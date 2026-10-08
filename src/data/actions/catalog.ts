@@ -26,7 +26,9 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // E20 §5.3: single swing 45 (one hit per 40 HP infected), 100°, 2.1 m, 0.75 s; the same crowd sweep as the bat, stronger: >= 3 within 2.5 m, 25 damage each, 2.5 m push, 0.8 s stagger, 1.0 s total.
   { ...melee('fire-axe', 'wpn.fire-axe', 45, 2.1, 100, 0.75, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 25, knockback: 2.5, stagger: .8, windup: .25, active: .25, recovery: .5, cooldown: 1, hitStopMs: 60 } },
   melee('katana', 'wpn.katana', 48, 2.3, 130, 0.45, 2, 0.2),
-  fixtures['weapon.pistol'],
+  // E21 §5.2 handgun (first ranged weapon): 20 damage (2 hits per 40 HP infected), 22 m, 3 shots/s, one target per shot.
+  // No ammunition system (00 §6.1): no magazine, no reload, no reserve; the fire rate is the only limit.
+  { ...fixtures['weapon.pistol'], range: 22, fireRate: 3, magazine: 0, reloadTime: 0 },
   { ...gun('shotgun', 150, 18, 2, 6, 2, 12), pellets: 8, distanceFalloff: { start: 4, end: 12, minimum: 0.1 }, maxTargets: 8, knockback: 0, stagger: 0.3 },
   { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),

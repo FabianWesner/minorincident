@@ -1,6 +1,5 @@
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelTwoLayouts } from '../../levels/L2/layout';
-import { installLevelThree } from '../../levels/L3/encounters';
 import { ControlIntent } from '../entities/ControlIntent';
 import { installCampaignNpcs, rebuildNpcNavigation, prepareNpcNavigation } from '../npc/install';
 import { Npcs } from '../npc/Npcs';
@@ -70,7 +69,7 @@ export class SimWorld implements Lifecycle {
   missions: Mission | null = null;
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
-  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;if(def.id==='L3' && this.districts)installLevelThree(this,next);return next; }
+  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;return next; }
   /** Mission actors use the same component/physics owners as authored gameplay placements. */
   spawnMissionActor(def: ActorDef, at: { x: number; z: number }): EntitySnapshot {
     let id: number;

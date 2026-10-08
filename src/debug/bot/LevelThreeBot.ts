@@ -1,93 +1,150 @@
+import { Rng } from '../../core/Rng';
+import { l3, l3Street } from '../../data/l3';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
+import type { EntitySnapshot } from '../../sim/world/types';
 import { Walker } from './Walker';
-export type LevelThreeRoute = 'market' | 'park';
-const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
-/** L3 policy shared by the browser and Node battery. Ordinary controls and menu actions only. */
+
+/** E21 section 8 bot profiles. `evade-only` never attacks; `idle` stays where it starts in the station yard. */
+export type L3Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
+/** Forced street (AC11): the bot keeps to one avenue up to On-ramp Road; `auto` switches streets by what it sees. */
+export type L3StreetChoice = 'auto' | 'blvd' | 'commerce' | 'oak';
+type P = { x: number; z: number };
+const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
+const STREETS = ['blvd', 'commerce', 'oak'] as const;
+/** Cross-links the bot may switch streets at (full cross streets and the mid-block alleys). */
+const LINKS = [-120, -90, -55, -15, 40, 85, 128];
+
+/**
+ * L3 policy shared by the Node battery and the browser (ordinary controls only: movement, attack, interact; no cheats).
+ * Complete: takes the handgun, holds the yard with the police until the fallback, then moves up the avenues with the squad
+ * (waiting for it in the first two segments), shoots what comes at it before contact and axes what gets close, switches
+ * streets around the densest groups and picks up medkits when hurt. Newbie: 250 ms reaction, 15 % skipped attacks, shorter
+ * shooting range, never waits for the squad, occasional wrong turns. Evade-only: never attacks; runs, sidesteps, switches.
+ */
 export class LevelThreeBot {
   finished = false;
-  private walker = new Walker();
+  private readonly walker = new Walker();
+  private readonly rng: Rng;
   private frame: InputFrame = emptyInput();
-  private key = '';
-  private waypoint = 0;
-  private enterWaypoint = 0;
-  constructor(private readonly world: SimWorld, readonly policy: 'complete' | 'newbie' = 'complete', readonly route: LevelThreeRoute = 'market') {}
+  private street: 'blvd' | 'commerce' | 'oak';
+  private detour: (P & { until: number }) | null = null;
+  private stuck = { at: null as P | null, n: 0, next: 0 };
+  private last: P | null = null;
+  private medkit = 0;
+  private decidedAt: number | null = null;
+  private waiting = false;
+  private waitedSince = 0;
+  constructor(private readonly world: SimWorld, readonly profile: L3Profile = 'complete', readonly forced: L3StreetChoice = 'auto') {
+    this.rng = new Rng(world.seed, `l3-bot-${profile}-${forced}`);
+    this.street = forced === 'auto' ? 'commerce' : forced;
+  }
+  /** Infected the player can see (line of sight on the walk grid), nearest first. */
+  private threats(p: P, radius: number): EntitySnapshot[] {
+    const w = this.world;
+    return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
+      .sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
+  }
+  private chasing(e: EntitySnapshot): boolean { const b = e.infected?.l1; return !!b && (b.mode === 'chase' || b.mode === 'bite') && b.targetId === 1; }
   sample(): InputFrame {
-    const w = this.world, m = w.missions!;
+    const w = this.world, m = w.missions!, s = m.state.l3;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
-    if (this.finished) return emptyInput();
-    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.key = ''; }
+    if (this.finished || !s) return emptyInput();
+    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; }
     if (m.state.phase === 'briefing') m.begin();
     if (m.state.phase === 'cinematic') return { ...emptyInput(), interact: true };
-    if (this.policy === 'newbie' && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
-    const preferred = `${this.route}-route`;
-    const step = m.def.steps.find(s => s.id === preferred && m.state.steps[s.id].status === 'active') ?? m.def.steps.find(s => m.state.steps[s.id].status === 'active');
-    const frame = this.frame = emptyInput();
-    if (!step || w.entities.get(1)!.health.current <= 0) return frame;
-    const p = w.entities.get(1)!.transform, at = m.def.anchors[step.anchor], state = m.state.steps[step.id];
-    const key = `${step.id}:${state.started}`;
-    if (this.key !== key) { this.key = key; this.waypoint = 0; this.enterWaypoint = 0; this.walker.reset(); }
-    const drive = step.complete.kind === 'drive' ? step.complete : null;
-    const car = w.vehicles!.cars.get(m.state.actors.sedan);
-    if (w.vehicles!.active !== null && car) {
-      if (!drive || state.driveArrived && drive.exit) { frame.brake = true; frame.interact = car.physics.speed < .5; return frame; }
-      const c = car.entity.transform, a = m.def.anchors;
-      const x = a.sedan.x, z = a.market.z, west = a.park.x, south = a.approach.z;
-      // Ten-metre corner radii leave room for the sedan's speed-scaled steering.
-      // Quarter-circle road waypoints begin before the junction, not at its centre.
-      const mainTurn = [{ x, z: z+10 }, { x: x-.76, z: z+6.17 }, { x: x-2.93, z: z+2.93 }, { x: x-6.17, z: z+.76 }, { x: x-10, z }];
-      const shopTurn = [{ x: west+10, z }, { x: west+6.17, z: z+.76 }, { x: west+2.93, z: z+2.93 }, { x: west+.76, z: z+6.17 }, { x: west, z: z+10 }];
-      const parkTurn = [{ x: west, z: south-10 }, { x: west+.76, z: south-6.17 }, { x: west+2.93, z: south-2.93 }, { x: west+6.17, z: south-.76 }, { x: west+10, z: south }];
-      const road = step.id === 'approach'
-        ? [...(this.route === 'market' ? shopTurn : []), ...parkTurn, at]
-        : [...mainTurn, ...(step.id === 'park-route' ? [...shopTurn, at] : [at])];
-      while (this.waypoint < road.length-1 && dist(c, road[this.waypoint]) < 3) this.waypoint++;
-      const target = road[this.waypoint], dx = target.x - c.x, dz = target.z - c.z;
-      const delta = Math.atan2(Math.sin(Math.atan2(-dz, dx) - c.yaw), Math.cos(Math.atan2(-dz, dx) - c.yaw));
-      const reverse = Math.abs(delta) > 2.1;
-      const angle = reverse ? Math.atan2(Math.sin(delta + Math.PI), Math.cos(delta + Math.PI)) : delta;
-      frame.left.held = step.id !== 'approach' && this.waypoint < 2;
-      frame.drive = { throttle: reverse ? -.65 : 1, steer: Math.max(-1, Math.min(1, Math.atan(2 * car.physics.def.wheelbase * Math.sin(angle) / Math.max(3, Math.min(7, dist(c, target)))) / car.physics.def.steering * (reverse ? -1 : 1))) };
-      frame.brake = car.physics.speed > (Math.abs(angle) > .5 ? 4 : 9);
+    const newbie = this.profile === 'newbie';
+    if (newbie && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
+    const frame = this.frame = emptyInput(), player = w.entities.get(1)!, p = player.transform, a = m.def.anchors;
+    if (player.health.current <= 0 || this.profile === 'idle') return frame;
+    const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
+    const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => {
+      frame.attackTarget = { id: target.id, side }; frame.move = { x: 0, z: 0 };
+      if (side === 'LEFT') frame.left.held = true; else frame.right.held = true;
+    };
+    const fights = this.profile !== 'evade-only', skip = newbie && this.rng.next() < .15;
+    const gun = w.combat?.runner.loadout.state.RIGHT.rack.some(r => r.id === 'weapon.pistol') ?? false;
+    const near = this.threats(p, 2.4);
+    // Fight: the axe for what is at arm's length, the handgun for what comes at the courier from range (before contact).
+    const fight = (range: number): boolean => {
+      if (!fights || skip) return false;
+      if (near[0]) { strike(near[0], 'LEFT'); return true; }
+      if (!gun) return false;
+      const shot = this.threats(p, range).find(e => this.chasing(e) || dist(e.transform, p) < 9);
+      if (shot) { strike(shot, 'RIGHT'); return true; }
+      return false;
+    };
+    // ---------------------------------------------------------------- the yard: handgun, then hold with the police
+    if (s.phase === 'yard' || s.phase === 'attack') {
+      if (m.state.steps.armory.status === 'active') { if (go(a['l3-armory'], .5, 'armory')) frame.interact = !newbie || this.rng.next() < .6; if (!frame.interact) fight(14); return frame; }
+      if (fight(newbie ? 12 : 16)) return frame;
+      go({ x: -134.5, z: 1.5 }, 1.2, 'hold');
       return frame;
     }
-    if (drive && car && !(drive.exit && state.driveArrived)) {
-      const c = car.entity.transform, z = car.physics.def.width / 2 + .55;
-      const local = (x: number, side: number) => ({ x: c.x + Math.cos(c.yaw)*x + Math.sin(c.yaw)*side, z: c.z-Math.sin(c.yaw)*x+Math.cos(c.yaw)*side });
-      const door = local(.2, z);
-      // The stand-to-interact driver door is +Z. Walk behind the parked chassis
-      // when coming from its other side, rather than pushing through a dynamic car.
-      const side = (p.x-c.x)*Math.sin(c.yaw)+(p.z-c.z)*Math.cos(c.yaw);
-      if (this.enterWaypoint === 0 && side >= 0) this.enterWaypoint = 2;
-      const around = [local(-4, -z-1), local(-4, z+1), door];
-      while (this.enterWaypoint < 2 && dist(p, around[this.enterWaypoint]) < .65) this.enterWaypoint++;
-      frame.move = this.walker.step(w, around[this.enterWaypoint], .35, `enter-${car.entity.id}-${this.enterWaypoint}`) ?? frame.move;
-      frame.interact = dist(p, door) < .65;
-      return frame;
+    // ---------------------------------------------------------------- the avenues
+    if (this.last && dist(this.last, p) > 6) { this.walker.reset(); this.detour = null; }
+    this.last = { x: p.x, z: p.z };
+    const hp = player.health.current / player.health.max;
+    // Medkits when hurt: the nearest one ahead or close by that is still there.
+    if (!this.medkit && hp <= (newbie ? .5 : .65)) {
+      const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
+        .filter(e => dist(e.transform, p) < 24 && e.transform.x > p.x - 10).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+      if (kit) this.medkit = kit.id;
     }
-    // The nav grid uses an axis-aligned chassis box. At a slanted parking angle,
-    // a valid capsule position beside the door can lie inside that conservative
-    // box. Step away from the chassis with ordinary controls before routing.
-    if (car && dist(p, car.entity.transform) < car.physics.def.length / 2 + 2 && !w.infected!.nav.clear(p.x, p.z, .45)) {
-      const c = car.entity.transform, side = (p.x-c.x)*Math.sin(c.yaw)+(p.z-c.z)*Math.cos(c.yaw) >= 0 ? 1 : -1;
-      frame.move = { x: side*Math.sin(c.yaw), z: side*Math.cos(c.yaw) };
-      return frame;
+    if (this.medkit) {
+      const kit = w.entities.get(this.medkit);
+      if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > .95) this.medkit = 0;
+      else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
-    const waveIds = step.type === 'defend' ? new Set(Object.entries(m.state.actors).filter(([key]) => key.startsWith(`${step.id}-wave-`)).map(([, id]) => id)) : null;
-    const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && (waveIds?.has(e.id) || dist(e.transform, p) < (step.id === 'checkpoint' ? 18 : 3)));
-    enemies.sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
-    const enemy = enemies[0];
-    if (enemy) {
-      frame.move = this.walker.step(w, enemy.transform, .8, `fight-${enemy.id}`) ?? frame.move;
-      if (dist(p, enemy.transform) < 2.5 && w.combat!.query.visible(p, enemy.transform)) { frame.attackTarget = { id: enemy.id, side: 'LEFT' }; frame.left.held = true; frame.move = { x: 0, z: 0 }; }
-    } else frame.move = this.walker.step(w, at, Math.min(1, at.radius / 2), step.id) ?? frame.move;
-    if (step.complete.kind === 'interact' && dist(p, at) <= at.radius) frame.interact = true;
-    // Escort followers stop behind a stationary player. Keep walking inside
-    // the gate area until the patient crosses it, regardless of arrival direction.
-    if (step.complete.kind === 'escort' && !enemy) {
-      const inside = [{ x: at.x, z: at.z }, { x: at.x+1, z: at.z-1 }, { x: at.x+1, z: at.z+1 }, { x: at.x-1, z: at.z+1 }, { x: at.x-1, z: at.z-1 }];
-      if (dist(p, inside[this.waypoint]) < .6) this.waypoint = this.waypoint === inside.length-1 ? 1 : this.waypoint+1;
-      frame.move = this.walker.step(w, inside[this.waypoint], .25, `patient-gate-${this.waypoint}`) ?? frame.move;
+    // Street choice at the cross-links: keep away from the densest group the courier can see ahead.
+    if (this.forced === 'auto' && p.x < 122) {
+      const link = LINKS.find(x => Math.abs(p.x - x) < 3.2);
+      // One decision per cross-link (no dithering between two streets at the same corner).
+      if (link !== undefined && link !== this.decidedAt) {
+        this.decidedAt = link;
+        const ahead = (st: typeof STREETS[number]) => this.threats(p, 32).filter(e => l3Street(e.transform.z) === st && e.transform.x > p.x - 2).length + (st === this.street ? -1.5 : 0) + Math.abs(STREETS.indexOf(st) - STREETS.indexOf(this.street)) * .8;
+        const best = [...STREETS].sort((x, y) => ahead(x) - ahead(y))[0];
+        if (best !== this.street) { this.street = best; this.walker.reset(); }
+      }
+    }
+    // A jammed walker (crowd, wreck or corner) steps aside along a connected route.
+    if (w.tick >= this.stuck.next) {
+      this.stuck.next = w.tick + 60;
+      if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget) this.stuck.n++; else this.stuck.n = 0;
+      this.stuck.at = { x: p.x, z: p.z };
+      if (this.stuck.n >= 3) { const at = this.walker.detour(w, { x: p.x + 10, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
+    }
+    if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
+    const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
+    // Fight a few, flee from many: a crowd closing in (or a losing fight) means breaking away forward, not standing.
+    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, { x: p.x + 12, z: l3.map.streets[this.street] }, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
+    if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 6 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 12, until: w.tick + 180 };
+    if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
+    // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
+    // Segment 3 is the run-away part: fight only what is about to grab the courier, keep moving otherwise.
+    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 7 : p.x >= l3.map.segments[2][0] ? 6 : 15;
+    if (fight(range)) return frame;
+    // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
+    if (this.profile === 'complete' && s.squad.length && p.x < 50 && p.x > -100) {
+      const lag = Math.max(...s.squad.map(q => { const e = w.entities.get(q.id); return e ? dist(e.transform, p) : 0; }));
+      // A careful courier waits a few seconds for a straggler, not forever (an officer stuck on a wreck is left behind).
+      if (lag <= 7) this.waiting = false;
+      else if (!this.threats(p, 20).some(e => this.chasing(e))) {
+        if (!this.waiting) { this.waiting = true; this.waitedSince = w.tick; }
+        if (w.tick - this.waitedSince < 300) return frame;
+      }
+    }
+    // Forward: along the street, then up On-ramp Road to the checkpoint lane and through the zone line.
+    const zone = a['l3-zone'];
+    if (p.x > 118) { if (Math.abs(p.z) > 2.2 && p.x < 131) go({ x: 129, z: 0 }, .8, 'onramp'); else go({ x: zone.x + 3, z: 0 }, .3, 'zone'); return frame; }
+    // A point 24 m ahead on the chosen street (on clear ground); the grid route takes the cross-links by itself.
+    const nav = w.infected!.nav, z = l3.map.streets[this.street], ahead = Math.min(124, Math.floor(p.x / 12) * 12 + 24);
+    let target = { x: ahead, z };
+    for (const dz of [0, 1.5, -1.5, 3, -3, 4.5, -4.5]) if (nav.clear(ahead, z + dz, .45)) { target = { x: ahead, z: z + dz }; break; }
+    if (go(target, .8, `route-${this.street}-${target.x}`) && dist(p, target) > 1.6) {
+      // No route to that point (a closed pocket): take the next street over, or step aside when the street is forced.
+      if (this.forced === 'auto') { this.street = STREETS[(STREETS.indexOf(this.street) + 1) % 3]; this.walker.reset(); }
+      else { const at = this.walker.detour(w, { x: p.x + 10, z }); if (at) this.detour = { ...at, until: w.tick + 120 }; }
     }
     return frame;
   }

@@ -28,9 +28,17 @@ export interface Civilian {
   ally?: AllyState;
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number };
 }
-/** Serializable allied-fighter task state (firefighters in L2, police from L3). Ticks are sim ticks. */
+/** E21 allied fighters v2: a handgun/rifle with a distance-dependent hit chance (one target per shot, no ammunition). */
+export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM: number; hitNear: number; hitFar: number }
+/** Serializable allied-fighter task state (firefighters in L2, police from L3, soldiers at the L3 army checkpoint). Ticks are sim ticks. */
 export interface AllyState {
-  role: 'firefighter' | 'officer';
+  role: 'firefighter' | 'officer' | 'soldier';
+  /** v2 firearm (officers and soldiers from L3); without it officers keep the L2 v1 values. */
+  gun?: AllyGun;
+  /** v2 squad: follow this entity (the player) at 2-6 m, engage within `engageM`, never more than `leashM` away when engaged. */
+  follow?: { targetId: number; slot: number; minM: number; maxM: number; engageM: number; leashM: number; moveMs: number; breakoutUntil?: number };
+  /** v2 cover zone: only infected within `range` of this point are engaged (the soldiers' last 20 m before the zone line). */
+  cover?: Point;
   /** Engaged allies fight what they see; disengaged ones follow their routine or `run` order. */
   engaged: boolean;
   /** Scripted move (run to the truck, jog to a door); cleared on arrival. */

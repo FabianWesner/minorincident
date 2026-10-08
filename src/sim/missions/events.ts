@@ -13,4 +13,11 @@ export type MissionEvent =
   /** E20 set-piece beats, in order (AC06): alarm, departure, arrival, crew exit, crew at the doors, doors open, radio, gate closed. */
   | { tick: number; type: 'l2.alarm' | 'l2.truckDeparted' | 'l2.truckArrived' | 'l2.crewExit' | 'l2.firefightersAtDoors' | 'l2.doorsOpen' | 'l2.radio' | 'l2.gateClosed' }
   /** E20 §5.2 allied fighter strike (firefighter melee, officer shot); the hit itself is an ordinary `combat.hit`. */
-  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' };
+  /** E21 beats: the attack starts, a wave emerges, the fallback (first-of rule), a squad member is lost, a segment is entered, the zone line crossed. */
+  | { tick: number; type: 'l3.handgun' | 'l3.attack' | 'l3.crossed' }
+  | { tick: number; type: 'l3.wave'; wave: number; count: number }
+  | { tick: number; type: 'l3.fallback'; cause: 'time' | 'turned' | 'inside'; squad: number[] }
+  | { tick: number; type: 'l3.squad-lost'; id: number; cause: 'bite' | 'kill' | 'separated' }
+  | { tick: number; type: 'l3.segment'; segment: number; squad: number }
+  | { tick: number; type: 'l3.gunfire'; sourceId: number; position: { x: number; z: number } }
+  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' | 'soldier'; hit?: boolean; from?: { x: number; z: number }; to?: { x: number; z: number } }

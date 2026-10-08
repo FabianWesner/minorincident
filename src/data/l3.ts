@@ -31,7 +31,7 @@ export const l3 = {
     hp: 100,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
     /** The squad: follow 2-6 m, engage within 18 m, stay within 20 m when not engaged, separated beyond 40 m. */
-    squad: { size: 4, minFollowM: 2, maxFollowM: 6, engageM: 18, leashM: 20, separatedM: 40, separatedS: 3, moveMs: 4.3 },
+    squad: { size: 4, minFollowM: 2, maxFollowM: 6, engageM: 18, leashM: 20, separatedM: 40, separatedS: 3, moveMs: 4.8, slowerMs: .3, breakoutS: 12 },
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
@@ -40,21 +40,26 @@ export const l3 = {
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    targets: [10, 25, 40] as readonly number[],
+    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits at the top of the band (48) so the squad is overwhelmed there. */
+    targets: [10, 25, 48] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
-      // S2 (x -40..50): about 25 in groups of 2-4.
-      [[-30, 'commerce', 3], [-24, 'blvd', 3], [-10, 'oak', 3], [0, 'blvd', 3], [12, 'commerce', 3], [20, 'oak', 3], [30, 'blvd', 3], [42, 'commerce', 2], [46, 'oak', 2]],
-      // S3 (x 50..128): about 40, denser groups; the street switch is the way through.
-      [[56, 'blvd', 4], [60, 'commerce', 3], [64, 'oak', 4], [74, 'blvd', 3], [80, 'commerce', 4], [86, 'oak', 3], [94, 'blvd', 4], [100, 'commerce', 3], [106, 'oak', 4], [112, 'blvd', 3], [118, 'commerce', 2], [120, 'oak', 3]],
+      // S2 (x -40..50): about 25 in groups of 3-4 on the walking lines (wrecks and the jam split the Boulevard ones).
+      [[-30, 'commerce', 4], [-22, 'blvd', 3], [-8, 'oak', 3], [2, 'commerce', 3], [10, 'blvd', 4], [22, 'oak', 3], [30, 'commerce', 3], [44, 'blvd', 2]],
+      // S3 (x 50..128): about 40: one dense cluster per street (7) staggered along the corridor, plus groups between them.
+      [[64, 'commerce', 8], [96, 'blvd', 8], [82, 'oak', 8], [56, 'blvd', 3], [104, 'commerce', 3], [112, 'oak', 3], [118, 'blvd', 3]],
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
+    /** Segment 3 also holds a horde (part of its 48) that streams west down one avenue (seeded) from the on-ramp end. */
+    horde: { size: 12, fromX: 121, toX: 72 },
     leashM: 9,
+    /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
+    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [3, 5] as P, maxPerLink: 2, cooldownS: 18 },
     pressure: { idleS: 20, everyS: 10, count: [1, 3] as P, behindM: [15, 35] as P },
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
-    retireBehindM: 75,
+    retireBehindM: 60,
     caps: { high: 80, low: 40 },
   },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */

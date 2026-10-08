@@ -577,7 +577,8 @@ export class InfectedSystem {
     b.grabUntil = 0; e.combat!.attacking = false; brain.biteTargetId = 0;
     if (bitten && victim) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
-      const cap = this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap;
+      // The level cap (L1/L2: 60 high / 30 low; L3: 80 / 40): at the cap a bite kills instead of turning (L1 section 5.9).
+      const cap = this.director.cap, turns = this.director.count + this.recentTurns.length < cap;
       if (turns) this.recentTurns.push(tick);
       if (this.l1!.humans instanceof WorldHumans) this.l1!.humans.bitten.add(victimId);
       this.world.events.emit({ type: 'outbreak.bite', tick, sourceId: e.id, targetId: victimId, position: { x: victim.x, z: victim.z }, turns });
