@@ -16063,5 +16063,208 @@
       "lod2": 4000
     },
     "decayVariants": []
+  },
+  {
+    "id": "bld.storefront-row",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.storefront-row/build.py",
+    "glb": "public/assets/models/bld.storefront-row.glb",
+    "sourceGlb": "assets/bld.storefront-row/model.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 10.1,
+      "y": 10.2,
+      "z": 16.54,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "shop1DoorSocket",
+      "shop2DoorSocket",
+      "shop3DoorSocket",
+      "rear1DoorSocket",
+      "rear2DoorSocket",
+      "rear3DoorSocket"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.storefront-row.lod1.glb",
+      "lod2": "public/assets/models/bld.storefront-row.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.kessler-hardware",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.kessler-hardware/build.py",
+    "glb": "public/assets/models/bld.kessler-hardware.glb",
+    "sourceGlb": "assets/bld.kessler-hardware/model.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 10.08,
+      "y": 10.8,
+      "z": 9.4,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [
+      "door_cellar"
+    ],
+    "sockets": [
+      "cellarDoorSocket",
+      "shopDoorSocket"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.kessler-hardware.lod1.glb",
+      "lod2": "public/assets/models/bld.kessler-hardware.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.metro-entrance",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.metro-entrance/build.py",
+    "glb": "public/assets/models/bld.metro-entrance.glb",
+    "sourceGlb": "assets/bld.metro-entrance/model.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 7.52,
+      "y": 6.48,
+      "z": 4.85,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [
+      "shutter"
+    ],
+    "sockets": [
+      "stairTopSocket",
+      "stairBottomSocket",
+      "entranceSocket",
+      "shutterSocket"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.metro-entrance.lod1.glb",
+      "lod2": "public/assets/models/bld.metro-entrance.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "backpackTeal",
+      "solid": true
+    }
+  },
+  {
+    "id": "int.basement-cellar",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/int.basement-cellar/build.py",
+    "glb": "public/assets/models/int.basement-cellar.glb",
+    "sourceGlb": "assets/int.basement-cellar/model.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 8.8,
+      "y": 4.01,
+      "z": 6.8,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [
+      "door_cellar"
+    ],
+    "sockets": [
+      "cellarDoorSocket",
+      "braceSocket",
+      "stairTopSocket",
+      "stairBottomSocket",
+      "bulbSocket"
+    ],
+    "budget": {
+      "triangles": 40000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/int.basement-cellar.lod1.glb",
+      "lod2": "public/assets/models/int.basement-cellar.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 15000,
+      "lod2": 4000
+    },
+    "decayVariants": []
   }
 ]
