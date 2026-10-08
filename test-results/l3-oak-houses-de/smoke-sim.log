@@ -1,0 +1,18 @@
+
+> test:smoke
+> sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke
+
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l3-oak-houses-de
+
+
+ Test Files  5 passed | 152 skipped (157)
+      Tests  6 passed | 816 skipped (822)
+   Start at  11:13:50
+   Duration  9.77s (import 59%, tests 21%, transform 17%, worker 2%)
+
+     Import  512 modules were evaluated 8851 times · 7.79s total, 59% of tracked time
+             ~3.56s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+
+Error: http://127.0.0.1:3347 is already used, make sure that nothing is running on the port/url or set reuseExistingServer:true in config.webServer.

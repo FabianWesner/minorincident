@@ -36,7 +36,7 @@ export class MissionUI {
     this.map.className = 'mission-minimap'; this.map.setAttribute('aria-label','Objective minimap');
     this.panel.className = 'mission-panel'; this.panel.setAttribute('aria-label','Mission');
     this.button.type = 'button'; this.button.addEventListener('click',this.accept);
-    for (const [key,label] of [['time','Time (seconds)'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
+    for (const [key,label] of [['time','Time (seconds)'],['knockdowns','Knockdowns'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
       const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; title.dataset.testid=`result-label-${key}`; value.dataset.testid=`result-${key}`; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
     }
     this.panel.append(this.heading,this.detail,this.result,this.button);

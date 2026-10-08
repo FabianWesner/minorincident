@@ -4164,7 +4164,17 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "door_front",
+      "window_front",
+      "window_left",
+      "window_right",
+      "window_rearL",
+      "window_rearR",
+      "lamp_porch"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -4174,7 +4184,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.house-a/model.glb",
     "script": "assets/bld.house-a/build.py",
     "lods": {
@@ -4189,6 +4202,12 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -4224,7 +4243,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.house-b/model.glb",
     "script": "assets/bld.house-b/build.py",
     "lods": {
@@ -4239,6 +4261,12 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -4273,7 +4301,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.house-c/model.glb",
     "lods": {
       "lod1": "public/assets/models/bld.house-c.lod1.glb",
@@ -4287,6 +4318,12 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -4438,7 +4475,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.joes-diner/model.glb",
     "script": "assets/bld.joes-diner/build.py",
     "lods": {
@@ -4452,6 +4492,17 @@
     },
     "authoredLodTriangles": {
       "lod1": 11000,
+      "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
       "lod2": 4000
     }
   },
@@ -4531,7 +4582,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "lods": {
       "lod1": "public/assets/models/bld.maple-hardware.lod1.glb",
       "lod2": "public/assets/models/bld.maple-hardware.lod2.glb"
@@ -4542,6 +4596,17 @@
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -4571,7 +4636,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.mainstreet-brick/model.glb",
     "script": "assets/bld.mainstreet-brick/build.py",
     "lods": {
@@ -4587,21 +4655,32 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "compactMeshopt": true
+    "compactMeshopt": true,
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    }
   },
   {
     "id": "bld.bus-stop",
     "category": "building",
     "status": "integrated",
-    "tier": "hero",
+    "tier": "side",
     "script": "assets/bld.bus-stop/build.py",
     "glb": "public/assets/models/bld.bus-stop.glb",
     "sourceGlb": "assets/bld.bus-stop/model.glb",
     "dimensions": {
-      "x": 2.0414009504020214,
-      "y": 2.6750000715255737,
-      "z": 4.969200611114502,
-      "tolerance": 0.1
+      "x": 2.0414,
+      "y": 2.675,
+      "z": 4.9692,
+      "tolerance": 0.015
     },
     "forward": "+X",
     "frontNodes": [
@@ -4609,18 +4688,26 @@
     ],
     "requiredNodes": [
       "root",
-      "interior",
-      "roof"
+      "body",
+      "roof",
+      "interior"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "entranceSocket",
+      "benchSocket",
+      "navSocket"
+    ],
     "budget": {
-      "triangles": 100000,
-      "materials": 32,
-      "fileKB": 6000,
-      "drawCalls": 40
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceForward": "+X",
     "lods": {
       "lod1": "public/assets/models/bld.bus-stop.lod1.glb",
@@ -4633,6 +4720,11 @@
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 3000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "drawCalls": 8,
+      "materials": 8
     }
   },
   {
@@ -8090,31 +8182,45 @@
   {
     "id": "decay.burned-facade",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.burned-facade.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 1.6,
+      "y": 3.8,
+      "z": 4.8,
+      "tolerance": 0.015
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "attachSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.burned-facade/build.py",
+    "sourceGlb": "assets/decay.burned-facade/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/decay.burned-facade.lod1.glb",
+      "lod2": "public/assets/models/decay.burned-facade.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.collapsed-facade",
@@ -11216,31 +11322,58 @@
   {
     "id": "bld.police",
     "category": "building",
-    "status": "placeholder",
-    "tier": "side",
+    "status": "integrated",
+    "tier": "hero",
     "glb": "public/assets/models/bld.police.glb",
     "dimensions": {
       "x": 10,
       "y": 5,
       "z": 8,
-      "tolerance": 0.1
+      "tolerance": 0.015
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
-    "animatedNodes": [],
-    "sockets": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior"
+    ],
+    "animatedNodes": [
+      "doorMain"
+    ],
+    "sockets": [
+      "entranceSocket",
+      "armorySocket",
+      "yardEntrySocket",
+      "coverLeftSocket",
+      "coverRightSocket"
+    ],
     "budget": {
-      "triangles": 10000,
+      "triangles": 30000,
       "materials": 8,
-      "fileKB": 512,
-      "drawCalls": 8
+      "drawCalls": 8,
+      "fileKB": 1500
     },
     "decayVariants": [],
     "world": {
       "token": "policeBlue",
       "solid": true
-    }
+    },
+    "script": "assets/bld.police/build.py",
+    "sourceGlb": "assets/bld.police/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.police.lod1.glb",
+      "lod2": "public/assets/models/bld.police.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "aliasOf": "bld.police-station"
   },
   {
     "id": "bld.hospital",
@@ -13568,15 +13701,22 @@
       "roof",
       "interior"
     ],
-    "animatedNodes": [],
-    "sockets": [],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "entrySocket"
+    ],
     "budget": {
       "triangles": 100000,
       "materials": 32,
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "world": {
       "token": "brick",
       "solid": true
@@ -13587,6 +13727,18 @@
       "lod2": "public/assets/models/bld.house-d.lod2.glb"
     },
     "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "script": "assets/bld.house-d/build.py",
+    "sourceForward": "+X",
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
     }
@@ -13613,15 +13765,22 @@
       "roof",
       "interior"
     ],
-    "animatedNodes": [],
-    "sockets": [],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "entrySocket"
+    ],
     "budget": {
       "triangles": 100000,
       "materials": 32,
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "world": {
       "token": "brick",
       "solid": true
@@ -13632,6 +13791,18 @@
       "lod2": "public/assets/models/bld.house-e.lod2.glb"
     },
     "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "script": "assets/bld.house-e/build.py",
+    "sourceForward": "+X",
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
     }
@@ -15590,5 +15761,187 @@
       "lod1": 600,
       "lod2": 200
     }
+  },
+  {
+    "id": "decay.burned-facade.brick",
+    "category": "prop",
+    "tier": "side",
+    "status": "integrated",
+    "script": "assets/decay.burned-facade.brick/build.py",
+    "sourceGlb": "assets/decay.burned-facade.brick/model.glb",
+    "glb": "public/assets/models/decay.burned-facade.brick.glb",
+    "dimensions": {
+      "x": 1.275,
+      "y": 4.17,
+      "z": 4.4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "colliders": "from-glb",
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/decay.burned-facade.brick.lod1.glb",
+      "lod2": "public/assets/models/decay.burned-facade.brick.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "decay.burned-facade.diner",
+    "category": "prop",
+    "tier": "side",
+    "status": "integrated",
+    "script": "assets/decay.burned-facade.diner/build.py",
+    "sourceGlb": "assets/decay.burned-facade.diner/model.glb",
+    "glb": "public/assets/models/decay.burned-facade.diner.glb",
+    "dimensions": {
+      "x": 1.275,
+      "y": 4.39,
+      "z": 4.4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "colliders": "from-glb",
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/decay.burned-facade.diner.lod1.glb",
+      "lod2": "public/assets/models/decay.burned-facade.diner.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "decay.burned-facade.house",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "street",
+    "script": "assets/decay.burned-facade.house/build.py",
+    "sourceGlb": "assets/decay.burned-facade.house/model.glb",
+    "glb": "public/assets/models/decay.burned-facade.house.glb",
+    "dimensions": {
+      "x": 0.43,
+      "y": 2.9,
+      "z": 3.6,
+      "tolerance": 0.05
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "mountSocket",
+      "windowSocket"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "mountSocket",
+      "windowSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/decay.burned-facade.house.lod1.glb",
+      "lod2": "public/assets/models/decay.burned-facade.house.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "bld.police-station",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.police-station/build.py",
+    "sourceGlb": "assets/bld.police-station/model.glb",
+    "glb": "public/assets/models/bld.police-station.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 12,
+      "y": 6.85,
+      "z": 16,
+      "tolerance": 0.015
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior"
+    ],
+    "animatedNodes": [
+      "doorMain"
+    ],
+    "sockets": [
+      "entranceSocket",
+      "armorySocket",
+      "yardEntrySocket",
+      "coverLeftSocket",
+      "coverRightSocket"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/bld.police-station.lod1.glb",
+      "lod2": "public/assets/models/bld.police-station.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
   }
 ]

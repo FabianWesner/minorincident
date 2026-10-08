@@ -10,7 +10,12 @@ export interface DamageEvent {
   hitStopMs?: number; knockdown?: boolean;
   /** Crowd sweep (roundhouse): keeps its authored shove/stagger beyond the normal-hit caps, without a knockdown. */
   sweep?: boolean;
+  /** A lethal hit kills an infected for good (a burning DoT); explosive hits always do (PO "Infected recover"). */
+  permanent?: boolean;
 }
+/** A knocked-down infected that will get up again (PO "Infected recover"): 0 HP, yet not a corpse. */
+export function downed(e: EntitySnapshot): boolean { return e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0; }
+const lethal = (hit: DamageEvent) => hit.type === 'explosive' || !!hit.permanent;
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
 export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
   let amount = hit.base * hit.multiplier;
@@ -33,7 +38,16 @@ export class Damage {
   constructor(private readonly world: SimWorld) {}
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
-    if (!target || !source || target.health.current <= 0) return 0;
+    if (!target || !source) return 0;
+    if (target.health.current <= 0) {
+      // Explosives and fire finish a downed infected for good; any other damaging hit restarts its down time (PO 10-08).
+      if (downed(target) && damageAmount(hit, target) > 0) {
+        if (!lethal(hit)) { this.world.infected!.down(target, false); return 0; }
+        this.world.infected!.down(target, true);
+        this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback: hit.knockback, amount: 0, damageType: hit.type });
+      }
+      return 0;
+    }
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     if (target.civilian) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
@@ -85,7 +99,11 @@ export class Damage {
     }
     if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);
     if (target.escort && target.health.current === 0) { this.world.npcs?.escorts.down(target); return amount; }
-    if (wasAlive && target.health.current === 0) this.world.events.emit({ ...event, type: 'combat.kill' } satisfies GameEvent);
+    if (wasAlive && target.health.current === 0) {
+      // PO "Infected recover": only explosives (and a lethal burn) kill an infected; everything else knocks it down.
+      const up = target.infected && this.world.infected ? this.world.infected.down(target, lethal(hit)) : -1;
+      this.world.events.emit({ ...event, type: 'combat.kill', ...(up >= 0 ? { downed: up } : {}) } satisfies GameEvent);
+    }
     return amount;
   }
 }
