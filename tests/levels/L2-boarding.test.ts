@@ -22,6 +22,22 @@ function clickAndWait(w: SimWorld, target: { x: number; z: number }, done: () =>
 }
 
 describe('L2 one-attempt interactions', () => {
+  test('axe can be taken at 5 s before the alarm, then board normally after it (PO: “L2: Let me take the axe even before the fire alarm”)', async () => {
+    const l = await loadL2(1); world = l.world;
+    for (let i = 0; i < 5 * 60; i++) l.world.update();
+    expect(l.mission.state.l2!.phase).toBe('calm');
+    const anchors = l.mission.def.anchors;
+    const rack = anchors['l2-axe-rack'];
+    clickAndWait(l.world, rack, () => Math.hypot(l.world.entities.get(1)!.transform.x - rack.x, l.world.entities.get(1)!.transform.z - rack.z) <= rack.radius);
+    for (let i = 0; i < 60 && !l.mission.state.l2!.axe; i++) { l.world.setInput({ interact: true }); l.world.update(); }
+    l.world.setInput({ interact: false });
+    expect(l.mission.state.l2!.axe).toBe(true);
+    for (let i = 0; i < 60 * 45 && l.mission.state.l2!.phase === 'calm'; i++) l.world.update();
+    expect(l.mission.state.l2!.phase).toBe('alarm');
+    clickAndWait(l.world, anchors['l2-board'], () => l.mission.state.l2!.seated);
+    expect(l.mission.state.l2!.seated).toBe(true);
+  }, 120_000);
+
   test('axe: one click on the rack picks it up (20 seeds)', async () => {
     const times: number[] = [];
     for (const seed of seeds) {
