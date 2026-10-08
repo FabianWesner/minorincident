@@ -66,7 +66,7 @@ def box(name, position, size, token, owner, lod, rotation=0, axis=0):
     return obj
 
 
-def batch(root, protected):
+def batch(root, protected, extinguish_windows=True):
     # First use the shared material merger; then fold swatches into one draw per
     # rigid owner. Ratios multiply pal_picketWhite in both glTF and runtime.
     export.merge_by_material(root, protected)
@@ -92,16 +92,16 @@ def batch(root, protected):
         bpy.context.object.name = owner.name + '_pal_picketWhite'
     # A surviving emissive batch is always a stable named reference.
     emissive = [o for o in root.children_recursive if o.type == 'MESH' and o.data.materials[0].name.startswith('emi_')]
-    for obj in emissive: obj.name = 'lamps_emi_windowGlow'
+    for obj in emissive: obj.name = obj.parent.name + '_emi_windowGlow'
     for obj in root.children_recursive:
         if 'ss_light' not in obj: continue
         value = obj['ss_light']
         light = json.loads(value) if isinstance(value, str) else dict(value)
-        if light['type'] == 'window':
+        if light['type'] == 'window' and extinguish_windows:
             # Broken, boarded and deserted windows have no electrical spill.
             light['intensity'] = 0
             light['emissiveNodes'] = []
-        else: light['emissiveNodes'] = ['lightsFront'] if emissive else []
+        else: light['emissiveNodes'] = [o.name for o in emissive if o.parent.name == ('door_front' if 'door_front' in obj.name else 'lightsFront')]
         obj['ss_light'] = json.dumps(light)
 
 
@@ -111,7 +111,7 @@ def build_house(directory, output, decay, only_tier=None):
     stats = {}
     for lod in ([only_tier] if only_tier is not None else (0, 1, 2)):
         bpy.ops.wm.read_factory_settings(use_empty=True)
-        source = directory / ('model.lod2.glb' if lod == 2 else 'model.lod1.glb')
+        source = directory / (('model.distance2.glb' if lod == 2 else 'model.distance1.glb') if directory.name in ('bld.house-d','bld.house-e') else ('model.lod2.glb' if lod == 2 else 'model.lod1.glb'))
         bpy.ops.import_scene.gltf(filepath=str(source))
         bpy.context.view_layer.update()
         # Native distance exports can shift their root to centre trimmed foliage.
@@ -204,7 +204,7 @@ def build_house(directory, output, decay, only_tier=None):
                 continue
             # Far foliage: each closed crown gets an explicit six-vertex recipe,
             # retaining its exact extrema and therefore the original footprint.
-            if lod == 2 and token == 'foliage':
+            if lod == 2 and token in ('foliage','foliageDark','foliageLight'):
                 crowns = [bounds(obj, ids) for ids in components(obj)]
                 owner = obj.parent
                 bpy.data.objects.remove(obj, do_unlink=True)
@@ -221,16 +221,24 @@ def build_house(directory, output, decay, only_tier=None):
             face = hi[axis]+.015 if sign>0 else lo[axis]-.015
             def point(a,b,d=0):
                 v=c.copy();v[axis]=face+sign*d;v[u]+=a;v.z+=b;return tuple(v)
+            def surface(name, vertices, token):
+                # Match the outward facade normal on all four sides. Concave
+                # void/scorch outlines use Newell's normal, not their first corner.
+                normal = Vector((0,0,0))
+                for a,b in zip(vertices,vertices[1:]+vertices[:1]):
+                    normal += Vector(a).cross(Vector(b))
+                if normal[axis]*sign < 0: vertices = list(reversed(vertices))
+                return mesh(name, vertices, [tuple(range(len(vertices)))], token, owner)
             if decay=='w3' or index%3==0:
                 # Irregular void lies inside surviving glazing borders. Retain
                 # sash bars and frame geometry from the integrated original.
                 outline=[(-.42,-.42),(-.16,-.31),(-.07,-.45),(.14,-.36),(.42,-.43),(.34,-.08),(.46,.08),(.33,.22),(.4,.44),(.08,.35),(-.12,.46),(-.26,.3),(-.43,.42),(-.34,.13),(-.47,-.02),(-.32,-.16)]
                 if lod==2: outline=outline[::2]
                 verts=[point(a*w,b*h,.008) for a,b in outline]
-                mesh('jaggedWindowVoid',verts,[tuple(range(len(verts)))], 'uiDark', owner)
+                surface('jaggedWindowVoid',verts,'uiDark')
                 if lod==0:
                     for a,b in [(-.38,.28),(.34,-.27)]:
-                        mesh('survivingGlassShard',[point(a*w,b*h,.012),point((a+.10)*w,(b-.12)*h,.012),point((a+.13)*w,b*h,.012)],[(0,1,2)],'picketWhite',owner)
+                        surface('survivingGlassShard',[point(a*w,b*h,.012),point((a+.10)*w,(b-.12)*h,.012),point((a+.13)*w,b*h,.012)],'picketWhite')
             if decay=='w2' and not door:
                 for k in range(2):
                     dims=[.065,.065,.19]; dims[u]=w*1.04; dims[axis]=.075
@@ -245,13 +253,13 @@ def build_house(directory, output, decay, only_tier=None):
                 # The opening remains smaller and darker than the surrounding patch.
                 for top in (False,True):
                     z=.56 if top else -.58
-                    profile=[(-.64,z-.08),(-.53,z+.20),(-.19,z+.12),(.06,z+.29),(.31,z+.15),(.58,z+.09),(.52,z-.10)]
-                    mesh('localSoot', [point(a*w,b*h,.10) for a,b in profile], [tuple(range(len(profile)))], 'uiDark' if top else 'asphalt', owner)
+                    profile=[(-.95,z-.08),(-.83,z+.20),(-.29,z+.12),(.06,z+.29),(.51,z+.15),(.95,z+.09),(.82,z-.10)] if c.z < 3.5 else [(-.64,z-.08),(-.53,z+.20),(-.19,z+.12),(.06,z+.29),(.31,z+.15),(.58,z+.09),(.52,z-.10)]
+                    surface('localSoot', [point(a*w,b*h,.10) for a,b in profile], 'uiDark' if top else 'asphalt')
                 dims=[.07,.07,.12];dims[u]=w*.54;dims[axis]=.075
                 box('splinteredSill',point(.15*w,-.55*h,.10),dims,'woodWarm',owner,lod,.13,axis)
         if decay=='w2':
             # Clutter is inside the existing porch bounds, clear of door pivots.
-            positions={'bld.house-a':[(2.1,2.13,.68),(2.15,1.93,.61)],'bld.house-b':[(1.51,-3.38,.94),(1.79,-3.43,.80)],'bld.house-c':[(.69,-.73,1.12),(.88,-.69,1.04)]}
+            positions={'bld.house-a':[(2.1,2.13,.68),(2.15,1.93,.61)],'bld.house-b':[(1.51,-3.38,.94),(1.79,-3.43,.80)],'bld.house-c':[(.69,-.73,1.12),(.88,-.69,1.04)],'bld.house-d':[(3.05,-.90,.62),(3.05,-.50,.57)],'bld.house-e':[(2.65,-1.65,.87),(2.80,-1.30,.80)]}
             for i,p in enumerate(positions[directory.name]):
                 box('entranceBelongings',p,(.36,.32,.40 if i==0 else .25),'woodWarm' if i==0 else 'backpackTeal',root,lod,.12*i,2)
         # All imported empties, anchors and colliders keep their exact transforms.
