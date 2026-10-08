@@ -17,7 +17,7 @@ export const l2Dressing: readonly Dressing[] = [
   ...([[-36.8, 8.4, 'npc.civilian-man-a'], [-35.6, 10.2, 'npc.civilian-woman-b'], [10.4, -35.6, 'npc.civilian-man-b'], [12.2, -36.4, 'npc.civilian-woman-a'], [-24, -34.4, 'npc.civilian-elderly'], [44.2, 26.4, 'npc.civilian-man-a'], [-46.4, 32.8, 'npc.civilian-woman-a']] as const)
     .map(([x, z, assetId], i) => ({ kind: 'corpse' as const, assetId, x, z, yaw: i * 1.7, entity: true })),
   // Abandoned vehicles, doors open, pulled onto the kerb.
-  { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 28.6, yaw: .12 },
+  { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 26.9, yaw: .12 },
   { kind: 'abandoned', assetId: 'veh.suv-dark', x: -12, z: 32.2, yaw: Math.PI - .2 },
   { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
   { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -33.4, yaw: .1 },
@@ -42,7 +42,7 @@ export const l2Dressing: readonly Dressing[] = [
   // Broken shop and house windows (code art in L2Props until `decay.broken-glass` lands: a dark pane and glass on the pavement).
   ...([[-66.2, -38.4, 0], [-35.6, -37.4, 0], [-19.6, -34.6, 0], [5.6, -26.6, Math.PI], [-10.7, 33.6, 0]] as const).map(([x, z, yaw]) => ({ kind: 'broken-window' as const, assetId: 'decay.broken-glass', x, z, yaw, entity: true })),
   // Main Row by the courier depot (the L1 pickup spot): a car run into the kerb, a blood trail, spilled bags.
-  { kind: 'crashed', assetId: 'veh.sedan-red', x: -32.4, z: -29.4, yaw: 2.6 },
+  { kind: 'crashed', assetId: 'veh.sedan-red', x: -35.2, z: -27.4, yaw: Math.PI + .12 },
   { kind: 'blood', assetId: 'decal.blood-trail', x: -35.4, z: -31.4, yaw: 1.2 },
   { kind: 'bin', assetId: 'prop.trash-bags', x: -30.6, z: -35.8, yaw: .4 },
   // Blood trails and pools.
