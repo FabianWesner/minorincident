@@ -4350,7 +4350,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.apartment-block-b.glb",
-    "hash": "4971de22122caa523588085c49b732bf2282edf34207af63f984b1b81585dad6"
+    "hash": "7722711b6bd894e81f18b9ef985db84dca6f0296f0183838a9312446d405b6de"
   },
   "bld.town-hall": {
     "class": "fixed",
@@ -4370,25 +4370,25 @@ export default {
       {
         "min": [
           4.479999866485596,
-          -9.536743172944284e-8,
-          1.0499999999999998
+          0.5249999046325682,
+          0.5249999999999999
         ],
         "max": [
           4.799999866485596,
-          7.699999904632568,
-          7.7
+          7.1749999046325685,
+          8.225
         ]
       },
       {
         "min": [
           4.479999866485596,
-          -9.536743172944284e-8,
-          -7.7
+          0.5249999046325682,
+          -8.225
         ],
         "max": [
           4.799999866485596,
-          7.699999904632568,
-          -1.0499999999999998
+          7.1749999046325685,
+          -0.5249999999999999
         ]
       },
       {
@@ -4429,7 +4429,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.town-hall.glb",
-    "hash": "d145e38ec55d7ef407dc50872adf6600f86dd24977ed84a6f57344ce4173a1c2"
+    "hash": "ba64f57c861e135af8327b7c7414f26c16e4ffe1e5b2abc85a6bd247cd680ea8"
   },
   "bld.church": {
     "class": "fixed",
@@ -4508,6 +4508,6 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.church.glb",
-    "hash": "f75fe822a57079bbff40b4122e1ccb6f9ab16332b4fb05691e8e540401eac7cd"
+    "hash": "e1990a41ecb215411ceebb3b06f80da09fd5d132b6ea30fdd4409fb3b3ffd6a0"
   }
 };

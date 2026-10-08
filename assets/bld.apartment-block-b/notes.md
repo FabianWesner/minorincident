@@ -33,3 +33,5 @@ Large pieces are beveled at LOD0. LOD1 removes masonry relief and bevels, keeps 
 Run sequentially: `npm run assets:build -- <id>`, `npm run assets:pack -- <id>`, `npm run assets:validate -- --ids <id>`. Packing preserves authored files; do not use --regenerate.
 
 QA: `test-results/l4-fairhaven-civic-buildings/<id>/comparison.png`, `lod-contact.png`, `game-reference-peer.png`, `cutaway.png`. Independent orchestrator acceptance remains outstanding.
+
+Rework 10-08 (orchestrator QA): solid teal balcony fascia/rails and teal slabs, striped teal/cream storefront awnings over lit shop windows, rooftop AC units and a wooden water tank (total height 17.76, manifest dimensions.y updated), lit windows on the camera-facing faces; rear and +Y faces keep glazing only at LOD1/2 to stay under the 4k LOD2 cap. Footprint and anchors unchanged.
