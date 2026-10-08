@@ -21,6 +21,8 @@ confirm that no asset restoration is necessary.
   combat stream silently, crossfade over 0.8 s, hold for seven seconds after the
   last perceived threat, and return to the current level/story bed.
 - `8f30a560`: exclude hidden ambush actors as well as dead/downed infected.
+- `3526bdc6`: also exclude concealed/perched cats (`infected.hidden`), matching
+  the sim's separate concealment flag; a focused regression assertion covers it.
 - Follow-up: exercise down/recover through the director and capture encounter
   screenshots. The browser release check waits for both sides of the fade to
   reach the original gain thresholds within the original deadline.
@@ -69,7 +71,11 @@ and at most two workers. Heavy sim/unit runs use the shared sim lock.
   have passed; the clean encounter run produced no model 404s.
 - `E2E_PORT=3357 npm run verify -- E16` and
   `E2E_PORT=3357 npm run test:smoke`: queued on the shared sim lock at this checkpoint.
+  After prolonged polling starvation, restarted the still-queued commands with
+  `SIM_WAIT=60` to join the lock helper's waiting queue (no test process was aborted).
   Logs: `test-results/danger-verify.log`, `test-results/danger-smoke.log`.
+- After the concealed-cat guard, focused danger units 4/4, typecheck, lint and
+  production build all passed again.
 
 ## Deviations and limits
 
