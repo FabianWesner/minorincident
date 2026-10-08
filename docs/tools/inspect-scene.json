@@ -1,0 +1,16 @@
+{
+  "name": "inspection-camera",
+  "seed": 1,
+  "ground": "sidewalk",
+  "size": 40,
+  "props": [{ "id": "bench", "asset": "prop.bench", "at": [-4, 0] }],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-6, -6] },
+    { "id": "walker", "kind": "pedestrian", "at": [0, 0], "state": { "walk": [[0, 0], [5, 0]], "loop": true } },
+    { "id": "infected", "kind": "infected", "at": [8, 8], "yaw": 180 }
+  ],
+  "camera": { "mode": "pose", "position": [9, 8, 12], "target": [0, 0.7, 0] },
+  "frames": 300,
+  "shots": [0, 300],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "drawCallsMax": 600 }
+}
