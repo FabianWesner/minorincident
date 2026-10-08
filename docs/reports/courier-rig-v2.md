@@ -49,12 +49,64 @@ The elbow, knee and wrist reach the ≥ 0.9 target. The shoulder loses some volu
 
 **Clips.** The hand never twists more than 90° relative to its twist bone in the bat chain (unit test). Bat clips turn the head up to 97–121° relative to the chest, the same as the approved library. It is not clamped (PO-approved attack pose); v2 spreads it over neck and head instead of a 1 cm hinge. A one-line 75° clamp in `retarget.ts` is available if the PO wants it.
 
-**CPU** (`tools/skinpilot/profile.ts --both`; CharacterView update + ride contacts + living layer + matrices + `Skeleton.update`; 2,000 frames; with a glance target). Skinned p95 rose from 0.014–0.044 ms (main) to 0.037–0.131 ms, worst female kick p95 0.131 ms, typically 0.05–0.09 ms. That is under the 0.3 ms budget. Per frame inside the living layer: secondary motion ≈ 9.5 µs (bag + ponytail, 2 substeps, apply), helpers 1 µs, look-at 1.6 µs. The rest is the extra bones (mixer tracks, matrices, skeleton palette) and one extra world-matrix pass.
+**CPU** (`tools/skinpilot/profile.ts --both`; CharacterView update + ride contacts + living layer + matrices + `Skeleton.update`; 2,000 frames; with a glance target). Skinned p95 went from 0.014–0.044 ms on main to **0.030–0.075 ms** (worst: female ride 0.075 ms). That is well under the 0.3 ms budget. Raw data: `test-results/courier-rig-v2/profile-{before,after}/cpu-profile.json`. Per frame inside the living layer: secondary motion ≈ 9.5 µs (bag + ponytail, 2 substeps, apply), helpers 1 µs, look-at 1.6 µs. The rest is the extra bones (mixer tracks, matrices, skeleton palette) and one extra world-matrix pass.
 
 ## Evidence
 
-In `test-results/courier-rig-v2/` (git-ignored, small). See the Evidence section at the end, which is filled after capture.
+Everything is in `test-results/courier-rig-v2/` (git-ignored, about 16 MB). The captures use the actual L1 renderer, the game FOV and pitch at an 8 m review radius, 60 Hz sim poses and 20 fps WebM, through `tools/playeranim/fable-capture.ts`. Before = main `333192ba`; after = this branch.
+
+- `compare-{female,male}-{idle,walk,run,turn,bat,ride}.jpg`: six-frame strips at the same video times. The top row is before and the bottom row is after.
+- `close-{female,male}-idle.jpg`: zoomed idle pair (AO crevice shading, unchanged silhouette).
+- `before/`, `after/`: per variant `*-idle-walk-stop.webm` (5 s), `*-click-turns.webm` (4.75 s), `*-run-turns.webm` (4.5 s), `*-fight.webm` (fists + bat, 7.5 s), `*-bike.webm` (mount, ride, dismount, 4.25 s), plus game-camera stills (idle, walk, run, turn, unarmed, bat, ride).
+- `deform-{before,after}.json` and `profile-{before,after}/`: the numbers above. `gates/`: validation logs.
+
+The L1 sim drifts slightly between the two capture runs (the corgi and the exact combo frame differ), so the bat strips match in time but are not tick-identical. Pose orientations are identical by construction (see Clips).
+
+Review: footwork, stops, turns and bike contacts look the same as before. Locked feet, step turns and the grips hold, and the unit footwork/turn/stop/bike tests pass unchanged. The chest no longer hinges at the waist. Shoulders carry the strap without the stretched strap tail visible in the old bat frames. Wrists stay round in bat swings. The bag swings and settles. The ponytail trails in runs and turns. AO darkens under the visor, the armpits and between the legs without making the figure dirty. Glances were not captured because no infected came within range during the capture; unit tests cover them.
 
 ## Validation
 
-See the end of this file.
+Headless Chromium (ANGLE Metal), at most 2 Playwright workers, Vitest 2 workers under the sim lock, lane ports 3391 (capture) and 3392 (gates), never 3300. Logs are in `test-results/courier-rig-v2/gates/`.
+
+| Command | Result |
+| --- | --- |
+| `npm run typecheck` | PASS |
+| `npm run lint` | PASS, 0 warnings |
+| `sh tools/sim-lock.sh npx vitest run tests/unit --maxWorkers=2` | **320 passed**, 0 failed, 92 files |
+| `E2E_PORT=3392 SIM_WAIT=1 E2E_SKIN=1 npm run verify -- E04` | **61 unit/sim + 32 browser passed** |
+| `E2E_SKIN=1 sh tools/e2e-lock.sh npx playwright test tests/e2e/bicycle.spec.ts tests/e2e/bicycle-stability.spec.ts tests/e2e/arrival-stability.spec.ts tests/e2e/combat-wiring.spec.ts --project=chromium --workers=2` | **10 passed** |
+| `E2E_SKIN=0 npm run test:smoke` | **6 sim + 25 browser passed** |
+| `E2E_SKIN=1 npm run test:smoke` | **6 sim + 25 browser passed** |
+
+New tests are in `tests/unit/render/courier-rig-v2.test.ts`, 11 in total. They cover:
+- the chain contract and 1:1 clip tracks;
+- frozen-frame bit-identity and run-to-run determinism of the whole pose, including hair, bag and eyes;
+- glance clamp ±70°, ≤ 360°/s and fade-out before strike contact;
+- ponytail and bag settling below 2 cm/s (relative to their carrier) 1 s after a run-stop, with the ponytail outside both colliders;
+- blink cadence (mean 2–6 s, lids closed ≤ 0.15 s);
+- hand within 90° of its twist bone through the bat chain.
+
+`skin-pilot.test.ts` changed in two places only. The torso-twist bound now reads the chest (spine_03), because the waist joint alone no longer carries the twist. The authored-kick contact test now expects the new chain joints at rest. Verify regenerates tracked `test-results/epics/*` evidence; those files were restored, not committed.
+
+## Deviations and open points
+
+- **Shoulder volume.** The strap now rides chest and clavicle as requested, which costs shoulder volume and stretch at the strap edge: 0.85–0.89 vs 0.94 forward and abduct, max stretch up to 4.4 on the female. `--strap 0` in the build restores v1 shoulder numbers if the PO prefers the old strap. Hip flex is unchanged (≈ 0.75).
+- **Head turn in bat clips.** It is kept at the approved 97–121° relative to the chest (not clamped to the plan's ±75°); v2 only spreads it over the neck.
+- **Neck share.** The neck follows the source neck_01 only through the 45 % share of the head turn, not its raw track. This is more robust on the chibi proportions.
+- **Bag settle window.** It is 1 s after the stop instead of the plan's 0.8 s: the courier's settle step about 0.4 s after a stop re-excites the bag.
+- **GLB size** is +10–12 % (AO colours); the plan allowed +15 %.
+- **Not done** (later `courier-alive` / `clips-v2` scope): face states and mouth bones, additive breathing/lean layers, day rim, new Mesh2Motion clips, and the arm-clearance check.
+- **Kicks, knee and spinning backfist** (authored clips) still hold the new chain at rest. They keep the approved pose but do not gain spine curvature.
+- **WebGPU** parity remains the repository's manual check. The skinning path is shared; the quantized COLOR_0/WEIGHTS_0 use KHR_mesh_quantization normalized attributes.
+
+Reproduce:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender -b --python assets/char.courier-female-skin/build.py -- --glb assets/char.courier-female-skin/model.skin.glb
+/Applications/Blender.app/Contents/MacOS/Blender -b --python assets/char.courier-male-skin/build.py -- --glb assets/char.courier-male-skin/model.skin.glb
+npx tsx tools/skinpilot/compress.ts assets/char.courier-female-skin/model.skin.glb public/assets/models/char.courier-female.skin.glb
+npx tsx tools/skinpilot/compress.ts assets/char.courier-male-skin/model.skin.glb public/assets/models/char.courier-male.skin.glb
+MESH2MOTION_SOURCE=/path/to/pinned/mesh2motion-app npx tsx tools/skinpilot/retarget.ts
+npx tsx tools/skinpilot/deform.ts test-results/courier-rig-v2/deform-after.json
+sh tools/sim-lock.sh npx tsx tools/skinpilot/profile.ts test-results/courier-rig-v2/profile-after --both
+```
