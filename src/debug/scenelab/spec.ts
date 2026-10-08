@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -40,7 +40,7 @@ export interface SceneSpec {
   clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
   expect?: Expectations;
 }
-export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; scale?: number | [number, number, number]; tint?: string }
+export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; role?: string }
 export interface ActorSpec {
@@ -76,7 +76,11 @@ export type Action =
   | { mountBike: string }
   | { dismount: true }
   | { chase: string }
-  | { flee: Point };
+  | { flee: Point }
+  /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
+   * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
+   * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
+  | { handover: { building: string; meet: Point | string; pauseS?: number; /** Arm's length in front of an actor `meet` (default 1.05 m, the L1 clerk; the technician uses 1.4). */ standoff?: number; legacy?: boolean } };
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
 export type EffectSpec =
   | { blast: string; at: Point }
@@ -96,6 +100,8 @@ export interface Expectations {
   footSlideMaxCm?: number;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
+  /** Longest run of consecutive frames in which a courier sole zig-zags vertically by >= 0.8 cm (a bobbing body or foot). */
+  footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
   bodyOverlapMaxCm?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
@@ -104,6 +110,21 @@ export interface Expectations {
   torsoPitchMaxDeg?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** Frames a living actor stood in a door aperture or leaf sweep (src/data/buildingDoors.ts) while that door was not
+   * fully open (`metrics.doors`). */
+  doorClosedFramesMax?: number;
+  /** Most bone-vs-prop clipping hits (`clipping.actors`, see `clipping` options). */
+  actorHitsMax?: number;
+  /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
+  wheelSinkMaxCm?: number;
+  /** Deepest drawn pushable mesh below the drawn ground. */
+  propSinkMaxCm?: number;
+  /** Require actual prop contact samples, preventing an empty scene passing. */
+  propGroundSamplesMin?: number;
+  /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
+  wheelFloatMaxCm?: number;
+  /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
+  wheelSpikeMaxCm?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;

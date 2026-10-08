@@ -29,15 +29,15 @@ export function installCharacterSeparation(world: SimWorld): void {
         if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
         const otherRadius = radii.get(other.id)!; if (!otherRadius) continue;
         // Combat spacing between an infected and a human fighter (larger fighters still need to enter their authored
-        // melee/grab range). Infected among themselves keep a small air gap (E19-AC23: a horde reads as separate bodies,
-        // not one blob) yet stay a dense group; everyone else keeps body contact.
+        // melee/grab range). L1-brain infected among themselves keep a small air gap (E19-AC23: a horde reads as separate bodies,
+        // not one blob) yet stay a dense group; animal packs, migration streams and everyone else keep body contact (T-E07-09/16).
         const infected = (e.infected ? 1 : 0) + (other.infected ? 1 : 0);
         // Melee ring: an infected stands 1.08 m from the courier (centre to centre), just inside its 1.1 m
         // attack range. At 1.0 m the hunched (~0.5 m forward) torso plus the 0.22 m attack lunge drove heads and arms
         // into the courier's body (QA qa-courier-attack-bat: "the five infected pile up inside the courier's body").
         // Pedestrians keep 1.05 m (capped 0.3 m gap): L1 bites need contact at 1.0 m (InfectedSystem chaseL1).
         const courier = !!(e.survivor || other.survivor);
-        const gap = infected === 1 ? Math.max(.015, courier ? Math.min(.45, meleeRing - r - otherRadius) : Math.min(.3, 1.05 - r - otherRadius)) : infected === 2 ? .22 : .015;
+        const gap = infected === 1 ? Math.max(.015, courier ? Math.min(.45, meleeRing - r - otherRadius) : Math.min(.3, 1.05 - r - otherRadius)) : infected === 2 && e.infected!.l1 && other.infected!.l1 ? .22 : .015;
         const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
         if (dx * dx + dz * dz >= reach * reach) continue;
         const distance = Math.hypot(dx, dz), overlap = reach - distance;

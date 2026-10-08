@@ -1,12 +1,13 @@
 /** Scene Lab motion metrics, the same model-free contact rule as tools/playeranim/metrics.ts and tools/crowdfoot:
  * a foot is planted while its lowest sole point is within 1.2 cm of that actor's floor; while planted the grounded
  * point must not translate (slide) and the foot must not yaw (drift). Floor = the known ground height per frame, else the
- * lowest sole point of the window. `sinkMaxCm`: deepest sole point below the floor (feet through the ground). */
+ * lowest sole point of the window. `sinkMaxCm`: deepest sole point below the floor (feet through the ground).
+ * `jitterRunMax`: longest run of consecutive frames in which a sole zig-zags vertically by >= 0.8 cm (a one-frame bob). */
 export interface FootSample { heel: number[]; toe: number[]; yaw: number }
 /** `floor`: ground height under the actor when known (Scene Lab); otherwise the lowest sole point of the track is used. */
 export interface MotionFrame { frame: number; clip?: string; /** Informational animation label (not used by the foot rules), e.g. the corgi clip. */ label?: string; /** Sim position [x, z] (trace only). */ at?: number[]; feet: FootSample[]; torsoPitchDeg?: number; speed?: number; floor?: number }
 export interface MotionSummary {
-  frames: number; contacts: number; slideMaxCm: number; slideP95Cm: number | null; yawDriftMaxDeg: number; liftMaxCm: number; sinkMaxCm: number;
+  frames: number; contacts: number; slideMaxCm: number; slideP95Cm: number | null; yawDriftMaxDeg: number; liftMaxCm: number; sinkMaxCm: number; jitterRunMax: number;
   torsoPitchMinDeg: number | null; torsoPitchMaxDeg: number | null; worstSlideFrame: number | null;
 }
 const percentile = (a: number[], p: number) => a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)];
@@ -17,18 +18,25 @@ export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionS
   const used = frames.filter(f => f.feet.length && !(f.clip && unplantedClips.test(f.clip)));
   const pitches = frames.map(f => f.torsoPitchDeg).filter((v): v is number => v !== undefined && Number.isFinite(v));
   const base = { frames: frames.length, torsoPitchMinDeg: pitches.length ? Math.round(Math.min(...pitches) * 10) / 10 : null, torsoPitchMaxDeg: pitches.length ? Math.round(Math.max(...pitches) * 10) / 10 : null };
-  if (!used.length) return { ...base, contacts: 0, slideMaxCm: 0, slideP95Cm: null, yawDriftMaxDeg: 0, liftMaxCm: 0, sinkMaxCm: 0, worstSlideFrame: null };
+  if (!used.length) return { ...base, contacts: 0, slideMaxCm: 0, slideP95Cm: null, yawDriftMaxDeg: 0, liftMaxCm: 0, sinkMaxCm: 0, jitterRunMax: 0, worstSlideFrame: null };
   const trackFloor = Math.min(...used.flatMap(f => f.feet.flatMap(c => [c.heel[1], c.toe[1]])));
   const floorOf = (f: MotionFrame) => f.floor ?? trackFloor;
   const slides: number[] = [], drifts: number[] = [];
-  let lift = 0, sink = 0, worst = 0, worstFrame: number | null = null;
+  let lift = 0, sink = 0, jitterRun = 0, worst = 0, worstFrame: number | null = null;
   const feet = Math.max(...used.map(f => f.feet.length));
   for (let i = 0; i < feet; i++) {
     let slide = 0, drift = 0, startYaw: number | undefined, previous: MotionFrame | undefined, started = 0;
     const close = () => { slides.push(slide); drifts.push(drift); if (slide > worst) { worst = slide; worstFrame = started; } slide = 0; drift = 0; startYaw = undefined; previous = undefined; };
+    let h1: number | undefined, h2: number | undefined, f1 = -9, f2 = -9, run = 0;   // lowest sole height (above the floor) of the last two consecutive frames
     for (const f of used) {
       const c = f.feet[i]; if (!c) continue;
-      const floor = floorOf(f), lowest = Math.min(c.heel[1], c.toe[1]); lift = Math.max(lift, lowest - floor); if (f.frame >= 3) sink = Math.max(sink, floor - lowest);   // frames 0-2 are the spawn settle
+      const floor = floorOf(f), lowest = Math.min(c.heel[1], c.toe[1]);
+      // Vertical zig-zag: the sole reverses by >= 0.8 cm on every consecutive frame. A gait touchdown reverses once or twice;
+      // a bobbing body or a foot solver in a limit cycle keeps going (the run length counts the frames).
+      const h = lowest - floor, consecutive = h1 !== undefined && h2 !== undefined && f1 === f.frame - 2 && f2 === f.frame - 1;
+      if (consecutive && (h2! - h1!) * (h - h2!) < 0 && Math.min(Math.abs(h2! - h1!), Math.abs(h - h2!)) >= .008) jitterRun = Math.max(jitterRun, ++run); else if (consecutive) run = 0;
+      h1 = h2; f1 = f2; h2 = h; f2 = f.frame;
+      lift = Math.max(lift, lowest - floor); if (f.frame >= 3) sink = Math.max(sink, floor - lowest);   // frames 0-2 are the spawn settle
       if (lowest < floor + grounded) {
         if (startYaw === undefined) { startYaw = c.yaw; started = f.frame; }
         else if (previous) {
@@ -43,7 +51,7 @@ export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionS
     if (startYaw !== undefined) close();
   }
   return { ...base, contacts: slides.length, slideMaxCm: Math.round(Math.max(0, ...slides) * 1000) / 10, slideP95Cm: slides.length ? Math.round(percentile(slides, .95) * 1000) / 10 : null,
-    yawDriftMaxDeg: Math.round(Math.max(0, ...drifts) * 10) / 10, liftMaxCm: Math.round(lift * 1000) / 10, sinkMaxCm: Math.round(sink * 1000) / 10, worstSlideFrame: worstFrame };
+    yawDriftMaxDeg: Math.round(Math.max(0, ...drifts) * 10) / 10, liftMaxCm: Math.round(lift * 1000) / 10, sinkMaxCm: Math.round(sink * 1000) / 10, jitterRunMax: jitterRun, worstSlideFrame: worstFrame };
 }
 /** Signed torso pitch in degrees: hip→chest against vertical, positive leaning toward `forward` (x, z). */
 export function torsoPitch(hip: number[], chest: number[], forward: number[]): number {

@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, Quaternion, Vector3 } from 'three/webgpu';
+import { AdditiveBlending, BoxGeometry, CircleGeometry, CylinderGeometry, DoubleSide, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, SphereGeometry, TorusGeometry, Vector3 } from 'three/webgpu';
 import { l2, l2Anchors } from '../data/l2';
 import { l2Dressing } from '../levels/L2/layout';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -20,18 +20,43 @@ export class L2Props extends Group {
   private readonly scaleV = new Vector3();
   private readonly yAxis = new Vector3(0, 1, 0);
   private readonly turn = new Quaternion();
-  private readonly beacons: InstancedMesh;
+  /** Alarm beacons on the station front (wall x = -75.45): housing, red dome with a bright lens, rotating flare fan. */
+  private readonly beacons: { root: Group; dome: Mesh; fan: Group }[] = [];
+  private readonly beaconGeo = { housing: new CylinderGeometry(.2, .24, .14, 14), dome: new SphereGeometry(.2, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), fan: new CircleGeometry(3.4, 14, 0, .5).rotateX(-Math.PI / 2), lens: new SphereGeometry(.09, 8, 6) };
+  private readonly beaconMat = {
+    housing: new MeshBasicNodeMaterial({ color: '#2a2a2e' }), lens: new MeshBasicNodeMaterial({ color: '#ffd2c4' }), dome: new MeshBasicNodeMaterial({ color: '#ff3a24' }),
+    glow: new MeshBasicNodeMaterial({ color: '#ff2a1a', transparent: true, opacity: .16, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }),
+  };
   private readonly bars: { mesh: InstancedMesh; boxes: Box[] }[] = [];
   private readonly stripes: { mesh: InstancedMesh; boxes: Box[] }[] = [];
   /** Per gate: open and closed offsets of its panel. */
   private readonly gates: { open: [number, number]; closed: [number, number] }[] = [];
   private readonly axe = new Group();
+  /** Grove Market storefront walls (the interior model is open to the camera on its east and south sides): sliding doors hide once the doors open. */
+  private readonly marketDoors: Mesh[] = [];
+  private readonly brickMat = new MeshBasicNodeMaterial({ color: '#d9a17f' });
+  private readonly shopGlass = new MeshBasicNodeMaterial({ color: '#a9d4e6', transparent: true, opacity: .22, depthWrite: false });
+  /** Soft marker for the optional axe: a bobbing gem over the rack and a ring where the courier stands. */
+  private readonly glint = new Group();
+  private readonly gem = new OctahedronGeometry(.28);
+  private readonly ring = new TorusGeometry(.7, .06, 6, 28);
+  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe28a' });
+  private readonly frame = new MeshBasicNodeMaterial({ color: '#e9dfc4' });
+  private readonly haft = new MeshBasicNodeMaterial({ color: '#c98a4b' });
   constructor(private readonly world: SimWorld, materials: Materials) {
     super(); this.name = 'l2-props';
     const instanced = (material: MeshBasicNodeMaterial | ReturnType<Materials['get']>, count: number) => {
       const mesh = new InstancedMesh(this.box, material, Math.max(1, count)); mesh.count = count; mesh.frustumCulled = false; this.add(mesh); return mesh;
     };
-    this.beacons = instanced(this.red, 2); this.beacons.count = 0;
+    for (const z of [39.4, 44.2]) {
+      const root = new Group(); root.position.set(-75.3, 3.3, z); root.visible = false;
+      const housing = new Mesh(this.beaconGeo.housing, this.beaconMat.housing); housing.rotation.z = Math.PI / 2; housing.position.x = .08;
+      const bracket = new Mesh(this.box, this.beaconMat.housing); bracket.scale.set(.22, .1, .1); bracket.position.set(-.1, 0, 0);
+      const dome = new Mesh(this.beaconGeo.dome, this.beaconMat.dome); dome.rotation.z = -Math.PI / 2; dome.position.x = .15;
+      const fan = new Group(); fan.position.x = .15; for (const a of [0, Math.PI]) { const f = new Mesh(this.beaconGeo.fan, this.beaconMat.glow); f.rotation.y = a; fan.add(f); }
+      const lens = new Mesh(this.beaconGeo.lens, this.beaconMat.lens); lens.position.x = .2;
+      root.add(housing, bracket, dome, lens, fan); this.add(root); this.beacons.push({ root, dome, fan });
+    }
     // Light bars on every lit police car / ambulance of the dressing and the checkpoint: red and blue halves.
     const red: Box[] = [], blue: Box[] = [];
     for (const d of l2Dressing) if (d.lit) {
@@ -39,13 +64,35 @@ export class L2Props extends Group {
       for (const [side, list] of [[-1, red], [1, blue]] as const) list.push({ x: d.x - az * side * .35 + ax * .2, y, z: d.z + ax * side * .35 + az * .2, sx: .3, sy: .14, sz: .3 });
     }
     this.bars.push({ mesh: instanced(this.red, red.length), boxes: red }, { mesh: instanced(this.blue, blue.length), boxes: blue });
-    // The fire axe on its rack (head and handle hidden once taken).
-    const [rx, rz] = l2Anchors['l2-axe-rack'];
-    const part = (material: ReturnType<Materials['get']>, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); m.castShadow = true; this.axe.add(m); };
-    part(materials.get('woodWarm'), [1.1, .5, .08], [rx, 1.5, rz + .55]);
-    part(materials.get('woodWarm'), [.08, 1.05, .08], [rx, 1.45, rz + .48]);
-    part(materials.get('policeBlue'), [.36, .2, .06], [rx + .1, 1.88, rz + .46]);
+    // The fire axe on its rack, mounted on the station front facing the street (+x): a dark board with a pale frame, a wooden
+    // haft and a big red head so it reads at game-camera size. Unlit colours (the bay is dark). Head and haft hide once taken.
+    const [rx, rz] = l2Anchors['l2-axe-rack'], wx = rx - 1.05;
+    const part = (material: ReturnType<Materials['get']> | MeshBasicNodeMaterial, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); this.axe.add(m); };
+    part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, rz]);
+    part(materials.get('uiDark'), [.12, 1.3, 1.5], [wx + .05, 1.55, rz]);
+    part(this.haft, [.1, 1.15, .1], [wx + .16, 1.5, rz - .1]);
+    part(this.red, [.12, .42, .55], [wx + .17, 2.0, rz + .1]);
+    this.glint.add(new Mesh(this.gem, this.gold), new Mesh(this.ring, this.gold));
+    this.glint.children[0].position.set(wx + .5, 2.9, rz);
+    this.glint.children[1].rotation.x = Math.PI / 2; this.glint.children[1].position.set(rx, .32, rz);
+    this.add(this.glint);
     this.add(this.axe);
+    // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.
+    const wallPiece = (mat: MeshBasicNodeMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number, door = false) => {
+      const m = new Mesh(this.box, mat); m.scale.set(sx, sy, sz); m.position.set(x, y, z); this.add(m); if (door) this.marketDoors.push(m);
+    };
+    const storefront = (along: 'z' | 'x', fixed: number, from: number, to: number, doorAt: number) => {
+      const d = .2, w = 2.6, pos = (a: number, y: number, len: number, h: number, mat: MeshBasicNodeMaterial, door = false) =>
+        along === 'z' ? wallPiece(mat, fixed, y, a, d, h, len, door) : wallPiece(mat, a, y, fixed, len, h, d, door);
+      for (const [a0, a1] of [[from, doorAt - w / 2], [doorAt + w / 2, to]] as const) {
+        const len = a1 - a0, mid = (a0 + a1) / 2, n = Math.max(1, Math.round(len / 2.2));
+        pos(mid, .5, len, 1, this.brickMat); pos(mid, 2.05, len, 2.1, this.shopGlass);
+        for (let k = 0; k <= n; k++) pos(a0 + (len * k) / n, 1.6, .1, 3.2, this.frame);
+      }
+      pos((from + to) / 2, 3.3, to - from, .3, this.brickMat);
+      pos(doorAt, 1.5, w - .1, 2.9, this.shopGlass, true); pos(doorAt - w / 2 + .05, 1.5, .1, 2.9, this.frame, true); pos(doorAt + w / 2 - .05, 1.5, .1, 2.9, this.frame, true);
+    };
+    storefront('z', -51.35, -46.7, -37.7, -42.2); storefront('x', -37.65, -59.9, -51.35, -55.6);
     // Checkpoint gates: striped panels (stripes relative to the panel centre), moved between open and closed.
     const [z0, z1] = l2.checkpoint.gateZ, x = l2.checkpoint.gateX, white: Box[] = [], redStripes: Box[] = [];
     const panel = (w: number, d: number, open: [number, number], closed: [number, number]) => {
@@ -83,18 +130,24 @@ export class L2Props extends Group {
     const s = this.world.missions?.state.l2, tick = this.world.tick;
     if (!s) return;
     const alarm = s.alarmAt > 0 && tick >= s.alarmAt && s.phase !== 'calm' && s.phase !== 'done';
-    this.beacons.count = alarm ? 2 : 0;
-    if (alarm) {
-      const pulse = Math.floor(tick / 12) % 2 ? .34 : .24;
-      [-75.9, -68.7].forEach((bx, i) => { this.m4.compose(this.at.set(bx, 3.1, 44.4), this.turn.setFromAxisAngle(this.yAxis, tick * .18 + i), this.scaleV.set(pulse, pulse, pulse)); this.beacons.setMatrixAt(i, this.m4); });
-      this.beacons.instanceMatrix.needsUpdate = true;
-    }
+    // Beacons only while the alarm sounds and until the truck leaves; the flare fan turns.
+    const lit = alarm && s.phase !== 'ride' && s.phase !== 'arrived';
+    this.beacons.forEach((b, i) => {
+      b.root.visible = lit; if (!lit) return;
+      b.fan.rotation.y = tick * .16 + i * 1.7;
+      b.dome.scale.setScalar(Math.floor(tick / 12) % 2 ? 1.12 : 1);
+    });
     // Light bars alternate red and blue every quarter second.
     const phase = Math.floor(tick / 15) % 2;
     this.bars[0].mesh.visible = phase === 0; this.bars[1].mesh.visible = phase === 1;
-    this.axe.children[1].visible = this.axe.children[2].visible = !s.axe;
+    this.axe.children[2].visible = this.axe.children[3].visible = !s.axe;
+    const hint = this.world.missions?.state.steps.axe?.status === 'active' && !s.axe;
+    this.glint.visible = hint;
+    if (hint) { const bob = Math.sin(tick * .08); this.glint.children[0].position.y = 2.95 + bob * .12; this.glint.children[0].rotation.y = tick * .06; this.glint.children[1].scale.setScalar(1 + .08 * bob); }
+    const doorsClosed = s.doorsOpenAt === 0;
+    for (const m of this.marketDoors) m.visible = doorsClosed;
     const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
     for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
   }
-  dispose(): void { this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
+  dispose(): void { for (const g of Object.values(this.beaconGeo)) g.dispose(); for (const m of Object.values(this.beaconMat)) m.dispose(); this.gem.dispose(); this.ring.dispose(); this.gold.dispose(); this.frame.dispose(); this.brickMat.dispose(); this.shopGlass.dispose(); this.haft.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
 }

@@ -195,9 +195,9 @@ export class LevelTwoRescue {
       e!.civilian!.story = null; a.run = this.seat(i); a.runSpeed = l2.calm.crewRunMs;
     }
   }
-  /** Boarding points along the truck flanks (crew) and the crew door (player). */
+  /** Boarding points along the camera-facing (+x) flank (crew) and the crew door (player): the boarding reads from the screen side. */
   private seat(i: number): Point {
-    const t = this.world.entities.get(this.s.truckId)!.transform, side = i % 2 ? -1 : 1, along = -2.2 + Math.floor(i / 2) * 1.6;
+    const t = this.world.entities.get(this.s.truckId)!.transform, side = 1, along = -2.4 + i * .95;
     return this.snap({ x: t.x + Math.cos(t.yaw) * along + Math.sin(t.yaw) * side * 1.7, z: t.z - Math.sin(t.yaw) * along + Math.cos(t.yaw) * side * 1.7 }, .35);
   }
   private takeAxe(): void {
@@ -370,6 +370,8 @@ export class LevelTwoRescue {
       return;
     }
     if (s.phase === 'alarm') {
+      // The firefighter points at the optional axe a few seconds after the call, while it is still on the wall.
+      if (tick === s.alarmAt + ticks(5.2) && !s.axe && this.mission.state.steps.axe.status === 'active') this.mission.radio('L2.axe');
       for (const id of s.crewIds) {
         const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
         if (!a.run) { e.hidden = true; world.spatial.delete(id); }
