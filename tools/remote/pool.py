@@ -142,15 +142,18 @@ def pick():
         ss = [s for s in servers() if s["status"] in ("running", "initializing", "starting")]
         sts = [x for x in states([s for s in ss if s["status"] == "running"]) if x]
         booting = len(ss) - len(sts)
-        free = [x for x in sts if x["running"] < SLOTS]
+        free = [x for x in sts if x["running"] < SLOTS and x["last"]]  # only runners whose provisioning finished (/srv/mi/last-activity)
         if free:
             free.sort(key=lambda x: (x["running"] + x["waiting"], x["load"]))
             best = free[0]; print(best["ip"]); return
         waited = time.time() - t0
         if not ss:
             log("no runner exists; creating one"); s = create(); print(ip(s)); return
-        if waited > SCALE_WAIT and len(ss) < MAX and booting == 0:
-            log(f"all {len(sts)} runner(s) full for {int(waited)}s; adding one"); create(); continue
+        if waited > SCALE_WAIT and len(ss) < MAX and booting == 0 and time.time() > globals().get("_no_scale_until", 0):
+            log(f"all {len(sts)} runner(s) full for {int(waited)}s; adding one")
+            try: create(); continue
+            except SystemExit as e:  # e.g. Hetzner "Primary IP limit exceeded": keep queueing on the existing runners
+                log(f"could not add a runner ({e}); waiting for a free slot instead"); globals()["_no_scale_until"] = time.time() + 1800
         if not announced or int(waited) % 60 < 5:
             log(f"all runners full ({', '.join(x['name'] + ':' + str(x['running']) + '/' + str(SLOTS) + '+' + str(x['waiting']) + 'q' for x in sts)}); waiting {int(waited)}s"); announced = True
         time.sleep(5)
@@ -189,7 +192,7 @@ def snapshot(name):
     s = next((x for x in servers() if x["name"] == name), None) or sys.exit(f"no server {name}")
     st = state(s)
     if not st or st["running"] or st["waiting"]: sys.exit("pool.py: runner is busy; snapshot cleans workspaces, retry when idle")
-    rsh(ip(s), "rm -rf /srv/mi/ws/* /srv/mi/queue/* /srv/mi/locks/*; cd /srv/mi/nm && ls -t | tail -n +3 | xargs -r rm -rf; sync", 120)
+    rsh(ip(s), "rm -rf /srv/mi/ws/* /srv/mi/jobs/* /srv/mi/queue/* /srv/mi/locks/*; cd /srv/mi/nm && ls -t | tail -n +3 | xargs -r rm -rf; sync", 120)
     old = api("GET", f"/images?type=snapshot&label_selector=role%3Drunner-base,{LABEL}")["images"]
     r = api("POST", f"/servers/{s['id']}/actions/create_image", {"type": "snapshot", "description": "mi-runner base " + time.strftime("%F %H:%M"),
                                                                 "labels": {"project": "minor-incident", "role": "runner-base"}})

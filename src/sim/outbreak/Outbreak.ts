@@ -241,9 +241,39 @@ export class Outbreak {
     return this.world.combat?.query.visible(a, b, ignoreId) ?? true;
   }
 
+  /** Public for scripted beats: a calm pedestrian panics now and flees from `threat` (L2 rescued people after the burst out). */
+  panic(e: EntitySnapshot, threat: Vec2): void {
+    const c = e.civilian; if (!c?.l1 || c.state !== 'calm' || e.infection) return;
+    c.threat.x = threat.x; c.threat.z = threat.z; this.dropProp(e); this.state(e, 'flee'); c.l1.repickAt = this.world.tick;
+  }
+  /**
+   * Flight to a haven along a street route (E20 rescued people heading for the checkpoint): no refuge choice and no
+   * removal; on arrival the person turns calm and waits there, looking back down the street (still a live, biteable human).
+   */
+  private fleeHaven(e: EntitySnapshot): void {
+    const c = e.civilian!, h = c.l1!.haven!, at = h.leg < h.route.length ? h.route[h.leg] : h;
+    // Arrived, or wedged within a few metres of the spot (cones, a parked car, other people waiting): wait there.
+    const left = h.leg >= h.route.length ? Math.hypot(e.transform.x - h.x, e.transform.z - h.z) : Infinity;
+    const tick = this.world.tick;
+    if (h.sx === undefined || Math.hypot(e.transform.x - h.sx, e.transform.z - (h.sz ?? 0)) > .4) { h.sx = e.transform.x; h.sz = e.transform.z; h.since = tick; }
+    if (left <= 1.2 || left <= 6 && tick - (h.since ?? tick) > 60) {
+      this.state(e, 'calm'); c.path.length = 0; c.goal = -1;
+      c.schedule = [{ activity: 'look', anchor: 'l2/haven', target: { x: h.x, z: h.z }, facing: { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+      return;
+    }
+    const before = { x: e.transform.x, z: e.transform.z };
+    this.world.npcs!.move(e, at, c.l1!.fleeSpeed, c, .2);
+    if (h.leg < h.route.length && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 2.5) { h.leg++; c.path.length = 0; c.goal = -1; }
+    if (Math.hypot(e.transform.x - before.x, e.transform.z - before.z) < 1e-4) {
+      // No route this tick (crowded corner, closed gate): head straight for the next street point.
+      const dx = at.x - e.transform.x, dz = at.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
+      this.world.npcs!.moveStep(e, dx / d * c.l1!.fleeSpeed / 60, dz / d * c.l1!.fleeSpeed / 60);
+    }
+  }
   /** Flee to the best refuge: near, and not past the threat. Entering it removes the pedestrian as escaped. */
   private flee(e: EntitySnapshot): void {
     const c = e.civilian!, l1 = c.l1!, tick = this.world.tick;
+    if (l1.haven) { this.fleeHaven(e); return; }
     if (tick >= l1.repickAt || !l1.target) {
       let best: Refuge | null = null, score = Infinity;
       for (const r of this.refuges) {

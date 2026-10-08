@@ -5,6 +5,8 @@
  * Times in seconds, speeds in m/s. Starting tuning; every number is read by the L2 controller, bots and tests.
  */
 type P = readonly [number, number];
+/** Behaviour of a trapped person at the glass (see `l2.rescue.atGlass`). */
+export type GlassRole = 'bang' | 'press' | 'plead' | 'look' | 'cower' | 'hug' | 'child';
 export const l2 = {
   /** Beat 1-2: the calm in the bay, then the alarm (seeded inside the window). */
   calm: { alarmAtS: [20, 30] as P, crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
@@ -19,8 +21,44 @@ export const l2 = {
     ambushRush: { 'refuge-door-1': [-50, -36], 'refuge-door-17': [-46, -38], 'refuge-door-8': [-48, -34] } as Record<string, P>,
     /** Fleeing people run for the north and east town edges (the nearby houses are locked); the south stays the courier's way out. */
     refuges: ['edge-in-3', 'edge-in-4'] as readonly string[],
-    /** Trapped people visible at the open storefront before the release (x, z, yaw): east glass and south glass. */
-    atGlass: [[-52.2, -43.6, 0], [-52.3, -41.6, 0], [-52.2, -39.8, 0], [-57.6, -38.4, -Math.PI / 2], [-55.4, -38.5, -Math.PI / 2], [-53.6, -38.4, -Math.PI / 2]] as readonly (readonly [number, number, number])[],
+    /**
+     * Trapped people visible behind the glass before the release (x, z, yaw, behaviour): east glass (front doors at z -42.2) and
+     * south glass (loading door at x -55.6). PO 10-08 "the humans are just standing there": every one panics on its own loop —
+     * banging, pressing on the glass, waving both arms, looking back into the shop, crouched crying, holding a child.
+     */
+    atGlass: [
+      [-51.95, -42.95, 0, 'bang'], [-51.95, -41.45, 0, 'bang'], [-51.95, -44.6, 0, 'press'], [-51.95, -39.9, 0, 'plead'], [-52.0, -46.0, 0, 'plead'],
+      [-52.85, -42.2, 0, 'look'], [-53.05, -43.85, 0, 'hug'], [-52.5, -43.8, 0, 'child'], [-52.95, -40.6, 0, 'cower'],
+      [-55.05, -38.2, -Math.PI / 2, 'bang'], [-56.35, -38.2, -Math.PI / 2, 'press'], [-57.75, -38.25, -Math.PI / 2, 'plead'], [-53.65, -38.25, -Math.PI / 2, 'look'],
+      [-56.0, -39.15, -Math.PI / 2, 'cower'], [-58.7, -39.4, -Math.PI / 2, 'hug'], [-58.7, -38.75, -Math.PI / 2, 'child'],
+    ] as readonly (readonly [number, number, number, GlassRole])[],
+    /** The crew's places at the doors: three at the chained front doors, three at the loading door; one directs the people. */
+    crewDoors: [[-50.55, -43.05, 'pry'], [-48.6, -42.2, 'direct'], [-50.55, -41.35, 'pry'], [-57.0, -36.85, 'pry'], [-55.6, -36.6, 'pry'], [-54.2, -36.85, 'pry']] as readonly (readonly [number, number, 'pry' | 'direct'])[],
+    crewRunMs: 4.2,
+    /**
+     * Doors open: the people burst out running (a fan away from each door), look back at the shop, then flee for the police
+     * checkpoint at the bridge (the courier's destination) along one of three street routes (PO 10-08: they never vanish;
+     * they meet the outbreak on the way). Late arrivals wait in front of the closed gate.
+     */
+    burstM: [6, 11] as P, burstSpreadDeg: 75, tripEvery: 7, lookBackS: [.6, 1.4] as P,
+    fleeRoutes: [
+      [[-30.6, -31], [-30.6, 0], [-30.6, 30.2], [10, 30.2], [50, 30.4], [70, 30.2]],
+      [[-12, -31], [20, -31], [49.8, -30.5], [50, -2], [50.6, 12], [50.2, 30.2], [70, 30.2]],
+      [[-62, -31], [-64, -26], [-64, 2], [-64, 29.5], [-31, 30], [10, 30.2], [50, 30.4], [70, 30.2]],
+    ] as readonly (readonly P[])[],
+    /** Safe spots behind the police line (x, z) and in front of the closed gate. */
+    havenBehind: { x: [84.6, 88.4] as P, z: [26.4, 33.8] as P }, havenGate: { x: 73.6, z: [26.2, 34.2] as P },
+    /**
+     * Danger before the ambush (no omniscience: sounds and far figures only, nothing targets the courier). Seconds after the
+     * crew reaches the doors. Lurkers: pedestrians with the turned look crossing a far street end, removed before the doors open.
+     */
+    danger: {
+      screams: [[.5, -80, -14], [2.7, -20, -54]] as readonly (readonly [number, number, number])[],
+      carAlarm: { atS: 1.4, x: -61.6, z: -22, beeps: 5, everyS: .85 },
+      snarl: { atS: 3.3, x: -72, z: -30 },
+      lurkers: [[.8, -72, -33.5, -72, -26.5], [1.3, -73.2, -33, -73.6, -27.5], [2.2, -30.6, -56, -24, -56]] as readonly (readonly [number, number, number, number, number])[],
+      smoke: [-66, -54] as P,
+    },
     radioAfterS: 45, radioAwayM: 25,
   },
   /** Section 5.2: allied fighters v1. */
@@ -69,6 +107,8 @@ export const l2Anchors: Record<string, P> = {
   'l2-door-front': [-50.7, -42.2],
   'l2-door-loading': [-55.6, -37.3],
   'l2-forecourt': [-46.5, -38.0],
+  /** Where the doors objective leads the courier: close enough that the game camera frames the people behind the glass. */
+  'l2-watch': [-48.2, -40.0],
   'l2-gate': [76, 30],
   'l2-gate-inside': [79.5, 30],
   'l2-cluster': [48, 30],

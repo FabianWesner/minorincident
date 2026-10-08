@@ -9,7 +9,7 @@ import type { DistrictId } from '../districts/types';
  * No fail timer, no reward screen: crossing the checkpoint gate completes the level and the campaign continues into L3.
  */
 export function levelTwoMission(resolve: (district: DistrictId, name: string) => Anchor): MissionDef {
-  const names = ['l2-start', 'l2-axe-rack', 'l2-board', 'l2-truck', 'l2-truck-stop', 'l2-market', 'l2-door-front', 'l2-door-loading', 'l2-forecourt', 'l2-gate', 'l2-gate-inside', 'l2-cluster', 'l2-cluster-alarm', 'l2-side-gate',
+  const names = ['l2-start', 'l2-axe-rack', 'l2-board', 'l2-truck', 'l2-truck-stop', 'l2-market', 'l2-door-front', 'l2-door-loading', 'l2-forecourt', 'l2-watch', 'l2-gate', 'l2-gate-inside', 'l2-cluster', 'l2-cluster-alarm', 'l2-side-gate',
     ...['bench-1', 'bench-2', 'bench-3', 'crew-1', 'crew-2', 'crew-3', 'crew-4', 'crew-5', 'crew-6'].map(n => `l2-${n}`), 'edge-in-1', 'edge-in-2', 'edge-in-3', 'edge-in-4', 'edge-in-5', 'edge-in-6'];
   const def: MissionDef = {
     id: 'L2', l2: true, briefing: dialogue['L2.briefing'], anchors: {}, actors: {}, groups: {}, gates: {}, items: ['axe'],
@@ -31,7 +31,7 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   const axe = step('axe', 'interact', 'Optional: grab the fire axe from the rack by the station door', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, { kind: 'start' });
   axe.optional = true; axe.onComplete = [{ kind: 'grant', item: 'axe' }];
   step('ride', 'custom', 'Ride with Engine 3 to Grove Market', 'l2-truck-stop', state('arrived'), after('board'));
-  step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-forecourt', state('doors-open'), after('ride'));
+  step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-watch', state('doors-open'), after('ride'));
   step('bridge', 'reach', 'Reach the police checkpoint at the bridge', 'l2-gate-inside', state('crossed'), { kind: 'state', key: 'radio', equals: true });
   return def;
 }
