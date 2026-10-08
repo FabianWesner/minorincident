@@ -55,7 +55,7 @@ test('T-E05-roundhouse-few @E05 bat: with 1 or 2 infected in reach (or a third j
   }
 });
 
-test('T-E05-roundhouse-rate @E05 bat: chained clicks repeat the roundhouse, but its recovery caps it at <= 1.25 per second', async () => {
+test('T-E05-roundhouse-rate @E05 bat: chained clicks repeat the roundhouse, but its recovery caps it at <= 2.25 per second (PO 10-08 fight speed; was 1.25)', async () => {
   const w = await arena(); equip(w, ['weapon.bat']);
   const ids = ring(w, 4, 1.3, 100000), home = ids.map(id => ({ ...w.entities.get(id)!.transform }));
   // A click every 4 ticks (15 Hz) for 6 s; dummies are put back so the crowd stays in reach.
@@ -65,16 +65,16 @@ test('T-E05-roundhouse-rate @E05 bat: chained clicks repeat the roundhouse, but 
   }
   const sweeps = attacks(w).filter(e => e.style === 'roundhouse');
   expect(sweeps.length).toBeGreaterThanOrEqual(3);
-  // Sustained rate (between the first and last sweep) and every gap respect the 0.8 s lockout.
-  expect((sweeps.length - 1) / ((sweeps.at(-1)!.tick - sweeps[0].tick) / 60)).toBeLessThanOrEqual(1.25 + 1e-9);
-  for (let i = 1; i < sweeps.length; i++) expect(sweeps[i].tick - sweeps[i - 1].tick).toBeGreaterThanOrEqual(48);
+  // Sustained rate (between the first and last sweep) and every gap respect the 0.45 s sweep.
+  expect((sweeps.length - 1) / ((sweeps.at(-1)!.tick - sweeps[0].tick) / 60)).toBeLessThanOrEqual(2.25 + 1e-9);
+  for (let i = 1; i < sweeps.length; i++) expect(sweeps[i].tick - sweeps[i - 1].tick).toBeGreaterThanOrEqual(27);
 });
 
-test('T-E20-roundhouse-axe @E20 @E20-AC10 fire axe: the shared sweep with E20 values (>= 3 within 2.5 m, 25 each, >= 2 m push, 0.8 s stagger, 1.0 s)', async () => {
+test('T-E20-roundhouse-axe @E20 @E20-AC10 fire axe: the shared sweep with E20 values (>= 3 within 2.5 m, 13 each, >= 2 m push, 0.8 s stagger, 0.5 s; PO 10-08 fight speed, was 25 / 1.0 s)', async () => {
   const axe = catalog['weapon.fire-axe'].roundhouse!, bat = catalog['weapon.bat'].roundhouse!;
-  expect(axe).toMatchObject({ threshold: 3, radius: 2.5, damage: 25, stagger: .8 });
+  expect(axe).toMatchObject({ threshold: 3, radius: 2.5, damage: 13, stagger: .8 });
   expect(axe.knockback).toBeGreaterThanOrEqual(2); expect(axe.knockback).toBeLessThanOrEqual(3);
-  expect(axe.windup + axe.active + axe.recovery).toBeCloseTo(1, 5);
+  expect(axe.windup + axe.active + axe.recovery).toBeCloseTo(.5, 5);
   expect(bat).toMatchObject({ threshold: 3, radius: 2.2 }); expect(bat.damage).toBeGreaterThan(0); expect(bat.damage).toBeLessThanOrEqual(catalog['weapon.bat'].damage);
   expect(bat.knockback).toBeLessThanOrEqual(.8);
   expect(axe.damage).toBeGreaterThan(bat.damage); expect(axe.radius).toBeGreaterThan(bat.radius); expect(axe.knockback).toBeGreaterThan(bat.knockback);
@@ -84,7 +84,7 @@ test('T-E20-roundhouse-axe @E20 @E20-AC10 fire axe: the shared sweep with E20 va
   const [attack] = attacks(w);
   expect(attack.style).toBe('roundhouse');
   for (const id of ids) {
-    expect(health(w, id)).toBe(75);
+    expect(health(w, id)).toBe(100 - catalog['weapon.fire-axe'].roundhouse!.damage);
     const t = w.entities.get(id)!.transform; expect(Math.hypot(t.x, t.z) - 2.3).toBeGreaterThanOrEqual(2 - .05);
   }
 });
