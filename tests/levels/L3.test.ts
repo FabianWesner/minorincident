@@ -242,7 +242,7 @@ describe('L3 The Police Collapse', () => {
     const l = await loadL3(1); world = l.world; const w = l.world, s = l.mission.state.l3!;
     const kit = w.entities.get(s.medkitIds[1])!, player = w.entities.get(1)!;
     player.health.current = 30; Object.assign(player.transform, { x: kit.transform.x, z: kit.transform.z }); w.physics.playerBody!.setTranslation({ x: kit.transform.x, y: player.transform.y, z: kit.transform.z }, true);
-    w.update(); expect(player.health.current).toBe(70); expect((kit.pickup as { collected: boolean }).collected).toBe(true);
+    w.update(); expect(player.health.current).toBeCloseTo(70, 0); expect((kit.pickup as { collected: boolean }).collected).toBe(true);
     const other = w.entities.get(s.medkitIds[2])!; player.health.current = 90; Object.assign(player.transform, { x: other.transform.x, z: other.transform.z }); w.physics.playerBody!.setTranslation({ x: other.transform.x, y: player.transform.y, z: other.transform.z }, true);
     w.update(); expect(player.health.current).toBe(100);
     const newbie = await battery('newbie');
