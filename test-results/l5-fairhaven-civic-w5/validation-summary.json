@@ -1,0 +1,43 @@
+{
+  "tiers": 847,
+  "failed": 0,
+  "errors": 0,
+  "commands": {
+    "assets:validate": "passed",
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed"
+  },
+  "selectedVariantTiers": 12,
+  "selectedBaseTiers": 12,
+  "unit": {
+    "passed": 363,
+    "failed": 0,
+    "filesPassed": 103,
+    "workers": 2
+  },
+  "vitestSmoke": {
+    "passed": 6,
+    "failed": 0,
+    "filteredOut": 851
+  },
+  "chromiumSmokeInitial": {
+    "passed": 6,
+    "failed": 4
+  },
+  "chromiumSmokeRetry": {
+    "passed": 3,
+    "failed": 1,
+    "workers": 1,
+    "timeoutMs": 180000,
+    "crowdTimeoutMs": 120000
+  },
+  "combinedWebglSmoke": {
+    "passed": 9,
+    "failed": 0
+  },
+  "blockers": [
+    "Linux WebGPU crowd probe: mapped GPUDevice.createBuffer(48 bytes) failure and device errors; manual WebGPU remains required.",
+    "Independent orchestrator visual acceptance pending."
+  ]
+}

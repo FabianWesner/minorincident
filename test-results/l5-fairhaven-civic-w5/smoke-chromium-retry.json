@@ -1,0 +1,398 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "S-02.*@smoke|T-E14-03-mouse|T-E07-crowd-drawn",
+      "--project=chromium",
+      "--workers=1",
+      "--timeout=180000"
+    ],
+    "configFile": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/playwright.config.ts",
+    "rootDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3327 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3327",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/controls-playtest.spec.ts",
+      "file": "e2e/controls-playtest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E03",
+            "E03-AC14",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 112796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T20:46:17.864Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2750c3bdceeb5e094725-03dcd144480ffdfe041b",
+          "file": "e2e/controls-playtest.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/crowd-drawn.spec.ts",
+      "file": "e2e/crowd-drawn.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 93410,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T20:49:44.219Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e77c0fb1ea48c182de9-fa1d6210c12952f68cb1",
+          "file": "e2e/crowd-drawn.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+          "ok": false,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1824,
+                  "error": {
+                    "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)\n    at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)\n    at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)\n    at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)\n    at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)\n    at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)\n    at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)\n    at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)\n    at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639",
+                    "stack": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)\n    at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)\n    at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)\n    at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)\n    at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)\n    at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)\n    at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)\n    at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)\n    at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639\n    at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)\n    at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)\n    at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)\n    at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)\n    at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)\n    at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)\n    at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)\n    at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)\n    at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639\n    at boot (/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/fixtures.ts:30:14)\n    at /srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/crowd-drawn.spec.ts:23:5",
+                    "location": {
+                      "file": "http://127.0.0.1:3327/build/registry-CqdFyNqa.js",
+                      "column": 1545,
+                      "line": 576
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "http://127.0.0.1:3327/build/registry-CqdFyNqa.js",
+                        "column": 1545,
+                        "line": 576
+                      },
+                      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)\n    at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)\n    at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)\n    at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)\n    at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)\n    at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)\n    at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)\n    at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)\n    at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639\n    at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)\n    at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)\n    at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)\n    at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)\n    at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)\n    at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)\n    at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)\n    at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)\n    at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639\n    at boot (/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/fixtures.ts:30:14)\n    at /srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/crowd-drawn.spec.ts:23:5"
+                    },
+                    {
+                      "location": {
+                        "file": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/fixtures.ts",
+                        "column": 81,
+                        "line": 22
+                      },
+                      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+   \"pageerror: Cannot read properties of undefined (reading 'destroy')\",\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:22\n\n  20 |     const guard = attachErrorGuard(page);\n  21 |     await use(); guard.dispose();\n> 22 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  23 |   }, { auto: true }],\n  24 | });\n  25 | export { expect };\n    at Object.base.extend.errorGuard.auto (/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/fixtures.ts:22:81)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T20:51:17.756Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/test-results/playwright/run-3327/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "http://127.0.0.1:3327/build/registry-CqdFyNqa.js",
+                    "column": 1545,
+                    "line": 576
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0e77c0fb1ea48c182de9-e982f98dac5e1bfc9120",
+          "file": "e2e/crowd-drawn.spec.ts",
+          "line": 15,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/menus-mouse.spec.ts",
+      "file": "e2e/menus-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC03",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 79630,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-08T20:48:10.801Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "985816c1468952bd1927-cecdef361888236d9f37",
+          "file": "e2e/menus-mouse.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-08T20:46:15.524Z",
+    "duration": 304510.471,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
