@@ -1,6 +1,5 @@
 import { expect, test } from 'vitest';
 import { Rng } from '../../../src/core/Rng';
-import { fireAxe } from '../../../src/data/l2';
 import type { GameEvent } from '../../../src/sim/world/types';
 import { arena, equip, fire, step } from './helpers';
 
@@ -25,7 +24,7 @@ test('T-E20-10 @E20 @E20-AC10 axe single vs roundhouse table (20 seeds); the bat
       // The full single-swing damage on a sturdier target.
       const sturdy = w.spawnDummy('infected.runner', { x: 1.4, z: 0 }, { hp: 100, radius: .35 });
       fire(w); step(w, 50);
-      expect(w.entities.get(sturdy)!.health.current).toBe(100 - fireAxe.single.damage);
+      expect(w.entities.get(sturdy)!.health.current).toBe(100 - 45);
       expect(w.entities.get(back)!.health.current).toBe(40);
     }
     // Three to five within 2.5 m all around: the same input is a roundhouse hitting every one of them and pushing each >= 2 m.
@@ -44,7 +43,7 @@ test('T-E20-10 @E20 @E20-AC10 axe single vs roundhouse table (20 seeds); the bat
       expect(hits.length).toBeGreaterThanOrEqual(3);
       for (const id of ids) {
         const e = w.entities.get(id)!, p = from.get(id)!;
-        expect(e.health.current, `seed ${seed}`).toBe(40 - fireAxe.roundhouse.damage);
+        expect(e.health.current, `seed ${seed}`).toBe(40 - 25);
         expect(Math.hypot(e.transform.x - p.x, e.transform.z - p.z), `seed ${seed} push`).toBeGreaterThanOrEqual(2);
       }
       // Roundhouse takes 1.0 s in total: the next swing is not ready before that.

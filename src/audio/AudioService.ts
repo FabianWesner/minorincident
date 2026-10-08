@@ -544,7 +544,7 @@ export class AudioService implements Lifecycle {
         }
         if (event.type === 'combat.attack') {
             if (!['ranged', 'throwable'].includes(action(event.actionId).category))
-                this.play(`action.${event.actionId}`, { position, rate: event.actionId === 'weapon.bat' ? .8 : event.actionId === 'weapon.crowbar' ? .95 : event.actionId === 'weapon.machete' ? 1.3 : event.actionId === 'weapon.kick' ? .72 : 1.15 }, source);
+                this.play(`action.${event.actionId}`, { position, rate: event.style === 'roundhouse' ? .62 : event.actionId === 'weapon.bat' ? .8 : event.actionId === 'weapon.crowbar' ? .95 : event.actionId === 'weapon.machete' ? 1.3 : event.actionId === 'weapon.kick' ? .72 : 1.15 }, source);
             return;
         }
         if (event.type === 'footstep') {

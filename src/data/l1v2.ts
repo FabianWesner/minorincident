@@ -27,6 +27,12 @@ export const l1v2 = {
     average: { baseMs: 5.3, who: "adult civilians, lab staff, workers" },
     athletic: { baseMs: 5.6, who: "joggers, young adults, skater" },
     jitter: 0.04,
+    /** PO 2026-10-07 ("not all on the same speed, so they don't arrive at the same moment"): a persistent per-entity
+     * factor 1.04 - spread * u^skew (u uniform per spawn): most a bit slower than the tier base, a few at today's max
+     * (base x 1.04), never above it; never below `minMs` so a fleeing civilian (<= 4.0 m/s) still never outruns one.
+     * Plus a per-entity reaction delay on a fresh sighting, so a group strings out instead of arriving together. */
+    factor: { max: 1.04, spread: 0.28, skew: 1.4, minMs: 4.05, reactionS: [0, 0.4] },
+    minShareAbovePlayerRun: 0.6,
     frailMinShareAbovePlayerRun: 0.95,
     closeTenMetresMaxS: 20,
   },
