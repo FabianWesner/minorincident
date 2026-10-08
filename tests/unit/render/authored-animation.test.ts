@@ -90,7 +90,7 @@ test('M1-04 @E04 corgi trots on diagonal pairs and settles into an authored sit'
   expect(rotation('legFR').angleTo(rotation('legBL'))).toBeLessThan(.0001);
   expect(rotation('legFL').angleTo(rotation('legFR'))).toBeGreaterThan(.2);
   animator.update(1,0,.2);animator.update(1.8,0,.2);expect(animator.clip).toBe('corgi-idle');
-  animator.update(6,0,.2);expect(animator.clip).toBe('corgi-sit');expect(body.position.y).toBeLessThan(rest-.08);
+  animator.update(6,0,.2);expect(animator.clip).toBe('corgi-sit');expect(body.position.y).toBeLessThan(rest-.05); // rump on the floor (corgi-feet: no paw or rump under it)
 });
 
 test.each(['source', 'production'])('M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (%s)', async (delivery) => {

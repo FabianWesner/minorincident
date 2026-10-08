@@ -32,6 +32,8 @@ export interface SceneSpec {
   frames?: number;
   shots?: number[];
   video?: number;
+  /** Debug: include each actor's per-frame motion samples (`metrics.actors.<id>.track`: frame, clip/label, speed, feet). */
+  trace?: boolean;
   /** Clipping report options: `ignore` pairs of placement ids or asset ids; `sameAsset` also checks chains of one
    * asset (fence/hedge runs share end posts by design, so they are skipped by default); `slackCm` (default 2) is how far
    * a bone's flesh radius may sink into a prop surface before it is reported. */
