@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -75,6 +75,7 @@ export type Action =
   | { infect: { by?: string; instant?: boolean } }
   | { mountBike: string }
   | { dismount: true }
+  | { interact: true }
   | { chase: string }
   | { flee: Point }
   /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
@@ -186,6 +187,12 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [],
   };
+  for (const name of spec.layout?.anchors ?? []) {
+    const anchor = source?.anchors[name];
+    if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
+    layout.anchors[name] = structuredClone(anchor);
+    layout.anchors[name].position[0] += shift[0]; layout.anchors[name].position[2] += shift[1];
+  }
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
   const composition: LevelComposition = {
     id: 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
