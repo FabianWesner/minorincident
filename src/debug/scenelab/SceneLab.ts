@@ -29,7 +29,8 @@ type Plan =
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
   | { type: 'attack'; target: string; until: number }
-  | { type: 'mount'; bike: string; at: number };
+  | { type: 'mount'; bike: string; at: number }
+  | { type: 'interact' };
 interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number }
 interface Hit extends BoneHit { actor: string; frame: number; count: number }
 const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] } : p;
@@ -195,6 +196,7 @@ export class SceneLab {
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2) };
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
+      else if ('interact' in a) actor.plan = { type: 'interact' };
       else if ('hit' in a) world.player!.damage(a.hit.amount ?? 5, world.tick);
       return;
     }
@@ -369,6 +371,8 @@ export class SceneLab {
       const target = this.actors.get(plan.target);
       if (!target || this.frame >= plan.until) courier.plan = null;
       else { frame.attackTarget = { id: target.entity, side: 'LEFT' }; frame.left = { down: false, held: true, up: false }; }
+    } else if (plan?.type === 'interact') {
+      frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
       // Mount/dismount is the real interact press next to the bicycle (one tick).
       const bike = plan.bike ? this.vehicles.get(plan.bike) : undefined;
