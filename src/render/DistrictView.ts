@@ -493,7 +493,14 @@ export class DistrictView extends Group {
         if (screenBand > band) band = screenBand;
       }
       entry.bands[index] = band;
-      (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
+      const selected = band === 'lod2' ? far : band === 'lod1' ? near : hero;
+      if (ref.userData.propEnabled) {
+        ref.position.y = ref.userData.propSimY;
+        // Preserve body rotation; the selected mesh's seat/back can support a tipped chair.
+        const gap = this.propGap(entry, ref, selected);
+        if (Number.isFinite(gap)) ref.position.y -= ref.userData.propAwake ? Math.min(0, gap) : gap;
+      }
+      selected.references.push(ref);
     }
     for (const batch of [hero, near, far]) {
       batch.visible = batch.references.length > 0;
@@ -521,11 +528,39 @@ export class DistrictView extends Group {
       ref.userData.propEnabled = enabled;
       ref.scale.fromArray(ref.userData.propScale).multiplyScalar(enabled ? 1 : 0);
       const [px, py, pz] = item.pose.p, q = item.pose.q, x = px - entry.origin[0], z = pz - entry.origin[1];
-      if (!visibilityChanged && Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.position.y - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
-        && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5 && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
+      if (!visibilityChanged && Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.userData.propSimY - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
+        && ref.userData.propAwake === item.awake && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5
+        && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
+      ref.userData.propSimY = py; ref.userData.propAwake = item.awake;
       this.propUploads++;
-      ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]); this.dirtyEntries.add(entry);
+      ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]);
+      // Ground contact is resolved in partition against the LOD that will actually be drawn.
+      this.dirtyEntries.add(entry);
     }
+  }
+  private readonly propPoint = new Vector3();
+  private propGap(entry: LodBatch, ref: Object3D, batch: InstancedGroup): number {
+    ref.updateMatrix();
+    let gap = Infinity;
+    for (const point of batch.contactPoints()) {
+      const v = this.propPoint.copy(point).applyMatrix4(ref.matrix); v.x += entry.origin[0]; v.z += entry.origin[1];
+      const ground = this.groundAt(v.x, v.z);
+      if (ground !== null) gap = Math.min(gap, v.y - ground);
+    }
+    return gap;
+  }
+  /** Scene Lab: probe the actual selected LOD mesh against the drawn ground. */
+  propGroundGaps(): { id: string; gapCm: number }[] {
+    const gaps: { id: string; gapCm: number }[] = [];
+    for (const [id, link] of this.propLinks) if (link && link.ref.userData.propEnabled) {
+      const { entry, ref } = link, index = entry.refs.indexOf(ref), band = entry.bands[index];
+      if (band === undefined) continue;
+      const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
+      if (!batch.references.includes(ref)) continue;
+      const gap = this.propGap(entry, ref, batch);
+      if (Number.isFinite(gap)) gaps.push({ id, gapCm: gap * 100 });
+    }
+    return gaps;
   }
   private linkProp(item: PushProp): { ref: Object3D; entry: LodBatch } | null {
     let best: { ref: Object3D; entry: LodBatch } | null = null, distance = .1;
@@ -560,6 +595,7 @@ export class DistrictView extends Group {
     if (lod === 'lod0') { entry.hero = replacement; entry.loaded = true; }
     else if (lod === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
     else { entry.far = replacement; entry.farLoaded = true; }
+    this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
   }
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
