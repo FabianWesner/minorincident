@@ -26,7 +26,7 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   };
   const after = (...ids: string[]): ObjectiveDef['start'] => ({ kind: 'objectives', ids, mode: 'all' });
   const state = (key: string): Trigger => ({ kind: 'state', key, equals: true });
-  step('calm', 'custom', 'Catch your breath at Fire Station 3', 'l2-start', state('alarm'), { kind: 'start' });
+  step('calm', 'custom', 'Wait for the alarm at Fire Station 3', 'l2-start', state('alarm'), { kind: 'start' });
   step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('calm'));
   const axe = step('axe', 'interact', 'Optional: grab the fire axe from the rack by the station door', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, after('calm'));
   axe.optional = true; axe.onComplete = [{ kind: 'grant', item: 'axe' }];
