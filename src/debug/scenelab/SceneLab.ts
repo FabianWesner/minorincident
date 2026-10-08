@@ -132,7 +132,7 @@ export class SceneLab {
     const courier = this.world.entities.get(1)!.transform, exit = doorExit(this.world, door, courier);
     if (!exit) throw new Error(`emerge.house ${e.house}: no way out from the door to the courier`);
     const stagger: [number, number] = typeof e.staggerS === 'number' ? [e.staggerS, e.staggerS] : e.staggerS ?? [1.5, 4];
-    return { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [], count: e.count ?? 3, stagger, start: e.frame ?? 30, base: e.id ?? 'resident', openFrame: null };
+    return { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [], ...(e.speedMs ? { speedMs: e.speedMs } : {}), count: e.count ?? 3, stagger, start: e.frame ?? 30, base: e.id ?? 'resident', openFrame: null };
   }
   /** One tick of the emergence: residents step out of the door one by one, then chase the courier (L1 `rush`). */
   private emergeStep(): void {

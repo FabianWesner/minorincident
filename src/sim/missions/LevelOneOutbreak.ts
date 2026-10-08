@@ -299,7 +299,6 @@ export class LevelOneOutbreak {
   }
   /** The annex front door the staff come out of (the building data in src/data/buildingDoors.ts), with its way to the street. */
   private labDoor(): L1State['labExit'] {
-    if ((globalThis as { __noLabExit?: boolean }).__noLabExit) return null;
     const { world } = this.mission, district = world.districts?.districts[0], front = this.anchor('lab-exit-front');
     if (!district || !front) return null;
     const door = layoutHouseDoors(district.layout, district.origin, undefined, id => id === 'bld.clinic-annex').sort((a, b) => Math.hypot(a.x - front.x, a.z - front.z) - Math.hypot(b.x - front.x, b.z - front.z))[0];

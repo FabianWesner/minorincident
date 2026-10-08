@@ -153,10 +153,13 @@ function place(world: SimWorld, house: HouseDoor, e: { id: number; transform: { 
  */
 export function walkResidents(world: SimWorld, house: HouseEmergence, tick: number): number[] {
   const done: number[] = [], walking = house.walking ?? [], end = (house.sx - house.x) * house.nx + (house.sz - house.z) * house.nz, step = (house.speedMs ?? emergeSpeedMs) / 60;
+  // Nobody steps into the doorway before the leaves have swung open (DistrictView: doorSwingS 0.4 s, eased; 27 ticks).
+  const opened = world.openDoors.get(doorId(house)), swinging = !!opened && tick < opened.at + 27;
   for (let i = walking.length - 1; i >= 0; i--) {
     const w = walking[i], e = world.entities.get(w.id);
     if (!e?.infected || e.health.current <= 0) { if (e) e.emerging = undefined; walking.splice(i, 1); continue; }
     const p = e.transform;
+    if (swinging) { if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2); w.until++; continue; }
     if (w.leg < 0) {
       const s = Math.min(end, (p.x - house.x) * house.nx + (p.z - house.z) * house.nz + step), lane = w.lane ?? 0;
       // Through the door in its lane (a double door takes two abreast), then onto the path line by the doorstep.
