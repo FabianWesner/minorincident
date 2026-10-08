@@ -16,6 +16,14 @@
     {
       "id": "072f5d1f",
       "purpose": "APC batching, anchors, collider and recorded total draw blocker"
+    },
+    {
+      "id": "a8b895fd",
+      "purpose": "required per-asset evidence and complete measured report"
+    },
+    {
+      "id": "71b2e28b",
+      "purpose": "merged updated main into lane preserving both sides; no merge into main"
     }
   ],
   "assets": [
@@ -725,7 +733,14 @@
     "npm run assets:validate",
     "npm run typecheck",
     "npm run lint",
-    "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2"
+    "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2",
+    "python3 tools/blender/run.py assets/veh.sedan-white.wrecked/build.py --glb .cache/traffic-distance-check.glb --distance-tier 2 --bake-ao",
+    "cmp .cache/traffic-distance-check.glb assets/veh.sedan-white/model.wrecked.lod2.glb",
+    "E2E_PORT=3318 npm run test:smoke",
+    "npm run build (after main merge)",
+    "npm run typecheck (after main merge)",
+    "npm run lint (after main merge)",
+    "sh tools/sim-lock.sh sh -c 'npm run test:unit -- --maxWorkers=2 2>&1'"
   ],
   "checks": {
     "perAssetBuildPackValidate": "six canonical bases passed; declared variants validated",
@@ -734,19 +749,38 @@
       "failed": 0,
       "errors": []
     },
-    "typecheck": "passed",
-    "lint": "passed",
+    "typecheck": "passed again after main merge",
+    "lint": "passed again after main merge",
     "unit": {
       "passed": 342,
       "failed": 1,
       "filesPassed": 97,
       "filesFailed": 1,
       "failure": "tests/unit/assets/runtime-integration.test.ts: production runtime exports are integrated, while missing exports retain their status @E17-AC09. APC status is modeled intentionally because the total draw delivery cap is blocked.",
-      "log": "\n> test:unit\n> vitest run tests/unit --maxWorkers=2\n\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l3-traffic-and-army-vehicles\n\n \u276f tests/unit/assets/runtime-integration.test.ts (5 tests | 1 failed) 79ms\n   \u00d7 production runtime exports are integrated, while missing exports retain their status @E17-AC09 19ms\n\n Test Files  1 failed | 97 passed (98)\n      Tests  1 failed | 342 passed (343)\n   Start at  11:46:09\n   Duration  43.39s (tests 93%, import 5%, transform 2%)\n\n"
+      "log": "\n> test:unit\n> vitest run tests/unit --maxWorkers=2\n\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l3-traffic-and-army-vehicles\n\n \u276f tests/unit/assets/runtime-integration.test.ts (5 tests | 1 failed) 138ms\n   \u00d7 production runtime exports are integrated, while missing exports retain their status @E17-AC09 22ms\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  tests/unit/assets/runtime-integration.test.ts > production runtime exports are integrated, while missing exports retain their status @E17-AC09\nAssertionError: veh.military-apc: expected 'modeled' to be 'integrated' // Object.is equality\n\nExpected: \"integrated\"\nReceived: \"modeled\"\n\n \u276f tests/unit/assets/runtime-integration.test.ts:21:149\n     19| test('production runtime exports are integrated, while missing exports\u2026\n     20|   const files = new Set(execFileSync('git', ['ls-files', '-z'], { enco\u2026\n     21|   for (const def of manifest) if ('sourceGlb' in def && def.sourceGlb \u2026\n       |                                                                                                                                                     ^\n     22| });\n     23| test('runtime survivor rigs accept normalized heights and keep ground \u2026\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n\n Test Files  1 failed | 97 passed (98)\n      Tests  1 failed | 342 passed (343)\n   Start at  11:49:35\n   Duration  71.26s (tests 93%, import 5%, transform 2%)\n\n"
     },
     "lightMetadata": "301 anchors / 73 assets / 0 errors / 0 unreferenced emissives",
     "browser": "headless Chromium with --use-angle=metal, shared lock, one page; all 18 game views loaded without placeholders",
-    "images": "19 required QA sheets; all widths <=1500px; references alongside views; individual captures removed"
+    "images": "19 required QA sheets; all widths <=1500px; references alongside views; individual captures removed",
+    "explicitDistanceWrapper": "passed: --distance-tier 2 honors explicit --glb output; cmp equals canonical source LOD2; rebuild leaves committed source binary unchanged",
+    "smoke": {
+      "command": "E2E_PORT=3318 npm run test:smoke",
+      "simulation": {
+        "passed": 6,
+        "skipped": 819,
+        "failed": 0
+      },
+      "browser": {
+        "passed": 25,
+        "failed": 0,
+        "workers": 2,
+        "headless": true,
+        "port": 3318
+      },
+      "log": "\n> test:smoke\n> sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke\n\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l3-traffic-and-army-vehicles\n\n\n Test Files  5 passed | 153 skipped (158)\n      Tests  6 passed | 819 skipped (825)\n   Start at  11:50:47\n   Duration  13.16s (import 57%, tests 21%, transform 20%, worker 2%)\n\n     Import  513 modules were evaluated 8971 times \u00b7 9.97s total, 57% of tracked time\n             ~4.57s faster with isolate: false \u2014 shared modules are evaluated once per worker instead of once per file\n             learn more: https://vitest.dev/guide/improving-performance#test-isolation\n\n\nRunning 25 tests using 2 workers\n\n  \u2713   1 [chromium] \u203a tests/e2e/audio/smoke.spec.ts:5:1 \u203a S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)\n  \u2713   3 [chromium] \u203a tests/e2e/driving.spec.ts:22:1 \u203a S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (3.4s)\n  \u2713   4 [chromium] \u203a tests/e2e/menus-mouse.spec.ts:3:1 \u203a T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (7.8s)\n  \u2713   2 [chromium] \u203a tests/e2e/controls-playtest.spec.ts:8:1 \u203a S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (22.4s)\n  \u2713   6 [chromium] \u203a tests/e2e/smoke.spec.ts:3:1 \u203a S-01 @smoke foundation boots, ready resolves and a screenshot is available (669ms)\n  \u2713   7 [chromium] \u203a tests/e2e/smoke.spec.ts:12:1 \u203a S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (506ms)\n  \u2713   5 [chromium] \u203a tests/e2e/save.spec.ts:35:1 \u203a T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (10.4s)\n  \u2713   8 [chromium] \u203a tests/e2e/crowd-drawn.spec.ts:15:3 \u203a T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (22.2s)\n  \u2713   9 [chromium] \u203a tests/e2e/crowd-drawn.spec.ts:15:3 \u203a T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (20.4s)\n  \u2713  10 [chromium] \u203a tests/e2e/crowd-feel.spec.ts:87:1 \u203a 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 (4.4s)\n  \u2713  12 [pixel-7] \u203a tests/e2e/smoke.spec.ts:3:1 \u203a S-01 @smoke foundation boots, ready resolves and a screenshot is available (539ms)\n  \u2713  13 [pixel-7] \u203a tests/e2e/smoke.spec.ts:12:1 \u203a S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (459ms)\n  \u2713  11 [pixel-7] \u203a tests/e2e/audio/smoke.spec.ts:5:1 \u203a S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (5.9s)\n  \u2713  15 [pixel-7-landscape] \u203a tests/e2e/smoke.spec.ts:3:1 \u203a S-01 @smoke foundation boots, ready resolves and a screenshot is available (568ms)\n  \u2713  16 [pixel-7-landscape] \u203a tests/e2e/smoke.spec.ts:12:1 \u203a S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (457ms)\n  \u2713  14 [pixel-7-landscape] \u203a tests/e2e/audio/smoke.spec.ts:5:1 \u203a S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.0s)\n  \u2713  18 [iphone-14] \u203a tests/e2e/smoke.spec.ts:3:1 \u203a S-01 @smoke foundation boots, ready resolves and a screenshot is available (555ms)\n  \u2713  19 [iphone-14] \u203a tests/e2e/smoke.spec.ts:12:1 \u203a S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (465ms)\n  \u2713  17 [iphone-14] \u203a tests/e2e/audio/smoke.spec.ts:5:1 \u203a S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (5.9s)\n  \u2713  21 [iphone-14-landscape] \u203a tests/e2e/smoke.spec.ts:3:1 \u203a S-01 @smoke foundation boots, ready resolves and a screenshot is available (554ms)\n  \u2713  22 [iphone-14-landscape] \u203a tests/e2e/smoke.spec.ts:12:1 \u203a S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (457ms)\n  \u2713  20 [iphone-14-landscape] \u203a tests/e2e/audio/smoke.spec.ts:5:1 \u203a S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)\n  \u2713  24 [webkit] \u203a tests/e2e/smoke.spec.ts:3:1 \u203a S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.8s)\n  \u2713  25 [webkit] \u203a tests/e2e/smoke.spec.ts:12:1 \u203a S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.7s)\n  \u2713  23 [webkit] \u203a tests/e2e/audio/smoke.spec.ts:5:1 \u203a S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (9.0s)\n\n  25 passed (1.3m)\n"
+    },
+    "productionBuild": "passed after main merge",
+    "workingTree": "clean after final report commit and test-artifact cleanup"
   },
   "deviations": [
     "APC remains modeled because 11 protected material primitives exceed eight. Budget remains eight. Current validator checks static draws only (three for APC), so its passing result does not prove this total cap. No runtime or pivot contract rewritten.",
@@ -771,5 +805,6 @@
       "unitConsequence": "E17-AC09 requires integrated status whenever both source and public GLBs are tracked; marking this over-cap APC integrated would conceal the delivery blocker."
     }
   ],
-  "scope": "Asset build/registration and generated light/physics metadata only. Level placement, NPC behavior, sound playback, switching lights, mission logic unchanged; no level epic implementation or smoke run. No forbidden directories/specifications edited; no new dependencies; no main merge, push or deployment."
+  "scope": "Asset build/registration and generated light/physics metadata only. Level placement, NPC behavior, sound playback, switching lights, mission logic unchanged by asset work; no level epic implementation. Smoke is rerun after inheriting the updated main. No forbidden directories/specifications edited; no new dependencies; no main merge, push or deployment.",
+  "upstreamMerge": "Includes upstream-only gameplay/specification/test changes; no specification was authored or edited by this asset lane."
 }
