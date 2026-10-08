@@ -31,6 +31,9 @@ test('@E16 dead/downed, offscreen and wall-obscured infected never count as musi
     expect(isMusicThreat(entity, listener, clear, clear)).toBe(true);
     expect(isMusicThreat(entity, listener, () => false, clear)).toBe(false);
     expect(isMusicThreat(entity, listener, clear, () => false)).toBe(false);
+    entity.hidden = true;
+    expect(isMusicThreat(entity, listener, clear, clear)).toBe(false);
+    entity.hidden = false;
     entity.transform.x = 12.01;
     expect(isMusicThreat(entity, listener, clear, clear)).toBe(false);
     entity.transform.x = 2; entity.health.current = 0;
