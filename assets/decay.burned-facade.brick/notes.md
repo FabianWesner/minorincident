@@ -18,3 +18,6 @@ building's footprint or navigation anchors.
 The standard turntable's 10% coverage guard rejects the narrow side profiles
 (~6–7% coverage), after saving the all-side sheet. The asset is intentionally a
 shallow section; 3/4 and game-camera captures show the complete frontage.
+
+## Rebuild 2026-10-08 (orchestrator QA reject of the flat panel)
+Real broken masonry: stair-stepped/diagonal collapsed parapets on every pier and header, open window holes with a dark interior, charred lintels and posts, soot tongues, charcoal slat awning, collapsed header, rubble and fallen beams on the pavement. Palette folded to 8 materials. Tiers 1500/600/200 unchanged.
