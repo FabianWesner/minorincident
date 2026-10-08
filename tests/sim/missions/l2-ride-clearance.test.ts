@@ -17,7 +17,7 @@ function plant(w: SimWorld, truckId: number, t: number): void {
   if (!planted.has(w)) {
     planted.set(w, ids);
     const o = w.npcs!.civilians.outbreak!;
-    for (const [x, z] of [[-70.6, 24], [-52, 30.6], [-30.6, 10], [-30.6, -20]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
+    for (const [x, z] of [[-58, 30.6], [-45, 30.6], [-30.6, 10], [-30.6, -20]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
   }
   const first = w.entities.get(ids[0]), truck = w.entities.get(truckId)!.transform;
   if (first && t % 300 === 299) {

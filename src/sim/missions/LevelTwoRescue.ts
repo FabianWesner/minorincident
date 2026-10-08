@@ -181,8 +181,8 @@ export class LevelTwoRescue {
     // A few people still out on the streets, trying to get somewhere (civilians only: the town has no infected yet).
     // Never on or beside the truck's route lane (it is a kinematic ride that must not meet anybody).
     for (const [x, z] of l2.escape.civilians) {
-      const p = this.snap({ x, z }, .4), q = this.snap({ x: x + 6, z }, .4);
-      if (this.nearRoute(p) || this.nearRoute(q) || this.nearRoute({ x: (p.x + q.x) / 2, z: (p.z + q.z) / 2 })) continue;
+      const p = this.offRoute(this.snap({ x, z }, .4)); let q = this.offRoute(this.snap({ x: p.x + 6, z: p.z }, .4));
+      if (this.nearRoute({ x: (p.x + q.x) / 2, z: (p.z + q.z) / 2 })) q = this.offRoute(this.snap({ x: p.x + 2, z: p.z + 2 }, .4));
       this.outbreak().spawnPedestrian(p, { waypoints: [p, q] });
     }
     this.s.phase = 'alarm'; this.s.alarmAt = tick;
@@ -233,6 +233,16 @@ export class LevelTwoRescue {
       if (Math.hypot(p.x - a.x - abx * t, p.z - a.z - abz * t) < m) return true;
     }
     return false;
+  }
+  /** The nearest clear point at least 5 m from the route (the point itself when it already is). */
+  private offRoute(p: Point): Point {
+    if (!this.nearRoute(p)) return p;
+    const nav = this.world.infected!.nav;
+    for (let d = 1; d <= 14; d++) for (let k = 0; k < 16; k++) {
+      const x = p.x + Math.cos(k * Math.PI / 8) * d, z = p.z + Math.sin(k * Math.PI / 8) * d;
+      if (!this.nearRoute({ x, z }) && nav.clear(x, z, .4)) return { x, z };
+    }
+    return p;
   }
   /** Truck pose `ds` metres further along the route (heading of that segment); ds = 0 is the actual pose. */
   private poseAhead(ds: number, at: { x: number; z: number; yaw: number }): { x: number; z: number; yaw: number } {
