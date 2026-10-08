@@ -4,6 +4,7 @@ import { emptyInput } from '../../../src/input/InputFrame';
 import { Loadout } from '../../../src/sim/combat/Loadout';
 import { ActionRunner } from '../../../src/sim/combat/ActionRunner';
 import { actions, action } from '../../../src/data/actions/fixtures';
+import { action as catalogAction } from '../../../src/data/actions/catalog';
 import { validateAction } from '../../../src/data/actions/schema';
 
 test('T-E05-schema @E05 reference actions validate and invalid timers/query values fail', () => {
@@ -23,12 +24,13 @@ test('T-E05-phases @E05 windup, active and recovery are fixed tick phases and in
 });
 
 test('T-E05-slot-timers @E05 rack cycling preserves ammo, charge timers and reloads', () => {
-  const rack = new Loadout(['weapon.pistol', 'weapon.grenade'], ['weapon.bat']);
-  const pistol = rack.current('LEFT');
-  for (let tick = 1; tick <= 76; tick += 15) rack.spend('LEFT', tick, action('weapon.pistol'), false);
-  const frame = emptyInput(); frame.selector = 1; rack.input(frame, 77); rack.update(92, () => {});
-  expect(pistol.magazine).toBe(0); expect(rack.current('LEFT').id).toBe('weapon.grenade');
-  rack.spend('LEFT', 92, action('weapon.grenade'), false); const grenade = rack.current('LEFT');
-  rack.input(frame, 100); rack.update(136, () => {}); expect(pistol.magazine).toBe(6);
-  rack.update(811, () => {}); expect(grenade.charges).toBe(1); rack.update(812, () => {}); expect(grenade.charges).toBe(2);
+  // A magazine weapon (the shotgun: 6 shells, 2 s reload); the E21 handgun has no ammunition at all (00 section 6.1).
+  const rack = new Loadout(['weapon.shotgun', 'weapon.grenade'], ['weapon.bat']);
+  const gun = rack.current('LEFT');
+  for (let tick = 1; tick <= 151; tick += 30) rack.spend('LEFT', tick, catalogAction('weapon.shotgun'), false);
+  const frame = emptyInput(); frame.selector = 1; rack.input(frame, 182); rack.update(197, () => {});
+  expect(gun.magazine).toBe(0); expect(rack.current('LEFT').id).toBe('weapon.grenade');
+  rack.spend('LEFT', 197, action('weapon.grenade'), false); const grenade = rack.current('LEFT');
+  rack.input(frame, 205); rack.update(271, () => {}); expect(gun.magazine).toBe(6);
+  rack.update(916, () => {}); expect(grenade.charges).toBe(1); rack.update(917, () => {}); expect(grenade.charges).toBe(2);
 });

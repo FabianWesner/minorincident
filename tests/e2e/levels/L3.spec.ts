@@ -76,7 +76,7 @@ const begin = async (page: Page) => {
 };
 
 test.describe('L3 The Police Collapse in the browser', () => {
-  test('T-E21-19 @E21 @E21-AC19 @E21-AC04 real-input playthrough: armory, station attack, fallback, Commerce Street to the army zone; photo spots', async ({ page }) => {
+  test('T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, Commerce Street to the army zone; photo spots for the vision review', async ({ page }) => {
     test.setTimeout(1_800_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await begin(page);
     const h = helpers(page), { step, mission, player, snap, go, interact, fightNearby } = h;
