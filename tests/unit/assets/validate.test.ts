@@ -71,3 +71,16 @@ test.each([['veh.test', 'vehicle', 1, 6000], ['veh.test', 'vehicle', 2, 2000], [
   indices.setArray(Uint16Array.from({ length: (cap + 1) * 3 }, (_, i) => i % 3));
   expect(validateDocument(doc, def, 1024, lod).errors).toContain(`delivery: LOD${lod} triangles ${cap + 1} > ${cap}`);
 });
+
+test('@E17-AC02 decay caps apply to variants without changing the integrated base budget', async () => {
+  const original = manifest.find(a => a.id === 'veh.sedan-red')! as AssetDef;
+  const reports = await validateAssets([{ ...original, decayBudget: { triangles: 0, materials: 0, drawCalls: 0 } }]);
+  expect(reports.filter(r => r.id.startsWith('veh.sedan-red:')).flatMap(r => r.errors)).toEqual([]);
+  const variants = reports.filter(r => r.id.startsWith('veh.sedan-red.wrecked:'));
+  expect(variants).toHaveLength(3);
+  for (const report of variants) {
+    expect(report.errors.some(e => e.startsWith('materials:'))).toBe(true);
+    expect(report.errors.some(e => e.startsWith('static drawCalls:'))).toBe(true);
+  }
+  expect(variants.filter(r => r.id.endsWith(':lod0')).every(r => r.errors.some(e => e.startsWith('triangles:')))).toBe(true);
+});
