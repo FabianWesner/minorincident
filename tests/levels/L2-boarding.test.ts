@@ -34,6 +34,8 @@ describe('L2 one-attempt interactions', () => {
     expect(l.mission.state.l2!.axe).toBe(true);
     for (let i = 0; i < 60 * 45 && l.mission.state.l2!.phase === 'calm'; i++) l.world.update();
     expect(l.mission.state.l2!.phase).toBe('alarm');
+    for (let i = 0; i < 60 * 6; i++) l.world.update();
+    expect(l.world.events.events().some(e => e.type === 'dialogue.line' && e.id === 'L2.axe')).toBe(false);
     clickAndWait(l.world, anchors['l2-board'], () => l.mission.state.l2!.seated);
     expect(l.mission.state.l2!.seated).toBe(true);
   }, 120_000);
