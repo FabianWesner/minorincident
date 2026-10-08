@@ -2460,7 +2460,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.lawn-chair-a.glb",
-    "hash": "2ec181933294edd611d238b9bcda2ac5293fce68ed9b54f41a558d3ac32b1e59"
+    "hash": "a3ece5b1a2d8050d8f034a7f2d88d4b8513bfe73d1a29c8875bb2c3fc563d155"
   },
   "prop.lawn-chair-b": {
     "class": "light",
@@ -2496,7 +2496,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.lawn-chair-b.glb",
-    "hash": "d9e6a2f9ad2f912bab127233d51f408d66d64cb4eb81b483445d669f0b9998d1"
+    "hash": "fb0ec2557643b1f213106def0bd44cebf3608b68d2034492f0a5c0746eb4a876"
   },
   "prop.kiddie-pool": {
     "class": "fixed",
@@ -2856,7 +2856,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.broken-chair.glb",
-    "hash": "e3b8696b648ab146c50adbf2f2a3e03b82c0ea82d521a7fadfe4fe37250240bb"
+    "hash": "f12bfacb972c292a229e50f16361d337f26940b1d2d5fcc812cba74ad33210a7"
   },
   "prop.recycling-bin": {
     "class": "light",
