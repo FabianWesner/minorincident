@@ -1,7 +1,8 @@
 import { MAX_BODIES, type L1Aftermath } from '../../levels/continuity';
 import type { SimWorld } from '../world/SimWorld';
 
-const r2 = (v: number) => Math.round(v * 100) / 100, r4 = (v: number) => Math.round(v * 1e4) / 1e4;
+/** Rounded, and -0 folded to 0 so a JSON round trip of the save reproduces the record exactly. */
+const r2 = (v: number) => Math.round(v * 100) / 100 + 0, r4 = (v: number) => Math.round(v * 1e4) / 1e4 + 0;
 /**
  * The player-caused part of the L1 world at the moment L1 completes (src/levels/continuity.ts). Sim state only, in a
  * stable order and rounded, so the same run always stores the same record. Scripted canon is never stored: L2 always

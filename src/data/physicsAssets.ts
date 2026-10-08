@@ -1223,6 +1223,37 @@ export default {
     "source": "public/assets/models/decay.burned-facade.glb",
     "hash": "e90071e27f8310e920fb84035945b4cb2b4f98337076c99542dbd1fb9ba7ab4b"
   },
+  "decay.rubble-pile": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.016508519649505615,
+      0.3527115052565932,
+      0.03789249062538147
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -1.4272459745407104,
+          0.009487993083894253,
+          -0.7604680061340332
+        ],
+        "max": [
+          1.4602630138397217,
+          0.6959350043907762,
+          0.8362529873847961
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.rubble-pile.glb",
+    "hash": "136967884e9516a3d3b87bc35da805362711abda03ae91a8d8708381d972fd06"
+  },
   "prop.light-tower-trailer": {
     "class": "heavy",
     "centerOfMass": [
