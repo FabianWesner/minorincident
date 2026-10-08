@@ -52,6 +52,8 @@ export interface AssetDef {
   decayTriangleBudget?: number;
   /** Stricter delivery limits for damage siblings; unset fields inherit the integrated base budget. */
   decayBudget?: Partial<AssetDef["budget"]>;
+  /** Limits for a particular damage recipe; other shipped variants keep their budgets. */
+  decayBudgets?: Record<string, Partial<AssetDef["budget"]>>;
   decayAuthoredLodTriangles?: { lod1: number; lod2: number };
   decayVariants: string[];
 }
