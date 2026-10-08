@@ -118,6 +118,9 @@ export class L2TruckDrive {
     const car = this.world.vehicles!.cars.get(this.state.truckId)!;
     car.physics.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
     car.noEnterUntil = Number.MAX_SAFE_INTEGER;
-    this.world.vehicles!.autopilot.set(this.state.truckId, intent => { intent.steer = car.physics.steeringAngle / car.physics.def.steering; });
+    this.world.vehicles!.autopilot.set(this.state.truckId, intent => {
+      intent.steer = car.physics.steeringAngle / car.physics.def.steering;
+      intent.brake = car.entity.vehicle!.braking;
+    });
   }
 }
