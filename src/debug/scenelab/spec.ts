@@ -39,6 +39,10 @@ export interface SceneSpec {
    * a bone's flesh radius may sink into a prop surface before it is reported. */
   clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
   expect?: Expectations;
+  /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
+   * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
+   * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
+  emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string };
 }
 export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
@@ -104,6 +108,12 @@ export interface Expectations {
   torsoPitchMaxDeg?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** `emerge`: residents whose first drawn position is past the door threshold (they must be drawn first inside the house). */
+  emergeOutsideMax?: number;
+  /** `emerge`: frames a resident spent in the doorway while the door was drawn less than 60 % open. */
+  doorShutFramesMax?: number;
+  /** Frames any actor drew its far LOD (lod2) within 14 m of the camera. */
+  farLodCloseMax?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;
@@ -129,6 +139,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   });
   if (couriers > 1) errors.push('at most one courier (it is the player entity)');
   spec.vehicles?.forEach((v, i) => { point(v.at, `vehicles[${i}].at`); if (v.id) { if (ids.has(v.id)) errors.push(`duplicate id ${v.id}`); ids.add(v.id); } });
+  if (spec.emerge && (typeof spec.emerge.house !== 'string' || !spec.layout)) errors.push('emerge: needs a house placement id from layout');
   spec.script?.forEach((s, i) => { if (!Number.isInteger(s.frame) || s.frame < 0) errors.push(`script[${i}].frame: nonnegative integer`); });
   return errors;
 }

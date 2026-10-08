@@ -36,6 +36,8 @@ export class NpcView extends Group {
     this.off = world.events.on('corgi.bark', event => { if (event.type === 'corgi.bark') { this.barkUntil = event.tick + 180; this.threatId = event.threatId; this.bark.dataset.direction = `${event.direction.x},${event.direction.z}`; } });
   }
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
+  /** Streamed close-up (LOD0) civilian batches still loading. */
+  ready(): Promise<void> { return this.civilians.ready(); }
   async init(): Promise<void> {
     await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);

@@ -86,9 +86,11 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = distant ? 'lod2' : 'lod1'; }
+  /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
+  get distant(): boolean { return this.lod === 'lod2'; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
-    const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
+    const loaded = await this.registry.loadAsset(this.model, this.lod);
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
@@ -181,11 +183,11 @@ class CivilianBatch extends Group {
       const model = e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
       if (model !== this.model) continue;
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
-      if (e.corpse) { if (!this.distant && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
+      if (e.corpse) { if (this.lod === 'lod1' && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if ((this.visibility.lod(e.id, pixels) === 'lod2') !== this.distant) continue;
+      if (this.visibility.band(e.id, pixels, this.model) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
@@ -312,9 +314,40 @@ export class CivilianCrowd extends Group {
   private readonly presentation = new MotionPresentation(crowdTurnRate);
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
-  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive','npc.police-officer'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props,this.gait,this.footwork,this.moves,this.presentation),new CivilianBatch(world,model,true,this.visibility,shading,this.props,this.gait,this.footwork,this.moves,this.presentation)]); this.add(...this.batches); }
+  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading; this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive','npc.police-officer'].flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]); this.add(...this.batches); }
+  private readonly shading?: Materials;
+  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation); }
+  /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
+   * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
+   * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */
+  private readonly heroLoads = new Map<string, Promise<void>>();
+  private selectHeroes(camera?: import('three').Camera): void {
+    const v = this.visibility, previous = new Set(v.heroes); v.heroes.clear();
+    if (this.low || !camera) return;
+    const picks: { id: number; model: string; d: number }[] = [];
+    for (const e of this.world.entities.iterate()) {
+      if (e.corpse || e.hidden || e.infected?.hidden || e.civilian?.pet || e.health.current <= 0) continue;
+      const turned = !e.civilian && !!e.infected && keepsLook(e);
+      if (!turned && (!e.civilian || e.civilian.state === 'infected')) continue;
+      const model = e.appearance?.asset ?? e.civilian?.model; if (!model || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      const pixels = v.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
+      if (pixels <= (previous.has(e.id) ? 164 : 196)) continue;
+      picks.push({ id: e.id, model, d: Math.hypot(e.transform.x - camera.position.x, e.transform.y - camera.position.y, e.transform.z - camera.position.z) - (previous.has(e.id) ? .75 : 0) });
+    }
+    picks.sort((a, b) => a.d - b.d || a.id - b.id);
+    for (const pick of picks.slice(0, 4)) {
+      v.heroes.add(pick.id);
+      if (!this.heroLoads.has(pick.model)) {
+        const hero = this.batch(pick.model, 'lod0');
+        this.heroLoads.set(pick.model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); v.heroModels.add(pick.model); }, () => {}));
+      }
+    }
+  }
+  private disposed = false;
+  /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
+  async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1, camera?: import('three').Camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900); this.selectHeroes(camera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
-  dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
+  dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }
