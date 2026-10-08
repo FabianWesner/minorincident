@@ -299,22 +299,24 @@ export class LevelOneOutbreak {
   }
   /** The annex front door the staff come out of (the building data in src/data/buildingDoors.ts), with its way to the street. */
   private labDoor(): L1State['labExit'] {
+    if ((globalThis as { __noLabExit?: boolean }).__noLabExit) return null;
     const { world } = this.mission, district = world.districts?.districts[0], front = this.anchor('lab-exit-front');
     if (!district || !front) return null;
     const door = layoutHouseDoors(district.layout, district.origin, undefined, id => id === 'bld.clinic-annex').sort((a, b) => Math.hypot(a.x - front.x, a.z - front.z) - Math.hypot(b.x - front.x, b.z - front.z))[0];
     const exit = door && doorExit(world, door, front);
-    return door && exit ? { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [] } : null;
+    // Panicked staff burst out at a run right behind the technician (a stumble here let the courier walk away unharmed).
+    return door && exit ? { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [], speedMs: l1v2.speedTiers.average.baseMs } : null;
   }
   /** Staff member `i` (1..4) of the accident: inside the annex behind the technician, two abreast, walking out. */
   private staffOut(tick: number, i: number): number {
     const l1 = this.l1, k = i - 1;
-    return emergeResident(this.mission.world, l1.labExit!, tick, { inside: 2.3 + Math.floor(k / 2) * .8, lateral: k % 2 ? .42 : -.42,
+    return emergeResident(this.mission.world, l1.labExit!, tick, { inside: 2.1 + Math.floor(k / 2) * .8, lateral: k % 2 ? .42 : -.42,
       look: { role: story.techRole, model: story.staffModels[k % story.staffModels.length], tint: story.staffTints[k % story.staffTints.length] } });
   }
   /** Staff on their walk out of the annex door: at the street each gets a short disoriented beat, then rushes. */
   private labWalk(tick: number): void {
     const l1 = this.l1;
-    for (const id of walkResidents(this.mission.world, l1.labExit!, tick)) { const run = l1.runs.find(r => r.id === id); if (run) run.rushAt = tick + Math.round(.5 * TICKS); }
+    for (const id of walkResidents(this.mission.world, l1.labExit!, tick)) { const run = l1.runs.find(r => r.id === id); if (run) run.rushAt = tick; }
   }
   /** An exiting lab-staff member: a pedestrian turned at once (same pipeline as the technician), looks kept. */
   private spawnInfected(at: { x: number; z: number }, variant: string): number {
