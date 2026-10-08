@@ -326,7 +326,7 @@ export class CivilianCrowd extends Group {
     if (this.low || !camera) return;
     const picks: { id: number; model: string; d: number }[] = [];
     for (const e of this.world.entities.iterate()) {
-      if (e.corpse || e.hidden || e.infected?.hidden || e.civilian?.pet || e.health.current <= 0) continue;
+      if (e.corpse || e.hidden || e.infected?.hidden || e.civilian?.pet || (e.health?.current ?? 1) <= 0) continue;
       const turned = !e.civilian && !!e.infected && keepsLook(e);
       if (!turned && (!e.civilian || e.civilian.state === 'infected')) continue;
       const model = e.appearance?.asset ?? e.civilian?.model; if (!model || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
