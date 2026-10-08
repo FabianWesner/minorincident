@@ -68,6 +68,7 @@ describe('L2 truck ride clearance', () => {
         }
         previousYaw = t.yaw; previousSpeed = s.rideV;
         const pose = truckPoseAt(s.rideS), travelled = s.rideS - previousS; previousS = s.rideS;
+        if (pose.section === 'junction') expect(s.rideV, `seed ${seed}: turn speed`).toBeLessThanOrEqual(4 + 1e-6);
         // Street lane centres come from the district's 5 m two-way roads (not the driven pose).
         if (pose.section !== 'apron') {
           const error = pose.section === 'elm' ? Math.abs(t.z - 31.25) : pose.section === 'juniper' ? Math.abs(t.x + 28.75) : pose.section === 'row' ? Math.abs(t.z + 32.25) : Math.abs(Math.hypot(t.x + 37.75, t.z - (t.z > 0 ? 22.25 : -23.25)) - 9);
