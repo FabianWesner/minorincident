@@ -80,11 +80,11 @@ export const l2Anchors: Record<string, P> = {
   'l2-axe-rack': stationPoint(2.6, -.8),
   'l2-truck': [truck.x, truck.z],
   // Crew door on the station side of the cab.
-  'l2-board': truckPoint(-.5, 1.95),
+  'l2-board': truckPoint(.3, 2.0),
   // Two seats on the bench by the open bay, two on the bench deeper in the left bay.
   'l2-bench-1': stationPoint(1.3, 2.5), 'l2-bench-2': stationPoint(1.3, .7), 'l2-bench-3': stationPoint(-1.3, 3.8), 'l2-bench-4': stationPoint(-1.3, 2.0),
   'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
-  'l2-crew-5': truckPoint(-2.0, 1.9), 'l2-crew-6': stationPoint(4.0, -3.5),
+  'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(4.0, -3.5),
   'l2-truck-stop': [-43.0, -30.4],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],

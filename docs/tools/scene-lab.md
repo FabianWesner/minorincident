@@ -61,9 +61,11 @@ a yaw-0 actor faces +X.
 
 - **`props`** take any manifest id (`src/assets/manifest.json`): `bld.*`, `prop.*`, `veh.*` (static) or `house.*` kit pieces. They are placed with the same record the Blender layout exporter writes, so collision, navigation, light groups and crowns match a shipped district.
 - **`layout`** copies placements from a shipped district: `{ "district": "D-GROVE", "bbox": [[x0, z0], [x1, z1]], "assets": ["prop.flower-bed*", "prop.picket-fence"], "ids": [...], "recenter": true }`.
+  - `level: "L2"` applies the shipped L2 dressing and road-clearance rules before cropping.
   - `assets` accepts a trailing `*` as a prefix match.
   - `recenter` moves the crop so its centre is at the origin.
   - `ground: "district"` keeps that district's baked roads and paving, and its surface and lawn polygons (so the bicycle's pavement rule and kerb heights work).
+- **Displaced furniture fixtures:** a pushable in `props` may supply `rotation: [x, y, z, w]` (quaternion) to reproduce a tipped pose. Give it an explicit `id`. This represents displacement during play; authored layouts are checked separately for clear roads.
 - **Static instances are baked at load.** Adding a prop with `place` reloads the scene, and the frame counter goes back to 0.
 
 ### Actors
@@ -130,6 +132,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 `expect` sets gates; the runner exits 1 if one fails:
 
 - `consoleErrors` (default 0)
+- `propSinkMaxCm`: deepest drawn pushable vertex below the drawn ground; use `1` for the 1 cm furniture contact gate.
+- `propGroundSamplesMin`: minimum contact samples, so an empty or undrawn fixture cannot pass.
 - `clippingMax`
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
@@ -170,6 +174,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
   - Seated, knocked-down and rising clips are excluded from the foot metrics. The corgi has paws: slide only, no yaw drift. A paw that skims within 1.2 cm of the ground during its swing counts as sliding, so the corgi's slide also catches paws dragging through the floor (see `sinkMaxCm`).
 - **`metrics.bodies`.** Actor pairs whose torso (hip to shoulders, 10 cm), neck (6 cm) and head (a 20 cm capsule above the head pivot, 11 cm) capsules interpenetrate by more than 2 cm, sampled every third frame: `a`, `b`, the worst `depthCm`, its `frame` and `count`. Seated, knocked-down and dying actors are skipped. It catches crowds and melee rings piling into each other (qa-courier-attack-bat had 15.8 cm before the 1.08 m melee ring; a hit contact reads 4-6 cm).
 - **`trace`.** `"trace": true` in a spec adds each actor's per-frame samples to `metrics.actors.<id>.track`: `frame`, `clip` (or `label`, e.g. the corgi clip), `speed`, sim position `at` and the foot points. Use it to find the frame and clip behind a slide or sink.
+- **`metrics.props`.** Maximum sinking depth in cm, number of drawn-ground samples, and current per-prop signed gaps (positive is above ground). Probes use the actual selected LOD mesh vertices and the same drawn height field as vehicles.
 - **`metrics.lods`.** The current detail band of every placement (`lod0`, `lod1`, `lod2` or `culled`).
 - **`metrics.visibility`.** Sim counts against drawn counts per kind in the last frame, such as infected alive in the sim against infected figures drawn. A gap with the subject on screen is a crowd or visibility bug.
 - **`metrics.vehicles`.** Position, yaw, health and speed per vehicle id.
