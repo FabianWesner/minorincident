@@ -19,7 +19,11 @@ test('@E20 truck brakes smoothly and holds for a stationary sedan in its lane', 
   expect(held).toBe(true); expect(overlap).toBe(false); expect(brakeMax).toBeLessThanOrEqual(4 + 1e-6);
   expect(l.mission.state.l2!.arrivedAt).toBe(0);
   const before = { ...w.entities.get(l.mission.state.l2!.truckId)!.transform };
-  for (let i = 0; i < 180; i++) w.update();
+  // A blocked ride outlasts the station routine's 60 s clock: passengers remain seated until the actual crew exit.
+  for (let i = 0; i < 65 * 60; i++) {
+    w.update();
+    expect(l.mission.state.l2!.crewIds.every(id => w.entities.get(id)!.hidden)).toBe(true);
+  }
   const after = w.entities.get(l.mission.state.l2!.truckId)!.transform;
   expect(Math.hypot(after.x - before.x, after.z - before.z)).toBeLessThan(.01);
   expect(truckBodyOverlap(after, 7.4, 2.1, w.entities.get(sedan)!, w)).toBe(false);

@@ -170,7 +170,7 @@ export class LevelTwoRescue {
     if (id === 'board') this.board();
     if (id === 'axe') this.takeAxe();
     if (id === 'ride' && (this.s.phase === 'ride' || this.s.phase === 'alarm')) {
-      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; this.world.spatial.delete(c); } }
+      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
       if (!this.s.seated) this.board();
       this.s.phase = 'ride'; this.s.departAt ||= this.world.tick; this.s.rideS = this.routeInfo().length; this.ride();
     }
@@ -382,11 +382,12 @@ export class LevelTwoRescue {
       if (tick === s.alarmAt + ticks(5.2) && !s.axe && this.mission.state.steps.axe.status === 'active') this.mission.radio('L2.axe');
       for (const id of s.crewIds) {
         const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
-        if (!a.run) { e.hidden = true; world.spatial.delete(id); }
+        // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.
+        if (!a.run) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); }
       }
       const crewIn = s.crewIds.every(id => world.entities.get(id)?.hidden !== false);
       if (s.seated && (crewIn || tick - s.alarmAt > ticks(l2.calm.crewToTruckMaxS + 6))) {
-        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; world.spatial.delete(id); } }
+        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
         s.phase = 'ride'; s.departAt = tick; this.parkNav(false); world.events.emit({ type: 'l2.truckDeparted', tick });
       }
       if (s.seated) this.carry(world.entities.get(s.truckId)!.transform.x, world.entities.get(s.truckId)!.transform.z);
