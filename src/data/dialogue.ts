@@ -13,6 +13,8 @@ export const dialogue: Record<string, string> = {
   'L2.doors': 'Doors coming open — get them out, get them out!',
   'L2.radio': 'All units, fall back. Evacuation point is the police checkpoint at the river bridge. Anyone who can move — go!',
   'L2.checkpoint': 'Over here! Move, move — we’re closing the gate!',
+  'L2.keepBack': 'Keep them back!',
+  'L2.runKid': 'Run, kid, run!',
   'L2.twist': 'You can kill zombies. You cannot kill the outbreak.',
   'L3.briefing': 'Sunset Grove Police, behind the bridge line. The gate is shut. For the first time today, people with guns are in charge.',
   'L3.sergeant': 'Armory table, by the door. Take a handgun. Point, squeeze. Aim for what’s closest.',
