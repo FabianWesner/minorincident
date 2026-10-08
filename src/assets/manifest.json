@@ -15753,5 +15753,64 @@
       "lod1": 600,
       "lod2": 200
     }
+  },
+  {
+    "id": "veh.military-apc",
+    "category": "vehicle",
+    "status": "modeled",
+    "tier": "hero",
+    "script": "assets/veh.military-apc/build.py",
+    "sourceGlb": "assets/veh.military-apc/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/veh.military-apc.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.military-apc.lod1.glb",
+      "lod2": "public/assets/models/veh.military-apc.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 5.69,
+      "y": 3.27,
+      "z": 2.95,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "body",
+      "lightsFront",
+      "lightsBrake",
+      "front",
+      "turret",
+      "gun"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelML",
+      "wheelMR",
+      "wheelRL",
+      "wheelRR",
+      "turret",
+      "gun"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR",
+      "muzzle"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 10,
+      "fileKB": 1500,
+      "drawCalls": 40
+    },
+    "decayVariants": []
   }
 ]
