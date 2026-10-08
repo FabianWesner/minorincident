@@ -1,0 +1,85 @@
+[
+  {
+    "name": "unit-final",
+    "command": [
+      "sh",
+      "tools/sim-lock.sh",
+      "npm",
+      "run",
+      "test:unit",
+      "--",
+      "--maxWorkers=2"
+    ],
+    "env": {
+      "E2E_PORT": "3378",
+      "SIM_WAIT": "1"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "verify-E04",
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E04"
+    ],
+    "env": {
+      "E2E_PORT": "3378",
+      "SIM_WAIT": "1",
+      "E2E_SKIN": "1"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "bicycle-combat-arrival",
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/e2e/bicycle.spec.ts",
+      "tests/e2e/bicycle-stability.spec.ts",
+      "tests/e2e/combat-wiring.spec.ts",
+      "tests/e2e/arrival-stability.spec.ts",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "env": {
+      "E2E_PORT": "3378",
+      "SIM_WAIT": "1",
+      "E2E_SKIN": "1"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "smoke-skin0",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "env": {
+      "E2E_PORT": "3378",
+      "SIM_WAIT": "1",
+      "E2E_SKIN": "0"
+    },
+    "exitCode": 0
+  },
+  {
+    "name": "smoke-skin1",
+    "command": [
+      "npm",
+      "run",
+      "test:smoke"
+    ],
+    "env": {
+      "E2E_PORT": "3378",
+      "SIM_WAIT": "1",
+      "E2E_SKIN": "1"
+    },
+    "exitCode": 0
+  }
+]

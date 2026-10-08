@@ -1,0 +1,610 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/bicycle.spec.ts",
+      "tests/e2e/bicycle-stability.spec.ts",
+      "tests/e2e/combat-wiring.spec.ts",
+      "tests/e2e/arrival-stability.spec.ts",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/test-results/playwright/run-3378",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/test-results/playwright/run-3378",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/test-results/playwright/run-3378",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/test-results/playwright/run-3378",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/test-results/playwright/run-3378",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/test-results/playwright/run-3378",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/player-anim-r1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3378 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3378",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/arrival-stability.spec.ts",
+      "file": "e2e/arrival-stability.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "courier skin=0 arrival remains idle beside corgi and curb for 3 seconds @E03 @E04",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18346,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "arrival measurement {\"skin\":0,\"target\":{\"x\":-66.4,\"z\":5.5},\"fixedFrames\":180,\"liveFrames\":154,\"driftMmPerSecond\":0,\"liveDriftMmPerSecond\":0,\"maxSpeed\":0,\"yawRange\":0,\"animations\":[\"idle\"],\"markerVisible\":false}\n"
+                    },
+                    {
+                      "text": "arrival measurement {\"skin\":0,\"target\":{\"x\":-67.5,\"z\":3.2},\"fixedFrames\":180,\"liveFrames\":138,\"driftMmPerSecond\":0,\"liveDriftMmPerSecond\":0,\"maxSpeed\":0,\"yawRange\":0,\"animations\":[\"idle\"],\"markerVisible\":false}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:03:19.624Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "598128f9849f7de9a418-305f418934a63217cdaf",
+          "file": "e2e/arrival-stability.spec.ts",
+          "line": 4,
+          "column": 28
+        },
+        {
+          "title": "courier skin=1 arrival remains idle beside corgi and curb for 3 seconds @E03 @E04",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E04"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18254,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "arrival measurement {\"skin\":1,\"target\":{\"x\":-66.4,\"z\":5.5},\"fixedFrames\":180,\"liveFrames\":164,\"driftMmPerSecond\":0,\"liveDriftMmPerSecond\":0,\"maxSpeed\":0,\"yawRange\":0,\"animations\":[\"idle\"],\"markerVisible\":false}\n"
+                    },
+                    {
+                      "text": "arrival measurement {\"skin\":1,\"target\":{\"x\":-67.5,\"z\":3.2},\"fixedFrames\":180,\"liveFrames\":144,\"driftMmPerSecond\":0,\"liveDriftMmPerSecond\":0,\"maxSpeed\":0,\"yawRange\":0,\"animations\":[\"idle\"],\"markerVisible\":false}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:03:19.613Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "598128f9849f7de9a418-e703957803d69d634d43",
+          "file": "e2e/arrival-stability.spec.ts",
+          "line": 4,
+          "column": 28
+        }
+      ]
+    },
+    {
+      "title": "e2e/bicycle-stability.spec.ts",
+      "file": "e2e/bicycle-stability.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "bike skin=0 mounts level on the start sidewalk and rider follows a 90 degree turn @E19",
+          "ok": true,
+          "tags": [
+            "E19"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13136,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "bike turn measurement {\"skin\":0,\"fixedFrames\":180,\"liveFrames\":144,\"yawChangeDegrees\":89.41855689317666,\"maxFrameMismatchDegrees\":0.0000029575586669421963,\"maxLiveFrameMismatchDegrees\":0.0000029575586669421963}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:03:38.031Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c8012a5555668ebfb1b1-f252a6df8c1484766b4c",
+          "file": "e2e/bicycle-stability.spec.ts",
+          "line": 8,
+          "column": 28
+        },
+        {
+          "title": "bike skin=1 mounts level on the start sidewalk and rider follows a 90 degree turn @E19",
+          "ok": true,
+          "tags": [
+            "E19"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13030,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "bike turn measurement {\"skin\":1,\"fixedFrames\":180,\"liveFrames\":154,\"yawChangeDegrees\":89.41855689317666,\"maxFrameMismatchDegrees\":0.0000029575586669421963,\"maxLiveFrameMismatchDegrees\":0.0000029575586669421963}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:03:38.121Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c8012a5555668ebfb1b1-12c442fe6ef9c71dc083",
+          "file": "e2e/bicycle-stability.spec.ts",
+          "line": 8,
+          "column": 28
+        }
+      ],
+      "suites": [
+        {
+          "title": "bike ACTION after the garage bat",
+          "file": "e2e/bicycle-stability.spec.ts",
+          "line": 69,
+          "column": 6,
+          "specs": [
+            {
+              "title": "touch ACTION remains enabled for remount after the bat objective @E19",
+              "ok": true,
+              "tags": [
+                "E19"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 8488,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-07T16:03:51.195Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c8012a5555668ebfb1b1-e5ff03b139fd502c48db",
+              "file": "e2e/bicycle-stability.spec.ts",
+              "line": 71,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/bicycle.spec.ts",
+      "file": "e2e/bicycle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E19-16h @E19 @E19-AC16 courier sits on the bike with hands on the handlebar",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16516,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:03:51.220Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e6507268489a62ce8d61-0d372d65d505f7918e40",
+          "file": "e2e/bicycle.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/combat-wiring.spec.ts",
+      "file": "e2e/combat-wiring.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack state",
+          "ok": true,
+          "tags": [
+            "E05",
+            "E05-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 3571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:03:59.842Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0af9e8106ec3788350ff-7e1579f532086a800548",
+          "file": "e2e/combat-wiring.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "T-E05-browser @E05 arena placeholder scene, cheats, settings, screenshot and lifecycle",
+          "ok": true,
+          "tags": [
+            "E05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14277,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:04:03.421Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0af9e8106ec3788350ff-a668a3701631fca2430c",
+          "file": "e2e/combat-wiring.spec.ts",
+          "line": 44,
+          "column": 1
+        },
+        {
+          "title": "@E05 real released clicks chain weapon.fists and hit a downed target",
+          "ok": true,
+          "tags": [
+            "E05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:04:07.852Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0af9e8106ec3788350ff-af6340aa9bcf558744e0",
+          "file": "e2e/combat-wiring.spec.ts",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "title": "@E05 real released clicks chain weapon.bat and hit a downed target",
+          "ok": true,
+          "tags": [
+            "E05"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-07T16:04:12.901Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0af9e8106ec3788350ff-d883f4c22d96745080a4",
+          "file": "e2e/combat-wiring.spec.ts",
+          "line": 64,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-07T16:03:18.306Z",
+    "duration": 59467.189,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
