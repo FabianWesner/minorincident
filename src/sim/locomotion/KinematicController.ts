@@ -55,7 +55,11 @@ export class KinematicController {
       // the centre and the leading toe, above the paving sampled at the toe.
       const ground = Math.max(support(supportX, supportZ), support(transform.x + this.displacement.x, transform.z + this.displacement.z), support((supportX + transform.x) / 2, (supportZ + transform.z) / 2));
       const clearance = ground > .01 || navigation ? .02 : magnitude > 0 ? .01 : .005;
-      this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + clearance - transform.y));
+      // Lift only while the capsule is below the support it is heading for. Once it rests on it (within 2 mm of the
+      // resting height) the downward intent grounds it: a hover target above the resting height is pulled straight back
+      // by the controller's snap-to-ground, and that lift/snap cycle bobbed the whole courier 1.5 cm every tick whenever
+      // navigation was on (a held target-attack stops at range with navigation on; Scene Lab qa-courier-attack-bat).
+      if (ground + survivor.height / 2 + .005 - transform.y > .002) this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + clearance - transform.y));
     }
     if (enabled) {
       let px = 0, pz = 0;
