@@ -90,3 +90,19 @@ test('@E19 prepared tier occupancy matches a full rebake after dynamic blockers 
   grid.setBlocker(2, door, true); full.setBlocker(2, door, true); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
   grid.setBlocker(2, door, false); full.setBlocker(2, door, false); full.rebake(); expect(grid.blocked).toEqual(full.blocked);
 });
+
+test('@E07 melee ring: five infected hold 1.08 m from the courier yet keep landing hits (QA qa-courier-attack-bat pile-up)', async () => {
+  const { meleeRing } = await import('../../../src/sim/ai/CharacterSeparation');
+  const w = await arena(); w.combat!.damage.god = false;
+  const player = w.entities.get(1)!, start = player.health.current;
+  for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5; w.infected!.spawn('infected.runner', { x: player.transform.x + Math.cos(a) * 3, z: player.transform.z + Math.sin(a) * 3 }, { state: 'chase' }); }
+  let closest = Infinity, attacks = 0;
+  for (let tick = 0; tick < 300; tick++) {
+    w.update(); if (tick < 120) continue;
+    for (const e of w.infected!.active) { closest = Math.min(closest, Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)); if (e.infected!.state === 'attack') attacks++; }
+  }
+  expect(meleeRing).toBeLessThan(1.1);   // inside the 1.1 m infected attack range
+  expect(closest).toBeGreaterThan(meleeRing - .03);
+  expect(attacks).toBeGreaterThan(100);
+  expect(player.health.current).toBeLessThan(start);
+});

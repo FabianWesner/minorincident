@@ -96,6 +96,8 @@ export interface Expectations {
   footSlideMaxCm?: number;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
+  /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
+  bodyOverlapMaxCm?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;

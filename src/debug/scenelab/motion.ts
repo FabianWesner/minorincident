@@ -4,7 +4,7 @@
  * lowest sole point of the window. `sinkMaxCm`: deepest sole point below the floor (feet through the ground). */
 export interface FootSample { heel: number[]; toe: number[]; yaw: number }
 /** `floor`: ground height under the actor when known (Scene Lab); otherwise the lowest sole point of the track is used. */
-export interface MotionFrame { frame: number; clip?: string; /** Informational animation label (not used by the foot rules), e.g. the corgi clip. */ label?: string; feet: FootSample[]; torsoPitchDeg?: number; speed?: number; floor?: number }
+export interface MotionFrame { frame: number; clip?: string; /** Informational animation label (not used by the foot rules), e.g. the corgi clip. */ label?: string; /** Sim position [x, z] (trace only). */ at?: number[]; feet: FootSample[]; torsoPitchDeg?: number; speed?: number; floor?: number }
 export interface MotionSummary {
   frames: number; contacts: number; slideMaxCm: number; slideP95Cm: number | null; yawDriftMaxDeg: number; liftMaxCm: number; sinkMaxCm: number;
   torsoPitchMinDeg: number | null; torsoPitchMaxDeg: number | null; worstSlideFrame: number | null;
