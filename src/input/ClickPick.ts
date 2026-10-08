@@ -44,7 +44,7 @@ export class ClickPick {
       const distance = Math.min(segment(x, y, this.a, this.b), segment(x, y, this.b, this.c)), score = distance / radius;
       if (score > 1) continue;
       this.last.push({ id: target.id, score, depth, drawn: this.wasDrawn });
-      if (score < bestScore - .15 || (score < bestScore + .15 && depth < bestDepth)) { best = target; bestScore = score; bestDepth = depth; }
+      if (score < bestScore - .08 || (score < bestScore + .08 && depth < bestDepth)) { best = target; bestScore = score; bestDepth = depth; }
     }
     return best;
   }
