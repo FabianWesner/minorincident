@@ -1,6 +1,6 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { Rng } from '../../core/Rng';
-import { l2, l2TruckRoute } from '../../data/l2';
+import { l2, l2TruckRoute, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
 import { l2Dressing } from '../../levels/L2/layout';
@@ -26,6 +26,17 @@ const fresh = (): L2State => ({
   released: 0, ambush: [], ambushIds: [], pending: [], escapeIds: [], clusterIds: [], escapeSpawned: false, clusterSpawned: false, clusterReached: false,
 });
 type Pending = L2State['pending'][number];
+/** Stateless seeded hash in [0, 1): presentation timing that survives checkpoints without extra state. */
+const hash = (n: number): number => { let x = Math.imul(n ^ 0x9e3779b9, 0x85ebca6b); x ^= x >>> 13; x = Math.imul(x, 0xc2b2ae35); x ^= x >>> 16; return (x >>> 0) / 4294967296; };
+const DEG = Math.PI / 180;
+/** Rescue set-piece shouts (speech bubbles): beat anchor, seconds after it, speaker (crew index or glass index), line. */
+const SHOUTS: readonly (readonly ['arrived' | 'exit' | 'doors', number, 'crew' | 'glass', number, string])[] = [
+  ['arrived', .4, 'glass', 0, 'Help! Please, get us out!'],
+  ['exit', .3, 'crew', 0, 'Hang on! We’re getting you out!'],
+  ['doors', .2, 'crew', 1, 'Stand back from the glass!'],
+  ['doors', 1.8, 'glass', 5, 'They’re inside! Hurry!'],
+  ['doors', 3.1, 'crew', 4, 'Chain’s going — stand clear!'],
+];
 
 /**
  * L2 "The Failed Rescue" controller (specs/epic-20 sections 4 and 5). Scripted only up to `l2.doorsOpen`: the calm bay, the
@@ -143,12 +154,18 @@ export class LevelTwoRescue {
   private spawnTrapped(count: number): number[] {
     const o = this.outbreak(), ids: number[] = [], out = this.snap({ x: -49.6, z: -42.2 });
     for (let i = 0; i < count; i++) {
-      const id = o.spawnPedestrian(out, { schedule: this.schedule(out, { x: -44, z: -36 }) });
+      const glass = l2.rescue.atGlass[i];
+      // Children wear an adult look scaled down by the crowd (never the elderly model); they are never targets (E08 rule).
+      const id = o.spawnPedestrian(out, { schedule: this.schedule(out, { x: -44, z: -36 }), ...(glass?.[3] === 'child' ? { model: i % 2 ? 'npc.civilian-woman-b' : 'npc.civilian-man-b' } : {}) });
       const e = this.world.entities.get(id)!;
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; ids.push(id);
-      // The first few stand at the open storefront, banging and waving at the street; the rest wait out of sight inside.
-      const glass = l2.rescue.atGlass[i];
-      if (glass) { Object.assign(e.transform, { x: glass[0], z: glass[1], yaw: glass[2] }); e.civilian!.story = { clip: 'npc-wave', start: this.world.tick + i * 7 }; this.world.spatial.set(id, glass[0], glass[1]); continue; }
+      // The first sixteen panic behind the east and south glass, each on its own loop; the rest wait out of sight inside.
+      if (glass) {
+        Object.assign(e.transform, { x: glass[0], z: glass[1], yaw: glass[2] }); this.world.spatial.set(id, glass[0], glass[1]);
+        if (glass[3] === 'child') e.civilian!.adult = false;
+        e.civilian!.story = { clip: this.glassClip(glass[3], i, this.world.tick), start: this.world.tick - (i * 23) % 50 };
+        continue;
+      }
       e.hidden = true; e.transform.x = -55.6 + (i % 5 - 2) * 1.2; e.transform.z = -42.2 + (Math.floor(i / 5) % 6 - 2.5) * 1.1;
       this.world.spatial.delete(id);
     }
@@ -271,9 +288,9 @@ export class LevelTwoRescue {
       const e = world.entities.get(id); if (!e?.civilian?.ally) continue;
       const lx = 2.8 - i * 1.15, lz = 1.9 + (i % 2) * .9, p = this.snap({ x: t.x + Math.cos(t.yaw) * lx + Math.sin(t.yaw) * lz, z: t.z - Math.sin(t.yaw) * lx + Math.cos(t.yaw) * lz }, .35);
       e.hidden = false; Object.assign(e.transform, p); world.spatial.set(id, p.x, p.z);
-      // Three to the chained front doors, three to the loading door.
-      const door = [{ x: -49.6, z: -44.6 }, { x: -48.6, z: -42.2 }, { x: -49.6, z: -39.8 }, { x: -57.8, z: -36.3 }, { x: -55.6, z: -35.6 }, { x: -53.4, z: -36.3 }][i];
-      e.civilian!.ally.run = this.snap(door, .35); e.civilian!.ally.runSpeed = 3.4; e.civilian!.pauseUntil = 0;
+      // Three to the chained front doors, three to the loading door: an urgent run, not a jog.
+      const [x, z] = l2.rescue.crewDoors[i];
+      e.civilian!.ally.run = this.snap({ x, z }, .35); e.civilian!.ally.runSpeed = l2.rescue.crewRunMs; e.civilian!.pauseUntil = 0;
     }
     world.events.emit({ type: 'l2.crewExit', tick });
   }
@@ -281,6 +298,8 @@ export class LevelTwoRescue {
     const { world } = this.mission, tick = world.tick, s = this.s;
     s.phase = 'collapse'; s.doorsOpenAt = tick;
     for (const id of ['door-front', 'door-loading']) this.wall(id, false);
+    this.clearLurkers(); s.say = null;
+    for (const door of ['l2-door-front', 'l2-door-loading']) this.cue('prop.break', this.anchor(door), 1);
     world.events.emit({ type: 'gate.changed', tick, id: 'l2-door-front', open: true });
     world.events.emit({ type: 'gate.changed', tick, id: 'l2-door-loading', open: true });
     world.events.emit({ type: 'l2.doorsOpen', tick });
@@ -385,11 +404,18 @@ export class LevelTwoRescue {
         const crew = s.crewIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally);
         if (crew.every(e => !e.civilian!.ally!.run || Math.hypot(e.civilian!.ally!.run.x - e.transform.x, e.civilian!.ally!.run.z - e.transform.z) < 1.5) || tick - s.crewExitAt > ticks(8)) {
           s.atDoorsAt = tick; s.phase = 'doors'; world.events.emit({ type: 'l2.firefightersAtDoors', tick });
-          for (const e of crew) { e.civilian!.ally!.forceUntil = tick + ticks(l2.rescue.forceDoorsS); e.civilian!.ally!.run = null; e.transform.yaw = e.transform.x > -52 ? Math.PI : Math.PI / 2; }
+          for (const e of crew) {
+            const a = e.civilian!.ally!, role = l2.rescue.crewDoors[s.crewIds.indexOf(e.id)]?.[2];
+            a.forceUntil = tick + ticks(l2.rescue.forceDoorsS); a.run = null; a.forceClip = role === 'direct' ? 'npc-stand-back' : undefined;
+            e.transform.yaw = e.transform.x > -52 ? Math.PI : Math.PI / 2;
+          }
         }
       }
     }
+    if (!s.doorsOpenAt) this.trappedPanic(tick);
     if (s.phase === 'doors' && tick - s.atDoorsAt >= ticks(l2.rescue.forceDoorsS)) this.openDoors();
+    if (s.trips?.length) this.tripsUpdate(tick);
+    if (s.flee?.length) for (const f of s.flee) if (f.at === tick) { const e = this.world.entities.get(f.id); if (e) this.outbreak().panic(e, this.anchor('l2-door-front')); }
     if (s.doorsOpenAt) {
       this.emergeAmbush(tick);
       this.release(tick);
@@ -421,20 +447,126 @@ export class LevelTwoRescue {
       if (near && c.story?.clip !== 'npc-wave-in') c.story = { clip: 'npc-wave-in', start: tick }; else if (!near && c.story) c.story = null;
     }
   }
-  /** Trapped civilians stream out through both doors over ~11 s, starting the tick the doors open. */
+  /**
+   * Trapped civilians burst out through both doors over ~11 s, starting the tick the doors open: they run (their own flee
+   * speed) in a fan away from their door, on to a farther point, then turn and look back at the shop until something
+   * frightens them. Every `tripEvery`-th one trips after a few metres; the next person out of that door stops to help.
+   */
   private release(tick: number): void {
-    const s = this.s, total = s.trappedIds.length;
+    const s = this.s, total = s.trappedIds.length, r = l2.rescue;
     if (s.released >= total) return;
-    // `released` counts people through the doors; those waving at the glass were already visible.
-    const due = Math.min(total, 1 + Math.floor((tick - s.doorsOpenAt) / (ticks(l2.rescue.releaseOverS) / total)));
+    // `released` counts people through the doors; those at the glass were already visible.
+    const due = Math.min(total, 1 + Math.floor((tick - s.doorsOpenAt) / (ticks(r.releaseOverS) / total)));
     for (; s.released < due; s.released++) {
-      const id = s.trappedIds[s.released], e = this.world.entities.get(id); if (!e?.civilian) continue;
-      const front = s.released % 2 === 0, k = Math.floor(s.released / 2) % 5;
+      const i = s.released, id = s.trappedIds[i], e = this.world.entities.get(id); if (!e?.civilian) continue;
+      const front = i % 2 === 0, k = Math.floor(i / 2) % 5;
       const at = this.snap(front ? { x: -50.4, z: -44 + k * .9 } : { x: -57.4 + k * .9, z: -36.8 }, .35);
       Object.assign(e.transform, at); e.transform.yaw = front ? 0 : -Math.PI / 2; e.hidden = false; this.world.spatial.set(id, at.x, at.z);
       const c = e.civilian; c.pauseUntil = tick; c.scheduleStep = 0; c.activityUntil = 0; c.story = null;
-      c.schedule = [{ activity: 'walk', anchor: 'l2/out', target: this.snap({ x: -44 + (s.released % 4) * 1.4, z: -36 + Math.floor(s.released / 4) % 3 * 1.2 }, .35), ticks: 1 },
-        { activity: 'look', anchor: 'l2/out', target: this.snap({ x: -43, z: -34 }, .35), facing: this.anchor('l2-truck-stop'), ticks: 600 }];
+      if (c.l1) c.l1.walkSpeed = c.l1.fleeSpeed * (.85 + hash(id * 3 + this.world.seed) * .15);
+      // A fan away from the door (front: east, loading: south), each person its own heading and distance.
+      const heading = (front ? 0 : Math.PI / 2) + ((i * .618 + hash(id + this.world.seed * 31)) % 1 * 2 - 1) * r.burstSpreadDeg * DEG;
+      const d1 = r.burstM[0] + hash(id * 5) * (r.burstM[1] - r.burstM[0]), burst = this.snap({ x: at.x + Math.cos(heading) * d1, z: at.z + Math.sin(heading) * d1 }, .35);
+      const look = r.lookBackS[0] + hash(id * 7) * (r.lookBackS[1] - r.lookBackS[0]);
+      c.schedule = [{ activity: 'walk', anchor: 'l2/out', target: burst, ticks: 1 }, { activity: 'look', anchor: 'l2/out', target: burst, facing: this.anchor('l2-door-front'), ticks: ticks(look + 30) }];
+      // Then the checkpoint, along one of three streets (by street logic, not by knowing where the infected are).
+      const route = r.fleeRoutes[(i + Math.floor(hash(id * 13 + this.world.seed) * 3)) % r.fleeRoutes.length].map(([x, z]) => ({ x, z }));
+      const hb = r.havenBehind, haven = this.snap({ x: hb.x[0] + hash(id * 17) * (hb.x[1] - hb.x[0]), z: hb.z[0] + hash(id * 19) * (hb.z[1] - hb.z[0]) }, .35);
+      if (c.l1) c.l1.haven = { route, leg: 0, ...haven };
+      (s.flee ??= []).push({ id, at: tick + ticks(d1 / Math.max(1, c.l1?.walkSpeed ?? 3) + .4 + look) + (i % r.tripEvery === 3 ? ticks(1.5) : 0) });
+      if (i % r.tripEvery === 3) (s.trips ??= []).push({ id, at: tick + ticks(.55 + hash(id * 11) * .35), helper: s.trappedIds[i + 2] ?? 0 });
+    }
+  }
+  /** Tripped: down (knockdown) for half a second, back up, running on; the helper runs over and waves them up. */
+  private tripsUpdate(tick: number): void {
+    const s = this.s, trips = s.trips!;
+    for (const t of trips) {
+      const e = this.world.entities.get(t.id), c = e?.civilian; if (!c || c.state !== 'calm') continue;
+      const helper = this.world.entities.get(t.helper)?.civilian;
+      if (tick === t.at) {
+        c.pauseUntil = tick + ticks(1.5); c.story = { clip: 'knockdown', start: tick };
+        this.cue('l1.chaos.fall', e!.transform, .8);
+        const h = this.world.entities.get(t.helper);
+        if (h && helper?.state === 'calm' && !h.hidden && Math.hypot(h.transform.x - e!.transform.x, h.transform.z - e!.transform.z) < 9) {
+          const side = this.snap({ x: e!.transform.x + .8, z: e!.transform.z + .5 }, .35);
+          helper.schedule = [{ activity: 'look', anchor: 'l2/help', target: side, facing: { x: e!.transform.x, z: e!.transform.z }, ticks: ticks(1) }, ...(helper.schedule ?? []).slice(-2)];
+          helper.scheduleStep = 0; helper.activityUntil = 0; helper.pauseUntil = tick; helper.story = { clip: 'npc-wave-in', start: tick };
+        }
+      }
+      if (tick === t.at + ticks(.5)) c.story = { clip: 'get-up', start: tick };
+      if (tick === t.at + ticks(1.5)) { c.story = null; if (helper?.story?.clip === 'npc-wave-in') helper.story = null; }
+    }
+  }
+  // ------------------------------------------------------------------------------------------------- rescue presentation
+  /** Behaviour of a trapped person at the glass this tick: a seeded loop per person, more frantic once the truck is there. */
+  private glassClip(role: GlassRole, i: number, tick: number): string {
+    const h = hash(i * 7 + 1 + this.world.seed * 131), period = ticks(3.2 + h * 2.6), t = (tick + Math.floor(h * period)) % period;
+    const urgent = !!this.mission.state.l2?.arrivedAt, glance = t > period - ticks(1.25);
+    switch (role) {
+      case 'bang': return glance ? 'npc-glance' : urgent || t < period / 2 ? 'npc-bang' : 'npc-press';
+      case 'press': return glance ? 'npc-glance' : urgent && t < period * .4 ? 'npc-bang' : 'npc-press';
+      case 'plead': return glance ? 'npc-glance' : 'npc-plead';
+      case 'look': return urgent && t < period * .45 ? 'npc-plead' : 'npc-glance';
+      case 'hug': return 'npc-hug';
+      default: return 'npc-cower';
+    }
+  }
+  /** Audio-only set-piece sound at a world point (existing licensed banks; `lowpass` muffles it behind the glass). */
+  private cue(cue: string, at: Point, gain?: number, lowpass?: number): void {
+    this.world.events.emit({ type: 'l2.cue', tick: this.world.tick, cue, position: { x: at.x, z: at.z }, ...(gain === undefined ? {} : { gain }), ...(lowpass === undefined ? {} : { lowpass }) });
+  }
+  private say(id: number, text: string, seconds = 1.9): void {
+    const e = this.world.entities.get(id), tick = this.world.tick; if (!e || e.hidden) return;
+    this.s.say = { id, text, at: tick, until: tick + ticks(seconds) };
+    this.world.events.emit({ type: 'story.say', tick, id, text, position: { x: e.transform.x, z: e.transform.z } });
+  }
+  private clearLurkers(): void {
+    for (const id of this.s.lurkers ?? []) { this.world.spatial.delete(id); this.world.entities.delete(id); }
+    this.s.lurkers = [];
+  }
+  /**
+   * Until the doors open (PO 10-08 "there is no emergency"): the people behind the glass panic on desynced loops, muffled
+   * banging and screams come through the glass, the crew shouts and heaves on the chains, the radio crackles, and the town
+   * gets louder around the forecourt: distant screams, a car alarm, a snarl, figures crossing a far street end that vanish.
+   */
+  private trappedPanic(tick: number): void {
+    const s = this.s, r = l2.rescue, glassN = Math.min(r.atGlass.length, s.trappedIds.length);
+    if (tick % 6 === 0) for (let i = 0; i < glassN; i++) {
+      const c = this.world.entities.get(s.trappedIds[i])?.civilian; if (!c) continue;
+      const clip = this.glassClip(r.atGlass[i][3], i, tick);
+      if (c.story?.clip !== clip) c.story = { clip, start: tick - (i * 23) % 50 };
+    }
+    if (!s.arrivedAt) return;
+    const market = this.anchor('l2-market'), since = (at: number, sec: number) => at > 0 && tick === at + ticks(sec);
+    // Behind the glass: fists on the panes, screams and a crowd in panic, muffled.
+    const bangers = r.atGlass.slice(0, glassN).flatMap(([x, z, , role]) => role === 'bang' || role === 'press' ? [{ x, z }] : []);
+    if (bangers.length && hash(tick * 3 + 1) < .055) this.cue('l1.glass.rattle', bangers[Math.floor(hash(tick) * bangers.length)], .55, 2400);
+    if (hash(tick * 5 + 2) < .009) this.cue('l1.scream', market, .4, 1300);
+    if ((tick - s.arrivedAt) % ticks(1.6) === 0) this.cue('l1.chaos.distant', market, .55, 900);
+    if (since(s.arrivedAt, 1.4)) this.mission.radio('L2.dispatch');
+    for (const [anchor, sec, who, index, text] of SHOUTS) {
+      const at = anchor === 'arrived' ? s.arrivedAt : anchor === 'exit' ? s.crewExitAt : s.atDoorsAt;
+      if (since(at, sec)) this.say(who === 'crew' ? s.crewIds[index] : s.trappedIds[index], text);
+    }
+    if (s.phase !== 'doors') return;
+    // The forcing: metal on metal and the chain creaking at both doors, the crew grunting on each heave.
+    const pryers = s.crewIds.map(id => this.world.entities.get(id)).filter((e): e is EntitySnapshot => e?.civilian?.story?.clip === 'ff-pry');
+    for (const [k, e] of pryers.entries()) {
+      const beat = (tick - s.atDoorsAt + k * 13) % ticks(.9);
+      if (beat === 0) this.cue(k % 2 ? 'prop.creak' : 'impact.body.metal', e.transform, .6);
+      if (beat === 20 && k % 2 === 0) this.cue('bark.male.effort', e.transform, .45);
+    }
+    // Danger rising during the 4 s: only sounds and far figures (nothing hunts the courier before the doors open).
+    const d = r.danger;
+    for (const [sec, x, z] of d.screams) if (since(s.atDoorsAt, sec)) this.cue('ambient.scream', { x, z }, 1);
+    for (let b = 0; b < d.carAlarm.beeps; b++) if (since(s.atDoorsAt, d.carAlarm.atS + b * d.carAlarm.everyS)) this.cue('l1.chaos.car-alarm', d.carAlarm, .9);
+    if (since(s.atDoorsAt, d.snarl.atS)) this.cue('l1.chaos.infected', d.snarl, .7);
+    for (const [sec, x0, z0, x1, z1] of d.lurkers) if (since(s.atDoorsAt, sec)) {
+      const from = this.snap({ x: x0, z: z0 }, .4), to = this.snap({ x: x1, z: z1 }, .4);
+      const id = this.outbreak().spawnPedestrian(from, { walkSpeed: 1.05, yaw: -Math.atan2(to.z - from.z, to.x - from.x), schedule: [{ activity: 'walk', anchor: 'l2/lurk', target: to, ticks: 1 }, { activity: 'inside', anchor: 'l2/lurk', target: to, ticks: ticks(60) }] });
+      const e = this.world.entities.get(id)!, c = e.civilian!;
+      c.pauseUntil = tick; c.veins = .9; c.eyesGlow = true; c.story = { clip: 'shamble', start: tick }; e.appearance!.handProp = null;
+      (s.lurkers ??= []).push(id);
     }
   }
   private inZone(p: Point): boolean { const [z0, z1] = l2.checkpoint.gateZ; return p.x >= l2.checkpoint.gateX + .6 && p.z >= z0 + .3 && p.z <= z1 - .3; }
@@ -444,6 +576,13 @@ export class LevelTwoRescue {
     if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) { s.crossedAt = tick; s.phase = 'checkpoint'; this.mission.radio('L2.checkpoint'); }
     if (s.crossedAt && !s.gateClosedAt && tick - s.crossedAt >= ticks(.6)) {
       s.gateClosedAt = tick; for (const id of ['gate-main', 'gate-north', 'gate-south']) this.wall(id, true);
+      // People still on their way can no longer get in: they make for the front of the closed gate instead.
+      const g = l2.rescue.havenGate;
+      for (const [k, id] of s.trappedIds.entries()) {
+        const e = this.world.entities.get(id), h = e?.civilian?.l1?.haven; if (!e || !h || this.inZone(e.transform)) continue;
+        Object.assign(h, this.snap({ x: g.x, z: g.z[0] + (k % 9) / 8 * (g.z[1] - g.z[0]) }, .35), { leg: Math.min(h.leg, h.route.length) });
+        if (e.civilian!.state === 'calm' && Math.hypot(e.transform.x - h.x, e.transform.z - h.z) > 1.5 && h.leg > 0) this.outbreak().panic(e, { x: e.transform.x - 5, z: e.transform.z });
+      }
       for (const id of ['l2-gate-main', 'l2-gate-north', 'l2-gate-south']) this.world.events.emit({ type: 'gate.changed', tick, id, open: false });
       this.world.events.emit({ type: 'l2.gateClosed', tick });
       // The corgi always makes it through with the courier.
@@ -464,6 +603,9 @@ export class LevelTwoRescue {
     for (const key of ['alarmAt', 'departAt', 'arrivedAt', 'crewExitAt', 'atDoorsAt', 'doorsOpenAt', 'radioAt', 'crossedAt', 'gateClosedAt'] as const) if (s[key]) s[key] += delta;
     for (const a of s.ambush) if (a.at) a.at += delta;
     for (const q of s.pending) if (q.at) q.at += delta;
+    for (const t of s.trips ?? []) t.at += delta;
+    for (const f of s.flee ?? []) f.at += delta;
+    s.say = null;
     this.kinematic();
     for (const id of Object.keys(WALLS)) {
       const handle = this.walls.get(id); if (handle !== undefined) { this.world.physics.removeBlocker(handle); this.walls.delete(id); }

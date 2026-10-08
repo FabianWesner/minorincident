@@ -232,7 +232,7 @@ export const eventCues = {
     'outbreak.bite': 'ui.tick', 'outbreak.distraction': 'ui.tick', 'outbreak.civilian-escaped': 'ui.tick', 'outbreak.infection': 'ui.tick',
     // E20 set piece: station bell, departure siren, doors forced open, checkpoint gate; allied strikes.
     'l2.alarm': 'l1.bell', 'l2.truckDeparted': 'vehicle.siren', 'l2.truckArrived': 'ui.tick', 'l2.crewExit': 'ui.tick', 'l2.firefightersAtDoors': 'ui.tick',
-    'l2.doorsOpen': 'door.gate', 'l2.radio': 'ui.tick', 'l2.gateClosed': 'door.gate', 'ally.attack': 'action.weapon.fists',
+    'l2.doorsOpen': 'door.gate', 'l2.radio': 'ui.tick', 'l2.gateClosed': 'door.gate', 'l2.cue': 'ui.tick', 'ally.attack': 'action.weapon.fists',
     'l1.flicker': 'l1.flicker.buzz', 'l1.blast': 'l1.blast', 'l1.ringing': 'l1.ringing', 'l1.smoke': 'l1.bell', 'l1.screams': 'l1.scream', 'l1.infectedExit': 'l1.chaos.infected',
 } satisfies Record<GameEvent['type'], string>;
 export const audioCategories = [...offsets.keys()];
