@@ -521,6 +521,10 @@ export class AudioService implements Lifecycle {
             this.arc?.event(event.type, t);
             return;
         }
+        if (event.type === 'l2.cue') {
+            this.play(event.cue, { position: event.position, gain: event.gain, lowpass: event.lowpass });
+            return;
+        }
         if (event.type === 'sim.tick') {
             this.update();
             return;

@@ -10,6 +10,7 @@ export const dialogue: Record<string, string> = {
   'L2.captain': 'Grab some water. You’re safe here — for now.',
   'L2.call': 'Engine 3, trapped civilians at Grove Market, thirty-plus, building secured from inside — go!',
   'L2.axe': 'Grab the axe off the wall by the door, kid! A bat won’t cut it out there.',
+  'L2.dispatch': 'Engine 3, be advised — attacks reported spreading along Main Row. Make it fast.',
   'L2.doors': 'Doors coming open — get them out, get them out!',
   'L2.radio': 'All units, fall back. Evacuation point is the police checkpoint at the river bridge. Anyone who can move — go!',
   'L2.checkpoint': 'Over here! Move, move — we’re closing the gate!',
