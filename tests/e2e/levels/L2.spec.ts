@@ -4,6 +4,7 @@ import { test, expect, boot, testUrl } from '../fixtures';
 import { menuStart } from '../ui-helpers';
 import { l2Anchors } from '../../../src/data/l2';
 import { l2Routes } from '../../../src/debug/bot/LevelTwoBot';
+import type { MissionState } from '../../../src/sim/missions/types';
 
 /** E20 L2 browser runs. Browser runs only through tools/e2e-lock.sh, headless. */
 const output = 'test-results/epics/E20';
@@ -12,8 +13,17 @@ const at = (name: string) => ({ x: l2Anchors[name][0], z: l2Anchors[name][1] });
 type P = { x: number; z: number };
 
 function helpers(page: Page) {
-  const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
-  const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
+  let lastL2: MissionState | null = null;
+  const step = async (n: number) => {
+    // Capture in the same browser task as stepping: campaign UI may load L3 before the next API call.
+    const state = await page.evaluate(async n => { const a = window.__SS__!; await a.step(n); return a.missions.state(); }, n);
+    if (state?.l2) lastL2 = state;
+  };
+  const mission = async () => {
+    const state = await page.evaluate(() => window.__SS__!.missions.state()!);
+    if (state.l2) lastL2 = state;
+    return state;
+  };
   const player = () => page.evaluate(() => window.__SS__!.getState().player!);
   const shots = new Set<string>();
   const snap = async (name: string) => {
@@ -56,7 +66,7 @@ function helpers(page: Page) {
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
   };
   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
-  return { step, mission, player, snap, shots, go, fightNearby, interact };
+  return { step, mission, player, snap, shots, go, fightNearby, interact, lastL2: () => lastL2 };
 }
 
 test.describe('L2 The Failed Rescue in the browser', () => {
@@ -110,7 +120,8 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     expect((await mission()).l2!.gateClosedAt).toBeGreaterThan(0);
     await step(20); await snap('l2-bridge-checkpoint');
     for (let i = 0; i < 40 && (await mission()).phase === 'playing'; i++) await step(15);
-    const final = await mission();
+    const current = await mission(), final = current.l2 ? current : h.lastL2();
+    if (!final?.l2) throw new Error('No L2 mission snapshot captured before campaign handoff');
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ phase: final.phase, stats: final.stats, l2: { axe: final.l2!.axe, deaths: final.stats.deaths }, shots: [...h.shots] }, null, 2) + '\n');
     expect(['result', 'progression']).toContain(final.phase);
     expect([...h.shots].sort()).toEqual(['l2-alarm', 'l2-bridge-checkpoint', 'l2-cluster', 'l2-collapse', 'l2-doors-open', 'l2-station-calm', 'l2-streets-w1', 'l2-truck-ride']);
