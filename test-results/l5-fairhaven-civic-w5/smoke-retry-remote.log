@@ -1,0 +1,115 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l5-fairhaven-civic-w5 -> 94.130.181.173:/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503
+[remote] sync 8s, 3937 files; queueing for a slot
+[runner] slot 0 acquired; load 3.01 4.76 4.65
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+fatal: Needed a single revision
+vite v6.4.3 building for production...
+transforming...
+✓ 353 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                            1.42 kB │ gzip:     0.67 kB
+dist/index.html                                    1.93 kB │ gzip:     0.70 kB
+dist/build/basis_transcoder-o4Hde_L7.js           57.53 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm        527.33 kB │ gzip:   247.62 kB
+dist/build/rapier-C6GCbKVJ.wasm                3,082.10 kB │ gzip: 1,176.71 kB
+dist/build/index-vdrG8zru.css                     28.98 kB │ gzip:     6.60 kB
+dist/build/lookViewpoints-BX-OEann.js              0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js      0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js              1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-BVZ5xaSc.js                  1.32 kB │ gzip:     0.77 kB
+dist/build/controls-DMKU12KT.js                    1.36 kB │ gzip:     0.71 kB
+dist/build/crowd-DWWZi7qY.js                       2.50 kB │ gzip:     1.32 kB
+dist/build/lookPatch-DyqfCDcR.js                   6.85 kB │ gzip:     3.29 kB
+dist/build/InputFrame-BRF1n_q3.js                 13.69 kB │ gzip:     4.53 kB
+dist/build/MotionLab-CEbKcEF_.js                  19.85 kB │ gzip:     8.37 kB
+dist/build/testApi-DCDgL-IO.js                    24.38 kB │ gzip:     9.33 kB
+dist/build/index-CMwXQuZS.js                      25.79 kB │ gzip:     6.79 kB
+dist/build/SceneLab-BN892ZGg.js                   40.94 kB │ gzip:    15.67 kB
+dist/build/Pickups-DcABkLC8.js                    54.90 kB │ gzip:    18.31 kB
+dist/build/doorRoute-B2NgFx9V.js                  67.22 kB │ gzip:    18.09 kB
+dist/build/Debug-C730xr4k.js                     155.72 kB │ gzip:    33.01 kB
+dist/build/rapier-B4BYJx26.js                    211.96 kB │ gzip:    36.09 kB
+dist/build/install-1yCzseA0.js                   233.73 kB │ gzip:    71.27 kB
+dist/build/three.module-DU4VTmKq.js              287.28 kB │ gzip:    77.61 kB
+dist/build/index-CNcZdf1D.js                     907.47 kB │ gzip:   262.96 kB
+dist/build/registry-CqdFyNqa.js                1,107.84 kB │ gzip:   276.38 kB
+dist/build/Physics-D-rIf-wp.js                 1,933.77 kB │ gzip:   346.75 kB
+✓ built in 7.92s
+[WebServer] fatal: Needed a single revision
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (1.9m)
+  ✓  2 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (1.3m)
+  ✓  3 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (1.6m)
+  ✘  4 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (1.8s)
+
+
+  1) [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props 
+
+    Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true
+        at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)
+        at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)
+        at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)
+        at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)
+        at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)
+        at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)
+        at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)
+        at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)
+        at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639
+        at CF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:576:1545)
+        at kF.createAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:579:35882)
+        at HR.update (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:83238)
+        at WR.updateAttribute (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85969)
+        at WR.updateAttributes (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:85447)
+        at WR.updateForRender (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:33:84654)
+        at v9.compileAsync (http://127.0.0.1:3327/build/registry-CqdFyNqa.js:41:48392)
+        at async yd.load (http://127.0.0.1:3327/build/index-CNcZdf1D.js:9:475444)
+        at async http://127.0.0.1:3327/build/index-CNcZdf1D.js:12:26639
+        at boot (/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/fixtures.ts:30:14)
+        at /srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/crowd-drawn.spec.ts:23:5
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "pageerror: Instance dropped in popErrorScope",
+    +   "pageerror: Cannot read properties of undefined (reading 'destroy')",
+    +   "pageerror: Instance dropped in popErrorScope",
+    + ]
+
+       at e2e/fixtures.ts:22
+
+      20 |     const guard = attachErrorGuard(page);
+      21 |     await use(); guard.dispose();
+    > 22 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      23 |   }, { auto: true }],
+      24 | });
+      25 | export { expect };
+        at Object.base.extend.errorGuard.auto (/srv/mi/ws/build-l5-fairhaven-civic-w5-cda503/tests/e2e/fixtures.ts:22:81)
+
+    Error Context: test-results/playwright/run-3327/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3327/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3327/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props 
+  3 passed (5.1m)
+[remote] pulled test-results/playwright/results.json
+[remote] done exit=1 (runner 94.130.181.173, sync 8s, remote total 315s)
