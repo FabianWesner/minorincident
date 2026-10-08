@@ -15,8 +15,9 @@ import { alignSkeleton } from './skin';
 import { skinClips } from './clips';
 import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
+import { CourierLiving } from './CourierRig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
@@ -109,9 +110,10 @@ export class CharacterView extends Group {
         attachment(2, character.rig[`arm${side}`], [0.14, 0.1, 0.17], [0, -0.05, 0], 'uiDark');
       }
       attachment(2, character.rig.hip, [0.09, 0.18, 0.08], [0.02, -0.07, 0.22], 'woodWarm');
-      attachment(3, character.rig.torso, [0.12, 0.19, 0.27], [0.12, 0.1, 0], 'uiDark');
+      const chest = character.model.getObjectByName('chest') ?? character.rig.torso, chestLift = chest === character.rig.torso ? 0 : chest.getWorldPosition(this.scratchA).y - character.rig.torso.getWorldPosition(this.scratchB).y;
+      attachment(3, chest, [0.12, 0.19, 0.27], [0.12, 0.1 - chestLift, 0], 'uiDark');
       attachment(3, character.rig.head, [0.23, 0.055, 0.4], [0, 0.14, 0], 'survivorRed');
-      attachment(4, character.rig.torso, [0.14, 0.25, 0.37], [0.16, 0.08, 0], 'policeBlue');
+      attachment(4, chest, [0.14, 0.25, 0.37], [0.16, 0.08 - chestLift, 0], 'policeBlue');
       attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
       const pilot = isSkin;
       if (pilot) {
@@ -120,7 +122,9 @@ export class CharacterView extends Group {
           legs: [new LimbIK(r.legL, r.shinL, r.footL), new LimbIK(r.legR, r.shinR, r.footR)],
           soleHeight: r.footL.getWorldPosition(this.scratchA).y - r.root.getWorldPosition(this.scratchB).y });
       }
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator: new KeyframeAnimator(character.rig, pilot ? skinClips : undefined), gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
+      const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     this.makeParcel(materials);
   }
@@ -129,6 +133,9 @@ export class CharacterView extends Group {
     const before = this.characters.get(pose.variant)?.animator.evaluations;
     if (this.variant !== pose.variant) { this.contactEvaluation = -1; this.contactHistory = false; this.rideAttached = false; }
     this.variant = pose.variant; this.tier = pose.gearTier;
+    // Look-at is presentation only: off while striking (the body snaps onto the aim), hurt, dead, riding or in scripted actions.
+    this.lookWeight = !['idle', 'walk', 'run'].includes(pose.animation) || pose.attack && tick < pose.attack.endsAt + 6 || ride ? 0 : 1;
+    if (pose.animation === 'hurt') this.hurtTick = pose.animationTick;
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
       for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
@@ -154,6 +161,7 @@ export class CharacterView extends Group {
       this.position.add(this.appliedOffset);
       this.quaternion.copy(contacts && weight >= 1 ? contacts.orientation : this.appliedRotation);
       if (contacts && weight >= 1) this.seatPelvis(contacts.seat, -.04);
+      this.presentLiving(character, weight);
       return;
     }
     this.contactEvaluation = character.animator.evaluations;
@@ -197,7 +205,21 @@ export class CharacterView extends Group {
     }
     this.appliedOffset.add(this.position); this.appliedRotation.copy(this.quaternion);
     this.lastPresented.copy(this.position); this.lastPresentedRotation.copy(this.quaternion); this.contactHistory = true;
+    this.presentLiving(character, weight);
     this.cpuMs += performance.now() - started;
+  }
+  /** World point the courier glances at (nearest threat or target), or null. Presentation only. */
+  glanceAt(target: Vector3 | null): void { if (target) this.lookTarget.copy(target); this.looking = !!target; }
+  private readonly lookTarget = new Vector3();
+  private looking = false;
+  private lookWeight = 0;
+  private hurtTick = -1;
+  /** Skeleton v2 living layer (look-at, blink, ponytail, bag, helpers): the last pose layer of the frame. */
+  private presentLiving(character: LoadedCharacter, rideWeight: number): void {
+    if (!character.living) return;
+    this.updateMatrixWorld(true);
+    character.living.present({ time: character.animator.time, evaluation: character.animator.evaluations, look: this.looking ? this.lookTarget : null,
+      lookWeight: rideWeight > 0 ? 0 : this.lookWeight, hurtTick: this.hurtTick, ground: rideWeight > 0 ? undefined : character.rig.root.getWorldPosition(this.scratchA).y });
   }
   /** Riding: moves the whole figure so its pelvis lands on `target` (world, the saddle) after this frame's pose update. */
   seatPelvis(target: Vector3, lift = 0): void {

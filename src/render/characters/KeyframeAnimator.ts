@@ -4,6 +4,7 @@ import type { AnimationState, SurvivorState } from '../../data/survivor';
 import { authoredClips, retargetClip, skinClips, skinGait, settleGroundPose, strides, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import { CourierGroundContacts } from './CourierGroundContacts';
+import { chainNodes, courierBones, shoulderOffset, type CourierBones } from './CourierRig';
 
 const locoStates = new Set(['idle', 'walk', 'run', 'start', 'stop', 'turn-left', 'turn-right']);
 const smooth = (a: number, b: number, x: number): number => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
@@ -19,6 +20,8 @@ export class KeyframeAnimator {
   private attackTick = -1;
   private actionTick = -1;
   private lastTime = 0;
+  /** Presentation clock of the last evaluation (s). */
+  get time(): number { return this.lastTime; }
   private moving = false;
   private phase = 0;
   private readonly worldPosition = new Vector3();
@@ -51,10 +54,13 @@ export class KeyframeAnimator {
   private rideChangedAt = -1;
   rideWeight = 0;
   private readonly ground: CourierGroundContacts | undefined;
+  /** Skeleton v2 chain/helpers (fitted courier skins only). */
+  readonly bones: CourierBones | undefined;
   private readonly sampledPose: { node: Object3D; position: Vector3; rotation: Quaternion }[] = [];
   constructor(private readonly rig: CharacterRig, clipSource?: typeof skinClips) {
     this.skin = clipSource === skinClips;
-    if (this.skin) for (const node of Object.values(rig)) this.sampledPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
+    this.bones = this.skin ? courierBones(rig.root) : undefined;
+    if (this.skin) for (const node of [...Object.values(rig), ...this.bones ? chainNodes(this.bones) : []]) this.sampledPose.push({ node, position: node.position.clone(), rotation: node.quaternion.clone() });
     if (this.skin) this.ground = new CourierGroundContacts(rig);
     this.strides = clipSource === skinClips ? { ...strides, ...Object.fromEntries(Object.entries(skinGait).map(([k, g]) => [k, g.stride])) } : strides;
     this.mixer = new AnimationMixer(rig.root);
@@ -190,10 +196,13 @@ export class KeyframeAnimator {
     if (!this.skin && this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; const offset = .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); this.rig.hip.position.x += offset; }
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
     if (pose.animation === 'die') settleGroundPose(this.rig.root);
-    const target = this.rig.torso.rotation.z * -.3;
-    const springDt = Math.min(.03, dt);
-    this.secondaryVelocity += ((target - this.secondary) * 90 - this.secondaryVelocity * 15) * springDt; this.secondary += this.secondaryVelocity * springDt;
-    if (this.backpack) this.backpack.rotation.z = this.backpackRest + this.secondary;
+    // Skeleton v2 swings the bag with a 2-DOF pendulum after the ride contacts (CourierLiving).
+    if (!this.bones) {
+      const target = this.rig.torso.rotation.z * -.3;
+      const springDt = Math.min(.03, dt);
+      this.secondaryVelocity += ((target - this.secondary) * 90 - this.secondaryVelocity * 15) * springDt; this.secondary += this.secondaryVelocity * springDt;
+      if (this.backpack) this.backpack.rotation.z = this.backpackRest + this.secondary;
+    }
     this.evaluations++;
   }
   /** A forward support line also survives action fades and hit recoil. Source
@@ -202,7 +211,7 @@ export class KeyframeAnimator {
   private keepTorsoForward(): void {
     const r = this.rig;
     this.postureRotation.copy(r.hip.quaternion).multiply(r.torso.quaternion);
-    this.chest.copy(r.armL.position).add(r.armR.position).multiplyScalar(.5).applyQuaternion(this.postureRotation);
+    shoulderOffset(r, this.bones, this.chest).applyQuaternion(this.postureRotation);
     this.spine.copy(r.torso.position).applyQuaternion(r.hip.quaternion);
     const pitch = Math.atan2(this.chest.x + this.spine.x, this.chest.y + this.spine.y);
     if (pitch >= .12) return;
