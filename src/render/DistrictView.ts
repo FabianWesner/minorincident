@@ -406,36 +406,36 @@ export class DistrictView extends Group {
       for (const group of [entry.hero, entry.near, entry.far]) group.traverse(o => { if (o instanceof Mesh && /^roof/.test(o.name)) o.visible = !inside; });
     }
   }
-  /** Door openness (0 closed .. 1 open) per doored building batch, eased toward its target. */
-  private readonly doorOpen = new Map<LodBatch, { k: number; applied: WeakMap<InstancedGroup, number> }>();
+  /** Door openness (0 closed .. 1 open) per doored placement, eased toward its target. */
+  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number }>();
   /**
    * Buildings with animated street doors (src/data/buildingDoors.ts) swing their leaves open while someone stands in or
    * walks up to the doorway (PO 2026-10-08: "door stays closed while the person goes out and in") and close behind them.
+   * `held` doors (SimWorld.openDoors: a threshold point, e.g. a house the L1 residents come out of) stay open. Each
+   * placement swings on its own (several houses share one batch).
    */
-  updateDoors(bodies: Iterable<{ x: number; z: number }>): void {
+  updateDoors(bodies: Iterable<{ x: number; z: number }>, held: Iterable<{ x: number; z: number }> = []): void {
     const seconds = this.frameSeconds;
     const doored = this.lodBatches.filter(entry => buildingDoors[entry.id]?.leaves.length);
     if (!doored.length) return;
-    const list = [...bodies];
+    const list = [...bodies], holds = [...held];
     for (const entry of doored) {
       const def = buildingDoors[entry.id];
-      let state = this.doorOpen.get(entry); if (!state) this.doorOpen.set(entry, state = { k: 0, applied: new WeakMap() });
-      const near = entry.refs.some(ref => {
+      for (const ref of entry.refs) {
+        let state = this.doorOpen.get(ref); if (!state) this.doorOpen.set(ref, state = { entry, k: 0, applied: -1 });
         const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
-        return !!way && list.some(b => doorZone(way, b));
-      });
-      state.k = Math.max(0, Math.min(1, state.k + (near ? 1 : -1) * seconds / doorSwingS));
-      const eased = state.k * state.k * (3 - 2 * state.k);
-      for (const group of [entry.hero, entry.near, entry.far]) {
-        if (state.applied.get(group) === eased) continue;
-        state.applied.set(group, eased);
-        for (const leaf of def.leaves) group.pose(leaf.node, leaf.open * eased);
+        const open = !!way && (holds.some(h => Math.hypot(h.x - way.centre.x, h.z - way.centre.z) < 1) || list.some(b => doorZone(way, b)));
+        state.k = Math.max(0, Math.min(1, state.k + (open ? 1 : -1) * seconds / doorSwingS));
+        const eased = state.k * state.k * (3 - 2 * state.k);
+        if (state.applied === eased) continue;
+        state.applied = eased;
+        for (const group of [entry.hero, entry.near, entry.far]) for (const leaf of def.leaves) group.pose(leaf.node, leaf.open * eased, ref);
       }
     }
   }
-  /** Openness of every doored building (Scene Lab door gate). */
+  /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
-    return [...this.doorOpen].flatMap(([entry, state]) => entry.refs.map(ref => ({ assetId: entry.id, position: [ref.position.x + entry.origin[0], ref.position.y, ref.position.z + entry.origin[1]] as [number, number, number], open: state.k })));
+    return [...this.doorOpen].map(([ref, state]) => ({ assetId: state.entry.id, position: [ref.position.x + state.entry.origin[0], ref.position.y, ref.position.z + state.entry.origin[1]] as [number, number, number], open: state.k }));
   }
   setFoliageVisible(visible: boolean): void { this.foliage.visible = visible; }
   applyLook(): void {

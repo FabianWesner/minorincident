@@ -18,6 +18,12 @@ export interface BuildingDoor {
   /** Leaves the view swings open while someone is in the doorway (node name, open yaw about +Y in radians).
    * Empty when the authored rest pose is already open. */
   leaves: { node: string; open: number }[];
+  /**
+   * Infected can come out of this door (HouseEmergence: L1 beat-9 residents, the lab-accident staff). `floor` is the
+   * porch deck and stair treads walked from the door plane outward: [until metres (local x past `x`), height], ground
+   * beyond the last; empty for a door at street level.
+   */
+  emerge?: { floor: [number, number][] };
 }
 
 export const buildingDoors: Record<string, BuildingDoor> = {
@@ -26,7 +32,12 @@ export const buildingDoors: Record<string, BuildingDoor> = {
   'bld.courier-depot': { x: 1.27, z: -.675, width: 1.35, lane: -.4, inside: .9, apron: 2.75, leaves: [] },
   // Double glass doors, closed at rest; both leaves swing outward (pose test: door_main -60, door_main_right +60 deg).
   // The technician waits 1.58 m behind the door (L1 lab-tech-spawn), outside the opening zone, so the doors stay shut.
-  'bld.clinic-annex': { x: 2.53, z: -.18, width: 1.8, lane: -.18, inside: .95, apron: 3.3, leaves: [{ node: 'door_main', open: -1.31 }, { node: 'door_main_right', open: 1.31 }] },
+  'bld.clinic-annex': { x: 2.53, z: -.18, width: 1.8, lane: -.18, inside: .95, apron: 3.3, leaves: [{ node: 'door_main', open: -1.31 }, { node: 'door_main_right', open: 1.31 }], emerge: { floor: [] } },
+  // House front door on a raised porch (assets/bld.house-a/build.py, GLB frame = Blender frame shifted -0.68 in x): hinge
+  // empty `door_front` at x 1.404, z -1.02, leaf 1.06 wide to z -2.08 (the layout.py door path point is x 4.1, z -1.6).
+  // The leaf swings outward over the porch (-100 degrees). Plank deck top 0.54 m to x 3.0, treads 0.36 m to 3.26 and 0.20 m
+  // to 3.52, then the garden path.
+  'bld.house-a': { x: 1.404, z: -1.56, width: 1.0, lane: -1.56, inside: .5, apron: 4.1, leaves: [{ node: 'door_front', open: -1.745 }], emerge: { floor: [[1.59, .54], [1.85, .36], [2.11, .2]] } },
 };
 
 /** Asset-local (x, z) to world for a placement (same transform as the instanced static view). */

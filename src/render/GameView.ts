@@ -620,7 +620,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
-    if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies());
+    if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
@@ -695,7 +695,7 @@ export class GameView implements Lifecycle {
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
-    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
+    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);

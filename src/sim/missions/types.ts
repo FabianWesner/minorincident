@@ -1,3 +1,4 @@
+import type { HouseEmergence } from '../outbreak/HouseEmergence';
 import type { DeviceOptions } from '../interact/Interactables';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import type { EntitySnapshot } from '../world/types';
@@ -82,10 +83,13 @@ export interface L1State {
   turnedIds: number[]; escapedIds: number[];
   graceUntil: number;
   /**
-   * Beat 9 (PO rule 2026-10-07): the one house near the garage whose residents come out one by one; `door` is the
-   * refuge-door number (0 = none in range), `next` the tick of the next emergence, `ids` the residents out so far.
+   * Beat 9 (PO rule 2026-10-07): the one house near the garage whose residents come out of its front door one by one
+   * (HouseEmergence: `house` the placement id, '' = none in range; `x, z` the threshold; `next` the tick of the next
+   * resident; `ids` the residents out so far).
    */
-  house: { door: number; x: number; z: number; ox: number; oz: number; next: number; ids: number[] } | null;
+  house: HouseEmergence | null;
+  /** The lab accident: the four staff walking out of the annex front door behind the technician (HouseEmergence). */
+  labExit?: HouseEmergence | null;
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
   beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */

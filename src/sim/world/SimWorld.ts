@@ -35,6 +35,8 @@ import { EntityStore } from './EntityStore';
 import { emptyInput, type EntityFilter, type EntitySnapshot, type GameEvent, type GameStateSnapshot, type InputFrame, type Transform } from './types';
 
 /** Headless composition root: survivor gameplay and the preserved E01/E02 cube fixtures. */
+/** An open building door (see SimWorld.openDoors). */
+export interface OpenDoor { x: number; z: number; nx: number; nz: number; at: number }
 export class SimWorld implements Lifecycle {
   /** Explicit inspection courier option; false for every normal game and bot run. */
   inspectionGhost = false;
@@ -104,6 +106,18 @@ export class SimWorld implements Lifecycle {
   /** Story beats (E19 PO UAT): while set, player input is replaced by `scripted` (or nothing); any press
    * (click, key, tap, move) marks `skip` for the beat owner to fast-forward. */
   storyLock: { scripted: InputFrame | null; skip: boolean } | null = null;
+  /**
+   * Building doors standing open (shared door-open helper): `x, z` the threshold point, `nx, nz` the outward normal, `at`
+   * the tick it opened. Gameplay owns the state (deterministic, checkpoint-safe through its owner); the district view
+   * swings the authored door leaf open (DistrictView.syncDoors). Open with `openDoor`, never by writing the map.
+   */
+  readonly openDoors = new Map<string, OpenDoor>();
+  /** Open a building door once (idempotent): the leaf swings out and `gate.changed` fires for audio and tests. */
+  openDoor(id: string, door: Omit<OpenDoor, 'at'>, tick = this.tick): void {
+    if (this.openDoors.has(id)) return;
+    this.openDoors.set(id, { ...door, at: tick });
+    this.events.emit({ type: 'gate.changed', tick, id, open: true });
+  }
   private storyHeld = false;
   private readonly drivingCombatInput = emptyInput();
   private scheme: import('../../input/InputFrame').Scheme = 'mouse-only';
@@ -306,7 +320,7 @@ export class SimWorld implements Lifecycle {
     this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
-    this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput();
+    this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }
   dispose(): void { this.reset(); }
 }
