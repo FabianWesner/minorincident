@@ -16,6 +16,7 @@ import { attribute } from 'three/tsl';
 import { staticBatch, staticBatchAsync } from './staticBatch';
 import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
+import { openFireStationBays } from './fireStationBays';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2']): string[] {
   const def = definition(productionIds[id] ?? id);
@@ -118,11 +119,7 @@ export class DistrictAssets {
         const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
         if (turned > straight) asset.rotation.y = Math.PI / 2;
       }
-      // The authored sectional leaves expose a real aperture (not a dark overlay on a closed door).
-      if (id === 'bld.fire-station') for (const name of ['door_bay_L', 'door_bay_R']) {
-        const leaf = asset.getObjectByName(name);
-        if (leaf) leaf.position.y += Number(leaf.userData.travel ?? 3.15);
-      }
+      openFireStationBays(id, asset);
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
