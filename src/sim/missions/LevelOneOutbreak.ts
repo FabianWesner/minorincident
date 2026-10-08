@@ -253,6 +253,8 @@ export class LevelOneOutbreak {
   }
   private emit(type: L1AccidentEventName): void {
     if (type === 'l1.blast') this.blastPush();
+    // The annex front doors burst open with the screams; the staff run out of them at the exit beat.
+    if (type === 'l1.screams') { const l1 = this.l1, w = this.mission.world; l1.labExit ??= this.labDoor(); if (l1.labExit) w.openDoor(doorId(l1.labExit), { x: l1.labExit.x, z: l1.labExit.z, nx: l1.labExit.nx, nz: l1.labExit.nz }, w.tick); }
     const a = this.anchor(story.anchors[type]);
     this.mission.world.events.emit({ type, tick: this.mission.world.tick, anchor: story.anchors[type], position: { x: a.x, z: a.z } });
   }
@@ -261,7 +263,7 @@ export class LevelOneOutbreak {
   private release(tick: number): void {
     const { world } = this.mission, l1 = this.l1, ai = world.infected;
     l1.phase = 'spread'; l1.exitIds = []; l1.exitHeadingsDeg = [];
-    l1.labExit = this.labDoor();
+    l1.labExit ??= this.labDoor();
     if (ai) {
       const rng = new Rng(world.seed, 'l1-exit');
       for (const [i, [exit, heading]] of story.exits.entries()) {
@@ -273,7 +275,10 @@ export class LevelOneOutbreak {
         const id = i === 0 ? this.infectTechnician(at) : l1.labExit ? this.staffOut(tick, i) : this.spawnInfected(at, story.variants[i]);
         if (id === 0) continue;
         l1.exitIds.push(id); l1.exitHeadingsDeg.push(heading);
-        const target = this.pedestrianTarget(from) ?? this.farPoint(from, rad);
+        // Out of one door the staff would all chase the same nearby pedestrians: three of them go for the courier, who used
+        // to be cut off by the window and side exits (difficulty: the newbie bot must still take hits).
+        const player = world.entities.get(1)!.transform, chase = l1.labExit && i !== 4;
+        const target = chase ? { x: player.x, z: player.z } : this.pedestrianTarget(from) ?? this.farPoint(from, rad);
         const exiting = world.entities.get(id);
         if (exiting?.combat) { exiting.combat.damageMultiplier = story.graceDamage; exiting.combat.staggerUntil = tick + Math.round(story.staggerS * TICKS); }
         if (i === 0) {
@@ -306,10 +311,10 @@ export class LevelOneOutbreak {
     // Panicked staff burst out at a run right behind the technician (a stumble here let the courier walk away unharmed).
     return door && exit ? { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [], speedMs: l1v2.speedTiers.average.baseMs } : null;
   }
-  /** Staff member `i` (1..4) of the accident: inside the annex behind the technician, two abreast, walking out. */
+  /** Staff member `i` (1..4) of the accident: just inside the open annex doors, two abreast, running out. */
   private staffOut(tick: number, i: number): number {
     const l1 = this.l1, k = i - 1;
-    return emergeResident(this.mission.world, l1.labExit!, tick, { inside: 2.1 + Math.floor(k / 2) * .8, lateral: k % 2 ? .42 : -.42,
+    return emergeResident(this.mission.world, l1.labExit!, tick, { inside: .5 + Math.floor(k / 2) * .75, lateral: k % 2 ? .42 : -.42,
       look: { role: story.techRole, model: story.staffModels[k % story.staffModels.length], tint: story.staffTints[k % story.staffTints.length] } });
   }
   /** Staff on their walk out of the annex door: at the street each gets a short disoriented beat, then rushes. */
