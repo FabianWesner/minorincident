@@ -3,7 +3,7 @@ import { Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, O
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
-  private readonly batches: { mesh: InstancedMesh; local: Matrix4 }[] = [];
+  private readonly batches: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }[] = [];
   private readonly scratch = new Matrix4();
   private readonly tinted: boolean;
   private readonly color = new Color();
@@ -17,7 +17,8 @@ export class InstancedGroup extends Group {
       mesh.count = references.length;
       if (this.tinted) mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(capacity * 3).fill(1), 3);
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
-      this.batches.push({ mesh, local: new Matrix4().multiplyMatrices(inverse, child.matrixWorld) }); this.add(mesh);
+      const local = new Matrix4().multiplyMatrices(inverse, child.matrixWorld), door = child.userData.door as string | undefined;
+      this.batches.push({ mesh, local, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
     });
     this.update();
   }
@@ -30,9 +31,22 @@ export class InstancedGroup extends Group {
       batch.mesh.instanceMatrix.needsUpdate = true; if (batch.mesh.instanceColor) batch.mesh.instanceColor.needsUpdate = true; batch.mesh.computeBoundingSphere();
     }
   }
-  private write(batch: { mesh: InstancedMesh; local: Matrix4 }, i: number): void {
+  /** Swing a split door leaf (staticBatch `splitDoors`): yaw about its hinge's +Y, on one placement or on every instance.
+   * The yaw lives on the placement reference, so it survives LOD repartitions between the hero/near/far groups. */
+  pose(door: string, yaw: number, reference?: Object3D): void {
+    for (const ref of reference ? [reference] : this.references) (ref.userData.doorYaw ??= {} as Record<string, number>)[door] = yaw;
+    for (const batch of this.batches) if (batch.door === door && batch.base) {
+      for (let i = 0; i < this.references.length; i++) if (!reference || this.references[i] === reference) this.write(batch, i);
+      batch.mesh.instanceMatrix.needsUpdate = true; batch.mesh.computeBoundingSphere();
+    }
+  }
+  get doors(): string[] { return this.batches.flatMap(b => b.door ? [b.door] : []); }
+  private readonly leaf = new Matrix4();
+  private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }, i: number): void {
     this.references[i].updateWorldMatrix(true, false);
-    this.scratch.multiplyMatrices(this.references[i].matrixWorld, batch.local); batch.mesh.setMatrixAt(i, this.scratch);
+    const yaw = batch.door ? (this.references[i].userData.doorYaw as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
+    const local = batch.base && yaw ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationY(yaw)) : batch.local;
+    this.scratch.multiplyMatrices(this.references[i].matrixWorld, local); batch.mesh.setMatrixAt(i, this.scratch);
     const tint = this.references[i].userData.tint; if (batch.mesh.instanceColor && typeof tint === 'string') batch.mesh.setColorAt(i, this.color.set(tint));
   }
   dispose(): void { for (const batch of this.batches) batch.mesh.dispose(); this.clear(); this.batches.length = 0; }

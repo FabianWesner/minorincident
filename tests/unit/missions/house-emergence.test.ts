@@ -8,7 +8,7 @@ describe('HouseEmergence door geometry', () => {
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as DistrictLayout;
   const anchors = Object.fromEntries(Object.entries(layout.anchors).map(([k, a]) => [k, { x: (a as { position: number[] }).position[0], z: (a as { position: number[] }).position[2] }]));
   test('every house-a front door sits behind its gate path, faces the street and matches its refuge door', () => {
-    const doors = layoutHouseDoors(layout, [0, 0], anchors);
+    const doors = layoutHouseDoors(layout, [0, 0], anchors, id => id === 'bld.house-a');
     expect(doors.length).toBe(layout.placements.filter(p => p.assetId === 'bld.house-a').length);
     for (const d of doors) {
       const p = layout.placements.find(q => q.id === d.house)!;

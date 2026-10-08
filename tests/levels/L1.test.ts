@@ -124,10 +124,10 @@ describe('L1 v2 mission', () => {
       expect(l1.exitIds).toContain(id);
       const same = w.entities.get(id)!;
       expect(same.infected?.variant).toBe(variant); expect(same.civilian).toBeUndefined(); expect(same.faction).toBe('infected');
-      // At the exit the five stand at >= 2 different exits.
-      const exits = ['lab-exit-front', 'lab-exit-side', 'lab-exit-window'].map(n => mission.def.anchors[n]);
-      const used = new Set(l1.exitIds.map(i => { const e = w.entities.get(i)!.transform; return exits.map((a, k) => [Math.hypot(a.x - e.x, a.z - e.z), k]).sort((a, b) => a[0] - b[0])[0][1]; }));
-      expect(used.size).toBeGreaterThanOrEqual(l1v2.accident.minExits);
+      // PO P1 10-08: the four staff are inside the annex behind its front door (never at the exits) and walk out of it.
+      const lab = l1.labExit!; expect(lab.house).toMatch(/^bld\.clinic-annex/);
+      for (const i of l1.exitIds.slice(1)) { const e = w.entities.get(i)!.transform; expect((e.x - lab.x) * lab.nx + (e.z - lab.z) * lab.nz, `seed ${seed} staff ${i}`).toBeLessThan(-1); }
+      expect(w.openDoors.has(`door-${lab.house}`)).toBe(true);
       expect(maxSeparatedHeadings(l1.exitHeadingsDeg, l1v2.accident.minHeadingSeparationDeg)).toBeGreaterThanOrEqual(l1v2.accident.minDistinctHeadings);
       w.dispose(); world = undefined;
     }

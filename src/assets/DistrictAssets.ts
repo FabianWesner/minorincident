@@ -1,4 +1,4 @@
-import { Box3, Group, Matrix4, Mesh, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { Group, Mesh, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -14,6 +14,7 @@ import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
 import { staticBatch, staticBatchAsync } from './staticBatch';
+import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
@@ -22,8 +23,6 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
   if (!atLeast(def.status, 'integrated') || def.decalTexture) return [];
   return [...new Set(lods.map(lod => def.lods?.[lod] ?? def.glb).filter((path): path is string => Boolean(path)).map(path => '/' + path.replace(/^public\//, '')))];
 }
-/** A building's hinged door leaf (DistrictAssets.doorLeaf). Shared: clone `leaf` per placement. */
-export interface DoorLeaf { leaf: Group; matrix: Matrix4; bounds: Box3; angle: number }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
 export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station']);
@@ -127,6 +126,7 @@ export class DistrictAssets {
       }
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
+      const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {
@@ -176,31 +176,7 @@ export class DistrictAssets {
       );
     return this.cache.get(key)!;
   }
-  /**
-   * The hinged door of a building (pivot node `door_front` / `door_entry` / `door_back`; DistrictView.syncDoors swings
-   * it open): the leaf batched with the building's own palette shading, in pivot space, plus the pivot
-   * transform in model space, the leaf bounds and the authored opening angle (degrees about the up axis). Null when the
-   * asset has no door pivot.
-   */
-  doorLeaf(id: string, lod: AssetQuality = 'lod0'): Promise<DoorLeaf | null> {
-    const productionId = productionIds[id] ?? id, canonical = this.canonical(id, lod), key = `${id}:door:${canonical}`;
-    if (!this.doorLeaves.has(key)) this.doorLeaves.set(key, this.assets.loadAsset(productionId, canonical).then(asset => {
-      asset.updateMatrixWorld(true);
-      let pivot: import('three').Object3D | undefined;
-      for (const name of ['door_front', 'door_entry', 'door_back']) { pivot = asset.getObjectByName(name); if (pivot) break; }
-      if (!pivot) return null;
-      const matrix = asset.matrixWorld.clone().invert().multiply(pivot.matrixWorld);
-      const source = pivot.clone(true); source.position.set(0, 0, 0); source.quaternion.identity(); source.scale.set(1, 1, 1);
-      const leaf = this.remember(staticBatch(source, true, this.materials)); this.share(leaf);
-      leaf.traverse(node => { if (node instanceof Mesh) { this.batchMaterials.add(node.material as Material); if (node.material instanceof PaletteMaterial) node.material.seeThrough(); } });
-      const angle = Number(pivot.userData.open_angle ?? -100);
-      return { leaf, matrix, bounds: new Box3().setFromObject(leaf), angle: Number.isFinite(angle) ? angle : -100 };
-    }));
-    return this.doorLeaves.get(key)!;
-  }
-  private readonly doorLeaves = new Map<string, Promise<DoorLeaf | null>>();
   dispose(): void {
-    this.doorLeaves.clear();
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
     for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear();
