@@ -1,0 +1,16 @@
+{
+  "name": "infected-chase",
+  "ground": "asphalt",
+  "size": 44,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-5, 0], "yaw": 0 },
+    { "id": "horde", "kind": "infected", "archetype": "infected.runner", "count": 10, "at": [5, 0], "spread": 2.2, "yaw": 180, "state": "chase" }
+  ],
+  "script": [
+    { "frame": 40, "actor": "courier", "do": { "run": [[-12, 0], [-12, -10], [10, -10], [10, 8], [-12, 8], [-12, 0]], "loop": true } }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1.3 },
+  "frames": 420,
+  "shots": [0, 120, 300, 420],
+  "expect": { "consoleErrors": 0 }
+}

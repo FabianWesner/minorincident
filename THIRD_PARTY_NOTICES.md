@@ -96,6 +96,8 @@ distributed with those packages. Rapier and Playwright use Apache-2.0.
 Project dependency versions are pinned in package-lock.json. Wrangler is a
 deploy-only tool invoked through npx and is not a project dependency.
 glTF Transform, meshoptimizer, ndarray and pngjs use MIT.
+The Scene Lab QA tool (tools/scenelab, dev only, not bundled) uses @modelcontextprotocol/sdk 1.32.1 (MIT) and
+zod 4.6.5 (MIT); the SDK's transitive packages are MIT, ISC, BSD-2-Clause or BSD-3-Clause.
 The local PNG-only ndarray-pixels adapter avoids Sharp/libvips and its
 non-permissive native dependency. Production atlases must be PNG. Basis Universal runtime transcoders bundled
 by Three.js use Apache-2.0 (Binomial LLC).
