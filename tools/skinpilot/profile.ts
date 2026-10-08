@@ -1,7 +1,7 @@
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { cpus, platform } from 'node:os';
 import { performance } from 'node:perf_hooks';
-import { MeshLambertMaterial, SkinnedMesh } from 'three';
+import { MeshLambertMaterial, SkinnedMesh, Vector3 } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { CharacterView } from '../../src/render/characters/CharacterView';
@@ -23,6 +23,7 @@ const makeMaterial = () => Object.assign(new MeshLambertMaterial({ vertexColors:
 const materials = { fromVertexColors: makeMaterial, fromColor: makeMaterial, get: makeMaterial, unique: makeMaterial } as unknown as Materials;
 const percentile = (values: number[], p: number) => values.sort((a, b) => a - b)[Math.floor((values.length - 1) * p)];
 const results: Record<string, unknown> = {};
+const threat = new Vector3(3, 1.1, -2);
 try {
   for (const variant of (process.argv.includes('--both') ? ['female', 'male'] : ['female']) as ('female' | 'male')[]) for (const skin of [false, true]) for (const mode of ['idle', 'walk', 'run', 'jab', 'kick', 'bat', 'ride']) {
     const character = new CharacterView(); await character.init(materials, false, false, 'courier', skin);
@@ -45,6 +46,8 @@ try {
         for (const [target, name] of [['seat', 'seat'], ['handL', 'grip_l'], ['handR', 'grip_r'], ['footL', 'pedal_l'], ['footR', 'pedal_r']] as const) bike.getObjectByName(name)!.getWorldPosition(contacts[target]);
       }
       const start = performance.now();
+      // Worst case for the living layer: a threat to glance at (riding/strikes fade it out themselves).
+      character.glanceAt?.(threat);
       character.update(pose, tick, 1, mode === 'ride' ? { pedal, steer: 0 } : undefined);
       if (skin) character.applyRideContacts(mode === 'ride' ? contacts : undefined);
       else if (mode === 'ride') { character.seatPelvis(contacts.seat, -.04); character.holdHandlebar(contacts.handL, contacts.handR); }

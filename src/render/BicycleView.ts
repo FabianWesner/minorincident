@@ -91,8 +91,10 @@ export class BicycleView extends Group {
     const rig = this.rig; if (!rig) return null;
     rig.root.updateMatrixWorld(true);
     const wheels = [rig.wheelR, rig.wheelF].map((wheel, i) => {
-      const p = wheel?.getWorldPosition(new Vector3()); if (!p) return null;
-      p.y -= (i === 0 ? WHEEL_R.R : WHEEL_R.F) * SCALE; return p.toArray();
+      const p = wheel?.getWorldPosition(new Vector3()); if (!p || !wheel) return null;
+      // Lowest tire point: a leaned wheel's rim bottom is R * sqrt(1 - axle_y^2) below the hub.
+      const axle = new Vector3(0, 0, 1).applyQuaternion(wheel.getWorldQuaternion(new Quaternion()));
+      p.y -= (i === 0 ? WHEEL_R.R : WHEEL_R.F) * SCALE * Math.sqrt(Math.max(0, 1 - axle.y * axle.y)); return p.toArray();
     });
     return { position: rig.root.position.toArray(), orientation: rig.lean.getWorldQuaternion(new Quaternion()).toArray(), seat: rig.seat?.getWorldPosition(new Vector3()).toArray() ?? null, wheels };
   }
@@ -131,8 +133,12 @@ export class BicycleView extends Group {
     const rig = this.rig, b = bike.bicycle, from = b.mounted ? this.world.previousPlayer : null, to = bike.transform;
     const t = from ? Object.assign(this.presented, { x: lerp(from.x, to.x, alpha), y: to.y, z: lerp(from.z, to.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
     rig.model.position.x = b.mounted ? rig.offset : 0;
-    const ground = t.y;
-    rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
+    // Each wheel rests on the paving under its own contact point (kerbs, crosswalk slabs): the frame pitches between them.
+    const districts = this.world.districts, fx = Math.cos(t.yaw), fz = -Math.sin(t.yaw);
+    const xR = rig.model.position.x + bicycleGeometry.rearWheel, xF = rig.model.position.x + bicycleGeometry.frontWheel;
+    const gR = districts ? districts.pavingHeight(t.x + fx * xR, t.z + fz * xR) : Math.max(0, t.y), gF = districts ? districts.pavingHeight(t.x + fx * xF, t.z + fz * xF) : gR;
+    const pitch = Math.atan2(gF - gR, xF - xR);
+    rig.root.visible = true; rig.root.position.set(t.x, gR - xR * Math.sin(pitch), t.z); rig.root.rotation.y = t.yaw;
     if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
     rig.last = { x: t.x, z: t.z };
     const steering = b.steer * bicycleHandling.maxSteering / (1 + b.speed / l1v2.bicycle.speedMs);
@@ -145,7 +151,7 @@ export class BicycleView extends Group {
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
     rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
     rig.leanAngle = riding ? b.lean ?? 0 : 0;
-    rig.lean.rotation.x = rig.leanAngle; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .012 * speed : 0;
+    rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = riding ? Math.abs(Math.sin(b.pedal * 2)) * .008 * speed : 0;
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
     rig.placed = riding && carrying ? Math.min(1, rig.placed + 1 / 21) : 0;

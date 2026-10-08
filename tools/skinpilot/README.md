@@ -61,3 +61,9 @@ MESH2MOTION_SOURCE=/path/to/pinned/mesh2motion-app npx tsx tools/skinpilot/retar
 Skin mesh rebuilding uses `assets/char.courier-female-skin/build.py` or
 `assets/char.courier-male-skin/build.py`, followed by `tools/skinpilot/compress.ts`.
 No bike model changes are needed for contacts.
+
+Skeleton v2 (`docs/reports/courier-rig-v2.md`): the runtime joint names are unchanged; the Mesh2Motion
+chain (torso = spine_01, spine, chest, neck, clavicles) carries retargeted tracks, while the
+elbow/knee/twist/toe helpers, eyes, ponytail and bag are driven by `src/render/characters/CourierRig.ts`
+after the ride contacts. Measure deformation with `npx tsx tools/skinpilot/deform.ts out.json
+[--glb=a.glb,b.glb]` (fan-volume ratio and edge stretch per joint, v1 and v2 comparable).
