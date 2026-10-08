@@ -22,8 +22,6 @@ export interface Refuge { id: string; x: number; z: number }
 export interface OutbreakOptions {
   /** Refuge doors and map edges a fleeing pedestrian runs to (anchors `refuge-door-*`, `edge-in-*`). */
   refuges: Refuge[];
-  /** Off-screen entries for the civilian top-up (anchors `edge-in-*`). Defaults to the edge refuges. */
-  entries?: Refuge[];
   /** Named positions for anchor-only accident events (`l1.blast` at `lab-door`, ...). */
   anchors?: Record<string, Vec2>;
   tier?: 'high' | 'low';
@@ -47,19 +45,17 @@ export interface PedestrianOptions {
 export class Outbreak {
   readonly rng: Rng;
   readonly humans: HumanTargets;
-  readonly stats = { bites: 0, turned: 0, killed: 0, escaped: 0, rescued: 0, toppedUp: 0, hordeSpawned: 0 };
+  readonly stats = { bites: 0, turned: 0, killed: 0, escaped: 0, rescued: 0, };
   /** Tick of the first living infected in the level; -1 before the accident. */
   started = -1;
   /** Optional dynamic line-of-sight blockers (gates, car-wash curtain) registered by lane C/F. */
   blockers: LosBlockerRegistry | null = null;
   readonly refuges: Refuge[];
-  readonly entries: Refuge[];
   private readonly heard: { x: number; z: number; tick: number }[] = [];
   private readonly rescue = new Set<number>();
   /** People convulsing on the ground this tick: witnesses notice them like an infected. */
   private readonly turning: EntitySnapshot[] = [];
   private emitting = false;
-  private topUpAt = 0;
   private readonly offs: (() => void)[] = [];
   constructor(readonly world: SimWorld, readonly options: OutbreakOptions) {
     this.rng = new Rng(world.seed, 'outbreak');
@@ -67,7 +63,6 @@ export class Outbreak {
     const ai = world.infected!;
     ai.director.levelCap = l1v2.director.capHigh; ai.director.tier = options.tier ?? 'high';
     this.refuges = options.refuges.map(r => ({ id: r.id, ...this.snap(r) }));
-    this.entries = (options.entries ?? options.refuges.filter(r => r.id.startsWith('edge'))).map(r => ({ id: r.id, ...this.snap(r) }));
     const hear = (event: { type: string; position?: Vec2; anchor?: string }) => {
       const p = event.position ?? (event.anchor ? options.anchors?.[event.anchor] : undefined); if (p) this.hear(p);
     };
@@ -134,7 +129,7 @@ export class Outbreak {
     return tint;
   }
   /**
-   * Every L1 infected is somebody: director, horde and stream spawns (and a pooled record reused under a new id) get a
+   * Every L1 infected is somebody: lab exits, house residents (and a pooled record reused under a new id) get a
    * pedestrian look (random civilian model, free tint) so they render with the turned treatment, never the old runner.
    * Runs in the AI phase and again at cleanup, so spawns from later phases are dressed before the frame renders.
    */
@@ -148,7 +143,7 @@ export class Outbreak {
   }
   update(): void {
     const world = this.world, ai = world.infected!, tick = world.tick;
-    if (this.started < 0 && ai.active.some(a => a.health.current > 0)) { this.started = tick; this.topUpAt = tick; }
+    if (this.started < 0 && ai.active.some(a => a.health.current > 0)) this.started = tick;
     this.dressInfected();
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
@@ -167,7 +162,6 @@ export class Outbreak {
       } else if (c.state === 'flee' || c.state === 'hide') this.flee(e);
       if (!e.hidden && e.civilian && mobile.has(c.state) && (tick + e.id) % 2 === 0 && !this.aiBites()) this.contact(e);
     }
-    this.topUp();
   }
 
   private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
@@ -418,59 +412,11 @@ export class Outbreak {
   liveCivilians(): number {
     let count = 0; for (const e of this.world.entities.iterate()) if (e.civilian?.l1 && !e.hidden && !e.infection && mobile.has(e.civilian.state)) count++; return count;
   }
-  /** Section 5.9: walkers enter from off-screen edges while fewer than 25 remain, until 3:30 into the outbreak. */
-  private topUp(): void {
-    const tick = this.world.tick, d = l1v2.director;
-    if (this.started < 0 || tick < this.topUpAt || tick - this.started > ticks(d.topUpUntilS) || !this.entries.length) return;
-    this.topUpAt = tick + ticks(l1Pedestrians.topUpEveryS);
-    if (this.liveCivilians() >= d.topUpBelowCivilians) return;
-    const director = this.world.infected!.director;
-    const start = Math.floor(this.rng.next() * this.entries.length);
-    for (let i = 0; i < this.entries.length; i++) {
-      const entry = this.entries[(start + i) % this.entries.length];
-      if (!director.safe('infected.runner', entry)) continue;
-      const goal = this.walkGoal(entry);
-      this.spawnPedestrian({ x: entry.x, z: entry.z }, { waypoints: [goal, { x: entry.x, z: entry.z }] });
-      this.stats.toppedUp++; return;
-    }
-  }
-  private walkGoal(from: Vec2): Point {
-    const nav = this.world.infected!.nav;
-    for (let i = 0; i < 8; i++) {
-      const angle = this.rng.next() * Math.PI * 2, r = 15 + this.rng.next() * 25;
-      const cell = nav.nearestCell(from.x + Math.cos(angle) * r, from.z + Math.sin(angle) * r);
-      if (cell >= 0 && nav.clear(nav.x(cell), nav.z(cell), .35)) return { x: nav.x(cell), z: nav.z(cell) };
-    }
-    return { x: from.x, z: from.z };
-  }
-  /**
-   * Section 5.9 horde guarantee before beat 9 (called by the mission): if fewer than 6 infected are within 35 m of
-   * `exit`, spawn the shortfall at the off-screen `entry` as infected pedestrians (civilian models with the overlay)
-   * chasing fleeing pedestrians. Returns the number spawned.
-   */
-  ensureHorde(exit: Vec2, entry: Vec2): number {
-    const ai = this.world.infected!, d = l1v2.director;
-    let near = 0; for (const a of ai.active) if (a.health.current > 0 && Math.hypot(a.transform.x - exit.x, a.transform.z - exit.z) <= d.hordeRadiusM) near++;
-    const at = this.snap(entry), missing = Math.max(0, d.hordeMinInfectedNearGarage - near);
-    // M1-10: never spawn in view; the mission simply asks again on a later tick.
-    if (missing && !ai.director.offscreen(at)) return 0;
-    let spawned = 0;
-    for (let i = 0; i < missing && ai.director.count < ai.director.cap && ai.pool.length; i++) {
-      const p = this.snap({ x: at.x + (i % 3) * 1.2 - 1.2, z: at.z + Math.floor(i / 3) * 1.2 });
-      this.turnNow(this.world.entities.get(this.spawnPedestrian(p))!); spawned++;
-    }
-    for (let i = 0; i < Math.min(2, spawned); i++) {
-      const p = this.snap({ x: at.x + (exit.x - at.x) * .25 + i, z: at.z + (exit.z - at.z) * .25 });
-      const id = this.spawnPedestrian(p), c = this.world.entities.get(id)!.civilian!;
-      c.threat.x = at.x; c.threat.z = at.z; c.l1!.noticed = this.world.tick; this.state(this.world.entities.get(id)!, 'flee');
-    }
-    this.stats.hordeSpawned += spawned; return spawned;
-  }
   /** Checkpoint restore (after `Npcs.restore` shifted entity timers by `delta`): layer-level clocks only. */
   restore(delta: number): void {
-    this.started = this.started < 0 ? -1 : this.started + delta; this.topUpAt += delta; this.heard.length = 0; this.rescue.clear(); this.humans.invalidate();
+    this.started = this.started < 0 ? -1 : this.started + delta; this.heard.length = 0; this.rescue.clear(); this.humans.invalidate();
   }
   /** Plain state for a checkpoint snapshot (entities carry everything else). */
-  snapshot() { return { started: this.started, topUpAt: this.topUpAt, stats: { ...this.stats } }; }
-  load(state: ReturnType<Outbreak['snapshot']>): void { this.started = state.started; this.topUpAt = state.topUpAt; Object.assign(this.stats, state.stats); this.heard.length = 0; this.rescue.clear(); this.humans.invalidate(); }
+  snapshot() { return { started: this.started, stats: { ...this.stats } }; }
+  load(state: ReturnType<Outbreak['snapshot']>): void { this.started = state.started; Object.assign(this.stats, state.stats); this.heard.length = 0; this.rescue.clear(); this.humans.invalidate(); }
 }

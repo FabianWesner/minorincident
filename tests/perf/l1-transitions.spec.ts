@@ -59,7 +59,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     const loading = await page.evaluate(() => ({ ...window.__SS__!.perf().loadTiming, warmUp: performance.getEntriesByType('measure').filter(e => e.name.startsWith('L1 ')).map(e => ({ name: e.name, ms: e.duration })) }));
     console.log(`${phase} ${mode} loading ${JSON.stringify(loading)}`);
     // Objective transitions of L1 v2: pickup, delivery hand-over, the accident (flicker, blast, smoke, screams), the infected exit,
-    // the bat pickup, death/respawn from the accident checkpoint, and the fire-station shutter with the end caption.
+    // the bat pickup, death/respawn (the world is kept, PO rule 2026-10-07), and the fire-station shutter with the end caption.
     await place('parcel-counter'); await measure('pickup', interact, 2_500);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.completedObjectives)).toContain('pickup');
     await place('lab-door');
@@ -76,12 +76,14 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.stats.deaths)).toBe(1);
     // The ending is now a reach volume: entering it during paused setup would finish before recording.
     // Stand outside the open bay, then capture the player's real click and actual crossing.
-    await page.evaluate(p => {
-      const a = window.__SS__!; a.teleport('player', { x: p.x, z: p.z - 3 });
+    // The bay opens east toward the game camera (PO 2026-10-07): stand 3 m outside along the door -> trigger axis.
+    await page.evaluate(({ p, q }) => {
+      const a = window.__SS__!, len = Math.hypot(q.x - p.x, q.z - p.z);
+      a.teleport('player', { x: p.x - (q.x - p.x) / len * 3, z: p.z - (q.z - p.z) / len * 3 });
       a.camera.preset('D-GROVE/W0/l1-safe');
-      a.camera.cinematic({ position: [p.x - 12, 16, p.z - 12], target: [p.x, 0, p.z] }, true);
+      a.camera.cinematic({ position: [p.x + 12, 16, p.z + 12], target: [p.x, 0, p.z] }, true);
       a.step(1);
-    }, at('fire-bay-door'));
+    }, { p: at('fire-bay-door'), q: at('fire-bay-trigger') });
     await page.evaluate(() => window.__SS__!.screenshotReady());
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('playing');
     await measure('fire-station-end', async () => {
