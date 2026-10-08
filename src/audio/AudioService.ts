@@ -11,6 +11,8 @@ import { MusicDirector, type MusicIntensity, type MusicTransition } from './Musi
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
+import { storyMusic } from '../data/musicBeats';
+import { isMusicThreat } from './MusicThreat';
 import { l1v2 } from '../data/l1v2';
 import { humanInfected } from '../data/infected';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
@@ -94,6 +96,7 @@ export class AudioService implements Lifecycle {
     private started = false;
     private starting = false;
     private quietMusicUntil = 0;
+    private attackMusicUntil = 0;
     private lastDamageTick = -1000;
     private lastDamage = 0;
     private scheduledTransition: MusicTransition | null = null;
@@ -465,6 +468,7 @@ export class AudioService implements Lifecycle {
         // Long recordings and unused SFX banks must not compete with the level download.
         const generation = this.generation;
         setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
+        if (this.hasScore) this.score.prepareDanger();
         if (this.hasScore) void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         for (const layer of musicLayers) {
             const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
@@ -478,19 +482,20 @@ export class AudioService implements Lifecycle {
         if (!this.started) return;
         const t = this.context.currentTime;
         this.score.update();
-        this.music.update(t, { ...input, incident: this.incident, complete: this.complete });
+        const story = storyMusic(this.level, this.world.missions?.state);
+        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 ? { minimum: story.minimum } : {}), incident: this.incident, complete: this.complete });
         const transition = this.music.pending ?? this.music.transitions.at(-1) ?? { time: t, state: this.music.state, layers: this.music.layers };
         // A transient alert can cancel the first pending change before its bar.
         // Restore the committed state even when the director has no history yet.
         if (!this.scheduledTransition || transition.state !== this.scheduledTransition.state || transition.layers.join() !== this.scheduledTransition.layers.join()) {
             this.scheduledTransition = transition;
-            if (this.hasScore) void this.score.transition(transition.state, transition.time, this.musicEpoch, this.music.bar);
+            if (this.hasScore) void this.score.transition(transition.state, transition.time, this.musicEpoch, this.music.bar, transition.immediate);
             for (const [layer, v] of this.stemVoices) {
                 const at = Math.max(t, transition.time);
                 v.gain.gain.cancelScheduledValues(at);
                 v.gain.gain.setValueAtTime(v.gain.gain.value, at);
                 // The recording carries the theme. Add filtered recorded rhythm/dread accents only.
-                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * 0.18 : 0, at + 2);
+                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * 0.18 : 0, at + (transition.immediate ? 0.8 : 2));
             }
         }
     }
@@ -543,6 +548,10 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'combat.attack') {
+            if (source === 1) {
+                this.attackMusicUntil = t + 0.2;
+                this.musicIntensity({ alerted: 0, danger: true });
+            }
             if (!['ranged', 'throwable'].includes(action(event.actionId).category))
                 this.play(`action.${event.actionId}`, { position, rate: event.style === 'roundhouse' ? .62 : event.actionId === 'weapon.bat' ? .8 : event.actionId === 'weapon.crowbar' ? .95 : event.actionId === 'weapon.machete' ? 1.3 : event.actionId === 'weapon.kick' ? .72 : 1.15 }, source);
             return;
@@ -794,7 +803,7 @@ export class AudioService implements Lifecycle {
                 if (key.startsWith('rocket:') && !this.world.combat?.projectiles.some(p => key === `rocket:${p.attack.id}`))
                     this.stopLoop(key);
         }
-        let alerted = 0;
+        let alerted = 0, danger = t < this.attackMusicUntil;
         if (this.world.tick % 12 === 0) {
             this.points.length = 0;
             let index = 0;
@@ -810,8 +819,9 @@ export class AudioService implements Lifecycle {
                     p.x = e.transform.x;
                     p.z = e.transform.z;
                     this.points.push(p);
-                    if (e.infected.state !== 'idle' && e.infected.state !== 'wander' && Math.hypot(p.x - player.transform.x, p.z - player.transform.z) < 30)
-                        alerted++;
+                    if (isMusicThreat(e, player.transform, p => !this.host.offscreen(p), (a, b) => this.world.infected?.l1?.lineOfSight(a, b) ?? this.world.combat?.query.visible(a, b) ?? true)) {
+                        danger = true; alerted++;
+                    }
                 }
             this.horde.update(this.points, player.transform);
             let audibleCount = 0;
@@ -833,7 +843,7 @@ export class AudioService implements Lifecycle {
                     if (v)
                         this.individualVocals.set(p.id, v);
                 }
-            this.musicIntensity(this.externalIntensity ?? { alerted, damage: this.world.tick - this.lastDamageTick < 300 ? this.lastDamage : 0, vehicleSpeed: this.vehicleSpeed });
+            this.musicIntensity(this.externalIntensity ? { ...this.externalIntensity, ...(danger ? { danger: true } : {}) } : { alerted, danger });
         }
         for (const e of this.world.entities.iterate())
             if (e.survivor && e.health.current > 0) {
@@ -906,7 +916,7 @@ export class AudioService implements Lifecycle {
             if (p.cue === 'l1.blast') this.haptic('explosion');
         }
     }
-    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
+    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, story: storyMusic(this.level, this.world.missions?.state), state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
         this.generation++;
         for (const off of this.unsubscribers)
@@ -931,6 +941,7 @@ export class AudioService implements Lifecycle {
         this.incident = false;
         this.complete = false;
         this.quietMusicUntil = 0;
+        this.attackMusicUntil = 0;
     }
     dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
 }

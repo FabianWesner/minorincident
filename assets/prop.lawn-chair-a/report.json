@@ -2,8 +2,8 @@
   "id": "prop.lawn-chair-a",
   "triangles": {
     "lod0": 1520,
-    "lod1": 180,
-    "lod2": 38
+    "lod1": 1520,
+    "lod2": 1520
   },
   "dimensions_blender": [
     0.6418020129203796,
@@ -29,24 +29,24 @@
   ],
   "delivery": {
     "model.glb": {
-      "bytes": 43216,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 61252,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod1.glb": {
-      "bytes": 9620,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 61252,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 6112,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 61252,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.11842105263157894,
-    "lod2": 0.025
+    "lod1": 1,
+    "lod2": 1
   },
   "within_budget": true,
   "nodes_ok": true,

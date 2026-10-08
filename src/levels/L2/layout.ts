@@ -1,3 +1,5 @@
+import { overlapsRoad, inside } from '../districts/validate';
+import { pushableProps } from '../../data/pushableProps';
 import { l2Anchors } from '../../data/l2';
 import type { DistrictLayout, Placement } from '../districts/types';
 
@@ -68,6 +70,25 @@ const SUPERSEDED: readonly (readonly [asset: string, x: number, z: number])[] = 
   ['prop.privacy-fence', 80.37, 26.44], ['prop.privacy-fence', 80.37, 28.81], ['prop.privacy-fence', 80.37, 31.19], ['prop.privacy-fence', 80.37, 33.56], ['prop.privacy-fence', 81.5, 35],
 ];
 const supersededIds = (layout: DistrictLayout): Set<string> => new Set(layout.placements.filter(p => SUPERSEDED.some(([asset, x, z]) => p.id.startsWith(`${asset}:`) && Math.abs(p.position[0] - x) < .05 && Math.abs(p.position[2] - z) < .05)).map(p => p.id));
+/**
+ * Interaction rings are keep-out zones for props (PO 10-08: a hydrant beside the boarding ring made it hard to enter): the courier
+ * must be able to walk straight in from the apron. Ring + `CLEAR_M` around the three station rings and a corridor of the same
+ * half-width along the apron approaches. Buildings and fences stay; loose street props (hydrants, lamps, crates) are dropped.
+ */
+export const RING_CLEAR_M = 1.2;
+const RINGS: readonly (readonly [string, number])[] = [['l2-board', 1.8], ['l2-axe-rack', 1.5], ['l2-start', 1.2]];
+const CORRIDORS: readonly (readonly [string, string])[] = [['l2-start', 'l2-axe-rack'], ['l2-start', 'l2-board'], ['l2-axe-rack', 'l2-board']];
+const segDist = (px: number, pz: number, [ax, az]: readonly number[], [bx, bz]: readonly number[]) => {
+  const dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((px - ax) * dx + (pz - az) * dz) / (dx * dx + dz * dz)));
+  return Math.hypot(px - (ax + dx * t), pz - (az + dz * t));
+};
+/** Distance from a point to the nearest station ring edge or approach corridor centre line (minus the ring/clearance radius). */
+export function stationKeepOutGap(x: number, z: number): number {
+  const ring = Math.min(...RINGS.map(([n, r]) => Math.hypot(x - l2Anchors[n][0], z - l2Anchors[n][1]) - r));
+  const corridor = Math.min(...CORRIDORS.map(([a, b]) => segDist(x, z, l2Anchors[a], l2Anchors[b]) - .6));
+  return Math.min(ring, corridor);
+}
+const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.includes('fence');
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
 
@@ -87,11 +108,32 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const superseded = supersededIds(layout);
     layout.placements = layout.placements.filter(p => !superseded.has(p.id));
     layout.colliders = layout.colliders.filter(c => !superseded.has(c.id));
+    const blocking = new Set(layout.placements.filter(p => looseProp(p.assetId) && stationKeepOutGap(p.position[0], p.position[2]) < RING_CLEAR_M + 1.5).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !blocking.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !blocking.has(c.id));
+    // Loose inherited furniture cannot start in a driving lane. Check the whole footprint.
+    const onRoad = new Set(layout.placements.filter(p => pushableProps[p.assetId] && overlapsRoad(layout, p.visualAabb)).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !onRoad.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !onRoad.has(c.id.split('/')[0]));
     layout.placements.push(MARKET);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
       const s = d.scale ?? 1, decal = d.assetId.startsWith('decal.');
-      layout.placements.push({ id: `l2-${d.kind}-${i}`, assetId: d.assetId, position: [d.x, decal ? .06 : 0, d.z], yaw: d.yaw ?? 0, scale: decal ? [1.4, 1, 2.6] : [s, s, s], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [d.x - 1, 0, d.z - 1], max: [d.x + 1, 1.5, d.z + 1] } });
+      const placement: Placement = { id: `l2-${d.kind}-${i}`, assetId: d.assetId, position: [d.x, decal ? .06 : 0, d.z], yaw: d.yaw ?? 0, scale: decal ? [1.4, 1, 2.6] : [s, s, s], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [d.x - 1, 0, d.z - 1], max: [d.x + 1, 1.5, d.z + 1] } };
+      // Checkpoint barriers are intentional; belongings and bins belong beside the road.
+      if (pushableProps[d.assetId] && d.kind !== 'checkpoint') {
+        placement.allowRoad = false;
+        if (overlapsRoad(layout, placement.visualAabb)) {
+          let found = false;
+          for (let r = .5; r <= 12 && !found; r += .5) for (const [dx, dz] of [[r, 0], [-r, 0], [0, r], [0, -r], [r, r], [-r, r], [r, -r], [-r, -r]]) {
+            const box = { min: [d.x + dx - 1, 0, d.z + dz - 1] as [number, number, number], max: [d.x + dx + 1, 1.5, d.z + dz + 1] as [number, number, number] };
+            if (overlapsRoad(layout, box) || !inside([d.x + dx, d.z + dz], layout.bounds)) continue;
+            placement.position = [d.x + dx, 0, d.z + dz]; placement.visualAabb = box; found = true; break;
+          }
+          if (!found) throw new Error(`No roadside position for ${placement.id}`);
+        }
+      }
+      layout.placements.push(placement);
     }
     layout.placements.push({ id: 'l2-alarm-car-5', assetId: 'veh.sedan-white', position: [48.6, 0, 12.4], yaw: H, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [47.6, 0, 10.2], max: [49.6, 1.6, 14.6] } });
     layout.lightGroups.push({ id: 'l2', offAt: 5 });

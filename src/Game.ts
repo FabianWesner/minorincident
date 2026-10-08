@@ -171,7 +171,7 @@ export class Game {
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
         if (!speculative) this.campaignUI.reset();
         // Keep the current picture (title backdrop) on screen while the level loads and warms up.
-        if (id === 'L1' && this.params.get('test') !== '1') this.view.freeze();
+        if ((id === 'L1' || id === 'L2') && this.params.get('test') !== '1') this.view.freeze();
         const start=performance.now();
         const {composition,layouts}=opts?.source??await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
