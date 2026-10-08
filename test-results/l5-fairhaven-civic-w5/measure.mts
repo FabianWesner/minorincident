@@ -31,12 +31,17 @@ for(const id of ids){const def=manifest.find((x:any)=>x.id===id);const tiers=[];
   const suffix=lod?`.lod${lod}`:'';const src=`assets/${id}/model${suffix}.glb`,variant=`assets/${id}/model.w5${suffix}.glb`,production=`public/assets/models/${id}.w5${suffix}.glb`;
   const base=await io.read(src),raw=await io.read(variant),doc=await io.read(production);
   const v=validateDocument(doc,{...def,id:id+'.w5',sourceGlb:variant},statSync(production).size,lod,raw);if(v.errors.length)throw new Error(v.errors.join(';'));
-  const anchorNames=['root','body','roof','interior','door_front',...def.frontNodes,...def.sockets];const anchors=[];
+  if(v.triangles>[30000,12000,4000][lod] || v.drawCalls>8)throw new Error(`${id}:${lod}: batch budget`);
+  const rootA=base.getRoot().listNodes().find((n:any)=>n.getName()==='root')!,rootB=raw.getRoot().listNodes().find((n:any)=>n.getName()==='root')!;
+  if(JSON.stringify(rootA.getExtras().ss_physics)!==JSON.stringify(rootB.getExtras().ss_physics))throw new Error(`${id}:${lod}: changed physics`);
+  const colliders=base.getRoot().listNodes().filter((n:any)=>n.getName().startsWith('col:'));
+  for(const a of colliders){const b=raw.getRoot().listNodes().find((n:any)=>n.getName()===a.getName());if(!b||JSON.stringify(a.getExtras())!==JSON.stringify(b.getExtras()))throw new Error(`${id}:${lod}: collider metadata changed`);}
+  const anchorNames=['root','body','roof','interior','door_front',...def.frontNodes,...def.sockets,...colliders.map((n:any)=>n.getName())];const anchors=[];
   for(const name of anchorNames){const a=base.getRoot().listNodes().find((x:any)=>x.getName()===name),b=raw.getRoot().listNodes().find((x:any)=>x.getName()===name);if(!a||!b)throw new Error(`missing ${name}`);
    const delta=Math.max(...a.getWorldMatrix().map((v:number,i:number)=>Math.abs(v-b.getWorldMatrix()[i])));if(delta>1e-6)throw new Error(`${id}:${lod}:${name}: moved ${delta}`);anchors.push({name,delta,translation:b.getWorldTranslation()});
   }
   const a=mask(base),b=mask(raw),intersection=[...a].filter(x=>b.has(x)).length,iou=intersection/(a.size+b.size-intersection);if(iou<.9)throw new Error(`${id}: footprint IoU ${iou}`);
-  tiers.push({lod,triangles:v.triangles,drawCalls:v.drawCalls,materials:v.materials,productionBytes:statSync(production).size,sourceBytes:statSync(variant).size,dimensions:v.dimensions,footprintIoU:iou,anchors});
+  tiers.push({lod,triangles:v.triangles,drawCalls:v.drawCalls,materials:v.materials,productionBytes:statSync(production).size,sourceBytes:statSync(variant).size,dimensions:v.dimensions,footprintIoU:iou,physicsUnchanged:true,colliderCount:colliders.length,anchors});
  }
  const item={id,variant:id+'.w5',tiers,independentAcceptance:'pending'};results.push(item);mkdirSync(`test-results/l5-fairhaven-civic-w5/${id}.w5`,{recursive:true});writeFileSync(`assets/${id}.w5/report.json`,JSON.stringify(item,null,2)+'\n');
 }
