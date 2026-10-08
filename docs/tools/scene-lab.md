@@ -95,6 +95,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
 | `{ "flee": [x, z] }` | pedestrian | Flee from that point. |
 | `{ "mountBike": "<vehicle id>" }`, `{ "dismount": true }` | courier | A real interact press next to the bike. |
+| `{ "handover": { "building": "<placement or asset id>", "meet": "courier" or [x, z], "pauseS": 2.2 } }` | pedestrian | The L1 hand-over walk (`src/sim/missions/doorRoute.ts`): out of the building's street door (`src/data/buildingDoors.ts`) with the parcel, to arm's length in front of `meet`, give and wave, back in the same way. `"legacy": true` replays the pre-2026-10-08 straight-line walk (A/B with `--query doors=0`, which also freezes the animated doors). |
 
 ### Vehicles
 
@@ -133,6 +134,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `clippingMax`
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
+- `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
 - `yawDriftMaxDeg`
@@ -140,6 +142,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `clickMissMax` (clicks on a drawn body that picked another actor or nothing, or did not start a swing within 100 ms / right after the running swing and cooldown; out-of-reach picks count as approaches)
 - `drawCallsMax`
 - `trianglesMax`
+- `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
+- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime.
 
 `clipping` takes these options:
 
@@ -163,6 +167,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
   - `yawDriftMaxDeg`: foot rotation while planted. Turning on the spot shows up here.
   - `liftMaxCm`: highest step.
   - `sinkMaxCm`: feet below the ground.
+  - `jitterRunMax`: longest run of consecutive frames in which a sole reverses vertically by at least 0.8 cm.
   - `torsoPitchMinDeg` and `torsoPitchMaxDeg`: hip to shoulders against vertical, positive leaning forward. The courier runs at about 3–11°. L1 infected lurch at 20–30° and hunch at about 50° when idle.
   - Seated, knocked-down and rising clips are excluded from the foot metrics. The corgi has paws: slide only, no yaw drift. A paw that skims within 1.2 cm of the ground during its swing counts as sliding, so the corgi's slide also catches paws dragging through the floor (see `sinkMaxCm`).
 - **`metrics.bodies`.** Actor pairs whose torso (hip to shoulders, 10 cm), neck (6 cm) and head (a 20 cm capsule above the head pivot, 11 cm) capsules interpenetrate by more than 2 cm, sampled every third frame: `a`, `b`, the worst `depthCm`, its `frame` and `count`. Seated, knocked-down and dying actors are skipped. It catches crowds and melee rings piling into each other (qa-courier-attack-bat had 15.8 cm before the 1.08 m melee ring; a hit contact reads 4-6 cm).
