@@ -3382,7 +3382,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "world": {
@@ -3393,7 +3394,18 @@
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.sedan-blue",
@@ -3441,7 +3453,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "lods": {
       "lod1": "public/assets/models/veh.sedan-blue.lod1.glb",
@@ -3456,7 +3469,18 @@
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.sedan-white",
@@ -3503,7 +3527,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceGlb": "assets/veh.sedan-white/model.glb",
     "lods": {
@@ -3528,6 +3553,13 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
     }
   },
   {
@@ -3643,7 +3675,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceGlb": "assets/veh.suv-dark/model.glb",
     "script": "assets/veh.suv-dark/build.py",
@@ -3669,6 +3702,13 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
     }
   },
   {

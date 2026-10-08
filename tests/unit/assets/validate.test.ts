@@ -84,3 +84,15 @@ test('@E17-AC02 decay caps apply to variants without changing the integrated bas
   }
   expect(variants.filter(r => r.id.endsWith(':lod0')).every(r => r.errors.some(e => e.startsWith('triangles:')))).toBe(true);
 });
+
+test('@E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits', async () => {
+  const original = manifest.find(a => a.id === 'veh.sedan-red')! as AssetDef;
+  const reports = await validateAssets([{ ...original, decayBudgets: { burned: { materials: 0, drawCalls: 0 } } }]);
+  expect(reports.filter(r => !r.id.includes('.burned:')).flatMap(r => r.errors)).toEqual([]);
+  const burned = reports.filter(r => r.id.includes('.burned:'));
+  expect(burned).toHaveLength(3);
+  for (const report of burned) {
+    expect(report.errors.some(e => e.startsWith('materials:'))).toBe(true);
+    expect(report.errors.some(e => e.startsWith('static drawCalls:'))).toBe(true);
+  }
+});
