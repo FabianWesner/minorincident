@@ -36,12 +36,13 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // never a target down the street (a straggler grabbed behind the running group is on his own).
   let forced: EntitySnapshot | undefined;
   // Breakout (the first seconds after the fallback call): the squad gets out with the player instead of holding the yard.
-  // Otherwise (E21 §5.4) an officer in a fight keeps fighting wherever the player goes (separation is real); one without
-  // a target that has fallen behind regroups and picks no new fight down the street on the way.
+  // Otherwise (E21 §5.4) an officer engages what it sees within 18 m while it is within 20 m of the player, and a fight in
+  // progress goes on wherever the player goes (separation is real); one further back without a target regroups and picks
+  // no new fight on the way.
   const breakout = follower && (a.follow!.breakoutUntil ?? 0) > tick;
   const current = a.targetId ? world.entities.get(a.targetId) : undefined;
   const fighting = !!current?.infected && current.health.current > 0 && !current.hidden && dist(current.transform, e.transform) <= (a.follow?.engageM ?? 0) * 1.2;
-  if (follower && a.engaged && !a.strikeAt && (breakout || (!fighting && dist(e.transform, leader!.transform) > a.follow!.maxM + 2))) {
+  if (follower && a.engaged && !a.strikeAt && (breakout || (!fighting && dist(e.transform, leader!.transform) > a.follow!.leashM))) {
     forced = ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id));
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;

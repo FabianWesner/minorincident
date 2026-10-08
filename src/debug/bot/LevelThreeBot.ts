@@ -89,7 +89,8 @@ export class LevelThreeBot {
     this.last = { x: p.x, z: p.z };
     const hp = player.health.current / player.health.max;
     // Medkits when hurt: the nearest one ahead or close by that is still there.
-    if (!this.medkit && hp <= (newbie ? .5 : .65)) {
+    // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
+    if (!this.medkit && hp <= (newbie ? .8 : .65)) {
       const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
         .filter(e => dist(e.transform, p) < 24 && e.transform.x > p.x - 10).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
       if (kit) this.medkit = kit.id;
@@ -128,13 +129,15 @@ export class LevelThreeBot {
     const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 7 : p.x >= l3.map.segments[2][0] ? 6 : 15;
     if (fight(range)) return frame;
     // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
-    if (this.profile === 'complete' && s.squad.length && p.x < 50 && p.x > -100) {
+    // A newbie sticks to the police too, but only in the first segment and not for as long.
+    // Evade-only never shoots, so it keeps the armed squad close as long as there is one (the police fight for it).
+    if ((this.profile === 'complete' || this.profile === 'evade-only' || (newbie && p.x < l3.map.segments[0][1])) && s.squad.length && (p.x < 50 || this.profile === 'evade-only') && p.x > -100) {
       const lag = Math.max(...s.squad.map(q => { const e = w.entities.get(q.id); return e ? dist(e.transform, p) : 0; }));
       // A careful courier waits a few seconds for a straggler, not forever (an officer stuck on a wreck is left behind).
-      // At most 5 s at a time and 20 s per segment: the courier does not wait for an officer who cannot get through.
+      // At most 5 s at a time and 40 s (segment 1) / 20 s (segment 2): the courier does not wait for an officer who cannot get through.
       const seg = p.x < l3.map.segments[0][1] ? 0 : 1;
-      if (lag <= 7) { if (this.waiting) this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
-      else if (!this.threats(p, 20).some(e => this.chasing(e)) && this.waitedTotal[seg] < 1200) {
+      if (lag <= 6.5) { if (this.waiting) this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
+      else if (!this.threats(p, 20).some(e => this.chasing(e)) && this.waitedTotal[seg] < (newbie ? 900 : seg ? 1200 : 2400)) {
         if (!this.waiting) { this.waiting = true; this.waitedSince = w.tick; }
         if (w.tick - this.waitedSince < 300) return frame;
       } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }

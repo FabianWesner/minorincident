@@ -87,7 +87,7 @@ export class LevelThreeCollapse {
     const edges = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('edge-in-')).map(id => ({ id, ...this.anchor(id) }));
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
-    world.infected.director.levelCap = l3.density.caps.high;
+    world.infected.director.levelCap = l3.density.caps.high; world.infected.director.strict = true;
     world.npcs.setAmbient(0);
     // L3-default progression (bat + axe from L1/L2) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.kick']);

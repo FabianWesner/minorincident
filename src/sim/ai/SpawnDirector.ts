@@ -37,8 +37,10 @@ export class SpawnDirector {
   /** Living infected only: a knocked-down infected (PO "Infected recover") frees its slot while down, so authored
    * populations still emerge; the cap bounds new spawns, recoveries may briefly exceed it. */
   get count(): number {
-    let count = 0; for (const e of this.ai.active) if (e.health.current > 0) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
+    let count = 0; for (const e of this.ai.active) if (e.health.current > 0 || (this.strict && (e.infected?.recoverAt ?? -1) >= 0)) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
   }
+  /** E21: a downed infected that will get up keeps its slot, so recoveries can never push the level past its cap. */
+  strict = false;
   /** Plain geometric camera-volume input. The sim never imports or reads a renderer/camera object. */
   setFrustum(matrix: readonly number[], position?: { x: number; y: number; z: number }): void {
     if (matrix.length !== 16 || !matrix.every(Number.isFinite)) throw new RangeError('Invalid spawn frustum');
