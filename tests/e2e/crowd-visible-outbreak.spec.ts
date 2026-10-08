@@ -74,10 +74,10 @@ for (const renderer of ['webgl', 'webgpu'] as const) {
     writeFileSync(`${dir}/${renderer}.json`, JSON.stringify(result, null, 2) + '\n');
     expect(result.backend).toBe(renderer);
     expect(result.infectedSamples, 'on-screen infected samples').toBeGreaterThan(300);
+    expect(result.misses, 'living figures in view that drew nothing (or a non-finite pose)').toEqual([]);
     expect(result.attacks, 'infected strikes on the courier').toBeGreaterThan(0);
     expect(result.turned, 'bitten pedestrians who turned').toBeGreaterThan(0);
     expect(result.kills, 'infected the bat turned into corpses').toBeGreaterThan(0);
     expect(result.doors, 'house emergence doors').toBeGreaterThan(0);
-    expect(result.misses, 'living figures in view that drew nothing (or a non-finite pose)').toEqual([]);
   });
 }
