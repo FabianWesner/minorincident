@@ -71,11 +71,13 @@ def build_burned(directory, output):
                 token = tokens[f.material_index]
                 c = f.calc_center_median()
                 glass = not wheel and (token in ('backpackTeal', 'glassBlue') or
-                    token == 'asphalt' and (c.z > (.63 * H if bus or ambulance else .58 * H)))
+                    token == 'asphalt' and (c.z > (.45 * H if ambulance else .56 * H if bus else .58 * H)))
                 # Burned rear ambulance panes and bus window batches are uiDark.
                 glass |= not wheel and token == 'uiDark' and (
-                    ambulance and any(a in ('doorPatient', 'doorRearL', 'doorRearR') for a in ancestors) and c.z > .58 * H or
-                    bus and c.z > .56 * H and abs(c.y) > .32 * W and abs(f.normal.y) > .7 and f.calc_area() > .06)
+                    ambulance and any(a in ('doorL', 'doorR', 'doorPatient', 'doorRearL', 'doorRearR') for a in ancestors) and c.z > .50 * H and f.calc_area() > .025 and max(abs(f.normal.x),abs(f.normal.y)) > .7 or
+                    bus and .56 * H < c.z < .86 * H and f.calc_area() > .06 and (
+                        abs(c.y) > .32 * W and abs(f.normal.y) > .7 or
+                        (c.x > .16 * L or c.x < -.43 * L) and abs(f.normal.x) > .7))
                 if not police and not wheel and obj.data.materials[f.material_index].name.startswith('emi_'):
                     kill.append(f)
                     continue
