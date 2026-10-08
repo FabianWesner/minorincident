@@ -111,3 +111,26 @@ per-archetype pitch/colour. Voice recipes set `level` in `imports.json`: the bui
 active-part RMS (−21 dBFS) under the sprite ceiling, so variants in a pool sit within about 1.5 dB.
 The in-game Credits & Licenses screen and the generated block in `THIRD_PARTY_NOTICES.md` come from
 `npx tsx tools/credits/generate.ts` (package.json, package-lock.json, `imports.json`); a unit test fails when they drift.
+
+### Nearby danger encounters
+
+Live gameplay uses the same camera-frustum check as telegraphs and the sim's sight
+blockers (including L1's active gates/curtains). A living, upright infected within
+12 m, or a player attack, selects the existing `score-combat` recording. It is
+preloaded silently after the first gameplay frames, then crossfaded in 0.8 s with
+trim 0.6. Each sighting renews a 7 s hold; the outgoing recording fades to zero
+while the level's calm recording returns in 0.8 s. L1's calm recording remains
+`score-calm-L1` (Jazz Brunch). Explicit `music.intensity` events and offline renders
+retain the original bar-scheduled horde score; encounter transitions carry an
+`immediate` marker. Both paths use the same music bus, stingers and suspension.
+The reused danger excerpt is Blinding Lights by Zander Noriega (CC-BY 3.0),
+32–128 s, already attributed in both audio ledgers and Credits & Licenses.
+
+Story intensity floors are data in `src/data/musicBeats.ts`, read from the current
+serialized mission state, so checkpoint restores retain the correct score without
+replaying audio events. L1's accident/spread hold tension until the fire station;
+L2's doors-open collapse and escape hold dramatic rock until the police checkpoint.
+L3's active defend/escape objectives set the highest concurrent floor. Safe beats,
+briefings and completed levels release the floor. Nearby combat can raise any
+floor, with the same seven-second encounter hold before returning to that floor.
+The active beat and floor are exposed in `audio.snapshot().music.story`.
