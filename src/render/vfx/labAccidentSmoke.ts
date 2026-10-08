@@ -33,11 +33,12 @@ export class SmokeColumn extends Group {
   private readonly forward = new Vector3();
   /** Game camera: puffs fade out as they grow on screen, so no single puff covers more than ~a quarter of the view. */
   camera: PerspectiveCamera | null = null;
-  constructor() {
+  /** `capacity` puff meshes; `tone` = base grey of a puff (0.16 dark accident smoke, higher = paler lingering smoke). */
+  constructor(private readonly capacity = PUFFS, private readonly tone = 0.16, pieces = PIECES, private readonly puffScale = 1) {
     super();
     this.name = 'lab-accident-fx';
     const plane = new PlaneGeometry(1, 1), box = new BoxGeometry(1, 1, 0.35);
-    for (let i = 0; i < PUFFS; i++) {
+    for (let i = 0; i < capacity; i++) {
       const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, map: this.texture ?? undefined, opacity: 0 });
       // PO #28: the shared courier see-through hole also opens puffs between the camera and the courier.
       material.opacityNode = materialOpacity.mul(seeThroughHole());
@@ -45,19 +46,19 @@ export class SmokeColumn extends Group {
       m.visible = false; m.frustumCulled = false; m.renderOrder = 3; this.puffMeshes.push(m); this.add(m);
     }
     const glass = new MeshBasicNodeMaterial({ color: 0xd5f3fa }), dark = new MeshBasicNodeMaterial({ color: 0x25252a });
-    for (let i = 0; i < PIECES; i++) {
+    for (let i = 0; i < pieces; i++) {
       const m = new Mesh(box, i % 3 === 0 ? dark : glass); m.visible = false; m.frustumCulled = false; this.pieceMeshes.push(m); this.add(m);
     }
   }
   get puffCount(): number { return this.puffs.length; }
   get pieceCount(): number { return this.pieces.length; }
   spawnPuff(now: number, rng: Rng, x: number, y: number, z: number): void {
-    if (this.puffs.length >= PUFFS) this.puffs.shift();
-    this.puffs.push({ x: x + (rng.next() - 0.5) * 0.8, y: y + rng.next() * 0.4, z: z + (rng.next() - 0.5) * 0.8, vx: 0.4 + (rng.next() - 0.5) * 0.5, vy: 1.5 + rng.next() * 0.9, vz: (rng.next() - 0.5) * 0.4, born: now, life: 7 + rng.next() * 2, size: 2.4 + rng.next() * 1.8, shade: rng.next() });
+    if (this.puffs.length >= this.capacity) this.puffs.shift();
+    this.puffs.push({ x: x + (rng.next() - 0.5) * 0.8, y: y + rng.next() * 0.4, z: z + (rng.next() - 0.5) * 0.8, vx: 0.4 + (rng.next() - 0.5) * 0.5, vy: (1.5 + rng.next() * 0.9) * this.puffScale, vz: (rng.next() - 0.5) * 0.4, born: now, life: 7 + rng.next() * 2, size: (2.4 + rng.next() * 1.8) * this.puffScale, shade: rng.next() });
   }
   /** Hard shard or debris chunk. `glass` = bright opaque pane fragment, else dark chunk (decided by the mesh slot). */
   spawnPiece(now: number, rng: Rng, x: number, y: number, z: number, dx: number, dz: number, glass: boolean): void {
-    if (this.pieces.length >= PIECES) this.pieces.shift();
+    if (this.pieces.length >= this.pieceMeshes.length) this.pieces.shift();
     const spread = (rng.next() - 0.5) * 2.2, c = Math.cos(spread), s = Math.sin(spread), speed = 3 + rng.next() * 4;
     this.pieces.push({ x, y, z, vx: (dx * c - dz * s) * speed, vy: 2 + rng.next() * 3.5, vz: (dx * s + dz * c) * speed, born: now, life: 8 + rng.next() * 3, size: glass ? 0.14 + rng.next() * 0.18 : 0.2 + rng.next() * 0.25, spin: (rng.next() - 0.5) * 14, rot: rng.next() * 6, landed: false, glass });
   }
@@ -70,7 +71,7 @@ export class SmokeColumn extends Group {
       const p = this.puffs[i], age = now - p.born;
       if (age >= p.life) { this.puffs.splice(i, 1); continue; }
       i++;
-      const k = age / p.life, m = this.puffMeshes[n++], grow = p.size * (1 + k * 0.9), shade = 0.16 + p.shade * 0.1;
+      const k = age / p.life, m = this.puffMeshes[n++], grow = p.size * (1 + k * 0.9), shade = this.tone + p.shade * 0.1;
       m.visible = true; m.position.set(p.x + p.vx * age, p.y + p.vy * age + 0.05 * age * age, p.z + p.vz * age); m.quaternion.copy(facing); m.scale.set(grow, grow, 1);
       const mat = m.material as MeshBasicNodeMaterial;
       let near = 1;
@@ -87,7 +88,7 @@ export class SmokeColumn extends Group {
       mat.opacity = 0.92 * Math.min(1, age / 0.5) * Math.min(1, (1 - k) * 3.5) * near;
       mat.color.setRGB(shade * 0.9, shade * 1.05, shade * 0.92);
     }
-    for (let i = n; i < PUFFS; i++) this.puffMeshes[i].visible = false;
+    for (let i = n; i < this.capacity; i++) this.puffMeshes[i].visible = false;
     n = 0;
     for (let i = 0; i < this.pieces.length;) {
       const q = this.pieces[i], age = now - q.born;
@@ -101,7 +102,7 @@ export class SmokeColumn extends Group {
       m.visible = true; m.position.set(q.x, q.y, q.z); m.scale.setScalar(size);
       m.quaternion.copy(this.spin.setFromAxisAngle(this.axis.set(0.4, 1, 0.3).normalize(), q.rot));
     }
-    for (let i = n; i < PIECES; i++) { if (!this.pieceMeshes[i].visible) break; this.pieceMeshes[i].visible = false; }
+    for (let i = n; i < this.pieceMeshes.length; i++) { if (!this.pieceMeshes[i].visible) break; this.pieceMeshes[i].visible = false; }
   }
   /** Prewarm-safe: leaves nothing alive. */
   reset(): void { this.puffs.length = 0; this.pieces.length = 0; for (const m of [...this.puffMeshes, ...this.pieceMeshes]) m.visible = false; }

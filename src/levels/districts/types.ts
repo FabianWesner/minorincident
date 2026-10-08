@@ -33,6 +33,8 @@ export interface Placement extends PlacementTransform {
   visualAabb: Aabb;
   /** Optional per-instance colour multiplier (house walls); batches stay shared, colour is an instance attribute. */
   tint?: string;
+  /** Declared decay twin of the asset drawn instead of the base (`burned`); collision and footprint stay the base's. */
+  decay?: string;
 }
 export interface StaticCollider {
   /** Low GLB paving/steps support feet without blocking planar navigation. */

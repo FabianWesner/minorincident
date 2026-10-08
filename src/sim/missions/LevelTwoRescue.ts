@@ -4,6 +4,7 @@ import { l2, l2TruckRoute } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
 import { l2Dressing } from '../../levels/L2/layout';
+import { clearOfL2Script } from '../../levels/continuity';
 import type { Mission } from './Mission';
 import type { L2State } from './types';
 import type { EntitySnapshot } from '../world/types';
@@ -136,6 +137,11 @@ export class LevelTwoRescue {
     const o = this.outbreak();
     for (const d of l2Dressing) if (d.entity && d.kind === 'corpse') {
       const p = this.snap({ x: d.x, z: d.z }, .35), id = o.spawnPedestrian(p, { model: d.assetId, yaw: d.yaw, schedule: this.schedule(p, p) }), e = this.world.entities.get(id)!;
+      e.civilian!.state = 'finished'; e.civilian!.entered = this.world.tick - 600; e.appearance!.handProp = null;
+    }
+    // Campaign continuity: the pedestrians who died in this run's L1 still lie where they fell (src/levels/continuity.ts).
+    for (const body of this.world.aftermath?.bodies ?? []) if (clearOfL2Script(body)) {
+      const p = this.snap({ x: body.x, z: body.z }, .35), id = o.spawnPedestrian(p, { model: body.model, tint: body.tint, yaw: body.yaw, schedule: this.schedule(p, p) }), e = this.world.entities.get(id)!;
       e.civilian!.state = 'finished'; e.civilian!.entered = this.world.tick - 600; e.appearance!.handProp = null;
     }
   }
