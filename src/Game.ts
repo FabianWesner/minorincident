@@ -253,7 +253,8 @@ export class Game {
       this.world.applyInput(frame, this.input.scheme);
     }
     if (this.world.infected) {
-      this.view.camera.updateMatrixWorld();
+      // The director sees the tick pose, never a render-rate interpolated one (determinism across displays).
+      this.view.view.present(1);
       this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
       this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
     }

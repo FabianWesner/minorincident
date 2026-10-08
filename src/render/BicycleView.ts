@@ -122,11 +122,14 @@ export class BicycleView extends Group {
   }
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
-  update(camera?: Camera): void {
+  private readonly presented = { x: 0, y: 0, z: 0, yaw: 0 };
+  update(camera?: Camera, alpha = 1): void {
     const bike = this.world.vehicles?.bicycle.entity;
     if (!bike?.bicycle) return;
     if (!this.rig) { void this.build(); return; }
-    const rig = this.rig, b = bike.bicycle, t = bike.transform;
+    // Ridden, the sim pins the bike onto the rider after physics: render it at the rider's interpolated transform.
+    const rig = this.rig, b = bike.bicycle, from = b.mounted ? this.world.previousPlayer : null, to = bike.transform;
+    const t = from ? Object.assign(this.presented, { x: lerp(from.x, to.x, alpha), y: to.y, z: lerp(from.z, to.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
     rig.model.position.x = b.mounted ? rig.offset : 0;
     const ground = t.y;
     rig.root.visible = true; rig.root.position.set(t.x, Math.max(0, ground), t.z); rig.root.rotation.y = t.yaw;
