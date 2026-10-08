@@ -219,7 +219,8 @@ describe('L1 v2 mission', () => {
     expect(Math.hypot(house.x - g.x, house.z - g.z)).toBeLessThanOrEqual(l1v2.house.doorM[1]);
     expect(house.ids).toHaveLength(l1v2.house.count);
     // PO P1 10-08: the door opens once with the first resident and stays open (one bang), the residents follow 1.5 to 4 s apart.
-    expect(doors).toEqual([{ id: `door-${house.door}`, tick: appear.get(house.ids[0])!.tick - 1 }]);
+    // (The lab annex door opened for the accident staff earlier; only house doors count here.)
+    expect(doors.filter(d => !d.id.includes("clinic-annex"))).toEqual([{ id: `door-${house.door}`, tick: appear.get(house.ids[0])!.tick - 1 }]);
     expect(w.openDoors.get(`door-${house.door}`)).toMatchObject({ x: house.x, z: house.z, nx: house.nx, nz: house.nz });
     const ticks = house.ids.map(id => appear.get(id)!.tick);
     for (let i = 1; i < ticks.length; i++) {
