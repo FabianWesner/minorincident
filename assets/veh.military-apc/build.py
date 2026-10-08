@@ -11,7 +11,7 @@ import bmesh
 from mathutils import Vector
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
-from sslib import palette, primitives as P, sockets, export, ao
+from sslib import palette, primitives as P, sockets, colliders, export, ao
 from sslib.distance import tier_argument, build_native_lods
 
 TIER = tier_argument()
@@ -26,7 +26,7 @@ for data in list(bpy.data.meshes):
 root = sockets.empty('veh.military-apc')
 root['ss_physics'] = json.dumps({'class': 'heavy', 'mass': 10500, 'friction': .8,
     'restitution': .04, 'centerOfMass': [0, 1.05, 0], 'pushable': False,
-    'kickable': False, 'flammable': True})
+    'kickable': False, 'flammable': True, 'sounds': 'prop.metal-heavy'})
 owners = {'body': sockets.empty('body', parent=root),
           'lightsFront': sockets.empty('lightsFront', (2.74,0,1.22), root)}
 
@@ -148,7 +148,8 @@ box('ammo box',(.06,-.25,2.81),(.33,.27,.24),'khaki',.02,'gun')
 if TIER < 2:
     box('sight',(.42,0,2.97),(.06,.055,.13),'uiDark',.005,'gun')
     for s in [-1,1]: rod('gun grip',(-.22,s*.14,2.82),(-.22,s*.14,2.68),.026,'uiDark','gun')
-sockets.empty('muzzle',(1.62,0,0),owners['gun'])
+sockets.empty('muzzle',(1.62-.02,0,0),owners['gun'])
+colliders.cuboid('hull',(5.69,2.95,3.27),(0,0,1.635),root)
 sockets.empty('front',(2.82,0,1.1),root)
 for name, loc in {'driverSeat':(.71,-.46,1.46),'exitL':(-1.3,-1.8,0),'exitR':(-1.3,1.8,0)}.items():
     sockets.empty(name,loc,root)
@@ -163,6 +164,14 @@ for s,label in [(-1,'L'),(1,'R')]:
     brake['ss_light']=json.dumps({'type':'point','color':'light_siren_red','intensity':2,
         'range':3,'powerGroup':'self','emissiveNodes':['lightsBrake_emi_sirenRed'],'tiers':'all'})
 
+for anchor in root.children_recursive:
+    if 'ss_light' not in anchor: continue
+    record = json.loads(anchor['ss_light'])
+    for key, value in {'pool': False, 'beam': 'none', 'reflect': True,
+                       'shadow': 'none', 'heroPriority': 0, 'flicker': 'none',
+                       'breakable': True}.items():
+        record.setdefault(key, value)
+    anchor['ss_light'] = json.dumps(record)
 export.merge_by_material(root, set(owners))
 meshes=[o for o in root.children_recursive if o.type=='MESH']
 for obj in meshes:
@@ -171,6 +180,32 @@ for obj in meshes:
     bm.to_mesh(obj.data); bm.free()
 # Vertex AO is baked after final geometry batching, before each tier exports.
 ao.bake_all(meshes,samples=16 if TIER else 32)
+# Palette vertex swatches consolidate each rigid owner without losing colors.
+# Six wheel owners + turret + gun + body + two emitting batches = eleven draws.
+# Eight is impossible with this full moving/light contract; keep registration modeled.
+white = palette.mat('picketWhite')
+white_rgb = white.diffuse_color[:3]
+for obj in meshes:
+    source = obj.data.materials[0]
+    if source.name.startswith('emi_'): continue
+    layer = obj.data.color_attributes.active_color
+    tint = source.diffuse_color[:3]
+    for value in layer.data:
+        c = value.color
+        value.color = tuple(c[i]*tint[i]/white_rgb[i] for i in range(3)) + (1,)
+    obj.data.materials.clear(); obj.data.materials.append(white)
+batches = {}
+for obj in meshes:
+    batches.setdefault((obj.parent, obj.data.materials[0].name), []).append(obj)
+meshes = []
+for (owner, material), objects in batches.items():
+    bpy.ops.object.select_all(action='DESELECT')
+    for obj in objects: obj.select_set(True)
+    bpy.context.view_layer.objects.active = objects[0]
+    bpy.ops.object.join()
+    obj = bpy.context.object; obj.name = owner.name+'_'+material
+    meshes.append(obj)
+bpy.context.view_layer.update()
 export.glb(root,Path(args.glb).resolve())
 if not TIER and Path(args.glb).resolve() != Path(__file__).parent / 'model.glb':
     export.glb(root,Path(__file__).parent / 'model.glb')
