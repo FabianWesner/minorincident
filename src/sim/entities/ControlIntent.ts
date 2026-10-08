@@ -63,7 +63,11 @@ export class ControlIntent {
     if (attack && combat) {
       const target = this.world.entities.get(attack.id), button = attack.side === 'LEFT' ? frame.left : frame.right;
       // One click approaches and attacks once; holding repeats until released or retargeted.
-      if (!target || (target.health.current <= 0 && !(attack.ground && downed(target))) || target.hidden || target.infected?.hidden || (attack.started && (!button.held || attack.ground)) || (attack.until !== undefined && this.world.tick > attack.until && !button.held)) this.attack = null;
+      if (!target || (target.health.current <= 0 && !(attack.ground && downed(target))) || target.hidden || target.infected?.hidden || (attack.started && (!button.held || attack.ground)) || (attack.until !== undefined && this.world.tick > attack.until && !button.held)) {
+        // A target lost mid-approach stops the courier on the spot (no glide from the approach run).
+        if (!attack.started && !target?.health.current) this.world.player?.locomotion.reset();
+        this.attack = null;
+      }
       else {
         const p = player.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
         const actionId = combat.runner.loadout.current(attack.side).id;
