@@ -521,11 +521,13 @@ export class GameView implements Lifecycle {
       if (target) this.destination.position.set(target.x, .12, target.z);
     }
     const profileStart = this.renderer.profile ? performance.now() : 0;
+    // The rig steps with the sim; render it between the last two tick poses like every other transform.
+    this.view.present(alpha);
     this.syncMission();
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.scene.add(this.bicycle); }
-    this.bicycle?.update(this.camera); // Sample one bike frame for its saddle, lean and rider.
+    this.bicycle?.update(this.camera, alpha); // Sample one bike frame for its saddle, lean and rider.
     if (this.character && current && survivor) {
       // Portrait hero readability supplements the seven-metre camera floor; collision stays in metres.
       this.character.scale.setScalar(this.camera.aspect < 1 ? 1.25 : 1);
