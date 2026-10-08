@@ -15909,7 +15909,7 @@
   {
     "id": "veh.military-apc",
     "category": "vehicle",
-    "status": "modeled",
+    "status": "integrated",
     "tier": "hero",
     "script": "assets/veh.military-apc/build.py",
     "sourceGlb": "assets/veh.military-apc/model.glb",
@@ -15961,9 +15961,10 @@
       "triangles": 15000,
       "materials": 8,
       "fileKB": 1500,
-      "drawCalls": 8
+      "drawCalls": 12
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "budgetNote": "APC-only draw cap 12 per LOD: six wheel pivots, turret, gun and lit lamps are separate moving/emissive assemblies (rare set piece)."
   },
   {
     "id": "decay.burned-facade.house",

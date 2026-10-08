@@ -9,3 +9,5 @@ All source sockets/pivots survive as empties. Four wheel owners retain independe
 Measured delivery and command results: `docs/reports/l3-traffic-and-army-vehicles.json`. Visual evidence: `test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/`.
 
 Concrete visual limitations: Rear trunk is intentionally largely intact; small debris disappears at 160px.
+
+Revision 2: rebuilt from the intact native LOD1/LOD2 with smooth front crush, torn hood and engine bay, glass shards, ajar door, flat front tyre, rust and soot tint; wheels use one tinted material so total draws <= 8.

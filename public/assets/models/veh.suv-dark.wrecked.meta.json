@@ -1,35 +1,41 @@
 {
   "id": "veh.suv-dark",
-  "errors": [
-    "geometry body_pal_uiDark: degenerate triangle"
-  ],
-  "triangles": 4036,
-  "materials": 3,
-  "drawCalls": 7,
-  "fileKB": 284.78125,
+  "errors": [],
+  "triangles": 9078,
+  "materials": 4,
+  "drawCalls": 8,
+  "fileKB": 852.67578125,
   "dimensions": [
-    4.953733921051025,
-    2.5171079309657216,
-    2.740000009536743
+    4.77049994468689,
+    2.526600956916809,
+    2.8397669792175293
   ],
-  "hash": "1803bc1ff208946bebd191d3d605bcb23e4951563f0412c706fb5cfab15b6a74",
+  "hash": "22368b795768284fa057dff1ea1bf6aaac0c3180ac50c7966338746420f2eb49",
   "runtime": {
     "id": "veh.suv-dark",
     "errors": [],
-    "triangles": 4033,
-    "materials": 3,
-    "drawCalls": 7,
-    "fileKB": 77.94921875,
+    "triangles": 9078,
+    "materials": 4,
+    "drawCalls": 8,
+    "fileKB": 230.43359375,
     "dimensions": [
-      4.953733921051025,
-      2.517156583925888,
-      2.7399967523767446
+      4.77049994468689,
+      2.526585926565624,
+      2.8397046241986685
     ],
-    "hash": "3d19392a2c195916556522a7d1f6e1b9280f6f87cea362671fe7c69775ad6b1b"
+    "hash": "035575b8c5398c540185dae1349fa817a016b3225847a03b2d7d4865fd6d6c1e"
   },
   "nodes": [
     {
       "name": "body_pal_asphalt",
+      "pivot": [
+        -0.051203131675720215,
+        -0.027054250240325928,
+        0
+      ]
+    },
+    {
+      "name": "body_pal_brick",
       "pivot": [
         -0.051203131675720215,
         -0.027054250240325928,
@@ -285,7 +291,7 @@
       ]
     },
     {
-      "name": "wheelFL_pal_uiDark",
+      "name": "wheelFL_pal_sidewalk",
       "pivot": [
         1.3287968635559082,
         0.5029457211494446,
@@ -301,7 +307,7 @@
       ]
     },
     {
-      "name": "wheelFR_pal_uiDark",
+      "name": "wheelFR_pal_sidewalk",
       "pivot": [
         1.3287968635559082,
         0.5029457211494446,
@@ -317,7 +323,7 @@
       ]
     },
     {
-      "name": "wheelRL_pal_uiDark",
+      "name": "wheelRL_pal_sidewalk",
       "pivot": [
         -1.4912031888961792,
         0.5029457211494446,
@@ -333,7 +339,7 @@
       ]
     },
     {
-      "name": "wheelRR_pal_uiDark",
+      "name": "wheelRR_pal_sidewalk",
       "pivot": [
         -1.4912031888961792,
         0.5029457211494446,

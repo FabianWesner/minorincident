@@ -2,7 +2,7 @@
   "batch": "l3-traffic-and-army-vehicles",
   "firstNeed": "L3",
   "priority": "P1",
-  "status": "five-wrecks-delivered-apc-blocked",
+  "status": "wrecks-rebuilt-v2-apc-integrated-awaiting-qa",
   "baseCommit": "b00c5631",
   "commits": [
     {
@@ -806,5 +806,42 @@
     }
   ],
   "scope": "Asset build/registration and generated light/physics metadata only. Level placement, NPC behavior, sound playback, switching lights, mission logic unchanged by asset work; no level epic implementation. Smoke is rerun after inheriting the updated main. No forbidden directories/specifications edited; no new dependencies; no main merge, push or deployment.",
-  "upstreamMerge": "Includes upstream-only gameplay/specification/test changes; no specification was authored or edited by this asset lane."
+  "upstreamMerge": "Includes upstream-only gameplay/specification/test changes; no specification was authored or edited by this asset lane.",
+  "revision2": {
+    "note": "Wrecks rebuilt from each intact vehicle native LOD1/LOD2 (tools/blender/sslib/traffic_wrecks.py): crumpled front, torn hood with dark engine bay, shattered glass shards, ajar impact-side door (limited by the +-10% dimension contract), flat front tyre, rust/soot vertex tint, livery kept. APC: budget.drawCalls 12 (budgetNote), status integrated.",
+    "wreckTriangles": {
+      "veh.sedan-white.wrecked": [
+        8220,
+        4786,
+        1726
+      ],
+      "veh.suv-dark.wrecked": [
+        9078,
+        5105,
+        1612
+      ],
+      "veh.pickup-red.wrecked": [
+        10299,
+        5440,
+        1974
+      ],
+      "veh.ambulance.wrecked": [
+        10461,
+        5118,
+        1958
+      ],
+      "veh.school-bus.wrecked": [
+        10650,
+        5170,
+        1764
+      ]
+    },
+    "wreckTotalDraws": {
+      "veh.sedan-white.wrecked": 7,
+      "veh.suv-dark.wrecked": 8,
+      "veh.pickup-red.wrecked": 8,
+      "veh.ambulance.wrecked": 8,
+      "veh.school-bus.wrecked": 8
+    }
+  }
 }
