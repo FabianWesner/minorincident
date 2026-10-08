@@ -173,7 +173,9 @@ def build_burned(directory, output):
                     modifier = obj.modifiers.new('authoredHeatOpening', 'BOOLEAN')
                     modifier.operation = 'DIFFERENCE'
                     modifier.solver = 'EXACT'
-                    modifier.use_self = True
+                    # Red's far roof overlaps its pillars; resolve those solids.
+                    # Other far shells already have closed, separate panels.
+                    modifier.use_self = lod < 2 or asset == 'veh.sedan-red'
                     modifier.use_hole_tolerant = True
                     modifier.object = cutter
                     bpy.ops.object.modifier_apply(modifier=modifier.name)
