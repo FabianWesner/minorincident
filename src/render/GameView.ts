@@ -37,6 +37,7 @@ import { VehicleFeedback } from './vfx/VehicleFeedback';
 import { Vfx, type VfxSettings } from './vfx/Vfx';
 import { LabAccidentFx } from './vfx/labAccident';
 import { labAccidentTargets, anchorLookup } from './vfx/labAccidentView';
+import { ContinuityFx } from './vfx/continuityFx';
 import { DistrictAssets } from '../assets/DistrictAssets';
 import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
@@ -115,6 +116,8 @@ export class GameView implements Lifecycle {
   private entityAssets: EntityAssets | null = null;
   vfx: Vfx | null = null;
   private labAccident: LabAccidentFx | null = null;
+  /** L2: aftermath of the L1 lab blast (lingering smoke over the burned annex). */
+  private continuity: ContinuityFx | null = null;
   private labWindows: { prewarmWindows(): () => void } | null = null;
   private vehicleFeedback: VehicleFeedback | null = null;
   private readonly vfxSettings: VfxSettings = {};
@@ -263,6 +266,7 @@ export class GameView implements Lifecycle {
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
     if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
+    if (this.world.scenario === 'L2') { this.continuity = new ContinuityFx(this.world.seed, this.camera.quaternion, this.camera); this.scene.add(this.continuity.column); }
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
@@ -403,7 +407,7 @@ export class GameView implements Lifecycle {
     }
   }
   /** Real render seconds, deliberately independent of sim ticks/time scale. */
-  frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); }
+  frame(seconds: number): void { const dt = Math.min(1, seconds); this.playSeconds += dt; this.vfx?.advance(dt); this.labAccident?.advance(dt); this.continuity?.advance(dt); }
   /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
   private playSeconds = 0;
   /** Network-only extras wait until the first playable frames have been presented. */
@@ -599,7 +603,7 @@ export class GameView implements Lifecycle {
     }
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
-    this.vehicles?.update(alpha); this.l2Props?.update();
+    this.vehicles?.update(alpha); this.l2Props?.update(); this.continuity?.present();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
@@ -694,6 +698,7 @@ export class GameView implements Lifecycle {
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }
     if (this.labAccident) { this.scene.remove(this.labAccident.column); this.labAccident.dispose(); this.labAccident = null; }
+    if (this.continuity) { this.scene.remove(this.continuity.column); this.continuity.dispose(); this.continuity = null; }
     if (this.vfx) { this.scene.remove(this.vfx); this.vfx.dispose(); this.vfx = null; }
     if (this.vehicleFeedback) { this.scene.remove(this.vehicleFeedback); this.vehicleFeedback.dispose(); this.vehicleFeedback = null; }
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}

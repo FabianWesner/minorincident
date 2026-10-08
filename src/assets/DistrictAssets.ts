@@ -7,9 +7,9 @@ import { paletteTokens } from "../data/palette";
 import type { Materials } from "../render/Materials";
 import { PaletteMaterial } from "../render/PaletteMaterial";
 import { placeholder } from "./districtPlaceholders";
-import { worldAssets } from "./worldDefinitions";
+import { decayTwin, worldAsset } from "./worldDefinitions";
 import { AssetRegistry } from "./registry";
-import { atLeast } from "./types";
+import { atLeast, variantPath } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
@@ -18,9 +18,9 @@ import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2']): string[] {
-  const def = definition(productionIds[id] ?? id);
+  const twin = decayTwin(id), base = twin?.base ?? id, def = definition(productionIds[base] ?? base);
   if (!atLeast(def.status, 'integrated') || def.decalTexture) return [];
-  return [...new Set(lods.map(lod => def.lods?.[lod] ?? def.glb).filter((path): path is string => Boolean(path)).map(path => '/' + path.replace(/^public\//, '')))];
+  return [...new Set(lods.map(lod => def.lods?.[lod] ?? def.glb).filter((path): path is string => Boolean(path)).map(path => '/' + variantPath(path, twin?.decay).replace(/^public\//, '')))];
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
@@ -98,20 +98,22 @@ export class DistrictAssets {
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
   prefetch(id: string, lod: AssetQuality = 'lod1'): void {
     try {
-      if (worldAssets[id] && atLeast(this.assets.definition(productionIds[id] ?? id).status, "integrated")) void this.base(id, lod).catch(() => {});
+      if (worldAsset(id) && atLeast(this.assets.definition(this.production(id)).status, "integrated")) void this.base(id, lod).catch(() => {});
     } catch { /* unknown ids report through asset() */ }
   }
+  /** Production export of a placement id; a decay twin (`<base>.<decay>`) loads its base's variant files. */
+  private production(id: string): string { const base = decayTwin(id)?.base ?? id; return productionIds[base] ?? base; }
   private canonical(id: string, lod: AssetQuality): AssetQuality {
-    const assetDef = this.assets.definition(productionIds[id] ?? id);
+    const assetDef = this.assets.definition(this.production(id));
     return (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
   }
   /** Powered and unpowered placements share their large diffuse geometry. */
   private base(id: string, lod: AssetQuality): Promise<Group> {
-    const def = worldAssets[id], productionId = productionIds[id] ?? id, canonical = this.canonical(id, lod);
+    const twin = decayTwin(id), plain = twin?.base ?? id, def = worldAsset(id)!, productionId = this.production(id), canonical = this.canonical(id, lod);
     const baseKey = `${id}:batch:${canonical}`;
-    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then(async (asset) => {
+    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical, twin?.decay).then(async (asset) => {
       await loadGate.wait();
-      if (productionId !== id) {
+      if (productionId !== plain) {
         const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
         const straight = Math.min(1, target.x / source.x, target.z / source.z), turned = Math.min(1, target.x / source.z, target.z / source.x);
         // Fit legacy footprints while retaining human-sized doors/floors.
@@ -119,12 +121,12 @@ export class DistrictAssets {
         if (turned > straight) asset.rotation.y = Math.PI / 2;
       }
       // The authored sectional leaves expose a real aperture (not a dark overlay on a closed door).
-      if (id === 'bld.fire-station') for (const name of ['door_bay_L', 'door_bay_R']) {
+      if (plain === 'bld.fire-station') for (const name of ['door_bay_L', 'door_bay_R']) {
         const leaf = asset.getObjectByName(name);
         if (leaf) leaf.position.y += Number(leaf.userData.travel ?? 3.15);
       }
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
-      if (ROOFED.has(id)) asset.userData.splitRoof = true;
+      if (ROOFED.has(plain)) asset.userData.splitRoof = true;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {
@@ -136,7 +138,7 @@ export class DistrictAssets {
     return this.cache.get(baseKey)!;
   }
   async asset(id: string, lit = true, lod: AssetQuality = 'lod1'): Promise<Group> {
-    const def = worldAssets[id];
+    const def = worldAsset(id);
     // Registered decals, camp kits and character dressing have no world footprint.
     // Keep their original materials (including decal alpha/texture) in static instances.
     if (!def) {
@@ -144,7 +146,7 @@ export class DistrictAssets {
       if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod).then(root => { const group = new Group(); group.add(root); return this.remember(group); }));
       return this.cache.get(key)!;
     }
-    const productionId = productionIds[id] ?? id;
+    const productionId = this.production(id);
     if (atLeast(this.assets.definition(productionId).status, "integrated")) {
       const canonical = this.canonical(id, lod);
       const key = `${id}:${lit}:${canonical}`;
