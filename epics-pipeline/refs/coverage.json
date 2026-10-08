@@ -1,0 +1,1353 @@
+{
+  "total": 405,
+  "categories": {
+    "prop": 155,
+    "building": 92,
+    "character": 53,
+    "infected": 33,
+    "weapon": 24,
+    "vehicle": 48
+  },
+  "sources": {
+    "existing": 290,
+    "sheet": 34,
+    "text": 81
+  },
+  "unclassified": [],
+  "excluded": {
+    "ui.logo": "UI",
+    "ui.hud-layout": "UI",
+    "ui.portrait.survivor-m": "UI",
+    "ui.portrait.survivor-f": "UI",
+    "ui.portrait.corgi": "UI",
+    "ui.palette-swatches": "UI",
+    "decay.furniture-barricade": "pure alias",
+    "bld.school": "pure alias",
+    "bld.gym": "pure alias",
+    "bld.supermarket": "pure alias",
+    "bld.pharmacy": "pure alias",
+    "bld.hospital": "pure alias",
+    "bld.substation": "pure alias",
+    "icon.fists": "UI",
+    "icon.kick": "UI",
+    "icon.bat": "UI",
+    "icon.crowbar": "UI",
+    "icon.machete": "UI",
+    "icon.knife": "UI",
+    "icon.nail-bat": "UI",
+    "icon.shovel": "UI",
+    "icon.police-baton": "UI",
+    "icon.fire-axe": "UI",
+    "icon.katana": "UI",
+    "icon.pistol": "UI",
+    "icon.shotgun": "UI",
+    "icon.nail-gun": "UI",
+    "icon.smg": "UI",
+    "icon.hunting-rifle": "UI",
+    "icon.assault-rifle": "UI",
+    "icon.machine-gun": "UI",
+    "icon.rocket-launcher": "UI",
+    "icon.grenade": "UI",
+    "icon.molotov": "UI",
+    "icon.pipe-bomb": "UI",
+    "icon.firecracker-lure": "UI",
+    "icon.smoke-grenade": "UI",
+    "icon.flashbang": "UI",
+    "icon.corgi-lure": "UI",
+    "icon.slam": "UI",
+    "icon.shield-bubble": "UI",
+    "icon.adrenaline": "UI",
+    "ability.turret": "ability/action or flat decal (not a 3D object)",
+    "icon.turret": "UI",
+    "prop.flower-bed": "pure alias",
+    "bld.backdrop-houses": "pure alias",
+    "decal.blood-splats": "ability/action or flat decal (not a 3D object)",
+    "decal.footprints": "ability/action or flat decal (not a 3D object)",
+    "decal.papers": "ability/action or flat decal (not a 3D object)",
+    "abl.shield-bubble": "ability/action or flat decal (not a 3D object)",
+    "abl.ground-slam": "ability/action or flat decal (not a 3D object)",
+    "decay.graffiti": "ability/action or flat decal (not a 3D object)",
+    "decal.blood-pool": "ability/action or flat decal (not a 3D object)",
+    "decal.blood-trail": "ability/action or flat decal (not a 3D object)",
+    "decal.arterial-spray": "ability/action or flat decal (not a 3D object)",
+    "wpn.fists": "ability/action or flat decal (not a 3D object)",
+    "wpn.kick": "ability/action or flat decal (not a 3D object)",
+    "ability.corgi-lure": "ability/action or flat decal (not a 3D object)",
+    "ability.shield-bubble": "ability/action or flat decal (not a 3D object)",
+    "ability.adrenaline": "ability/action or flat decal (not a 3D object)"
+  },
+  "origins": {
+    "char.survivor-male": [
+      "manifest"
+    ],
+    "char.survivor-female": [
+      "manifest"
+    ],
+    "char.corgi": [
+      "manifest"
+    ],
+    "equip.backpack-teal": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "equip.backpack-red": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "equip.backpack-green": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "equip.backpack-blue": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "inf.common-worker": [
+      "manifest"
+    ],
+    "inf.jogger": [
+      "manifest"
+    ],
+    "inf.baseball-cap": [
+      "manifest"
+    ],
+    "inf.suburban-mom": [
+      "manifest"
+    ],
+    "inf.delivery-driver": [
+      "manifest"
+    ],
+    "inf.skater": [
+      "manifest"
+    ],
+    "inf.college-student": [
+      "manifest"
+    ],
+    "inf.bbq-dad": [
+      "manifest"
+    ],
+    "inf.cashier": [
+      "manifest"
+    ],
+    "inf.bathrobe-neighbor": [
+      "manifest"
+    ],
+    "inf.construction-worker": [
+      "manifest"
+    ],
+    "inf.crawler": [
+      "manifest"
+    ],
+    "inf.corpse-poses": [
+      "manifest"
+    ],
+    "inf.riot-cop": [
+      "manifest"
+    ],
+    "inf.hazmat": [
+      "manifest"
+    ],
+    "inf.firefighter": [
+      "manifest"
+    ],
+    "inf.bloated": [
+      "manifest"
+    ],
+    "inf.screamer": [
+      "manifest"
+    ],
+    "inf.sprinter": [
+      "manifest"
+    ],
+    "inf.armored-football": [
+      "manifest"
+    ],
+    "inf.butcher": [
+      "manifest"
+    ],
+    "inf.nurse": [
+      "manifest"
+    ],
+    "inf.brute": [
+      "manifest"
+    ],
+    "wpn.baseball-bat": [
+      "manifest"
+    ],
+    "wpn.nail-bat": [
+      "manifest"
+    ],
+    "wpn.crowbar": [
+      "manifest"
+    ],
+    "wpn.machete": [
+      "manifest"
+    ],
+    "wpn.shovel": [
+      "manifest"
+    ],
+    "wpn.police-baton": [
+      "manifest"
+    ],
+    "wpn.pistol": [
+      "manifest"
+    ],
+    "wpn.shotgun": [
+      "manifest"
+    ],
+    "wpn.nail-gun": [
+      "manifest"
+    ],
+    "thr.molotov": [
+      "manifest"
+    ],
+    "thr.pipe-bomb": [
+      "manifest"
+    ],
+    "thr.firecracker-lure": [
+      "manifest"
+    ],
+    "pick.medkit": [
+      "manifest"
+    ],
+    "pick.soda": [
+      "manifest"
+    ],
+    "pick.energy-drink": [
+      "manifest"
+    ],
+    "pick.bandages": [
+      "manifest"
+    ],
+    "pick.pistol-ammo": [
+      "manifest"
+    ],
+    "pick.shotgun-ammo": [
+      "manifest"
+    ],
+    "pick.nail-ammo": [
+      "manifest"
+    ],
+    "util.flashlight": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "util.radio": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "util.keys": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "util.batteries": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "util.lockpick-kit": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "haz.spike-barricade": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "haz.gas-can": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "haz.car-alarm": [
+      "manifest"
+    ],
+    "haz.fuse-box": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "haz.propane-tank": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.shopping-cart": [
+      "manifest"
+    ],
+    "prop.folding-chair": [
+      "manifest"
+    ],
+    "veh.fire-engine": [
+      "manifest"
+    ],
+    "veh.sedan-red": [
+      "manifest"
+    ],
+    "veh.sedan-blue": [
+      "manifest"
+    ],
+    "veh.sedan-white": [
+      "manifest"
+    ],
+    "veh.school-bus": [
+      "manifest"
+    ],
+    "veh.suv-dark": [
+      "manifest"
+    ],
+    "veh.pickup-red": [
+      "manifest"
+    ],
+    "veh.pickup-white": [
+      "manifest"
+    ],
+    "veh.sedan-green": [
+      "manifest"
+    ],
+    "veh.suv-green": [
+      "manifest"
+    ],
+    "veh.police-sedan": [
+      "manifest"
+    ],
+    "veh.police-suv": [
+      "manifest"
+    ],
+    "veh.ambulance": [
+      "manifest"
+    ],
+    "veh.jeep-red": [
+      "manifest"
+    ],
+    "prop.stop-here-sign-trailer": [
+      "manifest"
+    ],
+    "bld.house-a": [
+      "manifest"
+    ],
+    "bld.house-b": [
+      "manifest"
+    ],
+    "bld.house-c": [
+      "manifest"
+    ],
+    "bld.safe-house": [
+      "manifest"
+    ],
+    "kit.porch-stairs": [
+      "manifest"
+    ],
+    "bld.shed": [
+      "manifest"
+    ],
+    "bld.joes-diner": [
+      "manifest"
+    ],
+    "bld.gas-station": [
+      "manifest"
+    ],
+    "bld.maple-hardware": [
+      "manifest"
+    ],
+    "bld.mainstreet-brick": [
+      "manifest"
+    ],
+    "bld.bus-stop": [
+      "manifest"
+    ],
+    "int.diner": [
+      "manifest"
+    ],
+    "bld.school-elementary": [
+      "manifest"
+    ],
+    "int.gym-cafeteria": [
+      "manifest"
+    ],
+    "kit.playground": [
+      "manifest"
+    ],
+    "int.supermarket": [
+      "manifest"
+    ],
+    "int.mini-mall": [
+      "manifest"
+    ],
+    "int.food-court": [
+      "manifest"
+    ],
+    "int.pharmacy-clinic": [
+      "manifest"
+    ],
+    "bld.fire-station": [
+      "manifest"
+    ],
+    "bld.hospital-exterior": [
+      "manifest"
+    ],
+    "kit.police-checkpoint": [
+      "manifest"
+    ],
+    "kit.evac-camp": [
+      "manifest"
+    ],
+    "bld.gazebo": [
+      "manifest"
+    ],
+    "bld.restroom-block": [
+      "manifest"
+    ],
+    "bld.dugout": [
+      "manifest"
+    ],
+    "kit.bleachers": [
+      "manifest"
+    ],
+    "prop.scoreboard": [
+      "manifest"
+    ],
+    "kit.creek-bridge-wood": [
+      "manifest"
+    ],
+    "kit.campground": [
+      "manifest"
+    ],
+    "npc.civilian-adult-m": [
+      "manifest"
+    ],
+    "npc.civilian-adult-f": [
+      "manifest"
+    ],
+    "npc.civilian-kid": [
+      "manifest"
+    ],
+    "npc.civilian-elderly": [
+      "manifest"
+    ],
+    "npc.patient-zero-courier": [
+      "manifest"
+    ],
+    "prop.medical-cooler": [
+      "manifest"
+    ],
+    "veh.courier-van": [
+      "manifest"
+    ],
+    "npc.brother": [
+      "manifest"
+    ],
+    "npc.mrs-alvarez": [
+      "manifest"
+    ],
+    "npc.police-officer": [
+      "manifest"
+    ],
+    "npc.paramedic": [
+      "manifest"
+    ],
+    "npc.firefighter-alive": [
+      "manifest"
+    ],
+    "npc.national-guard": [
+      "manifest"
+    ],
+    "npc.survivor-group": [
+      "manifest"
+    ],
+    "npc.helicopter-pilot": [
+      "manifest"
+    ],
+    "wpn.knife": [
+      "manifest"
+    ],
+    "wpn.fire-axe": [
+      "manifest"
+    ],
+    "wpn.katana": [
+      "manifest"
+    ],
+    "wpn.smg": [
+      "manifest"
+    ],
+    "wpn.hunting-rifle": [
+      "manifest"
+    ],
+    "wpn.assault-rifle": [
+      "manifest"
+    ],
+    "wpn.machine-gun": [
+      "manifest"
+    ],
+    "wpn.rocket-launcher": [
+      "manifest"
+    ],
+    "proj.rocket": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "thr.frag-grenade": [
+      "manifest"
+    ],
+    "thr.flashbang": [
+      "manifest"
+    ],
+    "veh.military-truck": [
+      "manifest"
+    ],
+    "veh.box-truck": [
+      "manifest"
+    ],
+    "veh.semi-trailer": [
+      "manifest"
+    ],
+    "veh.helicopter": [
+      "manifest"
+    ],
+    "veh.train-freight": [
+      "manifest"
+    ],
+    "bld.river-bridge": [
+      "manifest"
+    ],
+    "kit.river-terrain": [
+      "manifest"
+    ],
+    "kit.rail-crossing": [
+      "manifest"
+    ],
+    "bld.tunnel-portal": [
+      "manifest"
+    ],
+    "bld.power-substation": [
+      "manifest"
+    ],
+    "kit.highway-onramp": [
+      "manifest"
+    ],
+    "bld.helipad": [
+      "manifest"
+    ],
+    "bld.civic-center": [
+      "manifest"
+    ],
+    "decay.dropped-belongings": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.broken-glass": [
+      "manifest"
+    ],
+    "decay.boarded-windows": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.burned-facade": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.collapsed-facade": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.rubble-pile": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.downed-power-line": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.fallen-tree": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.crater": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.body-bag": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "decay.abandoned-checkpoint": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.light-tower-trailer": [
+      "manifest"
+    ],
+    "prop.plank-stack": [
+      "manifest"
+    ],
+    "prop.sandbag-pallet": [
+      "manifest"
+    ],
+    "prop.dumpster": [
+      "manifest"
+    ],
+    "prop.sofa": [
+      "manifest"
+    ],
+    "prop.pallet": [
+      "manifest"
+    ],
+    "prop.vending-cart": [
+      "manifest"
+    ],
+    "prop.fire-extinguisher": [
+      "manifest"
+    ],
+    "thr.smoke-grenade": [
+      "manifest"
+    ],
+    "prop.tear-gas-canister": [
+      "manifest"
+    ],
+    "debris.wood-small": [
+      "manifest"
+    ],
+    "debris.metal": [
+      "manifest"
+    ],
+    "debris.glass": [
+      "manifest"
+    ],
+    "debris.rubble": [
+      "manifest"
+    ],
+    "veh.fuel-truck": [
+      "manifest"
+    ],
+    "inf.dog-retriever": [
+      "manifest"
+    ],
+    "inf.dog-dachshund": [
+      "manifest"
+    ],
+    "inf.dog-k9": [
+      "manifest"
+    ],
+    "inf.cat-tabby": [
+      "manifest"
+    ],
+    "inf.cat-black": [
+      "manifest"
+    ],
+    "inf.crow": [
+      "manifest"
+    ],
+    "amb.pigeon": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "inf.lion": [
+      "manifest"
+    ],
+    "inf.gorilla": [
+      "manifest"
+    ],
+    "inf.flamingo": [
+      "manifest"
+    ],
+    "amb.zebra": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "amb.elephant": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "gib.chunk-set": [
+      "manifest"
+    ],
+    "gib.limb-generic": [
+      "manifest"
+    ],
+    "prop.gas-pump": [
+      "manifest"
+    ],
+    "prop.jukebox": [
+      "manifest"
+    ],
+    "prop.light-tower": [
+      "manifest"
+    ],
+    "prop.porta-potty": [
+      "manifest"
+    ],
+    "prop.vending-machine": [
+      "manifest"
+    ],
+    "npc.civilian-man-a": [
+      "manifest"
+    ],
+    "npc.civilian-man-b": [
+      "manifest"
+    ],
+    "npc.civilian-woman-a": [
+      "manifest"
+    ],
+    "npc.civilian-woman-b": [
+      "manifest"
+    ],
+    "prop.barricade": [
+      "manifest"
+    ],
+    "prop.bench": [
+      "manifest"
+    ],
+    "prop.fire-hydrant": [
+      "manifest"
+    ],
+    "prop.hedge": [
+      "manifest"
+    ],
+    "prop.mailbox-blue": [
+      "manifest"
+    ],
+    "prop.picket-fence": [
+      "manifest"
+    ],
+    "prop.street-lamp": [
+      "manifest"
+    ],
+    "prop.street-sign": [
+      "manifest"
+    ],
+    "prop.traffic-cone": [
+      "manifest"
+    ],
+    "prop.trash-bin": [
+      "manifest"
+    ],
+    "prop.utility-pole": [
+      "manifest"
+    ],
+    "inf.teen-skater": [
+      "manifest"
+    ],
+    "prop.tree": [
+      "manifest"
+    ],
+    "veh.wreck": [
+      "manifest"
+    ],
+    "bld.police": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "bld.park-lodge": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "bld.zoo-gate": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "bld.reptile-house": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.picnic-table": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.bus-stop": [
+      "manifest"
+    ],
+    "prop.tent": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.flower": [
+      "manifest"
+    ],
+    "prop.street-tree": [
+      "manifest"
+    ],
+    "prop.street-tree-blossom": [
+      "manifest"
+    ],
+    "prop.garden-bush": [
+      "manifest"
+    ],
+    "prop.garden-bush-small": [
+      "manifest"
+    ],
+    "bld.clinic-annex": [
+      "manifest"
+    ],
+    "bld.garage-detached": [
+      "manifest"
+    ],
+    "bld.cafe-corner": [
+      "manifest"
+    ],
+    "bld.courier-depot": [
+      "manifest"
+    ],
+    "veh.courier-bike": [
+      "manifest"
+    ],
+    "prop.package-courier": [
+      "manifest"
+    ],
+    "char.courier-male": [
+      "manifest"
+    ],
+    "char.courier-female": [
+      "manifest"
+    ],
+    "npc.lab-tech-a": [
+      "manifest"
+    ],
+    "npc.lab-tech-b": [
+      "manifest"
+    ],
+    "npc.lab-guard": [
+      "manifest"
+    ],
+    "npc.depot-clerk": [
+      "manifest"
+    ],
+    "bld.house-d": [
+      "manifest"
+    ],
+    "bld.house-e": [
+      "manifest"
+    ],
+    "kit.house-variants": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.yard-gate": [
+      "manifest"
+    ],
+    "prop.privacy-fence": [
+      "manifest"
+    ],
+    "prop.bike-rack": [
+      "manifest"
+    ],
+    "prop.cafe-patio-set": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.garden-set": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "prop.alley-set": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "kit.car-wash": [
+      "manifest"
+    ],
+    "prop.lab-signs": [
+      "manifest"
+    ],
+    "kit.edge-roadwork": [
+      "manifest"
+    ],
+    "prop.flower-bed.large": [
+      "manifest"
+    ],
+    "prop.flower-bed.small": [
+      "manifest"
+    ],
+    "prop.flower-box": [
+      "manifest"
+    ],
+    "prop.bbq": [
+      "manifest"
+    ],
+    "prop.lawn-chair-a": [
+      "manifest"
+    ],
+    "prop.lawn-chair-b": [
+      "manifest"
+    ],
+    "prop.kiddie-pool": [
+      "manifest"
+    ],
+    "prop.gnome": [
+      "manifest"
+    ],
+    "prop.flamingo": [
+      "manifest"
+    ],
+    "prop.sprinkler": [
+      "manifest"
+    ],
+    "prop.hose-reel": [
+      "manifest"
+    ],
+    "prop.wheelbarrow": [
+      "manifest"
+    ],
+    "prop.crates": [
+      "manifest"
+    ],
+    "prop.carpet": [
+      "manifest"
+    ],
+    "prop.trash-bags": [
+      "manifest"
+    ],
+    "prop.broken-chair": [
+      "manifest"
+    ],
+    "prop.recycling-bin": [
+      "manifest"
+    ],
+    "prop.laundry-line": [
+      "manifest"
+    ],
+    "house.driveway.anchor": [
+      "manifest"
+    ],
+    "house.driveway.empty": [
+      "manifest"
+    ],
+    "house.driveway.hoop": [
+      "manifest"
+    ],
+    "house.garage.closed": [
+      "manifest"
+    ],
+    "house.garage.half": [
+      "manifest"
+    ],
+    "house.garage.open": [
+      "manifest"
+    ],
+    "house.porch-a": [
+      "manifest"
+    ],
+    "house.porch-b": [
+      "manifest"
+    ],
+    "int.fire-station-bay": [
+      "manifest"
+    ],
+    "prop.axe-rack": [
+      "manifest"
+    ],
+    "wpn.halligan": [
+      "manifest"
+    ],
+    "prop.checkpoint-gate": [
+      "manifest"
+    ],
+    "prop.jersey-barrier": [
+      "manifest"
+    ],
+    "prop.crowd-fence": [
+      "manifest"
+    ],
+    "prop.armory-table": [
+      "manifest"
+    ],
+    "veh.evac-bus": [
+      "manifest"
+    ],
+    "kit.army-checkpoint": [
+      "manifest"
+    ],
+    "decay.looted-store": [
+      "manifest"
+    ],
+    "decay.damaged-sign": [
+      "manifest"
+    ],
+    "decay.makeshift-barricade": [
+      "manifest"
+    ],
+    "abl.turret": [
+      "manifest",
+      "tools/assets/missing-models.md"
+    ],
+    "veh.sedan-red.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.sedan-red.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.sedan-blue.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.sedan-blue.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.sedan-white.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.sedan-white.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.suv-dark.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.suv-dark.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.pickup-red.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.pickup-red.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.police-sedan.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.police-sedan.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.ambulance.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.ambulance.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.school-bus.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.school-bus.burned": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "prop.hmg-nest": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.military-apc": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.tank": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.tank.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.military-apc.wrecked": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "veh.helicopter-military": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.police-station": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "kit.police-bridge-checkpoint": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.apartment-block-a": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.apartment-block-b": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.town-hall": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.church": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.storefront-row": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.metro-entrance": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.kessler-hardware": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "kit.reception-plaza": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "decay.blown-sandbags": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "decay.fuel-truck-crater": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "int.basement-cellar": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "int.metro-station": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "int.metro-exit": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "kit.metro-tunnel": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "kit.maintenance-corridor": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "prop.service-gate": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "prop.fluorescent-strip": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "prop.emergency-light": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "kit.shelter-camp": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-a.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-a.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-b.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-b.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-c.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-c.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-d.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-d.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-e.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.house-e.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.mainstreet-brick.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.mainstreet-brick.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.joes-diner.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.joes-diner.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.maple-hardware.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.maple-hardware.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.bus-stop.w2": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.bus-stop.w3": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.apartment-block-a.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.apartment-block-b.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.town-hall.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.church.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.storefront-row.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.metro-entrance.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.kessler-hardware.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.police-station.w5": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.survivor-group.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.paramedic.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.civilian-elderly.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.civilian-woman-a.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.civilian-man-a.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.civilian-man-b.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.civilian-woman-b.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.dale.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.rosa.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.mr-okafor.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.mia.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.sam.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.marcus.aftermath": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.shelter-survivor.sitting": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.shelter-survivor.lying": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "npc.shelter-survivor.bandaged": [
+      "inventory \u00a76 expanded requirement"
+    ],
+    "bld.helipad.flare-stand": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.helipad.windsock": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.power-substation.breaker": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.power-substation.fence": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.power-substation.lever": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.power-substation.transformer": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.river-bridge.charges": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.river-bridge.gate": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.river-bridge.ramp": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "bld.river-bridge.truss": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-female.gear-t1": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-female.gear-t2": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-female.gear-t3": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-female.gear-t4": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-male.gear-t1": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-male.gear-t2": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-male.gear-t3": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "char.survivor-male.gear-t4": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "decay.burned-facade.brick": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "decay.burned-facade.diner": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "decay.burned-facade.house": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "decay.burned-facade.school": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.highway-onramp.ramp": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.highway-onramp.sign": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.rail-crossing.box": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.rail-crossing.gate": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.rail-crossing.signal": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.rail-crossing.track": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.river-terrain.bank": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.river-terrain.rocks": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "kit.river-terrain.water": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "npc.survivor-ally-hunter": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "npc.survivor-ally-mechanic": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "npc.survivor-ally-teen": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "veh.train-boxcar": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "veh.train-flatcar": [
+      "restored assets/<id>/reference.png model subasset"
+    ],
+    "veh.train-tanker": [
+      "restored assets/<id>/reference.png model subasset"
+    ]
+  },
+  "excluded_restored_references": [
+    "abl.ground-slam",
+    "char.survivor.pose-kick",
+    "char.survivor.pose-rifle",
+    "decal.arterial-spray",
+    "decay.graffiti",
+    "char.survivor.pose-driving",
+    "inf.schoolgirl",
+    "decay.furniture-barricade",
+    "ui.icon.minimap",
+    "prop.flower-bed",
+    "ui.icon.actions",
+    "char.survivor.pose-throw",
+    "fire-engine",
+    "char.survivor.pose-heavy",
+    "decal.blood-pool",
+    "decal.blood-trail",
+    "abl.shield-bubble"
+  ]
+}
