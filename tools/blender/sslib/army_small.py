@@ -55,12 +55,13 @@ def tent(s, owner='body', length=3.6, width=2.8, h0=1.05, ridge=2.40, roof='canv
 
 def prop_tent(s):
     s.owner('body')
-    tent(s)
+    # Footprint stays within the 3 x 3 m slot already reserved by the D-PARK / D-CIVIC layouts.
+    tent(s, length=2.66, width=2.8, h0=.85, ridge=1.88)
     s.ao_floor = .5
-    s.physics('fixed', 0, 'prop.wood-medium', True, (0, 1.0, 0))
-    s.collider('body', (3.7, 2.9, 2.35), (0, 0, 1.18))
-    s.socket('front', (2.0, 0, .5))
-    s.socket('entry', (2.5, 0, 0))
+    s.physics('fixed', 0, 'prop.wood-medium', True, (0, .9, 0))
+    s.collider('body', (3.0, 2.9, 1.95), (0, 0, .98))
+    s.socket('front', (1.6, 0, .5))
+    s.socket('entry', (2.0, 0, 0))
 
 
 # ---------------------------------------------------------------------------- hmg nest
