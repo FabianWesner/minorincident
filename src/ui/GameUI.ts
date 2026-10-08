@@ -11,6 +11,7 @@ import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/
 import './ui.css';
 
 type Screen = 'title' | 'character' | 'levels' | 'pause' | 'settings' | 'credits' | 'upgrades' | 'rack' | 'loading' | null;
+declare const __BUILD_COMMIT__: string;
 export class GameUI {
   readonly root = node('div', 'menus');
   readonly enabled: boolean;
@@ -24,9 +25,13 @@ export class GameUI {
   private nextLevel = 'L1';
   private started = false;
   private missionPhase = '';
+  private readonly debugEnabled: boolean;
+  private readonly fpsSamples: { at: number; fps: number }[] = [];
+  private debugText: HTMLPreElement | null = null;
   private readonly screens = new Map<Exclude<Screen, null>, HTMLElement>();
   private readonly pauseButton = button('pause-button', 'Ⅱ Pause', () => this.pause());
   constructor(private readonly game: Game) {
+    this.debugEnabled = ['true', '1'].includes(game.params.get('debug') ?? '');
     this.enabled = game.params.get('test') !== '1' || game.params.get('ui') === '1';
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Storage may be disabled. */ }
@@ -92,6 +97,13 @@ export class GameUI {
       button('pause-restart', 'Restart level', () => this.askRestart()),
       button('pause-hide-ui', 'Hide UI (H)', () => this.hideUi(true)),
       button('pause-title', 'Title screen', () => this.show('title')));
+    if (this.debugEnabled) {
+      const debug = node('section', 'pause-debug'); debug.className = 'pause-debug'; debug.dataset.testid = 'pause-debug';
+      const heading = node('h2', 'pause-debug-heading', 'Debug info');
+      this.debugText = node('pre', 'pause-debug-text'); this.debugText.setAttribute('aria-label', 'Copyable debug information');
+      debug.append(heading, this.debugText, button('pause-debug-copy', 'Copy', () => { void this.copyDebug(); }));
+      pause.append(debug);
+    }
     // In-page confirmation (no browser confirm()): replaces the bar buttons until answered.
     const confirm = node('div', 'restart-confirm'); confirm.className = 'restart-confirm'; confirm.hidden = true; confirm.setAttribute('role', 'alertdialog');
     confirm.setAttribute('aria-labelledby', 'restart-confirm-text');
@@ -306,7 +318,57 @@ export class GameUI {
     }
     this.hud.update();
     this.pauseButton.hidden = !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    if (this.debugEnabled && this.screen === 'pause') this.updateDebugInfo();
     this.updateMs = performance.now() - start;
+  }
+  private updateDebugInfo(): void {
+    const now = performance.now(), fps = this.game.frameMs > 0 ? 1000 / this.game.frameMs : 0;
+    this.fpsSamples.push({ at: now, fps });
+    while (this.fpsSamples.length && now - this.fpsSamples[0].at > 2000) this.fpsSamples.shift();
+    const world = this.game.world, player = world.entities.get(1), mission = world.missions;
+    const active = mission?.def.steps.find(step => mission.state.steps[step.id]?.status === 'active');
+    const nearest: { id: string; distance: number }[] = [];
+    if (player && world.districts) for (const district of world.districts.districts) {
+      const [ox, oz] = district.origin;
+      for (const [id, point] of Object.entries(district.layout.anchors)) nearest.push({ id: `${district.layout.district}/${id}`, distance: Math.hypot(player.transform.x - (point.position[0] + ox), player.transform.z - (point.position[2] + oz)) });
+      for (const building of district.layout.buildings) nearest.push({ id: `${district.layout.district}/${building.id}`, distance: Math.hypot(player.transform.x - ((building.aabb.min[0] + building.aabb.max[0]) / 2 + ox), player.transform.z - ((building.aabb.min[2] + building.aabb.max[2]) / 2 + oz)) });
+      for (const placement of district.layout.placements) nearest.push({ id: `${district.layout.district}/${placement.id}`, distance: Math.hypot(player.transform.x - (placement.position[0] + ox), player.transform.z - (placement.position[2] + oz)) });
+    }
+    const closest = nearest.filter(item => item.distance <= 10).sort((a, b) => a.distance - b.distance)[0];
+    const entities = [...world.entities.iterate()];
+    const infected = entities.filter(entity => entity.infected);
+    const loadout = player?.weapons ? [...player.weapons.LEFT.rack, ...player.weapons.RIGHT.rack].map(slot => slot.id).join(', ') : 'none';
+    const seed = world.seed;
+    const district = world.districts?.districts.map(d => {
+      const bounds = d.layout.bounds;
+      const center = bounds.reduce((sum, point) => [sum[0] + point[0] / bounds.length, sum[1] + point[1] / bounds.length], [d.origin[0], d.origin[1]] as [number, number]);
+      return { id: d.id, distance: Math.hypot((player?.transform.x ?? 0) - center[0], (player?.transform.z ?? 0) - center[1]) };
+    }).sort((a, b) => a.distance - b.distance)[0]?.id ?? 'unknown';
+    const bike = player?.riding ? world.entities.get(player.riding)?.bicycle : undefined;
+    const driving = player?.riding ? world.entities.get(player.riding)?.vehicle?.driver === player.id : false;
+    const fields = [
+      `Level: ${mission?.def.id ?? world.scenario ?? 'unknown'} · Seed: ${seed}`,
+      `Step: ${active ? `${active.id} · ${active.text}` : 'none'} · Checkpoint: ${mission?.state.checkpoint ?? 'none'}`,
+      `Sim: tick ${world.tick} · ${(world.tick / 60).toFixed(1)} s elapsed`,
+      `Player (x, z, y): ${player ? `${player.transform.x.toFixed(2)}, ${player.transform.z.toFixed(2)}, ${player.transform.y.toFixed(2)}` : 'unavailable'} · yaw ${player?.transform.yaw.toFixed(3) ?? '—'} rad`,
+      `District: ${district} · Nearest: ${closest ? `${closest.id} (${closest.distance.toFixed(1)} m)` : 'none within 10 m'}`,
+      `Vehicle: ${driving ? 'driving' : bike?.mounted ? 'on bike' : 'on foot'}${player?.riding ? ` · entity ${player.riding}` : ''} · HP ${player ? `${player.health.current}/${player.health.max}` : '—'}`,
+      `Loadout: ${loadout || 'empty'} · Camera: ${this.game.view.view.getState().spot ?? 'follow'} / zoom ${this.game.view.view.getState().zoom.toFixed(2)}`,
+      `Backend: ${this.game.view.renderer.selectedBackend} · Quality: ${this.game.quality.tier} · FPS (2 s avg): ${this.fpsSamples.length ? (this.fpsSamples.reduce((sum, sample) => sum + sample.fps, 0) / this.fpsSamples.length).toFixed(1) : '—'}`,
+      `Entities: pedestrians ${entities.filter(e => e.civilian && e.health.current > 0 && !e.infected).length} · infected alive ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt < 0).length} · downed ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt >= 0).length} · corpses ${entities.filter(e => e.corpse || e.infected?.state === 'dead').length}`,
+      `Build: ${typeof __BUILD_COMMIT__ === 'undefined' ? 'unknown' : __BUILD_COMMIT__}`,
+    ];
+    if (this.debugText) this.debugText.textContent = fields.join('\n');
+  }
+  private async copyDebug(): Promise<void> {
+    const text = this.debugText?.textContent ?? '';
+    try { await navigator.clipboard.writeText(text); }
+    catch {
+      if (!this.debugText) return;
+      const selection = document.createRange(); selection.selectNodeContents(this.debugText);
+      const current = window.getSelection(); current?.removeAllRanges(); current?.addRange(selection);
+      document.execCommand('copy'); current?.removeAllRanges();
+    }
   }
   private readonly missionAccept = (event: MouseEvent): void => {
     if (!(event.target as HTMLElement).closest('[data-testid=mission-button]')) return;

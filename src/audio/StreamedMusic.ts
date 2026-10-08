@@ -13,7 +13,7 @@ export class StreamedMusic {
     private generation = 0;
     private suspended = false;
     private requested: MusicState | null = null;
-    private target: { state: MusicState; requested: number; epoch: number; bar: number } | null = null;
+    private target: { state: MusicState; requested: number; epoch: number; bar: number; immediate: boolean } | null = null;
     state: MusicState | null = null;
     /** Mission level; set before the first transition of a world. */
     level = '';
@@ -41,8 +41,9 @@ export class StreamedMusic {
         this.decks.set(state, deck);
         return deck;
     }
-    async transition(state: MusicState, requested: number, epoch: number, bar: number): Promise<void> {
-        this.target = { state, requested, epoch, bar };
+    prepareDanger(): void { this.deck('combat'); }
+    async transition(state: MusicState, requested: number, epoch: number, bar: number, immediate = false): Promise<void> {
+        this.target = { state, requested, epoch, bar, immediate };
         if (state === this.requested || this.suspended) return;
         this.requested = state;
         const generation = ++this.generation, incoming = this.deck(state);
@@ -60,14 +61,15 @@ export class StreamedMusic {
             return;
         }
         const now = this.context.currentTime;
-        const at = epoch + Math.ceil((Math.max(now, requested) - epoch) / bar) * bar;
+        const fade = immediate ? 0.8 : 2;
+        const at = immediate ? now : epoch + Math.ceil((Math.max(now, requested) - epoch) / bar) * bar;
         for (const [key, deck] of this.decks) {
             const gain = deck.gain.gain;
             gain.cancelAndHoldAtTime(now);
             gain.setValueAtTime(gain.value, at);
             // Source normalized to -18 LUFS. Master is +6 dB; this trim preserves headroom.
-            gain.linearRampToValueAtTime(key === state ? 0.5 : 0, at + 2);
-            deck.retire = key === state ? Infinity : at + 2;
+            gain.linearRampToValueAtTime(key === state ? (immediate && state === 'combat' ? 0.6 : 0.5) : 0, at + fade);
+            deck.retire = key === state ? Infinity : at + fade;
         }
         this.state = state;
         this.transitions.push({ state, requested, time: at });
@@ -98,7 +100,7 @@ export class StreamedMusic {
         // Keep the last musical request so returning focus can retry that incoming deck.
         const target = this.target;
         if (target && target.state !== this.state)
-            await this.transition(target.state, target.requested, target.epoch, target.bar);
+            await this.transition(target.state, target.requested, target.epoch, target.bar, target.immediate);
     }
     snapshot() { return { state: this.state, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, file: d.file, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
     reset(): void {

@@ -2,25 +2,24 @@ import { BoxGeometry, Group, IcosahedronGeometry, InstancedMesh, Matrix4, MeshBa
 import { l2 } from '../data/l2';
 import type { SimWorld } from '../sim/world/SimWorld';
 
-/** Front doors (east face, sliding along z) and loading door (south face, sliding along x) of Grove Market. */
+/** Front doors (east face) and loading door (south face) of Grove Market: outer face of the L2Props storefront wall. */
 const DOORS = [
-  { axis: 'z' as const, face: -51.32, centre: -42.2, from: -46.6, to: -37.8 },
-  { axis: 'x' as const, face: -37.66, centre: -55.6, from: -59.7, to: -51.4 },
+  { axis: 'z' as const, face: -51.25, centre: -42.2 },
+  { axis: 'x' as const, face: -37.55, centre: -55.6 },
 ];
-const HALF = 2, HEIGHT = 2.55, CHAIN_Y = 1.05;
+const CHAIN_Y = 1.05;
 const SPARKS = 9, PUFFS = 22;
 const hash = (n: number): number => { let x = Math.imul(n ^ 0x9e3779b9, 0x85ebca6b); x ^= x >>> 13; x = Math.imul(x, 0xc2b2ae35); x ^= x >>> 16; return (x >>> 0) / 4294967296; };
 
 /**
- * E20 rescue set piece code art (PO 10-08 "there is no emergency"), driven by the L2 sim state: Grove Market's glass fronts
- * with chained sliding doors (the people behind them stay visible), the chain jerking and spitting sparks while the crew
- * heaves on their halligan bars, the leaves sliding open and the chain dropping at `l2.doorsOpen`, and a smoke column rising
+ * E20 rescue set piece code art (PO 10-08 "there is no emergency"), driven by the L2 sim state: the chains across Grove
+ * Market's glass doors (walls and doors are L2Props'), jerking and spitting sparks while the crew heaves on their halligan
+ * bars, dropping to the ground at `l2.doorsOpen`, and a smoke column rising
  * from a side street behind the market from the ride on. Instanced boxes and puffs, unlit colours (read at midday).
  */
 export class L2RescueProps extends Group {
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly puff = new IcosahedronGeometry(1, 0);
-  private readonly glassMat = new MeshBasicNodeMaterial({ color: '#bfe4ef', transparent: true, opacity: .2, depthWrite: false });
   private readonly frameMat = new MeshBasicNodeMaterial({ color: '#2c3036' });
   private readonly chainMat = new MeshBasicNodeMaterial({ color: '#8d9399' });
   private readonly lockMat = new MeshBasicNodeMaterial({ color: '#c9a338' });
@@ -28,7 +27,7 @@ export class L2RescueProps extends Group {
   private readonly barMat = new MeshBasicNodeMaterial({ color: '#4a4f57' });
   private readonly smokeDark = new MeshBasicNodeMaterial({ color: '#45464a' });
   private readonly smokeLight = new MeshBasicNodeMaterial({ color: '#6e6f73' });
-  private readonly glass: InstancedMesh; private readonly frames: InstancedMesh; private readonly chains: InstancedMesh; private readonly locks: InstancedMesh;
+  private readonly frames: InstancedMesh; private readonly chains: InstancedMesh; private readonly locks: InstancedMesh;
   private readonly sparks: InstancedMesh; private readonly bars: InstancedMesh; private readonly smoke: InstancedMesh[];
   private readonly m4 = new Matrix4(); private readonly q = new Quaternion(); private readonly v = new Vector3(); private readonly sv = new Vector3();
   private readonly dir = new Vector3(); private readonly yUp = new Vector3(0, 1, 0); private readonly xAxis = new Vector3(1, 0, 0);
@@ -37,8 +36,7 @@ export class L2RescueProps extends Group {
     const mesh = (geometry: BoxGeometry | IcosahedronGeometry, material: MeshBasicNodeMaterial, count: number) => {
       const m = new InstancedMesh(geometry, material, count); m.count = 0; m.frustumCulled = false; this.add(m); return m;
     };
-    this.glass = mesh(this.box, this.glassMat, 8); this.glass.renderOrder = 2;
-    this.frames = mesh(this.box, this.frameMat, 40); this.chains = mesh(this.box, this.chainMat, 48); this.locks = mesh(this.box, this.lockMat, 2);
+    this.frames = mesh(this.box, this.frameMat, 4); this.chains = mesh(this.box, this.chainMat, 48); this.locks = mesh(this.box, this.lockMat, 2);
     this.sparks = mesh(this.box, this.sparkMat, SPARKS * 2 * 2); this.bars = mesh(this.box, this.barMat, 6);
     this.smoke = [mesh(this.puff, this.smokeDark, PUFFS), mesh(this.puff, this.smokeLight, PUFFS)];
     this.update();
@@ -58,24 +56,12 @@ export class L2RescueProps extends Group {
   update(): void {
     const s = this.world.missions?.state.l2, tick = this.world.tick;
     this.visible = !!s; if (!s) return;
-    const open = s.doorsOpenAt > 0 ? Math.min(1, (tick - s.doorsOpenAt) / 30) : 0, slide = open * open * (3 - 2 * open);
+    const open = s.doorsOpenAt > 0 ? Math.min(1, (tick - s.doorsOpenAt) / 30) : 0;
     const forcing = s.phase === 'doors' && s.atDoorsAt > 0, t = (tick - s.atDoorsAt) / 60;
-    let g = 0, f = 0, c = 0, sp = 0;
+    let f = 0, c = 0, sp = 0;
     for (const [d, door] of DOORS.entries()) {
-      // Fixed panes either side of the opening, then the two sliding leaves (outside the fixed glass while they open).
-      for (const [a, b] of [[door.from, door.centre - HALF], [door.centre + HALF, door.to]]) {
-        this.faceBox(this.glass, g++, door, (a + b) / 2, HEIGHT / 2, 0, b - a, HEIGHT, .03);
-        for (const u of [a, b]) this.faceBox(this.frames, f++, door, u, HEIGHT / 2, 0, .09, HEIGHT, .09);
-      }
-      for (const side of [-1, 1]) {
-        const centre = door.centre + side * (HALF / 2 + slide * HALF * .95);
-        this.faceBox(this.glass, g++, door, centre, HEIGHT / 2, .07, HALF - .04, HEIGHT - .05, .03);
-        for (const edge of [-1, 1]) this.faceBox(this.frames, f++, door, centre + edge * (HALF / 2 - .04), HEIGHT / 2, .07, .07, HEIGHT - .05, .08);
-        this.faceBox(this.frames, f++, door, centre, .06, .07, HALF - .04, .12, .08);
-        // Push bar handles at the meeting edge.
-        this.faceBox(this.frames, f++, door, centre - side * (HALF / 2 - .18), CHAIN_Y, .16, .05, .5, .05);
-      }
-      this.faceBox(this.frames, f++, door, (door.from + door.to) / 2, HEIGHT + .08, 0, door.to - door.from, .16, .14);
+      // Push-bar handles the chain runs through.
+      if (!open) for (const side of [-1, 1]) this.faceBox(this.frames, f++, door, door.centre + side * .22, CHAIN_Y, .16, .05, .5, .05);
       // The chain: an X of links through both handles and a padlock; it jerks on each heave and lies on the ground once cut.
       const heave = forcing ? Math.max(0, Math.sin(t * Math.PI * 2 / .9 + d)) : 0, jerk = forcing ? Math.sin(tick * 1.7 + d * 3) * .03 * heave : 0;
       const at = (u: number, y: number, n: number) => door.axis === 'z' ? new Vector3(door.face + n, y, u) : new Vector3(u, y, door.face + n);
@@ -122,8 +108,8 @@ export class L2RescueProps extends Group {
       }
       mesh.count = n; mesh.instanceMatrix.needsUpdate = true;
     }
-    this.glass.count = g; this.frames.count = f; this.chains.count = c; this.locks.count = 2; this.sparks.count = sp; this.bars.count = b;
-    for (const m of [this.glass, this.frames, this.chains, this.locks, this.sparks, this.bars]) m.instanceMatrix.needsUpdate = true;
+    this.frames.count = f; this.chains.count = c; this.locks.count = 2; this.sparks.count = sp; this.bars.count = b;
+    for (const m of [this.frames, this.chains, this.locks, this.sparks, this.bars]) m.instanceMatrix.needsUpdate = true;
   }
-  dispose(): void { this.box.dispose(); this.puff.dispose(); for (const m of [this.glassMat, this.frameMat, this.chainMat, this.lockMat, this.sparkMat, this.barMat, this.smokeDark, this.smokeLight]) m.dispose(); }
+  dispose(): void { this.box.dispose(); this.puff.dispose(); for (const m of [this.frameMat, this.chainMat, this.lockMat, this.sparkMat, this.barMat, this.smokeDark, this.smokeLight]) m.dispose(); }
 }

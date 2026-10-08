@@ -113,6 +113,8 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('trianglesMax', metrics.perf.triangles.max ?? 0, e.trianglesMax);
   add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
   add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
+  add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
+  if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
   const wheels = Object.values(metrics.wheels ?? {}).flat();
   add('wheelSinkMaxCm', Math.max(0, ...wheels.map(w => -w.gapMinCm)), e.wheelSinkMaxCm);
   add('wheelFloatMaxCm', Math.max(0, ...wheels.map(w => w.gapMaxCm)), e.wheelFloatMaxCm);
