@@ -102,9 +102,11 @@ export class Game {
       else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
         if (!this.clock.paused) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
-        if (!this.clock.paused) this.view.frame(seconds);
+        // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
+        const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
+        if (!this.clock.paused) this.view.frame(seconds * slow);
         const start = performance.now();
-        this.clock.advance(seconds, () => this.simTick());
+        this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
         if (!this.clock.paused || this.restoredWhilePaused) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
@@ -252,7 +254,8 @@ export class Game {
       this.world.applyInput(frame, this.input.scheme);
     }
     if (this.world.infected) {
-      this.view.camera.updateMatrixWorld();
+      // The director sees the tick pose, never a render-rate interpolated one (determinism across displays).
+      this.view.view.present(1);
       this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
       this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
     }

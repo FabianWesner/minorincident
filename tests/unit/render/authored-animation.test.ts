@@ -164,10 +164,14 @@ test.each([
   actionCalls.mockRestore();
 });
 
-test('@E19 gait cadence caps fast short-stride figures while preserving slow authored strides', () => {
-  expect(cadenceStride('npc-walk', .7, .7)).toBe(strides['npc-walk'] * .7);
+test('@E19 gait cadence caps fast short-stride figures; slow crowd walkers keep a minimum cadence', () => {
+  // Crowd footwork: a slow walker takes shorter steps (>= 1.6 cycles/s) instead of over-long strides it cannot plant.
+  expect(cadenceStride('npc-walk', .7, .7)).toBeCloseTo(.7 / 1.6);
+  expect(cadenceStride('npc-walk', 1, 1.6)).toBe(strides['npc-walk']);
   expect(cadenceStride('run', .55, 4)).toBeCloseTo(4 / 2.7);
-  expect(cadenceStride('infected-frail', .5, 4)).toBeCloseTo(4 / 2);
+  // Crowd tier gaits run at 3+ cycles/s (shorter legs step faster) so the stance stays within leg reach.
+  expect(cadenceStride('infected-frail', .5, 4)).toBeCloseTo(4 / (3.3 / Math.sqrt(.5)));
+  expect(cadenceStride('infected-lurch', 1, 5.1)).toBeCloseTo(5.1 / 3);
   expect(cadenceStride('corgi-walk', .7, 3)).toBeCloseTo(3 / 2);
   expect(cadenceStride('corgi-gallop', .7, 7)).toBeCloseTo(7 / 2.7);
 });

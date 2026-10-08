@@ -69,6 +69,11 @@ export class Lighting {
   /** Direction towards the shadow-casting light: the sun/moon, or the promoted hero lamp at night. */
   private readonly shadowDirection = new Vector3(0, 1, 0);
   private readonly heroTarget = new Vector3();
+  private readonly lightDir = new Vector3();
+  private readonly lightRight = new Vector3();
+  private readonly lightUp = new Vector3();
+  private readonly shadowCenter = new Vector3();
+  private readonly worldUp = new Vector3(0, 1, 0);
   private heroTime = -1;
   /** Name of the promoted hero light for diagnostics (null: the sun/moon casts). */
   heroLight: string | null = null;
@@ -137,9 +142,16 @@ export class Lighting {
       this.ray.set(view.camera.position, this.corner);
       if (this.ray.intersectPlane(this.ground, this.corner)) visibleRadius = Math.max(visibleRadius, this.corner.distanceTo(view.focus));
     }
-    const radius = Math.max(8, visibleRadius) * 1.1;
-    this.sun.target.position.copy(view.focus);
-    this.sun.position.copy(this.heroTime >= 0 ? this.shadowDirection : this.direction.value).multiplyScalar(radius * 2).add(view.focus);
+    // Quarter-metre radius steps keep the texel size fixed while the view only translates.
+    const radius = Math.ceil(Math.max(8, visibleRadius) * 1.1 * 4) / 4;
+    // Stable shadows while scrolling: move the shadow frustum in whole texels of its own light-space grid,
+    // otherwise every static shadow edge resamples (swims/flickers) as the follow camera glides.
+    const direction = this.lightDir.copy(this.heroTime >= 0 ? this.shadowDirection : this.direction.value).normalize();
+    const right = this.lightRight.crossVectors(this.worldUp, direction); if (right.lengthSq() < 1e-8) right.set(1, 0, 0); right.normalize(); const up = this.lightUp.crossVectors(direction, right);
+    const texel = 2 * radius / this.sun.shadow.mapSize.x, a = view.focus.dot(right), b = view.focus.dot(up);
+    const center = this.shadowCenter.copy(view.focus).addScaledVector(right, Math.round(a / texel) * texel - a).addScaledVector(up, Math.round(b / texel) * texel - b);
+    this.sun.target.position.copy(center);
+    this.sun.position.copy(direction).multiplyScalar(radius * 2).add(center);
     const camera = this.sun.shadow.camera;
     camera.left = camera.bottom = -radius; camera.right = camera.top = radius;
     camera.near = 0.1; camera.far = radius * 4; camera.updateProjectionMatrix();

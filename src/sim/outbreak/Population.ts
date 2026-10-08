@@ -10,7 +10,7 @@ type Plan = PedestrianOptions & { at: Point; jog?: boolean; dog?: boolean };
  * doorsteps and gardens, plus walkers, joggers and elderly strollers on every sidewalk. Works on any layout that has
  * roads and the section 3 anchors; points are snapped to clear navigation. Model+tint pairs are unique within 20 m.
  */
-export function populateGrove(outbreak: Outbreak, count = 56): number[] {
+export function populateGrove(outbreak: Outbreak, count = 60): number[] {
   const world = outbreak.world, nav = world.infected!.nav, rng = outbreak.rng;
   const district = world.districts!.districts.find(d => d.id === 'D-GROVE') ?? world.districts!.districts[0];
   const [ox, oz] = district.origin, layout = district.layout;
@@ -88,6 +88,14 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
   if (patio) { circle(free(snap({ x: patio.x - 3, z: patio.z + 2 }, 3)), 3, ['coffee', 'phone', null]); circle(free(snap({ x: patio.x + 4, z: patio.z + 3 }, 3)), 2, ['coffee', 'coffee']); }
   for (let i = 1; i < 4; i++) sitter(patio && { x: patio.x + i * 25, z: patio.z });
   // QA1-11: no standing group at the bus stop; walkers pass it instead (see the fill below).
+  // PO rule 2026-10-07 (growth only by bites): the garage block is busy, so the house residents of beat 9 find people to bite
+  // and the snowball is visible - two chat groups on the Elm Street sidewalks beside the garage and a coffee sitter nearby.
+  const garage = anchor('garage-door');
+  if (garage) {
+    circle(free(snap({ x: garage.x - 9, z: garage.z - 4.5 }, 3)), 3, ['phone', null, 'coffee']);
+    circle(free(snap({ x: garage.x + 10, z: garage.z - 10.5 }, 3)), 2, [null, 'bag']);
+    sitter(garage);
+  }
   // At most ~8 doorstep hubs spread over the map (the full layout has 50+ refuge doors).
   const hubDoors = doors.filter((_, i) => i % Math.max(1, Math.ceil(doors.length / 8)) === 0);
   for (const [i, door] of hubDoors.entries()) {
@@ -110,9 +118,13 @@ export function populateGrove(outbreak: Outbreak, count = 56): number[] {
   let larch = Math.min(8, nearLab.length * 3);
   // ...and Maple Corner (the start) gets the first eight walkers.
   const hub = anchor('player-start') ?? patio, nearStart = hub ? runs.filter(run => run.some(q => Math.hypot(q.x - hub.x, q.z - hub.z) < 18)) : [];
-  let maple = Math.min(8, nearStart.length * 3);
+  let maple = Math.min(6, nearStart.length * 3);
+  // ...and the beat 9 stretch: Elm Street from the garage to Fire Station 3 gets a dense share of the walkers and joggers.
+  const fire = anchor('fire-bay-door'), onElm = (q: Point) => !!garage && !!fire && q.x >= Math.min(garage.x, fire.x) - 4 && q.x <= Math.max(garage.x, fire.x) + 12 && Math.abs(q.z - garage.z + 6) < 9;
+  const nearElm = garage ? runs.filter(run => run.some(onElm)) : [];
+  let elm = Math.min(14, nearElm.length * 2);
   for (let guard = 0; plans.length < count && runs.length && guard < count * 8; guard++) {
-    const atStart = maple-- > 0, run = atStart ? nearStart[maple % nearStart.length] : larch-- > 0 ? nearLab[larch % nearLab.length] : runs[r++ % runs.length], kind = rng.next();
+    const atStart = maple-- > 0, run = atStart ? nearStart[maple % nearStart.length] : larch-- > 0 ? nearLab[larch % nearLab.length] : elm-- > 0 ? nearElm[elm % nearElm.length] : runs[r++ % runs.length], kind = rng.next();
     // Start-area walkers begin within a few metres of the courier so the opening frame is busy.
     const closest = hub ? run.reduce((best, q, i) => Math.hypot(q.x - hub.x, q.z - hub.z) < Math.hypot(run[best].x - hub.x, run[best].z - hub.z) ? i : best, 0) : 0;
     const start = atStart ? Math.max(0, closest - Math.floor(rng.next() * 3)) : Math.floor(rng.next() * run.length);

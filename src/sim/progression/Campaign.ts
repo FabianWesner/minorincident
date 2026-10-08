@@ -4,7 +4,7 @@ import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
 import type { GearTier, SurvivorVariant } from '../../data/survivor';
 export type Level = 1|2|3|4|5|6;
 export type ProgressionPreset = `L${2|3|4|5|6}-default`;
-export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean }
+export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
   version:1; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
   ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;

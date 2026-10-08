@@ -76,6 +76,11 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'hazard.armed'; id: number; fuseAt: number }
   | { tick: number; type: 'hazard.exploded'; id: number; position: { x: number; y: number; z: number }; radius: number }
   | { tick: number; type: 'hazard.leaked'; id: number }
+  /** E27: every blast (hazard, throwable, car, scripted stage). `fx` names the BlastFxPreset. */
+  | { tick: number; type: 'explosion'; defId: string; cls: import('../../data/explosions').BlastClass; fx: string; sourceId: number; position: { x: number; y: number; z: number }; radius: number }
+  /** E27 bullet time: the presentation clock runs at `scale` for `seconds` (render) when the setting is on. */
+  | { tick: number; type: 'explosion.slowmo'; defId: string; scale: number; seconds: number }
+  | { tick: number; type: 'ai.lostTarget'; sourceId: number; targetId: number; cause: 'smoke' }
   | { tick: number; type: 'hazard.electrified' | 'prop.ignited'; id: number; until: number }
   | { tick: number; type: 'prop.broken'; id: number; pieces: number }
   | { tick: number; type: 'interact.completed'; id: number; kind: import('../interact/Interactables').DeviceKind; cycle: number }

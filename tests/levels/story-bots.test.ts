@@ -56,10 +56,12 @@ test('@E19 @E19-AC22 fire-station invitation repeats without moving or protectin
     }
     expect(mission.state.steps.firestation.status).toBe('active');
     const door = mission.def.anchors['fire-bay-door'], inside = mission.def.anchors['fire-bay-trigger'];
-    const p = world.entities.get(1)!, outside = { x: door.x, z: door.z - 2 };
+    // Inward unit vector (door -> trigger): the bay opens east toward the game camera (PO 2026-10-07).
+    const len = Math.hypot(inside.x - door.x, inside.z - door.z), ix = (inside.x - door.x) / len, iz = (inside.z - door.z) / len;
+    const p = world.entities.get(1)!, outside = { x: door.x - ix * 2, z: door.z - iz * 2 };
     Object.assign(p.transform, outside); world.physics.playerBody!.setTranslation(p.transform, true); world.clearInput();
     const calls: number[] = []; world.events.on('story.say', e => { if (e.type === 'story.say' && e.text === 'Get in!') calls.push(e.tick); });
-    const nav = world.infected!.nav, cell = nav.nearestCell(door.x, door.z - 25, .45);
+    const nav = world.infected!.nav, cell = nav.nearestCell(door.x - ix * 14, door.z - iz * 14, .45);
     const id = world.infected!.spawn('infected.runner', { x: nav.x(cell), z: nav.z(cell) }, { state: 'chase' });
     const chaser = world.entities.get(id)!, before = { ...chaser.transform };
     for (let i = 0; i < 250; i++) world.update();
@@ -71,10 +73,10 @@ test('@E19 @E19-AC22 fire-station invitation repeats without moving or protectin
     expect(mission.state.gates['fire-shutter']).toBe(true);
     // Normal held movement crosses the actual open aperture; no setTranslation on the entry path.
     for (let i = 0; i < 150 && mission.state.phase === 'playing'; i++) {
-      world.setInput({ move: { x: 0, z: 1 } }); world.update();
+      world.setInput({ move: { x: ix, z: iz } }); world.update();
     }
     expect(mission.state.phase).toBe('result'); expect(world.storyLock).toBeNull();
-    expect(p.transform.z).toBeGreaterThan(door.z);
+    expect((p.transform.x - door.x) * ix + (p.transform.z - door.z) * iz).toBeGreaterThan(0);
     expect(Math.hypot(p.transform.x - inside.x, p.transform.z - inside.z)).toBeLessThanOrEqual(inside.radius);
     expect(mission.state.gates['fire-shutter']).toBe(false);
   } finally { world.dispose(); }

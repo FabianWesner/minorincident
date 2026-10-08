@@ -10,7 +10,6 @@ export class RiderContacts {
   readonly orientation = new Quaternion();
 }
 
-/** Keep the opt-in pilot behind ?skin=1. Set true here to switch the default;
- * ?skin=0 remains an explicit rollback/A/B override. */
-export const DEFAULT_SKIN = false;
+/** Fitted couriers are the default; skin=0 retains the rigid fallback. */
+export const DEFAULT_SKIN = true;
 export function useSkinnedCourier(params: URLSearchParams): boolean { return params.get('skin') === '1' || !params.has('skin') && DEFAULT_SKIN; }

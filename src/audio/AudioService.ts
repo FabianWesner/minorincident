@@ -150,6 +150,7 @@ export class AudioService implements Lifecycle {
         if (!this.world.scenario)
             return;
         this.level = /^L[1-6]$/.test(this.world.scenario) ? this.world.scenario : 'L1';
+        this.score.level = this.level;
         this.tier = this.world.districts?.composition.tier ?? 0;
         this.graph.map = fromDistricts(this.world.districts);
         this.registry.reset(this.world.seed);

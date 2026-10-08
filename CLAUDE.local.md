@@ -34,3 +34,6 @@ Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal +
 - Bot time bands: never pad, never shrink the band to fit a thin level — add the missing content.
 - PROD (minor-incident.com) is the public beta: deploy after each green batch (typecheck, unit, build, smoke) straight to PROD after the orchestrator's own QA. QA env (`BRANCH=qa`) only when the PO must test before a merge (PO rule 10-07). Every deploy gets an entry in `epics-pipeline/deploylog.json` → `deploylog.py` → deploy-log artifact.
 - Smoke/verify had no check that crowd figures are actually drawn on screen; a merge made all pedestrians invisible on PROD (10-07). Every crowd/render merge needs a visible-figures guard before deploy.
+- Resumed scheduler jobs (`--resume-from`) come back with `sandbox=workspace-write` and cannot run Blender/git staging/localhost listeners: for build lanes re-run fresh (or `codex exec --dangerously-bypass-approvals-and-sandbox` in the lane worktree) instead of resuming (10-07, art-l2l3-qa).
+- PO picks the model for the player figure: Fable 5.1 took over from Astra on 10-07 (on demand only).
+- PO 10-07: Fable/Astra are for getting a hard technique right (on demand); once the PO approves it, rollouts and follow-up work go back to Opus.

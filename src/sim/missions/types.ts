@@ -4,7 +4,8 @@ import type { EntitySnapshot } from '../world/types';
 
 export const objectiveTypes = ['reach', 'interact', 'kill', 'killAll', 'survive', 'defend', 'escort', 'collect', 'drive', 'custom'] as const;
 export type ObjectiveType = typeof objectiveTypes[number];
-export interface Anchor { x: number; z: number; radius: number }
+/** `y`: visible floor height for markers when the spot is raised (e.g. the Fire Station 3 bay floor); default street level. */
+export interface Anchor { x: number; z: number; radius: number; y?: number }
 /** Triggers use fixed sim ticks. IDs reference the definition, never renderer objects. */
 export type Trigger =
   | { kind: 'start' }
@@ -77,10 +78,14 @@ export interface L1State {
   techId: number;
   /** Handover and accident timeline in sim ticks; 0 = not scheduled. */
   hx: number; hz: number; handoverAt: number; deliveredAt: number; flickerAt: number; exitAt: number; warned: boolean; fired: number;
-  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number }; rushAt?: number; /** Emerging from a building: hidden at the door until this tick, then stumbles out and joins the AI. */ emergeAt?: number; door?: number }[];
+  exitIds: number[]; exitHeadingsDeg: number[]; runs: { id: number; dx: number; dz: number; speed: number; until: number; via?: { x: number; z: number }; rushAt?: number; /** Came out of this refuge door (beat 9 house). */ door?: number }[];
   turnedIds: number[]; escapedIds: number[];
-  /** Beat 9: the horde near the garage was produced; further streams spawned along the route to the fire station. */
-  graceUntil: number; hordeDone: boolean; routeSpawns: number; routeNextAt: number;
+  graceUntil: number;
+  /**
+   * Beat 9 (PO rule 2026-10-07): the one house near the garage whose residents come out one by one; `door` is the
+   * refuge-door number (0 = none in range), `next` the tick of the next emergence, `ids` the residents out so far.
+   */
+  house: { door: number; x: number; z: number; ox: number; oz: number; next: number; ids: number[] } | null;
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
   beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */
