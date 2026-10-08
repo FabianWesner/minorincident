@@ -98,6 +98,10 @@ export class Civilians {
     for (const e of this.world.entities.iterate()) {
       const c = e.civilian; if (!c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
       if (!c.adult) continue;
+      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
+        this.world.npcs!.move(e, c.vehicleYield.target, 2.8, c, .15); continue;
+      }
+      if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
       if (c.risingInfectedId && (this.world.entities.get(c.risingInfectedId)?.health.current ?? 0) <= 0) {
         const newborn = this.world.entities.get(c.risingInfectedId); if (newborn) delete newborn.infectionRise;
         delete c.risingInfectedId; c.eyesGlow = false; this.state(e, 'finished');

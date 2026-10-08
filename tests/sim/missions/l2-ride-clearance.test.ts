@@ -1,7 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l2TruckRoute } from '../../../src/data/l2';
+import { l2TruckRoute, l2TruckPath } from '../../../src/data/l2';
 import { loadL2, runL2 } from '../../../tools/sim-runner/l2Bots';
+import { truckBodyOverlap, truckPoseAt, truckWallOverlap } from '../../../src/sim/vehicles/L2TruckDrive';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 
 /** L2 beat 3: the kinematic fire truck never overlaps a pedestrian, infected, corgi, car, prop or static collider (PO: "Firefighting car went over a ped"). */
@@ -17,7 +18,7 @@ function plant(w: SimWorld, truckId: number, t: number): void {
   if (!planted.has(w)) {
     planted.set(w, ids);
     const o = w.npcs!.civilians.outbreak!;
-    for (const [x, z] of [[-58, 30.6], [-45, 30.6], [-30.6, 10], [-30.6, -20]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
+    for (const [x, z] of [[-58, 31.25], [-45, 31.25], [-28.75, 10], [-28.75, -20]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
   }
   const first = w.entities.get(ids[0]), truck = w.entities.get(truckId)!.transform;
   if (first && t % 300 === 299) {
@@ -27,7 +28,7 @@ function plant(w: SimWorld, truckId: number, t: number): void {
 }
 
 describe('L2 truck ride clearance', () => {
-  test('route polyline stays on clear (drivable) cells for the whole truck width', async () => {
+  test('@E20 route polyline stays on clear (drivable) cells for the whole truck width', async () => {
     const l = await loadL2(1); world = l.world; const nav = l.world.infected!.nav;
     // The parked truck's own blocker is lifted at departure; ignore it by sampling after the ride starts.
     let bad = 0;
@@ -42,33 +43,52 @@ describe('L2 truck ride clearance', () => {
       }
     }
     expect(bad).toBe(0);
+    for (const p of l2TruckPath) {
+      expect(nav.walls.some(w => truckWallOverlap(p, L, W, w))).toBe(false);
+      if (Math.abs(p.curvature) > .05) expect(Math.hypot(1 / Math.abs(p.curvature) + W / 2, L / 2)).toBeGreaterThanOrEqual(8);
+    }
   });
 
-  for (const mode of ['natural', 'planted'] as const) test(`20 seeds (${mode}): no body or static collider overlaps the truck footprint during the ride; ride stays in the time band`, async () => {
+  for (const mode of ['natural', 'planted'] as const) test(`@E20 20 seeds (${mode}): no body or static collider overlaps the truck footprint during the ride; ride stays in the time band`, async () => {
     const report: unknown[] = [];
     for (const seed of seeds) {
       const l = await loadL2(seed); world = l.world; const { mission } = l; const w = l.world;
       const hits = new Map<string, number>(); let staticHits = 0, heldTicks = 0, rideStart = 0, rideEnd = 0;
+      let previousYaw: number | null = null, previousSpeed = 0, yawRateMax = 0, yawJumpMax = 0, accelMax = 0, brakeMax = 0, laneM = 0, roadM = 0, previousS = 0;
       runL2(w, mission, 'complete', { seed, maxSeconds: 240, stopWhen: m => {
         const s = m.state.l2!; if (s.phase !== 'ride') return s.phase === 'arrived' || !!s.arrivedAt;
-        const car = w.vehicles!.cars.get(s.truckId)!, t = car.entity.transform, c = Math.cos(t.yaw), sn = Math.sin(t.yaw);
+        const car = w.vehicles!.cars.get(s.truckId)!, t = car.entity.transform;
         rideStart ||= w.tick; rideEnd = w.tick; if (s.rideV < .05) heldTicks++;
         if (mode === 'planted') plant(w, s.truckId, rideEnd - rideStart);
+        if (previousYaw !== null) {
+          const jump = Math.abs(Math.atan2(Math.sin(t.yaw - previousYaw), Math.cos(t.yaw - previousYaw))) * 180 / Math.PI;
+          yawJumpMax = Math.max(yawJumpMax, jump); yawRateMax = Math.max(yawRateMax, jump * 60);
+          accelMax = Math.max(accelMax, (s.rideV - previousSpeed) * 60); brakeMax = Math.max(brakeMax, (previousSpeed - s.rideV) * 60);
+        }
+        previousYaw = t.yaw; previousSpeed = s.rideV;
+        const pose = truckPoseAt(s.rideS), travelled = s.rideS - previousS; previousS = s.rideS;
+        // Street lane centres come from the district's 5 m two-way roads (not the driven pose).
+        if (pose.section !== 'apron') {
+          const error = pose.section === 'elm' ? Math.abs(t.z - 31.25) : pose.section === 'juniper' ? Math.abs(t.x + 28.75) : pose.section === 'row' ? Math.abs(t.z + 32.25) : Math.abs(Math.hypot(t.x + 37.75, t.z - (t.z > 0 ? 22.25 : -23.25)) - 9);
+          roadM += travelled; if (error <= .6) laneM += travelled;
+          // The centre must be on actual road geometry, including the junction's curved connector.
+          expect(Math.abs(t.z - 30) <= 2.5 || Math.abs(t.x + 30) <= 2.5 || Math.abs(t.z + 31) <= 2.5, `seed ${seed}: asphalt at ${t.x},${t.z}`).toBe(true);
+        }
         for (const e of w.entities.iterate()) {
-          if (e.id === s.truckId || e.hidden || e.id === 1 || !(e.civilian || e.infected || e.companion || e.vehicle || e.kind === 'physics-prop')) continue;
-          const dx = e.transform.x - t.x, dz = e.transform.z - t.z, lx = dx * c - dz * sn, lz = dx * sn + dz * c, r = e.combat?.radius ?? .3;
-          const ox = Math.max(0, Math.abs(lx) - L / 2), oz = Math.max(0, Math.abs(lz) - W / 2);
-          if (ox * ox + oz * oz < r * r) hits.set(`${e.kind}:${e.archetype ?? ''}#${e.id}`, (hits.get(`${e.kind}:${e.archetype ?? ''}#${e.id}`) ?? 0) + 1);
+          if (e.id === s.truckId || e.hidden || e.id === 1 || !(e.civilian || e.infected || e.companion || e.vehicle || e.traffic || e.kind === 'physics-prop')) continue;
+          if (truckBodyOverlap(t, L, W, e, w)) hits.set(`${e.kind}:${e.archetype ?? ''}#${e.id}`, (hits.get(`${e.kind}:${e.archetype ?? ''}#${e.id}`) ?? 0) + 1);
         }
-        const nav = w.infected!.nav;
-        for (let a = -L / 2; a <= L / 2; a += .5) for (const b of [-W / 2, 0, W / 2]) {
-          const px = t.x + a * c + b * sn, pz = t.z - a * sn + b * c;
-          if (nav.walls.some(q => Math.abs(px - q.x) < q.halfX && Math.abs(pz - q.z) < q.halfZ)) staticHits++;
-        }
+        for (const q of w.infected!.nav.walls) if (truckWallOverlap(t, L, W, q)) staticHits++;
         return false;
       } });
-      const seconds = (rideEnd - rideStart) / 60;
-      report.push({ seed, seconds, heldS: heldTicks / 60, overlaps: [...hits], staticHits });
+      expect(mission.state.l2!.arrivedAt, `seed ${seed}: ride arrived`).toBeGreaterThan(0);
+      const seconds = (mission.state.l2!.arrivedAt - mission.state.l2!.departAt) / 60;
+      report.push({ seed, seconds, heldS: heldTicks / 60, overlaps: [...hits], staticHits, yawRateMax, yawJumpMax, accelMax, brakeMax, laneShare: laneM / roadM });
+      expect(yawRateMax, `seed ${seed}: yaw rate`).toBeLessThanOrEqual(25);
+      expect(yawJumpMax, `seed ${seed}: heading continuity`).toBeLessThanOrEqual(2);
+      expect(accelMax).toBeLessThanOrEqual(2.6 + 1e-6); expect(brakeMax).toBeLessThanOrEqual(4 + 1e-6);
+      expect(laneM / roadM, `seed ${seed}: right lane`).toBeGreaterThanOrEqual(.95);
+      if (mode === 'natural') expect(seconds).toBeLessThanOrEqual(25);
       expect([...hits], `seed ${seed}`).toEqual([]);
       expect(staticHits, `seed ${seed} static`).toBe(0);
       expect(seconds, `seed ${seed} ride time`).toBeGreaterThan(15);

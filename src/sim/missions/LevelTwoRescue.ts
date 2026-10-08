@@ -1,4 +1,4 @@
-import * as RAPIER from '@dimforge/rapier3d-compat';
+import { L2TruckDrive } from '../vehicles/L2TruckDrive';
 import { Rng } from '../../core/Rng';
 import { l2, l2TruckRoute } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -36,7 +36,7 @@ type Pending = L2State['pending'][number];
  */
 export class LevelTwoRescue {
   private readonly walls = new Map<string, number>();
-  private heldTicks = 0;
+  private driver: L2TruckDrive | null = null;
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
   constructor(private readonly mission: Mission) {}
   private get s(): L2State { return this.mission.state.l2!; }
@@ -87,8 +87,8 @@ export class LevelTwoRescue {
   /** The truck is a ride, never a drivable car: kinematic body, doors inert. */
   private kinematic(): void {
     const car = this.world.vehicles!.cars.get(this.s.truckId); if (!car) return;
-    car.physics.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
-    (car as { noEnterUntil: number }).noEnterUntil = Number.MAX_SAFE_INTEGER;
+    this.driver = new L2TruckDrive(this.world, this.s);
+    this.driver.prepare();
   }
   private parkNav(blocked: boolean): void {
     const car = this.world.vehicles!.cars.get(this.s.truckId); if (!car) return;
@@ -244,80 +244,13 @@ export class LevelTwoRescue {
     }
     return p;
   }
-  /** Truck pose `ds` metres further along the route (heading of that segment); ds = 0 is the actual pose. */
-  private poseAhead(ds: number, at: { x: number; z: number; yaw: number }): { x: number; z: number; yaw: number } {
-    if (ds <= 0) return at;
-    const r = this.routeInfo(), sT = Math.min(r.length, this.s.rideS + ds);
-    let k = 1; while (k < r.pts.length - 1 && r.cum[k] < sT) k++;
-    const a = r.pts[k - 1], b = r.pts[k], f = (sT - r.cum[k - 1]) / Math.max(1e-6, r.cum[k] - r.cum[k - 1]);
-    return { x: a.x + (b.x - a.x) * f, z: a.z + (b.z - a.z) * f, yaw: -Math.atan2(b.z - a.z, b.x - a.x) };
-  }
-  /**
-   * First body that the truck's footprint (grown by a safety margin) would touch within `reach` m along the route:
-   * distance travelled until contact. People, infected, the corgi, cars and movable props all count.
-   */
-  private blocker(at: { x: number; z: number; yaw: number }, reach: number): { gap: number; e: EntitySnapshot; pose: { x: number; z: number; yaw: number } } | null {
-    const { world } = this.mission, def = world.vehicles!.cars.get(this.s.truckId)!.physics.def;
-    const bodies = [...world.entities.iterate()].filter(e => e.id !== this.s.truckId && e.id !== 1 && !e.hidden && (e.civilian || e.infected || e.companion || e.vehicle || e.kind === 'physics-prop'));
-    for (let ds = 0; ds <= reach; ds += .5) {
-      const p = this.poseAhead(ds, at), c = Math.cos(p.yaw), sn = Math.sin(p.yaw);
-      let best: EntitySnapshot | null = null, bestLx = Infinity;
-      for (const e of bodies) {
-        const dx = e.transform.x - p.x, dz = e.transform.z - p.z, lx = dx * c - dz * sn, lz = dx * sn + dz * c, r = (e.combat?.radius ?? .35) + .3;
-        if (Math.abs(lz) < def.width / 2 + r + .25 && Math.abs(lx) < def.length / 2 + r && lx < bestLx) { best = e; bestLx = lx; }
-      }
-      if (best) return { gap: ds, e: best, pose: p };
-    }
-    return null;
-  }
-  /** Hearing the siren, a person in the way runs sideways off the lane (flee from a point on the centre line). */
-  private stepAside(e: EntitySnapshot, x: number, z: number, yaw: number): void {
-    const c = e.civilian; if (!c || c.ally || !(c.state === 'calm' || c.state === 'hide' || c.state === 'alarmed')) return;
-    const side = Math.sign((e.transform.x - x) * Math.sin(yaw) + (e.transform.z - z) * Math.cos(yaw)) || (e.id % 2 ? 1 : -1);
-    c.story = null; c.schedule = undefined; c.owner = null;
-    Object.assign(c.threat, { x: e.transform.x - Math.sin(yaw) * side * 1.5, z: e.transform.z - Math.cos(yaw) * side * 1.5 });
-    this.world.npcs!.civilians.state(e, 'flee');
-  }
-  /** Last resort after a hold: a movable body is placed on the nearest clear spot beside the lane. */
-  private clearBody(e: EntitySnapshot, x: number, z: number, yaw: number): void {
-    if (e.vehicle || e.kind === 'physics-prop') return;
-    const nav = this.world.infected!.nav, c = Math.cos(yaw), sn = Math.sin(yaw), dx = e.transform.x - x, dz = e.transform.z - z, lx = dx * c - dz * sn, lz = dx * sn + dz * c;
-    for (const k of [Math.sign(lz) || 1, -(Math.sign(lz) || 1)]) for (let m = 2.6; m <= 6; m += .5) {
-      const nx = x + c * lx + sn * k * m, nz = z - sn * lx + c * k * m;
-      if (!nav.clear(nx, nz, .4)) continue;
-      e.transform.x = nx; e.transform.z = nz; this.world.spatial.set(e.id, nx, nz); return;
-    }
-  }
-  /** Kinematic ride along the authored route: accelerate, slow for corners, brake to the forecourt. */
+  /** Continuous, right-lane curved motion shared with the isolated Scene Lab QA. */
   private ride(): void {
-    const { world } = this.mission, r = this.routeInfo(), s = this.s, car = world.vehicles!.cars.get(s.truckId);
-    if (!car) return;
-    let k = 1; while (k < r.pts.length - 1 && r.cum[k] < s.rideS) k++;
-    const toCorner = k < r.pts.length - 1 ? r.cum[k] - s.rideS : Infinity, left = r.length - s.rideS;
-    // Nobody is driven over: a body in the corridor ahead (person, infected, corgi, car, prop) makes the truck brake to a stop
-    // short of it, the person steps off the lane at once (siren), and after a short hold anything movable is placed beside the lane.
-    const t0 = car.entity.transform, brake = l2.ride.accelMs2 * 1.6, reach = s.rideV * s.rideV / (2 * brake) + 6;
-    const hit = this.blocker(t0, reach);
-    let cap = Infinity, hold = false;
-    if (hit) {
-      this.stepAside(hit.e, hit.pose.x, hit.pose.z, hit.pose.yaw);
-      cap = Math.sqrt(2 * brake * .8 * Math.max(0, hit.gap - .5));
-      hold = hit.gap <= .5;
-      if (hold && ++this.heldTicks > ticks(1.5)) this.clearBody(hit.e, hit.pose.x, hit.pose.z, hit.pose.yaw);
-    } else this.heldTicks = 0;
-    const target = Math.min(cap, l2.ride.cruiseMs, Math.sqrt(2 * l2.ride.accelMs2 * Math.max(0, left)) + .3, toCorner < 7 ? l2.ride.cornerMs + toCorner * .6 : Infinity);
-    s.rideV += Math.max(-brake / TICKS, Math.min(l2.ride.accelMs2 / TICKS, target - s.rideV));
-    if (hold) s.rideV = Math.min(s.rideV, cap);
-    s.rideS = Math.min(r.length, s.rideS + (hold ? 0 : Math.max(.02, s.rideV)) / TICKS);
-    k = 1; while (k < r.pts.length - 1 && r.cum[k] < s.rideS) k++;
-    const a = r.pts[k - 1], b = r.pts[k], f = (s.rideS - r.cum[k - 1]) / Math.max(1e-6, r.cum[k] - r.cum[k - 1]);
-    const x = a.x + (b.x - a.x) * f, z = a.z + (b.z - a.z) * f, want = -Math.atan2(b.z - a.z, b.x - a.x);
-    const yaw0 = car.entity.transform.yaw, delta = Math.atan2(Math.sin(want - yaw0), Math.cos(want - yaw0)), yaw = yaw0 + Math.max(-.045, Math.min(.045, delta));
-    const y = car.physics.body.translation().y;
-    car.physics.body.setNextKinematicTranslation({ x, y, z }); car.physics.body.setNextKinematicRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) });
-    car.entity.transform.x = x; car.entity.transform.z = z; car.entity.transform.yaw = yaw; car.entity.vehicle!.speed = s.rideV;
-    this.carry(x, z);
-    if (s.rideS >= r.length - 1e-6) this.arrive();
+    const car = this.world.vehicles!.cars.get(this.s.truckId); if (!car) return;
+    this.driver ??= new L2TruckDrive(this.world, this.s);
+    const arrived = this.driver.step(), t = car.entity.transform;
+    this.carry(t.x, t.z);
+    if (arrived) this.arrive();
   }
   /** Seated player, crew and corgi ride with the truck (hidden, no input). */
   private carry(x: number, z: number): void {

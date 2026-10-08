@@ -1,3 +1,4 @@
+import { tyreProfile, tyreRing } from './TyreContact';
 import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
@@ -17,7 +18,7 @@ import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 const lampPosition = new Vector3(), lampDirection = new Vector3();
-interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean }
+interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; ring: Vector3[] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
@@ -31,6 +32,8 @@ export class VehicleView extends Group {
   private bloodEnabled = true;
   private readonly feedbackEvents = new Map<number, VehicleFeedbackEvent>();
   private disposed = false;
+  private readonly axle = new Vector3(0, 0, 1);
+  private readonly contact = new Vector3();
   private readonly chassisRotation = new Quaternion();
   private readonly pending = new Map<number, Promise<void>>();
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
@@ -64,7 +67,7 @@ export class VehicleView extends Group {
       return copy;
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
-    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z }; });
+    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, ring: tyreRing(tyreProfile(node, 1), 1) }; });
     const lamp = (name: string, color: string) => {
       const material = new MeshBasicNodeMaterial({ color });
       model.getObjectByName(name)?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
@@ -100,11 +103,22 @@ export class VehicleView extends Group {
         const heights = record.wheels.map(w => this.ground!(...this.wheelSpot(w.node)) ?? 0), mean = heights.reduce((a, b) => a + b, 0) / heights.length;
         record.parent.position.y += mean;
         for (let i = 0; i < 4; i++) record.wheels[i].node.position.y += heights[i] - mean;
+        // Reuse the bicycle tread contacts: a steered tyre can touch paint/paving with its shoulder before its hub does.
+        record.parent.updateMatrixWorld(true);
+        for (const wheel of record.wheels) {
+          let gap = Infinity;
+          for (const local of wheel.ring) {
+            this.contact.copy(local).applyAxisAngle(this.axle, -(wheel.node.rotation.z - wheel.spin)).applyMatrix4(wheel.node.matrixWorld);
+            const ground = this.ground(this.contact.x, this.contact.z);
+            if (ground !== null) gap = Math.min(gap, this.contact.y - ground);
+          }
+          if (Number.isFinite(gap)) wheel.node.position.y -= gap;
+        }
       }
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
-      record.door.visible = this.world.vehicles!.active === null && car.entity.health.current > 0;
+      record.door.visible = this.world.vehicles!.active === null && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil;
       // E27 burned variant: an exploded car chars to soot once (shared paint copies, no new materials).
       if ((state.damage === 'exploded') !== record.charred) { record.charred = state.damage === 'exploded'; for (const m of record.paint) if ('char' in m) (m as unknown as { char: { value: number } }).char.value = record.charred ? .88 : 0; }
       record.smoke.visible = state.damage !== 'normal'; record.fire.visible = state.damage === 'burning' || state.damage === 'exploded';

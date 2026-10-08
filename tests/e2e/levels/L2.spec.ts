@@ -78,7 +78,7 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     expect((await mission()).l2!.axe).toBe(true);
     expect((await player()).weapons!.LEFT.rack.map(r => r.id)).toContain('weapon.fire-axe');
     // Board at the crew door by interaction.
-    await go(at('l2-board'), .6); await interact();
+    await go(at('l2-board'), .6, async () => (await mission()).l2!.seated); await interact();
     for (let i = 0; i < 20 && !(await mission()).l2!.seated; i++) { await interact(); await step(10); }
     expect((await mission()).l2!.seated).toBe(true);
     for (let i = 0; i < 200; i++) {
