@@ -215,3 +215,7 @@ body[data-ui-screen=pause] .menu-pause{max-width:min(640px,calc(100vw - 760px))}
   body[data-ui-screen=pause] .menus{justify-items:start}
   body[data-ui-screen=pause] .menu-pause{margin-left:308px;max-width:calc(100vw - 340px - 120px)}
 }
+/* Desktop: the pause control is only a small, quiet corner icon (P / Esc is the way to pause); touch keeps its own button above. */
+.full-ui:not(.touch-ui)[data-ui-screen] [data-testid=pause-button]{top:auto;left:auto;right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));transform:none;width:30px;height:30px;min-width:30px;min-height:30px;padding:0;font-size:14px;border-radius:50%;opacity:.45;background:#182333cc}
+.full-ui:not(.touch-ui)[data-ui-screen] [data-testid=pause-button]:hover,.full-ui:not(.touch-ui)[data-ui-screen] [data-testid=pause-button]:focus-visible{opacity:1}
+.full-ui:not(.touch-ui) [data-testid=pause-label]{display:none}
