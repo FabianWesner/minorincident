@@ -104,6 +104,17 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 - **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
 - **Traffic:** `traffic` is the kinematic ambient-traffic box.
 
+### House emergence
+
+`"emerge": { "house": "bld.house-a:405", "count": 4, "staggerS": 1.5, "frame": 30 }` runs the game's own L1 beat-9
+emergence (`src/sim/outbreak/HouseEmergence.ts`) at that house placement: from `frame` on, `count` residents are
+spawned inside the house behind the front door, the door swings open with the first one and stays open, and each one
+stumbles out over the threshold, across the porch, down the treads and through the gate before chasing the courier.
+They become actors `resident-0` .. (`id` renames them). Only house kinds with measured door geometry can emerge
+(currently `bld.house-a`). `metrics.emergence` gives the door, the doorstep, the frame the door opened and how far it is open;
+each resident's `firstDrawn.outM` is how far past the threshold it was first drawn (negative = inside).
+See `specs/scenes/qa-l1-house-emergence*.json`.
+
 ### Effects and timeline
 
 `"script": [{ "frame": 20, "effect": { "wreck": "sedan" } }]`
@@ -138,6 +149,9 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `torsoPitchMaxDeg`
 - `drawCallsMax`
 - `trianglesMax`
+- `emergeOutsideMax` (`emerge` residents first drawn past the door threshold, or never drawn)
+- `doorShutFramesMax` (frames an `emerge` resident spent within 0.7 m of the threshold while the door was drawn less than 60 % open)
+- `farLodCloseMax` (frames any actor drew its far LOD, lod2, within 14 m of the camera; `metrics.actors.<id>.farLodCloseFrames`)
 
 `clipping` takes these options:
 

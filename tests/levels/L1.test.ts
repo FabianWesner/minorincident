@@ -191,15 +191,20 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house door near the garage, one by one, 1.5-4 s apart', async () => {
+  test('T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart', async () => {
     const { world: w, mission } = await load(2); w.combat!.damage.god = true;
-    const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>();
+    const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>(), path = new Map<number, number[]>();
     w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doors.push({ id: e.id, tick: e.tick }); });
     const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
     let nearMax = 0;
     // The courier takes the bat and heads for the fire station (complete bot); every tick, note new residents where they appear.
     w.events.on('sim.tick', () => {
-      for (const id of mission.state.l1?.house?.ids ?? []) if (!appear.has(id)) { const t = w.entities.get(id)!.transform; appear.set(id, { tick: w.tick, x: t.x, z: t.z }); }
+      const h = mission.state.l1?.house;
+      for (const id of h?.ids ?? []) {
+        const t = w.entities.get(id)!.transform; if (!appear.has(id)) appear.set(id, { tick: w.tick, x: t.x, z: t.z });
+        // Signed distance past the threshold along the door normal, for the first 4 s of each resident.
+        const list = path.get(id) ?? []; path.set(id, list); if (list.length < 240) list.push((t.x - h!.x) * h!.nx + (t.z - h!.z) * h!.nz);
+      }
       if (mission.state.l1?.house) nearMax = Math.max(nearMax, near());
     });
     // ...until the house opens; then the (immortal) courier waits on the street so the level does not end first.
@@ -209,19 +214,26 @@ describe('L1 v2 mission', () => {
     for (let i = 0; i < 120; i++) w.update(); // the last one is noted on the next tick and the crowd gathers
     const house = mission.state.l1!.house!;
     expect(house.door).toBeGreaterThan(0);
+    // A house front door facing the game camera (+X +Z), so the emergence is in view.
+    expect(house.house).toMatch(/^bld\.house-/); expect(house.nx + house.nz).toBeGreaterThan(0);
     expect(Math.hypot(house.x - g.x, house.z - g.z)).toBeLessThanOrEqual(l1v2.house.doorM[1]);
     expect(house.ids).toHaveLength(l1v2.house.count);
-    // Same door every time, one door bang per resident, staggered 1.5 to 4 s.
-    expect(new Set(doors.map(d => d.id))).toEqual(new Set([`door-${house.door}`]));
-    expect(doors).toHaveLength(l1v2.house.count);
-    for (let i = 1; i < doors.length; i++) {
-      const gap = (doors[i].tick - doors[i - 1].tick) / 60;
+    // PO P1 10-08: the door opens once with the first resident and stays open (one bang), the residents follow 1.5 to 4 s apart.
+    expect(doors).toEqual([{ id: `door-${house.door}`, tick: appear.get(house.ids[0])!.tick - 1 }]);
+    expect(w.openDoors.get(`door-${house.door}`)).toMatchObject({ x: house.x, z: house.z, nx: house.nx, nz: house.nz });
+    const ticks = house.ids.map(id => appear.get(id)!.tick);
+    for (let i = 1; i < ticks.length; i++) {
+      const gap = (ticks[i] - ticks[i - 1]) / 60;
       expect(gap).toBeGreaterThanOrEqual(l1v2.house.staggerS[0] - 1 / 30); expect(gap).toBeLessThanOrEqual(l1v2.house.staggerS[1] + 1 / 30);
     }
-    // Each one appears within 3 m of that door, on its door-open tick, with a pedestrian look.
-    for (const [i, id] of house.ids.entries()) {
-      const a = appear.get(id)!; expect(a.tick - doors[i].tick).toBeGreaterThanOrEqual(0); expect(a.tick - doors[i].tick).toBeLessThanOrEqual(1); // noted on the next sim.tick
-      expect(Math.hypot(a.x - house.x, a.z - house.z)).toBeLessThanOrEqual(3);
+    // Each one is first inside the house just behind the threshold (never on the yard or the pavement), walks out over
+    // the threshold (monotonic, no jump) to the doorstep, and keeps its pedestrian look.
+    for (const id of house.ids) {
+      const a = appear.get(id)!, out = path.get(id)!, lateral = Math.abs((a.x - house.x) * house.nz - (a.z - house.z) * house.nx);
+      expect(out[0], `resident ${id} first position past the threshold`).toBeLessThan(-.5); expect(lateral).toBeLessThan(.3);
+      expect(Math.max(...out), `resident ${id} came out`).toBeGreaterThan(.8);
+      const cross = out.findIndex(v => v >= 0);
+      for (let k = 1; k <= cross; k++) expect(out[k] - out[k - 1]).toBeLessThan(.05);
       expect(w.entities.get(id)?.appearance?.entityId).toBe(id);
     }
     expect(nearMax).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
@@ -231,19 +243,22 @@ describe('L1 v2 mission', () => {
     const report: { seed: number; profile: string; exits: number; house: number; bitten: number; deaths: number }[] = [];
     for (const [seed, profile] of [[1, 'complete'], [2, 'complete'], [3, 'newbie']] as const) {
       const { world: w, mission } = await loadL1(seed); world = w;
-      const bitten = new Set<number>(), seen = new Set<number>(), bad: number[] = [];
+      const bitten = new Set<number>(), seen = new Set<number>(), bad: number[] = [], outside: number[] = [];
       w.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite' && e.turns) bitten.add(e.targetId); });
       w.events.on('sim.tick', () => {
         const l1 = mission.state.l1!;
         for (const e of w.infected!.active) {
           if (seen.has(e.id)) continue; seen.add(e.id);
           if (!l1.exitIds.includes(e.id) && !l1.house?.ids.includes(e.id) && !bitten.has(e.id)) bad.push(e.id);
+          // PO P1 10-08: every house resident's first position is inside the house, behind the door threshold.
+          const h = l1.house; if (h?.ids.includes(e.id) && (e.transform.x - h.x) * h.nx + (e.transform.z - h.z) * h.nz >= 0) outside.push(e.id);
         }
       });
       // A forced death right after the exits must not add anyone either.
       const run = runL1(w, mission, profile, { seed, onExit: () => { w.player!.damage(1000, w.tick); } });
       expect(run.outcome, `seed ${seed} ${profile}`).toBe('complete');
       expect(bad, `seed ${seed} ${profile}: infected without provenance`).toEqual([]);
+      expect(outside, `seed ${seed} ${profile}: house residents first seen outside the door`).toEqual([]);
       const l1 = mission.state.l1!;
       expect(l1.exitIds).toHaveLength(l1v2.accident.infectedCount);
       expect(l1.house!.ids.length).toBeLessThanOrEqual(l1v2.house.count);

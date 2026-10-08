@@ -22,7 +22,8 @@ import {
 } from "three/webgpu";
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
-import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
+import { ROOFED, type DistrictAssets, type DoorLeaf } from "../assets/DistrictAssets";
+import type { OpenDoor } from "../sim/world/SimWorld";
 import type { Materials } from "./Materials";
 import { worldAssets } from "../assets/worldDefinitions";
 import { InstancedGroup } from "./InstancedGroup";
@@ -508,6 +509,57 @@ export class DistrictView extends Group {
     else { entry.far = replacement; entry.farLoaded = true; }
     old.removeFromParent(); old.dispose();
   }
+  /** Open doors drawn by syncDoors: the swung leaf and the dark doorway over the baked closed leaf, per door id. */
+  private readonly doors = new Map<string, { group: Group; leaf: Group | null; sign: number; angle: number; at: number }>();
+  /**
+   * Shared door-open helper (render side of SimWorld.openDoors): a building door the sim opened swings its authored leaf
+   * (the GLB door pivot, `open_angle` about the up axis, eased over 0.45 s of sim time) outward, and a dark doorway box
+   * covers the baked closed leaf so the opening reads as open. The door is matched to the nearest building placement
+   * whose door pivot lies within 1.5 m of the threshold. Doors removed from the map are closed again.
+   */
+  syncDoors(open: ReadonlyMap<string, OpenDoor>, tick: number): void {
+    for (const [id, door] of open) if (!this.doors.has(id)) this.openDoor(id, door);
+    for (const [id, d] of this.doors) {
+      if (!open.has(id)) { d.group.removeFromParent(); this.doors.delete(id); continue; }
+      if (!d.leaf) continue;
+      const t = Math.min(1, Math.max(0, (tick - d.at) / 27)), ease = 1 - (1 - t) ** 3;
+      d.leaf.rotation.y = d.sign * Math.abs(d.angle) * Math.PI / 180 * ease;
+    }
+  }
+  /** Scene Lab probe: how far a door's drawn leaf has opened (0 closed .. 1 at its authored angle), null if not drawn. */
+  doorOpening(id: string): number | null { const d = this.doors.get(id); return d?.leaf ? Math.abs(d.leaf.rotation.y) / Math.max(1e-6, Math.abs(d.angle) * Math.PI / 180) : null; }
+  private openDoor(id: string, door: OpenDoor): void {
+    const entry: { group: Group; leaf: Group | null; sign: number; angle: number; at: number } = { group: new Group(), leaf: null, sign: 1, angle: 0, at: door.at };
+    entry.group.name = `door:${id}`; this.doors.set(id, entry);
+    let best: { batch: LodBatch; ref: Object3D } | null = null, distance = 9;
+    for (const batch of this.lodBatches) {
+      if (worldAssets[batch.id]?.category !== 'building') continue;
+      for (const ref of batch.refs) {
+        const d = Math.hypot(ref.position.x + batch.origin[0] - door.x, ref.position.z + batch.origin[1] - door.z);
+        if (d < distance) { distance = d; best = { batch, ref }; }
+      }
+    }
+    if (!best) return;
+    const { batch, ref } = best;
+    void this.registry.doorLeaf(batch.id, this.low ? 'lod1' : 'lod0').then((source: DoorLeaf | null) => {
+      if (!source || this.disposed || this.doors.get(id) !== entry) return;
+      ref.updateMatrix();
+      const pivot = new Matrix4().makeTranslation(batch.origin[0], 0, batch.origin[1]).multiply(ref.matrix).multiply(source.matrix);
+      const hinge = new Vector3().setFromMatrixPosition(pivot);
+      if (Math.hypot(hinge.x - door.x, hinge.z - door.z) > 1.5) { console.info(JSON.stringify({ type: 'door.unmatched', id, asset: batch.id, hinge: [hinge.x, hinge.z] })); return; }
+      entry.group.matrixAutoUpdate = false; entry.group.matrix.copy(pivot);
+      const leaf = source.leaf.clone(true); leaf.traverse(o => { if (o instanceof Mesh) { o.castShadow = true; o.receiveShadow = true; } });
+      // Doorway: the baked closed leaf stays in the building batch; a dark box just around it reads as the open opening.
+      const size = source.bounds.getSize(new Vector3()), centre = source.bounds.getCenter(new Vector3());
+      const box = new BoxGeometry(size.x + .03, size.y + .01, size.z + .03); this.ownedGeometry.push(box);
+      const doorway = new Mesh(box, this.doorway); doorway.name = 'doorway'; doorway.position.copy(centre);
+      // Swing outward: the sign whose rotated leaf centre lies furthest along the door's outward normal.
+      const along = (sign: number) => { const c = centre.clone().applyAxisAngle(new Vector3(0, 1, 0), sign * Math.abs(source.angle) * Math.PI / 180).applyMatrix4(pivot); return (c.x - door.x) * door.nx + (c.z - door.z) * door.nz; };
+      entry.sign = along(1) >= along(-1) ? 1 : -1; entry.angle = source.angle; entry.leaf = new Group(); entry.leaf.add(leaf);
+      entry.group.add(doorway, entry.leaf); this.add(entry.group);
+    });
+  }
+  private readonly doorway = new MeshBasicNodeMaterial({ color: '#17121a' });
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
    * With a focus, nearest placements load first through a small background download window. */
   async prepare(focus?: { x: number; z: number }, cancelled = () => false, maximumDistance = Infinity): Promise<void> {
@@ -585,7 +637,7 @@ export class DistrictView extends Group {
     for (const m of this.ownedMaterials) m.dispose();
     for (const t of this.textures) t.dispose();
     this.windowMask.dispose();
-    this.black.dispose();
+    this.black.dispose(); this.doorway.dispose(); this.doors.clear();
     this.clear();
   }
 }

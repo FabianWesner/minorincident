@@ -608,6 +608,7 @@ export class GameView implements Lifecycle {
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
+    this.districts?.syncDoors(this.world.openDoors, this.world.tick + alpha - 1);
     this.lighting?.update(this.view); this.updateLights(); this.districts?.updateLods(this.view);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
@@ -687,7 +688,7 @@ export class GameView implements Lifecycle {
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
-    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
+    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);

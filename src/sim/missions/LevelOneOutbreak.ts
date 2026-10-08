@@ -6,6 +6,7 @@ import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import { L1Story } from './L1Story';
+import { doorExit, doorId, emergeResident, layoutHouseDoors, walkResidents } from '../outbreak/HouseEmergence';
 
 const TICKS = 60;
 /** Story-only numbers; spec section 3 beats 4 to 6. Everything systemic lives in the C/D lanes. */
@@ -104,6 +105,7 @@ export class LevelOneOutbreak {
     const l1 = this.l1;
     for (const key of ['handoverAt', 'deliveredAt', 'flickerAt', 'exitAt', 'graceUntil'] as const) if (l1[key]) l1[key] += delta;
     if (l1.house?.next) l1.house.next += delta;
+    for (const w of l1.house?.walking ?? []) w.until += delta;
     for (const run of l1.runs) run.until += delta;
     if (l1.exitIds.length) this.safePoint();
   }
@@ -308,8 +310,10 @@ export class LevelOneOutbreak {
 
   /**
    * Beat 9 (PO rule 2026-10-07, supersedes the section 5.9 top-ups): when the courier leaves the garage with the bat, the
-   * residents of ONE house near the garage come out one by one (1.5 to 4 s apart): the door bangs open, each stumbles out
-   * and joins the normal AI toward the courier. No other infected ever enter the world unbitten; growth is bites only.
+   * residents of ONE house near the garage come out one by one (1.5 to 4 s apart): the front door swings open and stays
+   * open, each resident stumbles out of the house over the threshold (HouseEmergence: spawned inside behind the door,
+   * never on the yard or the pavement) and joins the normal AI toward the courier at the doorstep. No other infected ever
+   * enter the world unbitten; growth is bites only.
    */
   private horde(tick: number, player: EntitySnapshot): void {
     const { world, state } = this.mission, l1 = this.l1, outbreak = world.npcs?.civilians.outbreak, ai = world.infected, h = l1v2.house;
@@ -319,52 +323,36 @@ export class LevelOneOutbreak {
       const bat = this.anchor('garage-bat');
       // "On leaving the garage": the courier steps out with the bat (or has been inside for 4 s).
       if (Math.hypot(p.x - bat.x, p.z - bat.z) < l1v2.director.hordeLeaveGarageM && tick - state.steps.firestation.started < 4 * TICKS) return;
-      l1.house = this.houseDoor() ?? { door: 0, x: 0, z: 0, ox: 0, oz: 0, next: 0, ids: [] };
+      l1.house = this.houseDoor() ?? { door: 0, house: '', x: 0, z: 0, nx: 0, nz: 1, floor: [], sx: 0, sz: 0, route: [], ox: 0, oz: 0, next: 0, ids: [] };
       l1.house.next = tick + Math.round(h.firstAfterS * TICKS);
       return;
     }
     const house = l1.house;
-    if (!house.door || house.ids.length >= h.count || tick < house.next || !ai.pool.length || ai.director.count >= ai.director.cap) return;
+    if (!house.house) return;
+    // A checkpoint load keeps the door open (the world map is not part of the mission snapshot).
+    if (house.ids.length) world.openDoor(doorId(house), { x: house.x, z: house.z, nx: house.nx, nz: house.nz }, tick - 60);
+    for (const id of walkResidents(world, house, tick)) ai.rush(id, { x: p.x, z: p.z }, tick + story.exitSearchS * TICKS);
+    if (house.ids.length >= h.count || tick < house.next || !ai.pool.length || ai.director.count >= ai.director.cap) return;
     const rng = new Rng(world.seed, `l1-house-${house.ids.length}`);
-    const outside = { x: house.ox, z: house.oz };
-    const e = world.entities.get(outbreak.spawnPedestrian(outside))!;
-    outbreak.turnNow(e);
-    // The door bangs open and the resident stumbles out (stagger beat), walks to the doorstep, then joins the AI.
-    e.transform.x = house.x; e.transform.z = house.z; e.transform.yaw = -Math.atan2(house.oz - house.z, house.ox - house.x);
-    world.spatial.set(e.id, house.x, house.z);
-    if (e.combat) e.combat.staggerUntil = tick + 45;
-    const brain = e.infected?.l1; if (brain) brain.pauseUntil = tick + 10 * TICKS;
-    world.events.emit({ type: 'gate.changed', tick, id: `door-${house.door}`, open: true });
-    l1.runs.push({ id: e.id, dx: p.x, dz: p.z, speed: 1.7, until: tick + 4 * TICKS, via: outside, door: house.door });
-    house.ids.push(e.id);
+    emergeResident(world, house, tick);
     house.next = tick + Math.round((h.staggerS[0] + rng.next() * (h.staggerS[1] - h.staggerS[0])) * TICKS);
   }
 
   /**
-   * The house: the nearest refuge door 6 to 25 m from the garage door whose front faces the game camera (which looks from
-   * +X +Z, so the emergence is visible) and whose doorstep has a walkable route to the garage. Deterministic per layout.
+   * The house: the nearest house front door 6 to 25 m from the garage door that faces the game camera (which looks from
+   * +X +Z, so the door and every resident coming out of it are in view) and whose doorstep has a walkable route to the
+   * garage. Deterministic per layout.
    */
   private houseDoor(): L1State['house'] {
-    const { world } = this.mission, nav = world.infected?.nav, layout = world.districts?.districts[0].layout, garage = this.anchor('garage-door'), [min, max] = l1v2.house.doorM;
-    if (!nav) return null;
-    const doors: { n: number; x: number; z: number; d: number }[] = [];
-    for (let n = 1; n <= 80; n++) {
-      const a = this.mission.def.anchors[`refuge-door-${n}`]; if (!a) break;
-      const d = Math.hypot(a.x - garage.x, a.z - garage.z); if (d >= min && d <= max) doors.push({ n, x: a.x, z: a.z, d });
-    }
-    doors.sort((a, b) => a.d - b.d || a.n - b.n);
-    const toCell = nav.nearestCell(garage.x, garage.z);
+    const { world } = this.mission, nav = world.infected?.nav, district = world.districts?.districts[0], garage = this.anchor('garage-door'), [min, max] = l1v2.house.doorM;
+    if (!nav || !district) return null;
+    const doors = layoutHouseDoors(district.layout, district.origin, this.mission.def.anchors)
+      .map(d => ({ ...d, d: Math.hypot(d.x - garage.x, d.z - garage.z) }))
+      .filter(d => d.d >= min && d.d <= max && d.nx + d.nz > 0)
+      .sort((a, b) => a.d - b.d || a.house.localeCompare(b.house));
     for (const door of doors) {
-      // Outward direction: from the nearest building's centre through the door.
-      let out = { x: 0, z: 1 }, best = Infinity;
-      for (const b of layout?.buildings ?? []) {
-        const cx = (b.aabb.min[0] + b.aabb.max[0]) / 2, cz = (b.aabb.min[2] + b.aabb.max[2]) / 2, d = Math.hypot(door.x - cx, door.z - cz);
-        if (d < best) { best = d; const dx = door.x - cx, dz = door.z - cz; out = Math.abs(dx) > Math.abs(dz) ? { x: Math.sign(dx), z: 0 } : { x: 0, z: Math.sign(dz) }; }
-      }
-      if (out.x + out.z <= 0) continue;
-      const cell = nav.nearestCell(door.x + out.x * l1v2.house.stumbleOutM, door.z + out.z * l1v2.house.stumbleOutM);
-      if (cell < 0 || toCell < 0 || !nav.path(cell, toCell, [], 8000)) continue;
-      return { door: door.n, x: door.x, z: door.z, ox: nav.x(cell), oz: nav.z(cell), next: 0, ids: [] };
+      const exit = doorExit(world, door, garage); if (!exit) continue;
+      return { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [] };
     }
     return null;
   }
