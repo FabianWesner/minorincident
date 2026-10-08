@@ -13,6 +13,10 @@ export function coverage(bytes: Buffer): number {
   return occupied/(png.width*png.height);
 }
 export function referenceFor(id: string): string {
+  if (id === 'veh.military-truck.wrecked') {
+    const local = `assets/${id}/reference-upscaled.png`;
+    if (!existsSync(local)) return referenceFor('veh.military-truck');
+  }
   const local = `assets/${id}/reference-upscaled.png`;
   if (existsSync(local)) return local;
   const common = spawnSync('git', ['rev-parse', '--git-common-dir'], { encoding: 'utf8' }).stdout.trim();
