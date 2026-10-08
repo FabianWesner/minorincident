@@ -3502,7 +3502,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceGlb": "assets/veh.sedan-white/model.glb",
     "lods": {
       "lod1": "public/assets/models/veh.sedan-white.lod1.glb",
@@ -3514,6 +3516,16 @@
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -3567,10 +3579,22 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "sourceScale": 0.91666669,
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -3618,7 +3642,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceGlb": "assets/veh.suv-dark/model.glb",
     "script": "assets/veh.suv-dark/build.py",
     "sourceForward": "+X",
@@ -3631,6 +3657,16 @@
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -3684,13 +3720,25 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "world": {
       "token": "survivorRed",
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -4048,9 +4096,21 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayBudget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 8
+    },
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -15845,6 +15905,66 @@
       "lod1": 600,
       "lod2": 200
     }
+  },
+  {
+    "id": "veh.military-apc",
+    "category": "vehicle",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/veh.military-apc/build.py",
+    "sourceGlb": "assets/veh.military-apc/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/veh.military-apc.glb",
+    "lods": {
+      "lod1": "public/assets/models/veh.military-apc.lod1.glb",
+      "lod2": "public/assets/models/veh.military-apc.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 5.69,
+      "y": 3.27,
+      "z": 2.95,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "body",
+      "lightsFront",
+      "lightsBrake",
+      "front",
+      "turret",
+      "gun"
+    ],
+    "animatedNodes": [
+      "wheelFL",
+      "wheelFR",
+      "wheelML",
+      "wheelMR",
+      "wheelRL",
+      "wheelRR",
+      "turret",
+      "gun"
+    ],
+    "sockets": [
+      "driverSeat",
+      "exitL",
+      "exitR",
+      "muzzle"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "budgetNote": "APC-only draw cap 12 per LOD: six wheel pivots, turret, gun and lit lamps are separate moving/emissive assemblies (rare set piece)."
   },
   {
     "id": "decay.burned-facade.house",

@@ -4005,6 +4005,37 @@ export default {
     "source": "public/assets/models/decay.burned-facade.diner.glb",
     "hash": "a9a372f8eb0bacf73141210f8d94ae1cb024147182f9bad1310734be99ba1646"
   },
+  "veh.military-apc": {
+    "class": "heavy",
+    "mass": 10500,
+    "friction": 0.8,
+    "restitution": 0.04,
+    "centerOfMass": [
+      0,
+      1.05,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.845,
+          -9.536743172944284e-9,
+          -1.475
+        ],
+        "max": [
+          2.845,
+          3.2699999904632566,
+          1.475
+        ]
+      }
+    ],
+    "source": "public/assets/models/veh.military-apc.glb",
+    "hash": "4276fd38dac06b807ea505a1ae412e8ada4c1831353c49bb92e673b2fa8a007e"
+  },
   "decay.burned-facade.house": {
     "class": "fixed",
     "mass": 0,
