@@ -231,6 +231,16 @@ def build_wreck(directory, output, only_tier=None):
         root['decay']='wrecked'
         record=json.loads(root['ss_physics']);record.update(pushable=False,kickable=False,sounds='prop.metal-heavy',friction=.85,restitution=.02)
         root['ss_physics']=json.dumps(record)
+        if lod==0:
+            # Close inspection keeps soft manufactured edges on the surviving
+            # native solids. Weld glTF normal seams before beveling actual edges;
+            # never bevel individual imported triangles or simplify panels.
+            for obj in [o for o in root.children_recursive if o.type=='MESH']:
+                bm=bmesh.new();bm.from_mesh(obj.data)
+                bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00001)
+                bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(obj.data);bm.free()
+                mod=obj.modifiers.new('near manufactured edge','BEVEL');mod.width=.018;mod.segments=1
+                mod.limit_method='ANGLE';mod.angle_limit=.60;mod.use_clamp_overlap=True
         export.merge_by_material(root,protected,preserve_vertex_colors=True)
         meshes=[o for o in root.children_recursive if o.type=='MESH']
         ao.bake_all(meshes,16)
