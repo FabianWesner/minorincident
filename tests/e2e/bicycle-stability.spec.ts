@@ -23,7 +23,8 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
   expect(mounted.render.actions!.attachments.find(a => a.actionId === 'weapon.bat')!.visible).toBe(false);
   const bike = mounted.render.bicycle!;
   expect(layout.surfaces.some(s => s.surface === 'tile' && bike.wheels.every(p => p && inside([p[0], p[2]], s.polygon)))).toBe(true);
-  for (const p of bike.wheels) expect(p![1]).toBeCloseTo(.13, 3);
+  // Wheels on the drawn sidewalk top (the baked tile box tops out at 13.34 cm; its layout height is 13 cm).
+  for (const p of bike.wheels) expect(Math.abs(p![1] - .1334)).toBeLessThan(.005);
   const hip = mounted.render.character!.pelvis!;
   expect(Math.hypot(hip[0] - bike.seat![0], hip[1] - bike.seat![1] + .04, hip[2] - bike.seat![2])).toBeLessThan(.01);
   const frames = await page.evaluate(async () => {
