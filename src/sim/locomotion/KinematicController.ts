@@ -17,6 +17,7 @@ export class KinematicController {
   private readonly next = { x: 0, y: 0, z: 0 };
   navigationGrid: NavGrid | null = null;
   speedScale = 1;
+  private clearance = .005;
   crowd: readonly CrowdObstacle[] = [];
   /** Solid props without a static collider (the parked bicycle): always pushed out of, at up to 4 m/s. */
   props: readonly CrowdObstacle[] = [];
@@ -45,6 +46,7 @@ export class KinematicController {
     this.displacement.x = this.velocity.x * FIXED_DT; this.displacement.z = this.velocity.z * FIXED_DT;
     // Continuous downward intent grounds the capsule; static geometry remains authoritative.
     this.displacement.y = -0.02;
+    let hover = -Infinity;
     if (enabled) {
       // Thin paving edges can defeat Rapier autostep at low joystick speeds.
       // Start a bounded upward sweep at the capsule's leading foot, using the
@@ -54,12 +56,12 @@ export class KinematicController {
       // Probe the whole leading footprint: a thin raised curb can lie between
       // the centre and the leading toe, above the paving sampled at the toe.
       const ground = Math.max(support(supportX, supportZ), support(transform.x + this.displacement.x, transform.z + this.displacement.z), support((supportX + transform.x) / 2, (supportZ + transform.z) / 2));
-      const clearance = ground > .01 || navigation ? .02 : magnitude > 0 ? .01 : .005;
-      // Lift only while the capsule is below the support it is heading for. Once it rests on it (within 2 mm of the
-      // resting height) the downward intent grounds it: a hover target above the resting height is pulled straight back
-      // by the controller's snap-to-ground, and that lift/snap cycle bobbed the whole courier 1.5 cm every tick whenever
-      // navigation was on (a held target-attack stops at range with navigation on; Scene Lab qa-courier-attack-bat).
-      if (ground + survivor.height / 2 + .005 - transform.y > .002) this.displacement.y = Math.max(this.displacement.y, Math.min(.06, ground + survivor.height / 2 + clearance - transform.y));
+      // The wanted hover flips with the input mode (a held target-attack alternates navigation on and off per tick): it
+      // rises at once but settles back slowly, so the capsule never follows it up and down.
+      const wanted = ground > .01 || navigation ? .02 : magnitude > 0 ? .01 : .005;
+      this.clearance = wanted > this.clearance ? wanted : Math.max(wanted, this.clearance - .06 * FIXED_DT);
+      hover = ground + survivor.height / 2 + this.clearance - transform.y;
+      this.displacement.y = Math.max(this.displacement.y, Math.min(.06, hover));
     }
     if (enabled) {
       let px = 0, pz = 0;
@@ -96,6 +98,9 @@ export class KinematicController {
     const controller = this.physics.characterController!, collider = this.physics.playerCollider!;
     controller.computeColliderMovement(collider, this.displacement, undefined, collider.collisionGroups());
     controller.computedMovement(this.displacement);
+    // Snap-to-ground pulls a capsule hovering above its resting height straight back down, and the next tick lifts it again:
+    // a 1.5 cm bob every tick (Scene Lab qa-courier-attack-bat). Hold the hover instead of snapping out of it.
+    if (hover > this.displacement.y && hover < .06) this.displacement.y = hover;
     // Rapier's skin-contact correction can alternate by tens of micrometres on a
     // resting capsule. Keep that numerical noise from accumulating into visible
     // idle vibration; real falls, steps and horizontal pushes still move it.
@@ -116,5 +121,5 @@ export class KinematicController {
       transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), survivor.turnSpeed * FIXED_DT);
     }
   }
-  reset(): void { this.velocity.x = this.velocity.z = 0; resetResponse(this.response); this.navigating = false; }
+  reset(): void { this.clearance = .005; this.velocity.x = this.velocity.z = 0; resetResponse(this.response); this.navigating = false; }
 }
