@@ -29,3 +29,7 @@ Interior furnishings and flower/pine shapes are simplified palette-only forms. C
 No manifest entry was modified and nothing was committed. Existing placeholders have the required building nodes but side tier; registration must set hero tier and the three delivered paths. WebGPU remains a manual check under repository rules; headless automated renderer QA uses WebGL2/Metal. Whole-epic E17 integration verification belongs after registration; these standalone files were checked directly with the shared GLB validator, determinism rebuilds and renderer inspection.
 
 Repository checks: `npm run typecheck` PASS; `npm run lint` PASS; `npm run test:unit -- --maxWorkers=4` PASS (65 test files passed, two skipped; 200 tests passed, two todo). No source, specs or manifest modifications were needed.
+
+## Authored standing twins (L3 Oak Avenue D/E lane)
+
+W2/W3 now build through sslib.house_decay; runtime variants remain base-owned. The original detailed base model is unchanged. Distance tiers now rerun explicit native recipes: low-sided foliage/cylinders, solid fused foundation/curb runs, structural wall openings and closed roof decks. model.distance1/2.glb retain the palette-separated recipe inputs; model.lod1/2.glb fold swatches into vertex colors per rigid owner. These authored inputs are reusable source assets, not temporary render exports. No generic decimation remains in this build source. Door and cutaway ownership and the existing entrance anchors survive.
