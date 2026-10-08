@@ -1,0 +1,85 @@
+{
+ "name": "qa-handover-depot",
+ "note": "L1 pickup hand-over (PO 2026-10-08 'The woman walks through the walls instead of door'): the depot clerk walks out of the open shopfront door, past the A-frame, to the courier at the counter and back in.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -45,
+    -45
+   ],
+   [
+    -31,
+    -33
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -37.8,
+    -35.6
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "recipient",
+   "kind": "pedestrian",
+   "at": [
+    -34.6,
+    -36.2
+   ],
+   "look": {
+    "model": "npc.depot-clerk",
+    "tint": "#3f7f9a",
+    "role": "cashier"
+   },
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 10,
+   "actor": "recipient",
+   "do": {
+    "handover": {
+     "building": "bld.courier-depot",
+     "meet": "courier",
+     "pauseS": 2.2
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   -37.4,
+   0.9,
+   -38.2
+  ],
+  "radius": 7.5
+ },
+ "frames": 470,
+ "shots": [
+  0,
+  60,
+  110,
+  160,
+  250,
+  330,
+  400,
+  470
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "actorHitsMax": 0,
+  "doorClosedFramesMax": 0,
+  "bodyOverlapMaxCm": 2
+ }
+}

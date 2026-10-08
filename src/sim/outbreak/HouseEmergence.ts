@@ -1,5 +1,7 @@
 import type { SimWorld } from '../world/SimWorld';
 import type { DistrictLayout } from '../../levels/districts/types';
+import { buildingDoors, doorwayOf } from '../../data/buildingDoors';
+import type { PedestrianOptions } from './Outbreak';
 
 /**
  * Residents coming out of a house's front door (L1 beat 9, PO rule 2026-10-07: "10 ... come out of the house ... No
@@ -31,43 +33,31 @@ export interface HouseEmergence extends HouseDoor {
   /** Tick of the next resident; `ids` the residents out (or on their way out) so far. */
   next: number; ids: number[];
   /** Residents still on their scripted walk out of the door: release timeout tick, and the route leg (-1 = porch). */
-  walking?: { id: number; until: number; leg: number }[];
+  walking?: { id: number; until: number; leg: number; lane?: number }[];
 }
-type DoorSpec = { x: number; z: number; depth: number; floor: [number, number][] };
-
-/**
- * Front doors residents can come out of, in house-local metres (models face +X at yaw 0). `x, z` is the door path point
- * of layouts/D-GROVE/layout.py `HOUSE` (the gate path and the refuge point are placed from it), `depth` how far the
- * door leaf sits behind it, and `floor` the porch deck and stair treads from the threshold out. Measured from
- * assets/bld.house-a/build.py (door pivot x 2.085 before the -0.68 GLB recentre; plank deck top 0.54 m to x 3.68; treads
- * 0.36 m to 3.94 and 0.20 m to 4.20). House kinds without measured door geometry are not used: house-b has a side
- * entry, house-c's street side is its deck and back windows.
- */
-const houseDoors: Record<string, (scale: number) => DoorSpec | null> = {
-  'bld.house-a': () => ({ x: 4.1, z: -1.6, depth: 2.69, floor: [[1.59, .54], [1.85, .36], [2.11, .2]] }),
-};
+export type LayoutDoor = Omit<HouseDoor, 'sx' | 'sz' | 'route' | 'ox' | 'oz'> & { depth: number; width: number; gate: { x: number; z: number } };
 /** Scripted pace out of the door (a stumble, slower than the AI run), metres per second. */
 export const emergeSpeedMs = 1.25;
 /** Spawn depth behind the threshold: the resident is inside, out of sight, while the door swings (0.45 s). */
 export const emergeInsideM = .9;
 
-/** Local (x, z) to world offset, same convention as layout.py `rot` (three.js rotation.y). */
-const rot = (yaw: number, x: number, z: number) => ({ x: x * Math.cos(yaw) + z * Math.sin(yaw), z: -x * Math.sin(yaw) + z * Math.cos(yaw) });
-
-/** Every usable house front door of a district layout (world metres; `origin` is the district origin). */
-export type LayoutDoor = Omit<HouseDoor, 'sx' | 'sz' | 'route' | 'ox' | 'oz'> & { depth: number; gate: { x: number; z: number } };
-export function layoutHouseDoors(layout: DistrictLayout, origin: [number, number] = [0, 0], anchors?: Record<string, { x: number; z: number }>): LayoutDoor[] {
+/**
+ * Every door infected can come out of in a district layout (world metres; `origin` is the district origin): any placement
+ * whose asset has `emerge` door data in src/data/buildingDoors.ts (today `bld.house-a` and `bld.clinic-annex`). `assets`
+ * narrows the kinds (L1 beat 9 uses houses only).
+ */
+export function layoutHouseDoors(layout: DistrictLayout, origin: [number, number] = [0, 0], anchors?: Record<string, { x: number; z: number }>, assets?: (assetId: string) => boolean): LayoutDoor[] {
   const refuges = Object.entries(anchors ?? {}).filter(([k]) => k.startsWith('refuge-door-')).map(([k, a]) => ({ n: Number(k.slice(12)), x: a.x, z: a.z }));
   const out: LayoutDoor[] = [];
   for (const p of layout.placements) {
-    const t = houseDoors[p.assetId]?.(p.scale[0]); if (!t) continue;
-    const yaw = p.yaw ?? 0, path = rot(yaw, t.x, t.z), n = rot(yaw, 1, 0);
-    const sx = p.position[0] + origin[0] + path.x, sz = p.position[2] + origin[1] + path.z;
-    // The refuge point sits on the pavement at this house's gate, on the line of the door path.
+    const def = buildingDoors[p.assetId]; if (!def?.emerge || (assets && !assets(p.assetId))) continue;
+    const way = doorwayOf(p, origin)!, n = way.out, scale = p.scale[0], depth = (def.apron - def.x) * scale;
+    const sx = way.centre.x + n.x * depth, sz = way.centre.z + n.z * depth;
+    // The refuge point sits on the pavement at this building's gate, on the line of the door path.
     const gate = refuges.filter(r => Math.hypot(r.x - sx, r.z - sz) < 8 && Math.abs((r.x - sx) * n.z - (r.z - sz) * n.x) < .5)
       .sort((a, b) => Math.hypot(a.x - sx, a.z - sz) - Math.hypot(b.x - sx, b.z - sz))[0];
     const r6 = (v: number) => Math.round(v * 1e6) / 1e6;
-    out.push({ door: gate?.n ?? 0, house: p.id, x: r6(sx - n.x * t.depth), z: r6(sz - n.z * t.depth), nx: r6(n.x), nz: r6(n.z), floor: t.floor.map(([s, y]) => [s, y]), depth: t.depth,
+    out.push({ door: gate?.n ?? 0, house: p.id, x: r6(way.centre.x), z: r6(way.centre.z), nx: r6(n.x), nz: r6(n.z), floor: def.emerge.floor.map(([m, y]) => [m * scale, y]), depth, width: way.width,
       // Without the anchors (Scene Lab crops): layout.py puts the refuge point 1 m out from the door path point.
       gate: gate ? { x: gate.x, z: gate.z } : { x: r6(sx + n.x), z: r6(sz + n.z) } });
   }
@@ -125,14 +115,16 @@ export function floorAt(door: Pick<HouseDoor, 'floor'>, s: number): number {
  * One resident steps out: spawned inside behind the threshold, turned (same pipeline as the technician), facing out,
  * AI held until the doorstep. The door opens with the first resident and stays open. Returns the entity id.
  */
-export function emergeResident(world: SimWorld, house: HouseEmergence, tick: number): number {
+export function emergeResident(world: SimWorld, house: HouseEmergence, tick: number, opts: { look?: PedestrianOptions; inside?: number; lateral?: number; tier?: 'frail' | 'average' | 'athletic' } = {}): number {
   const outbreak = world.npcs?.civilians.outbreak; if (!outbreak) return 0;
-  const id = outbreak.spawnPedestrian({ x: house.ox, z: house.oz });
+  // Spawned on a clear nav cell (the spawn rule), then placed inside behind the door before anything is drawn.
+  const nav = world.infected?.nav, cell = nav ? nav.nearestCell(house.ox, house.oz, .35) : -1;
+  const id = outbreak.spawnPedestrian(nav && cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: house.ox, z: house.oz }, opts.look);
   const e = world.entities.get(id)!;
-  outbreak.turnNow(e);
-  place(world, house, e, -emergeInsideM);
+  outbreak.turnNow(e, opts.tier);
+  place(world, house, e, -(opts.inside ?? emergeInsideM), opts.lateral ?? 0);
   e.transform.yaw = -Math.atan2(house.nz, house.nx);
-  let walk = emergeInsideM + Math.hypot(house.sx - house.x, house.sz - house.z), from: [number, number] = [house.sx, house.sz];
+  let walk = (opts.inside ?? emergeInsideM) + Math.hypot(house.sx - house.x, house.sz - house.z), from: [number, number] = [house.sx, house.sz];
   for (const p of house.route) { walk += Math.hypot(p[0] - from[0], p[1] - from[1]); from = p; }
   walk /= emergeSpeedMs;
   const until = tick + Math.ceil(walk * 60) + 60;
@@ -141,12 +133,13 @@ export function emergeResident(world: SimWorld, house: HouseEmergence, tick: num
   if (e.combat) e.combat.staggerUntil = tick + 2;
   e.emerging = true;
   world.openDoor(doorId(house), { x: house.x, z: house.z, nx: house.nx, nz: house.nz }, tick);
-  (house.walking ??= []).push({ id, until, leg: -1 });
+  (house.walking ??= []).push({ id, until, leg: -1, ...(opts.lateral ? { lane: opts.lateral } : {}) });
   house.ids.push(id);
   return id;
 }
-function place(world: SimWorld, house: HouseDoor, e: { id: number; transform: { x: number; y: number; z: number } }, s: number): void {
-  const p = e.transform; p.x = house.x + house.nx * s; p.z = house.z + house.nz * s;
+/** On the door line `s` metres past the threshold (`lateral` metres to the side, + = right of the outward normal). */
+function place(world: SimWorld, house: HouseDoor, e: { id: number; transform: { x: number; y: number; z: number } }, s: number, lateral = 0): void {
+  const p = e.transform; p.x = house.x + house.nx * s - house.nz * lateral; p.z = house.z + house.nz * s + house.nx * lateral;
   p.y = .7 + Math.max(floorAt(house, s), world.districts?.groundHeight(p.x, p.z) ?? 0);
   world.spatial.set(e.id, p.x, p.z);
 }
@@ -163,8 +156,9 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     if (!e?.infected || e.health.current <= 0) { if (e) e.emerging = undefined; walking.splice(i, 1); continue; }
     const p = e.transform;
     if (w.leg < 0) {
-      const s = Math.min(end, (p.x - house.x) * house.nx + (p.z - house.z) * house.nz + step);
-      place(world, house, e, s); p.yaw = -Math.atan2(house.nz, house.nx);
+      const s = Math.min(end, (p.x - house.x) * house.nx + (p.z - house.z) * house.nz + step), lane = w.lane ?? 0;
+      // Through the door in its lane (a double door takes two abreast), then onto the path line by the doorstep.
+      place(world, house, e, s, s <= 0 ? lane : lane * Math.max(0, 1 - s / Math.max(.5, end))); p.yaw = -Math.atan2(house.nz, house.nx);
       if (s >= end - 1e-6) w.leg = 0;
     } else if (w.leg < house.route.length) {
       const [tx, tz] = house.route[w.leg], dx = tx - p.x, dz = tz - p.z, d = Math.hypot(dx, dz), m = Math.min(step, d);

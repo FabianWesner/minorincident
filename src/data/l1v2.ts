@@ -64,7 +64,7 @@ export const l1v2 = {
   /** Section 3 beats 4 to 6 / AC07, AC19. */
   accident: {
     calmS: [4, 6], corgiWarnLeadS: 1.5, sequenceS: 8, blastShakeS: 1.5, ringingS: 1.2,
-    exitDelayS: [8, 10], infectedCount: 5, minExits: 2, minDistinctHeadings: 3, minHeadingSeparationDeg: 60,
+    exitDelayS: [8, 10], infectedCount: 5, minDistinctHeadings: 3, minHeadingSeparationDeg: 60,
     bitesWithinS: 60, killWithinS: 5, maxFrameMs: 50,
     /** Event offsets from the flicker (t = 0). */
     eventAtS: { flicker: 0, blast: 1.5, ringing: 1.7, smoke: 2.9, screams: 3.5, infectedExit: 9 },

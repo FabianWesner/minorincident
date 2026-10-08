@@ -22,10 +22,12 @@ import {
 } from "three/webgpu";
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
-import { ROOFED, type DistrictAssets, type DoorLeaf } from "../assets/DistrictAssets";
-import type { OpenDoor } from "../sim/world/SimWorld";
+import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
+import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
 import { worldAssets } from "../assets/worldDefinitions";
+import manifest from "../assets/manifest.json";
+import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
 import { resolvePosition } from "../levels/districts/validate";
@@ -33,6 +35,7 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
+import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
@@ -68,6 +71,8 @@ export class DistrictView extends Group {
   private readonly foliage: Foliage;
   private ambient?: AmbientLife;
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
+  /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
+  readonly ground = new GroundField();
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
@@ -109,6 +114,7 @@ export class DistrictView extends Group {
         const plane = new PlaneGeometry(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs)); this.ownedGeometry.push(plane);
         const slab = new Mesh(plane, this.materials.get(lab.ground)); slab.name = 'scene-ground'; slab.rotation.x = -Math.PI / 2; slab.receiveShadow = true;
         slab.position.set(d.origin[0] + (Math.max(...xs) + Math.min(...xs)) / 2, .002, d.origin[1] + (Math.max(...zs) + Math.min(...zs)) / 2); this.add(slab);
+        slab.updateMatrixWorld(true); this.ground.add(slab);
       }
     }
     for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
@@ -152,6 +158,9 @@ export class DistrictView extends Group {
           });
           root.add(clone);
         }
+        // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
+        root.updateMatrixWorld(true);
+        root.children.at(-scenes.length)?.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -202,6 +211,8 @@ export class DistrictView extends Group {
             references.get(key)!.push(reference);
           }
         }
+        // Static vehicles (parked cars, wrecks, the APC) are authored on the y = 0 plane: rest them on the drawn road or paving under their wheels.
+        for (const [key, refs] of references) if (/^veh\./.test(key)) for (const ref of refs) this.restOnGround(ref, key.split(':')[0], d.origin);
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
@@ -296,6 +307,17 @@ export class DistrictView extends Group {
     }
   }
 
+  /** Drawn ground at a world point (null outside the baked district ground). */
+  groundAt(x: number, z: number): number | null { return this.ground.height(x, z); }
+  private restOnGround(ref: Object3D, id: string, origin: [number, number]): void {
+    const size = (manifest as AssetDef[]).find(a => a.id === id)?.dimensions; if (!size || ref.position.y > .01 || /^veh\.(train|helicopter)/.test(id)) return;
+    const hx = size.x * ref.scale.x * .32, hz = size.z * ref.scale.z * .4, c = Math.cos(ref.rotation.y), s = Math.sin(ref.rotation.y);
+    const heights = [[hx, hz], [hx, -hz], [-hx, hz], [-hx, -hz]].map(([x, z]) => this.ground.height(origin[0] + ref.position.x + x * c + z * s, origin[1] + ref.position.z - x * s + z * c)).filter((h): h is number => h !== null).sort((a, b) => a - b);
+    if (heights.length < 2) return;
+    // Median of the four wheel spots: a lane stripe or a kerb under one wheel does not lift the whole car.
+    const middle = heights.length / 2, ground = heights.length % 2 ? heights[Math.floor(middle)] : (heights[middle - 1] + heights[middle]) / 2;
+    ref.position.y = Math.max(ref.position.y, ground);
+  }
   private box(
     root: Group,
     token: import("../data/palette").PaletteToken,
@@ -382,6 +404,37 @@ export class DistrictView extends Group {
       const inside = entry.refs.some(r => Math.abs(player.x - (r.position.x + entry.origin[0])) < half && Math.abs(player.z - (r.position.z + entry.origin[1])) < half);
       for (const group of [entry.hero, entry.near, entry.far]) group.traverse(o => { if (o instanceof Mesh && /^roof/.test(o.name)) o.visible = !inside; });
     }
+  }
+  /** Door openness (0 closed .. 1 open) per doored placement, eased toward its target. */
+  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number }>();
+  /**
+   * Buildings with animated street doors (src/data/buildingDoors.ts) swing their leaves open while someone stands in or
+   * walks up to the doorway (PO 2026-10-08: "door stays closed while the person goes out and in") and close behind them.
+   * `held` doors (SimWorld.openDoors: a threshold point, e.g. a house the L1 residents come out of) stay open. Each
+   * placement swings on its own (several houses share one batch).
+   */
+  updateDoors(bodies: Iterable<{ x: number; z: number }>, held: Iterable<{ x: number; z: number }> = []): void {
+    const seconds = this.frameSeconds;
+    const doored = this.lodBatches.filter(entry => buildingDoors[entry.id]?.leaves.length);
+    if (!doored.length) return;
+    const list = [...bodies], holds = [...held];
+    for (const entry of doored) {
+      const def = buildingDoors[entry.id];
+      for (const ref of entry.refs) {
+        let state = this.doorOpen.get(ref); if (!state) this.doorOpen.set(ref, state = { entry, k: 0, applied: -1 });
+        const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
+        const open = !!way && (holds.some(h => Math.hypot(h.x - way.centre.x, h.z - way.centre.z) < 1) || list.some(b => doorZone(way, b)));
+        state.k = Math.max(0, Math.min(1, state.k + (open ? 1 : -1) * seconds / doorSwingS));
+        const eased = state.k * state.k * (3 - 2 * state.k);
+        if (state.applied === eased) continue;
+        state.applied = eased;
+        for (const group of [entry.hero, entry.near, entry.far]) for (const leaf of def.leaves) group.pose(leaf.node, leaf.open * eased, ref);
+      }
+    }
+  }
+  /** Openness of every doored placement (Scene Lab door gate). */
+  doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
+    return [...this.doorOpen].map(([ref, state]) => ({ assetId: state.entry.id, position: [ref.position.x + state.entry.origin[0], ref.position.y, ref.position.z + state.entry.origin[1]] as [number, number, number], open: state.k }));
   }
   setFoliageVisible(visible: boolean): void { this.foliage.visible = visible; }
   applyLook(): void {
@@ -509,57 +562,6 @@ export class DistrictView extends Group {
     else { entry.far = replacement; entry.farLoaded = true; }
     old.removeFromParent(); old.dispose();
   }
-  /** Open doors drawn by syncDoors: the swung leaf and the dark doorway over the baked closed leaf, per door id. */
-  private readonly doors = new Map<string, { group: Group; leaf: Group | null; sign: number; angle: number; at: number }>();
-  /**
-   * Shared door-open helper (render side of SimWorld.openDoors): a building door the sim opened swings its authored leaf
-   * (the GLB door pivot, `open_angle` about the up axis, eased over 0.45 s of sim time) outward, and a dark doorway box
-   * covers the baked closed leaf so the opening reads as open. The door is matched to the nearest building placement
-   * whose door pivot lies within 1.5 m of the threshold. Doors removed from the map are closed again.
-   */
-  syncDoors(open: ReadonlyMap<string, OpenDoor>, tick: number): void {
-    for (const [id, door] of open) if (!this.doors.has(id)) this.openDoor(id, door);
-    for (const [id, d] of this.doors) {
-      if (!open.has(id)) { d.group.removeFromParent(); this.doors.delete(id); continue; }
-      if (!d.leaf) continue;
-      const t = Math.min(1, Math.max(0, (tick - d.at) / 27)), ease = 1 - (1 - t) ** 3;
-      d.leaf.rotation.y = d.sign * Math.abs(d.angle) * Math.PI / 180 * ease;
-    }
-  }
-  /** Scene Lab probe: how far a door's drawn leaf has opened (0 closed .. 1 at its authored angle), null if not drawn. */
-  doorOpening(id: string): number | null { const d = this.doors.get(id); return d?.leaf ? Math.abs(d.leaf.rotation.y) / Math.max(1e-6, Math.abs(d.angle) * Math.PI / 180) : null; }
-  private openDoor(id: string, door: OpenDoor): void {
-    const entry: { group: Group; leaf: Group | null; sign: number; angle: number; at: number } = { group: new Group(), leaf: null, sign: 1, angle: 0, at: door.at };
-    entry.group.name = `door:${id}`; this.doors.set(id, entry);
-    let best: { batch: LodBatch; ref: Object3D } | null = null, distance = 9;
-    for (const batch of this.lodBatches) {
-      if (worldAssets[batch.id]?.category !== 'building') continue;
-      for (const ref of batch.refs) {
-        const d = Math.hypot(ref.position.x + batch.origin[0] - door.x, ref.position.z + batch.origin[1] - door.z);
-        if (d < distance) { distance = d; best = { batch, ref }; }
-      }
-    }
-    if (!best) return;
-    const { batch, ref } = best;
-    void this.registry.doorLeaf(batch.id, this.low ? 'lod1' : 'lod0').then((source: DoorLeaf | null) => {
-      if (!source || this.disposed || this.doors.get(id) !== entry) return;
-      ref.updateMatrix();
-      const pivot = new Matrix4().makeTranslation(batch.origin[0], 0, batch.origin[1]).multiply(ref.matrix).multiply(source.matrix);
-      const hinge = new Vector3().setFromMatrixPosition(pivot);
-      if (Math.hypot(hinge.x - door.x, hinge.z - door.z) > 1.5) { console.info(JSON.stringify({ type: 'door.unmatched', id, asset: batch.id, hinge: [hinge.x, hinge.z] })); return; }
-      entry.group.matrixAutoUpdate = false; entry.group.matrix.copy(pivot);
-      const leaf = source.leaf.clone(true); leaf.traverse(o => { if (o instanceof Mesh) { o.castShadow = true; o.receiveShadow = true; } });
-      // Doorway: the baked closed leaf stays in the building batch; a dark box just around it reads as the open opening.
-      const size = source.bounds.getSize(new Vector3()), centre = source.bounds.getCenter(new Vector3());
-      const box = new BoxGeometry(size.x + .03, size.y + .01, size.z + .03); this.ownedGeometry.push(box);
-      const doorway = new Mesh(box, this.doorway); doorway.name = 'doorway'; doorway.position.copy(centre);
-      // Swing outward: the sign whose rotated leaf centre lies furthest along the door's outward normal.
-      const along = (sign: number) => { const c = centre.clone().applyAxisAngle(new Vector3(0, 1, 0), sign * Math.abs(source.angle) * Math.PI / 180).applyMatrix4(pivot); return (c.x - door.x) * door.nx + (c.z - door.z) * door.nz; };
-      entry.sign = along(1) >= along(-1) ? 1 : -1; entry.angle = source.angle; entry.leaf = new Group(); entry.leaf.add(leaf);
-      entry.group.add(doorway, entry.leaf); this.add(entry.group);
-    });
-  }
-  private readonly doorway = new MeshBasicNodeMaterial({ color: '#17121a' });
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
    * With a focus, nearest placements load first through a small background download window. */
   async prepare(focus?: { x: number; z: number }, cancelled = () => false, maximumDistance = Infinity): Promise<void> {
@@ -637,7 +639,7 @@ export class DistrictView extends Group {
     for (const m of this.ownedMaterials) m.dispose();
     for (const t of this.textures) t.dispose();
     this.windowMask.dispose();
-    this.black.dispose(); this.doorway.dispose(); this.doors.clear();
+    this.black.dispose();
     this.clear();
   }
 }

@@ -183,6 +183,13 @@ export class Hud {
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
     if (objective) text(this.trackerText, `${deadline}${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    // Optional objectives that run beside the main one (L2: the fire axe) stay on the tracker, and the prompt shows in their ring.
+    if (objective && mission) {
+      const optional = mission.def.steps.filter(step => step.optional && step !== objective && mission.state.steps[step.id].status === 'active');
+      const inRing = mission.interactStepInRange();
+      if (inRing?.optional) text(this.trackerText, `Hold still or press E · ${inRing.text.replace(/^Optional: /, '')}`);
+      else if (optional.length) text(this.trackerText, `${this.trackerText.textContent} · ${optional[0].text}`);
+    }
     for (let i = 0; i < sides.length; i++) {
       const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.l1;
       if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }

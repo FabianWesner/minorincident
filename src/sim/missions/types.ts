@@ -88,11 +88,16 @@ export interface L1State {
    * resident; `ids` the residents out so far).
    */
   house: HouseEmergence | null;
+  /** The lab accident: the four staff walking out of the annex front door behind the technician (HouseEmergence). */
+  labExit?: HouseEmergence | null;
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
   beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */
   say?: { id: number; text: string; at: number; until: number } | null;
   beatsDone?: string[]; clerkId?: number; firefighterId?: number;
+  /** Door-to-courier walking routes of the clerk (pickup) and the technician (hand-over): behind the door, door plane,
+   * outside the facade, navigation corners, meeting point (src/sim/missions/doorRoute.ts). */
+  clerkRoute?: { x: number; z: number }[] | null; techRoute?: { x: number; z: number }[] | null;
 }
 /** Serializable L2 controller state. Ticks are sim ticks, 0 = not yet. */
 export interface L2State {
