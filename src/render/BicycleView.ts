@@ -61,11 +61,11 @@ const hubAbove = (profile: Profile, fallback: number, lean: number) => {
 };
 /** Half width of the tyre itself (outer 15 % of the radius; hub and axle stubs are wider but never touch the road). */
 const tyreHalfWidth = (profile: Profile) => { const outer = Math.max(0, ...profile.map(([radial]) => radial)) * .85; return Math.max(0, ...profile.filter(([radial]) => radial > outer).map(([, axial]) => axial)); };
-/** Tread ring of a wheel in its local (model) units: the profile's outer points at 5 axial stations, every 3 degrees over the lower half. */
+/** Tread ring of a wheel in its local (model) units: the profile's outer points at 9 axial stations, every 3 degrees over the lower half. */
 function tyreRing(profile: Profile, scale: number): Vector3[] {
   const half = tyreHalfWidth(profile), tread = profile.filter(([radial]) => radial > Math.max(0, ...profile.map(([r]) => r)) * .85), out: Vector3[] = [];
   if (!tread.length) return out;
-  for (const station of [-1, -.5, 0, .5, 1]) {
+  for (const station of [-1, -.75, -.5, -.25, 0, .25, .5, .75, 1]) {
     const [radial, axial] = tread.reduce((best, p) => Math.abs(p[1] - Math.abs(station) * half) < Math.abs(best[1] - Math.abs(station) * half) ? p : best);
     for (let k = -30; k <= 30; k++) { const a = k * Math.PI / 60; out.push(new Vector3(Math.sin(a) * radial / scale, -Math.cos(a) * radial / scale, Math.sign(station) * axial / scale)); }
   }
@@ -250,14 +250,14 @@ export class BicycleView extends Group {
     // (no pedal bob: the wheels stay on the ground and the rider's own ride clip carries the stroke).
     const lift = Math.max(hubAbove(rig.profiles[0], rR, rig.leanAngle) - rR * Math.cos(rig.leanAngle), hubAbove(rig.profiles[1], rF, rig.leanAngle) - rF * Math.cos(rig.leanAngle));
     rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = lift;
-    if (drawn) {
-      // Settle on what is drawn: the posed tyres (steer, lean and pitch together) against the drawn ground under them.
+    // Settle on what is drawn: the posed tyres (steer, lean and pitch together) against the drawn ground under them
+    // (a second pass absorbs the shift of the contacts that the re-pitch causes).
+    if (drawn) for (let pass = 0; pass < 2; pass++) {
       rig.root.updateMatrixWorld(true);
       const cR = this.clearance(rig.wheelR, rig.rings[0]), cF = this.clearance(rig.wheelF, rig.rings[1]);
-      if (cR !== null && cF !== null) {
-        gR -= cR; gF -= cF; pitch = solve(gR, gF);
-        rig.root.position.y = gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch); rig.lean.rotation.z = pitch;
-      }
+      if (cR === null || cF === null || Math.max(Math.abs(cR), Math.abs(cF)) < 5e-4) break;
+      gR -= cR; gF -= cF; pitch = solve(gR, gF);
+      rig.root.position.y = gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch); rig.lean.rotation.z = pitch;
     }
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;

@@ -55,6 +55,9 @@ export class SceneLab {
   /** Drawn tyre bottom against the drawn ground per vehicle wheel: `${vehicle}|${wheel}` -> gap range (spawn frames 0-2 excluded). */
   private wheels = new Map<string, { vehicle: string; wheel: number; gapMinCm: number; gapMaxCm: number; minFrame: number; maxFrame: number; at: number[]; samples: number; surface: string | null; rayCheckCm: number }>();
   private wheelTrack = new Map<string, (number | string)[][]>();
+  /** Hub heights of every wheel over the last two frames, the worst one-frame spike (up then down, or down then up: the smaller
+   * of the two moves) and the largest one-frame move, per `${vehicle}|${wheel}`. */
+  private hubs = new Map<string, { last: number[]; spikeCm: number; spikeFrame: number; stepCm: number; stepFrame: number }>();
   private groundMeshes: Mesh[] | null = null;
   private readonly ray = new Raycaster();
   private readonly registry = new AssetRegistry(() => {});
@@ -73,7 +76,7 @@ export class SceneLab {
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
     }
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
+    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
     this.game.clock.pause();
@@ -439,6 +442,13 @@ export class SceneLab {
           }
         }
       }
+      const hub = node.getWorldPosition(v).y, track = this.hubs.get(`${id}|${index}`) ?? { last: [], spikeCm: 0, spikeFrame: 0, stepCm: 0, stepFrame: 0 };
+      this.hubs.set(`${id}|${index}`, track); track.last.push(hub); if (track.last.length > 3) track.last.shift();
+      if (track.last.length === 3) {
+        const [a, b, c] = track.last, d1 = b - a, d2 = c - b, spike = Math.sign(d1) !== Math.sign(d2) ? Math.min(Math.abs(d1), Math.abs(d2)) * 100 : 0;
+        if (spike > track.spikeCm) Object.assign(track, { spikeCm: Math.round(spike * 10) / 10, spikeFrame: this.frame - 1 });
+        if (Math.abs(d2) * 100 > track.stepCm) Object.assign(track, { stepCm: Math.round(Math.abs(d2) * 1000) / 10, stepFrame: this.frame });
+      }
       if (!Number.isFinite(gap)) return;
       const ray = this.renderedGround(lowest.x, lowest.z, lowest.y + .5), drawn = field.groundAt(lowest.x, lowest.z);
       const rayCheck = ray !== null && drawn !== null ? Math.round(Math.abs(ray - drawn) * 1000) / 10 : 0;
@@ -521,7 +531,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
-      bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id)])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
+      bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),

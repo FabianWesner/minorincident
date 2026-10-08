@@ -113,5 +113,6 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const wheels = Object.values(metrics.wheels ?? {}).flat();
   add('wheelSinkMaxCm', Math.max(0, ...wheels.map(w => -w.gapMinCm)), e.wheelSinkMaxCm);
   add('wheelFloatMaxCm', Math.max(0, ...wheels.map(w => w.gapMaxCm)), e.wheelFloatMaxCm);
+  add('wheelSpikeMaxCm', Math.max(0, ...wheels.map(w => w.hubSpikeCm)), e.wheelSpikeMaxCm);
   return { pass: checks.every(c => c.pass), checks };
 }

@@ -148,7 +148,8 @@ test('@regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs
     const tyres = view.wheelNodes(); expect(tyres).toHaveLength(2);
     let worst = { sink: 0, float: 0 }, samples = 0;
     const surfaces = new Set<string>();
-    let rayCheck = 0, where = '';
+    let rayCheck = 0, where = '', spike = 0;
+    const hubs: number[][] = [[], []];
     const check = () => {
       view.update(); view.updateMatrixWorld(true);
       for (const tyre of tyres) {
@@ -177,7 +178,10 @@ test('@regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs
         const k = i / steps, w = Math.sin(i * .15);
         Object.assign(transform, { x: ax + (bx - ax) * k, z: az + (bz - az) * k, yaw: Math.atan2(-(bz - az), bx - ax) + w * .15 });
         Object.assign(bicycle, { speed: 6, steer: w, lean: w * .3, pedal: i * .3 });
-        if (i % 3 === 0) check();
+        if (i % 3 === 0) check(); else { view.update(); view.updateMatrixWorld(true); }
+        // Flicker lane 10-08: no one-frame height pops (0 -> 0.079 -> 0) on the ridden bike; real steps ramp over several frames.
+        tyres.forEach((tyre, w) => { const y = tyre.getWorldPosition(new Vector3()).y, h = hubs[w]; h.push(y); if (h.length > 3) h.shift();
+          if (h.length === 3) { const d1 = h[1] - h[0], d2 = h[2] - h[1]; if (Math.sign(d1) !== Math.sign(d2)) spike = Math.max(spike, Math.min(Math.abs(d1), Math.abs(d2))); } });
       }
     }
     bicycle.speed = 0; bicycle.lean = 0; bicycle.steer = 0; check(); // stopped
@@ -186,5 +190,6 @@ test('@regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs
     expect(worst.sink, `deepest tyre point below the drawn ground (m), worst at ${where}`).toBeLessThanOrEqual(.005);
     expect(worst.float, `tyre clearance above the drawn ground (m), worst at ${where}`).toBeLessThanOrEqual(.01);
     expect(rayCheck, 'height field vs ray against the drawn meshes (m)').toBeLessThan(.002);
+    expect(spike, 'one-frame hub height spike (m)').toBeLessThan(.01);
   } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
 });

@@ -108,6 +108,8 @@ export interface Expectations {
   wheelSinkMaxCm?: number;
   /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
   wheelFloatMaxCm?: number;
+  /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
+  wheelSpikeMaxCm?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;
