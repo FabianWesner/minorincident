@@ -31,6 +31,8 @@
     },
     {
       "command": [
+        "sh",
+        "tools/sim-lock.sh",
         "npx",
         "vitest",
         "run",

@@ -31,10 +31,13 @@ export function modelLod(distance: number, previous: string | undefined, low: bo
 }
 
 /** Crowd bands use CSS pixels, so portrait/zoom changes select the detail actually visible.
- * Separate enter/leave thresholds prevent a figure oscillating between batches. */
-export function crowdLod(pixels: number, previous: 'lod1' | 'lod2' | undefined, low: boolean): 'lod1' | 'lod2' {
-  if (low) return 'lod2';
-  return pixels > (previous === 'lod1' ? 144 : previous === 'lod2' ? 176 : 160) ? 'lod1' : 'lod2';
+ * Separate enter/leave thresholds prevent a figure oscillating between batches.
+ * The authored figure LOD2 (~1.8k triangles over ~60 rigid parts) is a far silhouette only: at the game camera a
+ * figure is 120-180 CSS px (2-3x that on retina/phones), where LOD2 reads as a broken kite torso with floating parts
+ * (PROD "this guy looks terrible"). Both tiers therefore keep LOD1 down to ~96 px; the low tier used to force LOD2. */
+export const crowdLodPixels = { enter: 104, leave: 88 } as const;
+export function crowdLod(pixels: number, previous?: 'lod1' | 'lod2'): 'lod1' | 'lod2' {
+  return pixels > (previous === 'lod1' ? crowdLodPixels.leave : previous === 'lod2' ? crowdLodPixels.enter : (crowdLodPixels.enter + crowdLodPixels.leave) / 2) ? 'lod1' : 'lod2';
 }
 
 /** Small dressing keeps its authored silhouette while avoiding subpixel detail.

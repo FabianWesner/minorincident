@@ -29,7 +29,7 @@ export const codeCredits: readonly Credit[] = [
         "url": "https://github.com/brunosimon/folio-2025",
         "license": "MIT",
         "licenseUrl": "https://spdx.org/licenses/MIT.html",
-        "detail": "Engine, input, UI, rendering, vehicle and audio patterns; no art, meshes, textures or audio reused."
+        "detail": "Engine, input, UI, rendering, vehicle, explosion (impulse, fireball, roll kick, bullet time) and audio patterns; no art, meshes, textures or audio reused."
     },
     {
         "title": "Mesh2Motion human rig and animation clips",
@@ -75,6 +75,16 @@ export const audioCredits: readonly Credit[] = [
         "authorUrl": "https://soundcloud.com/zander-noriega",
         "files": [
             "Zander Noriega - Blinding Lights.wav"
+        ]
+    },
+    {
+        "title": "Jazz Brunch",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700074",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Jazz Brunch.mp3"
         ]
     },
     {

@@ -1,0 +1,21 @@
+
+Running 10 tests using 2 workers
+
+arrival measurement {"skin":1,"target":{"x":-66.4,"z":5.5},"fixedFrames":180,"liveFrames":164,"driftMmPerSecond":0,"liveDriftMmPerSecond":0,"maxSpeed":0,"yawRange":0,"animations":["idle"],"markerVisible":false}
+arrival measurement {"skin":0,"target":{"x":-66.4,"z":5.5},"fixedFrames":180,"liveFrames":154,"driftMmPerSecond":0,"liveDriftMmPerSecond":0,"maxSpeed":0,"yawRange":0,"animations":["idle"],"markerVisible":false}
+arrival measurement {"skin":1,"target":{"x":-67.5,"z":3.2},"fixedFrames":180,"liveFrames":144,"driftMmPerSecond":0,"liveDriftMmPerSecond":0,"maxSpeed":0,"yawRange":0,"animations":["idle"],"markerVisible":false}
+  ✓   1 [chromium] › tests/e2e/arrival-stability.spec.ts:4:28 › courier skin=1 arrival remains idle beside corgi and curb for 3 seconds @E03 @E04 (18.3s)
+arrival measurement {"skin":0,"target":{"x":-67.5,"z":3.2},"fixedFrames":180,"liveFrames":138,"driftMmPerSecond":0,"liveDriftMmPerSecond":0,"maxSpeed":0,"yawRange":0,"animations":["idle"],"markerVisible":false}
+  ✓   2 [chromium] › tests/e2e/arrival-stability.spec.ts:4:28 › courier skin=0 arrival remains idle beside corgi and curb for 3 seconds @E03 @E04 (18.3s)
+bike turn measurement {"skin":1,"fixedFrames":180,"liveFrames":154,"yawChangeDegrees":89.41855689317666,"maxFrameMismatchDegrees":0.0000029575586669421963,"maxLiveFrameMismatchDegrees":0.0000029575586669421963}
+bike turn measurement {"skin":0,"fixedFrames":180,"liveFrames":144,"yawChangeDegrees":89.41855689317666,"maxFrameMismatchDegrees":0.0000029575586669421963,"maxLiveFrameMismatchDegrees":0.0000029575586669421963}
+  ✓   3 [chromium] › tests/e2e/bicycle-stability.spec.ts:8:28 › bike skin=0 mounts level on the start sidewalk and rider follows a 90 degree turn @E19 (13.1s)
+  ✓   4 [chromium] › tests/e2e/bicycle-stability.spec.ts:8:28 › bike skin=1 mounts level on the start sidewalk and rider follows a 90 degree turn @E19 (13.0s)
+  ✓   5 [chromium] › tests/e2e/bicycle-stability.spec.ts:71:3 › bike ACTION after the garage bat › touch ACTION remains enabled for remount after the bat objective @E19 (8.5s)
+  ✓   7 [chromium] › tests/e2e/combat-wiring.spec.ts:6:1 › T-E05-13 @E05 @E05-AC13 real cursor LMB RMB wheel matches sim side/rack state (3.6s)
+  ✓   6 [chromium] › tests/e2e/bicycle.spec.ts:7:1 › T-E19-16h @E19 @E19-AC16 courier sits on the bike with hands on the handlebar (16.5s)
+  ✓   9 [chromium] › tests/e2e/combat-wiring.spec.ts:64:3 › @E05 real released clicks chain weapon.fists and hit a downed target (5.0s)
+  ✓  10 [chromium] › tests/e2e/combat-wiring.spec.ts:64:3 › @E05 real released clicks chain weapon.bat and hit a downed target (3.3s)
+  ✓   8 [chromium] › tests/e2e/combat-wiring.spec.ts:44:1 › T-E05-browser @E05 arena placeholder scene, cheats, settings, screenshot and lifecycle (14.3s)
+
+  10 passed (59.5s)

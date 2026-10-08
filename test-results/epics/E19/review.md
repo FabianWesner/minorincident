@@ -65,3 +65,19 @@ No overall vision pass is claimed. Opus must score the five required scenes and 
 | l1-spread | 5/10 | **P1**: the mid-transformation victim is a tiny figure at the fence; the transformation does not read at the game camera (no clear stagger/colour shift/glow cue, face hidden by the fence). |
 | l1-horde | 6/10 | **P1**: only a handful of infected visible near the player; it does not read "too many — run" (the minimap carries the message, the scene does not). Close bodies overlap. |
 **AC23: FAIL** (two scenes < 7, two P1). E19 stays in-progress until fixed and re-reviewed.
+
+## Lane l1-look — AC23 P1 fixes and re-capture (2026-10-07, pending Opus re-review)
+Before images: `git show 51cbaffc:test-results/epics/E19/l1v2/l1-spread.png` / `l1-horde.png`. After: the files in `l1v2/` (all 9 spots re-captured by T-E19-23, 1600×900).
+
+| Image | Change in the game | Lane observation | Score / final judgment |
+| --- | --- | --- | --- |
+| [Morning](l1v2/l1-morning.png) | none | Unchanged content; re-captured. | Pending Opus |
+| [Facility](l1v2/l1-facility.png) | none | Unchanged content; re-captured. | Pending Opus |
+| [Accident](l1v2/l1-accident.png) | none | Unchanged content; re-captured (plume still opaque, P2). | Pending Opus |
+| [Spread](l1v2/l1-spread.png) | Turning pedestrians get a pulsing ash-green glow on the skin only (hair and clothes keep the person's own colours); ash-green wisps when the eyes ignite and a puff on rising (spec §5.7 "VFX puff"). Capture: the first systemic victim on open ground (no fence/hedge/tree/lamp/wall on the camera side), photographed mid-rise with the **game follow camera** angle at zoom 0.75 (player range 0.5–1.45), centred on the victim. | The same jogger (dreadlocks, red/white top, own clothes) is half-risen on the sidewalk with glowing ash-green hands/face and green wisps; `spread-victim.json` = same entity id in phase `rise`, `openGround: true`. The face is turned away from the camera in this seed, so the red eyes are not readable. | Pending Opus |
+| [Horde](l1v2/l1-horde.png) | Beat 9 starts when the courier steps out of the garage with the bat; the director tops the garage group up to 20 (was 6) from house doors spread by bearing (W, N, E doors; ≤ 3 per door, doors opening 0.4 s apart) and they rush to where the courier is; route streams 4 (was 3). Infected keep a 0.22 m air gap among themselves (was 0.015). Capture: game camera at its widest zoom (1.45) once ≥ 12 infected are within 16 m, instead of after 20 s of piling onto the immortal courier. | ~12 infected visible converging from up-left, up and right onto the courier on Elm Street, individual bodies separable; `horde-scene.json`: 17 within 16 m, 21 within 25 m, 0 within 2 m, bearings spread over the full circle. | Pending Opus |
+
+Fairness/perf after the change: complete bot 20/20 (median 102.6 s, 0 deaths), newbie 20/20 (median 119.6 s, median deaths 0), evade-only completes, T-E19-09 (AC25 ≥ 6 near the garage, door emergence) green. Horde perf (30 forced infected, high tier, machine load ~9): A/B on the same load, before 15.3 ms p95, after 14.7 / 15.1 ms p95 (budget 16.7 ms); the earlier 14.1 ms reading was on a quieter machine.
+
+## Orchestrator (Opus) AC23 re-review — 2026-10-07
+l1-spread 7/10 (same jogger in own clothes, ash-green skin glow and wisps mid-rise, readable at the game camera; face turned away this seed — P2). l1-horde 7/10 (~12 infected converging on the courier from three directions, separable bodies; a foreground roof covers part of the frame — P2). Morning 8, facility 7, accident 7 unchanged. **AC23: PASS** (all ≥ 7, no P0/P1).

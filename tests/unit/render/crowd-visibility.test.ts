@@ -15,8 +15,8 @@ test('@E18-AC01 zoom selects detail with hysteresis, consistently across batches
   const camera = new PerspectiveCamera(60, 1, .1, 100); camera.updateMatrixWorld();
   const visibility = new CrowdVisibility(); visibility.begin(camera, 900);
   const near = visibility.pixels(0, 0, -5, 1.8), far = visibility.pixels(0, 0, -30, 1.8);
-  expect(near).toBeCloseTo(far * 6); expect(visibility.lod(2, near, false)).toBe('lod1');
-  expect(visibility.lod(2, 145, false)).toBe('lod1'); expect(visibility.lod(2, 145, false)).toBe('lod1');
-  expect(visibility.lod(2, far, false)).toBe('lod2'); expect(visibility.lod(2, 175, false)).toBe('lod2');
-  expect(visibility.lod(2, near, false)).toBe('lod1'); expect(visibility.lod(2, near, true)).toBe('lod2');
+  expect(near).toBeCloseTo(far * 6); expect(visibility.lod(2, near)).toBe('lod1');
+  expect(visibility.lod(2, 89)).toBe('lod1'); expect(visibility.lod(2, 89)).toBe('lod1');
+  expect(visibility.lod(2, far)).toBe('lod2'); expect(visibility.lod(2, 103)).toBe('lod2');
+  expect(visibility.lod(2, near)).toBe('lod1');
 });

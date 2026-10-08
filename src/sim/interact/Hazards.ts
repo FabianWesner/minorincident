@@ -2,6 +2,8 @@
 // arm once, delay the blast, disable. Fixed tick timers replace GSAP/wall time.
 import { DebrisPool } from '../../physics/DebrisPool';
 import { Damage } from '../combat/Damage';
+import { explosionDef, hazardExplosions } from '../../data/explosions';
+import { Explosions } from '../combat/Explosions';
 import type { DamageEvent } from '../combat/Damage';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -11,9 +13,11 @@ export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-
 export type HazardKind = typeof hazardKinds[number];
 export type DestructibleKind = typeof destructibleKinds[number];
 const harmfulKinds: readonly HazardKind[] = ['fire', 'toxic', 'water', 'metal-fence', 'live-wire'];
-export interface Hazard { kind: HazardKind; radius: number; fuseAt: number; exploded: boolean; activeUntil: number; leaked: boolean }
+export interface Hazard { kind: HazardKind; radius: number; fuseAt: number; exploded: boolean; activeUntil: number; leaked: boolean;
+  /** E27 fires: remaining spread generations and the tick the fire spreads once (half its life). */
+  spread?: number; spreadAt?: number }
 export interface Destructible { kind: DestructibleKind | 'fuel-trail'; flammable: boolean; exposure: number; burnTime: number; burningUntil: number; broken: boolean }
-export interface HazardOptions { hp?: number; radius?: number; burnTime?: number; halfX?: number; halfZ?: number; duration?: number }
+export interface HazardOptions { hp?: number; radius?: number; burnTime?: number; halfX?: number; halfZ?: number; duration?: number; spread?: number }
 /** E11 hazard triggers/damage; E27 consumes arming/blast events for richer effects. */
 export class Hazards {
   readonly debris: DebrisPool;
@@ -22,6 +26,7 @@ export class Hazards {
   private readonly area = { x: 0, z: 0, r: 0 };
   private readonly blastTicks = new Int32Array(8).fill(-60);
   private blastCursor = 0;
+  private readonly spreading: EntitySnapshot[] = [];
   constructor(private readonly world: SimWorld) {
     this.debris = new DebrisPool(world.physics); this.damage = world.combat?.damage ?? new Damage(world);
     world.events.on('combat.hit', e => {
@@ -44,6 +49,7 @@ export class Hazards {
     const isProp = (destructibleKinds as readonly string[]).includes(kind), hp = opts.hp ?? (kind === 'propane' || kind === 'barrel' ? 20 : kind === 'car-alarm' ? 1000 : 60);
     const e = this.world.entities.create({ kind: isProp ? 'prop' : 'hazard', archetype: `${isProp ? 'prop' : 'hazard'}.${kind}`, faction: 'environment', health: { current: hp, max: hp }, transform: { ...pos, y: .7, yaw: 0 } });
     if (!isProp) e.hazard = { kind: kind as HazardKind, radius: opts.radius ?? (kind === 'propane' || kind === 'barrel' ? 5 : kind === 'car-alarm' ? 20 : 2), fuseAt: 0, exploded: false, activeUntil: kind === 'fire' || kind === 'toxic' || kind === 'live-wire' ? this.world.tick + Math.ceil((opts.duration ?? 30) * 60) : 0, leaked: false };
+    if (kind === 'fire' && opts.spread) { e.hazard!.spread = opts.spread; e.hazard!.spreadAt = this.world.tick + Math.ceil((opts.duration ?? 30) * 30); }
     if (isProp || kind === 'fuel-trail') e.destructible = { kind: kind as DestructibleKind | 'fuel-trail', flammable: ['fence', 'crate', 'barricade', 'fuel-trail'].includes(kind), exposure: 0, burnTime: opts.burnTime ?? 6, burningUntil: 0, broken: false };
     const zone = ['fire', 'toxic', 'water', 'live-wire', 'fuel-trail'].includes(kind);
     if (!zone) {
@@ -60,7 +66,7 @@ export class Hazards {
   private destroy(e: EntitySnapshot): void {
     const h = e.hazard;
     if (h && ['propane', 'barrel'].includes(h.kind)) {
-      if (!h.fuseAt && !h.exploded) { h.fuseAt = this.world.tick + 18; this.world.events.emit({ type: 'hazard.armed', tick: this.world.tick, id: e.id, fuseAt: h.fuseAt }); }
+      if (!h.fuseAt && !h.exploded) { h.fuseAt = this.world.tick + explosionDef(hazardExplosions[h.kind]).chainDelay; this.world.events.emit({ type: 'hazard.armed', tick: this.world.tick, id: e.id, fuseAt: h.fuseAt }); }
       return;
     }
     if (e.destructible && !e.destructible.broken) {
@@ -103,19 +109,22 @@ export class Hazards {
     this.blastTicks[this.blastCursor] = this.world.tick; this.blastCursor = (this.blastCursor + 1) % 8;
     const h = e.hazard!; h.exploded = true; this.world.interactables!.unblock(e.id);
     this.world.events.emit({ type: 'hazard.exploded', tick: this.world.tick, id: e.id, position: { x: e.transform.x, y: .7, z: e.transform.z }, radius: h.radius });
-    // Copy the query IDs once per blast: hit events may query neighbors recursively (alarm/fuse).
-    for (const id of [...this.nearby(e, h.radius)]) {
-      const target = this.world.entities.get(id)!;
-      const distance = Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z);
-      this.damage.apply({ attackId: 0, actionId: 'hazard.propane', sourceId: e.id, targetId: id, origin: e.transform, direction: { x: 0, z: 0 }, base: 100 * Math.max(0, h.radius - distance) / h.radius, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
-    }
+    // E27: the shared blast resolves curve damage (line of sight), chains, barricades, impulses and aftermath fires.
+    this.world.explosions!.blast(hazardExplosions[h.kind], e.transform, { sourceId: e.id, radius: h.radius });
   }
   snapshot() { return { blastTicks: [...this.blastTicks], blastCursor: this.blastCursor }; }
   update(): void {
     const tick = this.world.tick;
     const actionZones = this.world.combat?.effects.zones;
     let fireReach = 2;
-    for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && tick < e.hazard.activeUntil) fireReach = Math.max(fireReach, e.hazard.radius);
+    let fires = 0; this.spreading.length = 0;
+    for (const e of this.world.entities.iterate()) if (e.hazard?.kind === 'fire' && tick < e.hazard.activeUntil) { fireReach = Math.max(fireReach, e.hazard.radius); fires++; if (e.hazard.spread && tick === e.hazard.spreadAt) this.spreading.push(e); }
+    // E27: a fire creeps once to a neighbouring spot at half life (deterministic angle), under the shared fire cap.
+    for (const e of this.spreading) {
+      if (fires++ >= Explosions.maxFires) break;
+      const h = e.hazard!, angle = e.id * 2.399963, step = h.radius * 1.4;
+      this.spawn('fire', { x: e.transform.x + Math.cos(angle) * step, z: e.transform.z + Math.sin(angle) * step }, { radius: h.radius * .85, duration: (h.activeUntil - tick) / 60 + 4, spread: h.spread! - 1 });
+    }
     for (const e of this.world.entities.iterate()) {
       if (e.noiseTarget && tick >= e.noiseTarget.until) delete e.noiseTarget;
       const h = e.hazard, d = e.destructible;

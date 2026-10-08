@@ -1,5 +1,5 @@
 {
-  "tick": 120,
+  "tick": 178,
   "audio": {
     "state": "running",
     "unlocked": true,
@@ -7,7 +7,7 @@
     "muted": false,
     "master": 2,
     "output": 0,
-    "voices": 20,
+    "voices": 21,
     "voiceLimit": 32,
     "music": {
       "level": "L1",
@@ -18,7 +18,7 @@
         "decks": []
       },
       "paused": false,
-      "position": 2.0706666666666664,
+      "position": 3.0466666666666664,
       "layers": [
         "base",
         "pulse",
@@ -64,14 +64,14 @@
       {
         "cue": "horde.loop.asphalt",
         "variant": "horde.loop.asphalt",
-        "time": 3.7493333333333334,
+        "time": 3.7226666666666666,
         "tick": 12,
         "sourceId": 100000,
         "position": {
           "id": 0,
-          "x": 7.146303891572326,
-          "z": -1.9443629697604816,
-          "count": 4
+          "x": 6.755663106493707,
+          "z": -2.0588083718259385,
+          "count": 3
         },
         "gain": 0.07848604768514633,
         "rate": 0.9854338765144348,
@@ -80,13 +80,13 @@
       {
         "cue": "horde.loop.asphalt",
         "variant": "horde.loop.asphalt",
-        "time": 3.7493333333333334,
+        "time": 3.7226666666666666,
         "tick": 12,
         "sourceId": 100001,
         "position": {
           "id": 1,
-          "x": 11.179548450258755,
-          "z": -1.9856417403735378,
+          "x": 11.117280424889678,
+          "z": -1.9640352301749224,
           "count": 3
         },
         "gain": 0.07848604768514633,
@@ -96,14 +96,14 @@
       {
         "cue": "horde.loop.asphalt",
         "variant": "horde.loop.asphalt",
-        "time": 3.7493333333333334,
+        "time": 3.7226666666666666,
         "tick": 12,
         "sourceId": 100002,
         "position": {
           "id": 2,
-          "x": 9.077111247870064,
-          "z": -2.0341591567311164,
-          "count": 3
+          "x": 8.614353319117537,
+          "z": -1.9397358453188709,
+          "count": 4
         },
         "gain": 0.07848604768514633,
         "rate": 1.000381350517273,
@@ -112,13 +112,13 @@
       {
         "cue": "infected.vocal",
         "variant": "infected.vocal",
-        "time": 4.112,
-        "tick": 36,
+        "time": 3.9093333333333335,
+        "tick": 24,
         "sourceId": 2,
         "position": {
           "id": 2,
-          "x": 5.400087456976289,
-          "z": -1.7737586815545303
+          "x": 5.651241619261713,
+          "z": -1.9534129301914624
         },
         "gain": 0.11660361289978027,
         "rate": 0.9475478529930115,
@@ -132,8 +132,8 @@
         "sourceId": 3,
         "position": {
           "id": 3,
-          "x": 5.413278286453506,
-          "z": -1.4162423018472508
+          "x": 5.344715113907517,
+          "z": -1.3617513664340721
         },
         "gain": 0.10963204503059387,
         "rate": 1.0264838933944702,
@@ -147,8 +147,8 @@
         "sourceId": 4,
         "position": {
           "id": 4,
-          "x": 5.2004905615243215,
-          "z": -1.6670554664193227
+          "x": 5.200158209399791,
+          "z": -1.8588352400866788
         },
         "gain": 0.11633270233869553,
         "rate": 1.0568220615386963,
@@ -162,8 +162,8 @@
         "sourceId": 5,
         "position": {
           "id": 5,
-          "x": 5.661940065192497,
-          "z": -1.1216325633043396
+          "x": 5.5665538080881705,
+          "z": -1.0157225472591784
         },
         "gain": 0.133146271109581,
         "rate": 1.0036264657974243,
@@ -172,8 +172,8 @@
       {
         "cue": "l1.calm.traffic",
         "variant": "l1.calm.traffic",
-        "time": 4.88,
-        "tick": 82,
+        "time": 4.858666666666666,
+        "tick": 80,
         "position": {
           "x": 14.452255476293168,
           "z": -1.5711905955384378
@@ -185,14 +185,14 @@
       {
         "cue": "telegraph.runner",
         "variant": "telegraph.runner",
-        "time": 4.949333333333334,
-        "tick": 85,
+        "time": 4.896,
+        "tick": 82,
         "sourceId": 2,
         "position": {
-          "x": 2.3401148136201875,
+          "x": 2.293955248063212,
           "y": 0.7,
-          "z": -0.806982982597649,
-          "yaw": -2.8544603686781116
+          "z": -0.8341177445507453,
+          "yaw": -2.894907724877397
         },
         "gain": 0.6000000238418579,
         "rate": 1,
@@ -201,40 +201,24 @@
       {
         "cue": "telegraph.runner",
         "variant": "telegraph.runner.v3",
-        "time": 5.1146666666666665,
-        "tick": 96,
+        "time": 5.077333333333334,
+        "tick": 94,
         "sourceId": 3,
         "position": {
-          "x": 2.411362579074884,
+          "x": 2.399698303609276,
           "y": 0.7,
-          "z": -0.5122984143681725,
-          "yaw": -2.8948591018107366
+          "z": -0.5944787848933196,
+          "yaw": -2.900284547360435
         },
         "gain": 0.6000000238418579,
         "rate": 1,
         "voice": 18
       },
       {
-        "cue": "telegraph.runner",
-        "variant": "telegraph.runner.v2",
-        "time": 5.264,
-        "tick": 105,
-        "sourceId": 4,
-        "position": {
-          "x": 2.276300273697957,
-          "y": 0.7,
-          "z": -0.9891489310212085,
-          "yaw": -2.8045113679706817
-        },
-        "gain": 0.6000000238418579,
-        "rate": 1,
-        "voice": 19
-      },
-      {
         "cue": "gore.squelch",
-        "variant": "gore.squelch.v2",
-        "time": 5.28,
-        "tick": 106,
+        "variant": "gore.squelch.v3",
+        "time": 5.226666666666667,
+        "tick": 103,
         "sourceId": 2,
         "position": {
           "x": 0,
@@ -242,47 +226,47 @@
           "z": 0,
           "yaw": 0.3205919885488634
         },
-        "gain": 0.17704017460346222,
-        "rate": 1.0147227048873901,
+        "gain": 0.18026065826416016,
+        "rate": 1.011033058166504,
+        "voice": 19
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner.v1",
+        "time": 5.28,
+        "tick": 105,
+        "sourceId": 4,
+        "position": {
+          "x": 2.187567333521874,
+          "y": 0.7,
+          "z": -1.1589979732755196,
+          "yaw": -2.752670503973179
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
         "voice": 20
       },
       {
         "cue": "telegraph.runner",
         "variant": "telegraph.runner.v3",
         "time": 5.312,
-        "tick": 108,
+        "tick": 107,
         "sourceId": 5,
         "position": {
-          "x": 2.4655371598038758,
+          "x": 2.4580805590632364,
           "y": 0.7,
-          "z": -0.31818241548929604,
-          "yaw": -2.967306621943598
+          "z": -0.2999311643033979,
+          "yaw": -2.981845249353339
         },
         "gain": 0.6000000238418579,
         "rate": 1,
         "voice": 21
       },
       {
-        "cue": "telegraph.runner",
-        "variant": "telegraph.runner",
-        "time": 5.461333333333333,
-        "tick": 117,
-        "sourceId": 6,
-        "position": {
-          "x": 2.303338531499906,
-          "y": 0.7,
-          "z": -0.859937346194272,
-          "yaw": -2.85369682395607
-        },
-        "gain": 0.6000000238418579,
-        "rate": 1,
-        "voice": 22
-      },
-      {
         "cue": "gore.squelch",
-        "variant": "gore.squelch.v3",
-        "time": 5.498666666666667,
-        "tick": 118,
+        "variant": "gore.squelch",
+        "time": 5.445333333333333,
+        "tick": 115,
         "sourceId": 3,
         "position": {
           "x": 0,
@@ -290,29 +274,342 @@
           "z": 0,
           "yaw": 0.3205919885488634
         },
-        "gain": 0.200336292386055,
-        "rate": 0.9980813264846802,
+        "gain": 0.1629454344511032,
+        "rate": 1.0268808603286743,
+        "voice": 22
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner.v2",
+        "time": 5.477333333333333,
+        "tick": 117,
+        "sourceId": 6,
+        "position": {
+          "x": 2.281135624494013,
+          "y": 0.7,
+          "z": -0.9559466821551225,
+          "yaw": -2.800409585236887
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
         "voice": 23
+      },
+      {
+        "cue": "infected.vocal",
+        "variant": "infected.vocal.v2",
+        "time": 5.509333333333333,
+        "tick": 120,
+        "sourceId": 2,
+        "position": {
+          "id": 2,
+          "x": 0.23070255215562566,
+          "z": -0.921561898316592
+        },
+        "gain": 0.12741713225841522,
+        "rate": 0.9646501541137695,
+        "voice": 24
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner",
+        "time": 5.626666666666667,
+        "tick": 126,
+        "sourceId": 7,
+        "position": {
+          "x": 2.4566567338283134,
+          "y": 0.7,
+          "z": 0.005644874938791319,
+          "yaw": -3.0443440792132517
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 25
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch.v2",
+        "time": 5.712,
+        "tick": 132,
+        "sourceId": 5,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.17031554877758026,
+        "rate": 1.0138624906539917,
+        "voice": 26
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner.v1",
+        "time": 5.712,
+        "tick": 132,
+        "sourceId": 8,
+        "position": {
+          "x": 2.319110966855044,
+          "y": 0.7,
+          "z": -0.9228237662768795,
+          "yaw": -2.8621593461997996
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 27
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch",
+        "time": 5.744,
+        "tick": 133,
+        "sourceId": 4,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.2008877843618393,
+        "rate": 0.970353364944458,
+        "voice": 28
+      },
+      {
+        "cue": "ambient.dog",
+        "variant": "ambient.dog",
+        "time": 5.8453333333333335,
+        "tick": 139,
+        "position": {
+          "x": -12.069644061848521,
+          "z": -18.52845834568143
+        },
+        "gain": 0.20000000298023224,
+        "rate": 0.980826199054718,
+        "voice": 29
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner.v2",
+        "time": 5.8933333333333335,
+        "tick": 142,
+        "sourceId": 9,
+        "position": {
+          "x": 2.4487216283987743,
+          "y": 0.7,
+          "z": -0.293378796056754,
+          "yaw": -2.9724277091209093
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 30
+      },
+      {
+        "cue": "infected.vocal",
+        "variant": "infected.vocal.v1",
+        "time": 5.925333333333334,
+        "tick": 144,
+        "sourceId": 3,
+        "position": {
+          "id": 3,
+          "x": 0.8819860642734486,
+          "z": -0.34437610688486686
+        },
+        "gain": 0.1321956217288971,
+        "rate": 0.9451122879981995,
+        "voice": 31
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch.v1",
+        "time": 5.941333333333334,
+        "tick": 145,
+        "sourceId": 6,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.18917198479175568,
+        "rate": 1.022862195968628,
+        "voice": 32
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch",
+        "time": 6.026666666666666,
+        "tick": 150,
+        "sourceId": 7,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.1818878948688507,
+        "rate": 0.9701787233352661,
+        "voice": 33
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner.v3",
+        "time": 6.128,
+        "tick": 156,
+        "sourceId": 10,
+        "position": {
+          "x": 2.3890069705778503,
+          "y": 0.7,
+          "z": -0.5039176322429295,
+          "yaw": -2.9588342682828945
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 34
+      },
+      {
+        "cue": "infected.vocal",
+        "variant": "infected.vocal",
+        "time": 6.128,
+        "tick": 156,
+        "sourceId": 4,
+        "position": {
+          "id": 4,
+          "x": -1.291154009189662,
+          "z": -0.29188433763165833
+        },
+        "gain": 0.13280268013477325,
+        "rate": 0.9438167214393616,
+        "voice": 35
+      },
+      {
+        "cue": "infected.vocal",
+        "variant": "infected.vocal.v2",
+        "time": 6.128,
+        "tick": 156,
+        "sourceId": 5,
+        "position": {
+          "id": 5,
+          "x": -1.2790781952080328,
+          "z": 1.0877751921701955
+        },
+        "gain": 0.11430105566978455,
+        "rate": 1.0376827716827393,
+        "voice": 36
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner",
+        "time": 6.245333333333333,
+        "tick": 163,
+        "sourceId": 2,
+        "position": {
+          "x": -2.4789970297184825,
+          "y": 0.7,
+          "z": -0.06250316214124375,
+          "yaw": -0.44625152580312
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 37
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch.v2",
+        "time": 6.277333333333333,
+        "tick": 165,
+        "sourceId": 9,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.16847151517868042,
+        "rate": 0.9749739766120911,
+        "voice": 38
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner.v2",
+        "time": 6.378666666666667,
+        "tick": 171,
+        "sourceId": 11,
+        "position": {
+          "x": 2.4249270227615196,
+          "y": 0.7,
+          "z": -0.3706039772865988,
+          "yaw": -2.9798054519370702
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 39
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch.v1",
+        "time": 6.426666666666667,
+        "tick": 174,
+        "sourceId": 8,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.17763768136501312,
+        "rate": 0.9861195087432861,
+        "voice": 40
+      },
+      {
+        "cue": "telegraph.runner",
+        "variant": "telegraph.runner",
+        "time": 6.442666666666667,
+        "tick": 175,
+        "sourceId": 3,
+        "position": {
+          "x": 0.5435386640833428,
+          "y": 0.7,
+          "z": -0.7788120783274374,
+          "yaw": -2.655940935990709
+        },
+        "gain": 0.6000000238418579,
+        "rate": 1,
+        "voice": 41
+      },
+      {
+        "cue": "gore.squelch",
+        "variant": "gore.squelch",
+        "time": 6.477333333333333,
+        "tick": 177,
+        "sourceId": 10,
+        "position": {
+          "x": 0,
+          "y": 0.7049999833106995,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "gain": 0.18430890142917633,
+        "rate": 0.9985403418540955,
+        "voice": 42
       }
     ],
     "clusters": [
       {
         "id": 0,
-        "x": 1.3472301012958634,
-        "z": -0.48410886242840084,
-        "count": 5
+        "x": -1.9699076632274162,
+        "z": 0.21515546179243772,
+        "count": 4
       },
       {
         "id": 1,
-        "x": 5.144341144113419,
-        "z": -0.885451857425336,
+        "x": 2.064152316090562,
+        "z": -0.3886171547498164,
         "count": 2
       },
       {
         "id": 2,
-        "x": 3.381611409944083,
-        "z": -0.6490790712966588,
-        "count": 3
+        "x": 0.47317994537276364,
+        "z": -0.1570439228638717,
+        "count": 4
       }
     ],
     "captions": []
@@ -324,14 +621,14 @@
     "renderCpuMs": 0,
     "propUploads": 0,
     "awakeProps": 0,
-    "fps": 59.88023952095874,
-    "frameMs": 16.699999999999818,
-    "simMs": 0.5,
+    "fps": 60.240963855423665,
+    "frameMs": 16.599999999999454,
+    "simMs": 0.3000001907348633,
     "uiMs": 0,
     "drawCalls": 59,
     "triangles": 376361,
-    "geometries": 81,
-    "textures": 7,
+    "geometries": 83,
+    "textures": 8,
     "entities": 11,
     "backend": "webgl",
     "loadTiming": null,
@@ -353,35 +650,43 @@
         "cullDistance": 60
       }
     },
-    "renderedFrames": 119,
+    "renderedFrames": 180,
     "contextLost": false,
     "paused": false,
-    "heapBytes": 521000000
+    "heapBytes": 521000000,
+    "lighting": {
+      "lightFieldMs": 0.09999942779541016,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroShadow": 0,
+      "preset": "golden"
+    }
   },
   "infected": [
     {
       "id": 2,
-      "state": "chase",
+      "state": "attack",
       "health": 40
     },
     {
       "id": 3,
-      "state": "chase",
+      "state": "attack",
       "health": 40
     },
     {
       "id": 4,
-      "state": "attack",
+      "state": "chase",
       "health": 40
     },
     {
       "id": 5,
-      "state": "attack",
+      "state": "chase",
       "health": 40
     },
     {
       "id": 6,
-      "state": "attack",
+      "state": "chase",
       "health": 40
     },
     {
@@ -406,7 +711,7 @@
     },
     {
       "id": 11,
-      "state": "chase",
+      "state": "attack",
       "health": 40
     }
   ]

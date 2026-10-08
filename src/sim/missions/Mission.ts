@@ -176,12 +176,16 @@ export class Mission {
     this.state.failure = reason; this.state.phase = 'retry'; this.emit({ type: 'mission.failed', reason }); this.run(def?.onFail ?? []);
   }
   private event(event: GameEvent): void {
-    if (event.type === 'player.respawned') { if (this.state.phase === 'playing') this.restore(this.state.checkpoint ?? 'start'); return; }
+    if (event.type === 'player.respawned') {
+      // L1 (PO rule 2026-10-07): respawn keeps the world; only the courier is placed safely. Other levels restore the checkpoint.
+      if (this.state.phase === 'playing') { if (this.l1) this.l1.respawn(); else this.restore(this.state.checkpoint ?? 'start'); }
+      return;
+    }
     if (this.state.phase !== 'playing') return;
     if (event.type === 'mission.failed') { this.state.failure = event.reason; this.state.phase = 'retry'; return; }
     if (event.type === 'pickup.collected' && 'kind' in event && event.kind === 'item' && event.item && this.def.items.includes(event.item)) this.collect(event.item);
     if (event.type === 'player.damaged') this.state.stats.damage += event.amount;
-    if (event.type === 'player.died') this.state.stats.deaths++;
+    if (event.type === 'player.died') { this.state.stats.deaths++; this.l1?.noteDeath(); }
     if (event.type === 'combat.kill') {
       const entity = this.world.entities.get(event.targetId);
       if (entity?.faction === 'infected' && event.sourceId === 1) this.state.stats.kills++;

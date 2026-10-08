@@ -17,6 +17,8 @@ export function physicsMetadata(): Record<string, PhysicsAsset> {
     const raw = nodes.find(n => n.extras?.ss_physics)?.extras?.ss_physics;
     if (!raw) continue;
     const physics = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    // JSON.stringify writes -0 as 0; canonicalize authored centres before freshness comparisons.
+    if (Array.isArray(physics.centerOfMass)) physics.centerOfMass = physics.centerOfMass.map((v: number) => v === 0 ? 0 : v);
     const boxes = staticCollision[asset.id]?.boxes ?? [];
     // Older collider extras use Blender XYZ sizes, newer ones game XYZ. Resolve that export
     // convention against delivered geometry; translations are always GLTF Y-up.

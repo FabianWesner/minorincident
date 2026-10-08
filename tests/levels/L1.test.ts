@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
+import { SimPhase } from '../../src/core/EventBus';
 import { l1v2 } from '../../src/data/l1v2';
 import { l1AccidentEvents } from '../../src/sim/outbreak/types';
 import { storyLines } from '../../src/sim/missions/L1Story';
@@ -99,8 +100,8 @@ describe('L1 v2 mission', () => {
         onExit: () => { exitTick = w.tick; if (unopposed) parkObserver(w); }, stopWhen: () => exitTick > 0 && w.tick > exitTick + 240 * 60,
       }));
       for (const id of born) if (!mission.state.l1!.exitIds.includes(id)) expect(bitten.has(id), `seed ${seed}, infected ${id}`).toBe(true);
-      expect(w.npcs!.civilians.outbreak!.stats.hordeSpawned).toBe(0);
-      expect(mission.state.l1!.routeSpawns).toBe(0);
+      // No spawns besides the exits: the beat 9 house never opened (the garage beat is not reached).
+      expect(mission.state.l1!.house).toBeNull();
       w.dispose(); world = undefined;
     }
     record(unopposed ? 'unopposed-spread' : 'forecourt-idle', runs);
@@ -177,9 +178,11 @@ describe('L1 v2 mission', () => {
       const { world: w, mission } = await loadL1(seed); world = w;
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
       w.player!.damage(1000, w.tick);
-      for (let i = 0; i < 400 && !w.events.events().some(e => e.type === 'checkpoint.restored'); i++) w.update();
+      for (let i = 0; i < 400 && !w.events.events().some(e => e.type === 'player.respawned'); i++) w.update();
+      w.update();
       const p = w.entities.get(1)!;
-      expect(w.events.events().some(e => e.type === 'checkpoint.restored'), `seed ${seed}`).toBe(true);
+      expect(w.events.events().some(e => e.type === 'player.respawned'), `seed ${seed}`).toBe(true);
+      expect(w.events.events().some(e => e.type === 'checkpoint.restored'), 'respawn keeps the world: no checkpoint restore').toBe(false);
       expect(p.health.current).toBe(p.health.max);
       expect(p.survivor!.invulnerableUntil).toBeGreaterThan(w.tick + 60);
       const close = w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 8);
@@ -188,21 +191,66 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-09 @E19 @E19-AC25 beat 9 the director produces >= 6 infected near the garage exit and a stream ahead on the route', async () => {
+  test('T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house door near the garage, one by one, 1.5-4 s apart', async () => {
     const { world: w, mission } = await load(2); w.combat!.damage.god = true;
-    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => m.state.steps.weapon.status === 'completed' });
+    const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>();
+    w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doors.push({ id: e.id, tick: e.tick }); });
     const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
-    for (let i = 0; i < 60 * 40 && !mission.state.l1!.hordeDone; i++) w.update();
-    expect(mission.state.l1!.hordeDone).toBe(true);
-    // Emergence: the horde infected wait hidden at doors, then appear within 3 m of that door after the door-open event.
-    const doorRuns = mission.state.l1!.runs.filter(r => r.door), doorEvents: string[] = [];
-    expect(doorRuns.length).toBeGreaterThan(0);
-    w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doorEvents.push(e.id); });
-    for (const r of doorRuns) expect(w.entities.get(r.id)!.hidden).toBe(true);
-    for (let i = 0; i < 60 * 10 && mission.state.l1!.runs.some(r => r.emergeAt !== undefined); i++) w.update();
-    expect(doorEvents.length).toBeGreaterThan(0);
-    for (let i = 0; i < 60 * 30 && near() < l1v2.director.hordeMinInfectedNearGarage; i++) w.update();
-    expect(near()).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
+    let nearMax = 0;
+    // The courier takes the bat and heads for the fire station (complete bot); every tick, note new residents where they appear.
+    w.events.on('sim.tick', () => {
+      for (const id of mission.state.l1?.house?.ids ?? []) if (!appear.has(id)) { const t = w.entities.get(id)!.transform; appear.set(id, { tick: w.tick, x: t.x, z: t.z }); }
+      if (mission.state.l1?.house) nearMax = Math.max(nearMax, near());
+    });
+    // ...until the house opens; then the (immortal) courier waits on the street so the level does not end first.
+    runL1(w, mission, 'complete', { seed: 2, stopWhen: m => !!m.state.l1!.house });
+    w.clearInput();
+    for (let i = 0; i < 60 * 60 && mission.state.l1!.house!.ids.length < l1v2.house.count; i++) w.update();
+    for (let i = 0; i < 120; i++) w.update(); // the last one is noted on the next tick and the crowd gathers
+    const house = mission.state.l1!.house!;
+    expect(house.door).toBeGreaterThan(0);
+    expect(Math.hypot(house.x - g.x, house.z - g.z)).toBeLessThanOrEqual(l1v2.house.doorM[1]);
+    expect(house.ids).toHaveLength(l1v2.house.count);
+    // Same door every time, one door bang per resident, staggered 1.5 to 4 s.
+    expect(new Set(doors.map(d => d.id))).toEqual(new Set([`door-${house.door}`]));
+    expect(doors).toHaveLength(l1v2.house.count);
+    for (let i = 1; i < doors.length; i++) {
+      const gap = (doors[i].tick - doors[i - 1].tick) / 60;
+      expect(gap).toBeGreaterThanOrEqual(l1v2.house.staggerS[0] - 1 / 30); expect(gap).toBeLessThanOrEqual(l1v2.house.staggerS[1] + 1 / 30);
+    }
+    // Each one appears within 3 m of that door, on its door-open tick, with a pedestrian look.
+    for (const [i, id] of house.ids.entries()) {
+      const a = appear.get(id)!; expect(a.tick - doors[i].tick).toBeGreaterThanOrEqual(0); expect(a.tick - doors[i].tick).toBeLessThanOrEqual(1); // noted on the next sim.tick
+      expect(Math.hypot(a.x - house.x, a.z - house.z)).toBeLessThanOrEqual(3);
+      expect(w.entities.get(id)?.appearance?.entityId).toBe(id);
+    }
+    expect(nearMax).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
+  }, HEAVY);
+
+  test('T-E19-provenance @E19 PO rule: no infected enters L1 except the 5 lab exits, the 10 house residents and bitten pedestrians', async () => {
+    const report: { seed: number; profile: string; exits: number; house: number; bitten: number; deaths: number }[] = [];
+    for (const [seed, profile] of [[1, 'complete'], [2, 'complete'], [3, 'newbie']] as const) {
+      const { world: w, mission } = await loadL1(seed); world = w;
+      const bitten = new Set<number>(), seen = new Set<number>(), bad: number[] = [];
+      w.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite' && e.turns) bitten.add(e.targetId); });
+      w.events.on('sim.tick', () => {
+        const l1 = mission.state.l1!;
+        for (const e of w.infected!.active) {
+          if (seen.has(e.id)) continue; seen.add(e.id);
+          if (!l1.exitIds.includes(e.id) && !l1.house?.ids.includes(e.id) && !bitten.has(e.id)) bad.push(e.id);
+        }
+      });
+      // A forced death right after the exits must not add anyone either.
+      const run = runL1(w, mission, profile, { seed, onExit: () => { w.player!.damage(1000, w.tick); } });
+      expect(run.outcome, `seed ${seed} ${profile}`).toBe('complete');
+      expect(bad, `seed ${seed} ${profile}: infected without provenance`).toEqual([]);
+      const l1 = mission.state.l1!;
+      expect(l1.exitIds).toHaveLength(l1v2.accident.infectedCount);
+      expect(l1.house!.ids.length).toBeLessThanOrEqual(l1v2.house.count);
+      report.push({ seed, profile, exits: l1.exitIds.length, house: l1.house!.ids.length, bitten: bitten.size, deaths: run.deaths });
+      w.dispose(); world = undefined;
+    }
+    record('provenance', report);
   }, HEAVY);
 
   test('T-E19-05 @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied', async () => {
@@ -234,30 +282,42 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-checkpoint @E19 checkpoints restore the outbreak, bicycle after death', async () => {
+  test('T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)', async () => {
     const { world: w, mission } = await load(4);
-    // Mocks of the optional F seams (bicycle, toys); the outbreak layer is the real lane D one.
-    const mocks = { bicycle: { at: [5, 5], riding: false } };
-    for (const [name, state] of Object.entries(mocks)) (w as unknown as Record<string, unknown>)[name] = { snapshot: () => state, restore: (s: unknown) => { Object.assign(state, structuredClone(s)); } };
-    runL1(w, mission, 'complete', { seed: 4, stopWhen: m => m.state.checkpoint === 'accident' });
-    expect(mission.state.checkpoint).toBe('accident');
-    const alive = w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort();
-    expect(alive).toHaveLength(5);
-    const techId = mission.state.l1!.techId;
-    mocks.bicycle.at = [99, 99];
-    const stats = w.npcs!.civilians.outbreak!.stats; stats.turned = 7;
-    w.player!.damage(1000, w.tick);
-    for (let i = 0; i < 400; i++) w.update();
-    expect(mission.state.checkpoint).toBe('accident');
-    expect(mocks.bicycle.at).toEqual([5, 5]); expect(w.npcs!.civilians.outbreak!.stats.turned).toBe(0);
-    expect(w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort()).toEqual(alive);
-    expect(w.entities.get(techId)?.infected).toBeDefined();
-    expect(['escape', 'weapon'].some(id => mission.state.steps[id].status === 'active')).toBe(true); expect(mission.state.steps.pickup.status).toBe('completed');
-    // The bat checkpoint carries the bat through a death.
-    runL1(w, mission, 'complete', { seed: 4, stopWhen: m => m.state.checkpoint === 'bat' });
+    runL1(w, mission, 'complete', { seed: 4, stopWhen: m => m.state.checkpoint === 'bat' && (m.state.l1!.house?.ids.length ?? 0) >= 3 });
     expect(mission.state.checkpoint).toBe('bat');
-    w.player!.damage(1000, w.tick); for (let i = 0; i < 400; i++) w.update();
-    expect(w.entities.get(1)!.weapons!.LEFT.rack[0].id).toBe('weapon.bat'); expect(mission.state.steps.firestation.status).toBe('active');
+    // A corpse for sure: kill one live infected.
+    const victim = w.infected!.active.find(e => e.health.current > 0 && !e.hidden)!;
+    w.combat!.damage.apply({ sourceId: 1, targetId: victim.id, attackId: 99, actionId: 'test', origin: victim.transform, direction: { x: 1, z: 0 }, base: 999, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
+    for (let i = 0; i < 30; i++) w.update();
+    const snapshot = () => {
+      const rows = [...w.entities.iterate()].filter(e => e.id !== 1)
+        .map(e => ({ id: e.id, kind: e.kind, dead: e.health.current <= 0, state: e.infected?.state ?? e.civilian?.state ?? '', x: e.transform.x, z: e.transform.z }));
+      return { rows, corpses: rows.filter(r => r.dead && r.kind === 'infected').length, infected: w.infected!.active.filter(e => e.health.current > 0).length, pedestrians: rows.filter(r => !r.dead && r.kind === 'civilian').length };
+    };
+    const steps = structuredClone(mission.state.steps), bites = w.npcs!.civilians.outbreak!.stats.bites, house = structuredClone(mission.state.l1!.house!);
+    // The respawn handlers run between these two (missions phase): nothing but the player may change.
+    let before: ReturnType<typeof snapshot> | null = null, after: ReturnType<typeof snapshot> | null = null;
+    w.events.on('player.respawned', () => { before = snapshot(); }, SimPhase.input);
+    w.events.on('player.respawned', () => { after = snapshot(); }, SimPhase.cleanup);
+    w.player!.damage(1000, w.tick);
+    for (let i = 0; i < 400 && !after; i++) w.update();
+    expect(after, 'respawned').not.toBeNull();
+    const [b, a] = [before!, after!] as ReturnType<typeof snapshot>[];
+    expect(w.events.events().some(e => e.type === 'checkpoint.restored')).toBe(false);
+    expect(a.corpses).toBeGreaterThan(0);
+    expect({ corpses: a.corpses, infected: a.infected, pedestrians: a.pedestrians }).toEqual({ corpses: b.corpses, infected: b.infected, pedestrians: b.pedestrians });
+    expect(a.rows).toEqual(b.rows);
+    record('respawn-world', { corpses: a.corpses, infected: a.infected, pedestrians: a.pedestrians, entities: a.rows.length });
+    // Nothing reset: objectives, outbreak counters, the beat 9 house, the bat.
+    expect(mission.state.steps.firestation.status).toBe(steps.firestation.status);
+    expect(w.npcs!.civilians.outbreak!.stats.bites).toBeGreaterThanOrEqual(bites);
+    expect(mission.state.l1!.house!.ids.slice(0, house.ids.length)).toEqual(house.ids);
+    expect(w.entities.get(1)!.weapons!.LEFT.rack[0].id).toBe('weapon.bat');
+    const p = w.entities.get(1)!;
+    expect(p.health.current).toBe(p.health.max); expect(p.survivor!.invulnerableUntil).toBeGreaterThan(w.tick + 60);
+    // The world keeps going and the courier can still finish.
+    expect(runL1(w, mission, 'complete', { seed: 4 }).outcome).toBe('complete');
   }, HEAVY);
 
   test('T-E19-end @E19 fire station: shutter closes, caption, result fields (delivered, infected, turned, escaped)', async () => {

@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { getBounds } from '@gltf-transform/functions';
 import type { Document, Node, Scene, Mesh } from '@gltf-transform/core';
 import type { AssetDef } from '../../src/assets/types';
-import { atLeast } from '../../src/assets/types';
+import { atLeast, variantPath } from '../../src/assets/types';
 import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
 import { reviewErrors } from './review';
@@ -155,7 +155,14 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
 }
 export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
   const io = await assetIO(), results: Validation[] = [];
-  for (const def of manifest) {
+  const variants = manifest.flatMap(def => def.decayVariants.map(decay => ({
+    ...def, id: `${def.id}.${decay}`, decayVariants: [],
+    glb: variantPath(def.glb, decay),
+    sourceGlb: variantPath(def.sourceGlb ?? `assets/${def.id}/model.glb`, decay),
+    lods: { lod1: def.lods?.lod1 && variantPath(def.lods.lod1, decay), lod2: def.lods?.lod2 && variantPath(def.lods.lod2, decay) },
+    budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles },
+  })));
+  for (const def of [...manifest, ...variants]) {
     const sourcePath = def.sourceGlb ?? (existsSync(`assets/${def.id}/model.glb`) ? `assets/${def.id}/model.glb` : undefined);
     if (!atLeast(def.status, 'modeled') && !(production && sourcePath)) continue;
     if (def.decalTexture) {
@@ -235,8 +242,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   mkdirSync('test-results/epics/E17', { recursive: true });
   if (!ids) for (const directory of ['public/assets/models', 'public/assets/layouts']) for (const file of readdirSync(directory).filter(file => file.endsWith('.glb'))) {
     const path = `${directory}/${file}`, bytes = readFileSync(path);
-    const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString()) as { extensionsRequired?: string[] };
-    if (!['EXT_meshopt_compression', 'KHR_mesh_quantization'].every(extension => json.extensionsRequired?.includes(extension))) results.push({ id: path, errors: ['delivery: missing meshopt/quantization'], triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: '' });
+    const json = JSON.parse(bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString()) as { extensionsRequired?: string[]; skins?: unknown[] };
+    // The opt-in skinned pilot uses lossless meshopt: quantize() rescales its mesh
+    // outside the skin transforms (tools/skinpilot/compress.ts). Rigid assets still require both.
+    const extensions = json.skins?.length ? ['EXT_meshopt_compression'] : ['EXT_meshopt_compression', 'KHR_mesh_quantization'];
+    if (!extensions.every(extension => json.extensionsRequired?.includes(extension))) results.push({ id: path, errors: ['delivery: missing meshopt/quantization'], triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: '' });
   }
   writeFileSync(`test-results/epics/E17/validate${ids ? '-selected' : process.argv.includes('--production') ? '-production' : ''}.json`, JSON.stringify(results, null, 2));
   console.log(JSON.stringify(results.map(({ id, errors, triangles }) => ({ id, errors, triangles })), null, 2));

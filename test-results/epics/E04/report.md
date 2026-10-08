@@ -53,3 +53,14 @@ No known E04 functional defects. The supplied hero meshes retain the existing ar
 - `92f71d1` kinematic survivor, health lifecycle and tagged sim proofs.
 - `bcf15a6` GLB presentation, complete clips, gear, browser/visual tests and source review.
 - Final documentation commit records done status, this report and the verification evidence (see branch HEAD).
+
+
+## Courier animation correction — 2026-10-07
+
+Lane `lane/player-anim-r1`, integrated main `745e83f6` in `fd1a3560`. Implemented in `f8c7f76f`, `9560c3eb`, `ca68bf9a`; harness `b5b2464a`/`500c9a22`; curated evidence `51d46995`. The round-one courier mesh/skeleton remains. Corrected backward torso pitch and spine counter-rotation, relaxed/counter-swinging arms, running cadence, knee anticipation, bike root transfer and held-weapon stow through dismount. Main's arrival stability, bike-frame orientation and repeated-evaluation behavior remain covered.
+
+Final validation: typecheck/lint pass; full unit 291 passed (86 files); E04 52 unit/sim + 30 browser passed; bicycle/arrival/combat 10 passed; skin-off and skin-on smoke each 6 sim + 23 browser passed. Zero failures or browser flakes. Exact commands, skip counts, measurement methods and logs are in the [lane report](../../../../docs/reports/player-anim-r1.md) and [validation JSON](../../player-anim-r1/validation.json).
+
+Walking minimum chest pitch changed from −17.65°/−16.58° (female/male) to +2.91°; steady run is 9–11°. Tests cover both variants' idle/walk/run/start/stop/90°/180° turn chest/head pitch. Highest isolated skinned CharacterView p95 is 0.132 ms. [Game-camera evidence](../../player-anim-r1/README.md) includes 14 paired comparisons, 20 L1 stills and four 6–10.75 s WebM videos; the updated vision review is in `review.md`.
+
+No specification edits or weakened criteria. This follows the PO-authorized round-one fitted-skin direction, not the abandoned avatar lane. Remaining limitations: brisk short-legged running, four-tick knee windup, blended rather than authored leg-over-bike motion, and existing strap stretch in extreme bat poses. Manual WebGPU and PO motion review remain. No push, merge into main or deployment.

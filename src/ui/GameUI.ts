@@ -121,7 +121,7 @@ export class GameUI {
     this.select(form, 'aimAssist', 'Aim assist', ['Off', 'Low', 'Default', 'High']);
     this.select(form, 'gore', 'Blood', ['Off', 'Reduced', 'Full']);
     this.select(form, 'quality', 'Quality', ['auto', 'high', 'low']);
-    for (const [key, label] of [['cameraShake', 'Camera shake'], ['flashReduction', 'Reduce flashes'], ['colorblind', 'Colorblind telegraphs'], ['muted', 'Mute audio']] as const) {
+    for (const [key, label] of [['cameraShake', 'Camera shake'], ['flashReduction', 'Reduce flashes'], ['colorblind', 'Colorblind telegraphs'], ['slowMotion', 'Explosion slow motion'], ['muted', 'Mute audio']] as const) {
       const row = node('label', `label-${key}`, label), input = node('input', `setting-${key}`);
       input.type = 'checkbox'; input.checked = this.settings.value[key];
       input.addEventListener('change', () => { this.settings.patch({ [key]: input.checked }); this.applySettings(); });
@@ -175,7 +175,7 @@ export class GameUI {
     }
     document.body.style.setProperty('--text-scale', String(value.textSize));
     document.body.classList.toggle('colorblind-ui', value.colorblind);
-    this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, colorblind: value.colorblind, quality });
+    this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, colorblind: value.colorblind, slowMotion: value.slowMotion, quality });
     this.game.world.npcs?.setQuality(quality);
     this.game.audio.set({ muted: value.muted || this.game.params.get('audio') === 'muted', gore: value.gore });
     if (this.game.world.combat) this.game.world.combat.assist.setting = value.aimAssist;

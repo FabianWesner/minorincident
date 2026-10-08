@@ -24,9 +24,9 @@ const materials = { fromVertexColors: makeMaterial, fromColor: makeMaterial, get
 const percentile = (values: number[], p: number) => values.sort((a, b) => a - b)[Math.floor((values.length - 1) * p)];
 const results: Record<string, unknown> = {};
 try {
-  for (const skin of [false, true]) for (const mode of ['idle', 'walk', 'run', 'jab', 'kick', 'bat', 'ride']) {
+  for (const variant of (process.argv.includes('--both') ? ['female', 'male'] : ['female']) as ('female' | 'male')[]) for (const skin of [false, true]) for (const mode of ['idle', 'walk', 'run', 'jab', 'kick', 'bat', 'ride']) {
     const character = new CharacterView(); await character.init(materials, false, false, 'courier', skin);
-    const pose: SurvivorState = { variant: 'female', gearTier: 0, animation: 'idle', animationTick: 0, velocity: { x: 0, z: 0 }, grounded: true, invulnerableUntil: 0, checkpoint: { x: 0, y: .7, z: 0 }, diedAt: null };
+    const pose: SurvivorState = { variant, gearTier: 0, animation: 'idle', animationTick: 0, velocity: { x: 0, z: 0 }, grounded: true, invulnerableUntil: 0, checkpoint: { x: 0, y: .7, z: 0 }, diedAt: null };
     const contacts = new RiderContacts(), bike = (await load('public/assets/models/veh.courier-bike.glb')).scene;
     bike.scale.setScalar(.6);
     const meshes: SkinnedMesh[] = []; character.traverse(node => { if (node instanceof SkinnedMesh) meshes.push(node); });
@@ -52,9 +52,9 @@ try {
       const end = performance.now();
       if (tick > 300) { samples.push(end - start); matrixSamples.push(end - matrices); }
     }
-    results[`skin${Number(skin)}-${mode}`] = { frames: samples.length, cpuMsP50: percentile(samples, .5), cpuMsP95: percentile(samples, .95), cpuMsMean: samples.reduce((a, b) => a + b, 0) / samples.length,
+    results[`${process.argv.includes('--both') ? variant + '-' : ''}skin${Number(skin)}-${mode}`] = { frames: samples.length, cpuMsP50: percentile(samples, .5), cpuMsP95: percentile(samples, .95), cpuMsMean: samples.reduce((a, b) => a + b, 0) / samples.length,
       matrixAndSkeletonMsP95: percentile(matrixSamples, .95), skinnedMeshes: meshes.length, bones: meshes[0]?.skeleton.bones.length ?? 0 };
-    character.dispose(); console.log(`profiled skin${Number(skin)} ${mode}`);
+    character.dispose(); console.log(`profiled ${variant} skin${Number(skin)} ${mode}`);
   }
 } finally { GLTFLoader.prototype.loadAsync = originalLoad; }
 writeFileSync(`${out}/cpu-profile.json`, JSON.stringify({ platform: platform(), cpu: cpus()[0]?.model, node: process.version, method: '300 warm-up, 2000 timed frames; CharacterView.update + ride contacts + matrix propagation + Skeleton.update; no simulation/render', results }, null, 2) + '\n');

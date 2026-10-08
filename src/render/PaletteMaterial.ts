@@ -13,6 +13,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly bloodCoverage = uniform(0);
   /** Render-only emissive hit pulse. */
   readonly hitFlash = uniform(0);
+  /** E27 burned variant: 0 = authored surface, 1 = charred soot (exploded cars). */
+  readonly char = uniform(0);
   /** E25 night readability: 1 on crowd figures (infected/civilians) for a moonlit silhouette rim. */
   readonly figureRim = uniform(0);
   constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'> }) {
@@ -38,7 +40,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         return distance.smoothstep(radius.mul(size), radius.mul(size).add(edge)).oneMinus();
       };
       const blood = max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)).mul(this.bloodCoverage.greaterThan(0).select(1, 0));
-      const surface = mix(base, color('#b3121f'), blood);
+      const surface = mix(mix(base, color('#b3121f'), blood), color('#1d1a18'), this.char);
       const albedo = mix(surface, lighting.bounce, bounce);
       const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(lighting.look.nodes.ambientStrength).mul(lighting.look.nodes.hemisphereIntensity.mul(2));
       const lit = albedo.mul(lighting.color.rgb.add(ambient)).mul(lighting.intensity);

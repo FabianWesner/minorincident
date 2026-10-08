@@ -397,20 +397,24 @@ g.hedge(-46.0, 46.2, -35.0, 46.2, scale=1.15)
 # --- Fire Station 3 (south-west corner)
 fs = 'bld.fire-station'
 fdx, fdy, fdz = dims(fs)
-FS_X = -73.2
-FS_Z = SFRONT + fdx / 2 + 2.5          # apron margin: the trigger sits outside the visual footprint
-FS_PID = g.place(fs, FS_X, FS_Z, FACE_YAW['N'])
+# PO 2026-10-07: the open bays face EAST, toward the game camera (which looks from +X +Z), so the courier arriving along Elm
+# Street sees the open bay, the waving firefighter and the objective ring inside it. (Facing north, toward Elm, the camera only
+# saw the back wall.) The station fills the corner lot; the lawn east of it is the apron the player crosses from the sidewalk.
+FS_YAW = FACE_YAW['E']
+FS_X = -77.0                           # collision shell local x -5.7..3.1: back wall 0.6 m inside the west perimeter fence
+FS_Z = SFRONT + 6.1 + 1.9              # local z +-6.1 (12.2 m wide), clear of the Elm Street sidewalk
+FS_PID = g.place(fs, FS_X, FS_Z, FS_YAW)
 # The right bay aperture is local X=1.6, Z=-1.23. Completion is 1.2 metres inside.
-fx, fz = rot(FACE_YAW['N'], 1.6, -1.23)
+fx, fz = rot(FS_YAW, 1.6, -1.23)
 anchors['fire-bay-door'] = (FS_X + fx, FS_Z + fz)
-fx, fz = rot(FACE_YAW['N'], .4, -1.23)
+fx, fz = rot(FS_YAW, .4, -1.23)
 anchors['fire-bay-trigger'] = (FS_X + fx, FS_Z + fz)
 doors.append(anchors['fire-bay-door'])
 g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
 
-# Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1), facing north.
-_fx0, _fx1 = FS_X - 6.1, FS_X + 6.1
-_fz0, _fz1 = FS_Z - 3.1, FS_Z + 5.7
+# Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1), facing east.
+_fx0, _fx1 = FS_X - 5.7, FS_X + 3.1
+_fz0, _fz1 = FS_Z - 6.1, FS_Z + 6.1
 l.data['acousticZones'].append(dict(id='fire-station-3', preset='interior-large', polygon=[[_fx0, _fz0], [_fx1, _fz0], [_fx1, _fz1], [_fx0, _fz1], [_fx0, _fz0]]))
 l.data['buildings'].append(dict(id=FS_PID, assetId=fs, aabb=dict(min=[_fx0, 0, _fz0], max=[_fx1, fdy, _fz1]), label='Fire Station 3'))
 
@@ -506,7 +510,12 @@ def alley_props(x0, x1, zc, step=9.0, phase=0.0):
             x += step; side = -side
             continue
         item = ALLEY_ITEMS[(n + int(x)) % len(ALLEY_ITEMS)]; n += 1
-        g.place(item, x, z, FACE_YAW['E'] if side < 0 else FACE_YAW['W'], .85 if item != 'prop.trash-bin' else .5, soft=True)
+        if item == 'prop.trash-bin':
+            # QA1-02: the bin stands lengthwise against the fence (0.9 m deep across the 3 m alley left 1.9 m, and the routed
+            # bicycle jammed on it); turned along the fence it keeps the corridor ~2.5 m wide.
+            g.place(item, x, zc + side * 1.1, FACE_YAW['N'] if side < 0 else FACE_YAW['S'], .5, soft=True)
+        else:
+            g.place(item, x, z, FACE_YAW['E'] if side < 0 else FACE_YAW['W'], .85, soft=True)
         if n % 4 == 0:
             g.place('prop.laundry-line', x + 3.5, zc + side * 1.0, PI / 2, 1.0, soft=True)
         x += step; side = -side
@@ -564,17 +573,20 @@ anchors['photo-l1-accident'] = (ax_, ANNEX_FRONT + 3.5)
 anchors['photo-l1-escape'] = (53.0, -3.0)
 anchors['photo-l1-spread'] = (0.0, Z0)
 anchors['photo-l1-garage'] = (gx, SFRONT + 1.0)
-anchors['photo-l1-horde'] = (30.0, 31.0)
-anchors['photo-l1-safe'] = (anchors['fire-bay-trigger'][0], anchors['fire-bay-trigger'][1] - 3.0)
+anchors['photo-l1-horde'] = (31.0, 26.8)          # north kerb of Elm Street: the camera-side roofs stay out of frame
+anchors['photo-l1-safe'] = (anchors['fire-bay-trigger'][0] + 3.0, anchors['fire-bay-trigger'][1])
+# Visible floor height for the objective ring where the spot is raised: the station's interior bay floor (model build.py:
+# 'Interior floor' top at 0.53 m). Gameplay stays 2D; only the marker uses it.
+FLOOR_Y = {'fire-bay-trigger': .53}
 for name, (x, z) in anchors.items():
-    l.anchor(name, [x, 0, z])
+    l.anchor(name, [x, FLOOR_Y.get(name, 0), z])
 l.data['anchors'] = {k: v for k, v in l.data['anchors'].items()}
 
 # named gameplay polygons
 l.zone('lab-nobike-zone', [(CX0, CZ0), (CX1, CZ0), (CX1, FENCE_Z), (CX0, FENCE_Z)])
 l.zone('garage-nobike-zone', [(gx - 3.7, GARAGE_FRONT - .6), (gx + 3.7, GARAGE_FRONT - .6), (gx + 3.7, GARAGE_FRONT + gdx + .2), (gx - 3.7, GARAGE_FRONT + gdx + .2)])
 fx0, fz0 = anchors['fire-bay-door']
-l.zone('fire-nobike-zone', [(FS_X - 6.2, SFRONT), (FS_X + 6.2, SFRONT), (FS_X + 6.2, FS_Z + fdx / 2 + .5), (FS_X - 6.2, FS_Z + fdx / 2 + .5)])
+l.zone('fire-nobike-zone', [(_fx0, _fz0 - .5), (_fx1 + 3.0, _fz0 - .5), (_fx1 + 3.0, _fz1), (_fx0, _fz1)])
 l.zone('carwash-bay', [(CW_X - cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z + cwz / 2), (CW_X - cwx / 2, CW_Z + cwz / 2)])
 
 # Plausibility problems (overlaps) are written next to the build cache and fail the build in tests/unit/layouts/d-grove.test.ts

@@ -24,8 +24,6 @@ export const l1Pedestrians = {
   shirts: ['#3178ac', '#e5d9b9', '#a86645', '#79865b', '#d4ad32', '#ac7a91', '#c4473d', '#f2efe4', '#6d5aa8', '#e08a3c', '#2f4858', '#e07fa0'],
   accessories: ['none', 'cap', 'glasses', 'backpack', 'scarf'],
   handProps: ['coffee', 'bag', 'phone', 'cane', 'watering-can'],
-  /** Seconds between top-up walkers entering from an edge while the director tops up (section 5.9). */
-  topUpEveryS: 2,
   /** Refuge or edge counts as reached within this radius (escaped). */
   refugeReachM: 1.2,
   /** Seconds spent knocking/fumbling at a refuge door (houses, shops) before being let in; edges are instant. */

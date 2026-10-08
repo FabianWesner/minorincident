@@ -1,9 +1,10 @@
 # Skinned courier pilot
 
-The female L1 courier opts in with `?skin=1`; `?skin=0` is the current default.
+Both L1 courier variants use fitted skins by default; `?skin=0` selects the rigid fallback.
 `DEFAULT_SKIN` in `src/render/characters/RiderContacts.ts` is the one-line default
-switch. Explicit URL flags always override it. The male courier and later-level
-survivors keep their current assets.
+switch. Explicit URL flags always override it. Later-level survivors keep their
+current assets. See `docs/reports/player-anim.md` for the gait/contact revision,
+measurements and paired motion-review tools in `tools/playeranim/`.
 
 The inherited skin asset retains the courier's fitted joint names and original
 outfit. It is a single welded mesh with an aligned skeleton. Mesh2Motion CC0
@@ -28,7 +29,7 @@ Run the tools from this worktree (all browser work is headless and locked):
 ```sh
 npm run build
 E2E_PORT=3354 sh tools/e2e-lock.sh npx tsx tools/skinpilot/l1-ab.ts test-results/skin-pilot
-npx tsx tools/skinpilot/profile.ts test-results/skin-pilot
+npx tsx tools/skinpilot/profile.ts test-results/skin-pilot --both
 E2E_SKIN=0 E2E_PORT=3355 npm run test:smoke
 E2E_SKIN=1 E2E_PORT=3355 npm run test:smoke
 ```
@@ -57,5 +58,6 @@ in `tools/motionlab/README.md`, then:
 MESH2MOTION_SOURCE=/path/to/pinned/mesh2motion-app npx tsx tools/skinpilot/retarget.ts
 ```
 
-Skin mesh rebuilding remains `assets/char.courier-female-skin/build.py`, followed
-by `tools/skinpilot/compress.ts`. No bike model changes are needed for contacts.
+Skin mesh rebuilding uses `assets/char.courier-female-skin/build.py` or
+`assets/char.courier-male-skin/build.py`, followed by `tools/skinpilot/compress.ts`.
+No bike model changes are needed for contacts.
