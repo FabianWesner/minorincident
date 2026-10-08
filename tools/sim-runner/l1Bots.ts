@@ -16,7 +16,7 @@ import type { EntitySnapshot } from '../../src/sim/world/types';
 export type L1Profile = 'complete' | 'newbie' | 'idle' | 'evade-only';
 export interface L1Report {
   profile: L1Profile; seed: number; outcome: 'complete' | 'timeout';
-  simSeconds: number; deaths: number; kills: number; damage: number;
+  simSeconds: number; deaths: number; kills: number; knockdowns: number; damage: number;
   timeline: { id: string; t: number }[];
   /** Living infected, sampled at +0/+60/+120/+240 s after the accident exit. */
   infectedAfterExit: Record<number, number>; maxInfected: number;
@@ -119,7 +119,7 @@ export function runL1(world: SimWorld, mission: Mission, profile: L1Profile, opt
   world.clearInput();
   return {
     profile, seed, outcome: mission.state.phase === 'result' || mission.state.phase === 'progression' ? 'complete' : 'timeout',
-    simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, damage: mission.state.stats.damage,
+    simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, knockdowns: mission.state.stats.knockdowns, damage: mission.state.stats.damage,
     timeline, infectedAfterExit, maxInfected, exitHeadingsDeg: [...mission.state.l1!.exitHeadingsDeg], exitIds: [...mission.state.l1!.exitIds], technicianId: mission.state.l1!.techId, bites,
   };
 }
