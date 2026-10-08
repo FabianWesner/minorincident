@@ -14,7 +14,7 @@ export interface CampaignSave {
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
   // E21: the handgun from the L3 armory is carried on (L4 starts with it). L2's fire axe is a pickup, not an unlock.
-  1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.pistol'],
+  1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.handgun'],
   4:['weapon.machine-gun','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
 };
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;

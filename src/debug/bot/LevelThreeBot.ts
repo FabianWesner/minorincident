@@ -68,7 +68,7 @@ export class LevelThreeBot {
       if (side === 'LEFT') frame.left.held = true; else frame.right.held = true;
     };
     const fights = this.profile !== 'evade-only', skip = newbie && this.rng.next() < .15;
-    const gun = w.combat?.runner.loadout.state.RIGHT.rack.some(r => r.id === 'weapon.pistol') ?? false;
+    const gun = w.combat?.runner.loadout.state.RIGHT.rack.some(r => r.id === 'weapon.handgun') ?? false;
     const near = this.threats(p, 2.4);
     // Fight: the axe for what is at arm's length, the handgun for what comes at the courier from range (before contact).
     const fight = (range: number): boolean => {

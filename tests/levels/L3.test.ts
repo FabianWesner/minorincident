@@ -63,15 +63,15 @@ describe('L3 The Police Collapse', () => {
   }, HEAVY);
 
   test('T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition', async () => {
-    const def = action('weapon.pistol');
+    const def = action('weapon.handgun');
     expect([def.damage, def.range, def.fireRate, def.maxTargets, def.magazine, def.reloadTime]).toEqual([20, 22, 3, 1, 0, 0]);
     const l = await loadL3(2); world = l.world; const w = l.world, m = l.mission, ai = w.infected!;
     // L3-default carries bat + axe and no handgun until the armory table.
-    expect(w.entities.get(1)!.weapons!.RIGHT.rack.some(s => s.id === 'weapon.pistol')).toBe(false);
+    expect(w.entities.get(1)!.weapons!.RIGHT.rack.some(s => s.id === 'weapon.handgun')).toBe(false);
     expect(w.entities.get(1)!.weapons!.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe', 'weapon.bat']);
     m.completeObjective('armory');
     const weapons = w.entities.get(1)!.weapons!;
-    expect(weapons.RIGHT.rack[0].id).toBe('weapon.pistol'); expect(weapons.selectedSide).toBe('RIGHT');
+    expect(weapons.RIGHT.rack[0].id).toBe('weapon.handgun'); expect(weapons.selectedSide).toBe('RIGHT');
     expect(weapons.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe', 'weapon.bat']);
     // Shooting range on an empty Commerce Street (before the attack): a line of two infected, one at 10 m, one behind it, one at 23 m.
     const p = w.entities.get(1)!.transform; Object.assign(p, { x: 0, z: .5 }); w.physics.playerBody!.setTranslation({ x: 0, y: p.y, z: .5 }, true); w.spatial.set(1, 0, .5); w.update();
@@ -90,7 +90,7 @@ describe('L3 The Police Collapse', () => {
     // 23 m is out of range: holding fire on it never hits (the command walks into range only when moving; here in place).
     const before = hits.length; fire(far, 40); expect(hits.slice(before).filter(id => id === far)).toHaveLength(0);
     // 600 continuous shots (200 s at 3 shots/s) into the air: no reload, no empty state, no magazine.
-    let shots = 0, reloads = 0; w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.pistol') shots++; });
+    let shots = 0, reloads = 0; w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') shots++; });
     for (let i = 0; i < 15_000 && shots < 600; i++) {
       w.applyInput({ ...emptyInput(), right: { down: i % 5 === 0, held: true, up: false }, aim: { x: 0, z: 1 }, attackInPlace: true }, 'keyboard'); w.update();
       const slot = w.entities.get(1)!.weapons!.RIGHT.rack[0]; if (slot.reloadUntil) reloads++;

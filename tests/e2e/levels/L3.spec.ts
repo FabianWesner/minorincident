@@ -86,7 +86,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     await go(at('l3-armory'), .7); await interact();
     for (let i = 0; i < 10 && !(await mission()).l3!.handgunAt; i++) { await interact(); await step(10); }
     expect((await mission()).l3!.handgunAt).toBeGreaterThan(0);
-    expect((await player()).weapons!.RIGHT.rack[0].id).toBe('weapon.pistol');
+    expect((await player()).weapons!.RIGHT.rack[0].id).toBe('weapon.handgun');
     expect((await player()).weapons!.selectedSide).toBe('RIGHT');
     // No ammunition HUD: the handgun card reads "Ready", never "n / m" or a reload ring.
     await expect(page.getByTestId('stats-RIGHT')).toHaveText('Ready');
@@ -149,7 +149,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L4');
     await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete/);
     const save = await page.evaluate(() => window.__SS__!.campaign.state());
-    expect(save!.ownedActions).toEqual(expect.arrayContaining(['weapon.bat', 'weapon.fire-axe', 'weapon.pistol']));
+    expect(save!.ownedActions).toEqual(expect.arrayContaining(['weapon.bat', 'weapon.fire-axe', 'weapon.handgun']));
     expect(save!.unlockedLevel).toBe(4);
     expect(l3.map.zoneX).toBeGreaterThan(0);
   });
