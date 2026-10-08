@@ -160,7 +160,7 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
     glb: variantPath(def.glb, decay),
     sourceGlb: variantPath(def.sourceGlb ?? `assets/${def.id}/model.glb`, decay),
     lods: { lod1: def.lods?.lod1 && variantPath(def.lods.lod1, decay), lod2: def.lods?.lod2 && variantPath(def.lods.lod2, decay) },
-    budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles },
+    budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget },
   })));
   for (const def of [...manifest, ...variants]) {
     const sourcePath = def.sourceGlb ?? (existsSync(`assets/${def.id}/model.glb`) ? `assets/${def.id}/model.glb` : undefined);
