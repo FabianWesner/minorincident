@@ -26,6 +26,14 @@ def build_burned(directory, output):
     tier = int(sys.argv[sys.argv.index('--distance-tier') + 1]) if '--distance-tier' in sys.argv else None
     if tier not in (None, 1, 2):
         raise ValueError('distance tier must be 1 or 2')
+    # Native tier exports can carry different centering transforms. The shipped
+    # base owns the runtime anchor contract, so snapshot it before authoring.
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    production = directory.parents[1] / 'public/assets/models' / (asset + '.glb')
+    bpy.ops.import_scene.gltf(filepath=str(production))
+    bpy.context.view_layer.update()
+    anchors = {o.name: o.matrix_world.copy() for o in bpy.context.scene.objects
+               if o.type == 'EMPTY' and not o.name.startswith(('mesh_', 'Scene'))}
     stats_path = directory / 'burned-stats.json'
     stats = json.loads(stats_path.read_text()) if stats_path.exists() else {}
     for lod in ((tier,) if tier else (0, 1, 2)):
@@ -250,6 +258,17 @@ def build_burned(directory, output):
         draws = sum(len(o.data.materials) for o in meshes)
         if triangles > [15000, 6000, 2000][lod] or draws > 8:
             raise ValueError(f'{asset} burned LOD{lod}: {triangles} tris, {draws} draws')
+        # Restore semantic world transforms without moving authored geometry.
+        # Set parents before children; protect wheel mesh world positions too.
+        worlds = {o: o.matrix_world.copy() for o in meshes}
+        def depth(obj):
+            return 0 if obj.parent is None else 1 + depth(obj.parent)
+        for obj in sorted(root.children_recursive + [root], key=depth):
+            if obj.name in anchors:
+                obj.matrix_world = anchors[obj.name]
+                bpy.context.view_layer.update()
+        for obj, world in worlds.items():
+            obj.matrix_world = world
         path = directory / ('model.burned' + ('' if lod == 0 else '.lod'+str(lod)) + '.glb')
         export.glb(root, path)
         stats['lod'+str(lod)] = dict(triangles=triangles, draws=draws, materials=len({m.name for o in meshes for m in o.data.materials}), bytes=path.stat().st_size)
