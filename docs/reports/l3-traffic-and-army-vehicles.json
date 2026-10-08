@@ -1,0 +1,775 @@
+{
+  "batch": "l3-traffic-and-army-vehicles",
+  "firstNeed": "L3",
+  "priority": "P1",
+  "status": "five-wrecks-delivered-apc-blocked",
+  "baseCommit": "b00c5631",
+  "commits": [
+    {
+      "id": "e8f6a5a6",
+      "purpose": "cherry-picked APC source/output from 5112efde preserving current manifest/physics entries"
+    },
+    {
+      "id": "290d6b0d",
+      "purpose": "five base-owned authored traffic wreck variants"
+    },
+    {
+      "id": "072f5d1f",
+      "purpose": "APC batching, anchors, collider and recorded total draw blocker"
+    }
+  ],
+  "assets": [
+    {
+      "id": "veh.sedan-white.wrecked",
+      "baseId": "veh.sedan-white",
+      "decay": "wrecked",
+      "delivery": "delivered-awaiting-independent-QA",
+      "source": {
+        "lod0": {
+          "triangles": 3892,
+          "draws": 7,
+          "bytes": 272220
+        },
+        "lod1": {
+          "triangles": 3572,
+          "draws": 7,
+          "bytes": 247036
+        },
+        "lod2": {
+          "triangles": 1458,
+          "draws": 7,
+          "bytes": 110096
+        }
+      },
+      "production": [
+        {
+          "id": "veh.sedan-white.wrecked",
+          "lod": 0,
+          "path": "public/assets/models/veh.sedan-white.wrecked.glb",
+          "bytes": 71244,
+          "triangles": 3876,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            4.711040019989014,
+            1.774861601709178,
+            2.368531549708518
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.sedan-white.wrecked",
+          "lod": 1,
+          "path": "public/assets/models/veh.sedan-white.wrecked.lod1.glb",
+          "bytes": 64864,
+          "triangles": 3560,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            4.714009046554565,
+            1.7748766508758247,
+            2.368441753392981
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.sedan-white.wrecked",
+          "lod": 2,
+          "path": "public/assets/models/veh.sedan-white.wrecked.lod2.glb",
+          "bytes": 33936,
+          "triangles": 1458,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            4.714009046554565,
+            1.7748987049922367,
+            2.3359283696678514
+          ],
+          "errors": []
+        }
+      ],
+      "pixelSizes": [
+        {
+          "lod": 0,
+          "pixelBounds": [
+            168,
+            134,
+            312,
+            242
+          ],
+          "maxPixels": 144
+        },
+        {
+          "lod": 1,
+          "pixelBounds": [
+            168,
+            134,
+            312,
+            242
+          ],
+          "maxPixels": 144
+        },
+        {
+          "lod": 2,
+          "pixelBounds": [
+            168,
+            135,
+            312,
+            243
+          ],
+          "maxPixels": 144
+        }
+      ],
+      "contactSheets": [
+        "test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/comparison.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/lod-contact.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.sedan-white.wrecked/game-camera.png"
+      ],
+      "interfaces": [
+        "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+      ],
+      "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: White identity, folded bonnet, open driver side, missing front-left tire, broken windshield backing.\n\nLimitations: Rear trunk is intentionally largely intact; small debris disappears at 160px.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+    },
+    {
+      "id": "veh.suv-dark.wrecked",
+      "baseId": "veh.suv-dark",
+      "decay": "wrecked",
+      "delivery": "delivered-awaiting-independent-QA",
+      "source": {
+        "lod0": {
+          "triangles": 4036,
+          "draws": 7,
+          "bytes": 291616
+        },
+        "lod1": {
+          "triangles": 3716,
+          "draws": 7,
+          "bytes": 266012
+        },
+        "lod2": {
+          "triangles": 1768,
+          "draws": 7,
+          "bytes": 130532
+        }
+      },
+      "production": [
+        {
+          "id": "veh.suv-dark.wrecked",
+          "lod": 0,
+          "path": "public/assets/models/veh.suv-dark.wrecked.glb",
+          "bytes": 79820,
+          "triangles": 4033,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            4.953733921051025,
+            2.517156583925888,
+            2.7399967523767446
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.suv-dark.wrecked",
+          "lod": 1,
+          "path": "public/assets/models/veh.suv-dark.wrecked.lod1.glb",
+          "bytes": 73104,
+          "triangles": 3713,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            4.956702947616577,
+            2.523052109234806,
+            2.7399749897817642
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.suv-dark.wrecked",
+          "lod": 2,
+          "path": "public/assets/models/veh.suv-dark.wrecked.lod2.glb",
+          "bytes": 39512,
+          "triangles": 1764,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            4.923003911972046,
+            2.4920764261804433,
+            2.739976877426502
+          ],
+          "errors": []
+        }
+      ],
+      "pixelSizes": [
+        {
+          "lod": 0,
+          "pixelBounds": [
+            171,
+            121,
+            310,
+            248
+          ],
+          "maxPixels": 139
+        },
+        {
+          "lod": 1,
+          "pixelBounds": [
+            171,
+            121,
+            310,
+            249
+          ],
+          "maxPixels": 139
+        },
+        {
+          "lod": 2,
+          "pixelBounds": [
+            171,
+            121,
+            310,
+            249
+          ],
+          "maxPixels": 139
+        }
+      ],
+      "contactSheets": [
+        "test-results/l3-traffic-and-army-vehicles/veh.suv-dark.wrecked/comparison.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.suv-dark.wrecked/lod-contact.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.suv-dark.wrecked/game-camera.png"
+      ],
+      "interfaces": [
+        "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+      ],
+      "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: Tall SUV and roof rack survive; displaced front corner, bowed roof, empty windows and exposed front-left hub.\n\nLimitations: Far roof rack loses fine fittings; dark paint makes the cabin openings lower contrast than on the white sedan.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+    },
+    {
+      "id": "veh.pickup-red.wrecked",
+      "baseId": "veh.pickup-red",
+      "decay": "wrecked",
+      "delivery": "delivered-awaiting-independent-QA",
+      "source": {
+        "lod0": {
+          "triangles": 4066,
+          "draws": 7,
+          "bytes": 292988
+        },
+        "lod1": {
+          "triangles": 3746,
+          "draws": 7,
+          "bytes": 267480
+        },
+        "lod2": {
+          "triangles": 1764,
+          "draws": 7,
+          "bytes": 134948
+        }
+      },
+      "production": [
+        {
+          "id": "veh.pickup-red.wrecked",
+          "lod": 0,
+          "path": "public/assets/models/veh.pickup-red.wrecked.glb",
+          "bytes": 78032,
+          "triangles": 4048,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            5.035039901733398,
+            2.1505605631188063,
+            2.532501987379624
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.pickup-red.wrecked",
+          "lod": 1,
+          "path": "public/assets/models/veh.pickup-red.wrecked.lod1.glb",
+          "bytes": 71192,
+          "triangles": 3724,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            5.03800892829895,
+            2.15058814999433,
+            2.5324578099310897
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.pickup-red.wrecked",
+          "lod": 2,
+          "path": "public/assets/models/veh.pickup-red.wrecked.lod2.glb",
+          "bytes": 39500,
+          "triangles": 1763,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            5.03800892829895,
+            2.0235053157109792,
+            2.5000160275319967
+          ],
+          "errors": []
+        }
+      ],
+      "pixelSizes": [
+        {
+          "lod": 0,
+          "pixelBounds": [
+            170,
+            137,
+            311,
+            246
+          ],
+          "maxPixels": 141
+        },
+        {
+          "lod": 1,
+          "pixelBounds": [
+            170,
+            137,
+            312,
+            246
+          ],
+          "maxPixels": 142
+        },
+        {
+          "lod": 2,
+          "pixelBounds": [
+            170,
+            138,
+            311,
+            246
+          ],
+          "maxPixels": 141
+        }
+      ],
+      "contactSheets": [
+        "test-results/l3-traffic-and-army-vehicles/veh.pickup-red.wrecked/comparison.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.pickup-red.wrecked/lod-contact.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.pickup-red.wrecked/game-camera.png"
+      ],
+      "interfaces": [
+        "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+      ],
+      "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: Red cab and open bed remain distinct; folded hood, skewed bed rail, missing driver door and windshield break.\n\nLimitations: Far bed trim and scratches disappear; the large folded nose and open bed remain.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+    },
+    {
+      "id": "veh.ambulance.wrecked",
+      "baseId": "veh.ambulance",
+      "decay": "wrecked",
+      "delivery": "delivered-awaiting-independent-QA",
+      "source": {
+        "lod0": {
+          "triangles": 4174,
+          "draws": 8,
+          "bytes": 279580
+        },
+        "lod1": {
+          "triangles": 3774,
+          "draws": 8,
+          "bytes": 247356
+        },
+        "lod2": {
+          "triangles": 1982,
+          "draws": 8,
+          "bytes": 145564
+        }
+      },
+      "production": [
+        {
+          "id": "veh.ambulance.wrecked",
+          "lod": 0,
+          "path": "public/assets/models/veh.ambulance.wrecked.glb",
+          "bytes": 71944,
+          "triangles": 4174,
+          "materials": 4,
+          "draws": 8,
+          "dimensions": [
+            6.643499851226807,
+            3.3675181612039538,
+            2.94088458943586
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.ambulance.wrecked",
+          "lod": 1,
+          "path": "public/assets/models/veh.ambulance.wrecked.lod1.glb",
+          "bytes": 63832,
+          "triangles": 3774,
+          "materials": 4,
+          "draws": 8,
+          "dimensions": [
+            6.643499851226807,
+            3.3674725322455723,
+            2.94088458943586
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.ambulance.wrecked",
+          "lod": 2,
+          "path": "public/assets/models/veh.ambulance.wrecked.lod2.glb",
+          "bytes": 42808,
+          "triangles": 1982,
+          "materials": 4,
+          "draws": 8,
+          "dimensions": [
+            6.615000009536743,
+            3.367507764701645,
+            2.7112476005761423
+          ],
+          "errors": []
+        }
+      ],
+      "pixelSizes": [
+        {
+          "lod": 0,
+          "pixelBounds": [
+            169,
+            108,
+            317,
+            253
+          ],
+          "maxPixels": 148
+        },
+        {
+          "lod": 1,
+          "pixelBounds": [
+            169,
+            108,
+            317,
+            253
+          ],
+          "maxPixels": 148
+        },
+        {
+          "lod": 2,
+          "pixelBounds": [
+            167,
+            109,
+            316,
+            255
+          ],
+          "maxPixels": 149
+        }
+      ],
+      "contactSheets": [
+        "test-results/l3-traffic-and-army-vehicles/veh.ambulance.wrecked/comparison.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.ambulance.wrecked/lod-contact.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.ambulance.wrecked/game-camera.png"
+      ],
+      "interfaces": [
+        "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+      ],
+      "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: White box and red stripe survive; crushed cab, open left shell rupture, missing driver door and dead emergency lights.\n\nLimitations: Rear lettering/medical mark disappear in LOD2; the side rupture is deliberately angular and the undamaged roof stays flat.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+    },
+    {
+      "id": "veh.school-bus.wrecked",
+      "baseId": "veh.school-bus",
+      "decay": "wrecked",
+      "delivery": "delivered-awaiting-independent-QA",
+      "source": {
+        "lod0": {
+          "triangles": 3940,
+          "draws": 7,
+          "bytes": 279396
+        },
+        "lod1": {
+          "triangles": 3620,
+          "draws": 7,
+          "bytes": 253408
+        },
+        "lod2": {
+          "triangles": 1668,
+          "draws": 7,
+          "bytes": 121616
+        }
+      },
+      "production": [
+        {
+          "id": "veh.school-bus.wrecked",
+          "lod": 0,
+          "path": "public/assets/models/veh.school-bus.wrecked.glb",
+          "bytes": 77800,
+          "triangles": 3924,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            8.007084096638946,
+            3.416877013100366,
+            3.303071862980091
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.school-bus.wrecked",
+          "lod": 1,
+          "path": "public/assets/models/veh.school-bus.wrecked.lod1.glb",
+          "bytes": 70532,
+          "triangles": 3607,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            8.007084096638946,
+            3.4168283118720524,
+            3.303071862980091
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.school-bus.wrecked",
+          "lod": 2,
+          "path": "public/assets/models/veh.school-bus.wrecked.lod2.glb",
+          "bytes": 35592,
+          "triangles": 1668,
+          "materials": 3,
+          "draws": 7,
+          "dimensions": [
+            8.007083222437467,
+            3.3991066507188687,
+            3.3033158666008386
+          ],
+          "errors": []
+        }
+      ],
+      "pixelSizes": [
+        {
+          "lod": 0,
+          "pixelBounds": [
+            169,
+            113,
+            315,
+            250
+          ],
+          "maxPixels": 146
+        },
+        {
+          "lod": 1,
+          "pixelBounds": [
+            169,
+            113,
+            315,
+            251
+          ],
+          "maxPixels": 146
+        },
+        {
+          "lod": 2,
+          "pixelBounds": [
+            169,
+            113,
+            316,
+            250
+          ],
+          "maxPixels": 147
+        }
+      ],
+      "contactSheets": [
+        "test-results/l3-traffic-and-army-vehicles/veh.school-bus.wrecked/comparison.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.school-bus.wrecked/lod-contact.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.school-bus.wrecked/game-camera.png"
+      ],
+      "interfaces": [
+        "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+      ],
+      "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: Yellow bus window rhythm survives; folded nose, bowed roof, open glazing, torn near door and exposed hub.\n\nLimitations: Far roof edging and trim disappear; the bowed roof and folded bonnet carry the damage read.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+    },
+    {
+      "id": "veh.military-apc",
+      "baseId": "veh.military-apc",
+      "decay": null,
+      "delivery": "blocked-total-draw-cap",
+      "source": {
+        "lod0": {
+          "triangles": 9804,
+          "meshes": 11,
+          "bytes": 692776
+        },
+        "lod1": {
+          "triangles": 2204,
+          "meshes": 11,
+          "bytes": 147716
+        },
+        "lod2": {
+          "triangles": 1068,
+          "meshes": 11,
+          "bytes": 78908
+        }
+      },
+      "production": [
+        {
+          "id": "veh.military-apc",
+          "lod": 0,
+          "path": "public/assets/models/veh.military-apc.glb",
+          "bytes": 166552,
+          "triangles": 9804,
+          "materials": 3,
+          "draws": 11,
+          "dimensions": [
+            5.690000057220459,
+            3.281472979600907,
+            3.110014207815543
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.military-apc",
+          "lod": 1,
+          "path": "public/assets/models/veh.military-apc.lod1.glb",
+          "bytes": 42088,
+          "triangles": 2204,
+          "materials": 3,
+          "draws": 11,
+          "dimensions": [
+            5.690000057220459,
+            3.264130066979473,
+            3.110011783799945
+          ],
+          "errors": []
+        },
+        {
+          "id": "veh.military-apc",
+          "lod": 2,
+          "path": "public/assets/models/veh.military-apc.lod2.glb",
+          "bytes": 28740,
+          "triangles": 1068,
+          "materials": 3,
+          "draws": 11,
+          "dimensions": [
+            5.690000057220459,
+            3.264130066979473,
+            3.110011783799945
+          ],
+          "errors": []
+        }
+      ],
+      "pixelSizes": [
+        {
+          "lod": 0,
+          "pixelBounds": [
+            167,
+            118,
+            314,
+            253
+          ],
+          "maxPixels": 147
+        },
+        {
+          "lod": 1,
+          "pixelBounds": [
+            167,
+            118,
+            314,
+            252
+          ],
+          "maxPixels": 147
+        },
+        {
+          "lod": 2,
+          "pixelBounds": [
+            167,
+            135,
+            314,
+            252
+          ],
+          "maxPixels": 147
+        }
+      ],
+      "contactSheets": [
+        "test-results/l3-traffic-and-army-vehicles/veh.military-apc/comparison.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.military-apc/lod-contact.png",
+        "test-results/l3-traffic-and-army-vehicles/veh.military-apc/game-camera.png"
+      ],
+      "interfaces": [
+        "six wheel owners; turret yaw; gun elevation; muzzle; driverSeat, exitL, exitR; front; col:hull; four ss_light anchors"
+      ],
+      "visualFaults": "Self-review: geometry identity passes; delivery is BLOCKED on total draw cap.\n\nInspected the supplied reference before editing the imported source and reviewed the all-side LOD and 147px game-camera sheets. The APC remains a low wide armored transport with six chunky wheels, sloped armor and a mounted HMG. LOD2 removes fittings and shows octagonal tires, while the defining silhouette survives.\n\n11 material draws at every tier, cap 8. Status remains modeled. Required moving pivots and light emission were preserved; no budget was widened. The existing static-only draw validator does not enforce this batch's total draw requirement.\n"
+    }
+  ],
+  "commands": [
+    "npm run assets:build -- veh.sedan-white --decay wrecked",
+    "npm run assets:pack -- veh.sedan-white",
+    "npm run assets:validate -- --ids veh.sedan-white",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.sedan-white --decay wrecked --lod-contact --output test-results/l3-traffic-and-army-vehicles",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.sedan-white --decay wrecked --output test-results/l3-traffic-and-army-vehicles",
+    "npm run assets:build -- veh.suv-dark --decay wrecked",
+    "npm run assets:pack -- veh.suv-dark",
+    "npm run assets:validate -- --ids veh.suv-dark",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.suv-dark --decay wrecked --lod-contact --output test-results/l3-traffic-and-army-vehicles",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.suv-dark --decay wrecked --output test-results/l3-traffic-and-army-vehicles",
+    "npm run assets:build -- veh.pickup-red --decay wrecked",
+    "npm run assets:pack -- veh.pickup-red",
+    "npm run assets:validate -- --ids veh.pickup-red",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.pickup-red --decay wrecked --lod-contact --output test-results/l3-traffic-and-army-vehicles",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.pickup-red --decay wrecked --output test-results/l3-traffic-and-army-vehicles",
+    "npm run assets:build -- veh.ambulance --decay wrecked",
+    "npm run assets:pack -- veh.ambulance",
+    "npm run assets:validate -- --ids veh.ambulance",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.ambulance --decay wrecked --lod-contact --output test-results/l3-traffic-and-army-vehicles",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.ambulance --decay wrecked --output test-results/l3-traffic-and-army-vehicles",
+    "npm run assets:build -- veh.school-bus --decay wrecked",
+    "npm run assets:pack -- veh.school-bus",
+    "npm run assets:validate -- --ids veh.school-bus",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.school-bus --decay wrecked --lod-contact --output test-results/l3-traffic-and-army-vehicles",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.school-bus --decay wrecked --output test-results/l3-traffic-and-army-vehicles",
+    "npm run assets:build -- veh.military-apc",
+    "npm run assets:pack -- veh.military-apc",
+    "npm run assets:validate -- --ids veh.military-apc",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.military-apc --lod-contact --output test-results/l3-traffic-and-army-vehicles",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npm run assets:turntable -- veh.military-apc --output test-results/l3-traffic-and-army-vehicles",
+    "npx tsx tools/assets/physics-metadata.ts",
+    "npm run assets:lights",
+    "npm run build",
+    "npm run preview -- --port 3318",
+    "E2E_PORT=3318 sh tools/e2e-lock.sh npx tsx tools/assets/traffic-evidence.ts",
+    "npm run assets:validate",
+    "npm run typecheck",
+    "npm run lint",
+    "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2"
+  ],
+  "checks": {
+    "perAssetBuildPackValidate": "six canonical bases passed; declared variants validated",
+    "globalAssets": {
+      "passed": 781,
+      "failed": 0,
+      "errors": []
+    },
+    "typecheck": "passed",
+    "lint": "passed",
+    "unit": {
+      "passed": 342,
+      "failed": 1,
+      "filesPassed": 97,
+      "filesFailed": 1,
+      "failure": "tests/unit/assets/runtime-integration.test.ts: production runtime exports are integrated, while missing exports retain their status @E17-AC09. APC status is modeled intentionally because the total draw delivery cap is blocked.",
+      "log": "\n> test:unit\n> vitest run tests/unit --maxWorkers=2\n\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l3-traffic-and-army-vehicles\n\n \u276f tests/unit/assets/runtime-integration.test.ts (5 tests | 1 failed) 79ms\n   \u00d7 production runtime exports are integrated, while missing exports retain their status @E17-AC09 19ms\n\n Test Files  1 failed | 97 passed (98)\n      Tests  1 failed | 342 passed (343)\n   Start at  11:46:09\n   Duration  43.39s (tests 93%, import 5%, transform 2%)\n\n"
+    },
+    "lightMetadata": "301 anchors / 73 assets / 0 errors / 0 unreferenced emissives",
+    "browser": "headless Chromium with --use-angle=metal, shared lock, one page; all 18 game views loaded without placeholders",
+    "images": "19 required QA sheets; all widths <=1500px; references alongside views; individual captures removed"
+  },
+  "deviations": [
+    "APC remains modeled because 11 protected material primitives exceed eight. Budget remains eight. Current validator checks static draws only (three for APC), so its passing result does not prove this total cap. No runtime or pivot contract rewritten.",
+    "Near/middle wreck geometry intentionally reuses native LOD1 to stay economical; near adds explicit beveled debris while far uses native LOD2.",
+    "Unit suite uses two workers under shared simulation lock, following the heavy-job constraint.",
+    "The brief was absent in this worktree; read the supplied brief at the main-workspace path."
+  ],
+  "blockers": [
+    {
+      "id": "veh.military-apc",
+      "measuredDraws": 11,
+      "cap": 8,
+      "minimumOwners": {
+        "wheels": 6,
+        "turret": 1,
+        "gun": 1,
+        "body": 1,
+        "headlights": 1,
+        "brakelights": 1
+      },
+      "resolution": "Orchestrator must authorize a cap exception or revised moving/light ownership before integration.",
+      "unitConsequence": "E17-AC09 requires integrated status whenever both source and public GLBs are tracked; marking this over-cap APC integrated would conceal the delivery blocker."
+    }
+  ],
+  "scope": "Asset build/registration and generated light/physics metadata only. Level placement, NPC behavior, sound playback, switching lights, mission logic unchanged; no level epic implementation or smoke run. No forbidden directories/specifications edited; no new dependencies; no main merge, push or deployment."
+}
