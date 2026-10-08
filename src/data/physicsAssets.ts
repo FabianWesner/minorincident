@@ -3750,8 +3750,22 @@ export default {
     "pushable": false,
     "kickable": false,
     "flammable": true,
-    "boxes": [],
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -2.845,
+          -9.536743172944284e-9,
+          -1.475
+        ],
+        "max": [
+          2.845,
+          3.2699999904632566,
+          1.475
+        ]
+      }
+    ],
     "source": "public/assets/models/veh.military-apc.glb",
-    "hash": "23b55aa72c326d717160544df01a3f0ff0e4d6c7959bdd9cfb160adb5e514aca"
+    "hash": "4276fd38dac06b807ea505a1ae412e8ada4c1831353c49bb92e673b2fa8a007e"
   }
 };

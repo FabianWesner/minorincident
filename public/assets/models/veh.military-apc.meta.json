@@ -2,80 +2,32 @@
   "id": "veh.military-apc",
   "errors": [],
   "triangles": 9804,
-  "materials": 9,
-  "drawCalls": 33,
-  "fileKB": 688.5703125,
+  "materials": 3,
+  "drawCalls": 11,
+  "fileKB": 676.5390625,
   "dimensions": [
     5.690000057220459,
     3.2814509868621826,
     3.1100000143051147
   ],
-  "hash": "18f2239b48af793d93079f718887c30ca8914b39969b4e5274d45ecf1ca8741c",
+  "hash": "72aa69297ac7811cd164f4476b50fec99bf2bd33f18dc3b5662fd350d6774d2b",
   "runtime": {
     "id": "veh.military-apc",
     "errors": [],
     "triangles": 9804,
-    "materials": 9,
-    "drawCalls": 33,
-    "fileKB": 180.0625,
+    "materials": 3,
+    "drawCalls": 11,
+    "fileKB": 162.6484375,
     "dimensions": [
       5.690000057220459,
       3.281472979600907,
       3.110014207815543
     ],
-    "hash": "f6469dcec3c121469c9042ce0cdcec32503d1e91217769b925a844e283242047"
+    "hash": "886757609ed4cf2d9a6d4edeb2de6accf5096a01a1323ed69691f3657e0fd185"
   },
   "nodes": [
     {
-      "name": "body_pal_khaki",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "body_pal_olive",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "body_pal_oliveLight",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "body_pal_oliveSeam",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
       "name": "body_pal_picketWhite",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "body_pal_tealDark",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "name": "body_pal_uiDark",
       "pivot": [
         0,
         0,
@@ -87,6 +39,14 @@
       "pivot": [
         0,
         0,
+        0
+      ]
+    },
+    {
+      "name": "col:hull",
+      "pivot": [
+        0,
+        1.6349999904632568,
         0
       ]
     },
@@ -187,23 +147,7 @@
       ]
     },
     {
-      "name": "gun_pal_khaki",
-      "pivot": [
-        0.02000001072883606,
-        2.8299999237060547,
-        0
-      ]
-    },
-    {
-      "name": "gun_pal_oliveSeam",
-      "pivot": [
-        0.02000001072883606,
-        2.8299999237060547,
-        0
-      ]
-    },
-    {
-      "name": "gun_pal_uiDark",
+      "name": "gun_pal_picketWhite",
       "pivot": [
         0.02000001072883606,
         2.8299999237060547,
@@ -213,7 +157,7 @@
     {
       "name": "muzzle",
       "pivot": [
-        1.6400000154972076,
+        1.620000034570694,
         2.8299999237060547,
         0
       ]
@@ -227,23 +171,7 @@
       ]
     },
     {
-      "name": "turret_pal_olive",
-      "pivot": [
-        -0.3799999952316284,
-        2.2899999618530273,
-        0
-      ]
-    },
-    {
-      "name": "turret_pal_oliveLight",
-      "pivot": [
-        -0.3799999952316284,
-        2.2899999618530273,
-        0
-      ]
-    },
-    {
-      "name": "turret_pal_oliveSeam",
+      "name": "turret_pal_picketWhite",
       "pivot": [
         -0.3799999952316284,
         2.2899999618530273,
@@ -259,23 +187,7 @@
       ]
     },
     {
-      "name": "wheelFL_pal_oliveLight",
-      "pivot": [
-        1.7799999713897705,
-        0.6000000238418579,
-        1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelFL_pal_oliveSeam",
-      "pivot": [
-        1.7799999713897705,
-        0.6000000238418579,
-        1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelFL_pal_uiDark",
+      "name": "wheelFL_pal_picketWhite",
       "pivot": [
         1.7799999713897705,
         0.6000000238418579,
@@ -291,23 +203,7 @@
       ]
     },
     {
-      "name": "wheelFR_pal_oliveLight",
-      "pivot": [
-        1.7799999713897705,
-        0.6000000238418579,
-        -1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelFR_pal_oliveSeam",
-      "pivot": [
-        1.7799999713897705,
-        0.6000000238418579,
-        -1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelFR_pal_uiDark",
+      "name": "wheelFR_pal_picketWhite",
       "pivot": [
         1.7799999713897705,
         0.6000000238418579,
@@ -323,23 +219,7 @@
       ]
     },
     {
-      "name": "wheelML_pal_oliveLight",
-      "pivot": [
-        -0.3199999928474426,
-        0.6000000238418579,
-        1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelML_pal_oliveSeam",
-      "pivot": [
-        -0.3199999928474426,
-        0.6000000238418579,
-        1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelML_pal_uiDark",
+      "name": "wheelML_pal_picketWhite",
       "pivot": [
         -0.3199999928474426,
         0.6000000238418579,
@@ -355,23 +235,7 @@
       ]
     },
     {
-      "name": "wheelMR_pal_oliveLight",
-      "pivot": [
-        -0.3199999928474426,
-        0.6000000238418579,
-        -1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelMR_pal_oliveSeam",
-      "pivot": [
-        -0.3199999928474426,
-        0.6000000238418579,
-        -1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelMR_pal_uiDark",
+      "name": "wheelMR_pal_picketWhite",
       "pivot": [
         -0.3199999928474426,
         0.6000000238418579,
@@ -387,23 +251,7 @@
       ]
     },
     {
-      "name": "wheelRL_pal_oliveLight",
-      "pivot": [
-        -1.909999966621399,
-        0.6000000238418579,
-        1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelRL_pal_oliveSeam",
-      "pivot": [
-        -1.909999966621399,
-        0.6000000238418579,
-        1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelRL_pal_uiDark",
+      "name": "wheelRL_pal_picketWhite",
       "pivot": [
         -1.909999966621399,
         0.6000000238418579,
@@ -419,23 +267,7 @@
       ]
     },
     {
-      "name": "wheelRR_pal_oliveLight",
-      "pivot": [
-        -1.909999966621399,
-        0.6000000238418579,
-        -1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelRR_pal_oliveSeam",
-      "pivot": [
-        -1.909999966621399,
-        0.6000000238418579,
-        -1.2400000095367432
-      ]
-    },
-    {
-      "name": "wheelRR_pal_uiDark",
+      "name": "wheelRR_pal_picketWhite",
       "pivot": [
         -1.909999966621399,
         0.6000000238418579,
