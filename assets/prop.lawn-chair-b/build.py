@@ -2,7 +2,7 @@
 """Shared deterministic modeling/export helpers for the Level 1 garden/alley batch.
 Blender only; no dependencies beyond the project's sslib. +X front, Z up, metres.
 """
-import argparse, json, math, sys, random
+import argparse, json, math, sys, random, shutil
 from pathlib import Path
 import bpy, bmesh
 from mathutils import Vector
@@ -178,6 +178,10 @@ def run(out):
   bpy.ops.object.select_all(action='DESELECT')
   for o in meshes+groups:o.select_set(True)
   bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_texcoords=False)
+  # These small chairs retain every solid slat at distance; decimation tears their thin boards.
+  for tier in (1, 2):
+   shutil.copyfile(a.glb, str(Path(a.glb).with_suffix(f'.lod{tier}.glb')))
+   report['triangles'][f'lod{tier}']=tris
  (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.render:
   scene=bpy.context.scene

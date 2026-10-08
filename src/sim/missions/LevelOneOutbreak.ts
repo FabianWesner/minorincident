@@ -6,6 +6,7 @@ import type { Mission } from './Mission';
 import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import { L1Story } from './L1Story';
+import { doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
 
 const TICKS = 60;
 /** Story-only numbers; spec section 3 beats 4 to 6. Everything systemic lives in the C/D lanes. */
@@ -191,20 +192,23 @@ export class LevelOneOutbreak {
       const step = state.steps.deliver, a = this.anchor('lab-door');
       const near = (player.transform.x - a.x) ** 2 + (player.transform.z - a.z) ** 2 <= a.radius ** 2;
       if (step?.status === 'active' && l1.carrying && near && player.health.current > 0 && (world.inputFrame.interact || step.interaction >= TICKS)) {
-        const dx = player.transform.x - door.x, dz = player.transform.z - door.z, d = Math.hypot(dx, dz) || 1;
+        const way = findDoorway(world, 'bld.clinic-annex', door), nav = world.infected?.nav, from = way?.door ?? door;
+        const dx = player.transform.x - from.x, dz = player.transform.z - from.z, d = Math.hypot(dx, dz) || 1;
         l1.hx = player.transform.x - dx / d * story.standoffM; l1.hz = player.transform.z - dz / d * story.standoffM;
-        l1.handoverAt = tick; l1.phase = 'handover'; this.story.handoverStart(l1.techId, door);
+        // PO 2026-10-08: out through the annex door (the view swings both leaves open), around props on the walk grid, back the same way.
+        l1.techRoute = way && nav ? [{ x: spawn.x, z: spawn.z }, ...doorRoute(nav, way, { x: l1.hx, z: l1.hz })] : [{ x: spawn.x, z: spawn.z }, { x: door.x, z: door.z }, { x: l1.hx, z: l1.hz }];
+        const meet = l1.techRoute[l1.techRoute.length - 1]; l1.hx = meet.x; l1.hz = meet.z;
+        l1.handoverAt = tick; l1.phase = 'handover'; this.story.handoverStart(l1.techId, from);
       } else { this.place(tech, spawn.x, spawn.z, a); return; }
     }
-    const out1 = Math.hypot(door.x - spawn.x, door.z - spawn.z), out2 = Math.hypot(l1.hx - door.x, l1.hz - door.z), total = out1 + out2;
+    const route = l1.techRoute ?? [{ x: spawn.x, z: spawn.z }, { x: door.x, z: door.z }, { x: l1.hx, z: l1.hz }], total = routeLength(route);
     const walkS = total / story.techWalkMs, pauseS = story.takeBoxS;
     // Any press during the beat fast-forwards to the moment the technician has the box.
     if (this.story.skipping && (tick - l1.handoverAt) / TICKS < walkS + pauseS) l1.handoverAt = tick - Math.ceil((walkS + pauseS) * TICKS);
     // The technician holds the signing pose until the line has been read.
     if (!this.story.skipping && this.story.reading && tick - l1.handoverAt >= Math.ceil((walkS + pauseS) * TICKS) - 1) l1.handoverAt++;
     const t = (tick - l1.handoverAt) / TICKS;
-    const point = (m: number) => m <= out1 ? { x: spawn.x + (door.x - spawn.x) * m / out1, z: spawn.z + (door.z - spawn.z) * m / out1 }
-      : { x: door.x + (l1.hx - door.x) * (m - out1) / out2, z: door.z + (l1.hz - door.z) * (m - out1) / out2 };
+    const point = (m: number) => routeAt(route, m);
     let pos: { x: number; z: number };
     if (t < walkS) { pos = point(t * story.techWalkMs); this.story.handoverPose(tech, 'out'); }
     else if (t < walkS + pauseS) {
@@ -215,7 +219,7 @@ export class LevelOneOutbreak {
     }
     else if (t < 2 * walkS + pauseS) { l1.carrying = false; this.story.handoverPose(tech, 'in'); pos = point(total - (t - walkS - pauseS) * story.techWalkMs); if (t - walkS - pauseS > .4) this.story.handoverEnd(undefined); }
     else {
-      this.place(tech, spawn.x, spawn.z, this.anchor('lab-door')); this.story.handoverEnd(tech);
+      this.place(tech, spawn.x, spawn.z, this.anchor('lab-door')); this.story.handoverEnd(tech); l1.techRoute = null;
       l1.delivered = true; l1.deliveredAt = tick; l1.phase = 'calm'; l1.carrying = false;
       // 4 to 6 s of nothing, then the accident: a fresh seeded stream, so a retry after death replays the same timing.
       const rng = new Rng(world.seed, 'l1-story');

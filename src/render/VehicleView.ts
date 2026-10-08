@@ -93,6 +93,14 @@ export class VehicleView extends Group {
         wheel.node.rotation.z = wheel.spin + lerp(previous.rotation, physics.rotation, alpha);
         wheel.node.position.y = wheel.y + body.def.suspension - lerp(previous.suspension, physics.suspension, alpha);
       }
+      // Rapier drives on the flat y = 0 plane while the district draws its roads 5 cm above it (and kerbs, paint, paving
+      // higher): rest the car on the drawn ground, each wheel on its own spot.
+      if (this.ground) {
+        record.parent.updateMatrixWorld(true);
+        const heights = record.wheels.map(w => this.ground!(...this.wheelSpot(w.node)) ?? 0), mean = heights.reduce((a, b) => a + b, 0) / heights.length;
+        record.parent.position.y += mean;
+        for (let i = 0; i < 4; i++) record.wheels[i].node.position.y += heights[i] - mean;
+      }
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
@@ -137,6 +145,12 @@ export class VehicleView extends Group {
   }
   setBloodEnabled(enabled: boolean): void { this.bloodEnabled = enabled; for (const record of this.records.values()) for (const material of record.paint) material.bloodCoverage.value = enabled ? record.blood : 0; }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
+  /** Drawn ground height (GameView: the district's baked roads and paving); null where it draws none. */
+  ground: ((x: number, z: number) => number | null) | null = null;
+  private readonly spot = new Vector3();
+  private wheelSpot(node: Object3D): [number, number] { node.getWorldPosition(this.spot); return [this.spot.x, this.spot.z]; }
+  /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
+  wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
   snapshot() { return [...this.records].map(([id, r]) => ({ id, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
   private releaseRecord(record: Record): void {
     for (const material of record.paint) material.dispose();
