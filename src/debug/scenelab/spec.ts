@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
+  layout?: { district: DistrictId; level?: 'L2'; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -60,7 +60,7 @@ export interface ActorSpec {
   loadout?: [string, string];
   god?: boolean;
 }
-export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean }
+export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
 /** Actor commands. Strings are shorthands: 'idle' | 'chase' | 'follow' | 'flee' | 'infect'. */
 export type Action =
   | 'idle' | 'chase' | 'follow' | 'flee' | 'infect'
@@ -117,6 +117,10 @@ export interface Expectations {
   actorHitsMax?: number;
   /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
   wheelSinkMaxCm?: number;
+  vehicleYawRateMaxDegS?: number;
+  vehicleBodyOverlapsMax?: number;
+  /** Prevent a blocked, stationary ride from passing its motion gates. */
+  vehicleRideRemainingMaxM?: number;
   /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
   wheelFloatMaxCm?: number;
   /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
