@@ -245,3 +245,11 @@ tool_timeout_sec = 600
 
 **Smoke test.** `npx tsx tools/scenelab/mcp-smoke.ts` is a scripted client. It runs load, spawn_actor, command, step,
 set_time, screenshot, metrics and clipping.
+
+### Gate interaction regression
+
+`npm run scene -- docs/scenes/gate-lockin.json` isolates the shipped `gate-1` yard gate.
+`layout.anchors` copies named gameplay anchors from the source layout and applies the crop's
+recentering shift. `{ "interact": true }` sends one real courier interaction press. The scene
+closes/reopens the gate on each face and walks through it in both directions; sim regressions
+in `tests/sim/interact/gate-lockin.test.ts` assert the toggle, navigation and sight state.

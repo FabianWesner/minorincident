@@ -212,7 +212,7 @@ export class SimWorld implements Lifecycle {
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
-    if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
+    if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0)return;
       const player=this.entities.get(1)!;
