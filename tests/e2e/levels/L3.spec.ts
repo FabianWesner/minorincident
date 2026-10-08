@@ -119,7 +119,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
       const m = await mission(), p = (await player()).transform;
       if (!h.shots.has('l3-squad-strong') && p.x > -100 && p.x < -80) await snap('l3-squad-strong');
       if (!h.shots.has('l3-commerce-street') && p.x > 5) { await snap('l3-commerce-street'); await snap('l3-oak-avenue'); await snap('l3-grove-boulevard'); }
-      if (!h.shots.has('l3-alone') && p.x > 90 && m.l3!.squad.length <= 1) await snap('l3-alone');
+      if (!h.shots.has('l3-alone') && (p.x > 112 || (p.x > 90 && m.l3!.squad.length <= 1))) await snap('l3-alone');
       if (!h.shots.has('l3-army-checkpoint') && p.x > 126) await snap('l3-army-checkpoint');
     }
     for (const name of ['l3-squad-strong', 'l3-alone', 'l3-army-checkpoint']) if (!h.shots.has(name) && await inL3()) await snap(name);
