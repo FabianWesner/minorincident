@@ -81,7 +81,7 @@ export class ControlIntent {
         // arrival slowdown plus the bounded locomotion response otherwise creeps for seconds before a swing.
         // Out of reach: the click becomes an approach-and-strike command; the recovery-buffer expiry no longer applies.
         // Brake for a point 0.35 m past the strike distance: the swing starts on entering reach, never after a creep.
-        if (distance > Math.max(range + .08, def.range * .95)) { delete attack.until; this.walk(frame, t, distance - range + .15); }
+        if (distance > Math.max(range + .08, def.range * .95)) { delete attack.until; this.walk(frame, t, distance - range + .25); }
         else {
           // Stop at range rather than drifting through the target during wind-up.
           frame.navigation = true; frame.move = { x: 0, z: 0 };
