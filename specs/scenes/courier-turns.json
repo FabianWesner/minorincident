@@ -1,0 +1,17 @@
+{
+  "name": "courier-turns",
+  "ground": "asphalt",
+  "size": 30,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-6, 0], "yaw": 0,
+      "state": { "run": [[6, 0], [-6, 0], [6, 0]] } }
+  ],
+  "script": [
+    { "frame": 330, "actor": "courier", "do": { "walk": [[2, 0], [6, 0]] } },
+    { "frame": 470, "actor": "courier", "do": { "turn": 180 } }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 0.55 },
+  "frames": 540,
+  "shots": [60, 150, 400, 540],
+  "expect": { "consoleErrors": 0 }
+}

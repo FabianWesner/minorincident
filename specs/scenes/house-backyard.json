@@ -1,0 +1,26 @@
+{
+  "name": "house-backyard",
+  "ground": "grass",
+  "size": 36,
+  "props": [
+    { "id": "house", "asset": "bld.house-a", "at": [0, 0] },
+    { "id": "fence-1", "asset": "prop.picket-fence", "at": [-12, -2.64] },
+    { "id": "fence-2", "asset": "prop.picket-fence", "at": [-12, 0] },
+    { "id": "fence-3", "asset": "prop.picket-fence", "at": [-12, 2.64] },
+    { "id": "bed", "asset": "prop.flower-bed.large", "at": [-11.1, 2.6] },
+    { "id": "bbq", "asset": "prop.bbq", "at": [-7.5, -3.2], "yaw": 20 },
+    { "id": "chair", "asset": "prop.lawn-chair-a", "at": [-8.2, 0.8], "yaw": -160 },
+    { "id": "gnome", "asset": "prop.gnome", "at": [-5.6, 3.6], "yaw": 180 },
+    { "id": "barrow", "asset": "prop.wheelbarrow", "at": [-10, -4.6], "yaw": 30 },
+    { "id": "hose", "asset": "prop.hose-reel", "at": [-4.6, -3.1], "yaw": 90 }
+  ],
+  "actors": [
+    { "id": "gardener", "kind": "pedestrian", "at": [-6, -1], "yaw": 90,
+      "look": { "model": "npc.civilian-elderly", "tint": "#7a9e6a", "accessories": ["cap"], "handProp": "watering-can" },
+      "state": { "walk": [[-9.2, 2.2], [-6.4, 1.8], [-6, -1]], "loop": true } }
+  ],
+  "camera": { "mode": "orbit", "target": [-6, 1, 0], "radius": 20, "azimuth": -45, "polar": 58 },
+  "frames": 240,
+  "shots": [0, 120, 240],
+  "expect": { "consoleErrors": 0 }
+}
