@@ -131,7 +131,7 @@ export interface L3State {
   segment: number; segmentSquad: number[]; lastShot: Record<number, number>; retired: number;
   /** Side-street spills per cross-link (count, last tick) and the infected they brought out. */
   spills: Record<string, { n: number; at: number }>; spillIds: number[];
-  /** The segment-3 horde's avenue, set by the first shot fired in segment 3 (or seeded when the courier gets there quietly). */
+  /** The one avenue without a segment-3 horde pack (seeded). */
   hordeStreet?: 'blvd' | 'commerce' | 'oak';
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
