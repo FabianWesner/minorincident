@@ -12,7 +12,7 @@ import { LevelTwoBot, type L2Opening, type L2Profile } from '../../src/debug/bot
 /** E20 L2 bot battery (specs/epic-20 section 8). Bots write only InputFrames: no teleports, loadout injection or cheats. */
 export interface L2Report {
   profile: L2Profile; opening: L2Opening; seed: number; outcome: 'complete' | 'timeout';
-  simSeconds: number; deaths: number; kills: number; damage: number; axe: boolean;
+  simSeconds: number; deaths: number; kills: number; knockdowns: number; damage: number; axe: boolean;
   timeline: { type: string; t: number }[];
   /** Live infected at doors-open + s, total and rescue-site only (ambush + bitten after the reveal). */
   infectedAt: Record<number, { all: number; rescue: number }>;
@@ -140,7 +140,7 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
   const arrived = s.arrivedAt ? s.arrivedAt : 0;
   return {
     profile, opening: opts.opening ?? 'side', seed: opts.seed ?? world.seed, outcome: mission.state.phase === 'result' || mission.state.phase === 'progression' ? 'complete' : 'timeout',
-    simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, damage: mission.state.stats.damage, axe: s.axe,
+    simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, knockdowns: mission.state.stats.knockdowns, damage: mission.state.stats.damage, axe: s.axe,
     timeline, infectedAt, firefighterHits: ffHits, firefightersTurnedBy90: turnedCrew.size, firstDeathS: firstDeath,
     killsNearDoors, clusterKilled, clusterSize: s.clusterIds.length, minHp: Number.isFinite(minHp) ? minHp : 100, deathsAt,
     calm: calm.alarmS ? calm : null,
