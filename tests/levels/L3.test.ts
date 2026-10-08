@@ -230,10 +230,10 @@ describe('L3 The Police Collapse', () => {
     const windows = new Map<number, number>(); for (const e of emergences) windows.set(Math.floor(e.tick / 600), (windows.get(Math.floor(e.tick / 600)) ?? 0) + 1);
     for (const n of windows.values()) expect(n).toBeLessThanOrEqual(3);
     record('pressure', { before, emergences });
-    // Advancing: the line moves on, emergence behind the old line stops.
-    const after = s.pressureIds.length;
-    runL3(w, m, 'complete', { stopWhen: mm => w.tick - startTick > 45 * 60 + 15 * 60 });
-    expect(s.pressureIds.length - after).toBeLessThanOrEqual(0 + (s.furthestAt < w.tick - 20 * 60 ? 3 : 0));
+    // Advancing: while the furthest line keeps moving, nothing emerges behind it (every new emergence needs 20 s idle).
+    let early = 0, seen = s.pressureIds.length;
+    runL3(w, m, 'complete', { stopWhen: mm => { const l = mm.state.l3!; if (l.pressureIds.length > seen) { if (w.tick - l.furthestAt < 20 * 60) early++; seen = l.pressureIds.length; } return w.tick - startTick > 60 * 60; } });
+    expect(early).toBe(0);
   }, HEAVY);
 
   test('T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP', async () => {
