@@ -494,11 +494,12 @@ export class DistrictView extends Group {
       }
       entry.bands[index] = band;
       const selected = band === 'lod2' ? far : band === 'lod1' ? near : hero;
-      if (ref.userData.propEnabled) {
+      if (ref.userData.propEnabled && (ref.userData.propContactDirty || ref.userData.propContactBatch !== selected)) {
         ref.position.y = ref.userData.propSimY;
         // Preserve body rotation; the selected mesh's seat/back can support a tipped chair.
         const gap = this.propGap(entry, ref, selected);
         if (Number.isFinite(gap)) ref.position.y -= ref.userData.propAwake ? Math.min(0, gap) : gap;
+        ref.userData.propContactDirty = false; ref.userData.propContactBatch = selected;
       }
       selected.references.push(ref);
     }
@@ -532,6 +533,7 @@ export class DistrictView extends Group {
         && ref.userData.propAwake === item.awake && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5
         && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
       ref.userData.propSimY = py; ref.userData.propAwake = item.awake;
+      ref.userData.propContactDirty = true;
       this.propUploads++;
       ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]);
       // Ground contact is resolved in partition against the LOD that will actually be drawn.
