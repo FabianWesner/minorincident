@@ -142,7 +142,7 @@ def pick():
         ss = [s for s in servers() if s["status"] in ("running", "initializing", "starting")]
         sts = [x for x in states([s for s in ss if s["status"] == "running"]) if x]
         booting = len(ss) - len(sts)
-        free = [x for x in sts if x["running"] < SLOTS]
+        free = [x for x in sts if x["running"] < SLOTS and x["last"]]  # only runners whose provisioning finished (/srv/mi/last-activity)
         if free:
             free.sort(key=lambda x: (x["running"] + x["waiting"], x["load"]))
             best = free[0]; print(best["ip"]); return
