@@ -47,7 +47,7 @@ test.describe('Real level inspection', () => {
         const api = window.__SS__!;
         api.inspect.enable(false); await api.loadLevel('L1', { seed: 7 }); api.pause(); api.missions.begin(); api.bot.start('complete');
         if (on) { api.inspect.enable(true, { courier: 'unchanged' }); api.inspect.setCamera({ position: [120, 70, 90], target: [-50, 0, -20] }); }
-        for (let i = 0; i < 12; i++) { await api.step(300); if (on) api.inspect.jump(api.inspect.anchors()[i].id); }
+        for (let i = 0; i < 12; i++) { await api.step(300); if (on) { if (i === 5) { api.inspect.enable(false); api.inspect.enable(true, { courier: 'unchanged' }); } api.inspect.jump(api.inspect.anchors()[i].id); } }
         const { render: _render, ...sim } = api.getState(); void _render;
         return sim;
       }, inspect);
@@ -77,5 +77,27 @@ test.describe('Real level inspection', () => {
     await page.getByRole('button', { name: 'Screenshot', exact: true }).click();
     await (await download).saveAs(`${output}/screenshot-button.png`);
     await page.keyboard.press('KeyF'); expect(await page.evaluate(() => window.__SS__!.inspect.state().enabled)).toBe(false);
+  });
+  test.describe('touch gestures', () => {
+    test.use({ hasTouch: true });
+    test('one finger pan, pinch zoom and two finger rotate', async ({ page, context }) => {
+      test.setTimeout(120_000); await boot(page, `${testUrl}&debug=true&inspect=1&level=L1`);
+      const cdp = await context.newCDPSession(page);
+      const pose = () => page.evaluate(() => window.__SS__!.inspect.state().camera!);
+      const before = await pose();
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ id: 1, x: 800, y: 500 }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ id: 1, x: 900, y: 550 }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      expect((await pose()).target).not.toEqual(before.target);
+      const pan = await pose();
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ id: 1, x: 750, y: 500 }, { id: 2, x: 950, y: 500 }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ id: 1, x: 720, y: 450 }, { id: 2, x: 1000, y: 550 }] });
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      const pinch = await pose();
+      expect(pinch.position).not.toEqual(pan.position);
+      expect(pinch.position[1]).toBeLessThan(pan.position[1]);
+      expect(pinch.target).toEqual(pan.target);
+      await cdp.detach();
+    });
   });
 });

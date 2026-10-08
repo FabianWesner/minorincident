@@ -10,7 +10,7 @@ export interface InspectionAnchor { id: string; kind: string; position: [number,
 /** Render-only camera override. Courier mode is explicit so bot comparisons can preserve all sim inputs. */
 export class Inspection {
   enabled = false;
-  private mode: CourierMode = 'unchanged';
+  private mode: CourierMode = 'ghost';
   private readonly target = new Vector3();
   private radius = 19;
   private yaw = Math.PI / 4;
@@ -60,7 +60,8 @@ export class Inspection {
   enable(on = true, options?: { courier?: CourierMode }): void {
     if (on && !(import.meta.env.DEV || this.game.params.get('debug') === 'true')) throw new Error('Inspection requires debug=true in production');
     if (on && !this.enabled) { this.target.copy(this.game.view.view.cameraTarget); this.radius = this.game.view.camera.position.distanceTo(this.target); }
-    this.enabled = on; this.keys.clear(); this.game.input.release(); this.game.world.clearInput();
+    this.enabled = on; this.keys.clear(); this.game.input.release();
+    if (!this.game.driver || on && options?.courier === 'ghost') this.game.world.clearInput();
     if (on && options?.courier) this.mode = options.courier;
     this.courier.value = this.mode;
     this.game.world.inspectionGhost = on && this.mode === 'ghost';
@@ -104,6 +105,7 @@ export class Inspection {
   state() { return { enabled: this.enabled, courier: this.mode, following: this.following, camera: this.game.view.view.inspectionPose, lod: this.game.view.view.inspectionGameLod ? 'game' : 'real', timeScale: this.game.clock.paused ? 0 : this.game.clock.timeScale, entity: this.entityAtCursor(), nearest: this.nearest(), perf: this.game.perf() }; }
   update(seconds: number): void {
     if (!this.enabled) return;
+    this.game.world.inspectionGhost = this.mode === 'ghost';
     if (this.level !== this.game.world.scenario) { this.level = this.game.world.scenario ?? ''; this.following = null; this.target.copy(this.game.view.view.cameraTarget); this.refreshAnchors(); this.game.world.inspectionGhost = this.mode === 'ghost'; }
     const speed = Math.min(seconds, .1) * (this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') ? 40 : 10);
     const x = Number(this.keys.has('KeyD') || this.keys.has('ArrowRight')) - Number(this.keys.has('KeyA') || this.keys.has('ArrowLeft'));

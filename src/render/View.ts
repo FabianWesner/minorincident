@@ -54,6 +54,7 @@ export class View {
   private readonly previousPosition = new Vector3();
   private readonly previousQuaternion = new Quaternion();
   private readonly tickPosition = new Vector3();
+  private readonly tickTarget = new Vector3();
   private readonly tickQuaternion = new Quaternion();
   /** Close isometric combat framing; portrait retains at least seven metres of ground width. */
   resize(width: number, height: number): void {
@@ -115,6 +116,7 @@ export class View {
     this.rollSpeed = (this.rollSpeed - this.rollAngle * 90 * seconds) * Math.exp(-7 * seconds); this.rollAngle += this.rollSpeed * seconds;
     if (this.rollAngle) this.camera.rotateZ(this.rollAngle);
     this.camera.updateMatrixWorld();
+    this.tickTarget.copy(this.cameraTarget);
     this.tickPosition.copy(this.camera.position); this.tickQuaternion.copy(this.camera.quaternion);
     if (seconds === 0) { this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion); }
   }
@@ -125,6 +127,7 @@ export class View {
       this.camera.position.fromArray(this.inspectionPose.position); this.cameraTarget.fromArray(this.inspectionPose.target);
       this.camera.lookAt(this.cameraTarget); this.camera.updateMatrixWorld(); return;
     }
+    this.cameraTarget.copy(this.tickTarget);
     const t = Math.max(0, Math.min(1, alpha));
     this.camera.position.lerpVectors(this.previousPosition, this.tickPosition, t);
     this.camera.quaternion.slerpQuaternions(this.previousQuaternion, this.tickQuaternion, t);

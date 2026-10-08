@@ -17,6 +17,7 @@ describe('inspection camera', () => {
     }
     inspected.inspectionPose = null; inspected.present(1);
     expect(inspected.camera.position.toArray()).toEqual(normal.camera.position.toArray());
+    expect(inspected.cameraTarget.toArray()).toEqual(normal.cameraTarget.toArray());
   });
   it('freezes LOD at game distance while preserving the visible frustum', () => {
     const view = new View(); view.reset({ x: 0, z: 0 });
