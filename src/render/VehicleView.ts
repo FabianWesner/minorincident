@@ -115,13 +115,20 @@ export class VehicleView extends Group {
         // Tyre faces can meet a paving edge between mesh vertices, especially with steering and body lean.
         record.parent.updateMatrixWorld(true);
         for (const wheel of record.wheels) {
-          let gap = Infinity;
-          for (const local of wheel.contacts) {
-            this.contact.copy(local).applyMatrix4(wheel.node.matrixWorld);
-            const ground = this.ground(this.contact.x, this.contact.z);
-            if (ground !== null) gap = Math.min(gap, this.contact.y - ground);
+          // Moving a wheel along a leaning chassis also moves its tread sideways. Recheck the contact after settling:
+          // at the station's paving boundary that small shift can put a face over a different ground triangle.
+          for (let pass = 0; pass < 3; pass++) {
+            wheel.node.updateWorldMatrix(true, false);
+            let gap = Infinity;
+            for (const local of wheel.contacts) {
+              this.contact.copy(local).applyMatrix4(wheel.node.matrixWorld);
+              const ground = this.ground(this.contact.x, this.contact.z);
+              if (ground !== null) gap = Math.min(gap, this.contact.y - ground);
+            }
+            if (!Number.isFinite(gap) || pass > 0 && gap >= 0) break;
+            const vertical = wheel.node.parent!.matrixWorld.elements[5];
+            if (vertical > .1) wheel.node.position.y -= (gap - .001) / vertical;
           }
-          if (Number.isFinite(gap)) wheel.node.position.y -= gap - .001;
         }
       }
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
