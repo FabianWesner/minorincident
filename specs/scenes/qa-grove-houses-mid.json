@@ -1,0 +1,69 @@
+{
+ "name": "qa-grove-houses-mid",
+ "note": "Residential row north, flowerbeds, fences, mailboxes, benches",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -26,
+    -32
+   ],
+   [
+    12,
+    2
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   -7.0,
+   -15.0
+  ],
+  "zoom": 1.1
+ },
+ "script": [
+  {
+   "frame": 8,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -7.0,
+     0.5,
+     -15.0
+    ],
+    "radius": 42,
+    "azimuth": 215,
+    "polar": 42
+   }
+  },
+  {
+   "frame": 16,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -7.0,
+     0.5,
+     -15.0
+    ],
+    "radius": 36,
+    "azimuth": 320,
+    "polar": 60
+   }
+  }
+ ],
+ "frames": 26,
+ "shots": [
+  0,
+  12,
+  24
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

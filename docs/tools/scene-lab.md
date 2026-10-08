@@ -10,7 +10,7 @@ and pedestrian looks. If a scene passes here, the same content behaves the same 
 
 - Runtime: `src/debug/scenelab/` (`SceneLab.ts`, `spec.ts`, `geometry.ts` for clipping, `motion.ts` for foot metrics). The browser exposes it as `window.__SCENE__` with `?test=1&scenelab`.
 - Runner and MCP server: `tools/scenelab/` (`cli.ts`, `mcp.ts`, `session.ts`, `mcp-smoke.ts`).
-- Examples: `specs/scenes/*.json`.
+- Examples: `specs/scenes/*.json`. The `qa-*` specs are the standing QA sweep (couriers, corgi, pedestrians, infected, D-GROVE chunks and `qa-grove-clipping-all`); run them with `npm run scene -- specs/scenes/qa-*.json` and add `--backend webgpu` for the character ones.
 
 ## CLI
 
@@ -63,7 +63,7 @@ a yaw-0 actor faces +X.
 - **`layout`** copies placements from a shipped district: `{ "district": "D-GROVE", "bbox": [[x0, z0], [x1, z1]], "assets": ["prop.flower-bed*", "prop.picket-fence"], "ids": [...], "recenter": true }`.
   - `assets` accepts a trailing `*` as a prefix match.
   - `recenter` moves the crop so its centre is at the origin.
-  - `ground: "district"` keeps that district's baked roads and paving.
+  - `ground: "district"` keeps that district's baked roads and paving, and its surface and lawn polygons (so the bicycle's pavement rule and kerb heights work).
 - **Static instances are baked at load.** Adding a prop with `place` reloads the scene, and the frame counter goes back to 0.
 
 ### Actors
@@ -131,6 +131,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `consoleErrors` (default 0)
 - `clippingMax`
 - `footSlideMaxCm`
+- `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
+- `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
 - `yawDriftMaxDeg`
 - `torsoPitchMaxDeg`
 - `drawCallsMax`
@@ -139,6 +141,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 `clipping` takes these options:
 
 - `ignore: [["a", "b"], ...]`: pairs of placement ids or asset ids.
+- `ignoreFoliage: true`: skip pairs with a tree, bush or hedge (crowns rise behind houses and bushes stand in beds by design).
 - `sameAsset: true`: also check chains of one asset. Fence and hedge runs share end posts by design, so they are skipped by default.
 - `slackCm` (default 2).
 
@@ -162,8 +165,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - **`metrics.lods`.** The current detail band of every placement (`lod0`, `lod1`, `lod2` or `culled`).
 - **`metrics.visibility`.** Sim counts against drawn counts per kind in the last frame, such as infected alive in the sim against infected figures drawn. A gap with the subject on screen is a crowd or visibility bug.
 - **`metrics.vehicles`.** Position, yaw, health and speed per vehicle id.
-- **`clipping.static`.** Placement pairs whose LOD0 meshes cut through each other. Each entry has `a`, `b`, the asset ids, `intersectingTriangles` and the contact `region` box (with `regionCm`). Any entry is real interpenetration (for example, `flowerbed-fence` reported 1208 triangle pairs where the picket fence ran through the flower bed; after the layout fix on main, 46 pairs in a 14 × 9 cm contact remain).
-- **`clipping.actors`.** Rig bones (`thighL`, `shinR`, `spine`, `neck`, `upperArmL`, `foreArmR`, …) against prop meshes. `crossing: true` means the bone centre line pierces a prop surface. Otherwise `clearanceCm` is less than the bone's flesh radius minus `slackCm`, so the skin is inside the prop. The entry also gives the prop id, the worst `frame` and `count` (sampled frames with the hit). `bench-sitter` uses the game's seat anchors (`src/sim/npc/seats.ts`) and the authored squashed bench scale. With the full-height bench it pierced in 6 of 7 bones (the pelvis was about 6 cm under the 52 cm seat top); after the seat-anchor fix on main it reports only a residual `shinL` crossing.
+- **`clipping.static`.** Placement pairs whose LOD0 meshes cut through each other. Each entry has `a`, `b`, the asset ids, `intersectingTriangles` and the contact `region` box (with `regionCm`). Any entry is real interpenetration (for example, `flowerbed-fence` reported 1208 triangle pairs where the picket fence ran through the flower bed; both the fence and the remaining 14 × 9 cm contact are fixed in the layout, the scene is a gate now).
+- **`clipping.actors`.** Rig bones (`thighL`, `shinR`, `spine`, `neck`, `upperArmL`, `foreArmR`, …) against prop meshes. `crossing: true` means the bone centre line pierces a prop surface. Otherwise `clearanceCm` is less than the bone's flesh radius minus `slackCm`, so the skin is inside the prop. The entry also gives the prop id, the worst `frame` and `count` (sampled frames with the hit). `bench-sitter` uses the game's seat anchors (`src/sim/npc/seats.ts`) and the authored squashed bench scale. With the full-height bench it pierced in 6 of 7 bones (the pelvis was about 6 cm under the 52 cm seat top); after the seat-anchor fix and the bench `hipX` 0.31 it reports nothing. A bone hit also carries `at`, the world point where the bone centre line pierces the surface.
 
 **Limits:**
 

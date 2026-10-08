@@ -37,6 +37,12 @@ export class PawContacts {
         foot.correction.copy(foot.release).multiplyScalar(fade * fade * (3 - 2 * fade));
       }
       foot.leg.position.add(foot.correction); foot.leg.updateWorldMatrix(false, true); foot.phase = p;
+      // The authored gallop swing can still dip a paw under the floor: lift it back onto the sole plane.
+      const dip = this.origin.y + foot.sole - this.point.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld).y;
+      if (dip > 0) {
+        const parent = foot.leg.parent!, low = parent.worldToLocal(this.point.clone()), high = parent.worldToLocal(this.point.clone().setY(this.point.y + dip));
+        high.sub(low); foot.leg.position.add(high); foot.correction.add(high); foot.leg.updateWorldMatrix(false, true);
+      }
     }
   }
   points(): number[][] { this.root.updateWorldMatrix(true, true); return this.feet.map(f => this.point.copy(f.paw).applyMatrix4(f.leg.matrixWorld).toArray()); }

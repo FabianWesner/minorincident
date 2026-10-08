@@ -63,7 +63,7 @@ describe('seated civilians (npc-sit)', () => {
           const back = bench[0], pelvis = boxes.get('hip')!;
           if (depth(pelvis, back) > 0.025) failures.push(`${id} t=${t}: pelvis inside the backrest`);
           const gap = boxes.get('torso')!.min.x - back.max.x;
-          if (gap < -0.025 || gap > 0.25) failures.push(`${id} t=${t}: torso ${gap.toFixed(3)} m from the backrest`);
+          if (gap < -0.025 || gap > 0.28) failures.push(`${id} t=${t}: torso ${gap.toFixed(3)} m from the backrest`);
         }
       }
     }

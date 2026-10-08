@@ -1,0 +1,116 @@
+{
+ "name": "qa-courier-attack-axe",
+ "note": "L2 fire axe.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "dummy-1",
+   "kind": "infected",
+   "at": [
+    2.48,
+    0.77
+   ],
+   "yaw": 162.8,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-2",
+   "kind": "infected",
+   "at": [
+    -0.77,
+    2.48
+   ],
+   "yaw": 72.8,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-3",
+   "kind": "infected",
+   "at": [
+    -2.48,
+    -0.77
+   ],
+   "yaw": -17.2,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-4",
+   "kind": "infected",
+   "at": [
+    0.77,
+    -2.48
+   ],
+   "yaw": -107.2,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 30,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-1",
+    "seconds": 2.4
+   }
+  },
+  {
+   "frame": 194,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-2",
+    "seconds": 2.4
+   }
+  },
+  {
+   "frame": 358,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-3",
+    "seconds": 2.4
+   }
+  },
+  {
+   "frame": 522,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-4",
+    "seconds": 2.4
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 9,
+  "azimuth": 40
+ },
+ "frames": 726,
+ "shots": [
+  20,
+  90,
+  150,
+  230,
+  310,
+  420,
+  520,
+  706
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}
