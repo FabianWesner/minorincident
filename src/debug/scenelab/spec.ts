@@ -123,6 +123,8 @@ export interface Expectations {
   propGroundSamplesMin?: number;
   /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
   wheelFloatMaxCm?: number;
+  /** Frames the courier bike was in view but not drawn, or drawn more than 0.6 m from its sim position (`metrics.bike`). */
+  bikeUndrawnFramesMax?: number;
   /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
   wheelSpikeMaxCm?: number;
 }
