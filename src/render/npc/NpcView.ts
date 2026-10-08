@@ -88,6 +88,8 @@ export class NpcView extends Group {
   }
   /** Scene Lab probe: the presented corgi/escort figure of an entity. */
   heroRoot(id: number): Group | undefined { return this.heroes.get(id)?.root; }
+  /** Scene Lab probe: the corgi animator's current clip. */
+  heroClip(id: number): string | undefined { return this.heroes.get(id)?.animator?.clip; }
   snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip, position: h.root.position.toArray(), head: h.head?.getWorldPosition(this.point.clone()).toArray() ?? null, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)), facing: this.facing(h) })), cars: this.cars.count }; }
   /** Rendered body facing on the ground (radians, sim yaw convention): tail -> head in world space, so any model or animation flip shows up. */
   private facing(h: Hero): number | null {

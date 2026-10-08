@@ -318,13 +318,17 @@ action('civ-grabbed',.8,[(0,p(hip=hip(y=-.06,twist=-12),torso=(0,-22,12),head=(0
 # Corgi warnings (E19 §5.8): stiffen (freeze low, nose and tail straight), growl
 # (head low, lips/body tremor), bark (front-paw push, head snaps up), nervous
 # (tail tucked, glances), and a rotary gallop beside the bicycle.
-stiff=p(body=(0,0,-4,0,-.03,0),head=z(4),tail=(0,0,-8),legFL=z(-8),legFR=z(-8),legBL=z(10),legBR=z(10))
+# The legs are single rigid joints: lowering or pitching the body needs the legs splayed so every paw still
+# rests on the floor (solved against char.corgi, gated by tests/unit/render/corgi-feet.test.ts). Forelegs brace forward.
+stiff=p(body=(0,0,-2,0,-.012,0),head=z(4),tail=(0,0,-8),legFL=z(22),legFR=z(22),legBL=z(2.5),legBR=z(2.5))
 action('corgi-stiffen',.5,[(0,p()),(.3,{**stiff,'head':z(8)}),(1,stiff)],dogs)
-growl=p(body=(0,0,-7,.02,-.06,0),head=z(-14),tail=(0,0,-2),legFL=z(-14),legFR=z(-14),legBL=z(14),legBR=z(14))
-action('corgi-growl',.4,[(0,growl),(.25,{**growl,'body':(0,0,-7.5,.02,-.066,0),'head':(0,1.5,-15)}),(.5,growl),(.75,{**growl,'body':(0,0,-6.5,.02,-.056,0),'head':(0,-1.5,-13)}),(1,growl)],dogs)
-action('corgi-bark',.5,[(0,stiff),(.15,{**stiff,'body':(0,0,-8,-.02,-.06,0),'head':z(-10)}),(.3,{**stiff,'body':(0,0,9,.03,.02,0),'head':z(26),'legFL':z(14),'legFR':z(10)}),
-    (.45,{**stiff,'body':(0,0,2,.01,-.01,0),'head':z(12)}),(.62,{**stiff,'body':(0,0,7,.02,.01,0),'head':z(22)}),(1,stiff)],dogs)
-nervous=p(body=(0,0,-3,0,-.04,0),head=z(-6),tail=(0,0,38),legBL=z(6),legBR=z(6))
+growl=p(body=(0,0,-3.5,.02,-.024,0),head=z(-14),tail=(0,0,-2),legFL=z(34),legFR=z(34),legBL=z(6.5),legBR=z(6.5))
+action('corgi-growl',.4,[(0,growl),(.25,{**growl,'body':(0,0,-3.8,.02,-.027,0),'head':(0,1.5,-15),'legFL':z(36.5),'legFR':z(36.5),'legBL':z(8),'legBR':z(8)}),(.5,growl),
+    (.75,{**growl,'body':(0,0,-3.2,.02,-.021,0),'head':(0,-1.5,-13),'legFL':z(32),'legFR':z(32),'legBL':z(5),'legBR':z(5)}),(1,growl)],dogs)
+action('corgi-bark',.5,[(0,stiff),(.15,{**stiff,'body':(0,0,-4,-.02,-.024,0),'head':z(-10),'legFL':z(36),'legFR':z(36),'legBL':z(4),'legBR':z(4)}),
+    (.3,{**stiff,'body':(0,0,9,.03,.02,0),'head':z(26),'legFL':z(14),'legFR':z(10),'legBL':z(16.5),'legBR':z(16.5)}),
+    (.45,{**stiff,'body':(0,0,1,.01,-.004,0),'head':z(12),'legFL':z(0),'legFR':z(0),'legBL':z(9.5),'legBR':z(9.5)}),(.62,{**stiff,'body':(0,0,7,.02,.01,0),'head':z(22),'legBL':z(17.5),'legBR':z(17.5)}),(1,stiff)],dogs)
+nervous=p(body=(0,0,-1,0,-.008,0),head=z(-6),tail=(0,0,38),legFL=z(14.5),legFR=z(14.5),legBL=z(3.5),legBR=z(3.5))
 action('corgi-nervous',2,[(0,nervous),(.18,{**nervous,'head':(0,35,-2)}),(.3,{**nervous,'head':(0,35,-2)}),(.45,nervous),(.6,{**nervous,'head':(0,-30,0)}),(.7,{**nervous,'head':(0,-30,0)}),(.85,{**nervous,'head':(0,0,-10)}),(1,nervous)],dogs)
 poses=[]
 for i in range(9):
@@ -450,8 +454,10 @@ for name,duration in [('corgi-walk',.7),('corgi-trot',.46)]:
             pose['leg'+side]=z(angles[(i+offset)%8])
         poses.append((i/8,pose))
     action(name,duration,poses,dogs)
-sit=p(body=(0,0,18,0,-.12,0),head=z(-18),legBL=z(-55),legBR=z(-55),legFL=z(-15),legFR=z(-15),tail=(0,15,0))
-action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,12,0,-.08,0)}),(1,sit)],dogs)
+# Sit: the rump rests on the floor, forelegs upright, hind legs folded forward under the belly with the paws on the floor
+# (the old 18 deg / -12 cm sit put the rump 12 cm and the hind paws 23 cm under the floor).
+sit=p(body=(0,0,8,0,-.062,0),head=z(-4),legBL=z(44.5),legBR=z(44.5),legFL=z(1.5),legFR=z(1.5),tail=(0,15,0))
+action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,5,0,-.04,0),'legBL':z(35),'legBR':z(35),'legFL':z(2.5),'legFR':z(2.5)}),(1,sit)],dogs)
 
 action('infected-flight',.35,[(0,p()),(.25,p(wingL=(35,0,0),wingR=(-35,0,0))),(.5,p()),(.75,p(wingL=(-45,0,0),wingR=(45,0,0))),(1,p())],['body','head','wingL','wingR'])
 action('animal-death',.6,[(0,p()),(.35,p(body=(0,0,35,0,-.08,0),head=z(-15))),(.75,p(body=(0,0,85,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15))),(1,p(body=(0,0,90,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15)))],dogs+['wingL','wingR'])

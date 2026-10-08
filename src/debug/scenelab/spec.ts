@@ -32,6 +32,8 @@ export interface SceneSpec {
   frames?: number;
   shots?: number[];
   video?: number;
+  /** Debug: include each actor's per-frame motion samples (`metrics.actors.<id>.track`: frame, clip/label, speed, feet). */
+  trace?: boolean;
   /** Clipping report options: `ignore` pairs of placement ids or asset ids; `sameAsset` also checks chains of one
    * asset (fence/hedge runs share end posts by design, so they are skipped by default); `slackCm` (default 2) is how far
    * a bone's flesh radius may sink into a prop surface before it is reported. */
@@ -94,6 +96,8 @@ export interface Expectations {
   footSlideMaxCm?: number;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
+  /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
+  bodyOverlapMaxCm?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;
