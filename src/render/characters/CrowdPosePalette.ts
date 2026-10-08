@@ -71,6 +71,11 @@ export class CrowdPosePalette {
     this.states.get(id)!.frame = row; this.states.get(id)!.weight = 1;
     return row;
   }
+  /** True when every matrix component of atlas row `row` is finite. */
+  finite(row: number): boolean {
+    for (let i = row * this.width, end = i + this.width; i < end; i++) if (!Number.isFinite(this.rows[i])) return false;
+    return true;
+  }
   /** CPU counterpart of the shader for regression probes. */
   pose(frame: number, outgoing: number, weight: number): Float32Array {
     const result = new Float32Array(this.width);

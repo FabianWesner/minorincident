@@ -278,6 +278,10 @@ export class CourierGroundContacts {
       // Flight (running): hold the pelvis on its arc with a slight rise; the reaching foot brings it down for heel strike.
       height = Math.min(height, this.origin.y + this.pelvisHeight + .2 * dt);
     }
+    // No foot to stand on and no pelvis yet (a crowd figure whose footwork starts mid-run with both feet in swing):
+    // keep the clip's hip height. Infinity here made the filter Infinity - Infinity = NaN, and the NaN pelvis then
+    // stuck, so the figure drew no pixels while the sim kept it biting (PO "invisible zombie").
+    if (height === Infinity) height = this.pelvisHeight === undefined ? rig.hip.getWorldPosition(this.joint).y : this.origin.y + this.pelvisHeight;
     // Settle down quickly (heel strike), rise smoothly.
     const current = this.pelvisHeight === undefined ? height : this.origin.y + this.pelvisHeight;
     const filtered = current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)));

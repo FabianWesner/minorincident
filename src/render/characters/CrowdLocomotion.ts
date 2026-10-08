@@ -178,6 +178,9 @@ export class CrowdLocomotion {
           footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { stance: footwork.stance, knee: gait?.knee, maxSwing: .4, ...style });
           this.store(pose, instance);
         });
+        // Never draw a broken solve: a non-finite pose collapses the figure to nothing on the GPU. Drop the
+        // contacts (they restart fresh) and show the baked clip pose this frame.
+        if (!poses.finite(row)) { this.footwork.states.delete(id); const baked = poses.correct(id, frame, blend[0], blend[1], () => {}); blend[1] = 1; return baked; }
         blend[1] = 1; return row;
       }
       this.footwork.states.delete(id);
