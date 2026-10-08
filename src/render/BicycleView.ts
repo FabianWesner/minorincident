@@ -185,6 +185,24 @@ export class BicycleView extends Group {
     for (const local of ring) { const p = this.ringPoint.copy(local).applyAxisAngle(AXLE, -wheel.rotation.z).applyMatrix4(wheel.matrixWorld); gap = Math.min(gap, p.y - this.groundAt(p.x, p.z)); }
     return gap;
   }
+  /** Crank, steer, lean and speed step once per sim tick: present them between the last two ticks at the render alpha
+   * (unsampled ticks of a multi-tick frame reconstructed linearly, as in MotionPresentation). */
+  private readonly rideTicks = { tick: -1, from: { pedal: 0, steer: 0, lean: 0, speed: 0 }, to: { pedal: 0, steer: 0, lean: 0, speed: 0 } };
+  private readonly rideFrame = { pedal: 0, steer: 0, lean: 0, speed: 0 };
+  private presentRide(b: { pedal: number; steer: number; lean?: number; speed: number }, alpha: number) {
+    const s = this.rideTicks, tick = this.world.tick, now = { pedal: b.pedal, steer: b.steer, lean: b.lean ?? 0, speed: b.speed };
+    if (s.tick < 0 || tick < s.tick || tick - s.tick > 10) { Object.assign(s.from, now); Object.assign(s.to, now); s.tick = tick; }
+    else if (tick !== s.tick) {
+      const k = (tick - s.tick - 1) / (tick - s.tick);
+      for (const key of ['pedal', 'steer', 'lean', 'speed'] as const) s.from[key] = s.to[key] + (now[key] - s.to[key]) * k;
+      Object.assign(s.to, now); s.tick = tick;
+    }
+    const a = Math.max(0, Math.min(1, alpha));
+    for (const key of ['pedal', 'steer', 'lean', 'speed'] as const) this.rideFrame[key] = lerp(s.from[key], s.to[key], a);
+    return this.rideFrame;
+  }
+  /** Crank phase and steer as presented this frame (the rider's pedalling clip follows the drawn crank). */
+  get presentedRide(): { pedal: number; steer: number } | null { return this.rideTicks.tick < 0 ? null : this.rideFrame; }
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly presented = { x: 0, y: 0, z: 0, yaw: 0 };
@@ -193,16 +211,20 @@ export class BicycleView extends Group {
     if (!bike?.bicycle) return;
     if (!this.rig) { void this.build(); return; }
     // Ridden, the sim pins the bike onto the rider after physics: render it at the rider's interpolated transform.
-    const rig = this.rig, b = bike.bicycle, from = b.mounted ? this.world.previousPlayer : null, to = bike.transform;
-    const t = from ? Object.assign(this.presented, { x: lerp(from.x, to.x, alpha), y: to.y, z: lerp(from.z, to.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
+    // The pin runs before the rider's post-physics sync, so `bike.transform` trails her by a tick: interpolate between the
+    // rider's own last two ticks (as the courier and the camera do). Lerping previousPlayer -> bike.transform spanned ~0 m,
+    // so bike and rider snapped per tick and juddered whenever frames ran 0/2 ticks (PO: flicker on the bike after a pause).
+    const rig = this.rig, b = bike.bicycle, rider = this.world.entities.get(1)?.transform, from = b.mounted && rider ? this.world.previousPlayer : null, to = bike.transform;
+    const t = from && rider ? Object.assign(this.presented, { x: lerp(from.x, rider.x, alpha), y: to.y, z: lerp(from.z, rider.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
+    const ride = this.presentRide(b, alpha);
     rig.model.position.x = b.mounted ? rig.offset : 0;
     // Each wheel rests on the paving under its own contact point (kerbs, crosswalk slabs): the frame pitches between them.
     const districts = this.world.districts, fx = Math.cos(t.yaw), fz = -Math.sin(t.yaw);
     const xR = rig.model.position.x + bicycleGeometry.rearWheel, xF = rig.model.position.x + bicycleGeometry.frontWheel;
     // Heights are the drawn ground (asphalt tops out 5 cm above the layout's paving 0), not the sim plane.
     const drawn = !!districts || !!this.ground, rR = WHEEL_R.R * SCALE, rF = WHEEL_R.F * SCALE;
-    const steering = b.steer * bicycleHandling.maxSteering / (1 + b.speed / l1v2.bicycle.speedMs), sx = Math.cos(t.yaw - steering), sz = -Math.sin(t.yaw - steering);
-    const lean = b.mounted ? b.lean ?? 0 : 0, [halfR, halfF] = rig.halfWidths;
+    const steering = ride.steer * bicycleHandling.maxSteering / (1 + ride.speed / l1v2.bicycle.speedMs), sx = Math.cos(t.yaw - steering), sz = -Math.sin(t.yaw - steering);
+    const lean = b.mounted ? ride.lean : 0, [halfR, halfF] = rig.halfWidths;
     // Pitching the frame swings each hub along the heading by R * sin(pitch) (1.7 cm on a kerb): sample under the pitched hubs.
     // Hubs at ground + radius: (xF - xR) sin(p) + (rF - rR) cos(p) = gF - gR + rF - rR.
     const k = Math.hypot(xF - xR, rF - rR), solve = (rear: number, front: number) => Math.asin(Math.max(-1, Math.min(1, (front - rear + rF - rR) / k))) - Math.atan2(rF - rR, xF - xR);
@@ -218,12 +240,12 @@ export class BicycleView extends Group {
     if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
     if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
     if (rig.handlebar) rig.handlebar.rotation.y = -steering;
-    if (rig.crank) { rig.crank.rotation.z = -b.pedal; for (const p of rig.pedals) p.rotation.z = b.pedal; }
+    if (rig.crank) { rig.crank.rotation.z = -ride.pedal; for (const p of rig.pedals) p.rotation.z = ride.pedal; }
     // Toy feel: lean into the turn while riding.
     const riding = b.mounted;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
     rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
-    rig.leanAngle = riding ? b.lean ?? 0 : 0;
+    rig.leanAngle = riding ? ride.lean : 0;
     // Rolled about the tyre contact line, the wide tyre's shoulder dips below the road: lift the frame by that dip
     // (no pedal bob: the wheels stay on the ground and the rider's own ride clip carries the stroke).
     const lift = Math.max(hubAbove(rig.profiles[0], rR, rig.leanAngle) - rR * Math.cos(rig.leanAngle), hubAbove(rig.profiles[1], rF, rig.leanAngle) - rF * Math.cos(rig.leanAngle));

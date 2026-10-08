@@ -580,7 +580,7 @@ export class GameView implements Lifecycle {
       // E19 courier: the bicycle sim (lane F) marks the rider; the bike's crank/steer drive the pose.
       const bike = riding === undefined ? undefined : (this.world.entities.get(riding) as { bicycle?: { pedal: number; steer: number } } | undefined)?.bicycle;
       this.character.update(stopped && this.frozenPose ? this.frozenPose : survivor, stopped ? this.hitStopTick : this.world.tick, stopped ? 1 : alpha,
-        riding === undefined ? undefined : { pedal: bike?.pedal ?? this.world.tick * .12, steer: bike?.steer ?? 0 });
+        riding === undefined ? undefined : { pedal: this.bicycle?.presentedRide?.pedal ?? bike?.pedal ?? this.world.tick * .12, steer: this.bicycle?.presentedRide?.steer ?? bike?.steer ?? 0 });
       if (this.character.skinActive) this.character.glanceAt(this.threat(current));
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
       if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);
