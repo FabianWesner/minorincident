@@ -73,3 +73,20 @@ test('@E17-AC01 wreck builds preserve authored distance meshes and validate all 
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test('@E17-AC01 decay build rejects the stricter draw budget before publishing', async () => {
+  const original = manifest.find(a => a.id === 'veh.sedan-red')! as AssetDef;
+  const directory = mkdtempSync('.cache/assets/house-unit-');
+  const def: AssetDef = { ...original, glb: `${directory}/house.glb`, decayBudget: { drawCalls: 0 } };
+  vi.mocked(spawnSync).mockImplementation(() => {
+    writeFileSync(`.cache/assets/${def.id}.glb`, readFileSync(`assets/${def.id}/model.wrecked.glb`));
+    return { status: 0 } as ReturnType<typeof spawnSync>;
+  });
+  try {
+    await expect(buildAsset(def, { decay: 'wrecked' })).rejects.toThrow('static drawCalls:');
+    expect(existsSync(`${directory}/house.wrecked.glb`)).toBe(false);
+  } finally {
+    vi.mocked(spawnSync).mockReset();
+    rmSync(directory, { recursive: true, force: true });
+  }
+});

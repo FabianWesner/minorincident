@@ -48,6 +48,8 @@ export interface AssetDef {
   budget: { triangles: number; materials: number; fileKB: number; drawCalls: number };
   /** LOD0 cap for authored decay exports; base hero meshes retain their own budget. */
   decayTriangleBudget?: number;
+  /** Stricter material/draw caps for base-owned decay twins. */
+  decayBudget?: Partial<AssetDef['budget']>;
   decayVariants: string[];
 }
 export function atLeast(status: AssetStatus, minimum: AssetStatus): boolean {

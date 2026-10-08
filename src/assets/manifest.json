@@ -4164,7 +4164,17 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "door_front",
+      "window_front",
+      "window_left",
+      "window_right",
+      "window_rearL",
+      "window_rearR",
+      "lamp_porch"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -4174,7 +4184,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.house-a/model.glb",
     "script": "assets/bld.house-a/build.py",
     "lods": {
@@ -4189,6 +4202,12 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -4224,7 +4243,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.house-b/model.glb",
     "script": "assets/bld.house-b/build.py",
     "lods": {
@@ -4239,6 +4261,12 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -4273,7 +4301,10 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "sourceGlb": "assets/bld.house-c/model.glb",
     "lods": {
       "lod1": "public/assets/models/bld.house-c.lod1.glb",
@@ -4287,6 +4318,12 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
