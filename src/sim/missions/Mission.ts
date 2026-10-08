@@ -76,6 +76,11 @@ export class Mission {
   }
   /** True while the player stands in an active step's interact ring: an `E` press belongs to the objective
    * (E19 QA1-01: pick up the parcel without also leaving the bicycle). */
+  /** The active interact step whose ring the player stands in (HUD prompt), or null. */
+  interactStepInRange(): ObjectiveDef | null {
+    if (this.state.phase !== 'playing') return null;
+    return this.def.steps.find(def => this.state.steps[def.id].status === 'active' && def.complete.kind === 'interact' && this.inside(def.complete.anchor)) ?? null;
+  }
   interactionAvailable(): boolean {
     return this.state.phase === 'playing' && this.def.steps.some(def => this.state.steps[def.id].status === 'active' && def.complete.kind === 'interact' && this.inside(def.complete.anchor));
   }
