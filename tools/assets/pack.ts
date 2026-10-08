@@ -1,7 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import manifest from '../../src/assets/manifest.json';
-import type { AssetDef } from '../../src/assets/types';
+import { variantPath, type AssetDef } from '../../src/assets/types';
 import { assetIO } from './io';
 import { optimizeAsset } from './optimize';
 import { requiredLods, triangleCount, lodTriangleLimit } from './delivery';
@@ -16,7 +16,7 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
   const triangles = triangleCount(await io.read(def.glb));
   let added = 0;
   for (const lod of requiredLods(def, triangles)) {
-    const supplied = `assets/${def.id}/model.${lod}.glb`, output = def.lods?.[lod] ?? def.glb.replace('.glb', `.${lod}.glb`);
+    const supplied = source.replace(/(\.lod[12])?\.glb$/, `.${lod}.glb`), output = def.lods?.[lod] ?? def.glb.replace('.glb', `.${lod}.glb`);
     if (!output) throw new Error(`${def.id}: missing ${lod} manifest path`);
     if (def.authoredLodRatios || def.authoredLodTriangles) {
       if (regenerate) throw new Error(`${def.id}: rebuild reviewed LODs from the Blender source`);
@@ -53,6 +53,14 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
       if (!existsSync(supplied)) added++;
       copyFileSync(output, supplied);
     }
+  }
+  for (const decay of def.decayVariants) {
+    added += await packAsset({ ...def, id: `${def.id}.${decay}`, decayVariants: [],
+      sourceGlb: variantPath(source, decay), glb: variantPath(def.glb, decay),
+      lods: { lod1: def.lods?.lod1 && variantPath(def.lods.lod1, decay), lod2: def.lods?.lod2 && variantPath(def.lods.lod2, decay) },
+      budget: def.decayBudget ?? { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles },
+      authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles,
+    }, regenerate);
   }
   return added;
 }

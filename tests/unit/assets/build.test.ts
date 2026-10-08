@@ -73,3 +73,16 @@ test('@E17-AC01 wreck builds preserve authored distance meshes and validate all 
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+test('@E17-AC02 commerce decay caps are enforced independently of the integrated base', async () => {
+  const original = manifest.find(a => a.id === 'bld.mainstreet-brick')! as AssetDef;
+  const reports = await validateAssets([{ ...original, decayBudget: { triangles: 1, materials: 0, drawCalls: 0, fileKB: 1 } }]);
+  expect(reports.filter(r => /^bld\.mainstreet-brick:/.test(r.id)).flatMap(r => r.errors)).toEqual([]);
+  for (const decay of ['w2', 'w3']) {
+    const report = reports.find(r => r.id === `bld.mainstreet-brick.${decay}:lod0`)!;
+    expect(report.errors.join(';')).toContain('triangles:');
+    expect(report.errors.join(';')).toContain('static drawCalls:');
+    expect(report.errors.join(';')).toContain('materials:');
+  }
+  expect(original.budget.triangles).toBe(100000);
+});
