@@ -27,4 +27,12 @@ export class CrowdVisibility {
   lod(id: number, pixels: number): 'lod1' | 'lod2' {
     const band = crowdLod(pixels, this.bands.get(id)); this.bands.set(id, band); return band;
   }
+  /** Close figures drawn with the full model this frame (picked by the owner), and the models whose LOD0 is loaded. */
+  readonly heroes = new Set<number>();
+  readonly heroModels = new Set<string>();
+  /** The detail band of a figure: a hero with its LOD0 loaded draws lod0, everyone else the pixel band. */
+  band(id: number, pixels: number, model: string): 'lod0' | 'lod1' | 'lod2' {
+    const band = this.lod(id, pixels);
+    return band === 'lod1' && this.heroes.has(id) && this.heroModels.has(model) ? 'lod0' : band;
+  }
 }
