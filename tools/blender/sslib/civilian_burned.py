@@ -84,6 +84,22 @@ def build_burned(directory, output):
             obj.data.transform(mw)
             obj.parent = None
             obj.matrix_world = Matrix.Identity(4)
+            if asset == 'veh.sedan-white' and token == 'uiDark' and not wheel:
+                # The intact white sedan has solid black gasket backing behind
+                # its glass. Tear that backing away as well, preserving a real
+                # cabin opening; the surviving perimeter is authored below.
+                bm = bmesh.new()
+                bm.from_mesh(obj.data)
+                def screen_point(p):
+                    if not (1.19 < p.z < 1.78 and abs(p.y) < .85):
+                        return False
+                    t = (p.z - 1.22) / (1.745 - 1.22)
+                    return any(abs(p.x - (xb + (xt-xb)*t)) < .065
+                               for xb, xt in [(1.035, .46), (-1.48, -.95)])
+                faces = [f for f in bm.faces if all(screen_point(v.co) for v in f.verts)]
+                bmesh.ops.delete(bm, geom=faces, context='FACES')
+                bm.to_mesh(obj.data)
+                bm.free()
             # Keep four wheel draws, plus paint/char/bare-metal body draws.
             material = 'sidewalk' if wheel else (paint if token == paint else 'sidewalk' if token == 'sidewalk' else 'uiDark')
             obj.data.materials.clear()
@@ -211,6 +227,14 @@ def build_burned(directory, output):
             obj = box(name, pos, size, token, rot)
             info[obj] = None
             return obj
+        if asset == 'veh.sedan-white':
+            for xb, xt in [(1.035, .46), (-1.48, -.95)]:
+                for x, z in [(xb, 1.22), (xt, 1.745)]:
+                    add('survivingScreenBorder', (x, 0, z), (.04, 1.66, .04))
+                for y in (-.81, .81):
+                    angle = math.atan2(xt-xb, .525)
+                    add('survivingScreenBorder', ((xb+xt)/2, y, 1.4825),
+                        (.04, .04, math.hypot(xt-xb, .525)), rot=(0, angle, 0))
         add('scorchedCabinFloor', ((gx0 + gx1) / 2, 0, floor_z), ((gx1-gx0)*.88, W*.65, .06))
         for x in (gx0 + (gx1-gx0)*.27, gx0 + (gx1-gx0)*.65):
             for y in (-W*.19, W*.19):
