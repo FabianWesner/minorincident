@@ -40,7 +40,36 @@ and `THIRD_PARTY_NOTICES.md`. No new recording or dependency was added.
 
 ## Validation
 
-Validation results and measured timings are recorded here after the final run.
+All browser runs use `E2E_PORT=3357`, the shared e2e lock, headless ANGLE/Metal,
+and at most two workers. Heavy sim/unit runs use the shared sim lock.
+
+- `npm run typecheck` and `npm run lint`: pass.
+- `sh tools/sim-lock.sh npx vitest run tests/unit --maxWorkers=2`:
+  101 files / 358 tests passed before the additional recovery test.
+- `E2E_PORT=3357 sh tools/e2e-lock.sh npx playwright test tests/e2e/audio --project=chromium --workers=1`:
+  first pass 47/48; L2's final silence assertion ran just before the fade settled,
+  and that run also saw transient model 404s against the crash-era preview build.
+  The strict gains and deadlines were preserved; the poll now waits for both sides.
+- Clean-build danger encounter rerun: L1 onset **786 ms**, release **7721 ms**;
+  L2 onset **811 ms**, release **7715 ms**. Maximum sampled summed deck gain 0.6.
+  L2's ten-second threat-free escape and safe-checkpoint release also passed.
+- `npm run scene -- specs/scenes/qa-courier-attack-bat.json --frames 120 --shots 90 --out test-results/epics/E16/danger-scene`:
+  pass; zero console errors, undrawn frames and actor clipping hits. Body overlap
+  5.2 cm (gate 6 cm); 27 draw calls / 104110 triangles at p95. Screenshot reviewed:
+  courier and all five infected visible, bat attack presented. This visual scene
+  checks the encounter presentation; the music gains are measured in the full game.
+
+- `npx vitest run tests/unit/audio/danger.test.ts --maxWorkers=2`: 4/4 passed,
+  including the added down/recover regression (pure director tests, 194 ms).
+- `E2E_PORT=3357 sh tools/e2e-lock.sh npx playwright test tests/e2e/audio/danger.spec.ts --project=chromium --workers=1`:
+  the two encounter tests and escape test passed. The new attack fixture supplied
+  an empty rack; corrected to a bat left rack / fists right rack.
+- The same locked browser command with `--grep 'starting a player attack'`:
+  1/1 passed after correcting the fixture. All four final danger browser cases
+  have passed; the clean encounter run produced no model 404s.
+- `E2E_PORT=3357 npm run verify -- E16` and
+  `E2E_PORT=3357 npm run test:smoke`: queued on the shared sim lock at this checkpoint.
+  Logs: `test-results/danger-verify.log`, `test-results/danger-smoke.log`.
 
 ## Deviations and limits
 
