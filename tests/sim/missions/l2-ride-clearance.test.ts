@@ -13,16 +13,17 @@ const L = 7.4, W = 2.1;
 
 /** Stress: four people planted on the lane, and the first one is put back on the lane again every 5 s (the PO's repeat case). */
 const planted = new WeakMap<SimWorld, number[]>();
-function plant(w: SimWorld, truckId: number, t: number): void {
+function plant(w: SimWorld, t: number): void {
   const ids = planted.get(w) ?? [];
   if (!planted.has(w)) {
     planted.set(w, ids);
     const o = w.npcs!.civilians.outbreak!;
     for (const [x, z] of [[-58, 31.25], [-45, 31.25], [-28.75, 10], [-28.75, -20]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
   }
-  const first = w.entities.get(ids[0]), truck = w.entities.get(truckId)!.transform;
-  if (first && t % 300 === 299) {
-    const x = truck.x + Math.cos(truck.yaw) * 12, z = truck.z - Math.sin(truck.yaw) * 12;
+  const first = w.entities.get(ids[0]), distance = w.missions!.state.l2!.rideS + 12;
+  if (first && t % 300 === 299 && distance < l2TruckPath.at(-1)!.s) {
+    // Plant on the driven lane, including its bends; a tangent extrapolation can land inside a fenced garden.
+    const { x, z } = truckPoseAt(distance);
     first.transform.x = x; first.transform.z = z; w.spatial.set(first.id, x, z);
   }
 }
@@ -59,7 +60,7 @@ describe('L2 truck ride clearance', () => {
         const s = m.state.l2!; if (s.phase !== 'ride') return s.phase === 'arrived' || !!s.arrivedAt;
         const car = w.vehicles!.cars.get(s.truckId)!, t = car.entity.transform;
         rideStart ||= w.tick; rideEnd = w.tick; if (s.rideV < .05) heldTicks++;
-        if (mode === 'planted') plant(w, s.truckId, rideEnd - rideStart);
+        if (mode === 'planted') plant(w, rideEnd - rideStart);
         if (previousYaw !== null) {
           const jump = Math.abs(Math.atan2(Math.sin(t.yaw - previousYaw), Math.cos(t.yaw - previousYaw))) * 180 / Math.PI;
           yawJumpMax = Math.max(yawJumpMax, jump); yawRateMax = Math.max(yawRateMax, jump * 60);
@@ -84,6 +85,7 @@ describe('L2 truck ride clearance', () => {
       expect(mission.state.l2!.arrivedAt, `seed ${seed}: ride arrived`).toBeGreaterThan(0);
       const seconds = (mission.state.l2!.arrivedAt - mission.state.l2!.departAt) / 60;
       report.push({ seed, seconds, heldS: heldTicks / 60, overlaps: [...hits], staticHits, yawRateMax, yawJumpMax, accelMax, brakeMax, laneShare: laneM / roadM });
+      mkdirSync('test-results/epics/E20', { recursive: true }); writeFileSync(`test-results/epics/E20/ride-clearance-${mode}.json`, JSON.stringify(report, null, 2) + '\n');
       expect(yawRateMax, `seed ${seed}: yaw rate`).toBeLessThanOrEqual(25);
       expect(yawJumpMax, `seed ${seed}: heading continuity`).toBeLessThanOrEqual(2);
       expect(accelMax).toBeLessThanOrEqual(2.6 + 1e-6); expect(brakeMax).toBeLessThanOrEqual(4 + 1e-6);

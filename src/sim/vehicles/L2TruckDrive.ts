@@ -28,8 +28,17 @@ export function truckBodyOverlap(p: TruckPose, length: number, width: number, e:
   }
   const prop = world.props?.items.find(p => p.entityId === e.id);
   if (prop) {
-    const centre = prop.collider.translation();
-    return truckBoxOverlap(p, length + margin * 2, width + margin * 2, { x: centre.x, z: centre.z, yaw: e.transform.yaw }, prop.half[0] * 2, prop.half[2] * 2);
+    const centre = prop.collider.translation(), q = prop.collider.rotation();
+    // Project the actual cuboid into X/Z: a tipped bin's height becomes part of its footprint.
+    const axes = [[1 - 2*(q.y*q.y + q.z*q.z), 2*(q.x*q.z - q.w*q.y)], [2*(q.x*q.y - q.w*q.z), 2*(q.y*q.z + q.w*q.x)], [2*(q.x*q.z + q.w*q.y), 1 - 2*(q.x*q.x + q.y*q.y)]];
+    const c = Math.cos(p.yaw), s = Math.sin(p.yaw), dx = centre.x - p.x, dz = centre.z - p.z;
+    for (const [ax, az] of [[c, -s], [s, c], ...axes.map(([x, z]) => [z, -x])]) {
+      if (ax*ax + az*az < 1e-8) continue;
+      const a = Math.abs(ax*c - az*s) * (length/2 + margin) + Math.abs(ax*s + az*c) * (width/2 + margin);
+      const b = axes.reduce((sum, [x, z], i) => sum + Math.abs(ax*x + az*z) * prop.half[i], 0);
+      if (Math.abs(dx*ax + dz*az) >= a + b) return false;
+    }
+    return true;
   }
   const c = Math.cos(p.yaw), s = Math.sin(p.yaw), dx = e.transform.x - p.x, dz = e.transform.z - p.z;
   const ox = Math.max(0, Math.abs(dx * c - dz * s) - length / 2), oz = Math.max(0, Math.abs(dx * s + dz * c) - width / 2);
@@ -79,7 +88,7 @@ export class L2TruckDrive {
     let gap = Infinity;
     for (let ds = 0; ds <= reach; ds += .2) {
       const p = truckPoseAt(s.rideS + ds);
-      for (const e of bodies) if (truckBodyOverlap(p, def.length, def.width, e, world, .4)) {
+      for (const e of bodies) if (truckBodyOverlap(p, def.length, def.width, e, world, e.traffic?.stopped && (e.traffic.yieldUntil ?? 0) > world.tick ? .12 : .4)) {
         this.yield(e, p);
         // Ambient traffic stops for the siren as the engine approaches its crossing.
         if (e.traffic) e.traffic.yieldUntil = world.tick + 120;
