@@ -1,0 +1,37 @@
+
+> assets:build
+> tsx tools/assets/build.ts decay.abandoned-checkpoint
+
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+01:08:06 | INFO: Starting glTF 2.0 export
+01:08:06 | INFO: Extracting primitive: body_pal_khakiSeam
+01:08:06 | INFO: Primitives created: 1
+01:08:06 | INFO: Finished glTF 2.0 export in 0.005420207977294922 s
+
+LOD 0 {"triangles": 800, "draws": 1, "bytes": 60940, "bounds": {"x": [-2.875, 2.67], "y": [-2.02, 1.858], "z": [0.0, 1.2]}, "dimensions": {"x": 5.545, "y": 1.2, "z": 3.878, "tolerance": 0.1}}
+01:08:06 | INFO: Starting glTF 2.0 export
+01:08:06 | INFO: Extracting primitive: body_pal_khakiSeam
+01:08:06 | INFO: Primitives created: 1
+01:08:06 | INFO: Finished glTF 2.0 export in 0.0026390552520751953 s
+
+LOD 1 {"triangles": 360, "draws": 1, "bytes": 27224, "bounds": {"x": [-2.875, 2.693], "y": [-2.02, 1.882], "z": [0.0, 1.2]}, "dimensions": {"x": 5.568, "y": 1.2, "z": 3.902, "tolerance": 0.1}}
+01:08:06 | INFO: Starting glTF 2.0 export
+01:08:06 | INFO: Extracting primitive: body_pal_khakiSeam
+01:08:06 | INFO: Primitives created: 1
+01:08:06 | INFO: Finished glTF 2.0 export in 0.0026040077209472656 s
+
+LOD 2 {"triangles": 196, "draws": 1, "bytes": 15660, "bounds": {"x": [-2.875, 2.693], "y": [-2.0, 1.882], "z": [0.0, 1.2]}, "dimensions": {"x": 5.568, "y": 1.2, "z": 3.882, "tolerance": 0.1}}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit
+prune: Removed types... Accessor (1)
+prune: Removed types... Accessor (4)
+prune: Removed types... Accessor (3)
+prune: Removed types... Accessor (1)
+prune: Removed types... Accessor (4)
+prune: Removed types... Accessor (3)
+prune: Removed types... Accessor (1)
+prune: Removed types... Accessor (4)
+prune: Removed types... Accessor (3)
+decay.abandoned-checkpoint: a77cc60e908e608207dbb98a1481d2573eb185b9c1b303a4eb9e7de08101f53a
