@@ -22,7 +22,7 @@ import { Services } from './core/Services';
 import { Ticker } from './core/Ticker';
 import { GameView } from './render/GameView';
 import { loadLayouts } from './levels/layouts';
-import type { Tier } from './levels/districts/types';
+import type { DistrictLayout, LevelComposition, Tier } from './levels/districts/types';
 import { SimWorld } from './sim/world/SimWorld';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
@@ -139,7 +139,8 @@ export class Game {
     this.levelQueue = load.catch(() => {}); return load;
   }
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset}, performanceScenario?: string, speculative = false):Promise<void>{
+  /** `source`/`setup` (Scene Lab): a prebuilt composition instead of the layout files, and a sim hook after assembly, before the view loads. */
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset;source?:{composition:LevelComposition;layouts:DistrictLayout[]};setup?:(world:SimWorld)=>void}, performanceScenario?: string, speculative = false):Promise<void>{
     // The player picked a level while one loads behind the menus: finish it at full speed.
     if (!speculative) {
       this.preloadForeground = true;
@@ -169,7 +170,7 @@ export class Game {
         // Keep the current picture (title backdrop) on screen while the level loads and warms up.
         if (id === 'L1' && this.params.get('test') !== '1') this.view.freeze();
         const start=performance.now();
-        const {composition,layouts}=await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
+        const {composition,layouts}=opts?.source??await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
         const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
@@ -184,6 +185,7 @@ export class Game {
           const mission=this.world.loadMission(campaign);
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
+        opts?.setup?.(this.world);
         if(this.campaign)this.watchCampaign();
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);

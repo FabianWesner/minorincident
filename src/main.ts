@@ -15,6 +15,7 @@ try {
   if (import.meta.env.DEV || params.get('test') === '1') {
     const { installTestApi } = await import('./debug/testApi');
     installTestApi(game, ready);
+    if (params.has('scenelab')) { const { installSceneLab } = await import('./debug/scenelab/SceneLab'); installSceneLab(game); }
   }
   await ready;
   if (params.has('lookdev') || import.meta.env.DEV && params.has('debug')) {

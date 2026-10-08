@@ -207,7 +207,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2'].includes(this.world.districts.composition.id) ? 'courier' : 'survivor', useSkinnedCourier(this.params));
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove ? this.view.cameraTarget : undefined;
@@ -511,6 +511,8 @@ export class GameView implements Lifecycle {
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
   crowdFigures() { return [...(this.crowd?.getState().figures ?? []), ...(this.npcs?.snapshot().civilians.figures ?? [])]; }
+  /** Scene Lab probes (src/debug/scenelab): the presentation objects it measures. Test/debug use only. */
+  labProbes() { return { districts: this.districts, character: this.character, npcs: this.npcs }; }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });

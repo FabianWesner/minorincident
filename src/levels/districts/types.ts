@@ -118,5 +118,11 @@ export interface LevelComposition {
     overrides?: Partial<
       Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions" | "barricades" | "photoSpots">
     >;
+    /** Scene Lab: full gameplay record for a synthetic layout (replaces `districtGameplay[id]`). */
+    gameplay?: DistrictGameplay;
   }[];
+  /** Scene Lab (src/debug/scenelab): an isolated, synthetic composition. Static instances come from the
+   * layout placements (not the baked GLB), crowns from the asset definitions; `glb` keeps the baked district
+   * ground, otherwise a flat `ground` plane (palette token) is drawn. `courier` selects the L1 hero look. */
+  scene?: { glb: boolean; ground: "grass" | "asphalt" | "sidewalk"; perimeter: boolean; courier: boolean };
 }

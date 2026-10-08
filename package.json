@@ -32,7 +32,9 @@
     "assets:collision": "tsx tools/assets/bake-static-collision.ts",
     "assets:pack": "tsx tools/assets/pack.ts",
     "look:capture": "sh tools/e2e-lock.sh tsx tools/look/capture.ts",
-    "look:score": "sh tools/e2e-lock.sh tsx tools/look/score.ts"
+    "look:score": "sh tools/e2e-lock.sh tsx tools/look/score.ts",
+    "scene": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts",
+    "scene:mcp": "tsx tools/scenelab/mcp.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",
@@ -43,6 +45,7 @@
     "@gltf-transform/core": "4.5.1",
     "@gltf-transform/extensions": "4.5.1",
     "@gltf-transform/functions": "4.5.1",
+    "@modelcontextprotocol/sdk": "1.32.1",
     "@playwright/test": "1.63.0",
     "@tweakpane/core": "2.0.5",
     "@types/node": "22.19.1",
@@ -57,6 +60,7 @@
     "typescript-eslint": "8.71.0",
     "vite": "6.4.3",
     "vitest": "5.0.3",
+    "zod": "4.6.5",
     "ndarray-pixels": "file:tools/assets/png-pixels"
   },
   "overrides": {

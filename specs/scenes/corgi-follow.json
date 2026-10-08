@@ -1,0 +1,15 @@
+{
+  "name": "corgi-follow",
+  "ground": "grass",
+  "size": 30,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-4, -4],
+      "state": { "walk": [[4, -4], [4, 4], [-4, 4], [-4, -4]] } },
+    { "id": "corgi", "kind": "corgi", "at": [-4, -2] }
+  ],
+  "script": [{ "frame": 300, "actor": "courier", "do": { "run": [[4, -4], [4, 4]] } }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 0.7 },
+  "frames": 480,
+  "shots": [120, 360, 480],
+  "expect": { "consoleErrors": 0 }
+}
