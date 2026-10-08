@@ -3736,5 +3736,36 @@ export default {
     ],
     "source": "public/assets/models/decay.burned-facade.diner.glb",
     "hash": "a9a372f8eb0bacf73141210f8d94ae1cb024147182f9bad1310734be99ba1646"
+  },
+  "decay.burned-facade.house": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.005000002682209015,
+      1.4500000476837158,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -0.20999999344348907,
+          0,
+          -1.7999999523162842
+        ],
+        "max": [
+          0.2199999988079071,
+          2.9000000953674316,
+          1.7999999523162842
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.burned-facade.house.glb",
+    "hash": "aed620fdecdf61e5fd264ab31a4b06f5cf0c04279e3bb1a1f5ce20c34a3de8eb"
   }
 };

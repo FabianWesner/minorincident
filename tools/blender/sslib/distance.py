@@ -27,7 +27,7 @@ def tier_argument():
     return tier
 
 
-def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_parts=(), fit_dimensions=False):
+def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_parts=(), fit_dimensions=False, fold_palette=False):
     directory = Path(directory).resolve()
     bpy.context.view_layer.update()
     # Source C groups unparented primitives explicitly before its normal merge.
@@ -211,10 +211,30 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
             resolved.extend(o.name for o in (scoped or candidates))
         light['emissiveNodes'] = sorted(set(resolved))
         obj['ss_light'] = json.dumps(light)
+    if fold_palette:
+        # Preserve palette-separated authored geometry for later damage recipes.
+        bpy.ops.object.select_all(action='SELECT')
+        bpy.ops.export_scene.gltf(filepath=str(directory / ('model.distance%d.glb' % tier)), export_format='GLB', use_selection=True, export_apply=True,
+                                 export_yup=True, export_extras=True, export_cameras=False, export_lights=False)
+        # Native D/E distance geometry shares rigid-owner vertex palette batches.
+        from .house_decay import batch
+        from .sockets import empty
+        lights = empty('lightsFront', parent=root)
+        for obj in list(root.children_recursive):
+            if obj.type == 'MESH' and obj.data.materials[0].name.startswith('emi_'):
+                owner = obj.parent
+                if owner.name != 'door_front':
+                    world = obj.matrix_world.copy(); obj.parent = lights; obj.matrix_world = world
+        batch(root, {'body','roof','interior','door_front','lightsFront'}, extinguish_windows=False)
+        meshes = [o for o in root.children_recursive if o.type == 'MESH']
     bpy.ops.object.select_all(action='SELECT')
     path = directory / ('model.lod%d.glb' % tier)
-    bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True, export_apply=True,
-                             export_yup=True, export_extras=True, export_cameras=False, export_lights=False)
+    if fold_palette:
+        from .export import glb
+        glb(root,path)
+    else:
+        bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True, export_apply=True,
+                                 export_yup=True, export_extras=True, export_cameras=False, export_lights=False)
     count = sum(triangles(o.data) for o in meshes)
     budget = (6000 if tier == 1 else 2000) if directory.name.startswith('veh.') else (12000 if tier == 1 else 4000)
     if count > budget: raise ValueError('%s LOD%d: %d > %d' % (directory.name, tier, count, budget))
