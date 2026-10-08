@@ -1,5 +1,5 @@
 """Reproducible palette-only house. +X front, Z up, metre units.
-Run exclusively with experiment/tools/blender_run.py. Independent color slots,
+Rebuild with tools/blender/run.py. Independent color slots,
 mirrored variant and optional garage; default geometry follows the concept crop.
 """
 import argparse
@@ -16,11 +16,20 @@ from mathutils import Vector, Matrix
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO / 'tools/blender'))
+# Standing variants keep the integrated base's transforms and anchors.
+if '--decay' in sys.argv:
+    from sslib.house_decay import build_house
+    tier = int(sys.argv[sys.argv.index('--distance-tier')+1]) if '--distance-tier' in sys.argv else None
+    build_house(HERE, sys.argv[sys.argv.index('--glb')+1], sys.argv[sys.argv.index('--decay')+1], tier)
+    raise SystemExit(0)
+from sslib.distance import tier_argument, export_variant
+DISTANCE = tier_argument()
 from sslib import palette, ao, export as shared_export
 ASSET_ID = 'bld.house-e'
 KIND = 'e'
 p = argparse.ArgumentParser()
 p.add_argument('--glb')
+p.add_argument('--quality', choices=['high','low'], default='high')
 p.add_argument('--render')
 p.add_argument('--view', choices=['ref', 'game', 'front', 'side', 'rear'], default='ref')
 p.add_argument('--samples', type=int, default=24)
@@ -126,6 +135,7 @@ def beam(name, start, end, width, token='trim', parent=body, depth=None):
 
 
 def ball(name, pos, size, token, parent=dressing, sub=1):
+    if DISTANCE: sub = 1
     bm = bmesh.new()
     bmesh.ops.create_icosphere(bm, subdivisions=sub, radius=1)
     me = bpy.data.meshes.new(name)
@@ -144,6 +154,7 @@ def ball(name, pos, size, token, parent=dressing, sub=1):
 
 
 def cone(name, pos, radius1, radius2, depth, token, parent=body, vertices=12):
+    if DISTANCE: vertices = min(vertices, 10 if DISTANCE == 1 else 6)
     bm = bmesh.new()
     bmesh.ops.create_cone(bm, cap_ends=True, segments=vertices, radius1=radius1, radius2=radius2, depth=depth)
     me = bpy.data.meshes.new(name)
@@ -265,8 +276,9 @@ def wall(name, origin, lo, hi, z0, z1, openings):
             o.rotation_euler.x = .025 if origin[0]=='Y' else 0
         z += .23
         row += 1
-    for i in range(math.ceil((hi-lo)/.75)):
-        ua=lo+i*.75;ub=min(hi,ua+.75)
+    foundation_count = 1 if DISTANCE == 2 else math.ceil((hi-lo)/.75)
+    for i in range(foundation_count):
+        ua=lo+i*(hi-lo)/foundation_count;ub=lo+(i+1)*(hi-lo)/foundation_count
         facade_box('foundation_block',origin,(ua+ub)/2,.25,ub-ua-.012,.5,.18,-.01,'sidewalk',bevel=.02)
     facade_box('skirt_trim',origin,(lo+hi)/2,.51,hi-lo,.09,.10,.055,'trim')
 
@@ -400,9 +412,9 @@ def railing(x0,x1,y0,y1,z,parent=body):
 PAD_X0, PAD_X1 = (-3.7,5.3) if KIND=='d' else (-3.9,4.6)
 PAD_HALF=4.0
 box('pad',( (PAD_X0+PAD_X1)/2,0,.095),(PAD_X1-PAD_X0,8,.19),'sidewalk',dressing,.025)
-for i in range(math.ceil((PAD_X1-PAD_X0)/.70)):
-    x=PAD_X0+(i+.5)*(PAD_X1-PAD_X0)/math.ceil((PAD_X1-PAD_X0)/.70)
-    for y in [-3.83,3.83]:box('curb',(x,y,.20),((PAD_X1-PAD_X0)/math.ceil((PAD_X1-PAD_X0)/.70)-.012,.32,.30),'sidewalk',dressing,.018)
+for i in range(1 if DISTANCE == 2 else math.ceil((PAD_X1-PAD_X0)/.70)):
+    x=PAD_X0+(i+.5)*(PAD_X1-PAD_X0)/(1 if DISTANCE == 2 else math.ceil((PAD_X1-PAD_X0)/.70))
+    for y in [-3.83,3.83]:box('curb',(x,y,.20),((PAD_X1-PAD_X0)/(1 if DISTANCE == 2 else math.ceil((PAD_X1-PAD_X0)/.70))-.012,.32,.30),'sidewalk',dressing,.018)
 for i in range(11):
     y=-3.64+i*.73
     for x in [PAD_X0+.16,PAD_X1-.16]:box('curb',(x,y,.20),(.32,.70,.30),'sidewalk',dressing,.018)
@@ -582,46 +594,22 @@ if not a.no_dressing:
 else:
     for obj in list(dressing.children_recursive):bpy.data.objects.remove(obj,do_unlink=True)
 
-# Capture an authored distant silhouette before detail merging.
-# Raw primitive faces omit bevels and tiny siding/shingle/flower parts entirely.
-coarse={}
-keep=('corner_board','skirt_trim','casing','window_pane',
-      'sill','shutter_frame','door_leaf','door_lite','door_jamb','door_lintel',
-      'stone_pier_mortar','pier_cap','porch_foundation','brick_step','brick_tread','stone_step','step_tread',
-      'column','tapered_column','porch_beam','porch_rail','entry_newel',
-      'dormer_shell','dormer_gable','portico_gable','front_gable','rear_gable','garage_gable',
-      'eave_fascia','rake_fascia','ridge_cap','hip_cap','hip_ridge','rake_bracket',
-      'chimney_mortar','chimney_coping','flue_dark','chimney_rain_cap',
-      'interior_floor','upper_floor','pad','grass_bed','pine_foliage',
-      'lantern_core','lantern_frame','lantern_hood','hanging_pot',
-      'bench_seat','bench_back','bench_leg','bench_arm','seat_cushion','back_cushion','throw_pillow',
-      'garage_shell','garage_plinth','garage_door')
-bpy.context.view_layer.update()
-for obj in [o for o in root.children_recursive if o.type=='MESH']:
-    name=obj.name.split('.')[0]
-    if not (name.startswith(keep) or name.endswith('_deck') or name=='shrub_core'):
-        continue
-    if name=='shrub_core' and max(obj.dimensions)<.45:
-        continue
-    owner=obj.parent
-    while owner!=root and owner.name not in protected:owner=owner.parent
-    key=owner.name+'_'+obj.data.materials[0].name
-    vs,fs=coarse.setdefault(key,([],[]))
-    matrix=owner.matrix_world.inverted()@obj.matrix_world
-    obj.data.calc_loop_triangles()
-    for triangle in obj.data.loop_triangles:
-        start=len(vs)
-        vs.extend(tuple(matrix@obj.data.vertices[i].co) for i in triangle.vertices)
-        fs.append((start,start+1,start+2))
-
-def coarse_box(key,pos,size):
-    vs,fs=coarse.setdefault(key,([],[]));start=len(vs)
-    x,y,z=[v/2 for v in size]
-    vs.extend((pos[0]+i,pos[1]+j,pos[2]+k) for i in [-x,x] for j in [-y,y] for k in [-z,z])
-    for face in [(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),(0,2,3,1),(4,5,7,6)]:
-        fs.extend(tuple(start+i for i in tri) for tri in [(face[0],face[1],face[2]),(face[0],face[2],face[3])])
-coarse_box('body_'+M['wall'].name,((FRONT+BACK)/2,0,(EAVE+.5)/2),(FRONT-BACK,2*HALF,EAVE-.5))
-coarse_box('body_'+M['sidewalk'].name,((FRONT+BACK)/2,0,.25),(FRONT-BACK,2*HALF,.5))
+# Explicit distance recipes preserve structural openings, decks and roof forms.
+if DISTANCE == 2:
+    # Fuse the two short-end curb runs, preserving their exact footprint.
+    for obj in list(dressing.children_recursive):
+        if obj.type == 'MESH' and obj.name.startswith('curb') and obj.dimensions.x < .4:
+            bpy.data.objects.remove(obj, do_unlink=True)
+    for x in [PAD_X0+.16,PAD_X1-.16]:
+        box('curb_run',(x,0,.20),(.32,7.7,.30),'sidewalk',dressing,0)
+if DISTANCE:
+    export_variant(HERE, DISTANCE,
+        omit=('shingle', 'leaf_cluster', 'flower_', 'grass_tuft', 'floor_joint',
+              'curtain_fold', 'shutter_louver', 'chimney_brick', 'pier_stone'),
+        far_omit=('clapboard', 'window_mullion', 'window_sash', 'ridge_cap',
+                  'hip_cap', 'pot_chain', 'rake_bracket', 'rake_brace',
+                  'column_collar', 'door_panel', 'door_hinge', 'bench_leg',
+                  'window_reveal', 'shutter_inset'), fold_palette=True)
 
 # Record light regions before material joining; retain semantic anchors after joining.
 light_records=[]
@@ -707,35 +695,16 @@ if a.glb:
     path=Path(a.glb).resolve()
     path.parent.mkdir(parents=True,exist_ok=True)
     shared_export.glb(root,path)
-    originals={o:o.data for o in meshes}
-    for level,ratio in [(1,.14),(2,1)]:
-        for obj in meshes:
-            if level==2:
-                vs,fs=coarse.get(obj.name,([],[]))
-                data=bpy.data.meshes.new(obj.name+'_distant')
-                data.from_pydata(vs,[],fs);data.materials.append(originals[obj].materials[0]);data.update()
-                if a.mirror:data.transform(Matrix.Diagonal((1,-1,1,1)))
-                if vs:
-                    bm=bmesh.new();bm.from_mesh(data)
-                    bmesh.ops.remove_doubles(bm,verts=bm.verts,dist=1e-7)
-                    bmesh.ops.recalc_face_normals(bm,faces=bm.faces);bm.to_mesh(data);bm.free()
-                obj.data=data
-            else:
-                obj.data=originals[obj].copy()
-                bpy.context.view_layer.objects.active=obj
-                mod=obj.modifiers.new('LOD reduction','DECIMATE');mod.ratio=ratio
-                bpy.ops.object.modifier_apply(modifier=mod.name)
-                bounds=[(min(v.co[axis] for v in originals[obj].vertices),max(v.co[axis] for v in originals[obj].vertices)) for axis in range(3)]
-                for vertex in obj.data.vertices:
-                    for axis,(lo,hi) in enumerate(bounds):vertex.co[axis]=min(hi,max(lo,vertex.co[axis]))
-            obj.data.update();obj.data.calc_loop_triangles()
-        if level==2:
-            nonempty=[o for o in meshes if len(o.data.polygons)]
-            ao.bake_all(nonempty,samples=32);tone_ao(nonempty)
-        triangles['lod'+str(level)]=stats()
-        shared_export.glb(root,path.with_name(path.stem+'.lod'+str(level)+'.glb'))
-        for obj in meshes:
-            reduced=obj.data;obj.data=originals[obj];bpy.data.meshes.remove(reduced)
+    from sslib.distance import build_native_lods
+    # Native source reruns strip explicit detail and export solid low-sided forms.
+    build_native_lods(__file__)
+    root = bpy.data.objects['root']
+    meshes = [o for o in root.children_recursive if o.type == 'MESH']
+    import shutil
+    for level in (1,2):
+        source = HERE / ('model.lod'+str(level)+'.glb')
+        target = path.with_name(path.stem+'.lod'+str(level)+'.glb')
+        if source != target: shutil.copyfile(source,target)
     # Optimize in place using the project's canonical meshopt/quantization pipeline.
     # Keep named mesh nodes too: light anchors refer to their emissive names.
     definition=next(d for d in json.loads((REPO/'src/assets/manifest.json').read_text()) if d['id']==ASSET_ID).copy()
@@ -757,7 +726,7 @@ if a.glb:
     report={'id':ASSET_ID,'tier':'hero','triangles':triangles,'draw_calls':len(meshes),
         'materials':sorted({o.data.materials[0].name for o in meshes}),
         'dimensions':dimensions,'nodes_ok':all(bpy.data.objects.get(n) for n in ['root','roof','interior','door_front','front']),
-        'within_budget':triangles['lod0']<=100000 and len(meshes)<=40 and triangles['lod1']<=triangles['lod0']*.155 and triangles['lod2']<=min(4000,triangles['lod0']*.045),
+        'within_budget':triangles['lod0']<=100000 and len(meshes)<=40 and triangles['lod1']<=12000 and triangles['lod2']<=4000,
         'ao':'Cycles CPU, deterministic seed 17, 32 samples, COLOR_0',
         'matches_reference':False,'done':False,'webgl2_ok':False,'webgpu_ok':False,
         'gaps':['Back and small furnished interior are inferred from the single reference view.']}

@@ -21,7 +21,7 @@ function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee'
 type Kill = Extract<GameEvent, { type: 'combat.hit' | 'combat.kill' }>;
 const [lowS, highS] = infectedRecovery.downS;
 
-test('T-recover-01 @E05 @E19 a lethal melee hit knocks down: 10-20 s on the ground (deterministic per seed), hits never extend it, then up at full HP', async () => {
+test('T-recover-01 @E05 @E19 a lethal melee hit knocks down: 10-20 s on the ground (deterministic per seed), a ground hit restarts the down time (PO 10-08), then up at full HP', async () => {
   const downTicks: number[] = [];
   for (const seed of [1, 2, 3, 4, 5, 1]) {
     const { w } = await arena(seed);
@@ -34,11 +34,15 @@ test('T-recover-01 @E05 @E19 a lethal melee hit knocks down: 10-20 s on the grou
     expect(recoverAt - downAt).toBeGreaterThanOrEqual(lowS * 60); expect(recoverAt - downAt).toBeLessThanOrEqual(highS * 60);
     downTicks.push(recoverAt - downAt);
     step(w, 200);
-    // Down, not dead: still an active brain (no corpse record), still on the ground; ground hits change nothing.
+    // Down, not dead: still an active brain (no corpse record), still on the ground.
     const body = w.entities.get(e.id)!;
     expect(body.corpse).toBeFalsy(); expect(body.infected!.state).toBe('dead');
-    expect(hit(w, body)).toBe(0); expect(body.infected!.recoverAt).toBe(recoverAt); expect(kills).toHaveLength(1);
-    step(w, recoverAt - w.tick - 1);
+    // PO 10-08 "Hitting a downed zombie should reset it's timer.": a fresh 10-20 s from the ground hit, no new kill event.
+    const hitAt = w.tick;
+    expect(hit(w, body)).toBe(0); expect(kills).toHaveLength(1);
+    const reset = body.infected!.recoverAt;
+    expect(reset - hitAt).toBeGreaterThanOrEqual(lowS * 60); expect(reset - hitAt).toBeLessThanOrEqual(highS * 60);
+    step(w, reset - w.tick - 1);
     expect(body.health.current).toBe(0);
     step(w, 2);
     expect(body.health.current).toBe(body.health.max); expect(body.infected!.state).not.toBe('dead');
