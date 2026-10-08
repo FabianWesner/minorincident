@@ -200,6 +200,9 @@ body[data-ui-screen=pause] .menu-pause{pointer-events:auto;width:auto;max-width:
 body[data-ui-screen=pause] .menu-pause h1{font-size:calc(16px * var(--text-scale));margin:0 6px 0 2px}
 body[data-ui-screen=pause] .menu-pause p{order:9;flex-basis:100%;margin:0;text-align:center;font-size:calc(13px * var(--text-scale));color:#e9d9bb}
 body[data-ui-screen=pause] .menu-pause button{min-height:44px;padding:0 14px}
+body[data-ui-screen=pause] .restart-confirm{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 10px}
+.restart-confirm[hidden]{display:none!important}
+body[data-ui-screen=pause] .restart-confirm span{font-size:calc(15px * var(--text-scale));color:#fff}
 body.ui-hidden .menus,body.ui-hidden .hud,body.ui-hidden .mission-ui,body.ui-hidden [data-touch-controls],body.ui-hidden .hud-stick-zone,body.ui-hidden [data-testid=pause-button]{display:none!important}
 /* The pause bar sits centred between the vitals (left, ~320 px) and the minimap (right, ~190 px); narrow screens and phones drop it below the top HUD row. */
 body[data-ui-screen=pause] .menu-pause{max-width:min(640px,calc(100vw - 760px))}
