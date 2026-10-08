@@ -1,0 +1,56 @@
+{
+  "assetValidate": {
+    "command": "npm run assets:validate",
+    "passed": 778,
+    "failed": 0
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2",
+    "filesPassed": 98,
+    "testsPassed": 343,
+    "testsFailed": 0,
+    "note": "Pre-merge required maxWorkers=4 run passed 341/341; post-merge run uses 2 workers per heavy limit."
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0
+  },
+  "smoke": {
+    "command": "E2E_PORT=3313 npm run test:smoke",
+    "simPassed": 6,
+    "simSkipped": 816,
+    "browserPassed": 25,
+    "browserFailed": 0,
+    "browserWorkers": 2,
+    "exitCode": 0
+  },
+  "determinism": {
+    "sourceTiers": 18,
+    "pass": true
+  },
+  "footprint": {
+    "resolution": 512,
+    "IoU": {
+      "w2.lod0": 1.0,
+      "w3.lod0": 1.0,
+      "w2.lod1": 1.0,
+      "w3.lod1": 1.0,
+      "w2.lod2": 1.0,
+      "w3.lod2": 1.0
+    },
+    "origin": "unchanged",
+    "dimensions": "2.0414 x 2.675 x 4.9692 m; all tiers and twins"
+  },
+  "commits": [
+    "147d7a42",
+    "a5b9caf3"
+  ]
+}
