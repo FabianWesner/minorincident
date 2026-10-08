@@ -1,0 +1,111 @@
+{
+  "id": "veh.school-bus.wrecked",
+  "baseId": "veh.school-bus",
+  "decay": "wrecked",
+  "delivery": "delivered-awaiting-independent-QA",
+  "source": {
+    "lod0": {
+      "triangles": 3940,
+      "draws": 7,
+      "bytes": 279396
+    },
+    "lod1": {
+      "triangles": 3620,
+      "draws": 7,
+      "bytes": 253408
+    },
+    "lod2": {
+      "triangles": 1668,
+      "draws": 7,
+      "bytes": 121616
+    }
+  },
+  "production": [
+    {
+      "id": "veh.school-bus.wrecked",
+      "lod": 0,
+      "path": "public/assets/models/veh.school-bus.wrecked.glb",
+      "bytes": 77800,
+      "triangles": 3924,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        8.007084096638946,
+        3.416877013100366,
+        3.303071862980091
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.school-bus.wrecked",
+      "lod": 1,
+      "path": "public/assets/models/veh.school-bus.wrecked.lod1.glb",
+      "bytes": 70532,
+      "triangles": 3607,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        8.007084096638946,
+        3.4168283118720524,
+        3.303071862980091
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.school-bus.wrecked",
+      "lod": 2,
+      "path": "public/assets/models/veh.school-bus.wrecked.lod2.glb",
+      "bytes": 35592,
+      "triangles": 1668,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        8.007083222437467,
+        3.3991066507188687,
+        3.3033158666008386
+      ],
+      "errors": []
+    }
+  ],
+  "pixelSizes": [
+    {
+      "lod": 0,
+      "pixelBounds": [
+        169,
+        113,
+        315,
+        250
+      ],
+      "maxPixels": 146
+    },
+    {
+      "lod": 1,
+      "pixelBounds": [
+        169,
+        113,
+        315,
+        251
+      ],
+      "maxPixels": 146
+    },
+    {
+      "lod": 2,
+      "pixelBounds": [
+        169,
+        113,
+        316,
+        250
+      ],
+      "maxPixels": 147
+    }
+  ],
+  "contactSheets": [
+    "test-results/l3-traffic-and-army-vehicles/veh.school-bus.wrecked/comparison.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.school-bus.wrecked/lod-contact.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.school-bus.wrecked/game-camera.png"
+  ],
+  "interfaces": [
+    "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+  ],
+  "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: Yellow bus window rhythm survives; folded nose, bowed roof, open glazing, torn near door and exposed hub.\n\nLimitations: Far roof edging and trim disappear; the bowed roof and folded bonnet carry the damage read.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+}

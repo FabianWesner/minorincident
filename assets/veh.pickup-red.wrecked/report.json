@@ -1,0 +1,111 @@
+{
+  "id": "veh.pickup-red.wrecked",
+  "baseId": "veh.pickup-red",
+  "decay": "wrecked",
+  "delivery": "delivered-awaiting-independent-QA",
+  "source": {
+    "lod0": {
+      "triangles": 4066,
+      "draws": 7,
+      "bytes": 292988
+    },
+    "lod1": {
+      "triangles": 3746,
+      "draws": 7,
+      "bytes": 267480
+    },
+    "lod2": {
+      "triangles": 1764,
+      "draws": 7,
+      "bytes": 134948
+    }
+  },
+  "production": [
+    {
+      "id": "veh.pickup-red.wrecked",
+      "lod": 0,
+      "path": "public/assets/models/veh.pickup-red.wrecked.glb",
+      "bytes": 78032,
+      "triangles": 4048,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        5.035039901733398,
+        2.1505605631188063,
+        2.532501987379624
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.pickup-red.wrecked",
+      "lod": 1,
+      "path": "public/assets/models/veh.pickup-red.wrecked.lod1.glb",
+      "bytes": 71192,
+      "triangles": 3724,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        5.03800892829895,
+        2.15058814999433,
+        2.5324578099310897
+      ],
+      "errors": []
+    },
+    {
+      "id": "veh.pickup-red.wrecked",
+      "lod": 2,
+      "path": "public/assets/models/veh.pickup-red.wrecked.lod2.glb",
+      "bytes": 39500,
+      "triangles": 1763,
+      "materials": 3,
+      "draws": 7,
+      "dimensions": [
+        5.03800892829895,
+        2.0235053157109792,
+        2.5000160275319967
+      ],
+      "errors": []
+    }
+  ],
+  "pixelSizes": [
+    {
+      "lod": 0,
+      "pixelBounds": [
+        170,
+        137,
+        311,
+        246
+      ],
+      "maxPixels": 141
+    },
+    {
+      "lod": 1,
+      "pixelBounds": [
+        170,
+        137,
+        312,
+        246
+      ],
+      "maxPixels": 142
+    },
+    {
+      "lod": 2,
+      "pixelBounds": [
+        170,
+        138,
+        311,
+        246
+      ],
+      "maxPixels": 141
+    }
+  ],
+  "contactSheets": [
+    "test-results/l3-traffic-and-army-vehicles/veh.pickup-red.wrecked/comparison.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.pickup-red.wrecked/lod-contact.png",
+    "test-results/l3-traffic-and-army-vehicles/veh.pickup-red.wrecked/game-camera.png"
+  ],
+  "interfaces": [
+    "four wheel owners; driverSeat, exitL, exitR; original collider and door pivots; front empty; wreckLightOff"
+  ],
+  "visualFaults": "L3 asset lane self-review; independent orchestrator acceptance remains required.\n\nReference inspected before modeling. Reviewed all sides and authored LOD contact sheets; fixed FOV25 / azimuth45 / polar0.3\u03c0 gameplay captures target 160px.\n\nObserved identity/damage: Red cab and open bed remain distinct; folded hood, skewed bed rail, missing driver door and windshield break.\n\nLimitations: Far bed trim and scratches disappear; the large folded nose and open bed remain.\n\nLOD0/1/2 preserve the large damage forms and semantic nodes. Wreck lenses are opaque and dead. No active flames. Triangle caps and eight total draws are measured separately from the validator's static-only draw check.\n"
+}
