@@ -31,6 +31,8 @@ for (const level of ['L1', 'L2']) test(`@E16 ${level} visible outbreak encounter
         throw error;
     });
     expect(samples.at(-1)!.music.state).toBe('combat');
+    mkdirSync('test-results/epics/E16', { recursive: true });
+    await page.screenshot({ path: `test-results/epics/E16/danger-${level}-encounter.png` });
     await page.waitForTimeout(1000);
     expect((await snapshot()).streamed.decks.find(d => d.state === 'calm')!.gain).toBeLessThan(0.01);
     // Remove live threats without changing the music director or emitting intensity events.
@@ -43,8 +45,9 @@ for (const level of ['L1', 'L2']) test(`@E16 ${level} visible outbreak encounter
     expect((await snapshot()).state).toBe('combat');
     await expect.poll(async () => {
         const music = await snapshot(); samples.push({ ms: Date.now() - started, music });
-        return music.streamed.decks.find(d => d.state === 'calm')?.gain ?? 0;
-    }, { timeout: 3000, intervals: [100] }).toBeGreaterThan(0.45);
+        return (music.streamed.decks.find(d => d.state === 'calm')?.gain ?? 0) > 0.45
+            && (music.streamed.decks.find(d => d.state === 'combat')?.gain ?? 0) < 0.01;
+    }, { timeout: 3000, intervals: [100] }).toBe(true);
     const releaseMs = Date.now() - left;
     expect(releaseMs).toBeGreaterThan(6000);
     expect(releaseMs).toBeLessThan(8200);
