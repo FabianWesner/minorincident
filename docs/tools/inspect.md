@@ -18,7 +18,7 @@ The default courier is a stationary ghost: infected ignore her and combat cannot
 | One finger | Pan |
 | Pinch / two finger twist | Zoom / rotate |
 
-The overlay includes camera coordinates, nearest placement or anchor, entity under the cursor (id, kind, look, state, drawn LOD), fps and draw calls, time scales 0 / 0.25 / 1 / 4, anchor/objective/checkpoint jumps, follow controls and PNG download. LOD distance **real** uses the inspection camera; **game** uses a virtual camera at the standard game radius around the inspected point. Frustum culling always uses the visible camera. Lighting, geometry, render tiers and animation come from the game.
+The overlay includes camera coordinates, nearest placement or anchor, entity under the cursor (id, kind, look, state, drawn LOD), fps and draw calls, time scales 0 / 0.25 / 1 / 4, anchor/objective/checkpoint jumps (scripted checkpoints appear when captured), follow controls and PNG download. LOD distance **real** uses the inspection camera; **game** uses a virtual camera at the standard game radius around the inspected point. Frustum culling always uses the visible camera. Lighting, geometry, render tiers and animation come from the game.
 
 The free camera never enters simulation decisions. In particular, the spawn director keeps the normal courier camera frustum. Ghost is an explicit change to courier behavior; use bot or unchanged to compare identical simulation runs. Inspection suspends automatic render quality adaptation while active, so inspecting an expensive overview cannot lower the simulation population. Time scale changes real time per tick; explicit `step()` always advances the same fixed ticks.
 

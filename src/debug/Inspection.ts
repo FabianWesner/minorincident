@@ -28,6 +28,7 @@ export class Inspection {
   private shown = true;
   private elapsed = 0;
   private level = '';
+  private checkpoint: string | null = null;
   private readonly ground = new Plane(new Vector3(0, 1, 0), 0);
   private readonly ray = new Raycaster();
   constructor(private readonly game: Game) {
@@ -87,7 +88,7 @@ export class Inspection {
     this.game.view.view.inspectionPose = structuredClone(pose); this.game.view.update(1);
   }
   follow(id: number | null): void { if (id !== null && !this.game.world.entities.get(id)) throw new Error(`Unknown entity ${id}`); if (!this.enabled) this.enable(true); this.following = id; this.update(0); this.game.view.update(1); }
-  timeScale(scale: number): void { this.game.clock.setTimeScale(scale); if (scale > 0) this.game.clock.resume(); }
+  timeScale(scale: number): void { this.game.clock.setTimeScale(scale); if (scale > 0) this.game.clock.resume(); else this.game.clock.pause(); }
   lod(mode: 'real' | 'game'): void { this.game.view.view.inspectionGameLod = mode === 'game'; this.game.view.update(1); }
   anchors(): InspectionAnchor[] {
     const anchors: InspectionAnchor[] = [];
@@ -97,7 +98,12 @@ export class Inspection {
     const mission = this.game.world.missions;
     if (mission) {
       for (const [id, at] of Object.entries(mission.def.anchors)) anchors.push({ id: `mission/${id}`, kind: 'objective', position: [at.x, 0, at.z] });
-      for (const checkpoint of mission.def.checkpoints ?? []) { const step = mission.def.steps.find(step => step.onComplete?.some(action => action.kind === 'checkpoint' && action.id === checkpoint)); const at = step && 'anchor' in step ? mission.def.anchors[step.anchor] : undefined; if (at) anchors.push({ id: `checkpoint/${checkpoint}`, kind: 'checkpoint', position: [at.x, 0, at.z] }); }
+      for (const checkpoint of mission.def.checkpoints ?? []) { const step = mission.def.steps.find(step => [...(step.onStart ?? []), ...(step.onComplete ?? [])].some(action => action.kind === 'checkpoint' && action.id === checkpoint)); const at = step && 'anchor' in step ? mission.def.anchors[step.anchor] : undefined; if (at) anchors.push({ id: `checkpoint/${checkpoint}`, kind: 'checkpoint', position: [at.x, 0, at.z] }); }
+      for (const checkpoint of mission.checkpointPositions()) {
+        const id = `checkpoint/${checkpoint.id}`, previous = anchors.find(anchor => anchor.id === id);
+        if (previous) previous.position = checkpoint.position;
+        else anchors.push({ id, kind: 'checkpoint', position: checkpoint.position });
+      }
     }
     return anchors;
   }
@@ -106,6 +112,8 @@ export class Inspection {
   update(seconds: number): void {
     if (!this.enabled) return;
     this.game.world.inspectionGhost = this.mode === 'ghost';
+    const checkpoint = this.game.world.missions?.state.checkpoint ?? null;
+    if (this.checkpoint !== checkpoint) { this.checkpoint = checkpoint; this.refreshAnchors(); }
     if (this.level !== this.game.world.scenario) { this.level = this.game.world.scenario ?? ''; this.following = null; this.target.copy(this.game.view.view.cameraTarget); this.refreshAnchors(); this.game.world.inspectionGhost = this.mode === 'ghost'; }
     const speed = Math.min(seconds, .1) * (this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') ? 40 : 10);
     const x = Number(this.keys.has('KeyD') || this.keys.has('ArrowRight')) - Number(this.keys.has('KeyA') || this.keys.has('ArrowLeft'));
