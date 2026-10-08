@@ -1,4 +1,4 @@
-"""Burned, broken standing shop frontages (brick and diner), explicit 1500/600/200 tiers.
+"""Burned, broken standing frontages (brick, diner; house via burned_ruins.py), explicit 1500/600/200 tiers.
 
 Masonry is built from real prisms: jagged collapsed parapets, open window holes with a dark
 interior, charred lintels with a soot gradient, tattered slat awnings and rubble on the pavement.
@@ -51,6 +51,9 @@ def flat(heights, lod):
 
 
 def recipe(asset, lod):
+    if asset.endswith('house'):
+        from .burned_ruins import house
+        return house(Scene(asset, lod))
     s = Scene(asset, lod); s.protected = set(); diner = asset.endswith('diner')
     REMAP.clear()
     REMAP.update({'asphalt': 'leather', 'leatherShadow': 'uiDark', 'survivorRed': 'brick'} if not diner else {'asphalt': 'leather', 'leatherShadow': 'uiDark', 'khakiSeam': 'leather', 'redDark': 'redShadow'})

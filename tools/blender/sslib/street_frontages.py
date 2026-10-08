@@ -199,35 +199,8 @@ def shelter(s, decay):
 
 
 def facade(s):
-    L=s.lod
-    # Generic standing shop wall. Full profile survives 200-triangle far budget.
-    s.box('threshold',(.16,0,.10),(1.60,4.8,.20),'sidewalk')
-    for y in (-2.15,2.15):s.box('standingPier',(0,y,1.98),(.40,.50,3.56),'brick')
-    s.box('windowSill',(0,-.60,.64),(.40,2.60,.88),'brick')
-    s.box('charredLintel',(0,0,3.05),(.40,3.90,.35),'uiDark')
-    # Locally chipped parapet, no wholesale collapse or ground rubble.
-    outline=[(-2.4,3.20),(-2.4,3.80),(-1.6,3.80),(-1.45,3.52),(-.9,3.62),(-.5,3.4),(.1,3.72),(.6,3.55),(1.1,3.80),(2.4,3.80),(2.4,3.2)]
-    vs=[(x,y,z) for x in (-.20,.20) for y,z in outline];n=len(outline)
-    fs=[tuple(range(n-1,-1,-1)),tuple(range(n,2*n))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
-    s.mesh('chippedStandingParapet',vs,fs,'brick')
-    for y in (-1.92,.66,1.91):s.box('charredFrame',(.22,y,1.97),(.10,.10,1.94),'uiDark')
-    s.box('charredSill',(.22,-.63,1.13),(.12,2.70,.14),'uiDark')
-    # Broad non-coplanar soot, both faces; broken pale glass tips at far tier too.
-    for x in (-.207,.207):
-        s.box('sootPatch',(x,-2.17,2.30),(.014,.44,1.7),'uiDark')
-        s.box('sootPatch',(x,2.17,2.85),(.014,.44,1.3),'uiDark')
-    for y in (-1.8,.4):s.mesh('glassShard',[(.28,y,2.82),(.28,y+.22,2.82),(.28,y+.05,2.48)],[(0,1,2)],'picketWhite')
-    if L<2:
-        s.box('charredAwning',(.48,0,2.89),(.80,3.92,.14),'uiDark')
-        for y in (-1.45,-.4,.65,1.6):s.box('scorchedTrim',(.90,y,2.82),(.06,.12,.28),'woodWarm')
-        for z in (.45,.75,3.4):
-            for y in (-2.16,2.16):s.box('brickJoint',(.217,y,z),(.02,.38,.035),'sidewalk')
-    if L==0:
-        for y in (-1.4,-.8,-.2,.4,1,1.6):s.box('localChar',(.219,y,3.45),(.024,.28,.14),'uiDark')
-    s.physics()
-    sockets.empty('attachSocket',(-.21,0,0),s.root)
-    colliders.cuboid('wall',(.44,4.8,3.8),(0,0,1.9),s.root)
-    return s
+    from .burned_ruins import generic
+    return generic(s)
 
 
 def finish(s,path):
