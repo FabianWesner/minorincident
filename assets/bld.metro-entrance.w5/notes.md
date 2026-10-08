@@ -6,9 +6,9 @@ Derived from the existing integrated base GLB independently at each authored dis
 
 | Tier | Triangles | Asset draws | Materials | Runtime bytes |
 | --- | ---: | ---: | ---: | ---: |
-| LOD0 | 5886 | 6 | 5 | 94240 |
-| LOD1 | 3113 | 6 | 5 | 52556 |
-| LOD2 | 1325 | 6 | 5 | 28040 |
+| LOD0 | 5959 | 6 | 5 | 95836 |
+| LOD1 | 3198 | 6 | 5 | 53892 |
+| LOD2 | 1414 | 6 | 5 | 29324 |
 
 Static solids are merged per palette material. LODs inherit the reviewed base authored recipes and use explicit smaller glass, impact and rubble recipes; no decimation. Deterministic seeds: rubble 523, impact 731, AO 17. Physics stays fixed. All rendering/capture is headless.
 

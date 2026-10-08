@@ -33,6 +33,7 @@ def subtract(obj, cutter):
     mod = obj.modifiers.new('authored fracture', 'BOOLEAN')
     mod.operation = 'DIFFERENCE'
     mod.solver = 'EXACT'
+    mod.material_mode = 'TRANSFER'
     mod.object = cutter
     bpy.context.view_layer.objects.active = obj
     bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -107,12 +108,16 @@ def cut_collapse(s):
     # Negative-Y is the game camera side. The cutter rises through the roof;
     # its bottom is a broad stair-stepped diagonal fracture, not a clean box.
     if row:
-        ys, zs, x0 = [-8.2, -7.0, -5.9, -4.9, -3.7, -3.0], [4.8, 5.15, 4.6, 5.55, 6.4, 7.1], -.25
+        ys, zs, x0 = [-8.5, -7.0, -5.9, -4.9, -3.7, -3.0], [4.8, 5.15, 4.6, 5.55, 6.4, 7.1], -.25
     elif metro:
         ys, zs, x0 = [-2.5, -1.7, -.9, -.2], [3.1, 3.6, 4.6, 5.35], -3.3
     else:
         ys, zs, x0 = [-4.7, -3.5, -2.5, -1.35, -.35], [4.7, 5.0, 5.6, 6.4, 7.05], .25
-    profile = list(zip(ys, zs)) + [(ys[-1], 14), (ys[0], 14)]
+    profile = [(ys[0], zs[0])]
+    for i in range(len(ys)-1):
+        mid = (ys[i]+ys[i+1])/2
+        profile += [(mid, zs[i]+.16), (mid+.10, zs[i]-.12), (ys[i+1], zs[i+1])]
+    profile += [(ys[-1], 14), (ys[0], 14)]
     cutter = s.extrude('CUTTER', profile, 'x', x0, 6, 'uiDark')
     bpy.context.view_layer.update()
     for obj in list(s.root.children_recursive):
