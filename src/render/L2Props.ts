@@ -1,5 +1,5 @@
 import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, Quaternion, Vector3 } from 'three/webgpu';
-import { l2, l2Anchors } from '../data/l2';
+import { l2, l2Anchors, l2Beacons, l2Station } from '../data/l2';
 import { l2Dressing } from '../levels/L2/layout';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -40,11 +40,13 @@ export class L2Props extends Group {
     }
     this.bars.push({ mesh: instanced(this.red, red.length), boxes: red }, { mesh: instanced(this.blue, blue.length), boxes: blue });
     // The fire axe on its rack (head and handle hidden once taken).
+    // Rack-local +z points from the stand-to-interact anchor to the wall: into the station (against its bay-out direction).
     const [rx, rz] = l2Anchors['l2-axe-rack'];
+    this.axe.position.set(rx, 0, rz); this.axe.rotation.y = Math.atan2(-Math.cos(l2Station.yaw), Math.sin(l2Station.yaw));
     const part = (material: ReturnType<Materials['get']>, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); m.castShadow = true; this.axe.add(m); };
-    part(materials.get('woodWarm'), [1.1, .5, .08], [rx, 1.5, rz + .55]);
-    part(materials.get('woodWarm'), [.08, 1.05, .08], [rx, 1.45, rz + .48]);
-    part(materials.get('policeBlue'), [.36, .2, .06], [rx + .1, 1.88, rz + .46]);
+    part(materials.get('woodWarm'), [1.1, .5, .08], [0, 1.5, .55]);
+    part(materials.get('woodWarm'), [.08, 1.05, .08], [0, 1.45, .48]);
+    part(materials.get('policeBlue'), [.36, .2, .06], [.1, 1.88, .46]);
     this.add(this.axe);
     // Checkpoint gates: striped panels (stripes relative to the panel centre), moved between open and closed.
     const [z0, z1] = l2.checkpoint.gateZ, x = l2.checkpoint.gateX, white: Box[] = [], redStripes: Box[] = [];
@@ -86,7 +88,7 @@ export class L2Props extends Group {
     this.beacons.count = alarm ? 2 : 0;
     if (alarm) {
       const pulse = Math.floor(tick / 12) % 2 ? .34 : .24;
-      [-75.9, -68.7].forEach((bx, i) => { this.m4.compose(this.at.set(bx, 3.1, 44.4), this.turn.setFromAxisAngle(this.yAxis, tick * .18 + i), this.scaleV.set(pulse, pulse, pulse)); this.beacons.setMatrixAt(i, this.m4); });
+      l2Beacons.forEach(([bx, bz], i) => { this.m4.compose(this.at.set(bx, 3.1, bz), this.turn.setFromAxisAngle(this.yAxis, tick * .18 + i), this.scaleV.set(pulse, pulse, pulse)); this.beacons.setMatrixAt(i, this.m4); });
       this.beacons.instanceMatrix.needsUpdate = true;
     }
     // Light bars alternate red and blue every quarter second.

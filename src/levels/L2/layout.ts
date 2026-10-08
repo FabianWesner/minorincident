@@ -1,4 +1,4 @@
-import { l2Anchors } from '../../data/l2';
+import { l2Anchors, l2Station, stationPoint } from '../../data/l2';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W1 "wounded, but still standing" dressing (E20 section 5.7); counted by the static AC15 test. */
@@ -20,14 +20,14 @@ export const l2Dressing: readonly Dressing[] = [
   { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 28.6, yaw: .12 },
   { kind: 'abandoned', assetId: 'veh.suv-dark', x: -12, z: 32.2, yaw: Math.PI - .2 },
   { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
-  { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -33.4, yaw: .1 },
+  { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -28.0, yaw: .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -61.6, z: -22, yaw: H + .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -70.4, z: -24, yaw: H - .08 },
   // Crashed: into a lamp post, into each other at the Juniper junction, nose into a hydrant.
   { kind: 'crashed', assetId: 'veh.sedan-green', x: -6.6, z: 26.4, yaw: .7 },
   { kind: 'crashed', assetId: 'veh.sedan-red', x: 11.2, z: -2.6, yaw: 2.3 },
   { kind: 'crashed', assetId: 'veh.suv-green', x: 16.4, z: 3.2, yaw: -.9 },
-  { kind: 'crashed', assetId: 'veh.sedan-green', x: 46.6, z: -33.6, yaw: -.5 },
+  { kind: 'crashed', assetId: 'veh.sedan-green', x: 48.8, z: -33.1, yaw: Math.PI - .5 },
   // Exactly one smoking vehicle (E27 small smoke column at its bonnet).
   { kind: 'smoking', assetId: 'veh.sedan-green', x: 33.6, z: 27.6, yaw: 2.9 },
   // Emergency vehicles left with their lights on.
@@ -50,8 +50,8 @@ export const l2Dressing: readonly Dressing[] = [
   // Small signs of fighting: a dropped baton and a tear-gas canister by the police car.
   { kind: 'fighting', assetId: 'wpn.police-baton', x: -17.6, z: -30.6, yaw: .6 },
   // Fire Station 3 bay: benches for the frightened civilians.
-  { kind: 'station', assetId: 'prop.bench', x: -76, z: 44.1, yaw: 0 },
-  { kind: 'station', assetId: 'prop.bench', x: -68.7, z: 43.9, yaw: Math.PI },
+  // Both face out of the bays (station-local +x): one at the mouth of the left bay, one deeper inside it.
+  ...([[1.0, 1.6], [-1.6, 2.9]] as const).map(([lx, lz]) => { const [x, z] = stationPoint(lx, lz); return { kind: 'station' as const, assetId: 'prop.bench', x, z, yaw: l2Station.yaw }; }),
   // Police bridge checkpoint at the east end of Elm Street: vehicles, barriers, fences, kit, light tower.
   { kind: 'checkpoint', assetId: 'veh.police-suv', x: 78.4, z: 25.9, yaw: .05, lit: true },
   { kind: 'checkpoint', assetId: 'veh.police-sedan', x: 83.3, z: 27.6, yaw: H + .06, lit: true },
@@ -61,7 +61,16 @@ export const l2Dressing: readonly Dressing[] = [
   ...([[86.6, 30.2]] as const).map(([x, z]) => ({ kind: 'river' as const, assetId: 'bld.river-bridge', x: x + 8, z, yaw: 0 })),
 ];
 
-const SUPERSEDED = new Set(['bld.mainstreet-brick:786', 'kit.edge-roadwork:1087', 'veh.courier-van:788', 'prop.bench:789', ...[1088, 1089, 1090, 1091, 1094].map(n => `prop.privacy-fence:${n}`)]);
+/**
+ * D-GROVE placements L2 removes, by asset and position (placement ids are build indices and shift whenever the layout changes):
+ * the eastern Main Row shop (the market takes its lot), the courier van and bench in front of it, and the Elm Street east-end
+ * road-work barrier with its plank fence and the south wing piece (the bridge checkpoint opens there).
+ */
+const SUPERSEDED: readonly (readonly [string, number, number])[] = [
+  ['bld.mainstreet-brick', -55.644, -42.194], ['veh.courier-van', -48.793, -37.15], ['prop.bench', -53.5, -37.5], ['kit.edge-roadwork', 82.8, 30],
+  ...[26.438, 28.812, 31.188, 33.562].map(z => ['prop.privacy-fence', 80.373, z] as const), ['prop.privacy-fence', 81.505, 35],
+];
+const superseded = (p: Placement) => SUPERSEDED.some(([asset, x, z]) => p.assetId === asset && Math.abs(p.position[0] - x) < .01 && Math.abs(p.position[2] - z) < .01);
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
 
@@ -78,8 +87,9 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Extra toys for the escape: a dumpster at the alley neck off Larch Street and the car alarm by the cluster.
     layout.anchors['dumpster-3'] = { position: [53.2, 0, 15], yaw: 0 }; layout.anchors['dumpster-3-end'] = { position: [55.8, 0, 15], yaw: 0 };
     layout.anchors['alarm-car-5'] = { position: [48.6, 0, 12.4], yaw: 0 };
-    layout.placements = layout.placements.filter(p => !SUPERSEDED.has(p.id));
-    layout.colliders = layout.colliders.filter(c => !SUPERSEDED.has(c.id));
+    const gone = new Set(layout.placements.filter(superseded).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !gone.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !gone.has(c.id));
     layout.placements.push(MARKET);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
