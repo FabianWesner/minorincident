@@ -35,7 +35,7 @@ export interface SceneSpec {
   /** Clipping report options: `ignore` pairs of placement ids or asset ids; `sameAsset` also checks chains of one
    * asset (fence/hedge runs share end posts by design, so they are skipped by default); `slackCm` (default 2) is how far
    * a bone's flesh radius may sink into a prop surface before it is reported. */
-  clipping?: { ignore?: [string, string][]; sameAsset?: boolean; slackCm?: number };
+  clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
   expect?: Expectations;
 }
 export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; scale?: number | [number, number, number]; tint?: string }
@@ -92,6 +92,10 @@ export interface Expectations {
   consoleErrors?: number;
   clippingMax?: number;
   footSlideMaxCm?: number;
+  /** Deepest sole point below the floor, in cm (feet through the ground). */
+  footSinkMaxCm?: number;
+  /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
+  undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;
   torsoPitchMaxDeg?: number;
   drawCallsMax?: number;
@@ -151,9 +155,9 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     version: 1, district, title: `Scene Lab: ${spec.name ?? 'scene'}`, geometryHash: 'scene-lab', bounds,
     roads: { nodes: [], edges: [] }, placements: kept, anchors: {}, zones: {}, buildings: [],
     colliders: solid.map(p => ({ id: p.id, aabb: structuredClone(p.visualAabb), minTier: p.minTier, maxTier: p.maxTier })),
-    walkable: { cellSize: 1, excluded: [] }, lawns: spec.ground === undefined || spec.ground === 'grass' ? [{ min: [x0, z0], max: [x1, z1] }] : [],
+    walkable: { cellSize: 1, excluded: [] }, lawns: spec.ground === 'district' && source ? source.lawns : spec.ground === undefined || spec.ground === 'grass' ? [{ min: [x0, z0], max: [x1, z1] }] : [],
     decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }], acousticZones: [],
-    surfaces: [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [],
+    surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [],
   };
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
   const composition: LevelComposition = {

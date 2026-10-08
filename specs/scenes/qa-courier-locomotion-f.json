@@ -1,0 +1,115 @@
+{
+ "name": "qa-courier-locomotion-f",
+ "note": "Idle, walk, run, two 180 degree reversals, turn on the spot, stop. Follow camera.",
+ "ground": "sidewalk",
+ "size": 40,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -8,
+    0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "female"
+   },
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 90,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      0,
+      0
+     ],
+     [
+      -6,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 330,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      8,
+      0
+     ],
+     [
+      -8,
+      0
+     ],
+     [
+      8,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 640,
+   "actor": "courier",
+   "do": {
+    "turn": 90
+   }
+  },
+  {
+   "frame": 700,
+   "actor": "courier",
+   "do": {
+    "turn": -90
+   }
+  },
+  {
+   "frame": 760,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      8,
+      6
+     ],
+     [
+      8,
+      -6
+     ],
+     [
+      2,
+      -6
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 0.5
+ },
+ "frames": 960,
+ "shots": [
+  60,
+  200,
+  390,
+  480,
+  560,
+  680,
+  800,
+  940
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "footSlideMaxCm": 6,
+  "footSinkMaxCm": 2,
+  "undrawnFramesMax": 0
+ }
+}

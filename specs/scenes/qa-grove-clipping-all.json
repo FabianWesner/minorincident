@@ -1,0 +1,11 @@
+{
+ "name": "qa-grove-clipping-all",
+ "note": "Whole D-GROVE (L1 and L2 town): static mesh clipping gate for every placement, no foliage pairs. Overview shot only.",
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-85, -55], [85, 55]] },
+ "clipping": { "ignoreFoliage": true },
+ "camera": { "mode": "orbit", "target": [0, 0, 0], "radius": 150, "azimuth": 215, "polar": 40 },
+ "frames": 4,
+ "shots": [4],
+ "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}

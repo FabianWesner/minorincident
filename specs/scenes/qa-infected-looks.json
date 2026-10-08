@@ -1,0 +1,310 @@
+{
+ "name": "qa-infected-looks",
+ "note": "Every L1 infected look (6 models x 3 speed tiers) chasing the courier: lurch, scale, LOD, textures.",
+ "ground": "asphalt",
+ "size": 44,
+ "actors": [
+  {
+   "id": "z00",
+   "kind": "infected",
+   "at": [
+    -7.0,
+    -6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "tier": "frail"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z01",
+   "kind": "infected",
+   "at": [
+    -7.0,
+    0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "tier": "average"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z02",
+   "kind": "infected",
+   "at": [
+    -7.0,
+    6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "tier": "athletic"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z10",
+   "kind": "infected",
+   "at": [
+    -4.2,
+    -6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "tier": "frail"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z11",
+   "kind": "infected",
+   "at": [
+    -4.2,
+    0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "tier": "average"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z12",
+   "kind": "infected",
+   "at": [
+    -4.2,
+    6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "tier": "athletic"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z20",
+   "kind": "infected",
+   "at": [
+    -1.4000000000000004,
+    -6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "tier": "frail"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z21",
+   "kind": "infected",
+   "at": [
+    -1.4000000000000004,
+    0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "tier": "average"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z22",
+   "kind": "infected",
+   "at": [
+    -1.4000000000000004,
+    6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-a",
+    "tier": "athletic"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z30",
+   "kind": "infected",
+   "at": [
+    1.3999999999999986,
+    -6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "tier": "frail"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z31",
+   "kind": "infected",
+   "at": [
+    1.3999999999999986,
+    0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "tier": "average"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z32",
+   "kind": "infected",
+   "at": [
+    1.3999999999999986,
+    6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "tier": "athletic"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z40",
+   "kind": "infected",
+   "at": [
+    4.199999999999999,
+    -6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "tier": "frail"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z41",
+   "kind": "infected",
+   "at": [
+    4.199999999999999,
+    0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "tier": "average"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z42",
+   "kind": "infected",
+   "at": [
+    4.199999999999999,
+    6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-elderly",
+    "tier": "athletic"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z50",
+   "kind": "infected",
+   "at": [
+    7.0,
+    -6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.police-officer",
+    "tier": "frail"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z51",
+   "kind": "infected",
+   "at": [
+    7.0,
+    0
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.police-officer",
+    "tier": "average"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "z52",
+   "kind": "infected",
+   "at": [
+    7.0,
+    6
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.police-officer",
+    "tier": "athletic"
+   },
+   "state": "chase"
+  },
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    10,
+    0
+   ],
+   "yaw": 180
+  }
+ ],
+ "script": [
+  {
+   "frame": 200,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      10,
+      -14
+     ],
+     [
+      -14,
+      -14
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   0,
+   0.9,
+   0
+  ],
+  "radius": 20,
+  "azimuth": 40
+ },
+ "frames": 360,
+ "shots": [
+  1,
+  60,
+  140,
+  220,
+  300,
+  350
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

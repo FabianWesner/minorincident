@@ -176,7 +176,7 @@ def row(name, x0, x1, facing, line, rear, kinds, drives=None, gate_at=None):
         face = yaw
         # long side parallel to the picket fence and clear of it; try both sides of the door path, skip when neither fits
         for bed_dx in (-2.7, 2.7):
-            if g.place('prop.flower-bed.large', door[0] + bed_dx, line + sgn * .8, yaw, 1.0, soft=True): break
+            if g.place('prop.flower-bed.large', door[0] + bed_dx, line + sgn * (.895 if k != 'd' else .83), yaw, (1.0 if k != 'd' else (.56, 1.0, 1.0)), soft=True): break   # house-d sits close to the fence: a slim bed (0.55 m) fits between
         if variant == 0:
             g.place('prop.gnome', gx, gz, face, 1.0, soft=True); g.place('prop.flamingo', gx + .7, gz + .2, face, 1.0, soft=True)
         elif variant == 1:

@@ -1,0 +1,134 @@
+{
+ "name": "qa-courier-attack-bat",
+ "note": "Bat combo incl. the roundhouse finisher.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "dummy-1",
+   "kind": "infected",
+   "at": [
+    2.48,
+    0.77
+   ],
+   "yaw": 162.8,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-2",
+   "kind": "infected",
+   "at": [
+    0.04,
+    2.6
+   ],
+   "yaw": 90.8,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-3",
+   "kind": "infected",
+   "at": [
+    -2.46,
+    0.84
+   ],
+   "yaw": 18.8,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-4",
+   "kind": "infected",
+   "at": [
+    -1.56,
+    -2.08
+   ],
+   "yaw": -53.2,
+   "state": "idle"
+  },
+  {
+   "id": "dummy-5",
+   "kind": "infected",
+   "at": [
+    1.5,
+    -2.12
+   ],
+   "yaw": -125.2,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 30,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-1",
+    "seconds": 3.2
+   }
+  },
+  {
+   "frame": 242,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-2",
+    "seconds": 3.2
+   }
+  },
+  {
+   "frame": 454,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-3",
+    "seconds": 3.2
+   }
+  },
+  {
+   "frame": 666,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-4",
+    "seconds": 3.2
+   }
+  },
+  {
+   "frame": 878,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy-5",
+    "seconds": 3.2
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 9,
+  "azimuth": 40
+ },
+ "frames": 1130,
+ "shots": [
+  20,
+  90,
+  150,
+  230,
+  310,
+  420,
+  520,
+  1110
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}
