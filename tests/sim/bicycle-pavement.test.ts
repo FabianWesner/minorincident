@@ -28,7 +28,8 @@ test('parked start, mount at rack, depot and automatic road parking keep both wh
   const w = new SimWorld(); await w.init(); w.loadComposition(compositions['D-GROVE'], [layout], 1);
   try {
     const b = w.vehicles!.bicycle; assertPavement(w);
-    const start = { ...b.entity!.transform }; expect(Math.hypot(start.x + 66.4, start.z - 9)).toBeLessThan(3.3);
+    // PO 2026-10-08: the bike waits at the depot rack (anchor bike-start), the courier starts on foot at the cafe.
+    const rack = layout.anchors['bike-start'].position, start = { ...b.entity!.transform }; expect(Math.hypot(start.x - rack[0], start.z - rack[2])).toBeLessThan(.5);
     teleport(w, start.x + .9, start.z); w.setInput({ interact: true }); step(w, 1); w.setInput({ interact: false });
     expect(b.riding).toBe(true); assertPavement(w);
     // The existing depot arrival path owns the automatic dismount.

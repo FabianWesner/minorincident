@@ -232,8 +232,8 @@ g.place(cafe, cafe_x, cafe_z, FACE_YAW['E'])
 if g.placeholder(cafe):
     g.shell('cafe', cafe_x, cafe_z, 'E', cdx, cdz, [('front', 0, 2.4)])
 anchors['cafe-patio'] = (CAFE_FRONT_X + 1.0, cafe_z)
-anchors['bike-start'] = (-68.1, 7.2)      # the bike stands in the rack, 2.4 m from the courier spawn: both in the first frame
-g.place('prop.bike-rack', -68.1, 7.2, 0.0)
+# PO 2026-10-08: "The bike is currently at the starting position, but people won't get it and just walk away. So let's place it
+# at the place where the player gets the package." The courier starts on foot; the cargo bike waits at the depot (below).
 anchors['player-start'] = (-66.4, 9.0)
 doors.append((CAFE_FRONT_X + 1.0, cafe_z))
 # patio dressing on the sidewalk side: planters, a bench facing the street, bin
@@ -281,6 +281,11 @@ g.place(depot, depot_x, depot_z, FACE_YAW['S'])
 if g.placeholder(depot):
     g.shell('depot', depot_x, depot_z, 'S', ddx, ddz, [('front', 0, 2.2)])
 anchors['parcel-door'] = (depot_x, SHOP_FRONT + .9)
+# Cargo bike rack at the front edge of the depot forecourt, west of the door (5.8 m: clear of the hand-over), long side toward
+# Main Row and the camera; the bike stands in front of it on the sidewalk tiles (the bicycle parks on pavement only), nose
+# toward the door, so after the pickup the courier rides on.
+g.place('prop.bike-rack', depot_x - 5.8, ZN - 4.5 - .7, PI / 2)
+anchors['bike-start'] = (depot_x - 5.8, ZN - 4.5 + .6)
 anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision is a closed shell: hand-over happens at the door
 doors.append(anchors['parcel-door'])
 g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark')   # paved apron under the van
