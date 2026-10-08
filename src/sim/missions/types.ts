@@ -110,6 +110,13 @@ export interface L2State {
   /** `x/z/seen`: where it first appeared and whether that point was inside the camera volume then (omniscience audit). */
   pending: { id: number; door: string; at: number; home: { x: number; z: number }; x?: number; z?: number; seen?: boolean }[]; escapeIds: number[]; clusterIds: number[];
   escapeSpawned: boolean; clusterSpawned: boolean; clusterReached: boolean;
+  /** Rescue set piece presentation (PO 10-08): the current speech bubble, scripted trips after the release and the far-street
+   * silhouettes (pedestrians with the turned look that cross a street end and vanish; never infected, never hunting). */
+  say?: { id: number; text: string; at: number; until: number } | null;
+  trips?: { id: number; at: number; helper: number }[];
+  /** Released people: tick at which each stops looking back and flees for the checkpoint. */
+  flee?: { id: number; at: number }[];
+  lurkers?: number[];
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {

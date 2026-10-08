@@ -21,7 +21,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // A rescued or startled ally does not run for a refuge: it is a fighter (state stays a live human state).
   if (c.state !== 'calm') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }
   if (c.story && c.story.clip === 'swing' && tick - c.story.start > 30 && tick >= a.forceUntil) c.story = null;
-  if (a.forceUntil > tick) { if (!c.story || c.story.clip !== 'swing' || tick - c.story.start > 40) c.story = { clip: 'swing', start: tick }; return true; }
+  // Forcing the doors: a looping halligan heave (or the directing gesture), seeded per person so the crew never moves in sync.
+  const forcing = a.forceClip ?? 'ff-pry';
+  if (c.story && c.story.clip === forcing && tick >= a.forceUntil) c.story = null;
+  if (a.forceUntil > tick) { if (c.story?.clip !== forcing) c.story = { clip: forcing, start: tick - (e.id * 17) % 40 }; return true; }
   if (a.engaged) {
     const officer = a.role === 'officer', post = a.post ?? e.transform;
     let target = a.targetId ? world.entities.get(a.targetId) : undefined;
