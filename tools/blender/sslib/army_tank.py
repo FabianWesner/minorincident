@@ -1,7 +1,10 @@
 """veh.tank: tracked main battle tank, +X forward, Z up, metres. Owners: body,
 turret (yaw), gun (elevation, child of turret), lit lamps. Authored per tier."""
 import math
-from mathutils import Vector
+from mathutils import Matrix, Vector
+
+# Lateral squeeze keeps the 3.3 m body inside a 3.5 m road lane (E17 lane contract).
+K = .94
 
 
 def star(s, name, center, size, side):
@@ -21,6 +24,8 @@ def ring6(x, w, lo, hi, cham=.28, inset=.30):
 
 def recipe(s):
     L = s.lod
+    s.xf = Matrix.Diagonal((1, K, 1, 1))
+    s.xf3 = s.xf.to_3x3()
     s.owner('body')
     s.owner('turret', (-.25, 0, 1.72))
     s.owner('gun', (1.30, 0, 2.12), 'turret')
@@ -169,14 +174,14 @@ def recipe(s):
         s.box('coax mg', (1.85, .46, 2.04), (.55, .09, .09), 'uiDark', 'gun', bevel=0)
 
     s.physics('heavy', 28000, 'prop.metal-heavy', False, (0, 1.1, 0))
-    s.collider('hull', (7.0, 3.5, 2.0), (-.05, 0, 1.0))
+    s.collider('hull', (7.0, 3.3, 2.0), (-.05, 0, 1.0))
     s.socket('front', (3.75, 0, 1.0))
     s.socket('muzzle', (5.96, 0, 2.12), 'gun')
     for sgn, label in ((-1, 'L'), (1, 'R')):
-        s.light('head' + label, (3.30, sgn * 1.00, 1.38), {
+        s.light('head' + label, (3.30, sgn * 1.00 * K, 1.38), {
             'type': 'spot', 'color': 'light_window_warm', 'intensity': 5, 'range': 24, 'angle': 48,
             'penumbra': .35, 'pool': True, 'beam': 'soft', 'flare': True, 'shadow': 'hero', 'heroPriority': 2,
             'emissiveNodes': ['lightsFront_emi_windowGlow']}, (0, -math.pi / 2, 0))
-        s.light('brake' + label, (-3.50, sgn * 1.05, .88), {
+        s.light('brake' + label, (-3.50, sgn * 1.05 * K, .88), {
             'type': 'point', 'color': 'light_siren_red', 'intensity': 2, 'range': 3,
             'emissiveNodes': ['lightsBrake_emi_sirenRed']})

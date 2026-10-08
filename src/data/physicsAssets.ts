@@ -4941,17 +4941,17 @@ export default {
         "min": [
           -3.550000000745058,
           0,
-          -1.75
+          -1.65
         ],
         "max": [
           3.449999999254942,
           2,
-          1.75
+          1.65
         ]
       }
     ],
     "source": "public/assets/models/veh.tank.glb",
-    "hash": "f70c71c48b727e4ed4369e40b08e56e66f54cf9189de6bb5e4f4725f21ed4c48"
+    "hash": "229c951bd48c1b4bb4a6c37f8f4a68f5b9d1f20bf4076912785d0cfd03f29256"
   },
   "veh.helicopter-military": {
     "class": "heavy",
@@ -5161,7 +5161,7 @@ export default {
     "restitution": 0.05,
     "centerOfMass": [
       0,
-      1,
+      0.9,
       0
     ],
     "pushable": false,
@@ -5171,18 +5171,18 @@ export default {
     "boxes": [
       {
         "min": [
-          -1.85,
-          0.004999947547912553,
+          -1.5,
+          0.00500001907348635,
           -1.45
         ],
         "max": [
-          1.85,
-          2.3549999475479124,
+          1.5,
+          1.9550000190734864,
           1.45
         ]
       }
     ],
     "source": "public/assets/models/prop.tent.glb",
-    "hash": "8b21bb2aaa49b913e5c19a1c808087fbcea13faf2facaf21a374bad15720d9e2"
+    "hash": "7e09c53008957938d9e46fe5e77e1bea95d4d6fa933fbe5ba6e774a84be5d298"
   }
 };
