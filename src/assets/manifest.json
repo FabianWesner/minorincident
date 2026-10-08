@@ -8314,13 +8314,19 @@
   {
     "id": "decay.rubble-pile",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
+    "script": "assets/decay.rubble-pile/build.py",
     "glb": "public/assets/models/decay.rubble-pile.glb",
+    "sourceGlb": "assets/decay.rubble-pile/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.rubble-pile.lod1.glb",
+      "lod2": "public/assets/models/decay.rubble-pile.lod2.glb"
+    },
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 2.8875,
+      "y": 0.6864,
+      "z": 1.5967,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8328,17 +8334,22 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
+      "triangles": 1500,
       "materials": 12,
-      "fileKB": 1200,
+      "fileKB": 300,
       "drawCalls": 30
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.downed-power-line",
@@ -9960,6 +9971,36 @@
     },
     "decayVariants": [],
     "decalTexture": "public/assets/decals/blood-pool.png"
+  },
+  {
+    "id": "decal.scorch",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "",
+    "dimensions": {
+      "x": 1,
+      "y": 0.015,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "decalTexture": "public/assets/decals/scorch.png"
   },
   {
     "id": "decal.blood-trail",
@@ -13048,7 +13089,11 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": ["burned"],
+    "decayAuthoredLodTriangles": {
+      "lod1": 14400,
+      "lod2": 4200
+    },
     "world": {
       "token": "brick",
       "solid": true
