@@ -552,7 +552,7 @@ export class LevelTwoRescue {
     // The forcing: metal on metal and the chain creaking at both doors, the crew grunting on each heave.
     const pryers = s.crewIds.map(id => this.world.entities.get(id)).filter((e): e is EntitySnapshot => e?.civilian?.story?.clip === 'ff-pry');
     for (const [k, e] of pryers.entries()) {
-      const beat = (tick - s.atDoorsAt + k * 13) % ticks(.95);
+      const beat = (tick - s.atDoorsAt + k * 13) % ticks(.9);
       if (beat === 0) this.cue(k % 2 ? 'prop.creak' : 'impact.body.metal', e.transform, .6);
       if (beat === 20 && k % 2 === 0) this.cue('bark.male.effort', e.transform, .45);
     }
