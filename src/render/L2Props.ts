@@ -3,6 +3,7 @@ import { l2, l2Anchors } from '../data/l2';
 import { l2Dressing } from '../levels/L2/layout';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
+import { L2RescueProps } from './L2RescueProps';
 
 type Box = { x: number; y: number; z: number; sx: number; sy: number; sz: number; gate?: number };
 /**
@@ -33,8 +34,10 @@ export class L2Props extends Group {
   private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe28a' });
   private readonly frame = new MeshBasicNodeMaterial({ color: '#e9dfc4' });
   private readonly haft = new MeshBasicNodeMaterial({ color: '#c98a4b' });
+  private readonly rescue: L2RescueProps;
   constructor(private readonly world: SimWorld, materials: Materials) {
     super(); this.name = 'l2-props';
+    this.rescue = new L2RescueProps(world); this.add(this.rescue);
     const instanced = (material: MeshBasicNodeMaterial | ReturnType<Materials['get']>, count: number) => {
       const mesh = new InstancedMesh(this.box, material, Math.max(1, count)); mesh.count = count; mesh.frustumCulled = false; this.add(mesh); return mesh;
     };
@@ -95,6 +98,7 @@ export class L2Props extends Group {
   update(): void {
     const s = this.world.missions?.state.l2, tick = this.world.tick;
     if (!s) return;
+    this.rescue.update();
     const alarm = s.alarmAt > 0 && tick >= s.alarmAt && s.phase !== 'calm' && s.phase !== 'done';
     this.beacons.count = alarm ? 2 : 0;
     if (alarm) {
@@ -112,5 +116,5 @@ export class L2Props extends Group {
     const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
     for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
   }
-  dispose(): void { this.gem.dispose(); this.ring.dispose(); this.gold.dispose(); this.frame.dispose(); this.haft.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
+  dispose(): void { this.rescue.dispose(); this.gem.dispose(); this.ring.dispose(); this.gold.dispose(); this.frame.dispose(); this.haft.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
 }
