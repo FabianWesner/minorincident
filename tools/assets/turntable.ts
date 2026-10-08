@@ -1,5 +1,6 @@
 import { chromium, type Page } from '@playwright/test';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
 import { spawnSync } from 'node:child_process';
@@ -14,12 +15,13 @@ export function coverage(bytes: Buffer): number {
 export function referenceFor(id: string): string {
   const local = `assets/${id}/reference-upscaled.png`;
   if (existsSync(local)) return local;
-  const main = '/Users/fabianwesner/Workspace/suburban-survivors';
+  const common = spawnSync('git', ['rev-parse', '--git-common-dir'], { encoding: 'utf8' }).stdout.trim();
+  const main = resolve(common, '..');
   return id === 'veh.fire-engine' ? `${main}/assets/fire-engine/reference-upscaled.png` : `${main}/assets/${id}/reference-upscaled.png`;
 }
 export async function captureTurntable(page: Page, id: string, directory: string, baseURL: string, decay?: string): Promise<number[]> {
   mkdirSync(directory, { recursive: true });
-  await page.goto(`${baseURL}/preview/?asset=${encodeURIComponent(id)}&test=1&renderer=webgl`);
+  await page.goto(`${baseURL}/preview/?asset=${encodeURIComponent(id)}&test=1&renderer=webgl&production=1`);
   await page.waitForFunction(() => !!window.__ASSET__);
   await page.evaluate(() => window.__ASSET__!.ready);
   if (decay) {
@@ -34,7 +36,7 @@ export async function captureTurntable(page: Page, id: string, directory: string
     const png = await page.locator('canvas').screenshot({ path });
     images.push(path); occupancies.push(coverage(png));
   }
-  await comparison(images, referenceFor(decay ? `${id}.${decay}` : id), `${directory}/comparison.png`);
+  await comparison(images, referenceFor(`${id}${decay ? `.${decay}` : ''}`), `${directory}/comparison.png`);
   writeFileSync(`${directory}/turntable.json`,JSON.stringify({ id, decay, coverage: occupancies, ...await page.evaluate(() => window.__ASSET__!.info()) },null,2)+'\n');
   return occupancies;
 }
