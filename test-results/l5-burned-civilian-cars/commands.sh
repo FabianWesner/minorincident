@@ -19,3 +19,12 @@ npm run assets:validate
 npm run typecheck
 npm run lint
 sh tools/remote/run.sh "$PWD" --pull test-results/l5-burned-civilian-cars/unit.json -- npm run test:unit -- --maxWorkers=2 --reporter=default --reporter=json --outputFile=test-results/l5-burned-civilian-cars/unit.json
+
+# If integrated GLBs from main have stale generated records:
+npm run assets:collision
+npx tsx tools/assets/physics-metadata.ts
+# Final remote regression, including Chromium smoke:
+sh tools/remote/run.sh "$PWD" --pull test-results/l5-burned-civilian-cars/unit.json --pull test-results/playwright/results.json --env E2E_PORT=3313 -- sh -c 'npm run typecheck && npm run lint && npm run test:unit -- --maxWorkers=2 --reporter=default --reporter=json --outputFile=test-results/l5-burned-civilian-cars/unit.json && npm run build && npm run test:smoke -- --project=chromium'
+
+# Supported local browser fallback; WebGPU remains manual.
+E2E_PORT=3313 sh tools/e2e-lock.sh npx playwright test --grep @smoke --grep-invert webgpu --project=chromium --workers=2
