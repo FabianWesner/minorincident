@@ -16,6 +16,9 @@ FRONT = {'E': (1, 0), 'N': (0, -1), 'W': (-1, 0), 'S': (0, 1)}
 # Solid assets whose manifest entry is still a placeholder box but that must stay enterable (door gaps in a shell).
 HOLLOW = {'bld.clinic-annex', 'bld.cafe-corner', 'bld.courier-depot', 'bld.garage-detached'}
 OVERLAP_TOLERANCE = .12
+# Low or open-framed props whose baked collision boxes are all below 0.45 m or only small clumps: their visual rectangle is the footprint
+# (PO "clipping errors": planters through fences, kiddie pools inside houses).
+VISUAL_FOOTPRINT = ('prop.flower-bed', 'prop.kiddie-pool', 'prop.sprinkler', 'prop.hose-reel', 'prop.flamingo', 'prop.gnome', 'prop.lawn-chair', 'prop.wheelbarrow')
 
 
 def rot(yaw, lx, lz):
@@ -101,6 +104,10 @@ class Grove:
         if hollow:
             return []
         boxes = self.boxes(asset, x, z, yaw, sc)
+        if asset.startswith(VISUAL_FOOTPRINT):
+            dx, dy, dz = self.dims(asset)
+            ex, ez = abs(math.cos(yaw)) * dx * sc[0] + abs(math.sin(yaw)) * dz * sc[2], abs(math.sin(yaw)) * dx * sc[0] + abs(math.cos(yaw)) * dz * sc[2]
+            return [(x - ex / 2, z - ez / 2, x + ex / 2, z + ez / 2, dy * sc[1])]
         if not boxes and (info.get('world') or {}).get('solid'):
             dx, dy, dz = self.dims(asset)
             ex, ez = abs(math.cos(yaw)) * dx * sc[0] + abs(math.sin(yaw)) * dz * sc[2], abs(math.sin(yaw)) * dx * sc[0] + abs(math.cos(yaw)) * dz * sc[2]

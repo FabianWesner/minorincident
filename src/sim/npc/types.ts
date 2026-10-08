@@ -5,6 +5,8 @@ export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' 
 export interface CivilianActivity {
   activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
   anchor: string; target: Point; ticks: number; facing?: Point; prop?: CivilianProp; seat?: Point;
+  /** Render-only: raises a seated model so its hip joint rests on the seat anchor (see seats.ts). */
+  seatLift?: number;
 }
 /** Serializable NPC components; no render objects or physics bodies. */
 export interface Civilian {

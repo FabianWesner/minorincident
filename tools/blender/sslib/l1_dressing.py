@@ -127,9 +127,14 @@ def planter(l,x,z):
     for dx in [-.48,.48]:l.box('planter-post','picketWhite',[.06,.4,.065],[x+dx,.23,z+.3])
 
 
+# Seated civilians (the npc-sit pose, src/sim/npc/seats.ts) have short legs: benches and chairs they sit on are squashed
+# vertically so the feet reach the ground while the thighs rest on the seat.
+SEAT_SY={'bench':.58,'lawn-chair':.68}
+
+
 def bench(l,x,z):
     # Reuse the accepted, bevelled side-tier park bench (its long axis is local Z).
-    l.place('prop.bench',[x,0,z],yaw=math.pi/2,scale=(.9,.9,.9))
+    l.place('prop.bench',[x,0,z],yaw=math.pi/2,scale=(.9,.9*SEAT_SY['bench'],.9))
 
 
 def bin(l,x,z):
@@ -190,7 +195,8 @@ def dress(l,residential=False):
             if not residential and abs(x)<5:continue
             # Keep the morning hedge's sidewalk approach clear for direct touch
             # movement; the rebuilt hedge and the bench must not form a trap.
-            if (i+side)%3==0:bench(l,-22 if residential and x==-18 and side==-1 else x,z)
+            # Benches keep clear of the first bin (-23) and the mailbox at x=17 (clipping guard, tests/unit/layouts/clipping.test.ts).
+            if (i+side)%3==0:bench(l,{-18:-21,18:19.8}.get(x,x) if residential and side==-1 else x,z)
             else:garden(l,x,z,i+side)
             for j in range(8):
                 px=x-2+rng.random()*4;pz=side*(3.85+rng.random()*2.2)
@@ -220,7 +226,7 @@ def dress(l,residential=False):
             planter(l,x+math.copysign(.7,x),z)
         # A cart returned beside the storefront and a bright vending machine, outside door paths.
         l.place('prop.shopping-cart',[10,0,-8.2],yaw=.3,scale=(.8,.8,.8))
-        l.place('prop.vending-machine',[-18.5,0,-7.8],yaw=math.pi/2,scale=(.65,.65,.65))
+        l.place('prop.vending-machine',[-20.6,0,-7.8],yaw=math.pi/2,scale=(.65,.65,.65))
     else:
         for x in [-18,5,23]:l.place('prop.folding-chair',[x,0,-6.3],yaw=.4,scale=(.75,.75,.75))
     # Entrance gardens fill the space near the close diner/store/pharmacy cameras.
@@ -228,6 +234,8 @@ def dress(l,residential=False):
         p=next(p for p in l.data['placements'] if p['id']==b['id']);x=p['position'][0];front=b['aabb']['max'][2]
         for side in [-1,1]:
             planter(l,x+side*3,front+1.3)
-            if not residential:bench(l,x+side*4.5,front+1.4)
+            # ...but not through the crossing's picket fences at x = +-8 (z = -20..20 step 8).
+            fence_clash=any(abs(abs(x+side*4.5)-8)<2.3 and abs(front+1.4-fz)<.7 for fz in range(-20,21,8))
+            if not residential and not fence_clash:bench(l,x+side*4.5,front+1.4)
         # Driveway / entrance path is a walkable surface, never a new blocker.
         l.box('driveway','sidewalk',[1.8,.08,max(.5,abs(front)-3.8)],[x,.02,(front-3.8)/2 if front<0 else (front+3.8)/2])
