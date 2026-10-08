@@ -28,7 +28,7 @@ export function installLevelThree(world: SimWorld, mission: Mission): void {
     parkedCar();
   });
   world.events.on('hazard.exploded', e => { if (e.type === 'hazard.exploded') smash(e.position, e.radius); });
-  world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.sourceId === mission.state.actors.sedan && world.entities.get(e.targetId)?.faction === 'infected') { mission.count('runovers'); mission.state.stats.kills++; } });
+  world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.sourceId === mission.state.actors.sedan && world.entities.get(e.targetId)?.faction === 'infected') { mission.count('runovers'); if (e.downed !== undefined) mission.state.stats.knockdowns++; else mission.state.stats.kills++; } });
   world.events.on('vehicle.obstacle-broken', e => { if (e.type === 'vehicle.obstacle-broken' && world.entities.get(e.targetId)?.archetype !== 'obstacle.wall') mission.count('smashed'); });
   const spawn = (key: string, archetype: string, x: number, z: number): void => {
     if (ai.director.count >= ai.director.cap) return;

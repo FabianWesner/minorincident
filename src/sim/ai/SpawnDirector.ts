@@ -34,8 +34,9 @@ export class SpawnDirector {
     this.tier = tier;
   }
   get cap(): number { return this.tier === 'low' ? Math.floor(this.levelCap / 2) : this.levelCap; }
+  /** Downed infected (PO "Infected recover": they get up again) keep their slot under the cap. */
   get count(): number {
-    let count = 0; for (const e of this.ai.active) if (e.health.current > 0) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
+    let count = 0; for (const e of this.ai.active) if (e.health.current > 0 || e.infected!.recoverAt >= 0) count += e.archetype === 'infected.crow' ? e.infected!.birds * 0.25 : 1; return count;
   }
   /** Plain geometric camera-volume input. The sim never imports or reads a renderer/camera object. */
   setFrustum(matrix: readonly number[], position?: { x: number; y: number; z: number }): void {

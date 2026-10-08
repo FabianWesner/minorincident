@@ -25,7 +25,7 @@ export class Status {
         const intervalEnd = Math.min(status.nextDot, status.expires);
         if (this.world.tick >= intervalEnd && status.def.dps > 0) {
           const duration = (intervalEnd - (status.nextDot - 60)) / 60;
-          this.world.combat!.damage.apply({ attackId: status.attackId ?? 0, actionId: status.actionId, sourceId: status.sourceId, targetId: entity.id, origin: entity.transform, direction: { x: 0, z: 0 }, base: status.def.dps * status.stacks * duration, multiplier: 1, type: 'status', knockback: 0, stagger: 0 });
+          this.world.combat!.damage.apply({ attackId: status.attackId ?? 0, actionId: status.actionId, sourceId: status.sourceId, targetId: entity.id, origin: entity.transform, direction: { x: 0, z: 0 }, base: status.def.dps * status.stacks * duration, multiplier: 1, type: 'status', permanent: status.kind === 'burning', knockback: 0, stagger: 0 });
           status.nextDot += 60;
         }
         if (this.world.tick >= status.expires) statuses.splice(i, 1);
