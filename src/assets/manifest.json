@@ -13605,15 +13605,22 @@
       "roof",
       "interior"
     ],
-    "animatedNodes": [],
-    "sockets": [],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "entrySocket"
+    ],
     "budget": {
       "triangles": 100000,
       "materials": 32,
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "world": {
       "token": "brick",
       "solid": true
@@ -13626,6 +13633,14 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "script": "assets/bld.house-d/build.py",
+    "sourceForward": "+X",
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -13650,15 +13665,22 @@
       "roof",
       "interior"
     ],
-    "animatedNodes": [],
-    "sockets": [],
+    "animatedNodes": [
+      "door_front"
+    ],
+    "sockets": [
+      "entrySocket"
+    ],
     "budget": {
       "triangles": 100000,
       "materials": 32,
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w2",
+      "w3"
+    ],
     "world": {
       "token": "brick",
       "solid": true
@@ -13671,6 +13693,14 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "script": "assets/bld.house-e/build.py",
+    "sourceForward": "+X",
+    "decayTriangleBudget": 30000,
+    "decayBudget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8
     }
   },
   {
@@ -15623,6 +15653,53 @@
       "drawCalls": 30
     },
     "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
+  },
+  {
+    "id": "decay.burned-facade.house",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "street",
+    "script": "assets/decay.burned-facade.house/build.py",
+    "sourceGlb": "assets/decay.burned-facade.house/model.glb",
+    "glb": "public/assets/models/decay.burned-facade.house.glb",
+    "dimensions": {
+      "x": 0.43,
+      "y": 2.9,
+      "z": 3.6,
+      "tolerance": 0.05
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "mountSocket",
+      "windowSocket"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "mountSocket",
+      "windowSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/decay.burned-facade.house.lod1.glb",
+      "lod2": "public/assets/models/decay.burned-facade.house.lod2.glb"
+    },
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
