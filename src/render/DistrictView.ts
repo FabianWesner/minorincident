@@ -100,7 +100,17 @@ export class DistrictView extends Group {
     // Bound the slice with a visible fence on the actual terrain perimeter.
     // Every collider below has matching rails and posts; internal seams stay open.
     const perimeter = new Group(); perimeter.name = 'slice-perimeter'; this.add(perimeter);
-    for (const fence of this.world.boundaries) {
+    const lab = this.world.composition.scene;
+    if (lab && !lab.glb && lab.ground !== 'grass') {
+      // Scene Lab flat ground: one paved slab over the synthetic bounds (the backdrop stays grass).
+      for (const d of this.world.districts) {
+        const xs = d.layout.bounds.map(p => p[0]), zs = d.layout.bounds.map(p => p[1]);
+        const plane = new PlaneGeometry(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs)); this.ownedGeometry.push(plane);
+        const slab = new Mesh(plane, this.materials.get(lab.ground)); slab.name = 'scene-ground'; slab.rotation.x = -Math.PI / 2; slab.receiveShadow = true;
+        slab.position.set(d.origin[0] + (Math.max(...xs) + Math.min(...xs)) / 2, .002, d.origin[1] + (Math.max(...zs) + Math.min(...zs)) / 2); this.add(slab);
+      }
+    }
+    for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
       const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
       const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
       for (const y of [.35, .8]) this.box(perimeter, 'picketWhite', [width, .15, depth], [x, y, z]);
@@ -125,9 +135,9 @@ export class DistrictView extends Group {
         root.position.set(d.origin[0], 0, d.origin[1]);
         this.add(root); this.districtRoots.push({ root, bounds: new Box3(
           new Vector3(d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), -2, d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1]))),
-          new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
+          new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(0, ...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
         ) });
-        const scenes = await Promise.all(
+        const scenes = lab && !lab.glb ? [] : await Promise.all(
           Array.from({ length: this.world.composition.tier + 1 }, (_, tier) =>
             this.registry.glb(
               `/assets/layouts/${d.id}.${tier === 0 ? "base" : `w${tier}`}.glb`,
@@ -144,8 +154,8 @@ export class DistrictView extends Group {
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
-        base.updateMatrixWorld(true);
-        base.traverse((o) => {
+        base?.updateMatrixWorld(true);
+        base?.traverse((o) => {
           if (o.userData.foliageColors && o.userData.minTier <= this.world.composition.tier && o.userData.maxTier >= this.world.composition.tier) {
             const key = o.userData.foliageColors.join(":"), ref = new Object3D(); o.matrixWorld.decompose(ref.position, ref.quaternion, ref.scale);
             if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
@@ -170,8 +180,19 @@ export class DistrictView extends Group {
         });
         // L3 authors parking and emergency dressing in its loaded layout. Its
         // references must use those positions, rather than the unchanged baked GLB.
-        if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2') {
+        if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
+          // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
+          if (lab) {
+            crowns.clear();
+            for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
+              const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();
+              const [cx, cy, cz] = crown.position.map((v, a) => v * p.scale[a]);
+              ref.position.set(p.position[0] + cx * Math.cos(p.yaw) + cz * Math.sin(p.yaw), p.position[1] + cy, p.position[2] - cx * Math.sin(p.yaw) + cz * Math.cos(p.yaw));
+              ref.scale.set(crown.radius[0] * p.scale[0], crown.radius[1] * p.scale[1], crown.radius[2] * p.scale[2]);
+              if (!crowns.has(key)) crowns.set(key, []); crowns.get(key)!.push(ref);
+            }
+          }
           for (const p of d.decay.placements) {
             const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}`;
             const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
@@ -523,6 +544,11 @@ export class DistrictView extends Group {
       for (const [mesh, material] of this.saved) mesh.material = material;
       this.saved.clear();
     }
+  }
+  /** Scene Lab probe: current detail band of every static instance (`culled` outside the frustum), district-local positions. */
+  lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
+    return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],
+      lod: entry.hero.references.includes(ref) ? 'lod0' as const : entry.near.references.includes(ref) ? 'lod1' as const : entry.far.references.includes(ref) ? 'lod2' as const : 'culled' as const })));
   }
   getState() {
     return {

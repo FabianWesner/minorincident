@@ -86,6 +86,8 @@ export class NpcView extends Group {
     this.bark.style.display = this.world.tick < this.barkUntil && threat ? '' : 'none';
     if (threat) { this.point.set(threat.transform.x, .7, threat.transform.z).project(camera); const length = Math.hypot(this.point.x, this.point.y) || 1; this.bark.style.left = `${(this.point.x / length * .4 + .5) * innerWidth}px`; this.bark.style.top = `${(.5 - this.point.y / length * .4) * innerHeight}px`; this.bark.textContent = `🐾 ${Math.abs(this.point.x) > Math.abs(this.point.y) ? this.point.x > 0 ? '→' : '←' : this.point.y > 0 ? '↑' : '↓'}`; }
   }
+  /** Scene Lab probe: the presented corgi/escort figure of an entity. */
+  heroRoot(id: number): Group | undefined { return this.heroes.get(id)?.root; }
   snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip, position: h.root.position.toArray(), head: h.head?.getWorldPosition(this.point.clone()).toArray() ?? null, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)), facing: this.facing(h) })), cars: this.cars.count }; }
   /** Rendered body facing on the ground (radians, sim yaw convention): tail -> head in world space, so any model or animation flip shows up. */
   private facing(h: Hero): number | null {

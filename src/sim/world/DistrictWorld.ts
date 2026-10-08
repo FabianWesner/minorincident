@@ -38,7 +38,7 @@ export class DistrictWorld {
     this.districts = composition.districts.map((d) => {
       const layout = layouts.find((l) => l.district === d.id);
       if (!layout) throw new Error(`Missing layout: ${d.id}`);
-      const gameplay = { ...districtGameplay[d.id], ...d.overrides },
+      const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides },
         decay = resolveDecay(layout, composition.tier),
         gameplayLayers = gameplay.decay.filter(
           (l) => l.tier <= composition.tier,
