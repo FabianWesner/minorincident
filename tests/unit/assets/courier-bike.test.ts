@@ -61,15 +61,15 @@ test('courier bike keeps authored two-wheel assemblies and attachment pivots in 
 });
 
 
+const assemble = (node: Node): Group => {
+  const group = new Group(); group.name = node.getName();
+  group.position.fromArray(node.getTranslation()); group.quaternion.fromArray(node.getRotation());
+  group.scale.fromArray(node.getScale());
+  for (const child of node.listChildren()) group.add(assemble(child));
+  return group;
+};
 test('courier bike riding retracts the stand and aligns the saddle with the rider', async () => {
   const document = await (await assetIO()).read('public/assets/models/veh.courier-bike.glb');
-  const assemble = (node: Node): Group => {
-    const group = new Group(); group.name = node.getName();
-    group.position.fromArray(node.getTranslation()); group.quaternion.fromArray(node.getRotation());
-    group.scale.fromArray(node.getScale());
-    for (const child of node.listChildren()) group.add(assemble(child));
-    return group;
-  };
   const model = new Group();
   for (const node of document.getRoot().listScenes()[0].listChildren()) model.add(assemble(node));
   const bicycle = { mounted: false, speed: 0, steer: 0, pedal: 0 };
@@ -114,5 +114,40 @@ test('courier bike riding retracts the stand and aligns the saddle with the ride
     }
     bicycle.mounted = false; for (let i = 0; i < 60; i++) view.update();
     expect(model.getObjectByName('kickstand')!.rotation.z).toBeCloseTo(0, 3);
+  } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
+});
+
+// QA: both wheels sank into raised paving (crosswalk slabs, kerbs) because the whole bike took the height under the rider's centre.
+test('@regression courier bike wheels rest on the paving under each wheel standing, riding, leaning and over kerbs', async () => {
+  const document = await (await assetIO()).read('public/assets/models/veh.courier-bike.glb');
+  const model = new Group();
+  for (const node of document.getRoot().listScenes()[0].listChildren()) model.add(assemble(node));
+  // Road at 0, a 0.05 m crosswalk slab (x 4..6) and a 0.13 m kerb with sidewalk (x > 10).
+  const paving = (x: number) => x > 10 ? .13 : x >= 4 && x <= 6 ? .05 : 0;
+  const bicycle = { mounted: false, speed: 0, steer: 0, pedal: 0, lean: 0 };
+  const transform = { x: 0, y: 0, z: 0, yaw: 0 };
+  const world = { tick: 0, districts: { pavingHeight: (x: number) => paving(x) }, vehicles: { bicycle: { entity: { bicycle, transform } } },
+    entities: { get: () => ({ transform: { x: 0, z: 0 }, survivor: {} }) } } as unknown as SimWorld;
+  vi.stubGlobal('document', { createElement: () => ({ dataset: {}, style: {}, remove: () => {} }), querySelector: () => null });
+  vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockResolvedValue(model);
+  const view = new BicycleView(world, {} as Materials);
+  try {
+    await view.load();
+    let worst = 0, samples = 0;
+    const check = () => {
+      view.update();
+      // A leaned or steered tire touches a few cm beside the sampled hub line: skip the paving edges themselves.
+      for (const wheel of view.snapshot()!.wheels) if ([4, 6, 10].every(edge => Math.abs(wheel![0] - edge) > .15)) { worst = Math.max(worst, Math.abs(wheel![1] - paving(wheel![0]))); samples++; }
+    };
+    check(); // parked on the road
+    bicycle.mounted = true;
+    for (let i = 0; i < 400; i++) {
+      // Ride east over the slab and kerb with weaving steering and lean, then circle back on the road side.
+      const k = i / 400; transform.x = -2 + 16 * k; transform.z = Math.sin(k * 12) * 2; transform.yaw = Math.sin(k * 12) * .8 - (i > 300 ? 2 : 0);
+      Object.assign(bicycle, { speed: 6, steer: Math.sin(k * 12), lean: Math.cos(k * 12) * .35, pedal: i * .3 });
+      check();
+    }
+    expect(samples).toBeGreaterThan(700);
+    expect(worst).toBeLessThanOrEqual(.01);
   } finally { view.dispose(); vi.restoreAllMocks(); vi.unstubAllGlobals(); }
 });

@@ -40,6 +40,9 @@ const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
 // Preserve the adjacent panels; farther boards need their silhouette, not fine bevels.
 const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
+/** Low tier: hero interiors whose LOD1 alone is ≥ 50 k triangles (supermarket, civic centre) stay on their shadowless LOD2
+ * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
+const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
@@ -177,7 +180,7 @@ export class DistrictView extends Group {
         });
         // L3 authors parking and emergency dressing in its loaded layout. Its
         // references must use those positions, rather than the unchanged baked GLB.
-        if (this.world.composition.id === 'L3' || lab) {
+        if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
           if (lab) {
@@ -203,7 +206,8 @@ export class DistrictView extends Group {
           [...references].map(async ([key, refs]) => {
             const [id, power] = key.split(":");
             if (!worldAssets[id]) {
-              const prototype = await this.registry.asset(id, power === 'true', 'lod0');
+              // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
+              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0');
               const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
@@ -425,7 +429,7 @@ export class DistrictView extends Group {
       const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
       // Bound detail by distance and projected size; preserve the independent low-tier policy.
       const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
-      let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
+      let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
         const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);

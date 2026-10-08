@@ -5,6 +5,8 @@ export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' 
 export interface CivilianActivity {
   activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
   anchor: string; target: Point; ticks: number; facing?: Point; prop?: CivilianProp; seat?: Point;
+  /** Render-only: raises a seated model so its hip joint rests on the seat anchor (see seats.ts). */
+  seatLift?: number;
 }
 /** Serializable NPC components; no render objects or physics bodies. */
 export interface Civilian {
@@ -22,7 +24,26 @@ export interface Civilian {
   panicReaction?: 'flee' | 'freeze';
   schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
+  /** E20 §5.2 allied fighter: a live, biteable human who engages visible infected instead of fleeing (no immunity). */
+  ally?: AllyState;
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number };
+}
+/** Serializable allied-fighter task state (firefighters in L2, police from L3). Ticks are sim ticks. */
+export interface AllyState {
+  role: 'firefighter' | 'officer';
+  /** Engaged allies fight what they see; disengaged ones follow their routine or `run` order. */
+  engaged: boolean;
+  /** Scripted move (run to the truck, jog to a door); cleared on arrival. */
+  run: Point | null; runSpeed: number;
+  /** Regroup / hold point; officers never leave it. */
+  post: Point | null; hold: boolean;
+  /** Officers: acquisition radius around the post (the line), raised while covering an evacuee. */
+  range?: number;
+  targetId: number; nextAttack: number; hits: number;
+  /** Swing/shot in progress: lands at `strikeAt` on `strikeTarget` if still in reach. */
+  strikeAt?: number; strikeTarget?: number;
+  /** Door forcing beat until this tick (halligan swing clip). */
+  forceUntil: number;
 }
 export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */

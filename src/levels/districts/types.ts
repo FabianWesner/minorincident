@@ -116,7 +116,7 @@ export interface LevelComposition {
     id: DistrictId;
     origin: Point;
     overrides?: Partial<
-      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions" | "barricades">
+      Pick<DistrictGameplay, "spawns" | "triggers" | "objectives" | "interactions" | "barricades" | "photoSpots">
     >;
     /** Scene Lab: full gameplay record for a synthetic layout (replaces `districtGameplay[id]`). */
     gameplay?: DistrictGameplay;

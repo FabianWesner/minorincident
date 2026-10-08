@@ -86,7 +86,7 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'interact.completed'; id: number; kind: import('../interact/Interactables').DeviceKind; cycle: number }
   | { tick: number; type: 'interact.interrupted'; id: number; progress: number }
   | { tick: number; type: 'vehicle.obstacle-broken'; targetId: number }
-  | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number }
+  | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number; /** E20: absent = driver (E09); the L2 fire truck seats the player as a passenger. */ role?: 'driver' | 'passenger' }
   | { tick: number; type: 'vehicle.smoking' | 'vehicle.burning' | 'vehicle.exploded' | 'vehicle.recovering'; sourceId: number }
   | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string; duration?: number }
   | { tick: number; type: 'entity.spawned'; id: number }
@@ -98,7 +98,7 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise' | 'sight'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }
-  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number } }
+  | { tick: number; type: 'combat.attack'; attackId: number; actionId: string; combo?: number; sourceId: number; side: import('../../data/actions/schema').Side; position: Transform; direction: { x: number; z: number }; style?: 'roundhouse' }
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle'; damageType?: import('../combat/Damage').DamageEvent['type'] }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }

@@ -29,6 +29,12 @@ const commands: string[][] = [
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', 'tests/perf/horde-budget.spec.ts', '--project=chromium', '--workers=1'],
       ]
+      : target === 'E20'
+        ? [
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E20-20', '--workers=2'],
+          // The rescue-peak frame budgets (desktop high, throttled phone low) run alone on the native GPU.
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l2-budgets.spec.ts', '--project=chromium', '--workers=1'],
+        ]
       : target === 'E25'
         ? [
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E25-14', '--workers=2'],

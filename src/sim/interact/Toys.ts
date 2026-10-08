@@ -95,8 +95,8 @@ export class Toys {
         w.vehicles.bicycle.parkPoints.push({ x: depot.x, z: depot.z, radius: 5, ...(spot ? { spot } : {}) });
       }
       for (let i = 1; i <= l1v2.toys.yardGates; i++) { const a = at(`gate-${i}`); if (a) this.gate(`gate-${i}`, a); }
-      for (let i = 1; i <= l1v2.toys.dumpsters; i++) { const a = at(`dumpster-${i}`), end = at(`dumpster-${i}-end`); if (a && end) this.dumpster(a, end); }
-      for (let i = 1; i <= l1v2.toys.carAlarm.cars; i++) { const a = at(`alarm-car-${i}`); if (a) this.alarm(a); }
+      for (let i = 1; at(`dumpster-${i}`); i++) { const a = at(`dumpster-${i}`), end = at(`dumpster-${i}-end`); if (a && end) this.dumpster(a, end); }
+      for (let i = 1; at(`alarm-car-${i}`); i++) { const a = at(`alarm-car-${i}`); if (a) this.alarm(a); }
       const wash = at('carwash-start'); if (wash && this.bay.length) this.carwash(wash);
     }
   }

@@ -9,4 +9,8 @@ export type MissionEvent =
   | { tick: number; type: 'mission.signal'; name: string; actorId?: number }
   | { tick: number; type: 'migration.started'; id: string; to: Anchor }
   | { tick: number; type: 'world.tier-requested'; tier: number }
-  | { tick: number; type: 'gate.changed'; id: string; open: boolean };
+  | { tick: number; type: 'gate.changed'; id: string; open: boolean }
+  /** E20 set-piece beats, in order (AC06): alarm, departure, arrival, crew exit, crew at the doors, doors open, radio, gate closed. */
+  | { tick: number; type: 'l2.alarm' | 'l2.truckDeparted' | 'l2.truckArrived' | 'l2.crewExit' | 'l2.firefightersAtDoors' | 'l2.doorsOpen' | 'l2.radio' | 'l2.gateClosed' }
+  /** E20 §5.2 allied fighter strike (firefighter melee, officer shot); the hit itself is an ordinary `combat.hit`. */
+  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' };

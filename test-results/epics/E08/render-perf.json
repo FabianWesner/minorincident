@@ -1,20 +1,60 @@
 {
+  "civilians": 30,
+  "inView": 20,
+  "models": 5,
   "crowd": {
-    "instances": 30,
-    "draws": 1,
-    "source": "placeholder"
+    "instances": 24,
+    "draws": 5,
+    "figures": 24,
+    "source": "glb"
   },
   "perf": {
-    "fps": 5.998800239952016,
-    "frameMs": 166.69999999999982,
+    "profile": null,
+    "profileAssets": null,
+    "updateCpuMs": 0,
+    "renderCpuMs": 0,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 12.004801920768282,
+    "frameMs": 83.30000000000018,
     "simMs": 0,
     "uiMs": 0,
-    "drawCalls": 96,
-    "triangles": 54007,
-    "geometries": 104,
-    "textures": 24,
+    "drawCalls": 304,
+    "triangles": 565487,
+    "geometries": 123,
+    "textures": 16,
     "entities": 37,
     "backend": "webgl",
-    "loadTiming": null
+    "loadTiming": null,
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 10,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 521000000,
+    "lighting": {
+      "lightFieldMs": 0.09999942779541016,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroShadow": 0,
+      "preset": "golden"
+    }
   }
 }

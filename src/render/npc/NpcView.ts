@@ -88,6 +88,6 @@ export class NpcView extends Group {
   }
   /** Scene Lab probe: the presented corgi/escort figure of an entity. */
   heroRoot(id: number): Group | undefined { return this.heroes.get(id)?.root; }
-  snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)) })), cars: this.cars.count }; }
+  snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip, position: h.root.position.toArray(), head: h.head?.getWorldPosition(this.point.clone()).toArray() ?? null, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)) })), cars: this.cars.count }; }
   dispose(): void { this.off(); this.bark.remove(); for (const h of this.heroes.values()) h.badge?.remove(); this.heroes.clear(); this.civilians.dispose(); for (const root of this.placeholders) disposeCharacter(root); this.cars.geometry.dispose(); (this.cars.material as MeshLambertNodeMaterial).dispose(); this.cars.dispose(); void this.registry.dispose(); this.clear(); }
 }
