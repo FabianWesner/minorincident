@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
 import { bakeInfected, civilianClips, framesPerClip } from '../../../src/render/characters/bakeInfected';
-import { CrowdLocomotion } from '../../../src/render/characters/CrowdLocomotion';
+import { CrowdFootwork, CrowdLocomotion } from '../../../src/render/characters/CrowdLocomotion';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import { cadenceStride, gaitShape } from '../../../src/render/characters/clips';
 import { GaitPhase } from '../../../src/render/characters/GaitPhase';
@@ -55,4 +55,31 @@ test('distance phase stays continuous when speed and stride change @E07', () => 
   expect((next - first + 1) % 1).toBeCloseTo(.001 / cadenceStride('infected-frail', .5, .4));
   expect(phase.sample(1, 200.001, 'infected-sprint', .5, 0)).toBe(next);
   expect(gaitShape['infected-frail'].stance).toBeGreaterThan(0);
+});
+
+// P1 PO "invisible zombie biting me": a running figure whose footwork starts with both feet past the short run
+// stance had no foot to stand on, the pelvis filter computed Infinity - Infinity = NaN and the NaN stuck, so the
+// GPU drew nothing for that infected (or pedestrian) for seconds while the sim kept it attacking.
+test('crowd footwork entering mid-run never produces a non-finite pose @E07', async () => {
+  const bytes = readFileSync('public/assets/models/npc.civilian-man-a.glb');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 64);
+  const footwork = new CrowdFootwork(64), loco = new CrowdLocomotion(scene, baked.clip, footwork);
+  const bad: string[] = [];
+  let id = 0;
+  for (const [name, speed] of [['civ-flee', 4], ['infected-frail', 4.7], ['infected-lurch', 5.1], ['infected-sprint', 5.6], ['npc-walk', 1.4]] as const) for (let k = 0; k < 20; k++) {
+    id++; const start = k / 20, stride = cadenceStride(name, baked.strideScale, speed);
+    for (let i = 0; i < 30; i++) {
+      const time = 10 + i / 60, phase = (start + i / 60 * speed / stride) % 1, x = i / 60 * speed;
+      footwork.begin(time);
+      const frame = civilianClips.indexOf(name) * framesPerClip + phase * (framesPerClip - 1);
+      const root = new Matrix4().makeRotationY(.4).setPosition(x, 0, 0), blend = palette.sample(id, name, frame, time);
+      const row = loco.present(id, palette, frame, blend, name, phase, root, baked.strideScale, speed, time, true, { lurch: 1 }, { drag: 0, dragFoot: 0 });
+      if (!palette.pose(row, blend[0], blend[1]).every(Number.isFinite)) bad.push(`${name} start ${start} frame ${i}`);
+      // The footwork keeps solving (it is not dropped by the non-finite guard).
+      if (!footwork.states.has(id)) bad.push(`${name} start ${start} frame ${i}: footwork dropped`);
+    }
+  }
+  palette.texture.dispose(); baked.geometry.dispose();
+  expect(bad).toEqual([]);
 });
