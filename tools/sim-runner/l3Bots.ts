@@ -73,7 +73,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
     world.events.on('objective.completed', e => { if (e.type === 'objective.completed') timeline.push({ type: `objective:${e.id}`, t: (e.tick - start) / 60 }); }),
     world.events.on('l3.fallback', e => { if (e.type === 'l3.fallback') { squadAtFallback = e.squad.length; for (const id of e.squad) squadIds.add(id); } }),
     world.events.on('checkpoint.restored', () => lastPos.clear()),
-    world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.pistol') handgunShots++; }),
+    world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') handgunShots++; }),
     // First acquisition (a later checkpoint restore shifts the stored tick with the timeline).
     world.events.on('l3.handgun', e => { if (firstGun < 0) firstGun = e.tick; }),
     world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'kind' in e && e.kind === 'medkit') medkits++; }),
@@ -89,7 +89,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
       if (e.type !== 'combat.kill' || world.entities.get(e.targetId)?.faction !== 'infected') return;
       const s = mission.state.l3!, src = world.entities.get(e.sourceId);
       if (s.fallbackAt && l3Segment(e.position.x) === 0) { if (e.sourceId === 1) s1.playerKills++; else if (officers.has(e.sourceId)) s1.officerKills++; }
-      if (e.sourceId === 1 && src) (e.actionId === 'weapon.pistol' ? gun : melee).push(dist(src.transform, e.position));
+      if (e.sourceId === 1 && src) (e.actionId === 'weapon.handgun' ? gun : melee).push(dist(src.transform, e.position));
     }),
     world.events.on('ai.alerted', e => {
       if (e.type !== 'ai.alerted' || e.sourceId !== 1) return;

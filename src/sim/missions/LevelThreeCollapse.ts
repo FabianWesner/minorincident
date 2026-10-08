@@ -98,7 +98,7 @@ export class LevelThreeCollapse {
     this.spawnMedkits();
     this.mission.radio('L3.briefing');
     // Gunfire is a loud event (section 5.3): the player's handgun and every ally shot.
-    world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.pistol') this.gunshot(1, e.position); });
+    world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') this.gunshot(1, e.position); });
     world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.role !== 'firefighter' && e.from) this.gunshot(e.sourceId, e.from); });
     world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite') this.bitten(e.targetId); });
     world.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') this.turned(e.id); });
@@ -171,10 +171,10 @@ export class LevelThreeCollapse {
   private takeHandgun(): void {
     const combat = this.world.combat, s = this.s; if (!combat || s.handgunAt) return;
     s.handgunAt = Math.max(1, this.world.tick);
-    const left = combat.runner.loadout.state.LEFT.rack.map(r => r.id), right = combat.runner.loadout.state.RIGHT.rack.map(r => r.id).filter(id => id !== 'weapon.pistol');
-    combat.setLoadout(left, ['weapon.pistol', ...right].slice(0, Math.max(2, combat.rackCapacity)));
+    const left = combat.runner.loadout.state.LEFT.rack.map(r => r.id), right = combat.runner.loadout.state.RIGHT.rack.map(r => r.id).filter(id => id !== 'weapon.handgun');
+    combat.setLoadout(left, ['weapon.handgun', ...right].slice(0, Math.max(2, combat.rackCapacity)));
     combat.runner.loadout.state.selectedSide = 'RIGHT';
-    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'RIGHT', actionId: 'weapon.pistol', replaced: null });
+    this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'RIGHT', actionId: 'weapon.handgun', replaced: null });
     this.world.events.emit({ type: 'l3.handgun', tick: this.world.tick });
     this.mission.radio('L3.handgun');
   }
