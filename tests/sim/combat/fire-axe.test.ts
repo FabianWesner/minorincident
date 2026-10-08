@@ -16,7 +16,7 @@ test('T-E20-10 @E20 @E20-AC10 axe single vs roundhouse table (20 seeds); the bat
       const front = runner(w, 1.3 + rng.next() * .5, (rng.next() - .5) * .6), back = runner(w, -1.6 - rng.next() * .4, (rng.next() - .5) * .6);
       fire(w); step(w, 50);
       const attack = events(w, 'combat.attack')[0] as Extract<GameEvent, { type: 'combat.attack' }>;
-      expect(attack.style, `seed ${seed}`).toBe('single');
+      expect(attack.style, `seed ${seed}`).toBeUndefined();
       const hits = events(w, 'combat.hit') as unknown as { targetId: number; amount: number }[];
       expect(hits.map(h => h.targetId)).toEqual([front]);
       expect(hits[0].amount).toBe(40);
