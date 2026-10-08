@@ -57,3 +57,9 @@ export function l1ReactionS(u: number): number {
   const [low, high] = l1v2.speedTiers.factor.reactionS;
   return low + (high - low) * ((u * 7.31) % 1);
 }
+/**
+ * PO rule "Infected recover" (specs/00-game-concept.md, 2026-10-08): a lethal melee/unarmed/firearm/vehicle hit only knocks
+ * an infected down; it gets up after a deterministic per-entity random `downS` at full health. Explosive blasts and a
+ * lethal burn kill for good. `getUpS` is the authored get-up beat (CrowdView plays the `get-up` clip from 0.7 s of a heavy reaction).
+ */
+export const infectedRecovery = { downS: [10, 20] as const, getUpS: .64 };

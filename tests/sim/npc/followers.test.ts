@@ -9,7 +9,8 @@ test('T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no pl
   for (let tick = 0; tick < 10800; tick++) {
     const p = w.entities.get(1)!;
     if (tick % 300 === 0) { const phase = (tick / 300) % 4; w.setInput({ move: { x: phase === 0 ? 1 : phase === 2 ? -1 : 0, z: phase === 1 ? 1 : phase === 3 ? -1 : 0 } }); }
-    if (tick % 600 === 0) { const id = w.infected!.spawn('infected.runner', { x: p.transform.x + 5, z: p.transform.z }); w.entities.get(id)!.health.current = 20; }
+    // PO "Infected recover" (2026-10-08): knocked-down runners get up again and keep their slot, so the stream respects the cap.
+    if (tick % 600 === 0 && w.infected!.director.count < w.infected!.director.cap) { const id = w.infected!.spawn('infected.runner', { x: p.transform.x + 5, z: p.transform.z }); w.entities.get(id)!.health.current = 20; }
     if (tick % 30 === 0) { const threat = w.infected!.active.find(e => e.health.current > 0); if (threat) { const dx = threat.transform.x - p.transform.x, dz = threat.transform.z - p.transform.z, d = Math.hypot(dx, dz) || 1; w.setInput({ aim: { x: dx / d, z: dz / d } }); } }
     const x = p.transform.x, z = p.transform.z; w.update();
     if (Math.hypot(p.transform.x - corgi.transform.x, p.transform.z - corgi.transform.z) <= 6) close++;
