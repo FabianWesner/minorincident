@@ -2173,6 +2173,37 @@ export default {
     "source": "public/assets/models/bld.bus-stop.glb",
     "hash": "944e12c3c1e08220879e294d218677bcaad1db5e02709de35237ed5ff0655f09"
   },
+  "prop.tent": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.9,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": true,
+    "sounds": "prop.wood-medium",
+    "boxes": [
+      {
+        "min": [
+          -1.5,
+          0.00500001907348635,
+          -1.45
+        ],
+        "max": [
+          1.5,
+          1.9550000190734864,
+          1.45
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.tent.glb",
+    "hash": "7e09c53008957938d9e46fe5e77e1bea95d4d6fa933fbe5ba6e774a84be5d298"
+  },
   "veh.courier-bike": {
     "class": "light",
     "mass": 38,
@@ -2460,7 +2491,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.lawn-chair-a.glb",
-    "hash": "2ec181933294edd611d238b9bcda2ac5293fce68ed9b54f41a558d3ac32b1e59"
+    "hash": "a3ece5b1a2d8050d8f034a7f2d88d4b8513bfe73d1a29c8875bb2c3fc563d155"
   },
   "prop.lawn-chair-b": {
     "class": "light",
@@ -2496,7 +2527,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.lawn-chair-b.glb",
-    "hash": "d9e6a2f9ad2f912bab127233d51f408d66d64cb4eb81b483445d669f0b9998d1"
+    "hash": "fb0ec2557643b1f213106def0bd44cebf3608b68d2034492f0a5c0746eb4a876"
   },
   "prop.kiddie-pool": {
     "class": "fixed",
@@ -2856,7 +2887,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.broken-chair.glb",
-    "hash": "e3b8696b648ab146c50adbf2f2a3e03b82c0ea82d521a7fadfe4fe37250240bb"
+    "hash": "f12bfacb972c292a229e50f16361d337f26940b1d2d5fcc812cba74ad33210a7"
   },
   "prop.recycling-bin": {
     "class": "light",
@@ -4023,13 +4054,13 @@ export default {
       {
         "min": [
           -2.845,
-          -9.536743172944284e-9,
-          -1.475
+          0.15999999046325675,
+          -1.635
         ],
         "max": [
           2.845,
-          3.2699999904632566,
-          1.475
+          3.109999990463257,
+          1.635
         ]
       }
     ],
@@ -4243,13 +4274,13 @@ export default {
       {
         "min": [
           -3.6,
-          -0.3500000953674318,
-          -3.65
+          0.19999990463256845,
+          -4.2
         ],
         "max": [
           3.6,
-          8.049999904632568,
-          3.65
+          7.499999904632569,
+          4.2
         ]
       }
     ],
@@ -4274,37 +4305,37 @@ export default {
       {
         "min": [
           2.200000047683716,
-          -0.599999976158142,
-          -0.6
+          2.384185793236071e-8,
+          -1.2
         ],
         "max": [
           3.200000047683716,
-          1.8000000238418579,
-          0.6
+          1.200000023841858,
+          1.2
         ]
       },
       {
         "min": [
           3.200000047683716,
-          -1.5999999940395355,
-          -0.4
+          5.960464455334602e-9,
+          -2
         ],
         "max": [
           3.700000047683716,
-          2.4000000059604645,
-          0.4
+          0.8000000059604645,
+          2
         ]
       },
       {
         "min": [
           3.700000047683716,
-          -1.7999999970197678,
-          -0.2
+          2.980232227667301e-9,
+          -2
         ],
         "max": [
           4.200000047683716,
-          2.2000000029802322,
-          0.2
+          0.40000000298023225,
+          2
         ]
       },
       {
@@ -4322,13 +4353,13 @@ export default {
       {
         "min": [
           -3.200000047683716,
-          -0.599999976158142,
-          -0.6
+          2.384185793236071e-8,
+          -1.2
         ],
         "max": [
           -2.200000047683716,
-          1.8000000238418579,
-          0.6
+          1.200000023841858,
+          1.2
         ]
       },
       {
@@ -5153,36 +5184,5 @@ export default {
     ],
     "source": "public/assets/models/kit.reception-plaza.glb",
     "hash": "6dd3249e7eda6b5d9d6613ee6d44fbd554afb25289c1c5c7e076eb1b1b7dffae"
-  },
-  "prop.tent": {
-    "class": "fixed",
-    "mass": 0,
-    "friction": 0.8,
-    "restitution": 0.05,
-    "centerOfMass": [
-      0,
-      0.9,
-      0
-    ],
-    "pushable": false,
-    "kickable": false,
-    "flammable": true,
-    "sounds": "prop.wood-medium",
-    "boxes": [
-      {
-        "min": [
-          -1.5,
-          0.00500001907348635,
-          -1.45
-        ],
-        "max": [
-          1.5,
-          1.9550000190734864,
-          1.45
-        ]
-      }
-    ],
-    "source": "public/assets/models/prop.tent.glb",
-    "hash": "7e09c53008957938d9e46fe5e77e1bea95d4d6fa933fbe5ba6e774a84be5d298"
   }
 };
