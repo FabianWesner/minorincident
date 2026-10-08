@@ -104,10 +104,12 @@ export class Bicycle {
         // Mount the entire frame on level pavement, including its forward saddle offset.
         // Prefer the parked heading; the rider's old facing can put the cargo box into a rack hoop.
         b.heading = -bike.transform.yaw;
-        // Close by on any clear, level ground first (a bike that fell on the road is picked up where it lies, not 8 m away on
-        // the sidewalk); the wider pavement search only for a frame wedged among props.
-        const spot = this.clearSpot(player.transform.x, player.transform.z, b.heading, [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], true, false)
-          ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, [4, 6, 8], true);
+        // A bike that fell on the road is picked up where it lies (any clear level ground close by, not 8 m away on the
+        // sidewalk); a parked one keeps the pavement-first search, with close-by road ground only as the last resort.
+        const near = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], wide = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8];
+        const spot = b.fallen
+          ? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true)
+          : this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false);
         if (!spot) return frame;
         const mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
         Object.assign(player.transform, spot, { y: (this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0) + survivor.height / 2 + .02, yaw: -b.heading });
