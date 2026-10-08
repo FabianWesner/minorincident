@@ -113,6 +113,12 @@ export interface Expectations {
   doorClosedFramesMax?: number;
   /** Most bone-vs-prop clipping hits (`clipping.actors`, see `clipping` options). */
   actorHitsMax?: number;
+  /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
+  wheelSinkMaxCm?: number;
+  /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
+  wheelFloatMaxCm?: number;
+  /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
+  wheelSpikeMaxCm?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;
