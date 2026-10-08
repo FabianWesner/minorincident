@@ -36,6 +36,7 @@ type Pending = L2State['pending'][number];
  */
 export class LevelTwoRescue {
   private readonly walls = new Map<string, number>();
+  private heldTicks = 0;
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
   constructor(private readonly mission: Mission) {}
   private get s(): L2State { return this.mission.state.l2!; }
@@ -178,7 +179,12 @@ export class LevelTwoRescue {
   private alarm(): void {
     const { world } = this.mission, tick = world.tick;
     // A few people still out on the streets, trying to get somewhere (civilians only: the town has no infected yet).
-    for (const [x, z] of l2.escape.civilians) { const p = this.snap({ x, z }, .4); this.outbreak().spawnPedestrian(p, { waypoints: [p, this.snap({ x: x + 6, z }, .4)] }); }
+    // Never on or beside the truck's route lane (it is a kinematic ride that must not meet anybody).
+    for (const [x, z] of l2.escape.civilians) {
+      const p = this.offRoute(this.snap({ x, z }, .4)); let q = this.offRoute(this.snap({ x: p.x + 6, z: p.z }, .4));
+      if (this.nearRoute({ x: (p.x + q.x) / 2, z: (p.z + q.z) / 2 })) q = this.offRoute(this.snap({ x: p.x + 2, z: p.z + 2 }, .4));
+      this.outbreak().spawnPedestrian(p, { waypoints: [p, q] });
+    }
     this.s.phase = 'alarm'; this.s.alarmAt = tick;
     world.events.emit({ type: 'l2.alarm', tick });
     if (!this.mission.state.states.alarm) this.mission.setState('alarm', true);
@@ -219,15 +225,90 @@ export class LevelTwoRescue {
     }
     return this.route;
   }
+  /** True within `m` metres of the truck route polyline. */
+  private nearRoute(p: Point, m = 5): boolean {
+    const r = this.routeInfo();
+    for (let i = 1; i < r.pts.length; i++) {
+      const a = r.pts[i - 1], b = r.pts[i], abx = b.x - a.x, abz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * abx + (p.z - a.z) * abz) / (abx * abx + abz * abz)));
+      if (Math.hypot(p.x - a.x - abx * t, p.z - a.z - abz * t) < m) return true;
+    }
+    return false;
+  }
+  /** The nearest clear point at least 5 m from the route (the point itself when it already is). */
+  private offRoute(p: Point): Point {
+    if (!this.nearRoute(p)) return p;
+    const nav = this.world.infected!.nav;
+    for (let d = 1; d <= 14; d++) for (let k = 0; k < 16; k++) {
+      const x = p.x + Math.cos(k * Math.PI / 8) * d, z = p.z + Math.sin(k * Math.PI / 8) * d;
+      if (!this.nearRoute({ x, z }) && nav.clear(x, z, .4)) return { x, z };
+    }
+    return p;
+  }
+  /** Truck pose `ds` metres further along the route (heading of that segment); ds = 0 is the actual pose. */
+  private poseAhead(ds: number, at: { x: number; z: number; yaw: number }): { x: number; z: number; yaw: number } {
+    if (ds <= 0) return at;
+    const r = this.routeInfo(), sT = Math.min(r.length, this.s.rideS + ds);
+    let k = 1; while (k < r.pts.length - 1 && r.cum[k] < sT) k++;
+    const a = r.pts[k - 1], b = r.pts[k], f = (sT - r.cum[k - 1]) / Math.max(1e-6, r.cum[k] - r.cum[k - 1]);
+    return { x: a.x + (b.x - a.x) * f, z: a.z + (b.z - a.z) * f, yaw: -Math.atan2(b.z - a.z, b.x - a.x) };
+  }
+  /**
+   * First body that the truck's footprint (grown by a safety margin) would touch within `reach` m along the route:
+   * distance travelled until contact. People, infected, the corgi, cars and movable props all count.
+   */
+  private blocker(at: { x: number; z: number; yaw: number }, reach: number): { gap: number; e: EntitySnapshot; pose: { x: number; z: number; yaw: number } } | null {
+    const { world } = this.mission, def = world.vehicles!.cars.get(this.s.truckId)!.physics.def;
+    const bodies = [...world.entities.iterate()].filter(e => e.id !== this.s.truckId && e.id !== 1 && !e.hidden && (e.civilian || e.infected || e.companion || e.vehicle || e.kind === 'physics-prop'));
+    for (let ds = 0; ds <= reach; ds += .5) {
+      const p = this.poseAhead(ds, at), c = Math.cos(p.yaw), sn = Math.sin(p.yaw);
+      let best: EntitySnapshot | null = null, bestLx = Infinity;
+      for (const e of bodies) {
+        const dx = e.transform.x - p.x, dz = e.transform.z - p.z, lx = dx * c - dz * sn, lz = dx * sn + dz * c, r = (e.combat?.radius ?? .35) + .3;
+        if (Math.abs(lz) < def.width / 2 + r + .25 && Math.abs(lx) < def.length / 2 + r && lx < bestLx) { best = e; bestLx = lx; }
+      }
+      if (best) return { gap: ds, e: best, pose: p };
+    }
+    return null;
+  }
+  /** Hearing the siren, a person in the way runs sideways off the lane (flee from a point on the centre line). */
+  private stepAside(e: EntitySnapshot, x: number, z: number, yaw: number): void {
+    const c = e.civilian; if (!c || c.ally || !(c.state === 'calm' || c.state === 'hide' || c.state === 'alarmed')) return;
+    const side = Math.sign((e.transform.x - x) * Math.sin(yaw) + (e.transform.z - z) * Math.cos(yaw)) || (e.id % 2 ? 1 : -1);
+    c.story = null; c.schedule = undefined; c.owner = null;
+    Object.assign(c.threat, { x: e.transform.x - Math.sin(yaw) * side * 1.5, z: e.transform.z - Math.cos(yaw) * side * 1.5 });
+    this.world.npcs!.civilians.state(e, 'flee');
+  }
+  /** Last resort after a hold: a movable body is placed on the nearest clear spot beside the lane. */
+  private clearBody(e: EntitySnapshot, x: number, z: number, yaw: number): void {
+    if (e.vehicle || e.kind === 'physics-prop') return;
+    const nav = this.world.infected!.nav, c = Math.cos(yaw), sn = Math.sin(yaw), dx = e.transform.x - x, dz = e.transform.z - z, lx = dx * c - dz * sn, lz = dx * sn + dz * c;
+    for (const k of [Math.sign(lz) || 1, -(Math.sign(lz) || 1)]) for (let m = 2.6; m <= 6; m += .5) {
+      const nx = x + c * lx + sn * k * m, nz = z - sn * lx + c * k * m;
+      if (!nav.clear(nx, nz, .4)) continue;
+      e.transform.x = nx; e.transform.z = nz; this.world.spatial.set(e.id, nx, nz); return;
+    }
+  }
   /** Kinematic ride along the authored route: accelerate, slow for corners, brake to the forecourt. */
   private ride(): void {
     const { world } = this.mission, r = this.routeInfo(), s = this.s, car = world.vehicles!.cars.get(s.truckId);
     if (!car) return;
     let k = 1; while (k < r.pts.length - 1 && r.cum[k] < s.rideS) k++;
     const toCorner = k < r.pts.length - 1 ? r.cum[k] - s.rideS : Infinity, left = r.length - s.rideS;
-    const target = Math.min(l2.ride.cruiseMs, Math.sqrt(2 * l2.ride.accelMs2 * Math.max(0, left)) + .3, toCorner < 7 ? l2.ride.cornerMs + toCorner * .6 : Infinity);
-    s.rideV += Math.max(-l2.ride.accelMs2 * 1.6 / TICKS, Math.min(l2.ride.accelMs2 / TICKS, target - s.rideV));
-    s.rideS = Math.min(r.length, s.rideS + Math.max(.02, s.rideV) / TICKS);
+    // Nobody is driven over: a body in the corridor ahead (person, infected, corgi, car, prop) makes the truck brake to a stop
+    // short of it, the person steps off the lane at once (siren), and after a short hold anything movable is placed beside the lane.
+    const t0 = car.entity.transform, brake = l2.ride.accelMs2 * 1.6, reach = s.rideV * s.rideV / (2 * brake) + 6;
+    const hit = this.blocker(t0, reach);
+    let cap = Infinity, hold = false;
+    if (hit) {
+      this.stepAside(hit.e, hit.pose.x, hit.pose.z, hit.pose.yaw);
+      cap = Math.sqrt(2 * brake * .8 * Math.max(0, hit.gap - .5));
+      hold = hit.gap <= .5;
+      if (hold && ++this.heldTicks > ticks(1.5)) this.clearBody(hit.e, hit.pose.x, hit.pose.z, hit.pose.yaw);
+    } else this.heldTicks = 0;
+    const target = Math.min(cap, l2.ride.cruiseMs, Math.sqrt(2 * l2.ride.accelMs2 * Math.max(0, left)) + .3, toCorner < 7 ? l2.ride.cornerMs + toCorner * .6 : Infinity);
+    s.rideV += Math.max(-brake / TICKS, Math.min(l2.ride.accelMs2 / TICKS, target - s.rideV));
+    if (hold) s.rideV = Math.min(s.rideV, cap);
+    s.rideS = Math.min(r.length, s.rideS + (hold ? 0 : Math.max(.02, s.rideV)) / TICKS);
     k = 1; while (k < r.pts.length - 1 && r.cum[k] < s.rideS) k++;
     const a = r.pts[k - 1], b = r.pts[k], f = (s.rideS - r.cum[k - 1]) / Math.max(1e-6, r.cum[k] - r.cum[k - 1]);
     const x = a.x + (b.x - a.x) * f, z = a.z + (b.z - a.z) * f, want = -Math.atan2(b.z - a.z, b.x - a.x);

@@ -40,7 +40,7 @@ export class Civilians {
       combat: { radius: .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     this.world.spatial.set(e.id, position.x, position.z); return e.id;
   }
-  private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
+  state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
