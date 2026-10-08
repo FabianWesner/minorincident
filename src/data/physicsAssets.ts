@@ -3681,9 +3681,9 @@ export default {
     "friction": 0.75,
     "restitution": 0.05,
     "centerOfMass": [
-      0.012499988079071045,
-      2.0850000381469727,
-      0
+      0.01694399118423462,
+      2.086121082305908,
+      0.019999980926513672
     ],
     "pushable": false,
     "kickable": false,
@@ -3694,17 +3694,17 @@ export default {
         "min": [
           -0.625,
           0,
-          -2.200000047683716
+          -2.2100000381469727
         ],
         "max": [
-          0.6499999761581421,
-          4.170000076293945,
-          2.200000047683716
+          0.6588879823684692,
+          4.172242164611816,
+          2.25
         ]
       }
     ],
     "source": "public/assets/models/decay.burned-facade.brick.glb",
-    "hash": "c914fefbeb8dd62e22f7ebc30c8fe1c967e3d8c856c596314e5a87e15adb6b6e"
+    "hash": "1cd303da95e958552cb98c6410cd5121ae69256e09b18d4d2a4ee13a1059aa75"
   },
   "decay.burned-facade.diner": {
     "class": "fixed",
@@ -3712,9 +3712,9 @@ export default {
     "friction": 0.75,
     "restitution": 0.05,
     "centerOfMass": [
-      0.012499988079071045,
+      0.01694399118423462,
       2.194999933242798,
-      0
+      0.02359950542449951
     ],
     "pushable": false,
     "kickable": false,
@@ -3725,16 +3725,16 @@ export default {
         "min": [
           -0.625,
           0,
-          -2.200000047683716
+          -2.202800989151001
         ],
         "max": [
-          0.6499999761581421,
+          0.6588879823684692,
           4.389999866485596,
-          2.200000047683716
+          2.25
         ]
       }
     ],
     "source": "public/assets/models/decay.burned-facade.diner.glb",
-    "hash": "489be847586ddc2925c60a1057aa0bebe4c9369fd17d1d6c8e9a5029342ca237"
+    "hash": "a9a372f8eb0bacf73141210f8d94ae1cb024147182f9bad1310734be99ba1646"
   }
 };
