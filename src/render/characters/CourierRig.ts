@@ -34,6 +34,13 @@ export function shoulderOffset(rig: CharacterRig, bones: CourierBones | undefine
 
 const twist = new Quaternion(), axis = new Vector3(), identity = new Quaternion(), q = new Quaternion();
 const BULGE = .12;
+/** Mid-joint helper: half the joint rotation, plus a bulge that widens the crease cross-section as it bends
+ * (linear blend skinning loses volume on the inner side). */
+function bend(helper: Object3D, joint: Object3D): void {
+  helper.quaternion.copy(identity).slerp(joint.quaternion, .5);
+  const bulge = 1 + BULGE * (1 - Math.abs(joint.quaternion.w));
+  helper.scale.set(bulge, 1, bulge);
+}
 /** Stateless helper drive, applied after every pose layer (any frame, any number of times). */
 export function driveHelpers(rig: CharacterRig, bones: CourierBones): void {
   for (const side of ['L', 'R'] as const) {
@@ -44,12 +51,7 @@ export function driveHelpers(rig: CharacterRig, bones: CourierBones): void {
     twist.set(axis.x * d, axis.y * d, axis.z * d, hand.quaternion.w);
     if (twist.lengthSq() < 1e-12) twist.identity(); else twist.normalize();
     bones[`foreArmTwist${side}`].quaternion.copy(identity).slerp(twist, .5);
-    for (const [helper, joint] of [[bones[`elbow${side}`], rig[`foreArm${side}`]], [bones[`knee${side}`], rig[`shin${side}`]]] as const) {
-      helper.quaternion.copy(identity).slerp(joint.quaternion, .5);
-      // Joint bulge: widen the cross-section at the crease as it bends (LBS loses volume on the inner side).
-      const bulge = 1 + BULGE * (1 - Math.abs(joint.quaternion.w));
-      helper.scale.set(bulge, 1, bulge);
-    }
+    bend(bones[`elbow${side}`], rig[`foreArm${side}`]); bend(bones[`knee${side}`], rig[`shin${side}`]);
   }
 }
 
@@ -99,7 +101,6 @@ export class CourierLiving {
   private readonly bagVelocity = new Vector3();
   private readonly bagAccel = new Vector3();
   private bagReady = false;
-  private readonly bagRest: Quaternion;
   private readonly scratch = new Vector3();
   private readonly scratch2 = new Vector3();
   private readonly up = new Vector3(0, 1, 0);
@@ -113,9 +114,8 @@ export class CourierLiving {
     // Look-at spread (research §2 #4): chest 20 % / neck 30 % / head 50 % of yaw; pitch neck 40 % / head 60 %.
     this.lookNodes = [[bones.chest, .2, 0], [bones.neck, .3, .4], [rig.head, .5, .6]];
     for (const node of [bones.chest, bones.neck, rig.head, rig.backpackSocket]) this.base.set(node, new Quaternion());
-    this.bagRest = rig.backpackSocket.quaternion.clone();
     this.irisRest = [bones.irisL.position.clone(), bones.irisR.position.clone()];
-    for (const bone of bones.pony) this.pony.push({ p: new Vector3(), prev: new Vector3(), length: 0 });
+    for (let i = 0; i < bones.pony.length; i++) this.pony.push({ p: new Vector3(), prev: new Vector3(), length: 0 });
     this.blinkAt = 1.5 + 3 * hash(seed);
   }
   present(input: PresentInput): void {
@@ -126,28 +126,29 @@ export class CourierLiving {
     if (dt < 0 || dt > .25) { dt = 0; this.ponyReady = this.bagReady = false; this.accumulator = 0; }
     this.lastTime = input.time;
     const rig = this.rig, bones = this.bones;
+    // The caller has propagated this frame's world matrices; helpers are leaves and change nothing above them.
     driveHelpers(rig, bones);
-    rig.root.updateMatrixWorld(true);
     if (dt > 0) this.stepLook(input, dt);
     this.applyLook(input.look);
     if (dt > 0) this.stepBlink(input);
     const closed = 1 - .9 * this.blink;
     bones.eyeL.scale.y = bones.eyeR.scale.y = closed;
-    // Secondary motion steps at 1/120 s on the presentation clock; the root matrices are current here.
-    rig.root.updateMatrixWorld(true);
+    // Secondary motion steps at 1/120 s on the presentation clock. Only what it reads is refreshed here (the head
+    // with its hair/eyes, the bag socket); the arms below the turned chest are propagated by the renderer.
+    rig.head.updateMatrixWorld(true); rig.backpackSocket.updateMatrixWorld(true);
     this.accumulator += dt;
     const h = 1 / 120;
     if (dt > 0) this.sampleBagAnchor(dt);
+    this.preparePony();
     let steps = 0;
     while (this.accumulator >= h - 1e-9 && steps < 30) { this.stepBag(h); this.stepPony(h); this.accumulator -= h; steps++; }
     if (!this.bagReady) this.sampleBagAnchor(0);
     if (!this.ponyReady) this.stepPony(0);
     this.applyBag(); this.applyPony();
     if (input.ground !== undefined) this.rollToes(input.ground);
-    else bones.toeL.quaternion.identity(), bones.toeR.quaternion.identity();
+    else { bones.toeL.quaternion.identity(); bones.toeR.quaternion.identity(); }
     this.stats.yaw = this.yaw * this.weight; this.stats.pitch = this.pitch * this.weight; this.stats.weight = this.weight; this.stats.blink = this.blink;
     this.stats.bagPitch = this.bagPitch; this.stats.bagRoll = this.bagRoll;
-    rig.root.updateMatrixWorld(true);
   }
   /** Yaw/pitch toward the target relative to the actor's facing, clamped ±70°/±25°, ≤ 360°/s. */
   private stepLook(input: PresentInput, dt: number): void {
@@ -165,7 +166,7 @@ export class CourierLiving {
     const rate = 360 * DEG * dt, ease = 1 - Math.exp(-dt / .12);
     this.yaw += Math.max(-rate, Math.min(rate, (yaw - this.yaw) * ease));
     this.pitch += Math.max(-rate, Math.min(rate, (pitch - this.pitch) * ease));
-    this.weight += (want - this.weight) * (1 - Math.exp(-dt / (want > this.weight ? .2 : .08)));
+    this.weight += (want - this.weight) * (1 - Math.exp(-dt / (want > this.weight ? .2 : .035)));
     if (this.weight < 1e-4 && want === 0) this.weight = 0;
   }
   private applyLook(look: Vector3 | null): void {
@@ -177,7 +178,7 @@ export class CourierLiving {
         // World-space increment (yaw about world up, pitch about the actor's lateral axis), expressed locally.
         this.rotation.setFromAxisAngle(this.up, this.yaw * w * yawShare).multiply(q.setFromAxisAngle(lateral, this.pitch * w * pitchShare));
         node.quaternion.premultiply(q.copy(this.parentRotation).invert().multiply(this.rotation).multiply(this.parentRotation));
-        node.updateMatrixWorld(true);
+        node.updateMatrix(); node.matrixWorld.multiplyMatrices(parent.matrixWorld, node.matrix);
       }
     }
     // Eyes take the rest of the turn (≤ 4 mm iris shift at the clamp) and lead it while the head eases in.
@@ -203,8 +204,8 @@ export class CourierLiving {
   }
   /** 2-DOF bag pendulum about its strap anchor, driven by the anchor's acceleration; the hip side is a collider. */
   private stepBag(h: number): void {
-    // Small-angle pendulum (L ≈ 0.22 m, ~1.1 Hz, ζ ≈ 0.3): forward acceleration swings the bag back (about +Z).
-    const k = 9.81 / .22, c = 2 * .3 * Math.sqrt(k), accel = this.bagAccel;
+    // Small-angle pendulum (L ≈ 0.22 m, ~1.1 Hz, ζ ≈ 0.55: a swing or two, then still): forward acceleration swings the bag back (about +Z).
+    const k = 9.81 / .22, c = 2 * .55 * Math.sqrt(k), accel = this.bagAccel;
     this.bagPitchVelocity += (-k * this.bagPitch - c * this.bagPitchVelocity - accel.x / .22) * h;
     this.bagRollVelocity += (-k * this.bagRoll - c * this.bagRollVelocity + accel.z / .22) * h;
     this.bagPitch += this.bagPitchVelocity * h; this.bagRoll += this.bagRollVelocity * h;
@@ -220,38 +221,44 @@ export class CourierLiving {
   }
   /** Verlet ponytail (Jakobsen): inertia, a pull toward the head-carried rest pose, gravity, fixed segment lengths
    * and sphere colliders for the head and the upper back. Particles are the tails of pony1..3. */
+  private readonly ponyAnchor = new Vector3();
+  private readonly ponyRotation = new Quaternion();
+  private readonly ponyScale = new Vector3();
+  private readonly sphereCenters = [new Vector3(), new Vector3()];
+  private readonly sphereRadii = [0, 0];
+  /** Per-frame inputs from the current world matrices: head-carried anchor, head rotation and scale, and the
+   * head sphere (skull under the cap) and upper back sphere colliders. */
+  private preparePony(): void {
+    const head = this.rig.head, bones = this.bones.pony;
+    if (!bones.length) return;
+    head.matrixWorld.decompose(this.scratch, this.ponyRotation, this.ponyScale);
+    this.ponyAnchor.setFromMatrixPosition(bones[0].matrixWorld);
+    const scale = this.ponyScale.y;
+    this.sphereCenters[0].set(-.03, .17, 0).applyMatrix4(head.matrixWorld); this.sphereRadii[0] = .2 * scale;
+    this.sphereCenters[1].set(-.04, .02, 0).applyMatrix4(this.bones.chest.matrixWorld); this.sphereRadii[1] = .13 * scale;
+  }
   private stepPony(h: number): void {
     const bones = this.bones.pony;
     if (!bones.length) return;
-    const head = this.rig.head, chest = this.bones.chest, scale = head.getWorldScale(this.scratch).y;
-    let parent = bones[0].getWorldPosition(this.tip);
-    head.getWorldQuaternion(this.parentRotation);
-    const rest = this.scratch2;
+    const scale = this.ponyScale.y, rest = this.scratch2;
+    let parent = this.ponyAnchor;
     for (let i = 0; i < bones.length; i++) {
       const particle = this.pony[i], offset = i + 1 < bones.length ? bones[i + 1].position : bones[i].position;
       // Rest tail: the chain straight along its bind direction, carried by the head.
-      rest.copy(offset).applyQuaternion(this.parentRotation).multiplyScalar(scale).add(parent);
+      rest.copy(offset).applyQuaternion(this.ponyRotation).multiplyScalar(scale).add(parent);
       if (!this.ponyReady || h === 0) { particle.p.copy(rest); particle.prev.copy(rest); particle.length = offset.length() * scale; parent = particle.p; continue; }
       const next = this.scratch.copy(particle.p).sub(particle.prev).multiplyScalar(.82).add(particle.p);
       next.addScaledVector(rest.sub(particle.p), .16 - .04 * i);
       next.y -= 3.5 * h * h;
       next.sub(parent).setLength(particle.length).add(parent);
-      for (const [center, radius] of this.colliders(head, chest, scale)) {
-        const d = next.distanceTo(center), r = radius + .012 * scale;
-        if (d < r) { next.sub(center).setLength(r).add(center); next.sub(parent).setLength(particle.length).add(parent); }
+      for (let c = 0; c < 2; c++) {
+        const center = this.sphereCenters[c], r = this.sphereRadii[c] + .012 * scale;
+        if (next.distanceTo(center) < r) { next.sub(center).setLength(r).add(center); next.sub(parent).setLength(particle.length).add(parent); }
       }
       particle.prev.copy(particle.p); particle.p.copy(next); parent = particle.p;
     }
     this.ponyReady = true;
     this.stats.tip.copy(this.pony[this.pony.length - 1].p);
-  }
-  private readonly sphereCenters = [new Vector3(), new Vector3()];
-  private readonly sphereList: [Vector3, number][] = [[this.sphereCenters[0], 0], [this.sphereCenters[1], 0]];
-  /** Head sphere (skull under the cap) and upper back sphere, world. */
-  private colliders(head: Object3D, chest: Object3D, scale: number): [Vector3, number][] {
-    head.localToWorld(this.sphereCenters[0].set(-.03, .17, 0)); this.sphereList[0][1] = .2 * scale;
-    chest.localToWorld(this.sphereCenters[1].set(-.04, .02, 0)); this.sphereList[1][1] = .13 * scale;
-    return this.sphereList;
   }
   private applyPony(): void {
     const bones = this.bones.pony;

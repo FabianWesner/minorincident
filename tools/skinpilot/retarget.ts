@@ -162,7 +162,8 @@ for (const spec of specs) {
   const hip: number[] = [];
   hipPositions.forEach((p, i) => { const k = i / (hipPositions.length - 1), q = p.clone(); if (spec.loop) q.sub(last.clone().sub(first).multiplyScalar(k)); if (spec.loop) q.sub(mean); else q.sub(first); q.y *= spec.bob ?? 1; if (spec.name === 'ride') q.set(0, 0, 0); hip.push(+q.x.toFixed(5), +q.y.toFixed(5), +q.z.toFixed(5)); });
   const out = [{ node: 'hip', path: 'translation', times, values: hip }];
-  for (const [node, values] of tracks) out.push({ node, path: 'rotation', times, values: values.map(v => +v.toFixed(5)) });
+  // 1e-4 per quaternion component (≈ 0.01°): the 21-joint library stays small enough for its chunk.
+  for (const [node, values] of tracks) out.push({ node, path: 'rotation', times, values: values.map(v => +v.toFixed(4)) });
   // Loops must close exactly.
   library.push({ name: spec.name, duration: frames / fps, source: `mesh2motion:${spec.source}`, tracks: out });
   console.log(spec.name, '←', spec.source, frames, 'frames', 'shift', shift, 'contact', contact);

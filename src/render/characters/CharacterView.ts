@@ -217,7 +217,7 @@ export class CharacterView extends Group {
   /** Skeleton v2 living layer (look-at, blink, ponytail, bag, helpers): the last pose layer of the frame. */
   private presentLiving(character: LoadedCharacter, rideWeight: number): void {
     if (!character.living) return;
-    this.updateMatrixWorld(true);
+    character.model.updateWorldMatrix(true, true);
     character.living.present({ time: character.animator.time, evaluation: character.animator.evaluations, look: this.looking ? this.lookTarget : null,
       lookWeight: rideWeight > 0 ? 0 : this.lookWeight, hurtTick: this.hurtTick, ground: rideWeight > 0 ? undefined : character.rig.root.getWorldPosition(this.scratchA).y });
   }
