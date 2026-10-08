@@ -6,6 +6,9 @@ import type { Mission } from '../../sim/missions/Mission';
  * Progress lives in mission state, so retries restore exactly the encounters at the checkpoint. */
 export function installLevelThree(world: SimWorld, mission: Mission): void {
   const ai = world.infected!; ai.director.levelCap = 60;
+  // L3's defense steps clear only when every wave actor is down at once, so its infected stay killable until the level is
+  // redesigned for the PO "Infected recover" rule (00 §6.2, 2026-10-08); runovers then count as kills, as before.
+  ai.recovery = false;
   const barrier = mission.def.anchors.barrier;
   const barrierId = world.vehicles!.obstacles.spawn('wall', barrier);
   const obstacle = () => world.vehicles!.obstacles.items.find(o => o.entity.id === barrierId);

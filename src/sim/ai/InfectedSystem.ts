@@ -323,6 +323,8 @@ export class InfectedSystem {
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: 1, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: 1, special: b.special, amount });
   }
+  /** PO "Infected recover" is on by default; a level whose scripted encounters still need kills (L3 defense waves) turns it off. */
+  recovery = true;
   /**
    * PO "Infected recover": called by Damage on the hit that drops an infected to 0 HP. Returns the tick it gets up, or -1
    * when it is dead for good (explosives, a lethal burn, a bursting bloater, a crow flock, an already settled corpse).
@@ -330,7 +332,7 @@ export class InfectedSystem {
    */
   down(e: EntitySnapshot, permanent: boolean): number {
     const b = e.infected!;
-    if (permanent || e.corpse || b.special === 'explode' || e.archetype === 'infected.crow') return b.recoverAt = -1;
+    if (permanent || !this.recovery || e.corpse || b.special === 'explode' || e.archetype === 'infected.crow') return b.recoverAt = -1;
     const [low, high] = infectedRecovery.downS, u = new Rng(this.world.seed, `infected-recover:${e.id}:${b.downs++}`).next();
     return b.recoverAt = this.world.tick + Math.round((low + (high - low) * u) * 60);
   }
