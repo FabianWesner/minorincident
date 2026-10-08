@@ -40,8 +40,8 @@ export const l3 = {
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits above the default (44 incl. the horde) so the squad is overwhelmed there. */
-    targets: [10, 25, 44] as readonly number[],
+    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits at the top of the band (48 incl. the horde) so the squad is overwhelmed there. */
+    targets: [10, 25, 48] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
@@ -52,9 +52,8 @@ export const l3 = {
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** Segment 3 also holds a horde (part of its 44) that streams west from the on-ramp end down the avenue of the first shot fired in
-     * segment 3 (seeded avenue when the courier reaches quietX without a shot). */
-    horde: { size: 8, fromX: 121, toX: 72, quietX: 96 },
+    /** Segment 3 also holds the horde (part of its 48): two packs of 6 at the on-ramp end of two avenues (seeded), streaming west. */
+    horde: { packSize: 6, fromX: 121, toX: 72 },
     leashM: 9,
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
     spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [3, 5] as P, maxPerLink: 2, cooldownS: 18 },
@@ -94,14 +93,14 @@ export const l3Anchors: Record<string, P> = {
   // Soldiers behind the T-walls and the nests of the army checkpoint.
   'l3-soldier-1': [139.0, -7.6], 'l3-soldier-2': [139.0, 7.6], 'l3-soldier-3': [139.0, -13.0], 'l3-soldier-4': [139.0, 13.0],
   'l3-soldier-5': [149.0, -7.0], 'l3-soldier-6': [149.0, 7.0], 'l3-soldier-7': [152.0, -2.4], 'l3-soldier-8': [139.0, -20.0],
-  'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-136, 0], 'photo-l3-squad-strong': [-92, 0],
+  'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-141, -13], 'photo-l3-squad-strong': [-92, 0],
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
   'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
 };
 /** Photo spots (section 6): name and camera offset, same framing scale as the L2 spots. */
 export const l3PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ['l3-station-yard', [16, 20, 16]], ['l3-station-attack', [18, 22, 18]], ['l3-squad-strong', [16, 20, 16]], ['l3-oak-avenue', [18, 22, 18]],
-  ['l3-commerce-street', [18, 22, 18]], ['l3-grove-boulevard', [18, 22, 18]], ['l3-alone', [16, 20, 16]], ['l3-army-checkpoint', [18, 22, 18]],
+  ['l3-commerce-street', [18, 22, 18]], ['l3-grove-boulevard', [14, 17, 14]], ['l3-alone', [16, 20, 16]], ['l3-army-checkpoint', [18, 22, 18]],
 ];
 /** Street of a world point (nearest street line), for population, forced-street bots and dressing tests. */
 export function l3Street(z: number): 'blvd' | 'commerce' | 'oak' { return z < -14 ? 'blvd' : z > 14 ? 'oak' : 'commerce'; }

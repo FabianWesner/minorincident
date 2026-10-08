@@ -44,15 +44,25 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
+    let fights = 0;
     for (let i = 0; i < 600; i++) {
       await step(20);
       if (done && await done()) return;
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
-      if ((await player()).health.current > 0 && await fightNearby(range)) await click();
+      // Fight a few, then break away (PO: fight a few, flee from many; knocked-down infected get up again).
+      const crowd = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 10).length; });
+      // Many ahead: back off along the street for a moment (they string out), then push on.
+      if (crowd >= 4) {
+        const p0 = (await player()).transform, back = { x: p0.x - 10, z: p0.z };
+        const point = await page.evaluate(q => window.__SS__!.input.project(q), back); await page.mouse.click(point.x, point.y); await step(45); await click(); fights = 0;
+      }
+      else if (fights < 3 && (await player()).health.current > 0 && await fightNearby(range)) { fights++; await click(); }
+      else if (fights >= 3) { if (++fights >= 8) fights = 0; if (fights === 4) await click(); }
       else if (i % 10 === 9) await click();
     }
-    throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
+    const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
+    throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
   };
   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
   return { step, mission, player, snap, shots, go, fightNearby, interact };
@@ -87,11 +97,13 @@ test.describe('L3 The Police Collapse in the browser', () => {
     let attackShot = false;
     for (let i = 0; i < 400 && !(await mission()).l3!.fallbackAt; i++) {
       if (!await fightNearby(14)) await step(15);
-      const m = await mission();
-      const inYard = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x > -160 && e.transform.x < -118 && Math.abs(e.transform.z) < 24).length);
-      if (!attackShot && m.l3!.waveIds.length >= 12 && inYard >= 5) { await snap('l3-station-attack'); attackShot = true; }
+      // The photo: once the attack is inside the frame (>= 4 infected within 15 m of the photo spot).
+      const inFrame = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x + 141, e.transform.z + 13) < 15).length);
+      if (!attackShot && inFrame >= 4) { await snap('l3-station-attack'); attackShot = true; }
     }
+    const inside = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x + 141, e.transform.z + 13) < 15).length);
     if (!attackShot) await snap('l3-station-attack');
+    console.log(JSON.stringify({ attackShotEarly: attackShot, inFrameAtFallback: inside }));
     expect((await mission()).l3!.fallbackAt).toBeGreaterThan(0);
     await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
     // Up Commerce Street to the army checkpoint (the squad follows), fighting the few that come close.
@@ -112,8 +124,12 @@ test.describe('L3 The Police Collapse in the browser', () => {
     }
     for (const name of ['l3-squad-strong', 'l3-alone', 'l3-army-checkpoint']) if (!h.shots.has(name) && await inL3()) await snap(name);
     for (let i = 0; i < 60 && await inL3(); i++) { last = await mission(); await step(15); }
+    // A hand-over in flight: wait for L4 to finish loading.
+    await page.waitForFunction(() => { const a = window.__SS__!; return a.getState().scenario === 'L4' || !!a.missions.state()?.l3; }, undefined, { timeout: 120_000 });
     const scenario = await page.evaluate(() => window.__SS__!.getState().scenario), now = await mission();
-    const final = scenario === 'L3' ? now : { ...last, phase: now && scenario === 'L4' ? 'progression' : last.phase, l3: { ...last.l3!, crossedAt: last.l3!.crossedAt || (scenario === 'L4' ? 1 : 0) } };
+    // Still on L3 with its state (result screen) or already handing over / on L4 (the L3 state is gone: use the last one seen).
+    const handedOver = scenario !== 'L3' || !now?.l3;
+    const final = !handedOver ? now : { ...last, phase: 'progression' as const, l3: { ...last.l3!, crossedAt: last.l3!.crossedAt || (scenario === 'L4' ? 1 : 0) } };
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ phase: final.phase, stats: final.stats, l3: { fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
     expect(['result', 'progression']).toContain(final.phase);
     expect(final.l3!.crossedAt).toBeGreaterThan(0);
