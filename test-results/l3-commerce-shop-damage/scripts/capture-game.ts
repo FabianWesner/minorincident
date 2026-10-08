@@ -8,7 +8,7 @@ try{
  for(const id of targets){const match=id.match(/^(bld\..+)\.(w[23])$/);const base=match?.[1]??id,decay=match?.[2];
   const dir=`test-results/l3-commerce-shop-damage/${id}`;mkdirSync(dir,{recursive:true});
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(`http://127.0.0.1:3348/preview/?asset=${base}&test=1&renderer=webgl&production=1`);
+  await page.goto(`http://127.0.0.1:${process.env.PORT??3348}/preview/?asset=${base}&test=1&renderer=webgl&production=1`);
   await page.waitForFunction(()=>!!window.__ASSET__);await page.evaluate(()=>window.__ASSET__!.ready);
   if(decay)await page.locator('#decay').evaluate((el,value)=>{(el as HTMLSelectElement).value=value;},decay);
   await page.locator('#toolbar').evaluate(el=>el.style.display='none');
