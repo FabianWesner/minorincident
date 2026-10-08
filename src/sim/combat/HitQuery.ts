@@ -15,21 +15,55 @@ export class HitQuery {
     this.area.x = origin.x; this.area.z = origin.z; this.area.r = range;
     return this.spatial.query(this.area, this.neighbors);
   }
+  /** Static walls bucketed on an 8 m grid (rebuilt when the array changes; `invalidate` after in-place edits). */
+  private grid: { cells: Map<number, number[]>; length: number; first: CoverWall | undefined; last: CoverWall | undefined } | null = null;
+  private stamps = new Uint32Array(0);
+  private stamp = 0;
+  private readonly candidates: number[] = [];
+  invalidate(): void { this.grid = null; }
+  private static key(x: number, z: number): number { return (x + 4096) * 8192 + z + 4096; }
+  private index() {
+    const w = this.walls;
+    if (this.grid && this.grid.length === w.length && this.grid.first === w[0] && this.grid.last === w[w.length - 1]) return this.grid;
+    const cells = new Map<number, number[]>();
+    w.forEach((wall, i) => {
+      for (let x = Math.floor((wall.x - wall.halfX) / 8); x <= Math.floor((wall.x + wall.halfX) / 8); x++) for (let z = Math.floor((wall.z - wall.halfZ) / 8); z <= Math.floor((wall.z + wall.halfZ) / 8); z++) {
+        const key = HitQuery.key(x, z), list = cells.get(key); if (list) list.push(i); else cells.set(key, [i]);
+      }
+    });
+    if (this.stamps.length < w.length) this.stamps = new Uint32Array(w.length);
+    return this.grid = { cells, length: w.length, first: w[0], last: w[w.length - 1] };
+  }
   /** Segment vs XZ slabs; returns first solid cover distance, or the whole segment. */
   clearDistance(origin: Vec2, direction: Vec2, range: number, ignoreId?: number): number {
     let closest = range;
-    for (const walls of this.wallGroups) for (const wall of walls) {
-      if (wall.entityId !== undefined && wall.entityId === ignoreId) continue;
-      if (wall.y - wall.halfY > 0.7 || wall.y + wall.halfY < 0.7) continue;
+    // Static walls: only those in the 8 m cells overlapping the segment's bounds (a wall crossing the segment shares a cell with it).
+    if (this.walls.length > 64) {
+      const grid = this.index(), ex = origin.x + direction.x * range, ez = origin.z + direction.z * range;
+      if (++this.stamp === 0xffffffff) { this.stamps.fill(0); this.stamp = 1; }
+      const list = this.candidates; list.length = 0;
+      for (let x = Math.floor(Math.min(origin.x, ex) / 8); x <= Math.floor(Math.max(origin.x, ex) / 8); x++) for (let z = Math.floor(Math.min(origin.z, ez) / 8); z <= Math.floor(Math.max(origin.z, ez) / 8); z++) {
+        for (const i of grid.cells.get(HitQuery.key(x, z)) ?? []) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; list.push(i); }
+      }
+      for (const i of list) closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId);
+      for (const wall of this.dynamicWalls) closest = this.cover(wall, origin, direction, range, closest, ignoreId);
+      return closest;
+    }
+    for (const walls of this.wallGroups) for (const wall of walls) closest = this.cover(wall, origin, direction, range, closest, ignoreId);
+    return closest;
+  }
+  private cover(wall: CoverWall, origin: Vec2, direction: Vec2, range: number, closest: number, ignoreId?: number): number {
+    {
+      if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
+      if (wall.y - wall.halfY > 0.7 || wall.y + wall.halfY < 0.7) return closest;
       let near = 0, far = range;
       for (const axis of ['x', 'z'] as const) {
         const half = axis === 'x' ? wall.halfX : wall.halfZ, d = direction[axis];
         if (Math.abs(d) < 1e-12) { if (origin[axis] < wall[axis] - half || origin[axis] > wall[axis] + half) { far = -1; break; } }
         else { const a = (wall[axis] - half - origin[axis]) / d, b = (wall[axis] + half - origin[axis]) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
       }
-      if (far >= near && near < closest) closest = near;
+      return far >= near && near < closest ? near : closest;
     }
-    return closest;
   }
   visible(origin: Vec2, target: Vec2, ignoreId?: number): boolean {
     const dx = target.x - origin.x, dz = target.z - origin.z, distance = Math.hypot(dx, dz);

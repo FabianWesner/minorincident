@@ -56,6 +56,8 @@ export interface CinematicDef {
 export interface MissionDef {
   /** L1 v2 story controller (technician, accident sequence, infected exits); see LevelOneOutbreak. */
   l1?: boolean;
+  /** L2 "The Failed Rescue" set-piece controller (station calm, alarm, truck ride, doors, ambush, checkpoint); see LevelTwoRescue. */
+  l2?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
@@ -90,10 +92,28 @@ export interface L1State {
   say?: { id: number; text: string; at: number; until: number } | null;
   beatsDone?: string[]; clerkId?: number; firefighterId?: number;
 }
+/** Serializable L2 controller state. Ticks are sim ticks, 0 = not yet. */
+export interface L2State {
+  phase: 'calm' | 'alarm' | 'ride' | 'arrived' | 'doors' | 'collapse' | 'escape' | 'checkpoint' | 'done';
+  alarmAt: number; departAt: number; arrivedAt: number; crewExitAt: number; atDoorsAt: number; doorsOpenAt: number; radioAt: number; crossedAt: number; gateClosedAt: number;
+  truckId: number; seated: boolean; axe: boolean;
+  /** Route progress (metres) and speed (m/s) of the kinematic truck. */
+  rideS: number; rideV: number;
+  crewIds: number[]; benchIds: number[]; trappedIds: number[]; officerIds: number[]; lineIds: number[];
+  doorIds: number[]; gateIds: number[];
+  /** Trapped civilians released so far, and the hidden ambush still waiting at its emergence doors. */
+  released: number; ambush: { id: number; door: string; at: number }[]; ambushIds: number[];
+  /** Escape population, cluster and their emergence (hidden at a door until `at`). */
+  /** `x/z/seen`: where it first appeared and whether that point was inside the camera volume then (omniscience audit). */
+  pending: { id: number; door: string; at: number; home: { x: number; z: number }; x?: number; z?: number; seen?: boolean }[]; escapeIds: number[]; clusterIds: number[];
+  escapeSpawned: boolean; clusterSpawned: boolean; clusterReached: boolean;
+}
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
   l1?: L1State;
+  /** L2 set-piece state; checkpoints snapshot it (ticks are shifted on restore). */
+  l2?: L2State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   /** Remaining global gameplay time (cinematics and retry screens pause it). */
   deadlineTicks: number | null;

@@ -9,6 +9,7 @@ import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
 import { VehicleView } from './VehicleView';
+import { L2Props } from './L2Props';
 import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
@@ -75,6 +76,7 @@ export class GameView implements Lifecycle {
   renderCpuMs = 0;
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
+  private l2Props: L2Props | null = null;
   private bicycle: BicycleView | null = null;
   private readonly seat = new Vector3();
   private readonly gripL = new Vector3();
@@ -194,7 +196,9 @@ export class GameView implements Lifecycle {
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
-      const instanceCapacity = this.world.scenario === 'L1' ? this.renderer.attributeInstanceCapacity() : undefined;
+      // L1 and L2 share D-GROVE (E20): the same instancing path, spawn focus and close-view warm-up.
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+      const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
       this.character=new CharacterView();
@@ -202,14 +206,14 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', this.world.districts.composition.id === 'L1' ? 'courier' : 'survivor', useSkinnedCourier(this.params));
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2'].includes(this.world.districts.composition.id) ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      const initialFocus = this.world.scenario === 'L1' ? this.view.cameraTarget : undefined;
+      const initialFocus = grove ? this.view.cameraTarget : undefined;
       const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
       await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
       loadMeasure('view:districts+character',t);
-      if (this.world.scenario === 'L1') {
+      if (grove) {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
         // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
@@ -257,6 +261,7 @@ export class GameView implements Lifecycle {
     if (this.crowd) this.scene.add(this.crowd);
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
+    if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
@@ -302,7 +307,9 @@ export class GameView implements Lifecycle {
       this.idPass = this.params.get('idpass') === '1'; this.update(1);
       this.startPreparation();
     };
-    if (this.world.scenario === 'L1' && this.params.get('test') !== '1') {
+    // E20: L2 runs in the same town with the same crowd, so it uses the same full shader warm-up.
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+    if (groveTown && this.params.get('test') !== '1') {
       // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
       // loading screen. Until it finishes the view does not draw and the game clock does not advance
       // (Game checks `warming`), so 'Begin mission' is never blocked and play starts warmed.
@@ -312,7 +319,7 @@ export class GameView implements Lifecycle {
       this.warming = warm().then(() => { done(); if (generation === this.generation) { this.warming = null; finish(); } }, error => { done(); if (generation === this.generation) { this.warming = null; console.error(error); } });
       return;
     }
-    if (this.world.scenario === 'L1') await warm();
+    if (groveTown) await warm();
     else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     finish();
   }
@@ -411,7 +418,8 @@ export class GameView implements Lifecycle {
     this.districts?.advance(seconds);
     const player = this.world.entities.get(1);
     if (player) {
-      this.view.driving = this.world.vehicles?.active != null;
+      // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
+      this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       const beat = this.world.missions?.state.l1?.beat;
@@ -576,7 +584,7 @@ export class GameView implements Lifecycle {
     }
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.vehicles); }
-    this.vehicles?.update(alpha);
+    this.vehicles?.update(alpha); this.l2Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(); this.actions?.update();
@@ -678,6 +686,7 @@ export class GameView implements Lifecycle {
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
+    if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();

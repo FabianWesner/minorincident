@@ -80,7 +80,8 @@ export class Damage {
           }
         }
       }
-      if (hit.type === 'melee') this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: hit.hitStopMs ?? 50 });
+      // The impact freeze is the courier's feedback: allied fighters' (E20) strikes do not freeze the screen.
+      if (hit.type === 'melee' && !source.civilian) this.world.events.emit({ type: 'combat.hit-stop', tick: this.world.tick, sourceId: hit.sourceId, durationMs: hit.hitStopMs ?? 50 });
     }
     if (hit.part === 'leg' && amount > 0) this.world.infected?.loseLeg(target.id, this.world.infected.gore);
     if (target.escort && target.health.current === 0) { this.world.npcs?.escorts.down(target); return amount; }

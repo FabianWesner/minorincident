@@ -7,6 +7,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../npc/types';
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
+import { updateAlly } from './Allies';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
 const ticks = (seconds: number) => Math.round(seconds * 60);
@@ -154,6 +155,8 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
+      if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.state === 'calm') this.routine(e);
       else if (c.state === 'alarmed') {

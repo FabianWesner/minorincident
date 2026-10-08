@@ -1,4 +1,5 @@
 import { levelThreeMission } from './L3/mission';
+import { levelTwoMission } from './L2/mission';
 import { dialogue } from '../data/dialogue';
 import type { DeviceKind } from '../sim/interact/Interactables';
 import type { DistrictId } from './districts/types';
@@ -11,6 +12,7 @@ export type MissionId = typeof missionIds[number];
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
   if (id === 'L3') return levelThreeMission(resolve);
+  if (id === 'L2') return levelTwoMission(resolve);
   const def: MissionDef = { id, briefing: dialogue[`${id}.briefing`], anchors: {}, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: [], cinematics: {}, steps: [], finish: [], onStart: [{ kind: 'radio', id: `${id}.briefing` }], onComplete: [{ kind: 'cinematic', id: 'twist' }] };
   const anchor = (key: string, district: DistrictId, name: string) => { def.anchors[key] = resolve(district, name); return key; };
   const actor = (key: string, at: string, kind: string, hp = 100, boss = false) => {
@@ -65,17 +67,6 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       fire.onStart = [{ kind: 'radio', id: 'L1.fire' }];
       fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
-    }
-    case 'L2': {
-      const home = anchor('home','D-RES','safe-house-door'), school = anchor('school','D-SCHOOL','gym-door'), buses = anchor('buses','D-PARK','safe-point');
-      const alvarez = actor('alvarez',home,'escort'), brother = actor('brother',school,'escort'), bus = actor('bus',buses,'defend');
-      interact('neighbor','Help Mrs. Alvarez',home).onComplete = [{ kind: 'spawn', group: alvarez }];
-      checkpoint(reach('school','Reach Sunset Grove Elementary',school));
-      const rescue = interact('brother','Find your brother in the gym',school); rescue.onComplete = [{ kind: 'spawn', group: brother }]; checkpoint(rescue);
-      for (const npc of [alvarez,brother]) {
-        const s = step(`escort-${npc}`,'escort',`Escort ${npc} to the buses`,buses,{ kind: 'escort', actor: npc, anchor: buses },['brother']); s.fail = [{ trigger: { kind: 'dead', actor: npc }, reason: 'escort-died' }];
-      }
-      const s = defend('board','Hold the buses while everyone boards',buses,bus,60); s.start = { kind: 'objectives', ids: ['escort-alvarez','escort-brother'], mode: 'all' }; end = s.id; break;
     }
     case 'L4': {
       const hub = anchor('hub','D-CIVIC','station-door'), substation = anchor('substation','D-EDGE','substation-door'), crossing = anchor('crossing','D-EDGE','arrival'), bridge = anchor('bridge','D-EDGE','exit');
