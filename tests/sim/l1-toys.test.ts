@@ -248,6 +248,19 @@ describe('L1 v2 corgi', () => {
     }
     expect(worst).toBeLessThan(.7);
   });
+  test('a corgi frozen by a threat while trotting back keeps facing its braking slide, then turns to the threat (PO: ran backwards)', async () => {
+    await dogWorld(); const dog = [...world.entities.iterate()].find(e => e.companion)!;
+    world.setInput({ move: { x: 1, z: 0 } }); for (let i = 0; i < 70; i++) world.update(); world.setInput({ move: { x: 0, z: 0 } });
+    const p = world.entities.get(1)!.transform; world.infected!.spawn('infected.runner', { x: p.x + 12, z: p.z + 3 }, { state: 'idle' });
+    let worst = 0, moving = 0;
+    for (let i = 0; i < 150; i++) {
+      world.update(); const v = dog.motion!.velocity; if (Math.hypot(v.x, v.z) <= .5) continue;
+      moving++; const h = -Math.atan2(v.z, v.x); worst = Math.max(worst, Math.abs(Math.atan2(Math.sin(h - dog.transform.yaw), Math.cos(h - dog.transform.yaw))));
+    }
+    expect(dog.companion!.warn!.stage).not.toBe('none'); expect(moving).toBeGreaterThan(10); expect(worst).toBeLessThanOrEqual(20 * Math.PI / 180);
+    const t = world.entities.get(dog.companion!.warn!.threat)!.transform, look = -Math.atan2(t.z - dog.transform.z, t.x - dog.transform.x);
+    expect(Math.abs(Math.atan2(Math.sin(look - dog.transform.yaw), Math.cos(look - dog.transform.yaw)))).toBeLessThan(.05); // standing: it looks at the threat
+  });
   test('the moving corgi faces its travel direction (no crab-walk) even with an off-screen threat to the side', async () => {
     await dogWorld(); const dog = [...world.entities.iterate()].find(e => e.companion)!, p = world.entities.get(1)!.transform;
     world.infected!.spawn('infected.runner', { x: p.x + 15, z: p.z + 6 }, { state: 'idle' });
