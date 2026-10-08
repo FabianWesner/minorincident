@@ -277,6 +277,13 @@ export class Mission {
   requestCheckpoint(id: string): void { this.pendingCheckpoints.push(id); }
   /** Dispatcher/toast line through the same path as scripted radio actions. */
   radio(id: string): void { this.run([{ kind: 'radio', id }]); }
+  /** Read-only locations of captured checkpoints, including checkpoints created by story controllers. */
+  checkpointPositions(): { id: string; position: [number, number, number] }[] {
+    return [...this.checkpoints].flatMap(([id, checkpoint]) => {
+      const player = checkpoint.entities.find(entity => entity.id === 1);
+      return player ? [{ id, position: [player.transform.x, player.transform.y, player.transform.z] as [number, number, number] }] : [];
+    });
+  }
   checkpoint(id: string): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint(this.world.entities.get(1)!.transform); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
   private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), seams: captureSeams(this.world) }; }
   private flushCheckpoint(): void { for(const id of this.pendingCheckpoints)this.checkpoint(id);this.pendingCheckpoints.length=0; }
