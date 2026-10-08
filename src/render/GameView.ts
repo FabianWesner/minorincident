@@ -559,6 +559,7 @@ export class GameView implements Lifecycle {
     // The rig steps with the sim; render it between the last two tick poses like every other transform.
     this.view.present(alpha);
     this.syncMission();
+    if (this.view.inspectionPose) this.view.present(alpha);
     const current = this.world.entities.get(1)?.transform, previous = this.world.previousPlayer;
     const survivor = this.world.entities.get(1)?.survivor;
     if (!this.bicycle && this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; this.scene.add(this.bicycle); }
@@ -610,7 +611,7 @@ export class GameView implements Lifecycle {
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update();
-    this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha);
+    this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera);
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);

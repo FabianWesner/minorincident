@@ -9,15 +9,16 @@ export class CrowdVisibility {
   private readonly point = new Vector3();
   private readonly bands = new Map<number, 'lod1' | 'lod2'>();
   private camera?: Camera;
+  private lodCamera?: Camera;
   private height = 900;
-  begin(camera?: Camera, height = 900): void {
-    this.camera = camera; this.height = height;
+  begin(camera?: Camera, height = 900, lodCamera = camera): void {
+    this.camera = camera; this.lodCamera = lodCamera; this.height = height;
     if (camera) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
   }
   pixels(x: number, y: number, z: number, height: number): number {
-    if (!this.camera) return 200;
-    this.point.set(x, y, z).applyMatrix4(this.camera.matrixWorldInverse);
-    return height * this.camera.projectionMatrix.elements[5] * this.height / (2 * Math.max(.1, -this.point.z));
+    if (!this.lodCamera) return 200;
+    this.point.set(x, y, z).applyMatrix4(this.lodCamera.matrixWorldInverse);
+    return height * this.lodCamera.projectionMatrix.elements[5] * this.height / (2 * Math.max(.1, -this.point.z));
   }
   visible(x: number, y: number, z: number, radius: number): boolean {
     this.bounds.center.set(x, y, z); this.bounds.radius = radius;

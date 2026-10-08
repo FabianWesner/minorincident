@@ -191,7 +191,7 @@ export class CrowdView extends Group {
     const player = this.world.entities.get(1)!;
     const focus = view?.cameraTarget ?? player.transform;
     if (view) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
-    this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900);
+    this.visibility.begin(view?.camera, typeof innerHeight === 'number' ? innerHeight : 900, view?.lodCamera);
     const heroes = this.heroIds; this.previousHeroes.clear();
     for (const id of heroes) this.previousHeroes.add(id);
     heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();

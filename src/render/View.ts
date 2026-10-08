@@ -22,6 +22,16 @@ export class View {
   zoom(delta: number): void {
     if (Number.isFinite(delta) && !this.blendTarget) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
   }
+  inspectionPose: CameraPose | null = null;
+  inspectionGameLod = false;
+  private readonly inspectionLodCamera = new PerspectiveCamera();
+  /** A virtual camera at the standard game radius; culling still uses the actual camera. */
+  get lodCamera(): PerspectiveCamera {
+    if (!this.inspectionPose || !this.inspectionGameLod) return this.camera;
+    const camera = this.inspectionLodCamera;
+    camera.copy(this.camera); camera.position.copy(this.cameraTarget).add(new Vector3().setFromSphericalCoords(19, this.polar, this.azimuth));
+    camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
+  }
   driving = false;
   cameraShake = true;
   spot: string | null = null;
@@ -44,6 +54,7 @@ export class View {
   private readonly previousPosition = new Vector3();
   private readonly previousQuaternion = new Quaternion();
   private readonly tickPosition = new Vector3();
+  private readonly tickTarget = new Vector3();
   private readonly tickQuaternion = new Quaternion();
   /** Close isometric combat framing; portrait retains at least seven metres of ground width. */
   resize(width: number, height: number): void {
@@ -105,12 +116,18 @@ export class View {
     this.rollSpeed = (this.rollSpeed - this.rollAngle * 90 * seconds) * Math.exp(-7 * seconds); this.rollAngle += this.rollSpeed * seconds;
     if (this.rollAngle) this.camera.rotateZ(this.rollAngle);
     this.camera.updateMatrixWorld();
+    this.tickTarget.copy(this.cameraTarget);
     this.tickPosition.copy(this.camera.position); this.tickQuaternion.copy(this.camera.quaternion);
     if (seconds === 0) { this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion); }
   }
   /** Render pose between the last two tick poses (alpha 0..1), matching the interpolated characters;
    * a tick-rate camera stair-steps on displays faster than 60 Hz or with uneven frame pacing. */
-  present(alpha: number): void {
+  present(alpha: number, gameCamera = false): void {
+    if (this.inspectionPose && !gameCamera) {
+      this.camera.position.fromArray(this.inspectionPose.position); this.cameraTarget.fromArray(this.inspectionPose.target);
+      this.camera.lookAt(this.cameraTarget); this.camera.updateMatrixWorld(); return;
+    }
+    this.cameraTarget.copy(this.tickTarget);
     const t = Math.max(0, Math.min(1, alpha));
     this.camera.position.lerpVectors(this.previousPosition, this.tickPosition, t);
     this.camera.quaternion.slerpQuaternions(this.previousQuaternion, this.tickQuaternion, t);
