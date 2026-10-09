@@ -61,7 +61,7 @@ def chunk(s, name, pos, size, token, angle=0):
 def rubble(s):
     # Exact big slab, brick landmarks and extremity chunks survive every tier.
     outline = [(-.78,-.38),(.48,-.43),(.74,-.2),(.66,.34),(-.38,.42),(-.76,.19)]
-    prism(s, 'exposedSlab', outline, .20, 'sidewalk', (-.02,.02,.24), (0,-.83,.22))
+    slab=prism(s, 'exposedSlab', outline, .20, 'sidewalk', (-.02,.02,.24), (0,-.83,.22))
     rocks = [(-.90,-.42,0,.58,.52,.30,.4),(.82,.49,0,.58,.50,.35,-.3),
              (-.43,.47,.14,.66,.49,.53,.9),(.43,.22,.36,.67,.58,.65,-.5),
              (.47,-.45,0,.63,.44,.31,.6),(-.38,-.64,0,.50,.36,.23,-.5)]
@@ -85,7 +85,10 @@ def rubble(s):
     for i,(x,y,z,dx,dy,dz,a) in enumerate(rocks):
         c=colliders.cuboid('masonry'+str(i),(dx,dy,dz),(x,y,z+dz/2),s.root)
         c.rotation_euler.z=a
-    colliders.cuboid('slab',(1.45,.75,.20),(-.02,.02,.34),s.root).rotation_euler.y=-.83
+    bpy.context.view_layer.update()
+    slab_center=slab.matrix_world @ Vector((-.02,-.005,.10))
+    proxy=colliders.cuboid('slab',(1.52,.85,.20),slab_center,s.root)
+    proxy.rotation_euler=slab.rotation_euler.copy()
 
 
 def tanker_section():
@@ -246,7 +249,7 @@ def sandbags(s):
             prism(s,'hangingTornCanvas',[(-.13,0),(.12,0),(.08,.63),(-.11,.56)],.018,'khaki',
                   (side*.85,-.25,.73),(-math.pi/2,side*.30,0))
     for side in (-1,1):
-        colliders.cuboid('survivingStack'+str(side),(.94,.50,.89),(side*1.1,0,.445),s.root)
+        colliders.cuboid('survivingStack'+str(side),(1.42,.50,.89),(side*1.335,0,.445),s.root)
     sockets.empty('breachSocket',(0,0,0),s.root)
     sockets.empty('lineEndLSocket',(-1.8,0,0),s.root)
     sockets.empty('lineEndRSocket',(1.8,0,0),s.root)
