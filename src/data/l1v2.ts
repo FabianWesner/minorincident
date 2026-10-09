@@ -29,11 +29,14 @@ export const l1v2 = {
     jitter: 0.04,
     /** PO 2026-10-07 ("not all on the same speed, so they don't arrive at the same moment"): a persistent per-entity
      * factor 1.04 - spread * u^skew (u uniform per spawn): most a bit slower than the tier base, a few at today's max
-     * (base x 1.04), never above it; never below `minMs` so a fleeing civilian (<= 4.0 m/s) still never outruns one.
-     * Plus a per-entity reaction delay on a fresh sighting, so a group strings out instead of arriving together. */
-    factor: { max: 1.04, spread: 0.28, skew: 1.4, minMs: 4.05, reactionS: [0, 0.4] },
-    minShareAbovePlayerRun: 0.6,
-    frailMinShareAbovePlayerRun: 0.95,
+     * (base x 1.04), never above it; never below `minMs`. Plus a per-entity reaction delay on a fresh sighting, so a group
+     * strings out instead of arriving together.
+     * PO 2026-10-09 ("This one was running behind me (same speed; should be a bit faster than me)"): `minMs` 4.05 -> 4.4, so
+     * a chaser is a bit faster than the running courier (4.5 m/s): means frail ~4.68 / average ~5.05 / athletic ~5.23 m/s
+     * (all ~4.99), ~91 % of spawns above 4.5 m/s (was ~74 %), a few at 4.4-4.5 m/s; the spread (strung-out arrival) stays. */
+    factor: { max: 1.04, spread: 0.28, skew: 1.4, minMs: 4.4, reactionS: [0, 0.4] },
+    minShareAbovePlayerRun: 0.85,
+    frailMinShareAbovePlayerRun: 0.8,
     closeTenMetresMaxS: 20,
   },
   /** Section 5.5 / AC13. */
