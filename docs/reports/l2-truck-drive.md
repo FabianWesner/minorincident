@@ -4,6 +4,8 @@ Lane: `lane/l2-truck-drive`. The prerequisite `worktree-agent-a93cb436eace68273`
 
 Implementation commits include recovered `aac694b3`, clearance/tyres `8436e011`, passenger routines `093bff1e`, contact cache `fb864b94`, browser launch config `812c2dcf` and handoff snapshot `bbd6faf7`.
 
+**Verification status: not fully green.** The full sim run passed 29 assertions and timed out in T-E20-09; a first-death trial fix is committed and its targeted rerun is pending. Both native T-E20-20 performance cases fail, including on unchanged merged main. No criteria or budgets were relaxed.
+
 ## Route and motion
 
 - Right-hand lane centres: east on Elm at z=31.25, north on Juniper at x=-28.75, west on Main Row at z=-32.25. Arrival is (-43, -32.25).
@@ -20,7 +22,7 @@ The before numbers are the recovered legacy-driver geometry diagnostic against t
 
 Fresh complete-bot battery: 20/20 complete, 122.23–134.40 s (median 126.93 s), every natural ride 24.58 s, and all 20 seeds meet the unchanged cluster kill limit (0–1 of 13 killed). All 13 cluster members are present at approach on every seed. Newbie and no-axe also complete 20/20; their medians are 138.91 s and 128.27 s respectively. Complete and newbie have 0 median deaths and remain inside the existing bot bands.
 
-Fresh natural clearance: **20/20**, 24.58 s each; max yaw **24.58°/s**, max heading jump **0.410°**, accel **2.60 m/s²**, braking **4.00 m/s²**, minimum right-lane share **95.67%**, body/vehicle/prop/static overlaps **0**. Planted clearance: **20/20**, 25.93–29.23 s including yielding; max yaw **24.64°/s**, max heading jump **0.411°**, minimum lane share **95.67%**, overlaps **0**. Both loops meet acceleration / braking caps. The route and both vehicle-obstruction tests also pass, including the 65 s stopped ride. Full E20 verification: pending.
+Fresh natural clearance: **20/20**, 24.58 s each; max yaw **24.58°/s**, max heading jump **0.410°**, accel **2.60 m/s²**, braking **4.00 m/s²**, minimum right-lane share **95.67%**, body/vehicle/prop/static overlaps **0**. Planted clearance: **20/20**, 25.93–29.23 s including yielding; max yaw **24.64°/s**, max heading jump **0.411°**, minimum lane share **95.67%**, overlaps **0**. Both loops meet acceleration / braking caps. The route and both vehicle-obstruction tests also pass, including the 65 s stopped ride. The full selected sim run passed these clearance assertions and T-E20-13; T-E20-09 alone timed out.
 
 | Scene Lab fixture | Frames | Max yaw °/s | Body / vehicle overlaps | Wheel sink | Route remaining |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -74,7 +76,9 @@ Scene fixtures: `tests/scenes/qa-l2-truck-drive-{game,top,full}.json`. Metrics a
 - Native rerun: `E2E_PORT=3362 sh tools/e2e-lock.sh npx playwright test tests/e2e/levels/L2.spec.ts tests/e2e/levels/l2-apron-alarm.spec.ts tests/e2e/levels/l2-axe-findable.spec.ts tests/e2e/controls-playtest.spec.ts tests/e2e/menus-mouse.spec.ts tests/e2e/crowd-drawn.spec.ts --project=chromium --workers=1`: eight passed; T-E20-18 exposed a snapshot race after the campaign had loaded L3. Commit `bbd6faf7` captures the actual completed L2 state in the same browser task as stepping. Its existing result/progression, gate and photo assertions remain. Targeted unchanged-title T-E20-18 rerun: **1 passed**, 155.82 s sim time, 0 kills, 22 knockdowns, 1 death.
 - WebKit runner rerun: `npx playwright install webkit`, install its system dependencies, build, then `npx playwright test tests/e2e/audio/smoke.spec.ts tests/e2e/smoke.spec.ts --project=webkit --grep @smoke --workers=2`: **3 passed**. Commit `812c2dcf` keeps Chromium-only ANGLE flags out of WebKit.
 - Native T-E20-20 final source: **0 passed / 2 failed**, with the unchanged budgets and the measurements above.
-- Standard E20 verification with the offloaded sim and host-partitioned browser results: sim pending; performance gates fail.
+- Full selected E20 + smoke sim: **29 passed / 1 timeout** (9063.26 s); only T-E20-09 exceeded its unchanged 3600000 ms wall timeout. Its observer recorded the kill/growth criterion on 20/20 seeds, and its fair records already showed deaths within 120 s on 20/20. Checkpoint respawns reset the doors-relative stop clock, so the fair battery repeatedly simulated the same completed death trial. Commit `3f86376b` adds an explicit first-death stop for that trial, preserving all assertions and the timeout. Targeted T-E20-09 rerun pending.
+- Both forced cluster openings complete **20/20** (side and alarm), and checkpoint closure/restoration assertions pass.
+- `npm run verify -- E20` with its sim offloaded returned **1** at the T-E20-09 timeout; it stopped before the later browser/performance stages. Those stages were independently executed with the functional and performance outcomes above; `checks.json` retains the actual stop point.
 
 Mac validation before the runner instruction used `tools/sim-lock.sh` / `tools/e2e-lock.sh`, with at most 2 workers and private ports (Scene Lab 3341, E20 3357/3359, smoke 3358). Remaining heavy runs moved to the Hetzner runner using the absolute `tools/remote/run.sh`; no Mac locks run on the remote host. Pixel/visual checks stay on the Mac with headless ANGLE/Metal. Remote functional browsers use headless SwiftShader. The requested unit command uses 2 workers instead of 3 to follow the crash-recovery machine-load constraint. No push, deployment or merge into main.
 
