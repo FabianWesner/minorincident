@@ -13,6 +13,8 @@ export interface AssetDef {
   id: string;
   /** Alternate inventory ID sharing a canonical model and its node/LOD contract. */
   aliasOf?: string;
+  /** Living adult skin: total owner/material draws must not exceed this shipped base per LOD. */
+  animatedDrawBase?: string;
   /** Presentation supplied by images, UI or procedural effects rather than a GLB. */
   nonModel?: 'ui' | 'ability' | 'procedural';
   /** District code placeholder palette and collision ownership. */
