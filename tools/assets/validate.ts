@@ -35,6 +35,24 @@ export function geometryHash(document: Document): string {
 function descendants(node: Node): Node[] {
   return [node, ...node.listChildren().flatMap(descendants)];
 }
+/** Include every animated owner/material primitive, including static attachments. */
+export function rigDrawErrors(document: Document, def: AssetDef, base: Document): string[] {
+  if (!def.rigDrawBase) return [];
+  const nodes = document.getRoot().listNodes();
+  const member = def.rigDrawBase.member;
+  const baseNodes = member ? base.getRoot().listNodes().find(n => n.getName() === member) : undefined;
+  if (member && !baseNodes) return [`rigDrawBase: missing member ${member}`];
+  const count = (list: Node[]) => list.reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
+  const calls = count(nodes), limit = count(baseNodes ? descendants(baseNodes) : base.getRoot().listNodes());
+  const errors = calls > limit ? [`animated-owner drawCalls: ${calls} > shipped base ${limit}`] : [];
+  // The crowd baker chooses animal clips by `body`, and skin/eye effects by material name.
+  if (nodes.some(n => n.getName() === 'body') && !base.getRoot().listNodes().some(n => n.getName() === 'body')) errors.push('living rig: added body node selects animal clips');
+  const names = document.getRoot().listMaterials().map(m => m.getName());
+  for (const pattern of [/^pal_skin/, /^pal_eyeBrown$/]) {
+    if (base.getRoot().listMaterials().some(m => pattern.test(m.getName())) && !names.some(n => pattern.test(n))) errors.push(`living rig: lost ${pattern.source} material classification`);
+  }
+  return errors;
+}
 /** Runtime hides gore/collider helpers; they do not contribute to the default silhouette. */
 function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
   const hidden: [Node,Mesh][]=[];
@@ -157,6 +175,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
       batches.add(key);
     }
   }
+  if (def.rigDrawBase && drawCalls > def.budget.drawCalls) errors.push(`animated-owner drawCalls: ${drawCalls} > ${def.budget.drawCalls}`);
   if (def.category === 'infected') for (const name of new Set([
     ...['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].map(name => `stump_${name}`),
     ...def.requiredNodes.filter(name => name.includes('stump_')),
@@ -224,6 +243,13 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
             const limit = baseline.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().length ?? 0), 0);
             if (validation.drawCalls > limit) validation.errors.push(`drawCalls including animated owners: ${validation.drawCalls} exceeds ${rig!.id} LOD${lod} (${limit})`);
           }
+        }
+        if (def.rigDrawBase) {
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const rigBase = definitions.find(a => a.id === def.rigDrawBase!.id);
+          const basePath = lod === 0 ? rigBase?.glb : rigBase?.lods?.[lod === 1 ? 'lod1' : 'lod2'];
+          if (def.category !== 'character' || !rigBase || rigBase.id === def.id || rigBase.category !== 'character' || !atLeast(rigBase.status, 'integrated') || !basePath || !existsSync(basePath)) validation.errors.push('rigDrawBase: expected a shipped living character tier');
+          else validation.errors.push(...rigDrawErrors(document, def, await io.read(basePath)));
         }
         // Pending registration belongs to art-integration. Still enforce shipping and
         // node preservation for its real exports, without treating placeholder sizes as authored contracts.

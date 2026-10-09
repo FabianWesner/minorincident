@@ -18331,5 +18331,407 @@
     },
     "rigidDrawBase": "npc.survivor-group",
     "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.dale.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.dale.aftermath/build.py",
+    "sourceGlb": "assets/npc.dale.aftermath/model.glb",
+    "glb": "public/assets/models/npc.dale.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.24057588,
+    "dimensions": {
+      "x": 0.46679,
+      "y": 1.77898,
+      "z": 0.75993,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 19
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.dale.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.dale.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.survivor-group",
+      "member": "survivor03_root"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.rosa.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.rosa.aftermath/build.py",
+    "sourceGlb": "assets/npc.rosa.aftermath/model.glb",
+    "glb": "public/assets/models/npc.rosa.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.25749424,
+    "dimensions": {
+      "x": 0.6215,
+      "y": 1.81406,
+      "z": 0.92767,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 21
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.rosa.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.rosa.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.paramedic"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.mr-okafor.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.mr-okafor.aftermath/build.py",
+    "sourceGlb": "assets/npc.mr-okafor.aftermath/model.glb",
+    "glb": "public/assets/models/npc.mr-okafor.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.27233734,
+    "dimensions": {
+      "x": 0.58771,
+      "y": 1.78,
+      "z": 0.866,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 18
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.mr-okafor.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.mr-okafor.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.civilian-elderly"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.mia.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.mia.aftermath/build.py",
+    "sourceGlb": "assets/npc.mia.aftermath/model.glb",
+    "glb": "public/assets/models/npc.mia.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.27293605,
+    "dimensions": {
+      "x": 0.65886,
+      "y": 1.80259,
+      "z": 0.82046,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 19
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.mia.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.mia.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.civilian-woman-a"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.sam.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.sam.aftermath/build.py",
+    "sourceGlb": "assets/npc.sam.aftermath/model.glb",
+    "glb": "public/assets/models/npc.sam.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.24057588,
+    "dimensions": {
+      "x": 0.74637,
+      "y": 1.80008,
+      "z": 0.74683,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 19
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.sam.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.sam.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.survivor-group",
+      "member": "survivor01_root"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
   }
 ]

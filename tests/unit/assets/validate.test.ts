@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import manifest from '../../../src/assets/manifest.json';
 import { atLeast, type AssetDef } from '../../../src/assets/types';
 import { parseInventory } from '../../../tools/assets/inventory';
-import { validateDocument, geometryHash, validateAssets } from '../../../tools/assets/validate';
+import { validateDocument, geometryHash, validateAssets, rigDrawErrors } from '../../../tools/assets/validate';
 import { lodTriangleLimit } from '../../../tools/assets/delivery';
 
 test('cheap LODs retain silhouettes while dense scenery still has a ratio budget', () => {
@@ -16,6 +16,37 @@ test('cheap LODs retain silhouettes while dense scenery still has a ratio budget
   const { def } = fixture(); def.id = 'wpn.test'; def.category = 'weapon';
   expect(lodTriangleLimit(5800, 1, def)).toBe(5800);
   expect(lodTriangleLimit(8000, 1, def)).toBe(3000);
+});
+
+test('living skins count animated materials and compare only their shipped group member', () => {
+  const { doc, def } = fixture(), base = fixture().doc;
+  def.category = 'character'; def.rigDrawBase = { id: 'npc.base', member: 'body' };
+  const mesh = doc.getRoot().listMeshes()[0];
+  expect(rigDrawErrors(doc, def, base)).toEqual([]);
+  mesh.addPrimitive(mesh.listPrimitives()[0].clone());
+  // A sibling in a group must not increase the selected adult's allowance.
+  base.getRoot().listScenes()[0].addChild(base.createNode('other-adult').setMesh(base.getRoot().listMeshes()[0]));
+  expect(rigDrawErrors(doc, def, base)).toEqual(['animated-owner drawCalls: 2 > shipped base 1']);
+  expect(validateDocument(doc, def, 1024).errors).toContain('animated-owner drawCalls: 2 > 1');
+  def.rigDrawBase.member = 'missing';
+  expect(rigDrawErrors(doc, def, base)).toEqual(['rigDrawBase: missing member missing']);
+});
+
+test('living skins retain the base crowd animation and infection classifications', () => {
+  const { doc, def } = fixture(), base = fixture().doc;
+  base.getRoot().listNodes()[0].setName('torso');
+  base.getRoot().listMaterials()[0].setName('pal_skinWarm');
+  base.createMaterial('pal_eyeBrown');
+  def.rigDrawBase = { id: 'npc.base' };
+  expect(rigDrawErrors(doc, def, base)).toEqual([
+    'living rig: added body node selects animal clips',
+    'living rig: lost ^pal_skin material classification',
+    'living rig: lost ^pal_eyeBrown$ material classification',
+  ]);
+  doc.getRoot().listNodes()[0].setName('torso');
+  doc.getRoot().listMaterials()[0].setName('pal_skinWarm');
+  doc.createMaterial('pal_eyeBrown');
+  expect(rigDrawErrors(doc, def, base)).toEqual([]);
 });
 
 test('T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations', () => {
