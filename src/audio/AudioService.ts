@@ -703,7 +703,7 @@ export class AudioService implements Lifecycle {
         if (event.type === 'dialogue' || event.type === 'dialogue.line') {
             const duration = 'duration' in event ? event.duration ?? 3 : 3;
             this.graph.duck('radio', t, duration);
-            this.play('dialogue.radio', { position });
+            this.play('dialogue.radio', { position, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
             this.caption(event.text, position, duration);
             return;
         }
@@ -914,7 +914,7 @@ export class AudioService implements Lifecycle {
             this.updateArc(player.transform, t);
         const ambient = this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
-            this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z } });
+            this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z }, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
         let changed = false;
         for (let i = this.captions.length - 1; i >= 0; i--)
             if (this.captions[i].expires <= t) {
