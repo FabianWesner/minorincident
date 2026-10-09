@@ -58,9 +58,9 @@ export const l5Dressing: readonly L5Dressing[] = [
     .map(([x, z, assetId], i) => d('rubble', assetId, x, z, { yaw: i * 0.9 })),
   // ---------------------------------------------------------------- three street segments narrowed by wreckage (a 1.4 m or wider gap stays open: the detour round the kerb)
   d('block', 'veh.military-truck', 31, -42.2, { yaw: H + .12, decay: 'wrecked', fixed: true }), d('block', 'veh.sedan-green', 12.6, 24.6, { yaw: .1, decay: 'burned', fixed: true }),
-  d('block', 'veh.pickup-white', -42, 44.4, { yaw: H - .2, decay: 'wrecked', fixed: true }),
+  d('block', 'veh.pickup-white', -18, 44.4, { yaw: H - .2, decay: 'wrecked', fixed: true }),
   // ---------------------------------------------------------------- the hiding place that is a wreck on the street: the bus on Lakeshore Avenue (Dale hides in the plaza's convoy truck)
-  d('bus', 'veh.school-bus', -2.5, 46.3, { yaw: .04, decay: 'wrecked', fixed: true }),
+  d('bus', 'veh.school-bus', -45, 46.3, { yaw: .04, decay: 'wrecked', fixed: true }),
   // ---------------------------------------------------------------- the dead: ~36 corpses (a quarter or more in uniform), body bags, belongings, dropped weapons
   corpse(-27.4, -12.6, 'npc.national-guard', 1.1, true), corpse(-23, -13.4, 'npc.national-guard', 4.0, true), corpse(-31, -8.6, 'npc.national-guard', 2.7, true), corpse(-32.4, 2.4, 'npc.national-guard', 0.3, true),
   corpse(-31.2, 11.2, 'npc.national-guard', 5.1, true), corpse(-26, 18.6, 'npc.national-guard', 3.4, true), corpse(-19.6, 19, 'npc.national-guard', 1.9, true), corpse(-9.6, 10.6, 'npc.national-guard', 2.2, true),
@@ -77,7 +77,7 @@ export const l5Dressing: readonly L5Dressing[] = [
   ...([[-26.2, -11.4, 'wpn.assault-rifle'], [-24.6, 16, 'wpn.assault-rifle'], [-13.4, -2.6, 'wpn.assault-rifle'], [-31.6, 5.4, 'wpn.machine-gun'], [-9, 12.4, 'wpn.assault-rifle'], [7, -8.4, 'wpn.pistol'], [-20, 4, 'wpn.shotgun'], [-72, 44.8, 'wpn.assault-rifle']] as const)
     .map(([x, z, assetId], i) => d('weapon', assetId, x, z, { yaw: i * 2.1 })),
   // ---------------------------------------------------------------- signs of life (visible cues): the chalk sign and a flashlight + radio at the hiding places
-  d('cue', 'decay.graffiti', -29.6, -45.4, { yaw: 0 }), d('cue', 'util.flashlight', -4.6, 43.3, { yaw: 1.3 }), d('cue', 'util.radio', -34.2, -45.2, { yaw: .4 }),
+  d('cue', 'decay.graffiti', -74.6, -45.4, { yaw: 0 }), d('cue', 'util.flashlight', -47.4, 43.3, { yaw: 1.3 }), d('cue', 'util.radio', -79.6, -45.2, { yaw: .4 }),
 ];
 
 /** Collapsed facades: whole street fronts that are down, against four buildings (the shops without a `w5` shell take glass, fires and rubble instead). */

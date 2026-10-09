@@ -114,7 +114,7 @@ export class LevelFiveBot {
     if (!fights && !this.detour && crowd.length) { const at = this.walker.detour(w, a['l5-metro-foot'], crowd[0].transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (this.detour) { go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // The group lags: wait for it (the complete bot) rather than walking off.
-    const far = friends.filter(f => dist(f.transform, p) > 8);
+    const far = friends.filter(f => dist(f.transform, p) > 6);
     if (fights && far.length && this.lag < (newbie ? 240 : 300) && s.phase !== 'metro') { this.lag++; return frame; }
     if (!far.length) this.lag = 0; else if (++this.lag > 700) this.lag = 0;
     // ---------------------------------------------------------------- the search: the cheapest tour of the five rings

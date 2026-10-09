@@ -173,7 +173,7 @@ export class LevelFiveAftermath {
     if (!e?.civilian?.survivor || r.status !== 'hidden') return;
     const out = this.snap({ x: def.outAt[0], z: def.outAt[1] }, .4), c = e.civilian, sv = c.survivor!;
     Object.assign(e.transform, out); e.hidden = false; world.spatial.set(e.id, out.x, out.z);
-    c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.schedule = undefined; c.activityUntil = 0;
+    c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.schedule = this.hiddenSchedule(out); c.scheduleStep = 0; c.activityUntil = 0;
     sv.mode = 'follow'; sv.slot = s.found; sv.foundAt = tick; sv.waitAt = tick + ticks(l5.follow.waitEveryS);
     r.status = 'following'; r.foundAt = tick; r.hold = 0; s.found++;
     world.events.emit({ type: 'l5.found', tick, key: r.key, id: r.id, count: s.found });
@@ -213,10 +213,10 @@ export class LevelFiveAftermath {
       world.events.emit({ type: 'l5.lost', tick, key: r.key, id: r.id, cause: r.status });
     }
   }
-  /** Single file: each follower walks behind the one found before it (the first behind the courier). */
+  /** Slots: the live followers renumber 0..n-1 in the order they were found, so the group closes up when one is lost. */
   private chain(): void {
-    let prev = 0;
-    for (const { e } of this.following().sort((a, b) => a.e.civilian!.survivor!.slot - b.e.civilian!.survivor!.slot)) { e.civilian!.survivor!.leader = prev; prev = e.id; }
+    let slot = 0;
+    for (const { e } of this.following().sort((a, b) => a.r.foundAt - b.r.foundAt)) e.civilian!.survivor!.slot = slot++;
   }
   private cues(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
