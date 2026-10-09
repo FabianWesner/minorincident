@@ -1,0 +1,27 @@
+{
+ "name": "qa-l4-tank-heli",
+ "note": "E22 spectacle: the tank in the lake-garden gap fires a large round at a cluster in the street (blast, scorch, smoke), the military helicopter orbits above the plaza; soldiers and a crowd in the frame.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 3,
+ "layout": { "district": "D-FAIR", "bbox": [[-52, -10], [8, 52]] },
+ "clipping": { "ignoreFoliage": true },
+ "props": [
+  { "id": "tank", "asset": "veh.tank", "at": [-20, 24], "yaw": -90 },
+  { "id": "heli", "asset": "veh.helicopter-military", "at": [-16, 17, 6], "yaw": 40 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-22, 8], "yaw": 90, "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": "idle" },
+  { "id": "sol-1", "kind": "pedestrian", "at": [-27, 19.4], "yaw": -90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": { "ally": { "role": "soldier", "weapon": "rifle" } } },
+  { "id": "sol-2", "kind": "pedestrian", "at": [-17, 19.4], "yaw": -90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": { "ally": { "role": "soldier", "weapon": "rifle" } } },
+  { "id": "zed", "kind": "infected", "at": [-22, 44.4], "count": 10, "spread": 3, "yaw": 90, "state": { "chase": "courier" } }
+ ],
+ "script": [
+  { "frame": 40, "effect": { "blast": "explosion.tank-shell", "at": [-22, 44.4] } },
+  { "frame": 160, "effect": { "blast": "explosion.tank-shell", "at": [-10, 43.6] } }
+ ],
+ "camera": { "mode": "game", "target": [-19, 26], "zoom": 1.5 },
+ "frames": 300,
+ "shots": [10, 48, 80, 170, 299],
+ "expect": { "consoleErrors": 0 }
+}

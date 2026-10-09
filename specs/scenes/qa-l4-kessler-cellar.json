@@ -1,0 +1,20 @@
+{
+ "name": "qa-l4-kessler-cellar",
+ "note": "E22 beat 7: Kessler Lane east of Metro Road and the hardware store's rear cellar door at the dead-end lane; the second camera shows the sealed cellar yard with its one warm bulb, a person alone in the room and the aisle to the barrable door clear.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 3,
+ "layout": { "district": "D-FAIR", "bbox": [[-86, -4], [86, 44]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [62, 28.6], "yaw": 0, "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": { "walk": [[69.6, 28.6]] } },
+  { "id": "inside", "kind": "pedestrian", "at": [-78.7, 0.6], "yaw": 180, "look": { "model": "npc.civilian-man-b", "tint": "#4d7fb0" }, "state": { "walk": [[-79.4, 5.4]] } }
+ ],
+ "script": [
+  { "frame": 90, "camera": { "mode": "game", "target": [-79, 3], "zoom": 0.55 } }
+ ],
+ "camera": { "mode": "game", "target": [68, 31], "zoom": 1.0 },
+ "frames": 200,
+ "shots": [20, 80, 150, 199],
+ "expect": { "consoleErrors": 0 }
+}

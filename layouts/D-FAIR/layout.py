@@ -146,7 +146,7 @@ for x0, z0, x1, z1 in ((-84.4, -34.6, -73.2, -34.6), (-84.4, 40.6, -73.2, 40.6),
     g.fence('privacy', x0, z0, x1, z1)
 g.fence('privacy', -73.4, 40.6, -62.8, 40.6)
 CELLAR_X, CELLAR_Z = -79.0, 3.0
-g.place('int.basement-cellar', CELLAR_X, CELLAR_Z, PI / 2, 1.0, check=False, y=-.3)   # its floor top is 0.3 m: the player walks at y 0
+CELLAR_ID = g.place('int.basement-cellar', CELLAR_X, CELLAR_Z, PI / 2, 1.0, check=False, y=-.3)   # its floor top is 0.3 m: the player walks at y 0
 # The baked slab would block the whole room: the cellar is non-solid and its walls, shelves and stair are authored here
 # (local x, z of the model -> world (cx + z, cz - x) at yaw pi/2), 2.4 m high.
 def cellar_box(name, x0, x1, z0, z1):
@@ -155,6 +155,10 @@ cellar_box('cellar-back', -4.4, -3.3, -3.4, 3.4); cellar_box('cellar-front', 4.0
 cellar_box('cellar-left', -4.4, 4.4, 2.3, 3.4); cellar_box('cellar-right', -4.4, 4.4, -3.4, -2.3)
 cellar_box('cellar-shelves', -3.05, .25, -2.28, -1.58); cellar_box('cellar-stair', -3.3, 1.7, 1.3, 2.3)
 g.path(-83.0, -1.0, -75.0, 7.0, 'sidewalk')
+# The cellar is a building for the audio occlusion (the city's gunfire above is muffled: -6 dB and a 1.2 kHz low-pass) and a small reverberant room.
+_c = (CELLAR_X - 3.6, CELLAR_X + 3.6, CELLAR_Z - 4.6, CELLAR_Z + 4.6)
+l.data['buildings'].append(dict(id=CELLAR_ID, assetId='int.basement-cellar', aabb=dict(min=[_c[0], 0, _c[2]], max=[_c[1], 4, _c[3]]), label="Kessler's cellar"))
+l.data['acousticZones'].insert(0, dict(id='cellar', preset='interior-small', polygon=[[_c[0], _c[2]], [_c[1], _c[2]], [_c[1], _c[3]], [_c[0], _c[3]], [_c[0], _c[2]]]))
 
 # ------------------------------------------------------------------------------------------------ the north row (facing Harbor Street, z < -45.8)
 FRONT_NH = -45.8

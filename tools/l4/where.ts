@@ -15,5 +15,9 @@ const m = world.loadMission(resolveCampaignMission('L4', world.districts!)); m.b
 for (let i = 0; i < seconds * 60; i++) { const s = m.state.l4!; if (s.phase === 'plaza' && !s.gunAt) m.completeObjective('quartermaster'); world.update(); }
 const s = m.state.l4!, p = world.entities.get(1)!.transform;
 console.log('phase', s.phase, 'player', p.x.toFixed(1), p.z.toFixed(1));
+const c0 = { x: -17, z: 3 }, byMode: Record<string, number> = {}, ring = [0, 0, 0, 0];
+for (const e of world.infected!.active) { const d = Math.hypot(e.transform.x - c0.x, e.transform.z - c0.z); ring[d < 15 ? 0 : d < 25 ? 1 : d < 40 ? 2 : 3]++; const k = `${e.health.current > 0 ? 'up' : 'down'}:${e.infected?.l1?.mode}`; byMode[k] = (byMode[k] ?? 0) + 1; }
+console.log('rings <15/<25/<40/far', JSON.stringify(ring), JSON.stringify(byMode));
+if (process.argv[4] !== 'full') process.exit(0);
 for (const e of world.infected!.active) console.log('inf', e.id, e.transform.x.toFixed(1), e.transform.z.toFixed(1), e.infected?.l1?.mode ?? e.infected?.state, e.health.current.toFixed(0));
 for (const id of s.soldierIds) { const e = world.entities.get(id)!; console.log('sol', id, e.transform.x.toFixed(1), e.transform.z.toFixed(1), e.civilian?.state, e.civilian?.ally?.engaged, e.civilian?.ally?.targetId); }

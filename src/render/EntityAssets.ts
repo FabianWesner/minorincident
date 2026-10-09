@@ -43,7 +43,8 @@ export class EntityAssets extends Group {
       if (this.disposed) return source as Group;
       // Authored mission actors currently move as rigid objects; preserve their
       // production swatches with two draws instead of one draw per Blender part.
-      const model = staticBatch(source, true, this.shading); model.userData = { ...source.userData };
+      // The helicopter keeps its rotor nodes (spun every frame, update); its <= 8 draws are cheap enough unmerged.
+      const model = id === 'veh.helicopter-military' ? source as Group : staticBatch(source, true, this.shading); model.userData = { ...source.userData };
       model.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.materials.add(node.material as Material); } });
       return model;
     }));
@@ -78,6 +79,9 @@ export class EntityAssets extends Group {
       if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
       model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
       model.rotation.y = entity.transform.yaw; model.visible = !entity.hidden && (entity.kind !== 'obstacle' || entity.health.current > 0);
+      const main = model.getObjectByName('mainRotor'), tail = model.getObjectByName('tailRotor');
+      if (main) main.rotation.y = this.world.tick * .62;
+      if (tail) tail.rotation.z = this.world.tick * .83;
       model.rotation.z = entity.health.current > 0 ? 0 : Math.PI / 2;
     }
     const player = this.world.entities.get(1);
