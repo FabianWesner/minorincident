@@ -146,13 +146,18 @@ export class NavGrid {
         ((from.x <= wall.x && to.x <= minX) || (from.x >= wall.x && to.x >= maxX) ||
          (from.z <= wall.z && to.z <= minZ) || (from.z >= wall.z && to.z >= maxZ))) continue;
       let enter = 0, leave = 1;
-      for (const [start, delta, center, half] of [[from.x, dx, wall.x, wall.halfX], [from.z, dz, wall.z, wall.halfZ]]) {
-        const min = center - half - radius, max = center + half + radius;
-        if (delta === 0) { if (start <= min || start >= max) { leave = -1; break; } }
-        else {
-          const a = (min - start) / delta, b = (max - start) / delta;
-          enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
-        }
+      // Keep the exact two slab tests without allocating three arrays per wall.
+      if (dx === 0) {
+        if (from.x <= minX || from.x >= maxX) continue;
+      } else {
+        const a = (minX - from.x) / dx, b = (maxX - from.x) / dx;
+        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+      }
+      if (dz === 0) {
+        if (from.z <= minZ || from.z >= maxZ) continue;
+      } else {
+        const a = (minZ - from.z) / dz, b = (maxZ - from.z) / dz;
+        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
       }
       if (enter < leave) return false;
     }
