@@ -1,0 +1,42 @@
+{
+ "name": "bld-grove-garage-detached",
+ "note": "D-GROVE bld.garage-detached (bld.garage-detached:817) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    15.1,
+    31.9
+   ],
+   [
+    30.5,
+    47.3
+   ]
+  ],
+  "ids": [
+   "bld.garage-detached:817"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   22.8,
+   1.7,
+   39.6
+  ],
+  "radius": 19,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

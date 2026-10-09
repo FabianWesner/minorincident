@@ -1,0 +1,42 @@
+{
+ "name": "bld-grove-mainstreet-brick",
+ "note": "D-GROVE bld.mainstreet-brick (bld.mainstreet-brick:780) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -85.5,
+    -51
+   ],
+   [
+    -67.8,
+    -33.3
+   ]
+  ],
+  "ids": [
+   "bld.mainstreet-brick:780"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -76.6,
+   3.4,
+   -42.2
+  ],
+  "radius": 19,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

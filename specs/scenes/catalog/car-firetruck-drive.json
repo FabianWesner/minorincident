@@ -1,0 +1,87 @@
+{
+ "name": "car-firetruck-drive",
+ "note": "The fire engine drives past at street speed, then an ambulance and the school bus follow. Look for: long bodies taking the lane, wheels on the road, siren lights, no clipping into the kerb props.",
+ "ground": "asphalt",
+ "size": 80,
+ "props": [
+  {
+   "id": "hydrant",
+   "asset": "prop.fire-hydrant",
+   "at": [
+    0,
+    -8
+   ]
+  },
+  {
+   "id": "lamp",
+   "asset": "prop.street-lamp",
+   "at": [
+    -8,
+    -8
+   ]
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "engine",
+   "asset": "vehicle.fire-engine",
+   "at": [
+    -22,
+    0
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     26,
+     0
+    ]
+   ]
+  },
+  {
+   "id": "ambulance",
+   "asset": "vehicle.ambulance",
+   "at": [
+    -32,
+    0
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     26,
+     0
+    ]
+   ]
+  },
+  {
+   "id": "bus",
+   "asset": "vehicle.school-bus",
+   "at": [
+    26,
+    5
+   ],
+   "yaw": 180,
+   "path": [
+    [
+     -26,
+     5
+    ]
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1.2
+ },
+ "frames": 480,
+ "sheet": 24,
+ "expect": {
+  "consoleErrors": 0,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "name": "bld-grove-courier-depot",
+ "note": "D-GROVE bld.courier-depot (bld.courier-depot:783) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -44.4,
+    -47.4
+   ],
+   [
+    -31.2,
+    -34.1
+   ]
+  ],
+  "ids": [
+   "bld.courier-depot:783"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -37.8,
+   1.7,
+   -40.8
+  ],
+  "radius": 19,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

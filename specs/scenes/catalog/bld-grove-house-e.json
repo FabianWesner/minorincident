@@ -1,0 +1,42 @@
+{
+ "name": "bld-grove-house-e",
+ "note": "D-GROVE bld.house-e (bld.house-e:29) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -47.3,
+    -29.5
+   ],
+   [
+    -32.1,
+    -14.2
+   ]
+  ],
+  "ids": [
+   "bld.house-e:29"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -39.7,
+   1.9,
+   -21.9
+  ],
+  "radius": 19,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

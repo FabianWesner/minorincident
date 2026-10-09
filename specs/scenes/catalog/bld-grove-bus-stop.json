@@ -1,0 +1,42 @@
+{
+ "name": "bld-grove-bus-stop",
+ "note": "D-GROVE bld.bus-stop (bld.bus-stop:762) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -76,
+    -15.5
+   ],
+   [
+    -63,
+    -2.5
+   ]
+  ],
+  "ids": [
+   "bld.bus-stop:762"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -69.5,
+   1.1,
+   -9
+  ],
+  "radius": 19,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

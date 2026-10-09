@@ -1,0 +1,42 @@
+{
+ "name": "bld-shop-supermarket",
+ "note": "D-SHOP bld.supermarket (bld.supermarket:41) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-SHOP",
+  "bbox": [
+   [
+    -22.5,
+    -22.5
+   ],
+   [
+    -5.5,
+    -5.5
+   ]
+  ],
+  "ids": [
+   "bld.supermarket:41"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -14,
+   1.4,
+   -14
+  ],
+  "radius": 19,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}
