@@ -203,7 +203,7 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
           const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
           const peer = definitions.find(candidate => candidate.id === def.animatedDrawBase);
           const peerPath = lod === 0 ? peer?.glb : peer?.lods?.[lod === 1 ? 'lod1' : 'lod2'];
-          if (def.category !== 'character' || !peer || !atLeast(peer.status, 'integrated') || !peerPath || !existsSync(peerPath)) {
+          if (def.category !== 'character' || !peer || peer.category !== 'character' || !atLeast(peer.status, 'integrated') || !peerPath || !existsSync(peerPath)) {
             validation.errors.push('animated-owner draws: missing integrated character base');
           } else {
             const peerDocument = await io.read(peerPath);
