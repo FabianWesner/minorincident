@@ -45,7 +45,8 @@ export class InstancedGroup extends Group {
   }
   /** Swing a split door leaf (staticBatch `splitDoors`): yaw about its hinge's +Y, on one placement or on every instance.
    * The yaw lives on the placement reference, so it survives LOD repartitions between the hero/near/far groups. */
-  pose(door: string, yaw: number, reference?: Object3D): void {
+  pose(door: string, yaw: number, reference?: Object3D, axis: 'y' | 'x' | 'z' = 'y'): void {
+    for (const ref of reference ? [reference] : this.references) (ref.userData.doorAxis ??= {})[door] = axis;
     for (const ref of reference ? [reference] : this.references) (ref.userData.doorYaw ??= {} as Record<string, number>)[door] = yaw;
     for (const batch of this.batches) if (batch.door === door && batch.base) {
       for (let i = 0; i < this.references.length; i++) if (!reference || this.references[i] === reference) this.write(batch, i);
@@ -54,10 +55,13 @@ export class InstancedGroup extends Group {
   }
   get doors(): string[] { return this.batches.flatMap(b => b.door ? [b.door] : []); }
   private readonly leaf = new Matrix4();
+  private readonly axisX = new Vector3(1, 0, 0);
+  private readonly axisY = new Vector3(0, 1, 0);
+  private readonly axisZ = new Vector3(0, 0, 1);
   private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }, i: number): void {
     this.references[i].updateWorldMatrix(true, false);
     const yaw = batch.door ? (this.references[i].userData.doorYaw as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
-    const local = batch.base && yaw ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationY(yaw)) : batch.local;
+    const local = batch.base && yaw ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationAxis(batch.door && this.references[i].userData.doorAxis?.[batch.door] === 'x' ? this.axisX : batch.door && this.references[i].userData.doorAxis?.[batch.door] === 'z' ? this.axisZ : this.axisY, yaw)) : batch.local;
     this.scratch.multiplyMatrices(this.references[i].matrixWorld, local); batch.mesh.setMatrixAt(i, this.scratch);
     const tint = this.references[i].userData.tint; if (batch.mesh.instanceColor && typeof tint === 'string') batch.mesh.setColorAt(i, this.color.set(tint));
   }

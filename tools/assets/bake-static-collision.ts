@@ -114,8 +114,8 @@ export async function writeStaticCollision(): Promise<void> {
       assets[def.id] = cached; continue;
     }
     let boxes = await bakeStaticCollision(source.glb);
-    // The army checkpoint's boom/wire rails ride above the body: they must never close its central lane.
-    if (def.id === 'kit.army-checkpoint') boxes = boxes.filter(box => box.min[1] < 1.0);
+    // Keep the closed boom arm; elevated wire rails stay decorative. Open placements remove only this arm at runtime.
+    if (def.id === 'kit.army-checkpoint') boxes = boxes.filter(box => box.min[1] < 1.0 || (box.min[0] < -5.9 && box.max[0] > -6.1 && box.min[2] < -1 && box.max[2] > 1));
     // The cellar is an enterable interior: only its floor is baked. The layout authors its walls, shelves and stair (layouts/D-FAIR/layout.py).
     if (def.id === 'int.basement-cellar') boxes = boxes.filter(box => box.max[1] < .45);
     if (def.id === 'bld.pharmacy') {

@@ -1,0 +1,210 @@
+{
+  "name": "qa-l3-finale",
+  "note": "Game camera: open boom, courier and surviving officers escape ahead of a pursuing pack into the HMG line; arm closes only after the last officer; pursuers stop outside.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        110,
+        -22
+      ],
+      [
+        155,
+        22
+      ]
+    ]
+  },
+  "armyBoom": {
+    "x": 137.1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        119,
+        0
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ],
+      "state": {
+        "run": [
+          [
+            141,
+            0
+          ],
+          [
+            144,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "officer-0",
+      "kind": "pedestrian",
+      "at": [
+        115,
+        1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 0
+        }
+      }
+    },
+    {
+      "id": "officer-1",
+      "kind": "pedestrian",
+      "at": [
+        114,
+        -1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 1
+        }
+      }
+    },
+    {
+      "id": "officer-2",
+      "kind": "pedestrian",
+      "at": [
+        113,
+        1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 2
+        }
+      }
+    },
+    {
+      "id": "officer-3",
+      "kind": "pedestrian",
+      "at": [
+        112,
+        -1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 3
+        }
+      }
+    },
+    {
+      "id": "army-0",
+      "kind": "pedestrian",
+      "at": [
+        139,
+        -1.1
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "role": "soldier",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "hmg"
+        }
+      }
+    },
+    {
+      "id": "army-1",
+      "kind": "pedestrian",
+      "at": [
+        139,
+        1.1
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "role": "soldier",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "hmg"
+        }
+      }
+    },
+    {
+      "id": "pursuers",
+      "kind": "infected",
+      "at": [
+        111,
+        0
+      ],
+      "yaw": 0,
+      "count": 14,
+      "spread": 3,
+      "state": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      134,
+      0
+    ],
+    "zoom": 1.4
+  },
+  "frames": 720,
+  "sheet": 30,
+  "shots": [
+    0,
+    120,
+    240,
+    360,
+    540,
+    720
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

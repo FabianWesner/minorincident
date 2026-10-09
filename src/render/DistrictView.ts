@@ -434,6 +434,14 @@ export class DistrictView extends Group {
       }
     }
   }
+  private armyBoomPose = -1;
+  /** The army checkpoint's authored boom is split at gateArm across every LOD. */
+  updateArmyBoom(open: number): void {
+    if (open === this.armyBoomPose) return;
+    this.armyBoomPose = open;
+    for (const entry of this.lodBatches) if (entry.id === 'kit.army-checkpoint')
+      for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, undefined, 'x');
+  }
   /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
     return [...this.doorOpen].map(([ref, state]) => ({ assetId: state.entry.id, position: [ref.position.x + state.entry.origin[0], ref.position.y, ref.position.z + state.entry.origin[1]] as [number, number, number], open: state.k }));

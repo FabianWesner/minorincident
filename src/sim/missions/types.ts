@@ -136,6 +136,8 @@ export interface L3State {
   handgunAt: number; attackAt: number; fallbackAt: number; fallbackCause: '' | 'time' | 'turned' | 'inside'; crossedAt: number; doneAt: number;
   /** Tick the officers left in the yard pulled its gates shut behind the squad (0 = open). */
   gatesClosedAt: number;
+  /** Finale chase packs and boom closure are checkpoint state, never renderer state. */
+  finalePacks?: number[]; finaleIds?: number[]; barrierClosedAt?: number;
   /** All police (posts + squad designates), the squad designates, soldiers and medkit pickups. */
   officerIds: number[]; squadIds: number[]; soldierIds: number[]; medkitIds: number[];
   /** The live squad after the fallback (`farSince`: tick it first strayed beyond 40 m) and every loss with its cause. */
