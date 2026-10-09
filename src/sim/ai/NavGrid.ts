@@ -2,6 +2,8 @@ import type { ScenarioDefinition } from '../../levels/loader';
 type Wall = NonNullable<ScenarioDefinition['walls']>[number];
 /** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
 const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
+/** Radius cuts (m) `move` tries, smallest first, for a body that already stands inside the baked wall margin. */
+const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 /** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   readonly cellSize = 0.5;
@@ -193,7 +195,14 @@ export class NavGrid {
       if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; continue; }
       if (!touched) {
         touched = true;
-        if (!this.clear(position.x, position.z, radius) && this.clear(position.x, position.z, radius - 0.002)) { radius -= 0.002; i--; continue; }
+        if (!this.clear(position.x, position.z, radius)) {
+          // A body already inside the baked margin (a hair to a few cm: shoved by a fight, a dodge or a spawn; the Rapier capsule
+          // itself still fits) must walk out, not freeze: every step, also the one away from the wall, would fail `clear` at the full
+          // radius (L1 courier frozen 1 cm inside a parked sedan's margin for the rest of the level, 10-09). Sweep with the largest
+          // radius that fits where it stands: it can slide along or leave, never go deeper.
+          const fit = marginSteps.find(cut => this.clear(position.x, position.z, radius - cut));
+          if (fit !== undefined) { radius -= fit; i--; continue; }
+        }
       }
       if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz;
     }
@@ -344,6 +353,22 @@ export class NavGrid {
   searchSize = 0;
   /** True while a budget-limited A* between these cells is still in progress (call `path` again to resume it). */
   pending(from: number, to: number): boolean { return this.searching && this.searchFrom === from && this.searchTo === to; }
+  /**
+   * Every walkable cell connected to `from` (4-neighbour, like `path`), as a 0/1 mask over the grid. A full flood with its own
+   * buffers (never the shared A* or flow workspace), for one-off questions such as "which candidate spots can reach the
+   * objective" where a budgeted `path` per candidate gives false "unreachable" answers over long distances.
+   */
+  reachableFrom(from: number): Uint8Array {
+    const seen = new Uint8Array(this.width * this.depth);
+    if (from < 0 || this.blocked[from]) return seen;
+    const queue = new Int32Array(seen.length); let head = 0, tail = 0;
+    seen[from] = 1; queue[tail++] = from;
+    while (head < tail) {
+      const cell = queue[head++];
+      for (let d = 0; d < 4; d++) { const n = this.neighbor(cell, d); if (n >= 0 && !this.blocked[n] && !seen[n]) { seen[n] = 1; queue[tail++] = n; } }
+    }
+    return seen;
+  }
   /**
    * Start cell for a route: the nearest walkable cell that is in straight reach of the body (`radius`), so an agent beside a
    * thin wall never starts on the cell behind it (same rule as `steer`). -1 when no walkable cell within 1.5 m is in reach

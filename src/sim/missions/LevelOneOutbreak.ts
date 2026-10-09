@@ -146,9 +146,13 @@ export class LevelOneOutbreak {
     const scored = candidates.filter(c => c && nav.clear(c.x, c.z, .6))
       .map(c => ({ c, score: Math.min(near(c.x, c.z), 24) - .08 * Math.hypot(c.x - from.x, c.z - from.z) - (seen(c) ? 8 : 0) }))
       .sort((a, b) => b.score - a.score);
-    // Never a fenced pocket: the spot must have a walking route to the active objective.
+    // Never a fenced pocket: the spot must have a walking route to the active objective. A flood from the objective answers it for
+    // every candidate at once; a budgeted A* per candidate (6000 cells ~ 22 m) said "unreachable" for every goal farther than that
+    // (the fire station moved 60+ m from the garage), so the safest-looking spot, a fenced yard, won and trapped the courier.
     const goal = state.marker ? this.mission.def.anchors[state.marker] : null, goalCell = goal ? nav.nearestCell(goal.x, goal.z) : -1;
-    const best = scored.find(({ c }) => { const cell = nav.nearestCell(c.x, c.z); return goalCell < 0 || cell >= 0 && nav.path(cell, goalCell, [], 6000); })?.c ?? scored[0]?.c ?? from;
+    const reach = goalCell >= 0 ? nav.reachableFrom(goalCell) : null;
+    const routed = (c: { x: number; z: number }) => { const cell = nav.cell(c.x, c.z); return cell >= 0 && !nav.blocked[cell] && (!reach || reach[cell] === 1); };
+    const best = scored.find(({ c }) => routed(c))?.c ?? scored[0]?.c ?? from;
     player.transform.x = best.x; player.transform.z = best.z;
     world.physics.playerBody!.setTranslation(player.transform, true); world.previousPlayer = { ...player.transform }; world.spatial.set(1, best.x, best.z);
   }
