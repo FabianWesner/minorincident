@@ -42,8 +42,9 @@ export class NavGrid {
   /** Player clearance is smaller than AI clearance. Route to the nearest walkable
    * cell when the player hugs a collider, then use direct movement once visible. */
   /** Memo of recent `nearestCell` answers (fixed targets such as refuges are asked every tick by every fleeing agent;
-   * a blocked target cell costs up to 169 line tests). Cleared whenever blocked cells change. */
+   * a blocked target cell costs up to 169 line tests). Invalidate only answers near changed blockers. */
   private readonly nearestMemo: { x: number; z: number; r: number; cell: number }[] = [];
+  private readonly nearestBlockers = new Map<number, Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>>();
   private nearestNext = 0;
   nearestCell(x: number, z: number, radius?: number): number {
     const r = radius ?? -1;
@@ -93,6 +94,8 @@ export class NavGrid {
   }
   rebake(prepared?: Uint8Array): void {
     this.indexWalls();
+    this.nearestBlockers.clear();
+    for (const [id, wall] of this.blockers) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ });
     if (prepared) {
       this.blocked.set(prepared);
       for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
@@ -101,11 +104,24 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
-    const previous = this.blockers.get(id);
+    const previous = this.blockers.get(id), previousBounds = this.nearestBlockers.get(id);
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
+    // Keep old bounds even when the caller mutates its retained wall object in place.
+    if (blocked) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ }); else this.nearestBlockers.delete(id);
     if (previous && previous !== wall) this.updateBlockerCells(previous);
     this.updateBlockerCells(wall);
-    this.target = -1; this.searching = false; this.nearestMemo.length = 0;
+    this.target = -1; this.searching = false;
+    if (previousBounds) this.invalidateNearest(previousBounds);
+    this.invalidateNearest(wall);
+  }
+  private invalidateNearest(wall: Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>): void {
+    for (let i = this.nearestMemo.length - 1; i >= 0; i--) {
+      const memo = this.nearestMemo[i];
+      // nearestCell searches six cells in each direction; include rounding to the candidate's centre
+      // and both baked clearance and the query's segment radius. Distant walls cannot change its answer.
+      const pad = 7 * this.cellSize + Math.max(this.clearance, memo.r);
+      if (Math.abs(memo.x - wall.x) <= wall.halfX + pad && Math.abs(memo.z - wall.z) <= wall.halfZ + pad) this.nearestMemo.splice(i, 1);
+    }
   }
   private updateBlockerCells(wall: Wall): void {
     const pad = this.clearance + this.cellSize;
