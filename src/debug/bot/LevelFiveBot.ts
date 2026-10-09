@@ -94,6 +94,13 @@ export class LevelFiveBot {
       if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > (newbie ? .99 : .95)) this.medkit = 0;
       else { go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
+    // A follower crouching in cover has an infected close by: go back to the group and deal with it (the complete bot never walks off on them).
+    const covered = friends.filter(f => f.civilian?.survivor?.cover);
+    if (fights && covered.length) {
+      const f = covered[0], hot = (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && dist(e.transform, f.transform) < 10).sort((x, y) => dist(x.transform, f.transform) - dist(y.transform, f.transform))[0];
+      if (hot && dist(p, hot.transform) > 8) { go(hot.transform, 7, `help-${f.id}`); return frame; }
+      if (hot) { strike(hot, dist(p, hot.transform) <= 2.4 ? 'LEFT' : 'RIGHT'); return frame; }
+    }
     // A jammed walker steps aside along a connected route.
     if (w.tick >= this.stuck.next) {
       this.stuck.next = w.tick + 60;
@@ -108,7 +115,7 @@ export class LevelFiveBot {
     if (this.detour) { go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // The group lags: wait for it (the complete bot) rather than walking off.
     const far = friends.filter(f => dist(f.transform, p) > 8);
-    if (this.profile === 'complete' && far.length && this.lag < 300 && s.phase !== 'metro') { this.lag++; return frame; }
+    if (fights && far.length && this.lag < (newbie ? 240 : 300) && s.phase !== 'metro') { this.lag++; return frame; }
     if (!far.length) this.lag = 0; else if (++this.lag > 700) this.lag = 0;
     // ---------------------------------------------------------------- the search: the cheapest tour of the five rings
     if (s.phase === 'search') {

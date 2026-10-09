@@ -4,7 +4,7 @@
  * layout, no soldiers, no crowds, a few wandering infected, five hidden survivors and the Metro entrance as the destination.
  * Times in seconds, speeds in m/s. Every number is read by the L5 controller, the survivor follower, bots and tests.
  */
-import { l4PhotoSpots } from './l4';
+import { l4ConvoyStations, l4PhotoSpots, l4Route, l4RoutePose } from './l4';
 
 type P = readonly [number, number];
 
@@ -52,16 +52,18 @@ export interface L5Survivor {
   cue: { id: string; text: string };
   found: string;
 }
+/** Dale hides in the cab of the second convoy truck, where the L4 column parked on the plaza (now a wreck): out of sight of every street. */
+const column = l4Route(), truck = l4RoutePose(column, l4ConvoyStations(column.length).end[3]);
 export const l5Survivors: readonly L5Survivor[] = [
-  { key: 'dale', name: 'Dale', model: 'npc.dale.aftermath', role: 'mechanic', place: 'the cab of a wrecked military truck', cover: 'behind', hideAt: [51.2, 10.6], ringAt: [47.6, 10.4], outAt: [47.2, 12.2],
+  { key: 'dale', name: 'Dale', model: 'npc.dale.aftermath', role: 'mechanic', place: 'the cab of a wrecked military truck on the plaza', cover: 'behind', hideAt: [truck.x, truck.z], ringAt: [truck.x, truck.z - 3.1], outAt: [truck.x + 1, truck.z - 3.3],
     cue: { id: 'l5.cue.dale', text: 'Someone is banging on metal, close by.' }, found: 'You… you\'re real. Take me with you.' },
-  { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [5.5, -9], ringAt: [1.4, -9], outAt: [0.8, -9],
+  { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], outAt: [59.2, 41.9],
     cue: { id: 'l5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
   { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], outAt: [-32.6, -2.7],
     cue: { id: 'l5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please — take me with you.' },
   { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-31.9, -49], ringAt: [-30.2, -44.3], outAt: [-30.2, -43.0],
     cue: { id: 'l5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
-  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-2.5, 43.8], ringAt: [-2.5, 40.2], outAt: [-2.5, 39.2],
+  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-2.5, 46.3], ringAt: [-2.5, 42.6], outAt: [-1.2, 42.6],
     cue: { id: 'l5.cue.sam', text: 'A flashlight blinks inside a wrecked bus.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
 ];
 
@@ -70,7 +72,7 @@ export const l5Anchors: Record<string, P> = {
   'l5-out': [67.2, 27.6],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [37.8, -43.4],
-  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-2.5, 38], 'photo-l5-group-of-five': [24, -39], 'photo-l5-metro-shelter': [37.8, -43.2],
+  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-2.5, 42.4], 'photo-l5-group-of-five': [24, -39], 'photo-l5-metro-shelter': [37.8, -43.2],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
@@ -81,7 +83,7 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
 export const l5Wanderers: readonly { at: P; n: number }[] = [
   { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-30, 5], n: 1 }, { at: [49, -22], n: 1 }, { at: [22, -37.4], n: 1 },
-  { at: [-44, 39.8], n: 2 }, { at: [-52, -12], n: 1 }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [28, 43.4], n: 2 },
+  { at: [-44, 39.8], n: 2 }, { at: [-52, -12], n: 1 }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [-58, -34], n: 1 }, { at: [10, 13], n: 1 },
 ];
 
