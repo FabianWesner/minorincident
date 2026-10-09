@@ -71,12 +71,13 @@ export class HitQuery {
     return !distance || this.clearDistance(origin, { x: dx / distance, z: dz / distance }, distance, ignoreId) >= distance - 1e-8;
   }
   private readonly eye = { x: 0, z: 0 };
-  melee(sourceId: number, origin: Vec2, aim: Vec2, range: number, arc: number, maxTargets: number, civilianGag = false): readonly EntitySnapshot[] {
+  /** `ground`: a downed infected the swing was aimed at (a click on it); other downed bodies are never struck. */
+  melee(sourceId: number, origin: Vec2, aim: Vec2, range: number, arc: number, maxTargets: number, civilianGag = false, ground?: number): readonly EntitySnapshot[] {
     this.hits.length = 0;
     const limit = Math.cos(arc * Math.PI / 360);
     for (const id of this.nearby(origin, range + 1e-6)) {
       const target = this.entities.get(id)!;
-      if (id === sourceId || target.health.current <= 0 || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
+      if (id === sourceId || (target.health.current <= 0 && !(id === ground && downed(target))) || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
       // Line of sight starts a little ahead of the attacker: standing against (or inside) a prop must not
       // swallow strikes at a target on its far side (QA2-01); walls between the two still block.

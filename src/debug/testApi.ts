@@ -9,6 +9,7 @@ import { runAudioL1Bot } from './audioBot';
 import { renderAudio } from './audioHarness';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
+import { CrowdFigureProbe } from '../render/characters/CrowdFigureProbe';
 import type { Action, BindingMap } from '../data/bindings';
 import type { Recording } from '../input/Recorder';
 import type { Game } from '../Game';
@@ -60,6 +61,8 @@ export interface SSTestApi {
     bindings(): BindingMap; rebind(action: Action, code: string): { ok: boolean; message: string };
     /** Ground → client pixels using the current camera. Tests still send real device events. */
     project(pos: { x: number; z: number }): { x: number; y: number };
+    /** Body-pick candidates of the last click (normalised capsule distance; <= 1 is a hit). */
+    lastPick(): { id: number; score: number; depth: number; drawn: boolean }[];
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
@@ -103,7 +106,9 @@ export interface SSTestApi {
   look: { get(): { worldLook: import('../data/worldLook').WorldLook; palette: Record<import('../data/palette').PaletteToken, string> }; set(patch: import('../data/lookPatch').LookPatch): void; export(): import('../data/lookPatch').LookPatch; reset(): void };
   /** E18 synthetic GPU cost in milliseconds; zero clears it. */
   /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
-  debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void };
+  debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void;
+    /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
+    figureJoints(on: boolean): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
   /** E25 light field: the E27 transient hook and its counters (null outside lit scenes). */
@@ -140,6 +145,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       set: (frame) => { game.world.setInput(frame); game.input.inject(frame); },
       clear: () => { game.input.clear(); game.world.clearInput(); },
       bindings: () => game.input.bindings.get(), rebind: (action, code) => game.input.rebind(action, code),
+      lastPick: () => structuredClone(game.input.picker.last),
       project: (pos) => {
         game.view.camera.updateMatrixWorld();
         const point = new Vector3(pos.x, 0, pos.z).project(game.view.camera);
@@ -229,7 +235,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         await new Promise<void>(resolve=>setTimeout(resolve,50));
       },
     },
-    debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms) },
+    debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
   window.__SS__ = api; return api;

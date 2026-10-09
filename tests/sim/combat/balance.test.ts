@@ -42,7 +42,7 @@ test('S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay h
   }
   expect(hashes[0]).toBe(hashes[1]); // Combo chains and reaction intent are now serialized; pin the new deterministic state.
   // Stage1 serializes bounded motion state and uses stable capsule support clearance.
-  expect(hashes[0]).toBe('2dc515cf'); // PO fast-click combat: short knockback, explicit knockdown, buffered chaining.
+  expect(hashes[0]).toBe('ca029b54'); // PO 10-08 fight speed: ~0.27 s unarmed beats at 6 damage, quicker bat finisher and sweeps.
 });
 
 test('T-E05-perf @E05 @perf 200 combat dummies and sustained fire below 4ms sim p95', async () => {
