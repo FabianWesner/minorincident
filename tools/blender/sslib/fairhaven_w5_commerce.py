@@ -139,6 +139,15 @@ def cut_collapse(s):
     elif not metro:
         # Kessler: the back-left gable and upper floor are blown away as well.
         cut_profile(s, [.7, 1.7, 2.7, 3.6, 4.6], [7.4, 6.2, 5.0, 4.0, 3.1], -5.0)
+        # Drop eave/fascia slivers whose roof was cut away: they would float in mid-air.
+        bpy.context.view_layer.update()
+        for obj in list(s.root.children_recursive):
+            if obj.type != 'MESH' or obj.parent.name in ('door_cellar', 'shutter'):
+                continue
+            lo, hi = bounds(obj)
+            size = [hi[k] - lo[k] for k in range(3)]
+            if lo[2] > 3.2 and min(size) < .32 and max(size) > 1.4 and .3 < (lo[1] + hi[1]) / 2 < 4.9:
+                erase(obj)
     if not metro:
         y0 = -7.45 if row else -3.9
         y1 = -3.1 if row else -.55
