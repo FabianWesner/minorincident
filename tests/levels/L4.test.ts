@@ -317,10 +317,24 @@ describe('L4 The Safe City Falls', () => {
     const l = await loadL4(2); world = l.world;
     const r = runL4(l.world, l.mission, 'evade-only', { seed: 2, maxSeconds: 700 });
     record('bot-evade-only', r);
-    expect(r.kills_.player).toBe(0); expect(r.outcome).toBe('complete');
+    expect(r.kills).toBe(0); expect(r.knockdowns).toBe(0); expect(r.outcome).toBe('complete');
     const low = await loadL4(3, 'low');
     const rl = runL4(low.world, low.mission, 'complete', { seed: 3, maxSeconds: 700 }); low.world.dispose();
     expect(rl.outcome).toBe('complete'); expect(rl.maxConcurrent).toBeLessThanOrEqual(l4.war.caps.infected.low); expect(rl.maxCharacters).toBeLessThanOrEqual(l4.war.caps.characters.low);
+  }, HEAVY);
+
+  test('T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths', async () => {
+    const l = await loadL4(4); world = l.world;
+    const r = runL4(l.world, l.mission, 'newbie', { seed: 4, maxSeconds: 700 });
+    record('bot-newbie', r);
+    expect(r.outcome).toBe('complete'); expect(r.deaths).toBeLessThanOrEqual(2);
+  }, HEAVY);
+
+  test('T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed)', async () => {
+    const l = await loadL4(2); world = l.world;
+    const r = runL4(l.world, l.mission, 'complete', { seed: 2, maxSeconds: 700 });
+    expect(r.soldiersAtBreak).toBeLessThanOrEqual(r.soldiersAtTurn); expect(r.soldiersAtCellar).toBeGreaterThanOrEqual(0);
+    expect(r.killsAtBreak).toBeGreaterThanOrEqual(60);
   }, HEAVY);
 
   test('T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy', async () => {

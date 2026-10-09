@@ -81,7 +81,7 @@ export class L4Spectacle {
     }
     // Holding in the lake garden: turn the hull toward the next target, fire every 8-12 s.
     if (tick < s.tankFireAt) return;
-    const target = this.cluster(3, p => this.clearOfAllies(p, l4.tank.minDistM));
+    const clear = (p: Point) => this.clearOfAllies(p, l4.tank.minDistM), target = this.cluster(3, clear) ?? this.cluster(1, clear);
     if (!target) { s.tankFireAt = tick + ticks(1); return; }
     const want = -Math.atan2(target.at.z - tank.transform.z, target.at.x - tank.transform.x);
     const delta = Math.atan2(Math.sin(want - tank.transform.yaw), Math.cos(want - tank.transform.yaw));

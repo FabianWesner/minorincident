@@ -31,6 +31,8 @@ export class LevelFourBot {
   private route: 'harbor' | 'lakeshore';
   private leg = 0;
   private detour: (P & { until: number }) | null = null;
+  private noPath = 0;
+  private picked = false;
   private stuck = { at: null as P | null, n: 0, next: 0 };
   private medkit = 0;
   constructor(private readonly world: SimWorld, readonly profile: L4Profile = 'complete', readonly forced: L4RouteChoice = 'auto') {
@@ -48,7 +50,7 @@ export class LevelFourBot {
     const w = this.world, m = w.missions!, s = m.state.l4;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
     if (this.finished || !s) return emptyInput();
-    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; this.leg = 0; }
+    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; this.leg = 0; this.picked = false; }
     if (m.state.phase === 'briefing') m.begin();
     if (m.state.phase === 'cinematic') return { ...emptyInput(), interact: true };
     const newbie = this.profile === 'newbie';
@@ -101,7 +103,8 @@ export class LevelFourBot {
       else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
     // Pick the emptier route once, at the break (forced runs keep theirs).
-    if (this.leg === 0 && this.forced === 'auto' && !this.detour) {
+    if (!this.picked && this.leg === 0 && this.forced === 'auto' && !this.detour) {
+      this.picked = true;
       const density = (r: 'harbor' | 'lakeshore') => this.threats({ x: p.x, z: p.z }, 40).filter(e => (r === 'harbor') === (e.transform.z < 0)).length;
       this.route = density('harbor') < density('lakeshore') ? 'harbor' : 'lakeshore';
     }
@@ -118,12 +121,12 @@ export class LevelFourBot {
     if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, door, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 4 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 10, until: w.tick + 180 };
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
-    if (fight(newbie ? 11 : 10)) return frame;
+    if (fight(5)) return frame;
     // Waypoints of the route (the grid path takes the cross streets by itself), then the cellar door: stand in its ring to descend.
     const legs = ROUTES[this.route];
     while (this.leg < legs.length && dist(p, legs[this.leg]) < 3) this.leg++;
     if (this.leg < legs.length) {
-      if (go(legs[this.leg], 1.5, `route-${this.route}-${this.leg}`) && dist(p, legs[this.leg]) > 3) { this.route = this.route === 'harbor' ? 'lakeshore' : 'harbor'; this.leg = 0; this.walker.reset(); }
+      if (go(legs[this.leg], 1.5, `route-${this.route}-${this.leg}`) && dist(p, legs[this.leg]) > 3) { if (++this.noPath >= 90) { this.noPath = 0; this.route = this.route === 'harbor' ? 'lakeshore' : 'harbor'; this.leg = 0; this.walker.reset(); } } else this.noPath = 0;
       return frame;
     }
     if (go(door, .45, 'door')) frame.interact = !newbie || this.rng.next() < .6;

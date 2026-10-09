@@ -46,9 +46,9 @@ export const l4 = {
   turn: { afterGunS: [40, 50] as P, latestAfterArrivalS: 100 },
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
-    fromS: 28, waveEveryS: 12,
+    fromS: 28, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small. */
-    waveSize: [8, 12, 16, 20, 20, 20, 20, 20, 20, 20] as readonly number[], edgesPerWave: 3,
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3,
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },
@@ -76,7 +76,7 @@ export const l4 = {
   /** Section 5.5: military spectacle (sim-light, view-heavy). */
   tank: {
     /** Enters at turn + enterAfterS from the army gate along Lakeshore, then north through the lake garden gap. */
-    enterAfterS: 22, speedMs: 3.6, fireEveryS: [8, 12] as P, minDistM: 15, shellId: 'explosion.tank-shell', turnRate: .9,
+    enterAfterS: 22, speedMs: 3.6, fireEveryS: [8, 12] as P, minDistM: 15, shellId: 'explosion.tank-shell', turnRate: 2.2,
     path: [[-70, 43.9], [-26, 43.9], [-20, 37.9], [-20, 22]] as readonly P[],
   },
   heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
