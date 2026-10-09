@@ -35,7 +35,23 @@ export function installNpcSystems(world: SimWorld): void {
   // Grid cells need room for the survivor's .45 m corner-steering clearance.
   const definition: ScenarioDefinition = { name: districts.composition.id, survivor: true, combat: true, infected: true, navigationClearance: .5, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, player: { ...world.entities.get(1)!.transform }, walls };
   world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition); world.npcs = new Npcs(world);
-  world.infected.nav.mask = (x, z) => { return world.districts!.districts.some(d => inside([x - d.origin[0], z - d.origin[1]], d.layout.bounds)); }; world.infected.nav.rebake();
+  // Steering samples this boundary every 20 cm. Authored rectangular districts
+  // need only range checks, preserving inside()'s inclusive minimum/exclusive maximum.
+  const masks = districts.districts.map(d => {
+    const p = d.layout.bounds;
+    const rectangle = p.length === 5 && p[0][0] === p[4][0] && p[0][1] === p[4][1] &&
+      ((p[0][0] === p[1][0] && p[1][1] === p[2][1] && p[2][0] === p[3][0] && p[3][1] === p[0][1]) ||
+       (p[0][1] === p[1][1] && p[1][0] === p[2][0] && p[2][1] === p[3][1] && p[3][0] === p[0][0]));
+    if (!rectangle) return (x: number, z: number) => inside([x - d.origin[0], z - d.origin[1]], p);
+    const minX = Math.min(...p.map(v => v[0])), maxX = Math.max(...p.map(v => v[0]));
+    const minZ = Math.min(...p.map(v => v[1])), maxZ = Math.max(...p.map(v => v[1]));
+    return (x: number, z: number) => {
+      x -= d.origin[0]; z -= d.origin[1];
+      return x >= minX && x < maxX && z >= minZ && z < maxZ;
+    };
+  });
+  world.infected.nav.mask = (x, z) => { for (const contains of masks) if (contains(x, z)) return true; return false; };
+  world.infected.nav.rebake();
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
 }
 

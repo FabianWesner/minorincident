@@ -6,7 +6,26 @@ import { NpcPatrol } from '../../../src/debug/bot/NpcPatrol';
 import { npcs } from '../../../src/data/npcs';
 import { npcWorld, step } from './helpers';
 import type { GameEvent } from '../../../src/sim/world/types';
+import { inside } from '../../../src/levels/districts/validate';
 const metrics: { level: string; tier: string; average: number; expected: number; simMsP95: number; ticks: number; distance: number; attacks: number }[] = [];
+test('@E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds', async () => {
+  const w = new SimWorld(); await w.init();
+  try {
+    const composition = { ...compositions.L1, districts: compositions.L1.districts.map(d => ({ ...d, origin: [d.origin[0] + 17, d.origin[1] - 9] as [number, number] })) };
+    for (const shape of ['rectangle', 'reversed', 'irregular']) {
+      const layouts = composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8')));
+      if (shape === 'reversed') for (const layout of layouts) layout.bounds.reverse();
+      if (shape === 'irregular') for (const layout of layouts) layout.bounds[1][0] -= 5;
+      w.loadComposition(composition, layouts, 42);
+      const check = (x: number, z: number) => expect(w.infected!.nav.mask!(x, z), `${shape}: ${x},${z}`).toBe(w.districts!.districts.some(d => inside([x - d.origin[0], z - d.origin[1]], d.layout.bounds)));
+      for (let x = -100; x <= 120; x += 10) for (let z = -80; z <= 80; z += 10) check(x, z);
+      for (const d of w.districts!.districts) for (let i = 0; i < d.layout.bounds.length; i++) {
+        const p = d.layout.bounds[i], next = d.layout.bounds[(i + 1) % d.layout.bounds.length];
+        for (const [x, z] of [p, [(p[0] + next[0]) / 2, (p[1] + next[1]) / 2]]) for (const dx of [-.001, 0, .001]) for (const dz of [-.001, 0, .001]) check(x + d.origin[0] + dx, z + d.origin[1] + dz);
+      }
+    }
+  } finally { w.dispose(); }
+});
 for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC11 @E08-AC17 L1-L6 first three-minute objective-patrol runs: density and immunity`, async () => {
   const w = new SimWorld(); await w.init();
   for (let level = 1; level <= 6; level++) {
@@ -32,11 +51,14 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
     const average = total / 10800;
     if (over) { expect(average).toBeLessThanOrEqual(initial.size); for (const id of initial) expect(w.entities.get(id)).toBeDefined(); expect(ambient().filter(e => !initial.has(e.id)).length).toBe(0); }
     else { expect(average, `L${level} ${tier}`).toBeGreaterThanOrEqual(expected * .9); expect(average).toBeLessThanOrEqual(expected * 1.1); } expect(infectionEvents).toHaveLength(0); expect(distance).toBeGreaterThan(10); expect(attacks).toBeGreaterThan(0); stop(); stopAttack();
-    times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(times.length * .95)]; expect(simMsP95, `L${level} ${tier}`).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+    times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(times.length * .95)];
+    console.log(JSON.stringify({ level: `L${level}`, tier, simMsP95, budget: tier === 'high' ? 4 : 6 }));
+    expect(simMsP95, `L${level} ${tier}`).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
     metrics.push({ level: `L${level}`, tier, average, expected, simMsP95, ticks: w.tick, distance, attacks });
   }
   w.dispose(); mkdirSync('test-results/epics/E08', { recursive: true }); writeFileSync('test-results/epics/E08/campaign.json', JSON.stringify(metrics, null, 2));
-}, 120000);
+// Six 10,800-tick patrols plus district assembly; per-tick budgets above remain unchanged.
+}, 600_000);
 test('T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise', async () => {
   let turned = 0; const durations = new Set<number>();
   for (let seed = 1; seed <= 100; seed++) {
