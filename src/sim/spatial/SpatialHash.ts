@@ -1,36 +1,42 @@
 const numericOrder = (a: number, b: number): number => a - b;
+type Position = { id: number; x: number; z: number; cellX: number; cellZ: number };
 /** 4 m cells; the exact distance filter and numeric sort give stable queries. */
 export class SpatialHash {
-  private readonly cells = new Map<string, Set<number>>();
-  private readonly free: { x: number; z: number }[] = [];
-  private readonly positions = new Map<number, { x: number; z: number }>();
-  private key(x: number, z: number): string { return `${Math.floor(x / 4)},${Math.floor(z / 4)}`; }
+  // Keep the position in its bucket so dense queries do not look up every ID again.
+  private readonly cells = new Map<string, Map<number, Position>>();
+  private readonly free: Position[] = [];
+  private readonly positions = new Map<number, Position>();
   set(id: number, x: number, z: number): void {
-    const previous = this.positions.get(id);
-    if (previous && this.key(previous.x, previous.z) === this.key(x, z)) { previous.x = x; previous.z = z; return; }
-    if (previous) this.cells.get(this.key(previous.x, previous.z))!.delete(id);
-    const position = previous ?? this.free.pop() ?? { x, z }; position.x = x; position.z = z;
+    const previous = this.positions.get(id), cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
+    if (previous && previous.cellX === cellX && previous.cellZ === cellZ) { previous.x = x; previous.z = z; return; }
+    if (previous) this.cells.get(`${previous.cellX},${previous.cellZ}`)!.delete(id);
+    const position = previous ?? this.free.pop() ?? { id, x, z, cellX, cellZ };
+    position.id = id; position.x = x; position.z = z; position.cellX = cellX; position.cellZ = cellZ;
     this.positions.set(id, position);
-    const key = this.key(x, z);
+    const key = `${cellX},${cellZ}`;
     let cell = this.cells.get(key);
-    if (!cell) this.cells.set(key, cell = new Set());
-    cell.add(id);
+    if (!cell) this.cells.set(key, cell = new Map());
+    cell.set(id, position);
   }
   delete(id: number): void {
     const position = this.positions.get(id);
     if (!position) return;
-    const key = this.key(position.x, position.z), cell = this.cells.get(key)!;
+    const cell = this.cells.get(`${position.cellX},${position.cellZ}`)!;
     cell.delete(id); this.free.push(position);
     this.positions.delete(id);
   }
   query(within: { x: number; z: number; r: number }, result: number[] = [], sorted = true): number[] {
-    if (![within.x, within.z, within.r].every(Number.isFinite) || within.r < 0) throw new RangeError('Query position and radius must be finite, radius nonnegative');
+    const { x, z, r } = within;
+    if (!Number.isFinite(x) || !Number.isFinite(z) || !Number.isFinite(r) || r < 0) throw new RangeError('Query position and radius must be finite, radius nonnegative');
     result.length = 0;
-    for (let x = Math.floor((within.x - within.r) / 4); x <= Math.floor((within.x + within.r) / 4); x++) {
-      for (let z = Math.floor((within.z - within.r) / 4); z <= Math.floor((within.z + within.r) / 4); z++) {
-        for (const id of this.cells.get(`${x},${z}`) ?? []) {
-          const p = this.positions.get(id)!;
-          if ((p.x - within.x) ** 2 + (p.z - within.z) ** 2 <= within.r ** 2) result.push(id);
+    const minX = Math.floor((x - r) / 4), maxX = Math.floor((x + r) / 4);
+    const minZ = Math.floor((z - r) / 4), maxZ = Math.floor((z + r) / 4), radiusSquared = r * r;
+    for (let cx = minX; cx <= maxX; cx++) {
+      for (let cz = minZ; cz <= maxZ; cz++) {
+        const cell = this.cells.get(`${cx},${cz}`); if (!cell) continue;
+        for (const p of cell.values()) {
+          const dx = p.x - x, dz = p.z - z;
+          if (dx * dx + dz * dz <= radiusSquared) result.push(p.id);
         }
       }
     }

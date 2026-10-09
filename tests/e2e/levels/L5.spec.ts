@@ -19,7 +19,9 @@ function helpers(page: Page) {
   const player = () => page.evaluate(() => window.__SS__!.getState().player!);
   const shots = new Set<string>();
   const snap = async (name: string) => {
-    await page.evaluate(n => window.__SS__!.camera.preset(`D-FAIR/W5/${n}`), name);
+    // Paused sim stepping leaves the presentation clock frozen: let short-lived
+    // muzzle/tracer effects expire as they would before a normal photograph.
+    await page.evaluate(n => { const a = window.__SS__!; if (n === 'l5-group-of-five' || n === 'l5-metro-shelter') a.vfx.stepRender(.3); a.camera.preset(`D-FAIR/W5/${n}`); }, name);
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${output}/${name}.png` }); shots.add(name);
     writeFileSync(`${output}/${name}-positions.json`, JSON.stringify(await page.evaluate(() => { const a = window.__SS__!; return { player: a.getState().player!.transform, followers: a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor).map(e => ({ id: e.id, at: e.transform, health: e.health.current })) }; }), null, 1));
