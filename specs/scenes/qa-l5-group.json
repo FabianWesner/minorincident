@@ -1,0 +1,149 @@
+{
+ "name": "qa-l5-group",
+ "note": "E23 beat 3-4 (photo spot l5-group-of-five): the courier leads the five survivors east along Harbor Street at sunset; they follow in their slots (behind, alternating sides, 2-5 m) and keep to the pace; all drawn, no clipping, no skating.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -30,
+    -83
+   ],
+   [
+    58,
+    5
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -14,
+    -39.4
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ],
+   "state": {
+    "run": [
+     [
+      22,
+      -39.4
+     ]
+    ]
+   }
+  },
+  {
+   "id": "dale",
+   "kind": "pedestrian",
+   "at": [
+    -17,
+    -38
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.dale.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 0
+    }
+   }
+  },
+  {
+   "id": "rosa",
+   "kind": "pedestrian",
+   "at": [
+    -18.2,
+    -39.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.rosa.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 1
+    }
+   }
+  },
+  {
+   "id": "okafor",
+   "kind": "pedestrian",
+   "at": [
+    -19.4,
+    -38
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.mr-okafor.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 2
+    }
+   }
+  },
+  {
+   "id": "mia",
+   "kind": "pedestrian",
+   "at": [
+    -20.6,
+    -39.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.mia.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 3
+    }
+   }
+  },
+  {
+   "id": "sam",
+   "kind": "pedestrian",
+   "at": [
+    -21.8,
+    -38
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.sam.aftermath"
+   },
+   "state": {
+    "survivor": {
+     "slot": 4
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 0.9
+ },
+ "frames": 480,
+ "shots": [
+  30,
+  150,
+  300,
+  470
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "bodyOverlapMaxCm": 12
+ }
+}

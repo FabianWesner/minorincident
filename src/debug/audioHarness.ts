@@ -5,7 +5,7 @@ import { dbGain, reverbPresets, type ReverbPreset } from '../audio/acoustics';
 import { wave } from '../audio/synthesis';
 import { MusicDirector } from '../audio/MusicDirector';
 export interface AudioRenderRequest {
-    scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music';
+    scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music' | 'l5-quiet';
     includeDialogue?: boolean;
     bus?: AudioBus;
     ducked?: boolean;
@@ -34,7 +34,7 @@ export interface AudioRenderResult {
 /** Query-gated offline acceptance harness. Calls the production graph and loads production sprite files.
  * Audio is returned as PCM WAV for independent Node/FFmpeg measurement, never scored against synthetic metadata. */
 export async function renderAudio(request: AudioRenderRequest): Promise<AudioRenderResult> {
-    const duration = request.scenario === 'audio-mix' ? 60 : request.scenario === 'twist' ? 5 : request.scenario === 'music' ? 14 : request.scenario === 'doppler' ? 4 : 3;
+    const duration = request.scenario === 'audio-mix' || request.scenario === 'l5-quiet' ? 60 : request.scenario === 'twist' ? 5 : request.scenario === 'music' ? 14 : request.scenario === 'doppler' ? 4 : 3;
     const rate = 24000, context = new OfflineAudioContext(2, Math.ceil(duration * rate), rate), graph = new AudioGraph(context), registry = new AudioRegistry(context);
     const events: {
         cue: string;
@@ -114,6 +114,20 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
             }
         }
         transitions = music.transitions;
+    }
+    if (request.scenario === 'l5-quiet') {
+        // The first 60 s of L5 as the production rules play them (E23-AC14): no music at all, the W5 beds (wind, fire) at the W5 gain, a distant
+        // collapse, an infected's breathing now and then, two signs of life (a knock, a clang) and one machine-gun burst.
+        for (const bed of ambienceTiers[5].beds)
+            play(`bed.${bed}`, 0, { loop: true, gain: dbGain(-16) });
+        for (const t of [14, 33, 49])
+            play('ambient.collapse', t, { position: { x: 30, z: -30 } });
+        for (const t of [9, 31, 52])
+            play('infected.vocal', t, { position: { x: 12, z: 5 }, gain: 0.6 });
+        for (const t of [20, 35])
+            play(t === 20 ? 'door.wood' : 'impact.body.metal', t, { position: { x: 14, z: 2 } });
+        for (let k = 0; k < 6; k++)
+            play('action.weapon.army-mg', 41 + k * 0.1, { position: { x: 0, z: -2 }, dry: true });
     }
     if (request.scenario === 'audio-mix') {
         // 60s deterministic combat + dialogue + explosion, including the same gain/ducking envelopes as live.

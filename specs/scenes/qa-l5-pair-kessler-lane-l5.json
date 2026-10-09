@@ -1,0 +1,44 @@
+{
+ "name": "qa-l5-pair-kessler-lane-l5",
+ "note": "E23 recognition (AC18): Kessler Lane hours later (W5): the same buildings, burned and shot up, the power out, sunset.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    28,
+    -11.399999999999999
+   ],
+   [
+    108,
+    68.6
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   82,
+   17,
+   42.6
+  ],
+  "target": [
+   68,
+   0,
+   28.6
+  ]
+ },
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

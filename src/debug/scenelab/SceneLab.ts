@@ -312,6 +312,7 @@ export class SceneLab {
         if (leader) c.ally.follow = { targetId: leader, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs };
         e.health = { current: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp, max: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp };
       }
+      else if ('survivor' in a) { c.survivor = { key: id, mode: 'follow', slot: a.survivor.slot ?? 0, leader: 0, cover: false, waitAt: world.tick + 600, foundAt: world.tick }; c.state = 'calm'; c.schedule = [this.stand(e.transform, e.transform.yaw)]; c.scheduleStep = 0; c.pauseUntil = 0; }
       else if ('handover' in a) this.startHandover(actor, e, a.handover);
       return;
     }

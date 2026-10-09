@@ -28,7 +28,9 @@ export function levelFiveMission(resolve: (district: DistrictId, name: string) =
   const after = (...ids: string[]): ObjectiveDef['start'] => ({ kind: 'objectives', ids, mode: 'all' });
   const state = (key: string): Trigger => ({ kind: 'state', key, equals: true });
   step('emerge', 'Unbar the cellar door', 'l5-brace', { kind: 'interact', anchor: 'l5-brace', seconds: l5.emerge.interactS }, { kind: 'start' }, 'interact');
-  step('look', 'Look for anyone still alive', 'l5-plaza', state('accounted'), { kind: 'state', key: 'searching', equals: true });
-  step('metro', 'Lead the survivors to the metro station', 'metro-entrance', state('sheltered'), after('look'));
+  const look = step('look', 'Look for anyone still alive', 'l5-plaza', state('accounted'), { kind: 'state', key: 'searching', equals: true });
+  look.onStart = [{ kind: 'radio', id: 'L5.search' }];
+  const metro = step('metro', 'Lead the survivors to the metro station', 'metro-entrance', state('sheltered'), after('look'));
+  metro.onStart = [{ kind: 'radio', id: 'L5.accounted' }]; metro.onComplete = [{ kind: 'radio', id: 'L5.twist' }];
   return def;
 }

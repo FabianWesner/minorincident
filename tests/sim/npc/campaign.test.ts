@@ -30,8 +30,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
     }
     const average = total / 10800;
     if (over) { expect(average).toBeLessThanOrEqual(initial.size); for (const id of initial) expect(w.entities.get(id)).toBeDefined(); expect(ambient().filter(e => !initial.has(e.id)).length).toBe(0); }
-    else { expect(average).toBeGreaterThanOrEqual(expected * .9); expect(average).toBeLessThanOrEqual(expected * 1.1); } expect(infectionEvents).toHaveLength(0); expect(distance).toBeGreaterThan(10); expect(attacks).toBeGreaterThan(0); stop(); stopAttack();
-    times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(times.length * .95)]; expect(simMsP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+    else { expect(average, `L${level} ${tier}`).toBeGreaterThanOrEqual(expected * .9); expect(average).toBeLessThanOrEqual(expected * 1.1); } expect(infectionEvents).toHaveLength(0); expect(distance).toBeGreaterThan(10); expect(attacks).toBeGreaterThan(0); stop(); stopAttack();
+    times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(times.length * .95)]; expect(simMsP95, `L${level} ${tier}`).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
     metrics.push({ level: `L${level}`, tier, average, expected, simMsP95, ticks: w.tick, distance, attacks });
   }
   w.dispose(); mkdirSync('test-results/epics/E08', { recursive: true }); writeFileSync('test-results/epics/E08/campaign.json', JSON.stringify(metrics, null, 2));

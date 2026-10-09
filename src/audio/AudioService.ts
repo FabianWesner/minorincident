@@ -478,7 +478,8 @@ export class AudioService implements Lifecycle {
         setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
         if (this.hasScore && this.level !== 'L5') this.score.prepareDanger();
         if (this.hasScore && this.level !== 'L5') void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
-        for (const layer of musicLayers) {
+        // L5 has no stems: no layered music exists in the silent city (the calm score starts after 60 s, see l5Score).
+        for (const layer of this.level === 'L5' ? [] : musicLayers) {
             const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
                 this.stemVoices.set(layer, v);

@@ -1,0 +1,44 @@
+{
+ "name": "qa-l5-pair-plaza-l5",
+ "note": "E23 recognition (AC18): the Reception Plaza hours later (W5): the same buildings, burned and shot up, the power out, sunset.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -77,
+    -57
+   ],
+   [
+    43,
+    63
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   3,
+   24,
+   23
+  ],
+  "target": [
+   -17,
+   0,
+   3
+  ]
+ },
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

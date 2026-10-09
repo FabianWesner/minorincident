@@ -90,6 +90,8 @@ export type Action =
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
   /** E21/E22 allied fighter. `weapon` selects the L4 v3 kit (soldier rifle, HMG crew, armed civilian pistol / hunting rifle / improvised melee); without it the L3 officer or soldier gun. */
   | { ally: { role?: 'officer' | 'soldier' | 'civilian'; follow?: string; slot?: number; weapon?: 'rifle' | 'hmg' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar' } }
+  /** E23 survivor (pedestrians only): follows the courier exactly as the L5 followers do (slot 0-4: behind her, alternating sides, 2-5 m; crouches while an infected is within 8 m). */
+  | { survivor: { slot?: number } }
   /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
    * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
    * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */

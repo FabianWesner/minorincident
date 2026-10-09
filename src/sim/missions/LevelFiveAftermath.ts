@@ -160,7 +160,6 @@ export class LevelFiveAftermath {
     if (s.phase !== 'emerged') return;
     s.phase = 'search'; s.searchAt = world.tick;
     if (!this.mission.state.states.searching) this.mission.setState('searching', true);
-    this.mission.radio('L5.search');
     world.events.emit({ type: 'l5.searching', tick: world.tick });
   }
   /** Cheat/test completion of the search: everyone steps out at once. */
@@ -191,7 +190,6 @@ export class LevelFiveAftermath {
     // The lookout behind the half-open shutter waves a flashlight.
     const look = this.entity(s.lookoutId);
     if (look) { look.hidden = false; this.world.spatial.set(look.id, look.transform.x, look.transform.z); if (look.civilian) look.civilian.story = { clip: 'npc-wave-in', start: world.tick }; }
-    this.mission.radio('L5.accounted');
     world.events.emit({ type: 'l5.accounted', tick: world.tick });
   }
   private following(): { r: L5State['survivors'][number]; e: EntitySnapshot }[] {
@@ -255,13 +253,13 @@ export class LevelFiveAftermath {
     s.shutterAt = tick; s.phase = 'shelter';
     for (const { r, e } of this.following()) if (dist(e.transform, player.transform) <= l5.metro.gatherM) r.status = 'sheltered';
     s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length;
-    this.mission.radio('L5.twist');
+    this.mission.radio('L5.shutter');
     world.events.emit({ type: 'l5.shutter', tick });
   }
   /** Cheat/test completion of the last step: everybody who still follows is carried in, the shutter closes now. */
   private forceShelter(): void {
     const s = this.s; if (s.doneAt) return;
-    if (!s.shutterAt) { s.shutterAt = this.world.tick; s.phase = 'shelter'; for (const { r } of this.following()) r.status = 'sheltered'; s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length; this.mission.radio('L5.twist'); this.world.events.emit({ type: 'l5.shutter', tick: this.world.tick }); }
+    if (!s.shutterAt) { s.shutterAt = this.world.tick; s.phase = 'shelter'; for (const { r } of this.following()) r.status = 'sheltered'; s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length; this.mission.radio('L5.shutter'); this.world.events.emit({ type: 'l5.shutter', tick: this.world.tick }); }
     this.done();
   }
   private done(): void {
