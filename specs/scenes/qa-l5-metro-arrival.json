@@ -1,6 +1,6 @@
 {
  "name": "qa-l5-metro-arrival",
- "note": "E23 beat 4-5 (photo spot l5-metro-shelter): the courier and the five survivors arrive at the foot of the Metro entrance; the lookout waves from the half-open shutter; fires and smoke over the ruined block.",
+ "note": "E23 beat 4-5 (photo spot l5-metro-shelter): the courier and the five survivors arrive at the foot of the Metro entrance, seen from the west down Harbor Street; the lookout waves from the half-open shutter; fires and smoke over the ruined block.",
  "ground": "district",
  "time": "L5",
  "tier": 5,
@@ -26,8 +26,8 @@
    "id": "courier",
    "kind": "courier",
    "at": [
-    25,
-    -40
+    24,
+    -39.8
    ],
    "yaw": 0,
    "loadout": [
@@ -47,7 +47,7 @@
    "id": "dale",
    "kind": "pedestrian",
    "at": [
-    18,
+    20,
     -39
    ],
    "yaw": 0,
@@ -64,7 +64,7 @@
    "id": "rosa",
    "kind": "pedestrian",
    "at": [
-    16.8,
+    19.1,
     -40.4
    ],
    "yaw": 0,
@@ -81,7 +81,7 @@
    "id": "okafor",
    "kind": "pedestrian",
    "at": [
-    15.6,
+    18.2,
     -39
    ],
    "yaw": 0,
@@ -98,7 +98,7 @@
    "id": "mia",
    "kind": "pedestrian",
    "at": [
-    14.4,
+    17.3,
     -40.4
    ],
    "yaw": 0,
@@ -115,7 +115,7 @@
    "id": "sam",
    "kind": "pedestrian",
    "at": [
-    13.2,
+    16.4,
     -39
    ],
    "yaw": 0,
@@ -163,12 +163,17 @@
   }
  ],
  "camera": {
-  "mode": "game",
+  "mode": "pose",
+  "position": [
+   14,
+   9,
+   -37.5
+  ],
   "target": [
    34,
-   -42
-  ],
-  "zoom": 1.2
+   0,
+   -42.5
+  ]
  },
  "frames": 360,
  "shots": [

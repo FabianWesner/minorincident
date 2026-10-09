@@ -7,15 +7,15 @@ const crop = (level, [x, z], r) => ({ level, district: 'D-FAIR', bbox: [[x - r, 
 
 // ---------------------------------------------------------------- recognition: the four pair cameras, L4 (safe) and L5 (fallen), identical framing
 const pairs = {
-  plaza: { at: [-17, 3], offset: [20, 24, 20], r: 60, note: 'the Reception Plaza' },
+  plaza: { at: [-17, 3], stand: [-14, 6], offset: [20, 24, 20], r: 60, note: 'the Reception Plaza' },
   'harbor-street': { at: [-10, -39], offset: [-22, 13, 4], r: 50, note: 'Harbor Street' },
-  'metro-entrance': { at: [37.8, -44.2], offset: [14, 17, 14], r: 40, note: 'the Metro entrance' },
+  'metro-entrance': { at: [37.8, -44.2], stand: [34.6, -44.6], offset: [14, 17, 14], r: 40, note: 'the Metro entrance' },
   'kessler-lane': { at: [68, 28.6], offset: [-14, 17, -14], r: 40, note: 'Kessler Lane' },
 };
 for (const [key, p] of Object.entries(pairs)) {
   const camera = { mode: 'pose', position: [p.at[0] + p.offset[0], p.offset[1], p.at[1] + p.offset[2]], target: [p.at[0], 0, p.at[1]] };
-  out(`qa-l5-pair-${key}-l4`, { note: `E23 recognition (AC18): ${p.note} in L4 (clean, intact), the pair camera pair-${key}; compare with qa-l5-pair-${key}-l5.`, ground: 'district', time: 'L4', tier: 0, layout: crop('L4', p.at, p.r), clipping: { ignoreFoliage: true }, camera, actors: [{ id: 'courier', kind: 'courier', at: p.at, yaw: 0, state: 'idle' }], frames: 6, shots: [5], expect: { consoleErrors: 0 } });
-  out(`qa-l5-pair-${key}-l5`, { note: `E23 recognition (AC18): ${p.note} hours later (W5): the same buildings, burned and shot up, the power out, sunset.`, ...L5, layout: crop('L5', p.at, p.r), camera, actors: [{ id: 'courier', kind: 'courier', at: p.at, yaw: 0, state: 'idle' }], frames: 6, shots: [5], expect: { consoleErrors: 0 } });
+  out(`qa-l5-pair-${key}-l4`, { note: `E23 recognition (AC18): ${p.note} in L4 (clean, intact), the pair camera pair-${key}; compare with qa-l5-pair-${key}-l5.`, ground: 'district', time: 'L4', tier: 0, layout: crop('L4', p.at, p.r), clipping: { ignoreFoliage: true }, camera, actors: [{ id: 'courier', kind: 'courier', at: p.stand ?? p.at, yaw: 0, state: 'idle' }], frames: 6, shots: [5], expect: { consoleErrors: 0 } });
+  out(`qa-l5-pair-${key}-l5`, { note: `E23 recognition (AC18): ${p.note} hours later (W5): the same buildings, burned and shot up, the power out, sunset.`, ...L5, layout: crop('L5', p.at, p.r), camera, actors: [{ id: 'courier', kind: 'courier', at: p.stand ?? p.at, yaw: 0, state: 'idle' }], frames: 6, shots: [5], expect: { consoleErrors: 0 } });
 }
 
 // ---------------------------------------------------------------- the five hiding places: the courier at the ring, the survivor stepping out
@@ -41,25 +41,25 @@ for (const [key, p] of Object.entries(places)) {
 // ---------------------------------------------------------------- the group of five behind the courier, then the Metro arrival
 const survivors = [['dale', 'npc.dale.aftermath'], ['rosa', 'npc.rosa.aftermath'], ['okafor', 'npc.mr-okafor.aftermath'], ['mia', 'npc.mia.aftermath'], ['sam', 'npc.sam.aftermath']];
 out('qa-l5-group', {
-  note: 'E23 beat 3-4 (photo spot l5-group-of-five): the courier leads the five survivors east along Harbor Street at sunset; they follow in their slots (behind, alternating sides, 2-5 m) and keep to the pace; all drawn, no clipping, no skating.',
+  note: 'E23 beat 3-4 (photo spot l5-group-of-five): the courier leads the five survivors east along Harbor Street at sunset, seen from the west down the street; they follow in their slots (behind, alternating sides, 2-5 m) and keep to the pace; all drawn, no clipping, no skating.',
   ...L5, layout: crop('L5', [14, -39], 44),
   actors: [
-    { id: 'courier', kind: 'courier', at: [-14, -39.4], yaw: 0, loadout: ['weapon.fire-axe', 'weapon.army-mg'], state: { walk: [[22, -39.4]] } },
-    ...survivors.map(([id, model], i) => ({ id, kind: 'pedestrian', at: [-16 - i * 1.0, -38.4 - (i % 2) * 1.4], yaw: 0, look: { model }, state: { survivor: { slot: i } } })),
+    { id: 'courier', kind: 'courier', at: [8, -39.8], yaw: 0, loadout: ['weapon.fire-axe', 'weapon.army-mg'], state: { walk: [[34, -39.8]] } },
+    ...survivors.map(([id, model], i) => ({ id, kind: 'pedestrian', at: [5 - i * 0.9, -38.8 - (i % 2) * 1.4], yaw: 0, look: { model }, state: { survivor: { slot: i } } })),
   ],
-  camera: { mode: 'follow', actor: 'courier', zoom: 1.15 }, frames: 480, shots: [30, 150, 300, 470],
+  camera: { mode: 'pose', position: [-2, 10, -36.5], target: [18, 0, -39.5] }, frames: 420, shots: [30, 150, 300, 419],
   expect: { consoleErrors: 0, undrawnFramesMax: 0, bodyOverlapMaxCm: 12 },
 });
 out('qa-l5-metro-arrival', {
-  note: 'E23 beat 4-5 (photo spot l5-metro-shelter): the courier and the five survivors arrive at the foot of the Metro entrance; the lookout waves from the half-open shutter; fires and smoke over the ruined block.',
+  note: 'E23 beat 4-5 (photo spot l5-metro-shelter): the courier and the five survivors arrive at the foot of the Metro entrance, seen from the west down Harbor Street; the lookout waves from the half-open shutter; fires and smoke over the ruined block.',
   ...L5, layout: crop('L5', [37.8, -42], 36),
   actors: [
-    { id: 'courier', kind: 'courier', at: [25, -40], yaw: 0, loadout: ['weapon.fire-axe', 'weapon.army-mg'], state: { walk: [[37.8, -42.6]] } },
-    ...survivors.map(([id, model], i) => ({ id, kind: 'pedestrian', at: [18 - i * 1.2, -39 - (i % 2) * 1.4], yaw: 0, look: { model }, state: { survivor: { slot: i } } })),
+    { id: 'courier', kind: 'courier', at: [24, -39.8], yaw: 0, loadout: ['weapon.fire-axe', 'weapon.army-mg'], state: { walk: [[37.8, -42.6]] } },
+    ...survivors.map(([id, model], i) => ({ id, kind: 'pedestrian', at: [20 - i * 0.9, -39 - (i % 2) * 1.4], yaw: 0, look: { model }, state: { survivor: { slot: i } } })),
     { id: 'lookout', kind: 'pedestrian', at: [37.8, -44.9], yaw: 90, look: { model: 'npc.marcus.aftermath' }, state: 'idle' },
   ],
   script: [{ frame: 0, effect: { fire: [30, -43.4] } }, { frame: 0, effect: { smoke: [44, -47] } }],
-  camera: { mode: 'game', target: [34, -42], zoom: 1.2 }, frames: 360, shots: [20, 180, 359],
+  camera: { mode: 'pose', position: [14, 9, -37.5], target: [34, 0, -42.5] }, frames: 360, shots: [20, 180, 359],
   expect: { consoleErrors: 0, undrawnFramesMax: 0 },
 });
 out('qa-l5-sparse-infected', {
