@@ -434,6 +434,15 @@ export class DistrictView extends Group {
       }
     }
   }
+  private metroShutterClosed = -1;
+  /** L5 closes the existing Metro shutter from its authored half-open offset (1.2 m) onto the platform. */
+  updateMetroShutter(closed: number): void {
+    if (closed === this.metroShutterClosed) return;
+    this.metroShutterClosed = closed;
+    for (const entry of this.lodBatches) if (entry.id === 'bld.metro-entrance') for (const ref of entry.refs) {
+      for (const group of [entry.hero, entry.near, entry.far]) group.slide('shutter', -1.2 * closed, ref);
+    }
+  }
   /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
     return [...this.doorOpen].map(([ref, state]) => ({ assetId: state.entry.id, position: [ref.position.x + state.entry.origin[0], ref.position.y, ref.position.z + state.entry.origin[1]] as [number, number, number], open: state.k }));

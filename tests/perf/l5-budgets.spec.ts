@@ -36,19 +36,25 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const follow = await page.evaluate(() => window.__SS__!.perf());
     await page.locator('canvas').screenshot({ path: `${dir}/l5-follow-${tier}.png`, scale: 'css' });
     // A walk with the group along Harbor Street (the bot, ordinary inputs), real clock, rAF frame times.
-    const frames = await page.evaluate(async () => {
-      const a = window.__SS__!, out: number[] = []; a.bot.start('complete'); a.resume(); let previous = 0;
+    const measurement = await page.evaluate(async () => {
+      const a = window.__SS__!, out: number[] = [], hitches: unknown[] = [], tasks: unknown[] = [];
+      const observer = new PerformanceObserver(list => tasks.push(...list.getEntries().map(e => ({ start: e.startTime, duration: e.duration }))));
+      observer.observe({ type: 'longtask', buffered: false });
+      a.bot.start('complete'); a.resume(); let previous = 0;
       for (let i = 0; i < 1500; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
-        if (previous && i > 2) out.push(now - previous); previous = now;
+        if (previous && i > 2) { out.push(now - previous); if (now - previous > 40) hitches.push({ i, now, delta: now - previous, level: a.getState().scenario, phase: a.missions.state()?.phase, l5: a.missions.state()?.l5?.phase, perf: a.perf() }); } previous = now;
       }
-      a.pause(); return out;
+      a.pause(); observer.disconnect(); return { frames: out, hitches, tasks, endLevel: a.getState().scenario, end: a.missions.state() };
     });
+    const frames = measurement.frames;
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     const proof = { tier, counts, baselineDrawCalls: baseline.drawCalls, baselineTriangles: baseline.triangles, pairDrawCalls: pair.drawCalls, pairTriangles: pair.triangles, followDrawCalls: follow.drawCalls, followTriangles: follow.triangles,
       p50: percentile(frames, .5), p95: percentile(frames, .95), max: Math.max(...frames) };
-    writeFileSync(`${dir}/l5-${tier}.json`, JSON.stringify({ ...proof, pairProfile: pair.profile, pairAssets: pair.profileAssets, followProfile: follow.profile, frames }, null, 2));
+    writeFileSync(`${dir}/l5-${tier}.json`, JSON.stringify({ ...proof, pairProfile: pair.profile, pairAssets: pair.profileAssets, followProfile: follow.profile, ...measurement }, null, 2));
     console.log(JSON.stringify(proof));
+    // A campaign handover must never turn an L5 frame sample into an L6 loading benchmark.
+    expect(measurement.endLevel).toBe('L5');
     expect(counts.followers).toBeGreaterThanOrEqual(5); expect(counts.fires).toBeGreaterThanOrEqual(8); expect(counts.corpses).toBeGreaterThanOrEqual(30); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 12 : 8);
     for (const [draws, tris] of [[proof.pairDrawCalls, proof.pairTriangles], [proof.followDrawCalls, proof.followTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
     // No tier regression against the L4 W0 frame of the same camera: <= 20 % more draw calls.

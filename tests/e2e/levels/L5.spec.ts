@@ -29,7 +29,8 @@ function helpers(page: Page) {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 3 || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && (e as { infected?: { l1?: { mode?: string } } }).infected?.l1?.mode === 'chase')).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      return near ? a.input.project(near.transform) : null;
+      const point = near ? a.input.project(near.transform) : null;
+      return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? point : null;
     }, range);
     if (!target) return false;
     await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
@@ -40,11 +41,20 @@ function helpers(page: Page) {
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
-        const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
+        const a = window.__SS__!, x = target.x, z = target.z, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
-      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
-      await page.mouse.click(point.x, point.y);
+      // Ground clicks resolve on the next sim tick using the camera that projected them.
+      await step(1);
+      const ground = [target, ...Array.from({ length: 16 }, (_, i) => ({
+        x: target.x + Math.cos(i * Math.PI / 8) * stop * .8,
+        z: target.z + Math.sin(i * Math.PI / 8) * stop * .8,
+      }))];
+      for (const q of ground) {
+        const point = await page.evaluate(q => window.__SS__!.input.project(q), q);
+        await page.mouse.click(point.x, point.y); await step(1);
+        if (await page.evaluate(() => window.__SS__!.input.lastPick().length === 0)) break;
+      }
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
@@ -117,7 +127,15 @@ test.describe('L5 Aftermath in the browser', () => {
     expect((await mission()).steps.metro.status).toBe('active');
     await go({ x: 20, z: -39.4 }, 4, 11); await regroup(); await snap('l5-group-of-five');
     await go(metroFoot(), 2.4, 11);
-    for (let i = 0; i < 80 && (await mission()).phase === 'playing'; i++) { if (!await fightNearby(11)) await step(15); if ((await mission()).l5!.shutterAt && !h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter'); }
+    for (let i = 0; i < 80 && (await mission()).phase === 'playing'; i++) {
+      if (!await fightNearby(11)) await step(15);
+      if ((await mission()).l5!.shutterAt && !h.shots.has('l5-metro-shelter')) {
+        // Show the authored leaf after its two-second closing animation, before handover.
+        const remaining = (await mission()).l5!.shutterAt + 120 - await page.evaluate(() => window.__SS__!.getState().tick);
+        if (remaining > 0) await step(remaining);
+        await snap('l5-metro-shelter');
+      }
+    }
     if (!h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter');
     const last = await mission();
     for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);

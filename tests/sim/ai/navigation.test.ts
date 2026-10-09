@@ -5,6 +5,14 @@ import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { humanInfected, validateInfected } from '../../../src/data/infected';
 const worlds: SimWorld[] = [];
+test('navigation lets a capsule leave a shallow collider margin without moving deeper', () => {
+  const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, y: 1, z: 0, halfX: 1, halfY: 1, halfZ: 2 }]);
+  for (const overlap of [.001, .015, .055, .095]) {
+    const p = { x: 1.35 - overlap, z: 0 }, start = p.x;
+    nav.move(p, -.02, 0, .35); expect(p.x).toBe(start);
+    nav.move(p, .02, 0, .35); expect(p.x).toBeGreaterThan(start);
+  }
+});
 async function arena(name = 'horde-arena') { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name); w.combat!.damage.god = true; return w; }
 function step(w: SimWorld, count: number) { for (let i = 0; i < count; i++) w.update(); }
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });

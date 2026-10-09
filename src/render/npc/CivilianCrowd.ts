@@ -386,8 +386,9 @@ export class CivilianCrowd extends Group {
   private discover(): void {
     for (const e of this.world.entities.iterate()) {
       const model = crowdModelOf(e);
-      // Rescue-level survivors (E23) are met one by one: load their hero model with the level, not when each one first fills the screen.
-      if (model && e.civilian?.survivor) this.loadHero(model);
+      // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
+      // Bake their close models before shader warm-up: meeting one during play must not parse/bake a rig.
+      if (model && (e.civilian?.survivor || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
       if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
       this.known.add(model);
       const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];

@@ -53,11 +53,23 @@ export class InstancedGroup extends Group {
     }
   }
   get doors(): string[] { return this.batches.flatMap(b => b.door ? [b.door] : []); }
+  /** Move an authored sliding leaf vertically in asset space; the offset survives LOD repartitions. */
+  slide(door: string, height: number, reference: Object3D): void {
+    const shifts = reference.userData.doorHeight ??= {} as Record<string, number>;
+    shifts[door] = height;
+    for (const batch of this.batches) if (batch.door === door && batch.base) {
+      const index = this.references.indexOf(reference);
+      if (index < 0) continue;
+      this.write(batch, index); batch.mesh.instanceMatrix.needsUpdate = true; batch.mesh.computeBoundingSphere();
+    }
+  }
   private readonly leaf = new Matrix4();
   private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }, i: number): void {
     this.references[i].updateWorldMatrix(true, false);
     const yaw = batch.door ? (this.references[i].userData.doorYaw as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
-    const local = batch.base && yaw ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationY(yaw)) : batch.local;
+    const height = batch.door ? (this.references[i].userData.doorHeight as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
+    const local = batch.base && (yaw || height) ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationY(yaw)) : batch.local;
+    if (height) local.elements[13] += height;
     this.scratch.multiplyMatrices(this.references[i].matrixWorld, local); batch.mesh.setMatrixAt(i, this.scratch);
     const tint = this.references[i].userData.tint; if (batch.mesh.instanceColor && typeof tint === 'string') batch.mesh.setColorAt(i, this.color.set(tint));
   }

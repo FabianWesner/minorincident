@@ -77,7 +77,7 @@ export const l5Anchors: Record<string, P> = {
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ...l4PhotoSpots.filter(([name]) => name.startsWith('pair-')),
-  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-18, 10, 3]], ['l5-metro-shelter', [12, 14, 12]],
+  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-26, 24, 20]], ['l5-metro-shelter', [12, 14, 12]],
 ];
 
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
