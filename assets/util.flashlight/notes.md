@@ -1,0 +1,3 @@
+Chunky 0.3135 × 0.13 × 0.13 m handheld lamp. +X is the lens direction. `handMountSocket` sits in the rear grip; `weaponMountSocket` sits below it. The runtime must align the socket and keep the lamp ahead of the muzzle/hand rather than across the character. `light:flashlight` points +X and carries a white 35-degree spot cone, 18 m range, beam/pool/reflection/hero-shadow metadata. No modeled beam. Root physics is light, 0.35 kg, non-pushable/non-kickable handheld metadata; collider proxy is retained.
+
+Authored cylinders use 24/12/8 sides; far LOD keeps axial extrema, lens, dark grip and red bezel/tail. Near-only grip bands and mid/near switch are omitted explicitly. Four material draws in each tier. No textures or new dependencies.

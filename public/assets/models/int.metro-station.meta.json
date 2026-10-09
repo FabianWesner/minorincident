@@ -1,0 +1,686 @@
+{
+  "id": "int.metro-station",
+  "errors": [],
+  "triangles": 10488,
+  "materials": 5,
+  "drawCalls": 8,
+  "fileKB": 754.703125,
+  "dimensions": [
+    60,
+    5.75,
+    36
+  ],
+  "hash": "079c70373cf6c3e471adfcb220ae4a58cd80c524ecd1a92d38b5d322d8ca972e",
+  "runtime": {
+    "id": "int.metro-station",
+    "errors": [],
+    "triangles": 10480,
+    "materials": 5,
+    "drawCalls": 8,
+    "fileKB": 179.76171875,
+    "dimensions": [
+      60,
+      5.749687185277871,
+      35.99963377788629
+    ],
+    "hash": "4ec9a98a9ae9c26814d62593896049679d4a6ff31062d437b6ee8fcb957cedb2"
+  },
+  "nodes": [
+    {
+      "name": "body_emi_picketWhite",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "body_pal_backpackTeal",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "body_pal_schoolBusYellow",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "body_pal_sidewalk",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "body_pal_uiDark",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "body",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "col:concourseFloor",
+      "pivot": [
+        0,
+        0.30000001192092896,
+        0
+      ]
+    },
+    {
+      "name": "col:hallReturn",
+      "pivot": [
+        -14.800000190734863,
+        2.5,
+        -5.5
+      ]
+    },
+    {
+      "name": "col:hallReturn.001",
+      "pivot": [
+        14.800000190734863,
+        2.5,
+        -5.5
+      ]
+    },
+    {
+      "name": "col:kioskBase",
+      "pivot": [
+        -11,
+        1.350000023841858,
+        -3
+      ]
+    },
+    {
+      "name": "col:platformColumn",
+      "pivot": [
+        -24,
+        2.799999952316284,
+        17
+      ]
+    },
+    {
+      "name": "col:platformColumn.001",
+      "pivot": [
+        -24,
+        2.799999952316284,
+        11
+      ]
+    },
+    {
+      "name": "col:platformColumn.002",
+      "pivot": [
+        -12,
+        2.799999952316284,
+        17
+      ]
+    },
+    {
+      "name": "col:platformColumn.003",
+      "pivot": [
+        -12,
+        2.799999952316284,
+        11
+      ]
+    },
+    {
+      "name": "col:platformColumn.004",
+      "pivot": [
+        0,
+        2.799999952316284,
+        17
+      ]
+    },
+    {
+      "name": "col:platformColumn.005",
+      "pivot": [
+        0,
+        2.799999952316284,
+        11
+      ]
+    },
+    {
+      "name": "col:platformColumn.006",
+      "pivot": [
+        12,
+        2.799999952316284,
+        17
+      ]
+    },
+    {
+      "name": "col:platformColumn.007",
+      "pivot": [
+        12,
+        2.799999952316284,
+        11
+      ]
+    },
+    {
+      "name": "col:platformColumn.008",
+      "pivot": [
+        24,
+        2.799999952316284,
+        17
+      ]
+    },
+    {
+      "name": "col:platformColumn.009",
+      "pivot": [
+        24,
+        2.799999952316284,
+        11
+      ]
+    },
+    {
+      "name": "col:platformFloor",
+      "pivot": [
+        0,
+        0.30000001192092896,
+        15
+      ]
+    },
+    {
+      "name": "col:portalLintel9.850",
+      "pivot": [
+        -10,
+        3.9000000953674316,
+        -9.850000381469727
+      ]
+    },
+    {
+      "name": "col:portalLintel9.851",
+      "pivot": [
+        10,
+        3.9000000953674316,
+        -9.850000381469727
+      ]
+    },
+    {
+      "name": "col:streetStep0",
+      "pivot": [
+        6,
+        0.71875,
+        -2
+      ]
+    },
+    {
+      "name": "col:streetStep1",
+      "pivot": [
+        6,
+        0.8374999761581421,
+        -2.375
+      ]
+    },
+    {
+      "name": "col:streetStep2",
+      "pivot": [
+        6,
+        0.956250011920929,
+        -2.75
+      ]
+    },
+    {
+      "name": "col:streetStep3",
+      "pivot": [
+        6,
+        1.0750000476837158,
+        -3.125
+      ]
+    },
+    {
+      "name": "col:streetStep4",
+      "pivot": [
+        6,
+        1.193750023841858,
+        -3.5
+      ]
+    },
+    {
+      "name": "col:streetStep5",
+      "pivot": [
+        6,
+        1.3125,
+        -3.875
+      ]
+    },
+    {
+      "name": "col:streetStep6",
+      "pivot": [
+        6,
+        1.431249976158142,
+        -4.25
+      ]
+    },
+    {
+      "name": "col:streetStep7",
+      "pivot": [
+        6,
+        1.5499999523162842,
+        -4.625
+      ]
+    },
+    {
+      "name": "col:streetStep8",
+      "pivot": [
+        6,
+        1.6687500476837158,
+        -5
+      ]
+    },
+    {
+      "name": "col:streetStep9",
+      "pivot": [
+        6,
+        1.787500023841858,
+        -5.375
+      ]
+    },
+    {
+      "name": "col:streetStep10",
+      "pivot": [
+        6,
+        1.90625,
+        -5.75
+      ]
+    },
+    {
+      "name": "col:streetStep11",
+      "pivot": [
+        6,
+        2.0250000953674316,
+        -6.125
+      ]
+    },
+    {
+      "name": "col:streetStep12",
+      "pivot": [
+        6,
+        2.143749952316284,
+        -6.5
+      ]
+    },
+    {
+      "name": "col:streetStep13",
+      "pivot": [
+        6,
+        2.262500047683716,
+        -6.875
+      ]
+    },
+    {
+      "name": "col:streetStep14",
+      "pivot": [
+        6,
+        2.3812499046325684,
+        -7.25
+      ]
+    },
+    {
+      "name": "col:streetStep15",
+      "pivot": [
+        6,
+        2.5,
+        -7.625
+      ]
+    },
+    {
+      "name": "col:trackBed",
+      "pivot": [
+        0,
+        0.09000000357627869,
+        23
+      ]
+    },
+    {
+      "name": "col:wallEnd9.85",
+      "pivot": [
+        13.100000381469727,
+        2.5,
+        -9.850000381469727
+      ]
+    },
+    {
+      "name": "col:wallPier9.850",
+      "pivot": [
+        -13.100000381469727,
+        2.5,
+        -9.850000381469727
+      ]
+    },
+    {
+      "name": "col:wallPier9.851",
+      "pivot": [
+        0,
+        2.5,
+        -9.850000381469727
+      ]
+    },
+    {
+      "name": "concoursePlatformSocket",
+      "pivot": [
+        0,
+        0.6000000238418579,
+        10
+      ]
+    },
+    {
+      "name": "emergencyLamp10Socket",
+      "pivot": [
+        10,
+        3.200000047683716,
+        -9.399999618530273
+      ]
+    },
+    {
+      "name": "emergencyLamp-10Socket",
+      "pivot": [
+        -10,
+        3.200000047683716,
+        -9.399999618530273
+      ]
+    },
+    {
+      "name": "front",
+      "pivot": [
+        30,
+        0,
+        8
+      ]
+    },
+    {
+      "name": "interior",
+      "pivot": [
+        0,
+        0.6000000238418579,
+        0
+      ]
+    },
+    {
+      "name": "light:mainHall0",
+      "pivot": [
+        0,
+        4.400000095367432,
+        -6
+      ]
+    },
+    {
+      "name": "light:mainHall12",
+      "pivot": [
+        12,
+        4.400000095367432,
+        -6
+      ]
+    },
+    {
+      "name": "light:mainHall-12",
+      "pivot": [
+        -12,
+        4.400000095367432,
+        -6
+      ]
+    },
+    {
+      "name": "light:mainPlatform0",
+      "pivot": [
+        0,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "light:mainPlatform12",
+      "pivot": [
+        12,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "light:mainPlatform24",
+      "pivot": [
+        24,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "light:mainPlatform-12",
+      "pivot": [
+        -12,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "light:mainPlatform-24",
+      "pivot": [
+        -24,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "mainHall0Mount",
+      "pivot": [
+        0,
+        4.400000095367432,
+        -6
+      ]
+    },
+    {
+      "name": "mainHall12Mount",
+      "pivot": [
+        12,
+        4.400000095367432,
+        -6
+      ]
+    },
+    {
+      "name": "mainHall-12Mount",
+      "pivot": [
+        -12,
+        4.400000095367432,
+        -6
+      ]
+    },
+    {
+      "name": "mainPlatform0Mount",
+      "pivot": [
+        0,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "mainPlatform12Mount",
+      "pivot": [
+        12,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "mainPlatform24Mount",
+      "pivot": [
+        24,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "mainPlatform-12Mount",
+      "pivot": [
+        -12,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "mainPlatform-24Mount",
+      "pivot": [
+        -24,
+        4.5,
+        14
+      ]
+    },
+    {
+      "name": "col:maintenanceDoorA",
+      "pivot": [
+        -10,
+        1.899999976158142,
+        -9.670000076293945
+      ]
+    },
+    {
+      "name": "maintenanceDoorA_pal_uiDark",
+      "pivot": [
+        -11.100000381469727,
+        0.6000000238418579,
+        -9.670000076293945
+      ]
+    },
+    {
+      "name": "maintenanceDoorA",
+      "pivot": [
+        -11.100000381469727,
+        0.6000000238418579,
+        -9.670000076293945
+      ]
+    },
+    {
+      "name": "maintenanceDoorABraceSocket",
+      "pivot": [
+        -10,
+        1.399999976158142,
+        -9.199999809265137
+      ]
+    },
+    {
+      "name": "maintenanceDoorASocket",
+      "pivot": [
+        -10,
+        0.6000000238418579,
+        -10
+      ]
+    },
+    {
+      "name": "col:maintenanceDoorB",
+      "pivot": [
+        10,
+        1.899999976158142,
+        -9.670000076293945
+      ]
+    },
+    {
+      "name": "maintenanceDoorB_pal_uiDark",
+      "pivot": [
+        8.899999618530273,
+        0.6000000238418579,
+        -9.670000076293945
+      ]
+    },
+    {
+      "name": "maintenanceDoorB",
+      "pivot": [
+        8.899999618530273,
+        0.6000000238418579,
+        -9.670000076293945
+      ]
+    },
+    {
+      "name": "maintenanceDoorBBraceSocket",
+      "pivot": [
+        10,
+        1.399999976158142,
+        -9.199999809265137
+      ]
+    },
+    {
+      "name": "maintenanceDoorBSocket",
+      "pivot": [
+        10,
+        0.6000000238418579,
+        -10
+      ]
+    },
+    {
+      "name": "roof_pal_sidewalk",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "roof",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "sealedStreetStairSocket",
+      "pivot": [
+        6,
+        4.400000095367432,
+        -8.5
+      ]
+    },
+    {
+      "name": "shelterCampSocket",
+      "pivot": [
+        0,
+        0.6000000238418579,
+        -1
+      ]
+    },
+    {
+      "name": "stairsArrivalSocket",
+      "pivot": [
+        6,
+        0.6000000238418579,
+        -2
+      ]
+    },
+    {
+      "name": "tunnelEndSocket",
+      "pivot": [
+        30,
+        0.6000000238418579,
+        15
+      ]
+    },
+    {
+      "name": "tunnelStartSocket",
+      "pivot": [
+        -30,
+        0.6000000238418579,
+        15
+      ]
+    },
+    {
+      "name": "root",
+      "pivot": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}
