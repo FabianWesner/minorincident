@@ -185,7 +185,8 @@ test.describe('L5 Aftermath in the browser', () => {
       const m = await page.evaluate(() => window.__SS__!.missions.state());
       if (!m || m.phase !== 'playing' || (await page.evaluate(() => window.__SS__!.getState().scenario)) !== 'L5') break;
       await page.evaluate(() => window.__SS__!.cheats.completeObjective());
-      await page.evaluate(() => window.__SS__!.step(2));
+      // The last cheat ends the level and the campaign loads L6 behind the call: stepping is only legal while paused.
+      await page.evaluate(async () => { const a = window.__SS__!; try { a.pause(); await a.step(2); } catch { /* the next level is loading */ } });
     }
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L6');
