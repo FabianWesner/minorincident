@@ -108,6 +108,7 @@ export class InfectedSystem {
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
+    delete entity.infected!.vault;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
