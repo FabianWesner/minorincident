@@ -43,6 +43,7 @@ export interface CueLog {
     rate: number;
     voice: number;
     variant: string;
+    lowpass: number;
 }
 interface AudioHost {
     readyForBackground?(): boolean;
@@ -372,7 +373,7 @@ export class AudioService implements Lifecycle {
         const v = this.graph.play(result.cue, result.buffer, { ...options, gain, rate: (options.rate ?? 1) * result.rate });
         if (!v)
             return null;
-        this.log.push({ cue: id, variant: result.variant, time: t, tick: this.world.tick, sourceId, position: options.position ? { ...options.position } : undefined, gain: v.gain.gain.value, rate: v.source.playbackRate.value, voice: v.id });
+        this.log.push({ cue: id, variant: result.variant, time: t, tick: this.world.tick, sourceId, position: options.position ? { ...options.position } : undefined, gain: v.gain.gain.value, rate: v.source.playbackRate.value, lowpass: v.filter.frequency.value, voice: v.id });
         if (this.log.length > 10000)
             this.log.splice(0, 1000);
         if (result.cue.caption)
