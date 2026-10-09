@@ -1,0 +1,157 @@
+{
+ "name": "qa-courier-carry-front",
+ "note": "Bat+pistol carried, front close-up.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.pistol"
+   ]
+  },
+  {
+   "id": "dummy",
+   "kind": "infected",
+   "at": [
+    2.2,
+    0
+   ],
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 60,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      0,
+      -3
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 200,
+   "actor": "courier",
+   "do": "idle"
+  },
+  {
+   "frame": 205,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      0,
+      -3
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 330,
+   "actor": "courier",
+   "do": "idle"
+  },
+  {
+   "frame": 335,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy",
+    "seconds": 2.2,
+    "side": "LEFT"
+   }
+  },
+  {
+   "frame": 480,
+   "actor": "courier",
+   "do": {
+    "select": "RIGHT"
+   }
+  },
+  {
+   "frame": 485,
+   "actor": "courier",
+   "do": "idle"
+  },
+  {
+   "frame": 540,
+   "actor": "courier",
+   "do": {
+    "walk": [
+     [
+      0,
+      -3
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "frame": 680,
+   "actor": "courier",
+   "do": "idle"
+  },
+  {
+   "frame": 685,
+   "actor": "courier",
+   "do": {
+    "attack": "dummy",
+    "seconds": 2.0,
+    "side": "RIGHT"
+   }
+  },
+  {
+   "frame": 830,
+   "actor": "courier",
+   "do": {
+    "select": "LEFT"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 4,
+  "azimuth": -150
+ },
+ "frames": 900,
+ "shots": [
+  20,
+  100,
+  240,
+  370,
+  420,
+  490,
+  580,
+  700,
+  760,
+  860
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "undrawnFramesMax": 0
+ }
+}
