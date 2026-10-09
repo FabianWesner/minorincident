@@ -75,7 +75,8 @@ export class LevelThreeBot {
       if (!fights || skip) return false;
       if (near[0]) { strike(near[0], 'LEFT'); return true; }
       if (!gun) return false;
-      const shot = this.threats(p, range).find(e => this.chasing(e) || dist(e.transform, p) < 9);
+      // In the last segment the courier escapes; the officers handle their own opponents.
+      const shot = this.threats(p, range).find(e => this.chasing(e) || p.x < l3.map.segments[2][0] && dist(e.transform, p) < 9);
       if (shot) { strike(shot, 'RIGHT'); return true; }
       return false;
     };
