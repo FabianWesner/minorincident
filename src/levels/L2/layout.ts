@@ -152,7 +152,13 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
         const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
         const spot = findClearSpot(layout, placement, obstacles, {
           slide: d.assetId.startsWith('veh.'),
-          accept: (x, z) => stationKeepOutGap(x, z) >= RING_CLEAR_M && (!roadside || !overlapsRoad(layout, { min: [x - half[0], 0, z - half[1]], max: [x + half[0], 1.5, z + half[1]] })),
+          margin: d.assetId.startsWith('veh.') ? .1 : .3, // props keep a hand's width off fences and posts, cars may touch
+          accept: (x, z) => {
+            if (stationKeepOutGap(x, z) < RING_CLEAR_M) return false;
+            // Checkpoint barriers and cones close the road: they stand on the asphalt, never beside a mailbox on the pavement.
+            const onRoad = overlapsRoad(layout, { min: [x - half[0], 0, z - half[1]], max: [x + half[0], 1.5, z + half[1]] });
+            return roadside ? !onRoad : d.kind !== 'checkpoint' || d.assetId.startsWith('veh.') || onRoad;
+          },
         });
         if (!spot) throw new Error(`No clear spot for ${placement.id} (${d.assetId}) near ${d.x}, ${d.z}`);
         const [dx, dz] = [spot[0] - placement.position[0], spot[1] - placement.position[2]];
