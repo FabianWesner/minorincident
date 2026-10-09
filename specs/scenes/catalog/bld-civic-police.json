@@ -1,0 +1,42 @@
+{
+ "name": "bld-civic-police",
+ "note": "D-CIVIC bld.police (bld.police:53) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-CIVIC",
+  "bbox": [
+   [
+    -23,
+    -23
+   ],
+   [
+    -5,
+    -5
+   ]
+  ],
+  "ids": [
+   "bld.police:53"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -14,
+   2,
+   -14
+  ],
+  "radius": 25.6,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}
