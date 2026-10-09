@@ -123,7 +123,7 @@ export class DistrictView extends Group {
       const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
       for (const y of [.35, .8]) this.box(perimeter, 'picketWhite', [width, .15, depth], [x, y, z]);
       const length = Math.max(width, depth), count = Math.ceil(length / 2);
-      for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
+      for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z], false);
     }
     // Placement asset ids are known from the layout JSON: start their downloads now instead of
     // after each multi-megabyte layout GLB has arrived and been parsed.
@@ -234,6 +234,11 @@ export class DistrictView extends Group {
             const hero = new InstancedGroup(prototypes[0], refs.slice(), capacity), near = new InstancedGroup(prototypes[0], refs.slice(), capacity), far = new InstancedGroup(prototypes[1], refs.slice(), capacity);
             // Distant low-tier props keep their shaded production art without a shadow draw.
             if (this.low) far.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+            // Phone tier: a building heavier than 30k triangles per placement would be drawn twice (view + shadow) for little shade.
+            if (this.low) {
+              let triangles = 0; prototypes[0].traverse(node => { if (node instanceof Mesh) triangles += (node.geometry.index?.count ?? node.geometry.getAttribute('position').count) / 3; });
+              if (triangles > 30000) for (const batch of [hero, near]) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+            }
             for (const batch of [hero, near, far]) {
               batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch);
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
@@ -326,12 +331,13 @@ export class DistrictView extends Group {
     token: import("../data/palette").PaletteToken,
     size: [number, number, number],
     p: [number, number, number],
+    shadow = true,
   ): void {
     const geometry = new BoxGeometry(...size);
     this.ownedGeometry.push(geometry);
     const mesh = new Mesh(geometry, this.materials.get(token));
     mesh.position.fromArray(p);
-    mesh.castShadow = true;
+    mesh.castShadow = shadow;
     mesh.receiveShadow = true;
     root.add(mesh);
   }
@@ -579,7 +585,9 @@ export class DistrictView extends Group {
     // Allocate full placement capacity, then retain only currently visible refs.
     const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;
     const replacement = new InstancedGroup(prototype, entry.refs.slice(), old.capacity);
-    if (this.low && lod === 'lod2') replacement.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+    let replacementTriangles = 0; if (this.low) replacement.traverse(node => { if (node instanceof Mesh) replacementTriangles += (node.geometry.index?.count ?? node.geometry.getAttribute('position').count) / 3; });
+    // Phone tier: far LODs and buildings heavier than 30k triangles per placement skip the shadow pass.
+    if (this.low && (lod === 'lod2' || replacementTriangles > 30000)) replacement.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
     if (this.warmHero) { await this.warmHero(replacement); if (this.disposed) { replacement.dispose(); return; } }
     if (this.swapSlot) { await this.swapSlot(); if (this.disposed) { replacement.dispose(); return; } }
     replacement.references.splice(0, replacement.references.length, ...old.references);
