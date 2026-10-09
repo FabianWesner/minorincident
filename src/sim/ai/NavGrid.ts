@@ -187,10 +187,15 @@ export class NavGrid {
     const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
     // A body resting exactly on a collider face (float round-off puts it a hair inside) would fail every step, also the
     // slide along the face: it froze pressed against walls and parked trucks (PO 10-09). Sweep it with a 2 mm smaller body.
-    if (!this.clear(position.x, position.z, radius) && this.clear(position.x, position.z, radius - 0.002)) radius -= 0.002;
+    // Checked only once a step is refused, so free movement costs nothing extra.
+    let touched = false;
     for (let i = 0; i < count; i++) {
-      if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; }
-      else { if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz; }
+      if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; continue; }
+      if (!touched) {
+        touched = true;
+        if (!this.clear(position.x, position.z, radius) && this.clear(position.x, position.z, radius - 0.002)) { radius -= 0.002; i--; continue; }
+      }
+      if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz;
     }
   }
   private neighbor(cell: number, direction: number): number {
