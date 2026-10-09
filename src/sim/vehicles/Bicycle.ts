@@ -19,10 +19,16 @@ export interface BicycleState {
   lean?: number;
   /** Stand-to-mount timer in ticks; mounting re-arms only after the player has left the bicycle. */
   standTicks: number; armed: boolean; lockUntil: number;
+  /** Knocked over by an infected: the tick it fell and the side it lies on (+1/-1, the frame's local +Z/-Z). Cleared on mount. */
+  fallen?: { at: number; side: number };
 }
 const ARCHETYPE = 'veh.courier-bike';
 const { speedMs, accelToMs, accelS, mountInteractS } = l1v2.bicycle;
 const MOUNT_RANGE = 1.5, BUMP_RANGE = 1.15;
+/** Short stumble after an infected knocks the rider off (input locked, no damage, no knockback). */
+const STUMBLE_TICKS = 18;
+/** A knocked-over bike drops right beside the rider: only these rings, never back to an older parking spot. */
+const CRASH_RADII = [.9, 1.1, 1.4, 1.8, 2.4, 3];
 const inPolygon = (p: Vec2, poly: readonly Vec2[]): boolean => {
   let inside = false;
   for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
@@ -43,7 +49,6 @@ export class Bicycle {
   private mountedInPark = false;
   private id = -1;
   private lastOutside: Vec2 = { x: 0, z: 0 };
-  private lastPark: { x: number; z: number; yaw: number; y: number } | null = null;
   private navPose = '';
   constructor(private readonly world: SimWorld) {}
   /** Creates the bicycle at `pos`; the integrator/mission calls this once per level (anchor `bike-start`). */
@@ -53,7 +58,6 @@ export class Bicycle {
     if (!parking) throw new Error('No clear pavement for courier bicycle');
     const spot = parking; heading = parking.heading; state.heading = heading;
     const e = this.world.entities.create({ kind: 'bicycle', archetype: ARCHETYPE, faction: 'environment', transform: { x: spot.x, y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0, z: spot.z, yaw: -heading }, health: { current: 1, max: 1 }, bicycle: state });
-    this.lastPark = { ...e.transform };
     this.id = e.id; this.postPhysics(); return e.id;
   }
   get entity(): EntitySnapshot | undefined {
@@ -87,8 +91,9 @@ export class Bicycle {
       const d = Math.hypot(player.transform.x - bike.transform.x, player.transform.z - bike.transform.z);
       if (d > 2) b.armed = true;
       // Wedged bike (under an awning, inside props): when the courier is close, it steps out to the nearest clear spot.
-      if (d <= 3 && this.world.tick % 20 === 0 && !this.clearAt(bike.transform.x, bike.transform.z, -bike.transform.yaw)) {
-        const spot = this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw); if (spot) { Object.assign(bike.transform, spot, { y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0 }); }
+      // Solids only: a bike left (or knocked over) on the road is not wedged and must not hop onto the sidewalk.
+      if (d <= 3 && this.world.tick % 20 === 0 && !this.clearAt(bike.transform.x, bike.transform.z, -bike.transform.yaw, false, false)) {
+        const spot = this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw) ?? this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw, CRASH_RADII, false, false); if (spot) { Object.assign(bike.transform, spot, { y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0 }); }
       }
       const still = Math.hypot(frame.move.x, frame.move.z) < .05;
       // At the depot the courier waits for the parcel, rather than immediately auto-mounting the parked bike.
@@ -99,12 +104,17 @@ export class Bicycle {
         // Mount the entire frame on level pavement, including its forward saddle offset.
         // Prefer the parked heading; the rider's old facing can put the cargo box into a rack hoop.
         b.heading = -bike.transform.yaw;
-        const spot = this.clearSpot(player.transform.x, player.transform.z, b.heading, [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8], true);
+        // A bike that fell on the road is picked up where it lies (any clear level ground close by, not 8 m away on the
+        // sidewalk); a parked one keeps the pavement-first search, with close-by road ground only as the last resort.
+        const near = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3], wide = [0, .3, .6, .9, 1.2, 1.6, 2.2, 3, 4, 6, 8];
+        const spot = b.fallen
+          ? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true)
+          : this.clearSpot(player.transform.x, player.transform.z, b.heading, wide, true) ?? this.clearSpot(player.transform.x, player.transform.z, b.heading, near, true, false);
         if (!spot) return frame;
         const mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
         Object.assign(player.transform, spot, { y: (this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0) + survivor.height / 2 + .02, yaw: -b.heading });
         this.world.physics.playerBody?.setTranslation(player.transform, true); this.world.player?.locomotion.reset(); this.world.controls.reset(); this.world.spatial.set(1, spot.x, spot.z);
-        b.mounted = true; b.standTicks = 0; player.riding = bike.id;
+        b.mounted = true; b.standTicks = 0; delete b.fallen; player.riding = bike.id;
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
         this.mountedInPark = mountedInPark;
         return { ...frame, interact: false };
@@ -118,10 +128,11 @@ export class Bicycle {
     // A ring that just completed by standing in it (stand-to-interact) still owns a late `E` for 1.5 s:
     // the press the player meant for the counter must not also drop them off the bicycle (QA1-01).
     if (frame.interact && !claimed && this.world.tick - this.claimedAt > 90) { this.dismount(bike, player); return { ...frame, interact: false }; }
-    // Contact with an infected stops the bicycle and dismounts the rider (no damage, no knockback).
+    // Contact with an infected stops the bicycle and knocks the rider off (no damage, no knockback): she stumbles and the
+    // bike tips over right beside her, where it stays until she picks it up again (PO: it must never vanish).
     for (const e of this.world.entities.iterate()) {
       if (!e.infected || e.health.current <= 0 || e.hidden || e.infected.hidden) continue;
-      if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.dismount(bike, player); return frame; }
+      if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= BUMP_RANGE) { this.knockOff(bike, player); return frame; }
     }
     if (this.atNoBikeZone(player.transform)) { this.dismount(bike, player, this.lastOutside); return frame; }
     // Arriving at the depot without the parcel: she hops off and the bike is parked visibly right there.
@@ -133,7 +144,6 @@ export class Bicycle {
       // The depot has a clear curb spot beside the counter approach, within remount reach after hand-over.
       if (park?.spot && this.clearAt(park.spot.x, park.spot.z, Math.PI / 2)) {
         Object.assign(bike.transform, park.spot, { y: this.world.districts?.pavingHeight(park.spot.x, park.spot.z) ?? 0, yaw: -Math.PI / 2 }); b.heading = Math.PI / 2;
-        this.lastPark = { ...bike.transform };
       }
       return frame;
     }
@@ -207,8 +217,8 @@ export class Bicycle {
       this.navPose = key;
     }
   }
-  /** Full toy-scale box versus Rapier solids, plus wheel/frame margins inside one pavement polygon. */
-  clearAt(x: number, z: number, heading: number, mounted = false): boolean {
+  /** Full toy-scale box versus Rapier solids on level ground, plus (with `pavement`) wheel/frame margins inside one pavement polygon. */
+  clearAt(x: number, z: number, heading: number, mounted = false, pavement = true): boolean {
     if (this.atNoBikeZone({ x, z })) return false;
     const nav = this.world.infected?.nav;
     const fx = Math.cos(heading), fz = Math.sin(heading);
@@ -217,24 +227,24 @@ export class Bicycle {
     if (samples.some(p => this.inNoBikeZone(p))) return false;
     if (nav && (!nav.clear(x, z, survivor.radius + .1, false, this.id) || samples.some(p => !nav.clear(p.x, p.z, .05, false, this.id)))) return false;
     const districts = this.world.districts;
-    if (districts && (!districts.districts.some(d => d.layout.surfaces.some(s => s.surface === 'tile' && samples.every(p => inside([p.x - d.origin[0], p.z - d.origin[1]], s.polygon)))) || samples.some(p => Math.abs(districts.pavingHeight(p.x, p.z) - ground) > .001))) return false;
+    if (districts && (pavement && !districts.districts.some(d => d.layout.surfaces.some(s => s.surface === 'tile' && samples.every(p => inside([p.x - d.origin[0], p.z - d.origin[1]], s.polygon)))) || samples.some(p => Math.abs(districts.pavingHeight(p.x, p.z) - ground) > .001))) return false;
     const centre = (geometry.minX + geometry.maxX) / 2 + offset;
     const shape = new RAPIER.Cuboid((geometry.maxX - geometry.minX) / 2 + .03, geometry.height / 2, geometry.halfWidth + .03);
     return !this.world.physics.world!.intersectionWithShape({ x: x + fx * centre, y: ground + .01 + geometry.height / 2, z: z + fz * centre }, { x: 0, y: Math.sin(-heading / 2), z: 0, w: Math.cos(heading / 2) }, shape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!);
   }
   /** Search outward for a level, clear frame; wider rings reach pavement when dismounting in the street. */
-  clearSpot(px: number, pz: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], mounted = false): Vec2 | null {
+  clearSpot(px: number, pz: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], mounted = false, pavement = true): Vec2 | null {
     for (const radius of radii) for (let i = 0; i < 8; i++) {
       // left of the rider first, then right, behind, ahead
       const a = heading + Math.PI / 2 + [0, Math.PI, Math.PI / 2, -Math.PI / 2, Math.PI / 4, -Math.PI / 4, 3 * Math.PI / 4, -3 * Math.PI / 4][i];
       const x = px + Math.cos(a) * radius, z = pz + Math.sin(a) * radius;
-      if (this.clearAt(x, z, heading, mounted) && !this.inNoBikeZone({ x, z })) return { x, z };
+      if (this.clearAt(x, z, heading, mounted, pavement) && !this.inNoBikeZone({ x, z })) return { x, z };
     }
     return null;
   }
-  private parkingSpot(x: number, z: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8]): (Vec2 & { heading: number }) | null {
+  private parkingSpot(x: number, z: number, heading: number, radii: readonly number[] = [.9, 1.2, 1.4, 2, 3, 4, 5, 6, 8], pavement = true): (Vec2 & { heading: number }) | null {
     for (const radius of radii) for (const direction of [heading, heading + Math.PI / 2]) {
-      const spot = this.clearSpot(x, z, direction, [radius]);
+      const spot = this.clearSpot(x, z, direction, [radius], false, pavement);
       if (spot) {
         // Installing the parked frame's nav blocker must leave the dismounted rider a clear start.
         // A safe frame behind the rider can still overlap their capsule and trap every routed step.
@@ -247,14 +257,34 @@ export class Bicycle {
     }
     return null;
   }
-  private dismount(bike: EntitySnapshot, player: EntitySnapshot, at?: Vec2): void {
+  /**
+   * Parks beside the rider: on level pavement when there is some in reach, else on any clear level ground nearby, else
+   * exactly where she got off. Never back to an older parking spot: that teleport read as the bike vanishing (PO 10-08).
+   */
+  private dismount(bike: EntitySnapshot, player: EntitySnapshot, at?: Vec2, crash = false): void {
     const b = bike.bicycle!;
     b.mounted = false; b.speed = 0; b.steer = 0; b.lean = 0; b.armed = false; b.lockUntil = this.world.tick + 18;
     delete player.riding;
-    // Park beside the rider on level pavement; if the local area has no safe spot, retain the last safe parking location.
-    const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z, spot = this.parkingSpot(x, z, b.heading);
-    if (spot) { b.heading = spot.heading; Object.assign(bike.transform, { x: spot.x, z: spot.z, y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0, yaw: -b.heading }); this.lastPark = { ...bike.transform }; }
-    else if (this.lastPark) { Object.assign(bike.transform, this.lastPark); b.heading = -bike.transform.yaw; }
+    const x = at?.x ?? player.transform.x, z = at?.z ?? player.transform.z;
+    const spot = crash ? this.parkingSpot(x, z, b.heading, CRASH_RADII, false) ?? this.crashSpot(x, z, b.heading) : this.parkingSpot(x, z, b.heading) ?? this.parkingSpot(x, z, b.heading, CRASH_RADII, false);
+    const p = spot ?? { x, z, heading: b.heading };
+    b.heading = p.heading; Object.assign(bike.transform, { x: p.x, z: p.z, y: this.world.districts?.pavingHeight(p.x, p.z) ?? 0, yaw: -b.heading });
     this.world.player!.locomotion.reset();
+  }
+  /** Crowded street: any spot beside the rider whose frame is free of solids, even on a kerb or touching her capsule. */
+  private crashSpot(x: number, z: number, heading: number): (Vec2 & { heading: number }) | null {
+    const nav = this.world.infected?.nav;
+    for (const radius of CRASH_RADII) for (let i = 0; i < 8; i++) {
+      const a = heading + Math.PI / 2 + i * Math.PI / 4, px = x + Math.cos(a) * radius, pz = z + Math.sin(a) * radius;
+      if (!this.inNoBikeZone({ x: px, z: pz }) && (!nav || nav.clear(px, pz, .3, false, this.id))) return { x: px, z: pz, heading };
+    }
+    return null;
+  }
+  /** An infected bumps the rider: she stumbles off and the bike tips over on the side away from her. */
+  private knockOff(bike: EntitySnapshot, player: EntitySnapshot): void {
+    this.dismount(bike, player, undefined, true);
+    const t = bike.transform, side = (player.transform.x - t.x) * Math.sin(t.yaw) + (player.transform.z - t.z) * Math.cos(t.yaw);
+    bike.bicycle!.fallen = { at: this.world.tick, side: side > 0 ? -1 : 1 };
+    if (player.combat) player.combat.staggerUntil = Math.max(player.combat.staggerUntil, this.world.tick + STUMBLE_TICKS);
   }
 }

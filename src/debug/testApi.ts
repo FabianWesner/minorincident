@@ -1,3 +1,5 @@
+import { LevelOneBot } from './bot/LevelOneBot';
+import type { Inspection } from './Inspection';
 import { LevelThreeBot, type LevelThreeRoute } from './bot/LevelThreeBot';
 import { LevelTwoBot, type L2Opening } from './bot/LevelTwoBot';
 import { missionControls } from '../sim/missions/controls';
@@ -7,6 +9,7 @@ import { runAudioL1Bot } from './audioBot';
 import { renderAudio } from './audioHarness';
 import type { ActionState, GearTier, SurvivorVariant } from '../data/survivor';
 import { Vector3 } from 'three';
+import { CrowdFigureProbe } from '../render/characters/CrowdFigureProbe';
 import type { Action, BindingMap } from '../data/bindings';
 import type { Recording } from '../input/Recorder';
 import type { Game } from '../Game';
@@ -24,6 +27,7 @@ export interface BotStatus { running: boolean; policy: string | null }
 /** Version 1.10: campaign saves/presets plus NPCs, crowds, vehicles, interactions, missions, VFX and E16 audio probes. */
 type WithoutTick<T> = T extends GameEvent ? Omit<T, 'tick'> : never;
 export interface SSTestApi {
+  inspect: Pick<Inspection, 'enable' | 'setCamera' | 'follow' | 'timeScale' | 'anchors' | 'state' | 'jump' | 'lod'>;
   version: string;
   /** E13: copied campaign state; menu uses native UI; restore validates/applies without writing storage. */
   campaign: {
@@ -57,6 +61,8 @@ export interface SSTestApi {
     bindings(): BindingMap; rebind(action: Action, code: string): { ok: boolean; message: string };
     /** Ground → client pixels using the current camera. Tests still send real device events. */
     project(pos: { x: number; z: number }): { x: number; y: number };
+    /** Body-pick candidates of the last click (normalised capsule distance; <= 1 is a hit). */
+    lastPick(): { id: number; score: number; depth: number; drawn: boolean }[];
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
     record(): void; stopRecording(): Recording; replay(data: Recording): Promise<void>;
   };
@@ -100,7 +106,9 @@ export interface SSTestApi {
   look: { get(): { worldLook: import('../data/worldLook').WorldLook; palette: Record<import('../data/palette').PaletteToken, string> }; set(patch: import('../data/lookPatch').LookPatch): void; export(): import('../data/lookPatch').LookPatch; reset(): void };
   /** E18 synthetic GPU cost in milliseconds; zero clears it. */
   /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
-  debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void };
+  debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void;
+    /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
+    figureJoints(on: boolean): void };
   perf(): ReturnType<Game['perf']>;
   screenshotReady(): Promise<void>;
   /** E25 light field: the E27 transient hook and its counters (null outside lit scenes). */
@@ -117,7 +125,8 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
-    version: '1.11.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+    inspect: { enable: (...args) => game.inspect!.enable(...args), setCamera: pose => game.inspect!.setCamera(pose), follow: id => game.inspect!.follow(id), timeScale: x => game.inspect!.timeScale(x), anchors: () => game.inspect!.anchors(), state: () => game.inspect!.state(), jump: id => game.inspect!.jump(id), lod: mode => game.inspect!.lod(mode) },
+    version: '1.12.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
       l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
       l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},
@@ -136,6 +145,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       set: (frame) => { game.world.setInput(frame); game.input.inject(frame); },
       clear: () => { game.input.clear(); game.world.clearInput(); },
       bindings: () => game.input.bindings.get(), rebind: (action, code) => game.input.rebind(action, code),
+      lastPick: () => structuredClone(game.input.picker.last),
       project: (pos) => {
         game.view.camera.updateMatrixWorld();
         const point = new Vector3(pos.x, 0, pos.z).project(game.view.camera);
@@ -183,7 +193,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
-    bot: { start: (policy, options) => { if (game.world.scenario === 'L2' && policy && policy !== 'driver') { game.driver = new LevelTwoBot(game.world, policy, options?.opening); return; } if (game.world.scenario === 'L3' && (policy === 'complete' || policy === 'newbie')) { game.driver = new LevelThreeBot(game.world, policy, options?.route); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof LevelTwoBot ? game.driver.profile : game.driver instanceof LevelThreeBot ? game.driver.policy : game.driver ? 'driver' : null }) },
+    bot: { start: (policy, options) => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); if (game.world.scenario === 'L1' && (!policy || policy === 'complete' || policy === 'newbie' || policy === 'idle')) { game.driver = new LevelOneBot(game.world, policy); return; } if (game.world.scenario === 'L2' && policy && policy !== 'driver') { game.driver = new LevelTwoBot(game.world, policy, options?.opening); return; } if (game.world.scenario === 'L3' && (policy === 'complete' || policy === 'newbie')) { game.driver = new LevelThreeBot(game.world, policy, options?.route); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof LevelOneBot ? game.driver.profile : game.driver instanceof LevelTwoBot ? game.driver.profile : game.driver instanceof LevelThreeBot ? game.driver.policy : game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose, instant) => game.view.view.cinematic(pose, instant) },
     settings: { set: (patch) => { if (patch.textSize !== undefined || patch.colorblind !== undefined || patch.quality !== undefined) { game.ui.settings.patch(patch); game.ui.applySettings(); } if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); if (patch.quality !== undefined) game.setQuality(patch.quality); const quality = patch.quality !== undefined ? game.quality.tier : undefined; game.view.settings({ ...patch, quality }); const keys=['cameraShake','flashReduction','gore','quality','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','aimAssist','textSize','colorblind'];game.campaignSettings(Object.fromEntries(Object.entries(patch).filter(([key])=>keys.includes(key))) as CampaignSettings); } },
     vfx: {
@@ -225,7 +235,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         await new Promise<void>(resolve=>setTimeout(resolve,50));
       },
     },
-    debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms) },
+    debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };
   window.__SS__ = api; return api;

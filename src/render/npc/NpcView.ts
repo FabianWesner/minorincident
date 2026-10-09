@@ -37,7 +37,7 @@ export class NpcView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
   async init(): Promise<void> {
-    await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi');
+    await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
     this.human = createCivilianPlaceholder(); this.placeholders.push(this.human);
     for (const root of [this.dog, this.human]) root.traverse(node => {
@@ -50,8 +50,8 @@ export class NpcView extends Group {
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (root === this.human || this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
   }
-  update(camera: Camera, alpha = 1): void {
-    this.civilians.update(alpha, camera); let cars = 0;
+  update(camera: Camera, alpha = 1, lodCamera = camera): void {
+    this.civilians.update(alpha, camera, lodCamera); let cars = 0;
     for (const [id, hero] of this.heroes) if (!this.world.entities.get(id)) { this.remove(hero.root); hero.badge?.remove(); this.heroes.delete(id); }
     for (const e of this.world.entities.iterate()) {
       if (e.traffic || e.convoy) { this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, .6, e.transform.z); this.cars.setMatrixAt(cars++, this.transform); continue; }

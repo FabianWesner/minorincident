@@ -46,7 +46,7 @@ export async function loadL2(seed: number, tier: 'high' | 'low' = 'high'): Promi
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 export function inCheckpointZone(p: { x: number; z: number }): boolean { const [z0, z1] = l2.checkpoint.gateZ; return p.x >= l2.checkpoint.gateX + .3 && p.z >= z0 && p.z <= z1; }
 
-export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opts: { seed?: number; opening?: L2Opening; maxSeconds?: number; stopWhen?: (m: Mission) => boolean; god?: boolean } = {}): L2Report {
+export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opts: { seed?: number; opening?: L2Opening; maxSeconds?: number; stopWhen?: (m: Mission) => boolean; stopAfterPlayerDeath?: boolean; god?: boolean } = {}): L2Report {
   const bot = new LevelTwoBot(world, profile, opts.opening ?? 'side'), maxTicks = (opts.maxSeconds ?? 600) * 60, start = world.tick;
   if (opts.god) world.combat!.damage.god = true;
   const s0 = mission.state.l2!, a = mission.def.anchors, forecourt = a['l2-forecourt'];
@@ -92,10 +92,12 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
   for (const type of ['combat.attack', 'combat.hit', 'combat.kill'] as const) offs.push(world.events.on(type, () => { if (!mission.state.l2!.alarmAt || world.tick < mission.state.l2!.alarmAt) calm.combatEvents++; }));
   const alive = () => world.infected!.active.filter(e => e.health.current > 0);
   for (let tick = 0; tick < maxTicks && !bot.finished; tick++) {
+    // A death observation is final: restoring its checkpoint resets the doors clock and can repeat the same trial.
+    if (opts.stopAfterPlayerDeath && firstDeath !== null) break;
     if (opts.stopWhen?.(mission)) break;
     const s = mission.state.l2!, t = world.tick;
     if (s.phase === 'calm') calm.infectedMax = Math.max(calm.infectedMax, world.infected!.active.length);
-    if (s.phase !== 'calm' && !calm.alarmS) { calm.alarmS = (s.alarmAt - start) / 60; calm.axeActive = mission.state.steps.axe.status === 'active'; }
+    if (s.phase !== 'calm' && !calm.alarmS) { calm.alarmS = (s.alarmAt - start) / 60; calm.axeActive = mission.state.steps.axe.status === 'active' || mission.state.steps.axe.status === 'completed'; } // PO 10-08: the axe can be taken before the alarm
     if (s.alarmAt && calm.crewAtTruckS === null && s.crewIds.every(id => world.entities.get(id)?.hidden)) calm.crewAtTruckS = (t - s.alarmAt) / 60;
     if (s.phase === 'ride') seatedEveryTick &&= !!world.entities.get(1)!.hidden && s.crewIds.every(id => !!world.entities.get(id)?.hidden);
     if (s.arrivedAt && !controlAt && !world.storyLock && !world.entities.get(1)!.hidden) controlAt = t;
