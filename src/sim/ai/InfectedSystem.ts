@@ -283,8 +283,9 @@ export class InfectedSystem {
   private windup(e: EntitySnapshot): void {
     const b = e.infected!, def = infectedDef(e.archetype); b.state = 'attack'; b.attackId = ++this.sequence;
     b.until = this.world.tick + Math.ceil(def.windup * 60); e.combat!.attacking = true;
-    // A runner's lunge is a short homing burst (0.6 s, ~4 m); charges, pounces and leaps keep their 2 s committed line.
-    b.activeUntil = b.until + (b.special === 'lunge' ? 36 : 120);
+    // A runner's lunge is a short homing burst (0.33 s, ~2.3 m): it strikes a courier who stands or turns into it, a courier
+    // running flat out escapes it (E19-AC14 evade battery). Charges, pounces and leaps keep their 2 s committed line.
+    b.activeUntil = b.until + (b.special === 'lunge' ? 20 : 120);
     const player = this.world.entities.get(1)!; const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
     b.dx = distance ? dx / distance : 1; b.dz = distance ? dz / distance : 0;
     this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: b.special, duration: def.windup });
@@ -349,8 +350,10 @@ export class InfectedSystem {
     }
     return true;
   }
+  /** Id of the infected whose attack last struck the courier (lunge miss detection). */
+  private struck = 0;
   private attackPlayer(e: EntitySnapshot, damage: number): void {
-    const b = e.infected!;
+    const b = e.infected!; this.struck = e.id;
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: 1, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage, multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId: 1, special: b.special, amount });
   }
@@ -498,7 +501,13 @@ export class InfectedSystem {
       return;
     }
     if (b.state === 'attack') {
-      if (tick >= b.until && this.resolve(e)) {
+      if (tick >= b.until && (this.struck = 0, this.resolve(e))) {
+        // A lunge that missed (she side-stepped or outran it) costs a recovery beat: it stops and turns back onto her.
+        // This is the dodge window of a run-away game now that the lunge homes and the chaser no longer loses her.
+        if (b.special === 'lunge' && this.struck !== e.id && brain.targetId === 1) {
+          const p = this.world.entities.get(1)!.transform;
+          brain.pauseUntil = tick + 30; brain.looking = true; brain.lookYaw = -Math.atan2(p.z - e.transform.z, p.x - e.transform.x);
+        }
         b.state = 'chase'; b.cooldown = tick + Math.max(0, l1Ticks(l1v2.infected.attackCycleS) - Math.ceil(infectedDef(e.archetype).windup * 60)); e.combat!.attacking = false;
         // The lunge ends planted: bleed its 7 m/s impulse so the next step can turn back onto the courier at once.
         const m = e.locomotion, v = m ? Math.hypot(m.vx, m.vz) : 0;
