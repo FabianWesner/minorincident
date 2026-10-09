@@ -56,11 +56,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const outputIndex = process.argv.indexOf('--output');
     const output = outputIndex >= 0 ? process.argv[outputIndex + 1] : 'test-results/assets';
     if (!output) throw new Error('--output requires a directory');
-    const manifest: {id:string;status:string;script?:string;glb:string}[] = JSON.parse(readFileSync('src/assets/manifest.json','utf8'));
+    const manifest: {id:string;status:string;script?:string;glb:string;animatedDrawBase?:string}[] = JSON.parse(readFileSync('src/assets/manifest.json','utf8'));
     const changed = target === '--changed' ? spawnSync('git',['diff','--name-only','HEAD'],{encoding:'utf8'}).stdout.split('\n') : [];
     const selected = manifest.filter(a => target === '--all' ? ['integrated','final'].includes(a.status) : target === '--changed' ? changed.includes(a.glb) || (!!a.script && changed.includes(a.script)) : target?.split(',').includes(a.id));
     if (!selected.length && target !== '--changed') throw new Error('Usage: npm run assets:turntable -- <id>|--all|--changed (preview server must be running)');
-    for (const {id} of selected) {
+    for (const {id, animatedDrawBase} of selected) {
       if (lodContact) {
         const directory = `${output}/${id}${decay ? `.${decay}` : ''}`; mkdirSync(directory, { recursive: true });
         await page.setViewportSize({ width: 480, height: 360 });
@@ -95,6 +95,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
         console.log(`${directory}/lod-contact.png`);
         continue;
       }
+      // Adult silhouettes need portrait framing for useful all-side occupancy.
+      await page.setViewportSize(id.endsWith('.lying') && animatedDrawBase ? { width: 640, height: 360 } : animatedDrawBase ? { width: 360, height: 640 } : { width: 1600, height: 900 });
       const values = await captureTurntable(page,id,`${output}/${id}${decay ? `.${decay}` : ''}`,`http://127.0.0.1:${process.env.E2E_PORT ?? 3313}`,decay);
       if (values.some((v)=>v<.1||v>.8)) throw new Error(`Object coverage outside 10–80%: ${values}`);
     }

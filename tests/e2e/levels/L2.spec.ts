@@ -98,6 +98,10 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     // Fight a little at the doors, then break away.
     for (let i = 0; i < 8; i++) { if (!await h.fightNearby()) await step(20); }
     await snap('l2-collapse');
+    // The escape horde now really hunts (zombie-ai: no frozen infected, 4.4 m/s floor, near-notice): ~12 chase the courier down Maple and
+    // the 'escape' checkpoint restores that same scrum, so a lone axe courier loops through deaths. This test checks the traversal and the
+    // photo spots, not survival (balance is the PO's call): god mode from here, the strikes stay real input.
+    await page.evaluate(() => window.__SS__!.cheats.god(true));
     const route = l2Routes.side;
     for (const wp of route) {
       await go(wp, 1.8, async () => { const m = await mission(); return m.phase !== 'playing' || m.l2!.gateClosedAt > 0; });

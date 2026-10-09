@@ -1,0 +1,12 @@
+{
+  "name": "l5-flashlight-asset",
+  "ground": "asphalt",
+  "size": 10,
+  "time": "L6",
+  "dof": false,
+  "props": [{ "id": "lamp", "asset": "util.flashlight", "at": [0, 0] }],
+  "camera": { "mode": "close", "target": [0, 0.065, 0], "radius": 1.8, "azimuth": 45 },
+  "frames": 30,
+  "shots": [0, 30],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
