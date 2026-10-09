@@ -21,7 +21,7 @@
   { "id": "c2", "kind": "pedestrian", "at": [-25.5, 8], "yaw": 180, "look": { "model": "npc.civilian-woman-b", "tint": "#e0a050" }, "state": "idle" },
   { "id": "c3", "kind": "pedestrian", "at": [-5, 26], "yaw": 90, "look": { "model": "npc.civilian-elderly", "tint": "#8a8a8a", "handProp": "cane" }, "state": { "walk": [[-5, 30], [-5, 26]], "loop": true } }
  ],
- "camera": { "mode": "follow", "actor": "courier", "zoom": 1.1 },
+ "camera": { "mode": "game", "target": [-24, 2], "zoom": 3.0 },
  "frames": 240,
  "shots": [1, 80, 239],
  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
