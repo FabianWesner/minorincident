@@ -5,7 +5,9 @@ import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Materials } from '../render/Materials';
 
 /** Elements processed between cooperative yield points of the batching steps. */
-const slice = 16384;
+// Frequent checkpoints keep the existing time budget meaningful for quantized/interleaved
+// meshes on a slow CPU; a 16k-vertex color slice can overrun a whole gameplay frame.
+const slice = 1024;
 /** Float copy of a (possibly quantized/normalized) attribute without per-component getComponent calls. */
 function* decode(attribute: import('three').BufferAttribute | import('three').InterleavedBufferAttribute): Generator<void, Float32Array> {
   const size = attribute.itemSize, values = new Float32Array(attribute.count * size);
