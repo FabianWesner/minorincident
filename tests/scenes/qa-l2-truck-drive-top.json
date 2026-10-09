@@ -10,11 +10,11 @@
     "bbox": [
       [
         -47,
-        -40
+        -46
       ],
       [
-        -22,
-        -2
+        46,
+        -24
       ]
     ]
   },
@@ -23,12 +23,12 @@
       "id": "engine",
       "asset": "vehicle.fire-engine",
       "at": [
-        -28.75,
-        -7
+        22,
+        -32.0
       ],
       "l2Ride": {
-        "distanceM": 80,
-        "speedMs": 7.6
+        "distanceM": 18,
+        "speedMs": 5.6
       }
     }
   ],
@@ -37,8 +37,8 @@
       "id": "elder",
       "kind": "pedestrian",
       "at": [
-        -28.75,
-        -22
+        10,
+        -37
       ],
       "look": {
         "model": "npc.civilian-elderly"
@@ -49,20 +49,20 @@
   "camera": {
     "mode": "orbit",
     "target": [
-      -33,
-      -27
+      0,
+      -32
     ],
-    "radius": 60,
+    "radius": 70,
     "polar": 1,
     "azimuth": 0
   },
-  "frames": 660,
+  "frames": 840,
   "shots": [
     0,
-    160,
-    320,
-    500,
-    660
+    200,
+    400,
+    600,
+    840
   ],
   "expect": {
     "consoleErrors": 0,
