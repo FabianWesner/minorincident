@@ -37,7 +37,8 @@ function helpers(page: Page) {
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
-        const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
+        // A distant checkpoint respawn must still click the canvas, above the weapon HUD.
+        const a = window.__SS__!, x = target.x, z = target.z, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
       const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
