@@ -38,6 +38,16 @@ for c in range(6):
     spec('l3-corridor-c%d' % c, 'L3', 'D-CORRIDOR', [[x0, -46], [x1, 46]], 2,
          'L3 layout sweep cell %d on D-CORRIDOR: shipped L3 dressing and placement rules, static mesh clipping gate.' % c,
          [(cx[c] + cx[c + 1]) / 2, 0, 0])
+# Flat ground dressing (blood, glass) lying under a lamp, bin or fence foot is not a prop cutting through another.
+flat = [[a, b] for a in ['decal.blood-trail', 'decal.blood-pool', 'decay.broken-glass'] for b in ['prop.street-lamp', 'prop.trash-bin', 'prop.wheelbarrow', 'prop.picket-fence', 'decay.looted-store']] + [['prop.sandbag-pallet', 'wpn.police-baton'], ['bld.cafe-corner', 'prop.privacy-fence']]  # baton on a pallet; fence foot on the cafe patio slab (8 cm)
+for c in range(6):
+    known_l3 = 'l3-corridor-c%d' % c
+    path = '%s/%s.json' % (OUT, known_l3)
+    s = json.load(open(path))
+    s['clipping']['ignore'] = flat
+    with open(path, 'w') as f:
+        json.dump(s, f, indent=1)
+        f.write('\n')
 known = {
     # The bay bench is authored against the crew seat anchors and cuts into the station's front step (see levels/L2/layout.ts).
     'l2-grid-r2c0': [['prop.bench', 'bld.fire-station']],
