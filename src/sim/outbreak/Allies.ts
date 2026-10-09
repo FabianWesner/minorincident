@@ -138,11 +138,21 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   if (post && Math.hypot(post.x - e.transform.x, post.z - e.transform.z) > (a.hold ? .4 : l2.allies.regroupM)) npcs.move(e, post, a.hold ? 2 : a.runSpeed * .8, c, a.hold ? .3 : l2.allies.regroupM * .5);
   return true;
 }
-/** Squad: stay 2-6 m from the player on an own slot around it; regroup when the player moves on (E21 §5.4). Never teleports. */
+/** Squad: stay 3-8 m from the player on an own slot around it; regroup when the player moves on (E21 §5.4). Never teleports. */
 function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): boolean {
   const f = a.follow!, d = dist(e.transform, p);
   const leader = world.entities.get(f.targetId)!;
   const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
+  // A stop or a tight turn can leave a follower inside the band. Step into nearby clear space, never onto the courier.
+  if (d < f.minM) {
+    const nav = world.infected!.nav, angle = Math.atan2(e.transform.z - p.z, e.transform.x - p.x);
+    for (let i = 0; i < 16; i++) {
+      const a = angle + i * Math.PI / 8, goal = { x: p.x + Math.cos(a) * (f.minM + 1), z: p.z + Math.sin(a) * (f.minM + 1) };
+      if (!nav.clear(goal.x, goal.z, .4) || !nav.visible(e.transform, goal, .4)) continue;
+      world.npcs!.move(e, goal, f.moveMs * .6, e.civilian!, .15); break;
+    }
+    return true;
+  }
   // E08 corgi/escort band: keep walking while the leader walks, avoiding repeated stop/start response delays.
   if (d > f.maxM || (moving && d > f.minM)) {
     // E08 shared NPC movement uses the same obstacle routing/steering as corgi and survivor escorts.
@@ -154,7 +164,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const nav = world.infected!.nav;
     // Around a wreck, follow the courier's reachable line rather than routing to a slot on its far face.
     const goal = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
-    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, .5))
+    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, goal === p ? f.minM : .5))
       world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
   }
   return true;

@@ -67,6 +67,7 @@ describe('L3 squad and checkpoint', () => {
         const e = w.entities.get(q.id)!;
         expect(e.health.current).toBeGreaterThan(0);
         expect(Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), JSON.stringify({ courier: p.transform, officer: e.transform })).toBeLessThanOrEqual(8);
+        expect(Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z)).toBeGreaterThanOrEqual(3);
       }
     } finally { w.dispose(); }
   }, 120_000);

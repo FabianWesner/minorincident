@@ -440,7 +440,7 @@ export class DistrictView extends Group {
     if (open === this.armyBoomPose) return;
     this.armyBoomPose = open;
     for (const entry of this.lodBatches) if (entry.id === 'kit.army-checkpoint')
-      for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, undefined, 'x');
+      for (const ref of entry.refs) for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
   }
   /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
