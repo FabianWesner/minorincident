@@ -1,0 +1,5 @@
+# Visual review
+
+Reviewed all sides and 135/190 px game-size reference-peer views. Two continuous low surviving ends, clear central breach, displaced sacks, folded canvas and broad pale filling read as a shattered line. Near sacks use the integrated pallet's four-course proportions with stuffed/chamfered shells. Middle/far ends are narrower but preserve grade, overall bounds and support courses; no upper course floats. Compared with prop.sandbag-pallet, colors and mass read consistently, with more damage and loose filling here. Remaining fault: LOD2 has angular rectangular sacks and omits hanging canvas; the broad sand spill carries the burst cue. Reference fabric wrinkles, grains and seam detail are simplified. No tidy wall bridges the breach and no collision proxy fills it. Own review is provisional; orchestrator acceptance is independent.
+
+Evidence: `test-results/l5-war-debris-and-craters/decay.blown-sandbags/comparison.png`, `lod-contact.png`, `game-reference-peer.jpg`. Headless WebGL2, Metal, shared browser lock, no WebGPU claim.
