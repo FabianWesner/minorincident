@@ -128,12 +128,12 @@ export class LevelThreeBot {
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
     // Segment 3 is the run-away part: fight only what is about to grab the courier, keep moving otherwise.
-    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 7 : p.x >= l3.map.segments[2][0] ? 9 : 15;
+    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 5 : p.x >= l3.map.segments[2][0] ? 9 : 15;
     if (fight(range)) return frame;
     // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
     // A newbie sticks to the police too, but only in the first segment and not for as long.
     // Evade-only never shoots, so it keeps the armed squad close as long as there is one (the police fight for it).
-    if ((this.profile === 'complete' || this.profile === 'evade-only' || (newbie && p.x < l3.map.segments[0][1])) && s.squad.length && (p.x < 50 || this.profile === 'evade-only') && p.x > -100) {
+    if ((this.profile === 'complete' || this.profile === 'evade-only' || (newbie && p.x < l3.map.segments[0][1])) && s.squad.length && (p.x < 50 || this.profile === 'evade-only') && p.x > -120) {
       const lag = Math.max(...s.squad.map(q => { const e = w.entities.get(q.id); return e ? dist(e.transform, p) : 0; }));
       // A careful courier waits a few seconds for a straggler, not forever (an officer stuck on a wreck is left behind).
       // At most 5 s at a time and 40 s (segment 1) / 20 s (segment 2): the courier does not wait for an officer who cannot get through.
@@ -142,6 +142,7 @@ export class LevelThreeBot {
       else if (!this.threats(p, 20).some(e => this.chasing(e)) && this.waitedTotal[seg] < (newbie ? 900 : seg ? 1200 : 2400)) {
         if (!this.waiting) { this.waiting = true; this.waitedSince = w.tick; }
         if (w.tick - this.waitedSince < 300) return frame;
+        this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false;
       } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
     }
     // Forward: along the street, then up On-ramp Road to the checkpoint lane and through the zone line.
