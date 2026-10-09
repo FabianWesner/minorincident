@@ -8,7 +8,7 @@ command -v lockf >/dev/null 2>&1 || exec "$@"
 [ -n "${MI_E2E_LOCK_HELD:-}" ] && exec "$@"
 export MI_E2E_LOCK_HELD=1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
-slots="${E2E_SLOTS:-1}"
+slots="${E2E_SLOTS:-2}"  # 10-09: 2 parallel browsers (Mac load ~3.5 with 7 lanes); perf measurements should pass E2E_SLOTS=1 and check `uptime`
 # Join the kernel queue for the default shared slot; polling can starve queued lanes.
 if [ "$slots" -eq 1 ]; then
   exec lockf -k "$base.0" "$@"
@@ -17,7 +17,7 @@ while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
     # Keep the inode: unlinking a lock file splits queued and newly arriving users.
-    lockf -k -t "${E2E_WAIT:-60}" "$base.$i" "$@" 2>/dev/null; rc=$?
+    lockf -k -t 0 "$base.$i" "$@" 2>/dev/null; rc=$?
     [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
     i=$((i + 1))
   done

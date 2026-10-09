@@ -204,7 +204,10 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=48, smooth=True):
     if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 6)
-    if DISTANCE == 2 and name.endswith('_tyre'): profile = [profile[i] for i in (0, 1, 4, 5, 8, 9)]
+    if DISTANCE == 2 and name.endswith('_tyre'):
+        # Fewer sidewall rings leave room for a round tread without exceeding the far asset's triangle budget.
+        segs = 16
+        profile = [profile[i] for i in (0, 4, 5, 9)]
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []

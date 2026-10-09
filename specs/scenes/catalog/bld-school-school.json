@@ -1,0 +1,42 @@
+{
+ "name": "bld-school-school",
+ "note": "D-SCHOOL bld.school (bld.school:53) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-SCHOOL",
+  "bbox": [
+   [
+    -22,
+    -22
+   ],
+   [
+    -6,
+    -6
+   ]
+  ],
+  "ids": [
+   "bld.school:53"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -14,
+   1.6,
+   -14
+  ],
+  "radius": 24,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

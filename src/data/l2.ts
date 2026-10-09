@@ -93,6 +93,11 @@ export const l2 = {
     gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5 },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
   infectedDamage: 1.8,
+  /**
+   * PO 10-09 "the final fight is far too easy": melee hits that knock down a normal infected (40 HP runner). Damage.ts caps each
+   * melee hit at maxHP / hits, so a runner takes 3 fire-axe, 4 bat (roundhouse too) or 6 fist hits. Guns, kicks and L1 are unchanged.
+   */
+  infectedMeleeHits: { 'weapon.fire-axe': 3, 'weapon.bat': 4, 'weapon.fists': 8 } as Readonly<Record<string, number>>,
   /** Section 4: checkpoints. */
   checkpoints: ['doors', 'escape', 'cluster'] as const,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
