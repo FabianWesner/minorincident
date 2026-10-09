@@ -54,7 +54,10 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     // Game camera: every on-screen figure at game-camera size draws the near tier.
     const gameSized = game.filter(f => f.onScreen && f.pixels >= 105);
     expect(gameSized.length, 'figures at game-camera size').toBeGreaterThanOrEqual(3);
-    for (const figure of gameSized) expect(figure, `figure ${figure.id} at ${figure.pixels} px`).toMatchObject({ drawn: true, lod: 'lod1' });
-    for (const figure of close) expect(figure, `close-up of ${figure.id}`).toMatchObject({ drawn: true, lod: 'lod1' });
+    for (const figure of gameSized) expect(figure, `figure ${figure.id} at ${figure.pixels} px`).toMatchObject({ drawn: true });
+    for (const figure of gameSized) expect(['lod0', 'lod1'], `figure ${figure.id} near tier`).toContain(figure.lod);
+    for (const figure of close) expect(figure, `close-up of ${figure.id}`).toMatchObject({ drawn: true });
+    // lod1 is the near band; the few closest figures (CrowdVisibility heroes, > 196 px) draw the full lod0. Never the far lod2.
+    for (const figure of close) expect(['lod0', 'lod1'], `close-up near tier ${figure.id}`).toContain(figure.lod);
   });
 }

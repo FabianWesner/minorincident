@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+if "--decay" in sys.argv and sys.argv[sys.argv.index("--decay") + 1] == "wrecked":
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools/blender"))
+    from sslib.military_wrecks import build_wreck
+    build_wreck(Path(__file__).resolve().parent, sys.argv[sys.argv.index("--glb") + 1])
+    raise SystemExit(0)
+
 """Deterministic hero military cargo truck. +X front, +Z up, metres.
 Run only through experiment/tools/blender_run.py. Static parts join by material;
 rigid wheels, hinged doors/tailgate and lamp assemblies retain joint origins.

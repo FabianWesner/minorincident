@@ -1,0 +1,227 @@
+{
+ "name": "qa-click-group",
+ "note": "P1 PO 10-08 'I click on a Zombie but the attack is not performed': real click picks on the drawn body (head/chest/hip/feet) of a group of L1-look infected, downed ones included, in the game camera. Every click must start or queue an attack on that infected within 100 ms.",
+ "ground": "asphalt",
+ "size": 30,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "z-1",
+   "kind": "infected",
+   "at": [
+    1.4,
+    0
+   ],
+   "yaw": 180,
+   "state": "chase"
+  },
+  {
+   "id": "z-2",
+   "kind": "infected",
+   "at": [
+    1.0,
+    1.2
+   ],
+   "yaw": 130,
+   "state": "chase"
+  },
+  {
+   "id": "z-3",
+   "kind": "infected",
+   "at": [
+    -0.6,
+    1.5
+   ],
+   "yaw": 68,
+   "state": "chase"
+  },
+  {
+   "id": "z-4",
+   "kind": "infected",
+   "at": [
+    -1.5,
+    -0.2
+   ],
+   "yaw": -8,
+   "state": "chase"
+  },
+  {
+   "id": "z-5",
+   "kind": "infected",
+   "at": [
+    0.3,
+    -1.6
+   ],
+   "yaw": -101,
+   "state": "chase"
+  },
+  {
+   "id": "z-rear",
+   "kind": "infected",
+   "at": [
+    -2.4,
+    -2.4
+   ],
+   "yaw": -135,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "click": "z-1",
+    "part": "head"
+   }
+  },
+  {
+   "frame": 44,
+   "actor": "courier",
+   "do": {
+    "click": "z-1",
+    "part": "chest"
+   }
+  },
+  {
+   "frame": 68,
+   "actor": "courier",
+   "do": {
+    "click": "z-1",
+    "part": "hip"
+   }
+  },
+  {
+   "frame": 92,
+   "actor": "courier",
+   "do": {
+    "click": "z-2",
+    "part": "feet"
+   }
+  },
+  {
+   "frame": 116,
+   "actor": "courier",
+   "do": {
+    "click": "z-3",
+    "part": "head"
+   }
+  },
+  {
+   "frame": 140,
+   "actor": "courier",
+   "do": {
+    "click": "z-4",
+    "part": "chest"
+   }
+  },
+  {
+   "frame": 164,
+   "actor": "courier",
+   "do": {
+    "click": "z-5",
+    "part": "hip"
+   }
+  },
+  {
+   "frame": 188,
+   "actor": "courier",
+   "do": {
+    "click": "z-2",
+    "part": "feet"
+   }
+  },
+  {
+   "frame": 212,
+   "actor": "courier",
+   "do": {
+    "click": "z-3",
+    "part": "head"
+   }
+  },
+  {
+   "frame": 236,
+   "actor": "courier",
+   "do": {
+    "click": "z-4",
+    "part": "chest"
+   }
+  },
+  {
+   "frame": 260,
+   "actor": "courier",
+   "do": {
+    "click": "z-5",
+    "part": "hip"
+   }
+  },
+  {
+   "frame": 284,
+   "actor": "courier",
+   "do": {
+    "click": "z-rear",
+    "part": "feet"
+   }
+  },
+  {
+   "frame": 308,
+   "actor": "courier",
+   "do": {
+    "click": "z-1",
+    "part": "head"
+   }
+  },
+  {
+   "frame": 332,
+   "actor": "courier",
+   "do": {
+    "click": "z-2",
+    "part": "chest"
+   }
+  },
+  {
+   "frame": 356,
+   "actor": "courier",
+   "do": {
+    "click": "z-rear",
+    "part": "hip"
+   }
+  },
+  {
+   "frame": 380,
+   "actor": "courier",
+   "do": {
+    "click": "z-3",
+    "part": "feet"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier"
+ },
+ "frames": 420,
+ "shots": [
+  20,
+  92,
+  212,
+  404
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "clickMissMax": 0,
+  "undrawnFramesMax": 0
+ }
+}

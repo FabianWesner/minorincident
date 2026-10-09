@@ -110,10 +110,12 @@ export async function writeStaticCollision(): Promise<void> {
     const hash = createHash('sha256').update(readFileSync(source.glb)).digest('hex');
     const cached = staticCollision[def.id];
     // Alias fitting depends on manifest dimensions as well as source bytes.
-    if (def.id !== 'bld.fire-station' && !aliases[def.id] && cached?.source === source.glb && cached.hash === hash) {
+    if (def.id !== 'bld.fire-station' && def.id !== 'kit.army-checkpoint' && !aliases[def.id] && cached?.source === source.glb && cached.hash === hash) {
       assets[def.id] = cached; continue;
     }
     let boxes = await bakeStaticCollision(source.glb);
+    // The army checkpoint's boom/wire rails ride above the body: they must never close its central lane.
+    if (def.id === 'kit.army-checkpoint') boxes = boxes.filter(box => box.min[1] < 1.0);
     if (def.id === 'bld.pharmacy') {
       const straight = Math.min(1, def.dimensions.x / source.dimensions.x, def.dimensions.z / source.dimensions.z), turned = Math.min(1, def.dimensions.x / source.dimensions.z, def.dimensions.z / source.dimensions.x);
       const fit = Math.max(straight, turned);

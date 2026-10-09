@@ -1,0 +1,41 @@
+{
+ "name": "l3-corridor-c1",
+ "note": "L3 layout sweep cell 1 on D-CORRIDOR: shipped L3 dressing and placement rules, static mesh clipping gate.",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "level": "L3",
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -119.7,
+    -46
+   ],
+   [
+    -52.3,
+    46
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   -86.0,
+   0,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 4,
+ "shots": [
+  4
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "staticOverlapMax": 0
+ }
+}
