@@ -64,7 +64,7 @@ export interface ActorSpec {
   loadout?: [string, string];
   god?: boolean;
 }
-export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean }
+export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
 /** Actor commands. Strings are shorthands: 'idle' | 'chase' | 'follow' | 'flee' | 'infect'. */
 export type Action =
   | 'idle' | 'chase' | 'follow' | 'flee' | 'infect'
@@ -130,6 +130,10 @@ export interface Expectations {
   propSinkMaxCm?: number;
   /** Require actual prop contact samples, preventing an empty scene passing. */
   propGroundSamplesMin?: number;
+  vehicleYawRateMaxDegS?: number;
+  vehicleBodyOverlapsMax?: number;
+  /** Prevent a blocked, stationary ride from passing its motion gates. */
+  vehicleRideRemainingMaxM?: number;
   /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
   wheelFloatMaxCm?: number;
   /** Frames the courier bike was in view but not drawn, or drawn more than 0.6 m from its sim position (`metrics.bike`). */

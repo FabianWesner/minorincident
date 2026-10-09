@@ -1,4 +1,4 @@
-import * as RAPIER from '@dimforge/rapier3d-compat';
+import { L2TruckDrive } from '../vehicles/L2TruckDrive';
 import { Rng } from '../../core/Rng';
 import { l2, l2TruckRoute, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -47,6 +47,7 @@ const SHOUTS: readonly (readonly ['arrived' | 'exit' | 'doors', number, 'crew' |
  */
 export class LevelTwoRescue {
   private readonly walls = new Map<string, number>();
+  private driver: L2TruckDrive | null = null;
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
   constructor(private readonly mission: Mission) {}
   private get s(): L2State { return this.mission.state.l2!; }
@@ -97,8 +98,8 @@ export class LevelTwoRescue {
   /** The truck is a ride, never a drivable car: kinematic body, doors inert. */
   private kinematic(): void {
     const car = this.world.vehicles!.cars.get(this.s.truckId); if (!car) return;
-    car.physics.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
-    (car as { noEnterUntil: number }).noEnterUntil = Number.MAX_SAFE_INTEGER;
+    this.driver = new L2TruckDrive(this.world, this.s);
+    this.driver.prepare();
   }
   private parkNav(blocked: boolean): void {
     const car = this.world.vehicles!.cars.get(this.s.truckId); if (!car) return;
@@ -186,7 +187,7 @@ export class LevelTwoRescue {
     if (id === 'board') this.board();
     if (id === 'axe') this.takeAxe();
     if (id === 'ride' && (this.s.phase === 'ride' || this.s.phase === 'alarm')) {
-      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; this.world.spatial.delete(c); } }
+      for (const c of this.s.crewIds) { const e = this.world.entities.get(c); if (e) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(c); } }
       if (!this.s.seated) this.board();
       this.s.phase = 'ride'; this.s.departAt ||= this.world.tick; this.s.rideS = this.routeInfo().length; this.ride();
     }
@@ -195,7 +196,12 @@ export class LevelTwoRescue {
   private alarm(): void {
     const { world } = this.mission, tick = world.tick;
     // A few people still out on the streets, trying to get somewhere (civilians only: the town has no infected yet).
-    for (const [x, z] of l2.escape.civilians) { const p = this.snap({ x, z }, .4); this.outbreak().spawnPedestrian(p, { waypoints: [p, this.snap({ x: x + 6, z }, .4)] }); }
+    // Never on or beside the truck's route lane (it is a kinematic ride that must not meet anybody).
+    for (const [x, z] of l2.escape.civilians) {
+      const p = this.offRoute(this.snap({ x, z }, .4)); let q = this.offRoute(this.snap({ x: p.x + 6, z: p.z }, .4));
+      if (this.nearRoute({ x: (p.x + q.x) / 2, z: (p.z + q.z) / 2 })) q = this.offRoute(this.snap({ x: p.x + 2, z: p.z + 2 }, .4));
+      this.outbreak().spawnPedestrian(p, { waypoints: [p, q] });
+    }
     this.s.phase = 'alarm'; this.s.alarmAt = tick;
     world.events.emit({ type: 'l2.alarm', tick });
     if (!this.mission.state.states.alarm) this.mission.setState('alarm', true);
@@ -236,24 +242,32 @@ export class LevelTwoRescue {
     }
     return this.route;
   }
-  /** Kinematic ride along the authored route: accelerate, slow for corners, brake to the forecourt. */
+  /** True within `m` metres of the truck route polyline. */
+  private nearRoute(p: Point, m = 5): boolean {
+    const r = this.routeInfo();
+    for (let i = 1; i < r.pts.length; i++) {
+      const a = r.pts[i - 1], b = r.pts[i], abx = b.x - a.x, abz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * abx + (p.z - a.z) * abz) / (abx * abx + abz * abz)));
+      if (Math.hypot(p.x - a.x - abx * t, p.z - a.z - abz * t) < m) return true;
+    }
+    return false;
+  }
+  /** The nearest clear point at least 5 m from the route (the point itself when it already is). */
+  private offRoute(p: Point): Point {
+    if (!this.nearRoute(p)) return p;
+    const nav = this.world.infected!.nav;
+    for (let d = 1; d <= 14; d++) for (let k = 0; k < 16; k++) {
+      const x = p.x + Math.cos(k * Math.PI / 8) * d, z = p.z + Math.sin(k * Math.PI / 8) * d;
+      if (!this.nearRoute({ x, z }) && nav.clear(x, z, .4)) return { x, z };
+    }
+    return p;
+  }
+  /** Continuous, right-lane curved motion shared with the isolated Scene Lab QA. */
   private ride(): void {
-    const { world } = this.mission, r = this.routeInfo(), s = this.s, car = world.vehicles!.cars.get(s.truckId);
-    if (!car) return;
-    let k = 1; while (k < r.pts.length - 1 && r.cum[k] < s.rideS) k++;
-    const toCorner = k < r.pts.length - 1 ? r.cum[k] - s.rideS : Infinity, left = r.length - s.rideS;
-    const target = Math.min(l2.ride.cruiseMs, Math.sqrt(2 * l2.ride.accelMs2 * Math.max(0, left)) + .3, toCorner < 7 ? l2.ride.cornerMs + toCorner * .6 : Infinity);
-    s.rideV += Math.max(-l2.ride.accelMs2 * 1.6 / TICKS, Math.min(l2.ride.accelMs2 / TICKS, target - s.rideV));
-    s.rideS = Math.min(r.length, s.rideS + Math.max(.02, s.rideV) / TICKS);
-    k = 1; while (k < r.pts.length - 1 && r.cum[k] < s.rideS) k++;
-    const a = r.pts[k - 1], b = r.pts[k], f = (s.rideS - r.cum[k - 1]) / Math.max(1e-6, r.cum[k] - r.cum[k - 1]);
-    const x = a.x + (b.x - a.x) * f, z = a.z + (b.z - a.z) * f, want = -Math.atan2(b.z - a.z, b.x - a.x);
-    const yaw0 = car.entity.transform.yaw, delta = Math.atan2(Math.sin(want - yaw0), Math.cos(want - yaw0)), yaw = yaw0 + Math.max(-.045, Math.min(.045, delta));
-    const y = car.physics.body.translation().y;
-    car.physics.body.setNextKinematicTranslation({ x, y, z }); car.physics.body.setNextKinematicRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) });
-    car.entity.transform.x = x; car.entity.transform.z = z; car.entity.transform.yaw = yaw; car.entity.vehicle!.speed = s.rideV;
-    this.carry(x, z);
-    if (s.rideS >= r.length - 1e-6) this.arrive();
+    const car = this.world.vehicles!.cars.get(this.s.truckId); if (!car) return;
+    this.driver ??= new L2TruckDrive(this.world, this.s);
+    const arrived = this.driver.step(), t = car.entity.transform;
+    this.carry(t.x, t.z);
+    if (arrived) this.arrive();
   }
   /** Seated player, crew and corgi ride with the truck (hidden, no input). */
   private carry(x: number, z: number): void {
@@ -387,11 +401,12 @@ export class LevelTwoRescue {
       if (tick === s.alarmAt + ticks(5.2) && !s.axe && this.mission.state.steps.axe.status === 'active') this.mission.radio('L2.axe');
       for (const id of s.crewIds) {
         const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
-        if (!a.run) { e.hidden = true; world.spatial.delete(id); }
+        // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.
+        if (!a.run) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); }
       }
       const crewIn = s.crewIds.every(id => world.entities.get(id)?.hidden !== false);
       if (s.seated && (crewIn || tick - s.alarmAt > ticks(l2.calm.crewToTruckMaxS + 6))) {
-        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; world.spatial.delete(id); } }
+        for (const id of s.crewIds) { const e = world.entities.get(id); if (e) { e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; world.spatial.delete(id); } }
         s.phase = 'ride'; s.departAt = tick; this.parkNav(false); world.events.emit({ type: 'l2.truckDeparted', tick });
       }
       if (s.seated) this.carry(world.entities.get(s.truckId)!.transform.x, world.entities.get(s.truckId)!.transform.z);

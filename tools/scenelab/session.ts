@@ -135,6 +135,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
   if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
   const wheels = Object.values(metrics.wheels ?? {}).flat();
+  add('vehicleYawRateMaxDegS', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.yawRateMaxDegS ?? 0)), e.vehicleYawRateMaxDegS);
+  add('vehicleRideRemainingMaxM', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.rideRemainingM ?? 0)), e.vehicleRideRemainingMaxM);
+  add('vehicleBodyOverlapsMax', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.bodyOverlaps ?? 0)), e.vehicleBodyOverlapsMax);
   add('wheelSinkMaxCm', Math.max(0, ...wheels.map(w => -w.gapMinCm)), e.wheelSinkMaxCm);
   add('wheelFloatMaxCm', Math.max(0, ...wheels.map(w => w.gapMaxCm)), e.wheelFloatMaxCm);
   add('bikeUndrawnFramesMax', (metrics.bike?.missedFrames ?? 0) + (metrics.bike?.offFrames ?? 0), e.bikeUndrawnFramesMax);
