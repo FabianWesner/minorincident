@@ -566,7 +566,8 @@ export class AudioService implements Lifecycle {
             if (event.actor === 'infected')
                 return;
             const surface = event.surface ?? surfaceAt(this.graph.map, event.position);
-            this.play(`footstep.${event.actor}.${surface}`, { position: event.position }, source);
+            const weatherStep = this.world.weather?.kind === 'snow' ? 'weather.footstep.snow' : this.world.weather?.rain ? 'weather.footstep.wet' : `footstep.${event.actor}.${surface}`;
+            this.play(weatherStep, { position: event.position }, source);
             return;
         }
         if (event.type === 'light.generator') {
@@ -806,6 +807,10 @@ export class AudioService implements Lifecycle {
             this.graph.setWeather(weather.kind);
             if (weather.rain > 0) this.loop('weather:rain', 'weather.rain', { gain: weather.rain });
             else this.stopLoop('weather:rain');
+            let nearest: { x: number; y: number; z: number } | null = null, distance = 15;
+            if (weather.rain) for (const car of this.world.vehicles?.cars.values() ?? []) { const at = car.entity.transform, d = Math.hypot(at.x - player.transform.x, at.z - player.transform.z); if (d < distance) { distance = d; nearest = at; } }
+            if (nearest) this.loop('weather:rain-metal', 'weather.rain-metal', { position: nearest, gain: weather.rain });
+            else this.stopLoop('weather:rain-metal');
         }
         if (this.world.tick % 6 === 0) {
             const previous = this.world.previousPlayer;
