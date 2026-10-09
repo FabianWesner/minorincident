@@ -1,0 +1,44 @@
+{
+  "assetsValidate": {
+    "passed": 874,
+    "failed": 0
+  },
+  "batchTiers": {
+    "passed": 12,
+    "failed": 0
+  },
+  "authoredGeometryDeterminism": {
+    "matched": 12,
+    "total": 12
+  },
+  "portalApertures": {
+    "passed": 15,
+    "failed": 0
+  },
+  "lightContracts": {
+    "tiers": 12,
+    "errors": 0,
+    "unreferencedEmissives": 0
+  },
+  "typecheck": "pass",
+  "lint": "pass",
+  "unit": {
+    "passedFiles": 104,
+    "passedTests": 366,
+    "failed": 0
+  },
+  "smoke": {
+    "simulationPassedFiles": 5,
+    "simulationPassedTests": 6,
+    "simulationSkippedFiles": 164,
+    "simulationSkippedTests": 864,
+    "browserPassed": 20,
+    "browserFailed": 5,
+    "exitCode": 1
+  },
+  "pending": [
+    "independent orchestrator visual acceptance",
+    "int.metro-station attachment fit",
+    "five smoke failures detailed in delivery report"
+  ]
+}

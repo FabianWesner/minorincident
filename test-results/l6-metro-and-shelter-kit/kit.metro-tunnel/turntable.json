@@ -1,11 +1,11 @@
 {
   "id": "kit.metro-tunnel",
   "coverage": [
-    0.3319666666666667,
-    0.6039013888888889,
-    0.32719444444444445,
-    0.7123729166666667,
-    0.21011458333333333
+    0.33144583333333333,
+    0.5874361111111112,
+    0.32672430555555554,
+    0.7083347222222223,
+    0.2076125
   ],
   "placeholder": false,
   "drawCalls": 9,
@@ -14,13 +14,15 @@
     "Scene",
     "root",
     "body",
+    "body_emi_picketWhite",
+    "mesh_0",
+    "body_emi_sirenRed",
     "mesh_1",
-    "mesh_1_1",
-    "mesh_1_2",
-    "mesh_1_3",
-    "mesh_1_4",
-    "mesh_1_5",
-    "mesh_1_6",
+    "mesh_3",
+    "mesh_3_1",
+    "mesh_3_2",
+    "mesh_3_3",
+    "mesh_3_4",
     "brace0Socket",
     "brace3.8Socket",
     "brace-3.8Socket",
@@ -51,12 +53,15 @@
     "main4Mount",
     "main-4Mount",
     "roof",
-    "mesh_0",
+    "mesh_2",
     "sidePassage0Socket",
     "sidePassage3.8Socket",
     "sidePassage-3.8Socket",
     "tunnelEndSocket",
     "tunnelStartSocket"
   ],
-  "events": []
+  "events": [],
+  "assetDrawCalls": 8,
+  "assetTriangles": 3418,
+  "measurementNote": "Renderer totals include one shared fullscreen presentation draw/triangle."
 }

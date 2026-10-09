@@ -64,7 +64,10 @@
         "tunnelEndSocket",
         "tunnelStartSocket"
       ],
-      "events": []
+      "events": [],
+      "assetDrawCalls": 8,
+      "assetTriangles": 3418,
+      "presentationDraws": 1
     },
     {
       "model": "kit.metro-tunnel",
@@ -128,7 +131,10 @@
         "tunnelEndSocket",
         "tunnelStartSocket"
       ],
-      "events": []
+      "events": [],
+      "assetDrawCalls": 8,
+      "assetTriangles": 1506,
+      "presentationDraws": 1
     },
     {
       "model": "kit.metro-tunnel",
@@ -192,7 +198,10 @@
         "tunnelEndSocket",
         "tunnelStartSocket"
       ],
-      "events": []
+      "events": [],
+      "assetDrawCalls": 8,
+      "assetTriangles": 962,
+      "presentationDraws": 1
     },
     {
       "model": "kit.metro-tunnel",
@@ -256,7 +265,10 @@
         "tunnelEndSocket",
         "tunnelStartSocket"
       ],
-      "events": []
+      "events": [],
+      "assetDrawCalls": 8,
+      "assetTriangles": 3418,
+      "presentationDraws": 1
     },
     {
       "model": "kit.metro-tunnel",
@@ -320,7 +332,10 @@
         "tunnelEndSocket",
         "tunnelStartSocket"
       ],
-      "events": []
+      "events": [],
+      "assetDrawCalls": 8,
+      "assetTriangles": 1506,
+      "presentationDraws": 1
     },
     {
       "model": "kit.metro-tunnel",
@@ -384,7 +399,10 @@
         "tunnelEndSocket",
         "tunnelStartSocket"
       ],
-      "events": []
+      "events": [],
+      "assetDrawCalls": 8,
+      "assetTriangles": 962,
+      "presentationDraws": 1
     },
     {
       "model": "bld.tunnel-portal",
@@ -479,5 +497,6 @@
       "events": []
     }
   ],
-  "errors": []
+  "errors": [],
+  "measurementNote": "Viewer renderer.info includes one shared fullscreen presentation draw and triangle. Asset budget measurements below count production GLB primitives."
 }
