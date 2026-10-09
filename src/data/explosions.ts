@@ -73,6 +73,14 @@ export const explosionDefs: Readonly<Record<string, ExplosionDef>> = Object.from
     { delay: 15, offset: { x: 3, z: 0 }, def: 'explosion.gas-canopy' },
     { delay: 36, offset: { x: -2, z: 3 }, def: 'explosion.gas-tanks' },
   ] }),
+  // E22 tank main gun round (large class): clears a cluster, never in reach of the player or an ally (the L4 controller picks the target).
+  def('explosion.tank-shell', 'large', 6, 220, .6, 9, { fires: { count: 1, radius: 1.2, seconds: 14, spread: 0 } }),
+  // E22 line break: the tank round sets off a fuel truck at the plaza edge, mega chain: tank, canopy-sized flash, then the main tank (E27 mega).
+  def('explosion.fuel-truck', 'mega', 8, 220, .6, 9, { fx: 'blast.large', stages: [
+    { delay: 0, offset: { x: 0, z: 0 }, def: 'explosion.gas-pump' },
+    { delay: 14, offset: { x: 0, z: 3 }, def: 'explosion.gas-canopy' },
+    { delay: 34, offset: { x: 0, z: -2 }, def: 'explosion.gas-tanks' },
+  ] }),
 ].map(d => [d.id, d]));
 
 const preset = (id: string, p: Omit<BlastFxPreset, 'id'>): BlastFxPreset => ({ id, ...p });
@@ -88,7 +96,7 @@ export const blastFxPresets: Readonly<Record<string, BlastFxPreset>> = Object.fr
 export const hazardExplosions: Readonly<Record<string, string>> = { propane: 'explosion.propane', barrel: 'explosion.barrel' };
 export const actionExplosions: Readonly<Record<string, string>> = { 'weapon.grenade': 'explosion.grenade', 'weapon.pipe-bomb': 'explosion.pipe-bomb', 'weapon.rocket-launcher': 'explosion.rocket', 'weapon.molotov': 'explosion.molotov' };
 export const vehicleExplosion = 'explosion.car';
-export const scriptedExplosions: readonly string[] = ['explosion.gas-station'];
+export const scriptedExplosions: readonly string[] = ['explosion.gas-station', 'explosion.fuel-truck'];
 
 export function explosionDef(id: string): ExplosionDef {
   const d = explosionDefs[id]; if (!d) throw new Error(`Unknown explosion: ${id}`); return d;

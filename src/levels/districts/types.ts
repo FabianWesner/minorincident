@@ -13,9 +13,11 @@ export const districtIds = [
 export const groveDistrictId = "D-GROVE" as const;
 /** E21 L3 corridor district (the three parallel avenues). Like D-GROVE it is not in `districtIds`. */
 export const corridorDistrictId = "D-CORRIDOR" as const;
-export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId;
+/** E22 L4 Fairhaven downtown (the safe city that falls). Like D-GROVE it is not in `districtIds`. */
+export const fairDistrictId = "D-FAIR" as const;
+export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId | typeof fairDistrictId;
 /** Districts that run the L1 v2 outbreak rules (sight-only infected brain, pedestrian outbreak layer, corgi). */
-export const outbreakDistrictIds: readonly DistrictId[] = [groveDistrictId, corridorDistrictId];
+export const outbreakDistrictIds: readonly DistrictId[] = [groveDistrictId, corridorDistrictId, fairDistrictId];
 export const isOutbreakDistrict = (id: string): boolean => (outbreakDistrictIds as readonly string[]).includes(id);
 export type Tier = 0 | 1 | 2 | 3 | 4 | 5;
 export type Point = [number, number];

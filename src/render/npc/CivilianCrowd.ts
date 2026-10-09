@@ -18,6 +18,9 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
 import { RoutineProps } from './RoutineProps';
+import type { CivilianProp } from '../../sim/npc/types';
+/** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
+const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
@@ -230,7 +233,8 @@ class CivilianBatch extends Group {
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
-      const handProp = c.story ? c.story.prop : activity?.prop;
+      const carried = e.appearance?.handProp, weapon = carried && weaponProps.has(carried) ? carried as CivilianProp : undefined;
+      const handProp = (c.story ? c.story.prop : activity?.prop) ?? weapon;
       if (handProp && c.state === 'calm' && this.props && (c.story || e.appearance?.handProp !== null)) {
         const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
         this.hand.fromArray(this.bakedClip.matrices, Math.floor(sourceFrame) * stride + part * 16);

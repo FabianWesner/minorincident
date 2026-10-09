@@ -1,6 +1,8 @@
 export interface Point { x: number; z: number }
 export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
-export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel';
+export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel'
+  /** E22 weapons of soldiers and armed civilians (code art in RoutineProps, dropped when the bearer turns). */
+  | 'rifle' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar';
 /** Resolved layout anchors, in world metres. Durations and cursors use sim ticks and survive checkpoints. */
 export interface CivilianActivity {
   activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
@@ -36,7 +38,11 @@ export interface Civilian {
 export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM: number; hitNear: number; hitFar: number }
 /** Serializable allied-fighter task state (firefighters in L2, police from L3, soldiers at the L3 army checkpoint). Ticks are sim ticks. */
 export interface AllyState {
-  role: 'firefighter' | 'officer' | 'soldier';
+  role: 'firefighter' | 'officer' | 'soldier' | 'civilian';
+  /** E22 allied fighters v3: what the shooter carries (audio/tracer look; `hmg` crews a nest), improvised melee of an armed civilian, and the flight timer of one that panics. */
+  weapon?: 'hmg' | 'rifle' | 'pistol' | 'hunting-rifle';
+  melee?: { damage: number; reachM: number; swingS: number };
+  panicUntil?: number;
   /** v2 firearm (officers and soldiers from L3); without it officers keep the L2 v1 values. */
   gun?: AllyGun;
   /** v2 squad: follow this entity (the player) at 2-6 m, engage within `engageM`, never more than `leashM` away when engaged. */

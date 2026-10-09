@@ -15,6 +15,8 @@ export interface Appearance {
   /** Carried prop; cleared when dropped (startle or bite). */
   handProp: string | null;
   tier: SpeedTier;
+  /** E22: where this person came from (`L3-bus`: the evacuees from the L3 buses; two of them turn first). */
+  origin?: string;
 }
 
 /** True for an infected (or turning pedestrian) that must render as its own former self, never as another model. */
