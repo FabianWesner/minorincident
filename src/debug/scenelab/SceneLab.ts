@@ -310,6 +310,11 @@ export class SceneLab {
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
       else if ('hit' in a) this.hit(e, a.hit);
+      else if ('ally' in a && a.ally.role === 'firefighter') {
+        // The L1/L2 allied firefighter (axe swing, l2.allies.firefighter numbers), engaged where he stands.
+        c.ally = { ...allyState('firefighter', { x: e.transform.x, z: e.transform.z }), engaged: true };
+        e.health = { current: l2.allies.firefighter.hp, max: l2.allies.firefighter.hp };
+      }
       else if ('ally' in a && (a.ally.weapon || a.ally.role === 'civilian')) {
         // The L4 allied fighter v3 setup (LevelFourWar.spawnSoldiers / engageAll): soldier rifle, HMG crew, armed civilians.
         const w = a.ally.weapon ?? 'rifle', role = a.ally.role ?? 'soldier', post = { x: e.transform.x, z: e.transform.z };
