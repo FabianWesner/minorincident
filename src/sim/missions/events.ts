@@ -15,4 +15,11 @@ export type MissionEvent =
   /** E20 rescue set piece sound (PO 10-08): muffled banging and screams behind the glass, the forcing, distant danger. Audio only. */
   | { tick: number; type: 'l2.cue'; cue: string; position: { x: number; z: number }; gain?: number; lowpass?: number }
   /** E20 §5.2 allied fighter strike (firefighter melee, officer shot); the hit itself is an ordinary `combat.hit`. */
-  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' };
+  /** E21 beats: the attack starts, a wave emerges, the fallback (first-of rule), a squad member is lost, a segment is entered, the zone line crossed. */
+  | { tick: number; type: 'l3.handgun' | 'l3.attack' | 'l3.crossed' }
+  | { tick: number; type: 'l3.wave'; wave: number; count: number }
+  | { tick: number; type: 'l3.fallback'; cause: 'time' | 'turned' | 'inside'; squad: number[] }
+  | { tick: number; type: 'l3.squad-lost'; id: number; cause: 'bite' | 'kill' | 'separated' }
+  | { tick: number; type: 'l3.segment'; segment: number; squad: number }
+  | { tick: number; type: 'l3.gunfire'; sourceId: number; position: { x: number; z: number } }
+  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' | 'soldier'; hit?: boolean; from?: { x: number; z: number }; to?: { x: number; z: number } }

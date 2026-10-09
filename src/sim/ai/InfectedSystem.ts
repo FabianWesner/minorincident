@@ -5,7 +5,7 @@ import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
 import { infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
-import { groveDistrictId } from '../../levels/districts/types';
+import { isOutbreakDistrict } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
 import { Perception, WorldHumans } from './Perception';
 import { planSearch, searchPlan, wanderGoal, type L1Brain } from './Search';
@@ -73,7 +73,7 @@ export class InfectedSystem {
     });
     world.events.on('noise', (event) => { if (event.type === 'noise') this.noise(event.position, event.radius, event.radius >= 25, event.sourceId); });
     world.events.on('outbreak.distraction', (event) => { if (event.type === 'outbreak.distraction') this.distraction(event); });
-    if (world.districts?.districts.some((d) => d.id === groveDistrictId)) this.configureL1v2();
+    if (world.districts?.districts.some((d) => isOutbreakDistrict(d.id))) this.configureL1v2();
     world.events.on('combat.hit', (event) => {
       if (event.type !== 'combat.hit' || event.amount <= 0) return;
       const target = world.entities.get(event.targetId);
@@ -580,7 +580,8 @@ export class InfectedSystem {
     b.grabUntil = 0; e.combat!.attacking = false; brain.biteTargetId = 0;
     if (bitten && victim) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
-      const cap = this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap;
+      // At the cap a bite kills instead of turning (L1 section 5.9): L1/L2 60 high / 30 low; a strict level cap (L3: 80 / 40).
+      const cap = this.director.strict ? this.director.cap : this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap;
       if (turns) this.recentTurns.push(tick);
       if (this.l1!.humans instanceof WorldHumans) this.l1!.humans.bitten.add(victimId);
       this.world.events.emit({ type: 'outbreak.bite', tick, sourceId: e.id, targetId: victimId, position: { x: victim.x, z: victim.z }, turns });

@@ -12,7 +12,7 @@ export const l2 = {
   calm: { alarmAtS: [20, 30] as P, crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
   /** Beat 3: the truck ride (kinematic route, Main Row west from the station since 2026-10-08: 83 m, so it cruises at 5.6 m/s
    * through the wrecks instead of 7.6 m/s over the old 150 m Elm -> Juniper -> Main Row loop; the ride stays 15-25 s). */
-  ride: { cruiseMs: 5.6, cornerMs: 4.2, accelMs2: 2.6, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
+  ride: { cruiseMs: 5.6, cornerMs: 4, accelMs2: 2.6, brakeMs2: 4, yawRateDegS: 25, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
   /** Beat 4-5: arrival, doors, release and the ambush reveal. */
   rescue: {
     forceDoorsS: 4, trapped: { high: 30, low: 20 }, releaseOverS: 11, ambush: 24, crewHp: 100,
@@ -87,7 +87,10 @@ export const l2 = {
   cluster: { home: [48, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
-  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20 },
+  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20,
+    /** PO 2026-10-08: the officers visibly fire (allied fighters v2 handguns: seeded hit chance, muzzle flash, tracer); hits knock
+     * infected down per the recover rule, only the closed gate stops them. Shots are loud events (E21 gunfire rule). */
+    gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5 },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
   infectedDamage: 1.8,
   /** Section 4: checkpoints. */
@@ -106,7 +109,7 @@ export const l2Station = { x: 38.8, z: -41.05, yaw: -Math.PI / 2 } as const;
 export const stationPoint = (lx: number, lz: number): P => [
   l2Station.x + lx * Math.cos(l2Station.yaw) + lz * Math.sin(l2Station.yaw), l2Station.z - lx * Math.sin(l2Station.yaw) + lz * Math.cos(l2Station.yaw)];
 /** The engine waits on Main Row in front of the open bays, nose west toward Grove Market. */
-const truck = { x: 40.0, z: -31.8, yaw: Math.PI } as const;
+const truck = { x: 40.0, z: -32.25, yaw: Math.PI } as const;
 /** Truck-local (x forward, z to the right of the cab: north while the nose points west) to world. */
 const truckPoint = (lx: number, lz: number): P => [truck.x + Math.cos(truck.yaw) * lx + Math.sin(truck.yaw) * lz, truck.z - Math.sin(truck.yaw) * lx + Math.cos(truck.yaw) * lz];
 export const l2Truck = truck;
@@ -123,7 +126,7 @@ export const l2Anchors: Record<string, P> = {
   'l2-bench-1': stationPoint(1.3, 2.5), 'l2-bench-2': stationPoint(1.3, .7), 'l2-bench-3': stationPoint(-1.3, 3.8), 'l2-bench-4': stationPoint(-1.3, 2.0),
   'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
   'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(4.0, -3.5),
-  'l2-truck-stop': [-43.0, -30.4],
+  'l2-truck-stop': [-43.0, -32.25],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],
   'l2-door-loading': [-55.6, -37.3],
@@ -142,5 +145,29 @@ export const l2Anchors: Record<string, P> = {
 /** What the crew look at while they wait (gear, the truck), and the alarm beacons above the two bays (x, z). */
 export const l2StationLooks: readonly P[] = [stationPoint(6.4, 5.1), stationPoint(4.6, 5.1), stationPoint(3.4, -.5), stationPoint(2.4, -.1), [truck.x, truck.z], [truck.x, truck.z]];
 export const l2Beacons: readonly P[] = [stationPoint(1.7, -3.1), stationPoint(1.7, 1.7)];
-/** Truck route (centre line): Main Row west from the station, in the westbound lane past the W1 wrecks, to the Grove Market forecourt. */
-export const l2TruckRoute: readonly P[] = [[truck.x, truck.z], [-26.0, -31.8], [-43.0, -30.4]];
+/** Right lane centre: west on Main Row z=-32.25 (straight, no corners; the arc/apron/junction sections are gone with the old loop). */
+export type TruckPathPoint = { x: number; z: number; yaw: number; curvature: number; s: number; limit: number; section: 'apron' | 'elm' | 'juniper' | 'row' | 'junction' };
+function truckPath(): TruckPathPoint[] {
+  const path: TruckPathPoint[] = [];
+  const add = (x: number, z: number, yaw: number, curvature: number, section: TruckPathPoint['section']) => {
+    const prev = path.at(-1), s = prev ? prev.s + Math.hypot(x - prev.x, z - prev.z) : 0;
+    const corner = section === 'apron' || section === 'junction';
+    // Leave room for the Rapier rotation reconstruction at the fixed-step boundary.
+    const limit = Math.min(corner ? l2.ride.cornerMs : l2.ride.cruiseMs, Math.abs(curvature) > .001 ? l2.ride.yawRateDegS * Math.PI / 180 / Math.abs(curvature) * .95 : Infinity);
+    path.push({ x, z, yaw, curvature, s, limit, section });
+  };
+  const line = (ax: number, az: number, bx: number, bz: number, section: TruckPathPoint['section']) => {
+    const n = Math.ceil(Math.hypot(bx - ax, bz - az) / .1);
+    for (let i = 1; i <= n; i++) add(ax + (bx - ax) * i / n, az + (bz - az) * i / n, -Math.atan2(bz - az, bx - ax), 0, section);
+  };
+  // Main Row, westbound right lane (north side, z=-32.25), straight from the station to the Grove Market forecourt: no corners.
+  add(l2Truck.x, -32.25, -Math.PI, 0, 'row');
+  line(l2Truck.x, -32.25, -43, -32.25, 'row');
+  // Backward braking envelope: each sample can reach the next sample's corner cap with <=4 m/s².
+  path.at(-1)!.limit = 0;
+  for (let i = path.length - 2; i >= 0; i--) path[i].limit = Math.min(path[i].limit, Math.sqrt(path[i+1].limit**2 + 2*l2.ride.brakeMs2*(path[i+1].s-path[i].s)));
+  return path;
+}
+export const l2TruckPath: readonly TruckPathPoint[] = truckPath();
+/** Sampled drivable polyline, used by layout clearance and spawn keep-out checks. */
+export const l2TruckRoute: readonly P[] = l2TruckPath.map(p => [p.x, p.z]);

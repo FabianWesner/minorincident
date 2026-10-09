@@ -3397,7 +3397,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "world": {
@@ -3408,7 +3409,18 @@
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.sedan-blue",
@@ -3456,7 +3468,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "lods": {
       "lod1": "public/assets/models/veh.sedan-blue.lod1.glb",
@@ -3471,7 +3484,18 @@
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.sedan-white",
@@ -3518,7 +3542,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceGlb": "assets/veh.sedan-white/model.glb",
     "lods": {
@@ -3543,6 +3568,13 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
     }
   },
   {
@@ -3613,6 +3645,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
     }
   },
   {
@@ -3659,7 +3695,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceGlb": "assets/veh.suv-dark/model.glb",
     "script": "assets/veh.suv-dark/build.py",
@@ -3685,6 +3722,13 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
     }
   },
   {
@@ -4018,6 +4062,10 @@
         "materials": 8,
         "drawCalls": 8
       }
+    },
+    "world": {
+      "token": "policeBlue",
+      "solid": true
     }
   },
   {
@@ -4074,7 +4122,11 @@
     },
     "sourceGlb": "assets/veh.police-suv/model.glb",
     "script": "assets/veh.police-suv/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
   },
   {
     "id": "veh.ambulance",
@@ -4143,6 +4195,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
     }
   },
   {
@@ -7581,6 +7637,10 @@
       "materials": 8,
       "drawCalls": 8,
       "fileKB": 1500
+    },
+    "world": {
+      "token": "foliageDark",
+      "solid": true
     }
   },
   {
@@ -7847,6 +7907,10 @@
     "authoredLodTriangles": {
       "lod1": 24000,
       "lod2": 21000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": false
     }
   },
   {
@@ -8048,6 +8112,10 @@
     "authoredLodTriangles": {
       "lod1": 22000,
       "lod2": 14000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
     }
   },
   {
@@ -8168,6 +8236,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "canvasTan",
+      "solid": false
     }
   },
   {
@@ -8208,6 +8280,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": false
     }
   },
   {
@@ -8286,7 +8362,11 @@
     "sourceGlb": "assets/prop.sofa/model.glb",
     "script": "assets/prop.sofa/build.py",
     "sourceForward": "+X",
-    "aliasOf": "prop.sofa"
+    "aliasOf": "prop.sofa",
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
   },
   {
     "id": "decay.burned-facade",
@@ -8329,6 +8409,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -8732,7 +8816,11 @@
     },
     "sourceGlb": "assets/prop.sandbag-pallet/model.glb",
     "script": "assets/prop.sandbag-pallet/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "canvasTan",
+      "solid": true
+    }
   },
   {
     "id": "prop.dumpster",
@@ -10241,6 +10329,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.light-tower.lod1.glb",
       "lod2": "public/assets/models/prop.light-tower.lod2.glb"
+    },
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
     }
   },
   {
@@ -15623,7 +15715,7 @@
       "lod2": "public/assets/models/prop.jersey-barrier.lod2.glb"
     },
     "dimensions": {
-      "x": 3.0,
+      "x": 3,
       "y": 0.949999988079071,
       "z": 0.7200000286102295,
       "tolerance": 0.1
@@ -15648,6 +15740,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
     }
   },
   {
@@ -15703,7 +15799,7 @@
       "lod2": "public/assets/models/prop.armory-table.lod2.glb"
     },
     "dimensions": {
-      "x": 2.0,
+      "x": 2,
       "y": 1.0800000429153442,
       "z": 0.800000011920929,
       "tolerance": 0.1
@@ -15730,6 +15826,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -15798,6 +15898,10 @@
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
     }
   },
   {
@@ -15815,7 +15919,7 @@
     "dimensions": {
       "x": 14.199999809265137,
       "y": 5.889999866485596,
-      "z": 13.0,
+      "z": 13,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -15838,6 +15942,10 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
     }
   },
   {
@@ -15854,7 +15962,7 @@
     },
     "dimensions": {
       "x": 2.1363840103149414,
-      "y": 2.0,
+      "y": 2,
       "z": 2.6850939989089966,
       "tolerance": 0.1
     },
@@ -15878,6 +15986,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -15918,6 +16030,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -15958,6 +16074,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -16000,6 +16120,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -16042,6 +16166,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -16114,6 +16242,10 @@
       "materials": 8,
       "drawCalls": 9,
       "fileKB": 1500
+    },
+    "world": {
+      "token": "foliageDark",
+      "solid": true
     }
   },
   {
@@ -16161,6 +16293,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -16212,7 +16348,11 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
   {
     "id": "bld.storefront-row",

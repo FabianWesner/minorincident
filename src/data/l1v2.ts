@@ -51,7 +51,8 @@ export const l1v2 = {
    * the courier leaves the garage with the bat (beat 9). Growth from there is bites only.
    */
   director: { hordeMinInfectedNearGarage: 6, hordeLeaveGarageM: 5, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
-  house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25], stumbleOutM: 2.2 },
+  /** Beat 9 house: `doorM` the front-door distance band from the garage door; the walk out lives in HouseEmergence. */
+  house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25] },
   /** Section 5.10 / AC16. */
   bicycle: { speedMs: 7.5, accelToMs: 7, accelS: 1.5, minTurnRadiusM: 2.5, mountInteractS: 0.4, damage: 0 },
   /** Section 5.11 / AC20. */
@@ -63,7 +64,7 @@ export const l1v2 = {
   /** Section 3 beats 4 to 6 / AC07, AC19. */
   accident: {
     calmS: [4, 6], corgiWarnLeadS: 1.5, sequenceS: 8, blastShakeS: 1.5, ringingS: 1.2,
-    exitDelayS: [8, 10], infectedCount: 5, minExits: 2, minDistinctHeadings: 3, minHeadingSeparationDeg: 60,
+    exitDelayS: [8, 10], infectedCount: 5, minDistinctHeadings: 3, minHeadingSeparationDeg: 60,
     bitesWithinS: 60, killWithinS: 5, maxFrameMs: 50,
     /** Event offsets from the flicker (t = 0). */
     eventAtS: { flicker: 0, blast: 1.5, ringing: 1.7, smoke: 2.9, screams: 3.5, infectedExit: 9 },

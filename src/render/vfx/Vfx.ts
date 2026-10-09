@@ -27,7 +27,7 @@ export interface VfxTargets {
   /** E25 light field transient pools (fires, blast flashes, mega tint). */
   light?: import('./Blasts').BlastLight;
 }
-const eventTypes = ['combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
+const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
@@ -207,6 +207,13 @@ export class Vfx extends Group {
         for (let i = 1; i <= 12; i++) this.particles.spawn(this.time, 0.08, p.x + event.direction.x * i * 0.7, 0.9, p.z + event.direction.z * i * 0.7, 0, 0, 0, 0.06, 0, 0xffe7a0);
         if (this.quality === 'high') this.burst(p.x, 0.9, p.z, 0xd7af65, 1, 0.08, 2);
       }
+    } else if (event.type === 'ally.attack' && event.from && event.to) {
+      // E21 officers and soldiers: a muzzle flash and a short tracer toward the target (hit or miss), as the courier's handgun.
+      const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, d = Math.hypot(dx, dz) || 1, ux = dx / d, uz = dz / d;
+      // PO 2026-10-08 (L2 checkpoint): the firing must read from the game camera, so the tracer spans the whole shot and lingers.
+      this.burst(event.from.x + ux * .6, 1.2, event.from.z + uz * .6, 0xfff1b8, 8, .3, .16, 0);
+      const spacing = this.quality === 'high' ? .35 : .7, lift = (1.15 - .9) / d;
+      for (let i = 1; i <= Math.min(64, Math.floor(d / spacing)); i++) this.particles.spawn(this.time, .18 - i * .001, event.from.x + ux * i * spacing, 1.15 - lift * i * spacing, event.from.z + uz * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'explosion') {
