@@ -1,10 +1,11 @@
 import { describe, expect, test } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l3 } from '../../src/data/l3';
 import { ArmyCheckpointBoom } from '../../src/sim/missions/ArmyCheckpointBoom';
 import { loadL3, followFrustum } from '../../tools/sim-runner/l3Bots';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
-import type { Placement } from '../../src/levels/districts/types';
+import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
 
 describe('L3 squad and checkpoint', () => {
   test('closed checkpoint boom stops a walking courier and shared NPC navigation; opening restores the lane', async () => {
@@ -30,6 +31,36 @@ describe('L3 squad and checkpoint', () => {
       m.completeObjective('armory'); m.completeObjective('defend');
       expect(m.state.l3!.squad.map(q => q.id).sort()).toEqual([...living].sort());
       for (const id of living) expect(w.entities.get(id)!.civilian!.ally!.follow?.targetId).toBe(1);
+    } finally { w.dispose(); }
+  }, 120_000);
+  test('all three routes have sidewalk med packs within 40 m and reachable from the street', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const nav = w.infected!.nav;
+      const layout: DistrictLayout = JSON.parse(readFileSync('public/assets/layouts/D-CORRIDOR.layout.json', 'utf8'));
+      expect(m.state.l3!.medkitIds).toHaveLength(28);
+      for (const z of Object.values(l3.map.streets)) {
+        const positions = l3.medkits.positions.slice(1).filter(p => Math.abs(p[1] - z) < 5).sort((a, b) => a[0] - b[0]);
+        expect(positions).toHaveLength(9);
+        expect(positions[0][0] - l3.map.corridor[0]).toBeLessThanOrEqual(40);
+        for (let i = 1; i < positions.length; i++) expect(positions[i][0] - positions[i - 1][0]).toBeLessThanOrEqual(40);
+        for (const [x, authoredZ] of positions) {
+          const index = l3.medkits.positions.findIndex(p => p[0] === x && p[1] === authoredZ);
+          const kit = w.entities.get(m.state.l3!.medkitIds[index])!.transform;
+          // D-CORRIDOR: Boulevard is 7 m wide, the other roads 5 m; sidewalks are 2 m.
+          const roadEdge = z === l3.map.streets.blvd ? 3.5 : 2.5;
+          const location = JSON.stringify({ authored: [x, authoredZ], actual: [kit.x, kit.z] });
+          expect(Math.abs(kit.z - z), location).toBeGreaterThan(roadEdge);
+          expect(Math.abs(kit.z - z), location).toBeLessThan(roadEdge + 2);
+          // Exported street/sidewalk surfaces are rectangles; include cross streets as well.
+          const surfaces = layout.surfaces.filter(s => kit.x >= Math.min(...s.polygon.map(p => p[0])) && kit.x <= Math.max(...s.polygon.map(p => p[0])) && kit.z >= Math.min(...s.polygon.map(p => p[1])) && kit.z <= Math.max(...s.polygon.map(p => p[1])));
+          expect(surfaces.some(s => s.surface === 'tile'), location).toBe(true);
+          expect(surfaces.some(s => s.surface === 'asphalt'), location).toBe(false);
+          expect(nav.clear(kit.x, kit.z, .3)).toBe(true);
+          const path: number[] = [];
+          expect(nav.path(nav.nearestCell(x, z, .3), nav.nearestCell(kit.x, kit.z, .3), path, 1600)).toBe(true);
+        }
+      }
     } finally { w.dispose(); }
   }, 120_000);
   test('boom waits for the last living officer; a dead officer cannot prevent closure', async () => {
