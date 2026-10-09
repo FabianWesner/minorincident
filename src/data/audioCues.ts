@@ -234,6 +234,8 @@ export const eventCues = {
     'l2.alarm': 'l1.bell', 'l2.truckDeparted': 'vehicle.siren', 'l2.truckArrived': 'ui.tick', 'l2.crewExit': 'ui.tick', 'l2.firefightersAtDoors': 'ui.tick',
     'l2.doorsOpen': 'door.gate', 'l2.radio': 'ui.tick', 'l2.gateClosed': 'door.gate', 'l2.cue': 'ui.tick', 'ally.attack': 'action.weapon.fists',
     'l3.handgun': 'ui.pickup', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'door.gate',
+    'l4.convoyStarted': 'ui.tick', 'l4.convoyArrived': 'door.gate', 'l4.gun': 'ui.pickup', 'l4.war': 'vehicle.siren', 'l4.heliWithdrawn': 'ui.tick', 'l4.descended': 'door.gate', 'l4.doorBarred': 'door.gate', 'l4.battle': 'ui.tick',
+    'l4.firstTurn': 'ui.tick', 'l4.lineBreaks': 'ui.tick', 'l4.wave': 'ui.tick', 'l4.tankFire': 'ui.tick', 'l4.heliPass': 'ui.tick', 'hmg.burst': 'ui.tick',
     'l1.flicker': 'l1.flicker.buzz', 'l1.blast': 'l1.blast', 'l1.ringing': 'l1.ringing', 'l1.smoke': 'l1.bell', 'l1.screams': 'l1.scream', 'l1.infectedExit': 'l1.chaos.infected',
 } satisfies Record<GameEvent['type'], string>;
 export const audioCategories = [...offsets.keys()];

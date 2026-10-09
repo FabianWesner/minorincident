@@ -1,0 +1,62 @@
+import { l4Anchors, l4Line } from '../../data/l4';
+import type { DistrictLayout, Placement } from '../districts/types';
+
+/** Kinds of the W0 "clean, intact, alive" dressing and the army's orderly reception (E22 section 5.2); counted by the static AC05 test. */
+export type L4DressingKind = 'reception' | 'sandbag' | 'nest' | 'light' | 'barrier' | 'parked' | 'cafe' | 'water';
+export interface L4Dressing { kind: L4DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; lit?: boolean }
+const H = Math.PI / 2, PI = Math.PI;
+const d = (kind: L4DressingKind, assetId: string, x: number, z: number, more: Partial<L4Dressing> = {}): L4Dressing => ({ kind, assetId, x, z, ...more });
+
+/** Static L4 dressing manifest (clean, intact: no wrecks, damage decals or corpses before the first turn). */
+export const l4Dressing: readonly L4Dressing[] = [
+  // ---------------------------------------------------------------- the army reception (registration, triage, quartermaster, water)
+  d('reception', 'kit.reception-plaza', -26.0, -8.8, { yaw: 0 }),
+  d('reception', 'prop.armory-table', -25.2, 0.6, { yaw: H }),
+  d('reception', 'prop.tent', -30.6, 12.6, { yaw: H }), d('reception', 'prop.tent', -26.8, 12.6, { yaw: H }), d('reception', 'prop.tent', -22.8, 12.6, { yaw: H }),
+  d('water', 'prop.crates', -30.6, 3.4, { yaw: .2 }), d('water', 'prop.crates', -30.6, 4.7, { yaw: -.1 }), d('water', 'prop.crates', -29.2, 3.6, { yaw: .1 }), d('water', 'prop.crates', -20.8, 3.4, { yaw: 0 }),
+  d('light', 'prop.light-tower', -31.2, 15.4, { yaw: 0 }), d('light', 'prop.light-tower', -12.8, -12.2, { yaw: PI }),
+  // ---------------------------------------------------------------- the sandbag line (north, west and south runs; the east side is the convoy)
+  ...l4Line.map(p => d('sandbag', 'prop.sandbag-pallet', p.x, p.z, { yaw: p.yaw === 0 ? 0 : H })),
+  d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-1'][0], l4Anchors['l4-hmg-1'][1], { yaw: PI + .8 }),
+  d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-2'][0], l4Anchors['l4-hmg-2'][1], { yaw: -.6 }),
+  // ---------------------------------------------------------------- army barriers at the street ends (a gap stays open): traffic is held by soldiers
+  ...([[-81.2, -43.4, H], [-81.2, -42.1, H], [-81.2, -36.6, H], [-81.2, -35.2, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
+  ...([[81.2, -43.4, H], [81.2, -42.1, H], [81.2, -36.6, H], [81.2, -35.2, H], [81.2, 42.2, H], [81.2, 43.5, H], [81.2, 49.0, H], [81.2, 50.3, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
+  d('sandbag', 'prop.sandbag-pallet', 79.4, -44.4, { yaw: H }), d('sandbag', 'prop.sandbag-pallet', -79.4, -44.4, { yaw: H }),
+  // ---------------------------------------------------------------- Fairhaven's own cars, parked in the lanes the convoy does not use (traffic held by soldiers)
+  // (the six that the war sets alight are real vehicles spawned by the controller: l4Cars)
+  ...([[-40, 43.3, 'veh.sedan-blue', 0], [24, 43.3, 'veh.sedan-white', .02], [44, 43.3, 'veh.sedan-green', 0],
+    [-46, -42.6, 'veh.sedan-red', PI], [-8, -42.6, 'veh.suv-green', PI], [40, -42.6, 'veh.sedan-white', PI],
+    [-59.7, -8, 'veh.sedan-green', H], [15.8, 30, 'veh.suv-dark', H],
+    [51.8, -22, 'veh.sedan-white', H], [51.8, 5, 'veh.sedan-blue', -H]] as const).map(([x, z, assetId, yaw]) => d('parked', assetId, x, z, { yaw })),
+  // ---------------------------------------------------------------- cafe tables on the pavements and the promenade
+  d('cafe', 'prop.cafe-patio-set', -43, 38.6, { yaw: 0 }), d('cafe', 'prop.cafe-patio-set', -40, 38.6, { yaw: 0 }), d('cafe', 'prop.cafe-patio-set', 5.5, 28.8, { yaw: PI }), d('cafe', 'prop.cafe-patio-set', 5.5, 12.4, { yaw: PI }),
+];
+
+/**
+ * L4 copy of the D-FAIR layout: authored L4 anchors (the cellar anchors come from the layout's own cellar and door placements)
+ * and the clean army/city dressing. Feeds collision, navigation and rendering alike (the same pattern as the L2/L3 layout copies).
+ */
+export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
+  return structuredClone(layouts).map(layout => {
+    if (layout.district !== 'D-FAIR') return layout;
+    const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
+    for (const [name, [x, z]] of Object.entries(l4Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    const metro = layout.anchors['metro-entrance'];
+    if (metro) for (const name of ['photo-l4-metro-entrance-safe', 'pair-metro-entrance']) layout.anchors[name] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
+    if (door) layout.anchors['l4-cellar-door'] = { position: [...door.position], yaw: 0 };
+    // The cellar yard: the player arrives at the stair foot, the brace socket is on the back wall (model local (-3.1, -0.4), yaw pi/2).
+    if (inner) {
+      const [cx, , cz] = inner.position;
+      layout.anchors['l4-cellar-in'] = { position: [cx + .3, 0, cz - 2.4], yaw: 0 };
+      layout.anchors['l4-brace'] = { position: [cx - .4, 0, cz + 2.6], yaw: 0 };
+    }
+    const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1) => {
+      const p: Placement = { id, assetId, position: [x, 0, z], yaw, scale: [scale, scale, scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l4', visualAabb: { min: [x - 1, 0, z - 1], max: [x + 1, 1.5, z + 1] } };
+      layout.placements.push(p);
+    };
+    for (const [i, e] of l4Dressing.entries()) add(`l4-${e.kind}-${i}`, e.assetId, e.x, e.z, e.yaw ?? 0, e.scale ?? 1);
+    layout.lightGroups.push({ id: 'l4', offAt: 5 });
+    return layout;
+  });
+}

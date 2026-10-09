@@ -61,6 +61,8 @@ export interface MissionDef {
   l2?: boolean;
   /** L3 "The Police Collapse" controller (armory, station attack, fallback, squad, corridor, army checkpoint); see LevelThreeCollapse. */
   l3?: boolean;
+  /** L4 "The Safe City Falls" controller (convoy, quartermaster, the turn, the war, the line break, the cellar); see LevelFourWar. */
+  l4?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
@@ -150,6 +152,31 @@ export interface L3State {
   /** The one avenue without a segment-3 horde pack (seeded). */
   hordeStreet?: 'blvd' | 'commerce' | 'oak';
 }
+/** Serializable L4 controller state. Ticks are sim ticks, 0 = not yet. */
+export interface L4State {
+  phase: 'convoy' | 'plaza' | 'war' | 'collapse' | 'cellar' | 'done';
+  rideAt: number; arrivedAt: number; gunAt: number; turnDueAt: number; turnAt: number; warAt: number; lineBreakAt: number; lineCause: '' | 'time' | 'soldiers' | 'inside' | 'forced';
+  descendAt: number; barredAt: number; doneAt: number; markerAt: number;
+  /** Convoy: entity ids head first, arc length of each, the common speed, and whether the courier is seated in the player bus. */
+  convoyIds: number[]; convoyS: number[]; convoyV: number; seated: boolean;
+  /** People: evacuees from the buses, the evacuees who turn, soldiers (`qmId` the quartermaster, `hmgIds` the gunners), residents, medkits. */
+  evacueeIds: number[]; turnerIds: number[]; soldierIds: number[]; qmId: number; hmgIds: number[]; residentIds: number[]; medkitIds: number[];
+  /** Armed civilians (weapon assigned at spawn, drawn and used from the turn on). */
+  armed: { id: number; weapon: 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar'; armedAt: number }[];
+  /** Counts at the beats the acceptance checks compare. */
+  soldiersAtTurn: number; civiliansAtTurn: number; infectedAtT30: number; killsAtBreak: number; infectedAtBreak: number; soldiersAtBreak: number; soldiersAtCellar: number;
+  /** The war: waves emerged, the next wave tick, infected brought from the street edges, and the collapse waves. */
+  wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number;
+  /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
+  pendingDoor: { id: number; door: string; home: { x: number; z: number } }[]; pockets: number[];
+  /** Spectacle: tank (route progress, next shot, shots fired), helicopter, HMG bursts, fuel truck and the live damage. */
+  tankId: number; tankS: number; tankFireAt: number; tankShots: number; tankPhase: 'off' | 'enter' | 'hold' | 'gone';
+  heliId: number; heliAngle: number; heliPhase: 'off' | 'arrive' | 'orbit' | 'withdraw' | 'gone'; heliAt: number; heliBurstAt: number; heliBurst: number; heliShots: number; heliTarget: { x: number; z: number } | null;
+  hmgBursts: number; hmgLastAt: Record<number, number>;
+  fuelId: number; craterId: number; burning: number[]; fires: number; glass: number[]; scorch: number; lastShot: Record<number, number>;
+  /** Kills by the player and by allies (soldiers, armed civilians) since the turn; the kill share check reads these. */
+  kills: { player: number; soldiers: number; armedCivilians: number; unarmedCivilians: number; heli: number; tank: number; other: number };
+}
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
@@ -158,6 +185,8 @@ export interface MissionState {
   l2?: L2State;
   /** L3 controller state; checkpoints snapshot it (ticks are shifted on restore). */
   l3?: L3State;
+  /** L4 controller state; checkpoints snapshot it (ticks are shifted on restore). */
+  l4?: L4State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   /** Remaining global gameplay time (cinematics and retry screens pause it). */
   deadlineTicks: number | null;

@@ -22,6 +22,13 @@ export class RoutineProps extends Group {
       cane: [part(new CylinderGeometry(.018, .021, .73, 8), '#71513e', .05, -.36), part(new BoxGeometry(.15, .035, .035), '#493d34'), part(new CylinderGeometry(.027, .027, .035, 8), '#292537', .05, -.735)],
       // E19 story beats: the courier parcel (cardboard, teal Sunset Grove tape), held at the hands.
       parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .02, -.06, -.1), part(new BoxGeometry(.31, .045, .08), '#2aa198', .02, .065, -.1), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .02, .062, -.02)],
+      // E22 weapons (code art, held at the right hand): long guns point along the forearm's forward axis, bats and pipes hang along the hand.
+      rifle: [part(new BoxGeometry(.07, .09, .95), '#3b3f33', 0, -.02, .38), part(new BoxGeometry(.06, .14, .26), '#2b2d27', 0, -.06, -.1), part(new BoxGeometry(.045, .045, .3), '#1f2120', 0, .02, .75)],
+      pistol: [part(new BoxGeometry(.045, .1, .06), '#2d2f33', 0, -.04, 0), part(new BoxGeometry(.05, .06, .2), '#3a3d42', 0, .02, .1)],
+      'hunting-rifle': [part(new BoxGeometry(.06, .08, .8), '#7a5535', 0, -.02, .3), part(new BoxGeometry(.04, .045, .5), '#2d2f33', 0, .01, .72), part(new BoxGeometry(.05, .05, .24), '#5f4328', 0, -.05, -.12)],
+      pipe: [part(new CylinderGeometry(.028, .028, .85, 8), '#79808a', 0, -.3)],
+      bat: [part(new CylinderGeometry(.045, .025, .85, 10), '#b98a55', 0, -.32), part(new CylinderGeometry(.03, .03, .08, 8), '#493d34', 0, .12)],
+      crowbar: [part(new CylinderGeometry(.022, .022, .7, 8), '#5b5f66', 0, -.25), part(new BoxGeometry(.06, .06, .16), '#5b5f66', 0, -.62, .06)],
       'watering-can': [part(new CylinderGeometry(.13, .13, .22, 12), '#68a093', 0, -.17), ring(.14, .018, 0, -.04, 0, '#426b60'), part(new CylinderGeometry(.033, .045, .3, 8).rotateZ(-.85), '#68a093', .19, -.10), part(new CylinderGeometry(.065, .025, .05, 10).rotateZ(-.85), '#bec9ba', .30, -.01)],
     };
     for (const [name, parts] of Object.entries(shapes)) {

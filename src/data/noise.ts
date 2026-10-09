@@ -11,7 +11,7 @@ export const noise = {
 export type NoiseKind = keyof typeof noise;
 const weapons: Record<string, NoiseKind> = {
     pistol: 'pistol', handgun: 'pistol', smg: 'smg', shotgun: 'shotgun', 'assault-rifle': 'rifle', 'hunting-rifle': 'rifle',
-    'machine-gun': 'machineGun', 'nail-gun': 'pistol', 'rocket-launcher': 'explosionLarge',
+    'machine-gun': 'machineGun', 'army-mg': 'machineGun', 'nail-gun': 'pistol', 'rocket-launcher': 'explosionLarge',
     grenade: 'explosionSmall', molotov: 'explosionSmall', 'pipe-bomb': 'explosionMedium',
     'firecracker-lure': 'firecracker', turret: 'pistol',
 };
