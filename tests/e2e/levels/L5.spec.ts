@@ -126,6 +126,41 @@ test.describe('L5 Aftermath in the browser', () => {
     expect(errors).toEqual([]);
   });
 
+  test('T-E23-18 @E23 @E23-AC18 recognition: the four pair cameras in L4 (W0, intact) and L5 (W5, fallen) from the real game, side by side', async ({ page }) => {
+    test.setTimeout(900_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
+    const names = ['pair-plaza', 'pair-harbor-street', 'pair-metro-entrance', 'pair-kessler-lane'], anchors: Record<string, P> = { 'pair-plaza': { x: -17, z: 3 }, 'pair-harbor-street': { x: -10, z: -39 }, 'pair-metro-entrance': { x: 37.8, z: -44.2 }, 'pair-kessler-lane': { x: 68, z: 28.6 } };
+    const shoot = async (level: 'W0' | 'W5') => {
+      const out: Record<string, Buffer> = {};
+      for (const name of names) {
+        // The courier stands at the anchor: the see-through fade keeps the buildings between her and the camera open, as in play.
+        await page.evaluate(({ name, level, at }) => { const a = window.__SS__!; a.teleport(a.query({ kind: 'player' })[0].id, { x: at.x, z: at.z }); a.camera.preset(`D-FAIR/${level}/${name}`); }, { name, level, at: anchors[name] });
+        await page.evaluate(() => window.__SS__!.step(8)); await page.evaluate(() => window.__SS__!.screenshotReady());
+        out[name] = await page.screenshot();
+      }
+      return out;
+    };
+    await begin(page, 'L4', 'L4-default');
+    await page.evaluate(() => { const a = window.__SS__!; a.cheats.god(true); a.cheats.completeObjective('ride'); });
+    await page.evaluate(() => window.__SS__!.step(90));
+    const safe = await shoot('W0');
+    await begin(page);
+    await page.evaluate(() => { const a = window.__SS__!; a.cheats.god(true); a.cheats.completeObjective('emerge'); });
+    await page.evaluate(() => window.__SS__!.step(60 * 12));
+    const fallen = await shoot('W5');
+    const width = 800;
+    const scaled = (png: PNG) => { const h = Math.round(png.height * width / png.width), out = new PNG({ width, height: h }); for (let y = 0; y < h; y++) for (let x = 0; x < width; x++) { const sx = Math.min(png.width - 1, Math.floor(x * png.width / width)), sy = Math.min(png.height - 1, Math.floor(y * png.height / h)), i = (y * width + x) * 4, j = (sy * png.width + sx) * 4; for (let k = 0; k < 4; k++) out.data[i + k] = png.data[j + k]; } return out; };
+    const report: Record<string, number> = {};
+    for (const name of names) {
+      const a = PNG.sync.read(safe[name]), b = PNG.sync.read(fallen[name]), left = scaled(a), right = scaled(b), sheet = new PNG({ width: width * 2 + 4, height: left.height });
+      sheet.data.fill(255); PNG.bitblt(left, sheet, 0, 0, width, left.height, 0, 0); PNG.bitblt(right, sheet, 0, 0, width, right.height, width + 4, 0);
+      writeFileSync(`${output}/recognition-${name}.png`, PNG.sync.write(sheet));
+      let differ = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) > 60) differ++;
+      report[name] = differ / (a.data.length / 4);
+      expect(report[name], `${name}: L5 must look clearly different from L4`).toBeGreaterThan(.3);
+    }
+    writeFileSync(`${output}/recognition.json`, JSON.stringify(report, null, 1));
+  });
+
   test('T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign', async ({ page }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(120_000);
     await begin(page, 'L4', 'L4-default');
