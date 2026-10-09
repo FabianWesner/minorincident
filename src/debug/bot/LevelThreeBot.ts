@@ -94,7 +94,7 @@ export class LevelThreeBot {
     // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
     if (!this.medkit && hp <= (newbie ? .9 : .65)) {
       const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
-        .filter(e => dist(e.transform, p) < (newbie ? 40 : 24) && e.transform.x > p.x - 10).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+        .filter(e => dist(e.transform, p) < (newbie ? 40 : 24) && e.transform.x > p.x - 10 && (this.forced === 'auto' || l3Street(e.transform.z) === this.street)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
       if (kit) this.medkit = kit.id;
     }
     if (this.medkit) {
