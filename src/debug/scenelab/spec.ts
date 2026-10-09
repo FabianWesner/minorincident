@@ -63,7 +63,7 @@ export interface ActorSpec {
   spread?: number;
   state?: Action;
   /** Courier only: [left, right] weapons, e.g. ["weapon.bat", "weapon.fists"] (default: empty-handed as at the L1 start), and god mode (default true). */
-  loadout?: [string, string];
+  loadout?: [string | string[], string | string[]];
   god?: boolean;
 }
 export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
@@ -76,7 +76,8 @@ export type Action =
   | { moveTo: Point; pace?: 'walk' | 'run' }
   | { turn: number }
   | { sit: string; seconds?: number }
-  | { attack: string; seconds?: number }
+  | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT' }
+  | { select: 'LEFT' | 'RIGHT'; index?: number }
   /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
@@ -89,7 +90,7 @@ export type Action =
   /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
   /** E21/E22 allied fighter. `weapon` selects the L4 v3 kit (soldier rifle, HMG crew, armed civilian pistol / hunting rifle / improvised melee); without it the L3 officer or soldier gun. */
-  | { ally: { role?: 'officer' | 'soldier' | 'civilian'; follow?: string; slot?: number; weapon?: 'rifle' | 'hmg' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar' } }
+  | { ally: { role?: 'officer' | 'soldier' | 'civilian' | 'firefighter'; follow?: string; slot?: number; weapon?: 'rifle' | 'hmg' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar' } }
   /** E23 survivor (pedestrians only): follows the courier exactly as the L5 followers do (slot 0-4: behind her, alternating sides, 2-5 m; crouches while an infected is within 8 m). */
   | { survivor: { slot?: number } }
   /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a

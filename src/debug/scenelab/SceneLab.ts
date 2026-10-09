@@ -41,7 +41,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
-  | { type: 'attack'; target: string; until: number }
+  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT' }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'interact' };
@@ -220,7 +220,7 @@ export class SceneLab {
         player.transform.yaw = yaw; Object.assign(world.previousPlayer!, player.transform);
         if (a.look?.model === 'male' || a.look?.model === 'female') world.player!.select(a.look.model, 0);
         // L1 parity: the courier starts empty-handed (Game.loadLevel clears the L1 loadout); `loadout` arms her.
-        if (a.loadout) world.combat!.setLoadout([a.loadout[0]], [a.loadout[1]]); else world.combat!.clearLoadout();
+        if (a.loadout) world.combat!.setLoadout([a.loadout[0]].flat(), [a.loadout[1]].flat()); else world.combat!.clearLoadout();
         world.combat!.damage.god = a.god ?? true;
       } else if (a.kind === 'pedestrian') {
         const o = world.npcs!.civilians.outbreak!;
@@ -279,7 +279,8 @@ export class SceneLab {
       if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
-      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2) };
+      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT' };
+      else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
@@ -297,6 +298,11 @@ export class SceneLab {
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
       else if ('hit' in a) this.hit(e, a.hit);
+      else if ('ally' in a && a.ally.role === 'firefighter') {
+        // The L1/L2 allied firefighter (axe swing, l2.allies.firefighter numbers), engaged where he stands.
+        c.ally = { ...allyState('firefighter', { x: e.transform.x, z: e.transform.z }), engaged: true };
+        e.health = { current: l2.allies.firefighter.hp, max: l2.allies.firefighter.hp };
+      }
       else if ('ally' in a && (a.ally.weapon || a.ally.role === 'civilian')) {
         // The L4 allied fighter v3 setup (LevelFourWar.spawnSoldiers / engageAll): soldier rifle, HMG crew, armed civilians.
         const w = a.ally.weapon ?? 'rifle', role = a.ally.role ?? 'soldier', post = { x: e.transform.x, z: e.transform.z };
@@ -477,7 +483,7 @@ export class SceneLab {
     } else if (plan?.type === 'attack') {
       const target = this.actors.get(plan.target);
       if (!target || this.frame >= plan.until) courier.plan = null;
-      else { frame.attackTarget = { id: target.entity, side: 'LEFT' }; frame.left = { down: false, held: true, up: false }; }
+      else { frame.attackTarget = { id: target.entity, side: plan.side }; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'click') {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }

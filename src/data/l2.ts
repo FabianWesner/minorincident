@@ -67,7 +67,14 @@ export const l2 = {
   allies: {
     coneDeg: 140, rangeM: 16, regroupM: 6,
     /** engageM: they guard the doors and the people coming out, they do not clear the streets. */
-    firefighter: { hp: 100, damage: 25, swingS: .8, reachM: 1.8, windupS: .35, moveMs: 3.8, rescueWindowS: 1, engageM: 10 },
+    /**
+     * PO 2026-10-09 (verbatim): "When firefighter fight Zombies, then they need to make fight moves. Also they are currently too
+     * strong". Helpers, not killers: was hp 100, 25 damage every 0.8 s (a 40 hp runner fell in 2 hits / 1.6 s, as fast as the
+     * courier's bat); now 14 damage every 1.3 s (3 hits, about 2.6 s per runner, the courier's bat needs 2 hits at ~0.35 s) and
+     * hp 70 (4 infected bites at 10 x 1.8), so three infected overwhelm one. Windup 0.4 s = the swing clip's strike frame.
+     * engageM 8 (was 10): they guard the doors and the people coming out.
+     */
+    firefighter: { hp: 70, damage: 14, swingS: 1.3, reachM: 1.8, windupS: .4, moveMs: 3.8, rescueWindowS: 1, engageM: 8 },
     officer: { hp: 100, damage: 40, shotS: .7, rangeM: 15 },
   },
   /** Section 5.5: the street escape. */
