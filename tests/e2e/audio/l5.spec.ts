@@ -33,11 +33,49 @@ test('T-E23-14a @E23 @E23-AC14 no music cue in the first 60 s of L5 and no battl
     expect([...log.early, ...log.late].filter(c => /siren|helicopter|megaphone|explosion\.(boom|roar)|tank|hmg/.test(c))).toEqual([]);
 });
 test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below the battle mix of L4\'s war phase (offline render of the production graph)', async ({ page }) => {
-    test.setTimeout(300_000);
-    await boot(page);
-    const war = await render(page, { scenario: 'audio-mix' }, 'audio-war-reference'), quiet = await render(page, { scenario: 'l5-quiet', level: 'L5', tier: 5 }, 'audio-l5-quiet');
+    test.setTimeout(900_000);
+    mkdirSync(root, { recursive: true });
+    await boot(page); await page.mouse.click(200, 250);
+    const capture = async (level: 'L4' | 'L5'): Promise<AudioRenderRequest> => {
+        await page.evaluate(async level => {
+            const a = window.__SS__!; await a.loadLevel(level, { seed: 1, progression: level === 'L4' ? 'L4-default' : 'L5-default' });
+            a.pause(); a.missions.begin(); a.cheats.god(true); await a.audio.unlock();
+            if (level === 'L4') a.bot.start('complete'); else a.cheats.completeObjective('emerge');
+        }, level);
+        const cues: NonNullable<AudioRenderRequest['cues']> = [];
+        let firstTurn = -1, lineBreak = -1, tick = 0;
+        let score: AudioRenderRequest['score'];
+        for (let i = 0; i < (level === 'L4' ? 2400 : 600); i++) {
+            const frame = await page.evaluate(async () => {
+                const a = window.__SS__!; await a.step(6);
+                const state = a.getState(), p = state.player!.transform, audio = a.audio.snapshot();
+                const events = a.events(); a.audio.clearLog();
+                return { tick: state.tick, cues: audio.cues.map(c => ({ ...c, position: c.position ? { x: c.position.x - p.x, y: c.position.y, z: c.position.z - p.z } : undefined })),
+                    first: events.find(e => e.type === 'l4.firstTurn')?.tick, last: events.find(e => e.type === 'l4.lineBreaks')?.tick,
+                    score: audio.music.streamed.decks.find(d => d.state === 'combat') };
+            });
+            tick = frame.tick;
+            if (frame.first !== undefined) firstTurn = frame.first;
+            if (frame.last !== undefined) lineBreak = frame.last;
+            for (const c of frame.cues) cues.push({ ...c, time: c.tick / 60 });
+            if (frame.score && firstTurn >= 0) score = { file: frame.score.file, gain: frame.score.gain };
+            if (level === 'L4' && lineBreak >= 0 || level === 'L5' && tick >= 3600) break;
+            // Let native one-shot sources finish so capture uses the live voice limiter.
+            await page.waitForTimeout(100);
+        }
+        if (level === 'L4') { expect(firstTurn).toBeGreaterThan(0); expect(lineBreak).toBeGreaterThan(firstTurn); }
+        const start = level === 'L4' ? firstTurn / 60 : 0, duration = level === 'L4' ? (lineBreak - firstTurn) / 60 : 60;
+        const beds = cues.filter(c => c.cue.startsWith('bed.') && c.time < start).map(c => ({ ...c, time: 0 }));
+        const windowCues = cues.filter(c => c.time >= start && c.time < start + duration).map(c => ({ ...c, time: c.time - start }));
+        const request: AudioRenderRequest = { scenario: 'cue-log', level, duration, cues: [...beds, ...windowCues], ...(level === 'L4' && score ? { score } : {}) };
+        writeFileSync(`${root}/audio-${level}-production-log.json`, JSON.stringify({ firstTurn, lineBreak, request }, null, 1));
+        return request;
+    };
+    const war = await render(page, await capture('L4'), 'audio-war-reference'), quiet = await render(page, await capture('L5'), 'audio-l5-quiet');
     const loudWar = loudness(war.path), loudQuiet = loudness(quiet.path);
     writeFileSync(`${root}/audio-l5-vs-war.json`, JSON.stringify({ war: loudWar, quiet: loudQuiet, differenceLU: loudWar.lufs - loudQuiet.lufs, cues: [...new Set(quiet.result.events.map(e => e.cue))] }, null, 1));
+    expect(quiet.result.events.map(e => e.cue)).toEqual(expect.arrayContaining(['bed.wind', 'bed.fire']));
+    expect(war.result.events.some(e => e.cue.startsWith('action.weapon.') || e.cue.startsWith('explosion.'))).toBe(true);
     expect(quiet.result.events.some(e => e.cue.startsWith('music.') || e.cue.startsWith('stinger.'))).toBe(false);
     expect(loudWar.lufs - loudQuiet.lufs).toBeGreaterThanOrEqual(18);
 });
