@@ -141,6 +141,18 @@ export interface Expectations {
   actorHitsMax?: number;
   /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
   wheelSinkMaxCm?: number;
+  /** Infected pursuit (`metrics.pursuit`): longest run of frames an L1 infected that should move stood still (boxed, pocketed). */
+  stuckActorFramesMax?: number;
+  /** Most frames an infected was not chasing/attacking while the living courier was within 6 m in clear sight. */
+  lostTargetNearFramesMax?: number;
+  /** Farthest an infected chasing the running courier got ahead of her along her running direction, in metres. */
+  overshootMaxM?: number;
+  /** At least this many infected wind-ups (telegraphs) aimed at the courier: it closes in and attacks. */
+  courierSwingsMin?: number;
+  /** At least this many infected attacks that landed on the courier (`infected.attack`). */
+  courierAttacksMin?: number;
+  /** A pedestrian is bitten (`outbreak.bite`) by this frame. */
+  firstBiteFrameMax?: number;
   /** Deepest drawn pushable mesh below the drawn ground. */
   propSinkMaxCm?: number;
   /** Require actual prop contact samples, preventing an empty scene passing. */

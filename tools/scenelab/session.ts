@@ -164,6 +164,13 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
   add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
   add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
+  const pursuit = Object.values(metrics.pursuit?.actors ?? {});
+  add('stuckActorFramesMax', Math.max(0, ...pursuit.map(p => p.stuckRunMax)), e.stuckActorFramesMax);
+  add('lostTargetNearFramesMax', Math.max(0, ...pursuit.map(p => p.lostNearFrames)), e.lostTargetNearFramesMax);
+  add('overshootMaxM', Math.max(0, ...pursuit.map(p => p.overshootMaxM)), e.overshootMaxM);
+  if (e.courierSwingsMin !== undefined) checks.push({ name: 'courierSwingsMin', pass: (metrics.pursuit?.courierSwings ?? 0) >= e.courierSwingsMin, value: metrics.pursuit?.courierSwings ?? 0, limit: e.courierSwingsMin });
+  if (e.courierAttacksMin !== undefined) checks.push({ name: 'courierAttacksMin', pass: (metrics.pursuit?.courierAttacks ?? 0) >= e.courierAttacksMin, value: metrics.pursuit?.courierAttacks ?? 0, limit: e.courierAttacksMin });
+  if (e.firstBiteFrameMax !== undefined) { const f = metrics.pursuit?.firstBiteFrame ?? -1; checks.push({ name: 'firstBiteFrameMax', pass: f >= 0 && f <= e.firstBiteFrameMax, value: f, limit: e.firstBiteFrameMax }); }
   if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
   const wheels = Object.values(metrics.wheels ?? {}).flat();
   add('vehicleYawRateMaxDegS', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.yawRateMaxDegS ?? 0)), e.vehicleYawRateMaxDegS);

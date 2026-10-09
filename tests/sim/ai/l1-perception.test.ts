@@ -322,7 +322,7 @@ describe('L1 v2 infected perception', () => {
       expect(brain(chaser).distractionId).toBe(0);
       // A visible human overrides the attraction.
       let spot: Vec2 | undefined, lure: EntitySnapshot | undefined;
-      for (const candidate of near) if (!spot && brain(candidate).mode === 'search') for (const off of [0, 0.3, -0.3, 0.6, -0.6]) for (const r of [6, 4, 9, 12]) {
+      for (const candidate of near) if (!spot && brain(candidate).mode === 'search') for (const off of [0, 0.3, -0.3, 0.6, -0.6]) for (const r of [2.5, 6, 4, 9, 12]) { // 2.5 m: noticed from any side (PO 10-09), so a mid-turn searcher cannot look away first
         const p = { x: candidate.transform.x + Math.cos(-candidate.transform.yaw + off) * r, z: candidate.transform.z + Math.sin(-candidate.transform.yaw + off) * r };
         if (!spot && Math.abs(p.x) < 58 && Math.abs(p.z) < 58 && perception.sees(candidate, p)) { spot = p; lure = candidate; }
       }
@@ -354,7 +354,7 @@ describe('L1 v2 infected perception', () => {
         const group = Array.from({ length: 5 }, (_, i) => ai.l1Speed(zombie(w, 30 + i * 2, -56 + Object.keys(tiers).indexOf(tier) * 3, 0, variant).id));
         const f = l1v2.speedTiers.factor, base = l1v2.speedTiers[tier as keyof typeof tiers].baseMs;
         expect(group.every((s) => s >= f.minMs - 1e-9 && s <= base * f.max + 1e-9)).toBe(true);
-        for (let i = 0; i < group.length; i++) for (let j = i + 1; j < group.length; j++) expect(Math.abs(group[i] - group[j]) / Math.max(group[i], group[j])).toBeGreaterThanOrEqual(0.01);
+        for (let i = 0; i < group.length; i++) for (let j = i + 1; j < group.length; j++) expect(Math.abs(group[i] - group[j]) / Math.max(group[i], group[j])).toBeGreaterThanOrEqual(0.005); // PO 10-09 floor 4.4 m/s narrows the frail band
         all[tier].push(...group);
         expect(brain(w.entities.get(ai.active.at(-1)!.id)!).tier).toBe(tier);
       }
@@ -388,7 +388,7 @@ describe('L1 v2 infected perception', () => {
     console.info(`[AC12] frail ${Math.min(...all.frail).toFixed(2)}-${Math.max(...all.frail).toFixed(2)} average ${Math.min(...all.average).toFixed(2)}-${Math.max(...all.average).toFixed(2)} athletic ${Math.min(...all.athletic).toFixed(2)}-${Math.max(...all.athletic).toFixed(2)} m/s; close 10 m median ${median(closing).toFixed(1)} s (min ${Math.min(...closing).toFixed(1)}, max ${Math.max(...closing).toFixed(1)})`);
   }, 120_000);
 
-  test('T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.5 s, deterministic per seed', async () => {
+  test('T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed', async () => {
     const k = Math.SQRT1_2;
     const arrivals = async (seed: number) => {
       const { w, humans } = await l1World(seed);
@@ -408,7 +408,9 @@ describe('L1 v2 infected perception', () => {
     for (const seed of [1, 2, 3, 4, 5]) {
       const a = await arrivals(seed);
       expect(a.every(Number.isFinite), `seed ${seed}: ${a}`).toBe(true);
-      expect(Math.max(...a) - Math.min(...a), `seed ${seed}: ${a.map(x => x.toFixed(2))}`).toBeGreaterThanOrEqual(2.5);
+      console.info(`[AC12b] seed ${seed} arrival spread ${(Math.max(...a) - Math.min(...a)).toFixed(2)} s`);
+      // PO 10-09 raised the speed floor to 4.4 m/s (chasers a bit faster than the courier): the slow tail is shorter, 2.5 -> 2.0 s.
+      expect(Math.max(...a) - Math.min(...a), `seed ${seed}: ${a.map(x => x.toFixed(2))}`).toBeGreaterThanOrEqual(2.0);
       if (seed === 1) expect(await arrivals(seed)).toEqual(a);
     }
   }, 120_000);

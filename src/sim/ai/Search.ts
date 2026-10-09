@@ -57,6 +57,10 @@ export interface L1Brain {
   stuckX: number; stuckZ: number; stuckTick: number; stuckCount: number;
   /** A human given up as unreachable (fenced yard, no route) is ignored until `ignoreUntil`. */
   ignoreId: number; ignoreUntil: number;
+  /** Route backoff: no new A* request before this tick after a search found no route (keeps the shared budget for others). */
+  routeAt?: number;
+  /** Walking out of a nav pocket (fence gap, porch alley narrower than the baked clearance) to this point until `escapeUntil`. */
+  escapeX?: number; escapeZ?: number; escapeUntil?: number;
 }
 export function searchPlan(): SearchPlan {
   return { startTick: 0, until: 0, originX: 0, originZ: 0, probes: [], doubleBackAt: -1, next: -1, visited: 0, doubledBack: false, legTicks: 0 };
