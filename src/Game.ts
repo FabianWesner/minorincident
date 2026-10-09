@@ -1,6 +1,7 @@
 import type { Inspection } from './debug/Inspection';
 import { LevelOneBot } from './debug/bot/LevelOneBot';
 import { LevelThreeBot } from './debug/bot/LevelThreeBot';
+import { LevelFourBot } from './debug/bot/LevelFourBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
@@ -50,7 +51,7 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: LevelOneBot | Driver | LevelThreeBot | LevelTwoBot | null = null;
+  driver: LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -204,7 +205,7 @@ export class Game {
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
-      }catch(error){ this.view.unfreeze(); this.view.missionHidden = false; throw error; }
+      }catch(error){ console.error("Level load failed", error); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
   }

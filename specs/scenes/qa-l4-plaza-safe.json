@@ -1,0 +1,28 @@
+{
+ "name": "qa-l4-plaza-safe",
+ "note": "E22 beat 2: the clean Reception Plaza before the turn: town hall, church, apartment blocks and low shops intact and lit, the army reception kit with its queue, the quartermaster table and a courier walking in; soldiers on posts behind the sandbag line, people chatting. Nothing damaged.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 3,
+ "layout": { "district": "D-FAIR", "bbox": [[-58, -38], [14, 44]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0.5, 5.5], "yaw": 180, "loadout": ["weapon.handgun", "weapon.fire-axe"], "state": { "walk": [[-12, 5.5], [-22, 1.5]] } },
+  { "id": "qm", "kind": "pedestrian", "at": [-26.6, 0.6], "yaw": 0, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "n1", "kind": "pedestrian", "at": [-27, -15.8], "yaw": 90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "n2", "kind": "pedestrian", "at": [-22, -15.8], "yaw": 90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "s1", "kind": "pedestrian", "at": [-27, 19.4], "yaw": -90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "w1", "kind": "pedestrian", "at": [-31.8, 9.4], "yaw": 180, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "q1", "kind": "pedestrian", "at": [-31.4, -3.2], "yaw": 90, "look": { "model": "npc.civilian-man-a", "tint": "#d8b04a" }, "state": "idle" },
+  { "id": "q2", "kind": "pedestrian", "at": [-29.9, -3.2], "yaw": 90, "look": { "model": "npc.civilian-woman-b", "tint": "#9a5a8a" }, "state": "idle" },
+  { "id": "q3", "kind": "pedestrian", "at": [-28.4, -3.2], "yaw": 90, "look": { "model": "npc.civilian-man-b", "tint": "#4d7fb0", "handProp": "bag" }, "state": "idle" },
+  { "id": "q4", "kind": "pedestrian", "at": [-26.9, -3.2], "yaw": 90, "look": { "model": "npc.civilian-woman-a", "tint": "#c4473d" }, "state": "idle" },
+  { "id": "c1", "kind": "pedestrian", "at": [-26.5, 8], "yaw": 0, "look": { "model": "npc.civilian-man-a", "tint": "#6f9a5a", "handProp": "coffee" }, "state": "idle" },
+  { "id": "c2", "kind": "pedestrian", "at": [-25.5, 8], "yaw": 180, "look": { "model": "npc.civilian-woman-b", "tint": "#e0a050" }, "state": "idle" },
+  { "id": "c3", "kind": "pedestrian", "at": [-5, 26], "yaw": 90, "look": { "model": "npc.civilian-elderly", "tint": "#8a8a8a", "handProp": "cane" }, "state": { "walk": [[-5, 30], [-5, 26]], "loop": true } }
+ ],
+ "camera": { "mode": "game", "target": [-24, 2], "zoom": 3.0 },
+ "frames": 240,
+ "shots": [1, 80, 239],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

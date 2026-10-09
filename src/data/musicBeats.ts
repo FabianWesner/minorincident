@@ -7,12 +7,14 @@ export const musicBeats: Record<string, Readonly<Record<string, number>>> = {
     L3: { forecourt: 0.5, car: 0.25, 'market-route': 0.25, 'park-route': 0.25, 'market-bypass': 0.25,
         'market-supplies': 0.25, 'market-cover': 0.5, 'park-rescue': 0.25, 'park-cover': 0.5,
         approach: 0.5, checkpoint: 0.5, 'checkpoint-cover': 0.5, patient: 0.25, gates: 0.5, safe: 0 },
+    // E22: a calm bed through the ride and the plaza, the loudest mix from the turn, the cellar keeps the tension low.
+    L4: { convoy: 0, plaza: 0, war: 0.5, collapse: 0.5, cellar: 0.25, done: 0.25, safe: 0 },
 };
 
 export function storyMusic(level: string, mission?: MissionState): { beat: string; minimum: number } {
     if (!mission || mission.id !== level || mission.phase !== 'playing') return { beat: 'safe', minimum: 0 };
     const beats = musicBeats[level];
-    let beat = mission.l1?.phase ?? mission.l2?.phase ?? 'safe';
+    let beat = mission.l1?.phase ?? mission.l2?.phase ?? mission.l4?.phase ?? 'safe';
     if (level === 'L1' && mission.steps.firestation?.status === 'completed') beat = 'safe';
     if (level === 'L3') {
         for (const [id, step] of Object.entries(mission.steps))

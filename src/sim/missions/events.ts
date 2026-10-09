@@ -22,4 +22,12 @@ export type MissionEvent =
   | { tick: number; type: 'l3.squad-lost'; id: number; cause: 'bite' | 'kill' | 'separated' }
   | { tick: number; type: 'l3.segment'; segment: number; squad: number }
   | { tick: number; type: 'l3.gunfire'; sourceId: number; position: { x: number; z: number } }
-  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' | 'soldier'; hit?: boolean; from?: { x: number; z: number }; to?: { x: number; z: number } }
+  /** E22 beats: the convoy rolls and stops, the machine gun is issued, the first turn, the war starts, a tank round, a helicopter pass, an HMG burst, the line breaks, the cellar door is barred. */
+  | { tick: number; type: 'l4.convoyStarted' | 'l4.convoyArrived' | 'l4.gun' | 'l4.war' | 'l4.heliWithdrawn' | 'l4.descended' | 'l4.doorBarred' | 'l4.battle' }
+  | { tick: number; type: 'l4.firstTurn'; ids: number[]; humansNear: number }
+  | { tick: number; type: 'l4.lineBreaks'; cause: 'time' | 'soldiers' | 'inside' | 'forced' }
+  | { tick: number; type: 'l4.wave'; wave: number; count: number; edges: number[] }
+  | { tick: number; type: 'l4.tankFire'; from: { x: number; z: number }; to: { x: number; z: number }; shot: number }
+  | { tick: number; type: 'l4.heliPass'; from: { x: number; z: number }; to: { x: number; z: number } }
+  | { tick: number; type: 'hmg.burst'; sourceId: number }
+  | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' | 'soldier' | 'civilian' | 'heli' | 'tank'; weapon?: 'hmg' | 'rifle' | 'pistol' | 'hunting-rifle' | 'door-gun'; hit?: boolean; from?: { x: number; z: number }; to?: { x: number; z: number } }
