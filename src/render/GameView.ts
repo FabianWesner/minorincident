@@ -132,6 +132,7 @@ export class GameView implements Lifecycle {
   private wireframe: PhysicsWireframe | null = null;
   readonly look = new LookUniforms();
   private lighting: Lighting | null = null;
+  private gloomShown = 1;
   private materials: Materials | null = null;
   private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
   private districts:DistrictView|null=null;
@@ -535,6 +536,10 @@ export class GameView implements Lifecycle {
     if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
+    // E23: the sunset fades with the story (the sim owns the target; the picture eases toward it).
+    const target = this.lighting?.preset === 'L5' ? mission?.state.l5?.gloom ?? 1 : 1;
+    this.gloomShown += (target - this.gloomShown) * (Math.abs(target - this.gloomShown) < .002 ? 1 : .04);
+    this.lighting?.setGloom(this.gloomShown);
   }
   /** Presentation glance target for the courier: the locked attack target within 8 m, else the nearest live infected within 6 m (head height). */
   private threat(player: { x: number; z: number }): Vector3 | null {

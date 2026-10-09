@@ -23,6 +23,7 @@ import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelFourLayouts } from '../../levels/L4/layout';
+import { levelFiveLayouts } from '../../levels/L5/layout';
 import { inside } from '../../levels/districts/validate';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
@@ -116,7 +117,8 @@ export class SceneLab {
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
       // Fairhaven likewise (E22): the army reception, sandbag line, nests, parked cars and the L4 anchors.
-      if (spec.layout.district === 'D-FAIR') source = levelFourLayouts([source])[0];
+      // ... and its devastated twin hours later (E23, `level: "L5"`): W5 shells, wrecks, craters, glass, the power out.
+      if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };

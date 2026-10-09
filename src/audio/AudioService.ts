@@ -14,8 +14,14 @@ import { StreamedMusic } from './StreamedMusic';
 import { storyMusic } from '../data/musicBeats';
 import { isMusicThreat } from './MusicThreat';
 import { l1v2 } from '../data/l1v2';
+import { l5 } from '../data/l5';
 import { humanInfected } from '../data/infected';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
+/** E23 signs of life: each survivor's sound is an existing cue (knock, clang, radio, a soft voice, a flashlight click). */
+const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> = {
+    dale: { cue: 'impact.body.metal', gain: 1.2, rate: 0.8 }, rosa: { cue: 'door.wood', gain: 1.1, rate: 0.9 }, okafor: { cue: 'bark.male.effort', gain: 0.7, rate: 0.7 },
+    mia: { cue: 'dialogue.radio', gain: 0.45, rate: 1 }, sam: { cue: 'ui.switch', gain: 2.5, rate: 0.8 },
+};
 /** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
 const voicedInfected = new Set(humanInfected.map(d => d.id));
 export interface AudioSettings {
@@ -103,6 +109,8 @@ export class AudioService implements Lifecycle {
     private externalIntensity: MusicIntensity | null = null;
     private vehicleSpeed = 0;
     private incident = false;
+    /** E23: the silent city. No music (score, stems, stingers) for the first `l5.audio.musicFromS` seconds of L5, then a sparse low drone: the calm score only, never a danger or battle layer. */
+    private l5Music = false;
     private complete = false;
     private readonly captionElement = document.createElement('output');
     private readonly captionStyle = document.createElement('style');
@@ -468,8 +476,8 @@ export class AudioService implements Lifecycle {
         // Long recordings and unused SFX banks must not compete with the level download.
         const generation = this.generation;
         setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
-        if (this.hasScore) this.score.prepareDanger();
-        if (this.hasScore) void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
+        if (this.hasScore && this.level !== 'L5') this.score.prepareDanger();
+        if (this.hasScore && this.level !== 'L5') void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         for (const layer of musicLayers) {
             const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
@@ -478,8 +486,18 @@ export class AudioService implements Lifecycle {
         for (const bed of ambienceTiers[this.tier].beds)
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: this.tier === 5 ? dbGain(-16) : 1 });
     }
+    /** L5 music: silent until 60 s into the level, then the calm score alone (no layers, no danger music, no stems). */
+    private l5Score(): void {
+        if (!this.started) return;
+        if (this.l5Music) { this.score.update(); return; }
+        const mission = this.world.missions?.state;
+        if (!mission || mission.phase !== 'playing' || mission.stats.time < l5.audio.musicFromS) return;
+        this.l5Music = true;
+        if (this.hasScore) { this.score.prepareDanger(); void this.score.transition('calm', this.context.currentTime + 0.05, this.musicEpoch, this.music.bar); }
+    }
     private musicIntensity(input: MusicIntensity): void {
         if (!this.started) return;
+        if (this.level === 'L5') return;
         const t = this.context.currentTime;
         this.score.update();
         const story = storyMusic(this.level, this.world.missions?.state);
@@ -500,6 +518,7 @@ export class AudioService implements Lifecycle {
         }
     }
     private stinger(kind: string, level: string): void {
+        if (this.level === 'L5' && !this.l5Music) return;
         const t = this.context.currentTime;
         if (kind === 'twist') {
             const at = this.graph.twist(t);
@@ -519,6 +538,13 @@ export class AudioService implements Lifecycle {
         const position = 'position' in event ? event.position : entity?.transform;
         if (event.type.startsWith('l1.')) {
             this.arc?.event(event.type, t);
+            return;
+        }
+        if (event.type === 'l5.cue') {
+            // A sign of life: the knock, the clang, the radio, the voice or the flashlight click of that survivor, positional, with its caption.
+            const sound = l5CueSounds[event.key] ?? { cue: 'door.wood', gain: 0.8, rate: 1 };
+            this.play(sound.cue, { position: event.position, gain: sound.gain, rate: sound.rate });
+            this.caption(event.text, event.position, 4);
             return;
         }
         if (event.type === 'l2.cue') {
@@ -782,6 +808,8 @@ export class AudioService implements Lifecycle {
             if (event.id === 'escape') this.stinger('elite', this.level);
         }
         const id = eventCues[event.type];
+        if (this.level === 'L5' && id.startsWith('stinger.') && !this.l5Music)
+            return;
         if (id !== 'ui.tick')
             this.play(id, { position }, source);
         if (event.type === 'pickup.collected')
@@ -795,6 +823,7 @@ export class AudioService implements Lifecycle {
             this.graph.buses.ambience.gain.setTargetAtTime(1, this.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
         }
         this.startBedsAndMusic();
+        if (this.level === 'L5') this.l5Score();
         const player = this.world.entities.get(1);
         if (!player)
             return;
@@ -954,6 +983,7 @@ export class AudioService implements Lifecycle {
         this.complete = false;
         this.quietMusicUntil = 0;
         this.attackMusicUntil = 0;
+        this.l5Music = false;
     }
     dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
 }

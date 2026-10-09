@@ -98,7 +98,8 @@ export const ambienceTiers = [
     { beds: ['sirens', 'helicopter'], oneShots: ['megaphone', 'radio', 'gunshot'] },
     { beds: ['wind', 'fire', 'hum'], oneShots: ['alarm', 'glass', 'explosion', 'power'] },
     { beds: ['fire-roar', 'moans'], oneShots: ['scream', 'automatic', 'collapse'] },
-    { beds: ['wind', 'fire'], oneShots: ['debris', 'dog', 'helicopter'] },
+    // W5 (E23): a silent burnt city. No helicopter, no siren; only debris settling, a far collapse, a dog.
+    { beds: ['wind', 'fire'], oneShots: ['debris', 'collapse', 'dog'] },
 ] as const;
 for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.beds]))].entries())
     cue(`bed.${id}`, 'ambience', 'bed', ['birds', 'traffic', 'sirens', 'wind'].includes(id) ? 12 : 2, 100 + i * 210, { gain: 0.18, loop: true });

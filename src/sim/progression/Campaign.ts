@@ -9,6 +9,8 @@ export interface CampaignSave {
   version:1; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
   ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;
   usage:Record<string,number>;
+  /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
+  survivors?:string[];
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
 }
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
