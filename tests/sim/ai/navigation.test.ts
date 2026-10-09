@@ -8,6 +8,35 @@ const worlds: SimWorld[] = [];
 async function arena(name = 'horde-arena') { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name); w.combat!.damage.god = true; return w; }
 function step(w: SimWorld, count: number) { for (let i = 0; i < count; i++) w.update(); }
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
+test('@E19 a body inside the conservative wall margin can slide out without crossing the solid', () => {
+  const grid = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, z: 0, y: 1, halfX: 1, halfZ: 2, halfY: 1 }]);
+  const p = { x: 1.33, z: 0 };
+  expect(grid.clear(p.x, p.z, .34)).toBe(false);
+  for (let i = 0; i < 30; i++) grid.move(p, 0, .1, .34);
+  expect(p.z).toBeCloseTo(3);
+  grid.move(p, .1, 0, .34);
+  expect(grid.clear(p.x, p.z, .34)).toBe(true);
+  for (let i = 0; i < 30; i++) grid.move(p, -.1, -.1, .34);
+  expect(grid.clear(p.x, p.z, .34)).toBe(true);
+});
+
+test('@E19 respawn connectivity distinguishes an unfinished long route from an enclosed yard without resetting A*', () => {
+  const grid = new NavGrid({ width: 100, depth: 100 }, [
+    { x: 0, z: -3, y: 1, halfX: 3.2, halfZ: .2, halfY: 1 },
+    { x: 0, z: 3, y: 1, halfX: 3.2, halfZ: .2, halfY: 1 },
+    { x: -3, z: 0, y: 1, halfX: .2, halfZ: 3, halfY: 1 },
+    { x: 3, z: 0, y: 1, halfX: .2, halfZ: 3, halfY: 1 },
+  ]);
+  const from = grid.cell(-40, -40), goal = grid.cell(40, 40), path: number[] = [];
+  expect(grid.path(from, goal, path, 1)).toBe(false);
+  expect(grid.pending(from, goal)).toBe(true);
+  const reachable = grid.reachableFrom(goal);
+  expect(reachable[from]).toBe(1);
+  expect(reachable[grid.cell(0, 0)]).toBe(0);
+  expect(grid.pending(from, goal)).toBe(true);
+  expect(grid.path(from, goal, path, Infinity)).toBe(true);
+});
+
 test('T-E07-01 @E07 @E07-AC01 all twelve human roles validate and spawn', async () => {
   validateInfected(); expect(humanInfected).toHaveLength(12); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
   const w = await arena(); for (const [i, def] of humanInfected.entries()) { const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }))!; expect(e.health.current).toBe(def.hp); expect(e.infected!.speed).toBe(def.speed); }

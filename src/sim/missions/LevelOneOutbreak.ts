@@ -147,8 +147,8 @@ export class LevelOneOutbreak {
       .map(c => ({ c, score: Math.min(near(c.x, c.z), 24) - .08 * Math.hypot(c.x - from.x, c.z - from.z) - (seen(c) ? 8 : 0) }))
       .sort((a, b) => b.score - a.score);
     // Never a fenced pocket: the spot must have a walking route to the active objective. A flood from the objective answers it for
-    // every candidate at once; a budgeted A* per candidate (6000 cells ~ 22 m) said "unreachable" for every goal farther than that
-    // (the fire station moved 60+ m from the garage), so the safest-looking spot, a fenced yard, won and trapped the courier.
+    // every candidate at once. A budgeted A* can return false while still pending, especially after the station move;
+    // restarting it for each candidate then falls back to a safe-looking fenced yard and traps the courier.
     const goal = state.marker ? this.mission.def.anchors[state.marker] : null, goalCell = goal ? nav.nearestCell(goal.x, goal.z) : -1;
     const reach = goalCell >= 0 ? nav.reachableFrom(goalCell) : null;
     const routed = (c: { x: number; z: number }) => { const cell = nav.cell(c.x, c.z); return cell >= 0 && !nav.blocked[cell] && (!reach || reach[cell] === 1); };
