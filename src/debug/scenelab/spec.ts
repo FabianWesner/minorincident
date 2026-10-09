@@ -70,7 +70,8 @@ export type Action =
   | { moveTo: Point; pace?: 'walk' | 'run' }
   | { turn: number }
   | { sit: string; seconds?: number }
-  | { attack: string; seconds?: number }
+  | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT' }
+  | { select: 'LEFT' | 'RIGHT' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
   | { infect: { by?: string; instant?: boolean } }
   | { mountBike: string }

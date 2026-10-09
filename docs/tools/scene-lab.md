@@ -90,7 +90,8 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `{ "moveTo": [x, z], "pace": "walk" }` | courier, pedestrian | Click-to-move with the game's pathfinding. |
 | `{ "turn": deg }` | all | Turn to face that yaw; the courier turns on the spot. |
 | `{ "sit": "<placement id or asset id>" }` | pedestrian | Sit on that prop, using the same seat rule as L1. |
-| `{ "attack": "<actor id>", "seconds": 2 }` | courier | The real target-attack input. |
+| `{ "attack": "<actor id>", "seconds": 2, "side": "RIGHT" }` | courier | The real target-attack input; `side` (default `LEFT`) is the loadout slot used, so a `["weapon.bat", "weapon.pistol"]` loadout fires the pistol with `"side": "RIGHT"`. |
+| `{ "select": "LEFT" \| "RIGHT" }` | courier | Switch the equipped slot. Only the selected slot's weapon is in her right hand; the other is holstered (melee on the back, gun on the hip). |
 | `"chase"` / `{ "chase": "<actor id>" }` | infected | Chase. |
 | `{ "hit": { "from": "<actor id>" or [x, z], "heavy": true } }` | all | A heavy hit is a knockdown. |
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
