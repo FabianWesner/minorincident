@@ -60,6 +60,8 @@ export interface AllyState {
   targetId: number; nextAttack: number; hits: number;
   /** Swing/shot in progress: lands at `strikeAt` on `strikeTarget` if still in reach. */
   strikeAt?: number; strikeTarget?: number;
+  /** Police tactics (PO 2026-10-09): a short reposition (backstep, sidestep, spread) in progress, the earliest tick for the next one, the shot count of the last routine reposition, and a baton strike in progress. */
+  step?: { x: number; z: number; until: number }; stepAfter?: number; repoHits?: number; baton?: boolean;
   /** Door forcing beat until this tick (halligan pry clip, or `forceClip`: the crew member directing the people inside). */
   forceUntil: number; forceClip?: string;
 }
