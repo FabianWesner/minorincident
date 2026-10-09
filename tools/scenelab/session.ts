@@ -144,11 +144,14 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
   add('clipping', clipping.static.length + clipping.actors.length, e.clippingMax);
+  add('staticOverlap', clipping.static.length, e.staticOverlapMax);
   const motion = Object.values(metrics.actors).map(a => a.motion);
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
   add('bodyOverlapMaxCm', Math.max(0, ...(metrics.bodies ?? []).map(b => b.depthCm)), e.bodyOverlapMaxCm);
+  add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
+  add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
@@ -161,6 +164,13 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
   add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
   add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
+  const pursuit = Object.values(metrics.pursuit?.actors ?? {});
+  add('stuckActorFramesMax', Math.max(0, ...pursuit.map(p => p.stuckRunMax)), e.stuckActorFramesMax);
+  add('lostTargetNearFramesMax', Math.max(0, ...pursuit.map(p => p.lostNearFrames)), e.lostTargetNearFramesMax);
+  add('overshootMaxM', Math.max(0, ...pursuit.map(p => p.overshootMaxM)), e.overshootMaxM);
+  if (e.courierSwingsMin !== undefined) checks.push({ name: 'courierSwingsMin', pass: (metrics.pursuit?.courierSwings ?? 0) >= e.courierSwingsMin, value: metrics.pursuit?.courierSwings ?? 0, limit: e.courierSwingsMin });
+  if (e.courierAttacksMin !== undefined) checks.push({ name: 'courierAttacksMin', pass: (metrics.pursuit?.courierAttacks ?? 0) >= e.courierAttacksMin, value: metrics.pursuit?.courierAttacks ?? 0, limit: e.courierAttacksMin });
+  if (e.firstBiteFrameMax !== undefined) { const f = metrics.pursuit?.firstBiteFrame ?? -1; checks.push({ name: 'firstBiteFrameMax', pass: f >= 0 && f <= e.firstBiteFrameMax, value: f, limit: e.firstBiteFrameMax }); }
   if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
   const wheels = Object.values(metrics.wheels ?? {}).flat();
   add('vehicleYawRateMaxDegS', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.yawRateMaxDegS ?? 0)), e.vehicleYawRateMaxDegS);

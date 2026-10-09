@@ -1,4 +1,5 @@
 import { l3Anchors, l3Street } from '../../data/l3';
+import { findClearSpot, firstOverlap, footprints, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W2 -> W3 "recently collapsed, still recognizable" dressing (E21 section 5.8); counted by the static AC15 test. */
@@ -101,10 +102,25 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-CORRIDOR') return layout;
     for (const [name, [x, z]] of Object.entries(l3Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    // Placement rule shared with L2: dressing never cuts into a fence, wall, lamp, tree or another prop and stays out of
+    // gardens; a piece that would moves to the nearest clear spot (cars slide along their own axis first, bumper to obstacle).
+    // A fence run never ends inside a building: base panels that cut into one are dropped (the fence simply stops at the wall).
+    const walls = layout.placements.filter(p => p.assetId.startsWith('bld.') || p.assetId.startsWith('kit.')).flatMap(p => footprints(p));
+    const through = new Set(layout.placements.filter(p => /fence/.test(p.assetId) && firstOverlap(p, walls, .2) !== undefined).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !through.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !through.has(c.id.split('/')[0]));
+    const obstacles = obstaclesOf(layout, 2);
     const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string) => {
       const decal = assetId.startsWith('decal.');
       const p: Placement = { id, assetId, position: [x, decal ? .06 : 0, z], yaw, scale: decal ? [1.4, 1, 2.6] : [scale, scale, scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l3', visualAabb: { min: [x - 1, 0, z - 1], max: [x + 1, 1.5, z + 1] } };
       if (decay) p.decay = decay;
+      if (!decal && footprints(p, 0, true).length) {
+        const spot = findClearSpot(layout, p, obstacles, { slide: assetId.startsWith('veh.'), margin: assetId.startsWith('veh.') ? .1 : .3, maxRadius: 8 });
+        if (!spot) throw new Error(`No clear spot for ${id} (${assetId}) near ${x}, ${z}`);
+        const [dx, dz] = [spot[0] - x, spot[1] - z];
+        p.position = [spot[0], 0, spot[1]]; p.visualAabb = { min: [x + dx - 1, 0, z + dz - 1], max: [x + dx + 1, 1.5, z + dz + 1] };
+        obstacles.push(...footprints(p, 0, true));
+      }
       layout.placements.push(p);
     };
     for (const [i, entry] of l3Dressing.entries()) if (!entry.entity) add(`l3-${entry.kind}-${i}`, entry.assetId, entry.x, entry.z, entry.yaw ?? 0, entry.scale ?? 1, entry.decay);

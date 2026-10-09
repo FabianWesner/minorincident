@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2' | 'L3'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -110,6 +110,8 @@ export type CameraSpec =
 export interface Expectations {
   consoleErrors?: number;
   clippingMax?: number;
+  /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
+  staticOverlapMax?: number;
   footSlideMaxCm?: number;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
@@ -117,6 +119,10 @@ export interface Expectations {
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
   bodyOverlapMaxCm?: number;
+  /** Corgi trunk/head against the courier's drawn body, including both legs. */
+  corgiCourierOverlapMaxCm?: number;
+  /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */
+  corgiRunLagMaxM?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;
@@ -136,6 +142,18 @@ export interface Expectations {
   actorHitsMax?: number;
   /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
   wheelSinkMaxCm?: number;
+  /** Infected pursuit (`metrics.pursuit`): longest run of frames an L1 infected that should move stood still (boxed, pocketed). */
+  stuckActorFramesMax?: number;
+  /** Most frames an infected was not chasing/attacking while the living courier was within 6 m in clear sight. */
+  lostTargetNearFramesMax?: number;
+  /** Farthest an infected chasing the running courier got ahead of her along her running direction, in metres. */
+  overshootMaxM?: number;
+  /** At least this many infected wind-ups (telegraphs) aimed at the courier: it closes in and attacks. */
+  courierSwingsMin?: number;
+  /** At least this many infected attacks that landed on the courier (`infected.attack`). */
+  courierAttacksMin?: number;
+  /** A pedestrian is bitten (`outbreak.bite`) by this frame. */
+  firstBiteFrameMax?: number;
   /** Deepest drawn pushable mesh below the drawn ground. */
   propSinkMaxCm?: number;
   /** Require actual prop contact samples, preventing an empty scene passing. */
