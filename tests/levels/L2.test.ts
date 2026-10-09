@@ -197,6 +197,27 @@ describe('L2 The Failed Rescue', () => {
     expect(l.mission.state.phase).toBe('progression'); expect(l.mission.state.result).not.toBeNull();
   }, HEAVY);
 
+  test('T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down', async () => {
+    // PO 10-08: "The crowd ... runs away and then just disappears." Every released person stays an entity for the whole level.
+    for (const seed of [1, 2, 3]) {
+      const l = await loadL2(seed); world = l.world; const m = l.mission, w = l.world;
+      const turned = new Set<number>(), removed = new Set<number>();
+      const off = w.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') turned.add(e.id); });
+      const r = runL2(w, m, 'complete', { seed, stopWhen: mm => { for (const id of mm.state.l2!.trappedIds) if (!w.entities.get(id) && !turned.has(id)) removed.add(id); return false; } });
+      off(); expect(r.outcome).toBe('complete'); expect([...removed], `seed ${seed} removed`).toEqual([]);
+      const s = m.state.l2!, fates: Record<string, number> = {};
+      for (const id of s.trappedIds) {
+        const e = w.entities.get(id), c = e?.civilian;
+        const fate = turned.has(id) ? 'turned' : c && ['down', 'finished', 'bitten', 'rising', 'grabbed'].includes(c.state) ? 'down'
+          : e && (inCheckpointZone(e.transform) || e.transform.x >= 60 && Math.abs(e.transform.z - 30) <= 8) ? 'checkpoint' : `elsewhere ${e?.transform.x.toFixed(0)},${e?.transform.z.toFixed(0)}`;
+        fates[fate] = (fates[fate] ?? 0) + 1;
+      }
+      expect(Object.keys(fates).filter(k => k.startsWith('elsewhere')), `seed ${seed} ${JSON.stringify(fates)}`).toEqual([]);
+      expect(s.trappedIds.every(id => w.entities.get(id)?.civilian?.l1?.haven || turned.has(id) || !w.entities.get(id)?.civilian)).toBe(true);
+      w.dispose(); world = undefined;
+    }
+  }, HEAVY);
+
   test('T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons', async () => {
     const l = await loadL2(2); world = l.world; const m = l.mission, w = l.world;
     for (const id of ['doors', 'escape', 'cluster'] as const) {

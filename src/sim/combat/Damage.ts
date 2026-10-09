@@ -57,7 +57,7 @@ export class Damage {
     let amount = damageAmount(hit, target);
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
-    if (target.id === 1 && this.god) amount = 0;
+    if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;
     if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
     // Keep ordinary player melee in reach even after knockback upgrades. Special

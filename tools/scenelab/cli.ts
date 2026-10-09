@@ -6,7 +6,7 @@ import { SceneSession, encodeWebm, evaluate, readSpec, stopServer, writeJson, ty
  * Several specs share one browser session. Exit 1 when any `expect` gate fails or a scene throws. */
 const args = process.argv.slice(2), flag = (name: string) => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : undefined; };
 const files = args.filter((a, i) => a.endsWith('.json') && !args[i - 1]?.startsWith('--'));
-if (!files.length) { console.error('usage: npm run scene -- specs/scenes/<name>.json [...] [--frames N] [--shots 0,60] [--video 4] [--backend webgl2|webgpu] [--tier high|low] [--out dir] [--size 1280x720]'); process.exit(2); }
+if (!files.length && !flag('inspect-level')) { console.error('usage: npm run scene -- specs/scenes/<name>.json [...] [--frames N] [--shots 0,60] [--video 4] [--backend webgl2|webgpu] [--tier high|low] [--out dir] [--size 1280x720]'); process.exit(2); }
 const backend = (flag('backend') ?? 'webgl2') as Backend, tier = (flag('tier') ?? 'high') as 'high' | 'low';
 const [width, height] = (flag('size') ?? '1280x720').split('x').map(Number);
 const query = Object.fromEntries(args.flatMap((a, i) => a === '--query' ? [args[i + 1].split('=') as [string, string]] : []));
@@ -17,6 +17,21 @@ try {
   const started = Date.now();
   await session.open();
   const openMs = Date.now() - started;
+  if (flag('inspect-level')) {
+    const level = flag('inspect-level')!, out = resolve(flag('out') ?? `test-results/inspect/scene-${level}`);
+    const anchors = await session.inspectLevel(level, flag('bot') === 'complete');
+    const selected = flag('anchor') ? anchors.filter(a => a.id === flag('anchor')) : anchors.filter(a => a.kind === 'objective').slice(0, 3);
+    if (!selected.length) throw new Error('No matching inspection anchors');
+    const files: string[] = [];
+    for (const [i, anchor] of selected.entries()) {
+      await session.page.evaluate(id => window.__SS__!.inspect.jump(id), anchor.id);
+      const path = `${out}/anchor-${i}.png`; await session.screenshot(path); files.push(path);
+    }
+    const state = await session.page.evaluate(() => window.__SS__!.inspect.state());
+    writeJson(`${out}/metrics.json`, { level, anchors: selected, state, consoleErrors: session.errors, checks: { pass: session.errors.length === 0 } });
+    summary.push({ level, pass: session.errors.length === 0, files, metrics: `${out}/metrics.json`, drawCalls: state.perf.drawCalls, triangles: state.perf.triangles });
+    if (session.errors.length) code = 1;
+  }
   for (const file of files) {
     const spec = readSpec(resolve(file)), name = spec.name ?? basename(file, '.json');
     const video = Number(flag('video') ?? spec.video ?? 0);
@@ -26,6 +41,10 @@ try {
     const errorsBefore = session.errors.length, t0 = Date.now();
     try {
       const scene = await session.load(spec);
+      if (flag('inspect') === 'true') await session.page.evaluate(() => {
+        window.__SS__!.inspect.enable(true, { courier: 'unchanged' });
+        window.__SS__!.inspect.setCamera({ position: [9, 8, 12], target: [0, .7, 0] });
+      });
       const loadMs = Date.now() - t0, written: string[] = [], jpegs: Buffer[] = [];
       // Step in batches inside the page; stop only where a capture happens.
       const stops = new Set(shots);

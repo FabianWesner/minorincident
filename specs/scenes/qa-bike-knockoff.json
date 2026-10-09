@@ -1,0 +1,24 @@
+{
+ "name": "qa-bike-knockoff",
+ "note": "P1 10-08, PO verbatim: \"I was driving on the bike in L1 and when I was attacked by a zombie the bike just disappeared...\". Rides the D-GROVE street at z = -16 at full speed into an infected; no clear pavement lies within 8 m of the bump, so the old dismount fell back to the last parking spot and the bike jumped back to where she had mounted it. Now: she is knocked off (short stumble), the bike tips over beside her and lies on the drawn road; she clears the infected with the bat, picks the bike up (E) and rides on. Gates: the bike is drawn at its sim spot every frame it is in view, no tyre below the drawn road.",
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-36, -28], [-2, -4]] },
+ "clipping": { "ignoreFoliage": true },
+ "vehicles": [{ "id": "bike", "asset": "vehicle.bicycle", "at": [-30, -16], "yaw": 0 }],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-31.2, -16], "yaw": 0, "god": true, "loadout": ["weapon.bat", "weapon.fists"] },
+  { "id": "zombie", "kind": "infected", "archetype": "infected.runner", "at": [-16, -16], "yaw": 180, "state": "idle" }
+ ],
+ "script": [
+  { "frame": 20, "actor": "courier", "do": { "mountBike": "bike" } },
+  { "frame": 50, "actor": "courier", "do": { "run": [[-26, -16], [-6, -16]] } },
+  { "frame": 190, "actor": "courier", "do": { "attack": "zombie", "seconds": 4 } },
+  { "frame": 450, "actor": "courier", "do": { "mountBike": "bike" } },
+  { "frame": 480, "actor": "courier", "do": { "run": [[-12, -16], [-6, -16]] } }
+ ],
+ "camera": { "mode": "pose", "position": [-35, 3.4, -16.1], "target": [-17, 0, -16] },
+ "frames": 600,
+ "shots": [40, 120, 150, 165, 185, 260, 440, 470, 560],
+ "trace": true,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "bikeUndrawnFramesMax": 0, "wheelSinkMaxCm": 0.5 }
+}

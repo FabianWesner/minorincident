@@ -229,7 +229,7 @@ export class Hud {
   }
   /** Story bubble from the mission state (`l1.say`): fades in over 10 ticks, out over 15 after its reading time. */
   private updateStory(): void {
-    const world = this.game.world, say = world.missions?.state.l1?.say, tick = world.tick;
+    const world = this.game.world, say = world.missions?.state.l1?.say ?? world.missions?.state.l2?.say, tick = world.tick;
     const opacity = say ? Math.min(1, (tick - say.at) / 10, 1 - (tick - say.until) / 15) : 0;
     this.storyBubble.hidden = !say || opacity <= 0;
     if (!say || this.storyBubble.hidden) return;

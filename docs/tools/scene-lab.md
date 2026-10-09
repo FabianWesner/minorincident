@@ -252,3 +252,21 @@ tool_timeout_sec = 600
 
 **Smoke test.** `npx tsx tools/scenelab/mcp-smoke.ts` is a scripted client. It runs load, spawn_actor, command, step,
 set_time, screenshot, metrics and clipping.
+
+## Real level inspection
+
+Scene Lab can also operate the full running mission via the [inspection camera](inspect.md):
+
+```sh
+npm run scene -- --inspect-level L2 --bot complete
+npm run scene -- --inspect-level L1 --anchor mission/lab-door --out test-results/inspect/L1
+```
+
+The CLI captures three objective anchors (or the requested anchor) and renderer metrics with console-error gates. MCP adds `inspect_level` (level, optional bot), `inspect_camera` (position/target, anchor, follow, timeScale, LOD distance), and `inspect_state` (camera, anchors, entities). The existing `screenshot` tool captures both isolated scenes and running levels. The same headless browser, shared lock, private server and output rules apply. Use `load_scene` to return to isolated scene tools.
+### Gate interaction regression
+
+`npm run scene -- docs/scenes/gate-lockin.json` isolates the shipped `gate-1` yard gate.
+`layout.anchors` copies named gameplay anchors from the source layout and applies the crop's
+recentering shift. `{ "interact": true }` sends one real courier interaction press. The scene
+closes/reopens the gate on each face and walks through it in both directions; sim regressions
+in `tests/sim/interact/gate-lockin.test.ts` assert the toggle, navigation and sight state.

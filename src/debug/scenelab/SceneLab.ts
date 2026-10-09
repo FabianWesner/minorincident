@@ -31,7 +31,8 @@ type Plan =
   | { type: 'turn'; yaw: number }
   | { type: 'attack'; target: string; until: number }
   | { type: 'mount'; bike: string; at: number }
-  | { type: 'click'; entity: number; at: number };
+  | { type: 'click'; entity: number; at: number }
+  | { type: 'interact' };
 interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number }
 interface Hit extends BoneHit { actor: string; frame: number; count: number }
 const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] } : p;
@@ -69,6 +70,8 @@ export class SceneLab {
   /** Hub heights of every wheel over the last two frames, the worst one-frame spike (up then down, or down then up: the smaller
    * of the two moves) and the largest one-frame move, per `${vehicle}|${wheel}`. */
   private hubs = new Map<string, { last: number[]; spikeCm: number; spikeFrame: number; stepCm: number; stepFrame: number }>();
+  /** Courier bike presence: frames its sim entity was in view, frames it was then not drawn (or drawn > 0.6 m off its sim spot). */
+  private bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 };
   private groundMeshes: Mesh[] | null = null;
   private readonly ray = new Raycaster();
   private readonly registry = new AssetRegistry(() => {});
@@ -89,7 +92,7 @@ export class SceneLab {
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
@@ -207,6 +210,7 @@ export class SceneLab {
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
+      else if ('interact' in a) actor.plan = { type: 'interact' };
       else if ('hit' in a) world.player!.damage(a.hit.amount ?? 5, world.tick);
       return;
     }
@@ -389,6 +393,8 @@ export class SceneLab {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
       else { frame.pointerTarget = true; frame.aimSource = 'pointer'; if (this.frame > plan.at + 40) courier.plan = null; }
+    } else if (plan?.type === 'interact') {
+      frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
       // Mount/dismount is the real interact press next to the bicycle (one tick).
       const bike = plan.bike ? this.vehicles.get(plan.bike) : undefined;
@@ -493,7 +499,7 @@ export class SceneLab {
       const list = this.vehicleTrack.get(id) ?? []; this.vehicleTrack.set(id, list);
       list.push([this.frame, +v.transform.x.toFixed(3), +v.transform.y.toFixed(3), +v.transform.z.toFixed(3), +(v.transform.yaw * 180 / Math.PI).toFixed(1), +(this.world.districts?.pavingHeight(v.transform.x, v.transform.z) ?? 0).toFixed(3)]);
     }
-    if (this.frame > 2) this.sampleWheels();
+    if (this.frame > 2) { this.sampleWheels(); this.sampleBike(); }
     for (let i = 0; i < torsos.length; i++) for (let j = i + 1; j < torsos.length; j++) {
       const depth = bodyOverlap(torsos[i].bones, torsos[j].bones); if (depth <= .02) continue;   // 2 cm slack: soft contact
       const key = `${torsos[i].id}|${torsos[j].id}`, old = this.bodies.get(key), depthCm = Math.round(depth * 1000) / 10;
@@ -583,6 +589,19 @@ export class SceneLab {
       if (gap > old.gapMaxCm) Object.assign(old, { gapMaxCm: gap, maxFrame: this.frame });
     });
   }
+  /** Is the courier bike drawn where the sim has it (PO 10-08: it vanished after an infected knocked her off)? */
+  private sampleBike(): void {
+    const bike = [...this.vehicles].map(([, e]) => this.world.entities.get(e)).find(e => e?.bicycle), root = this.game.view.labProbes().bicycle?.drawnRoot();
+    if (!bike) return;
+    const q = this.game.view.project(bike.transform.x, bike.transform.y + .4, bike.transform.z);
+    if (!(Math.abs(q[0]) < .95 && Math.abs(q[1]) < .95 && q[2] < 1)) return;
+    this.bike.inViewFrames++;
+    let shown = !!root, o: Object3D | null = root ?? null;
+    while (o) { if (!o.visible) shown = false; if (!o.parent && o.type !== 'Scene') shown = false; o = o.parent; }
+    const off = root ? Math.hypot(root.position.x - bike.transform.x, root.position.z - bike.transform.z) : Infinity;
+    if (Number.isFinite(off)) this.bike.maxOffsetCm = Math.max(this.bike.maxOffsetCm, Math.round(off * 1000) / 10);
+    if (!shown || off > .6) { if (!shown) this.bike.missedFrames++; else this.bike.offFrames++; if (this.bike.firstMissedFrame < 0) this.bike.firstMissedFrame = this.frame; }
+  }
   private surfaceAt(x: number, z: number): string | null {
     let found: string | null = null;
     for (const d of this.world.districts?.districts ?? []) for (const s of d.layout.surfaces) if (inside([x - d.origin[0], z - d.origin[1]], s.polygon)) found = s.surface + (s.height !== undefined ? `@${s.height}` : '');
@@ -659,7 +678,7 @@ export class SceneLab {
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
-      actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
   }
   describe() {
