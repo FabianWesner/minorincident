@@ -8363,13 +8363,13 @@
   {
     "id": "decay.rubble-pile",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.rubble-pile.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 2.3830630779266357,
+      "y": 1.3078960180282593,
+      "z": 2.097200036048889,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8377,17 +8377,30 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "debrisCenterSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.rubble-pile/build.py",
+    "sourceGlb": "assets/decay.rubble-pile/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.rubble-pile.lod1.glb",
+      "lod2": "public/assets/models/decay.rubble-pile.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.downed-power-line",
@@ -8450,13 +8463,13 @@
   {
     "id": "decay.crater",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.crater.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 5.1897101402282715,
+      "y": 1.0943660140037537,
+      "z": 4.570327997207642,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8464,17 +8477,34 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "col:blastSurface",
+      "terrainCutout"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "blastCenterSocket",
+      "terrainCutoutSocket",
+      "rimGroundSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.crater/build.py",
+    "sourceGlb": "assets/decay.crater/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.crater.lod1.glb",
+      "lod2": "public/assets/models/decay.crater.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.body-bag",
@@ -14573,7 +14603,10 @@
   },
   {
     "id": "prop.lawn-chair-a",
-    "authoredLodTriangles": { "lod1": 1520, "lod2": 1520 },
+    "authoredLodTriangles": {
+      "lod1": 1520,
+      "lod2": 1520
+    },
     "category": "prop",
     "status": "integrated",
     "tier": "side",
@@ -14611,7 +14644,10 @@
   },
   {
     "id": "prop.lawn-chair-b",
-    "authoredLodTriangles": { "lod1": 1520, "lod2": 1520 },
+    "authoredLodTriangles": {
+      "lod1": 1520,
+      "lod2": 1520
+    },
     "category": "prop",
     "status": "integrated",
     "tier": "side",
@@ -14982,7 +15018,10 @@
   },
   {
     "id": "prop.broken-chair",
-    "authoredLodTriangles": { "lod1": 2624, "lod2": 2624 },
+    "authoredLodTriangles": {
+      "lod1": 2624,
+      "lod2": 2624
+    },
     "category": "prop",
     "status": "integrated",
     "tier": "side",
@@ -16861,5 +16900,96 @@
       "drawCalls": 8
     },
     "decayVariants": []
+  },
+  {
+    "id": "decay.fuel-truck-crater",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.fuel-truck-crater/build.py",
+    "sourceGlb": "assets/decay.fuel-truck-crater/model.glb",
+    "glb": "public/assets/models/decay.fuel-truck-crater.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.fuel-truck-crater.lod1.glb",
+      "lod2": "public/assets/models/decay.fuel-truck-crater.lod2.glb"
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "col:blastSurface",
+      "terrainCutout"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "blastCenterSocket",
+      "terrainCutoutSocket",
+      "rimGroundSocket",
+      "fuelTruckRemnantSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "dimensions": {
+      "x": 9.638032913208008,
+      "y": 1.8055340051651,
+      "z": 6.801683187484741,
+      "tolerance": 0.1
+    }
+  },
+  {
+    "id": "decay.blown-sandbags",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.blown-sandbags/build.py",
+    "sourceGlb": "assets/decay.blown-sandbags/model.glb",
+    "glb": "public/assets/models/decay.blown-sandbags.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.blown-sandbags.lod1.glb",
+      "lod2": "public/assets/models/decay.blown-sandbags.lod2.glb"
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "breachSocket",
+      "lineEndLSocket",
+      "lineEndRSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "dimensions": {
+      "x": 4.0585010051727295,
+      "y": 0.8899999856948853,
+      "z": 1.8263520002365112,
+      "tolerance": 0.1
+    }
   }
 ]

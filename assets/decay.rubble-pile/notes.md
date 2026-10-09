@@ -1,0 +1,3 @@
+# decay.rubble-pile
+
+Separate L5 masonry heap: six large split blocks, leaning concrete slab, loose brick, timber and bent reinforcing bar. Warm brick and pale concrete echo the reference. The recipe retains the major slab, perimeter fragments and rebar at every tier; near chips use a three-ring crown, distant fragments a complete four-corner solid. No generic decimation. Collider proxies are individual masonry/slab cuboids with local rotations; no broad footprint slab. debrisCenterSocket is for placement/VFX only. Fixed mass zero, not pushable or kickable. No lights. Ground contact is Y=0. Approximate proxies simplify chipped edges; runtime placement must transform each proxy including its rotation.
