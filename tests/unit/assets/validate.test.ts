@@ -144,3 +144,13 @@ test('living skins count animated material draws and reject duplicate attachment
   expect(attached.errors).toContain('drawCalls including animated owners: 2 > 1');
   expect(attached.errors.join('\n')).toContain('static attachments must share their owner material batch');
 });
+// Animated attachments used to bypass the static draw gate entirely.
+test('living adult draw cap counts geometry under animated owners', () => {
+  const { doc, def } = fixture();
+  def.category = 'character'; def.animatedDrawBase = 'npc.civilian-man-a';
+  expect(validateDocument(doc, def, 1024).errors).toEqual([]);
+  const body = doc.getRoot().listNodes().find(n => n.getName() === 'body')!;
+  body.addChild(doc.createNode('bandage').setMesh(body.getMesh()));
+  def.budget.triangles = 10;
+  expect(validateDocument(doc, def, 1024).errors).toContain('animated-owner drawCalls: 2 > 1');
+});
