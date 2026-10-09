@@ -34,14 +34,20 @@ function helpers(page: Page) {
       const friends = a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor?.mode === 'follow');
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && (a.input.visible(e.transform) || friends.some(f => f.civilian?.survivor?.cover && Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
         .filter(e => e.infected?.l1?.mode === 'chase' || e.infected?.l1?.mode === 'bite' || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 9 || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7))
-        .sort((a, b) => Number(b.infected?.l1?.mode === 'bite') - Number(a.infected?.l1?.mode === 'bite') || Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+        .sort((a, b) => {
+          const danger = (e: typeof a) => Math.min(Infinity, ...friends.map(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z)));
+          return Number(b.infected?.l1?.mode === 'bite') - Number(a.infected?.l1?.mode === 'bite') ||
+            Number(danger(b) < 3) - Number(danger(a) < 3) ||
+            Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z);
+        })[0];
       return near ? { id: near.id, close: Math.hypot(near.transform.x - p.x, near.transform.z - p.z) < 2.4, rescue: near.infected?.l1?.mode === 'bite' || !a.input.visible(near.transform), p, at: near.transform } : null;
     }, range);
     if (!target) return false;
     await page.evaluate(({ p, at }) => window.__SS__!.camera.cinematic({ position: [p.x + 24, 29, p.z + 24], target: [(p.x + at.x) / 2, 0, (p.z + at.z) / 2] }, true), target);
     await step(1);
     if (target.rescue && !target.close) {
-      // Walk beside the grabber before swinging: the victim can shield a distant gunshot.
+      // Sprint beside the grabber before swinging: the victim can shield a distant gunshot.
+      await page.keyboard.up('Alt'); // Sprint: the grab lasts only one second.
       const dx = target.p.x - target.at.x, dz = target.p.z - target.at.z, d = Math.hypot(dx, dz);
       const ground = { x: target.at.x + dx / d * 1.7, z: target.at.z + dz / d * 1.7 };
       const point = await page.evaluate(q => window.__SS__!.input.project(q), ground);
@@ -51,6 +57,7 @@ function helpers(page: Page) {
         const distance = await page.evaluate(id => { const a = window.__SS__!, p = a.getState().player!.transform, e = a.getEntity(id); return e ? Math.hypot(e.transform.x - p.x, e.transform.z - p.z) : 0; }, target.id);
         if (distance < 2.4) { target.close = true; break; }
       }
+      await page.keyboard.down('Alt');
     }
     const key = target.close ? 'j' : 'k';
     await page.keyboard.down(key);
@@ -91,7 +98,7 @@ function helpers(page: Page) {
       const lag = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'civilian' }).some(e => e.civilian?.survivor && !e.hidden && e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 6); });
       // Keep guarding the followers; a nine-second fighting hiatus exceeds their grab/turn window.
       if ((await player()).health.current > 0 && await fightNearby(Math.max(18, range))) await click();
-      else if (lag) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await step(12); await click(); }
+      else if (lag) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await regroup(12); await click(); }
       else if (i % 4 === 3) await click();
     }
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
@@ -162,6 +169,9 @@ test.describe('L5 Aftermath in the browser', () => {
     expect((await mission()).l5!.found).toBe(5); expect([...heard].sort()).toEqual(['dale', 'mia', 'okafor', 'rosa', 'sam']);
     // Protect all five through the group photo, then enter the Metro: the group photo, then the shutter.
     expect((await mission()).steps.metro.status).toBe('active');
+    // Approach from the west, keeping the entrance trigger out of the route until after the photo.
+    await go({ x: -20, z: -37.6 }, 1.6, 11);
+    await go({ x: 10, z: -37.6 }, 1.6, 11);
     await go({ x: 10, z: -42.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
     expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
     await go(metroFoot(), 2.4, 11);
