@@ -1,5 +1,5 @@
 import { l3Anchors, l3Street } from '../../data/l3';
-import { findClearSpot, footprints, obstaclesOf } from '../placementClearance';
+import { findClearSpot, firstOverlap, footprints, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W2 -> W3 "recently collapsed, still recognizable" dressing (E21 section 5.8); counted by the static AC15 test. */
@@ -104,6 +104,11 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [name, [x, z]] of Object.entries(l3Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     // Placement rule shared with L2: dressing never cuts into a fence, wall, lamp, tree or another prop and stays out of
     // gardens; a piece that would moves to the nearest clear spot (cars slide along their own axis first, bumper to obstacle).
+    // A fence run never ends inside a building: base panels that cut into one are dropped (the fence simply stops at the wall).
+    const walls = layout.placements.filter(p => p.assetId.startsWith('bld.') || p.assetId.startsWith('kit.')).flatMap(p => footprints(p));
+    const through = new Set(layout.placements.filter(p => /fence/.test(p.assetId) && firstOverlap(p, walls, .2) !== undefined).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !through.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !through.has(c.id.split('/')[0]));
     const obstacles = obstaclesOf(layout, 2);
     const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string) => {
       const decal = assetId.startsWith('decal.');
