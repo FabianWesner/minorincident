@@ -123,11 +123,17 @@ export class NavGrid {
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
     if (!this.clear(to.x, to.z, radius)) return false;
     const walls = new Set(this.blockers.values());
+    let previousX = Infinity, previousZ = Infinity;
     for (let i = 0; i <= steps; i++) {
       const x = from.x + dx * i / Math.max(1, steps), z = from.z + dz * i / Math.max(1, steps);
       if (this.mask && !this.mask(x, z)) return false;
       if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
-      for (const wall of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) walls.add(wall);
+      // Consecutive 20 cm samples usually share a 4 m bucket. Collect its walls once.
+      const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
+      if (bucketX !== previousX || bucketZ !== previousZ) {
+        for (const wall of this.buckets.get(`${bucketX},${bucketZ}`) ?? []) walls.add(wall);
+        previousX = bucketX; previousZ = bucketZ;
+      }
     }
     // Sampled clearance alone can skip a corner between two samples. A pulled
     // waypoint must clear the entire segment, including narrow foliage boxes.
