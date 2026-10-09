@@ -2930,31 +2930,46 @@
   {
     "id": "util.radio",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
+    "script": "assets/util.radio/build.py",
+    "sourceGlb": "assets/util.radio/model.glb",
     "glb": "public/assets/models/util.radio.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 0.2574999928474426,
+      "y": 0.7900000028312206,
+      "z": 0.31949999928474426,
+      "tolerance": 0.03
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "front"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "audioSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
     },
-    "decayVariants": []
+    "lods": {
+      "lod1": "public/assets/models/util.radio.lod1.glb",
+      "lod2": "public/assets/models/util.radio.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
   },
   {
     "id": "util.keys",
@@ -17234,5 +17249,146 @@
       "lod2": 4000
     },
     "decayVariants": []
+  },
+  {
+    "id": "prop.service-gate",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.service-gate/build.py",
+    "sourceGlb": "assets/prop.service-gate/model.glb",
+    "glb": "public/assets/models/prop.service-gate.glb",
+    "dimensions": {
+      "x": 0.435,
+      "y": 2.58,
+      "z": 2.56,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front",
+      "gate",
+      "col:gate"
+    ],
+    "animatedNodes": [
+      "gate"
+    ],
+    "sockets": [
+      "gateClosed",
+      "gateOpen",
+      "braceSlot",
+      "latchSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.service-gate.lod1.glb",
+      "lod2": "public/assets/models/prop.service-gate.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
+  },
+  {
+    "id": "prop.fluorescent-strip",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.fluorescent-strip/build.py",
+    "sourceGlb": "assets/prop.fluorescent-strip/model.glb",
+    "glb": "public/assets/models/prop.fluorescent-strip.glb",
+    "dimensions": {
+      "x": 0.3645000010728836,
+      "y": 0.4000000059604645,
+      "z": 1.850000023841858,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front",
+      "light:fluorescent"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "mountSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.fluorescent-strip.lod1.glb",
+      "lod2": "public/assets/models/prop.fluorescent-strip.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
+  },
+  {
+    "id": "prop.emergency-light",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.emergency-light/build.py",
+    "sourceGlb": "assets/prop.emergency-light/model.glb",
+    "glb": "public/assets/models/prop.emergency-light.glb",
+    "dimensions": {
+      "x": 0.29250000417232513,
+      "y": 0.7200000286102295,
+      "z": 0.3799999952316284,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front",
+      "light:emergency"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "mountSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.emergency-light.lod1.glb",
+      "lod2": "public/assets/models/prop.emergency-light.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
   }
 ]
