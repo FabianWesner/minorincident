@@ -36,6 +36,7 @@ function helpers(page: Page) {
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
   let seenDeaths = 0;
   const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
+    let groundStart = 0, lastRetry = (await player()).transform;
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
@@ -51,7 +52,8 @@ function helpers(page: Page) {
         x: target.x + Math.cos(i * Math.PI / 8) * radius,
         z: target.z + Math.sin(i * Math.PI / 8) * radius,
       }))];
-      for (const q of ground) {
+      for (let j = 0; j < ground.length; j++) {
+        const q = ground[(groundStart + j) % ground.length];
         const point = await page.evaluate(q => window.__SS__!.input.project(q), q);
         await page.mouse.click(point.x, point.y); await step(1);
         if (await page.evaluate(() => window.__SS__!.input.lastPick().length === 0)) break;
@@ -79,7 +81,12 @@ function helpers(page: Page) {
       }
       else if (fights < 3 && (await player()).health.current > 0 && await fightNearby(range)) { fights++; await click(); }
       else if (fights >= 3) { if (++fights >= 8) fights = 0; if (fights === 4) await click(); }
-      else if (i % 10 === 9) await click();
+      else if (i % 10 === 9) {
+        // A clear ground click can still approach the wrong side of a wreck. Try another
+        // physical ground point within the unchanged waypoint tolerance after a stall.
+        if (Math.hypot(p.x - lastRetry.x, p.z - lastRetry.z) < .25) groundStart = (groundStart + 1) % 17;
+        lastRetry = p; await click();
+      }
     }
     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
