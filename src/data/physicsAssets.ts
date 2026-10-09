@@ -188,7 +188,7 @@ export default {
   },
   "prop.shopping-cart": {
     "class": "medium",
-    "mass": 24,
+    "mass": 35,
     "friction": 0.35,
     "restitution": 0.1,
     "centerOfMass": [
@@ -203,6 +203,7 @@ export default {
     "vaultable": false,
     "flammable": false,
     "sounds": "prop.metal-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -218,7 +219,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.shopping-cart.glb",
-    "hash": "ad8f95e546ab881f6b873399667262b02552b998c95b05804eec2842755c65f3"
+    "hash": "8366d070a9515a724de4974374a12fc74049c814873bf10cf46dec70124fefe0"
   },
   "prop.folding-chair": {
     "class": "light",
@@ -810,22 +811,23 @@ export default {
     "pushable": true,
     "kickable": true,
     "flammable": false,
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.24,
-          0.005000010728836046,
-          -0.395
+          -0.2479960181263109,
+          0.000004303301825436812,
+          -0.4173319637775421
         ],
         "max": [
-          0.24,
-          0.7850000107288361,
-          0.395
+          0.293495968773665,
+          0.9975058297673373,
+          0.4173319935798645
         ]
       }
     ],
     "source": "public/assets/models/prop.medical-cooler.glb",
-    "hash": "e8555bcc02440d28add903bec93be7db882a9e2175fe101655a4644adda45ed9"
+    "hash": "4194e42784b69e3454250977da2b4cc56ece85127a4f5d2d1c8cff5630b84b98"
   },
   "veh.courier-van": {
     "class": "heavy",
@@ -1216,7 +1218,7 @@ export default {
     "hash": "9f2539728ba287156ea5de6c455e829a4cb123cecae504cc9f63668112e518d0"
   },
   "decay.furniture-barricade": {
-    "class": "heavy",
+    "class": "medium",
     "mass": 65,
     "friction": 0.8,
     "restitution": 0.05,
@@ -1237,22 +1239,23 @@ export default {
       "debrisSet": "debris.wood-small"
     },
     "sounds": "prop.wood-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.55,
-          -4.768371586472142e-9,
-          -1.26
+          -0.515002876205462,
+          -0.000005679956837312261,
+          -1.2599999904632568
         ],
         "max": [
-          0.55,
-          1.2599999952316283,
-          1.26
+          0.562002867145556,
+          1.249981850533918,
+          1.2600000202655792
         ]
       }
     ],
     "source": "public/assets/models/prop.sofa.glb",
-    "hash": "2669279d4339ef08c67f781833ff15d1745264bed5b0af7d4ff678113b040b97"
+    "hash": "c87b2a1f52870e737ca9606f42c678de7d564c9bfa8b81ebe3a1c0ab741b1abd"
   },
   "decay.burned-facade": {
     "class": "fixed",
@@ -1596,7 +1599,7 @@ export default {
     "hash": "08b2379485a64aa6d6df8dd970cf90f4ffcf431bf91a978a56d996f1c302b1e6"
   },
   "prop.plank-stack": {
-    "class": "heavy",
+    "class": "medium",
     "mass": 95,
     "friction": 0.75,
     "restitution": 0.05,
@@ -1611,22 +1614,23 @@ export default {
     "vaultable": true,
     "barricadeValue": 1,
     "barricadeHP": 250,
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -1.345,
-          -0.015000005960464469,
-          -0.485
+          -1.3458214178681374,
+          -5.318850955227106e-7,
+          -0.48407473647678495
         ],
         "max": [
-          1.345,
-          0.7149999940395355,
-          0.485
+          1.3379183635115623,
+          0.7281573369235477,
+          0.48407473647678495
         ]
       }
     ],
     "source": "public/assets/models/prop.plank-stack.glb",
-    "hash": "a143a7c43ab800f2bba3e89b91f1aa03e33cc7bdc48714750a23a92d3eb15ebe"
+    "hash": "4aa2498eda51c020d0da800f6ed40a8ada540c76bf2a2e044c63d5e8e578be0a"
   },
   "prop.dumpster": {
     "class": "heavy",
@@ -1664,7 +1668,7 @@ export default {
     "hash": "0115c647dff86febb2b39466dbadb68517ccb70fd8b8c55c2f6ead941d1e562a"
   },
   "prop.sofa": {
-    "class": "heavy",
+    "class": "medium",
     "mass": 65,
     "friction": 0.8,
     "restitution": 0.05,
@@ -1685,22 +1689,23 @@ export default {
       "debrisSet": "debris.wood-small"
     },
     "sounds": "prop.wood-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.55,
-          -4.768371586472142e-9,
-          -1.26
+          -0.515002876205462,
+          -0.000005679956837312261,
+          -1.2599999904632568
         ],
         "max": [
-          0.55,
-          1.2599999952316283,
-          1.26
+          0.562002867145556,
+          1.249981850533918,
+          1.2600000202655792
         ]
       }
     ],
     "source": "public/assets/models/prop.sofa.glb",
-    "hash": "2669279d4339ef08c67f781833ff15d1745264bed5b0af7d4ff678113b040b97"
+    "hash": "c87b2a1f52870e737ca9606f42c678de7d564c9bfa8b81ebe3a1c0ab741b1abd"
   },
   "prop.pallet": {
     "class": "medium",
@@ -1758,34 +1763,23 @@ export default {
     "vaultable": false,
     "flammable": false,
     "sounds": "prop.metal-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.885,
-          0.23349996805191042,
-          -0.43
+          -1.2190065665362861,
+          0,
+          -1.3350011151752725
         ],
         "max": [
-          0.885,
-          1.4334999680519105,
-          0.43
-        ]
-      },
-      {
-        "min": [
-          -1.084999999254942,
-          1.238499870300293,
-          -0.5250000029802322
-        ],
-        "max": [
-          1.185000000745058,
-          3.5084998703002928,
-          0.12499999701976777
+          1.1850010496101633,
+          2.694499909877777,
+          0.9350010794124857
         ]
       }
     ],
     "source": "public/assets/models/prop.vending-cart.glb",
-    "hash": "ee893e203026c0788ca5545815af0b949f802eb02794ef7eb5f18ac275dbc924"
+    "hash": "71d27c11c5ae4caea805f6f4011a6177f9b17df349d3048689d13d3bb04365a0"
   },
   "prop.fire-extinguisher": {
     "class": "light",
@@ -1864,22 +1858,23 @@ export default {
     "flammable": false,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.083,
-          6.5565109175214076e-9,
-          -0.083
+          -0.08454651591427509,
+          -1.4651287294498161e-8,
+          -0.11050029347030474
         ],
         "max": [
-          0.083,
-          0.33000000655651096,
-          0.083
+          0.30583357140710077,
+          0.6531142592430115,
+          0.08699235641448269
         ]
       }
     ],
     "source": "public/assets/models/prop.tear-gas-canister.glb",
-    "hash": "8aefa42eb504085d925a4325a2bbc9c647a20e3f191d8ad8cad7621b7021a95f"
+    "hash": "82788e62e7786fc624059361a4655040177dc07fc5c01bf49e7d84e741c78fcd"
   },
   "veh.fuel-truck": {
     "class": "heavy",
@@ -1929,9 +1924,9 @@ export default {
     "friction": 0.7,
     "restitution": 0.05,
     "centerOfMass": [
-      0,
-      0,
-      0.8
+      0.048989041955942,
+      1.0497639998793602,
+      0
     ],
     "pushable": true,
     "kickable": false,
@@ -1940,22 +1935,23 @@ export default {
     "barricadeValue": 1,
     "barricadeHP": 250,
     "sounds": "prop.metal-heavy",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.3699999992549419,
-          -4.768371586472142e-8,
-          -0.56
+          -0.3760372756076493,
+          0.00039283931255340576,
+          -0.5580718968485725
         ],
         "max": [
-          0.47000000074505804,
-          2.099999952316284,
-          0.56
+          0.47401535951953333,
+          2.099135160446167,
+          0.5580718968485725
         ]
       }
     ],
     "source": "public/assets/models/prop.jukebox.glb",
-    "hash": "2bd9cb11d9e48d637c8e8d7151de2b7001822a63fc53fb04b33a675f86d07bbb"
+    "hash": "edb6463ddd9921854d462bffe3479fa8d3ace7a31c6de7612c71f20a101d3eba"
   },
   "prop.light-tower": {
     "class": "heavy",
@@ -2004,7 +2000,7 @@ export default {
     "hash": "a8c6fc2286f2093500715a7ffe142e34a74f56d26a58b84f1463cd4c6a3abe21"
   },
   "prop.porta-potty": {
-    "class": "heavy",
+    "class": "medium",
     "mass": 90,
     "friction": 0.8,
     "restitution": 0.05,
@@ -2012,22 +2008,28 @@ export default {
     "kickable": false,
     "vaultable": false,
     "flammable": true,
+    "centerOfMass": [
+      0.021250009536743164,
+      1.2274999618530273,
+      0
+    ],
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.64,
-          5.7220459037665705e-8,
-          -0.64
+          -0.6350000082171352,
+          0,
+          -0.662993082213046
         ],
         "max": [
-          0.64,
-          2.380000057220459,
-          0.64
+          0.6775000272906215,
+          2.4549999237060547,
+          0.662993082213046
         ]
       }
     ],
     "source": "public/assets/models/prop.porta-potty.glb",
-    "hash": "df00af1063474a31ad61a2e4d95bdf3fa78131b1e7851b9cdf2d9cbcbb4cf70c"
+    "hash": "cb9dfb05ca9bc05a997f7dad94b466f3a163da4087b6e57583dbd8d402472135"
   },
   "prop.vending-machine": {
     "class": "fixed",
@@ -2176,71 +2178,54 @@ export default {
     "flammable": false,
     "explosive": null,
     "sounds": "prop.plastic-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.24,
-          -0.20700000017881393,
-          -0.033
+          -0.24000004079339196,
+          0,
+          -0.24000004079339196
         ],
         "max": [
-          0.24,
-          0.27299999982118606,
-          0.033
-        ]
-      },
-      {
-        "min": [
-          -0.155,
-          0.06600000619888308,
-          -0.155
-        ],
-        "max": [
-          0.155,
-          0.6460000061988831,
-          0.155
+          0.24000004079339196,
+          0.6460000276565552,
+          0.24000004079339196
         ]
       }
     ],
     "source": "public/assets/models/prop.traffic-cone.glb",
-    "hash": "586c6c0d3838df9e7694cf36581b40e8003d64ad6fa46a85d68d53b0fa4cd831"
+    "hash": "720ceb0c0e3d21569d7224f70dd774a6261d4619d0c9df84f6af27c08c4a6c7f"
   },
   "prop.trash-bin": {
-    "class": "light",
+    "class": "medium",
     "mass": 24,
     "friction": 0.65,
     "restitution": 0.08,
     "pushable": true,
     "kickable": true,
     "flammable": true,
+    "centerOfMass": [
+      -0.008000016212463379,
+      0.6090000136284743,
+      0.07750001549720764
+    ],
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
-          -0.32,
-          0.28000001430511473,
-          -1.100000009536743
+          -0.37000700601667896,
+          0.000008160277973789931,
+          -0.8134999871253967
         ],
         "max": [
-          0.32,
-          0.9400000143051148,
-          0.11999999046325682
-        ]
-      },
-      {
-        "min": [
-          -0.33,
-          0.2399999785423279,
-          -0.015000007152557338
-        ],
-        "max": [
-          0.33,
-          0.9299999785423279,
-          1.1549999928474426
+          0.3540069735917522,
+          1.2179918669789749,
+          0.968500018119812
         ]
       }
     ],
     "source": "public/assets/models/prop.trash-bin.glb",
-    "hash": "1030a54a0c8806580677c81edbea8afbbf70bfc1f61d6d400a8a42df1482d986"
+    "hash": "d14f84d7b30df56ca30b8a7a7851165221e2cc57f1f9a38735b186117012e84a"
   },
   "veh.wreck": {
     "class": "heavy",
@@ -3009,22 +2994,23 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
           -0.6923491954803467,
-          0.10062983632087708,
-          -0.4107823669910431
+          0.000009297601091029506,
+          -0.3100749059625259
         ],
         "max": [
           0.6923491954803467,
-          0.7209348976612091,
-          0.4107823669910431
+          0.8215229155788089,
+          0.3100749059625259
         ]
       }
     ],
     "source": "public/assets/models/prop.wheelbarrow.glb",
-    "hash": "ac8d132827d5fcc34b2c2cdc752849a43827d932c2b3f7568bde173cd4e9b502"
+    "hash": "db49c9557f23a146dbf34fef07ecbb205d1b250154289f5b4118ef9842859756"
   },
   "prop.crates": {
     "class": "medium",
