@@ -16,9 +16,10 @@ const grove = (): DistrictLayout => JSON.parse(readFileSync('public/assets/layou
 function rings(m: Mission): [string, number, number, number][] {
   return m.def.steps.filter(s => s.complete.kind === 'interact').map(s => { const a = m.def.anchors[(s.complete as { anchor: string }).anchor]; return [s.id, a.x, a.z, Math.min(a.radius, 2)]; });
 }
-/** Loose prop colliders (not buildings, fences or the ground) closer than ring + clearance. */
+/** Loose prop colliders (not buildings, fences or the ground) closer than ring + clearance. `dressing:fire-*` are the fire
+ * station's own piers, bollards and plinth curbs (authored colliders for parts of the building model), i.e. building. */
 function blockers(layout: DistrictLayout, ring: [string, number, number, number], clear: number): string[] {
-  return layout.colliders.filter(c => !c.id.startsWith('bld.') && !c.id.includes('fence') && !c.id.startsWith('kit.')).filter(c => {
+  return layout.colliders.filter(c => !c.id.startsWith('bld.') && !c.id.startsWith('dressing:fire-') && !c.id.includes('fence') && !c.id.startsWith('kit.')).filter(c => {
     const [x0, , z0] = c.aabb.min, [x1, , z1] = c.aabb.max, dx = Math.max(x0 - ring[1], 0, ring[1] - x1), dz = Math.max(z0 - ring[2], 0, ring[2] - z1);
     return Math.hypot(dx, dz) < ring[3] + clear;
   }).map(c => `${c.id}@${ring[0]}`);

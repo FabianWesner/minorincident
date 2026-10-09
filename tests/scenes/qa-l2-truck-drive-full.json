@@ -1,6 +1,6 @@
 {
   "name": "qa-l2-truck-drive-full",
-  "note": "Full actual L2 ride from the station apron through both right-lane junctions to Grove Market; the game camera follows the engine.",
+  "note": "Full actual L2 ride: engine leaves the moved Fire Station 3 on Main Row, westbound right lane, straight to Grove Market; the game camera follows the engine.",
   "seed": 1,
   "ground": "district",
   "time": "L2",
@@ -9,12 +9,12 @@
     "level": "L2",
     "bbox": [
       [
-        -80,
-        -40
+        -47,
+        -46
       ],
       [
-        -22,
-        48
+        46,
+        -24
       ]
     ]
   },
@@ -23,8 +23,8 @@
       "id": "engine",
       "asset": "vehicle.fire-engine",
       "at": [
-        -70.6,
-        36.7
+        40,
+        -32.0
       ],
       "l2Ride": {
         "distanceM": 0,
@@ -37,8 +37,8 @@
       "id": "elder",
       "kind": "pedestrian",
       "at": [
-        -28.75,
-        -22
+        10,
+        -37
       ],
       "look": {
         "model": "npc.civilian-elderly"
@@ -51,14 +51,14 @@
     "actor": "engine",
     "zoom": 1.15
   },
-  "frames": 1650,
+  "frames": 1200,
   "shots": [
     0,
-    220,
-    520,
+    200,
+    450,
+    750,
     1000,
-    1350,
-    1650
+    1200
   ],
   "expect": {
     "consoleErrors": 0,
