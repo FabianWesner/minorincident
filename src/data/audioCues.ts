@@ -34,6 +34,9 @@ function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequ
     audioCues[id] = { id, category, offset, duration, bus, shape, frequency, priority, gain: 0.35, antiSpam: 0.08, rateSpread: 0.06, loop: false, initial: (!category.startsWith('music-L') && !lazyCategories.has(category)) || category === 'music-L1', ...options };
     offsets.set(category, offset + duration + 0.08);
 }
+cue('weather.rain', 'ambience', 'bed', 4, 1300, { category: 'weather', initial: false, gain: .25, loop: true, rateSpread: 0 });
+cue('weather.gust', 'ambience', 'noise', 1.5, 160, { category: 'weather', initial: false, gain: .35, antiSpam: 0, rateSpread: 0 });
+cue('weather.thunder', 'ambience', 'noise', 2, 65, { category: 'weather', initial: false, gain: .7, antiSpam: 0, rateSpread: 0 });
 const captions: Record<string, string> = { screamer: 'Screamer inhaling', runner: 'Runner snarling', crawler: 'Crawler scraping', brute: 'Brute roaring', bloated: 'Bloated gurgling', dog: 'Dog growling', cat: 'Cat hissing', crow: 'Crows cawing', lion: 'Lion roaring', gorilla: 'Gorilla beating its chest' };
 export const telegraphCues: Record<string, string> = {};
 for (const [index, def] of infectedDefinitions.entries()) {
@@ -170,6 +173,7 @@ export const l1AccidentCues = ['l1.flicker.buzz', 'l1.blast', 'l1.glass.rattle',
 export const l1ChaosCues = ['l1.chaos.panic', 'l1.chaos.infected', 'l1.chaos.run', 'l1.chaos.car-alarm', 'l1.chaos.fall', 'l1.chaos.distant'] as const;
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
+    'weather.gust': 'weather.gust', 'weather.lightning': 'weather.thunder', 'weather.thunder': 'weather.thunder',
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
     'civilian.bark': 'civilian.hey', 'story.say': 'ui.tick', 'story.thud': 'impact.thump', 'civilian.state': 'ui.tick', 'civilian.eyes': 'civilian.transform', 'civilian.saved': 'stinger.objective', 'civilian.finished': 'ui.tick', 'civilian.turned': 'civilian.transform',
     'corgi.bark': 'corgi.warning', 'corgi.warn': 'corgi.warning', 'corgi.fetched': 'ui.pickup', 'escort.order': 'ui.switch', 'escort.downed': 'ui.tick', 'escort.revived': 'stinger.objective',

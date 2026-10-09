@@ -18,6 +18,7 @@ export class VehicleBody {
   readonly previousWheels = Array.from({ length: 4 }, () => ({ rotation: 0, steer: 0, suspension: 0, contact: false }));
   readonly intent: DriveIntent = { throttle: 0, steer: 0, brake: true, boost: false };
   boostScale = 1;
+  gripScale = 1;
   speed = 0; forwardSpeed = 0; roll = 0; stuck = false;
   steeringAngle = 0; braking = true; upsideDown = false;
   private upsideDownTicks = 0;
@@ -58,7 +59,7 @@ export class VehicleBody {
       this.controller.setWheelSteering(i, i < 2 ? this.steeringAngle : 0);
       this.controller.setWheelEngineForce(i, rearDrift ? 0 : force);
       this.controller.setWheelBrake(i, this.def.mass * (brake || reversing ? h.brake : rearDrift ? h.handbrake : Math.abs(throttle) < .05 ? h.idleBrake : 0));
-      this.controller.setWheelFrictionSlip(i, rearDrift ? h.driftGrip : h.grip);
+      this.controller.setWheelFrictionSlip(i, (rearDrift ? h.driftGrip : h.grip) * this.gripScale);
       this.controller.setWheelSideFrictionStiffness(i, rearDrift ? h.driftGrip / h.grip : 1);
     }
     this.controller.updateVehicle(FIXED_DT, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS);

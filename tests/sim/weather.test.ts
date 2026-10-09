@@ -1,0 +1,111 @@
+import { afterEach, expect, test } from 'vitest';
+import { SimWorld } from '../../src/sim/world/SimWorld';
+import { WeatherSystem } from '../../src/sim/weather/WeatherSystem';
+import { weatherKinds, weatherTimelines } from '../../src/data/weather';
+import { Perception } from '../../src/sim/ai/Perception';
+import { arena, equip, fire, step } from './combat/helpers';
+const worlds: SimWorld[] = [];
+afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
+async function load() { const w = await arena(); worlds.push(w); return w; }
+function weatherTicks(w: SimWorld, n: number) { for (let i = 0; i < n; i++) { w.tick++; w.weather!.update(); } }
+test('T-E28-01 @E28 @E28-AC01 seeded gust/lightning/wetness timeline and campaign keys', async () => {
+  const a = await load(), b = await load();
+  for (const w of [a, b]) w.weather!.setOverride('thunderstorm');
+  for (let tick = 1; tick <= 3600; tick++) { weatherTicks(a, 1); weatherTicks(b, 1); if (tick % 60 === 0) expect(a.weather!.snapshot()).toEqual(b.weather!.snapshot()); }
+  expect(a.events.events().filter(e => e.type === 'weather.lightning').length).toBeGreaterThan(2);
+  expect(a.events.events()).toEqual(b.events.events());
+  for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6']) {
+    a.scenario = level; a.tick = 0; a.weather = new WeatherSystem(a, 1);
+    for (const key of weatherTimelines[level]) { a.tick = key.tick; a.weather.update(); expect(a.weather.kind).toBe(key.kind); }
+  }
+});
+test('T-E28-02 @E28 @E28-AC02 rain changes real noise, Molotov duration and wheel friction', async () => {
+  const w = await load(); w.weather!.setOverride('rain'); equip(w, ['weapon.pistol']); fire(w); step(w, 3);
+  expect(w.events.events().some(e => e.type === 'noise' && e.radius === 20)).toBe(true);
+  equip(w, ['weapon.molotov']); fire(w, 'LEFT', { x: 1, z: 0 }, { x: 6, z: 0 }); step(w, 40);
+  const z = w.combat!.effects.zones.find(z => z.kind === 'fire')!;
+  expect(z.expires - z.created).toBe(216);
+  const id = w.vehicles!.spawn('vehicle.sedan', { x: 10, z: 10 }); step(w, 1);
+  const car = w.vehicles!.cars.get(id)!;
+  expect(car.physics.controller.wheelFrictionSlip(0)).toBeCloseTo(car.physics.def.handling.grip * .85);
+  expect(w.getState().weather!.modifiers).toMatchObject({ noiseRadius: .8, fireDuration: .6, vehicleGrip: .85 });
+});
+test('T-E28-03 @E28 @E28-AC03 heavy rain saturates in 60 seconds and dries with 90s half-life', async () => {
+  const w = await load(); w.weather!.setOverride('rain'); weatherTicks(w, 3600);
+  expect(w.weather!.wetness).toBeGreaterThanOrEqual(.8); const wet = w.weather!.wetness;
+  w.weather!.setOverride('clear'); weatherTicks(w, 5400); expect(w.weather!.wetness).toBeCloseTo(wet / 2, 8);
+});
+test('T-E28-04 @E28 @E28-AC04 lightning reveals only within 40m for 30 ticks and delays thunder by distance', async () => {
+  const w = await load(); const p = w.entities.get(1)!.transform;
+  const near = w.spawnDummy('infected.runner', { x: p.x + 39.9, z: p.z }), far = w.spawnDummy('infected.runner', { x: p.x + 40.1, z: p.z });
+  w.weather!.strike({ x: p.x + 340, y: 0, z: p.z });
+  expect(w.weather!.reveals.has(near)).toBe(true); expect(w.weather!.reveals.has(far)).toBe(false);
+  weatherTicks(w, 29); expect(w.weather!.reveals.has(near)).toBe(true); weatherTicks(w, 1); expect(w.weather!.reveals.size).toBe(0);
+  weatherTicks(w, 30); expect(w.events.events()).toContainEqual({ type: 'weather.thunder', tick: 60, strikeTick: 0, position: { x: p.x + 340, y: 0, z: p.z } });
+});
+test('T-E28-05 @E28 @E28-AC05 fog perception uses 60% of the ordinary sight range', async () => {
+  const w = await load(), sight = new Perception(w), id = w.spawnDummy('infected.runner', { x: 0, z: 0 }, { yaw: 0 });
+  const e = w.entities.get(id)!;
+  expect(sight.sees(e, { x: sight.rangeM * .8, z: 0 })).toBe(true);
+  w.weather!.setOverride('fog'); expect(sight.sees(e, { x: sight.rangeM * .8, z: 0 })).toBe(false);
+  expect(sight.sees(e, { x: sight.rangeM * .59, z: 0 })).toBe(true);
+});
+test('T-E28-06 @E28 @E28-AC06 wind biases at least 60% of spread cells downwind over 20 trials', async () => {
+  const w = await load(); w.weather!.setOverride('wind'); let downwind = 0;
+  for (let i = 0; i < 20; i++) {
+    const id = w.hazards!.spawn('fire', { x: i * 12, z: 0 }, { duration: 2, spread: 1 });
+    const parent = w.entities.get(id)!; w.tick = parent.hazard!.spreadAt!;
+    const ids = new Set(w.entities.values().map(e => e.id)); w.hazards!.update();
+    const child = w.entities.values().find(e => !ids.has(e.id) && e.hazard?.kind === 'fire')!;
+    expect(child).toBeDefined();
+    if ((child.transform.x - parent.transform.x) * w.weather!.wind.x + (child.transform.z - parent.transform.z) * w.weather!.wind.z > 0) downwind++;
+    w.tick += 600; w.hazards!.update();
+  }
+  expect(downwind / 20).toBeGreaterThanOrEqual(.6);
+});
+test('T-E28-07 @E28 @E28-AC07 moving player/infected record tracks and snow/ash apply grip', async () => {
+  const w = await load(); const id = w.spawnDummy('infected.runner', { x: 5, z: 0 });
+  for (const kind of ['snow', 'ash'] as const) {
+    w.weather!.setOverride(kind);
+    for (let i = 0; i < 50; i++) { w.entities.get(1)!.transform.x += .5; w.entities.get(id)!.transform.z += .5; weatherTicks(w, 1); }
+    expect(w.weather!.tracks.filter(t => t.id === 1).length).toBeGreaterThanOrEqual(50);
+    expect(w.weather!.tracks.filter(t => t.id === id).length).toBeGreaterThanOrEqual(50);
+    expect(w.weather!.modifiers.vehicleGrip).toBe(kind === 'snow' ? .6 : .9);
+  }
+  expect(weatherKinds).toContain('snow');
+});
+
+test('T-E28-08 @E28 @E28-AC08 every override preserves all six mission graph walks', async () => {
+  const { readFileSync } = await import('node:fs');
+  const { compositions } = await import('../../src/levels/compositions');
+  const { missionIds, resolveCampaignMission } = await import('../../src/levels/missions');
+  const rows = [];
+  for (const id of missionIds) {
+    const w = new SimWorld(); await w.init(); const c = compositions[id];
+    w.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 28);
+    for (const kind of weatherKinds) {
+    const m = w.loadMission(resolveCampaignMission(id, w.districts!)); w.weather!.setOverride(kind); m.begin();
+    let guard = 0;
+    while (m.state.phase === 'playing' && guard++ < 100) m.completeObjective();
+    expect(guard).toBeLessThan(100); expect(['cinematic', 'result', 'progression']).toContain(m.state.phase);
+    rows.push({ id, kind, steps: [...m.state.completedObjectives], phase: m.state.phase });
+    }
+    w.dispose();
+  }
+  for (const id of missionIds) { const level = rows.filter(r => r.id === id); for (const r of level) expect(r.steps).toEqual(level[0].steps); }
+}, 120_000);
+
+test('T-E28-06b @E28 @E28-AC06 strong gusts move light Rapier props', async () => {
+  const { PropSystem } = await import('../../src/sim/interact/PropSystem');
+  const { SimPhase } = await import('../../src/core/EventBus');
+  const run = async (wind: boolean) => {
+    const w = await load(); w.props = new PropSystem(w);
+    w.props.spawn({ id: 'cone', assetId: 'prop.traffic-cone', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-.2, 0, -.2], max: [.2, .6, .2] } }); w.props.settle();
+    w.events.on('sim.tick', () => w.props!.prePhysics(), SimPhase.ai); w.events.on('sim.tick', () => w.props!.postPhysics(), SimPhase.physics);
+    w.weather!.setOverride(wind ? 'wind' : 'clear');
+    const prop = w.props.items[0], start = prop.body.translation();
+    for (let i = 0; i < 180; i++) { if (wind) w.weather!.gust = 1; w.update(); }
+    const end = prop.body.translation(); return Math.hypot(end.x - start.x, end.z - start.z);
+  };
+  const clear = await run(false), wind = await run(true); expect(wind).toBeGreaterThan(clear + .1);
+});

@@ -43,6 +43,7 @@ export class VehicleView extends Group {
     const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
     const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
+    model.userData.assetId = def.asset;
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
       if (material.name.startsWith('emi_') || material.userData.emissiveStrength > 0) return material;

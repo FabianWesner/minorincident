@@ -232,6 +232,8 @@ export class Blasts extends Group {
   }
   /** Explicit render clock (Vfx time). Columns emit puffs; fires refresh at 4 Hz from the sim. */
   advance(now: number, seconds: number): void {
+    const weather = this.world.weather;
+    if (weather && (weather.kind === 'wind' || weather.kind === 'haze' || weather.kind === 'thunderstorm')) this.windNode.value.set(weather.wind.x, 0, weather.wind.z);
     this.time = now; this.clock.value = now; this.scorch.advance(now);
     const tick = Math.floor(now * 4);
     if (tick !== this.flames4Hz) { this.flames4Hz = tick; this.syncSources(now); }
@@ -350,7 +352,7 @@ export class Blasts extends Group {
     let puffs = 0, fireballs = 0;
     for (let i = 0; i < this.puffs.count; i++) if (this.puffExpiry[i] > this.time) puffs++;
     for (let i = 0; i < FIREBALLS; i++) if (this.fbExpiry[i] > this.time) fireballs++;
-    return { blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: FIREBALLS, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
+    return { wind: { x: this.windNode.value.x, z: this.windNode.value.z }, blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: FIREBALLS, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
       columns: this.columns.length + this.fireColumns.size, clouds: this.cloudColumns.size, scorch: this.scorch.count, parts: this.parts.count, flash: this.flash, bulletTime: { ...this.bullet }, slowMotion: this.slowMotion };
   }
   dispose(): void {
