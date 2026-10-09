@@ -1,0 +1,17 @@
+{
+ "name": "fight-firefighter-vs2",
+ "note": "PO 10-09: 'When firefighter fight Zombies, then they need to make fight moves. Also they are currently too strong'. Ally firefighter vs 2 walking infected at the game camera. Look for: a visible axe/halligan swing (windup, hit on the strike frame, recovery) while facing the target, several hits per infected, no instant kills.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-6, 4], "yaw": 0, "loadout": ["weapon.bat", "weapon.fists"] },
+  { "id": "firefighter", "kind": "pedestrian", "at": [0, 0], "yaw": 0, "look": { "model": "npc.firefighter-alive" }, "state": { "ally": { "role": "firefighter" } } },
+  { "id": "z-1", "kind": "infected", "at": [1.7, -0.4], "yaw": 0, "state": "idle" },
+  { "id": "z-2", "kind": "infected", "at": [2.6, 1.2], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "close", "target": "firefighter", "radius": 6, "azimuth": 40 },
+ "frames": 420,
+ "sheet": 30,
+ "shots": [30, 90, 150, 210],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
