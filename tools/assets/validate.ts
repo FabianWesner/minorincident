@@ -44,7 +44,14 @@ export function rigDrawErrors(document: Document, def: AssetDef, base: Document)
   if (member && !baseNodes) return [`rigDrawBase: missing member ${member}`];
   const count = (list: Node[]) => list.reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
   const calls = count(nodes), limit = count(baseNodes ? descendants(baseNodes) : base.getRoot().listNodes());
-  return calls > limit ? [`animated-owner drawCalls: ${calls} > shipped base ${limit}`] : [];
+  const errors = calls > limit ? [`animated-owner drawCalls: ${calls} > shipped base ${limit}`] : [];
+  // The crowd baker chooses animal clips by `body`, and skin/eye effects by material name.
+  if (nodes.some(n => n.getName() === 'body') && !base.getRoot().listNodes().some(n => n.getName() === 'body')) errors.push('living rig: added body node selects animal clips');
+  const names = document.getRoot().listMaterials().map(m => m.getName());
+  for (const pattern of [/^pal_skin/, /^pal_eyeBrown$/]) {
+    if (base.getRoot().listMaterials().some(m => pattern.test(m.getName())) && !names.some(n => pattern.test(n))) errors.push(`living rig: lost ${pattern.source} material classification`);
+  }
+  return errors;
 }
 /** Runtime hides gore/collider helpers; they do not contribute to the default silhouette. */
 function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {

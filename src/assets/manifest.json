@@ -17542,7 +17542,7 @@
     "sourceForward": "+X",
     "sourceScale": 1.24057588,
     "dimensions": {
-      "x": 0.6344,
+      "x": 0.46679,
       "y": 1.77898,
       "z": 0.75993,
       "tolerance": 0.08
@@ -17553,7 +17553,6 @@
     ],
     "requiredNodes": [
       "root",
-      "body",
       "hip",
       "torso",
       "head",
@@ -17594,9 +17593,9 @@
     ],
     "budget": {
       "triangles": 15000,
-      "materials": 1,
+      "materials": 3,
       "fileKB": 1500,
-      "drawCalls": 15
+      "drawCalls": 19
     },
     "lods": {
       "lod1": "public/assets/models/npc.dale.aftermath.lod1.glb",
@@ -17611,7 +17610,7 @@
       "id": "npc.survivor-group",
       "member": "survivor03_root"
     },
-    "budgetNote": "One vertex palette draw per original animated rigid owner; bounded by shipped civilian base at each tier."
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
   },
   {
     "id": "npc.rosa.aftermath",
@@ -17635,7 +17634,6 @@
     ],
     "requiredNodes": [
       "root",
-      "body",
       "hip",
       "torso",
       "head",
@@ -17676,9 +17674,9 @@
     ],
     "budget": {
       "triangles": 15000,
-      "materials": 1,
+      "materials": 3,
       "fileKB": 1500,
-      "drawCalls": 15
+      "drawCalls": 21
     },
     "lods": {
       "lod1": "public/assets/models/npc.rosa.aftermath.lod1.glb",
@@ -17692,7 +17690,7 @@
     "rigDrawBase": {
       "id": "npc.paramedic"
     },
-    "budgetNote": "One vertex palette draw per original animated rigid owner; bounded by shipped civilian base at each tier."
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
   },
   {
     "id": "npc.mr-okafor.aftermath",
@@ -17716,7 +17714,6 @@
     ],
     "requiredNodes": [
       "root",
-      "body",
       "hip",
       "torso",
       "head",
@@ -17757,9 +17754,9 @@
     ],
     "budget": {
       "triangles": 15000,
-      "materials": 1,
+      "materials": 3,
       "fileKB": 1500,
-      "drawCalls": 15
+      "drawCalls": 18
     },
     "lods": {
       "lod1": "public/assets/models/npc.mr-okafor.aftermath.lod1.glb",
@@ -17773,7 +17770,7 @@
     "rigDrawBase": {
       "id": "npc.civilian-elderly"
     },
-    "budgetNote": "One vertex palette draw per original animated rigid owner; bounded by shipped civilian base at each tier."
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
   },
   {
     "id": "npc.mia.aftermath",
@@ -17797,7 +17794,6 @@
     ],
     "requiredNodes": [
       "root",
-      "body",
       "hip",
       "torso",
       "head",
@@ -17838,9 +17834,9 @@
     ],
     "budget": {
       "triangles": 15000,
-      "materials": 1,
+      "materials": 3,
       "fileKB": 1500,
-      "drawCalls": 15
+      "drawCalls": 19
     },
     "lods": {
       "lod1": "public/assets/models/npc.mia.aftermath.lod1.glb",
@@ -17854,7 +17850,7 @@
     "rigDrawBase": {
       "id": "npc.civilian-woman-a"
     },
-    "budgetNote": "One vertex palette draw per original animated rigid owner; bounded by shipped civilian base at each tier."
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
   },
   {
     "id": "npc.sam.aftermath",
@@ -17878,7 +17874,6 @@
     ],
     "requiredNodes": [
       "root",
-      "body",
       "hip",
       "torso",
       "head",
@@ -17919,9 +17914,9 @@
     ],
     "budget": {
       "triangles": 15000,
-      "materials": 1,
+      "materials": 3,
       "fileKB": 1500,
-      "drawCalls": 15
+      "drawCalls": 19
     },
     "lods": {
       "lod1": "public/assets/models/npc.sam.aftermath.lod1.glb",
@@ -17936,6 +17931,6 @@
       "id": "npc.survivor-group",
       "member": "survivor01_root"
     },
-    "budgetNote": "One vertex palette draw per original animated rigid owner; bounded by shipped civilian base at each tier."
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
   }
 ]

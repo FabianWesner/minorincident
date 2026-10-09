@@ -1,0 +1,168 @@
+{
+  "name": "l5-five-living-survivors",
+  "ground": "sidewalk",
+  "time": "L5",
+  "size": 22,
+  "dof": false,
+  "actors": [
+    {
+      "id": "dale",
+      "kind": "pedestrian",
+      "at": [
+        -2.8,
+        0.0
+      ],
+      "look": {
+        "model": "npc.dale.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            -2.8,
+            0.0
+          ],
+          [
+            -2.8,
+            2.0
+          ],
+          [
+            -2.8,
+            0.0
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "rosa",
+      "kind": "pedestrian",
+      "at": [
+        -1.4,
+        1.2
+      ],
+      "look": {
+        "model": "npc.rosa.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            -1.4,
+            1.2
+          ],
+          [
+            -1.4,
+            3.2
+          ],
+          [
+            -1.4,
+            1.2
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "okafor",
+      "kind": "pedestrian",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "look": {
+        "model": "npc.mr-okafor.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            2.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "mia",
+      "kind": "pedestrian",
+      "at": [
+        1.4,
+        1.2
+      ],
+      "look": {
+        "model": "npc.mia.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            1.4,
+            1.2
+          ],
+          [
+            1.4,
+            3.2
+          ],
+          [
+            1.4,
+            1.2
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "sam",
+      "kind": "pedestrian",
+      "at": [
+        2.8,
+        0.0
+      ],
+      "look": {
+        "model": "npc.sam.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            2.8,
+            0.0
+          ],
+          [
+            2.8,
+            2.0
+          ],
+          [
+            2.8,
+            0.0
+          ]
+        ],
+        "loop": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1
+    ],
+    "zoom": 1
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    60,
+    120
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "farLodCloseMax": 0
+  }
+}

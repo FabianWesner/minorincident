@@ -2,38 +2,30 @@
   "id": "npc.rosa.aftermath",
   "errors": [],
   "triangles": 11838,
-  "materials": 1,
-  "drawCalls": 15,
-  "fileKB": 1014.0234375,
+  "materials": 3,
+  "drawCalls": 21,
+  "fileKB": 1012.44921875,
   "dimensions": [
     0.6215039729770517,
     1.8140586383715367,
     0.9276686417621685
   ],
-  "hash": "678a69990742f362ab734ceaf2894e027314763e7c1c4415ce117c52ecbd9c7f",
+  "hash": "cf0b7cdc29e8bf48138e6420a49bc8e389032baff8cd00ad201b28c3e543db47",
   "runtime": {
     "id": "npc.rosa.aftermath",
     "errors": [],
     "triangles": 11838,
-    "materials": 1,
-    "drawCalls": 15,
-    "fileKB": 228.8203125,
+    "materials": 3,
+    "drawCalls": 21,
+    "fileKB": 233.8046875,
     "dimensions": [
       0.6215039729770517,
       1.8140553651882856,
       0.9276688775929322
     ],
-    "hash": "bfd27a4e45b5b4f5ac6c824ecfb48edb3302ab5786a5804ab7154d9284b31b9c"
+    "hash": "debdba912e60009f10ac862d73e7bc862ea7ccc15dca9661a5ecf271d7881df7"
   },
   "nodes": [
-    {
-      "name": "body",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
     {
       "name": "front",
       "pivot": [
@@ -155,7 +147,23 @@
       ]
     },
     {
+      "name": "armL_pal_skinWarm",
+      "pivot": [
+        0,
+        1.2637817052038,
+        -0.2535737242591786
+      ]
+    },
+    {
       "name": "foreArmL_pal_picketWhite",
+      "pivot": [
+        0.01508993101116687,
+        1.05378017252038,
+        -0.33033117157147407
+      ]
+    },
+    {
+      "name": "foreArmL_pal_skinWarm",
       "pivot": [
         0.01508993101116687,
         1.05378017252038,
@@ -211,7 +219,23 @@
       ]
     },
     {
+      "name": "armR_pal_skinWarm",
+      "pivot": [
+        0,
+        1.2637817052038,
+        0.2535737242591786
+      ]
+    },
+    {
       "name": "foreArmR_pal_picketWhite",
+      "pivot": [
+        0.01508993101116687,
+        1.05378017252038,
+        0.33033117157147407
+      ]
+    },
+    {
+      "name": "foreArmR_pal_skinWarm",
       "pivot": [
         0.01508993101116687,
         1.05378017252038,
@@ -267,7 +291,23 @@
       ]
     },
     {
+      "name": "head_pal_eyeBrown",
+      "pivot": [
+        0,
+        1.3266563572418022,
+        0
+      ]
+    },
+    {
       "name": "head_pal_picketWhite",
+      "pivot": [
+        0,
+        1.3266563572418022,
+        0
+      ]
+    },
+    {
+      "name": "head_pal_skinWarm",
       "pivot": [
         0,
         1.3266563572418022,

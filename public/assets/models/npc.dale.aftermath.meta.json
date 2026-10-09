@@ -1,39 +1,31 @@
 {
   "id": "npc.dale.aftermath",
   "errors": [],
-  "triangles": 6554,
-  "materials": 1,
-  "drawCalls": 15,
-  "fileKB": 581.66015625,
+  "triangles": 8618,
+  "materials": 3,
+  "drawCalls": 19,
+  "fileKB": 776.83984375,
   "dimensions": [
-    0.6343957503953105,
+    0.46678527030840633,
     1.7789845368282042,
     0.7599346020120235
   ],
-  "hash": "4a448136547f1c54e6199a09cf4ca7c37b00ce765eb03e8dbeb61ae531ddfc1f",
+  "hash": "7c89fdba16a1d52d103a7cdd4af481c0bbe90a99277ef17e0adffe91dc061b78",
   "runtime": {
     "id": "npc.dale.aftermath",
     "errors": [],
-    "triangles": 6554,
-    "materials": 1,
-    "drawCalls": 15,
-    "fileKB": 140.578125,
+    "triangles": 8618,
+    "materials": 3,
+    "drawCalls": 19,
+    "fileKB": 181.0859375,
     "dimensions": [
-      0.6343983784824803,
-      1.7789851148976008,
-      0.7599326192587526
+      0.46679052648274594,
+      1.7789851148976006,
+      0.7599326192587524
     ],
-    "hash": "74561ccc1dc1898751936dec88801653a99a3e4e7b06eea4eb2fae43b8ea78d8"
+    "hash": "b655b538d8e2603151d88383010e3c78ffb9208f290c2b7f36a64144936c099b"
   },
   "nodes": [
-    {
-      "name": "body",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
     {
       "name": "front",
       "pivot": [
@@ -163,7 +155,15 @@
       ]
     },
     {
-      "name": "handL_pal_picketWhite",
+      "name": "foreArmL_pal_skinWarm",
+      "pivot": [
+        0.0223303648787269,
+        0.9924607187888168,
+        -0.2940164878487569
+      ]
+    },
+    {
+      "name": "handL_pal_skinWarm",
       "pivot": [
         0.05582591681832254,
         0.7753599249999998,
@@ -219,7 +219,15 @@
       ]
     },
     {
-      "name": "handR_pal_picketWhite",
+      "name": "foreArmR_pal_skinWarm",
+      "pivot": [
+        0.0223303648787269,
+        0.9924607187888168,
+        0.2940164878487569
+      ]
+    },
+    {
+      "name": "handR_pal_skinWarm",
       "pivot": [
         0.05582591681832254,
         0.7753599249999998,
@@ -267,7 +275,23 @@
       ]
     },
     {
+      "name": "head_pal_eyeBrown",
+      "pivot": [
+        0,
+        1.2839959943913124,
+        0
+      ]
+    },
+    {
       "name": "head_pal_picketWhite",
+      "pivot": [
+        0,
+        1.2839959943913124,
+        0
+      ]
+    },
+    {
+      "name": "head_pal_skinWarm",
       "pivot": [
         0,
         1.2839959943913124,

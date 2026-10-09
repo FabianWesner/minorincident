@@ -104,7 +104,10 @@ def source_scene(base, kind, tier, project):
     if kind:
         # The native cap crown uses literal ring strides instead of `seg`.
         code = code.replace('range(24)', f'range({(8, 6, 6)[tier]})').replace('j/24', f'j/{(8, 6, 6)[tier]}').replace('k*24', f'k*{(8, 6, 6)[tier]}').replace('(j+1)%24', f'(j+1)%{(8, 6, 6)[tier]}').replace('(k+1)*24', f'(k+1)*{(8, 6, 6)[tier]}')
-    tree = DistanceRecipe(tier).visit(ast.parse(code))
+    recipe = DistanceRecipe(tier)
+    if kind and tier == 0:
+        recipe.radial, recipe.rings = 12, 8
+    tree = recipe.visit(ast.parse(code))
     ast.fix_missing_locations(tree)
     argv = sys.argv
     sys.argv = [str(path)]
@@ -171,10 +174,16 @@ def wrap(owner, tier):
             seam.data.materials.append(palette.mat('sidewalk'))
 
 
+def ancestors(obj):
+    owner = obj.parent
+    while owner:
+        yield owner
+        owner = owner.parent
+
+
 def fold_colors(root, identity):
     """Shared palette regions with softly varying, broad asymmetric soot fields."""
     white = palette.mat('picketWhite')
-    base = white.diffuse_color[:3]
     for obj in list(root.children_recursive):
         if obj.type != 'MESH': continue
         material = obj.data.materials[0]
@@ -193,6 +202,9 @@ def fold_colors(root, identity):
         obj.data.color_attributes.active_color = layer
         is_wrap = name.startswith(('palegauze', 'gauzeoverlapping'))
         skin = token.startswith('skin')
+        # bakeInfected classifies skin/iris by these stable palette names.
+        target = palette.mat('skinWarm') if skin else palette.mat('eyeBrown') if token == 'eyeBrown' else white
+        base = target.diffuse_color[:3]
         for loop in obj.data.loops:
             p = obj.matrix_world @ obj.data.vertices[loop.vertex_index].co
             col = rgb.copy()
@@ -204,11 +216,17 @@ def fold_colors(root, identity):
                 dust = math.exp(-((p.z-.36)/.15)**2)
                 irregular = .80 + .20*math.sin(p.y*31+p.z*24)*math.cos(p.x*27-p.z*19)
                 soot = min(.84, max(chest*.78, back*.72, dust*.62)*irregular)
-                col = [c*(1-soot) for c in col]
+                char = palette.mat('uiDark').diffuse_color[:3]
+                col = [c*(1-soot) + char[k]*soot for k, c in enumerate(col)]
+                # Pale ash at trouser/skirt hems distinguishes dust from dark
+                # chest soot at the 135px camera, including sparse far profiles.
+                ash = palette.mat('sidewalk').diffuse_color[:3]
+                dust_mix = dust*.32*irregular
+                col = [c*(1-dust_mix) + ash[k]*dust_mix for k, c in enumerate(col)]
             # Preserve a clean living face: no dark sockets/emissive eye material.
             layer.data[loop.index].color = (*[min(1, col[k]/base[k]) for k in range(3)], 1)
         obj.data.materials.clear()
-        obj.data.materials.append(white)
+        obj.data.materials.append(target)
     export.merge_by_material(root, set(OWNERS), preserve_vertex_colors=True)
 
 
@@ -233,7 +251,7 @@ def build_aftermath(directory, output):
             name = obj.name.lower()
             omit = MID_OMIT if tier == 1 else FAR_OMIT if tier == 2 else ('stitch', 'seam', 'tread', 'stud', 'snap', 'fringe sheen')
             remove = any(word in name for word in omit)
-            if identity == 'dale' and any(word in name for word in ('glasses', 'pack', 'webbing', 'shoulder strap')): remove = True
+            if identity == 'dale' and (any(word in name for word in ('glasses', 'pack', 'webbing', 'shoulder strap')) or any(p.name == 'backpackSocket' for p in ancestors(obj))): remove = True
             if identity == 'rosa' and ('hand medical case' in name or 'medical backpack' in name): remove = True
             if identity == 'mia':
                 if 'tote' in name: remove = True
@@ -266,20 +284,16 @@ def build_aftermath(directory, output):
         root['derivedFrom'] = base
         if kind: root['sourceMember'] = kind
         # Character metadata stays character-owned; no pushable prop physics.
-        sockets.empty('body', parent=root)
         bpy.context.view_layer.update()
         points = [o.matrix_world @ v.co for o in root.children_recursive if o.type == 'MESH' for v in o.data.vertices]
         front_x = max(p.x for p in points)
         sockets.empty('front', (front_x+.015, 0, .9), root)
-        for o in root.children_recursive:
-            if o.type == 'MESH': o.data.calc_loop_triangles()
-        print('COMPONENTS', tier, sorted([(o.name, len(o.data.loop_triangles)) for o in root.children_recursive if o.type == 'MESH'], key=lambda p: -p[1])[:18])
         fold_colors(root, identity)
         meshes = [o for o in root.children_recursive if o.type == 'MESH']
         for obj in meshes: obj.data.calc_loop_triangles()
         tris = sum(len(o.data.loop_triangles) for o in meshes)
         draws = sum(len(o.data.materials) for o in meshes)
-        if tris > (15000, 6000, 2000)[tier] or draws > 15:
+        if tris > (15000, 6000, 2000)[tier] or draws > 25:
             print(sorted([(o.name, len(o.data.loop_triangles)) for o in meshes], key=lambda p: -p[1]))
             raise ValueError(f'{identity} LOD{tier}: {tris} triangles, {draws} draws')
         bpy.context.view_layer.update()
@@ -289,7 +303,7 @@ def build_aftermath(directory, output):
         dims = [(max(p[k] for p in points)-min(p[k] for p in points))*scale for k in (0, 2, 1)]
         path = directory/('model'+('' if tier == 0 else f'.lod{tier}')+'.glb')
         export.glb(root, path)
-        stats[f'lod{tier}'] = dict(triangles=tris, draws=draws, materials=1,
+        stats[f'lod{tier}'] = dict(triangles=tris, draws=draws, materials=len({m.name for o in meshes for m in o.data.materials}),
                                   bytes=path.stat().st_size, dimensions=dims)
     stats_path.write_text(json.dumps(stats, indent=2)+'\n')
     supplied = directory/('model'+(f'.lod{only_tier}' if only_tier else '')+'.glb')

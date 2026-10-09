@@ -32,6 +32,23 @@ test('living skins count animated materials and compare only their shipped group
   expect(rigDrawErrors(doc, def, base)).toEqual(['rigDrawBase: missing member missing']);
 });
 
+test('living skins retain the base crowd animation and infection classifications', () => {
+  const { doc, def } = fixture(), base = fixture().doc;
+  base.getRoot().listNodes()[0].setName('torso');
+  base.getRoot().listMaterials()[0].setName('pal_skinWarm');
+  base.createMaterial('pal_eyeBrown');
+  def.rigDrawBase = { id: 'npc.base' };
+  expect(rigDrawErrors(doc, def, base)).toEqual([
+    'living rig: added body node selects animal clips',
+    'living rig: lost ^pal_skin material classification',
+    'living rig: lost ^pal_eyeBrown$ material classification',
+  ]);
+  doc.getRoot().listNodes()[0].setName('torso');
+  doc.getRoot().listMaterials()[0].setName('pal_skinWarm');
+  doc.createMaterial('pal_eyeBrown');
+  expect(rigDrawErrors(doc, def, base)).toEqual([]);
+});
+
 test('T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations', () => {
   const { doc, def } = fixture();
   expect(validateDocument(doc, def, 1024).errors).toEqual([]);
