@@ -138,11 +138,18 @@ test.describe('L5 Aftermath in the browser', () => {
     await page.evaluate(() => { (window as unknown as { __cues: string[] }).__cues = []; });
     for (const key of ['rosa', 'sam', 'mia', 'okafor', 'dale']) {
       const target = ring(key);
+      if (!signShot && key === 'sam') {
+        // Stay outside the stand-to-interact ring until this bus's sign is captured.
+        await go({ x: target.x + 10, z: target.z - 4 }, 1.2, 11);
+        const fresh = () => page.evaluate(() => { const a = window.__SS__!; return a.events().some(e => e.type === 'l5.cue' && e.key === 'sam' && e.tick >= a.getState().tick - 60); });
+        for (let wait = 0; wait < 24 && !await fresh(); wait++) if (!await fightNearby(18)) await step(20);
+        expect(await fresh(), 'Sam sign of life at his bus').toBe(true);
+        await snap('l5-sign-of-life'); signShot = true;
+      }
       await go({ x: target.x, z: target.z }, 1.6, 11);
       for (let guard = 0; guard < 40 && await fightNearby(18); guard++) { /* clear nearby threats before opening the hiding place */ }
       const cues = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'l5.cue').map(e => (e as { key: string }).key));
       for (const c of cues) heard.add(c);
-      if (!signShot) { await snap('l5-sign-of-life'); signShot = true; }
       for (let i = 0; i < 12 && !(await mission()).l5!.survivors.find(r => r.key === key && r.status !== 'hidden'); i++) { await interact(); await step(20); }
       expect((await mission()).l5!.survivors.find(r => r.key === key)!.status, key).not.toBe('hidden');
       await expect(page.getByTestId('survivors-found')).toContainText(`${(await mission()).l5!.found}/5`);
@@ -153,7 +160,7 @@ test.describe('L5 Aftermath in the browser', () => {
     expect((await mission()).l5!.found).toBe(5); expect([...heard].sort()).toEqual(['dale', 'mia', 'okafor', 'rosa', 'sam']);
     // Protect all five through the group photo, then enter the Metro: the group photo, then the shutter.
     expect((await mission()).steps.metro.status).toBe('active');
-    await go({ x: 10, z: -39.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
+    await go({ x: 10, z: -42.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
     expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
     await go(metroFoot(), 2.4, 11);
     let last = await mission();
@@ -169,6 +176,7 @@ test.describe('L5 Aftermath in the browser', () => {
     if (!h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter');
     if (!last.l5!.shutterAt) last = await mission();
     for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);
+    await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L6');
     const handover = await page.evaluate(() => ({ level: window.__SS__!.getState().scenario, survivors: window.__SS__!.campaign.state()!.survivors }));
     expect(handover.level).toBe('L6'); expect(handover.survivors!.slice().sort()).toEqual(l5Survivors.map(s => s.key).sort());
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ statsAtShutter: last.stats, handover, l5: { survivors: last.l5!.survivors.map(r => `${r.key}:${r.status}`), gloom: last.l5!.gloom, shutterAt: last.l5!.shutterAt }, shots: [...h.shots].sort(), errors }, null, 1));
