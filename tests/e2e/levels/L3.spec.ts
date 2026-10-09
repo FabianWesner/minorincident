@@ -32,6 +32,7 @@ function helpers(page: Page) {
     return true;
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
+  let seenDeaths = 0;
   const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
     const click = async () => {
       const start = (await player()).transform;
@@ -47,6 +48,9 @@ function helpers(page: Page) {
     let fights = 0;
     for (let i = 0; i < 600; i++) {
       await step(20);
+      if (process.env.L3_TRACE && i % 2 === 0) console.log(await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!, inf = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 12); return `T x=${p.transform.x.toFixed(0)} z=${p.transform.z.toFixed(0)} hp=${p.health.current.toFixed(0)} n12=${inf.length} n4=${inf.filter(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).length}`; }));
+      const deaths = (await mission()).stats.deaths;
+      if (deaths !== seenDeaths) { seenDeaths = deaths; const q = (await player()).transform; console.log(`L3 death #${deaths} near x=${q.x.toFixed(0)} z=${q.z.toFixed(0)}`); }
       if (done && await done()) return;
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
@@ -76,7 +80,7 @@ const begin = async (page: Page) => {
 };
 
 test.describe('L3 The Police Collapse in the browser', () => {
-  test('T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, Commerce Street to the army zone; photo spots for the vision review', async ({ page }) => {
+  for (const street of ['commerce', 'blvd', 'oak'] as const) test(`T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, ${street} to the army zone; photo spots for the vision review`, async ({ page }) => {
     test.setTimeout(1_800_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await begin(page);
     const h = helpers(page), { step, mission, player, snap, go, interact, fightNearby } = h;
@@ -107,14 +111,16 @@ test.describe('L3 The Police Collapse in the browser', () => {
     expect((await mission()).l3!.fallbackAt).toBeGreaterThan(0);
     await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
     // Up Commerce Street to the army checkpoint (the squad follows), fighting the few that come close.
-    const route: P[] = [{ x: -126, z: 0 }];
-    for (let x = -110; x <= 120; x += 15) route.push({ x, z: 0 });
+    const sz = l3.map.streets[street], route: P[] = [{ x: -126, z: 0 }];
+    if (sz !== 0) route.push({ x: -120, z: sz });
+    for (let x = -105; x <= 105; x += 15) route.push({ x, z: sz });
+    if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end
     route.push({ x: 129, z: 0 }, { x: 143.5, z: 0 });
     // Crossing the zone line ends L3 and the campaign hands over to L4: keep the last L3 state, stop touching the world then.
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
     for (const wp of route) {
-      await go(wp, 2, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
+      await go(wp, sz === 0 ? 2 : 4, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
       if (!await inL3()) break;
       const m = await mission(), p = (await player()).transform;
       if (!h.shots.has('l3-squad-strong') && p.x > -100 && p.x < -80) await snap('l3-squad-strong');
@@ -130,7 +136,8 @@ test.describe('L3 The Police Collapse in the browser', () => {
     // Still on L3 with its state (result screen) or already handing over / on L4 (the L3 state is gone: use the last one seen).
     const handedOver = scenario !== 'L3' || !now?.l3;
     const final = !handedOver ? now : { ...last, phase: 'progression' as const, l3: { ...last.l3!, crossedAt: last.l3!.crossedAt || (scenario === 'L4' ? 1 : 0) } };
-    writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ phase: final.phase, stats: final.stats, l3: { fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
+    writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ phase: final.phase, stats: final.stats, street, l3: { fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
+    console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);
     expect(['result', 'progression']).toContain(final.phase);
     expect(final.l3!.crossedAt).toBeGreaterThan(0);
     expect([...h.shots].sort()).toEqual(['l3-alone', 'l3-army-checkpoint', 'l3-commerce-street', 'l3-grove-boulevard', 'l3-oak-avenue', 'l3-squad-strong', 'l3-station-attack', 'l3-station-yard']);
