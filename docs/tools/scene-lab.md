@@ -154,6 +154,12 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `sameAsset: true`: also check chains of one asset. Fence and hedge runs share end posts by design, so they are skipped by default.
 - `slackCm` (default 2).
 
+## Layout sweep (gate for layout changes)
+
+- `npm run scene:layout` runs `specs/scenes/layout-sweep/*.json`: L2 on D-GROVE as a 4x3 grid of `layout: { level: 'L2' }` crops and the L3 additions on D-MAIN/D-SHOP/D-CIVIC (`level: 'L3'`, tier 2), each with `expect.staticOverlapMax: 0` (mesh pairs from `clipping.static`; `python3 tools/scenelab/sweep-summary.py <out>` lists them). Regenerate the specs with `python3 tools/scenelab/gen-layout-sweep.py`.
+- The fast twin is `tests/unit/levels/layout-overlap.test.ts` (oriented collision boxes, no browser). Both fail on a prop or car that a level rule dropped through a fence, wall, lamp, mailbox, tree or another prop.
+- Rule for authors: level additions go through `src/levels/placementClearance.ts` (`findClearSpot`, `resolveOverlaps`): they move to the nearest clear spot and stay out of gardens; vehicles slide along their own axis first, so a "crashed" car stops with the bumper against the post. Never hand-place near a collider.
+
 ## Reading metrics.json
 
 - **`checks`.** Pass/fail per `expect` gate.
