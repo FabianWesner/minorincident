@@ -458,7 +458,7 @@ export class LevelTwoRescue {
     }
     if (s.radioAt && !s.clusterReached) {
       const [cx, cz] = l2.cluster.home;
-      if (Math.hypot(player.transform.x - cx, player.transform.z - cz) <= l2.cluster.triggerM) { s.clusterReached = true; (s.cpWait ??= []).push('cluster'); }
+      if (Math.hypot(player.transform.x - cx, player.transform.z - cz) <= l2.cluster.triggerM) { s.clusterReached = true; s.cpWait = ['cluster']; /* supersedes a still-waiting escape checkpoint */ }
     }
     if (this.mercyDue) this.mercy();
     this.calmCheckpoint(player);
