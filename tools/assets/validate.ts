@@ -11,7 +11,7 @@ import { assetIO } from './io';
 import { reviewErrors } from './review';
 import { requiredLods, semanticNodeNames, lodTriangleLimit } from './delivery';
 
-export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; fileKB: number; dimensions: number[]; hash: string }
+export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; animatedDrawCalls?: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
   const hash = createHash('sha256');
   for (const node of document.getRoot().listNodes().sort((a,b) => a.getName().localeCompare(b.getName()))) {
@@ -143,6 +143,20 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   const staticCalls = nodes.filter((n) => !def.animatedNodes.some((name) => byName.get(name) && descendants(byName.get(name)!).includes(n))).reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
   if (staticCalls > def.budget.drawCalls) errors.push(`static drawCalls: ${staticCalls} > ${def.budget.drawCalls}`);
+  const animatedDrawCalls = drawCalls - staticCalls;
+  if (def.rigidDrawBase) {
+    if (def.category !== 'character' || !def.animatedNodes.length) errors.push('rigidDrawBase: requires a living animated character');
+    if (drawCalls > def.budget.drawCalls) errors.push(`drawCalls including animated owners: ${drawCalls} > ${def.budget.drawCalls}`);
+    const batches = new Set<string>();
+    for (const node of nodes) for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      let owner: Node | null = node;
+      while (owner && !def.animatedNodes.includes(owner.getName())) owner = owner.getParentNode();
+      if (!owner) { errors.push(`rigid draw ${node.getName()}: no animated owner`); continue; }
+      const key = `${owner.getName()}|${primitive.getMaterial()?.getName()}`;
+      if (batches.has(key)) errors.push(`rigid draw ${key}: static attachments must share their owner material batch`);
+      batches.add(key);
+    }
+  }
   if (def.category === 'infected') for (const name of new Set([
     ...['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].map(name => `stump_${name}`),
     ...def.requiredNodes.filter(name => name.includes('stump_')),
@@ -151,7 +165,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     if (!cap || !descendants(cap).some((n) => n.getMesh())) errors.push(`${name}: missing geometry`);
     if (cap && cap.getExtras().hidden !== true) errors.push(`${name}: not hidden by default`);
   }
-  return { id: def.id, errors: [...new Set(errors)], triangles, materials, drawCalls, fileKB, dimensions, hash: geometryHash(document) };
+  return { id: def.id, errors: [...new Set(errors)], triangles, materials, drawCalls, animatedDrawCalls, fileKB, dimensions, hash: geometryHash(document) };
 }
 export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
   const io = await assetIO(), results: Validation[] = [];
@@ -198,6 +212,19 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       try {
         const document = await io.read(path);
         const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        if (def.rigidDrawBase) {
+          // Read the shipped baseline, including for --ids selections. Compare
+          // the same distance tier; a declared budget cannot widen this limit.
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const rig = definitions.find(candidate => candidate.id === def.rigidDrawBase);
+          const rigPath = rig && [rig.glb, rig.lods?.lod1, rig.lods?.lod2][lod];
+          if (!rigPath || !existsSync(rigPath)) validation.errors.push(`rigidDrawBase: missing shipped LOD${lod}`);
+          else {
+            const baseline = await io.read(rigPath);
+            const limit = baseline.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().length ?? 0), 0);
+            if (validation.drawCalls > limit) validation.errors.push(`drawCalls including animated owners: ${validation.drawCalls} exceeds ${rig!.id} LOD${lod} (${limit})`);
+          }
+        }
         // Pending registration belongs to art-integration. Still enforce shipping and
         // node preservation for its real exports, without treating placeholder sizes as authored contracts.
         if (!def.sourceGlb && sourcePath && !atLeast(def.status, 'modeled')) {
