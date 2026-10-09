@@ -238,10 +238,11 @@ def tint_and_wrap(root, lod, group):
         world = wrap.matrix_world.copy()
         wrap.parent = elbow
         wrap.matrix_world = world
+        if lod < 2: injury.add_mid_ring(wrap)
         layer = wrap.data.color_attributes.new(name='palette', type='FLOAT_COLOR', domain='CORNER')
         wrap.data.color_attributes.active_color = layer
         # Dirty gauze with a blood stain down the outward-front side (injury.py), not a clean cuff.
-        sign = injury.side_sign('foreArmL')
+        sign = injury.side_sign('foreArmL', bpy.data.objects[prefix+'armL'].matrix_world.translation.y, bpy.data.objects[prefix+'armR'].matrix_world.translation.y)
         for loop in wrap.data.loops:
             q = wrap.matrix_world @ wrap.data.vertices[loop.vertex_index].co
             layer.data[loop.index].color = injury.wrap_color(q, wrap.matrix_world.translation, sign, length)

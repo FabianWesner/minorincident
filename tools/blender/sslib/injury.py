@@ -5,16 +5,17 @@ white with a blood-brown stain that wedges down the outward-front side and is st
 geometry, no extra material or draw: the wrap keeps its owner's picketWhite batch).
 """
 import math
+import bmesh
 
-BLOOD = (.50, .03, .03)
+BLOOD = (.34, .010, .008)
 PAPER = (.90, .87, .79)
 
 
-def side_sign(owner_name, translation_y=0.0):
-    """+1 for the character's left (+Y) limbs, -1 for the right."""
-    if owner_name.endswith('L'): return 1
-    if owner_name.endswith('R'): return -1
-    return 1 if translation_y >= 0 else -1
+def side_sign(owner_name, left_y, right_y):
+    """Outward Y direction (+1/-1) of the limb `owner_name`, from where the rig's armL/armR actually sit
+    (the base rigs name sides independently of the +Y/-Y convention). Centre owners (head) take the left side."""
+    left = 1 if left_y > right_y else -1
+    return -left if owner_name.endswith('R') else left
 
 
 def wrap_color(p, center, sign, length, strength=1.0):
@@ -24,8 +25,18 @@ def wrap_color(p, center, sign, length, strength=1.0):
     # Outward-front direction in the horizontal plane (+X is the front).
     ox, oy = .55, .84 * sign
     cos = (dx * ox + dy * oy) / r if r > 1e-6 else 0
-    wedge = max(0.0, (cos + .25) / 1.25)
-    h = (p.z - center.z) / (length / 2) if length > 1e-6 else 0
-    drip = .62 + .38 * max(-1.0, min(1.0, -h))
-    t = min(.95, wedge * drip * 1.45 * strength)
+    wedge = max(0.0, (cos - .05) / .95)
+    v = (p.z - center.z) / (length / 2) if length > 1e-6 else 0
+    bell = math.exp(-((v + .25) / .55) ** 2)
+    t = min(.95, wedge * bell * 1.6 * strength)
     return (*[PAPER[i] * (1 - t) + BLOOD[i] * t for i in range(3)], 1)
+
+
+def add_mid_ring(obj):
+    """A primitive cylinder has only its two end rings: one more ring in the middle lets the stain be a patch, not a gradient."""
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    edges = [e for e in bm.edges if abs(e.verts[0].co.z - e.verts[1].co.z) > 1e-5]
+    bmesh.ops.subdivide_edges(bm, edges=edges, cuts=1, use_grid_fill=True)
+    bm.to_mesh(obj.data)
+    bm.free()
