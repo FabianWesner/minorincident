@@ -219,6 +219,30 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - **Crowds.** Spawn `count` infected, then check `visibility` (sim against drawn), `perf.drawCalls` and per-actor `lod`.
 - **Effects.** Script a `wreck` or `blast`, record a `video`, and check `consoleErrors`.
 
+## Contact sheets and the scene catalog (the QA sweep)
+
+Agents read images, not videos. A **contact sheet** is ONE `sheet.jpg`: a grid of labelled low-res snapshots (`f120` in each cell, 320 px wide, at most 24 cells, under 400 KB).
+
+```sh
+npm run scene -- specs/scenes/qa-ped-flee.json --sheet 30     # a snapshot every 30 frames -> test-results/scenes/<name>/sheet.jpg
+```
+
+- `--sheet N` (or `"sheet": N` in a spec) overrides nothing else: `--shots` and `--video` still work next to it. More than 24 cells are thinned evenly.
+- MCP `run_scene {path | spec, sheet?, frames?, shots?, video?}` runs a whole scene and returns the gates plus the sheet inline. Use it to look at what happened over time; `screenshot` is for one hi-res frame.
+- **Always open the sheet.** Gates catch numbers; the sheet shows a flat wall, a figure standing inside the courier, a black patch on the ground.
+
+**Catalog.** `specs/scenes/catalog/*.json` holds ready-to-run, gated scenes at the game camera. Names are prefixed by area: `bld-<district>-<family>` (turntable of every building family per district, LOD and clipping check; regenerate with `node tools/scenelab/gen-building-scenes.mjs`), `ped-*`, `inf-*`, `corgi-*`, `courier-*`, `fight-*` (every weapon vs 1 and 3 chasing infected, plus the 4-5 dummy racks), `bike-*`, `car-*`, `door-*`, `fx-*`, `area-grove-*`. Many entries only `extends` a spec in `specs/scenes/`, so the original stays the single source.
+
+```sh
+npm run scene:catalog                              # all scenes, <= 2 browsers (e2e lock), about 6 minutes
+npm run scene:catalog -- --filter 'fight-*'        # a glob on the scene name, comma separated: 'fx-*,car-*'
+npm run scene:catalog -- --list --filter 'bld-grove-*'
+```
+
+It writes `test-results/scene-catalog/index.md` (scene, pass/fail, every gate with value/limit, link to the sheet) and `<scene>/sheet.jpg` + `metrics.json`. No full-size PNGs are kept; re-run one scene with `npm run scene -- specs/scenes/catalog/<x>.json --shots ...` for hi-res frames. Options: `--jobs 1|2`, `--backend webgpu`, `--size 960x540`, `--out dir`. Exit code 1 when a gate fails: a red catalog scene is a real defect at the time of writing, not noise.
+
+**How a lane uses it.** After a gameplay or visual change: (1) run `npm run scene:catalog -- --filter '<your area>*'` (e.g. `fight-*`, `bld-corridor-*`, `ped-*`); (2) open each `sheet.jpg` and describe what you saw in your report; (3) if your change needs a new case, add a spec to `specs/scenes/catalog/` with gates (`consoleErrors`, `undrawnFramesMax`, `clippingMax`, `footSinkMaxCm`, `propSinkMaxCm` as fits) and a `note` saying what to look for. Do not loosen a gate to make a scene pass.
+
 ## MCP server
 
 `npm run scene:mcp` starts a stdio MCP server (`@modelcontextprotocol/sdk` 1.32.1, MIT).
@@ -237,6 +261,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 | `place` | Adds a prop: `{asset, at, yaw, scale, id}`. Reloads the scene. |
 | `spawn_actor` | Spawns an actor: `{kind, id, at, yaw, look, archetype, count, spread, state}`. |
 | `command` | Gives an actor an action: `{actor, action}`. With `actor: "fx"`, the action is an effect. |
+| `run_scene` | Runs a whole scene (path or spec) with `sheet`, `frames`, `shots`, `video`; returns gates and the contact sheet inline. |
 | `step` | Advances the scene: `{frames}`. |
 | `set_time` | Sets the lighting preset: `{preset}`. |
 | `set_camera` | Sets the camera: `{camera}`. |
