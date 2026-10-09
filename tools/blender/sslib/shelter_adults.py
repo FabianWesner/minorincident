@@ -222,8 +222,8 @@ def build_adult(directory, output):
             joints['torso'].rotation_euler.y=.12
         if asset.endswith('lying'):
             joints['hip'].rotation_euler.y=-math.pi/2
-            joints['armL'].rotation_euler.y=-.65
-            joints['foreArmL'].rotation_euler.y=-1.25
+            joints['armL'].rotation_euler.y=-.25
+            joints['foreArmL'].rotation_euler.y=2.7
             joints['head'].rotation_euler.y=.08
             # Cushion is owned by the head, so the rig remains fully movable.
             bpy.ops.mesh.primitive_cube_add(size=1)

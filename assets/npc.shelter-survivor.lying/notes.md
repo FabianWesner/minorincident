@@ -10,8 +10,10 @@ Runtime interface: `root.ss_standingPose` is JSON containing glTF Y-up local tra
 
 | Tier | Source triangles | Draws | Materials | Source bytes | Measured X/Y/Z (m) |
 | --- | ---: | ---: | ---: | ---: | --- |
-| lod0 | 14272 | 35 | 8 | 802420 | 1.8116 / 0.8929 / 0.8363 |
-| lod1 | 5665 | 30 | 8 | 326368 | 1.8091 / 0.8654 / 0.8318 |
-| lod2 | 1955 | 29 | 8 | 123332 | 1.8065 / 0.8654 / 0.8164 |
+| lod0 | 14272 | 35 | 8 | 797136 | 1.8116 / 0.5448 / 0.8363 |
+| lod1 | 5665 | 30 | 8 | 327156 | 1.8091 / 0.5454 / 0.8318 |
+| lod2 | 1955 | 29 | 8 | 123340 | 1.8065 / 0.5438 / 0.8164 |
 
 Visual evidence: `test-results/l6-shelter-adults-and-injuries/npc.shelter-survivor.lying/` (turntable, authored LOD contact, and reference/peer game-camera sheets). Independent orchestrator acceptance remains required.
+
+The reclined pose folds the left forearm back across the torso; the earlier upright signaling hand was corrected during visual QA.
