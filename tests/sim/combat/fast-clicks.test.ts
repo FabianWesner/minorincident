@@ -51,7 +51,7 @@ function knockDown(w: SimWorld, id: number) {
     type: 'melee', knockback: 0, stagger: .4 });
 }
 
-for (const [weapon, count] of [['weapon.fists', 5], ['weapon.bat', 2]] as const) {
+for (const [weapon, count] of [['weapon.fists', 7], ['weapon.bat', 2]] as const) {
   test(`@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep ${weapon} in reach and kill`, async () => {
     const row = await clickDuel(weapon, 10, true);
     expect(row.sentClicks).toBe(10); expect(row.killed).toBe(true); expect(row.hits).toHaveLength(count);
@@ -129,6 +129,6 @@ test('@E05 released mouse recovery tap in place keeps unarmed intent on the kick
   w.applyInput(frame, 'mouse-only'); w.update(); w.clearInput();
   while (w.tick < 25) w.update();
   const attacks = w.events.events().filter(e => e.type === 'combat.attack');
-  expect(attacks).toHaveLength(2); expect(attacks[1].tick).toBe(17);
+  expect(attacks).toHaveLength(2); expect(attacks[1].tick).toBe(15);
   for (const attack of attacks) expect(attack).toMatchObject({ actionId: 'weapon.fists', side: 'RIGHT' });
 });

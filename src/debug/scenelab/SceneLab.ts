@@ -31,6 +31,7 @@ type Plan =
   | { type: 'turn'; yaw: number }
   | { type: 'attack'; target: string; until: number }
   | { type: 'mount'; bike: string; at: number }
+  | { type: 'click'; entity: number; at: number }
   | { type: 'interact' };
 interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number }
 interface Hit extends BoneHit { actor: string; frame: number; count: number }
@@ -91,7 +92,7 @@ export class SceneLab {
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
+    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
@@ -206,6 +207,7 @@ export class SceneLab {
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2) };
+      else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
       else if ('interact' in a) actor.plan = { type: 'interact' };
@@ -368,7 +370,8 @@ export class SceneLab {
   private drivePlayer(): void {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'); if (!courier) return;
     const world = this.world, p = world.entities.get(1)!.transform, plan = courier.plan;
-    const frame: InputFrame & Record<string, unknown> = { ...emptyInput(), walk: undefined, moveTarget: undefined, attackTarget: undefined, navigation: undefined };
+    // InputSystem.inject merges into the last frame: name every one-tick field so a click's edges do not persist.
+    const frame: InputFrame & Record<string, unknown> = { ...emptyInput(), walk: undefined, moveTarget: undefined, attackTarget: undefined, navigation: undefined, cancelMove: undefined, mouseAttack: undefined, pointerTarget: undefined };
     if (plan?.type === 'path') {
       let target = toPoint(plan.points[plan.index]);
       if (Math.hypot(target.x - p.x, target.z - p.z) < .35) {
@@ -386,6 +389,10 @@ export class SceneLab {
       const target = this.actors.get(plan.target);
       if (!target || this.frame >= plan.until) courier.plan = null;
       else { frame.attackTarget = { id: target.entity, side: 'LEFT' }; frame.left = { down: false, held: true, up: false }; }
+    } else if (plan?.type === 'click') {
+      // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
+      if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
+      else { frame.pointerTarget = true; frame.aimSource = 'pointer'; if (this.frame > plan.at + 40) courier.plan = null; }
     } else if (plan?.type === 'interact') {
       frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
@@ -397,6 +404,39 @@ export class SceneLab {
     world.setInput(frame); this.game.input.inject(frame);
   }
 
+  /** Click probes: the drawn body part (rendered rig joints of the last frame) projected to the screen, resolved by the
+   * game's own click pick; an attack on that actor must start within 6 ticks, or right after the running swing. */
+  private readonly clicks: { frame: number; tick: number; actor: string; part: string; picked: string | null; until: number; started: number | null; approach: boolean }[] = [];
+  private click(id: string, part: 'head' | 'chest' | 'hip' | 'feet'): void {
+    const target = this.actors.get(id); if (!target) throw new Error(`Unknown actor ${id}`);
+    const f = this.game.view.crowdFigures().find(f => f.id === target.entity && f.drawn && f.joints), world = this.world;
+    const runner = world.combat?.runner, side = world.entities.get(1)?.weapons?.selectedSide ?? 'LEFT', running = runner?.running[side];
+    // Queued behind a running swing: valid until it (and the weapon cooldown) is over, plus 100 ms.
+    const ready = Math.max(world.tick, running && world.tick < running.endsAt ? running.endsAt : 0, runner?.loadout.current(side).readyAt ?? 0);
+    const tt = world.entities.get(target.entity)!.transform, pp = world.entities.get(1)!.transform, reach = runner ? runner.loadout.definition(runner.loadout.current(side).id).range : 0;
+    const row = { frame: this.frame, tick: world.tick, actor: id, part, picked: null as string | null, until: ready + 6, started: null as number | null, approach: Math.hypot(tt.x - pp.x, tt.z - pp.z) > reach * .95 };
+    this.clicks.push(row);
+    if (!f?.joints) { this.log.push(`click ${id}: not drawn`); return; }
+    const j = f.joints, feet = j.footL.map((v, i) => (v + j.footR[i]) / 2), axis = j.head.map((v, i) => v - j.hip[i]), length = Math.hypot(...axis) || 1;
+    const p = part === 'head' ? j.head.map((v, i) => v + axis[i] / length * .1) : part === 'chest' ? j.hip.map((v, i) => v + axis[i] * .6) : part === 'hip' ? j.hip : feet;
+    const q = this.game.view.project(p[0], p[1], p[2]), rect = this.game.view.renderer.domElement.getBoundingClientRect();
+    const picked = this.game.input.picker.pick(rect.left + (q[0] + 1) / 2 * rect.width, rect.top + (1 - q[1]) / 2 * rect.height, world.entities.iterate());
+    row.picked = picked ? [...this.actors.values()].find(a => a.entity === picked.id)?.id ?? `#${picked.id}` : null;
+    const courier = [...this.actors.values()].find(a => a.kind === 'courier');
+    if (picked && courier) courier.plan = { type: 'click', entity: picked.id, at: this.frame };
+  }
+  private clickReport() {
+    for (const row of this.clicks) if (row.started === null) {
+      const attack = this.world.events.events(row.tick).find(e => e.type === 'combat.attack' && e.sourceId === 1 && e.tick <= row.until);
+      if (attack && row.picked === row.actor) row.started = attack.tick - row.tick;
+    }
+    // Out of reach, a correct pick is an approach (ControlIntent walks in, then strikes; covered by the sim tests).
+    // A newer click before this one's swing came replaces it (latest click wins, one queued swing).
+    const rows = this.clicks.map((r, i) => ({ ...r, superseded: r.started === null && (this.clicks[i + 1]?.tick ?? Infinity) < r.until }))
+      .map(r => ({ ...r, hit: r.picked === r.actor && (r.started !== null || r.approach || r.superseded) }));
+    const swings = this.world.events.events(0).flatMap(e => e.type === 'combat.attack' && e.sourceId === 1 ? [`${e.tick}:${e.actionId.replace('weapon.', '')}${e.style ? `/${e.style}` : ''}`] : []);
+    return { total: rows.length, misses: rows.filter(r => !r.hit).length, rows, swings };
+  }
   /** Courier ankle height above the sole, in foot-local units, from the frame-0 idle pose (feet flat on the floor). */
   private calibrateSole(): void {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'), c = this.game.view.labProbes().character, foot = c?.node('footL');
@@ -638,7 +678,7 @@ export class SceneLab {
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
-      bike: { ...this.bike }, actors, visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
   }
   describe() {

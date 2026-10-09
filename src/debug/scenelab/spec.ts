@@ -71,6 +71,8 @@ export type Action =
   | { turn: number }
   | { sit: string; seconds?: number }
   | { attack: string; seconds?: number }
+  /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
+  | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
   | { infect: { by?: string; instant?: boolean } }
   | { mountBike: string }
@@ -109,6 +111,8 @@ export interface Expectations {
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;
   torsoPitchMaxDeg?: number;
+  /** Clicks on a drawn body that did not start (or queue) an attack on that actor within 100 ms (`metrics.clicks`). */
+  clickMissMax?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
   /** Frames a living actor stood in a door aperture or leaf sweep (src/data/buildingDoors.ts) while that door was not
