@@ -5,4 +5,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / 'tools/blender'))
 from sslib.fairhaven import run
 from sslib.fh_storefront import recipe
-run('bld.storefront-row', __file__, recipe)
+if '--decay' in sys.argv:
+    from sslib.fairhaven_w5 import run as run_damage
+    run_damage('bld.storefront-row', __file__)
+else:
+    run('bld.storefront-row', __file__, recipe)

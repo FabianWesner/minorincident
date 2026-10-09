@@ -8285,31 +8285,46 @@
   {
     "id": "decay.collapsed-facade",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.collapsed-facade.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 2.6517,
+      "y": 5.0093,
+      "z": 6.0,
+      "tolerance": 0.03
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "wallAttachSocket",
+      "rubbleSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 4,
+      "drawCalls": 8,
+      "fileKB": 200
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.collapsed-facade/build.py",
+    "sourceGlb": "assets/decay.collapsed-facade/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/decay.collapsed-facade.lod1.glb",
+      "lod2": "public/assets/models/decay.collapsed-facade.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.rubble-pile",
@@ -16129,10 +16144,17 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w5"
+    ],
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -16179,10 +16201,17 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w5"
+    ],
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -16231,10 +16260,17 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w5"
+    ],
     "world": {
       "token": "backpackTeal",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
