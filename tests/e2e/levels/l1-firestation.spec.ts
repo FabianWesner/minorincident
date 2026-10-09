@@ -54,10 +54,20 @@ test('T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-stati
     await page.evaluate(() => window.__SS__!.camera.follow());
   };
   let shot = false;
+  // PO 2026-10-08 route: the final leg runs back north across the spread; keep two game-camera frames of it (at 70 % and 35 % of
+  // the straight-line distance left) next to the invitation shot.
+  const legStart = Math.hypot((await player()).transform.x - trigger.x, (await player()).transform.z - trigger.z), legShots = [.7, .35];
   for (let i = 0; i < 500 && (await mission()).phase === 'playing'; i++) {
     if (await fight()) continue;
     const p = (await player()).transform;
-    if (!shot && Math.hypot(p.x - trigger.x, p.z - trigger.z) < 9 && (await mission()).l1!.say?.text === 'Get in!') {
+    if (legShots.length && Math.hypot(p.x - trigger.x, p.z - trigger.z) < legStart * legShots[0]) {
+      const n = 3 - legShots.length; legShots.shift();
+      await page.evaluate(() => window.__SS__!.screenshotReady());
+      await page.screenshot({ path: `${output}/final-leg-${n}.png` });
+    }
+    // Within 6 m: since 2026-10-08 the courier arrives along Main Row from the west, i.e. toward screen-right, where the half-width
+    // of the follow camera's view is ~8 m (approaching from the east along Elm Street the old bay was in view from 9 m).
+    if (!shot && Math.hypot(p.x - trigger.x, p.z - trigger.z) < 6 && (await mission()).l1!.say?.text === 'Get in!') {
       // The game follow camera (no override): the open bay, the waving firefighter and the floor ring must be in view.
       shot = true; await step(10);
       const view = await page.evaluate(q => ({ trigger: window.__SS__!.input.project(q), size: { w: innerWidth, h: innerHeight } }), trigger);

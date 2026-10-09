@@ -4,6 +4,7 @@ import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
 import { assetUrl } from '../../assets/assetUrl';
+import { openFireStationBays } from '../../assets/fireStationBays';
 import type { Game } from '../../Game';
 import type { DistrictLayout, Point } from '../../levels/districts/types';
 import type { CivilianActivity } from '../../sim/npc/types';
@@ -765,6 +766,7 @@ export class SceneLab {
     const sets: TriangleSet[] = [], matrix = new Matrix4(), v = new Vector3();
     for (const p of this.built.placements) {
       const root = await this.registry.loadAsset(p.assetId, 'lod0');
+      openFireStationBays(p.assetId, root);
       const holder = new Object3D(); holder.position.fromArray(p.position); holder.rotation.y = p.yaw; holder.scale.fromArray(p.scale); holder.add(root); holder.updateMatrixWorld(true);
       const tris: number[] = [], leaves = buildingDoors[p.assetId]?.leaves.map(l => l.node) ?? [];
       root.traverse(node => {

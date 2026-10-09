@@ -1,7 +1,7 @@
 import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
 import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
-import { l2Anchors, l2TruckPath } from '../../data/l2';
+import { l2Anchors, l2Station, l2TruckPath, stationPoint } from '../../data/l2';
 import { findClearSpot, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
 import type { DistrictLayout, Placement, Tier } from '../districts/types';
 
@@ -27,14 +27,14 @@ export const l2Dressing: readonly Dressing[] = [
   { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 26.9, yaw: .12 },
   { kind: 'abandoned', assetId: 'veh.suv-dark', x: -12, z: 32.2, yaw: Math.PI - .2 },
   { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
-  { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -33.4, yaw: .1 },
+  { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -28.0, yaw: .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -61.6, z: -22, yaw: H + .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -70.4, z: -24, yaw: H - .08 },
   // Crashed: into a lamp post, into each other at the Juniper junction, nose into a hydrant.
   { kind: 'crashed', assetId: 'veh.sedan-green', x: -6.6, z: 26.4, yaw: .7 },
   { kind: 'crashed', assetId: 'veh.sedan-red', x: 11.2, z: -2.6, yaw: 2.3 },
   { kind: 'crashed', assetId: 'veh.suv-green', x: 16.4, z: 3.2, yaw: -.9 },
-  { kind: 'crashed', assetId: 'veh.sedan-green', x: 46.6, z: -33.6, yaw: -.5 },
+  { kind: 'crashed', assetId: 'veh.sedan-green', x: 48.8, z: -33.1, yaw: Math.PI - .5 },
   // Exactly one smoking vehicle (E27 small smoke column at its bonnet).
   { kind: 'smoking', assetId: 'veh.sedan-green', x: 33.6, z: 27.6, yaw: 2.9 },
   // Emergency vehicles left with their lights on.
@@ -57,8 +57,8 @@ export const l2Dressing: readonly Dressing[] = [
   // Small signs of fighting: a dropped baton and a tear-gas canister by the police car.
   { kind: 'fighting', assetId: 'wpn.police-baton', x: -17.6, z: -30.6, yaw: .6 },
   // Fire Station 3 bay: benches for the frightened civilians.
-  { kind: 'station', assetId: 'prop.bench', x: -76, z: 44.1, yaw: 0 },
-  { kind: 'station', assetId: 'prop.bench', x: -68.7, z: 43.9, yaw: Math.PI },
+  // Both face out of the bays (station-local +x): one at the mouth of the left bay, one deeper inside it.
+  ...([[1.0, 1.6], [-1.6, 2.9]] as const).map(([lx, lz]) => { const [x, z] = stationPoint(lx, lz); return { kind: 'station' as const, assetId: 'prop.bench', x, z, yaw: l2Station.yaw }; }),
   // Police bridge checkpoint at the east end of Elm Street: vehicles, barriers, fences, kit, light tower.
   { kind: 'checkpoint', assetId: 'veh.police-suv', x: 78.4, z: 25.9, yaw: .05, lit: true },
   { kind: 'checkpoint', assetId: 'veh.police-sedan', x: 83.3, z: 27.6, yaw: H + .06, lit: true },

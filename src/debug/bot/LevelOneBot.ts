@@ -18,7 +18,7 @@ const goals: Record<string, string> = { pickup: 'parcel-counter', deliver: 'lab-
 
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Runs one profile to the result screen (or the time limit) and reports. */
-export function* l1Frames(world: SimWorld, mission: Mission, profile: L1Profile, opts: { seed?: number; maxSeconds?: number; stopWhen?: (mission: Mission) => boolean; onExit?: (world: SimWorld, mission: Mission) => void } = {}): Generator<InputFrame, L1Report> {
+export function* l1Frames(world: SimWorld, mission: Mission, profile: L1Profile, opts: { seed?: number; maxSeconds?: number; stopWhen?: (mission: Mission) => boolean; onExit?: (world: SimWorld, mission: Mission) => void; onTick?: (world: SimWorld, mission: Mission) => void } = {}): Generator<InputFrame, L1Report> {
   const seed = opts.seed ?? world.seed, maxTicks = (opts.maxSeconds ?? 900) * 60, rng = new Rng(seed, `bot-${profile}`);
   const walker = new Walker(), seen = new Set<string>(), timeline: L1Report['timeline'] = [];
   const infectedAfterExit: Record<number, number> = {};
@@ -34,6 +34,7 @@ export function* l1Frames(world: SimWorld, mission: Mission, profile: L1Profile,
   try {
   for (let tick = 0; tick < maxTicks && mission.state.phase !== 'result' && mission.state.phase !== 'progression'; tick++) {
     if (opts.stopWhen?.(mission)) break;
+    opts.onTick?.(world, mission);
     const player = world.entities.get(1)!, p = player.transform, l1 = mission.state.l1!, t = world.tick / 60;
     for (const id of mission.state.completedObjectives) if (!seen.has(id)) { seen.add(id); timeline.push({ id, t }); }
     if (l1.exitIds.length && !exitTick) { exitTick = world.tick; opts.onExit?.(world, mission); }
