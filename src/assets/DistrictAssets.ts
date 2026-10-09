@@ -123,6 +123,7 @@ export class DistrictAssets {
       openFireStationBays(id, asset);
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
+      if (id === 'kit.army-checkpoint' || id === 'prop.checkpoint-gate') asset.userData.splitDoors = ['gateArm'];
       const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);

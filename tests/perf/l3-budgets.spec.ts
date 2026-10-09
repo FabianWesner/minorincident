@@ -47,18 +47,26 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.locator('canvas').screenshot({ path: `${dir}/l3-grove-boulevard-${tier}.png`, scale: 'css' });
     const blvd = await record('true', 6_000);
     const vfx = await page.evaluate(() => (window.__SS__!.getState() as unknown as { render?: { vfx?: { particles?: number; columns?: number } } }).render?.vfx ?? null);
-    const proof = { tier, seed: 2, counts, attackDrawCalls: attackStatic.drawCalls, attackTriangles: attackStatic.triangles, blvdDrawCalls: blvdStatic.drawCalls, blvdTriangles: blvdStatic.triangles,
+    // Measure the occupied final street at the game camera, including pursuing packs and army HMG effects.
+    await page.evaluate(() => window.__SS__!.camera.follow());
+    await step('window.__SS__.getState().player.transform.x >= 110', 1200);
+    await page.evaluate(async () => { const a = window.__SS__!; a.bot.stop(); a.input.clear(); await a.screenshotReady(); });
+    const streetStatic = await page.evaluate(() => window.__SS__!.perf());
+    const streetCounts = await page.evaluate(() => { const a = window.__SS__!, s = a.missions.state()!.l3!; return { infected: a.getState().ai!.count, spawned: s.segmentIds.flat().length + s.spillIds.length + s.pressureIds.length + (s.finaleIds?.length ?? 0) }; });
+    await page.locator('canvas').screenshot({ path: `${dir}/l3-finale-${tier}.png`, scale: 'css' });
+    const street = await record('true', 6_000);
+    const proof = { tier, seed: 2, counts, streetCounts, streetDrawCalls: streetStatic.drawCalls, streetTriangles: streetStatic.triangles, streetP50: percentile(street, .5), streetP95: percentile(street, .95), attackDrawCalls: attackStatic.drawCalls, attackTriangles: attackStatic.triangles, blvdDrawCalls: blvdStatic.drawCalls, blvdTriangles: blvdStatic.triangles,
       attackP50: percentile(attack, .5), attackP95: percentile(attack, .95), attackMax: Math.max(...attack), fallbackMaxMs: Math.max(...fallback), blvdP50: percentile(blvd, .5), blvdP95: percentile(blvd, .95),
       simP95: percentile(attackCpu.map(c => c.sim), .95), updateP95: percentile(attackCpu.map(c => c.update), .95), renderP95: percentile(attackCpu.map(c => c.render), .95), fallbackFired: await page.evaluate(() => window.__SS__!.missions.state()!.l3!.fallbackAt > 0), vfx };
-    writeFileSync(`${dir}/l3-${tier}.json`, JSON.stringify({ ...proof, attackProfile: attackStatic.profile, blvdProfile: blvdStatic.profile, blvdAssets: blvdStatic.profileAssets, attack, fallback, blvd }, null, 2));
+    writeFileSync(`${dir}/l3-${tier}.json`, JSON.stringify({ ...proof, attackProfile: attackStatic.profile, blvdProfile: blvdStatic.profile, blvdAssets: blvdStatic.profileAssets, attack, fallback, blvd, street }, null, 2));
     console.log(JSON.stringify(proof));
     expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 30 : 15); expect(counts.officers).toBeGreaterThanOrEqual(6);
     expect(proof.fallbackFired).toBe(true);
-    for (const [draws, tris] of [[proof.attackDrawCalls, proof.attackTriangles], [proof.blvdDrawCalls, proof.blvdTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
+    for (const [draws, tris] of [[proof.attackDrawCalls, proof.attackTriangles], [proof.blvdDrawCalls, proof.blvdTriangles], [proof.streetDrawCalls, proof.streetTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
     // throttle, the E18-AC08 emulation proxy (p95 recorded for the report).
-    if (tier === 'high') { expect(proof.attackP95).toBeLessThanOrEqual(14); expect(proof.blvdP95).toBeLessThanOrEqual(14); }
-    else { expect(proof.attackP50).toBeLessThanOrEqual(1000 / 30); expect(proof.blvdP50).toBeLessThanOrEqual(1000 / 30); }
+    if (tier === 'high') { expect(proof.attackP95).toBeLessThanOrEqual(14); expect(proof.blvdP95).toBeLessThanOrEqual(14); expect(proof.streetP95).toBeLessThanOrEqual(14); }
+    else { expect(proof.attackP50).toBeLessThanOrEqual(1000 / 30); expect(proof.blvdP50).toBeLessThanOrEqual(1000 / 30); expect(proof.streetP50).toBeLessThanOrEqual(1000 / 30); }
     expect(proof.fallbackMaxMs).toBeLessThanOrEqual(50);
   });
 });

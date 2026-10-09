@@ -1,0 +1,800 @@
+{
+  "name": "qa-l3-finale",
+  "note": "Game camera: open boom, courier and surviving officers escape ahead of a pursuing pack into the HMG line; arm closes only after the last officer; pursuers stop outside.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        80,
+        -22
+      ],
+      [
+        155,
+        22
+      ]
+    ]
+  },
+  "armyBoom": {
+    "x": 137.1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        119,
+        0
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ],
+      "state": {
+        "run": [
+          [
+            141,
+            0
+          ],
+          [
+            144,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "officer-0",
+      "kind": "pedestrian",
+      "at": [
+        115,
+        1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 0
+        }
+      }
+    },
+    {
+      "id": "officer-1",
+      "kind": "pedestrian",
+      "at": [
+        114,
+        -1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 1
+        }
+      }
+    },
+    {
+      "id": "officer-2",
+      "kind": "pedestrian",
+      "at": [
+        113,
+        1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 2
+        }
+      }
+    },
+    {
+      "id": "officer-3",
+      "kind": "pedestrian",
+      "at": [
+        113,
+        -1.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 3
+        }
+      }
+    },
+    {
+      "id": "officer-4",
+      "kind": "pedestrian",
+      "at": [
+        114,
+        -3.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 4
+        }
+      }
+    },
+    {
+      "id": "officer-5",
+      "kind": "pedestrian",
+      "at": [
+        113,
+        3.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 5
+        }
+      }
+    },
+    {
+      "id": "officer-6",
+      "kind": "pedestrian",
+      "at": [
+        112,
+        -3.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 6
+        }
+      }
+    },
+    {
+      "id": "army-0",
+      "kind": "pedestrian",
+      "at": [
+        139,
+        -7.6
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "role": "soldier",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "hmg"
+        }
+      }
+    },
+    {
+      "id": "army-1",
+      "kind": "pedestrian",
+      "at": [
+        139,
+        7.6
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "role": "soldier",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "hmg"
+        }
+      }
+    },
+    {
+      "id": "pursuers-1",
+      "kind": "infected",
+      "at": [
+        114,
+        0
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-2",
+      "kind": "infected",
+      "at": [
+        113.70290660370726,
+        1.3016512173526744
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-3",
+      "kind": "infected",
+      "at": [
+        112.8704694055762,
+        2.3454944474040893
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-4",
+      "kind": "infected",
+      "at": [
+        111.66756280186894,
+        2.924783736545471
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-5",
+      "kind": "infected",
+      "at": [
+        110.33243719813106,
+        2.924783736545471
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-6",
+      "kind": "infected",
+      "at": [
+        109.1295305944238,
+        2.3454944474040897
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-7",
+      "kind": "infected",
+      "at": [
+        108.29709339629274,
+        1.3016512173526746
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-8",
+      "kind": "infected",
+      "at": [
+        108.19134171618255,
+        0.46193976625564376
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-9",
+      "kind": "infected",
+      "at": [
+        106.9112740975258,
+        -0.7276260688050391
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-10",
+      "kind": "infected",
+      "at": [
+        109.1295305944238,
+        -3.3454944474040893
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-11",
+      "kind": "infected",
+      "at": [
+        109.87049743187542,
+        -3.1161254527280158
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-12",
+      "kind": "infected",
+      "at": [
+        111.2056230356133,
+        -3.1161254527280158
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-13",
+      "kind": "infected",
+      "at": [
+        113.3704694055762,
+        -2.3454944474040897
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "pursuers-14",
+      "kind": "infected",
+      "at": [
+        113.70290660370726,
+        -1.301651217352675
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-1",
+      "kind": "infected",
+      "at": [
+        94,
+        0
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-2",
+      "kind": "infected",
+      "at": [
+        93.91259040293522,
+        0.8316467632710373
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-3",
+      "kind": "infected",
+      "at": [
+        93.65418183057041,
+        1.6269465723032006
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-4",
+      "kind": "infected",
+      "at": [
+        93.23606797749979,
+        2.3511410091698925
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-5",
+      "kind": "infected",
+      "at": [
+        92.67652242543544,
+        2.972579301909577
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-6",
+      "kind": "infected",
+      "at": [
+        92,
+        3.4641016151377544
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-7",
+      "kind": "infected",
+      "at": [
+        91.23606797749979,
+        3.804226065180614
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-8",
+      "kind": "infected",
+      "at": [
+        90.41811385307061,
+        3.978087581473093
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-9",
+      "kind": "infected",
+      "at": [
+        89.58188614692939,
+        3.9780875814730936
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-10",
+      "kind": "infected",
+      "at": [
+        88.76393202250021,
+        3.8042260651806146
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-11",
+      "kind": "infected",
+      "at": [
+        88,
+        3.464101615137755
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-12",
+      "kind": "infected",
+      "at": [
+        87.32347757456456,
+        2.972579301909578
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-13",
+      "kind": "infected",
+      "at": [
+        86.76393202250021,
+        2.351141009169893
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-14",
+      "kind": "infected",
+      "at": [
+        86.34581816942959,
+        1.6269465723032002
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-15",
+      "kind": "infected",
+      "at": [
+        86.08740959706478,
+        0.8316467632710373
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-16",
+      "kind": "infected",
+      "at": [
+        86,
+        4.898587196589413e-16
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-17",
+      "kind": "infected",
+      "at": [
+        86.08740959706478,
+        -0.8316467632710363
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-18",
+      "kind": "infected",
+      "at": [
+        86.34581816942959,
+        -1.6269465723031993
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-19",
+      "kind": "infected",
+      "at": [
+        86.76393202250021,
+        -2.351141009169892
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-20",
+      "kind": "infected",
+      "at": [
+        87.32347757456456,
+        -2.972579301909576
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-21",
+      "kind": "infected",
+      "at": [
+        88,
+        -3.464101615137754
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-22",
+      "kind": "infected",
+      "at": [
+        88.76393202250021,
+        -3.804226065180614
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-23",
+      "kind": "infected",
+      "at": [
+        89.58188614692938,
+        -3.978087581473093
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-24",
+      "kind": "infected",
+      "at": [
+        90.41811385307062,
+        -3.978087581473093
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-25",
+      "kind": "infected",
+      "at": [
+        91.23606797749979,
+        -3.8042260651806146
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-26",
+      "kind": "infected",
+      "at": [
+        91.64644660940672,
+        -3.8176550057310283
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-27",
+      "kind": "infected",
+      "at": [
+        93.17652242543544,
+        -2.972579301909576
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-28",
+      "kind": "infected",
+      "at": [
+        93.23606797749979,
+        -2.3511410091698934
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-29",
+      "kind": "infected",
+      "at": [
+        93.65418183057041,
+        -1.6269465723032006
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    },
+    {
+      "id": "rear-push-30",
+      "kind": "infected",
+      "at": [
+        93.91259040293522,
+        -0.8316467632710395
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      129,
+      0
+    ],
+    "zoom": 2.3
+  },
+  "frames": 720,
+  "sheet": 30,
+  "shots": [
+    0,
+    120,
+    240,
+    360,
+    540,
+    720
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "script": [
+    {
+      "frame": 180,
+      "camera": {
+        "mode": "game",
+        "target": [
+          134,
+          0
+        ],
+        "zoom": 1.6
+      }
+    }
+  ]
+}

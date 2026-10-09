@@ -4160,7 +4160,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.army-checkpoint.glb",
-    "hash": "3b47c1279316ecd4b731d56cba10f2c7cf74e3ed3a0482c08d7f5228550c0858"
+    "hash": "1103720d1f823ceb378170152bc4955c6dbb2fd3cfb7f4e1f9eaa1fd0ad81e9d"
   },
   "decay.looted-store": {
     "class": "heavy",

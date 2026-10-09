@@ -25,7 +25,9 @@ function helpers(page: Page) {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      return near ? a.input.project(near.transform) : null;
+      const point = near ? a.input.project(near.transform) : null;
+      // A covered/offscreen body cannot receive a physical canvas click.
+      return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? point : null;
     }, range);
     if (!target) return false;
     await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
@@ -34,14 +36,28 @@ function helpers(page: Page) {
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
   let seenDeaths = 0;
   const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
+    let groundStart = 0, lastRetry = (await player()).transform;
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
-        const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
+        const a = window.__SS__!, x = target.x, z = target.z, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
-      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
-      await page.mouse.click(point.x, point.y);
+      // Keep the destination in the canvas centre, clear of HUD buttons, and resolve the click
+      // under the camera used to project it. A corpse at a waypoint
+      // is still a valid attack target: choose nearby ground within the existing arrival tolerance.
+      await step(1);
+      const radius = stop * .8;
+      const ground = [target, ...Array.from({ length: 16 }, (_, i) => ({
+        x: target.x + Math.cos(i * Math.PI / 8) * radius,
+        z: target.z + Math.sin(i * Math.PI / 8) * radius,
+      }))];
+      for (let j = 0; j < ground.length; j++) {
+        const q = ground[(groundStart + j) % ground.length];
+        const point = await page.evaluate(q => window.__SS__!.input.project(q), q);
+        await page.mouse.click(point.x, point.y); await step(1);
+        if (await page.evaluate(() => window.__SS__!.input.lastPick().length === 0)) break;
+      }
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
@@ -59,11 +75,18 @@ function helpers(page: Page) {
       // Many ahead: back off along the street for a moment (they string out), then push on.
       if (crowd >= 4) {
         const p0 = (await player()).transform, back = { x: p0.x - 10, z: p0.z };
-        const point = await page.evaluate(q => window.__SS__!.input.project(q), back); await page.mouse.click(point.x, point.y); await step(45); await click(); fights = 0;
+        const point = await page.evaluate(q => { const p = window.__SS__!.input.project(q); return document.elementFromPoint(p.x, p.y)?.tagName === 'CANVAS' ? p : null; }, back);
+        if (point) { await page.mouse.click(point.x, point.y); await step(45); }
+        await click(); fights = 0;
       }
       else if (fights < 3 && (await player()).health.current > 0 && await fightNearby(range)) { fights++; await click(); }
       else if (fights >= 3) { if (++fights >= 8) fights = 0; if (fights === 4) await click(); }
-      else if (i % 10 === 9) await click();
+      else if (i % 10 === 9) {
+        // A clear ground click can still approach the wrong side of a wreck. Try another
+        // physical ground point within the unchanged waypoint tolerance after a stall.
+        if (Math.hypot(p.x - lastRetry.x, p.z - lastRetry.z) < .25) groundStart = (groundStart + 1) % 17;
+        lastRetry = p; await click();
+      }
     }
     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);

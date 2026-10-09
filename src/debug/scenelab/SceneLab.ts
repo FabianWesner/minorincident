@@ -1,4 +1,5 @@
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
+import { ArmyCheckpointBoom } from '../../sim/missions/ArmyCheckpointBoom';
 import { l2 } from '../../data/l2';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
@@ -122,6 +123,7 @@ export class SceneLab {
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
+    if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
     this.game.clock.pause();
@@ -129,12 +131,15 @@ export class SceneLab {
     this.game.view.settings({ cameraShake: false, cheapDof: spec.dof ?? true, timeOfDay: spec.time ?? 'L1' });
     this.camera = spec.camera ?? { mode: 'game', target: built.center };
     this.applyCamera();
+    if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(spec.armyBoom?.closed ? 0 : 1);
     // Prop triangles for the per-frame bone checks (LOD0 GLBs, cached by the registry across loads).
     await Promise.all([this.game.screenshotReady(), this.prepareClipping()]);
     this.calibrateSole();
     return this.describe();
   }
   /** Sim assembly before the view loads: systems, actors and vehicles exist when the presentation is built. */
+  private boom: ArmyCheckpointBoom | null = null;
+  private boomClosedAt = 0;
   private setup(world: SimWorld, spec: SceneSpec): void {
     for (const prop of spec.props ?? []) if (prop.rotation) {
       const item = world.props?.items.find(p => p.id.endsWith(`/${prop.id}`));
@@ -169,6 +174,16 @@ export class SceneLab {
       if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
     }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
+    this.boom = spec.armyBoom ? new ArmyCheckpointBoom(world, spec.armyBoom.x, spec.armyBoom.z) : null;
+    this.boomClosedAt = spec.armyBoom?.closed ? world.tick : 0;
+    if (this.boom) {
+      this.boom.set(!!spec.armyBoom?.closed);
+      world.events.on('sim.tick', () => {
+        if (this.boomClosedAt || spec.armyBoom?.closed) return;
+        const ids = [1, ...[...world.entities.iterate()].filter(e => e.civilian?.ally?.follow && !e.infection).map(e => e.id)];
+        if (this.boom!.ready(ids)) { this.boomClosedAt = world.tick; this.boom!.set(true); }
+      }, SimPhase.missions);
+    }
     // The emergence runs inside the tick in the mission phase, as LevelOneOutbreak does (motion is published from it).
     world.events.on('sim.tick', () => this.emergeStep(), SimPhase.missions);
   }
@@ -312,7 +327,7 @@ export class SceneLab {
       else if ('ally' in a) {
         // The L3 allied fighter v2 setup (LevelThreeCollapse.officer/fallback): a gun, engaged, a post or a squad slot.
         const role = a.ally.role ?? 'officer', leader = a.ally.follow ? this.actors.get(a.ally.follow)?.entity : undefined, f = l3.officers.squad, slot = a.ally.slot ?? 0;
-        c.ally = { ...allyState(role, leader ? null : { x: e.transform.x, z: e.transform.z }, !leader), gun: { ...(role === 'soldier' ? l3.soldiers.gun : l3.officers.gun) }, engaged: true, runSpeed: f.moveMs };
+        c.ally = { ...allyState(role, leader ? null : { x: e.transform.x, z: e.transform.z }, !leader), gun: { ...(role === 'soldier' ? l3.soldiers.gun : leader ? f.gun : l3.officers.gun) }, engaged: true, runSpeed: f.moveMs };
         if (leader) c.ally.follow = { targetId: leader, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs };
         e.health = { current: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp, max: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp };
       }
@@ -439,6 +454,7 @@ export class SceneLab {
       if (this.camera?.mode === 'follow' || this.camera?.mode === 'orbit' && this.camera.spin || typeof (this.camera as { target?: unknown })?.target === 'string') this.applyCamera();
       const start = performance.now();
       this.nextRenderFrame();
+      if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(this.spec?.armyBoom?.closed ? 0 : this.boomClosedAt ? Math.max(0, 1 - (this.world.tick - this.boomClosedAt) / 42) : 1);
       this.game.view.frame(1 / 60); await this.game.step(1);
       // `?profile` (set by the runner) attributes every submitted draw, including the PostFx scene pass and shadows.
       const stepMs = performance.now() - start, info = this.game.view.renderer.info.render, profile = Object.entries(this.game.view.renderer.profile ?? {});
@@ -828,7 +844,7 @@ export class SceneLab {
       state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
-    return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+    return { armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),

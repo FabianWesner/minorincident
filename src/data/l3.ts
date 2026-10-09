@@ -30,8 +30,8 @@ export const l3 = {
   officers: {
     hp: 100,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
-    /** The squad: follow 2-6 m, engage within 18 m, stay within 20 m when not engaged, separated beyond 40 m. */
-    squad: { size: 4, minFollowM: 2, maxFollowM: 6, engageM: 18, leashM: 20, separatedM: 40, separatedS: 3, moveMs: 4.8, slowerMs: .3, breakoutS: 12 },
+    /** The squad follows 3-8 m around/behind the courier; running beyond its band is a regroup order. */
+    squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12 },
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
@@ -40,8 +40,9 @@ export const l3 = {
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits in the centre of the band (40 incl. the horde) so the squad is overwhelmed there. */
-    targets: [10, 25, 40] as readonly number[],
+    /** PO 10-09: five times the street population; yard attack values above stay unchanged. */
+    streetMultiplier: 5,
+    targets: [50, 125, 200] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
@@ -53,24 +54,26 @@ export const l3 = {
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** Segment 3 also holds the horde (part of its 48): two packs of 5 at the on-ramp end of two avenues (seeded), streaming west. */
-    horde: { packSize: 5, fromX: 121, toX: 102 },
+    /** Segment 3 also holds the horde: two packs of 25 at the on-ramp end of two avenues (seeded), streaming west. */
+    horde: { packSize: 25, fromX: 72, toX: 132 },
     leashM: 9,
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
-    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [2, 3] as P, maxPerLink: 2, cooldownS: 18 },
-    pressure: { idleS: 20, everyS: 10, count: [1, 3] as P, behindM: [15, 35] as P },
+    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [10, 15] as P, maxPerLink: 2, cooldownS: 18 },
+    pressure: { idleS: 20, everyS: 10, count: [5, 15] as P, behindM: [15, 35] as P },
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
-    retireBehindM: 60,
+    retireBehindM: 35,
     caps: { high: 80, low: 40 },
   },
+  /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
+  finale: { startX: 65, packs: [[72, 8], [94, 12], [116, 15]] as readonly P[], chaseS: 40, barrierX: 137.1, passX: 138.2, closeS: .7 },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */
   medkits: {
     heal: 40,
     positions: [
-      [-138.6, -6.6],                                   // armory
-      [-88.2, 3.4], [-15.0, 3.4], [26.0, 3.4], [58.0, 3.4], [85.0, -3.4],          // Commerce Street (alley mouths, one ahead of the segment-3 waves)
-      [-50.3, -24.0], [-4.0, -24.0], [44.6, -24.2], [72.0, -32.2], [96.0, -32.2],      // Grove Boulevard
-      [-50.4, 24.4], [35.6, 24.4], [64.0, 24.4], [110.0, 31.4],        // Oak Avenue
+      [-138.6, -6.6],
+      // Visible sidewalks on every avenue; 30-35 m between packs, plus relief after the larger clusters.
+      ...([-100, -66, -32, 2, 36, 60, 88, 108, 122] as const).flatMap(x =>
+        ([-28, 0, 28] as const).map(z => [x === -100 && z === -28 ? x - 1 : x, z + ((x === -100 && z === -28) || (x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * (z === -28 ? 4.4 : 3.4)] as const)),
     ] as readonly P[],
   },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */

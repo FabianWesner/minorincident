@@ -620,6 +620,10 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    if (this.world.missions?.state.l3) {
+      const at = this.world.missions.state.l3.barrierClosedAt;
+      this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
+    }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
