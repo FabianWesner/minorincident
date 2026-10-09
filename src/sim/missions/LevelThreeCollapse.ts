@@ -235,11 +235,11 @@ export class LevelThreeCollapse {
   private fallback(cause: 'time' | 'turned' | 'inside'): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
     s.phase = 'fallback'; s.fallbackAt = tick; s.fallbackCause = cause;
-    // The squad: the living officers designated at the armory (3-4 normally), topped up by the nearest living officers.
+    // PO: every surviving human officer retreats; keep the designated squad first in the formation.
     const human = (id: number) => { const e = world.entities.get(id); return !!e?.civilian?.ally && e.health.current > 0 && !e.infection && e.civilian.state !== 'finished'; };
     const squad = s.squadIds.filter(human);
     const others = s.officerIds.filter(id => !squad.includes(id) && human(id)).sort((a, b) => dist(world.entities.get(a)!.transform, player.transform) - dist(world.entities.get(b)!.transform, player.transform));
-    while (squad.length < l3.officers.squad.size && others.length) squad.push(others.shift()!);
+    squad.push(...others);
     const f = l3.officers.squad;
     for (const [slot, id] of squad.entries()) {
       const a = world.entities.get(id)!.civilian!.ally!;
