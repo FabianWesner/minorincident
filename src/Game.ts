@@ -1,6 +1,7 @@
 import type { Inspection } from './debug/Inspection';
 import { LevelOneBot } from './debug/bot/LevelOneBot';
 import { LevelThreeBot } from './debug/bot/LevelThreeBot';
+import { LevelFourBot } from './debug/bot/LevelFourBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
@@ -50,7 +51,7 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: LevelOneBot | Driver | LevelThreeBot | LevelTwoBot | null = null;
+  driver: LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -73,6 +74,12 @@ export class Game {
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
     this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => this.view.view.zoom(delta)));
+    this.input.reach = () => {
+      const combat = this.world.combat, weapons = this.world.entities.get(1)?.weapons;
+      if (!combat || !weapons) return null;
+      const def = combat.runner.loadout.definition(combat.runner.loadout.current(weapons.selectedSide).id);
+      return def.category === 'melee' ? def.range : null;
+    };
     this.audio = this.services.add(new AudioService(this.world, {
       settingsChanged: patch => this.campaignSettings(patch),
       pause: () => { this.clock.pause(); this.ui?.pause(); }, resume: () => { this.ticker.reset(); this.clock.resume(); this.ui?.show(null); },
@@ -198,7 +205,7 @@ export class Game {
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
-      }catch(error){ this.view.unfreeze(); this.view.missionHidden = false; throw error; }
+      }catch(error){ console.error("Level load failed", error); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
   }

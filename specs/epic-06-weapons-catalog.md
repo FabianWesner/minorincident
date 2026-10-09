@@ -30,7 +30,7 @@ The redesigned campaign ([`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10-0
 | Level | Weapon | Rule |
 | --- | --- | --- |
 | L1 | baseball bat | single target, 2 hits per 40 HP infected (E19 §5.6) |
-| L2 | **fire axe** (optional pickup) | stronger than the bat: a normal frontal swing (45 damage, one hit per 40 HP infected) when fewer than 3 infected are within 2.5 m; **the same input automatically becomes a 360° roundhouse** when ≥ 3 infected are within 2.5 m (25 damage to each, 2–3 m knockback, 0.8 s stagger): it creates space, it does not wipe the crowd (E20 §5.3) |
+| L2 | **fire axe** (optional pickup) | stronger than the bat: a normal frontal swing (45 damage, one hit per 40 HP infected) when fewer than 3 infected are within 2.5 m; **the same input automatically becomes a 360° roundhouse** when ≥ 3 infected are within 2.5 m (13 damage to each over a 0.5 s sweep since the PO 10-08 fight speed, was 25 over 1.0 s; 2–3 m knockback, 0.8 s stagger): it creates space, it does not wipe the crowd (E20 §5.3) |
 | L3 | **handgun** (`weapon.pistol`) | first ranged weapon; single target (no pierce), 2 hits per infected, 22 m; does not replace the axe's crowd clearing (E21 §5.2) |
 | L4 | **machine gun** | strongest weapon; 10 rounds/s, pierce 1, suited to groups; **unlimited ammunition** (E22 §5.3) |
 | L5–L6 | — | **no new weapon**: escalation pauses; responsibility replaces firepower |

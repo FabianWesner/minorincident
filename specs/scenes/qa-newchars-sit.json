@@ -1,0 +1,124 @@
+{
+ "name": "qa-newchars-sit",
+ "ground": "sidewalk",
+ "size": 24,
+ "time": "L1",
+ "props": [
+  {
+   "id": "c0",
+   "asset": "prop.lawn-chair-a",
+   "at": [
+    -4,
+    0
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "c1",
+   "asset": "prop.lawn-chair-b",
+   "at": [
+    -1.5,
+    0
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "bench",
+   "asset": "prop.bench",
+   "at": [
+    2.5,
+    0
+   ],
+   "yaw": 90,
+   "scale": [
+    0.95,
+    0.551,
+    0.95
+   ]
+  }
+ ],
+ "actors": [
+  {
+   "id": "p0",
+   "kind": "pedestrian",
+   "at": [
+    -4,
+    2
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-elderly.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "sit": "c0"
+   }
+  },
+  {
+   "id": "p1",
+   "kind": "pedestrian",
+   "at": [
+    -1.5,
+    2
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.dale.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "sit": "c1"
+   }
+  },
+  {
+   "id": "p2",
+   "kind": "pedestrian",
+   "at": [
+    2.5,
+    2
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.mia.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "sit": "bench"
+   }
+  },
+  {
+   "id": "p3",
+   "kind": "pedestrian",
+   "at": [
+    3.2,
+    2
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.marcus.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "sit": "bench"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   0,
+   0.7,
+   0
+  ],
+  "radius": 8,
+  "azimuth": 150
+ },
+ "frames": 400,
+ "shots": [
+  200,
+  399
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

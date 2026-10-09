@@ -755,6 +755,14 @@ export class AudioService implements Lifecycle {
                 this.play('infected.bite', { position: this.world.entities.get(event.targetId)?.transform ?? position }, source);
             return;
         }
+        if (event.type === 'ally.attack' && event.from) {
+            // An armed officer, soldier or civilian (allied fighters v2/v3): a gunshot at the shooter, not a fist swing. The HMG and the door gun are
+            // machine guns, the soldiers' rifles assault rifles; the tank's round has its own explosion beats.
+            if (event.role === 'tank') return;
+            const machine = event.weapon === 'hmg' || event.weapon === 'door-gun';
+            this.play(machine ? 'action.weapon.machine-gun' : event.weapon === 'rifle' ? 'action.weapon.assault-rifle' : event.weapon === 'hunting-rifle' ? 'action.weapon.hunting-rifle' : 'action.weapon.pistol', { position: event.from, gain: machine ? 0.85 : 0.8 }, source);
+            return;
+        }
         if (event.type === 'infected.groan' || event.type === 'infected.recovered') {
             const body = this.world.entities.get(event.sourceId);
             if (body && voicedInfected.has(body.archetype))

@@ -13,6 +13,8 @@ export class NavGrid {
   private readonly parent: Int32Array;
   private readonly cost: Float64Array;
   private readonly open: Uint8Array;
+  private readonly pathSeen: Uint32Array;
+  private pathStamp = 0;
   private readonly heap: { cell: number; score: number }[] = [];
   private readonly buckets = new Map<string, Wall[]>();
   private searchFrom = -1;
@@ -31,6 +33,7 @@ export class NavGrid {
     const count = this.width * this.depth;
     this.blocked = new Uint8Array(count); this.distance = new Int32Array(count); this.queue = new Int32Array(count);
     this.parent = new Int32Array(count); this.cost = new Float64Array(count); this.open = new Uint8Array(count);
+    this.pathSeen = new Uint32Array(count);
     this.distance.fill(-1);
     this.indexWalls();
     for (let cell = 0; cell < count; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), clearance));
@@ -42,8 +45,9 @@ export class NavGrid {
   /** Player clearance is smaller than AI clearance. Route to the nearest walkable
    * cell when the player hugs a collider, then use direct movement once visible. */
   /** Memo of recent `nearestCell` answers (fixed targets such as refuges are asked every tick by every fleeing agent;
-   * a blocked target cell costs up to 169 line tests). Cleared whenever blocked cells change. */
+   * a blocked target cell costs up to 169 line tests). Invalidate only answers near changed blockers. */
   private readonly nearestMemo: { x: number; z: number; r: number; cell: number }[] = [];
+  private readonly nearestBlockers = new Map<number, Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>>();
   private nearestNext = 0;
   nearestCell(x: number, z: number, radius?: number): number {
     const r = radius ?? -1;
@@ -93,6 +97,8 @@ export class NavGrid {
   }
   rebake(prepared?: Uint8Array): void {
     this.indexWalls();
+    this.nearestBlockers.clear();
+    for (const [id, wall] of this.blockers) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ });
     if (prepared) {
       this.blocked.set(prepared);
       for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
@@ -101,11 +107,24 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
-    const previous = this.blockers.get(id);
+    const previous = this.blockers.get(id), previousBounds = this.nearestBlockers.get(id);
     if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
+    // Keep old bounds even when the caller mutates its retained wall object in place.
+    if (blocked) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ }); else this.nearestBlockers.delete(id);
     if (previous && previous !== wall) this.updateBlockerCells(previous);
     this.updateBlockerCells(wall);
-    this.target = -1; this.searching = false; this.nearestMemo.length = 0;
+    this.target = -1; this.searching = false;
+    if (previousBounds) this.invalidateNearest(previousBounds);
+    this.invalidateNearest(wall);
+  }
+  private invalidateNearest(wall: Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>): void {
+    for (let i = this.nearestMemo.length - 1; i >= 0; i--) {
+      const memo = this.nearestMemo[i];
+      // nearestCell searches six cells in each direction; include rounding to the candidate's centre
+      // and both baked clearance and the query's segment radius. Distant walls cannot change its answer.
+      const pad = 7 * this.cellSize + Math.max(this.clearance, memo.r);
+      if (Math.abs(memo.x - wall.x) <= wall.halfX + pad && Math.abs(memo.z - wall.z) <= wall.halfZ + pad) this.nearestMemo.splice(i, 1);
+    }
   }
   private updateBlockerCells(wall: Wall): void {
     const pad = this.clearance + this.cellSize;
@@ -123,11 +142,17 @@ export class NavGrid {
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
     if (!this.clear(to.x, to.z, radius)) return false;
     const walls = new Set(this.blockers.values());
+    let previousX = Infinity, previousZ = Infinity;
     for (let i = 0; i <= steps; i++) {
       const x = from.x + dx * i / Math.max(1, steps), z = from.z + dz * i / Math.max(1, steps);
       if (this.mask && !this.mask(x, z)) return false;
       if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
-      for (const wall of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) walls.add(wall);
+      // Consecutive 20 cm samples usually share a 4 m bucket. Collect its walls once.
+      const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
+      if (bucketX !== previousX || bucketZ !== previousZ) {
+        for (const wall of this.buckets.get(`${bucketX},${bucketZ}`) ?? []) walls.add(wall);
+        previousX = bucketX; previousZ = bucketZ;
+      }
     }
     // Sampled clearance alone can skip a corner between two samples. A pulled
     // waypoint must clear the entire segment, including narrow foliage boxes.
@@ -140,13 +165,18 @@ export class NavGrid {
         ((from.x <= wall.x && to.x <= minX) || (from.x >= wall.x && to.x >= maxX) ||
          (from.z <= wall.z && to.z <= minZ) || (from.z >= wall.z && to.z >= maxZ))) continue;
       let enter = 0, leave = 1;
-      for (const [start, delta, center, half] of [[from.x, dx, wall.x, wall.halfX], [from.z, dz, wall.z, wall.halfZ]]) {
-        const min = center - half - radius, max = center + half + radius;
-        if (delta === 0) { if (start <= min || start >= max) { leave = -1; break; } }
-        else {
-          const a = (min - start) / delta, b = (max - start) / delta;
-          enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
-        }
+      // Keep the exact two slab tests without allocating three arrays per wall.
+      if (dx === 0) {
+        if (from.x <= minX || from.x >= maxX) continue;
+      } else {
+        const a = (minX - from.x) / dx, b = (maxX - from.x) / dx;
+        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+      }
+      if (dz === 0) {
+        if (from.z <= minZ || from.z >= maxZ) continue;
+      } else {
+        const a = (minZ - from.z) / dz, b = (maxZ - from.z) / dz;
+        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
       }
       if (enter < leave) return false;
     }
@@ -155,9 +185,17 @@ export class NavGrid {
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number): void {
     const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
+    // A body resting exactly on a collider face (float round-off puts it a hair inside) would fail every step, also the
+    // slide along the face: it froze pressed against walls and parked trucks (PO 10-09). Sweep it with a 2 mm smaller body.
+    // Checked only once a step is refused, so free movement costs nothing extra.
+    let touched = false;
     for (let i = 0; i < count; i++) {
-      if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; }
-      else { if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz; }
+      if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; continue; }
+      if (!touched) {
+        touched = true;
+        if (!this.clear(position.x, position.z, radius) && this.clear(position.x, position.z, radius - 0.002)) { radius -= 0.002; i--; continue; }
+      }
+      if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz;
     }
   }
   private neighbor(cell: number, direction: number): number {
@@ -302,23 +340,63 @@ export class NavGrid {
     if (r.from !== from && r.from >= 0) result.unshift(r.from);
     return true;
   }
+  /** Cells the current (or last finished) A* search expanded in total, across resumed calls. */
+  searchSize = 0;
+  /** True while a budget-limited A* between these cells is still in progress (call `path` again to resume it). */
+  pending(from: number, to: number): boolean { return this.searching && this.searchFrom === from && this.searchTo === to; }
+  /**
+   * Start cell for a route: the nearest walkable cell that is in straight reach of the body (`radius`), so an agent beside a
+   * thin wall never starts on the cell behind it (same rule as `steer`). -1 when no walkable cell within 1.5 m is in reach
+   * (the body stands in a slot narrower than the baked clearance: see `escapeCell`).
+   */
+  startCell(position: { x: number; z: number }, radius: number): number {
+    const nearest = this.nearestCell(position.x, position.z);
+    if (nearest < 0 || this.visible(position, { x: this.x(nearest), z: this.z(nearest) }, radius)) return nearest;
+    let best = -1, distance = Infinity;
+    for (let dz = -3; dz <= 3; dz++) for (let dx = -3; dx <= 3; dx++) {
+      const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+      if (cell < 0 || this.blocked[cell]) continue;
+      const d = (this.x(cell) - position.x) ** 2 + (this.z(cell) - position.z) ** 2;
+      if (d < distance && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
+    }
+    return best;
+  }
+  /**
+   * After a failed `path` search: the nearest walkable cell within `range` metres that the search never reached (outside the
+   * start's pocket) and that the body (`radius`) can walk to in a straight line, or -1. A fence gap or porch alley narrower
+   * than the baked clearance leaves a few isolated cells; this is the way out of them. `outsideSearch` false: any walkable cell
+   * at least `minRange` away.
+   */
+  escapeCell(position: { x: number; z: number }, radius: number, range = 6, outsideSearch = true, minRange = 0): number {
+    const n = Math.ceil(range / this.cellSize); let best = -1, distance = range * range;
+    for (let dz = -n; dz <= n; dz++) for (let dx = -n; dx <= n; dx++) {
+      const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+      if (cell < 0 || this.blocked[cell] || (outsideSearch && this.pathSeen[cell] === this.pathStamp)) continue;
+      const d = (this.x(cell) - position.x) ** 2 + (this.z(cell) - position.z) ** 2;
+      if (d < distance && d >= minRange * minRange && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
+    }
+    return best;
+  }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
   path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
     if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
-      this.searchFrom = from; this.searchTo = to; this.searching = true;
+      this.searchFrom = from; this.searchTo = to; this.searching = true; this.searchSize = 0;
       this.heap.length = 0; this.push(from, 0);
-      this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
+      // As with reachPath, stamp visited cells instead of clearing the entire district for each agent.
+      this.pathStamp = (this.pathStamp + 1) >>> 0;
+      if (!this.pathStamp) { this.pathSeen.fill(0); this.pathStamp = 1; }
+      this.pathSeen[from] = this.pathStamp; this.cost[from] = 0; this.parent[from] = -1; this.open[from] = 1;
     }
     const tx = to % this.width, tz = Math.floor(to / this.width);
     while (this.expansions < budget) {
       let best = -1;
       while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
       if (best < 0) { this.searching = false; return false; }
-      this.expansions++; this.open[best] = 2;
+      this.expansions++; this.searchSize++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
-      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
+      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }
     return false;
   }

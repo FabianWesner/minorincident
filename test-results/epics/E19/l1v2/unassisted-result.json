@@ -23,55 +23,60 @@
     },
     "deliver": {
       "status": "completed",
-      "started": 724,
+      "started": 1023,
       "kills": [],
       "events": {
         "l1.delivered:*": 1
       },
-      "interaction": 515
+      "interaction": 469
     },
     "escape": {
       "status": "completed",
-      "started": 3379,
+      "started": 3663,
       "kills": [],
       "events": {},
       "interaction": 0
     },
     "weapon": {
       "status": "completed",
-      "started": 3380,
+      "started": 3664,
       "kills": [
-        172,
-        174,
-        170
+        164,
+        166,
+        162,
+        168,
+        107,
+        109
       ],
       "events": {
-        "player.damaged:*": 12,
-        "combat.kill:*": 3
+        "player.damaged:*": 17,
+        "combat.kill:*": 8
       },
-      "interaction": 36
+      "interaction": 20
     },
     "firestation": {
       "status": "completed",
-      "started": 5739,
+      "started": 7892,
       "kills": [
-        113,
-        196,
-        199,
-        202,
-        207,
-        210,
-        216,
-        220,
-        225,
+        145,
+        107,
+        206,
+        168,
+        166,
+        204,
+        162,
+        115,
+        249,
         232,
-        235,
-        152
+        225,
+        222,
+        214
       ],
       "events": {
-        "player.damaged:*": 5,
-        "combat.kill:*": 12,
-        "interact.completed:*": 1
+        "combat.kill:*": 18,
+        "pickup.collected:*": 3,
+        "player.damaged:*": 9,
+        "civilian.saved:*": 1
       },
       "interaction": 1
     }
@@ -98,50 +103,52 @@
   "subtitle": {
     "id": "L1.twist",
     "text": "Delivery complete. Outbreak: not contained.",
-    "until": 9690
+    "until": 11755
   },
   "cinematic": null,
   "failure": null,
   "stats": {
-    "time": 157.5,
-    "kills": 15,
-    "damage": 132.5,
+    "time": 191.91666666666666,
+    "kills": 0,
+    "knockdowns": 20,
+    "damage": 237.5,
     "deaths": 0,
-    "rescued": 0,
+    "rescued": 1,
     "optionalObjectives": []
   },
   "result": {
-    "time": 157.5,
-    "kills": 15,
-    "damage": 132.5,
+    "time": 191.91666666666666,
+    "kills": 0,
+    "knockdowns": 20,
+    "damage": 237.5,
     "deaths": 0,
-    "rescued": 0,
+    "rescued": 1,
     "optionalObjectives": [],
     "delivered": true,
-    "infected": 22,
-    "turned": 22,
-    "escaped": 34
+    "infected": 30,
+    "turned": 23,
+    "escaped": 39
   },
   "l1": {
     "phase": "spread",
     "carrying": false,
     "delivered": true,
     "away": true,
-    "techId": 165,
-    "hx": 65.98280682331344,
-    "hz": -12.942519353467407,
-    "handoverAt": 2145,
-    "deliveredAt": 2539,
-    "flickerAt": 2823,
-    "exitAt": 3379,
+    "techId": 158,
+    "hx": 66.26238790778515,
+    "hz": -13.230898629823837,
+    "handoverAt": 2474,
+    "deliveredAt": 2823,
+    "flickerAt": 3107,
+    "exitAt": 3663,
     "warned": true,
     "fired": 5,
     "exitIds": [
-      165,
-      168,
-      170,
-      172,
-      174
+      158,
+      162,
+      164,
+      166,
+      168
     ],
     "exitHeadingsDeg": [
       125,
@@ -152,99 +159,161 @@
     ],
     "runs": [],
     "turnedIds": [
-      141,
-      142,
-      123,
-      157,
-      143,
-      144,
-      113,
-      152,
-      134,
-      126,
-      147,
-      146,
-      129,
-      154,
-      109,
-      156,
+      130,
+      133,
+      132,
+      138,
       107,
-      137,
-      128,
-      127,
-      120,
-      133
+      109,
+      142,
+      145,
+      152,
+      115,
+      204,
+      214,
+      222,
+      97,
+      102,
+      232,
+      249,
+      118,
+      156,
+      155,
+      153,
+      253,
+      119
     ],
     "escapedIds": [
-      163,
-      139,
-      138,
-      158,
-      122,
-      159,
-      160,
-      114,
-      161,
-      115,
-      151,
-      118,
-      153,
-      117,
-      162,
-      116,
-      150,
-      125,
-      145,
-      155,
-      104,
-      149,
-      106,
-      148,
-      108,
-      103,
-      105,
-      132,
-      164,
       131,
-      130,
+      117,
+      134,
+      147,
+      146,
+      136,
+      143,
+      116,
+      139,
+      106,
+      108,
+      137,
+      148,
+      111,
+      141,
+      110,
+      149,
+      150,
+      140,
+      125,
       135,
+      127,
+      128,
+      144,
+      126,
+      151,
+      120,
+      114,
+      98,
+      100,
+      113,
+      101,
+      96,
+      99,
+      157,
       124,
-      119
+      112,
+      123,
+      154
     ],
     "graceUntil": 0,
     "house": {
-      "door": 34,
-      "x": 22.27984,
-      "z": 26,
-      "ox": 24.25,
-      "oz": 26.25,
-      "next": 7590,
+      "door": 30,
+      "house": "bld.house-a:405",
+      "x": 5.01147,
+      "z": 22.33275,
+      "nx": 0,
+      "nz": 1,
+      "floor": [
+        [
+          1.59,
+          0.54
+        ],
+        [
+          1.85,
+          0.36
+        ],
+        [
+          2.11,
+          0.2
+        ]
+      ],
+      "sx": 5.01147,
+      "sz": 25.028750000000002,
+      "route": [
+        [
+          5.051470000000001,
+          26
+        ],
+        [
+          5.801470000000001,
+          26
+        ]
+      ],
+      "ox": 5.801470000000001,
+      "oz": 26,
+      "next": 9743,
       "ids": [
-        196,
-        199,
-        202,
-        207,
-        210,
-        216,
+        206,
+        209,
+        212,
+        215,
+        218,
         220,
         225,
-        232,
-        235
-      ]
+        228,
+        238,
+        241
+      ],
+      "walking": []
+    },
+    "labExit": {
+      "door": 0,
+      "house": "bld.clinic-annex:822",
+      "x": 66.18,
+      "z": -14.9135,
+      "nx": 0,
+      "nz": 1,
+      "floor": [],
+      "sx": 66.18,
+      "sz": -13.743500000000001,
+      "route": [],
+      "ox": 66.18,
+      "oz": -13.743500000000001,
+      "next": 0,
+      "ids": [
+        162,
+        164,
+        166,
+        168
+      ],
+      "speedMs": 5.3,
+      "walking": []
     },
     "clerkId": 0,
+    "clerkRoute": null,
     "beat": null,
     "say": {
-      "id": 251,
+      "id": 259,
       "text": "Get in!",
-      "at": 9320,
-      "until": 9470
+      "at": 11377,
+      "until": 11527
     },
     "beatsDone": [
       "pickup",
       "handover",
       "garage"
     ],
-    "firefighterId": 251
+    "techRoute": null,
+    "firefighterId": 259,
+    "firefighterNext": 11635
   }
 }

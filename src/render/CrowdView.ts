@@ -4,7 +4,7 @@ import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { crowdLod } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
-import { InfectedMoves } from './characters/InfectedMoves';
+import { InfectedMoves, getUpSpan } from './characters/InfectedMoves';
 import { GaitPhase } from './characters/GaitPhase';
 import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
@@ -19,6 +19,7 @@ import manifest from '../assets/manifest.json';
 import { civilianRoles } from '../data/npcs';
 import { infectedDefinitions } from '../data/infected';
 import type { EntitySnapshot } from '../sim/world/types';
+import { isOutbreakDistrict } from '../levels/districts/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { createInfectedPlaceholder } from './characters/infectedPlaceholder';
 import type { View } from './View';
@@ -96,8 +97,8 @@ export class CrowdView extends Group {
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
-    const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => d.id === 'D-GROVE') ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
-    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+    const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4';
     const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);
@@ -264,7 +265,7 @@ export class CrowdView extends Group {
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       const duration = authoredClips.get(clip)!.duration;
-      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / .64) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = variantShirts[b.variant] ?? batch.shirt;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -307,8 +308,6 @@ export class CrowdView extends Group {
       if (batch.count) {
         batch.mesh.instanceMatrix.clearUpdateRanges(); batch.mesh.instanceMatrix.addUpdateRange(0, batch.count * 16); batch.mesh.instanceMatrix.needsUpdate = true;
         for (const attribute of [batch.state, batch.tint]) { attribute.clearUpdateRanges(); attribute.addUpdateRange(0, batch.count * 4); attribute.needsUpdate = true; }
-        const first = batch.poses.clip.frames * batch.texture.image.width * 4;
-        batch.texture.clearUpdateRanges(); batch.texture.addUpdateRange(first, batch.texture.image.data!.length - first);
       }
     }
     for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }

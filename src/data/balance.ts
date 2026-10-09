@@ -49,6 +49,29 @@ export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, 
     gorilla: [15.04, 23.19],
     flamingo: [0.01, 0.37],
   },
+  // E21 campaign handgun (no magazine, 3 shots/s): measured TTK +- 0.21 s, the convention of the reference rows.
+  'weapon.handgun': {
+    runner: [0.14, 0.56],
+    crawler: [0.14, 0.56],
+    brute: [4.47, 4.89],
+    screamer: [0.47, 0.89],
+    sprinter: [0.14, 0.56],
+    riot: [2.14, 2.56],
+    bloated: [1.47, 1.89],
+    firefighter: [1.81, 2.23],
+    hazmat: [1.47, 1.89],
+    armored: [12.81, 13.23],
+    butcher: [14.47, 14.89],
+    nurse: [0.81, 1.23],
+    dog: [0.14, 0.56],
+    dachshund: [0.01, 0.23],
+    k9: [0.47, 0.89],
+    cat: [0.01, 0.23],
+    crow: [0.01, 0.23],
+    lion: [6.14, 6.56],
+    gorilla: [19.47, 19.89],
+    flamingo: [0.01, 0.23],
+  },
   'weapon.pistol': {
     runner: [0.13, 0.55],
     crawler: [0.13, 0.55],
@@ -70,6 +93,29 @@ export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, 
     lion: [6.88, 7.3],
     gorilla: [21.38, 21.8],
     flamingo: [0.01, 0.3],
+  },
+  // E22 campaign machine gun (pierce 1, no magazine): measured TTK +- 0.21 s, the convention of the reference rows.
+  'weapon.army-mg': {
+    runner: [0.02, 0.44],
+    crawler: [0.01, 0.34],
+    brute: [1.92, 2.34],
+    screamer: [0.22, 0.64],
+    sprinter: [0.02, 0.44],
+    riot: [0.82, 1.24],
+    bloated: [0.62, 1.04],
+    firefighter: [0.72, 1.14],
+    hazmat: [0.62, 1.04],
+    armored: [5.52, 5.94],
+    butcher: [6.22, 6.64],
+    nurse: [0.22, 0.64],
+    dog: [0.02, 0.44],
+    dachshund: [0.01, 0.34],
+    k9: [0.22, 0.64],
+    cat: [0.01, 0.34],
+    crow: [0.01, 0.24],
+    lion: [2.62, 3.04],
+    gorilla: [8.32, 8.74],
+    flamingo: [0.01, 0.24],
   },
   'weapon.machine-gun': {
     runner: [0.18, 0.6],
@@ -167,7 +213,8 @@ export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, 
 Object.assign(ttkBands, {
   'weapon.fists': {
     runner: [1.24, 2.49],
-    crawler: [0.3, 1.07],
+    // PO 10-08 fight speed: 6-damage beats, 5 for a 25 HP crawler (was 3 x 9).
+    crawler: [0.3, 1.4],
     brute: [9.94, 15.53],
     screamer: [1.83, 3.37],
     sprinter: [0.63, 1.57],
@@ -342,7 +389,7 @@ Object.assign(ttkBands, {
     flamingo: [0.01, 0.37],
   },
   'weapon.fire-axe': {
-    // E20 §5.3: 45 per 0.75 s single swing (one hit per 40 HP infected); the roundhouse needs a crowd and is not measured here.
+    // E20 §5.3: 45 per single swing (0.5 s since PO 10-08, was 0.75 s) (one hit per 40 HP infected); the roundhouse needs a crowd and is not measured here.
     runner: [0.01, 0.49],
     crawler: [0.01, 0.49],
     brute: [3.5, 6.07],
@@ -586,3 +633,9 @@ Object.assign(ttkBands, {
     flamingo: [0.01, 0.27],
   },
 } satisfies Record<string, Record<CombatArchetype, readonly [number, number]>>);
+
+/** PO 2026-10-08 fight speed ("Every click needs to be a kick, no matter how fast I click"): the quicker bat finisher
+ * (23 ticks, 0.5 m shove instead of a 3.3 m fling) and the 0.5 s axe swing shorten tough fights; lower bounds follow. */
+for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8]] as const) {
+  for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+(low * factor).toFixed(2), high]; }
+}

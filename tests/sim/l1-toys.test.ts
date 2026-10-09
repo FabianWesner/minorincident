@@ -32,28 +32,39 @@ describe('L1 v2 bicycle', () => {
     const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; expect(bike().entity?.bicycle?.mounted).toBe(false);
     teleport({ x: start.x + 1, z: start.z }); step(2); press();
     expect(bike().riding).toBe(true);
-    world.setInput({ move: { x: 1, z: 0 } });
-    let peak = 0, prev = pos();
-    for (let i = 0; i < 150; i++) { step(1); const p = pos(); peak = Math.max(peak, Math.hypot(p.x - prev.x, p.z - prev.z) * 60); prev = p; }
-    expect(peak).toBeGreaterThan(7.3); expect(peak).toBeLessThanOrEqual(7.6);
-    const tiers = l1v2.speedTiers; expect(peak).toBeGreaterThan(tiers.athletic.baseMs * 1.06);
+    // The bike waits on the depot sidewalk (PO 2026-10-08) and the courier leaves with the parcel (an empty-handed rider is
+    // parked at the depot by design). A short ride along the sidewalk, stop, dismount: the bike stays where she got off.
+    world.entities.get(1)!.survivor!.carrying = 'prop.package-courier';
+    world.setInput({ move: { x: 1, z: 0 } }); step(20);
     world.setInput({ move: { x: 0, z: 0 } }); step(60); press();
     expect(bike().riding).toBe(false);
     const left = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }, p = pos();
-    expect(Math.hypot(left.x - p.x, left.z - p.z)).toBeLessThan(1);
+    // PO 2026-10-09: the bike now waits on the counter's sidewalk, so the dismounted frame takes the next clear ring (<1.5 m).
+    expect(Math.hypot(left.x - p.x, left.z - p.z)).toBeLessThan(1.5);
     step(300); expect(bike().entity!.transform.x).toBe(left.x);
     // checkpoint snapshots carry the bicycle: restoring them keeps its position
     const snapshot = world.query({}); const player = world.entities.get(1)!;
     bike().entity!.transform.x += 5; world.entities.restore(snapshot, player);
     expect(bike().entity!.transform.x).toBeCloseTo(left.x, 6);
+    // Remount, pull out onto Main Row, then the straight run east.
+    teleport({ x: left.x + 1, z: left.z - .9 }); step(2); press(); expect(bike().riding).toBe(true);
+    world.setInput({ move: { x: 0, z: 1 } }); step(45);
+    world.setInput({ move: { x: 1, z: 0 } });
+    let peak = 0, prev = pos();
+    for (let i = 0; i < 150; i++) { step(1); const q = pos(); peak = Math.max(peak, Math.hypot(q.x - prev.x, q.z - prev.z) * 60); prev = q; }
+    expect(peak).toBeGreaterThan(7.3); expect(peak).toBeLessThanOrEqual(7.6);
+    const tiers = l1v2.speedTiers; expect(peak).toBeGreaterThan(tiers.athletic.baseMs * 1.06);
   });
-  test('T-E19-16f @E19 @E19-AC16 mounting between rack bars steps onto the apron; a stopped rider can pull away from a wall', async () => {
+  test('T-E19-16f @E19 @E19-AC16 mounting beside the parked bike steps onto the apron; a stopped rider can pull away from a wall', async () => {
     await grove();
-    teleport({ x: -68.1, z: 7.6 });
-    Object.assign(bike().entity!.transform, { x: -67, z: 7.6 }); press();
+    // PO 2026-10-09: the bike is parked on the counter's sidewalk (anchor bike-start). She mounts from its east side, carrying the
+    // parcel (PO 2026-10-08 had the bike at the depot rack; that rack is now ~2.5 m west of the frame).
+    const bk = { ...bike().entity!.transform };
+    teleport({ x: bk.x + 1.3, z: bk.z }); world.entities.get(1)!.survivor!.carrying = 'prop.package-courier'; press();
     expect(bike().riding).toBe(true);
     expect(world.infected!.nav.clear(pos().x, pos().z, .45)).toBe(true);
-    world.setInput({ move: { x: -1, z: 0 } }); step(240);
+    // Nose into the depot's front wall, then pull away east along the counter front.
+    world.setInput({ move: { x: 0, z: -1 } }); step(240);
     const stopped = pos();
     world.setInput({ move: { x: 1, z: 0 } }); step(360);
     expect(bike().riding).toBe(true); expect(pos().x - stopped.x).toBeGreaterThan(4);
@@ -77,6 +88,9 @@ describe('L1 v2 bicycle', () => {
   });
   test('T-E19-16b @E19 @E19-AC16 stand still next to it for 0.4 s to mount; attacks are disabled while riding', async () => {
     await grove();
+    // PO 2026-10-09: the bike is parked inside the depot's waiting radius, where an empty-handed courier waits for the parcel rather
+    // than auto-mounting; this auto-mount check therefore carries the parcel (the rule under test is the 0.4 s stand-still).
+    world.entities.get(1)!.survivor!.carrying = 'prop.package-courier';
     const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(20); expect(bike().riding).toBe(false); step(10); expect(bike().riding).toBe(true);
     world.setInput({ left: { down: true, held: true, up: false }, move: { x: 1, z: 0 } }); step(30);
     expect(world.entities.get(1)!.survivor!.animation).not.toBe('attack');
@@ -124,7 +138,8 @@ describe('L1 v2 bicycle', () => {
     const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; teleport({ x: start.x + 1, z: start.z }); step(2); press();
     world.setInput({ move: { x: 1, z: 0 } }); step(40);
     const hp = world.entities.get(1)!.health.current, p = pos();
-    world.infected!.spawn('infected.runner', { x: p.x + 1.2, z: p.z }, { state: 'idle' }); step(40);
+    // PO 2026-10-09: the infected comes from the north side of the rider (the bike's new spot is clear of the lamp's collider).
+    world.infected!.spawn('infected.runner', { x: p.x, z: p.z - .9 }, { state: 'idle' }); step(40);
     expect(bike().riding).toBe(false); expect(world.entities.get(1)!.health.current).toBe(hp);
   });
 });

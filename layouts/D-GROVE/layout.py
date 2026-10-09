@@ -212,10 +212,14 @@ houses += row('r1c4s', *C4, 'S', *R1S, ['c', 'e', 'd'], [1, -1, 1])
 # north strip: houses face south onto Main Row, deep back yards, alley behind (z = -48.5)
 NFRONT = -35.5
 houses += row('nstrip-w', *C2, 'S', NFRONT, -47.0, ['a', 'd', 'e'], [1, -1, 0])
-houses += row('nstrip-e', *C3, 'S', NFRONT, -47.0, ['b', 'a'], [0, 1])
+# PO 2026-10-08 (route): Fire Station 3 takes the east part of the north strip (see the hero section); one house stays west of it.
+FS_LOT_X = 32.4
+houses += row('nstrip-e', C3[0], FS_LOT_X, 'S', NFRONT, -47.0, ['a'], [-1])
 # south strip: houses face north onto Elm Street, alley behind (z = 48)
 SFRONT = 34.5
 houses += row('sstrip-w', *C2, 'N', SFRONT, 46.0, ['e', 'c', 'd'], [0, 1, -1])
+# south-west corner (the old Fire Station 3 lot until 2026-10-08): three houses facing Elm Street, west of the car wash (from the end of the barrier wing at x -80.4)
+houses += row('sstrip-sw', -80.2, -53.0, 'N', SFRONT, 46.0, ['a', 'e', 'd'], [-1, 0, 1])
 houses += row('sstrip-e', *C4, 'N', SFRONT, 46.0, ['c', 'd', 'a'], [1, 0, -1])
 
 # ------------------------------------------------------------------------------------------------ hero buildings
@@ -228,8 +232,8 @@ g.place(cafe, cafe_x, cafe_z, FACE_YAW['E'])
 if g.placeholder(cafe):
     g.shell('cafe', cafe_x, cafe_z, 'E', cdx, cdz, [('front', 0, 2.4)])
 anchors['cafe-patio'] = (CAFE_FRONT_X + 1.0, cafe_z)
-anchors['bike-start'] = (-68.1, 7.2)      # the bike stands in the rack, 2.4 m from the courier spawn: both in the first frame
-g.place('prop.bike-rack', -68.1, 7.2, 0.0)
+# PO 2026-10-08: "The bike is currently at the starting position, but people won't get it and just walk away. So let's place it
+# at the place where the player gets the package." The courier starts on foot; the cargo bike waits at the depot (below).
 anchors['player-start'] = (-66.4, 9.0)
 doors.append((CAFE_FRONT_X + 1.0, cafe_z))
 # patio dressing on the sidewalk side: planters, a bench facing the street, bin
@@ -277,6 +281,15 @@ g.place(depot, depot_x, depot_z, FACE_YAW['S'])
 if g.placeholder(depot):
     g.shell('depot', depot_x, depot_z, 'S', ddx, ddz, [('front', 0, 2.2)])
 anchors['parcel-door'] = (depot_x, SHOP_FRONT + .9)
+# Cargo bike rack at the front edge of the depot forecourt, west of the door (5.8 m: clear of the hand-over), long side toward
+# Main Row and the camera; the bike stands in front of it on the sidewalk tiles (the bicycle parks on pavement only), nose
+# toward the door, so after the pickup the courier rides on.
+g.place('prop.bike-rack', depot_x - 5.8, ZN - 4.5 - .7, PI / 2)
+# PO 2026-10-09: "The bike needs to be initially be parked here" (the sidewalk in front of the parcel counter). Yaw 0 runs the
+# frame along the kerb. The spot is ~4.5 m from the counter's pickup ring (2 m), so a rider mounting from any side (1.5 m reach)
+# never stands inside the ring and triggers the parcel pickup instead; it is clear of the rack at x -43.6, the lamp at (-37, -34)
+# and the hydrant, and leaves the plaza east of the frame open for the walk to the door.
+anchors['bike-start'] = (-41.2, -34.6)
 anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision is a closed shell: hand-over happens at the door
 doors.append(anchors['parcel-door'])
 g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark')   # paved apron under the van
@@ -385,40 +398,57 @@ cw = 'kit.car-wash'
 cwx, cwy, cwz = dims(cw)
 CW_X, CW_Z = -50.0, 41.5
 g.place(cw, CW_X, CW_Z, 0.0)
-g.fence('privacy', CW_X - 3.0, SFRONT + .3, CW_X - 3.0, 46.0)
+# (the west lot-line fence of the car wash is the east lot line of sstrip-sw)
 anchors['carwash-start'] = (CW_X, SFRONT + 1.4)
 gs = 'bld.gas-station'
 gsd, gsh, gsw = dims(gs)
 GS_X = -40.0
 g.place(gs, GS_X, SFRONT + gsd / 2 + .2, FACE_YAW['N'])
-g.place('prop.fire-hydrant', -57.2, 36.0, 0, .8, soft=True)
-g.place('prop.trash-bin', -56.0, 35.6, FACE_YAW['N'], .55, soft=True)
-g.hedge(-59.0, 46.0, -53.5, 46.0, scale=1.15)
+g.place('prop.fire-hydrant', -54.6, 33.3, 0, .8, soft=True)
 g.hedge(-46.0, 46.2, -35.0, 46.2, scale=1.15)
 
-# --- Fire Station 3 (south-west corner)
+# --- Fire Station 3 (north strip, Main Row, east end)
+# PO 2026-10-08 (verbatim): "At the moment the user is moving away from the Zombies, so he might never see any. So why not moving
+# the firefighting place so the user has to get closer?" The station moved from the south-west corner to the north strip between the
+# depot and the Annex: from the bat the courier runs back north across the outbreak's spread (Larch Street passes the Annex gate).
+# The open bays face SOUTH onto Main Row; the game camera looks from +X +Z, so it sees the open bay, the waving firefighter and the
+# ring inside. The asset's own apron (local x 1.5..5.85) reaches the kerb; the shell (local x -5.7..3.1) stays clear of the alley.
 fs = 'bld.fire-station'
 fdx, fdy, fdz = dims(fs)
-# PO 2026-10-07: the open bays face EAST, toward the game camera (which looks from +X +Z), so the courier arriving along Elm
-# Street sees the open bay, the waving firefighter and the objective ring inside it. (Facing north, toward Elm, the camera only
-# saw the back wall.) The station fills the corner lot; the lawn east of it is the apron the player crosses from the sidewalk.
-FS_YAW = FACE_YAW['E']
-FS_X = -77.0                           # collision shell local x -5.7..3.1: back wall 0.6 m inside the west perimeter fence
-FS_Z = SFRONT + 6.1 + 1.9              # local z +-6.1 (12.2 m wide), clear of the Elm Street sidewalk
+FS_YAW = FACE_YAW['S']
+FS_X = FS_LOT_X + 6.4                   # local z +-6.1 -> world x 32.7..44.9: clear of the lot-line fence and the Larch Street sidewalk (45.5)
+FS_Z = -41.05                           # foundation local x -5.8..5.8 -> z -46.85 (2 cm off the alley fence) .. -35.25 (0.25 m onto the sidewalk)
 FS_PID = g.place(fs, FS_X, FS_Z, FS_YAW)
+# The apron (paving, curbs, bollards) is part of the asset but too low to count as a solid: keep kerb lamps and hydrants off it.
+_ap = [rot(FS_YAW, lx, lz) for lx, lz in ((1.5, -6.2), (5.9, 6.2))]
+g.solids.append(('fire-apron', FS_X + min(c[0] for c in _ap), FS_Z + min(c[1] for c in _ap), FS_X + max(c[0] for c in _ap), FS_Z + max(c[1] for c in _ap), .4, 'fire-apron'))
+# The model's collision is the shell only. Give the solid details at the bays real colliders (the route of 2026-10-08 arrives
+# from the side, and paths cut diagonally through them): the centre pier with its footing and two bollards, the two outer bollards,
+# and the 0.64 m side curbs that run the full depth of the plinth (the apron is entered from the front only). Local boxes
+# (x0, z0, x1, z1, height) from assets/bld.fire-station/build.py.
+for _n, (_x0, _z0, _x1, _z1, _h) in [('fire-pier', (1.21, .32, 2.17, 1.31, 3.0)), ('fire-bollard', (1.77, 4.71, 2.17, 5.11, 1.75)), ('fire-bollard', (1.77, -3.47, 2.17, -3.07, 1.75)),
+                                       ('fire-curb', (-5.74, 5.78, 5.89, 6.1, .64)), ('fire-curb', (-5.74, -6.1, 5.89, -5.78, .64))]:
+    _a, _b = rot(FS_YAW, _x0, _z0), rot(FS_YAW, _x1, _z1)
+    _wx0, _wx1 = sorted((FS_X + _a[0], FS_X + _b[0])); _wz0, _wz1 = sorted((FS_Z + _a[1], FS_Z + _b[1]))
+    D.collider(l, _n, [_wx1 - _wx0, _h, _wz1 - _wz0], [(_wx0 + _wx1) / 2, _h / 2, (_wz0 + _wz1) / 2])
 # The right bay aperture is local X=1.6, Z=-1.23. Completion is 1.2 metres inside.
 fx, fz = rot(FS_YAW, 1.6, -1.23)
 anchors['fire-bay-door'] = (FS_X + fx, FS_Z + fz)
 fx, fz = rot(FS_YAW, .4, -1.23)
 anchors['fire-bay-trigger'] = (FS_X + fx, FS_Z + fz)
 doors.append(anchors['fire-bay-door'])
-g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
+# The lot around the station: lot-line fence to the house (west), plank fence on the Larch Street side and along the alley.
+g.fence('privacy', FS_X + 6.45, NFRONT - .15, FS_X + 6.45, -47.0)
+g.fence('privacy', FS_LOT_X, -47.0, C3[1], -47.0)
+g.place('prop.fire-hydrant', FS_X - 7.6, NFRONT + .6, 0, .8, soft=True)
 
-# Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1), facing east.
-_fx0, _fx1 = FS_X - 5.7, FS_X + 3.1
-_fz0, _fz1 = FS_Z - 6.1, FS_Z + 6.1
+# Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1).
+_c = [rot(FS_YAW, lx, lz) for lx, lz in ((-5.7, -6.1), (3.1, 6.1))]
+_fx0, _fx1 = FS_X + min(c[0] for c in _c), FS_X + max(c[0] for c in _c)
+_fz0, _fz1 = FS_Z + min(c[1] for c in _c), FS_Z + max(c[1] for c in _c)
 l.data['acousticZones'].append(dict(id='fire-station-3', preset='interior-large', polygon=[[_fx0, _fz0], [_fx1, _fz0], [_fx1, _fz1], [_fx0, _fz1], [_fx0, _fz0]]))
 l.data['buildings'].append(dict(id=FS_PID, assetId=fs, aabb=dict(min=[_fx0, 0, _fz0], max=[_fx1, fdy, _fz1]), label='Fire Station 3'))
+FS_OUT = rot(FS_YAW, 1, 0)              # unit vector out of the bays (world)
 
 # ------------------------------------------------------------------------------------------------ perimeter
 PN, PS, PW, PE = -50.4, 49.9, -83.6, 83.6
@@ -576,7 +606,7 @@ anchors['photo-l1-escape'] = (53.0, -3.0)
 anchors['photo-l1-spread'] = (0.0, Z0)
 anchors['photo-l1-garage'] = (gx, SFRONT + 1.0)
 anchors['photo-l1-horde'] = (31.0, 26.8)          # north kerb of Elm Street: the camera-side roofs stay out of frame
-anchors['photo-l1-safe'] = (anchors['fire-bay-trigger'][0] + 3.0, anchors['fire-bay-trigger'][1])
+anchors['photo-l1-safe'] = (anchors['fire-bay-trigger'][0] + 3.0 * FS_OUT[0], anchors['fire-bay-trigger'][1] + 3.0 * FS_OUT[1])
 # Visible floor height for the objective ring where the spot is raised: the station's interior bay floor (model build.py:
 # 'Interior floor' top at 0.53 m). Gameplay stays 2D; only the marker uses it.
 FLOOR_Y = {'fire-bay-trigger': .53}
@@ -587,8 +617,9 @@ l.data['anchors'] = {k: v for k, v in l.data['anchors'].items()}
 # named gameplay polygons
 l.zone('lab-nobike-zone', [(CX0, CZ0), (CX1, CZ0), (CX1, FENCE_Z), (CX0, FENCE_Z)])
 l.zone('garage-nobike-zone', [(gx - 3.7, GARAGE_FRONT - .6), (gx + 3.7, GARAGE_FRONT - .6), (gx + 3.7, GARAGE_FRONT + gdx + .2), (gx - 3.7, GARAGE_FRONT + gdx + .2)])
-fx0, fz0 = anchors['fire-bay-door']
-l.zone('fire-nobike-zone', [(_fx0, _fz0 - .5), (_fx1 + 3.0, _fz0 - .5), (_fx1 + 3.0, _fz1), (_fx0, _fz1)])
+# the shell plus 2.5 m of apron in front of the bays
+_ax, _az = 2.5 * FS_OUT[0], 2.5 * FS_OUT[1]
+l.zone('fire-nobike-zone', [(_fx0 + min(_ax, 0), _fz0 + min(_az, 0)), (_fx1 + max(_ax, 0), _fz0 + min(_az, 0)), (_fx1 + max(_ax, 0), _fz1 + max(_az, 0)), (_fx0 + min(_ax, 0), _fz1 + max(_az, 0))])
 l.zone('carwash-bay', [(CW_X - cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z - cwz / 2), (CW_X + cwx / 2, CW_Z + cwz / 2), (CW_X - cwx / 2, CW_Z + cwz / 2)])
 
 # Clearance pass: flowerbeds, clutter, lamps and edge barriers are nudged off whatever they still touch (no hand-patched JSON)

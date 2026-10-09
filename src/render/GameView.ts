@@ -1,4 +1,5 @@
 import { PropFixtureView } from './PropFixtureView';
+import { pickBodies } from './characters/PickBodies';
 import { ContactShadows } from './ContactShadows';
 import { NpcView } from './npc/NpcView';
 import { lookViewpoints } from '../data/lookViewpoints';
@@ -10,6 +11,7 @@ import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
 import { VehicleView } from './VehicleView';
 import { L2Props } from './L2Props';
+import { L3Props } from './L3Props';
 import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
@@ -59,7 +61,8 @@ export function roundhouseSpin(attack: { started: number; activeAt: number; reco
   return u >= r ? 0 : -.45 + (Math.PI * 2 + .45) * (u - a) / Math.max(1, r - a);
 }
 export class GameView implements Lifecycle {
-  readonly scene = new Scene();
+  // The scene root stays at identity; moving views update their own matrices.
+  readonly scene = Object.assign(new Scene(), { matrixAutoUpdate: false });
   private missionUI: MissionUI | null = null;
   private marker: ObjectiveMarker | null = null;
   private cinematicId: string | null = null;
@@ -77,6 +80,7 @@ export class GameView implements Lifecycle {
   private readonly meshes: Mesh[] = [];
   private vehicles: VehicleView | null = null;
   private l2Props: L2Props | null = null;
+  private l3Props: L3Props | null = null;
   private bicycle: BicycleView | null = null;
   private readonly seat = new Vector3();
   private readonly glance = new Vector3();
@@ -197,8 +201,9 @@ export class GameView implements Lifecycle {
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
-      // L1 and L2 share D-GROVE (E20): the same instancing path, spawn focus and close-view warm-up.
-      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+      // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
+      // path, spawn focus and close-view warm-up.
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4';
       const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
@@ -207,7 +212,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove ? this.view.cameraTarget : undefined;
@@ -263,6 +268,7 @@ export class GameView implements Lifecycle {
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
     if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
+    if (this.world.scenario === 'L3' && this.materials) { this.l3Props = new L3Props(this.world, this.materials); this.scene.add(this.l3Props); }
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
@@ -308,8 +314,8 @@ export class GameView implements Lifecycle {
       this.idPass = this.params.get('idpass') === '1'; this.update(1);
       this.startPreparation();
     };
-    // E20: L2 runs in the same town with the same crowd, so it uses the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+    // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4';
     if (groveTown && this.params.get('test') !== '1') {
       // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
       // loading screen. Until it finishes the view does not draw and the game clock does not advance
@@ -371,7 +377,7 @@ export class GameView implements Lifecycle {
     batch.traverse(object => { saved.push([object, object.frustumCulled]); object.frustumCulled = false; });
     parent.add(batch); batch.updateMatrixWorld(true);
     let compiling: Promise<void>;
-    try { compiling = this.renderer.compileAsync(batch, this.camera, this.scene); }
+    try { compiling = this.postFx ? this.postFx.compile(undefined, batch) : this.renderer.compileAsync(batch, this.camera, this.scene); }
     finally { parent.remove(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
     await compiling;
   }
@@ -441,11 +447,6 @@ export class GameView implements Lifecycle {
   }
   /** Photo spots are only registered by the current scenario. */
   preset(name: string): void {
-    if (this.world.scenario === 'L3' && ['l3-mainstreet-w2', 'l3-driving', 'l3-checkpoint', 'l3-safe-zone'].includes(name)) {
-      const anchors = this.world.missions!.def.anchors;
-      const target = name === 'l3-driving' ? this.world.entities.get(this.world.missions!.state.actors.sedan)?.transform ?? anchors.sedan : name === 'l3-mainstreet-w2' ? { x: anchors.sedan.x, z: anchors.sedan.z-6 } : anchors[name === 'l3-checkpoint' ? 'barrier' : 'camp'];
-      this.view.preset(name, { position: [target.x+20, 24, target.z+22], target: [target.x, .4, target.z] }); this.update(1); return;
-    }
     const reviewSpot = lookViewpoints.find(spot => spot.id === name);
     if (reviewSpot) {
       this.view.reset(reviewSpot); this.view.spot = name;
@@ -531,7 +532,6 @@ export class GameView implements Lifecycle {
   }
   private syncMission(): void {
     const mission = this.world.missions, cinematic = mission?.state.cinematic;
-    if (mission?.def.id === 'L3') this.districts?.setEmergencyPower(!mission.state.states.collapsed);
     if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
@@ -606,10 +606,10 @@ export class GameView implements Lifecycle {
     }
     if (this.character) this.character.visible = !this.world.entities.get(1)?.hidden;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
-    this.vehicles?.update(alpha); this.l2Props?.update();
+    this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
-    this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
+    pickBodies.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera);
     this.flashOverlay.style.opacity = String(Math.max(this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
@@ -620,7 +620,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
-    if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies());
+    if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
@@ -695,7 +695,7 @@ export class GameView implements Lifecycle {
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
-    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
+    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   reset(): void {
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
@@ -710,6 +710,7 @@ export class GameView implements Lifecycle {
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
+    if (this.l3Props) { this.scene.remove(this.l3Props); this.l3Props.dispose(); this.l3Props = null; }
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();

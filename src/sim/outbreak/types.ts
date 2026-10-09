@@ -54,7 +54,7 @@ export interface DistractionEvent {
   tick: number;
   type: 'outbreak.distraction';
   id: number;
-  kind: 'car-alarm';
+  kind: 'car-alarm' | 'gunfire';
   position: Vec2;
   radius: number;
   /** Tick at which the distraction stops (alarm: 20 s). */

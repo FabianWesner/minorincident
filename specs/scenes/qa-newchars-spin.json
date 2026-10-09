@@ -1,0 +1,17 @@
+{
+ "name": "qa-newchars-spin",
+ "note": "Injury read from all sides, one character per build pipeline: L6 bandaged, L6 man-a, L5 woman-a aftermath, five-survivor Sam (orbit camera, 60 deg/s).",
+ "ground": "sidewalk",
+ "size": 20,
+ "time": "L1",
+ "actors": [
+  { "id": "a", "kind": "pedestrian", "at": [-3.2, 0], "yaw": 0, "look": { "model": "npc.shelter-survivor.bandaged", "tint": "#c8c8c8" }, "state": "idle" },
+  { "id": "b", "kind": "pedestrian", "at": [-1.1, 0], "yaw": 0, "look": { "model": "npc.civilian-man-a.aftermath", "tint": "#c8c8c8" }, "state": "idle" },
+  { "id": "c", "kind": "pedestrian", "at": [1.1, 0], "yaw": 0, "look": { "model": "npc.civilian-woman-a.aftermath", "tint": "#c8c8c8" }, "state": "idle" },
+  { "id": "d", "kind": "pedestrian", "at": [3.2, 0], "yaw": 0, "look": { "model": "npc.sam.aftermath", "tint": "#c8c8c8" }, "state": "idle" }
+ ],
+ "camera": { "mode": "orbit", "target": [0, 1.0, 0], "radius": 8.5, "azimuth": 45, "polar": 62, "spin": 60 },
+ "frames": 360,
+ "shots": [0, 90, 180, 270],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

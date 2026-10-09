@@ -21,10 +21,11 @@ export async function load(asset: string): Promise<Group> {
 type Feet = { heel: Vector3; toe: Vector3; yaw: number }[];
 interface Plan { speed: number; yaw: number; rate?: number; attack?: { until: number }; hit?: { started: number; until: number; heavy?: boolean } }
 interface Figure { kind: 'civilian' | 'infected'; tier?: 'infected-frail' | 'infected-lurch' | 'infected-sprint' }
-export async function drive(asset: string, figure: Figure, seconds: number, plan: (t: number) => Plan, near = true, scale = 1) {
+export async function drive(asset: string, figure: Figure, seconds: number, plan: (t: number) => Plan, near: boolean | ((t: number) => boolean) = true, scale = 1, splitBands = false) {
   const scene = await load(asset);
   const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 2);
   const footwork = new CrowdFootwork(), loco = new CrowdLocomotion(scene, baked.clip, footwork), gait = new GaitPhase(), moves = new InfectedMoves();
+  const farLoco = splitBands ? new CrowdLocomotion(scene, baked.clip, footwork) : loco;
   const presentation = new MotionPresentation(crowdTurnRate);
   const feetParts = ['footL', 'footR'].map(n => baked.clip.parts.indexOf(n));
   const hip = scene.getObjectByName('hip')!; scene.updateMatrixWorld(true);
@@ -55,7 +56,8 @@ export async function drive(asset: string, figure: Figure, seconds: number, plan
       const moved = speed > .06 && !attacking && !heavy;
       ({ layers, style } = moves.sample(e, attacking ? 'attack' : 'chase', want.attack?.until ?? 0, .6, tick, presented.yaw, speed, moved ? clip : undefined));
     }
-    frame = loco.present(1, palette, frame, blend, clip, phase, transform, strideScale, speed, t, near, layers, style);
+    const isNear = typeof near === 'function' ? near(t) : near;
+    frame = (isNear ? loco : farLoco).present(1, palette, frame, blend, clip, phase, transform, strideScale, speed, t, isNear, layers, style);
     const pose = palette.pose(frame, blend[0], blend[1]);
     const feet = feetParts.map(index => {
       part.multiplyMatrices(transform, new Matrix4().fromArray(pose, index * 16)); part.decompose(p, q, sc);
@@ -125,4 +127,3 @@ export const scenarios = {
     'flinch x4 (fast clicks)': (t: number) => { const hit = [1, 1.3, 1.6, 1.9].filter(h => t >= h).pop(); return { speed: 0, yaw: 0, hit: hit ? { started: Math.round(hit * 60), until: Math.round(hit * 60) + 15 } : undefined }; },
   },
 } as const;
-

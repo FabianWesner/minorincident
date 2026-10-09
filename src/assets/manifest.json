@@ -2901,60 +2901,90 @@
   {
     "id": "util.flashlight",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/util.flashlight.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 0.3135,
+      "y": 0.13,
+      "z": 0.13,
+      "tolerance": 0.03
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "light:flashlight"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "handMountSocket",
+      "weaponMountSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/util.flashlight/build.py",
+    "sourceGlb": "assets/util.flashlight/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/util.flashlight.lod1.glb",
+      "lod2": "public/assets/models/util.flashlight.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "util.radio",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
+    "script": "assets/util.radio/build.py",
+    "sourceGlb": "assets/util.radio/model.glb",
     "glb": "public/assets/models/util.radio.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 0.2574999928474426,
+      "y": 0.7900000028312206,
+      "z": 0.31949999928474426,
+      "tolerance": 0.03
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "front"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "audioSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
     },
-    "decayVariants": []
+    "lods": {
+      "lod1": "public/assets/models/util.radio.lod1.glb",
+      "lod2": "public/assets/models/util.radio.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
   },
   {
     "id": "util.keys",
@@ -3382,7 +3412,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "world": {
@@ -3393,7 +3424,18 @@
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.sedan-blue",
@@ -3441,7 +3483,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "lods": {
       "lod1": "public/assets/models/veh.sedan-blue.lod1.glb",
@@ -3456,7 +3499,18 @@
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.sedan-white",
@@ -3503,7 +3557,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceGlb": "assets/veh.sedan-white/model.glb",
     "lods": {
@@ -3528,6 +3583,13 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
     }
   },
   {
@@ -3580,7 +3642,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "sourceScale": 0.91666669,
@@ -3597,6 +3660,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
     }
   },
   {
@@ -3643,7 +3710,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceGlb": "assets/veh.suv-dark/model.glb",
     "script": "assets/veh.suv-dark/build.py",
@@ -3669,6 +3737,13 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
     }
   },
   {
@@ -3721,7 +3796,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "world": {
@@ -3982,14 +4058,30 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    },
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
   },
   {
     "id": "veh.police-suv",
@@ -4045,7 +4137,11 @@
     },
     "sourceGlb": "assets/veh.police-suv/model.glb",
     "script": "assets/veh.police-suv/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "policeBlue",
+      "solid": true
+    }
   },
   {
     "id": "veh.ambulance",
@@ -4097,7 +4193,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
@@ -4113,6 +4210,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
     }
   },
   {
@@ -7502,13 +7603,20 @@
       "wheelRL",
       "wheelRR",
       "lightsFront",
-      "lightsBrake"
+      "lightsBrake",
+      "wheelML",
+      "wheelMR",
+      "doorL",
+      "doorR",
+      "tailgate"
     ],
     "animatedNodes": [
       "wheelFL",
       "wheelFR",
       "wheelRL",
-      "wheelRR"
+      "wheelRR",
+      "wheelML",
+      "wheelMR"
     ],
     "sockets": [
       "driverSeat",
@@ -7521,7 +7629,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "sourceGlb": "assets/veh.military-truck/model.glb",
     "script": "assets/veh.military-truck/build.py",
     "sourceForward": "+X",
@@ -7532,6 +7642,20 @@
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudget": {
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "world": {
+      "token": "foliageDark",
+      "solid": true
     }
   },
   {
@@ -7798,6 +7922,10 @@
     "authoredLodTriangles": {
       "lod1": 24000,
       "lod2": 21000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": false
     }
   },
   {
@@ -7999,6 +8127,10 @@
     "authoredLodTriangles": {
       "lod1": 22000,
       "lod2": 14000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
     }
   },
   {
@@ -8119,6 +8251,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "canvasTan",
+      "solid": false
     }
   },
   {
@@ -8159,6 +8295,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": false
     }
   },
   {
@@ -8237,7 +8377,11 @@
     "sourceGlb": "assets/prop.sofa/model.glb",
     "script": "assets/prop.sofa/build.py",
     "sourceForward": "+X",
-    "aliasOf": "prop.sofa"
+    "aliasOf": "prop.sofa",
+    "world": {
+      "token": "woodWarm",
+      "solid": true
+    }
   },
   {
     "id": "decay.burned-facade",
@@ -8280,47 +8424,66 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
     "id": "decay.collapsed-facade",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.collapsed-facade.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 2.6517,
+      "y": 5.0093,
+      "z": 6.0,
+      "tolerance": 0.03
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "wallAttachSocket",
+      "rubbleSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 4,
+      "drawCalls": 8,
+      "fileKB": 200
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.collapsed-facade/build.py",
+    "sourceGlb": "assets/decay.collapsed-facade/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/decay.collapsed-facade.lod1.glb",
+      "lod2": "public/assets/models/decay.collapsed-facade.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.rubble-pile",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.rubble-pile.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 2.3830630779266357,
+      "y": 1.3078960180282593,
+      "z": 2.097200036048889,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8328,17 +8491,30 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "debrisCenterSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.rubble-pile/build.py",
+    "sourceGlb": "assets/decay.rubble-pile/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.rubble-pile.lod1.glb",
+      "lod2": "public/assets/models/decay.rubble-pile.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.downed-power-line",
@@ -8401,13 +8577,13 @@
   {
     "id": "decay.crater",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.crater.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 5.1897101402282715,
+      "y": 1.0943660140037537,
+      "z": 4.570327997207642,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8415,17 +8591,34 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "col:blastSurface",
+      "terrainCutout"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "blastCenterSocket",
+      "terrainCutoutSocket",
+      "rimGroundSocket"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.crater/build.py",
+    "sourceGlb": "assets/decay.crater/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.crater.lod1.glb",
+      "lod2": "public/assets/models/decay.crater.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.body-bag",
@@ -8459,13 +8652,13 @@
   {
     "id": "decay.abandoned-checkpoint",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.abandoned-checkpoint.glb",
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
+      "x": 5.547,
+      "y": 1.2,
+      "z": 3.906,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -8473,17 +8666,33 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "gateArm",
+      "hmgPosition"
     ],
     "animatedNodes": [],
-    "sockets": [],
+    "sockets": [
+      "braceSlot"
+    ],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "script": "assets/decay.abandoned-checkpoint/build.py",
+    "sourceGlb": "assets/decay.abandoned-checkpoint/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/decay.abandoned-checkpoint.lod1.glb",
+      "lod2": "public/assets/models/decay.abandoned-checkpoint.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    }
   },
   {
     "id": "decay.graffiti",
@@ -8622,7 +8831,11 @@
     },
     "sourceGlb": "assets/prop.sandbag-pallet/model.glb",
     "script": "assets/prop.sandbag-pallet/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "canvasTan",
+      "solid": true
+    }
   },
   {
     "id": "prop.dumpster",
@@ -9074,7 +9287,11 @@
     },
     "sourceGlb": "assets/veh.fuel-truck/model.glb",
     "script": "assets/veh.fuel-truck/build.py",
-    "sourceForward": "+X"
+    "sourceForward": "+X",
+    "world": {
+      "token": "foliageDark",
+      "solid": true
+    }
   },
   {
     "id": "inf.dog-retriever",
@@ -10131,6 +10348,10 @@
     "lods": {
       "lod1": "public/assets/models/prop.light-tower.lod1.glb",
       "lod2": "public/assets/models/prop.light-tower.lod2.glb"
+    },
+    "world": {
+      "token": "schoolBusYellow",
+      "solid": true
     }
   },
   {
@@ -14508,7 +14729,10 @@
   },
   {
     "id": "prop.lawn-chair-a",
-    "authoredLodTriangles": { "lod1": 1520, "lod2": 1520 },
+    "authoredLodTriangles": {
+      "lod1": 1520,
+      "lod2": 1520
+    },
     "category": "prop",
     "status": "integrated",
     "tier": "side",
@@ -14546,7 +14770,10 @@
   },
   {
     "id": "prop.lawn-chair-b",
-    "authoredLodTriangles": { "lod1": 1520, "lod2": 1520 },
+    "authoredLodTriangles": {
+      "lod1": 1520,
+      "lod2": 1520
+    },
     "category": "prop",
     "status": "integrated",
     "tier": "side",
@@ -14917,7 +15144,10 @@
   },
   {
     "id": "prop.broken-chair",
-    "authoredLodTriangles": { "lod1": 2624, "lod2": 2624 },
+    "authoredLodTriangles": {
+      "lod1": 2624,
+      "lod2": 2624
+    },
     "category": "prop",
     "status": "integrated",
     "tier": "side",
@@ -15504,7 +15734,7 @@
       "lod2": "public/assets/models/prop.jersey-barrier.lod2.glb"
     },
     "dimensions": {
-      "x": 3.0,
+      "x": 3,
       "y": 0.949999988079071,
       "z": 0.7200000286102295,
       "tolerance": 0.1
@@ -15529,6 +15759,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
     }
   },
   {
@@ -15584,7 +15818,7 @@
       "lod2": "public/assets/models/prop.armory-table.lod2.glb"
     },
     "dimensions": {
-      "x": 2.0,
+      "x": 2,
       "y": 1.0800000429153442,
       "z": 0.800000011920929,
       "tolerance": 0.1
@@ -15611,6 +15845,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -15679,6 +15917,10 @@
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
     }
   },
   {
@@ -15696,7 +15938,7 @@
     "dimensions": {
       "x": 14.199999809265137,
       "y": 5.889999866485596,
-      "z": 13.0,
+      "z": 13,
       "tolerance": 0.1
     },
     "forward": "+X",
@@ -15719,6 +15961,10 @@
     "authoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
     }
   },
   {
@@ -15735,7 +15981,7 @@
     },
     "dimensions": {
       "x": 2.1363840103149414,
-      "y": 2.0,
+      "y": 2,
       "z": 2.6850939989089966,
       "tolerance": 0.1
     },
@@ -15759,6 +16005,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -15799,6 +16049,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -15839,6 +16093,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": true
     }
   },
   {
@@ -15881,6 +16139,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -15923,6 +16185,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -15982,8 +16248,24 @@
       "fileKB": 1500,
       "drawCalls": 12
     },
-    "decayVariants": [],
-    "budgetNote": "APC-only draw cap 12 per LOD: six wheel pivots, turret, gun and lit lamps are separate moving/emissive assemblies (rare set piece)."
+    "decayVariants": [
+      "wrecked"
+    ],
+    "budgetNote": "APC-only draw cap 12 per LOD: six wheel pivots, turret, gun and lit lamps are separate moving/emissive assemblies (rare set piece). Wreck-only cap 9: body, six wheel pivots (including bare axle), skewed turret and broken gun retain base ownership.",
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudget": {
+      "materials": 8,
+      "drawCalls": 9,
+      "fileKB": 1500
+    },
+    "world": {
+      "token": "foliageDark",
+      "solid": true
+    }
   },
   {
     "id": "decay.burned-facade.house",
@@ -16030,6 +16312,10 @@
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
     }
   },
   {
@@ -16081,7 +16367,11 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
   },
   {
     "id": "bld.storefront-row",
@@ -16129,10 +16419,17 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w5"
+    ],
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -16179,10 +16476,17 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w5"
+    ],
     "world": {
       "token": "brick",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -16231,10 +16535,17 @@
       "lod1": 12000,
       "lod2": 4000
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "w5"
+    ],
     "world": {
       "token": "backpackTeal",
       "solid": true
+    },
+    "decayTriangleBudget": 30000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
     }
   },
   {
@@ -16284,7 +16595,11 @@
       "lod1": 15000,
       "lod2": 4000
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": false
+    }
   },
   {
     "id": "bld.apartment-block-a",
@@ -16348,6 +16663,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   },
   {
@@ -16412,6 +16731,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
     }
   },
   {
@@ -16479,6 +16802,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   },
   {
@@ -16550,6 +16877,10 @@
     "decayAuthoredLodTriangles": {
       "lod1": 12000,
       "lod2": 4000
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   },
   {
@@ -16601,7 +16932,23 @@
       "fileKB": 1500,
       "drawCalls": 8
     },
-    "decayVariants": []
+    "decayVariants": [
+      "wrecked"
+    ],
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudget": {
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "world": {
+      "token": "foliageDark",
+      "solid": true
+    }
   },
   {
     "id": "veh.helicopter-military",
@@ -16709,7 +17056,11 @@
       "fileKB": 300,
       "drawCalls": 8
     },
-    "decayVariants": []
+    "decayVariants": [],
+    "world": {
+      "token": "canvasTan",
+      "solid": true
+    }
   },
   {
     "id": "kit.reception-plaza",
@@ -16750,6 +17101,2244 @@
       "fileKB": 1500,
       "drawCalls": 8
     },
+    "decayVariants": [],
+    "world": {
+      "token": "canvasTan",
+      "solid": true
+    }
+  },
+  {
+    "id": "decay.fuel-truck-crater",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.fuel-truck-crater/build.py",
+    "sourceGlb": "assets/decay.fuel-truck-crater/model.glb",
+    "glb": "public/assets/models/decay.fuel-truck-crater.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.fuel-truck-crater.lod1.glb",
+      "lod2": "public/assets/models/decay.fuel-truck-crater.lod2.glb"
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "col:blastSurface",
+      "terrainCutout"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "blastCenterSocket",
+      "terrainCutoutSocket",
+      "rimGroundSocket",
+      "fuelTruckRemnantSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "dimensions": {
+      "x": 9.638032913208008,
+      "y": 1.8055340051651,
+      "z": 6.801683187484741,
+      "tolerance": 0.1
+    },
+    "world": {
+      "token": "uiDark",
+      "solid": false
+    }
+  },
+  {
+    "id": "decay.blown-sandbags",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/decay.blown-sandbags/build.py",
+    "sourceGlb": "assets/decay.blown-sandbags/model.glb",
+    "glb": "public/assets/models/decay.blown-sandbags.glb",
+    "lods": {
+      "lod1": "public/assets/models/decay.blown-sandbags.lod1.glb",
+      "lod2": "public/assets/models/decay.blown-sandbags.lod2.glb"
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "breachSocket",
+      "lineEndLSocket",
+      "lineEndRSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 300
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "dimensions": {
+      "x": 4.0585010051727295,
+      "y": 0.8899999856948853,
+      "z": 1.8263520002365112,
+      "tolerance": 0.1
+    },
+    "world": {
+      "token": "canvasTan",
+      "solid": false
+    }
+  },
+  {
+    "id": "int.metro-exit",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/int.metro-exit/build.py",
+    "sourceGlb": "assets/int.metro-exit/model.glb",
+    "glb": "public/assets/models/int.metro-exit.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 12.0,
+      "y": 5.81,
+      "z": 7.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "interior",
+      "escalator",
+      "body_emi_picketWhite",
+      "body_emi_sirenRed",
+      "light:emergency",
+      "light:exitLamp2.4",
+      "light:exitLamp-2.4",
+      "col:exitGate"
+    ],
+    "animatedNodes": [
+      "exitGate"
+    ],
+    "sockets": [
+      "platformSocket",
+      "stairsBottomSocket",
+      "stairsTopSocket",
+      "escalatorBottomSocket",
+      "escalatorTopSocket",
+      "nightStreetSocket",
+      "gateSocket",
+      "braceSocket",
+      "emergencyMount",
+      "exitLamp2.4Mount",
+      "exitLamp-2.4Mount"
+    ],
+    "budget": {
+      "triangles": 40000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/int.metro-exit.lod1.glb",
+      "lod2": "public/assets/models/int.metro-exit.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 15000,
+      "lod2": 4000
+    },
     "decayVariants": []
+  },
+  {
+    "id": "kit.metro-tunnel",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.metro-tunnel/build.py",
+    "sourceGlb": "assets/kit.metro-tunnel/model.glb",
+    "glb": "public/assets/models/kit.metro-tunnel.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 12.0,
+      "y": 5.0,
+      "z": 7.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "body_emi_picketWhite",
+      "body_emi_sirenRed",
+      "light:emergency",
+      "light:main4",
+      "light:main-4"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "sidePassage-3.8Socket",
+      "sidePassage0Socket",
+      "sidePassage3.8Socket",
+      "gate-3.8Socket",
+      "gate0Socket",
+      "gate3.8Socket",
+      "brace-3.8Socket",
+      "brace0Socket",
+      "brace3.8Socket",
+      "crossPassage-3.7Socket",
+      "crossPassage3.7Socket",
+      "tunnelStartSocket",
+      "tunnelEndSocket",
+      "emergencyMount",
+      "main4Mount",
+      "main-4Mount"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.metro-tunnel.lod1.glb",
+      "lod2": "public/assets/models/kit.metro-tunnel.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.maintenance-corridor",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.maintenance-corridor/build.py",
+    "sourceGlb": "assets/kit.maintenance-corridor/model.glb",
+    "glb": "public/assets/models/kit.maintenance-corridor.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 10.0,
+      "y": 3.9,
+      "z": 4.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "interior",
+      "body_emi_picketWhite",
+      "body_emi_sirenRed",
+      "light:emergency",
+      "light:main3",
+      "light:main-3"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "pumpRoomSocket",
+      "signalRoomSocket",
+      "pumpRoomGateSocket",
+      "signalRoomGateSocket",
+      "pumpRoomBraceSocket",
+      "signalRoomBraceSocket",
+      "startSocket",
+      "endSocket",
+      "roomEquipment-3Socket",
+      "roomEquipment3Socket",
+      "emergencyMount",
+      "main3Mount",
+      "main-3Mount"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.maintenance-corridor.lod1.glb",
+      "lod2": "public/assets/models/kit.maintenance-corridor.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.shelter-camp",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.shelter-camp/build.py",
+    "sourceGlb": "assets/kit.shelter-camp/model.glb",
+    "glb": "public/assets/models/kit.shelter-camp.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 5.6,
+      "y": 1.05,
+      "z": 5.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "body_emi_windowGlow",
+      "light:campLamp0",
+      "light:campLamp1"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "rest-1.25-1.35Socket",
+      "rest-1.251.1Socket",
+      "rest1.25-1.35Socket",
+      "rest1.251.1Socket",
+      "waterShareSocket",
+      "aisleStartSocket",
+      "aisleEndSocket",
+      "campLamp0Mount",
+      "campLamp1Mount"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.shelter-camp.lod1.glb",
+      "lod2": "public/assets/models/kit.shelter-camp.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.service-gate",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.service-gate/build.py",
+    "sourceGlb": "assets/prop.service-gate/model.glb",
+    "glb": "public/assets/models/prop.service-gate.glb",
+    "dimensions": {
+      "x": 0.435,
+      "y": 2.58,
+      "z": 2.56,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front",
+      "gate",
+      "col:gate"
+    ],
+    "animatedNodes": [
+      "gate"
+    ],
+    "sockets": [
+      "gateClosed",
+      "gateOpen",
+      "braceSlot",
+      "latchSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.service-gate.lod1.glb",
+      "lod2": "public/assets/models/prop.service-gate.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
+  },
+  {
+    "id": "prop.fluorescent-strip",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.fluorescent-strip/build.py",
+    "sourceGlb": "assets/prop.fluorescent-strip/model.glb",
+    "glb": "public/assets/models/prop.fluorescent-strip.glb",
+    "dimensions": {
+      "x": 0.3645000010728836,
+      "y": 0.4000000059604645,
+      "z": 1.850000023841858,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front",
+      "light:fluorescent"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "mountSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.fluorescent-strip.lod1.glb",
+      "lod2": "public/assets/models/prop.fluorescent-strip.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
+  },
+  {
+    "id": "prop.emergency-light",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.emergency-light/build.py",
+    "sourceGlb": "assets/prop.emergency-light/model.glb",
+    "glb": "public/assets/models/prop.emergency-light.glb",
+    "dimensions": {
+      "x": 0.29250000417232513,
+      "y": 0.7200000286102295,
+      "z": 0.3799999952316284,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front",
+      "light:emergency"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "mountSocket"
+    ],
+    "budget": {
+      "triangles": 1500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "lods": {
+      "lod1": "public/assets/models/prop.emergency-light.lod1.glb",
+      "lod2": "public/assets/models/prop.emergency-light.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 200
+    },
+    "decayVariants": [],
+    "sourceScale": 1
+  },
+  {
+    "id": "int.metro-station",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/int.metro-station/build.py",
+    "sourceGlb": "assets/int.metro-station/model.glb",
+    "glb": "public/assets/models/int.metro-station.glb",
+    "dimensions": {
+      "x": 60.0,
+      "y": 5.75,
+      "z": 36.0,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "maintenanceDoorA",
+      "maintenanceDoorB"
+    ],
+    "animatedNodes": [
+      "maintenanceDoorA",
+      "maintenanceDoorB"
+    ],
+    "sockets": [
+      "maintenanceDoorASocket",
+      "maintenanceDoorBSocket",
+      "stairsArrivalSocket",
+      "sealedStreetStairSocket",
+      "concoursePlatformSocket",
+      "tunnelStartSocket",
+      "tunnelEndSocket",
+      "shelterCampSocket"
+    ],
+    "budget": {
+      "triangles": 40000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/int.metro-station.lod1.glb",
+      "lod2": "public/assets/models/int.metro-station.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 15000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "npc.civilian-elderly.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-elderly.aftermath.glb",
+    "dimensions": {
+      "x": 0.5775,
+      "y": 1.78,
+      "z": 0.8475,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-elderly.aftermath/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-elderly.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-elderly.aftermath.lod2.glb"
+    },
+    "sourceScale": 1.27233734,
+    "script": "assets/npc.civilian-elderly.aftermath/build.py",
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.civilian-elderly",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.paramedic.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.paramedic.aftermath.glb",
+    "dimensions": {
+      "x": 0.6217,
+      "y": 1.8141,
+      "z": 0.9245,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "lods": {
+      "lod1": "public/assets/models/npc.paramedic.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.paramedic.aftermath.lod2.glb"
+    },
+    "sourceGlb": "assets/npc.paramedic.aftermath/model.glb",
+    "script": "assets/npc.paramedic.aftermath/build.py",
+    "sourceForward": "+X",
+    "sourceScale": 1.25749424,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.paramedic",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.civilian-woman-a.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-woman-a.aftermath.glb",
+    "dimensions": {
+      "x": 0.6589,
+      "y": 1.8026,
+      "z": 0.9669,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-a.aftermath/model.glb",
+    "script": "assets/npc.civilian-woman-a.aftermath/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-woman-a.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-woman-a.aftermath.lod2.glb"
+    },
+    "sourceScale": 1.27293605,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.civilian-woman-a",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.survivor-group.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.survivor-group.aftermath.glb",
+    "dimensions": {
+      "x": 0.8572,
+      "y": 1.8001,
+      "z": 2.5041,
+      "tolerance": 0.12
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "survivor02_footL",
+      "survivor02_shinL",
+      "survivor02_legL",
+      "survivor02_footR",
+      "survivor02_shinR",
+      "survivor02_legR",
+      "survivor02_handL",
+      "survivor02_foreArmL",
+      "survivor02_armL",
+      "survivor02_handR",
+      "survivor02_foreArmR",
+      "survivor02_armR",
+      "survivor02_head",
+      "survivor02_torso",
+      "survivor02_hip",
+      "survivor03_footL",
+      "survivor03_shinL",
+      "survivor03_legL",
+      "survivor03_footR",
+      "survivor03_shinR",
+      "survivor03_legR",
+      "survivor03_handL",
+      "survivor03_foreArmL",
+      "survivor03_armL",
+      "survivor03_handR",
+      "survivor03_foreArmR",
+      "survivor03_armR",
+      "survivor03_head",
+      "survivor03_torso",
+      "survivor03_hip",
+      "survivor04_footL",
+      "survivor04_shinL",
+      "survivor04_legL",
+      "survivor04_footR",
+      "survivor04_shinR",
+      "survivor04_legR",
+      "survivor04_handL",
+      "survivor04_foreArmL",
+      "survivor04_armL",
+      "survivor04_handR",
+      "survivor04_foreArmR",
+      "survivor04_armR",
+      "survivor04_head",
+      "survivor04_torso",
+      "survivor04_hip",
+      "survivor01_root",
+      "survivor02_root",
+      "survivor03_root",
+      "survivor04_root"
+    ],
+    "animatedNodes": [
+      "footL",
+      "shinL",
+      "legL",
+      "footR",
+      "shinR",
+      "legR",
+      "handL",
+      "foreArmL",
+      "armL",
+      "handR",
+      "foreArmR",
+      "armR",
+      "head",
+      "torso",
+      "hip",
+      "survivor02_footL",
+      "survivor02_shinL",
+      "survivor02_legL",
+      "survivor02_footR",
+      "survivor02_shinR",
+      "survivor02_legR",
+      "survivor02_handL",
+      "survivor02_foreArmL",
+      "survivor02_armL",
+      "survivor02_handR",
+      "survivor02_foreArmR",
+      "survivor02_armR",
+      "survivor02_head",
+      "survivor02_torso",
+      "survivor02_hip",
+      "survivor03_footL",
+      "survivor03_shinL",
+      "survivor03_legL",
+      "survivor03_footR",
+      "survivor03_shinR",
+      "survivor03_legR",
+      "survivor03_handL",
+      "survivor03_foreArmL",
+      "survivor03_armL",
+      "survivor03_handR",
+      "survivor03_foreArmR",
+      "survivor03_armR",
+      "survivor03_head",
+      "survivor03_torso",
+      "survivor03_hip",
+      "survivor04_footL",
+      "survivor04_shinL",
+      "survivor04_legL",
+      "survivor04_footR",
+      "survivor04_shinR",
+      "survivor04_legR",
+      "survivor04_handL",
+      "survivor04_foreArmL",
+      "survivor04_armL",
+      "survivor04_handR",
+      "survivor04_foreArmR",
+      "survivor04_armR",
+      "survivor04_head",
+      "survivor04_torso",
+      "survivor04_hip"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket",
+      "survivor02_weaponSocketL",
+      "survivor02_weaponSocketR",
+      "survivor02_backpackSocket",
+      "survivor03_weaponSocketL",
+      "survivor03_weaponSocketR",
+      "survivor03_backpackSocket",
+      "survivor04_weaponSocketL",
+      "survivor04_weaponSocketR",
+      "survivor04_backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 60
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.survivor-group.aftermath/model.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.24057588,
+    "lods": {
+      "lod1": "public/assets/models/npc.survivor-group.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.survivor-group.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "script": "assets/npc.survivor-group.aftermath/build.py",
+    "rigidDrawBase": "npc.survivor-group",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.survivor-group.aftermath.dale",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.survivor-group.aftermath.dale.glb",
+    "dimensions": {
+      "x": 0.7464,
+      "y": 1.8001,
+      "z": 0.7497,
+      "tolerance": 0.16
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.survivor-group.aftermath.dale/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.survivor-group.aftermath.dale.lod1.glb",
+      "lod2": "public/assets/models/npc.survivor-group.aftermath.dale.lod2.glb"
+    },
+    "sourceScale": 1.24057588,
+    "script": "assets/npc.survivor-group.aftermath.dale/build.py",
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.survivor-group",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.survivor-group.aftermath.sam",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.survivor-group.aftermath.sam.glb",
+    "dimensions": {
+      "x": 0.6327,
+      "y": 1.779,
+      "z": 0.7497,
+      "tolerance": 0.16
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.survivor-group.aftermath.sam/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.survivor-group.aftermath.sam.lod1.glb",
+      "lod2": "public/assets/models/npc.survivor-group.aftermath.sam.lod2.glb"
+    },
+    "sourceScale": 1.24057588,
+    "script": "assets/npc.survivor-group.aftermath.sam/build.py",
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.survivor-group",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.survivor-group.aftermath.cap-woman",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.survivor-group.aftermath.cap-woman.glb",
+    "dimensions": {
+      "x": 0.7464,
+      "y": 1.8001,
+      "z": 0.7497,
+      "tolerance": 0.16
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.survivor-group.aftermath.cap-woman/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.survivor-group.aftermath.cap-woman.lod1.glb",
+      "lod2": "public/assets/models/npc.survivor-group.aftermath.cap-woman.lod2.glb"
+    },
+    "sourceScale": 1.24057588,
+    "script": "assets/npc.survivor-group.aftermath.cap-woman/build.py",
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.survivor-group",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.survivor-group.aftermath.bun-woman",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.survivor-group.aftermath.bun-woman.glb",
+    "dimensions": {
+      "x": 0.6312,
+      "y": 1.7914,
+      "z": 0.7497,
+      "tolerance": 0.16
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 1,
+      "fileKB": 1500,
+      "drawCalls": 15
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.survivor-group.aftermath.bun-woman/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/npc.survivor-group.aftermath.bun-woman.lod1.glb",
+      "lod2": "public/assets/models/npc.survivor-group.aftermath.bun-woman.lod2.glb"
+    },
+    "sourceScale": 1.24057588,
+    "script": "assets/npc.survivor-group.aftermath.bun-woman/build.py",
+    "sourceForward": "+X",
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "rigidDrawBase": "npc.survivor-group",
+    "budgetNote": "Living adult contract: one palette draw per shipped independently animated rigid owner; each tier is also checked against its shipped source."
+  },
+  {
+    "id": "npc.dale.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.dale.aftermath/build.py",
+    "sourceGlb": "assets/npc.dale.aftermath/model.glb",
+    "glb": "public/assets/models/npc.dale.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.24057588,
+    "dimensions": {
+      "x": 0.46679,
+      "y": 1.77898,
+      "z": 0.75993,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 19
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.dale.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.dale.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.survivor-group",
+      "member": "survivor03_root"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.rosa.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.rosa.aftermath/build.py",
+    "sourceGlb": "assets/npc.rosa.aftermath/model.glb",
+    "glb": "public/assets/models/npc.rosa.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.25749424,
+    "dimensions": {
+      "x": 0.6215,
+      "y": 1.81406,
+      "z": 0.92767,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 21
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.rosa.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.rosa.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.paramedic"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.mr-okafor.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.mr-okafor.aftermath/build.py",
+    "sourceGlb": "assets/npc.mr-okafor.aftermath/model.glb",
+    "glb": "public/assets/models/npc.mr-okafor.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.27233734,
+    "dimensions": {
+      "x": 0.58771,
+      "y": 1.78,
+      "z": 0.866,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 18
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.mr-okafor.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.mr-okafor.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.civilian-elderly"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.mia.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.mia.aftermath/build.py",
+    "sourceGlb": "assets/npc.mia.aftermath/model.glb",
+    "glb": "public/assets/models/npc.mia.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.27293605,
+    "dimensions": {
+      "x": 0.65886,
+      "y": 1.80259,
+      "z": 0.82046,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 19
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.mia.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.mia.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.civilian-woman-a"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.sam.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/npc.sam.aftermath/build.py",
+    "sourceGlb": "assets/npc.sam.aftermath/model.glb",
+    "glb": "public/assets/models/npc.sam.aftermath.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.24057588,
+    "dimensions": {
+      "x": 0.74637,
+      "y": 1.80008,
+      "z": 0.74683,
+      "tolerance": 0.08
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 3,
+      "fileKB": 1500,
+      "drawCalls": 19
+    },
+    "lods": {
+      "lod1": "public/assets/models/npc.sam.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.sam.aftermath.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "rigDrawBase": {
+      "id": "npc.survivor-group",
+      "member": "survivor01_root"
+    },
+    "budgetNote": "Original rigid owners retain skin and iris palette names for civilian infection compatibility; static attachments batched within owner, bounded by shipped base at each tier."
+  },
+  {
+    "id": "npc.civilian-man-a.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-man-a.aftermath.glb",
+    "dimensions": {
+      "x": 0.45,
+      "y": 1.8,
+      "z": 0.8363,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 61,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-a.aftermath/model.glb",
+    "script": "assets/npc.civilian-man-a.aftermath/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-man-a.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-man-a.aftermath.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-man-a",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "npc.civilian-man-b.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-man-b.aftermath.glb",
+    "dimensions": {
+      "x": 0.5293,
+      "y": 1.8,
+      "z": 0.8383,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 48,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-man-b.aftermath/model.glb",
+    "script": "assets/npc.civilian-man-b.aftermath/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-man-b.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-man-b.aftermath.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-man-b",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-b at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "npc.civilian-woman-b.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.civilian-woman-b.aftermath.glb",
+    "dimensions": {
+      "x": 0.5,
+      "y": 1.8,
+      "z": 0.8113,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 58,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.civilian-woman-b.aftermath/model.glb",
+    "script": "assets/npc.civilian-woman-b.aftermath/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.civilian-woman-b.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.civilian-woman-b.aftermath.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-woman-b",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-woman-b at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "npc.marcus.aftermath",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.marcus.aftermath.glb",
+    "dimensions": {
+      "x": 0.45,
+      "y": 1.8,
+      "z": 0.8363,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 61,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.marcus.aftermath/model.glb",
+    "script": "assets/npc.marcus.aftermath/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.marcus.aftermath.lod1.glb",
+      "lod2": "public/assets/models/npc.marcus.aftermath.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-man-a",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "npc.shelter-survivor.bandaged",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.shelter-survivor.bandaged.glb",
+    "dimensions": {
+      "x": 0.755,
+      "y": 1.814,
+      "z": 0.836,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 61,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.shelter-survivor.bandaged/model.glb",
+    "script": "assets/npc.shelter-survivor.bandaged/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.shelter-survivor.bandaged.lod1.glb",
+      "lod2": "public/assets/models/npc.shelter-survivor.bandaged.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-man-a",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "npc.shelter-survivor.lying",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.shelter-survivor.lying.glb",
+    "dimensions": {
+      "x": 1.81,
+      "y": 0.545,
+      "z": 0.836,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket",
+      "restCushion"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "restCushion"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 61,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.shelter-survivor.lying/model.glb",
+    "script": "assets/npc.shelter-survivor.lying/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.shelter-survivor.lying.lod1.glb",
+      "lod2": "public/assets/models/npc.shelter-survivor.lying.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-man-a",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "npc.shelter-survivor.sitting",
+    "category": "character",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/npc.shelter-survivor.sitting.glb",
+    "dimensions": {
+      "x": 0.7,
+      "y": 1.35,
+      "z": 0.836,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "weaponSocketL",
+      "weaponSocketR",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [
+      "weaponSocketR",
+      "weaponSocketL",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "drawCalls": 61,
+      "fileKB": 1500
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/npc.shelter-survivor.sitting/model.glb",
+    "script": "assets/npc.shelter-survivor.sitting/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/npc.shelter-survivor.sitting.lod1.glb",
+      "lod2": "public/assets/models/npc.shelter-survivor.sitting.lod2.glb"
+    },
+    "sourceScale": 1,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "animatedDrawBase": "npc.civilian-man-a",
+    "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
   }
 ]

@@ -33,6 +33,8 @@ export interface EntitySnapshot {
   pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean };
   speedBuff?: { multiplier: number; until: number };
   hidden?: boolean;
+  /** Scripted walk out of a house door (HouseEmergence): body separation leaves the body (position and height) alone. */
+  emerging?: boolean;
   /** Infected currently clinging to this vehicle entity. */
   attachedTo?: number;
   /** Retaliation HP cost for vehicle ramming; supplied by infected definitions. */

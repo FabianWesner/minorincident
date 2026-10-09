@@ -5,7 +5,7 @@ import type { DistrictLayout } from '../../src/levels/districts/types';
 import { boot, test, expect, testUrl } from './fixtures';
 
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as DistrictLayout;
-for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sidewalk and rider follows a 90 degree turn @E19`, async ({ page }, info) => {
+for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the depot sidewalk and rider follows a 90 degree turn @E19`, async ({ page }, info) => {
   await boot(page, `${testUrl}&skin=${skin}`);
   await page.evaluate(() => window.__SS__!.loadLevel('L1', { seed: 1 }));
   await page.getByRole('button', { name: 'Begin mission' }).click();
@@ -28,8 +28,9 @@ for (const skin of [0, 1]) test(`bike skin=${skin} mounts level on the start sid
   const hip = mounted.render.character!.pelvis!;
   expect(Math.hypot(hip[0] - bike.seat![0], hip[1] - bike.seat![1] + .04, hip[2] - bike.seat![2])).toBeLessThan(.01);
   const frames = await page.evaluate(async () => {
-    const a = window.__SS__!; a.teleport('player', { x: -40, z: 0 });
-    a.input.set({ move: { x: 1, z: 0 } });
+    // The bike is parked nose east at the depot (PO 2026-10-08): on Juniper Lane west, turn north (90 degrees) up the street.
+    const a = window.__SS__!; a.teleport('player', { x: -30, z: 20 });
+    a.input.set({ move: { x: 0, z: -1 } });
     const frames = [];
     for (let i = 0; i < 180; i++) { await a.step(1); const s = a.getState(); frames.push({ bike: s.entities.find(e => e.bicycle)!, view: s.render.bicycle!, rider: s.render.character! }); }
     a.input.set({ move: { x: 0, z: 0 } }); return frames;

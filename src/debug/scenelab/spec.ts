@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2' | 'L3'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -32,6 +32,8 @@ export interface SceneSpec {
   frames?: number;
   shots?: number[];
   video?: number;
+  /** Contact sheet: one low-res snapshot every N frames (max 24 cells) written as one `sheet.jpg` grid, frame number in each cell. */
+  sheet?: number;
   /** Debug: include each actor's per-frame motion samples (`metrics.actors.<id>.track`: frame, clip/label, speed, feet). */
   trace?: boolean;
   /** Clipping report options: `ignore` pairs of placement ids or asset ids; `sameAsset` also checks chains of one
@@ -39,6 +41,10 @@ export interface SceneSpec {
    * a bone's flesh radius may sink into a prop surface before it is reported. */
   clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
   expect?: Expectations;
+  /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
+   * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
+   * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
+  emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
 export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
@@ -60,7 +66,7 @@ export interface ActorSpec {
   loadout?: [string, string];
   god?: boolean;
 }
-export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean }
+export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
 /** Actor commands. Strings are shorthands: 'idle' | 'chase' | 'follow' | 'flee' | 'infect'. */
 export type Action =
   | 'idle' | 'chase' | 'follow' | 'flee' | 'infect'
@@ -72,6 +78,8 @@ export type Action =
   | { sit: string; seconds?: number }
   | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT' }
   | { select: 'LEFT' | 'RIGHT' }
+  /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
+  | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
   | { infect: { by?: string; instant?: boolean } }
   | { mountBike: string }
@@ -79,6 +87,10 @@ export type Action =
   | { interact: true }
   | { chase: string }
   | { flee: Point }
+  /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
+   * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
+  /** E21/E22 allied fighter. `weapon` selects the L4 v3 kit (soldier rifle, HMG crew, armed civilian pistol / hunting rifle / improvised melee); without it the L3 officer or soldier gun. */
+  | { ally: { role?: 'officer' | 'soldier' | 'civilian' | 'firefighter'; follow?: string; slot?: number; weapon?: 'rifle' | 'hmg' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar' } }
   /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
    * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
    * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
@@ -99,6 +111,8 @@ export type CameraSpec =
 export interface Expectations {
   consoleErrors?: number;
   clippingMax?: number;
+  /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
+  staticOverlapMax?: number;
   footSlideMaxCm?: number;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
@@ -106,12 +120,22 @@ export interface Expectations {
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
   bodyOverlapMaxCm?: number;
+  /** Corgi trunk/head against the courier's drawn body, including both legs. */
+  corgiCourierOverlapMaxCm?: number;
+  /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */
+  corgiRunLagMaxM?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;
   torsoPitchMaxDeg?: number;
+  /** Clicks on a drawn body that did not start (or queue) an attack on that actor within 100 ms (`metrics.clicks`). */
+  clickMissMax?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** `emerge`: residents whose first drawn position is past the door threshold, or never drawn (they must be drawn first inside the building). */
+  emergeOutsideMax?: number;
+  /** Frames any actor drew its far LOD (lod2) within 14 m of the camera. */
+  farLodCloseMax?: number;
   /** Frames a living actor stood in a door aperture or leaf sweep (src/data/buildingDoors.ts) while that door was not
    * fully open (`metrics.doors`). */
   doorClosedFramesMax?: number;
@@ -119,10 +143,26 @@ export interface Expectations {
   actorHitsMax?: number;
   /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
   wheelSinkMaxCm?: number;
+  /** Infected pursuit (`metrics.pursuit`): longest run of frames an L1 infected that should move stood still (boxed, pocketed). */
+  stuckActorFramesMax?: number;
+  /** Most frames an infected was not chasing/attacking while the living courier was within 6 m in clear sight. */
+  lostTargetNearFramesMax?: number;
+  /** Farthest an infected chasing the running courier got ahead of her along her running direction, in metres. */
+  overshootMaxM?: number;
+  /** At least this many infected wind-ups (telegraphs) aimed at the courier: it closes in and attacks. */
+  courierSwingsMin?: number;
+  /** At least this many infected attacks that landed on the courier (`infected.attack`). */
+  courierAttacksMin?: number;
+  /** A pedestrian is bitten (`outbreak.bite`) by this frame. */
+  firstBiteFrameMax?: number;
   /** Deepest drawn pushable mesh below the drawn ground. */
   propSinkMaxCm?: number;
   /** Require actual prop contact samples, preventing an empty scene passing. */
   propGroundSamplesMin?: number;
+  vehicleYawRateMaxDegS?: number;
+  vehicleBodyOverlapsMax?: number;
+  /** Prevent a blocked, stationary ride from passing its motion gates. */
+  vehicleRideRemainingMaxM?: number;
   /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
   wheelFloatMaxCm?: number;
   /** Frames the courier bike was in view but not drawn, or drawn more than 0.6 m from its sim position (`metrics.bike`). */
@@ -154,6 +194,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   });
   if (couriers > 1) errors.push('at most one courier (it is the player entity)');
   spec.vehicles?.forEach((v, i) => { point(v.at, `vehicles[${i}].at`); if (v.id) { if (ids.has(v.id)) errors.push(`duplicate id ${v.id}`); ids.add(v.id); } });
+  if (spec.emerge && (typeof spec.emerge.house !== 'string' || !spec.layout)) errors.push('emerge: needs a house placement id from layout');
   spec.script?.forEach((s, i) => { if (!Number.isInteger(s.frame) || s.frame < 0) errors.push(`script[${i}].frame: nonnegative integer`); });
   return errors;
 }

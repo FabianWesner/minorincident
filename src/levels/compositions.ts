@@ -1,14 +1,20 @@
 import {
   districtIds,
   groveDistrictId,
+  corridorDistrictId,
+  fairDistrictId,
   type LevelComposition,
   type DistrictId,
 } from "./districts/types";
+import { l3PhotoSpots } from "../data/l3";
+import { l4PhotoSpots } from "../data/l4";
 /** Neighbouring district slabs touch at boundaries; all connected roads are available from load. */
 export const districtOrigins: Record<DistrictId, [number, number]> =
   Object.fromEntries([
     ...districtIds.map((id, i) => [id, [(i % 2) * 56, Math.floor(i / 2) * 56]]),
     [groveDistrictId, [0, 0]],
+    [corridorDistrictId, [0, 0]],
+    [fairDistrictId, [0, 0]],
   ]) as Record<DistrictId, [number, number]>;
 const ids = [
   ["D-RES", "D-MAIN", "D-SHOP"],
@@ -55,14 +61,18 @@ compositions.L2 = {
     ["l2-collapse", [16, 19, 16]], ["l2-streets-w1", [18, 22, 18]], ["l2-cluster", [22, 26, 22]], ["l2-bridge-checkpoint", [18, 22, 18]],
   ] as const).map(([name, offset]) => ({ name, target: { anchor: `photo-${name}` }, offset: [...offset] as [number, number, number] })) } }],
 };
-// L3 road loop: Main → supermarket → park → Civic. Override only this
-// composition; the other campaigns retain their original district placement.
-compositions.L3.districts = [
-  { id: 'D-MAIN', origin: [56, 56] }, { id: 'D-SHOP', origin: [0, 56] },
-  { id: 'D-PARK', origin: [0, 112] }, { id: 'D-CIVIC', origin: [56, 112] },
-];
-compositions.L3.timeOfDay = 'L3';
-for (const district of compositions.L3.districts) district.overrides = { spawns: [{ anchor: 'arrival' }, { x: 0, z: -20 }] };
+/** L3 "The Police Collapse" (E21): the D-CORRIDOR avenues, late afternoon, W2/W3 variants authored in its layout. */
+compositions.L3 = {
+  id: "L3", tier: 2, timeOfDay: "L3",
+  districts: [{ id: corridorDistrictId, origin: [0, 0], overrides: { photoSpots: l3PhotoSpots.map(([name, offset]) => ({ name, target: { anchor: `photo-${name}` }, offset: [...offset] as [number, number, number] })) } }],
+};
+compositions[corridorDistrictId] = { id: corridorDistrictId, tier: 2, timeOfDay: "L3", districts: [{ id: corridorDistrictId, origin: [0, 0] }] };
+/** L4 "The Safe City Falls" (E22): Fairhaven downtown, clean and alive (W0), golden afternoon; the war damage is live (E27 blasts, fires), never authored. */
+compositions.L4 = {
+  id: "L4", tier: 0, timeOfDay: "L4",
+  districts: [{ id: fairDistrictId, origin: [0, 0], overrides: { photoSpots: l4PhotoSpots.map(([name, offset]) => ({ name, target: { anchor: name.startsWith("pair-") ? name : `photo-${name}` }, offset: [...offset] as [number, number, number] })) } }],
+};
+compositions[fairDistrictId] = { id: fairDistrictId, tier: 3, timeOfDay: "L4", districts: [{ id: fairDistrictId, origin: [0, 0] }] };
 /** E25 `night-street` / perf: L1's town (W0, all blocks powered) at night. */
 compositions["night-street"] = { ...compositions[groveDistrictId], id: "night-street", timeOfDay: "night" };
 /** The retired M1 map (diner, hardware store, gas forecourt): kept only for its geometry/physics regression suites. */

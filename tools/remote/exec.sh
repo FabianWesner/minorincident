@@ -10,6 +10,7 @@ QF="/srv/mi/queue/$$.job"
 date +%s > /srv/mi/last-activity
 printf '%s\t%s\t%s\n' "${MI_SLUG:-?}" "$(date +%s)" "$*" > "$QF"
 trap 'rm -f "$QF"; date +%s > /srv/mi/last-activity' EXIT
+trap 'exit 143' TERM INT HUP   # a killed detached job still runs its EXIT trap (slot queue file, last-activity)
 # 1. slot (flock on one of N files, kept open on fd 9 for the whole run)
 got=""
 while [ -z "$got" ]; do

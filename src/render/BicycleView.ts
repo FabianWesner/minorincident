@@ -1,9 +1,10 @@
-import { Box3, BoxGeometry, Camera, Group, Matrix4, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type BufferAttribute, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
 import { RiderContacts } from './characters/RiderContacts';
+import { tyreProfile, tyreRing, tyreHalfWidth, type Profile } from './TyreContact';
 import { bicycleGeometry } from '../data/bicycleGeometry';
 import { bicycleHandling } from '../data/vehicles';
 import { l1v2 } from '../data/l1v2';
@@ -37,42 +38,12 @@ function bicyclePlaceholder(): Group {
   part(crank, 'pedalL', new BoxGeometry(.14, .03, .08), dark, 0, .17, .12); part(crank, 'pedalR', new BoxGeometry(.14, .03, .08), dark, 0, -.17, -.12);
   return root;
 }
-/** Tyre cross-section of a wheel at runtime scale: [radial, |axial|] points that can be lowest at some lean (16 axial bins). */
-type Profile = [number, number][];
-function tyreProfile(wheel: Object3D | undefined, scale: number): Profile {
-  if (!wheel) return [];
-  wheel.updateWorldMatrix(true, true);
-  const inverse = new Matrix4().copy(wheel.matrixWorld).invert(), m = new Matrix4(), p = new Vector3(), bins = new Map<number, [number, number]>();
-  wheel.traverse(n => {
-    if (!(n instanceof Mesh)) return;
-    m.multiplyMatrices(inverse, n.matrixWorld);
-    const position = n.geometry.getAttribute('position') as BufferAttribute;
-    for (let i = 0; i < position.count; i++) {
-      p.fromBufferAttribute(position, i).applyMatrix4(m);
-      const radial = Math.hypot(p.x, p.y) * scale, axial = Math.abs(p.z) * scale, bin = Math.round(axial * 400);
-      const old = bins.get(bin); if (!old || radial > old[0]) bins.set(bin, [radial, axial]);
-    }
-  });
-  return [...bins.values()];
-}
 /** Hub height above the lowest tyre point when the wheel plane is rolled by `lean`: the outer shoulder of a wide tyre dips below the tread. */
 const hubAbove = (profile: Profile, fallback: number, lean: number) => {
   const c = Math.cos(lean), s = Math.abs(Math.sin(lean)); let best = fallback * c;
   for (const [radial, axial] of profile) best = Math.max(best, radial * c + axial * s);
   return best;
 };
-/** Half width of the tyre itself (outer 15 % of the radius; hub and axle stubs are wider but never touch the road). */
-const tyreHalfWidth = (profile: Profile) => { const outer = Math.max(0, ...profile.map(([radial]) => radial)) * .85; return Math.max(0, ...profile.filter(([radial]) => radial > outer).map(([, axial]) => axial)); };
-/** Tread ring of a wheel in its local (model) units: the profile's outer points at 9 axial stations, every 3 degrees over the lower half. */
-function tyreRing(profile: Profile, scale: number): Vector3[] {
-  const half = tyreHalfWidth(profile), tread = profile.filter(([radial]) => radial > Math.max(0, ...profile.map(([r]) => r)) * .85), out: Vector3[] = [];
-  if (!tread.length) return out;
-  for (const station of [-1, -.75, -.5, -.25, 0, .25, .5, .75, 1]) {
-    const [radial, axial] = tread.reduce((best, p) => Math.abs(p[1] - Math.abs(station) * half) < Math.abs(best[1] - Math.abs(station) * half) ? p : best);
-    for (let k = -30; k <= 30; k++) { const a = k * Math.PI / 60; out.push(new Vector3(Math.sin(a) * radial / scale, -Math.cos(a) * radial / scale, Math.sign(station) * axial / scale)); }
-  }
-  return out;
-}
 interface Rig { rings: [Vector3[], Vector3[]]; profiles: [Profile, Profile]; halfWidths: [number, number]; root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; seat?: Object3D; kickstand?: Object3D; kick: number; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number; fallKey: string; fallLift: number }
 /**
  * Courier bicycle (spec 5.10). Follows the authoritative bicycle entity; wheels roll with the travelled distance, the crank

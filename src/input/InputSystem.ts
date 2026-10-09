@@ -8,6 +8,7 @@ import { Bindings } from './Bindings';
 import { Buttons } from './Buttons';
 import { emptyInput, type InputFrame, type Scheme, type Vec2 } from './InputFrame';
 import { Recorder } from './Recorder';
+import { ClickPick, clickable } from './ClickPick';
 import { Keyboard } from './devices/Keyboard';
 import { Pointer } from './devices/Pointer';
 import { RayCursor } from './devices/RayCursor';
@@ -23,6 +24,7 @@ export class InputSystem implements Lifecycle {
   readonly pointer: Pointer;
   readonly wheel: Wheel;
   readonly cursor: RayCursor;
+  readonly picker: ClickPick;
   readonly touch: Touch;
   private touchFire: 'touch' | 'assist' | null = null;
   readonly frame = emptyInput();
@@ -42,7 +44,6 @@ export class InputSystem implements Lifecycle {
   private selectedActiveSlot: number | undefined;
   private selectedSlot: { side: 'LEFT' | 'RIGHT'; index: number } | undefined;
   cycle(side: 'LEFT' | 'RIGHT'): void { this.selectors.push({ direction: 1, side }); }
-  private readonly projected = new Vector3();
   private pause = false;
   private injected: InputFrame | null = null;
   private readonly direction = new Vector3();
@@ -64,7 +65,7 @@ export class InputSystem implements Lifecycle {
     let storage: Storage | undefined;
     try { storage = localStorage; } catch { /* Defaults work with storage disabled. */ }
     this.bindings = new Bindings(storage);
-    this.cursor = new RayCursor(camera, canvas);
+    this.cursor = new RayCursor(camera, canvas); this.picker = new ClickPick(camera, canvas);
     this.keyboard = new Keyboard(window, this.key);
     this.pointer = new Pointer(canvas, window, this.mouseActivity, this.token);
     this.wheel = new Wheel(canvas, (direction) => { this.mouseActivity(); this.zoom(direction * .14); });
@@ -226,18 +227,7 @@ export class InputSystem implements Lifecycle {
       frame.mouseAttack = true;
       if (click.shift) { frame.attackInPlace = true; this.pointerGround = false; this.pointerTarget = false; continue; }
       if (this.drivingContext) continue;
-      let picked: EntitySnapshot | null = null, best = Infinity;
-      for (const target of candidates!) {
-        // A plain click only targets live infected; props (cars, bins, toys) never turn a click-to-move into a fight (PO, after respawn).
-        if (target.faction !== 'infected' || target.health.current <= 0 || target.hidden || target.infected?.hidden) continue;
-        const p = target.transform, rect = this.canvas.getBoundingClientRect();
-        this.projected.set(p.x, p.y, p.z).project(this.camera);
-        const sx = rect.left + (this.projected.x + 1) * rect.width / 2, sy = rect.top + (1 - this.projected.y) * rect.height / 2;
-        const screenDistance = Math.hypot(click.x - sx, click.y - sy);
-        const groundDistance = Math.hypot(point.x - p.x, point.z - p.z);
-        const score = Math.min(screenDistance / 18, groundDistance / (target.combat?.radius ?? .4) / 1.5);
-        if (score <= 1 && score < best) { picked = target; best = score; }
-      }
+      const picked = this.picker.pick(click.x, click.y, candidates!) ?? this.magnet(player, point, candidates!);
       if (picked) { frame.attackTarget = { id: picked.id, side: 'LEFT' }; this.pointerGround = false; this.pointerTarget = true; frame.pointerTarget = true; }
       else { frame.moveTarget = { x: point.x, z: point.z }; this.pointerGround = 'move'; this.pointerTarget = false; }
     }
@@ -265,6 +255,25 @@ export class InputSystem implements Lifecycle {
     if (selection?.side) frame.selectorSide = selection.side;
     if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; frame.pause = this.pause;
     this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); return frame;
+  }
+  /** Current melee reach of the active weapon (metres), supplied by the game; null outside combat. */
+  reach: (() => number | null) | null = null;
+  /** Melee magnet (combat proposal 1.2 B): a click that misses every body but lands just past an infected the courier
+   * can already reach, within 35 degrees of it, attacks that one instead of walking into it. A cone toward the
+   * cursor, not a radius, so clicking away from a crowd still walks. Melee reach only (guns keep plain picks). */
+  private magnet(player: Vec2, point: Vec2, targets: readonly EntitySnapshot[]): EntitySnapshot | null {
+    const reach = this.reach?.();
+    if (!reach || reach > 3) return null;
+    const cx = point.x - player.x, cz = point.z - player.z, click = Math.hypot(cx, cz);
+    if (click > reach + 2 || click < 1e-3) return null;
+    let best: EntitySnapshot | null = null, nearest = Infinity;
+    for (const target of targets) {
+      if (!clickable(target) || target.health.current <= 0) continue;
+      const dx = target.transform.x - player.x, dz = target.transform.z - player.z, distance = Math.hypot(dx, dz);
+      if (distance > reach + .3 || distance < 1e-3 || (dx * cx + dz * cz) / (distance * click) < Math.cos(35 * Math.PI / 180)) continue;
+      if (distance < nearest) { best = target; nearest = distance; }
+    }
+    return best;
   }
   private updateWalkHint(frame: InputFrame): void {
     if (this.walkHintDone) return;

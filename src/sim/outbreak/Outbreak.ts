@@ -158,6 +158,11 @@ export class Outbreak {
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
+      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
+        this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
+        continue;
+      }
+      if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
       if (c.state === 'calm') this.routine(e);
       else if (c.state === 'alarmed') {
         this.face(e, c.threat, .2);
@@ -284,7 +289,12 @@ export class Outbreak {
       if (best && best.id !== l1.refuge) { l1.refuge = best.id; l1.target = { x: best.x, z: best.z }; c.path.length = 0; c.goal = -1; }
       l1.repickAt = tick + 60;
     }
-    if (!l1.target) return;
+    if (!l1.target) {
+      // No refuge on this map (Scene Lab, a district without refuge anchors): run straight away from the threat, never freeze.
+      const dx = e.transform.x - c.threat.x, dz = e.transform.z - c.threat.z, d = Math.hypot(dx, dz) || 1;
+      this.world.npcs!.moveStep(e, dx / d * l1.fleeSpeed / 60, dz / d * l1.fleeSpeed / 60);
+      return;
+    }
     if (l1.doorAt !== undefined) {
       // Fumbling with the door: the pedestrian is still outside and can be caught.
       this.face(e, l1.target, .2);

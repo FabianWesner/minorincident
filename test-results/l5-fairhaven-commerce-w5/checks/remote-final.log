@@ -1,0 +1,13 @@
+[pool] all 3 runner(s) full for 2s; adding one
+[pool] nbg1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] fsn1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] hel1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] could not add a runner (pool.py: create failed: POST /servers: resource_limit_exceeded Primary IP limit exceeded); waiting for a free slot instead
+[pool] all runners full (mi-runner-1:2/2+1q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 2s
+[pool] all runners full (mi-runner-1:2/2+1q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 62s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l5-fairhaven-commerce-w5 -> 2.31.51.253:/srv/mi/ws/build-l5-fairhaven-commerce-w5-b70d1e
+[remote] sync 157s, 3980 files; job /srv/mi/jobs/build-l5-fairhaven-commerce-w5-b70d1e-95343-1791502255; queueing for a slot
+[runner] slot 1 acquired; load 4.04 4.77 4.63
+validate=0 typecheck=0 lint=0 unit=0
+[remote] pulled test-results/l5-fairhaven-commerce-w5/checks
+[remote] done exit=0 (runner 2.31.51.253, sync 157s, remote total 313s)

@@ -29,18 +29,21 @@ export const l1v2 = {
     jitter: 0.04,
     /** PO 2026-10-07 ("not all on the same speed, so they don't arrive at the same moment"): a persistent per-entity
      * factor 1.04 - spread * u^skew (u uniform per spawn): most a bit slower than the tier base, a few at today's max
-     * (base x 1.04), never above it; never below `minMs` so a fleeing civilian (<= 4.0 m/s) still never outruns one.
-     * Plus a per-entity reaction delay on a fresh sighting, so a group strings out instead of arriving together. */
-    factor: { max: 1.04, spread: 0.28, skew: 1.4, minMs: 4.05, reactionS: [0, 0.4] },
-    minShareAbovePlayerRun: 0.6,
-    frailMinShareAbovePlayerRun: 0.95,
+     * (base x 1.04), never above it; never below `minMs`. Plus a per-entity reaction delay on a fresh sighting, so a group
+     * strings out instead of arriving together.
+     * PO 2026-10-09 ("This one was running behind me (same speed; should be a bit faster than me)"): `minMs` 4.05 -> 4.4, so
+     * a chaser is a bit faster than the running courier (4.5 m/s): means frail ~4.68 / average ~5.05 / athletic ~5.23 m/s
+     * (all ~4.99), ~91 % of spawns above 4.5 m/s (was ~74 %), a few at 4.4-4.5 m/s; the spread (strung-out arrival) stays. */
+    factor: { max: 1.04, spread: 0.28, skew: 1.4, minMs: 4.4, reactionS: [0, 0.4] },
+    minShareAbovePlayerRun: 0.85,
+    frailMinShareAbovePlayerRun: 0.8,
     closeTenMetresMaxS: 20,
   },
   /** Section 5.5 / AC13. */
   player: { runMs: 4.5, walkMs: 2.0, walkReleaseToRunS: 0.2, touchWalkStickBelow: 0.5, staminaInL1: false, hp: 100 },
   /** Section 5.6 / AC14. */
   combat: {
-    unarmedDamage: [9, 11], unarmedHitsToKill: [4, 5], unarmedKnockbackM: [1.5, 2.5], unarmedStaggerS: 0.4,
+    unarmedDamage: [6, 6], unarmedHitsToKill: [6, 7], unarmedKnockbackM: [1.5, 2.5], unarmedStaggerS: 0.4,
     batDamage: 22, batFinisherDamage: 30, batHitsToKill: 2, batKnockbackM: [2.5, 3.5],
   },
   /** Section 5.8 / AC17. */
@@ -51,7 +54,8 @@ export const l1v2 = {
    * the courier leaves the garage with the bat (beat 9). Growth from there is bites only.
    */
   director: { hordeMinInfectedNearGarage: 6, hordeLeaveGarageM: 5, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
-  house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25], stumbleOutM: 2.2 },
+  /** Beat 9 house: `doorM` the front-door distance band from the garage door; the walk out lives in HouseEmergence. */
+  house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25] },
   /** Section 5.10 / AC16. */
   bicycle: { speedMs: 7.5, accelToMs: 7, accelS: 1.5, minTurnRadiusM: 2.5, mountInteractS: 0.4, damage: 0 },
   /** Section 5.11 / AC20. */
@@ -63,7 +67,7 @@ export const l1v2 = {
   /** Section 3 beats 4 to 6 / AC07, AC19. */
   accident: {
     calmS: [4, 6], corgiWarnLeadS: 1.5, sequenceS: 8, blastShakeS: 1.5, ringingS: 1.2,
-    exitDelayS: [8, 10], infectedCount: 5, minExits: 2, minDistinctHeadings: 3, minHeadingSeparationDeg: 60,
+    exitDelayS: [8, 10], infectedCount: 5, minDistinctHeadings: 3, minHeadingSeparationDeg: 60,
     bitesWithinS: 60, killWithinS: 5, maxFrameMs: 50,
     /** Event offsets from the flicker (t = 0). */
     eventAtS: { flicker: 0, blast: 1.5, ringing: 1.7, smoke: 2.9, screams: 3.5, infectedExit: 9 },

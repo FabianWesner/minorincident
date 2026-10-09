@@ -1,6 +1,6 @@
 // Equivalence of the optimized staticBatch vertex loop with the original per-vertex implementation.
 import { readFileSync } from 'node:fs';
-import { BufferAttribute, BufferGeometry, Mesh, Scene, type Material, type Object3D } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Mesh, MeshLambertNodeMaterial, Scene, type Material, type Object3D } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
@@ -73,4 +73,21 @@ test('optimized static batch attributes equal the reference loop @load', async (
     }
   }
   await registry.dispose(); materials.dispose();
+});
+
+test('@load interleaved batch decoding reaches pause checkpoints within 1024 vertices', async () => {
+  const count = 6144, data = new InterleavedBuffer(new Float32Array(count * 6), 6), geometry = new BufferGeometry();
+  let sincePause = 0, maximum = 0, pauses = 0;
+  for (const [name, offset] of [['position', 0], ['normal', 3]] as const) {
+    const attribute = new InterleavedBufferAttribute(data, 3, offset), get = attribute.getComponent.bind(attribute);
+    attribute.getComponent = (index, component) => { sincePause++; return get(index, component); };
+    geometry.setAttribute(name, attribute);
+  }
+  const source = new Mesh(geometry, new MeshLambertNodeMaterial());
+  // Force a pause at every cooperative checkpoint without depending on machine timing.
+  const batch = await staticBatchAsync(source, true, undefined, async () => { maximum = Math.max(maximum, sincePause); sincePause = 0; pauses++; }, -1);
+  expect(maximum).toBeLessThanOrEqual(1024 * 3); expect(pauses).toBeGreaterThan(1);
+  expect((batch.children[0] as Mesh).geometry.getAttribute('position').count).toBe(count);
+  geometry.dispose(); (source.material as Material).dispose();
+  for (const mesh of batch.children as Mesh[]) { mesh.geometry.dispose(); (mesh.material as Material).dispose(); }
 });

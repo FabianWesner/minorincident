@@ -19,7 +19,7 @@ export interface CrowdLayers {
   lurch?: number;
 }
 /** Clips that stand on their feet: footwork locks the feet and turns become steps. */
-const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'civ-startle', 'windup', 'swing', 'hurt']);
+const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot', 'civ-startle', 'windup', 'swing', 'hurt']);
 /** Crowd gait styles: stance (cycle fraction), run blend, knee scale. Shorter stance at speed keeps chibi legs within reach. */
 const gaitStyles: Record<string, { stance: number; run: number; knee?: number }> = {
   walk: { stance: .55, run: 0 }, 'npc-walk': { stance: .55, run: 0 }, 'npc-walk-relaxed': { stance: .56, run: 0, knee: .9 }, 'npc-carry': { stance: .56, run: 0, knee: .9 }, 'npc-cane': { stance: .6, run: 0, knee: .8 },
@@ -31,6 +31,7 @@ interface Footwork { contacts: CourierGroundContacts; owner: CrowdLocomotion; ti
 /** Per-figure footwork shared by every LOD batch of one crowd, with a per-frame budget of fully solved figures. */
 export class CrowdFootwork {
   readonly states = new Map<number, Footwork>();
+  readonly far = new Map<number, { contacts: GroundContacts; owner: CrowdLocomotion; time: number }>();
   private frame = 0;
   private admitted = 0;
   /** Figures solved this frame (tests and perf probes). */
@@ -45,7 +46,11 @@ export class CrowdFootwork {
   }
   mark(state: Footwork): void { state.active = this.frame; this.count++; }
   /** Drop figures that have not been drawn for a while (removed, culled, LOD-switched away). */
-  private prune(time: number): void { if (this.frame % 120 === 0) for (const [id, s] of this.states) if (time - s.time > 2 || time < s.time) this.states.delete(id); }
+  private prune(time: number): void {
+    if (this.frame % 120 !== 0) return;
+    for (const [id, s] of this.states) if (time - s.time > 2 || time < s.time) this.states.delete(id);
+    for (const [id, s] of this.far) if (time - s.time > 2 || time < s.time) this.far.delete(id);
+  }
 }
 
 /** One small off-scene skeleton per batch; figures retain only their contact
@@ -137,10 +142,15 @@ export class CrowdLocomotion {
     hip.updateMatrixWorld(true);
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */
-  correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers): void {
+  correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number): void {
     if (!layers && !this.animal && (!this.reach || !gaitShape[name])) return;
     let contacts = this.contacts.get(id);
     if (!contacts && !this.animal && gaitShape[name]) { this.toRest(); contacts = new GroundContacts(this.rig); this.contacts.set(id, contacts); }
+    const previous = this.footwork.far.get(id);
+    if (contacts && previous && previous.owner !== this && time !== undefined && time - previous.time <= .3) {
+      const left = previous.contacts.contact(0), right = previous.contacts.contact(1);
+      if (left && right) contacts.inherit(phase, [left, right]);
+    }
     this.load(pose, instance);
     if (layers) this.layer(layers, phase);
     const stride = cadenceStride(name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
@@ -149,6 +159,7 @@ export class CrowdLocomotion {
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       paws.update(phase, stride, 'corgi-trot');
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
+    if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     if (layers && !this.animal) this.ground();
     this.store(pose, instance);
   }
@@ -173,8 +184,24 @@ export class CrowdLocomotion {
     let state = this.footwork.states.get(id);
     if (state && (time < state.time || time - state.time > .3)) { this.footwork.states.delete(id); state = undefined; }
     const want = near && grounded && this.footwork.admit(id);
+    if (!near && state && gaitShape[clip]) {
+      // Fading the leg solve lets a planted shoe slide toward the baked stride. Transfer its world contacts to the
+      // cheaper solver instead, retaining the footwork budget for figures that are still near the camera.
+      let contacts = this.contacts.get(id);
+      if (!contacts) { this.toRest(); contacts = new GroundContacts(this.rig); this.contacts.set(id, contacts); }
+      contacts.inherit(phase, [state.contacts.contact(0), state.contacts.contact(1)]);
+      this.footwork.states.delete(id); state = undefined;
+    }
     if (want || state) {
-      if (!state) { this.toRest(); state = { contacts: new CourierGroundContacts(this.rig, this.rig.hip.parent!), owner: this, time, weight: 0, active: 0, run: gaitStyles[clip]?.run ?? 0, stance: gaitStyles[clip]?.stance ?? .55 }; this.footwork.states.set(id, state); }
+      if (!state) {
+        const previous = this.footwork.far.get(id);
+        const far = previous && time - previous.time <= .3 ? previous.contacts : undefined, left = far?.contact(0), right = far?.contact(1);
+        this.toRest(); state = { contacts: new CourierGroundContacts(this.rig, this.rig.hip.parent!), owner: this, time, weight: left && right ? 1 : 0, active: 0, run: gaitStyles[clip]?.run ?? 0, stance: gaitStyles[clip]?.stance ?? .55 };
+        if (left && right) state.contacts.inherit(phase, [left, right]);
+        this.footwork.far.delete(id);
+        this.footwork.states.set(id, state);
+      }
+      this.contacts.get(id)?.reset();
       if (state.owner !== this) { state.contacts.rebind(this.rig, this.rig.hip.parent!); state.owner = this; }
       const dt = Math.min(.1, time - state.time); state.time = time;
       state.weight = Math.max(0, Math.min(1, state.weight + (want ? 1 : -1) * Math.max(dt, 1e-3) / .12));
@@ -198,7 +225,7 @@ export class CrowdLocomotion {
       this.footwork.states.delete(id);
     }
     if ((strides[clip] && speed > .06) || layers) {
-      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers));
+      const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time));
       blend[1] = 1; return row;
     }
     this.reset(id);

@@ -8,6 +8,12 @@ import math
 from pathlib import Path
 import sys
 # Decay uses closed authored sedan tiers and a deterministic impact transform.
+if '--decay' in sys.argv and sys.argv[sys.argv.index('--decay') + 1] == 'burned':
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+    from sslib.civilian_burned import build_burned
+    build_burned(Path(__file__).resolve().parent, sys.argv[sys.argv.index('--glb') + 1])
+    raise SystemExit(0)
+
 if '--decay' in sys.argv and sys.argv[sys.argv.index('--decay') + 1] == 'wrecked':
     sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
     from sslib.rescue_wrecks import build_wreck

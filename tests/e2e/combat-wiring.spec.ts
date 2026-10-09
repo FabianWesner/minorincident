@@ -88,7 +88,7 @@ for (const weapon of ['weapon.fists', 'weapon.bat']) {
     }
     const result = await page.evaluate(id => ({ health: window.__SS__!.getEntity(id)!.health.current,
       hits: window.__SS__!.events().filter(e => e.type === 'combat.hit' && e.targetId === id && e.actionId !== 'weapon.kick') }), id);
-    expect(result.health).toBe(0); expect(result.hits.length).toBe(weapon === 'weapon.bat' ? 1 : 3);
+    expect(result.health).toBe(0); expect(result.hits.length).toBe(weapon === 'weapon.bat' ? 1 : 4); // unarmed: 6 per beat since the PO 10-08 fight speed
     expect(result.hits[0].tick).toBeLessThan(80);
   });
 }

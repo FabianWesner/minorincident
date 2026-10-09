@@ -1,5 +1,5 @@
 import { AdditiveBlending, BoxGeometry, CircleGeometry, CylinderGeometry, DoubleSide, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, SphereGeometry, TorusGeometry, Vector3 } from 'three/webgpu';
-import { l2, l2Anchors } from '../data/l2';
+import { l2, l2Anchors, l2Beacons, l2Station } from '../data/l2';
 import { l2Dressing } from '../levels/L2/layout';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -21,7 +21,7 @@ export class L2Props extends Group {
   private readonly scaleV = new Vector3();
   private readonly yAxis = new Vector3(0, 1, 0);
   private readonly turn = new Quaternion();
-  /** Alarm beacons on the station front (wall x = -75.45): housing, red dome with a bright lens, rotating flare fan. */
+  /** Alarm beacons on the station front (station-local x 1.7, see l2Beacons): housing, red dome with a bright lens, rotating flare fan. */
   private readonly beacons: { root: Group; dome: Mesh; fan: Group }[] = [];
   private readonly beaconGeo = { housing: new CylinderGeometry(.2, .24, .14, 14), dome: new SphereGeometry(.2, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), fan: new CircleGeometry(3.4, 14, 0, .5).rotateX(-Math.PI / 2), lens: new SphereGeometry(.09, 8, 6) };
   private readonly beaconMat = {
@@ -51,8 +51,9 @@ export class L2Props extends Group {
     const instanced = (material: MeshBasicNodeMaterial | ReturnType<Materials['get']>, count: number) => {
       const mesh = new InstancedMesh(this.box, material, Math.max(1, count)); mesh.count = count; mesh.frustumCulled = false; this.add(mesh); return mesh;
     };
-    for (const z of [39.4, 44.2]) {
-      const root = new Group(); root.position.set(-75.3, 3.3, z); root.visible = false;
+    // In the station frame (local +x out of the bays), so they follow Fire Station 3 to Main Row.
+    for (const [bx, bz] of l2Beacons) {
+      const root = new Group(); root.position.set(bx, 3.3, bz); root.rotation.y = l2Station.yaw; root.visible = false;
       const housing = new Mesh(this.beaconGeo.housing, this.beaconMat.housing); housing.rotation.z = Math.PI / 2; housing.position.x = .08;
       const bracket = new Mesh(this.box, this.beaconMat.housing); bracket.scale.set(.22, .1, .1); bracket.position.set(-.1, 0, 0);
       const dome = new Mesh(this.beaconGeo.dome, this.beaconMat.dome); dome.rotation.z = -Math.PI / 2; dome.position.x = .15;
@@ -67,17 +68,19 @@ export class L2Props extends Group {
       for (const [side, list] of [[-1, red], [1, blue]] as const) list.push({ x: d.x - az * side * .35 + ax * .2, y, z: d.z + ax * side * .35 + az * .2, sx: .3, sy: .14, sz: .3 });
     }
     this.bars.push({ mesh: instanced(this.red, red.length), boxes: red }, { mesh: instanced(this.blue, blue.length), boxes: blue });
-    // The fire axe on its rack, mounted on the station front facing the street (+x): a dark board with a pale frame, a wooden
+    // The fire axe on its rack, mounted on the station front facing the street: a dark board with a pale frame, a wooden
     // haft and a big red head so it reads at game-camera size. Unlit colours (the bay is dark). Head and haft hide once taken.
-    const [rx, rz] = l2Anchors['l2-axe-rack'], wx = rx - 1.05;
+    // Built in the station frame (local +x out of the bays) at the stand-to-interact anchor, so it follows the station.
+    const [rx, rz] = l2Anchors['l2-axe-rack'], wx = -1.05;
+    for (const g of [this.axe, this.glint]) { g.position.set(rx, 0, rz); g.rotation.y = l2Station.yaw; }
     const part = (material: ReturnType<Materials['get']> | MeshBasicNodeMaterial, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); this.axe.add(m); };
-    part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, rz]);
-    part(materials.get('uiDark'), [.12, 1.3, 1.5], [wx + .05, 1.55, rz]);
-    part(this.haft, [.1, 1.15, .1], [wx + .16, 1.5, rz - .1]);
-    part(this.red, [.12, .42, .55], [wx + .17, 2.0, rz + .1]);
+    part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, 0]);
+    part(materials.get('uiDark'), [.12, 1.3, 1.5], [wx + .05, 1.55, 0]);
+    part(this.haft, [.1, 1.15, .1], [wx + .16, 1.5, -.1]);
+    part(this.red, [.12, .42, .55], [wx + .17, 2.0, .1]);
     this.glint.add(new Mesh(this.gem, this.gold), new Mesh(this.ring, this.gold));
-    this.glint.children[0].position.set(wx + .5, 2.9, rz);
-    this.glint.children[1].rotation.x = Math.PI / 2; this.glint.children[1].position.set(rx, .32, rz);
+    this.glint.children[0].position.set(wx + .5, 2.9, 0);
+    this.glint.children[1].rotation.x = Math.PI / 2; this.glint.children[1].position.set(0, .32, 0);
     this.add(this.glint);
     this.add(this.axe);
     // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.
