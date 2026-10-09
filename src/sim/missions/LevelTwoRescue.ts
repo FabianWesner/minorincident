@@ -49,7 +49,7 @@ export class LevelTwoRescue {
   private readonly walls = new Map<string, number>();
   private driver: L2TruckDrive | null = null;
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
-  constructor(private readonly mission: Mission) {}
+  constructor(private readonly mission: Mission) { mission.world.infectedMeleeHits = l2.infectedMeleeHits; }
   private get s(): L2State { return this.mission.state.l2!; }
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }

@@ -202,9 +202,14 @@ export class Vfx extends Group {
       // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
       if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
       if (def?.category === 'ranged') {
-        const p = event.position;
-        this.burst(p.x + event.direction.x * 0.7, 0.9, p.z + event.direction.z * 0.7, 0xffe7a0, 6, 0.25, 0.06, 0);
-        for (let i = 1; i <= 12; i++) this.particles.spawn(this.time, 0.08, p.x + event.direction.x * i * 0.7, 0.9, p.z + event.direction.z * i * 0.7, 0, 0, 0, 0.06, 0, 0xffe7a0);
+        // PO 10-09: the courier's own shot must read from the game camera like the allies' tracers: a bright flash at the muzzle and
+        // a tracer that spans the shot (to the first wall or the weapon range) and lingers a few frames.
+        const p = event.position, d = Math.min(def.range, this.world.combat?.query.clearDistance({ x: p.x, z: p.z }, event.direction, def.range) ?? def.range);
+        const mx = p.x + event.direction.x * .7, mz = p.z + event.direction.z * .7;
+        this.burst(mx, 1.15, mz, 0xfff1b8, 8, .4, .12, 0);
+        this.particles.spawn(this.time, .1, mx, 1.15, mz, 0, 0, 0, .75, 0, 0xffffff);
+        const spacing = this.quality === 'high' ? .3 : .6, lift = (1.15 - .9) / Math.max(d, 1);
+        for (let i = 1; i <= Math.min(80, Math.floor(d / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, p.x + event.direction.x * i * spacing, 1.15 - lift * i * spacing, p.z + event.direction.z * i * spacing, 0, 0, 0, .3, 0, 0xfff6c8);
         if (this.quality === 'high') this.burst(p.x, 0.9, p.z, 0xd7af65, 1, 0.08, 2);
       }
     } else if (event.type === 'ally.attack' && event.from && event.to) {

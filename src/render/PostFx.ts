@@ -1,6 +1,6 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
-import { ColorManagement, NoToneMapping, RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget } from 'three/webgpu';
+import { ColorManagement, NoToneMapping, RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget, type Object3D } from 'three/webgpu';
 import { pass, uv, uniform, mix, vec2, rtt } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
@@ -39,20 +39,35 @@ export class PostFx {
   private tier: QualityTier = 'high';
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
   snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value }; }
-  /** Compile the gameplay target once, rather than building a second canvas-context variant. */
-  async compile(partitions?: (() => void)[]): Promise<void> {
+  /** Compile in the gameplay HDR/MSAA target. `root` warms a streamed subtree with the scene's lights. */
+  async compile(partitions?: (() => void)[], root?: Object3D): Promise<void> {
     const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();
     const tone = renderer.toneMapping, color = renderer.outputColorSpace;
     this.scenePass.renderTarget.samples = renderer.samples;
     this.scenePass.renderTarget.texture.type = renderer.getOutputBufferType();
     renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
+    // r186 compileAsync omits render call depth. The scene pass renders inside the
+    // pipeline quad (depth 1); depth 0 creates different render objects and node graphs.
+    const contexts = (renderer as unknown as { _renderContexts: { get(target: unknown, mrt: unknown, depth?: number): unknown } })._renderContexts;
+    const getContext = contexts.get;
+    const compile = (object: Object3D) => {
+      contexts.get = (target, mrt, depth = 0) => getContext.call(contexts, target, mrt, depth + 1);
+      try { return renderer.compileAsync(object, this.scenePass.camera, this.scenePass.scene as Scene); }
+      finally { contexts.get = getContext; }
+    };
     try {
-      if (!partitions) await this.scenePass.compileAsync(renderer);
+      if (!partitions && !root) {
+        renderer.setRenderTarget(this.scenePass.renderTarget); renderer.setMRT(this.scenePass.getMRT());
+        await compile(this.scenePass.scene);
+      }
       else {
         // Same state as PassNode.compileAsync, held across concurrent compile lanes (PreRenderer).
         const pass = this.scenePass as typeof this.scenePass & { getMRT(): ReturnType<WebGPURenderer['getMRT']> };
         renderer.setRenderTarget(pass.renderTarget); renderer.setMRT(pass.getMRT());
-        await Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(pass.scene, pass.camera); }));
+        // compileAsync captures the render context before yielding. Streaming must restore the
+        // target immediately, so an in-flight warm-up cannot redirect the next gameplay draw.
+        if (root) return compile(root);
+        await Promise.all(partitions!.map(apply => { apply(); return compile(pass.scene); }));
       }
     }
     finally { renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color; }

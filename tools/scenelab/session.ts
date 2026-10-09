@@ -90,6 +90,33 @@ export class SceneSession {
     await this.ready(); mkdirSync(dirname(path), { recursive: true });
     return this.page.screenshot({ path, type: 'png' });
   }
+  /** Low-res JPEG of the current frame for a contact sheet (waits for streaming like a screenshot). */
+  async snapshot(): Promise<Buffer> { await this.ready(); return this.page.screenshot({ type: 'jpeg', quality: 72 }); }
+  /** One JPG grid of labelled cells ("f<frame>"), composed on a canvas in a scratch page; the file stays under maxKb. */
+  async makeSheet(cells: { frame: number; jpeg: Buffer }[], path: string, cellWidth = 320, maxKb = 380): Promise<{ path: string; cells: number; kb: number }> {
+    const scratch = await this.page.context().newPage();
+    try {
+      const data = cells.map(c => ({ frame: c.frame, src: `data:image/jpeg;base64,${c.jpeg.toString('base64')}` }));
+      const b64 = await scratch.evaluate(async ({ data, cellWidth, maxKb }) => {
+        const images = await Promise.all(data.map(d => new Promise<HTMLImageElement>((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = d.src; })));
+        const aspect = images[0].height / images[0].width, h = Math.round(cellWidth * aspect), n = images.length;
+        const cols = n <= 4 ? n : n <= 12 ? 4 : 6, rows = Math.ceil(n / cols), gap = 2;
+        const c = document.createElement('canvas'); c.width = cols * cellWidth + (cols - 1) * gap; c.height = rows * h + (rows - 1) * gap;
+        const g = c.getContext('2d')!; g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height); g.imageSmoothingQuality = 'high'; g.font = 'bold 14px monospace'; g.textBaseline = 'top';
+        images.forEach((img, i) => {
+          const x = (i % cols) * (cellWidth + gap), y = Math.floor(i / cols) * (h + gap);
+          g.drawImage(img, x, y, cellWidth, h);
+          const label = `f${data[i].frame}`, w = g.measureText(label).width + 8;
+          g.fillStyle = 'rgba(0,0,0,.7)'; g.fillRect(x, y, w, 18); g.fillStyle = '#ffe14d'; g.fillText(label, x + 4, y + 2);
+        });
+        let q = 0.8, url = c.toDataURL('image/jpeg', q);
+        while (url.length * 0.75 > maxKb * 1024 && q > 0.3) { q -= 0.1; url = c.toDataURL('image/jpeg', q); }
+        return url.slice(url.indexOf(',') + 1);
+      }, { data, cellWidth, maxKb });
+      const buffer = Buffer.from(b64, 'base64'); mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, buffer);
+      return { path, cells: cells.length, kb: Math.round(buffer.length / 1024) };
+    } finally { await scratch.close(); }
+  }
   async close(): Promise<void> { this.guard?.dispose(); await this.browser?.close(); }
 }
 
@@ -117,11 +144,14 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
   add('clipping', clipping.static.length + clipping.actors.length, e.clippingMax);
+  add('staticOverlap', clipping.static.length, e.staticOverlapMax);
   const motion = Object.values(metrics.actors).map(a => a.motion);
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
   add('bodyOverlapMaxCm', Math.max(0, ...(metrics.bodies ?? []).map(b => b.depthCm)), e.bodyOverlapMaxCm);
+  add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
+  add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
@@ -134,6 +164,13 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
   add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
   add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
+  const pursuit = Object.values(metrics.pursuit?.actors ?? {});
+  add('stuckActorFramesMax', Math.max(0, ...pursuit.map(p => p.stuckRunMax)), e.stuckActorFramesMax);
+  add('lostTargetNearFramesMax', Math.max(0, ...pursuit.map(p => p.lostNearFrames)), e.lostTargetNearFramesMax);
+  add('overshootMaxM', Math.max(0, ...pursuit.map(p => p.overshootMaxM)), e.overshootMaxM);
+  if (e.courierSwingsMin !== undefined) checks.push({ name: 'courierSwingsMin', pass: (metrics.pursuit?.courierSwings ?? 0) >= e.courierSwingsMin, value: metrics.pursuit?.courierSwings ?? 0, limit: e.courierSwingsMin });
+  if (e.courierAttacksMin !== undefined) checks.push({ name: 'courierAttacksMin', pass: (metrics.pursuit?.courierAttacks ?? 0) >= e.courierAttacksMin, value: metrics.pursuit?.courierAttacks ?? 0, limit: e.courierAttacksMin });
+  if (e.firstBiteFrameMax !== undefined) { const f = metrics.pursuit?.firstBiteFrame ?? -1; checks.push({ name: 'firstBiteFrameMax', pass: f >= 0 && f <= e.firstBiteFrameMax, value: f, limit: e.firstBiteFrameMax }); }
   if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
   const wheels = Object.values(metrics.wheels ?? {}).flat();
   add('vehicleYawRateMaxDegS', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.yawRateMaxDegS ?? 0)), e.vehicleYawRateMaxDegS);

@@ -1,0 +1,99 @@
+{
+  "name": "inf-chase-l3",
+  "note": "L3 layout (D-CORRIDOR boulevard, 7 m lanes, parked wrecks and shop frontages): two runners chase the courier down the boulevard, then across both lanes between the parked cars. Look for: they keep after her round the cars, close in, never freeze or wander off while she is near.",
+  "ground": "district",
+  "time": "L3",
+  "layout": {
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        -60,
+        -46
+      ],
+      [
+        10,
+        -12
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -40,
+        -23.5
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "z1",
+      "kind": "infected",
+      "at": [
+        -47,
+        -23.5
+      ],
+      "yaw": 0,
+      "look": {
+        "tier": "average"
+      }
+    },
+    {
+      "id": "z2",
+      "kind": "infected",
+      "at": [
+        -48,
+        -25.5
+      ],
+      "yaw": 0,
+      "look": {
+        "tier": "athletic"
+      }
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -28,
+            -23.5
+          ],
+          [
+            -18,
+            -23.5
+          ],
+          [
+            -12,
+            -33
+          ],
+          [
+            0,
+            -33
+          ],
+          [
+            8,
+            -33
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1.2
+  },
+  "frames": 780,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lostTargetNearFramesMax": 0,
+    "overshootMaxM": 2,
+    "stuckActorFramesMax": 30,
+    "courierSwingsMin": 1
+  }
+}

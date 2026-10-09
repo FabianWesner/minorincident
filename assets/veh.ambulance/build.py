@@ -211,6 +211,10 @@ def ring(name, outer, inner, side, depth, mat, parent=None, y_skin=W, bevel=0.00
 
 def lathe(name, profile, center, axis, mat, parent=None, segs=32, smooth=True):
     if DISTANCE: segs = min(segs, 12 if DISTANCE == 1 else 8)
+    if DISTANCE == 2 and name.endswith('_tyre'):
+        # Spend the far tyre budget around the rolling circumference: eight sides bob the hub by nearly 5 cm.
+        segs = 16
+        profile = [profile[i] for i in (0, 3, 4, 7)]
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -464,7 +468,7 @@ for y in [-.76,-.38,0,.38,.76]:box('cab_roof_marker'+str(y),(1.22,y,2.79),(.10,.
 for ax,label in [(-1.95,'rear'),(2.12,'front')]:
  for side,sname in SIDES:
   cy=side*(1.00 if ax<0 else .94);g='wheel_'+label+'_'+sname;group(g,(ax,cy,.51),parent='chassis');axis='-y' if side<0 else 'y'
-  lathe(g+'_tyre',[(.30,-.17),(.43,-.17),(.49,-.13),(.51,-.08),(.515,.08),(.49,.15),(.43,.18),(.30,.18)],(ax,cy,.515),axis,'rubber',g,48)
+  lathe(g+'_tyre',[(.30,-.17),(.43,-.17),(.49,-.13),(.51,-.08),(.515,.08),(.49,.15),(.43,.18),(.30,.18)],(ax,cy,.51 if DISTANCE == 2 else .515),axis,'rubber',g,48)
   lathe(g+'_rim',[(.001,-.08),(.29,-.08),(.33,.08),(.34,.15),(.31,.17),(.285,.12),(.22,.10),(.001,.10)],(ax,cy,.515),axis,'rim',g,48)
   cylinder(g+'_hub',(ax,cy+side*.17,.515),.115,.075,axis,'chrome',g)
   for k in range(8):

@@ -1,0 +1,21 @@
+{
+  "name": "ped-downed-kerb",
+  "note": "PO 10-09 frame (L2 street, a bitten civilian lying by the kerb): two pedestrians are bitten by the D-GROVE main-street kerb (0.28 m step at z 5.4, between two parked cars): one falls across the step, one on the road as reference. Look for: the lying bodies rest on the paving / road surface (no floating gap under the torso or legs, no sinking into the kerb).",
+  "ground": "district",
+  "time": "L2",
+  "layout": { "district": "D-GROVE", "bbox": [[-30, -2], [-12, 12]] },
+  "actors": [
+    { "id": "p1", "kind": "pedestrian", "at": [-22, 5.35], "yaw": 90, "look": { "model": "npc.civilian-woman-a", "tint": "#e48ab0" }, "state": "idle" },
+    { "id": "p2", "kind": "pedestrian", "at": [-21.4, 3.9], "yaw": 0, "look": { "model": "npc.civilian-man-b", "tint": "#6aa0d8" }, "state": "idle" },
+    { "id": "courier", "kind": "courier", "at": [-26, 1], "yaw": 0 }
+  ],
+  "script": [
+    { "frame": 10, "actor": "p1", "do": { "infect": {} } },
+    { "frame": 10, "actor": "p2", "do": { "infect": {} } }
+  ],
+  "camera": { "mode": "game", "target": [-22, 4.8], "zoom": 0.4 },
+  "frames": 150,
+  "sheet": 15,
+  "shots": [90],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
