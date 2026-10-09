@@ -285,7 +285,11 @@ anchors['parcel-door'] = (depot_x, SHOP_FRONT + .9)
 # Main Row and the camera; the bike stands in front of it on the sidewalk tiles (the bicycle parks on pavement only), nose
 # toward the door, so after the pickup the courier rides on.
 g.place('prop.bike-rack', depot_x - 5.8, ZN - 4.5 - .7, PI / 2)
-anchors['bike-start'] = (depot_x - 5.8, ZN - 4.5 + .6)
+# PO 2026-10-09: "The bike needs to be initially be parked here" (the sidewalk in front of the parcel counter). Yaw 0 runs the
+# frame along the kerb. The spot is ~4.5 m from the counter's pickup ring (2 m), so a rider mounting from any side (1.5 m reach)
+# never stands inside the ring and triggers the parcel pickup instead; it is clear of the rack at x -43.6, the lamp at (-37, -34)
+# and the hydrant, and leaves the plaza east of the frame open for the walk to the door.
+anchors['bike-start'] = (-41.2, -34.6)
 anchors['parcel-counter'] = (depot_x, SHOP_FRONT + 1.0)   # real depot collision is a closed shell: hand-over happens at the door
 doors.append(anchors['parcel-door'])
 g.path(PASS_X - 3.2, SHOP_FRONT - .1, PASS_X + 3.2, SHOP_FRONT + 3.0, 'uiDark')   # paved apron under the van
