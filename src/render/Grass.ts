@@ -1,3 +1,4 @@
+import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 World/Grass.js and Wind.js (MIT, commit 41046b5).
 import { BufferGeometry, DoubleSide, Float32BufferAttribute, Mesh } from 'three/webgpu';
 import { attribute, cos, mix, positionLocal, sin, uniform, vec3, cameraViewMatrix } from 'three/tsl';
@@ -11,7 +12,7 @@ export class Grass extends Mesh {
   private readonly fullCount: number;
   private readonly sparseCount: number;
   static material(materials: Materials, phase: ReturnType<typeof windPhase>) {
-    const tip = attribute('tip', 'float'), weight = tip.mul(tip).mul(.08).mul(materials.look.nodes.windStrength);
+    const tip = attribute('tip', 'float'), weight = tip.mul(tip).mul(.08).mul(materials.look.nodes.windStrength).mul(weatherSurface.windStrength);
     const material = materials.shaded(mix(materials.look.nodes.grassRoot, materials.look.nodes.grassTip, tip)); material.side = DoubleSide;
     material.normalNode = vec3(0, 1, 0).transformDirection(cameraViewMatrix);
     const gust = sin(positionLocal.x.mul(.8).add(positionLocal.z.mul(.35)).add(phase.mul(1.6)))

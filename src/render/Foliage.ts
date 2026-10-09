@@ -1,3 +1,4 @@
+import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 World/Foliage.js (MIT).
 // Adapted from Bruno Simon folio-2025 World/Bushes.js (MIT).
 // Adapted from Bruno Simon folio-2025 World/Trees.js (MIT).
@@ -81,7 +82,7 @@ export class Foliage extends Group {
     if (!references.length) return;
     const gradient = normalWorld.y.mul(.5).add(.5).smoothstep(.15, .95);
     const material = this.materials.shaded(mix(this.materials.sample(uniform(paletteTokens.indexOf(colors[0]))), this.materials.sample(uniform(paletteTokens.indexOf(colors[1]))), gradient));
-    const wind = foliageWind(this.phase).mul(this.materials.look.nodes.windStrength), gust = varying(wind);
+    const wind = foliageWind(this.phase).mul(this.materials.look.nodes.windStrength).mul(weatherSurface.windStrength), gust = varying(wind);
     const leaf = texture(this.sdf, rotateUV(uv(), gust.mul(.12), vec2(.5))).r;
     const aspect = vec2(screenSize.x.div(screenSize.y), 1);
     const hole = (center: typeof this.player, depth: typeof this.playerDepth) => positionView.z.greaterThan(depth).select(smoothstep(this.holeRadius.mul(.55), this.holeRadius, screenUV.sub(center).mul(aspect).length()), 1);

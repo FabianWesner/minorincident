@@ -6,6 +6,7 @@ import { wave } from '../audio/synthesis';
 import { MusicDirector } from '../audio/MusicDirector';
 export interface AudioRenderRequest {
     scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music';
+    weather?: import('../data/weather').WeatherKind;
     includeDialogue?: boolean;
     bus?: AudioBus;
     ducked?: boolean;
@@ -40,6 +41,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         cue: string;
         time: number;
     }[] = [];
+    graph.setWeather(request.weather ?? 'clear');
     let maxVoices = 0;
     let scoreVoices = 0;
     await registry.prepare(request.level ?? 'L1');

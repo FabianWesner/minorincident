@@ -394,6 +394,7 @@ export class AudioService implements Lifecycle {
                 voice.velocity = { ...options.velocity };
             voice.baseGain = audioCues[id].gain * (options.gain ?? 1);
             voice.rate = options.rate ?? 1;
+            if (!voice.position) { voice.gain.gain.setValueAtTime(voice.baseGain, this.context.currentTime); voice.source.playbackRate.setValueAtTime(voice.rate, this.context.currentTime); }
             this.graph.updateEmitter(voice);
         }
         return voice ?? null;
@@ -511,6 +512,7 @@ export class AudioService implements Lifecycle {
     }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
+        if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
         if (!this.available())
             return;
         const t = this.context.currentTime;
@@ -564,7 +566,8 @@ export class AudioService implements Lifecycle {
             if (event.actor === 'infected')
                 return;
             const surface = event.surface ?? surfaceAt(this.graph.map, event.position);
-            this.play(`footstep.${event.actor}.${surface}`, { position: event.position }, source);
+            const weatherStep = this.world.weather?.kind === 'snow' ? 'weather.footstep.snow' : this.world.weather?.rain ? 'weather.footstep.wet' : `footstep.${event.actor}.${surface}`;
+            this.play(weatherStep, { position: event.position }, source);
             return;
         }
         if (event.type === 'light.generator') {
@@ -799,6 +802,16 @@ export class AudioService implements Lifecycle {
         if (!player)
             return;
         const t = this.context.currentTime;
+        const weather = this.world.weather;
+        if (weather) {
+            this.graph.setWeather(weather.kind);
+            if (weather.rain > 0) this.loop('weather:rain', 'weather.rain', { gain: weather.rain });
+            else this.stopLoop('weather:rain');
+            let nearest: { x: number; y: number; z: number } | null = null, distance = 15;
+            if (weather.rain) for (const car of this.world.vehicles?.cars.values() ?? []) { const at = car.entity.transform, d = Math.hypot(at.x - player.transform.x, at.z - player.transform.z); if (d < distance) { distance = d; nearest = at; } }
+            if (nearest) this.loop('weather:rain-metal', 'weather.rain-metal', { position: nearest, gain: weather.rain });
+            else this.stopLoop('weather:rain-metal');
+        }
         if (this.world.tick % 6 === 0) {
             const previous = this.world.previousPlayer;
             if (previous) {

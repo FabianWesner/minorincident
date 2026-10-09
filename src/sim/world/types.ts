@@ -61,7 +61,7 @@ export interface EntitySnapshot {
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
 export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
-export type GameEvent = import('../interact/Barricades').BarricadeEvent
+export type GameEvent = import('../weather/WeatherSystem').WeatherEvent | import('../interact/Barricades').BarricadeEvent
   | import('../npc/types').NpcEvent
   | { tick: number; type: 'level.started'; id: string }
   | import('../../data/audioEvents').AudioSystemEvent
@@ -112,6 +112,7 @@ export type GameEvent = import('../interact/Barricades').BarricadeEvent
   | { tick: number; type: 'scenario.loaded'; name: string; seed: number }
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
+  weather: ReturnType<import('../weather/WeatherSystem').WeatherSystem['snapshot']> | null;
   tick: number;
   ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;
   interactions?: { activeId: number | null; debris: ReturnType<import('../../physics/DebrisPool').DebrisPool['snapshot']>; hazards: ReturnType<import('../interact/Hazards').Hazards['snapshot']> | null };

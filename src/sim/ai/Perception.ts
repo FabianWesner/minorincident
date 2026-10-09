@@ -108,7 +108,7 @@ export class Perception {
   }
   inCone(e: EntitySnapshot, target: Vec2): boolean {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
-    if (distance > this.rangeM) return false;
+    if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1)) return false;
     return distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.cosHalf - 1e-9;
   }
   /** Detection: inside the cone and range with clear line of sight. */
@@ -121,7 +121,7 @@ export class Perception {
   /** Keeps an already chased target: the wide tracking cone, or within `chaseKeepM` with line of sight. */
   tracks(e: EntitySnapshot, target: Vec2): boolean {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
-    if (distance > this.rangeM) return false;
+    if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1)) return false;
     const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;
     return near && this.lineOfSight(e.transform, target);
   }
