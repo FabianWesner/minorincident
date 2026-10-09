@@ -245,11 +245,11 @@ export class InfectedSystem {
   /**
    * A body inside a collider or nav blocker (a parked truck's footprint switched on around it, a closed gate) can never move:
    * every swept step starts blocked. Walk it out toward the nearest free spot (up to 3 m, ~4 m/s), ignoring the solid it
-   * is already in. Touching a wall is not inside (80 % of the body radius).
+   * is already in (every swept step from a not-clear spot fails, however shallow).
    */
   private depenetrate(e: EntitySnapshot): void {
     const t = e.transform, r = e.combat!.radius, nav = this.nav;
-    if (nav.clear(t.x, t.z, r * 0.8)) return;
+    if (nav.clear(t.x, t.z, r - 0.001)) return;
     for (let d = 0.25; d <= 3; d += 0.25) for (let k = 0; k < 16; k++) {
       const a = (k + (e.id % 16) * 0.5) * Math.PI / 8, x = t.x + Math.cos(a) * d, z = t.z + Math.sin(a) * d;
       if (!nav.clear(x, z, r)) continue;
@@ -719,7 +719,12 @@ export class InfectedSystem {
     // E20: leashed street groups keep to their block; the panic flow pulls only free wanderers.
     const flow = tick < this.flowUntil && !brain.leashM;
     if (!brain.hasGoal) {
-      if (!(flow ? this.panicGoal(e, brain) : wanderGoal(brain, rng, this.nav, e.transform, this.crowdAt))) { brain.pauseUntil = tick + 30; return; }
+      if (!(flow ? this.panicGoal(e, brain) : wanderGoal(brain, rng, this.nav, e.transform, this.crowdAt))) {
+        // No open goal in view (standing in a slot narrower than the nav clearance): first walk out to the nearest open cell.
+        const cell = this.nav.escapeCell(e.transform, e.combat!.radius * 0.6, 8, false);
+        if (cell < 0) { brain.pauseUntil = tick + 30; return; }
+        brain.goalX = this.nav.x(cell); brain.goalZ = this.nav.z(cell); brain.hasGoal = true;
+      }
       brain.search.legTicks = 0;
     }
     const distance = Math.hypot(brain.goalX - e.transform.x, brain.goalZ - e.transform.z);
@@ -755,7 +760,7 @@ export class InfectedSystem {
     if ((brain.escapeUntil ?? 0) > tick) {
       // Leaving a nav pocket: walk straight to the open cell found outside it, then route normally.
       const ex = brain.escapeX! - e.transform.x, ez = brain.escapeZ! - e.transform.z, d = Math.hypot(ex, ez);
-      if (d > 0.15) { const v = Math.min(Math.max(speed, 2), d * 4); moveAgent(e, ex / d * v, ez / d * v, this.nav, tick); return; }
+      if (d > 0.15) { const v = Math.min(Math.max(speed, 1), d * 4); moveAgent(e, ex / d * v, ez / d * v, this.nav, tick); return; }
       brain.escapeUntil = 0; brain.directTick = -1; b.path.length = 0; b.goal = -1;
     }
     const target = this.navigation.target(e.transform, goal);
@@ -772,9 +777,9 @@ export class InfectedSystem {
         const stale = b.pathIndex >= b.path.length || (b.goal !== to && (tick + e.id) % 15 === 0);
         if (stale && this.budget > 0 && this.routes < 4 && tick >= (brain.routeAt ?? 0)) {
           this.routes++;
-          const start = nav.startCell(e.transform, radius * 0.6), found = nav.path(start, to, b.path, this.budget);
-          this.budget -= nav.expansions; b.pathIndex = 0; b.goal = to;
-          if (!found && !nav.pending(start, to)) { this.noRoute(e, brain, nav, survivor); if ((brain.escapeUntil ?? 0) > tick) return; }
+          const start = nav.startCell(e.transform, radius * 0.6), found = start >= 0 && nav.path(start, to, b.path, this.budget);
+          this.budget -= start >= 0 ? nav.expansions : 0; b.pathIndex = 0; b.goal = to;
+          if (!found && (start < 0 || !nav.pending(start, to))) { this.noRoute(e, brain, nav, survivor, start < 0); if ((brain.escapeUntil ?? 0) > tick) return; }
         }
         while (b.pathIndex < b.path.length && Math.hypot(nav.x(b.path[b.pathIndex]) - e.transform.x, nav.z(b.path[b.pathIndex]) - e.transform.z) < 0.6) b.pathIndex++;
         if ((tick + e.id) % 3 === 0 && b.pathIndex + 2 < b.path.length) {
@@ -810,11 +815,12 @@ export class InfectedSystem {
    * per-tick budget serves the others, then walk out of a nav pocket if the body stands in one, or give the goal up
    * (wander/search/attracted pick another; a chase keeps steering straight at the human and `watchStuck` decides).
    */
-  private noRoute(e: EntitySnapshot, brain: L1Brain, nav: NavGrid, survivor: boolean): void {
+  private noRoute(e: EntitySnapshot, brain: L1Brain, nav: NavGrid, survivor: boolean, slot: boolean): void {
     const tick = this.world.tick;
     brain.routeAt = tick + 30 + e.id % 15;
-    if (nav.searchSize < 400) {
-      const cell = nav.escapeCell(e.transform, e.combat!.radius * 0.6); // a body pressed against the gap posts still walks out
+    if (slot || nav.searchSize < 400) {
+      // A body pressed against the gap posts still walks out (60 % radius for the reach test).
+      const cell = nav.escapeCell(e.transform, e.combat!.radius * 0.6, slot ? 8 : 6, !slot);
       if (cell >= 0) { brain.escapeX = nav.x(cell); brain.escapeZ = nav.z(cell); brain.escapeUntil = tick + 120; return; }
     }
     if (!survivor && brain.mode !== 'chase') this.giveUp(e, brain);
