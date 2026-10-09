@@ -186,7 +186,8 @@ export class NavGrid {
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number): void {
-    const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
+    // Small separation nudges are strictly shorter than one 20 cm sweep step.
+    const count = Math.abs(dx) <= .1 && Math.abs(dz) <= .1 ? 1 : Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
     // A body resting exactly on a collider face (float round-off puts it a hair inside) would fail every step, also the
     // slide along the face: it froze pressed against walls and parked trucks (PO 10-09). Sweep it with a 2 mm smaller body.
     // Checked only once a step is refused, so free movement costs nothing extra.

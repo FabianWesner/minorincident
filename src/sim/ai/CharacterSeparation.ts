@@ -39,8 +39,9 @@ export function installCharacterSeparation(world: SimWorld): void {
         const courier = !!(e.survivor || other.survivor);
         const gap = infected === 1 ? Math.max(.015, courier ? Math.min(.45, meleeRing - r - otherRadius) : Math.min(.3, 1.05 - r - otherRadius)) : infected === 2 && e.infected!.l1 && other.infected!.l1 ? .22 : .015;
         const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
-        if (dx * dx + dz * dz >= reach * reach) continue;
-        const distance = Math.hypot(dx, dz), overlap = reach - distance;
+        const squared = dx * dx + dz * dz;
+        if (squared >= reach * reach) continue;
+        const distance = Math.sqrt(squared), overlap = reach - distance;
         if (overlap <= .001) continue;
         const angle = e.id * 2.399963, scale = other.survivor || other.civilian?.state === 'grabbed' || (other.companion && !other.companion.following && other.companion.state === 'follow') ? 1 : .5;
         nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);
