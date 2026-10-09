@@ -21,7 +21,7 @@ for (const file of readdirSync('public/assets/layouts').filter(f => f.endsWith('
       note: `${district} ${p.assetId} (${p.id}) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.`,
       ground: 'district',
       layout: { district, bbox: [[r(cx - half), r(cz - half)], [r(cx + half), r(cz + half)]], ids: [p.id, ...kit] },
-      camera: { mode: 'orbit', target: [r(cx), r(Math.min(h * 0.4, 4)), r(cz)], radius: r(Math.max(19, diag * 1.4)), azimuth: 45, polar: 54, spin: 60 },
+      camera: { mode: 'orbit', target: [r(cx), r(Math.min(h * 0.4, 4)), r(cz)], radius: r(Math.max(24, diag * 2)), azimuth: 45, polar: 54, spin: 60 },
       frames: 360, sheet: 30,
       clipping: { ignoreFoliage: true },
       expect: { consoleErrors: 0, clippingMax: 0 },
