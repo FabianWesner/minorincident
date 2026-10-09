@@ -37,20 +37,20 @@ function hitsToDown(w: SimWorld, weapon: string): number {
   return landed();
 }
 
-test('L1 arena: hits-to-down unchanged (axe 1, bat 2, fists 5); no L2 melee table is set', async () => {
+test('L1 arena: hits-to-down unchanged (axe 1, bat 2, fists 7 on main since click-attack); no L2 melee table is set', async () => {
   const w = await arena();
   expect(w.infectedMeleeHits).toBeNull();
   expect(hitsToDown(w, 'weapon.fire-axe')).toBe(1);
   expect(hitsToDown(w, 'weapon.bat')).toBe(2);
-  expect(hitsToDown(w, 'weapon.fists')).toBe(5);
+  expect(hitsToDown(w, 'weapon.fists')).toBe(7);
 });
 
-test('L2 mission: the level carries its melee table; a normal runner needs 3 axe, 4 bat, 6 fist hits', async () => {
+test('L2 mission: the level carries its melee table; a normal runner needs 3 axe, 4 bat, 8 fist hits', async () => {
   const w = await l2World();
   expect(w.infectedMeleeHits).toEqual(l2.infectedMeleeHits);
   expect(hitsToDown(w, 'weapon.fire-axe')).toBe(3);
   expect(hitsToDown(w, 'weapon.bat')).toBe(4);
-  expect(hitsToDown(w, 'weapon.fists')).toBe(6);
+  expect(hitsToDown(w, 'weapon.fists')).toBe(8);
 });
 
 test('L2 mission: one bat roundhouse over a crowd of three downs none of them', async () => {

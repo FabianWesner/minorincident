@@ -154,6 +154,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
+- `corgiCourierOverlapMaxCm`: corgi trunk/head/muzzle capsule penetration into the drawn courier body, including both legs (cm). Requires contact samples.
+- `corgiRunLagMaxM`: greatest distance behind the courier along her movement direction while she runs above 2.5 m/s. Requires running samples. Both companion gates report worst frames in `metrics.companion`.
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
 - `vehicleYawRateMaxDegS` (maximum wrapped yaw change per fixed tick, in degrees/second)
 - `vehicleBodyOverlapsMax` (full vehicle footprint against people, vehicles, movable props and static colliders)
@@ -175,6 +177,12 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `ignoreFoliage: true`: skip pairs with a tree, bush or hedge (crowns rise behind houses and bushes stand in beds by design).
 - `sameAsset: true`: also check chains of one asset. Fence and hedge runs share end posts by design, so they are skipped by default.
 - `slackCm` (default 2).
+
+## Layout sweep (gate for layout changes)
+
+- `npm run scene:layout` runs `specs/scenes/layout-sweep/*.json`: L2 on D-GROVE as a 4x3 grid of `layout: { level: 'L2' }` crops and L3 on D-CORRIDOR as 6 cells (the L3 layout copy is applied automatically for that district, tier 2), each with `expect.staticOverlapMax: 0` (mesh pairs from `clipping.static`; `python3 tools/scenelab/sweep-summary.py <out>` lists them). Regenerate the specs with `python3 tools/scenelab/gen-layout-sweep.py`.
+- The fast twin is `tests/unit/levels/layout-overlap.test.ts` (oriented collision boxes, no browser). Both fail on a prop or car that a level rule dropped through a fence, wall, lamp, mailbox, tree or another prop.
+- Rule for authors: level additions go through `src/levels/placementClearance.ts` (`findClearSpot`, `resolveOverlaps`): they move to the nearest clear spot and stay out of gardens; vehicles slide along their own axis first, so a "crashed" car stops with the bumper against the post. Never hand-place near a collider.
 
 ## Reading metrics.json
 

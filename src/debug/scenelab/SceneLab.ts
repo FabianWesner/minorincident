@@ -30,6 +30,7 @@ import { doorRoute, routeAt, routeLength } from '../../sim/missions/doorRoute';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
+import { Status } from '../../sim/combat/Status';
 
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 const rad = (deg: number) => deg * Math.PI / 180;
@@ -73,6 +74,7 @@ export class SceneLab {
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
+  private companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 };
   /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
   private handovers = new Map<string, { route: { x: number; z: number }[]; length: number; start: number; pause: number; face?: number }>();
   /** Door gate per doored placement: frames an actor stood in the aperture/leaf sweep while the door was not fully open. */
@@ -116,8 +118,8 @@ export class SceneLab {
       if (spec.layout.district === 'D-FAIR') source = levelFourLayouts([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
-    this.vehicleMotion.clear();
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
@@ -145,6 +147,10 @@ export class SceneLab {
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
     world.combat!.damage.god = true;
+    // Pursuit metrics: infected swings at the courier and bites on pedestrians (first frame of each).
+    world.events.on('infected.attack', ev => { if (ev.type === 'infected.attack' && ev.targetId === 1) { this.attacks.courier++; if (this.attacks.firstFrame < 0) this.attacks.firstFrame = this.frame; } });
+    world.events.on('telegraph', ev => { if (ev.type === 'telegraph' && ev.sourceId !== undefined && world.entities.get(ev.sourceId)?.infected?.l1?.targetId === 1) this.attacks.swings++; });
+    world.events.on('outbreak.bite', ev => { if (ev.type === 'outbreak.bite') { this.attacks.bites++; if (this.attacks.firstBiteFrame < 0) this.attacks.firstBiteFrame = this.frame; } });
     const player = world.entities.get(1)!;
     const courier = spec.actors?.find(a => a.kind === 'courier');
     if (!courier) player.hidden = true;
@@ -524,13 +530,43 @@ export class SceneLab {
     courier.sole = (foot.getWorldPosition(this.point).y - (this.world.districts?.pavingHeight(c.position.x, c.position.z) ?? 0)) / foot.getWorldScale(new Vector3()).y;
   }
   /** Per-frame probes: foot/torso tracks, LOD and visibility of every actor; bone-vs-prop clipping every 3rd frame. */
+  /**
+   * Infected pursuit QA (PO 10-09 "Zombies loose track", "not moving at all"), per L1-brain infected actor:
+   * `stuckRunMax` longest run of frames it should be moving (chasing beyond arm's reach, searching, attracted, wandering to a
+   * goal; not pausing, winding up, biting, staggered or emerging) yet moves < 0.1 m/s; `lostNearFrames` frames it is not
+   * chasing/attacking although the living courier is within 6 m in clear line of sight; `overshootMaxM` how far it got ahead
+   * of a courier running > 2 m/s while chasing her (along her running direction).
+   */
+  private readonly pursuit = new Map<string, { stuckRun: number; stuckRunMax: number; stuckFrame: number; lostNearFrames: number; overshootMaxM: number }>();
+  private attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
+  private samplePursuit(actor: LabActor, e: EntitySnapshot): void {
+    const b = e.infected, brain = b?.l1, tick = this.world.tick;
+    if (!b || !brain || e.health.current <= 0 || e.corpse || e.hidden || e.emerging) return;
+    const p = this.pursuit.get(actor.id) ?? { stuckRun: 0, stuckRunMax: 0, stuckFrame: -1, lostNearFrames: 0, overshootMaxM: 0 }; this.pursuit.set(actor.id, p);
+    const busy = tick < brain.pauseUntil || brain.cueUntil > 0 || b.state === 'attack' || brain.mode === 'bite' || Status.stunned(e, tick) || (e.infectionRise && tick < e.infectionRise.until) || e.attachedTo !== undefined;
+    const target = brain.mode === 'chase' ? this.world.entities.get(brain.targetId) : undefined;
+    const reach = target ? Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) : Infinity;
+    const shouldMove = !busy && (brain.mode === 'chase' ? reach > 1.6 : brain.mode !== 'wander' || brain.hasGoal);
+    p.stuckRun = shouldMove && (e.motion?.speed ?? 0) < .1 ? p.stuckRun + 1 : 0;
+    if (p.stuckRun > p.stuckRunMax) { p.stuckRunMax = p.stuckRun; p.stuckFrame = this.frame; }
+    const courier = [...this.actors.values()].some(a => a.kind === 'courier'), c = this.world.entities.get(1)!;
+    if (courier && !c.hidden && c.health.current > 0) {
+      const d = Math.hypot(c.transform.x - e.transform.x, c.transform.z - e.transform.z);
+      if (d < 6 && !Status.stunned(e, tick) && !(e.combat?.reaction && tick < e.combat.reaction.until) && brain.mode !== 'chase' && brain.mode !== 'bite' && b.state !== 'attack' && this.world.infected!.l1!.lineOfSight(e.transform, c.transform)) p.lostNearFrames++;
+      const v = c.survivor?.velocity, speed = v ? Math.hypot(v.x, v.z) : 0;
+      if (brain.mode === 'chase' && brain.targetId === 1 && speed > 2) p.overshootMaxM = Math.max(p.overshootMaxM, ((e.transform.x - c.transform.x) * v!.x + (e.transform.z - c.transform.z) * v!.z) / speed);
+    }
+  }
   private sample(): void {
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
     const clip = this.frame % 3 === 0 && this.staticSets;
     const torsos: { id: string; bones: Bone[] }[] = [];
+    let courierBody: Bone[] | undefined;
+    const dogBodies: Bone[][] = [];
     for (const actor of this.actors.values()) {
       const e = this.world.entities.get(actor.entity);
+      if (e && actor.kind === 'infected') this.samplePursuit(actor, e);
       sim[actor.kind] = (sim[actor.kind] ?? 0) + (e && !e.hidden && e.health.current > 0 ? 1 : 0);
       let feet: FootSample[] = [], joints: Record<string, number[]> | null = null, forward: number[] = [1, 0, 0], lod = 'lod0', visible = false, clipName: string | undefined, label: string | undefined;
       if (actor.kind === 'courier') {
@@ -543,10 +579,25 @@ export class SceneLab {
           feet = [footL, footR].map(f => { const heel = f.localToWorld(new Vector3(-.05, -actor.sole!, 0)).toArray(), toe = f.localToWorld(new Vector3(.085, -actor.sole!, 0)).toArray(); return { heel, toe, yaw: footYaw(heel, toe) }; });
           joints = Object.fromEntries((['hip', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR'] as const).map(n => [n, node(n)!.getWorldPosition(this.point).toArray()]));
           forward = [Math.cos(c.getState().yaw), 0, -Math.sin(c.getState().yaw)]; clipName = c.getState().clip;
+          if (visible && !(clipName && unplantedClips.test(clipName))) courierBody = this.bones(joints, joints.armL.map((v, i) => (v + joints!.armR[i]) / 2));
         }
       } else if (actor.kind === 'corgi') {
         const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible; label = probes.npcs?.heroClip(actor.entity);
-        if (root) { root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; }); }
+        if (root) {
+          root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; });
+          // The loaded corgi's trunk and head capsules, including the muzzle; compare with the courier's legs too.
+          const body = root.getObjectByName('body'), head = root.getObjectByName('head');
+          if (visible && body && head) {
+            const at = (node: Object3D, x: number, y = 0) => node.localToWorld(new Vector3(x, y, 0)).toArray() as Vec3;
+            dogBodies.push([{ name: 'body', a: at(body, -.3), b: at(body, .25), radius: .25 }, { name: 'head', a: at(head, .1, .06), b: at(head, .3, -.01), radius: .24 }]);
+          }
+          const player = this.world.entities.get(1), v = player?.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
+          if (e && player && speed > 2.5) {
+            const lag = Math.max(0, ((player.transform.x - e.transform.x) * v!.x + (player.transform.z - e.transform.z) * v!.z) / speed);
+            this.companion.runningSamples++;
+            if (lag > this.companion.runLagMaxM) { this.companion.runLagMaxM = lag; this.companion.runLagFrame = this.frame; }
+          }
+        }
       } else {
         const f = figures.get(actor.entity);
         if (f) {
@@ -575,6 +626,11 @@ export class SceneLab {
         if (!old) this.hits.set(key, { ...h, actor: actor.id, frame: this.frame, count: 1 });
         else { old.count++; if (h.crossing && !old.crossing || h.clearanceCm < old.clearanceCm) Object.assign(old, h, { frame: this.frame }); }
       }
+    }
+    if (courierBody) for (const body of dogBodies) {
+      this.companion.samples++;
+      const depth = bodyOverlap(courierBody, body) * 100;
+      if (depth > this.companion.overlapMaxCm) { this.companion.overlapMaxCm = depth; this.companion.overlapFrame = this.frame; }
     }
     for (const [id, entity] of this.vehicles) {
       const e = this.world.entities.get(entity), motion = this.vehicleMotion.get(id); if (!e || !motion) continue;
@@ -770,7 +826,8 @@ export class SceneLab {
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
-      bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
+      companion: { ...this.companion }, bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
   }
