@@ -289,7 +289,12 @@ export class Outbreak {
       if (best && best.id !== l1.refuge) { l1.refuge = best.id; l1.target = { x: best.x, z: best.z }; c.path.length = 0; c.goal = -1; }
       l1.repickAt = tick + 60;
     }
-    if (!l1.target) return;
+    if (!l1.target) {
+      // No refuge on this map (Scene Lab, a district without refuge anchors): run straight away from the threat, never freeze.
+      const dx = e.transform.x - c.threat.x, dz = e.transform.z - c.threat.z, d = Math.hypot(dx, dz) || 1;
+      this.world.npcs!.moveStep(e, dx / d * l1.fleeSpeed / 60, dz / d * l1.fleeSpeed / 60);
+      return;
+    }
     if (l1.doorAt !== undefined) {
       // Fumbling with the door: the pedestrian is still outside and can be caught.
       this.face(e, l1.target, .2);
