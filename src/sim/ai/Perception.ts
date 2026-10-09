@@ -91,8 +91,9 @@ export class WorldHumans implements HumanTargetQuery {
 
 /**
  * L1 infected vision (specs/epic-19 section 5.2): a forward 90 degree cone, 16 m, blocked by the scene's full-height
- * cover walls and by registered dynamic blockers. There is no hearing of the player. A chased target that slips just
- * outside the cone stays tracked inside `peripheralM` while line of sight is clear (it never starts a detection).
+ * cover walls and by registered dynamic blockers. There is no hearing of the player. A human within `peripheralM` with
+ * clear line of sight is noticed from any side (PO 10-09: a pedestrian right next to an infected was ignored). A chased
+ * target stays tracked within `chaseKeepM` in any direction, else in a wide 150 degree cone, while line of sight is clear.
  */
 export class Perception {
   humans: HumanTargetQuery;
@@ -112,10 +113,21 @@ export class Perception {
   }
   /** Detection: inside the cone and range with clear line of sight. */
   sees(e: EntitySnapshot, target: Vec2): boolean { return this.inCone(e, target) && this.lineOfSight(e.transform, target); }
-  /** Keeps an already chased target: the cone, or very close with line of sight. */
+  /** A chased target stays tracked inside this range in any direction while line of sight is clear (PO 10-09: "walking
+   * around, although in my direct near"). A pursuer that just lunged past or was knocked round does not forget her. */
+  readonly chaseKeepM = 6;
+  /** Half-angle cosine of the tracking cone for an already chased target (150 degrees: the body turns slower than the head). */
+  private readonly trackCos = Math.cos(75 * Math.PI / 180);
+  /** Keeps an already chased target: the wide tracking cone, or within `chaseKeepM` with line of sight. */
   tracks(e: EntitySnapshot, target: Vec2): boolean {
-    const near = Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.peripheralM;
-    return (near || this.inCone(e, target)) && this.lineOfSight(e.transform, target);
+    const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
+    if (distance > this.rangeM) return false;
+    const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;
+    return near && this.lineOfSight(e.transform, target);
+  }
+  /** Detection of a NEW target: the vision cone, or a body within `peripheralM` (an infected feels someone at arm's length). */
+  notices(e: EntitySnapshot, target: Vec2): boolean {
+    return (this.inCone(e, target) || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.peripheralM) && this.lineOfSight(e.transform, target);
   }
   /**
    * Closest visible human; the current target is kept unless another visible human is at least the switch hysteresis
@@ -126,7 +138,7 @@ export class Perception {
     for (const h of this.humans.within(e.transform, this.rangeM)) {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
-      if (!(isCurrent ? this.tracks(e, h.position) : this.sees(e, h.position))) continue;
+      if (!(isCurrent ? this.tracks(e, h.position) : this.notices(e, h.position))) continue;
       const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }

@@ -332,12 +332,47 @@ export class NavGrid {
     if (r.from !== from && r.from >= 0) result.unshift(r.from);
     return true;
   }
+  /** Cells the current (or last finished) A* search expanded in total, across resumed calls. */
+  searchSize = 0;
+  /** True while a budget-limited A* between these cells is still in progress (call `path` again to resume it). */
+  pending(from: number, to: number): boolean { return this.searching && this.searchFrom === from && this.searchTo === to; }
+  /**
+   * Start cell for a route: the nearest walkable cell that is in straight reach of the body (`radius`), so an agent beside a
+   * thin wall never starts on the cell behind it (same rule as `steer`). Falls back to `nearestCell`.
+   */
+  startCell(position: { x: number; z: number }, radius: number): number {
+    const nearest = this.nearestCell(position.x, position.z);
+    if (nearest < 0 || this.visible(position, { x: this.x(nearest), z: this.z(nearest) }, radius)) return nearest;
+    let best = nearest, distance = Infinity;
+    for (let dz = -3; dz <= 3; dz++) for (let dx = -3; dx <= 3; dx++) {
+      const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+      if (cell < 0 || this.blocked[cell]) continue;
+      const d = (this.x(cell) - position.x) ** 2 + (this.z(cell) - position.z) ** 2;
+      if (d < distance && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
+    }
+    return best;
+  }
+  /**
+   * After a failed `path` search: the nearest walkable cell within `range` metres that the search never reached (outside the
+   * start's pocket) and that the body (`radius`) can walk to in a straight line, or -1. A fence gap or porch alley narrower
+   * than the baked clearance leaves a few isolated cells; this is the way out of them.
+   */
+  escapeCell(position: { x: number; z: number }, radius: number, range = 6): number {
+    const n = Math.ceil(range / this.cellSize); let best = -1, distance = range * range;
+    for (let dz = -n; dz <= n; dz++) for (let dx = -n; dx <= n; dx++) {
+      const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+      if (cell < 0 || this.blocked[cell] || this.pathSeen[cell] === this.pathStamp) continue;
+      const d = (this.x(cell) - position.x) ** 2 + (this.z(cell) - position.z) ** 2;
+      if (d < distance && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
+    }
+    return best;
+  }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
   path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
     if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
-      this.searchFrom = from; this.searchTo = to; this.searching = true;
+      this.searchFrom = from; this.searchTo = to; this.searching = true; this.searchSize = 0;
       this.heap.length = 0; this.push(from, 0);
       // As with reachPath, stamp visited cells instead of clearing the entire district for each agent.
       this.pathStamp = (this.pathStamp + 1) >>> 0;
@@ -349,7 +384,7 @@ export class NavGrid {
       let best = -1;
       while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
       if (best < 0) { this.searching = false; return false; }
-      this.expansions++; this.open[best] = 2;
+      this.expansions++; this.searchSize++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
       for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }
