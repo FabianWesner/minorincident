@@ -1,0 +1,42 @@
+[
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- bld.kessler-hardware --decay w5 --lod-contact --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- bld.kessler-hardware --decay w5 --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- bld.metro-entrance --decay w5 --lod-contact --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- bld.metro-entrance --decay w5 --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- bld.storefront-row --decay w5 --lod-contact --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- bld.storefront-row --decay w5 --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- decay.collapsed-facade --lod-contact --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 0,
+    "diagnostic": ""
+  },
+  {
+    "command": "E2E_PORT=3346 sh tools/e2e-lock.sh npm run assets:turntable -- decay.collapsed-facade --output test-results/l5-fairhaven-commerce-w5",
+    "exitCode": 1,
+    "diagnostic": "/Users/wesner/Workspace/minorincident/.claude/worktrees/build-l5-fairhaven-commerce-w5/tools/assets/turntable.ts:95\n      if (values.some((v)=>v<.1||v>.8)) throw new Error(`Object coverage outside 10\u201380%: ${values}`);\n                                              ^\n\nError: Object coverage outside 10\u201380%: 0.19137916666666666,0.07714375,0.22676319444444445,0.075675,0.09804861111111111\n    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/build-l5-fairhaven-commerce-w5/tools/assets/turntable.ts:95:47)\n\nNode.js v26.0.0\n"
+  }
+]

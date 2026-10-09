@@ -1,0 +1,17 @@
+l5-unit-remote-final.log
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+0q, mi-runner-3:2/2+1q); waiting 2s
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+0q, mi-runner-3:2/2+1q); waiting 64s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/build-l5-burned-service-vehicles -> 94.130.181.173:/srv/mi/ws/build-l5-burned-service-vehicles-a3ea0b
+[remote] sync 188s, 3972 files; job /srv/mi/jobs/build-l5-burned-service-vehicles-a3ea0b-45738-1791500518; queueing for a slot
+[remote] done exit=255 (runner 94.130.181.173, sync 188s, remote total 807s)
+
+l5-unit-remote-rescheduled.log
+[pool] all 3 runner(s) full for 5s; adding one
+[pool] nbg1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] fsn1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] hel1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] could not add a runner (pool.py: create failed: POST /servers: resource_limit_exceeded Primary IP limit exceeded); waiting for a free slot instead
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+1q); waiting 5s
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+1q); waiting 60s
+
+Local unit log is empty: execution never acquired a shared simulation slot.

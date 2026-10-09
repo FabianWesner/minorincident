@@ -1,0 +1,68 @@
+
+> assets:build
+> tsx tools/assets/build.ts veh.tank --decay wrecked
+
+01:16:33 | INFO: Data are loaded, start creating Blender stuff
+01:16:33 | INFO: Blender create Mesh node body_pal_olive
+01:16:33 | INFO: Blender create Mesh node lightsBrake_emi_sirenRed
+01:16:33 | INFO: Blender create Mesh node lightsFront_emi_windowGlow
+01:16:33 | INFO: Blender create Mesh node gun_pal_olive
+01:16:33 | INFO: Blender create Mesh node turret_pal_olive
+01:16:33 | INFO: glTF import finished in 0.01s
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+01:16:34 | INFO: Starting glTF 2.0 export
+01:16:34 | INFO: Extracting primitive: body_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Extracting primitive: gun_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Extracting primitive: turret_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Finished glTF 2.0 export in 0.012784004211425781 s
+
+WRECK veh.tank 0 {"triangles": 8968, "draws": 3, "materials": 1, "bytes": 830044, "dimensions": {"x": 9.618380308151245, "y": 3.29184205038473, "z": 3.5348039865493774}, "source": "assets/veh.tank/model.lod1.glb"}
+01:16:34 | INFO: Data are loaded, start creating Blender stuff
+01:16:34 | INFO: Blender create Mesh node body_pal_olive
+01:16:34 | INFO: Blender create Mesh node lightsBrake_emi_sirenRed
+01:16:34 | INFO: Blender create Mesh node lightsFront_emi_windowGlow
+01:16:34 | INFO: Blender create Mesh node gun_pal_olive
+01:16:34 | INFO: Blender create Mesh node turret_pal_olive
+01:16:34 | INFO: glTF import finished in 0.01s
+01:16:34 | INFO: Starting glTF 2.0 export
+01:16:34 | INFO: Extracting primitive: body_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Extracting primitive: gun_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Extracting primitive: turret_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Finished glTF 2.0 export in 0.005517005920410156 s
+
+WRECK veh.tank 1 {"triangles": 3082, "draws": 3, "materials": 1, "bytes": 201008, "dimensions": {"x": 9.621696949005127, "y": 3.2937610815279186, "z": 3.5384490489959717}, "source": "assets/veh.tank/model.lod1.glb"}
+01:16:34 | INFO: Data are loaded, start creating Blender stuff
+01:16:34 | INFO: Blender create Mesh node body_pal_olive
+01:16:34 | INFO: Blender create Mesh node lightsBrake_emi_sirenRed
+01:16:34 | INFO: Blender create Mesh node lightsFront_emi_windowGlow
+01:16:34 | INFO: Blender create Mesh node gun_pal_olive
+01:16:34 | INFO: Blender create Mesh node turret_pal_olive
+01:16:34 | INFO: glTF import finished in 0.01s
+01:16:34 | INFO: Starting glTF 2.0 export
+01:16:34 | INFO: Extracting primitive: body_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Extracting primitive: gun_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Extracting primitive: turret_pal_picketWhite
+01:16:34 | INFO: Primitives created: 1
+01:16:34 | INFO: Finished glTF 2.0 export in 0.005446910858154297 s
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+WRECK veh.tank 2 {"triangles": 1532, "draws": 3, "materials": 1, "bytes": 104528, "dimensions": {"x": 9.621696949005127, "y": 3.275267081335187, "z": 3.5290110111236572}, "source": "assets/veh.tank/model.lod2.glb"}
+prune: Removed types... Accessor (3)
+prune: Removed types... Accessor (12)
+prune: Removed types... Accessor (9)
+prune: Removed types... Accessor (3)
+prune: Removed types... Accessor (12)
+prune: Removed types... Accessor (9)
+prune: Removed types... Accessor (3)
+prune: Removed types... Accessor (12)
+prune: Removed types... Accessor (9)
+veh.tank: 67ef1bfa0d41c71693cd05586e265fd88c7547afeb997b8bc11a018bd11776e9

@@ -28,3 +28,36 @@ test('@E18-AC01 WebGPU atlas writes the same row offset and float bytes; non-row
   texture.addUpdateRange(1, 17); backend.updateTexture(texture, {}); expect(original).toHaveBeenCalledTimes(2);
   texture.dispose();
 });
+
+test('@E18-AC01 crowd pose changes upload mutable rows without resending the baked clips', async () => {
+  const { CrowdPosePalette } = await import('../../../src/render/characters/CrowdPosePalette');
+  const matrices = new Float32Array(32); matrices[0] = matrices[5] = matrices[10] = matrices[15] = 1; matrices.set(matrices.subarray(0, 16), 16); matrices[28] = 1;
+  const palette = new CrowdPosePalette({ parts: ['root'], frames: 2, duration: 1, matrices }, 2);
+  const resource = { textureGPU: {}, glTextureType: 1, glFormat: 2, glType: 3 }, original = vi.fn(), upload = vi.fn();
+  const backend = { updateTexture: original, get: () => resource, gl: { texSubImage2D: upload }, state: { bindTexture: vi.fn() }, textureUtils: { setTextureParameters: vi.fn() } };
+  installTextureRanges(backend); backend.updateTexture(palette.texture, {});
+  const [row] = palette.sample(1, 'idle', 0, 0); backend.updateTexture(palette.texture, {});
+  expect(original).toHaveBeenCalledTimes(1);
+  expect(upload.mock.calls[0].slice(0, 6)).toEqual([1, 0, 0, row, 4, 1]);
+  palette.sample(1, 'idle', .5, .1); expect(palette.texture.updateRanges).toHaveLength(0);
+  const corrected = palette.correct(1, .5, row, 1, pose => { pose[13] = .25; });
+  expect(palette.texture.updateRanges).toEqual([{ start: corrected * 16, count: 16 }]);
+  backend.updateTexture(palette.texture, {});
+  expect(upload.mock.calls[1][3]).toBe(corrected); expect(original).toHaveBeenCalledTimes(1);
+  expect(Array.from((palette.texture.image.data as Float32Array).subarray(0, 32))).toEqual(Array.from(matrices));
+  expect((palette.texture.image.data as Float32Array)[corrected * 16 + 13]).toBe(.25);
+  palette.texture.dispose();
+});
+
+test('@E18-AC01 adjacent and overlapping pose rows upload once with their exact float bytes', () => {
+  const pixels = Float32Array.from({ length: 128 }, (_, i) => i), texture = new DataTexture(pixels, 4, 8, RGBAFormat, FloatType);
+  const resource = { textureGPU: {}, glTextureType: 1, glFormat: 2, glType: 3 }, original = vi.fn(), upload = vi.fn();
+  const backend = { updateTexture: original, get: () => resource, gl: { texSubImage2D: upload }, state: { bindTexture: vi.fn() }, textureUtils: { setTextureParameters: vi.fn() } };
+  installTextureRanges(backend); backend.updateTexture(texture, {});
+  texture.addUpdateRange(48, 16); texture.addUpdateRange(32, 32); texture.addUpdateRange(64, 16);
+  backend.updateTexture(texture, {});
+  expect(upload).toHaveBeenCalledTimes(1);
+  expect(upload).toHaveBeenCalledWith(1, 0, 0, 2, 4, 3, 2, 3, pixels.subarray(32, 80));
+  expect(texture.updateRanges).toHaveLength(0); expect(original).toHaveBeenCalledTimes(1);
+  texture.dispose();
+});

@@ -97,6 +97,7 @@ export function validateLayout(
       errors.push(`invalid road edge ${e.id}`);
   for (const p of layout.placements) {
     if (!(p.assetId in manifest)) errors.push(`unknown asset ${p.assetId}`);
+    else if (p.decay && !((manifest[p.assetId] as { decayVariants?: string[] }).decayVariants ?? []).includes(p.decay)) errors.push(`unknown decay variant ${p.id}:${p.decay}`);
     if (!inside([p.position[0], p.position[2]], layout.bounds))
       errors.push(`placement outside bounds ${p.id}`);
     if (
