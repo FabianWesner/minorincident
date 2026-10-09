@@ -138,7 +138,7 @@ export class LevelThreeCollapse {
       const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: 110, z: 0 }) });
       const e = this.world.entities.get(id)!;
       e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: zone.x - 12, z: zone.z }, range: 45, engaged: true };
-      e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.transform.yaw = Math.PI;
+      e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
       this.s.soldierIds.push(id);
     }
   }
