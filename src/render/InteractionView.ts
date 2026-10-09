@@ -54,6 +54,8 @@ export class InteractionView extends Group {
   private readonly caption = document.createElement('span');
   private readonly meter = document.createElement('div');
   private readonly meterFill = document.createElement('div');
+  private readonly coverage = document.createElement('div');
+  private readonly coverageFill = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly debrisMeshes: Mesh[] = [];
   private disposed = false;
@@ -64,7 +66,8 @@ export class InteractionView extends Group {
     this.ring.add(outline, stroke, this.fill); this.ring.rotation.x = -Math.PI / 2; this.add(this.ring);
     this.panel.className = 'interaction-prompt'; this.panel.dataset.testid = 'interaction-prompt'; this.panel.hidden = true;
     this.meter.className = 'interaction-meter'; this.meter.setAttribute('role', 'progressbar'); this.meter.setAttribute('aria-label', 'Interaction progress'); this.meter.setAttribute('aria-valuemin', '0'); this.meter.setAttribute('aria-valuemax', '100');
-    this.meter.append(this.meterFill); this.panel.append(this.label, this.meter, this.caption); document.querySelector('#game')!.append(this.panel);
+    this.coverage.className = 'interaction-meter'; this.coverage.hidden = true; this.coverage.setAttribute('role', 'meter'); this.coverage.setAttribute('aria-label', 'Slot coverage'); this.coverage.setAttribute('aria-valuemin', '0'); this.coverage.setAttribute('aria-valuemax', '100'); this.coverage.append(this.coverageFill);
+    this.meter.append(this.meterFill); this.panel.append(this.label, this.coverage, this.meter, this.caption); document.querySelector('#game')!.append(this.panel);
   }
   /** Asset readiness barrier used at load and screenshotReady, including dynamically spawned objects. */
   async synchronize(): Promise<void> {
@@ -178,6 +181,7 @@ export class InteractionView extends Group {
     const ghost = new Group(); ghost.name = 'slot-ghost';
     for (let x = -width / 2; x < width / 2; x += .35) for (const y of [.06, s.height]) {
       const dash = new Mesh(this.box, this.white); dash.scale.set(Math.min(.2, width / 2 - x), .035, .04); dash.position.set(x + dash.scale.x / 2, y, 0); ghost.add(dash);
+      for (const side of [-1, 1]) { const edge = dash.clone(); edge.position.z = side * ((s.depth ?? .7) / 2 + .15); ghost.add(edge); }
     }
     const brace = new Group(); brace.name = 'slot-brace';
     for (const y of [s.height * .3, s.height * .75]) {
@@ -232,6 +236,8 @@ export class InteractionView extends Group {
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;
+      this.coverage.hidden = !selected.barricade || selected.barricade.intact;
+      if (!this.coverage.hidden) { const coverage = selected.barricade!.coverage; this.coverage.setAttribute('aria-valuenow', String(Math.round(coverage * 100))); this.coverageFill.style.transform = `scaleX(${coverage})`; }
       this.meter.setAttribute('aria-valuenow', String(Math.round(c.progress * 100 + 1e-8))); this.meterFill.style.transform = `scaleX(${c.progress})`;
     }
     const pieces = this.world.hazards?.debris.pieces ?? [];

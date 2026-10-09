@@ -12,6 +12,7 @@ import type { SurvivorVariant } from './data/survivor';
 import { performanceLevels, installPerformanceLevel } from '../tests/fixtures/scenarios/performance';
 import { Quality, type QualitySetting } from './core/Quality';
 import { PerfOverlay } from './debug/performance/PerfOverlay';
+import type { BarricadeBot } from './debug/bot/BarricadeBot';
 import { Driver } from './debug/bot/Driver';
 import { AudioService } from './audio/AudioService';
 // Adapted from folio-2025 by Bruno Simon (MIT).
@@ -51,7 +52,7 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelTwoBot | null = null;
+  driver: BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();

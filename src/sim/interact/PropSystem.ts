@@ -24,6 +24,9 @@ export class PropSystem {
   /** Fixture-only stress override; production keeps the established 12-body cap. */
   awakeBudget = MAX_AWAKE_PROPS;
   private burstUntil = 0;
+  /** Resting displaced furniture participates in AI navigation, sampled at 2 Hz. */
+  readonly navWalls = new Map<number, import('../combat/HitQuery').CoverWall>();
+  private readonly momentumHits = new Map<string, number>();
   /** E27: a blast lets launched props fly (up to the spec 07 §8 low-tier cap of 60) instead of freezing mid-air at 12. */
   burst(untilTick: number): void { this.burstUntil = Math.max(this.burstUntil, untilTick); }
   readonly items: PushProp[] = [];
@@ -37,6 +40,7 @@ export class PropSystem {
   }
   /** (Re)create every pushable of the district set in its placement order; `saved` poses survive a tier rebuild/checkpoint. */
   install(districts: DistrictWorld, saved?: PropSnapshot, preserveDisplaced = false): void {
+    this.clearNavigation();
     const previousItems = this.items.slice();
     const ids = new Map(this.items.map(i => [i.id, i.entityId]));
     this.items.length = 0;
@@ -74,7 +78,7 @@ export class PropSystem {
       const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0], half[1], half[2]).setTranslation(center[0], center[1], center[2])
         .setFriction(metadata.friction ?? .7).setRestitution(metadata.restitution ?? .05)
         // Bottom-weighted, stiffer than a uniform box: props slide and only tip over when shoved hard.
-        .setMassProperties(mass, { x: (metadata.centerOfMass ? metadata.centerOfMass[0] * s[0] : center[0]), y: (metadata.centerOfMass ? metadata.centerOfMass[1] * s[1] : center[1] * .45), z: (metadata.centerOfMass ? metadata.centerOfMass[2] * s[2] : center[2]) }, { x: mass * (half[1] ** 2 + half[2] ** 2) / 3 * 2.6, y: mass * (half[0] ** 2 + half[2] ** 2) / 3, z: mass * (half[0] ** 2 + half[1] ** 2) / 3 * 2.6 }, { x: 0, y: 0, z: 0, w: 1 }), body);
+        .setMassProperties(mass, { x: (metadata.centerOfMass ? metadata.centerOfMass[0] * s[0] - center[0] : 0), y: (metadata.centerOfMass ? metadata.centerOfMass[1] * s[1] - center[1] : -center[1] * .55), z: (metadata.centerOfMass ? metadata.centerOfMass[2] * s[2] - center[2] : 0) }, { x: mass * (half[1] ** 2 + half[2] ** 2) / 3 * 2.6, y: mass * (half[0] ** 2 + half[2] ** 2) / 3, z: mass * (half[0] ** 2 + half[1] ** 2) / 3 * 2.6 }, { x: 0, y: 0, z: 0, w: 1 }), body);
       const hp = metadata.breakable?.hp ?? metadata.barricadeHP ?? 80;
       const entityId = this.rebuildingIds.get(id) ?? this.world.entities.create({ kind: 'physics-prop', archetype: placement.assetId, faction: 'environment', transform: { x: pose.p[0], y: pose.p[1], z: pose.p[2], yaw: placement.yaw }, health: { current: hp, max: hp }, combat: { radius: Math.max(half[0], half[2]), armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }).id;
       this.world.spatial.set(entityId, pose.p[0], pose.p[2]);
@@ -104,11 +108,9 @@ export class PropSystem {
   prePhysics(): void {
     for (const item of this.items) {
       if (item.fixed || item.braced || !item.body.isEnabled()) continue;
-      if (item.metadata.class === 'heavy') {
-        if (!this.shoulderPush && !item.body.isFixed()) item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false);
-        else if (this.shoulderPush && item.body.isFixed()) item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false);
-        continue;
-      }
+      if (item.metadata.class === 'heavy') continue;
+      const velocity = item.body.linvel();
+      if (Math.hypot(velocity.x, velocity.y, velocity.z) > 4) continue;
       const [x, , z] = item.pose.p;
       this.world.spatial.query({ x, z, r: item.radius + .4 }, this.nearby);
       for (const id of this.nearby) {
@@ -133,19 +135,62 @@ export class PropSystem {
       awake++;
       const t = item.body.translation();
       if (t.y < -5) {
-        const r = item.body.rotation(), ground = this.world.districts?.groundHeight(t.x, t.z) ?? 0;
-        // Keep the displaced location and orientation. A physics escape must not
-        // delete a knocked prop or silently return it to its authored placement.
-        this.place(item, { p: [t.x, ground + Math.hypot(...item.half) * 2, t.z], q: [r.x, r.y, r.z, r.w] });
-        item.body.wakeUp(); continue;
+        if (item.metadata.reset === 'remove') {
+          item.body.setEnabled(false); item.awake = false;
+          this.world.entities.get(item.entityId)!.health.current = 0;
+          this.world.spatial.delete(item.entityId);
+        } else this.place(item, item.home);
+        awake--; continue;
       }
       this.mirror(item);
+      this.momentum(item);
     }
+    if (this.world.tick % 30 === 0) this.updateNavigation();
     const budget = this.world.tick < this.burstUntil ? Math.max(this.awakeBudget, 60) : this.awakeBudget;
     if (awake <= budget || !player) return;
     const ranked = this.items.filter(i => i.awake).map(i => ({ i, d: (i.pose.p[0] - player.x) ** 2 + (i.pose.p[2] - player.z) ** 2 }))
       .sort((a, b) => b.d - a.d || (a.i.id < b.i.id ? -1 : 1));
     for (let n = 0; n < awake - budget; n++) { const item = ranked[n].i; item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false; }
+  }
+  /** Launch a kickable prop along the attack aim; speed is independent of mass. */
+  kick(entityId: number, aim: { x: number; z: number }): boolean {
+    const item = this.items.find(p => p.entityId === entityId);
+    if (!item || item.fixed || item.braced || !item.metadata.kickable || !item.body.isEnabled()) return false;
+    const length = Math.hypot(aim.x, aim.z); if (!length) return false;
+    item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false);
+    item.body.setLinvel({ x: aim.x / length * 6, y: 2, z: aim.z / length * 6 }, true);
+    return true;
+  }
+  private momentum(item: PushProp): void {
+    const v = item.body.linvel(), speed = Math.hypot(v.x, v.y, v.z);
+    if (speed <= 4 || !this.world.combat) return;
+    for (const target of this.world.infected?.active ?? []) {
+      if (target.health.current <= 0 || Math.abs(target.transform.y - item.pose.p[1] - item.half[1]) > item.half[1] + .7) continue;
+      if (Math.hypot(target.transform.x - item.pose.p[0], target.transform.z - item.pose.p[2]) > item.radius + target.combat!.radius) continue;
+      const key = `${item.entityId}/${target.id}`;
+      if ((this.momentumHits.get(key) ?? -60) + 60 > this.world.tick) continue;
+      this.momentumHits.set(key, this.world.tick);
+      this.world.combat.damage.apply({ sourceId: item.entityId, targetId: target.id, attackId: this.world.tick, actionId: 'prop.momentum', origin: { x: item.pose.p[0], z: item.pose.p[2] }, direction: { x: v.x / speed, z: v.z / speed }, base: Math.min(80, item.mass * speed * speed * .005), multiplier: 1, type: 'prop', knockback: 1.2, stagger: 1.2, knockdown: true });
+    }
+  }
+  private clearNavigation(): void {
+    for (const [id, wall] of this.navWalls) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, wall, blocked: false });
+    this.navWalls.clear();
+  }
+  private updateNavigation(): void {
+    for (const p of this.items) {
+      // Authored furniture was excluded from the bake; only gameplay displacement adds blockers.
+      const blocked = !p.braced && p.body.isEnabled() && (p.metadata.class === 'medium' || p.metadata.class === 'heavy')
+        && Math.hypot(p.pose.p[0] - p.home.p[0], p.pose.p[2] - p.home.p[2]) > .25 && Math.hypot(p.body.linvel().x, p.body.linvel().z) < .5;
+      const previous = this.navWalls.get(p.entityId);
+      const yaw = 2 * Math.atan2(p.pose.q[1], p.pose.q[3]), c = Math.abs(Math.cos(yaw)), s = Math.abs(Math.sin(yaw));
+      const wall = { x: p.pose.p[0], z: p.pose.p[2], y: p.pose.p[1] + p.half[1], halfY: p.half[1], halfX: c * p.half[0] + s * p.half[2], halfZ: s * p.half[0] + c * p.half[2], entityId: p.entityId };
+      if (blocked && (!previous || Math.abs(previous.x - wall.x) + Math.abs(previous.z - wall.z) + Math.abs(previous.halfX - wall.halfX) + Math.abs(previous.halfZ - wall.halfZ) > .05)) {
+        this.navWalls.set(p.entityId, wall); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: p.entityId, wall, blocked: true });
+      } else if (!blocked && previous) {
+        this.navWalls.delete(p.entityId); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: p.entityId, wall: previous, blocked: false });
+      }
+    }
   }
   /** Upgrade seam; false by default. Heavy props retain collision until unlocked. */
   shoulderPush = false;
@@ -175,7 +220,7 @@ export class PropSystem {
   brace(item: PushProp, on: boolean, inward = { x: 0, z: 1 }): void {
     item.braced = on; item.body.setBodyType(on ? RAPIER.RigidBodyType.KinematicPositionBased : RAPIER.RigidBodyType.Dynamic, false);
     if (on) { item.body.sleep(); item.awake = false; }
-    else { item.body.applyImpulse({ x: inward.x * item.mass * 2, y: item.mass, z: inward.z * item.mass * 2 }, true); item.awake = true; }
+    else { item.body.applyImpulse({ x: inward.x * item.mass * 2, y: item.mass * 3.5, z: inward.z * item.mass * 2 }, true); item.awake = true; }
   }
   private mirror(item: PushProp): void {
     const t = item.body.translation(), r = item.body.rotation();
@@ -197,7 +242,9 @@ export class PropSystem {
   }
   /** Checkpoint seam: every prop returns to its saved (or home) pose, asleep. */
   restore(saved: unknown): void {
+    this.clearNavigation();
     const poses = new Map((saved as PropSnapshot | undefined)?.map(s => [s.id, s]));
     for (const item of this.items) { item.body.setEnabled((this.world.entities.get(item.entityId)?.health.current ?? 0) > 0); if (!item.fixed) this.place(item, poses.get(item.id) ?? item.home); }
+    this.updateNavigation();
   }
 }
