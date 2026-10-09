@@ -394,6 +394,7 @@ export class AudioService implements Lifecycle {
                 voice.velocity = { ...options.velocity };
             voice.baseGain = audioCues[id].gain * (options.gain ?? 1);
             voice.rate = options.rate ?? 1;
+            if (!voice.position) { voice.gain.gain.setValueAtTime(voice.baseGain, this.context.currentTime); voice.source.playbackRate.setValueAtTime(voice.rate, this.context.currentTime); }
             this.graph.updateEmitter(voice);
         }
         return voice ?? null;
@@ -511,6 +512,7 @@ export class AudioService implements Lifecycle {
     }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
+        if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
         if (!this.available())
             return;
         const t = this.context.currentTime;
@@ -799,6 +801,12 @@ export class AudioService implements Lifecycle {
         if (!player)
             return;
         const t = this.context.currentTime;
+        const weather = this.world.weather;
+        if (weather) {
+            this.graph.setWeather(weather.kind);
+            if (weather.rain > 0) this.loop('weather:rain', 'weather.rain', { gain: weather.rain });
+            else this.stopLoop('weather:rain');
+        }
         if (this.world.tick % 6 === 0) {
             const previous = this.world.previousPlayer;
             if (previous) {

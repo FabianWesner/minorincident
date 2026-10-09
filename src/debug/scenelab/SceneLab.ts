@@ -136,6 +136,8 @@ export class SceneLab {
   }
   /** Sim assembly before the view loads: systems, actors and vehicles exist when the presentation is built. */
   private setup(world: SimWorld, spec: SceneSpec): void {
+    if (spec.weather) world.weather?.setOverride(spec.weather);
+    for (let i = 0; i < Math.round((spec.weatherWarmup ?? 0) * 60); i++) { world.tick++; world.weather?.update(); }
     for (const prop of spec.props ?? []) if (prop.rotation) {
       const item = world.props?.items.find(p => p.id.endsWith(`/${prop.id}`));
       if (!item) throw new Error(`Rotation fixture needs a pushable id: ${prop.id}`);
@@ -393,7 +395,8 @@ export class SceneLab {
   }
   effect(fx: EffectSpec): void {
     const world = this.world;
-    if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
+    if ('lightning' in fx) world.weather?.strike({ ...toPoint(fx.lightning), y: 0 }, fx.consequence);
+    else if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
     else if ('wreck' in fx) { const id = this.vehicles.get(fx.wreck); if (id === undefined) throw new Error(`wreck: unknown vehicle ${fx.wreck}`); world.vehicles!.damage(id, 1e6); }
     else { const kind = 'fire' in fx ? 'fire' : 'smoke', p = toPoint('fire' in fx ? fx.fire : fx.smoke); world.events.emit({ type: 'vfx.effect', tick: world.tick, kind, position: p, radius: fx.radius ?? 2 } as Parameters<typeof world.events.emit>[0]); }
   }
@@ -427,6 +430,7 @@ export class SceneLab {
         if ('actor' in s) this.command(s.actor, s.do);
         else if ('effect' in s) this.effect(s.effect);
         else if ('camera' in s) { this.camera = s.camera; this.applyCamera(); }
+        else if ('weather' in s) this.game.world.weather?.setOverride(s.weather);
         else if ('time' in s) this.setTime(s.time);
       }
       this.drivePlayer();

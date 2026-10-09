@@ -1,3 +1,4 @@
+import { weatherRayDither, weatherSurface } from '../render/WeatherView';
 import { LevelOneBot } from './bot/LevelOneBot';
 import type { Inspection } from './Inspection';
 import { LevelThreeBot, type L3Profile, type L3StreetChoice } from './bot/LevelThreeBot';
@@ -107,6 +108,7 @@ export interface SSTestApi {
   look: { get(): { worldLook: import('../data/worldLook').WorldLook; palette: Record<import('../data/palette').PaletteToken, string> }; set(patch: import('../data/lookPatch').LookPatch): void; export(): import('../data/lookPatch').LookPatch; reset(): void };
   /** E18 synthetic GPU cost in milliseconds; zero clears it. */
   /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
+  weather: { probe(mode: 'up' | 'snow' | 'wet' | 'tracks' | 'precipitation' | 'dense-precipitation' | null, assetId?: string): void; override(kind: import('../data/weather').WeatherKind | null, intensity?: number): void; strike(at: { x: number; y: number; z: number }): void };
   debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void;
     /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
     figureJoints(on: boolean): void };
@@ -236,6 +238,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         await new Promise<void>(resolve=>setTimeout(resolve,50));
       },
     },
+    weather: { probe: (mode, assetId) => { game.view.weatherMask(mode === 'precipitation' || mode === 'dense-precipitation' ? 'weather' : mode ? assetId ?? null : null); weatherRayDither.value = mode === 'dense-precipitation' ? 0 : 1; weatherSurface.probe.value = mode === 'up' ? 1 : mode === 'snow' ? 2 : mode === 'wet' ? 3 : mode === 'tracks' ? 4 : 0; game.view.update(1); }, override: (kind, intensity) => { game.world.weather?.setOverride(kind, intensity); game.view.update(1); }, strike: at => game.world.weather?.strike(at) },
     debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };

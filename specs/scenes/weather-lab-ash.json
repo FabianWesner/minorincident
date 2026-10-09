@@ -1,0 +1,89 @@
+{
+  "name": "weather-lab-ash",
+  "seed": 28,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L5",
+  "dof": false,
+  "props": [
+    {
+      "id": "house",
+      "asset": "bld.house-a",
+      "at": [
+        -5,
+        -4
+      ]
+    },
+    {
+      "id": "lamp",
+      "asset": "prop.street-lamp",
+      "at": [
+        6,
+        -5
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "car",
+      "asset": "vehicle.sedan",
+      "at": [
+        4,
+        0
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        2
+      ],
+      "state": {
+        "walk": [
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        -2,
+        6
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.45
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "weather": "ash",
+  "weatherWarmup": 90
+}

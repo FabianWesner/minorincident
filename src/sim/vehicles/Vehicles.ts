@@ -55,6 +55,7 @@ export class Vehicles {
     for (const car of this.cars.values()) {
       const state = car.entity.vehicle!, drive = car.physics.intent;
       car.physics.boostScale = this.progressionBoost;
+      car.physics.gripScale = this.world.weather?.modifiers.vehicleGrip ?? 1;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = drive.handbrake = false;
       if (this.active !== car.entity.id) this.autopilot.get(car.entity.id)?.(drive, car.entity);
       if (this.active === car.entity.id && frame.interact) this.exit(car);
