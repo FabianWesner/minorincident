@@ -20,16 +20,18 @@ test('T-E19-firefighter-fight @E19 the firefighter swings at an infected at the 
   for (let i = 0; i < 8 && (await mission()).steps.firestation.status !== 'active'; i++) await page.evaluate(() => window.__SS__!.cheats.completeObjective());
   for (let i = 0; i < 20 && (await mission()).l1!.beat; i++) await step(30);
   const door = at('fire-bay-door'), trigger = at('fire-bay-trigger');
-  // Courier on the sidewalk 7 m west of the bay mouth, god mode so the fight stays on the firefighter; an infected 3 m outside the bay.
-  await page.evaluate(({ x, z }) => { window.__SS__!.cheats.god(true); window.__SS__!.teleport('player', { x, z }); }, { x: door.x - 7, z: door.z + 4.6 });
+  // Courier on the apron 5 m west of the bay mouth (god mode, the fight stays on the firefighter); an infected facing him 2.5 m out.
+  await page.evaluate(({ x, z }) => { window.__SS__!.cheats.god(true); window.__SS__!.teleport('player', { x, z }); }, { x: door.x - 5, z: door.z + 3.2 });
   await step(60);
-  const out = { x: door.x + 0.5, z: door.z + 3.2 }, firefighter = (await mission()).l1!.firefighterId!;
+  const firefighter = (await mission()).l1!.firefighterId!;
   expect(firefighter).toBeGreaterThan(0);
-  await page.evaluate(p => window.__SS__!.spawn('infected.runner', p, { state: 'idle' }), out);
+  const post = await page.evaluate(id => window.__SS__!.query({ kind: 'civilian' }).find(e => e.id === id)!.transform, firefighter);
+  const out = { x: post.x + .3, z: post.z + 2.5 };
+  await page.evaluate(({ out, post }) => window.__SS__!.spawn('infected.runner', out, { state: 'idle', yaw: -Math.atan2(post.z - out.z, post.x - out.x) }), { out, post });
   let fought = false;
-  for (let i = 0; i < 12 && !fought; i++) {
+  for (let i = 0; i < 15 && !fought; i++) {
     await step(20);
-    fought = await page.evaluate(id => window.__SS__!.query({ kind: 'civilian' }).some(e => e.id === id && !!(e.civilian?.ally?.targetId || e.civilian?.ally?.strikeAt)), firefighter);
+    fought = await page.evaluate(id => window.__SS__!.events(0).some(e => e.type === 'ally.attack' && (e as { sourceId?: number }).sourceId === id), firefighter);
   }
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/firefighter-fight.png` });
