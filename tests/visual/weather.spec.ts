@@ -67,8 +67,9 @@ test('T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pix
 
 test('T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps', async ({ page }) => {
   const scene = spec('fog'); scene.weather = 'clear'; scene.script = [{ frame: 2, effect: { lightning: [6, -5], consequence: 'fire' } }, { frame: 12, effect: { lightning: [6, -5], consequence: 'blackout' } }];
-  await lab(page, scene); await page.evaluate(() => window.__SCENE__!.step(10)); await shot(page, 'scripted-strike-fire');
+  await lab(page, scene); const lit = await shot(page, 'scripted-strike-lit'); await page.evaluate(() => window.__SCENE__!.step(10)); await shot(page, 'scripted-strike-fire');
   expect(await page.evaluate(() => window.__SS__!.getState().entities.some(e => e.hazard?.kind === 'fire'))).toBe(true);
-  await page.evaluate(() => window.__SCENE__!.step(30)); await shot(page, 'scripted-strike-blackout');
-  const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.weather!.powerRevision).toBe(1); expect(state.render.districts!.windowMeshes).toBe(0);
+  await page.evaluate(() => window.__SCENE__!.step(30)); const dark = await shot(page, 'scripted-strike-blackout');
+  const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.weather!.powerRevision).toBe(1); const bright = (p: PNG) => { let n = 0; for (let i = 0; i < p.data.length; i += 4) if (p.data[i] > 200 && p.data[i + 1] > 200 && p.data[i + 2] > 200) n++; return n; };
+  expect(bright(lit)).toBeGreaterThan(100); expect(bright(dark)).toBeLessThan(bright(lit) * .5);
 });
