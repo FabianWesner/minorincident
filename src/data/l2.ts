@@ -96,6 +96,11 @@ export const l2 = {
    * melee hit at maxHP / hits, so a runner takes 3 fire-axe, 4 bat (roundhouse too) or 6 fist hits. Guns, kicks and L1 are unchanged.
    */
   infectedMeleeHits: { 'weapon.fire-axe': 3, 'weapon.bat': 4, 'weapon.fists': 8 } as Readonly<Record<string, number>>,
+  /**
+   * PO 10-09 (as l3.mercy): the escape and cluster checkpoints wait for a calm moment (nothing alive within `calmM`, health >= `calmHealth`).
+   * From the `fromDeaths`-th respawn at the same checkpoint on, each respawn releases `stepFrac` (max `maxFrac`) of the infected within `nearM` of the courier.
+   */
+  mercy: { calmM: 10, calmHealth: .7, fromDeaths: 2, stepFrac: .25, maxFrac: .75, nearM: 45 },
   /** Section 4: checkpoints. */
   checkpoints: ['doors', 'escape', 'cluster'] as const,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
