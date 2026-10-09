@@ -169,7 +169,9 @@ test.describe('L5 Aftermath in the browser', () => {
     if (!h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter');
     if (!last.l5!.shutterAt) last = await mission();
     for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);
-    writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ stats: last.stats, l5: { survivors: last.l5!.survivors.map(r => `${r.key}:${r.status}`), gloom: last.l5!.gloom, shutterAt: last.l5!.shutterAt }, shots: [...h.shots].sort(), errors }, null, 1));
+    const handover = await page.evaluate(() => ({ level: window.__SS__!.getState().scenario, survivors: window.__SS__!.campaign.state()!.survivors }));
+    expect(handover.level).toBe('L6'); expect(handover.survivors!.slice().sort()).toEqual(l5Survivors.map(s => s.key).sort());
+    writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ statsAtShutter: last.stats, handover, l5: { survivors: last.l5!.survivors.map(r => `${r.key}:${r.status}`), gloom: last.l5!.gloom, shutterAt: last.l5!.shutterAt }, shots: [...h.shots].sort(), errors }, null, 1));
     expect([...h.shots].sort()).toEqual(['l5-basement-exit', 'l5-group-of-five', 'l5-metro-shelter', 'l5-sign-of-life', 'pair-harbor-street', 'pair-kessler-lane', 'pair-metro-entrance', 'pair-plaza']);
     expect(last.l5!.survivors.filter(r => r.status === 'sheltered').length).toBeGreaterThanOrEqual(3);
     expect(errors).toEqual([]);
