@@ -62,14 +62,6 @@ export class Renderer extends WebGPURenderer {
     // r186 async warm-up restores _currentRenderContext before building bindings.
     // Its module cache then keys bindings by the persistent renderer and pins old levels.
     this.debug.onNodeBuilderCreated = (builder, object) => {
-      if (params.has('profilehitches')) {
-        const rendered = object as unknown as { object: Object3D; material: { name: string }; camera: Camera };
-        const names: string[] = [];
-        for (let node: Object3D | null = rendered.object; node; node = node.parent) names.push(node.name || node.type);
-        const label = `node-build:${names.reverse().join('/')}:${rendered.material.name}:${rendered.camera.type}`;
-        const timed = builder as unknown as { build(): unknown }, build = timed.build.bind(builder);
-        timed.build = () => { const start = performance.now(); try { return build(); } finally { performance.measure(label, { start, end: performance.now() }); } };
-      }
       const context = (object as { context: object }).context;
       const internal = builder as unknown as { _getBindGroup(name: string, bindings: unknown[]): unknown };
       const getBindGroup = internal._getBindGroup;

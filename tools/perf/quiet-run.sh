@@ -16,7 +16,7 @@ while :; do
     if [ -n "${PERF_CONDITIONS_LOG:-}" ]; then
       node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,browserSlots:[0,1],command:process.argv.slice(1)})+"\n")' "$@"
     fi
-    printf '%s\n' 'Quiet-run preflight: load < 3; pgrep -fl chrome.*headless: no processes; browser slots .0/.1 held.'
+    printf '%s\n' 'Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.'
     exec "$@"
   fi
   sleep 20

@@ -46,16 +46,28 @@ export class PostFx {
     this.scenePass.renderTarget.samples = renderer.samples;
     this.scenePass.renderTarget.texture.type = renderer.getOutputBufferType();
     renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
+    // r186 compileAsync omits render call depth. The scene pass renders inside the
+    // pipeline quad (depth 1); depth 0 creates different render objects and node graphs.
+    const contexts = (renderer as unknown as { _renderContexts: { get(target: unknown, mrt: unknown, depth?: number): unknown } })._renderContexts;
+    const getContext = contexts.get;
+    const compile = (object: Object3D) => {
+      contexts.get = (target, mrt, depth = 0) => getContext.call(contexts, target, mrt, depth + 1);
+      try { return renderer.compileAsync(object, this.scenePass.camera, this.scenePass.scene as Scene); }
+      finally { contexts.get = getContext; }
+    };
     try {
-      if (!partitions && !root) await this.scenePass.compileAsync(renderer);
+      if (!partitions && !root) {
+        renderer.setRenderTarget(this.scenePass.renderTarget); renderer.setMRT(this.scenePass.getMRT());
+        await compile(this.scenePass.scene);
+      }
       else {
         // Same state as PassNode.compileAsync, held across concurrent compile lanes (PreRenderer).
         const pass = this.scenePass as typeof this.scenePass & { getMRT(): ReturnType<WebGPURenderer['getMRT']> };
         renderer.setRenderTarget(pass.renderTarget); renderer.setMRT(pass.getMRT());
         // compileAsync captures the render context before yielding. Streaming must restore the
         // target immediately, so an in-flight warm-up cannot redirect the next gameplay draw.
-        if (root) return renderer.compileAsync(root, pass.camera, pass.scene as Scene);
-        await Promise.all(partitions!.map(apply => { apply(); return renderer.compileAsync(pass.scene, pass.camera); }));
+        if (root) return compile(root);
+        await Promise.all(partitions!.map(apply => { apply(); return compile(pass.scene); }));
       }
     }
     finally { renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color; }
