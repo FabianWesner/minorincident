@@ -364,15 +364,16 @@ export class NavGrid {
   /**
    * After a failed `path` search: the nearest walkable cell within `range` metres that the search never reached (outside the
    * start's pocket) and that the body (`radius`) can walk to in a straight line, or -1. A fence gap or porch alley narrower
-   * than the baked clearance leaves a few isolated cells; this is the way out of them. `outsideSearch` false: any walkable cell.
+   * than the baked clearance leaves a few isolated cells; this is the way out of them. `outsideSearch` false: any walkable cell
+   * at least `minRange` away.
    */
-  escapeCell(position: { x: number; z: number }, radius: number, range = 6, outsideSearch = true): number {
+  escapeCell(position: { x: number; z: number }, radius: number, range = 6, outsideSearch = true, minRange = 0): number {
     const n = Math.ceil(range / this.cellSize); let best = -1, distance = range * range;
     for (let dz = -n; dz <= n; dz++) for (let dx = -n; dx <= n; dx++) {
       const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
       if (cell < 0 || this.blocked[cell] || (outsideSearch && this.pathSeen[cell] === this.pathStamp)) continue;
       const d = (this.x(cell) - position.x) ** 2 + (this.z(cell) - position.z) ** 2;
-      if (d < distance && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
+      if (d < distance && d >= minRange * minRange && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
     }
     return best;
   }

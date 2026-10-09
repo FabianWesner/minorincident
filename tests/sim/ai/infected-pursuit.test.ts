@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, test } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { compositions } from '../../../src/levels/compositions';
 import type { CoverWall } from '../../../src/sim/combat/HitQuery';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import type { HumanTarget, HumanTargetQuery, Vec2 } from '../../../src/sim/outbreak/types';
@@ -128,6 +130,16 @@ describe('infected pursuit (PO 2026-10-09)', () => {
       w.dispose(); worlds.length = 0;
     }
   }, 120_000);
+
+  test('D-GROVE porch gate (catalog inf-door-emerge): a resident turned in the 2-cell gate pocket walks out into the yard', async () => {
+    const w = new SimWorld(); worlds.push(w); await w.init();
+    const c = compositions['D-GROVE'];
+    w.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 4); w.enableInfected();
+    const e = runner(w, 33.5, 35.2, -Math.PI / 2, 'npc.civilian-man-b');
+    let left = -1;
+    for (let i = 0; i < 6 * 60 && left < 0; i++) { w.update(); if (Math.hypot(e.transform.x - 33.5, e.transform.z - 35.2) > 1.5) left = w.tick; }
+    expect(left, `still at ${e.transform.x.toFixed(2)},${e.transform.z.toFixed(2)} (${brain(e).mode})`).toBeGreaterThan(0);
+  });
 
   test('a blocker switched on around an infected (parked truck footprint, closed gate) pushes it out; it moves on', async () => {
     const w = await arena(2), e = runner(w, 10, 10, 0);

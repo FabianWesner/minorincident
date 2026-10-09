@@ -721,7 +721,7 @@ export class InfectedSystem {
     if (!brain.hasGoal) {
       if (!(flow ? this.panicGoal(e, brain) : wanderGoal(brain, rng, this.nav, e.transform, this.crowdAt))) {
         // No open goal in view (standing in a slot narrower than the nav clearance): first walk out to the nearest open cell.
-        const cell = this.nav.escapeCell(e.transform, e.combat!.radius * 0.6, 8, false);
+        const cell = this.nav.escapeCell(e.transform, e.combat!.radius * 0.6, 8, false, 2.5);
         if (cell < 0) { brain.pauseUntil = tick + 30; return; }
         brain.goalX = this.nav.x(cell); brain.goalZ = this.nav.z(cell); brain.hasGoal = true;
       }
