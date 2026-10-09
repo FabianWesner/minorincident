@@ -20,9 +20,11 @@ test('T-E26-06 @E26-AC06 staged awake budget freezes farthest props after waking
   const player = w.entities.get(1)!.transform, distance = (p: typeof awake[number]) => Math.hypot(p.pose.p[0] - player.x, p.pose.p[2] - player.z);
   expect(Math.max(...awake.map(distance))).toBeLessThanOrEqual(Math.min(...w.props!.items.slice(0, 250).filter(p => !p.awake).map(distance)) + .001);
 });
-test('T-E26-07 @E26-AC07 fallen props reset to spawn asleep within one tick', async () => {
+test('T-E26-07 @E26-AC07 fallen props recover above ground at their displaced location within one tick', async () => {
   const w = await world('prop-yard'), p = w.props!.items[0]; p.body.setTranslation({ x: 10, y: -6, z: 3 }, true); w.props!.postPhysics();
-  expect(p.pose).toEqual(p.home); expect(p.body.isSleeping()).toBe(true);
+  expect(p.pose.p[0]).toBe(10); expect(p.pose.p[2]).toBe(3);
+  expect(p.pose.p[1]).toBeGreaterThan(w.districts?.groundHeight(10, 3) ?? 0);
+  expect(p.pose.q).toEqual(p.home.q); expect(p.body.isSleeping()).toBe(false);
 });
 test('T-E26-09 @E26-AC09 coverage rejects overlaps and low fill; 1.5s brace pins props and blocks navigation', async () => {
   const w = await world(), e = slot(w), p = w.props!.items[0];

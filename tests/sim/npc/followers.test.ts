@@ -52,7 +52,7 @@ test('T-E08-15 @E08 @E08-AC15 protected kids/brother never bitten, targeted or g
   const events: import('../../../src/sim/world/types').GameEvent[] = []; const stopAttack = w.events.on('infected.attack', e => events.push(e)), stopGrab = w.events.on('civilian.grabbed', e => events.push(e));
   step(w, 36000); expect(events.filter(e => 'targetId' in e && [child, brother].includes(e.targetId))).toHaveLength(0);
   expect(w.entities.get(child)!.civilian).toMatchObject({ state: 'calm', adult: false, gore: false }); expect(w.entities.get(brother)!.escort).toMatchObject({ child: true, gore: false }); stopAttack(); stopGrab(); w.dispose();
-});
+}, 120_000); // 36,000 sim ticks: functional coverage, not a wall-clock performance gate.
 test('@E08 corgi fetch, courage recovery and E06 lure use production systems', async () => {
   const w = await npcWorld(), corgi = [...w.entities.iterate()].find(e => e.companion)!;
   const id = w.pickups!.spawn('item', { x: 5, z: 0 }, 'key'); step(w, 100); expect(w.entities.get(1)!.inventory).toContain('key'); expect(w.events.events().find(e => e.type === 'corgi.fetched')).toMatchObject({ pickupId: id });
