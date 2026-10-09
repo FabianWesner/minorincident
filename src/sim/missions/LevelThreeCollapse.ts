@@ -440,10 +440,12 @@ export class LevelThreeCollapse {
   /** Checkpoint restore: shift the timeline. Entities (officers, squad, infected, pickups) come back from the snapshot. */
   /** Death-loop relief (data: `l3.mercy`), applied on the first tick after a respawn. */
   private mercyDue = false;
+  /** Respawns per checkpoint (a death loop is several deaths at the same checkpoint, not the level's death total). */
+  private readonly respawns: Record<string, number> = {};
   private mercy(): void {
     this.mercyDue = false;
     const { world } = this.mission, s = this.s, m = l3.mercy, ai = world.infected;
-    const frac = Math.min(m.maxFrac, m.stepFrac * (this.mission.state.stats.deaths - m.fromDeaths + 1)); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
+    const frac = Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths + 1)); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
     const p = world.entities.get(1)!.transform, [a, b] = m.aheadM, ahead = (x: number) => x > p.x + a && x < p.x + b;
     const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
     thin([...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
@@ -452,7 +454,7 @@ export class LevelThreeCollapse {
   }
   restore(delta: number): void {
     const s = this.mission.state.l3; if (!s) return;
-    this.mercyDue = true;
+    this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['handgunAt', 'attackAt', 'fallbackAt', 'crossedAt', 'doneAt', 'furthestAt', 'pressureAt'] as const) if (s[key]) s[key] += delta;
     for (const w of s.waves) if (w.at) w.at += delta;
     for (const q of s.pending) if (q.at) q.at += delta;
