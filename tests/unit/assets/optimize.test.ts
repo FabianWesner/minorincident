@@ -123,7 +123,7 @@ test('T-E17-pose-caps @E17-AC11 prefixed corpse joints retain usable hidden caps
   }
 });
 
-test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', async () => {
+test('T-E17-height @E17-AC02 standing adult exports stay 1.75–1.85 m at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
   const exceptions=new Set(['char.corgi','char.courier-male','char.courier-female','npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.depot-clerk','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   // Animal silhouettes and the prone/seated corpse pack are not standing adults.
@@ -132,6 +132,15 @@ test('T-E17-height @E17-AC02 adult exports stay 1.75–1.85 m at every LOD', asy
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {
       const doc=await io.read(path);
+      // Living shelter rest poses expose the original standing frame for retreat.
+      const restRoot = doc.getRoot().listNodes().find(n => n.getExtras().ss_standingPose);
+      if (restRoot) {
+        const reset = JSON.parse(restRoot.getExtras().ss_standingPose as string) as Record<string, { translation: [number,number,number]; rotation: [number,number,number,number]; scale: [number,number,number] }>;
+        for (const [name, pose] of Object.entries(reset)) {
+          doc.getRoot().listNodes().find(n => n.getName() === name)!.setTranslation(pose.translation).setRotation(pose.rotation).setScale(pose.scale);
+        }
+        doc.getRoot().listNodes().find(n => n.getName() === 'restCushion')?.dispose();
+      }
       const subjects=[doc.getRoot().listScenes()[0],...doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName()))];
       for (const subject of subjects) {
         const bounds=getBounds(subject),height=bounds.max[1]-bounds.min[1];
