@@ -15,13 +15,13 @@ const HEAVY = 3_600_000;
 function record(name: string, value: unknown) { mkdirSync('test-results/epics/E20', { recursive: true }); writeFileSync(`test-results/epics/E20/${name}.json`, JSON.stringify(value, null, 2) + '\n'); }
 /** One 20-seed battery per profile/opening, shared by every criterion that reads it (computed once per file run). */
 const batteries = new Map<string, Promise<L2Report[]>>();
-function battery(profile: L2Profile, opts: { opening?: L2Opening; god?: boolean; maxSeconds?: number; stopAfterDoorsS?: number } = {}): Promise<L2Report[]> {
+function battery(profile: L2Profile, opts: { opening?: L2Opening; god?: boolean; maxSeconds?: number; stopAfterDoorsS?: number; stopAfterPlayerDeath?: boolean } = {}): Promise<L2Report[]> {
   const key = JSON.stringify({ profile, ...opts });
   if (!batteries.has(key)) batteries.set(key, (async () => {
     const runs: L2Report[] = [];
     for (const seed of seeds) {
       const l = await loadL2(seed);
-      runs.push(runL2(l.world, l.mission, profile, { seed, opening: opts.opening, god: opts.god, maxSeconds: opts.maxSeconds ?? 600, stopWhen: opts.stopAfterDoorsS ? m => !!m.state.l2!.doorsOpenAt && m.world.tick - m.state.l2!.doorsOpenAt >= opts.stopAfterDoorsS! * 60 : undefined }));
+      runs.push(runL2(l.world, l.mission, profile, { seed, opening: opts.opening, god: opts.god, maxSeconds: opts.maxSeconds ?? 600, stopAfterPlayerDeath: opts.stopAfterPlayerDeath, stopWhen: opts.stopAfterDoorsS ? m => !!m.state.l2!.doorsOpenAt && m.world.tick - m.state.l2!.doorsOpenAt >= opts.stopAfterDoorsS! * 60 : undefined }));
       l.world.dispose();
     }
     record(`bots-${profile}${opts.opening ? `-${opts.opening}` : ''}${opts.god ? '-observer' : ''}`, runs);
@@ -129,7 +129,7 @@ describe('L2 The Failed Rescue', () => {
   }, HEAVY);
 
   test('T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives', async () => {
-    const observer = await battery('aggressive', { god: true, stopAfterDoorsS: 95 }), fair = await battery('aggressive', { stopAfterDoorsS: 121 });
+    const observer = await battery('aggressive', { god: true, stopAfterDoorsS: 95 }), fair = await battery('aggressive', { stopAfterDoorsS: 121, stopAfterPlayerDeath: true });
     expect(observer.every(r => r.axe)).toBe(true);
     expect(observer.filter(r => r.killsNearDoors >= 10 && r.infectedAt[90].all >= r.infectedAt[10].all).length).toBeGreaterThanOrEqual(16);
     expect(fair.filter(r => r.diedBy120).length).toBeGreaterThanOrEqual(16);

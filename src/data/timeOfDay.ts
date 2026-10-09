@@ -12,7 +12,8 @@ const golden: TimeOfDayPreset = { sun: '#ffdb9a', intensity: 1.15, polar: 1.15, 
 const presets = {
   L1: { sun: worldLook.sun, intensity: worldLook.sunIntensity, polar: .78, azimuth: -.7, shadow: worldLook.shadow, sky: worldLook.sky, fog: worldLook.fog, fogNear: 65, fogFar: 170 },
   L2: { sun: '#fff9ec', intensity: 1.3, polar: 0.35, azimuth: 0.1, shadow: '#656398', sky: '#b4d5e8', fog: '#c4d5dc', fogNear: 65, fogFar: 165 },
-  L3: { sun: '#ffe2b3', intensity: 1.2, polar: 0.9, azimuth: -0.7, shadow: '#66558e', sky: '#d9c9b2', fog: '#d5c0ad', fogNear: 60, fogFar: 150 },
+  // E21 late afternoon: lower, warmer sun (polar 1.08 rad, hue ~37 deg), long shadows (~5x L2's), harsher light, smoke-warm haze.
+  L3: { sun: '#ffd7a3', intensity: 1.32, polar: 1.08, azimuth: -0.75, shadow: '#5d4f88', sky: '#dcc3a4', fog: '#d6b596', fogNear: 52, fogFar: 140 },
   L4: golden, golden,
   L5: { sun: '#9c9edb', intensity: 0.65, polar: 1.48, azimuth: -1.4, shadow: '#504978', sky: '#695d91', fog: '#786d96', fogNear: 45, fogFar: 125, practical: .8, rim: .25, aura: .25 },
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 0.85, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },

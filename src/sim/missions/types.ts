@@ -1,3 +1,4 @@
+import type { HouseEmergence } from '../outbreak/HouseEmergence';
 import type { DeviceOptions } from '../interact/Interactables';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import type { EntitySnapshot } from '../world/types';
@@ -58,6 +59,8 @@ export interface MissionDef {
   l1?: boolean;
   /** L2 "The Failed Rescue" set-piece controller (station calm, alarm, truck ride, doors, ambush, checkpoint); see LevelTwoRescue. */
   l2?: boolean;
+  /** L3 "The Police Collapse" controller (armory, station attack, fallback, squad, corridor, army checkpoint); see LevelThreeCollapse. */
+  l3?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
@@ -82,10 +85,13 @@ export interface L1State {
   turnedIds: number[]; escapedIds: number[];
   graceUntil: number;
   /**
-   * Beat 9 (PO rule 2026-10-07): the one house near the garage whose residents come out one by one; `door` is the
-   * refuge-door number (0 = none in range), `next` the tick of the next emergence, `ids` the residents out so far.
+   * Beat 9 (PO rule 2026-10-07): the one house near the garage whose residents come out of its front door one by one
+   * (HouseEmergence: `house` the placement id, '' = none in range; `x, z` the threshold; `next` the tick of the next
+   * resident; `ids` the residents out so far).
    */
-  house: { door: number; x: number; z: number; ox: number; oz: number; next: number; ids: number[] } | null;
+  house: HouseEmergence | null;
+  /** The lab accident: the four staff walking out of the annex front door behind the technician (HouseEmergence). */
+  labExit?: HouseEmergence | null;
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
   beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */
@@ -110,6 +116,8 @@ export interface L2State {
   /** `x/z/seen`: where it first appeared and whether that point was inside the camera volume then (omniscience audit). */
   pending: { id: number; door: string; at: number; home: { x: number; z: number }; x?: number; z?: number; seen?: boolean }[]; escapeIds: number[]; clusterIds: number[];
   escapeSpawned: boolean; clusterSpawned: boolean; clusterReached: boolean;
+  /** Checkpoint gunfire: last loud event per officer, and the two barks (ticks, 0 = not yet). */
+  lastShot?: Record<number, number>; keepBackAt?: number; runKidAt?: number;
   /** Rescue set piece presentation (PO 10-08): the current speech bubble, scripted trips after the release and the far-street
    * silhouettes (pedestrians with the turned look that cross a street end and vanish; never infected, never hunting). */
   say?: { id: number; text: string; at: number; until: number } | null;
@@ -118,12 +126,38 @@ export interface L2State {
   flee?: { id: number; at: number }[];
   lurkers?: number[];
 }
+/** Serializable L3 controller state. Ticks are sim ticks, 0 = not yet. */
+export interface L3State {
+  phase: 'yard' | 'attack' | 'fallback' | 'corridor' | 'done';
+  handgunAt: number; attackAt: number; fallbackAt: number; fallbackCause: '' | 'time' | 'turned' | 'inside'; crossedAt: number; doneAt: number;
+  /** Tick the officers left in the yard pulled its gates shut behind the squad (0 = open). */
+  gatesClosedAt: number;
+  /** All police (posts + squad designates), the squad designates, soldiers and medkit pickups. */
+  officerIds: number[]; squadIds: number[]; soldierIds: number[]; medkitIds: number[];
+  /** The live squad after the fallback (`farSince`: tick it first strayed beyond 40 m) and every loss with its cause. */
+  squad: { id: number; farSince: number }[]; lost: { id: number; cause: 'bite' | 'kill' | 'separated'; tick: number }[];
+  turnedOfficers: number[];
+  /** Station waves still waiting at their emergence points (`id` 0 = not yet out). */
+  waves: { id: number; dir: 'river' | 'blvd' | 'oak'; at: number; wave: number }[]; waveIds: number[]; wavesSpawned: number;
+  /** Corridor population: segments populated, the planned emergences (with their first visible point for the audit) and ids. */
+  populated: boolean[]; pending: { id: number; door: string; home: { x: number; z: number }; segment: number; at: number; x?: number; z?: number; seen?: boolean; horde?: boolean }[]; segmentIds: number[][];
+  /** Forward pressure: furthest progress (x) and when it last grew; emergences behind it. */
+  furthest: number; furthestAt: number; pressureAt: number; pressureIds: number[];
+  /** Highest segment entered (-1 yard), squad size at each segment end, last gunshot tick per shooter, infected retired out of view. */
+  segment: number; segmentSquad: number[]; lastShot: Record<number, number>; retired: number;
+  /** Side-street spills per cross-link (count, last tick) and the infected they brought out. */
+  spills: Record<string, { n: number; at: number }>; spillIds: number[];
+  /** The one avenue without a segment-3 horde pack (seeded). */
+  hordeStreet?: 'blvd' | 'commerce' | 'oak';
+}
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
   l1?: L1State;
   /** L2 set-piece state; checkpoints snapshot it (ticks are shifted on restore). */
   l2?: L2State;
+  /** L3 controller state; checkpoints snapshot it (ticks are shifted on restore). */
+  l3?: L3State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   /** Remaining global gameplay time (cinematics and retry screens pause it). */
   deadlineTicks: number | null;

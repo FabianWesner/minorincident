@@ -1,0 +1,123 @@
+
+> assets:build
+> tsx tools/assets/build.ts veh.military-apc --decay wrecked
+
+01:16:37 | INFO: Data are loaded, start creating Blender stuff
+01:16:37 | INFO: Blender create Mesh node body_pal_khaki
+01:16:37 | INFO: Blender create Mesh node lightsBrake_emi_sirenRed
+01:16:37 | INFO: Blender create Mesh node lightsFront_emi_windowGlow
+01:16:37 | INFO: Blender create Mesh node gun_pal_khaki
+01:16:37 | INFO: Blender create Mesh node turret_pal_olive
+01:16:37 | INFO: Blender create Mesh node wheelFL_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelFR_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelML_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelMR_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelRL_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelRR_pal_oliveLight
+01:16:37 | INFO: glTF import finished in 0.01s
+INFO Draco is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_draco_bridge.dylib
+INFO MeshOptimizer is available, use library at /Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/libbf_intern_meshopt_bridge.dylib
+01:16:37 | INFO: Starting glTF 2.0 export
+01:16:37 | WARNING: Mesh body_pal_picketWhite is not valid, and may be exported wrongly
+01:16:37 | INFO: Extracting primitive: body_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: gun_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: turret_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: wheelFL_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: wheelFR_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: wheelML_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: wheelMR_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: wheelRL_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Extracting primitive: wheelRR_pal_picketWhite
+01:16:37 | INFO: Primitives created: 1
+01:16:37 | INFO: Finished glTF 2.0 export in 0.014123916625976562 s
+
+WRECK veh.military-apc 0 {"triangles": 6821, "draws": 9, "materials": 1, "bytes": 618188, "dimensions": {"x": 5.524307012557983, "y": 3.2760980650782585, "z": 3.0}, "source": "assets/veh.military-apc/model.lod1.glb"}
+01:16:37 | INFO: Data are loaded, start creating Blender stuff
+01:16:37 | INFO: Blender create Mesh node body_pal_khaki
+01:16:37 | INFO: Blender create Mesh node lightsBrake_emi_sirenRed
+01:16:37 | INFO: Blender create Mesh node lightsFront_emi_windowGlow
+01:16:37 | INFO: Blender create Mesh node gun_pal_khaki
+01:16:37 | INFO: Blender create Mesh node turret_pal_olive
+01:16:37 | INFO: Blender create Mesh node wheelFL_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelFR_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelML_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelMR_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelRL_pal_oliveLight
+01:16:37 | INFO: Blender create Mesh node wheelRR_pal_oliveLight
+01:16:37 | INFO: glTF import finished in 0.01s
+01:16:38 | INFO: Starting glTF 2.0 export
+01:16:38 | INFO: Extracting primitive: body_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: gun_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: turret_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelFL_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelFR_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelML_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelMR_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelRL_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelRR_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Finished glTF 2.0 export in 0.008374691009521484 s
+
+WRECK veh.military-apc 1 {"triangles": 2188, "draws": 9, "materials": 1, "bytes": 149336, "dimensions": {"x": 5.240000009536743, "y": 3.2789920065551996, "z": 3.0}, "source": "assets/veh.military-apc/model.lod1.glb"}
+01:16:38 | INFO: Data are loaded, start creating Blender stuff
+01:16:38 | INFO: Blender create Mesh node body_pal_olive
+01:16:38 | INFO: Blender create Mesh node lightsBrake_emi_sirenRed
+01:16:38 | INFO: Blender create Mesh node lightsFront_emi_windowGlow
+01:16:38 | INFO: Blender create Mesh node gun_pal_khaki
+01:16:38 | INFO: Blender create Mesh node turret_pal_olive
+01:16:38 | INFO: Blender create Mesh node wheelFL_pal_oliveLight
+01:16:38 | INFO: Blender create Mesh node wheelFR_pal_oliveLight
+01:16:38 | INFO: Blender create Mesh node wheelML_pal_oliveLight
+01:16:38 | INFO: Blender create Mesh node wheelMR_pal_oliveLight
+01:16:38 | INFO: Blender create Mesh node wheelRL_pal_oliveLight
+01:16:38 | INFO: Blender create Mesh node wheelRR_pal_oliveLight
+01:16:38 | INFO: glTF import finished in 0.01s
+01:16:38 | INFO: Starting glTF 2.0 export
+01:16:38 | INFO: Extracting primitive: body_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: gun_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: turret_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelFL_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelFR_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelML_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelMR_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelRL_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Extracting primitive: wheelRR_pal_picketWhite
+01:16:38 | INFO: Primitives created: 1
+01:16:38 | INFO: Finished glTF 2.0 export in 0.0075948238372802734 s
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+WRECK veh.military-apc 2 {"triangles": 744, "draws": 9, "materials": 1, "bytes": 56900, "dimensions": {"x": 5.240000009536743, "y": 3.1616769526153803, "z": 2.994999885559082}, "source": "assets/veh.military-apc/model.lod2.glb"}
+prune: Removed types... Accessor (9)
+prune: Removed types... Accessor (36)
+prune: Removed types... Accessor (27)
+prune: Removed types... Accessor (6)
+prune: Removed types... Accessor (36)
+prune: Removed types... Accessor (27)
+prune: Removed types... Accessor (5)
+prune: Removed types... Accessor (36)
+prune: Removed types... Accessor (27)
+veh.military-apc: 9a118edd7293cba33bee393008f73393f9a0b47ca5d2747d174c1c2dcd339951

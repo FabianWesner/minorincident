@@ -1,0 +1,36 @@
+
+> assets:validate
+> tsx tools/assets/validate.ts --ids veh.tank
+
+[
+  {
+    "id": "veh.tank:lod0",
+    "errors": [],
+    "triangles": 6844
+  },
+  {
+    "id": "veh.tank:lod1",
+    "errors": [],
+    "triangles": 3972
+  },
+  {
+    "id": "veh.tank:lod2",
+    "errors": [],
+    "triangles": 1764
+  },
+  {
+    "id": "veh.tank.wrecked:lod0",
+    "errors": [],
+    "triangles": 8968
+  },
+  {
+    "id": "veh.tank.wrecked:lod1",
+    "errors": [],
+    "triangles": 3082
+  },
+  {
+    "id": "veh.tank.wrecked:lod2",
+    "errors": [],
+    "triangles": 1532
+  }
+]

@@ -158,6 +158,11 @@ export class Outbreak {
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
+      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
+        this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
+        continue;
+      }
+      if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
       if (c.state === 'calm') this.routine(e);
       else if (c.state === 'alarmed') {
         this.face(e, c.threat, .2);

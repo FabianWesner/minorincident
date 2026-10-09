@@ -1,0 +1,37 @@
+{
+  "assetValidation": {
+    "passed": 847,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "unit": {
+    "filesPassed": 103,
+    "testsPassed": 364,
+    "failed": 0,
+    "workers": 2,
+    "runner": "remote"
+  },
+  "simSmoke": {
+    "filesPassed": 5,
+    "testsPassed": 6,
+    "failed": 0,
+    "testsSkipped": 852,
+    "runner": "remote"
+  },
+  "browserSmoke": {
+    "passed": 9,
+    "failed": 0,
+    "renderer": "WebGL2/Metal",
+    "headless": true,
+    "workers": 2,
+    "platform": "macOS"
+  },
+  "remoteBrowserAttempt": {
+    "passed": 6,
+    "failed": 4,
+    "details": "Three SwiftShader timeouts and one unsupported WebGPU buffer error; WebGL2 cases all passed on local Metal rerun."
+  },
+  "manualWebGPU": "not run (repository rule)"
+}

@@ -11,7 +11,12 @@ export const districtIds = [
 ] as const;
 /** L1 v2 district. Not in `districtIds`: that list is the campaign set iterated by the district/decay suites and L6. */
 export const groveDistrictId = "D-GROVE" as const;
-export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId;
+/** E21 L3 corridor district (the three parallel avenues). Like D-GROVE it is not in `districtIds`. */
+export const corridorDistrictId = "D-CORRIDOR" as const;
+export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId;
+/** Districts that run the L1 v2 outbreak rules (sight-only infected brain, pedestrian outbreak layer, corgi). */
+export const outbreakDistrictIds: readonly DistrictId[] = [groveDistrictId, corridorDistrictId];
+export const isOutbreakDistrict = (id: string): boolean => (outbreakDistrictIds as readonly string[]).includes(id);
 export type Tier = 0 | 1 | 2 | 3 | 4 | 5;
 export type Point = [number, number];
 export interface PlacementTransform {
@@ -33,6 +38,8 @@ export interface Placement extends PlacementTransform {
   visualAabb: Aabb;
   /** Optional per-instance colour multiplier (house walls); batches stay shared, colour is an instance attribute. */
   tint?: string;
+  /** Optional reviewed decay variant of the asset (manifest `decayVariants`: `w2`/`w3` buildings, `wrecked` vehicles). */
+  decay?: string;
 }
 export interface StaticCollider {
   /** Low GLB paving/steps support feet without blocking planar navigation. */

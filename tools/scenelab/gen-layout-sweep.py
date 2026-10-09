@@ -30,14 +30,15 @@ for r in range(3):
         spec('l2-grid-r%dc%d' % (r, c), 'L2', 'D-GROVE', [[x0, z0], [x1, z1]], 1,
              'L2 layout sweep cell r%d c%d: shipped L2 dressing and placement rules, static mesh clipping gate.' % (r, c),
              [(xs[c] + xs[c + 1]) / 2, 0, (zs[r] + zs[r + 1]) / 2])
-for d in ['D-MAIN', 'D-SHOP', 'D-CIVIC']:
-    spec('l3-%s' % d.lower(), 'L3', d, [[-28, -28], [28, 28]], 2,
-         'L3 additions (barricades, cones, police, fences) on %s, static mesh clipping gate.' % d, [0, 0, 0])
-# D-CIVIC's evac camp is one dense authored compound (tents, crates, fence panels inside a 12 m square): the pieces dressed
-# into it overlap the kit by design, so those pairs are listed instead of the whole scene being exempt.
-camp = ['prop.picket-fence', 'prop.street-lamp', 'prop.bench', 'npc.paramedic', 'npc.police-officer', 'prop.tent', 'prop.medical-cooler', 'prop.trash-bags']
+# L3 (E21 Police Collapse) plays in D-CORRIDOR (Scene Lab applies the L3 layout copy for that district): 6 cells along the avenues.
+cx = [-172, -114.7, -57.3, 0, 57.3, 114.7, 172]
+for c in range(6):
+    x0 = cx[c] - (pad if c else 0)
+    x1 = cx[c + 1] + (pad if c < 5 else 0)
+    spec('l3-corridor-c%d' % c, 'L3', 'D-CORRIDOR', [[x0, -46], [x1, 46]], 2,
+         'L3 layout sweep cell %d on D-CORRIDOR: shipped L3 dressing and placement rules, static mesh clipping gate.' % c,
+         [(cx[c] + cx[c + 1]) / 2, 0, 0])
 known = {
-    'l3-d-civic': [['kit.evac-camp', a] for a in camp] + [['prop.tree', 'prop.street-lamp'], ['prop.tree', 'bld.police'], ['prop.tree', 'bld.fire-station'], ['prop.medical-cooler', 'decal.blood-trail']],
     # The bay bench is authored against the crew seat anchors and cuts into the station's front step (see levels/L2/layout.ts).
     'l2-grid-r2c0': [['prop.bench', 'bld.fire-station']],
 }

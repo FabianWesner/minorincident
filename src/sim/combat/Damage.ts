@@ -36,6 +36,13 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
 export class Damage {
   god = false;
   constructor(private readonly world: SimWorld) {}
+  /** Per-level toughness (L2): a melee hit does at most maxHP / hits, so the weapon needs `hits` hits to down a normal infected. */
+  private meleeCap(hit: DamageEvent, target: EntitySnapshot): number | undefined {
+    const hits = this.world.infectedMeleeHits;
+    if (!hits || hit.type !== 'melee' || target.faction !== 'infected' || target.archetype === 'infected.crow') return undefined;
+    const count = hits[hit.actionId];
+    return count ? target.health.max / count : undefined;
+  }
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
@@ -55,6 +62,7 @@ export class Damage {
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
+    const cap = this.meleeCap(hit, target); if (cap !== undefined) amount = Math.min(amount, cap);
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;

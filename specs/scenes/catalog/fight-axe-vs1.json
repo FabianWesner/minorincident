@@ -1,0 +1,55 @@
+{
+ "name": "fight-axe-vs1",
+ "note": "L2 fire axe. 1 chasing infected walk into the courier; she attacks them one after the other with the real target-attack input (every click attacks). Look for: the swing hitting, knockdown reads, bodies not merging, nobody invisible.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "z-1",
+   "kind": "infected",
+   "at": [
+    6.58,
+    2.39
+   ],
+   "yaw": 200.0,
+   "state": "chase"
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "attack": "z-1",
+    "seconds": 4
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 9,
+  "azimuth": 40
+ },
+ "frames": 360,
+ "sheet": 20,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "bodyOverlapMaxCm": 6,
+  "footSinkMaxCm": 1
+ }
+}

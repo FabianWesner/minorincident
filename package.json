@@ -35,7 +35,8 @@
     "look:score": "sh tools/e2e-lock.sh tsx tools/look/score.ts",
     "scene": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts",
     "scene:layout": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts specs/scenes/layout-sweep/*.json",
-    "scene:mcp": "tsx tools/scenelab/mcp.ts"
+    "scene:mcp": "tsx tools/scenelab/mcp.ts",
+    "scene:catalog": "sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "0.21.0",
