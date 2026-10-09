@@ -4,6 +4,8 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Crowd } from './crowd';
 import { AssetRegistry, type PlaceholderLog } from './registry';
+import { Lighting } from '../render/Lighting';
+import { Materials } from '../render/Materials';
 import manifest from './manifest.json';
 import type { AssetDef } from './types';
 
@@ -32,7 +34,9 @@ export async function assetViewer(): Promise<void> {
   const camera = new PerspectiveCamera(25, innerWidth / innerHeight, .01, 500);
   const controls = new OrbitControls(camera, renderer.domElement);
   const events: PlaceholderLog[] = [];
-  const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer,
+  const inspectionLighting = new Lighting(new Scene());
+  const inspectionMaterials = new Materials(inspectionLighting);
+  const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
     // Explicit inspection shows pending source files without stale registration metadata.
     manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
       ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [], dimensions: { ...def.dimensions, tolerance: Number.POSITIVE_INFINITY } } : {}) } : def) : undefined,
@@ -42,7 +46,14 @@ export async function assetViewer(): Promise<void> {
   decay.disabled = !registry.definition(id).decayVariants.length;
   let object: Object3D, extent = 1;
   const center = new Vector3(), size = new Vector3();
-  function render(): void { renderer.info.reset(); renderer.render(scene,camera); }
+  function render(): void {
+    // Isolated inspection follows the game's zoom-relative fog convention.
+    // Large interiors need a distant camera to fit, without fog hiding their surfaces.
+    const fogOffset = Math.max(0, camera.position.distanceTo(controls.target) - 19);
+    inspectionLighting.fogNear.value = 55 + fogOffset;
+    inspectionLighting.fogFar.value = 140 + fogOffset;
+    renderer.info.reset(); renderer.render(scene,camera);
+  }
   async function view(index: number): Promise<void> {
     const angle = index === 4 ? Math.PI / 4 : index * Math.PI / 2;
     const elevation = index === 4 ? Math.PI * .2 : .32;
@@ -137,5 +148,5 @@ export async function assetViewer(): Promise<void> {
   } };
   await ready;
   window.addEventListener('resize', () => { renderer.setSize(innerWidth,innerHeight); camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix(); render(); });
-  window.addEventListener('pagehide', () => { controls.dispose(); if (object instanceof Crowd) object.dispose(); void registry.dispose(); renderer.dispose(); }, { once: true });
+  window.addEventListener('pagehide', () => { controls.dispose(); if (object instanceof Crowd) object.dispose(); void registry.dispose(); inspectionMaterials.dispose(); inspectionLighting.dispose(); renderer.dispose(); }, { once: true });
 }

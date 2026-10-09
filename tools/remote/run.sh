@@ -115,7 +115,9 @@ retry scp -q $SSHO "$LIST" "$HOST:$CACHE/.mi-manifest.new" \
   || { echo "run.sh: manifest update failed" >&2; exit 70; }
 # Private job dir: a full copy (about 270 MB of source), so parallel jobs never write into each other's files or into the cache.
 JOB_STARTED=1
-retry ssh $SSHO "$HOST" "rm -rf -- $JOB && cp -a $CACHE $JOB" || { echo "run.sh: cannot create job dir" >&2; exit 70; }
+# Prune first: job dirs older than 3 h whose run is not alive (no process has its cwd inside) are left by interrupted runs.
+PRUNE='for d in $(find /srv/mi/jobs -mindepth 1 -maxdepth 1 -mmin +180); do live=; for c in /proc/[0-9]*/cwd; do t=$(readlink "$c" 2>/dev/null) || continue; case $t in "$d"|"$d"/*) live=1; break;; esac; done; [ -n "$live" ] || rm -rf -- "$d"; done; avail=$(df -Pk /srv/mi | awk "NR==2{print int(\$4/1048576)}"); [ "$avail" -ge 8 ] || echo "[remote] WARNING: $(hostname) has ${avail} GB free after prune (under 8 GB)" >&2'
+retry ssh $SSHO "$HOST" "$PRUNE; rm -rf -- $JOB && cp -a $CACHE $JOB" || { echo "run.sh: cannot create job dir" >&2; exit 70; }
 rmdir "$LOCK" 2>/dev/null; LOCKED=""
 T1=$(date +%s)
 
