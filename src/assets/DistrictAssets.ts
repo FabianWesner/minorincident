@@ -17,6 +17,7 @@ import { staticBatch, staticBatchAsync } from './staticBatch';
 import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
+import { openFireStationBays } from './fireStationBays';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2']): string[] {
   const def = definition(productionIds[id] ?? id);
@@ -107,10 +108,10 @@ export class DistrictAssets {
     return (lod === 'lod1' || lod === 'lod2') && !assetDef.lods?.[lod] ? 'lod0' : lod;
   }
   /** Powered and unpowered placements share their large diffuse geometry. */
-  private base(id: string, lod: AssetQuality): Promise<Group> {
+  private base(id: string, lod: AssetQuality, decay?: string): Promise<Group> {
     const def = worldAssets[id], productionId = productionIds[id] ?? id, canonical = this.canonical(id, lod);
-    const baseKey = `${id}:batch:${canonical}`;
-    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical).then(async (asset) => {
+    const baseKey = `${id}:batch:${canonical}:${decay ?? ''}`;
+    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical, decay).then(async (asset) => {
       await loadGate.wait();
       if (productionId !== id) {
         const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
@@ -119,11 +120,7 @@ export class DistrictAssets {
         const fit = Math.max(straight, turned); asset.scale.set(fit, 1, fit);
         if (turned > straight) asset.rotation.y = Math.PI / 2;
       }
-      // The authored sectional leaves expose a real aperture (not a dark overlay on a closed door).
-      if (id === 'bld.fire-station') for (const name of ['door_bay_L', 'door_bay_R']) {
-        const leaf = asset.getObjectByName(name);
-        if (leaf) leaf.position.y += Number(leaf.userData.travel ?? 3.15);
-      }
+      openFireStationBays(id, asset);
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
       const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
@@ -137,21 +134,22 @@ export class DistrictAssets {
     }));
     return this.cache.get(baseKey)!;
   }
-  async asset(id: string, lit = true, lod: AssetQuality = 'lod1'): Promise<Group> {
+  /** `decay`: a reviewed decay variant of the asset (`w2`/`w3` buildings, `wrecked` vehicles; E21 per-placement damage). */
+  async asset(id: string, lit = true, lod: AssetQuality = 'lod1', decay?: string): Promise<Group> {
     const def = worldAssets[id];
     // Registered decals, camp kits and character dressing have no world footprint.
     // Keep their original materials (including decal alpha/texture) in static instances.
     if (!def) {
-      const key = `dressing:${id}:${lod}`;
-      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod).then(root => { const group = new Group(); group.add(root); return this.remember(group); }));
+      const key = `dressing:${id}:${lod}:${decay ?? ''}`;
+      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod, decay).then(root => { const group = new Group(); group.add(root); return this.remember(group); }));
       return this.cache.get(key)!;
     }
     const productionId = productionIds[id] ?? id;
     if (atLeast(this.assets.definition(productionId).status, "integrated")) {
       const canonical = this.canonical(id, lod);
-      const key = `${id}:${lit}:${canonical}`;
-      const baseKey = `${id}:batch:${canonical}`;
-      void this.base(id, lod);
+      const key = `${id}:${lit}:${canonical}:${decay ?? ''}`;
+      const baseKey = `${id}:batch:${canonical}:${decay ?? ''}`;
+      void this.base(id, lod, decay);
       if (!this.cache.has(key)) this.cache.set(key, this.cache.get(baseKey)!.then(source => {
         if (lit) return source;
         const root = source.clone(true);

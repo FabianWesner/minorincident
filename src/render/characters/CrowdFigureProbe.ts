@@ -1,5 +1,6 @@
 import { Matrix4, Vector3 } from 'three';
 import type { CrowdPosePalette } from './CrowdPosePalette';
+import { pickBodies } from './PickBodies';
 
 /** Draw-submission and ankle probes, read only by the query-gated test API. */
 export class CrowdFigureProbe {
@@ -16,6 +17,7 @@ export class CrowdFigureProbe {
   /** Sole (heel/toe) points need the rest ankle height in foot-local units (CrowdLocomotion.sole). */
   sole = 0;
   add(id: number, clip: string, phase: number, instance: Matrix4, palette: CrowdPosePalette, frame: number, outgoing: number, weight: number): void {
+    pickBodies.add(id, instance, palette, frame, outgoing, weight);
     if (!this.enabled) return;
     const pose = palette.pose(frame, outgoing, weight);
     const feet = ['footL', 'footR'].map(name => {

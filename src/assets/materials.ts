@@ -27,7 +27,7 @@ export class AssetMaterials {
         const token = match[2] as PaletteToken;
         let open = false;
         if (root.userData.diner && token === 'survivorRed') for (let parent = node.parent; parent; parent = parent.parent) if (parent.name === 'door_front') { open = true; break; }
-        const emissive = match[1] === 'emi' || open || world && token === 'windowGlow' ? 2 : 0;
+        const emissive = match[1] === 'emi' || open ? 2 : 0; // only emi_* (or the diner's open door) glows: pal_windowGlow is a plain tan paint (mainstreet-brick walls, plank stacks)
         const vertexColors = !emissive && node.geometry.hasAttribute('color');
         // Preserve authored thin hair/cloth faces in both palette and crowd bakes.
         const material = world ? this.shading.world(token, emissive, vertexColors, source.side) : this.shading.asset(token, emissive, vertexColors, source.side);

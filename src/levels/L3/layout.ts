@@ -1,47 +1,131 @@
+import { l3Anchors, l3Street } from '../../data/l3';
+import { findClearSpot, firstOverlap, footprints, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 
-/** L3-only dressing/parking edits feed both collision and rendering from the same layout. */
+/** Kinds of the W2 -> W3 "recently collapsed, still recognizable" dressing (E21 section 5.8); counted by the static AC15 test. */
+export type L3DressingKind =
+  // Oak Avenue (residential)
+  | 'garden' | 'crashed' | 'barricade' | 'blood' | 'corpse'
+  // Commerce Street (shopping)
+  | 'broken-window' | 'looted' | 'merchandise' | 'bags' | 'damaged-sign'
+  // Grove Boulevard (main road)
+  | 'wrecked-bus' | 'police-vehicle' | 'jam' | 'fighting'
+  // everywhere
+  | 'abandoned' | 'fire' | 'smoke'
+  // set pieces
+  | 'station' | 'army';
+export type L3Street = 'oak' | 'commerce' | 'blvd' | 'yard' | 'army';
+/**
+ * `entity`: not a static placement. `corpse` entries are dead pedestrians spawned by the L3 controller (the crowd model, no
+ * extra batch); `fire` entries are E27 fire hazards (flame cards, light pool and a smoke column; they kill infected, the
+ * PO rule's "fire kills"); `smoke` entries are smoke columns of fires deep inside a block (unreachable, visible from every
+ * street). `lit`: police light bars (L3Props). `decay`: the asset's reviewed decay variant.
+ */
+export interface L3Dressing { kind: L3DressingKind; street: L3Street; assetId: string; x: number; z: number; yaw?: number; scale?: number; decay?: string; lit?: boolean; entity?: boolean; count?: number }
+const H = Math.PI / 2, PI = Math.PI;
+const N = -29.9, S = -26.1;   // Boulevard lanes
+const d = (kind: L3DressingKind, street: L3Street, assetId: string, x: number, z: number, more: Partial<L3Dressing> = {}): L3Dressing => ({ kind, street, assetId, x, z, ...more });
+const corpse = (street: L3Street, x: number, z: number, model: string, yaw: number) => d('corpse', street, model, x, z, { yaw, entity: true });
+const fire = (street: L3Street, x: number, z: number, scale = 1) => d('fire', street, 'fx.fire', x, z, { scale, entity: true });
+
+/** Static L3 dressing manifest (the broken glass at every Commerce shop frontage is derived from the layout, see below). */
+export const l3Dressing: readonly L3Dressing[] = [
+  // ---------------------------------------------------------------- Grove Boulevard: jam, wrecked buses, police, fighting
+  ...([[-20, N, 'veh.sedan-blue', PI + .06], [-14, S, 'veh.suv-dark', .05], [-8, N, 'veh.pickup-white', PI - .08], [-2, S, 'veh.sedan-white', .1, 'wrecked'],
+    [4, N, 'veh.sedan-green', PI + .1], [10, S, 'veh.pickup-red', -.06], [16, N, 'veh.suv-green', PI - .05], [22, S, 'veh.sedan-red', .08], [28, N, 'veh.sedan-blue', PI]] as const)
+    .map(([x, z, assetId, yaw, decay]) => d('jam', 'blvd', assetId, x, z, { yaw, ...(decay ? { decay } : {}) })),
+  d('wrecked-bus', 'blvd', 'veh.school-bus', -78, -27.6, { yaw: .3, decay: 'wrecked' }),
+  d('wrecked-bus', 'blvd', 'veh.school-bus', 66, -28.2, { yaw: -.25, decay: 'wrecked' }),
+  d('police-vehicle', 'blvd', 'veh.police-suv', -104, -25.9, { yaw: .1, lit: true }),
+  d('police-vehicle', 'blvd', 'veh.police-sedan', -46, N, { yaw: PI - .2, lit: true }),
+  d('police-vehicle', 'blvd', 'veh.police-sedan', 84, -26.2, { yaw: .15 }),
+  d('police-vehicle', 'blvd', 'veh.police-sedan', 34, -29.6, { yaw: PI + .4, decay: 'wrecked' }),
+  d('fighting', 'blvd', 'prop.sandbag-pallet', -100, -23.6), d('fighting', 'blvd', 'prop.sandbag-pallet', -98.4, -23.6, { yaw: .2 }),
+  d('fighting', 'blvd', 'prop.barricade', -102.6, -24.0, { yaw: H }), d('fighting', 'blvd', 'prop.tear-gas-canister', -96.6, -25.2),
+  d('fighting', 'blvd', 'wpn.police-baton', -97.4, -24.4, { yaw: .7 }), d('fighting', 'blvd', 'prop.sandbag-pallet', 31.0, -23.4, { yaw: -.3 }),
+  d('fighting', 'blvd', 'prop.traffic-cone', -94.0, -26.0), d('fighting', 'blvd', 'prop.traffic-cone', 37.0, -25.4),
+  corpse('blvd', -99.2, -26.6, 'npc.police-officer', 1.2), corpse('blvd', -74, -24.4, 'npc.civilian-man-a', 2.6), corpse('blvd', 8.6, -23.6, 'npc.civilian-woman-b', .4), corpse('blvd', 70, -31.8, 'npc.civilian-man-b', 4.1),
+  d('blood', 'blvd', 'decal.blood-pool', -99.6, -25.8), d('blood', 'blvd', 'decal.blood-trail', 9.4, -24.0, { yaw: 1.1 }),
+  fire('blvd', -2, S, 1.1), fire('blvd', 34, -29.6, 1.1), fire('blvd', 66, -28.2, 1.3),
+  // ---------------------------------------------------------------- Commerce Street: looted shops, merchandise, bags, signs
+  ...([[-104, -3.4, 0], [-28, 3.4, PI], [22, -3.4, 0], [64, 3.4, PI], [102, -3.4, 0]] as const).map(([x, z, yaw]) => d('looted', 'commerce', 'decay.looted-store', x, z, { yaw })),
+  ...([[-101.6, -1.8, 'prop.shopping-cart'], [-25.8, 2.2, 'prop.shopping-cart'], [60.2, 1.6, 'prop.shopping-cart'], [24.4, -3.3, 'prop.crates'], [-64.8, 3.3, 'prop.crates'], [100.4, 2.2, 'prop.vending-cart']] as const)
+    .map(([x, z, assetId], i) => d('merchandise', 'commerce', assetId, x, z, { yaw: i * 1.3 })),
+  ...([[-60, 1.0], [-8, -1.2], [48, .8], [90, -1.4]] as const).map(([x, z], i) => d('bags', 'commerce', 'decay.dropped-belongings', x, z, { yaw: i * 1.9 })),
+  ...([[-80, -3.7, 0], [5, 3.7, PI], [75, -3.7, 0]] as const).map(([x, z, yaw]) => d('damaged-sign', 'commerce', 'decay.damaged-sign', x, z, { yaw: yaw + .3 })),
+  d('abandoned', 'commerce', 'veh.sedan-blue', -64, 1.3, { yaw: .1 }), d('abandoned', 'commerce', 'veh.sedan-white', 110, -1.3, { yaw: PI, decay: 'wrecked' }),
+  corpse('commerce', -44, 1.8, 'npc.civilian-woman-a', .8), corpse('commerce', -10, 3.6, 'npc.civilian-elderly', 2.2), corpse('commerce', 34, -1.6, 'npc.civilian-man-a', 5.0), corpse('commerce', 88, 2.4, 'npc.civilian-woman-b', 3.3),
+  d('blood', 'commerce', 'decal.blood-trail', -43, 2.6, { yaw: .4 }),
+  fire('commerce', 110, -1.3, 1.1), fire('commerce', 70.4, -3.7, .9),
+  // ---------------------------------------------------------------- Oak Avenue: crashed cars, barricades, trampled gardens
+  d('crashed', 'oak', 'veh.sedan-red', -72, 26.8, { yaw: .6, decay: 'wrecked' }),
+  d('crashed', 'oak', 'veh.suv-dark', 14, 29.4, { yaw: -.5, decay: 'wrecked' }),
+  d('crashed', 'oak', 'veh.pickup-red', 98, 27.2, { yaw: 2.6, decay: 'wrecked' }),
+  d('abandoned', 'oak', 'veh.sedan-green', -36, 29.6, { yaw: PI }), d('abandoned', 'oak', 'veh.suv-green', 58, 26.2, { yaw: .1 }),
+  d('barricade', 'oak', 'decay.makeshift-barricade', -24, 26.6, { yaw: H }),
+  d('barricade', 'oak', 'decay.furniture-barricade', 72, 29.6),
+  d('barricade', 'oak', 'decay.makeshift-barricade', 112, 29.4, { yaw: -H }),
+  ...([[-80, 32.0, 'prop.broken-chair'], [-8, 24.0, 'prop.trash-bags'], [62, 32.0, 'decay.dropped-belongings'], [100.6, 24.0, 'prop.wheelbarrow'], [-58, 24.0, 'prop.lawn-chair-a'], [24, 32.0, 'prop.trash-bin']] as const)
+    .map(([x, z, assetId], i) => d('garden', 'oak', assetId, x, z, { yaw: i * 1.7 })),
+  corpse('oak', -66, 24.6, 'npc.civilian-man-b', 1.9), corpse('oak', -20, 31.6, 'npc.civilian-woman-a', .3), corpse('oak', 18.4, 31.4, 'npc.civilian-elderly', 4.4),
+  corpse('oak', 60, 24.2, 'npc.civilian-man-a', 2.8), corpse('oak', 102, 31.6, 'npc.civilian-woman-b', 5.6),
+  ...([[-67.6, 26.2, 'decal.blood-trail'], [22.4, 31.0, 'decal.blood-pool'], [100, 24.4, 'decal.blood-trail']] as const).map(([x, z, assetId], i) => d('blood', 'oak', assetId, x, z, { yaw: i * 1.4 })),
+  fire('oak', 14, 29.4, 1.1), fire('oak', -72, 26.8, .9),
+  // Fires deep inside the blocks (unreachable service strips): their smoke columns stand over every street.
+  d('smoke', 'commerce', 'fx.fire', -18, -13.5, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', -44, 13.4, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', 30, 13.4, { scale: 1.6, entity: true }), d('smoke', 'blvd', 'fx.fire', 88, -13.5, { scale: 1.6, entity: true }),
+  // ---------------------------------------------------------------- the station yard and the bridgehead (W1, organized)
+  d('station', 'yard', 'prop.armory-table', -140.6, -8.4, { yaw: H }),
+  d('station', 'yard', 'veh.police-sedan', -148, 10.4, { yaw: .1, lit: true }), d('station', 'yard', 'veh.police-suv', -140.6, 12.6, { yaw: -.2, lit: true }),
+  d('station', 'yard', 'veh.police-sedan', -134.2, 9.2, { yaw: H, lit: true }), d('station', 'yard', 'veh.police-suv', -156.4, -8.0, { yaw: H, lit: true }),
+  ...([[-128.6, -19.9, 0], [-127.2, -6.4, H], [-127.2, 6.4, H], [-128.6, 19.9, 0], [-157.6, -17.4, 0], [-144.0, 17.4, 0]] as const).map(([x, z, yaw]) => d('station', 'yard', 'prop.sandbag-pallet', x, z, { yaw })),
+  d('station', 'yard', 'prop.light-tower', -133.6, -14.6, { yaw: .4 }), d('station', 'yard', 'prop.jersey-barrier', -136.2, 15.8, { yaw: H }),
+  ...([[-158.8, -1.6], [-158.8, 1.6], [-157.0, 3.4]] as const).map(([x, z]) => d('station', 'yard', 'prop.traffic-cone', x, z)),
+  // ---------------------------------------------------------------- the army checkpoint (heavier than the L2 police line)
+  d('army', 'army', 'veh.evac-bus', 158, -12.4), d('army', 'army', 'veh.evac-bus', 158, 11.6),
+  d('army', 'army', 'veh.military-truck', 151, -24.0, { yaw: H }), d('army', 'army', 'veh.military-apc', 150.4, 17.6, { yaw: PI + .2 }),
+  d('army', 'army', 'prop.light-tower', 145.6, -18.6), d('army', 'army', 'prop.light-tower', 145.6, 16.4, { yaw: PI }),
+  ...([[141.2, -9.6], [141.2, 9.6], [141.2, -15.0], [141.2, 15.0], [146.0, -6.4], [146.0, 6.4]] as const).map(([x, z]) => d('army', 'army', 'prop.sandbag-pallet', x, z, { yaw: H })),
+  ...([[154.0, -4.6], [154.0, 4.6], [162.0, -1.0]] as const).map(([x, z]) => d('army', 'army', 'prop.jersey-barrier', x, z, { yaw: 0 })),
+];
+
+/** Commerce Street shop fronts: broken glass at every frontage (E21 section 5.8), one per shop door. */
+export function commerceFrontages(layout: DistrictLayout): { x: number; z: number; facing: 1 | -1 }[] {
+  return layout.placements.filter(p => /^bld\.(mainstreet-brick|joes-diner|maple-hardware|pharmacy|supermarket|cafe-corner)$/.test(p.assetId) && l3Street(p.position[2]) === 'commerce')
+    .map(p => ({ x: p.position[0], z: p.position[2] < 0 ? -3.6 : 3.6, facing: p.position[2] < 0 ? 1 : -1 }));
+}
+
+/**
+ * L3 copy of the D-CORRIDOR layout: authored L3 anchors, the W2/W3 dressing manifest and the broken glass at every Commerce
+ * shop frontage. Feeds collision, navigation and rendering alike (the same pattern as L2's layout copy).
+ */
 export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
-    layout.anchors.arrival.position = [0, 0, -20];
-    const moved = new Set<string>();
-    for (const p of layout.placements) if (p.assetId === 'veh.wreck') {
-      // Keep the abandoned cars, but leave the whole 5 m road open for a long chassis.
-      p.position[0] = p.position[0] < 0 ? -8 : 8;
-      if (Math.abs(p.position[2]) < 8) p.position[2] = p.position[2] < 0 ? -8 : 8;
-      moved.add(p.id);
-    }
-    for (const p of layout.placements) if (['prop.fire-hydrant', 'prop.street-sign'].includes(p.assetId) && Math.abs(p.position[0]) < 4 && Math.abs(p.position[2]) < 4) {
-      // Keep corner furniture outside the sedan's swept chassis while turning.
-      p.position[0] = Math.sign(p.position[0])*8; p.position[2] = Math.sign(p.position[2])*8; moved.add(p.id);
-    }
-    for (const p of layout.placements) if (p.assetId === 'prop.street-lamp' && Math.abs(p.position[0]) <= 5 && Math.abs(p.position[2]) <= 4) {
-      p.position[0] = Math.sign(p.position[0])*10; moved.add(p.id);
-    }
-    const add = (assetId: string, x: number, z: number, yaw = 0): void => {
-      const p: Placement = { id: `l3-${layout.placements.length}`, assetId, position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 2, maxTier: 2, allowRoad: true, lightGroup: 'l3-emergency', visualAabb: { min: [x-.5, 0, z-.5], max: [x+.5, 1, z+.5] } };
-      if (assetId.startsWith('decal.')) { p.position[1] = .06; p.scale = [1.6, 1, 2.8]; }
+    if (layout.district !== 'D-CORRIDOR') return layout;
+    for (const [name, [x, z]] of Object.entries(l3Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    // Placement rule shared with L2: dressing never cuts into a fence, wall, lamp, tree or another prop and stays out of
+    // gardens; a piece that would moves to the nearest clear spot (cars slide along their own axis first, bumper to obstacle).
+    // A fence run never ends inside a building: base panels that cut into one are dropped (the fence simply stops at the wall).
+    const walls = layout.placements.filter(p => p.assetId.startsWith('bld.') || p.assetId.startsWith('kit.')).flatMap(p => footprints(p));
+    const through = new Set(layout.placements.filter(p => /fence/.test(p.assetId) && firstOverlap(p, walls, .2) !== undefined).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !through.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !through.has(c.id.split('/')[0]));
+    const obstacles = obstaclesOf(layout, 2);
+    const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string) => {
+      const decal = assetId.startsWith('decal.');
+      const p: Placement = { id, assetId, position: [x, decal ? .06 : 0, z], yaw, scale: decal ? [1.4, 1, 2.6] : [scale, scale, scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l3', visualAabb: { min: [x - 1, 0, z - 1], max: [x + 1, 1.5, z + 1] } };
+      if (decay) p.decay = decay;
+      if (!decal && footprints(p, 0, true).length) {
+        const spot = findClearSpot(layout, p, obstacles, { slide: assetId.startsWith('veh.'), margin: assetId.startsWith('veh.') ? .1 : .3, maxRadius: 8 });
+        if (!spot) throw new Error(`No clear spot for ${id} (${assetId}) near ${x}, ${z}`);
+        const [dx, dz] = [spot[0] - x, spot[1] - z];
+        p.position = [spot[0], 0, spot[1]]; p.visualAabb = { min: [x + dx - 1, 0, z + dz - 1], max: [x + dx + 1, 1.5, z + dz + 1] };
+        obstacles.push(...footprints(p, 0, true));
+      }
       layout.placements.push(p);
     };
-    layout.lightGroups.push({ id: 'l3-emergency', offAt: 3 });
-    if (layout.district === 'D-MAIN') for (let i = 0; i < 4; i++) {
-      add('prop.traffic-cone', 5.5, 14-i*5); add('prop.barricade', -11, 17-i*3, Math.PI/2);
-      add('prop.trash-bags', 7, 17-i*6); add('decal.blood-trail', -1.5, 15-i*4, Math.PI/2);
-    }
-    if (layout.district === 'D-SHOP') { add('prop.barricade', -5, -2, Math.PI/2); add('veh.police-sedan', -8, -2, Math.PI/2); }
-    if (layout.district === 'D-CIVIC') {
-      for (let i = 0; i < 4; i++) add('prop.picket-fence', 4+i*4, 24);
-      for (const x of [2, 18]) for (const z of [14, 18, 22]) add('prop.picket-fence', x, z, Math.PI/2);
-      for (const x of [2, 10, 14, 18]) add('prop.picket-fence', x, 10);
-      for (let i = 0; i < 4; i++) add('prop.traffic-cone', -2, -9+i*3);
-      add('prop.barricade', -2, -10, Math.PI/2); add('prop.barricade', -2, 2, Math.PI/2);
-      add('prop.medical-cooler', 7, 14); add('prop.bench', 10, 19);
-      add('prop.trash-bags', 5, 20); add('decal.blood-trail', 6, 15);
-      add('npc.police-officer', 6, 10); add('npc.paramedic', 8, 13);
-      add('prop.street-lamp', 3, 20); add('prop.street-lamp', 17, 20);
-      add('kit.evac-camp', 10, 16);
-    }
-    layout.colliders = layout.colliders.filter(c => !moved.has(c.id));
+    for (const [i, entry] of l3Dressing.entries()) if (!entry.entity) add(`l3-${entry.kind}-${i}`, entry.assetId, entry.x, entry.z, entry.yaw ?? 0, entry.scale ?? 1, entry.decay);
+    for (const [i, f] of commerceFrontages(layout).entries()) add(`l3-broken-window-${i}`, 'decay.broken-glass', f.x, f.z, f.facing > 0 ? 0 : Math.PI);
+    layout.lightGroups.push({ id: 'l3', offAt: 5 });
     return layout;
   });
 }

@@ -58,7 +58,7 @@ export async function packAsset(def: AssetDef, regenerate = false): Promise<numb
     added += await packAsset({ ...def, id: `${def.id}.${decay}`, decayVariants: [],
       sourceGlb: variantPath(source, decay), glb: variantPath(def.glb, decay),
       lods: { lod1: def.lods?.lod1 && variantPath(def.lods.lod1, decay), lod2: def.lods?.lod2 && variantPath(def.lods.lod2, decay) },
-      budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget },
+      budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget, ...def.decayBudgets?.[decay] },
       authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles,
     }, regenerate);
   }

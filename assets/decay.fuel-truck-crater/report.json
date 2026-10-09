@@ -1,0 +1,51 @@
+{
+  "id": "decay.fuel-truck-crater",
+  "status": "integrated",
+  "tiers": [
+    {
+      "tier": 0,
+      "triangles": 1172,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 37188,
+      "dimensions": [
+        9.638032913208008,
+        1.8054214917835247,
+        6.801656333659535
+      ],
+      "hash": "b3a5fcc58de83da1dd502fe64b70dd40c448910c2d5296773b4626a4842c1d3b",
+      "path": "public/assets/models/decay.fuel-truck-crater.glb"
+    },
+    {
+      "tier": 1,
+      "triangles": 504,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 20604,
+      "dimensions": [
+        9.681879997253418,
+        1.8086119407693158,
+        6.724455243918983
+      ],
+      "hash": "4eb6bef479a16712f2622bca42545202d3209303f53544599560d38814059bf1",
+      "path": "public/assets/models/decay.fuel-truck-crater.lod1.glb"
+    },
+    {
+      "tier": 2,
+      "triangles": 190,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 11596,
+      "dimensions": [
+        9.36000108718872,
+        1.761623789321355,
+        6.635725737949582
+      ],
+      "hash": "6c3ba2b868ce3a2a2a92d7b45e2f98bf5bdfb81e3e0dd8d3fbb58fec12376040",
+      "path": "public/assets/models/decay.fuel-truck-crater.lod2.glb"
+    }
+  ],
+  "authored": true,
+  "deterministicSourceBytes": true,
+  "notes": "See notes.md and review.md; concave crater collision requires terrain/runtime consumption."
+}

@@ -3,11 +3,12 @@ from mathutils import Matrix
 from . import naming
 
 
-def merge_by_material(root, protected):
+def merge_by_material(root, protected, preserve_vertex_colors=False):
     """Evaluate modifiers and merge static meshes within each rigid assembly."""
     bpy.context.view_layer.update()
     graph = bpy.context.evaluated_depsgraph_get()
     groups = {}
+    colors = {}
     meshes = [o for o in root.children_recursive if o.type == 'MESH']
     for obj in meshes:
         owner = obj.parent
@@ -21,10 +22,13 @@ def merge_by_material(root, protected):
             material = data.materials[tri.material_index]
             key = (owner.name, material.name)
             verts, faces = groups.setdefault(key, ([], []))
+            layer = data.color_attributes.active_color if preserve_vertex_colors else None
             points = [transform @ data.vertices[i].co for i in tri.vertices]
             if (points[1] - points[0]).cross(points[2] - points[0]).length < 1e-12:
                 continue
             start = len(verts)
+            if preserve_vertex_colors:
+                colors.setdefault(key, []).extend(tuple(layer.data[i if layer.domain == "CORNER" else data.loops[i].vertex_index].color) if layer else (1, 1, 1, 1) for i in tri.loops)
             verts.extend(points)
             faces.append((start, start + 1, start + 2))
         evaluated.to_mesh_clear()
@@ -40,10 +44,17 @@ def merge_by_material(root, protected):
                 unique.append(key)
             indices.append(lookup[key])
         faces = [tuple(indices[i] for i in face) for face in faces]
-        faces = [face for face in faces if len(set(face)) == 3]
+        valid = [i for i, face in enumerate(faces) if len(set(face)) == 3]
+        faces = [faces[i] for i in valid]
         mesh = bpy.data.meshes.new(owner_name + '_' + material_name)
         mesh.from_pydata(unique, [], faces)
         mesh.materials.append(bpy.data.materials[material_name])
+        if preserve_vertex_colors:
+            layer = mesh.color_attributes.new(name="palette", type="FLOAT_COLOR", domain="CORNER")
+            mesh.color_attributes.active_color = layer
+            values = colors[(owner_name, material_name)]
+            for j, i in enumerate(valid):
+                for k in range(3): layer.data[j * 3 + k].color = values[i * 3 + k]
         obj = bpy.data.objects.new(mesh.name, mesh)
         bpy.context.scene.collection.objects.link(obj)
         obj.parent = bpy.data.objects[owner_name]

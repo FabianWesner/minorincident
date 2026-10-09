@@ -13,6 +13,12 @@ export interface AssetDef {
   id: string;
   /** Alternate inventory ID sharing a canonical model and its node/LOD contract. */
   aliasOf?: string;
+  /** Living skin: per-owner material batches and per-tier draws cannot exceed this shipped rig. */
+  rigidDrawBase?: string;
+  /** Living rigid skins must not exceed their shipped base's draws at any tier. */
+  rigDrawBase?: { id: string; member?: string };
+  /** Living adult skin: total owner/material draws must not exceed this shipped base per LOD. */
+  animatedDrawBase?: string;
   /** Presentation supplied by images, UI or procedural effects rather than a GLB. */
   nonModel?: 'ui' | 'ability' | 'procedural';
   /** District code placeholder palette and collision ownership. */
@@ -54,6 +60,8 @@ export interface AssetDef {
   decayBudget?: Partial<AssetDef["budget"]>;
   /** Ruin variants may be shorter (collapsed tower/cupola); footprint axes stay on the base value. */
   decayDimensions?: Partial<{ x: number; y: number; z: number }>;
+  /** Limits for a particular damage recipe; other shipped variants keep their budgets. */
+  decayBudgets?: Record<string, Partial<AssetDef["budget"]>>;
   decayAuthoredLodTriangles?: { lod1: number; lod2: number };
   decayVariants: string[];
 }

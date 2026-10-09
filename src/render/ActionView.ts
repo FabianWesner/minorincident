@@ -130,7 +130,7 @@ export class ActionView extends Group {
       const def = action(loadout.current(side).id); let held = this.held[side];
       if (held?.id !== def.id) { const model = this.model(def); if (!model) continue; held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group(); holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
       const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
-      const inHand = side === selectedSide, mount = inHand ? this.character.socket('RIGHT').socket : this.holsterMount(def.category);
+      const inHand = side === selectedSide, mount = inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
       if (mount && held.holder.parent !== mount) mount.add(held.holder);
       const pose = inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
       if (pose) { held.holder.rotation.set(pose.rot[0], pose.rot[1], pose.rot[2]); held.holder.position.set(pose.pos[0], pose.pos[1], pose.pos[2]); }
@@ -229,7 +229,9 @@ export class ActionView extends Group {
   getState() {
     this.character.updateMatrixWorld(true);
     const attachments = (['LEFT', 'RIGHT'] as const).map((side) => {
-      const nodes = this.character.socket('RIGHT'), held = this.held[side]; nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
+      const nodes = this.character.socket('RIGHT'), held = this.held[side];
+      if (!nodes) return { side, actionId: held?.id, visible: false, iconUrl: null, socket: null, holstered: false, handDistance: 0, gripDistance: 0, attached: false, source: undefined, sockets: [] as string[] };
+      nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
       held?.model.getObjectByName('grip')?.getWorldPosition(this.gripPosition);
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
       return { side, actionId: held?.id, visible: held?.holder.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, holstered: side !== this.selected, handDistance: side === this.selected ? this.socketPosition.distanceTo(this.handPosition) : 0, gripDistance: side === this.selected ? this.gripPosition.distanceTo(this.socketPosition) : 0, attached: !!held?.holder.parent, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };

@@ -1,9 +1,10 @@
+import { simplifyCrowdLod } from '../characters/crowdLodGeometry';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
 import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
-import { InfectedMoves } from '../characters/InfectedMoves';
+import { InfectedMoves, getUpSpan } from '../characters/InfectedMoves';
 import { infectedDefinitions } from '../../data/infected';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
@@ -17,6 +18,9 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
 import { RoutineProps } from './RoutineProps';
+import type { CivilianProp } from '../../sim/npc/types';
+/** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
+const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
@@ -36,6 +40,32 @@ const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-elderly': ['pal_vest'],
 };
 type Clip = typeof civilianClips[number];
+/** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
+const coreModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];
+type StandingReset = Record<string, { translation: number[]; rotation: number[]; scale: number[] }>;
+/**
+ * Sitting/lying skins ship their joints in a rest pose plus an exported `ss_standingPose` and `restOnlyNodes` (cushion).
+ * The crowd bakes clips (npc-sit, death-side, ...) over the standing rig, so restore it first; ordinary models have none.
+ */
+export function restoreStanding(model: Group): void {
+  model.traverse(node => {
+    const raw = node.userData.ss_standingPose as string | undefined;
+    if (!raw) return;
+    const reset = JSON.parse(raw) as StandingReset;
+    for (const [name, pose] of Object.entries(reset)) {
+      const joint = model.getObjectByName(name);
+      if (joint) { joint.position.fromArray(pose.translation); joint.quaternion.fromArray(pose.rotation); joint.scale.fromArray(pose.scale); }
+    }
+    const rest = node.userData.restOnlyNodes as string[] | string | undefined;
+    for (const name of typeof rest === 'string' ? [rest] : rest ?? []) model.getObjectByName(name)?.removeFromParent();
+  });
+  model.updateMatrixWorld(true);
+}
+/** The crowd model an entity draws with, or null when it is no crowd figure. */
+export function crowdModelOf(e: EntitySnapshot): string | null {
+  const c = e.civilian;
+  return e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
+}
 /** Story clips that cycle (beckoning, glancing, the E20 rescue panic and door forcing); the rest hold their last frame. */
 const loopingStory = new Set<string>(['npc-wave-in', 'npc-glance', 'npc-bang', 'npc-plead', 'npc-press', 'npc-cower', 'npc-hug', 'ff-pry', 'npc-stand-back']);
 const windups = new Map(infectedDefinitions.map(d => [d.id, d.windup]));
@@ -88,12 +118,15 @@ class CivilianBatch extends Group {
   private readonly shirt = new Color();
   private readonly registry = new AssetRegistry(() => {});
   source = 'placeholder';
-  constructor(readonly world: SimWorld, readonly model: string, readonly distant: boolean, private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = distant ? 'lod2' : 'lod1'; }
+  /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
+  get distant(): boolean { return this.lod === 'lod2'; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
-    const loaded = await this.registry.loadAsset(this.model, this.distant ? 'lod2' : 'lod1');
+    const loaded = await this.registry.loadAsset(this.model, this.lod);
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
+    if (!placeholder) restoreStanding(model);
     const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
@@ -126,6 +159,8 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     deinterleaveGeometry(baked.geometry);
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+    // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
+    if (!placeholder) await simplifyCrowdLod(baked.geometry, this.distant ? .01 : .005, this.distant ? .35 : .5);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
@@ -180,14 +215,14 @@ class CivilianBatch extends Group {
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
       const c = e.civilian;
-      const model = e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
+      const model = crowdModelOf(e);
       if (model !== this.model) continue;
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
-      if (e.corpse) { if (!this.distant && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
+      if (e.corpse) { if (this.lod === 'lod1' && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if ((this.visibility.lod(e.id, pixels) === 'lod2') !== this.distant) continue;
+      if (this.visibility.band(e.id, pixels, this.model) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
@@ -225,7 +260,8 @@ class CivilianBatch extends Group {
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
-      const handProp = c.story ? c.story.prop : activity?.prop;
+      const carried = e.appearance?.handProp, weapon = carried && weaponProps.has(carried) ? carried as CivilianProp : undefined;
+      const handProp = (c.story ? c.story.prop : activity?.prop) ?? weapon;
       if (handProp && c.state === 'calm' && this.props && (c.story || e.appearance?.handProp !== null)) {
         const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
         this.hand.fromArray(this.bakedClip.matrices, Math.floor(sourceFrame) * stride + part * 16);
@@ -246,8 +282,6 @@ class CivilianBatch extends Group {
       for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
         attribute.clearUpdateRanges(); attribute.addUpdateRange(0, index * attribute.itemSize); attribute.needsUpdate = true;
       }
-      const first = this.bakedClip.frames * this.texture.image.width * 4;
-      this.texture.clearUpdateRanges(); this.texture.addUpdateRange(first, this.texture.image.data!.length - first);
     }
   }
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {
@@ -268,7 +302,7 @@ class CivilianBatch extends Group {
     const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
     if (heavy) clip = age < .7 ? 'knockdown' : 'get-up';
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
-    const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / .64) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+    const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction!)) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
@@ -314,9 +348,51 @@ export class CivilianCrowd extends Group {
   private readonly presentation = new MotionPresentation(crowdTurnRate);
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
-  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive','npc.police-officer'].flatMap(model=>[new CivilianBatch(world,model,false,this.visibility,shading,this.props,this.gait,this.footwork,this.moves,this.presentation),new CivilianBatch(world,model,true,this.visibility,shading,this.props,this.gait,this.footwork,this.moves,this.presentation)]); this.add(...this.batches); }
+  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading; this.batches=coreModels.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]); this.add(...this.batches); }
+  private readonly shading?: Materials;
+  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation); }
+  /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
+   * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
+   * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */
+  private readonly heroLoads = new Map<string, Promise<void>>();
+  private selectHeroes(camera?: import('three').Camera): void { // camera = the LOD camera (game camera while a free camera inspects)
+    const v = this.visibility, previous = new Set(v.heroes); v.heroes.clear();
+    if (this.low || !camera) return;
+    const picks: { id: number; model: string; d: number }[] = [];
+    for (const e of this.world.entities.iterate()) {
+      if (e.corpse || e.hidden || e.infected?.hidden || e.civilian?.pet || (e.health?.current ?? 1) <= 0) continue;
+      const turned = !e.civilian && !!e.infected && keepsLook(e);
+      if (!turned && (!e.civilian || e.civilian.state === 'infected')) continue;
+      const model = e.appearance?.asset ?? e.civilian?.model; if (!model || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      const pixels = v.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
+      if (pixels <= (previous.has(e.id) ? 164 : 196)) continue;
+      picks.push({ id: e.id, model, d: Math.hypot(e.transform.x - camera.position.x, e.transform.y - camera.position.y, e.transform.z - camera.position.z) - (previous.has(e.id) ? .75 : 0) });
+    }
+    picks.sort((a, b) => a.d - b.d || a.id - b.id);
+    for (const pick of picks.slice(0, 4)) {
+      v.heroes.add(pick.id);
+      if (!this.heroLoads.has(pick.model)) {
+        const hero = this.batch(pick.model, 'lod0');
+        this.heroLoads.set(pick.model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); v.heroModels.add(pick.model); }, () => {}));
+      }
+    }
+  }
+  private disposed = false;
+  private readonly known = new Set<string>(coreModels);
+  /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
+  private discover(): void {
+    for (const e of this.world.entities.iterate()) {
+      const model = crowdModelOf(e);
+      if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
+      this.known.add(model);
+      const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
+      this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(() => { if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
+    }
+  }
+  /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
+  async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
-  dispose(): void { this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
+  dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

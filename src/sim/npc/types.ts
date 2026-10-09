@@ -1,6 +1,8 @@
 export interface Point { x: number; z: number }
 export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
-export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel';
+export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel'
+  /** E22 weapons of soldiers and armed civilians (code art in RoutineProps, dropped when the bearer turns). */
+  | 'rifle' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar';
 /** Resolved layout anchors, in world metres. Durations and cursors use sim ticks and survive checkpoints. */
 export interface CivilianActivity {
   activity: 'walk' | 'sit' | 'stand' | 'chat' | 'look' | 'water' | 'door' | 'inside';
@@ -21,6 +23,8 @@ export interface Civilian {
   /** Harmless swing reaction; resumes the previous routine after a short pause. */
   annoyedFrom?: 'calm' | 'alarmed' | 'flee' | 'hide';
   gore: false; knockedUntil: number;
+  /** Siren: walk to this kerb point and wait, then resume the existing routine. */
+  vehicleYield?: { target: Point; until: number };
   panicReaction?: 'flee' | 'freeze';
   schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
@@ -30,9 +34,21 @@ export interface Civilian {
     /** E20 rescued people: flee along a street route to a safe spot (the bridge checkpoint) instead of a refuge; never removed. */
     haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number } };
 }
-/** Serializable allied-fighter task state (firefighters in L2, police from L3). Ticks are sim ticks. */
+/** E21 allied fighters v2: a handgun/rifle with a distance-dependent hit chance (one target per shot, no ammunition). */
+export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM: number; hitNear: number; hitFar: number }
+/** Serializable allied-fighter task state (firefighters in L2, police from L3, soldiers at the L3 army checkpoint). Ticks are sim ticks. */
 export interface AllyState {
-  role: 'firefighter' | 'officer';
+  role: 'firefighter' | 'officer' | 'soldier' | 'civilian';
+  /** E22 allied fighters v3: what the shooter carries (audio/tracer look; `hmg` crews a nest), improvised melee of an armed civilian, and the flight timer of one that panics. */
+  weapon?: 'hmg' | 'rifle' | 'pistol' | 'hunting-rifle';
+  melee?: { damage: number; reachM: number; swingS: number };
+  panicUntil?: number;
+  /** v2 firearm (officers and soldiers from L3); without it officers keep the L2 v1 values. */
+  gun?: AllyGun;
+  /** v2 squad: follow this entity (the player) at 2-6 m, engage within `engageM`, never more than `leashM` away when engaged. */
+  follow?: { targetId: number; slot: number; minM: number; maxM: number; engageM: number; leashM: number; moveMs: number; breakoutUntil?: number };
+  /** v2 cover zone: only infected within `range` of this point are engaged (the soldiers' last 20 m before the zone line). */
+  cover?: Point;
   /** Engaged allies fight what they see; disengaged ones follow their routine or `run` order. */
   engaged: boolean;
   /** Scripted move (run to the truck, jog to a door); cleared on arrival. */
@@ -44,6 +60,8 @@ export interface AllyState {
   targetId: number; nextAttack: number; hits: number;
   /** Swing/shot in progress: lands at `strikeAt` on `strikeTarget` if still in reach. */
   strikeAt?: number; strikeTarget?: number;
+  /** Police tactics (PO 2026-10-09): a short reposition (backstep, sidestep, spread) in progress, the earliest tick for the next one, the shot count of the last routine reposition, and a baton strike in progress. */
+  step?: { x: number; z: number; until: number }; stepAfter?: number; repoHits?: number; baton?: boolean;
   /** Door forcing beat until this tick (halligan pry clip, or `forceClip`: the crew member directing the people inside). */
   forceUntil: number; forceClip?: string;
 }
@@ -52,7 +70,7 @@ export interface Companion { following?: boolean; velocity?: Point; state: 'foll
   warn?: { stage: CorgiWarnStage; threat: number; nervousUntil: number } }
 export type CorgiWarnStage = 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous';
 export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }
-export interface Traffic { route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
+export interface Traffic { yieldUntil?: number; route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
 export interface Convoy { route: Point[]; samples: Point[]; distance: number; length: number; state: 'stop' | 'go' | 'arrived' | 'destroyed'; speed: number; offset: number }
 export type NpcEvent =
   | { tick: number; type: 'civilian.bark'; id: number; text: 'Hey!'; position: Point }

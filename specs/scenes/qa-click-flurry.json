@@ -1,0 +1,24 @@
+{
+ "name": "qa-click-flurry",
+ "note": "PO 10-08 'Every click needs to be a kick, no matter how fast I click': unarmed clicks at 6 Hz on one infected in reach. Every click must swing (clickMissMax 0), the beats alternate (jab, cross, front kick ...); she only steps in after the shoves (the idle target does not walk back).",
+ "ground": "asphalt",
+ "size": 20,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 0, "loadout": ["weapon.fists", "weapon.bat"] },
+  { "id": "z", "kind": "infected", "at": [1.2, 0], "yaw": 180, "state": "idle" }
+ ],
+ "script": [
+  { "frame": 20, "actor": "courier", "do": { "click": "z", "part": "chest" } },
+  { "frame": 30, "actor": "courier", "do": { "click": "z", "part": "head" } },
+  { "frame": 40, "actor": "courier", "do": { "click": "z", "part": "chest" } },
+  { "frame": 50, "actor": "courier", "do": { "click": "z", "part": "hip" } },
+  { "frame": 60, "actor": "courier", "do": { "click": "z", "part": "chest" } },
+  { "frame": 70, "actor": "courier", "do": { "click": "z", "part": "head" } },
+  { "frame": 80, "actor": "courier", "do": { "click": "z", "part": "chest" } },
+  { "frame": 90, "actor": "courier", "do": { "click": "z", "part": "feet" } }
+ ],
+ "camera": { "mode": "close", "target": [0.6, 0.8, 0], "radius": 5, "azimuth": 0 },
+ "frames": 130,
+ "shots": [20, 24, 28, 34, 38, 44, 50, 56, 62, 68, 76, 84],
+ "expect": { "consoleErrors": 0, "clickMissMax": 0, "undrawnFramesMax": 0 }
+}

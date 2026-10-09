@@ -1,6 +1,5 @@
 import { afterEach, expect, test } from 'vitest';
 import { emptyInput } from '../../../src/input/InputFrame';
-import { campaignMission } from '../../../src/levels/missions';
 import type { MissionDef, Trigger } from '../../../src/sim/missions/types';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 
@@ -91,9 +90,14 @@ test('@E12 pickup item enters mission and device inventories once and survives c
   expect(world.entities.get(mission.state.actors.fuse)!.pickup).toMatchObject({ collected: false }); walk(1, 0, 120);
   mission.checkpoint('C'); mission.restore('C'); expect(mission.state.items).toEqual(['fuse']); expect(world.entities.get(mission.state.actors.fuse)!.pickup).toMatchObject({ collected: true });
 });
-test('@E21 @E21-AC07 L3 uses a single 12-minute deadline; graph transitions do not reset it', async () => {
-  const def = campaignMission('L3', () => ({ x: 10, z: 0, radius: 2 }));
-  expect(def.deadline).toEqual({ seconds: 720, retryGraceSeconds: 60 }); expect(def.steps.every(s => s.timer === undefined)).toBe(true);
+// The old L3 "Reach the Safe Zone" (12-minute deadline) is retired (E21 rewrite); the E12 deadline system it used stays and is
+// covered here on a synthetic three-step graph with the same numbers.
+test('@E12 @L3-legacy a single 12-minute deadline; graph transitions do not reset it', async () => {
+  const def = definition({ kind: 'state', key: 'never', equals: true });
+  def.deadline = { seconds: 720, retryGraceSeconds: 60 }; def.states = ['never']; def.checkpoints = ['checkpoint'];
+  def.steps = ['forecourt', 'car', 'last'].map((id, i, all) => ({ id, type: 'custom' as const, text: id, anchor: 'goal', start: i ? { kind: 'objectives' as const, ids: [all[i - 1]], mode: 'all' as const } : { kind: 'start' as const }, complete: { kind: 'state' as const, key: 'never', equals: true }, fail: [] }));
+  def.finish = ['last'];
+  expect(def.steps.every(s => s.timer === undefined)).toBe(true);
   const mission = await load(def); mission.begin(); ticks(120); expect(mission.state.deadlineTicks).toBe(43080);
   mission.completeObjective('forecourt'); mission.completeObjective('car'); expect(mission.state.deadlineTicks).toBe(43080);
   ticks(60); mission.checkpoint('checkpoint'); const remaining = mission.state.deadlineTicks!;
@@ -102,7 +106,7 @@ test('@E21 @E21-AC07 L3 uses a single 12-minute deadline; graph transitions do n
   ticks(120); expect(world.tick).toBe(43200); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); expect(mission.state.completedObjectives).toEqual(['forecourt', 'car']);
   ticks(remaining + 3600); expect(mission.state.failure).toBe('timeout'); mission.restore(); expect(mission.state.deadlineTicks).toBe(remaining + 3600); // no accumulating grace
 });
-test('@E21 @E21-AC07 ordinary checkpoint restore gets no timeout grace; cinematics pause the global clock', async () => {
+test('@E12 @L3-legacy ordinary checkpoint restore gets no timeout grace; cinematics pause the global clock', async () => {
   const def = definition({ kind: 'hold', anchor: 'goal', seconds: 2 }); def.deadline = { seconds: 720, retryGraceSeconds: 60 };
   def.cinematics.pause = { seconds: 1, caption: 'Pause', position: [0, 2, 0], target: [0, 0, 0], actions: [] };
   const mission = await load(def); mission.begin(); ticks(60); mission.checkpoint('C'); ticks(60); mission.restore(); expect(mission.state.deadlineTicks).toBe(43140);

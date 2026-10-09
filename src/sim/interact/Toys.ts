@@ -77,13 +77,11 @@ export class Toys {
     const w = this.world, districts = w.districts; if (!districts) return;
     for (const d of districts.districts) {
       const at = (name: string) => { const a = d.layout.anchors[name]; return a ? { x: a.position[0] + d.origin[0], z: a.position[2] + d.origin[1], yaw: a.yaw } : null; };
-      const bike = at('bike-start'), start = at('player-start');
+      const bike = at('bike-start');
       if (bike) {
-        // Present at the start (PO QA #5): the bike stands on the rack side of the courier's spawn, within 3.3 m, never hidden at the screen edge.
-        const dx = bike.x - (start?.x ?? bike.x), dz = bike.z - (start?.z ?? bike.z), d = Math.hypot(dx, dz);
-        const at0 = start && d > 3.3 ? { x: start.x + dx / d * 3.3, z: start.z + dz / d * 3.3 } : bike;
-        // Stand on the walkable apron in front of the rack, not inside its bars (no route from an unwalkable start cell).
-        w.vehicles?.bicycle.spawn(at0, -bike.yaw);
+        // PO 2026-10-08: the bike waits at its own anchor (D-GROVE: the depot rack), not next to the courier's spawn; the anchor
+        // is the walkable paving in front of the rack, not inside its bars.
+        w.vehicles?.bicycle.spawn(bike, -bike.yaw);
       }
       for (const [id, poly] of Object.entries(d.layout.zones ?? {})) {
         const pts = poly.map(p => ({ x: p[0] + d.origin[0], z: p[1] + d.origin[1] }));

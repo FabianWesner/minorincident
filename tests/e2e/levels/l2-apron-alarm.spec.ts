@@ -1,5 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
+import { stationPoint } from '../../../src/data/l2';
 
 /** Game-camera look at the Fire Station 3 apron during the alarm: the axe marker is available during calm and beacons start at alarm. */
 const output = 'test-results/epics/E20/apron';
@@ -24,7 +25,9 @@ test('T-E20-apron-alarm @E20 axe ring is available during calm and beacons run d
   expect((await page.evaluate(() => window.__SS__!.getState().render.missionMarker))?.visible).toBe(true);
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/alarm-apron.png` });
-  await page.evaluate(() => window.__SS__!.camera.cinematic({ position: [-64, 7, 46], target: [-75.4, 3, 42] }, true));
+  // Station-local view of the front (Fire Station 3 moved to Main Row on 2026-10-08; the frame follows l2Station).
+  const [px, pz] = stationPoint(13, 3.5), [tx, tz] = stationPoint(1.6, -.5);
+  await page.evaluate(({ px, pz, tx, tz }) => window.__SS__!.camera.cinematic({ position: [px, 7, pz], target: [tx, 3, tz] }, true), { px, pz, tx, tz });
   await step(5); await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/alarm-front.png` });
 });

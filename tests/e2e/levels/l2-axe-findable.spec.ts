@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
-import { l2Anchors } from '../../../src/data/l2';
+import { l2Anchors, l2Station } from '../../../src/data/l2';
 
 /** The optional fire axe must be findable during the calm beat: captures at the game camera and a close look at the rack. */
 const output = 'test-results/epics/E20/axe';
@@ -21,10 +21,12 @@ test('T-E20-axe-findable @E20 the axe rack is visible and marked during calm', a
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/calm-apron.png` });
   const [rx, rz] = l2Anchors['l2-axe-rack'];
-  await page.evaluate(({ rx, rz }) => window.__SS__!.camera.cinematic({ position: [rx + 9, 7, rz + 9], target: [rx, 1.5, rz] }, true), { rx, rz });
-  await step(2); await page.evaluate(() => window.__SS__!.screenshotReady());
+  // The courier stands at the interact point: the rack hangs on the solid wall beside the bay, in the game camera.
+  await page.evaluate(({ rx, rz }) => { window.__SS__!.teleport('player', { x: rx, z: rz }); window.__SS__!.camera.follow(); }, { rx, rz });
+  await step(30); await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/calm-rack-close.png` });
-  await page.evaluate(() => window.__SS__!.camera.cinematic({ position: [-72, 38, 46], target: [-72, 0, 45.9] }, true));
+  // Top-down over the station (it moved to Main Row on 2026-10-08; the frame follows l2Station).
+  await page.evaluate(({ x, z }) => window.__SS__!.camera.cinematic({ position: [x, 38, z + .1], target: [x, 0, z] }, true), { x: l2Station.x, z: l2Station.z });
   await step(2); await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/top.png` });
   await page.evaluate(() => window.__SS__!.camera.follow());
