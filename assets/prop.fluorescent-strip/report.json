@@ -1,0 +1,176 @@
+{
+  "id": "prop.fluorescent-strip",
+  "tiers": [
+    {
+      "lod": 0,
+      "triangles": 640,
+      "draws": 4,
+      "materials": 4,
+      "bytes": 14116,
+      "dimensions": [
+        0.36450087447502166,
+        0.40001373848443755,
+        1.850000023841858
+      ],
+      "physics": {
+        "class": "fixed",
+        "mass": 0,
+        "friction": 0.75,
+        "restitution": 0.05,
+        "centerOfMass": [
+          0.007250003516674042,
+          0.20000000298023224,
+          0
+        ],
+        "pushable": false,
+        "kickable": false,
+        "flammable": false,
+        "sounds": "prop.metal-heavy"
+      },
+      "lights": [
+        {
+          "name": "light:fluorescent",
+          "position": [
+            0.1,
+            0.2,
+            0
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "type": "point",
+          "color": "light_fluorescent",
+          "intensity": 2.6,
+          "range": 9,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 1,
+          "flicker": "fluorescent",
+          "powerGroup": "metro-main",
+          "breakable": true,
+          "emissiveNodes": [
+            "body_emi_picketWhite"
+          ]
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "triangles": 264,
+      "draws": 4,
+      "materials": 4,
+      "bytes": 8228,
+      "dimensions": [
+        0.36450087447502166,
+        0.40001373848443755,
+        1.850000023841858
+      ],
+      "physics": {
+        "class": "fixed",
+        "mass": 0,
+        "friction": 0.75,
+        "restitution": 0.05,
+        "centerOfMass": [
+          0.007250003516674042,
+          0.20000000298023224,
+          0
+        ],
+        "pushable": false,
+        "kickable": false,
+        "flammable": false,
+        "sounds": "prop.metal-heavy"
+      },
+      "lights": [
+        {
+          "name": "light:fluorescent",
+          "position": [
+            0.1,
+            0.2,
+            0
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "type": "point",
+          "color": "light_fluorescent",
+          "intensity": 2.6,
+          "range": 9,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 1,
+          "flicker": "fluorescent",
+          "powerGroup": "metro-main",
+          "breakable": true,
+          "emissiveNodes": [
+            "body_emi_picketWhite"
+          ]
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "triangles": 136,
+      "draws": 4,
+      "materials": 4,
+      "bytes": 6716,
+      "dimensions": [
+        0.36450087447502166,
+        0.40001373848443755,
+        1.850000023841858
+      ],
+      "physics": {
+        "class": "fixed",
+        "mass": 0,
+        "friction": 0.75,
+        "restitution": 0.05,
+        "centerOfMass": [
+          0.007250003516674042,
+          0.20000000298023224,
+          0
+        ],
+        "pushable": false,
+        "kickable": false,
+        "flammable": false,
+        "sounds": "prop.metal-heavy"
+      },
+      "lights": [
+        {
+          "name": "light:fluorescent",
+          "position": [
+            0.1,
+            0.2,
+            0
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "type": "point",
+          "color": "light_fluorescent",
+          "intensity": 2.6,
+          "range": 9,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 1,
+          "flicker": "fluorescent",
+          "powerGroup": "metro-main",
+          "breakable": true,
+          "emissiveNodes": [
+            "body_emi_picketWhite"
+          ]
+        }
+      ]
+    }
+  ]
+}

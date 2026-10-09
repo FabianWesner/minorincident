@@ -1,0 +1,176 @@
+{
+  "id": "prop.emergency-light",
+  "tiers": [
+    {
+      "lod": 0,
+      "triangles": 580,
+      "draws": 5,
+      "materials": 5,
+      "bytes": 14688,
+      "dimensions": [
+        0.2925089382872822,
+        0.7200000286102295,
+        0.38000672917219486
+      ],
+      "physics": {
+        "class": "fixed",
+        "mass": 0,
+        "friction": 0.75,
+        "restitution": 0.05,
+        "centerOfMass": [
+          0.07124999910593033,
+          0.36000001430511475,
+          0
+        ],
+        "pushable": false,
+        "kickable": false,
+        "flammable": false,
+        "sounds": "prop.metal-heavy"
+      },
+      "lights": [
+        {
+          "name": "light:emergency",
+          "position": [
+            0.23,
+            0.36,
+            0
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 2.6,
+          "range": 9,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 1,
+          "flicker": "none",
+          "powerGroup": "metro-emergency",
+          "breakable": true,
+          "emissiveNodes": [
+            "body_emi_redDark"
+          ]
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "triangles": 268,
+      "draws": 5,
+      "materials": 5,
+      "bytes": 9084,
+      "dimensions": [
+        0.2925089382872822,
+        0.7200000286102295,
+        0.38000672917219486
+      ],
+      "physics": {
+        "class": "fixed",
+        "mass": 0,
+        "friction": 0.75,
+        "restitution": 0.05,
+        "centerOfMass": [
+          0.07124999910593033,
+          0.36000001430511475,
+          0
+        ],
+        "pushable": false,
+        "kickable": false,
+        "flammable": false,
+        "sounds": "prop.metal-heavy"
+      },
+      "lights": [
+        {
+          "name": "light:emergency",
+          "position": [
+            0.23,
+            0.36,
+            0
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 2.6,
+          "range": 9,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 1,
+          "flicker": "none",
+          "powerGroup": "metro-emergency",
+          "breakable": true,
+          "emissiveNodes": [
+            "body_emi_redDark"
+          ]
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "triangles": 156,
+      "draws": 5,
+      "materials": 5,
+      "bytes": 7452,
+      "dimensions": [
+        0.2925089382872822,
+        0.7200000286102295,
+        0.38000672917219486
+      ],
+      "physics": {
+        "class": "fixed",
+        "mass": 0,
+        "friction": 0.75,
+        "restitution": 0.05,
+        "centerOfMass": [
+          0.07124999910593033,
+          0.36000001430511475,
+          0
+        ],
+        "pushable": false,
+        "kickable": false,
+        "flammable": false,
+        "sounds": "prop.metal-heavy"
+      },
+      "lights": [
+        {
+          "name": "light:emergency",
+          "position": [
+            0.23,
+            0.36,
+            0
+          ],
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 2.6,
+          "range": 9,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 1,
+          "flicker": "none",
+          "powerGroup": "metro-emergency",
+          "breakable": true,
+          "emissiveNodes": [
+            "body_emi_redDark"
+          ]
+        }
+      ]
+    }
+  ]
+}
