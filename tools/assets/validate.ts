@@ -142,6 +142,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     if (!size || size.some(value => value > limit)) errors.push(`delivery: texture exceeds ${limit}px`);
   }
   const staticCalls = nodes.filter((n) => !def.animatedNodes.some((name) => byName.get(name) && descendants(byName.get(name)!).includes(n))).reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
+  if (def.animatedDrawBase && drawCalls > def.budget.drawCalls) errors.push(`animated-owner drawCalls: ${drawCalls} > ${def.budget.drawCalls}`);
   if (staticCalls > def.budget.drawCalls) errors.push(`static drawCalls: ${staticCalls} > ${def.budget.drawCalls}`);
   if (def.category === 'infected') for (const name of new Set([
     ...['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].map(name => `stump_${name}`),
@@ -198,6 +199,30 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       try {
         const document = await io.read(path);
         const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        if (def.animatedDrawBase) {
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const peer = definitions.find(candidate => candidate.id === def.animatedDrawBase);
+          const peerPath = lod === 0 ? peer?.glb : peer?.lods?.[lod === 1 ? 'lod1' : 'lod2'];
+          if (def.category !== 'character' || !peer || !atLeast(peer.status, 'integrated') || !peerPath || !existsSync(peerPath)) {
+            validation.errors.push('animated-owner draws: missing integrated character base');
+          } else {
+            const peerDocument = await io.read(peerPath);
+            const peerDraws = peerDocument.getRoot().listNodes().reduce((sum, node) => sum + (node.getMesh()?.listPrimitives().length ?? 0), 0);
+            if (validation.drawCalls > peerDraws) validation.errors.push(`animated-owner draws: ${validation.drawCalls} > ${def.animatedDrawBase} LOD${lod} (${peerDraws})`);
+            // Owners are counted once at their nearest animated ancestor. Static
+            // attachments cannot escape the total cap by nesting below a joint.
+            const owners = new Set(def.animatedNodes), pairs = new Set<string>();
+            for (const node of document.getRoot().listNodes()) {
+              let owner: Node | null = node;
+              while (owner && !owners.has(owner.getName())) owner = owner.getParentNode();
+              for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+                const pair = `${owner?.getName() ?? 'static'}:${primitive.getMaterial()?.getName()}`;
+                if (pairs.has(pair)) validation.errors.push(`animated-owner draws: unbatched ${pair}`);
+                pairs.add(pair);
+              }
+            }
+          }
+        }
         // Pending registration belongs to art-integration. Still enforce shipping and
         // node preservation for its real exports, without treating placeholder sizes as authored contracts.
         if (!def.sourceGlb && sourcePath && !atLeast(def.status, 'modeled')) {
