@@ -1,5 +1,6 @@
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
 import { levelTwoLayouts } from '../../levels/L2/layout';
+import { levelThreeLayouts } from '../../levels/L3/layout';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
@@ -89,6 +90,7 @@ export class SceneLab {
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
+      else if (spec.layout.level === 'L3') [source] = levelThreeLayouts([source]);
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;

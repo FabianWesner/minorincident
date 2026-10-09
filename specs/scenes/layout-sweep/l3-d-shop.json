@@ -1,0 +1,41 @@
+{
+ "name": "l3-d-shop",
+ "note": "L3 additions (barricades, cones, police, fences) on D-SHOP, static mesh clipping gate.",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "level": "L3",
+  "district": "D-SHOP",
+  "bbox": [
+   [
+    -28,
+    -28
+   ],
+   [
+    28,
+    28
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 4,
+ "shots": [
+  4
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "staticOverlapMax": 0
+ }
+}

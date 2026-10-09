@@ -1,7 +1,11 @@
 import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
 import { l2Anchors } from '../../data/l2';
-import type { DistrictLayout, Placement } from '../districts/types';
+import { findClearSpot, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
+import type { DistrictLayout, Placement, Tier } from '../districts/types';
+
+/** The L2 composition tier (static test asserts it): placements outside it are not part of the town the player sees. */
+const L2_TIER: Tier = 1;
 
 /** Kinds of the W1 "wounded, but still standing" dressing (E20 section 5.7); counted by the static AC15 test. */
 export type DressingKind = 'corpse' | 'abandoned' | 'crashed' | 'bin' | 'belongings' | 'broken-window' | 'blood' | 'emergency' | 'smoking' | 'fighting' | 'station' | 'checkpoint' | 'river';
@@ -115,7 +119,16 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const onRoad = new Set(layout.placements.filter(p => pushableProps[p.assetId] && overlapsRoad(layout, p.visualAabb)).map(p => p.id));
     layout.placements = layout.placements.filter(p => !onRoad.has(p.id));
     layout.colliders = layout.colliders.filter(c => !onRoad.has(c.id.split('/')[0]));
+    // The market is a fixed building: loose street furniture of the base layout that it swallows goes.
+    const swallowed = new Set(layout.placements.filter(p => looseProp(p.assetId) && firstOverlap(MARKET, footprints(p)) !== undefined).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !swallowed.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !swallowed.has(c.id.split('/')[0]));
     layout.placements.push(MARKET);
+    // Placement rule (PO 10-09 "barricades through fence", a car with a lamp post through its bonnet): dressing never cuts into a
+    // fence, wall, building, mailbox, hydrant, lamp, tree, bench or another prop and stays out of gardens. A dressing piece that
+    // does is moved to the nearest clear spot (vehicles first slide along their own axis, so a "crashed" car stops with its
+    // bumper against the post). Base layout geometry never moves for it.
+    const obstacles: Footprint[] = obstaclesOf(layout, L2_TIER);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
       const s = d.scale ?? 1, decal = d.assetId.startsWith('decal.');
@@ -133,6 +146,20 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
           if (!found) throw new Error(`No roadside position for ${placement.id}`);
         }
       }
+      // The bay benches are authored against the crew's seat anchors and the station ring keep-outs: they stay put (known:
+      // the bench cuts 75 cm into the station's front step, tracked with the L1-route lane that owns that corner).
+      if (!decal && d.kind !== 'station' && footprints(placement, 0, true).length) {
+        const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
+        const spot = findClearSpot(layout, placement, obstacles, {
+          slide: d.assetId.startsWith('veh.'),
+          accept: (x, z) => stationKeepOutGap(x, z) >= RING_CLEAR_M && (!roadside || !overlapsRoad(layout, { min: [x - half[0], 0, z - half[1]], max: [x + half[0], 1.5, z + half[1]] })),
+        });
+        if (!spot) throw new Error(`No clear spot for ${placement.id} (${d.assetId}) near ${d.x}, ${d.z}`);
+        const [dx, dz] = [spot[0] - placement.position[0], spot[1] - placement.position[2]];
+        placement.position = [spot[0], placement.position[1], spot[1]];
+        placement.visualAabb = { min: [placement.visualAabb.min[0] + dx, 0, placement.visualAabb.min[2] + dz], max: [placement.visualAabb.max[0] + dx, placement.visualAabb.max[1], placement.visualAabb.max[2] + dz] };
+      }
+      if (!decal) obstacles.push(...footprints(placement, 0, true));
       layout.placements.push(placement);
     }
     layout.placements.push({ id: 'l2-alarm-car-5', assetId: 'veh.sedan-white', position: [48.6, 0, 12.4], yaw: H, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [47.6, 0, 10.2], max: [49.6, 1.6, 14.6] } });

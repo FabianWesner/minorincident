@@ -1,0 +1,91 @@
+{
+ "name": "l3-d-civic",
+ "note": "L3 additions (barricades, cones, police, fences) on D-CIVIC, static mesh clipping gate.",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "level": "L3",
+  "district": "D-CIVIC",
+  "bbox": [
+   [
+    -28,
+    -28
+   ],
+   [
+    28,
+    28
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true,
+  "ignore": [
+   [
+    "kit.evac-camp",
+    "prop.picket-fence"
+   ],
+   [
+    "kit.evac-camp",
+    "prop.street-lamp"
+   ],
+   [
+    "kit.evac-camp",
+    "prop.bench"
+   ],
+   [
+    "kit.evac-camp",
+    "npc.paramedic"
+   ],
+   [
+    "kit.evac-camp",
+    "npc.police-officer"
+   ],
+   [
+    "kit.evac-camp",
+    "prop.tent"
+   ],
+   [
+    "kit.evac-camp",
+    "prop.medical-cooler"
+   ],
+   [
+    "kit.evac-camp",
+    "prop.trash-bags"
+   ],
+   [
+    "prop.tree",
+    "prop.street-lamp"
+   ],
+   [
+    "prop.tree",
+    "bld.police"
+   ],
+   [
+    "prop.tree",
+    "bld.fire-station"
+   ],
+   [
+    "prop.medical-cooler",
+    "decal.blood-trail"
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 4,
+ "shots": [
+  4
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "staticOverlapMax": 0
+ }
+}

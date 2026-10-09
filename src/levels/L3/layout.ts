@@ -1,3 +1,4 @@
+import { findClearSpot, firstOverlap, footprints, obstaclesOf, resolveOverlaps, type Footprint } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** L3-only dressing/parking edits feed both collision and rendering from the same layout. */
@@ -18,9 +19,25 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const p of layout.placements) if (p.assetId === 'prop.street-lamp' && Math.abs(p.position[0]) <= 5 && Math.abs(p.position[2]) <= 4) {
       p.position[0] = Math.sign(p.position[0])*10; moved.add(p.id);
     }
+    // Same placement rule as L2: an addition never cuts into a fence, building, lamp, pump or other prop; it moves to the
+    // nearest clear spot (cars slide along their own axis first, so they stop against the obstacle instead of through it).
+    // A fence run never ends inside a building: panels that cut into one are dropped (the fence simply stops at the wall).
+    const walls = layout.placements.filter(p => p.assetId.startsWith('bld.') && p.minTier <= 2 && p.maxTier >= 2).flatMap(p => footprints(p));
+    const through = new Set(layout.placements.filter(p => /fence/.test(p.assetId) && firstOverlap(p, walls, .35) !== undefined).map(p => p.id));
+    layout.placements = layout.placements.filter(p => !through.has(p.id));
+    layout.colliders = layout.colliders.filter(c => !through.has(c.id.split('/')[0]));
+    // The rewrites above and the inherited layout can leave a car on a bench or a lamp in a tree: nudge loose pieces clear first.
+    for (const id of resolveOverlaps(layout, 2, p => p.assetId.startsWith('veh.') || p.assetId.startsWith('prop.') && !/fence|hedge|flower|bush|tent|bus-stop|gate/.test(p.assetId))) moved.add(id);
+    const obstacles: Footprint[] = obstaclesOf(layout, 2);
     const add = (assetId: string, x: number, z: number, yaw = 0): void => {
       const p: Placement = { id: `l3-${layout.placements.length}`, assetId, position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 2, maxTier: 2, allowRoad: true, lightGroup: 'l3-emergency', visualAabb: { min: [x-.5, 0, z-.5], max: [x+.5, 1, z+.5] } };
       if (assetId.startsWith('decal.')) { p.position[1] = .06; p.scale = [1.6, 1, 2.8]; }
+      if (footprints(p, 0, true).length) {
+        const spot = findClearSpot(layout, p, obstacles, { slide: assetId.startsWith('veh.'), maxRadius: 8 });
+        if (!spot) throw new Error(`No clear spot for ${p.id} (${assetId}) near ${x}, ${z}`);
+        p.position = [spot[0], 0, spot[1]]; p.visualAabb = { min: [spot[0]-.5, 0, spot[1]-.5], max: [spot[0]+.5, 1, spot[1]+.5] };
+        obstacles.push(...footprints(p, 0, true));
+      }
       layout.placements.push(p);
     };
     layout.lightGroups.push({ id: 'l3-emergency', offAt: 3 });

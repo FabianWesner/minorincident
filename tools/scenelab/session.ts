@@ -117,6 +117,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
   add('clipping', clipping.static.length + clipping.actors.length, e.clippingMax);
+  add('staticOverlap', clipping.static.length, e.staticOverlapMax);
   const motion = Object.values(metrics.actors).map(a => a.motion);
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
