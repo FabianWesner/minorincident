@@ -21,6 +21,7 @@ try {
   await page.evaluate(() => window.__ASSET__!.ready);
   if (decay) await page.locator('#decay').evaluate((el, value) => { (el as HTMLSelectElement).value = value; }, decay);
   await page.locator('#toolbar').evaluate(el => { el.style.display = 'none'; });
+  await page.waitForTimeout(1500);
   const def = manifest.find(a => a.id === id)!;
   const { x, y, z } = def.dimensions;
   const width = (x + z) / Math.SQRT2, height = y * Math.cos(Math.PI * .2) + width * Math.sin(Math.PI * .2);
@@ -30,6 +31,7 @@ try {
     const distance = Math.max(width, height) * 360 / (2 * pixels * Math.tan(25 * Math.PI / 360));
     for (const [col, quality] of qualities.entries()) {
       await page.evaluate(async ({ quality, distance }) => { await window.__ASSET__!.deliveryView!(quality, distance); }, { quality, distance });
+      await page.waitForTimeout(500);
       PNG.bitblt(PNG.sync.read(await page.screenshot()), sheet, 0, 0, 480, 360, col * 480, row * 360);
     }
   }
@@ -38,6 +40,7 @@ try {
   for (const [row, quality] of (['high', 'lod2'] as const).entries()) {
     for (const [col, azimuth] of [45, 135, 225, 315].entries()) {
       await page.evaluate(async ({ quality, azimuth }) => { await window.__ASSET__!.inspectionView!(quality, azimuth); }, { quality, azimuth });
+      await page.waitForTimeout(500);
       PNG.bitblt(PNG.sync.read(await page.screenshot()), ring, 0, 0, 480, 360, col * 480, row * 360);
     }
   }

@@ -102,17 +102,7 @@ def fracture_windows(s):
             obj['ss_light'] = json.dumps(record)
 
 
-def cut_collapse(s):
-    metro = s.asset.endswith('metro-entrance')
-    row = s.asset.endswith('storefront-row')
-    # Negative-Y is the game camera side. The cutter rises through the roof;
-    # its bottom is a broad stair-stepped diagonal fracture, not a clean box.
-    if row:
-        ys, zs, x0 = [-8.5, -7.0, -5.9, -4.9, -3.7, -3.0], [4.8, 5.15, 4.6, 5.55, 6.4, 7.1], -.25
-    elif metro:
-        ys, zs, x0 = [-2.5, -1.7, -.9, -.2], [3.1, 3.6, 4.6, 5.35], -3.3
-    else:
-        ys, zs, x0 = [-4.7, -3.5, -2.5, -1.35, -.35], [4.7, 5.0, 5.6, 6.4, 7.05], .25
+def cut_profile(s, ys, zs, x0):
     profile = [(ys[0], zs[0])]
     for i in range(len(ys)-1):
         mid = (ys[i]+ys[i+1])/2
@@ -128,6 +118,27 @@ def cut_collapse(s):
             continue
         subtract(obj, cutter)
     erase(cutter)
+
+
+def cut_collapse(s):
+    metro = s.asset.endswith('metro-entrance')
+    row = s.asset.endswith('storefront-row')
+    # Negative-Y is the game camera side. The cutter rises through the roof;
+    # its bottom is a broad stair-stepped diagonal fracture, not a clean box.
+    if row:
+        ys, zs, x0 = [-8.5, -7.0, -5.9, -4.9, -3.7, -3.0], [4.8, 5.15, 4.6, 5.55, 6.4, 7.1], -.25
+    elif metro:
+        ys, zs, x0 = [-2.5, -1.7, -.9, -.2], [3.1, 3.6, 4.6, 5.35], -3.3
+    else:
+        ys, zs, x0 = [-4.7, -3.5, -2.5, -1.35, -.35], [4.7, 5.0, 5.6, 6.4, 7.05], .25
+    cut_profile(s, ys, zs, x0)
+    if row:
+        # Second stepped breach at the far end: the whole upper floor of that bay is gone,
+        # so the row reads as shelled from both sides instead of one bitten corner.
+        cut_profile(s, [3.3, 4.4, 5.5, 6.6, 7.7, 8.6], [7.2, 6.3, 5.4, 4.5, 3.6, 2.7], x0 + .1)
+    elif not metro:
+        # Kessler: the back-left gable and upper floor are blown away as well.
+        cut_profile(s, [.7, 1.7, 2.7, 3.6, 4.5], [7.4, 6.2, 5.0, 4.0, 3.1], x0)
     if not metro:
         y0 = -7.45 if row else -3.9
         y1 = -3.1 if row else -.55
@@ -201,6 +212,14 @@ def damage_finish(s):
                   ['brick','sidewalk','uiDark'][i%3])
         obj.location = (x,y,floor)
         obj.rotation_euler.z = rng.uniform(-.7,.7)
+    if not metro:
+        rng2 = random.Random(977)
+        for i in range((30, 18, 9)[s.lod]):
+            w, h = rng2.uniform(.4, .95), rng2.uniform(.3, .85)
+            obj = s.extrude('collapseRubble', [(-w/2,0),(-w*.45,h*.7),(-w*.13,h),(w*.45,h*.65),(w/2,0)], 'y', -w*.32, w*.32,
+                            ['brick','sidewalk','uiDark'][i%3])
+            obj.location = (rng2.uniform(3.3,4.7), rng2.uniform(3.4,8.0), .2) if row else (rng2.uniform(3.75,4.8), rng2.uniform(1.4,3.9), .2)
+            obj.rotation_euler.z = rng2.uniform(-.7,.7)
     # A broad fallen facade plate reads as collapse even at 90 px.
     if not metro:
         y = -6.25 if row else -2.75
