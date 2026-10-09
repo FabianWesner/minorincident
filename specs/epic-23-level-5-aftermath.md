@@ -110,5 +110,5 @@ Built on the L4 pattern: `src/data/l5.ts` (tuning, five survivors, wanderers, fi
 - **Bands (AC02/AC03):** recalibrated on the first green run, never padded: complete 100-240 s (observed ~124 s, the tour is short because the bot knows the places), newbie 130-300 s (observed ~210 s). Single-seed checks only (PO 10-09). The `evade-only` bot never attacks and loses people (rescues <= 2) but does not finish within 420 s.
 - **Retired with the old L5 (convoy fallback):** the D-RES..D-EDGE mission, its barricade rail, `tests/sim/npc/integration.test.ts` convoy test, and the perf scene `perf-l5-bridge` (now `perf-l5-aftermath`: the W5 Fairhaven at the pair-plaza camera with the worst-cap crowd). `T-E12-07-L5` now ends in `progression`.
 - **Handover:** `level.completed` carries `survivors` (keys); `CampaignUI` stores them in `campaign.survivors` for L6 (E24).
-- **Pre-existing on main (not caused by L5):** `T-E10-02` (L1 fire-station at W0), `T-E12-07-L1`, and the remote-runner timing flakes of `T-E08-11`, `T-E07-11`, `T-E18-02`.
+- **Pre-existing on main (verified at `ab90c079`, not caused by L5):** `tests/sim`: `T-E26-07` (barricades), the bicycle knock-off tip, the L1 corgi braking slide, `M1-06`, `T-E10-02` (L1 fire-station at W0), `T-E12-07-L1`, and the 4 ms sim p95 timings (`T-E07-11`, `T-E18-02`, `T-E08-11` L1) on the remote runners.
 
