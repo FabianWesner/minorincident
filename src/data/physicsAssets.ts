@@ -124,6 +124,37 @@ export default {
     "source": "public/assets/models/pick.energy-drink.glb",
     "hash": "15c3e47bbd399507ac5a043ca874639563c324e09d11a38c5f5d9cc8529b1cd5"
   },
+  "util.radio": {
+    "class": "light",
+    "mass": 0.75,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      -0.0012499988079071045,
+      0.39500001072883606,
+      -0.014750003814697266
+    ],
+    "pushable": true,
+    "kickable": true,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.12999999523162842,
+          0,
+          -0.1745000034570694
+        ],
+        "max": [
+          0.1274999976158142,
+          0.7900000214576721,
+          0.14499999582767487
+        ]
+      }
+    ],
+    "source": "public/assets/models/util.radio.glb",
+    "hash": "b6788b4697fbfe202c8256b92343076c567412d30f65615b3de3bb2f51d9a97b"
+  },
   "prop.shopping-cart": {
     "class": "medium",
     "mass": 24,
@@ -5184,5 +5215,122 @@ export default {
     ],
     "source": "public/assets/models/kit.reception-plaza.glb",
     "hash": "6dd3249e7eda6b5d9d6613ee6d44fbd554afb25289c1c5c7e076eb1b1b7dffae"
+  },
+  "prop.service-gate": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.03749999403953552,
+      1.2899999618530273,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.1,
+          1.1999999618530273,
+          -2.4100000047683716
+        ],
+        "max": [
+          0.1,
+          1.3799999618530274,
+          0.16999999523162845
+        ]
+      },
+      {
+        "min": [
+          -0.1,
+          1.1999999618530273,
+          -0.16999999523162845
+        ],
+        "max": [
+          0.1,
+          1.3799999618530274,
+          2.4100000047683716
+        ]
+      },
+      {
+        "min": [
+          -0.0525,
+          0.2799999809265137,
+          -2.140000009536743
+        ],
+        "max": [
+          0.0525,
+          2.259999980926514,
+          0.15999999046325675
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.service-gate.glb",
+    "hash": "b614b3b2a5290dcb4e8a1d3cb27e6338254e5282673f6631e3e8c0059ad7d433"
+  },
+  "prop.fluorescent-strip": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.007250003516674042,
+      0.20000000298023224,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.17499999701976776,
+          0,
+          -0.925000011920929
+        ],
+        "max": [
+          0.18950000405311584,
+          0.4000000059604645,
+          0.925000011920929
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.fluorescent-strip.glb",
+    "hash": "d02a34dd1d1fc9fa1539a681b75bfd85df07a8ae140d16882c52123fe8989f42"
+  },
+  "prop.emergency-light": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.07124999910593033,
+      0.36000001430511475,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.07500000298023224,
+          0,
+          -0.1899999976158142
+        ],
+        "max": [
+          0.2175000011920929,
+          0.7200000286102295,
+          0.1899999976158142
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.emergency-light.glb",
+    "hash": "b6f10bb76e55aed95d917996116daa8e120c5458d7df664d62d1c48d41eeefcf"
   }
 };
