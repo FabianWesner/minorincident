@@ -29,7 +29,11 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     // The reveal: stand by while the crew forces the doors, then run the real clock through doors-open + 2 s.
     await step('window.__SS__.missions.state().l2.atDoorsAt > 0');
+    const revealDiagnostic = process.env.L2_HITCH_PROFILE === '1' ? await context.newCDPSession(page) : null;
+    const revealProfileStart = revealDiagnostic ? await page.evaluate(() => performance.now()) : 0;
+    if (revealDiagnostic) { await revealDiagnostic.send('Profiler.enable'); await revealDiagnostic.send('Profiler.setSamplingInterval', { interval: 500 }); await revealDiagnostic.send('Profiler.start'); }
     const reveal = await record('window.__SS__.missions.state().l2.doorsOpenAt > 0', 2000);
+    if (revealDiagnostic) writeFileSync(`${dir}/reveal-${tier}-profile.json`, JSON.stringify({ ...await revealDiagnostic.send('Profiler.stop'), profileStart: revealProfileStart, times: await page.evaluate(() => (window as unknown as { l2Times: number[] }).l2Times) }));
     // The peak: idle at the doors (bot stopped) until >= 30 infected are up, then the game camera at l2-collapse.
     await page.evaluate(() => window.__SS__!.bot.stop());
     await step('window.__SS__.getState().ai.count >= 30', 200);
