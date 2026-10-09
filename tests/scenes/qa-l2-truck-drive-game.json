@@ -1,6 +1,6 @@
 {
   "name": "qa-l2-truck-drive-game",
-  "note": "Actual L2 driver approaching the Main Row junction, including the relocated red sedan and a pedestrian who yields to the siren. The game camera follows the engine.",
+  "note": "Actual L2 driver mid-ride on Main Row with a pedestrian at the kerb who yields to the siren. The game camera follows the engine.",
   "seed": 1,
   "ground": "district",
   "time": "L2",
@@ -10,11 +10,11 @@
     "bbox": [
       [
         -47,
-        -40
+        -46
       ],
       [
-        -22,
-        -2
+        46,
+        -24
       ]
     ]
   },
@@ -23,12 +23,12 @@
       "id": "engine",
       "asset": "vehicle.fire-engine",
       "at": [
-        -28.75,
-        -7
+        22,
+        -32.0
       ],
       "l2Ride": {
-        "distanceM": 80,
-        "speedMs": 7.6
+        "distanceM": 18,
+        "speedMs": 5.6
       }
     }
   ],
@@ -37,8 +37,8 @@
       "id": "elder",
       "kind": "pedestrian",
       "at": [
-        -28.75,
-        -22
+        10,
+        -37
       ],
       "look": {
         "model": "npc.civilian-elderly"
@@ -51,13 +51,13 @@
     "actor": "engine",
     "zoom": 1.15
   },
-  "frames": 660,
+  "frames": 840,
   "shots": [
     0,
-    160,
-    320,
-    500,
-    660
+    200,
+    400,
+    600,
+    840
   ],
   "expect": {
     "consoleErrors": 0,

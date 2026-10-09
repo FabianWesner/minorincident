@@ -11,6 +11,8 @@ test.each(['corgi', 'curb', 'parked bike'])('arrival stays at rest for 3 s besid
     const player = world.entities.get(1)!, bike = world.vehicles!.bicycle.entity!;
     bike.bicycle!.armed = false; // An already dismounted bike: exercise solid-frame clearance without auto-mount.
     const target = location === 'parked bike' ? { x: bike.transform.x, z: bike.transform.z } : location === 'curb' ? { x: -67.5, z: 3.2 } : { x: -66.4, z: 7 };
+    // PO 2026-10-08: the bike waits at the depot, not at the courier's spawn: walk up to it from a few metres along the sidewalk.
+    if (location === 'parked bike') { Object.assign(player.transform, { x: bike.transform.x - 4, z: bike.transform.z }); world.physics.playerBody!.setTranslation(player.transform, true); world.previousPlayer = { ...player.transform }; world.update(); }
     world.setInput({ moveTarget: target }); world.update(); world.setInput({ moveTarget: undefined });
     for (let i = 0; i < 300 && world.controls.moveTarget; i++) world.update();
     expect(world.controls.moveTarget).toBeNull();

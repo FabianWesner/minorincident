@@ -98,7 +98,7 @@ export interface L1State {
   beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */
   say?: { id: number; text: string; at: number; until: number } | null;
-  beatsDone?: string[]; clerkId?: number; firefighterId?: number;
+  beatsDone?: string[]; clerkId?: number; firefighterId?: number; firefighterNext?: number;
   /** Door-to-courier walking routes of the clerk (pickup) and the technician (hand-over): behind the door, door plane,
    * outside the facade, navigation corners, meeting point (src/sim/missions/doorRoute.ts). */
   clerkRoute?: { x: number; z: number }[] | null; techRoute?: { x: number; z: number }[] | null;

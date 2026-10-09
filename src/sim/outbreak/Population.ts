@@ -120,8 +120,13 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
   // ...and Maple Corner (the start) gets the first eight walkers.
   const hub = anchor('player-start') ?? patio, nearStart = hub ? runs.filter(run => run.some(q => Math.hypot(q.x - hub.x, q.z - hub.z) < 18)) : [];
   let maple = Math.min(6, nearStart.length * 3);
-  // ...and the beat 9 stretch: Elm Street from the garage to Fire Station 3 gets a dense share of the walkers and joggers.
-  const fire = anchor('fire-bay-door'), onElm = (q: Point) => !!garage && !!fire && q.x >= Math.min(garage.x, fire.x) - 4 && q.x <= Math.max(garage.x, fire.x) + 12 && Math.abs(q.z - garage.z + 6) < 9;
+  // ...and the beat 9 stretch from the garage to Fire Station 3 gets a dense share of the walkers and joggers: every sidewalk run
+  // within 14 m of the straight garage -> station line (route of 2026-10-08: Elm Street by the garage, Juniper east, Main Row).
+  const fire = anchor('fire-bay-door'), onElm = (q: Point) => {
+    if (!garage || !fire) return false;
+    const dx = fire.x - garage.x, dz = fire.z - garage.z, k = Math.max(0, Math.min(1, ((q.x - garage.x) * dx + (q.z - garage.z) * dz) / (dx * dx + dz * dz || 1)));
+    return Math.hypot(q.x - garage.x - dx * k, q.z - garage.z - dz * k) < 14;
+  };
   const nearElm = garage ? runs.filter(run => run.some(onElm)) : [];
   let elm = Math.min(14, nearElm.length * 2);
   for (let guard = 0; plans.length < count && runs.length && guard < count * 8; guard++) {
