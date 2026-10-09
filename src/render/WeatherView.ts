@@ -63,7 +63,7 @@ export class WeatherView extends Group {
     for (let i = 0; i < seeds.length; i++) seeds[i] = ((Math.sin(i * 127.1 + 311.7) * 43758.5453) % 1 + 1) % 1;
     g.setAttribute('seed', new InstancedBufferAttribute(seeds, 3));
     const seed = attribute('seed', 'vec3');
-    const local = attribute('position', 'vec3').mul(vec3(this.flake.mul(12).add(1), this.flake.mul(-.8).add(1), 1));
+    const local = attribute('position', 'vec3').mul(vec3(this.flake.mul(4).add(1), this.flake.mul(-.88).add(1), 1));
     const speed = mix(mix(16, .8, this.flake), 0, this.windLine);
     const offset = vec3(fract(seed.x.add(this.clock.mul(this.wind.x).div(40))).sub(.5).mul(40), fract(seed.y.sub(this.clock.mul(speed).div(15))).mul(mix(15, 2, this.windLine)), fract(seed.z.add(this.clock.mul(this.wind.z).div(40))).sub(.5).mul(40));
     this.material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: 2 });

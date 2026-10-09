@@ -75,3 +75,4 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 - Actual L6 tunnel-to-night-exit weather integration is pending E24: the baseline has no `night-exit` anchor; the weather system uses that anchor when present.
 - Photo weather selection uses the paused game controls because this baseline has no separate photo mode.
 - Quiet L1/L2/L3 before/after frame comparison is pending a Mac load below 3; busy measurements are not accepted as proof.
+- Checklist G vision approval remains pending: golden-hour beams are absent, wet streaks are overly regular, and wall occlusion needs a dedicated E25 lighting capture.
