@@ -40,23 +40,24 @@ export const l3 = {
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits at the top of the band (48 incl. the horde) so the squad is overwhelmed there. */
-    targets: [10, 25, 48] as readonly number[],
+    /** Spec defaults 10 / 25 / 40 (+-20 %); segment 3 sits in the centre of the band (40 incl. the horde) so the squad is overwhelmed there. */
+    targets: [10, 25, 40] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
       // S2 (x -40..50): about 25 in groups of 3-4 on the walking lines (wrecks and the jam split the Boulevard ones).
-      [[-30, 'commerce', 4], [-22, 'blvd', 3], [-8, 'oak', 3], [2, 'commerce', 3], [10, 'blvd', 4], [22, 'oak', 3], [30, 'commerce', 3], [44, 'blvd', 2]],
+      [[-30, 'commerce', 4], [-22, 'blvd', 3], [-8, 'oak', 3], [2, 'commerce', 3], [10, 'blvd', 3], [22, 'oak', 3], [30, 'commerce', 3], [44, 'blvd', 2]],
       // S3 (x 50..128): about 40: one dense cluster per street (7) staggered along the corridor, plus groups between them.
-      [[64, 'commerce', 8], [96, 'blvd', 8], [82, 'oak', 8], [56, 'blvd', 3], [104, 'commerce', 3], [112, 'oak', 3], [118, 'blvd', 3]],
+      // PO 10-09: the clusters of 8 are two waves of 4 about 14 m apart (a lull to back off, take the medkit and set up), not one blob.
+      [[62, 'commerce', 4], [76, 'commerce', 4], [86, 'commerce', 3], [92, 'blvd', 3], [80, 'blvd', 3], [58, 'blvd', 2], [70, 'oak', 4], [82, 'oak', 4], [92, 'oak', 3]],
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** Segment 3 also holds the horde (part of its 48): two packs of 6 at the on-ramp end of two avenues (seeded), streaming west. */
-    horde: { packSize: 6, fromX: 121, toX: 72 },
+    /** Segment 3 also holds the horde (part of its 48): two packs of 5 at the on-ramp end of two avenues (seeded), streaming west. */
+    horde: { packSize: 5, fromX: 121, toX: 102 },
     leashM: 9,
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
-    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [3, 5] as P, maxPerLink: 2, cooldownS: 18 },
+    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [2, 3] as P, maxPerLink: 2, cooldownS: 18 },
     pressure: { idleS: 20, everyS: 10, count: [1, 3] as P, behindM: [15, 35] as P },
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
     retireBehindM: 60,
@@ -67,14 +68,22 @@ export const l3 = {
     heal: 40,
     positions: [
       [-138.6, -6.6],                                   // armory
-      [-88.2, 3.4], [-15.0, 3.4], [85.0, -3.4],          // Commerce Street (alley mouths)
-      [-50.3, -24.0], [44.6, -24.2], [96.0, -32.2],      // Grove Boulevard
-      [-50.4, 24.4], [35.6, 24.4], [110.0, 31.4],        // Oak Avenue
+      [-88.2, 3.4], [-15.0, 3.4], [26.0, 3.4], [58.0, 3.4], [85.0, -3.4],          // Commerce Street (alley mouths, one ahead of the segment-3 waves)
+      [-50.3, -24.0], [-4.0, -24.0], [44.6, -24.2], [72.0, -32.2], [96.0, -32.2],      // Grove Boulevard
+      [-50.4, 24.4], [35.6, 24.4], [64.0, 24.4], [110.0, 31.4],        // Oak Avenue
     ] as readonly P[],
   },
-  /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): the L2 value, the city's infected are as strong. */
-  infectedDamage: 1.8,
-  checkpoints: ['armory', 'fallback', 'segment-2', 'segment-3'] as const,
+  /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
+  infectedDamage: 1.1,
+  /**
+   * PO 10-09: a courier who keeps dying at one spot is not meant to hit the same wall for 20 deaths. From the `fromDeaths`-th death on,
+   * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by
+   * `stepFrac` per death (max `maxFrac`). Hordes and density stay for anyone who plays it through; only a death loop eases.
+   */
+  mercy: { fromDeaths: 2, stepFrac: .25, maxFrac: .75, aheadM: [12, 90] as P },
+  checkpoints: ['armory', 'fallback', 'segment-2', 'segment-2b', 'segment-3', 'segment-3b'] as const,
+  /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
+  checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
   bots: { seeds: 20, completeMedianS: [120, 225] as P, newbieMedianS: [150, 270] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;
