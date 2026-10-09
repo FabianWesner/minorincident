@@ -75,7 +75,8 @@ test('an infected reaching a rider who has stopped also tips the bike over besid
   const { w, b, p } = await riding(start, 0, 0);
   try {
     w.infected!.director.levelCap = 60;
-    w.infected!.spawn('infected.runner', { x: start.x + 4, z: start.z }, { state: 'chase' });
+    // PO L1 vision-only pursuit (E19 §5.2): face the stopped rider so she is inside the 90° sight cone.
+    w.infected!.spawn('infected.runner', { x: start.x + 4, z: start.z }, { state: 'chase', yaw: Math.PI });
     for (let i = 0; i < 600 && b.riding; i++) step(w, 1);
     expect(b.riding).toBe(false);
     const t = b.entity!.transform;

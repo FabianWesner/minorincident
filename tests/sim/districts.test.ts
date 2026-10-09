@@ -14,6 +14,8 @@ import {
   resolveDecay,
 } from "../../src/levels/districts/validate";
 import { bakeNav } from "../../src/sim/world/NavGrid";
+import { placementColliders } from "../../src/levels/districts/staticCollision";
+import { pushableProps } from "../../src/data/pushableProps";
 const layouts = Object.fromEntries(
   [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId].map((id) => [
     id,
@@ -25,20 +27,20 @@ const layouts = Object.fromEntries(
 test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier", () => {
   for (const level of Object.values(compositions))
     for (const tier of [0, 1, 2, 3, 4, 5] as const) {
-      const inputs = level.districts.map((d) => ({
-        layout: layouts[d.id],
-        origin: d.origin,
-        colliders: resolveDecay(layouts[d.id], tier)
-          .colliders.map((c) => c.aabb)
-          .concat(
-            districtGameplay[d.id].decay
-              .filter((d) => d.tier <= tier)
-              .flatMap((d) => d.blockers),
-          ),
-      }));
+      const inputs = level.districts.map((d) => {
+        const decay = resolveDecay(layouts[d.id], tier);
+        const movable = new Set(decay.placements.filter(p => pushableProps[p.assetId]).map(p => p.id));
+        // PO open bay/raised ground (c5d7474c, 465c49e6): bake the runtime compound solids, excluding movable props and walkable supports.
+        return {
+          layout: layouts[d.id], origin: d.origin,
+          colliders: placementColliders(decay.placements, decay.colliders)
+            .filter(c => !c.walkable && !movable.has(c.id.split('/')[0])).map(c => c.aabb)
+            .concat(districtGameplay[d.id].decay.filter(d => d.tier <= tier).flatMap(d => d.blockers)),
+        };
+      });
       for (const seed of [1, 42, 2026]) {
-        const nav = bakeNav(inputs, seed);
-        expect(bakeNav(inputs, seed).hash).toBe(nav.hash);
+        const nav = bakeNav(inputs, seed, .5);
+        expect(bakeNav(inputs, seed, .5).hash).toBe(nav.hash);
         const first = level.districts[0],
           start = resolvePosition(
             districtGameplay[first.id].playerStart,
