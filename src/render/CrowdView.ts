@@ -98,7 +98,7 @@ export class CrowdView extends Group {
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
-    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4';
+    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
     const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);

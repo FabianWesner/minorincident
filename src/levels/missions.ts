@@ -1,3 +1,4 @@
+import { levelFiveMission } from './L5/mission';
 import { levelFourMission } from './L4/mission';
 import { levelThreeMission } from './L3/mission';
 import { levelTwoMission } from './L2/mission';
@@ -12,6 +13,7 @@ export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
+  if (id === 'L5') return levelFiveMission(resolve);
   if (id === 'L4') return levelFourMission(resolve);
   if (id === 'L3') return levelThreeMission(resolve);
   if (id === 'L2') return levelTwoMission(resolve);
@@ -69,16 +71,6 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       fire.onStart = [{ kind: 'radio', id: 'L1.fire' }];
       fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
-    }
-    case 'L5': {
-      const positions = [anchor('res','D-RES','arrival'),anchor('fuel','D-MAIN','fuel-shop-door'),anchor('checkpoint','D-CIVIC','checkpoint-door'),anchor('bridge','D-EDGE','exit')];
-      const convoy = actor('convoy',positions[0],'defend',1000);
-      for(let i=0;i<4;i++) {
-        if(i) { const s = reach(`fallback-${i}`,'Fall back to the next position',positions[i]); s.timer = 30; s.onStart = [{ kind: 'radio', id: 'L5.fallback' }]; }
-        const prep = step(`prep-${i+1}`,'survive','Prepare the fallback position',positions[i],{ kind: 'hold', anchor: positions[i], seconds: 20 }); checkpoint(prep);
-        defend(`hold-${i+1}`,`Hold position ${i+1}/4`,positions[i],convoy,[90,100,110,120][i]);
-      }
-      end = 'hold-4'; break;
     }
     case 'L6': {
       reach('home','Leave the burning neighborhood',anchor('home','D-RES','arrival'));

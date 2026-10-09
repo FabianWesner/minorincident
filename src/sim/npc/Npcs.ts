@@ -102,6 +102,7 @@ export class Npcs {
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
+      if (c?.survivor?.waitAt) c.survivor.waitAt += delta;
       const l1 = e.civilian?.l1; if (l1) { l1.repickAt += delta; if (l1.noticed >= 0) l1.noticed += delta; if (l1.graceUntil) l1.graceUntil += delta; if (l1.progressAt !== undefined) l1.progressAt += delta; if (l1.doorAt !== undefined) l1.doorAt += delta; }
       if (e.infection) { e.infection.startedTick += delta; e.infection.endsTick += delta; }
       if (e.infected) for (const key of ['until', 'cooldown', 'activeUntil', 'grabUntil', 'grabNextTick', 'scatterUntil'] as const) if (e.infected[key]) e.infected[key] += delta;

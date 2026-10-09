@@ -63,6 +63,8 @@ export interface MissionDef {
   l3?: boolean;
   /** L4 "The Safe City Falls" controller (convoy, quartermaster, the turn, the war, the line break, the cellar); see LevelFourWar. */
   l4?: boolean;
+  /** L5 "Aftermath" controller (emerge, five hidden survivors, the escort group, the metro shelter); see LevelFiveAftermath. */
+  l5?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
@@ -75,6 +77,8 @@ export interface MissionResult {
   time: number; kills: number; knockdowns: number; damage: number; deaths: number; rescued: number; optionalObjectives: string[];
   /** L1 v2 result screen: the job is done, and the outbreak is not contained. */
   delivered?: boolean; infected?: number; turned?: number; escaped?: number;
+  /** L5: the survivors that reached the station alive (keys of `l5Survivors`), carried into L6. */
+  survivors?: string[];
 }
 /** Serializable L1 v2 story state; lives in MissionState so checkpoints snapshot it (ticks are shifted on restore). */
 export interface L1State {
@@ -179,6 +183,19 @@ export interface L4State {
   /** Kills by the player and by allies (soldiers, armed civilians) since the turn; the kill share check reads these. */
   kills: { player: number; soldiers: number; armedCivilians: number; unarmedCivilians: number; heli: number; tank: number; other: number };
 }
+/** Serializable L5 controller state. Ticks are sim ticks, 0 = not yet. */
+export interface L5State {
+  phase: 'cellar' | 'emerged' | 'search' | 'metro' | 'shelter' | 'done';
+  startAt: number; emergedAt: number; searchAt: number; accountedAt: number; metroAt: number; shutterAt: number; doneAt: number;
+  /** The five survivors in casting order: entity id and fate (`hidden` until found, then `following`, `dead` or `turned`). */
+  survivors: { key: string; id: number; status: 'hidden' | 'following' | 'dead' | 'turned' | 'sheltered'; foundAt: number; cueAt: number; lostAt: number; hold: number }[];
+  found: number; lookoutId: number; infectedIds: number[]; medkitIds: number[]; corpseIds: number[]; fireIds: number[];
+  /** Sunset gloom, 1 = full sun at the basement exit, falling monotonically; the sun intensity factor the renderer applies. */
+  gloom: number;
+  /** The latest sign of life the courier heard (HUD ping), and the "Wait!" bark. */
+  cue: { key: string; x: number; z: number; until: number; text: string } | null;
+  lastShot: Record<number, number>; waitedAt: number; infectedMax: number; deadAtMetro: number;
+}
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
 export interface MissionState {
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
@@ -189,6 +206,8 @@ export interface MissionState {
   l3?: L3State;
   /** L4 controller state; checkpoints snapshot it (ticks are shifted on restore). */
   l4?: L4State;
+  /** L5 controller state; checkpoints snapshot it (ticks are shifted on restore). */
+  l5?: L5State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   /** Remaining global gameplay time (cinematics and retry screens pause it). */
   deadlineTicks: number | null;
