@@ -1,0 +1,70 @@
+{
+  "name": "qa-l3-closed-boom",
+  "note": "Courier presses against the closed army boom: visible arm and motor match the collision; corgi and chasing infected cannot cross.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        128,
+        -12
+      ],
+      [
+        148,
+        12
+      ]
+    ]
+  },
+  "armyBoom": {
+    "x": 137.1,
+    "closed": true
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        135,
+        0
+      ],
+      "god": false,
+      "state": {
+        "run": [
+          [
+            144,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        134,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      137,
+      0
+    ],
+    "zoom": 0.8
+  },
+  "frames": 180,
+  "sheet": 30,
+  "shots": [
+    0,
+    90,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

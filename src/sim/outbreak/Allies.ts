@@ -53,14 +53,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // never a target down the street (a straggler grabbed behind the running group is on his own).
   let forced: EntitySnapshot | undefined;
   // Breakout (the first seconds after the fallback call): the squad gets out with the player instead of holding the yard.
-  // Otherwise (E21 §5.4) an officer engages what it sees within 18 m while it is within 20 m of the player, and a fight in
-  // progress goes on wherever the player goes (separation is real); one further back without a target regroups and picks
-  // no new fight on the way.
+  // Moving beyond the follow leash ends even an existing fight: the squad catches up through shared E08 navigation.
   const breakout = follower && (a.follow!.breakoutUntil ?? 0) > tick;
-  const current = a.targetId ? world.entities.get(a.targetId) : undefined;
-  const fighting = !!current?.infected && current.health.current > 0 && !current.hidden && dist(current.transform, e.transform) <= (a.follow?.engageM ?? 0) * 1.2;
-  if (follower && a.engaged && !a.strikeAt && (breakout || (!fighting && dist(e.transform, leader!.transform) > a.follow!.leashM))) {
-    forced = ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id));
+  if (follower && a.engaged && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
+    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;
   }
@@ -135,10 +131,21 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
 /** Squad: stay 2-6 m from the player on an own slot around it; regroup when the player moves on (E21 §5.4). Never teleports. */
 function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): boolean {
   const f = a.follow!, d = dist(e.transform, p);
-  if (d > f.maxM) {
-    const angle = f.slot * 2.39996 + Math.PI, r = (f.minM + f.maxM) / 2, slot = { x: p.x + Math.cos(angle) * r, z: p.z + Math.sin(angle) * r };
-    const goal = world.infected!.nav.clear(slot.x, slot.z, .4) ? slot : p;
-    world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, f.minM * .5);
+  const leader = world.entities.get(f.targetId)!;
+  const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
+  // E08 corgi/escort band: keep walking while the leader walks, avoiding repeated stop/start response delays.
+  if (d > f.maxM || (moving && d > f.minM)) {
+    // E08 shared NPC movement uses the same obstacle routing/steering as corgi and survivor escorts.
+    // Slots trail the courier's facing, leaving her walking line clear even when she changes avenue.
+    const forward = world.entities.get(f.targetId)!.transform.yaw;
+    const behind = 4 + Math.floor(f.slot / 2), side = (f.slot % 2 ? 1 : -1) * 1.8;
+    const slot = { x: p.x - Math.cos(forward) * behind + Math.sin(forward) * side,
+      z: p.z + Math.sin(forward) * behind + Math.cos(forward) * side };
+    const nav = world.infected!.nav;
+    // Around a wreck, follow the courier's reachable line rather than routing to a slot on its far face.
+    const goal = d <= 10 && nav.clear(slot.x, slot.z, .4) && nav.visible(e.transform, slot, .4) && nav.visible(slot, p, .4) ? slot : p;
+    if (!world.npcs!.move(e, goal, d > f.maxM + 2 ? f.moveMs : f.moveMs * .9, e.civilian!, .5))
+      world.npcs!.move(e, p, f.moveMs, e.civilian!, f.minM);
   }
   return true;
 }

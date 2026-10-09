@@ -40,6 +40,8 @@ export interface Placement extends PlacementTransform {
   visualAabb: Aabb;
   /** Optional per-instance colour multiplier (house walls); batches stay shared, colour is an instance attribute. */
   tint?: string;
+  /** Army checkpoint boom starts raised; the mission owns its dynamic arm blocker. */
+  boomOpen?: boolean;
   /** Optional reviewed decay variant of the asset (manifest `decayVariants`: `w2`/`w3` buildings, `wrecked` vehicles). */
   decay?: string;
 }
