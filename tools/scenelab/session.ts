@@ -149,6 +149,8 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
   add('bodyOverlapMaxCm', Math.max(0, ...(metrics.bodies ?? []).map(b => b.depthCm)), e.bodyOverlapMaxCm);
+  add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
+  add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
