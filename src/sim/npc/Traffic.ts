@@ -53,7 +53,7 @@ export class Traffic {
         this.target.x = dx / distance; this.target.z = dz / distance;
         const brakingDistance = t.speed * t.speed / (2 * t.braking) + t.speed / 60;
         const gap = this.blocked(e, this.target, brakingDistance + .3);
-        const desired = Number.isFinite(gap) ? Math.min(t.desired, Math.sqrt(Math.max(0, 2 * t.braking * (gap - .1)))) : t.desired;
+        const desired = (t.yieldUntil ?? 0) > this.world.tick ? 0 : Number.isFinite(gap) ? Math.min(t.desired, Math.sqrt(Math.max(0, 2 * t.braking * (gap - .1)))) : t.desired;
         t.speed = Math.max(0, Math.min(desired, t.speed + 2 / 60));
         const move = Math.max(0, Math.min(distance, t.speed / 60, gap));
         t.stopped = move < .001;

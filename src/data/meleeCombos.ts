@@ -16,19 +16,24 @@ const move = (name: string, windup: number, active: number, recovery: number, ex
  * Normal beats use brief flinches and small displacement (00 §6.2). Only the
  * explicit bat overhead finisher knocks down; unarmed kicks are normal beats. */
 export const meleeMoves: Readonly<Record<string, readonly MeleeMove[]>> = {
+  // PO 10-08 (verbatim): "You need to increase the speed of fight movements. Every click needs to be a kick, no matter
+  // how fast I click." Diablo-paced flurry: 14-18 ticks per beat (~0.27 s, was 16-30), contact at <= 30 % of the beat;
+  // 6 damage (7 hits, was 9 x 5) keeps a 1v1 at the same ~1.9 s; half the shove so a fast flurry keeps the target in reach.
   'weapon.fists': [
-    move('jab', 3, 3, 10, { knockback: .15, stagger: .15, hitStopMs: 45 }),
-    move('cross', 4, 4, 10, { knockback: .2, stagger: .2, hitStopMs: 50 }),
-    move('front-kick', 6, 5, 17, { knockback: .3, stagger: .2, range: 1.55, arc: 60, hitStopMs: 60 }),
-    move('roundhouse-kick', 7, 5, 18, { knockback: .3, stagger: .2, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 60 }),
-    move('uppercut', 6, 5, 12, { knockback: .25, stagger: .25, hitStopMs: 50 }),
-    move('knee', 4, 4, 10, { knockback: .2, stagger: .2, range: 1.45, hitStopMs: 50 }),
-    move('spinning-backfist', 8, 5, 14, { knockback: .25, stagger: .2, range: 1.4, arc: 120, maxTargets: 2, hitStopMs: 60 }),
+    move('jab', 3, 2, 9, { damage: 6, knockback: .08, stagger: .15, hitStopMs: 40 }),
+    move('cross', 3, 3, 9, { damage: 6, knockback: .1, stagger: .2, hitStopMs: 40 }),
+    move('front-kick', 4, 3, 11, { damage: 6, knockback: .15, stagger: .2, range: 1.55, arc: 60, hitStopMs: 45 }),
+    move('roundhouse-kick', 5, 3, 10, { damage: 6, knockback: .15, stagger: .2, range: 1.6, arc: 110, maxTargets: 2, hitStopMs: 45 }),
+    move('uppercut', 4, 3, 10, { damage: 6, knockback: .12, stagger: .25, hitStopMs: 40 }),
+    move('knee', 3, 3, 9, { damage: 6, knockback: .1, stagger: .2, range: 1.45, hitStopMs: 40 }),
+    move('spinning-backfist', 5, 3, 10, { damage: 6, knockback: .12, stagger: .2, range: 1.4, arc: 120, maxTargets: 2, hitStopMs: 45 }),
   ],
+  // Bat beats keep their ~0.33 s tempo; the overhead finisher is quicker (23 ticks, was 28) and no longer flings the
+  // target 3.3 m out of reach (the courier then walked after it: the ~1 s gaps the PO felt): 0.5 m, inside the bat's reach.
   'weapon.bat': [
     move('forehand', 5, 4, 11, { damage: 22, knockback: .25, stagger: .2, hitStopMs: 42 }),
     move('backhand', 4, 4, 10, { damage: 22, knockback: .3, stagger: .2, hitStopMs: 42 }),
-    move('overhead', 9, 5, 14, { damage: 30, knockback: 3.3, stagger: .6, knockdown: true, arc: 70, hitStopMs: 67 }),
+    move('overhead', 7, 4, 12, { damage: 30, knockback: .5, stagger: .6, knockdown: true, arc: 70, hitStopMs: 60 }),
   ],
 };
 

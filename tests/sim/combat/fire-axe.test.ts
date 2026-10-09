@@ -1,3 +1,4 @@
+import { catalog } from '../../../src/data/actions/catalog';
 import { expect, test } from 'vitest';
 import { Rng } from '../../../src/core/Rng';
 import type { GameEvent } from '../../../src/sim/world/types';
@@ -43,11 +44,11 @@ test('T-E20-10 @E20 @E20-AC10 axe single vs roundhouse table (20 seeds); the bat
       expect(hits.length).toBeGreaterThanOrEqual(3);
       for (const id of ids) {
         const e = w.entities.get(id)!, p = from.get(id)!;
-        expect(e.health.current, `seed ${seed}`).toBe(40 - 25);
+        expect(e.health.current, `seed ${seed}`).toBe(40 - catalog['weapon.fire-axe'].roundhouse!.damage);
         expect(Math.hypot(e.transform.x - p.x, e.transform.z - p.z), `seed ${seed} push`).toBeGreaterThanOrEqual(2);
       }
-      // Roundhouse takes 1.0 s in total: the next swing is not ready before that.
-      expect(w.combat!.runner.loadout.current('LEFT').readyAt - attack.tick).toBe(60);
+      // Roundhouse takes 0.5 s in total (PO 10-08 fight speed; was 1.0 s): the next swing is not ready before that.
+      expect(w.combat!.runner.loadout.current('LEFT').readyAt - attack.tick).toBe(30);
     }
     // The bat from L1: a 40 HP infected needs two hits.
     {

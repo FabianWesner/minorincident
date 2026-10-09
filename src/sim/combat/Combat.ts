@@ -74,6 +74,7 @@ export class Combat {
   };
   private readonly switched = (side: 'LEFT' | 'RIGHT', actionId: string): void => { this.world.events.emit({ type: 'loadout.switched', tick: this.world.tick, sourceId: 1, side, actionId }); };
   private readonly started = (attack: Attack): void => {
+    const target = this.world.controls.targetId; if (target !== null) attack.target = target;
     this.world.controls.attacked(attack.side);
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
@@ -132,7 +133,7 @@ export class Combat {
     } else if (def.splash) this.splash(attack, source.transform);
     else if (attack.style === 'roundhouse') this.sweep(attack, source);
     else if (def.category === 'melee' || def.category === 'ability') {
-      for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace)) this.hit(attack, target, source.transform, 'melee');
+      for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace, attack.target)) this.hit(attack, target, source.transform, 'melee');
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
       const count = def.pellets!, angle = Math.atan2(attack.aim.z, attack.aim.x);
