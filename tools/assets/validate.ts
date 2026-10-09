@@ -35,6 +35,17 @@ export function geometryHash(document: Document): string {
 function descendants(node: Node): Node[] {
   return [node, ...node.listChildren().flatMap(descendants)];
 }
+/** Include every animated owner/material primitive, including static attachments. */
+export function rigDrawErrors(document: Document, def: AssetDef, base: Document): string[] {
+  if (!def.rigDrawBase) return [];
+  const nodes = document.getRoot().listNodes();
+  const member = def.rigDrawBase.member;
+  const baseNodes = member ? base.getRoot().listNodes().find(n => n.getName() === member) : undefined;
+  if (member && !baseNodes) return [`rigDrawBase: missing member ${member}`];
+  const count = (list: Node[]) => list.reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
+  const calls = count(nodes), limit = count(baseNodes ? descendants(baseNodes) : base.getRoot().listNodes());
+  return calls > limit ? [`animated-owner drawCalls: ${calls} > shipped base ${limit}`] : [];
+}
 /** Runtime hides gore/collider helpers; they do not contribute to the default silhouette. */
 function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
   const hidden: [Node,Mesh][]=[];
@@ -143,6 +154,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
   }
   const staticCalls = nodes.filter((n) => !def.animatedNodes.some((name) => byName.get(name) && descendants(byName.get(name)!).includes(n))).reduce((sum, n) => sum + (n.getMesh()?.listPrimitives().length ?? 0), 0);
   if (staticCalls > def.budget.drawCalls) errors.push(`static drawCalls: ${staticCalls} > ${def.budget.drawCalls}`);
+  if (def.rigDrawBase && drawCalls > def.budget.drawCalls) errors.push(`animated-owner drawCalls: ${drawCalls} > ${def.budget.drawCalls}`);
   if (def.category === 'infected') for (const name of new Set([
     ...['head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'legL', 'legR'].map(name => `stump_${name}`),
     ...def.requiredNodes.filter(name => name.includes('stump_')),
@@ -198,6 +210,13 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       try {
         const document = await io.read(path);
         const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        if (def.rigDrawBase) {
+          const definitions = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+          const rigBase = definitions.find(a => a.id === def.rigDrawBase!.id);
+          const basePath = lod === 0 ? rigBase?.glb : rigBase?.lods?.[lod === 1 ? 'lod1' : 'lod2'];
+          if (def.category !== 'character' || !rigBase || rigBase.id === def.id || rigBase.category !== 'character' || !atLeast(rigBase.status, 'integrated') || !basePath || !existsSync(basePath)) validation.errors.push('rigDrawBase: expected a shipped living character tier');
+          else validation.errors.push(...rigDrawErrors(document, def, await io.read(basePath)));
+        }
         // Pending registration belongs to art-integration. Still enforce shipping and
         // node preservation for its real exports, without treating placeholder sizes as authored contracts.
         if (!def.sourceGlb && sourcePath && !atLeast(def.status, 'modeled')) {
