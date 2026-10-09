@@ -16,16 +16,16 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L2', { seed: 2, progression: 'L2-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
     const step = async (until: string, max = 400) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(30)); };
     /** rAF frame times while the real clock runs, until `until` holds (plus `tail` ms). */
-    const record = (until: string, tail: number, minMs = 0) => page.evaluate(async ({ until, tail, minMs }) => {
-      const a = window.__SS__!, frames: number[] = [], cpu: { sim: number; update: number; render: number }[] = []; let previous = 0, end = 0; const start = performance.now(); a.resume();
+    const record = (until: string, tail: number, minMs = 0) => page.evaluate(async ({ until, tail, minMs, diagnostic }) => {
+      const a = window.__SS__!, frames: number[] = [], times: number[] = [], cpu: { sim: number; update: number; render: number }[] = []; let previous = 0, end = 0; const start = performance.now(); a.resume();
       for (let i = 0; i < 4000; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
-        if (previous && i > 2) { frames.push(now - previous); const p = a.perf(); cpu.push({ sim: p.simMs, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
+        if (previous && i > 2) { frames.push(now - previous); if (diagnostic) times.push(performance.now()); const p = a.perf(); cpu.push({ sim: p.simMs, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
         if (!end && (0, eval)(until) && now - start >= minMs) end = now + tail;
         if (end && now >= end) break;
       }
-      a.pause(); (window as unknown as { l2Cpu: typeof cpu }).l2Cpu = cpu; return frames;
-    }, { until, tail, minMs });
+      a.pause(); (window as unknown as { l2Cpu: typeof cpu; l2Times: number[] }).l2Cpu = cpu; (window as unknown as { l2Times: number[] }).l2Times = times; return frames;
+    }, { until, tail, minMs, diagnostic: process.env.L2_HITCH_PROFILE === '1' });
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     // The reveal: stand by while the crew forces the doors, then run the real clock through doors-open + 2 s.
     await step('window.__SS__.missions.state().l2.atDoorsAt > 0');
@@ -43,7 +43,11 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     // The gate close: the bot runs on to the checkpoint; record from the approach through the close + 1.5 s.
     await page.evaluate(() => window.__SS__!.bot.start('complete'));
     await step('(() => { const p = window.__SS__.getState().player.transform; return p.x > 62 || window.__SS__.missions.state().l2.crossedAt > 0; })()', 800);
+    const diagnostic = process.env.L2_HITCH_PROFILE === '1' ? await context.newCDPSession(page) : null;
+    const profileStart = diagnostic ? await page.evaluate(() => performance.now()) : 0;
+    if (diagnostic) { await diagnostic.send('Profiler.enable'); await diagnostic.send('Profiler.setSamplingInterval', { interval: 500 }); await diagnostic.send('Profiler.start'); }
     const gate = await record('window.__SS__.missions.state().l2.gateClosedAt > 0', 1500);
+    if (diagnostic) writeFileSync(`${dir}/gate-${tier}-profile.json`, JSON.stringify({ ...await diagnostic.send('Profiler.stop'), profileStart, times: await page.evaluate(() => (window as unknown as { l2Times: number[] }).l2Times) }));
     const gateCpu = await page.evaluate(() => (window as unknown as { l2Cpu: { sim: number; update: number; render: number }[] }).l2Cpu);
     const proof = { tier, seed: 2, counts, drawCalls: fixed.drawCalls, triangles: fixed.triangles, revealMaxMs: Math.max(...reveal), gateMaxMs: Math.max(...gate), peakP50: percentile(peak, .5), peakP95: percentile(peak, .95), peakMax: Math.max(...peak), frames: peak.length, simP95: percentile(cpu.map(c => c.sim), .95), updateP95: percentile(cpu.map(c => c.update), .95), renderP95: percentile(cpu.map(c => c.render), .95), gateClosed: await page.evaluate(() => window.__SS__!.missions.state()!.l2!.gateClosedAt > 0) };
     writeFileSync(`${dir}/l2-${tier}.json`, JSON.stringify({ ...proof, profile: fixed.profile, profileAssets: fixed.profileAssets, reveal, gate, gateCpu: { simP50: percentile(gateCpu.map(c => c.sim), .5), updateP50: percentile(gateCpu.map(c => c.update), .5), renderP50: percentile(gateCpu.map(c => c.render), .5) } }, null, 2));
