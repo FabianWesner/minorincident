@@ -48,7 +48,7 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -180,7 +180,7 @@ export class DistrictView extends Group {
           )
             return;
           const lit = d.decay.lights.includes(o.userData.lightGroup),
-            key = `${o.userData.assetId}:${lit}`;
+            key = `${o.userData.assetId}:${lit}:`;
           const reference = new Object3D();
           o.matrixWorld.decompose(
             reference.position,
@@ -191,8 +191,8 @@ export class DistrictView extends Group {
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });
-        // L3 authors parking and emergency dressing in its loaded layout. Its
-        // references must use those positions, rather than the unchanged baked GLB.
+        // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
+        // references must use those placements, rather than the unchanged baked GLB empties.
         if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
@@ -207,7 +207,7 @@ export class DistrictView extends Group {
             }
           }
           for (const p of d.decay.placements) {
-            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}`;
+            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
             const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
             if (p.tint) reference.userData.tint = p.tint;
             if (!references.has(key)) references.set(key, []);
@@ -219,15 +219,15 @@ export class DistrictView extends Group {
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
-            const [id, power] = key.split(":");
+            const [id, power, variant] = key.split(":"), decay = variant || undefined;
             if (!worldAssets[id]) {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
-              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0');
+              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
               const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
             const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
-            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2')));
+            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2', decay)));
             // L1 uses the shared vertex-attribute instancing path; live counts stay
             // unchanged while shader code no longer depends on placement capacity.
             const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
@@ -239,7 +239,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -360,13 +360,6 @@ export class DistrictView extends Group {
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
-    });
-  }
-  /** L3 collapse extinguishes Civic emissives; ordinary checkpoint restore powers them again. */
-  setEmergencyPower(powered: boolean): void {
-    const root = this.children.find(child => child.name === 'D-CIVIC');
-    root?.traverse(node => {
-      if (node instanceof Mesh && !Array.isArray(node.material) && (node.name === 'window-light' || node.material.name.startsWith('emi_'))) node.visible = powered;
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
@@ -581,7 +574,7 @@ export class DistrictView extends Group {
   /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
   swapSlot: (() => Promise<void>) | null = null;
   private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
-    const prototype = await this.registry.asset(entry.id, entry.lit, lod);
+    const prototype = await this.registry.asset(entry.id, entry.lit, lod, entry.decay);
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
     const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;

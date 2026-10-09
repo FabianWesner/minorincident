@@ -28,7 +28,7 @@ export class Companion {
   /** L1 v2 (D-GROVE): the corgi cannot be hurt, has no courage bar, and warns instead of fighting (spec 5.8). */
   /** Tests and scenarios without a D-GROVE district can force the L1 v2 behaviour. */
   forceSafe: boolean | null = null;
-  get safe(): boolean { return this.forceSafe ?? this.world.districts?.districts.some(d => d.id === 'D-GROVE') === true; }
+  get safe(): boolean { return this.forceSafe ?? this.world.districts?.districts.some(d => d.id === 'D-GROVE' || d.id === 'D-CORRIDOR') === true; }
   hit(e: EntitySnapshot, amount: number): void {
     if (this.safe) return;
     const c = e.companion!; c.courage = Math.max(0, c.courage - amount);

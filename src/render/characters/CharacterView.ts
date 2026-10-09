@@ -278,7 +278,8 @@ export class CharacterView extends Group {
   /** Held views borrow these nodes; CharacterView retains ownership of the rig. */
   /** Rig node of the visible variant (kick trails follow the foot). */
   node(name: keyof LoadedCharacter['rig']) { return this.characters.get(this.variant)?.rig[name]; }
-  socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)!.sockets[side]; }
+  /** Sockets of the visible variant; undefined while the figure is (re)loading, e.g. during a level hand-over. */
+  socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)?.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
     return { modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,

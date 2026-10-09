@@ -79,6 +79,16 @@ export class LevelTwoRescue {
     this.spawnTruck();
     this.spawnStation();
     this.spawnCheckpoint();
+    // Checkpoint gunfire is a loud event (E21 rule): non-chasing infected within 20 m head for the shot, so the attack piles up
+    // at the barricade and, once it is shut, at the closed gate.
+    world.events.on('ally.attack', e => {
+      if (e.type !== 'ally.attack' || !e.from || !this.s.officerIds.includes(e.sourceId)) return;
+      const s = this.s, c = l2.checkpoint, last = (s.lastShot ??= {})[e.sourceId] ?? -Infinity;
+      if (!s.keepBackAt && s.radioAt) { s.keepBackAt = world.tick; this.mission.radio('L2.keepBack'); }
+      if (world.tick - last < ticks(c.gunfireGapS)) return;
+      s.lastShot[e.sourceId] = world.tick;
+      world.events.emit({ type: 'outbreak.distraction', tick: world.tick, id: 310_000 + world.tick * 8 + (e.sourceId % 8), kind: 'gunfire', position: { x: e.from.x, z: e.from.z }, radius: c.gunfireM, until: world.tick + ticks(c.gunfireHoldS) });
+    });
     this.spawnCorpses();
     this.s.trappedIds = this.spawnTrapped(tier === 'low' ? l2.rescue.trapped.low : l2.rescue.trapped.high);
     for (const id of ['door-front', 'door-loading']) this.wall(id, true);
@@ -133,7 +143,7 @@ export class LevelTwoRescue {
     for (const post of posts.slice(0, l2.checkpoint.officers)) {
       const p = this.snap(post, .35);
       const id = o.spawnPedestrian(p, { role: 'officer', model: 'npc.police-officer', tint: '#2f4858', tier: 'average', schedule: [{ activity: 'look', anchor: 'l2/post', target: p, facing: { x: 60, z: 30 }, ticks: 60 * 60 }] });
-      const e = this.world.entities.get(id)!; e.civilian!.ally = allyState('officer', p, true); e.transform.yaw = Math.PI;
+      const e = this.world.entities.get(id)!; e.civilian!.ally = { ...allyState('officer', p, true), gun: { ...l2.checkpoint.gun } }; e.transform.yaw = Math.PI;
       this.s.officerIds.push(id);
     }
     const line: Point[] = [{ x: 82.2, z: 28.6 }, { x: 82.6, z: 30.6 }, { x: 83.2, z: 27.4 }, { x: 84, z: 29.6 }, { x: 83.4, z: 31.8 }, { x: 84.2, z: 33.2 }, { x: 82.2, z: 33 }, { x: 84.4, z: 27.8 }];
@@ -440,7 +450,10 @@ export class LevelTwoRescue {
     // Officers cover the courier's approach (they hold fire otherwise) and wave them in while nothing threatens the line.
     const gate = this.anchor('l2-gate'), cover = s.gateClosedAt > 0 || Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) <= l2.checkpoint.coverM;
     // Always: anything at the line itself. Covering: the whole 15 m in front of the gate.
-    for (const id of s.officerIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) { a.engaged = true; a.range = cover ? l2.checkpoint.shootM : 6; } }
+    for (const id of s.officerIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) { a.engaged = true; a.range = cover ? l2.checkpoint.shootM : l2.checkpoint.lineM; } }
+    // Barks: the first shots at the line, and the courier running the last stretch with infected on their heels.
+    if (s.radioAt && !s.crossedAt && !s.runKidAt && Math.hypot(player.transform.x - gate.x, player.transform.z - gate.z) <= l2.checkpoint.coverM
+      && world.infected!.active.some(e => e.health.current > 0 && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 10)) { s.runKidAt = tick; this.mission.radio('L2.runKid'); }
     if (s.radioAt && !s.gateClosedAt) for (const id of s.officerIds) {
       const e = world.entities.get(id), c = e?.civilian; if (!c?.ally || c.ally.targetId) continue;
       const near = Math.hypot(player.transform.x - e!.transform.x, player.transform.z - e!.transform.z) < 30;

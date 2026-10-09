@@ -13,6 +13,9 @@ import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { SimPhase } from '../../core/EventBus';
 import { installL1Outbreak } from '../../sim/outbreak/install';
 import { seatAnchor } from '../../sim/npc/seats';
+import { allyState } from '../../sim/outbreak/Allies';
+import { l3 } from '../../data/l3';
+import { levelThreeLayouts } from '../../levels/L3/layout';
 import { inside } from '../../levels/districts/validate';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
@@ -89,7 +92,9 @@ export class SceneLab {
       const response = await fetch(assetUrl(`/assets/layouts/${spec.layout.district}.layout.json`));
       if (!response.ok) throw new Error(`Layout ${spec.layout.district} not found`);
       source = await response.json() as DistrictLayout;
+      // The L3 corridor is played through its layout copy (W2/W3 dressing, wrecks, glass, the army dressing): crop that.
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
+      if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
@@ -224,6 +229,13 @@ export class SceneLab {
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
       else if ('hit' in a) this.hit(e, a.hit);
+      else if ('ally' in a) {
+        // The L3 allied fighter v2 setup (LevelThreeCollapse.officer/fallback): a gun, engaged, a post or a squad slot.
+        const role = a.ally.role ?? 'officer', leader = a.ally.follow ? this.actors.get(a.ally.follow)?.entity : undefined, f = l3.officers.squad, slot = a.ally.slot ?? 0;
+        c.ally = { ...allyState(role, leader ? null : { x: e.transform.x, z: e.transform.z }, !leader), gun: { ...(role === 'soldier' ? l3.soldiers.gun : l3.officers.gun) }, engaged: true, runSpeed: f.moveMs };
+        if (leader) c.ally.follow = { targetId: leader, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs };
+        e.health = { current: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp, max: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp };
+      }
       else if ('handover' in a) this.startHandover(actor, e, a.handover);
       return;
     }

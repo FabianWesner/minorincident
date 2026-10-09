@@ -85,7 +85,10 @@ export const l2 = {
   cluster: { home: [48, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
-  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20 },
+  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20,
+    /** PO 2026-10-08: the officers visibly fire (allied fighters v2 handguns: seeded hit chance, muzzle flash, tracer); hits knock
+     * infected down per the recover rule, only the closed gate stops them. Shots are loud events (E21 gunfire rule). */
+    gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5 },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
   infectedDamage: 1.8,
   /** Section 4: checkpoints. */
