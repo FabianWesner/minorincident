@@ -49,9 +49,9 @@ test('T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fi
   // The L1 completion trigger lies in the bay the L2 station-local frame describes (right bay, 1.2 m inside).
   const [tx, tz] = stationPoint(.4, -1.23), trigger = grove.anchors['fire-bay-trigger'].position;
   expect(Math.hypot(trigger[0] - tx, trigger[2] - tz)).toBeLessThan(.05);
-  // Superseded placements are matched by asset and position: all nine still find their placement (no silent no-op after a rebuild).
+  // Superseded placements are matched by asset and position: all ten (four at the market, the roadwork kit and five fences at the closing gate) still find their placement (no silent no-op after a rebuild).
   const [layout] = levelTwoLayouts([grove]);
-  expect(grove.placements.length - layout.placements.filter(p => !p.id.startsWith('l2-')).length).toBe(9);
+  expect(grove.placements.length - layout.placements.filter(p => !p.id.startsWith('l2-')).length).toBe(10);
   // The three ambush doors are the same physical doors as when L2 was tuned (door numbers follow the layout's door order).
   const expected = [[-76.65, -37.5], [-19.62, -35], [-50.82, -4]];
   for (const [i, [door]] of l2.rescue.ambushDoors.entries()) { const p = grove.anchors[door].position; expect(Math.hypot(p[0] - expected[i][0], p[2] - expected[i][1]), door).toBeLessThan(.05); }
