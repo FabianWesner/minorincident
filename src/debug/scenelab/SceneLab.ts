@@ -326,7 +326,7 @@ export class SceneLab {
       else if ('ally' in a) {
         // The L3 allied fighter v2 setup (LevelThreeCollapse.officer/fallback): a gun, engaged, a post or a squad slot.
         const role = a.ally.role ?? 'officer', leader = a.ally.follow ? this.actors.get(a.ally.follow)?.entity : undefined, f = l3.officers.squad, slot = a.ally.slot ?? 0;
-        c.ally = { ...allyState(role, leader ? null : { x: e.transform.x, z: e.transform.z }, !leader), gun: { ...(role === 'soldier' ? l3.soldiers.gun : l3.officers.gun) }, engaged: true, runSpeed: f.moveMs };
+        c.ally = { ...allyState(role, leader ? null : { x: e.transform.x, z: e.transform.z }, !leader), gun: { ...(role === 'soldier' ? l3.soldiers.gun : leader ? f.gun : l3.officers.gun) }, engaged: true, runSpeed: f.moveMs };
         if (leader) c.ally.follow = { targetId: leader, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs };
         e.health = { current: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp, max: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp };
       }

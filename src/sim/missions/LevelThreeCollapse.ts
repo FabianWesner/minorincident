@@ -243,7 +243,7 @@ export class LevelThreeCollapse {
     const f = l3.officers.squad;
     for (const [slot, id] of squad.entries()) {
       const a = world.entities.get(id)!.civilian!.ally!;
-      a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs;
+      a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs; a.gun = { ...f.gun };
       // Shared allied follower/navigation: all surviving officers can keep pace with the courier.
       a.follow = { targetId: 1, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs, breakoutUntil: tick + ticks(f.breakoutS) };
       world.entities.get(id)!.civilian!.story = null;
@@ -329,11 +329,13 @@ export class LevelThreeCollapse {
     const doors = this.doors(), scale = this.world.infected!.director.tier === 'low' ? .5 : 1;
     for (const [x, street, size] of l3.density.groups[segment]) {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
-      const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, home) - dist(b, home)).slice(0, 2);
+      const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
       for (let i = 0; i < Math.ceil(size * scale * l3.density.streetMultiplier); i++) {
         // Five small clusters across the neighbourhood, with breathing room along the walking line.
-        const spread = this.snap({ x: home.x + (i % 5 - 2) * 3, z: home.z + (Math.floor(i / 5) % 3 - 1) * 2 }, .5);
-        s.pending.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0 });
+        const cluster = Math.floor(i / clusterSize);
+        const spread = cluster === 0 ? home : this.snap({ x: home.x + offsets[cluster], z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
+        const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, spread) - dist(b, spread)).slice(0, 2);
+        s.pending.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
       }
     }
     if (segment === 2) this.planHorde();
@@ -360,7 +362,7 @@ export class LevelThreeCollapse {
     const allowance = s.phase === 'attack' ? Math.min(3, (ai.director.tier === 'low' ? 5 : 10) - s.segmentIds[0].length) : all ? Infinity : 3;
     let spawned = 0;
     for (const q of s.pending as Pending[]) {
-      if (q.id !== 0 || spawned >= allowance || (q.horde && p.x < l3.finale.startX + 10)) continue;
+      if (q.id !== 0 || spawned >= allowance || (s.phase === 'attack' && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10)) continue;
       const a = this.anchor(q.door);
       if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < 25) continue;
       const id = this.emerge(a, q.home);

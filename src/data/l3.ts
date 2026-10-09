@@ -31,7 +31,7 @@ export const l3 = {
     hp: 100,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
     /** The squad follows 3-8 m around/behind the courier; running beyond its band is a regroup order. */
-    squad: { size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12 },
+    squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12 },
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */

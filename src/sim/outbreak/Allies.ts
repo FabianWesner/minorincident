@@ -164,14 +164,14 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
  * Police tactics for an engaged officer (PO 2026-10-09: "they need to move like real policemen would do, not standing still"):
  * a baton strike at arm's length, a backstep (always facing the threat) when an infected closes in, a sidestep to clear the line
  * of fire past a teammate or the courier, spreading out from a neighbour, and a short reposition every few shots. Steps are
- * short (<= 1.6 m), kept within `leashM` of the post, and the officer does not shoot while stepping. Returns true while busy.
+ * short (<= 1.6 m), kept within `leashM` of the post, and officers keep firing while stepping to cover a running squad. Returns true while busy.
  */
 function tactics(world: SimWorld, e: EntitySnapshot, a: AllyState, target: EntitySnapshot, d: number, dx: number, dz: number): boolean {
   const tick = world.tick, c = e.civilian!, nx = dx / (d || 1), nz = dz / (d || 1), npcs = world.npcs!, nav = world.infected!.nav;
   const face = () => { e.transform.yaw = -Math.atan2(dz, dx); };
   if (a.step) {
     if (tick >= a.step.until || Math.hypot(a.step.x - e.transform.x, a.step.z - e.transform.z) <= .15) a.step = undefined;
-    else { npcs.move(e, a.step, pt.stepMs, c, .1); face(); return true; }
+    else { npcs.move(e, a.step, pt.stepMs, c, .1); face(); return false; }
   }
   // Shove: an infected at arm's length takes a baton strike instead of a point-blank shot.
   if (d <= pt.batonReachM) {

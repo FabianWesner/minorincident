@@ -146,7 +146,7 @@ export interface L3State {
   /** Station waves still waiting at their emergence points (`id` 0 = not yet out). */
   waves: { id: number; dir: 'river' | 'blvd' | 'oak'; at: number; wave: number }[]; waveIds: number[]; wavesSpawned: number;
   /** Corridor population: segments populated, the planned emergences (with their first visible point for the audit) and ids. */
-  populated: boolean[]; pending: { id: number; door: string; home: { x: number; z: number }; segment: number; at: number; x?: number; z?: number; seen?: boolean; horde?: boolean }[]; segmentIds: number[][];
+  populated: boolean[]; pending: { id: number; door: string; home: { x: number; z: number }; segment: number; at: number; x?: number; z?: number; seen?: boolean; horde?: boolean; streetExtra?: boolean }[]; segmentIds: number[][];
   /** Forward pressure: furthest progress (x) and when it last grew; emergences behind it. */
   furthest: number; furthestAt: number; pressureAt: number; pressureIds: number[];
   /** Highest segment entered (-1 yard), squad size at each segment end, last gunshot tick per shooter, infected retired out of view. */
