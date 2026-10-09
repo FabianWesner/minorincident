@@ -1,6 +1,7 @@
 import { spawnSync } from 'node:child_process';
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
+// Run directly with npx tsx (no outer e2e-lock). Each case owns its locks.
 // quiet-run reserves both browser slots and checks load/other browsers before each native case.
 const base = 'test-results/epics/E20/perf', summaries = [];
 for (let run = 1; run <= 3; run++) {

@@ -11,7 +11,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   test(`T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close ${tier}`, async ({ page, context }) => {
     test.setTimeout(600_000); mkdirSync(dir, { recursive: true });
     if (tier === 'low') { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
-    await page.goto(`/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}&profile`);
+    await page.goto(`/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}&profile${process.env.L2_HITCH_PROFILE === '1' ? '&profilehitches' : ''}`);
     await page.waitForFunction(() => Boolean(window.__SS__));
     await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L2', { seed: 2, progression: 'L2-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
     const step = async (until: string, max = 400) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(30)); };
@@ -47,7 +47,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const profileStart = diagnostic ? await page.evaluate(() => performance.now()) : 0;
     if (diagnostic) { await diagnostic.send('Profiler.enable'); await diagnostic.send('Profiler.setSamplingInterval', { interval: 500 }); await diagnostic.send('Profiler.start'); }
     const gate = await record('window.__SS__.missions.state().l2.gateClosedAt > 0', 1500);
-    if (diagnostic) writeFileSync(`${dir}/gate-${tier}-profile.json`, JSON.stringify({ ...await diagnostic.send('Profiler.stop'), profileStart, times: await page.evaluate(() => (window as unknown as { l2Times: number[] }).l2Times) }));
+    if (diagnostic) writeFileSync(`${dir}/gate-${tier}-profile.json`, JSON.stringify({ ...await diagnostic.send('Profiler.stop'), profileStart, builds: await page.evaluate(() => performance.getEntriesByType('measure').filter(e => e.name.startsWith('node-build:')).map(e => ({ name: e.name, at: e.startTime, ms: e.duration }))), times: await page.evaluate(() => (window as unknown as { l2Times: number[] }).l2Times) }));
     const gateCpu = await page.evaluate(() => (window as unknown as { l2Cpu: { sim: number; update: number; render: number }[] }).l2Cpu);
     const proof = { tier, seed: 2, counts, drawCalls: fixed.drawCalls, triangles: fixed.triangles, revealMaxMs: Math.max(...reveal), gateMaxMs: Math.max(...gate), peakP50: percentile(peak, .5), peakP95: percentile(peak, .95), peakMax: Math.max(...peak), frames: peak.length, simP95: percentile(cpu.map(c => c.sim), .95), updateP95: percentile(cpu.map(c => c.update), .95), renderP95: percentile(cpu.map(c => c.render), .95), gateClosed: await page.evaluate(() => window.__SS__!.missions.state()!.l2!.gateClosedAt > 0) };
     writeFileSync(`${dir}/l2-${tier}.json`, JSON.stringify({ ...proof, profile: fixed.profile, profileAssets: fixed.profileAssets, reveal, gate, gateCpu: { simP50: percentile(gateCpu.map(c => c.sim), .5), updateP50: percentile(gateCpu.map(c => c.update), .5), renderP50: percentile(gateCpu.map(c => c.render), .5) } }, null, 2));
