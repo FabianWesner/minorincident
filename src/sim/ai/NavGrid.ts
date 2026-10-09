@@ -187,8 +187,8 @@ export class NavGrid {
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number): void {
     const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
-    // A body resting exactly on a collider face (float round-off puts it a hair inside) would fail every step, also the
-    // slide along the face: it froze pressed against walls and parked trucks (PO 10-09). Sweep it with a 2 mm smaller body.
+    // Rapier contact or crowd pushes can leave a body inside the grid's conservative margin.
+    // Recover enough clearance to slide out instead of rejecting every step along the face.
     // Checked only once a step is refused, so free movement costs nothing extra.
     let touched = false;
     for (let i = 0; i < count; i++) {
@@ -196,11 +196,10 @@ export class NavGrid {
       if (!touched) {
         touched = true;
         if (!this.clear(position.x, position.z, radius)) {
-          // A body already inside the baked margin (a hair to a few cm: shoved by a fight, a dodge or a spawn; the Rapier capsule
-          // itself still fits) must walk out, not freeze: every step, also the one away from the wall, would fail `clear` at the full
-          // radius (L1 courier frozen 1 cm inside a parked sedan's margin for the rest of the level, 10-09). Sweep with the largest
-          // radius that fits where it stands: it can slide along or leave, never go deeper.
-          const fit = marginSteps.find(cut => this.clear(position.x, position.z, radius - cut));
+          // The capsule can fit inside the grid's square margin (the L1 courier was 1 cm inside a parked sedan's margin).
+          // Use the smallest bounded radius cut that clears the starting point so the sweep can slide out.
+          // The normal radius is retried on the next move.
+          const fit = marginSteps.find(cut => cut < radius && this.clear(position.x, position.z, radius - cut));
           if (fit !== undefined) { radius -= fit; i--; continue; }
         }
       }

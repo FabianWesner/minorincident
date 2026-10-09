@@ -163,7 +163,7 @@ export class L4Spectacle {
     const from = tank ? { x: tank.transform.x, z: tank.transform.z } : { x: f.x - 30, z: f.z + 20 };
     this.world.events.emit({ type: 'l4.tankFire', tick, from, to: { x: f.x, z: f.z }, shot: ++s.tankShots });
     this.world.events.emit({ type: 'ally.attack', tick, sourceId: tank?.id ?? 0, targetId: 0, role: 'tank', weapon: 'door-gun', hit: true, from, to: { x: f.x, z: f.z } });
-    this.world.explosions?.blast(f.blast, { x: f.x, z: f.z }, { sourceId: 1 });
+    this.world.explosions?.blast(f.blast, { x: f.x, z: f.z }, { sourceId: tank?.id ?? 0 });
     const truck = this.world.entities.get(s.fuelId);
     if (truck) { truck.hidden = true; const crater = spawnSetPiece(this.world, 'decay.fuel-truck-crater', { x: f.x, z: f.z, y: .7, yaw: f.yaw }); s.craterId = crater.id; }
     this.world.events.emit({ type: 'world.blocker.changed', tick, id: 900_450, blocked: false, wall: { x: f.x, y: 1, z: f.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
