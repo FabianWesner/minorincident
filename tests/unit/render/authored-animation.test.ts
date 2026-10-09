@@ -103,6 +103,18 @@ test.each(['source', 'production'])('M1-25 @E04 grounded locomotion retains supp
   expect(paths.size).toBeGreaterThan(0);
   for (const id of paths) {
     const { scene } = await model(id);
+    // The level pose lane restores the delivered standing reset before retreat.
+    // Exercise those frames here rather than sampling walking over a lying rest.
+    scene.traverse(node => {
+      if (!node.userData.ss_standingPose) return;
+      const reset = JSON.parse(node.userData.ss_standingPose) as Record<string, { translation: [number,number,number]; rotation: [number,number,number,number]; scale: [number,number,number] }>;
+      for (const [name, pose] of Object.entries(reset)) {
+        const joint = scene.getObjectByName(name)!;
+        joint.position.fromArray(pose.translation); joint.quaternion.fromArray(pose.rotation); joint.scale.fromArray(pose.scale);
+      }
+      scene.getObjectByName('restCushion')?.removeFromParent();
+    });
+    scene.updateMatrixWorld(true);
     expect(scene.getObjectByName('shinL'), id).toBeDefined();
     const height = new Box3().setFromObject(scene).getSize(new Vector3()).y;
     for (const name of ['walk','run','npc-walk','npc-walk-relaxed']) {
