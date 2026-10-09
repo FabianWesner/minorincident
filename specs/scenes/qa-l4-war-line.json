@@ -4,21 +4,193 @@
  "ground": "district",
  "time": "L4",
  "tier": 3,
- "layout": { "district": "D-FAIR", "bbox": [[-52, -44], [4, 24]] },
- "clipping": { "ignoreFoliage": true },
+ "layout": {
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -52,
+    -10
+   ],
+   [
+    8,
+    52
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
  "actors": [
-  { "id": "courier", "kind": "courier", "at": [-22, -9], "yaw": 90, "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": "idle" },
-  { "id": "sol-1", "kind": "pedestrian", "at": [-27, -15.8], "yaw": 90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": { "ally": { "role": "soldier", "weapon": "rifle" } } },
-  { "id": "sol-2", "kind": "pedestrian", "at": [-22, -15.8], "yaw": 90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": { "ally": { "role": "soldier", "weapon": "rifle" } } },
-  { "id": "sol-3", "kind": "pedestrian", "at": [-17, -15.8], "yaw": 90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": { "ally": { "role": "soldier", "weapon": "rifle" } } },
-  { "id": "hmg", "kind": "pedestrian", "at": [-31.2, -12.6], "yaw": 110, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": { "ally": { "role": "soldier", "weapon": "hmg" } } },
-  { "id": "civ-pistol", "kind": "pedestrian", "at": [-24, -11.5], "yaw": 90, "look": { "model": "npc.civilian-man-a", "tint": "#d8b04a", "handProp": "pistol" }, "state": { "ally": { "role": "civilian", "weapon": "pistol" } } },
-  { "id": "civ-rifle", "kind": "pedestrian", "at": [-19.5, -11.5], "yaw": 90, "look": { "model": "npc.civilian-man-b", "tint": "#4d7fb0", "handProp": "hunting-rifle" }, "state": { "ally": { "role": "civilian", "weapon": "hunting-rifle" } } },
-  { "id": "civ-bat", "kind": "pedestrian", "at": [-26.5, -12], "yaw": 90, "look": { "model": "npc.civilian-woman-b", "tint": "#9a5a8a", "handProp": "bat" }, "state": { "ally": { "role": "civilian", "weapon": "bat" } } },
-  { "id": "zed", "kind": "infected", "at": [-22, -30], "count": 16, "spread": 9, "yaw": -90, "state": { "chase": "courier" } }
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -22,
+    8
+   ],
+   "yaw": 90,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "sol-1",
+   "kind": "pedestrian",
+   "at": [
+    -27,
+    19.4
+   ],
+   "yaw": -90,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "sol-2",
+   "kind": "pedestrian",
+   "at": [
+    -22,
+    19.4
+   ],
+   "yaw": -90,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "sol-3",
+   "kind": "pedestrian",
+   "at": [
+    -17,
+    19.4
+   ],
+   "yaw": -90,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "civ-pistol",
+   "kind": "pedestrian",
+   "at": [
+    -24,
+    10
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-a",
+    "tint": "#d8b04a",
+    "handProp": "pistol"
+   },
+   "state": {
+    "ally": {
+     "role": "civilian",
+     "weapon": "pistol"
+    }
+   }
+  },
+  {
+   "id": "civ-rifle",
+   "kind": "pedestrian",
+   "at": [
+    -20,
+    8
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-man-b",
+    "tint": "#4d7fb0",
+    "handProp": "hunting-rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "civilian",
+     "weapon": "hunting-rifle"
+    }
+   }
+  },
+  {
+   "id": "civ-bat",
+   "kind": "pedestrian",
+   "at": [
+    -27,
+    8
+   ],
+   "yaw": 90,
+   "look": {
+    "model": "npc.civilian-woman-b",
+    "tint": "#9a5a8a",
+    "handProp": "bat"
+   },
+   "state": {
+    "ally": {
+     "role": "civilian",
+     "weapon": "bat"
+    }
+   }
+  },
+  {
+   "id": "zed",
+   "kind": "infected",
+   "at": [
+    -22,
+    44.4
+   ],
+   "count": 10,
+   "spread": 1.5,
+   "yaw": -90,
+   "state": {
+    "chase": "courier"
+   }
+  }
  ],
- "camera": { "mode": "game", "target": [-23, -14], "zoom": 1.15 },
+ "camera": {
+  "mode": "game",
+  "target": [
+   -23,
+   30
+  ],
+  "zoom": 2.6
+ },
  "frames": 420,
- "shots": [30, 120, 210, 300, 419],
- "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+ "shots": [
+  30,
+  120,
+  210,
+  300,
+  419
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
 }
