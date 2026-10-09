@@ -702,10 +702,10 @@
   "camera": {
     "mode": "game",
     "target": [
-      128,
+      129,
       0
     ],
-    "zoom": 1.0
+    "zoom": 2.3
   },
   "frames": 720,
   "sheet": 30,
@@ -720,5 +720,18 @@
   "expect": {
     "consoleErrors": 0,
     "undrawnFramesMax": 0
-  }
+  },
+  "script": [
+    {
+      "frame": 180,
+      "camera": {
+        "mode": "game",
+        "target": [
+          134,
+          0
+        ],
+        "zoom": 1.6
+      }
+    }
+  ]
 }
