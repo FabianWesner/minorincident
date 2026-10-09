@@ -809,6 +809,10 @@ export class InfectedSystem {
     brain.stuckCount = moved < 0.35 ? brain.stuckCount + 1 : 0;
     if (brain.stuckCount < 2) return;
     brain.stuckCount = 0; this.giveUp(e, brain);
+    // A starved route can leave every successive search probe behind the same fence.
+    // First walk to a clear nearby point, using the existing pocket escape, before trying the next goal.
+    const nav = this.navigation.grid(e.transform), cell = nav.escapeCell(e.transform, e.combat!.radius, 6, false, 1.5);
+    if (cell >= 0) { brain.escapeX = nav.x(cell); brain.escapeZ = nav.z(cell); brain.escapeUntil = tick + 120; }
   }
   /**
    * The current goal has no route (A* exhausted its component): back off new route requests for ~0.5 s so the shared
