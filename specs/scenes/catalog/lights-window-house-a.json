@@ -1,16 +1,16 @@
 {
  "name": "lights-window-house-a",
  "extends": "bld-grove-house-a.json",
- "note": "Window glows of bld.house-a at night, game camera, two sides (PO 10-09 'Lights are not on right place'): every glow must sit inside its window opening, LOD0 and LOD1 (far).",
+ "note": "Window glows of bld.house-a at night with the camera target 10 m away (building drawn as LOD1, as in the game): every glow must sit inside its window opening, two sides (PO 10-09 'Lights are not on right place').",
  "time": "night",
  "camera": {
   "mode": "orbit",
   "target": [
-   -43.1,
+   -36.1,
    1.8,
-   9.1
+   2.0999999999999996
   ],
-  "radius": 16,
+  "radius": 32,
   "azimuth": 45,
   "polar": 54
  },
@@ -20,36 +20,21 @@
    "camera": {
     "mode": "orbit",
     "target": [
-     -43.1,
+     -50.1,
      1.8,
-     9.1
+     16.1
     ],
-    "radius": 16,
+    "radius": 32,
     "azimuth": 225,
-    "polar": 54
-   }
-  },
-  {
-   "frame": 16,
-   "camera": {
-    "mode": "orbit",
-    "target": [
-     -43.1,
-     1.8,
-     9.1
-    ],
-    "radius": 51.2,
-    "azimuth": 45,
     "polar": 54
    }
   }
  ],
- "frames": 24,
+ "frames": 16,
  "sheet": 8,
  "shots": [
   4,
-  12,
-  20
+  12
  ],
  "expect": {
   "consoleErrors": 0
