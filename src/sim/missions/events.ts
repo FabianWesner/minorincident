@@ -23,6 +23,13 @@ export type MissionEvent =
   | { tick: number; type: 'l3.segment'; segment: number; squad: number }
   | { tick: number; type: 'l3.gunfire'; sourceId: number; position: { x: number; z: number } }
   /** E22 beats: the convoy rolls and stops, the machine gun is issued, the first turn, the war starts, a tank round, a helicopter pass, an HMG burst, the line breaks, the cellar door is barred. */
+  /** E23 beats: the courier steps out, the objective appears, all five are accounted for, the shutter rolls shut, the group is sheltered. */
+  | { tick: number; type: 'l5.emerged' | 'l5.searching' | 'l5.accounted' | 'l5.shutter' | 'l5.sheltered' }
+  /** E23 sign of life (audio cue with a position and a subtitle, heard within 25 m), a survivor found, a survivor lost, a follower calling "Wait!". */
+  | { tick: number; type: 'l5.cue'; key: string; position: { x: number; z: number }; text: string; distance: number }
+  | { tick: number; type: 'l5.found'; key: string; id: number; count: number }
+  | { tick: number; type: 'l5.lost'; key: string; id: number; cause: 'dead' | 'turned' }
+  | { tick: number; type: 'l5.wait'; id: number }
   | { tick: number; type: 'l4.convoyStarted' | 'l4.convoyArrived' | 'l4.gun' | 'l4.war' | 'l4.heliWithdrawn' | 'l4.descended' | 'l4.doorBarred' | 'l4.battle' }
   | { tick: number; type: 'l4.firstTurn'; ids: number[]; humansNear: number }
   | { tick: number; type: 'l4.lineBreaks'; cause: 'time' | 'soldiers' | 'inside' | 'forced' }
