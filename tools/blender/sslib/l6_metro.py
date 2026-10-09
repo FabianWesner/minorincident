@@ -50,8 +50,8 @@ def structure(s, name, pos, size, token=STONE, **kwargs):
     return obj
 
 
-def port(s, name, pos, width=2.2, **kwargs):
-    return anchor(s, name, pos, clearWidth=width, clearHeight=2.6, **kwargs)
+def port(s, name, pos, width=2.2, height=2.6, **kwargs):
+    return anchor(s, name, pos, clearWidth=width, clearHeight=height, **kwargs)
 
 
 def wall_with_openings(s, y, intervals, length, height, token=STONE):
@@ -60,7 +60,7 @@ def wall_with_openings(s, y, intervals, length, height, token=STONE):
         if a > cursor:
             structure(s, 'wallPier'+str(y)+str(n), ((cursor+a)/2,y,height/2+.2), (a-cursor,.3,height), token)
         structure(s, 'portalLintel'+str(y)+str(n), ((a+b)/2,y,(height+2.8)/2+.2), (b-a,.3,height-2.8), token)
-        for x in (a+.075,b-.075):
+        for x in (a-.075,b+.075):
             s.box('portalBorder',(x,y-.17,1.6),(.15,.12,2.8),DARK)
         s.box('portalHeader',((a+b)/2,y-.17,2.98),(b-a,.12,.16),DARK)
         cursor=b
@@ -108,16 +108,16 @@ def tunnel(s):
     for x in (-5.84,2,5.84):arch(s,x,roof)
     # Far half shell: the open near half is the permanent gameplay cutaway.
     s.extrude('halfVault',[(1.25,4.65),(2.5,4.1),(3.45,2.9),(3.8,3.05),(2.7,4.4),(1.3,5.0)],'x',-6,6,STONE,parent=roof)
-    for z in (2.15,2.45):
-        s.tube('utilityConduit',(0,3.38,z),.07,12,DARK,rot=(0,math.pi/2,0))
+    for z in (3.15,3.35):
+        s.tube('utilityConduit',(0,3.0,z),.07,12,DARK,rot=(0,math.pi/2,0))
     for x in (-3.8,0,3.8):
-        port(s,'sidePassage'+str(x)+'Socket',(x,3.8,.52),route='maintenance')
-        port(s,'gate'+str(x)+'Socket',(x,3.8,.52),asset='prop.service-gate')
-        anchor(s,'brace'+str(x)+'Socket',(x,3.8,.52),coverage=[2.2,2.6])
+        port(s,'sidePassage'+str(x)+'Socket',(x,3.8,.52),height=2.35,route='maintenance')
+        port(s,'gate'+str(x)+'Socket',(x,3.8,.52),height=2.35,asset='prop.service-gate')
+        anchor(s,'brace'+str(x)+'Socket',(x,3.8,.52),coverage=[2.2,2.35])
     for x in (-3.7,3.7):port(s,'crossPassage'+str(x)+'Socket',(x,-3.8,.52),route='cross-passage')
     for x in (-6,6):port(s,'tunnel'+('Start' if x<0 else 'End')+'Socket',(x,0,.25),6.9,moduleLength=12)
     for x in (-4,4):fixture(s,'main'+str(x),(x,2.65,3.0),strip=True)
-    fixture(s,'emergency',(0,3.36,2.75),emergency=True)
+    fixture(s,'emergency',(0,3.0,3.15),emergency=True)
     s.physics()
 
 
@@ -125,13 +125,13 @@ def corridor(s):
     """10 m service bay. A 2.2 m aisle links two actual room portals."""
     anchor(s,'interior',(0,0,.2),cutaway=True)
     structure(s,'floor',(0,0,.1),(10,4.6,.2))
-    wall_with_openings(s,2.15,[(-1.1,1.1),(2.6,4.8)],10,3.7)
+    wall_with_openings(s,2.15,[(-1.1,1.1),(2.2,4.4)],10,3.7)
     structure(s,'nearCurb',(0,-2.15,.38),(10,.3,.36))
     for x in (-4.85,4.85):
         structure(s,'endPier',(x,1.9,2.05),(.3,.5,3.7))
     # Thick pipe loop with real bends, flange discs and readable valve wheels.
-    s.tube('headerPipe',(-.4,1.67,3.25),.22,8.5,TEAL,rot=(0,math.pi/2,0),sides=(16,12,8))
-    for x in (-4.4,3.65):
+    s.tube('headerPipe',(.15,1.67,3.25),.22,8.5,TEAL,rot=(0,math.pi/2,0),sides=(16,12,8))
+    for x in (-4.4,4.7):
         s.tube('pipeRiser',(x,1.67,1.7),.22,2.9,TEAL,sides=(16,12,8))
         # quarter elbow is a closed swept prism, explicitly sampled per tier
         n=(8,6,4)[s.lod]; ring=(12,8,6)[s.lod]
@@ -168,13 +168,13 @@ def corridor(s):
         for z in (.55,.64,.73):s.box('cabinetVent',(x,1.248,z),(width*.6,.012,.035),DARK,d=1)
         s.box('signalDisplay',(x,1.247,1.77),(.28,.018,.18),TEAL)
         for dx in (-.15,0,.15):s.tube('signalDial',(x+dx,1.23,1.5),.043,.03,'survivorRed',rot=(math.pi/2,0,0),d=1)
-    for name,x in [('pumpRoom',0),('signalRoom',3.7)]:
+    for name,x in [('pumpRoom',0),('signalRoom',3.3)]:
         port(s,name+'Socket',(x,2.3,.2),room=name)
         port(s,name+'GateSocket',(x,2.3,.2),asset='prop.service-gate')
         anchor(s,name+'BraceSocket',(x,2.3,.2),coverage=[2.2,2.6])
     for x in (-5,5):port(s,('start' if x<0 else 'end')+'Socket',(x,-.65,.2),2.2,moduleLength=10)
     for x in (-3,3):fixture(s,'main'+str(x),(x,.9,3.25),strip=True)
-    fixture(s,'emergency',(0,1.97,2.9),emergency=True)
+    fixture(s,'emergency',(0,1.97,3.2),emergency=True)
     for x in (-3,3):anchor(s,'roomEquipment'+str(x)+'Socket',(x,1.1,.2))
     s.physics()
 
