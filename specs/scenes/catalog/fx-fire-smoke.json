@@ -1,0 +1,86 @@
+{
+ "name": "fx-fire-smoke",
+ "note": "Two fires and a smoke column burn on asphalt next to a bench and a bin; a pedestrian walks past. Look for: flames and smoke readable, not cut into squares, no sprite popping.",
+ "ground": "asphalt",
+ "size": 36,
+ "props": [
+  {
+   "id": "bench",
+   "asset": "prop.bench",
+   "at": [
+    4,
+    -3
+   ],
+   "yaw": 90
+  },
+  {
+   "id": "bin",
+   "asset": "prop.trash-bin",
+   "at": [
+    -4,
+    3
+   ]
+  }
+ ],
+ "actors": [
+  {
+   "id": "walker",
+   "kind": "pedestrian",
+   "at": [
+    -8,
+    -6
+   ],
+   "state": {
+    "walk": [
+     [
+      8,
+      -6
+     ]
+    ]
+   }
+  }
+ ],
+ "script": [
+  {
+   "frame": 5,
+   "effect": {
+    "fire": [
+     -2,
+     0
+    ]
+   }
+  },
+  {
+   "frame": 5,
+   "effect": {
+    "fire": [
+     4,
+     3
+    ]
+   }
+  },
+  {
+   "frame": 10,
+   "effect": {
+    "smoke": [
+     0,
+     -4
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 0.9
+ },
+ "frames": 360,
+ "sheet": 24,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}

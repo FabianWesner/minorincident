@@ -4,6 +4,8 @@ import { resolve } from 'node:path';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import { readFileSync } from 'node:fs';
+import { runSpec } from './run';
 import { SceneSession, readSpec, stopServer, thumbnail, writeJson, type Backend } from './session';
 import type { ActorSpec, PropSpec, SceneSpec } from '../../src/debug/scenelab/spec';
 
@@ -53,6 +55,18 @@ server.registerTool('load_scene', { description: 'Load a scene from a spec objec
 async ({ spec, path, backend, tier }) => {
   if ((backend && backend !== options.backend) || (tier && tier !== options.tier)) { await close(); options = { backend: backend ?? options.backend, tier: tier ?? options.tier }; }
   return call<SceneSpec>((s, v) => s.load(v))((path ? readSpec(resolve(path)) : spec ?? {}) as SceneSpec);
+});
+server.registerTool('run_scene', { description: 'Run a whole scene like the CLI (load, step all frames, shots / video / contact sheet, gates). Give a spec path or object. sheet=N takes a labelled low-res snapshot every N frames (max 24) and returns ONE sheet.jpg grid inline: the quickest way to see what happened over time. Returns pass/fail per gate, metrics path and file paths.',
+  inputSchema: { path: z.string().optional(), spec: anyJson.optional(), sheet: z.number().int().min(1).optional(), frames: z.number().int().min(1).max(7200).optional(), shots: z.array(z.number().int()).optional(), video: z.number().optional() } },
+async ({ path, spec, sheet, frames, shots: shotList, video }) => {
+  try {
+    const s = await ensure(), resolved = (path ? readSpec(resolve(path)) : spec ?? {}) as SceneSpec, name = resolved.name ?? (path ? path.replace(/.*\//, '').replace(/\.json$/, '') : 'scene');
+    const r = await runSpec(s, resolved, { file: path, out: `${out}/${name}`, sheet: sheet ?? resolved.sheet ?? 30, frames, shots: shotList, video });
+    const summary = { scene: r.name, pass: r.pass, frames: r.frames, seconds: r.seconds, failed: r.failed, clipping: r.clipping, consoleErrors: r.consoleErrors, sheet: r.sheet, sheetKb: r.sheetKb, files: r.files };
+    const content: ({ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string })[] = [{ type: 'text', text: JSON.stringify(summary, null, 2) }];
+    if (r.sheet) content.push({ type: 'image', data: readFileSync(r.sheet).toString('base64'), mimeType: 'image/jpeg' });
+    return { content };
+  } catch (error) { return { ...text(String(error instanceof Error ? error.message : error)), isError: true }; }
 });
 server.registerTool('inspect_level', { description: 'Run a real registered level with normal sim and a detached camera. Returns anchors. bot=true drives the existing complete profile; otherwise courier is a ghost.', inputSchema: { level: z.string(), bot: z.boolean().optional() } },
 call((s, { level, bot }: { level: string; bot?: boolean }) => s.inspectLevel(level, bot)));
