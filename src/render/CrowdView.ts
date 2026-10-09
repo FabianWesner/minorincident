@@ -96,8 +96,8 @@ export class CrowdView extends Group {
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
-    const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => d.id === 'D-GROVE') ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
-    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2';
+    const l1Roles = new Set<string>(this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => d.id === 'D-GROVE' || d.id === 'D-CORRIDOR') ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3';
     const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);

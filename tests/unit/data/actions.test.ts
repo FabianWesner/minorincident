@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { catalog, action } from '../../../src/data/actions/catalog';
 import { validateAction } from '../../../src/data/actions/schema';
-const roster = ['weapon.fists', 'weapon.kick', 'weapon.bat', 'weapon.crowbar', 'weapon.machete', 'weapon.knife', 'weapon.nail-bat', 'weapon.shovel', 'weapon.police-baton', 'weapon.fire-axe', 'weapon.katana', 'weapon.pistol', 'weapon.shotgun', 'weapon.nail-gun', 'weapon.smg', 'weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.machine-gun', 'weapon.rocket-launcher', 'weapon.grenade', 'weapon.molotov', 'weapon.pipe-bomb', 'weapon.firecracker-lure', 'weapon.smoke-grenade', 'weapon.flashbang', 'ability.corgi-lure', 'ability.ground-slam', 'ability.shield-bubble', 'ability.adrenaline', 'ability.turret'];
+const roster = ['weapon.fists', 'weapon.kick', 'weapon.bat', 'weapon.crowbar', 'weapon.machete', 'weapon.knife', 'weapon.nail-bat', 'weapon.shovel', 'weapon.police-baton', 'weapon.fire-axe', 'weapon.katana', 'weapon.pistol', 'weapon.handgun', 'weapon.shotgun', 'weapon.nail-gun', 'weapon.smg', 'weapon.hunting-rifle', 'weapon.assault-rifle', 'weapon.machine-gun', 'weapon.rocket-launcher', 'weapon.grenade', 'weapon.molotov', 'weapon.pipe-bomb', 'weapon.firecracker-lure', 'weapon.smoke-grenade', 'weapon.flashbang', 'ability.corgi-lure', 'ability.ground-slam', 'ability.shield-bubble', 'ability.adrenaline', 'ability.turret'];
 test('T-E06-01 @E06 @E06-AC01 full milestone roster validates at boot', () => {
   expect(Object.keys(catalog).sort()).toEqual(roster.sort());
   for (const def of Object.values(catalog)) { expect(validateAction(def)).toBe(def); expect(action(def.id)).toBe(def); }

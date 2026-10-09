@@ -6,12 +6,14 @@ import type { ScenarioDefinition } from '../../levels/loader';
 import { Npcs } from './Npcs';
 import type { DistrictWorld } from '../world/DistrictWorld';
 import { inside } from '../../levels/districts/validate';
+import { isOutbreakDistrict } from '../../levels/districts/types';
 /** Minimal campaign integration: assemble navigation from the loaded, decayed district colliders. */
 export function installCampaignNpcs(world: SimWorld): void {
   const districts = world.districts!;
   // L1 v2 (D-GROVE): systems + corgi only; `installL1Outbreak` adds the pedestrians (lane D).
   // L2 also plays on D-GROVE: keep the level for the per-level density/cap tables (E08-AC11 fixture: L2 = 40).
-  if (districts.districts.some(d => d.id === 'D-GROVE')) {
+  // L3 (D-CORRIDOR) runs the same outbreak rules: systems + corgi, its controller adds the people.
+  if (districts.districts.some(d => isOutbreakDistrict(d.id))) {
     installNpcSystems(world); if (/^L[1-6]$/.test(districts.composition.id)) world.npcs!.civilians.level = Number(districts.composition.id[1]);
     world.npcs!.companion.spawn(); return;
   }
