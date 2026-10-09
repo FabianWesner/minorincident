@@ -356,10 +356,12 @@ export class LevelThreeCollapse {
   }
   private emergePending(all = false): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
-    if (!all && world.tick % 10 !== 0) return;
+    // Stream street residents one at a time instead of creating three rigs/brains in one frame.
+    // The yard retains its original cadence; the street rate remains at least as high (20/s vs 18/s).
+    if (!all && world.tick % (s.phase === 'attack' ? 10 : 3) !== 0) return;
     // Preserve the original yard hold/cap headroom. The additional street residents emerge after the fallback.
     if (s.phase === 'attack' && s.segmentIds[0].length >= (ai.director.tier === 'low' ? 5 : 10)) return;
-    const allowance = s.phase === 'attack' ? Math.min(3, (ai.director.tier === 'low' ? 5 : 10) - s.segmentIds[0].length) : all ? Infinity : 3;
+    const allowance = s.phase === 'attack' ? Math.min(3, (ai.director.tier === 'low' ? 5 : 10) - s.segmentIds[0].length) : all ? Infinity : 1;
     let spawned = 0;
     for (const q of s.pending as Pending[]) {
       if (q.id !== 0 || spawned >= allowance || (s.phase === 'attack' && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10)) continue;
