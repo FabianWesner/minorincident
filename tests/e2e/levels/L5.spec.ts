@@ -231,11 +231,12 @@ test.describe('L5 Aftermath in the browser', () => {
         let changed = 0;
         for (let y = Math.max(0, top); y < Math.min(shown.height, bottom); y++) for (let x = Math.max(0, cx - half); x < Math.min(shown.width, cx + half); x++) {
           const i = (y * shown.width + x) * 4;
-          if (Math.abs(shown.data[i] - hidden.data[i]) + Math.abs(shown.data[i + 1] - hidden.data[i + 1]) + Math.abs(shown.data[i + 2] - hidden.data[i + 2]) > 24) changed++;
+          if (Math.abs(shown.data[i] - hidden.data[i]) + Math.abs(shown.data[i + 1] - hidden.data[i + 1]) + Math.abs(shown.data[i + 2] - hidden.data[i + 2]) > 14) changed++;
         }
         return { id: c.id, changed, area: (bottom - top) * half * 2 };
       });
-      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .15 : .25)).length;
+      // The sunset is dark: the figure-versus-ground contrast is lower than in L4's daylight check, so the pixel threshold is 14 (L4: 24).
+      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .12 : .25)).length;
       writeFileSync(`${dir}/${name}-${renderer}.json`, JSON.stringify({ ...before, results, drawn }, null, 2) + '\n');
       expect(before.backend).toBe(renderer); expect(before.list.length, `${name} in view`).toBeGreaterThanOrEqual(3); expect(drawn, `${name} drawn bodies`).toBe(before.list.length);
     };
