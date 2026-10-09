@@ -373,7 +373,8 @@ export class LevelTwoRescue {
     const forecourt = this.anchor('l2-forecourt'), market = this.anchor('l2-door-front');
     const near = (home: Point) => doors.map(d => ({ d, a: this.anchor(d) })).filter(({ a }) => Math.hypot(a.x - forecourt.x, a.z - forecourt.z) >= 42 && Math.hypot(a.x - market.x, a.z - market.z) >= 42)
       .sort((p, q) => Math.hypot(p.a.x - home.x, p.a.z - home.z) - Math.hypot(q.a.x - home.x, q.a.z - home.z));
-    const scale = this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1;
+    // Death-loop relief: a courier who keeps dying on the break-away meets a thinner street population.
+    const scale = (this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
     // The bridge cluster first: under the shared cap it must exist before the looser street groups.
     const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).slice(0, 4);
     for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) s.pending.push({ id: -2, door: list[i % list.length].d, at: 0, home });
@@ -452,14 +453,16 @@ export class LevelTwoRescue {
       if (!s.radioAt) {
         if (tick - s.doorsOpenAt >= ticks(l2.rescue.radioAfterS) || away) {
           s.radioAt = tick; s.phase = 'escape'; world.events.emit({ type: 'l2.radio', tick }); this.mission.radio('L2.radio');
-          this.mission.setState('radio', true); this.mission.requestCheckpoint('escape');
+          this.mission.setState('radio', true); (s.cpWait ??= []).push('escape');
         }
       }
     }
     if (s.radioAt && !s.clusterReached) {
       const [cx, cz] = l2.cluster.home;
-      if (Math.hypot(player.transform.x - cx, player.transform.z - cz) <= l2.cluster.triggerM) { s.clusterReached = true; this.mission.requestCheckpoint('cluster'); }
+      if (Math.hypot(player.transform.x - cx, player.transform.z - cz) <= l2.cluster.triggerM) { s.clusterReached = true; s.cpWait = ['cluster']; /* supersedes a still-waiting escape checkpoint */ }
     }
+    if (this.mercyDue) this.mercy();
+    this.calmCheckpoint(player);
     this.checkpointGate(tick, player);
     // L2 infected (turned adults in the open) hit harder than L1's first, disoriented victims (section 5.1 tuning).
     if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l2.infectedDamage;
@@ -624,11 +627,41 @@ export class LevelTwoRescue {
   advance(): boolean {
     const s = this.mission.state.l2; if (!s || s.radioAt) return false;
     const tick = this.world.tick; s.radioAt = tick; s.phase = 'escape'; this.world.events.emit({ type: 'l2.radio', tick }); this.mission.radio('L2.radio');
-    this.mission.setState('radio', true); this.mission.requestCheckpoint('escape'); return true;
+    this.mission.setState('radio', true); (s.cpWait ??= []).push('escape'); return true;
+  }
+  /**
+   * PO 10-09 (as L3): the escape and cluster checkpoints used to be saved the moment the break-away began, with the horde on the courier's heels,
+   * so every death respawned her into the same scrum. They now wait for a calm moment: nothing alive within `calmM` and health >= `calmHealth`.
+   */
+  private calmCheckpoint(player: EntitySnapshot): void {
+    const s = this.s, w = this.world; if (!s.cpWait?.length || w.tick % 10 !== 0) return;
+    const p = player.transform;
+    if (player.health.current <= 0 || player.health.current < player.health.max * l2.mercy.calmHealth || w.infected!.active.some(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < l2.mercy.calmM)) return;
+    const ids = s.cpWait; s.cpWait = [];
+    for (const id of ids) this.mission.requestCheckpoint(id);
+  }
+  /** Death-loop relief (data: `l2.mercy`), applied on the first tick after a respawn. */
+  private mercyDue = false;
+  private readonly respawns: Record<string, number> = {};
+  private mercy(): void {
+    this.mercyDue = false;
+    const { world } = this.mission, s = this.s, ai = world.infected, frac = this.relief();
+    if (frac <= 0 || !ai) return;
+    const p = world.entities.get(1)!.transform;
+    const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
+    thin([...ai.active].filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < l2.mercy.nearM).sort((a, b) => a.id - b.id), e => ai.release(e));
+    // The doors ambush still waiting behind its doors thins too.
+    thin(s.ambush.filter(a => !a.id), a => { a.id = -1; });
+  }
+  /** Share of the infected spared at this respawn: grows by `stepFrac` per respawn at the same checkpoint from the `fromDeaths`-th on. */
+  private relief(): number {
+    const m = l2.mercy;
+    return Math.max(0, Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths + 1)));
   }
   /** Checkpoint restore: shift the timeline, re-seat or re-park the truck, rebuild the walls from state. */
   restore(delta: number): void {
     const s = this.mission.state.l2; if (!s) return;
+    this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['alarmAt', 'departAt', 'arrivedAt', 'crewExitAt', 'atDoorsAt', 'doorsOpenAt', 'radioAt', 'crossedAt', 'gateClosedAt'] as const) if (s[key]) s[key] += delta;
     for (const a of s.ambush) if (a.at) a.at += delta;
     for (const q of s.pending) if (q.at) q.at += delta;

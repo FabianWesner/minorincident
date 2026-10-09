@@ -220,7 +220,8 @@ describe('L2 The Failed Rescue', () => {
 
   test('T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons', async () => {
     const l = await loadL2(2); world = l.world; const m = l.mission, w = l.world;
-    for (const id of ['doors', 'escape', 'cluster'] as const) {
+    // 'escape' is only saved at a calm moment (PO 10-09, l2.mercy), which a bot chased the whole way never gets before the cluster: its restore is covered in L2-escape-loop.test.ts.
+    for (const id of ['doors', 'cluster'] as const) {
       runL2(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === id });
       expect(m.state.checkpoint).toBe(id);
       const snap = { tick: w.tick, infected: w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort(), crew: m.state.l2!.crewIds.map(c => { const e = w.entities.get(c)!; return `${c}:${e.kind}:${e.health.current > 0}`; }), weapons: w.entities.get(1)!.weapons!.LEFT.rack.map(r => r.id), doors: m.state.l2!.doorsOpenAt > 0, phase: m.state.l2!.phase, stats: w.npcs!.civilians.outbreak!.stats.turned };
