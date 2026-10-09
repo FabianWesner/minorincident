@@ -1,0 +1,25 @@
+{
+ "name": "qa-l4-fuel-chain",
+ "note": "E22 beat 5: the line breaks. The tank round sets off the fuel truck on Plaza Way beside the convoy gap (E27 mega chain: pump, canopy, tanks); convoy trucks and shopfronts around it.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 3,
+ "layout": { "district": "D-FAIR", "bbox": [[-6, -40], [50, 24]] },
+ "clipping": { "ignoreFoliage": true },
+ "props": [
+  { "id": "fuel", "asset": "veh.fuel-truck", "at": [13.2, -9.5], "yaw": 90 },
+  { "id": "bus", "asset": "veh.evac-bus", "at": [6.6, 5.7], "yaw": 180 },
+  { "id": "truck", "asset": "veh.military-truck", "at": [-4.6, 5.7], "yaw": 180 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-3.5, -4], "yaw": 0, "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": "idle" },
+  { "id": "zed", "kind": "infected", "at": [14, -24], "count": 8, "spread": 1.5, "yaw": 180, "state": { "chase": "courier" } }
+ ],
+ "script": [
+  { "frame": 60, "effect": { "blast": "explosion.fuel-truck", "at": [13.2, -9.5] } }
+ ],
+ "camera": { "mode": "game", "target": [8, -6], "zoom": 1.9 },
+ "frames": 360,
+ "shots": [30, 70, 100, 150, 359],
+ "expect": { "consoleErrors": 0 }
+}

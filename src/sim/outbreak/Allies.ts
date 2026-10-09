@@ -1,9 +1,11 @@
 import { Rng } from '../../core/Rng';
 import { l2 } from '../../data/l2';
+import { l4 } from '../../data/l4';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { AllyGun, AllyState, Point } from '../npc/types';
 
+const civ = l4.civilians;
 const half = Math.cos(l2.allies.coneDeg / 2 * Math.PI / 180);
 const ticks = (s: number) => Math.round(s * 60);
 /** Fresh allied-fighter component (E20 §5.2): no immunity, no survival flag; it is an ordinary live human otherwise. */
@@ -27,6 +29,18 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  */
 export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean): boolean {
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
+  // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
+  if (a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0)) return false;
+  if (a.role === 'civilian' && a.engaged && (tick + e.id) % 6 === 0) {
+    let close = 0;
+    for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
+    if (close >= civ.panicInfected) {
+      a.panicUntil = tick + ticks(civ.panicS); a.targetId = 0; a.strikeAt = 0; c.story = null;
+      c.state = 'flee'; c.entered = tick; c.until = tick; if (c.l1) c.l1.repickAt = tick;
+      world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'flee', until: tick });
+      return false;
+    }
+  }
   // A rescued or startled ally does not run for a refuge: it is a fighter (state stays a live human state).
   if (c.state !== 'calm') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }
   if (c.story && c.story.clip === 'swing' && tick - c.story.start > 30 && tick >= a.forceUntil) c.story = null;
@@ -51,8 +65,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     a.targetId = forced.id;
   }
   if (a.engaged) {
-    const shooter = a.role !== 'firefighter', gun = a.gun, post = a.post ?? e.transform;
-    const reachM = gun ? (a.follow ? Math.min(gun.rangeM, a.follow.engageM) : gun.rangeM) : shooter ? l2.allies.officer.rangeM + 4 : l2.allies.firefighter.engageM;
+    const gun = a.gun, shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !gun), post = a.post ?? e.transform;
+    // Improvised melee (bat, pipe, crowbar) is the firefighter swing with the weapon's own numbers.
+    const ff = a.melee ? { ...l2.allies.firefighter, damage: a.melee.damage, reachM: a.melee.reachM, swingS: a.melee.swingS } : l2.allies.firefighter;
+    const reachM = gun ? (a.follow ? Math.min(gun.rangeM, a.follow.engageM) : gun.rangeM) : shooter ? l2.allies.officer.rangeM + 4 : ff.engageM;
     let target = a.targetId ? world.entities.get(a.targetId) : undefined;
     if (!forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % 6 === 0)) {
       // Re-acquire: biting infected first (rescue), then the nearest visible one.
@@ -82,10 +98,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         if (gun) {
           // v2 shot: one target, a seeded roll per shooter and shot, no pierce and no ammunition.
           const hit = d <= gun.rangeM && new Rng(world.seed, `ally-shot:${e.id}:${a.hits}`).next() < gunHitChance(gun, d);
-          world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: victim.id, role: a.role, hit, from: { x: e.transform.x, z: e.transform.z }, to: { x: victim.transform.x, z: victim.transform.z } });
+          world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: victim.id, role: a.role, ...(a.weapon ? { weapon: a.weapon } : {}), hit, from: { x: e.transform.x, z: e.transform.z }, to: { x: victim.transform.x, z: victim.transform.z } });
           if (hit) world.combat.damage.apply({ attackId: 0, actionId: 'weapon.pistol', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: gun.damage, multiplier: 1, type: 'bullet', knockback: 0, stagger: .25 });
         } else {
-          const def = shooter ? l2.allies.officer : l2.allies.firefighter, reach = shooter ? (a.range ?? l2.allies.officer.rangeM) + 4 : l2.allies.firefighter.reachM * 1.1;
+          const def = shooter ? l2.allies.officer : ff, reach = shooter ? (a.range ?? l2.allies.officer.rangeM) + 4 : ff.reachM * 1.1;
           if (d <= reach) world.combat.damage.apply({ attackId: 0, actionId: shooter ? 'weapon.pistol' : 'weapon.fire-axe', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: def.damage, multiplier: 1, type: shooter ? 'bullet' : 'melee', knockback: shooter ? 0 : .3, stagger: shooter ? .25 : .1 });
         }
       }
@@ -93,12 +109,12 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     if (a.strikeAt) return true;
     if (target) {
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
-      const reach = gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : l2.allies.firefighter.reachM;
+      const reach = gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
       if (d > reach * .9 && !a.hold && !a.follow) { npcs.move(e, target.transform, a.runSpeed, c, reach * .8); return true; }
       e.transform.yaw = -Math.atan2(dz, dx);
       if (d <= reach && tick >= a.nextAttack && world.combat) {
-        a.nextAttack = tick + ticks(gun ? gun.shotS : shooter ? l2.allies.officer.shotS : l2.allies.firefighter.swingS); a.hits++;
-        a.strikeAt = tick + Math.max(1, ticks(shooter ? 0 : l2.allies.firefighter.windupS)); a.strikeTarget = target.id;
+        a.nextAttack = tick + ticks(gun ? gun.shotS : shooter ? l2.allies.officer.shotS : ff.swingS); a.hits++;
+        a.strikeAt = tick + Math.max(1, ticks(shooter ? 0 : ff.windupS)); a.strikeTarget = target.id;
         c.story = shooter ? { clip: 'npc-gesture', start: tick } : { clip: 'swing', start: tick };
         if (!gun) world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: target.id, role: a.role });
       }

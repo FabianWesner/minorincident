@@ -1,3 +1,4 @@
+import { levelFourLayouts } from '../../levels/L4/layout';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelTwoLayouts } from '../../levels/L2/layout';
 import { ControlIntent } from '../entities/ControlIntent';
@@ -212,7 +213,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
-    const districts=new DistrictWorld(composition,composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts):layouts,seed);
+    const districts=new DistrictWorld(composition,composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts):layouts,seed);
     this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
     this.interactables!.nav = districts.nav;

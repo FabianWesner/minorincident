@@ -19,8 +19,10 @@ import { installL1Outbreak } from '../../sim/outbreak/install';
 import { doorExit, emergeResident, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../sim/outbreak/HouseEmergence';
 import { seatAnchor } from '../../sim/npc/seats';
 import { allyState } from '../../sim/outbreak/Allies';
+import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
 import { levelThreeLayouts } from '../../levels/L3/layout';
+import { levelFourLayouts } from '../../levels/L4/layout';
 import { inside } from '../../levels/districts/validate';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
@@ -113,6 +115,8 @@ export class SceneLab {
       // The L3 corridor is played through its layout copy (W2/W3 dressing, wrecks, glass, the army dressing): crop that.
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
+      // Fairhaven likewise (E22): the army reception, sandbag line, nests, parked cars and the L4 anchors.
+      if (spec.layout.district === 'D-FAIR') source = levelFourLayouts([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
@@ -291,6 +295,14 @@ export class SceneLab {
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
       else if ('hit' in a) this.hit(e, a.hit);
+      else if ('ally' in a && (a.ally.weapon || a.ally.role === 'civilian')) {
+        // The L4 allied fighter v3 setup (LevelFourWar.spawnSoldiers / engageAll): soldier rifle, HMG crew, armed civilians.
+        const w = a.ally.weapon ?? 'rifle', role = a.ally.role ?? 'soldier', post = { x: e.transform.x, z: e.transform.z };
+        const gun = w === 'hmg' ? l4.soldiers.hmg : w === 'rifle' ? l4.soldiers.rifle : w === 'pistol' ? l4.civilians.pistol : w === 'hunting-rifle' ? l4.civilians.rifle : null;
+        c.ally = { ...allyState(role, gun ? post : null, !!gun), engaged: true, runSpeed: 3.4, ...(gun ? { gun: { ...gun }, weapon: (w === 'rifle' || w === 'hmg' || w === 'pistol' || w === 'hunting-rifle' ? w : 'rifle') as 'rifle', range: gun.rangeM } : { melee: { ...l4.civilians.melee }, range: 8 }) };
+        e.health = { current: role === 'soldier' ? l4.soldiers.hp : l4.civilians.hp, max: role === 'soldier' ? l4.soldiers.hp : l4.civilians.hp };
+        if (e.appearance) e.appearance.handProp = w === 'hmg' ? 'rifle' : w;
+      }
       else if ('ally' in a) {
         // The L3 allied fighter v2 setup (LevelThreeCollapse.officer/fallback): a gun, engaged, a post or a squad slot.
         const role = a.ally.role ?? 'officer', leader = a.ally.follow ? this.actors.get(a.ally.follow)?.entity : undefined, f = l3.officers.squad, slot = a.ally.slot ?? 0;

@@ -1,0 +1,25 @@
+{
+ "name": "qa-l4-gate-convoy",
+ "note": "E22 beat 1: the convoy at the army gate on Lakeshore Avenue (APC, trucks, the two buses) under the barriers, sandbags and light towers; clean streets and the lake promenade behind.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 3,
+ "layout": { "district": "D-FAIR", "bbox": [[-86, 30], [-30, 62]] },
+ "clipping": { "ignoreFoliage": true },
+ "props": [
+  { "id": "bus-1", "asset": "veh.evac-bus", "at": [-78.3, 47.75], "yaw": 0 },
+  { "id": "truck-2", "asset": "veh.military-truck", "at": [-67.2, 47.75], "yaw": 0 },
+  { "id": "bus-2", "asset": "veh.evac-bus", "at": [-57.5, 44], "yaw": 90 },
+  { "id": "truck-1", "asset": "veh.military-truck", "at": [-56.8, 32.9], "yaw": 90 },
+  { "id": "apc", "asset": "veh.military-apc", "at": [-56.8, 23.6], "yaw": 90 }
+ ],
+ "actors": [
+  { "id": "g1", "kind": "pedestrian", "at": [-62, 44.6], "yaw": -90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "g2", "kind": "pedestrian", "at": [-62, 48.4], "yaw": 90, "look": { "model": "npc.national-guard", "tint": "#4b5a3a", "role": "soldier", "handProp": "rifle" }, "state": "idle" },
+  { "id": "p1", "kind": "pedestrian", "at": [-45, 41.2], "yaw": 0, "look": { "model": "npc.civilian-woman-a", "tint": "#c4473d", "handProp": "bag" }, "state": { "walk": [[-30, 41.2], [-45, 41.2]], "loop": true } }
+ ],
+ "camera": { "mode": "game", "target": [-68, 46], "zoom": 1.6 },
+ "frames": 120,
+ "shots": [10, 119],
+ "expect": { "consoleErrors": 0 }
+}

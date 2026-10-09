@@ -15,7 +15,7 @@ export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
   // E21: the handgun from the L3 armory is carried on (L4 starts with it). L2's fire axe is a pickup, not an unlock.
   1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.handgun'],
-  4:['weapon.machine-gun','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
+  4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
 };
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
 /** E20/E21 redesign: the first firearm is the L3 armory handgun (no choice after L2 any more). */
@@ -104,7 +104,7 @@ export function preset(name:ProgressionPreset):CampaignSave {
   for(let level=1;level<target;level++){
     // E21 L3-default = bat + axe: the default L2 run takes the optional fire axe from the station rack (the pickup adds it to
     // the owned actions). Later presets keep the E13 default path until their levels are rebuilt (E22-E24).
-    if(level===2&&target===3&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
+    if(level===2&&(target===3||target===4)&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
     autoRewards(save,level as Level);
   }return save;
 }

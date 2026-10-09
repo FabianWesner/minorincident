@@ -4,6 +4,7 @@ import type { CameraPose } from '../render/View';
 import { LevelOneBot } from './bot/LevelOneBot';
 import { LevelTwoBot } from './bot/LevelTwoBot';
 import { LevelThreeBot } from './bot/LevelThreeBot';
+import { LevelFourBot } from './bot/LevelFourBot';
 
 export type CourierMode = 'ghost' | 'bot' | 'unchanged';
 export interface InspectionAnchor { id: string; kind: string; position: [number, number, number] }
@@ -77,6 +78,7 @@ export class Inspection {
     if (world.scenario === 'L1') this.game.driver = new LevelOneBot(world);
     else if (world.scenario === 'L2') this.game.driver = new LevelTwoBot(world);
     else if (world.scenario === 'L3') this.game.driver = new LevelThreeBot(world, 'complete');
+    else if (world.scenario === 'L4') this.game.driver = new LevelFourBot(world, 'complete');
     else throw new Error(`No complete bot registered for ${world.scenario}`);
   }
   setCamera(pose: CameraPose): void {

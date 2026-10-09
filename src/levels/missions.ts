@@ -1,3 +1,4 @@
+import { levelFourMission } from './L4/mission';
 import { levelThreeMission } from './L3/mission';
 import { levelTwoMission } from './L2/mission';
 import { dialogue } from '../data/dialogue';
@@ -11,6 +12,7 @@ export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
+  if (id === 'L4') return levelFourMission(resolve);
   if (id === 'L3') return levelThreeMission(resolve);
   if (id === 'L2') return levelTwoMission(resolve);
   const def: MissionDef = { id, briefing: dialogue[`${id}.briefing`], anchors: {}, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: [], cinematics: {}, steps: [], finish: [], onStart: [{ kind: 'radio', id: `${id}.briefing` }], onComplete: [{ kind: 'cinematic', id: 'twist' }] };
@@ -67,18 +69,6 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       fire.onStart = [{ kind: 'radio', id: 'L1.fire' }];
       fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
-    }
-    case 'L4': {
-      const hub = anchor('hub','D-CIVIC','station-door'), substation = anchor('substation','D-EDGE','substation-door'), crossing = anchor('crossing','D-EDGE','arrival'), bridge = anchor('bridge','D-EDGE','exit');
-      reach('hub','Meet the survivor group at the fire station',hub);
-      for(let i=1;i<=3;i++) { const s = device(`breaker-${i}`,`Restart breaker ${i}/3`,substation,'breaker',3,i===1?['hub']:[`breaker-${i-1}`]); if(i===3)checkpoint(s); }
-      const zoo = anchor('zoo','D-ZOO','zoo-entrance'), fuseActor = actor('zoo-fuse',zoo,'pickup');
-      def.items.push('fuse'); def.actors[fuseActor].item = 'fuse';
-      const fuse = step('fuse','collect','Recover the fuse via the zoo',zoo,{ kind: 'items', ids: ['fuse'] },['hub']); fuse.onStart = [{ kind: 'spawn', group: fuseActor }];
-      const lever = device('crossing','Raise the rail crossing gates',crossing,'lever',3,['fuse']); def.actors['device-crossing'].device!.requires = ['fuse']; checkpoint(lever);
-      const wreck = actor('blockade',bridge,'barricade',180); def.actors[wreck].archetype = 'barricade.bridge-blockade';
-      const blockade = step('blockade','custom','Clear the bridge wreck blockade',bridge,{ kind: 'destroy', actor: wreck },['hub']); blockade.onStart = [{ kind: 'spawn', group: wreck }]; checkpoint(blockade);
-      end = reach('bridge','Return to the bridge',bridge,['breaker-3','crossing','blockade']).id; break;
     }
     case 'L5': {
       const positions = [anchor('res','D-RES','arrival'),anchor('fuel','D-MAIN','fuel-shop-door'),anchor('checkpoint','D-CIVIC','checkpoint-door'),anchor('bridge','D-EDGE','exit')];

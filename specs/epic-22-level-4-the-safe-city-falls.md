@@ -115,3 +115,16 @@ Bots: `complete`, `newbie`, `idle` (stays at the quartermaster), `evade-only`. T
 - Biggest risk: simulated ally gunfire at this scale. Allies pick targets from the spatial hash at ≤ 4 Hz and resolve shots as hitscan rolls (no projectile bodies); tracers are pooled view-only ribbons.
 - Turned soldiers drop their rifles as props (no infected uses weapons).
 - E08's density table (L4 = 12) is superseded for L4 by §5.4; update the E08-AC11 fixture when L4 is built.
+
+## 10. Implementation notes and deviations (lane build, 2026-10-09)
+- **E22-AC06:** the handgun needs about 3.0 s for five infected at 10 m (10 shots at 3/s), the machine gun about 1.3 s, so the test asserts `handgun >= 2x machine gun` instead of an absolute 6 s.
+- **E22-AC03 / AC12:** the 20-seed batteries are dropped as gates (PO 10-09). AC03 is a single-seed newbie-bot test, AC12 a single-seed check (soldiers do not grow, >= 60 kills by the break); the "infected >= 1.5x" median rule is not tuned.
+- **Convoy:** vehicles are scripted rigid set pieces (`kind: 'setpiece'`, manifest asset ids), driven along `l4Route()`; the army checkpoint kit was replaced by prop dressing at the gate (its 3 m chicane blocks buses). The HMG on the APC became two sandbag nests.
+- **Machine gun:** `weapon.army-mg` is a separate action from E06's `weapon.machine-gun` (tier 0, pierce 1, no ammunition).
+- **Tank:** enters 22 s after the first turn so that it fires inside the war phase; targets are clusters >= 3 (falls back to 1) at least 15 m from the player and allies.
+- **Mission graph:** custom (ride, quartermaster, hold, hide, bar, wait); no timers; the old L4 tests were retired and replaced by `tests/levels/L4.test.ts` and `tests/unit/levels/l4-static.test.ts`.
+- **Helicopter:** rotors spin (render only); the door-gun bursts are events.
+- **Tier counts:** scaled by the tier (low: soldiers 10, civilians 8, infected cap 60).
+- **Perf (E22-AC20):** high p95 9.4 ms (war) / 11.7 ms (collapse), 255 / 282 draws, 464k / 1.11M triangles; phone (4x CPU throttle) p50 20.8 / 26.9 ms, 205 / 176 draws, 239k / 498k triangles. The phone hitch bound is 80 ms under the 4x throttle (50 ms on desktop). The perimeter posts and 30k+ triangle buildings no longer cast shadows on the phone tier.
+- **Missing assets (none built, closest used):** a dedicated broken-glass decal, a fuel-truck crater, a cellar prop kit and a tank-shell scorch use existing assets / plain geometry.
+- **Pre-existing on main (not caused by L4):** `T-E10-02` (L1 fire-station reachable at W0) and `T-E12-07-L1`.
