@@ -25,4 +25,4 @@ for (; tick < seconds * 60 && !bot.finished; tick++) {
   }
 }
 const s = m.state.l4!, st = m.state.stats;
-console.log(JSON.stringify({ finished: bot.finished, phase: m.state.phase, l4phase: s.phase, seconds: +(tick / 60).toFixed(1), deaths: st.deaths, kills: s.kills, soldiersAtTurn: s.soldiersAtTurn, soldiersAtBreak: s.soldiersAtBreak, infectedAtBreak: s.infectedAtBreak, killsAtBreak: s.killsAtBreak, lineCause: s.lineCause, tankShots: s.tankShots, hmgBursts: s.hmgBursts, glass: s.glass.length, burning: s.burning.length }));
+console.log(JSON.stringify({ finished: bot.finished, phase: m.state.phase, l4phase: s.phase, seconds: +(tick / 60).toFixed(1), deaths: st.deaths, kills: s.kills, soldiersAtTurn: s.soldiersAtTurn, soldiersAtBreak: s.soldiersAtBreak, soldiersAtCellar: s.soldiersAtCellar, infectedAtBreak: s.infectedAtBreak, killsAtBreak: s.killsAtBreak, lineCause: s.lineCause, tankShots: s.tankShots, hmgBursts: s.hmgBursts, glass: s.glass.length, burning: s.burning.length }));

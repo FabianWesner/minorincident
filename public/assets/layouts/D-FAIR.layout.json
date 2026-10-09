@@ -1,6 +1,32 @@
 {
   "acousticZones": [
     {
+      "id": "cellar",
+      "polygon": [
+        [
+          -82.6,
+          -1.5999999999999996
+        ],
+        [
+          -75.4,
+          -1.5999999999999996
+        ],
+        [
+          -75.4,
+          7.6
+        ],
+        [
+          -82.6,
+          7.6
+        ],
+        [
+          -82.6,
+          -1.5999999999999996
+        ]
+      ],
+      "preset": "interior-small"
+    },
+    {
       "id": "outdoor",
       "polygon": [
         [
@@ -491,7 +517,25 @@
       -65.0
     ]
   ],
-  "buildings": [],
+  "buildings": [
+    {
+      "aabb": {
+        "max": [
+          -75.4,
+          4,
+          7.6
+        ],
+        "min": [
+          -82.6,
+          0,
+          -1.5999999999999996
+        ]
+      },
+      "assetId": "int.basement-cellar",
+      "id": "int.basement-cellar:216",
+      "label": "Kessler's cellar"
+    }
+  ],
   "colliders": [
     {
       "aabb": {
@@ -8243,7 +8287,7 @@
     }
   ],
   "district": "D-FAIR",
-  "geometryHash": "c08c77748c7448de185ed10f1f8f5c52358eaccc4ff0f07570598bfcfb4b9f40",
+  "geometryHash": "8f08564b5677ee1268ccecdc7b6ee97075abea634de149b25fdb0fee6d17d88e",
   "lawns": [],
   "layers": [
     {

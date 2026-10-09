@@ -18,7 +18,7 @@ export const l4 = {
   },
   /** Beat 1: the five-vehicle convoy (head first), kinematic along the Lakeshore - Church Road - Harbor - Plaza Way route. */
   convoy: {
-    speedMs: 12.5, accelMs2: 3, brakeMs2: 4, lateralMs2: 7, gapM: 3, leftRadiusM: 7, rightRadiusM: 3.6, laneM: 1.75, laneNsM: 1.25,
+    speedMs: 13.5, accelMs2: 3.6, brakeMs2: 4.5, lateralMs2: 13, gapM: 3, leftRadiusM: 7, rightRadiusM: 3.6, laneM: 1.75, laneNsM: 1.25,
     /** `len` is the hull length (manifest), `player` the bus the courier rides in (last in line, so she passes the gate first). */
     vehicles: [
       { id: 'apc', asset: 'veh.military-apc', len: 5.69, wid: 2.95 },
@@ -46,9 +46,9 @@ export const l4 = {
   turn: { afterGunS: [40, 50] as P, latestAfterArrivalS: 100 },
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
-    fromS: 30, waveEveryS: 9,
+    fromS: 28, waveEveryS: 12,
     /** Infected per wave per street edge, the first waves small. */
-    waveSize: [2, 3, 3, 4, 4, 5, 5, 6, 6, 6] as readonly number[], edgesPerWave: 3,
+    waveSize: [8, 12, 16, 20, 20, 20, 20, 20, 20, 20] as readonly number[], edgesPerWave: 3,
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },
@@ -61,8 +61,8 @@ export const l4 = {
   /** Section 5.4: allied fighters v3. */
   soldiers: {
     hp: 120,
-    rifle: { damage: 18, shotS: .25, rangeM: 26, nearM: 20, hitNear: .65, hitFar: .35 },
-    hmg: { damage: 30, shotS: .125, rangeM: 40, nearM: 30, hitNear: .7, hitFar: .4 },
+    rifle: { damage: 18, shotS: .4, rangeM: 26, nearM: 20, hitNear: .65, hitFar: .35 },
+    hmg: { damage: 30, shotS: .16, rangeM: 40, nearM: 30, hitNear: .7, hitFar: .4 },
     /** Engagement radius around the post: the line holds ground. */
     postRangeM: 24, hmgRangeM: 36, moveMs: 3.8,
   },
@@ -158,11 +158,13 @@ export const l4Crowd = {
   ] as readonly (readonly [P, P])[],
 } as const;
 /**
- * Street-edge emergence points of the outbreak (always out of view when used), four of them at least 60 degrees apart around the plaza:
- * the army gate (west), Harbor Street west and east, Lakeshore east. `metro` is the fifth, used for the collapse on the Metro Road route.
+ * Street-edge emergence points of the outbreak (always out of view when used), six around the plaza at the mouths of the streets and
+ * alleys 25-45 m from the sandbag line (at least three of them >= 60 degrees apart): the army gate side (west), the NW alley, Harbor
+ * Street (north), Plaza Way (east), and the two lake-garden gaps (south). `metro` is the last, used for the collapse on the Metro Road route.
  */
 export const l4Edges: readonly { id: string; at: P }[] = [
-  { id: 'gate', at: [-79, 47.9] }, { id: 'harbor-w', at: [-79, -38.1] }, { id: 'harbor-e', at: [78, -38.1] }, { id: 'lake-e', at: [78, 47.9] }, { id: 'metro', at: [50.5, -37.4] },
+  { id: 'west', at: [-56.6, 6] }, { id: 'nw-alley', at: [-39.2, -35] }, { id: 'north', at: [-18, -38.4] }, { id: 'east', at: [13.4, -3] },
+  { id: 'south-east', at: [-5.5, 42.6] }, { id: 'south-west', at: [-23, 42.6] }, { id: 'metro', at: [50.5, -37.4] },
 ];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [

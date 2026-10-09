@@ -184,10 +184,10 @@ describe('L4 The Safe City Falls', () => {
     expect([...w.entities.iterate()].some(e => e.droppedProp === 'rifle')).toBe(true);
   }, HEAVY);
 
-  test('T-E22-10 @E22 @E22-AC10 from all sides: four street edges (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view', async () => {
-    const c = l4.map.centre, angles = l4Edges.slice(0, 4).map(e => Math.atan2(e.at[1] - c.z, e.at[0] - c.x));
-    let apart = 0; for (let i = 0; i < 4; i++) for (let j = i + 1; j < 4; j++) { const d = Math.abs(Math.atan2(Math.sin(angles[i] - angles[j]), Math.cos(angles[i] - angles[j]))) * 180 / Math.PI; if (d >= 60) apart++; }
-    expect(apart).toBeGreaterThanOrEqual(3);
+  test('T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view', async () => {
+    const c = l4.map.centre, angles = l4Edges.slice(0, 6).map(e => Math.atan2(e.at[1] - c.z, e.at[0] - c.x));
+    let apart = 0; for (let i = 0; i < 6; i++) for (let j = i + 1; j < 6; j++) { const d = Math.abs(Math.atan2(Math.sin(angles[i] - angles[j]), Math.cos(angles[i] - angles[j]))) * 180 / Math.PI; if (d >= 60) apart++; }
+    expect(apart).toBeGreaterThanOrEqual(8);
     const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!;
     while (s.phase === 'convoy') w.update();
     step(w, 3 * 60); l.mission.completeObjective('quartermaster');
