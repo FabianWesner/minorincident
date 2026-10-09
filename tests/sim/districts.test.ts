@@ -13,6 +13,8 @@ import {
   resolvePosition,
   resolveDecay,
 } from "../../src/levels/districts/validate";
+import { placementColliders } from "../../src/levels/districts/staticCollision";
+import { pushableProps } from "../../src/data/pushableProps";
 import { bakeNav } from "../../src/sim/world/NavGrid";
 const layouts = Object.fromEntries(
   [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId].map((id) => [
@@ -25,20 +27,21 @@ const layouts = Object.fromEntries(
 test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier", () => {
   for (const level of Object.values(compositions))
     for (const tier of [0, 1, 2, 3, 4, 5] as const) {
-      const inputs = level.districts.map((d) => ({
-        layout: layouts[d.id],
-        origin: d.origin,
-        colliders: resolveDecay(layouts[d.id], tier)
-          .colliders.map((c) => c.aabb)
-          .concat(
-            districtGameplay[d.id].decay
-              .filter((d) => d.tier <= tier)
-              .flatMap((d) => d.blockers),
-          ),
-      }));
+      const inputs = level.districts.map((d) => {
+        const decay = resolveDecay(layouts[d.id], tier);
+        const pushed = new Set(decay.placements.filter(p => pushableProps[p.assetId]).map(p => p.id));
+        return {
+          layout: layouts[d.id], origin: d.origin,
+          // Match DistrictWorld: asset-derived geometry replaces coarse baked bounds;
+          // pushable props are dynamic bodies, while walkable support slabs do not block nav.
+          colliders: placementColliders(decay.placements, decay.colliders)
+            .filter(c => !c.walkable && !pushed.has(c.id.split('/')[0])).map(c => c.aabb)
+            .concat(districtGameplay[d.id].decay.filter(l => l.tier <= tier).flatMap(l => l.blockers)),
+        };
+      });
       for (const seed of [1, 42, 2026]) {
-        const nav = bakeNav(inputs, seed);
-        expect(bakeNav(inputs, seed).hash).toBe(nav.hash);
+        const nav = bakeNav(inputs, seed, .5);
+        expect(bakeNav(inputs, seed, .5).hash).toBe(nav.hash);
         const first = level.districts[0],
           start = resolvePosition(
             districtGameplay[first.id].playerStart,

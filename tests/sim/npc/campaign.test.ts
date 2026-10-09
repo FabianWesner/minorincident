@@ -13,7 +13,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
     const composition = compositions[`L${level}`]; w.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 42);
     w.npcs!.setQuality(tier);
     for (const e of w.entities.iterate()) if (e.civilian) expect(w.districts!.nav.walkable([e.transform.x, e.transform.z])).toBe(true);
-    const expected = npcs.density[level - 1] * (tier === 'low' ? .6 : 1), bot = new NpcPatrol(w), times: number[] = [];
+    // People retain their IDs: fractional targets are rounded to a whole-person cap.
+    const expected = Math.round(npcs.density[level - 1] * (tier === 'low' ? .6 : 1)), bot = new NpcPatrol(w), times: number[] = [];
     const corgi = [...w.entities.iterate()].find(e => e.companion)!;
     // Quality switches never despawn people: existing ambient civilians stay, and arrivals stop until the count is within the tier cap.
     const ambient = () => [...w.entities.iterate()].filter(e => e.civilian?.ambient && !e.civilian.pet && e.civilian.adult);

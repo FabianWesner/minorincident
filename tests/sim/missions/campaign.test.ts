@@ -21,6 +21,8 @@ for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat adv
   // E21: the same for L3, which ends at the army zone line and continues into L4.
   // E22: and L4, which ends at the barred cellar door and continues into L5.
   // E23: and L5, which ends at the Metro shutter and continues into L6.
+  // E19: L1 now goes directly to its result screen, without the old cinematic.
+  if (id === 'L1') { expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   if (id === 'L2' || id === 'L3' || id === 'L4' || id === 'L5') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   expect(api.state()!.phase).toBe('cinematic'); world.setInput({ interact: true }); for(let i=0;i<30;i++)world.update();
   expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true);
