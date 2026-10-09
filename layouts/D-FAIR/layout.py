@@ -35,8 +35,8 @@ ZL, ZH = 46, -40                        # Lakeshore Avenue / Harbor Street
 XC, XP, XM = -58, 14, 50                # Church Road / Plaza Way / Metro Road
 ZK = 28.6                               # Kessler Lane
 ROADS = [
-    dict(id='lakeshore', a=(-85, ZL), b=(85, ZL), w=7, kind='road'),
-    dict(id='harbor', a=(-85, ZH), b=(85, ZH), w=7, kind='road'),
+    dict(id='lakeshore', a=(-85, ZL), b=(85, ZL), ga=(-60, ZL), gb=(76, ZL), w=7, kind='road'),     # the street graph ends clear of the army gate and the barriers
+    dict(id='harbor', a=(-85, ZH), b=(85, ZH), ga=(-78, ZH), gb=(78, ZH), w=7, kind='road'),
     dict(id='church-rd', a=(XC, ZH), b=(XC, ZL), w=5, kind='road'),
     dict(id='plaza-way', a=(XP, ZH), b=(XP, ZL), w=5, kind='road'),
     dict(id='metro-rd', a=(XM, ZH), b=(XM, ZL), w=5, kind='road'),
@@ -199,7 +199,8 @@ _, hwx, hwz = put('lk', 'bld.kessler-hardware', 'S', FRONT_LK, HW_X)
 put('lk', 'bld.supermarket', 'S', FRONT_LK, 78.5)
 fill('lk', max_gap=3.0)
 g.fence('privacy', 54.8, 30.2, 61.2, 30.2)
-g.fence('privacy', 84.4, 26.9, 84.4, 56.4)
+g.fence('privacy', 84.4, 26.9, 84.4, 41.2)
+g.fence('privacy', 84.4, 51.0, 84.4, 56.4)
 # local (-4.1, -1.6) is the cellar door socket (rear wall); with yaw -pi/2 that is world (x + 1.6, z - 4.1)
 ox, oz = rot(FACE_YAW['S'], -4.1, -1.6)
 CELLAR_DOOR = (hwx + ox, hwz + oz)
@@ -215,11 +216,11 @@ for x in (-70, -50, -30, -2, 22, 40, 62, 76):
     D.bench(l, x, 54.3)
 for x in (-64, -42, -12, 10, 30, 52, 70):
     g.place('prop.street-tree' if int(x) % 3 else 'prop.street-tree-blossom', x, 52.6, 0, .75, soft=True)
-g.fence('privacy', -84.4, 40.6, -84.4, 56.4)
+g.fence('privacy', -84.4, 51.0, -84.4, 56.4)
+g.fence('privacy', -84.4, 40.6, -84.4, 41.2)
 
 # ------------------------------------------------------------------------------------------------ the army gate (Lakeshore, west end)
-GATE_X = -74.0
-g.place('kit.army-checkpoint', GATE_X, ZL, 0.0, 1.0, check=False)
+GATE_X = -74.0      # the army gate is dressing (src/levels/L4/layout.ts: barriers, sandbags, light towers) beside a 6 m open lane: the convoy passes through it
 
 # ------------------------------------------------------------------------------------------------ kerb lamps, signs, hydrants
 for r in g.road_list:
@@ -230,13 +231,14 @@ for r in g.road_list:
         for side in (-1, 1):
             if z == ZL and side > 0: continue          # the promenade has its own lamps
             p = x + (8 if side > 0 else 0)
+            if abs(p) > 80: continue
             if any(abs(p - c) < 7 for c in (XC, XP, XM)) or abs(p - GATE_X) < 9: continue
             g.place('prop.street-lamp', p, z + side * (r['w'] / 2 + .5), 0, 1.0, soft=True)
         x += 16.0
 for cx in (XC, XP, XM):
     for cz in (ZH, ZL):
-        g.place('prop.street-sign', cx + 3.5, cz + (3.5 if cz > 0 else -4.0), 0, .8, soft=True)
-        g.place('prop.fire-hydrant', cx - 3.5, cz + (3.5 if cz > 0 else -4.0), 0, .8, soft=True)
+        g.place('prop.street-sign', cx + 3.7, cz + (4.7 if cz > 0 else -4.7), 0, .8, soft=True)
+        g.place('prop.fire-hydrant', cx - 3.7, cz + (4.7 if cz > 0 else -4.7), 0, .8, soft=True)
 
 # ------------------------------------------------------------------------------------------------ anchors
 for i, d in enumerate(sorted(doors), 1):

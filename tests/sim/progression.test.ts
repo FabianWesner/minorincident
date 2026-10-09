@@ -21,7 +21,7 @@ test('T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm mag
 });
 test('T-E13-07-sim @E13 @E13-AC07 L5 default equips its expected upgraded loadout in sim',()=>{
   const save=preset('L5-default');save.settings.aimAssist='High';applyCampaign(world,save);expect(world.combat!.assist.setting).toBe('High');
-  expect(save.racks).toEqual({LEFT:['weapon.bat','weapon.kick','weapon.fists'],RIGHT:['weapon.pipe-bomb','weapon.rocket-launcher','weapon.machine-gun']});
+  expect(save.racks).toEqual({LEFT:['weapon.bat','weapon.kick','weapon.fists'],RIGHT:['weapon.pipe-bomb','weapon.rocket-launcher','weapon.army-mg']});
   expect(world.getState().progression!.campaign).toEqual(save);expect(world.player!.entity.survivor!.gearTier).toBe(3);
   for(const side of ['LEFT','RIGHT']as const)expect(world.player!.entity.weapons![side].rack.map(s=>s.id)).toEqual(save.racks[side]);
 });

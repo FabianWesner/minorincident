@@ -2,7 +2,7 @@ import { l4Anchors, l4Line } from '../../data/l4';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W0 "clean, intact, alive" dressing and the army's orderly reception (E22 section 5.2); counted by the static AC05 test. */
-export type L4DressingKind = 'reception' | 'sandbag' | 'nest' | 'light' | 'barrier' | 'parked' | 'cafe' | 'water';
+export type L4DressingKind = 'reception' | 'sandbag' | 'nest' | 'light' | 'barrier' | 'parked' | 'water';
 export interface L4Dressing { kind: L4DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; lit?: boolean }
 const H = Math.PI / 2, PI = Math.PI;
 const d = (kind: L4DressingKind, assetId: string, x: number, z: number, more: Partial<L4Dressing> = {}): L4Dressing => ({ kind, assetId, x, z, ...more });
@@ -14,11 +14,15 @@ export const l4Dressing: readonly L4Dressing[] = [
   d('reception', 'prop.armory-table', -25.2, 0.6, { yaw: H }),
   d('reception', 'prop.tent', -30.6, 12.6, { yaw: H }), d('reception', 'prop.tent', -26.8, 12.6, { yaw: H }), d('reception', 'prop.tent', -22.8, 12.6, { yaw: H }),
   d('water', 'prop.crates', -30.6, 3.4, { yaw: .2 }), d('water', 'prop.crates', -30.6, 4.7, { yaw: -.1 }), d('water', 'prop.crates', -29.2, 3.6, { yaw: .1 }), d('water', 'prop.crates', -20.8, 3.4, { yaw: 0 }),
-  d('light', 'prop.light-tower', -31.2, 15.4, { yaw: 0 }), d('light', 'prop.light-tower', -12.8, -12.2, { yaw: PI }),
+  d('light', 'prop.light-tower', -31.2, 15.4, { yaw: 0 }), d('light', 'prop.light-tower', -16.6, -12.2, { yaw: PI }),
   // ---------------------------------------------------------------- the sandbag line (north, west and south runs; the east side is the convoy)
   ...l4Line.map(p => d('sandbag', 'prop.sandbag-pallet', p.x, p.z, { yaw: p.yaw === 0 ? 0 : H })),
   d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-1'][0], l4Anchors['l4-hmg-1'][1], { yaw: PI + .8 }),
   d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-2'][0], l4Anchors['l4-hmg-2'][1], { yaw: -.6 }),
+  // ---------------------------------------------------------------- the army gate (Lakeshore, west end): shoulder barriers, nests and light towers around an open 6 m lane
+  ...([-78.5, -75.5, -72.5, -69.5] as const).flatMap(x => [d('barrier', 'prop.jersey-barrier', x, 42.1, { yaw: 0 }), d('barrier', 'prop.jersey-barrier', x, 49.9, { yaw: 0 })]),
+  d('sandbag', 'prop.sandbag-pallet', -67.2, 40.8, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -65.8, 40.8, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -67.2, 51.3, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -65.8, 51.3, { yaw: 0 }),
+  d('light', 'prop.light-tower', -73.2, 40.6, { yaw: 0 }), d('light', 'prop.light-tower', -73.2, 51.4, { yaw: PI }),
   // ---------------------------------------------------------------- army barriers at the street ends (a gap stays open): traffic is held by soldiers
   ...([[-81.2, -43.4, H], [-81.2, -42.1, H], [-81.2, -36.6, H], [-81.2, -35.2, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
   ...([[81.2, -43.4, H], [81.2, -42.1, H], [81.2, -36.6, H], [81.2, -35.2, H], [81.2, 42.2, H], [81.2, 43.5, H], [81.2, 49.0, H], [81.2, 50.3, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
@@ -29,8 +33,6 @@ export const l4Dressing: readonly L4Dressing[] = [
     [-46, -42.6, 'veh.sedan-red', PI], [-8, -42.6, 'veh.suv-green', PI], [40, -42.6, 'veh.sedan-white', PI],
     [-59.7, -8, 'veh.sedan-green', H], [15.8, 30, 'veh.suv-dark', H],
     [51.8, -22, 'veh.sedan-white', H], [51.8, 5, 'veh.sedan-blue', -H]] as const).map(([x, z, assetId, yaw]) => d('parked', assetId, x, z, { yaw })),
-  // ---------------------------------------------------------------- cafe tables on the pavements and the promenade
-  d('cafe', 'prop.cafe-patio-set', -43, 38.6, { yaw: 0 }), d('cafe', 'prop.cafe-patio-set', -40, 38.6, { yaw: 0 }), d('cafe', 'prop.cafe-patio-set', 5.5, 28.8, { yaw: PI }), d('cafe', 'prop.cafe-patio-set', 5.5, 12.4, { yaw: PI }),
 ];
 
 /**
