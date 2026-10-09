@@ -23,8 +23,11 @@ import {
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
+import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
 import { worldAssets } from "../assets/worldDefinitions";
+import manifest from "../assets/manifest.json";
+import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
 import { resolvePosition } from "../levels/districts/validate";
@@ -32,6 +35,7 @@ import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
+import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
@@ -62,11 +66,14 @@ export class DistrictView extends Group {
   private cameraRotation = [Infinity, Infinity, Infinity, Infinity];
   private cameraAspect = 0;
   private cameraHeight = 0;
+  private cameraGameLod = false;
 
   private readonly grass: Grass[] = [];
   private readonly foliage: Foliage;
   private ambient?: AmbientLife;
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
+  /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
+  readonly ground = new GroundField();
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
@@ -108,6 +115,7 @@ export class DistrictView extends Group {
         const plane = new PlaneGeometry(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs)); this.ownedGeometry.push(plane);
         const slab = new Mesh(plane, this.materials.get(lab.ground)); slab.name = 'scene-ground'; slab.rotation.x = -Math.PI / 2; slab.receiveShadow = true;
         slab.position.set(d.origin[0] + (Math.max(...xs) + Math.min(...xs)) / 2, .002, d.origin[1] + (Math.max(...zs) + Math.min(...zs)) / 2); this.add(slab);
+        slab.updateMatrixWorld(true); this.ground.add(slab);
       }
     }
     for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
@@ -151,6 +159,9 @@ export class DistrictView extends Group {
           });
           root.add(clone);
         }
+        // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
+        root.updateMatrixWorld(true);
+        root.children.at(-scenes.length)?.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -201,6 +212,8 @@ export class DistrictView extends Group {
             references.get(key)!.push(reference);
           }
         }
+        // Static vehicles (parked cars, wrecks, the APC) are authored on the y = 0 plane: rest them on the drawn road or paving under their wheels.
+        for (const [key, refs] of references) if (/^veh\./.test(key)) for (const ref of refs) this.restOnGround(ref, key.split(':')[0], d.origin);
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
@@ -295,6 +308,17 @@ export class DistrictView extends Group {
     }
   }
 
+  /** Drawn ground at a world point (null outside the baked district ground). */
+  groundAt(x: number, z: number): number | null { return this.ground.height(x, z); }
+  private restOnGround(ref: Object3D, id: string, origin: [number, number]): void {
+    const size = (manifest as AssetDef[]).find(a => a.id === id)?.dimensions; if (!size || ref.position.y > .01 || /^veh\.(train|helicopter)/.test(id)) return;
+    const hx = size.x * ref.scale.x * .32, hz = size.z * ref.scale.z * .4, c = Math.cos(ref.rotation.y), s = Math.sin(ref.rotation.y);
+    const heights = [[hx, hz], [hx, -hz], [-hx, hz], [-hx, -hz]].map(([x, z]) => this.ground.height(origin[0] + ref.position.x + x * c + z * s, origin[1] + ref.position.z - x * s + z * c)).filter((h): h is number => h !== null).sort((a, b) => a - b);
+    if (heights.length < 2) return;
+    // Median of the four wheel spots: a lane stripe or a kerb under one wheel does not lift the whole car.
+    const middle = heights.length / 2, ground = heights.length % 2 ? heights[Math.floor(middle)] : (heights[middle - 1] + heights[middle]) / 2;
+    ref.position.y = Math.max(ref.position.y, ground);
+  }
   private box(
     root: Group,
     token: import("../data/palette").PaletteToken,
@@ -375,6 +399,37 @@ export class DistrictView extends Group {
       for (const group of [entry.hero, entry.near, entry.far]) group.traverse(o => { if (o instanceof Mesh && /^roof/.test(o.name)) o.visible = !inside; });
     }
   }
+  /** Door openness (0 closed .. 1 open) per doored building batch, eased toward its target. */
+  private readonly doorOpen = new Map<LodBatch, { k: number; applied: WeakMap<InstancedGroup, number> }>();
+  /**
+   * Buildings with animated street doors (src/data/buildingDoors.ts) swing their leaves open while someone stands in or
+   * walks up to the doorway (PO 2026-10-08: "door stays closed while the person goes out and in") and close behind them.
+   */
+  updateDoors(bodies: Iterable<{ x: number; z: number }>): void {
+    const seconds = this.frameSeconds;
+    const doored = this.lodBatches.filter(entry => buildingDoors[entry.id]?.leaves.length);
+    if (!doored.length) return;
+    const list = [...bodies];
+    for (const entry of doored) {
+      const def = buildingDoors[entry.id];
+      let state = this.doorOpen.get(entry); if (!state) this.doorOpen.set(entry, state = { k: 0, applied: new WeakMap() });
+      const near = entry.refs.some(ref => {
+        const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
+        return !!way && list.some(b => doorZone(way, b));
+      });
+      state.k = Math.max(0, Math.min(1, state.k + (near ? 1 : -1) * seconds / doorSwingS));
+      const eased = state.k * state.k * (3 - 2 * state.k);
+      for (const group of [entry.hero, entry.near, entry.far]) {
+        if (state.applied.get(group) === eased) continue;
+        state.applied.set(group, eased);
+        for (const leaf of def.leaves) group.pose(leaf.node, leaf.open * eased);
+      }
+    }
+  }
+  /** Openness of every doored building (Scene Lab door gate). */
+  doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
+    return [...this.doorOpen].flatMap(([entry, state]) => entry.refs.map(ref => ({ assetId: entry.id, position: [ref.position.x + entry.origin[0], ref.position.y, ref.position.z + entry.origin[1]] as [number, number, number], open: state.k })));
+  }
   setFoliageVisible(visible: boolean): void { this.foliage.visible = visible; }
   applyLook(): void {
     const v = this.materials.look.values;
@@ -401,11 +456,11 @@ export class DistrictView extends Group {
     const p = view.camera.position;
     const rotation = view.camera.quaternion.toArray();
     if (Math.hypot(p.x - this.cameraPosition[0], p.y - this.cameraPosition[1], p.z - this.cameraPosition[2]) < .5
-      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight) {
+      && rotation.every((value, i) => Math.abs(value - this.cameraRotation[i]) < .0001) && this.cameraAspect === view.camera.aspect && this.cameraHeight === view.viewportHeight && this.cameraGameLod === view.inspectionGameLod) {
       for (const entry of this.dirtyEntries) this.partition(entry, view);
       this.dirtyEntries.clear(); return;
     }
-    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight;
+    this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
     this.dirtyEntries.clear();
@@ -419,20 +474,28 @@ export class DistrictView extends Group {
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
       if (!this.frustum.intersectsSphere(this.bounds)) continue;
-      const distance = Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
+      const distance = view.inspectionPose && !view.inspectionGameLod ? view.camera.position.distanceTo(this.bounds.center) : Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
       // Bound detail by distance and projected size; preserve the independent low-tier policy.
       const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
       let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
         const extent = Math.max(size.x * ref.scale.x, size.y * ref.scale.y, size.z * ref.scale.z);
-        this.viewPoint.copy(this.bounds.center).applyMatrix4(view.camera.matrixWorldInverse);
-        const pixels = extent * view.camera.projectionMatrix.elements[5] * view.viewportHeight / (2 * Math.max(.1, -this.viewPoint.z));
+        this.viewPoint.copy(this.bounds.center).applyMatrix4(view.lodCamera.matrixWorldInverse);
+        const pixels = extent * view.lodCamera.projectionMatrix.elements[5] * view.viewportHeight / (2 * Math.max(.1, -this.viewPoint.z));
         const screenBand = propLod(pixels, entry.bands[index]);
         if (screenBand > band) band = screenBand;
       }
       entry.bands[index] = band;
-      (band === 'lod2' ? far : band === 'lod1' ? near : hero).references.push(ref);
+      const selected = band === 'lod2' ? far : band === 'lod1' ? near : hero;
+      if (ref.userData.propEnabled && (ref.userData.propContactDirty || ref.userData.propContactBatch !== selected)) {
+        ref.position.y = ref.userData.propSimY;
+        // Preserve body rotation; the selected mesh's seat/back can support a tipped chair.
+        const gap = this.propGap(entry, ref, selected);
+        if (Number.isFinite(gap)) ref.position.y -= ref.userData.propAwake ? Math.min(0, gap) : gap;
+        ref.userData.propContactDirty = false; ref.userData.propContactBatch = selected;
+      }
+      selected.references.push(ref);
     }
     for (const batch of [hero, near, far]) {
       batch.visible = batch.references.length > 0;
@@ -460,11 +523,40 @@ export class DistrictView extends Group {
       ref.userData.propEnabled = enabled;
       ref.scale.fromArray(ref.userData.propScale).multiplyScalar(enabled ? 1 : 0);
       const [px, py, pz] = item.pose.p, q = item.pose.q, x = px - entry.origin[0], z = pz - entry.origin[1];
-      if (!visibilityChanged && Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.position.y - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
-        && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5 && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
+      if (!visibilityChanged && Math.abs(ref.position.x - x) < 1e-4 && Math.abs(ref.userData.propSimY - py) < 1e-4 && Math.abs(ref.position.z - z) < 1e-4
+        && ref.userData.propAwake === item.awake && Math.abs(ref.quaternion.x - q[0]) < 1e-5 && Math.abs(ref.quaternion.y - q[1]) < 1e-5
+        && Math.abs(ref.quaternion.z - q[2]) < 1e-5 && Math.abs(ref.quaternion.w - q[3]) < 1e-5) continue;
+      ref.userData.propSimY = py; ref.userData.propAwake = item.awake;
+      ref.userData.propContactDirty = true;
       this.propUploads++;
-      ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]); this.dirtyEntries.add(entry);
+      ref.position.set(x, py, z); ref.quaternion.set(q[0], q[1], q[2], q[3]);
+      // Ground contact is resolved in partition against the LOD that will actually be drawn.
+      this.dirtyEntries.add(entry);
     }
+  }
+  private readonly propPoint = new Vector3();
+  private propGap(entry: LodBatch, ref: Object3D, batch: InstancedGroup): number {
+    ref.updateMatrix();
+    let gap = Infinity;
+    for (const point of batch.contactPoints()) {
+      const v = this.propPoint.copy(point).applyMatrix4(ref.matrix); v.x += entry.origin[0]; v.z += entry.origin[1];
+      const ground = this.groundAt(v.x, v.z);
+      if (ground !== null) gap = Math.min(gap, v.y - ground);
+    }
+    return gap;
+  }
+  /** Scene Lab: probe the actual selected LOD mesh against the drawn ground. */
+  propGroundGaps(): { id: string; gapCm: number }[] {
+    const gaps: { id: string; gapCm: number }[] = [];
+    for (const [id, link] of this.propLinks) if (link && link.ref.userData.propEnabled) {
+      const { entry, ref } = link, index = entry.refs.indexOf(ref), band = entry.bands[index];
+      if (band === undefined) continue;
+      const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
+      if (!batch.references.includes(ref)) continue;
+      const gap = this.propGap(entry, ref, batch);
+      if (Number.isFinite(gap)) gaps.push({ id, gapCm: gap * 100 });
+    }
+    return gaps;
   }
   private linkProp(item: PushProp): { ref: Object3D; entry: LodBatch } | null {
     let best: { ref: Object3D; entry: LodBatch } | null = null, distance = .1;
@@ -499,6 +591,7 @@ export class DistrictView extends Group {
     if (lod === 'lod0') { entry.hero = replacement; entry.loaded = true; }
     else if (lod === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
     else { entry.far = replacement; entry.farLoaded = true; }
+    this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
   }
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.

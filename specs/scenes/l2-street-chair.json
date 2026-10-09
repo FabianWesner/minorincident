@@ -1,0 +1,118 @@
+{
+  "name": "l2-street-chair",
+  "ground": "district",
+  "time": "L2",
+  "tier": 1,
+  "layout": {
+    "district": "D-GROVE",
+    "level": "L2",
+    "bbox": [
+      [
+        -38,
+        -25
+      ],
+      [
+        -22,
+        -15
+      ]
+    ],
+    "assets": [
+      "prop.broken-chair"
+    ]
+  },
+  "props": [
+    {
+      "id": "tipped-wood",
+      "asset": "prop.broken-chair",
+      "at": [
+        -30,
+        -20
+      ],
+      "rotation": [
+        0.7071067811865476,
+        0,
+        0,
+        0.7071067811865476
+      ]
+    },
+    {
+      "id": "lawn-a",
+      "asset": "prop.lawn-chair-a",
+      "at": [
+        -30,
+        -22
+      ]
+    },
+    {
+      "id": "lawn-b",
+      "asset": "prop.lawn-chair-b",
+      "at": [
+        -30,
+        -18
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -32,
+        -19
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -33,
+        -20
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      -30,
+      0.4,
+      -20
+    ],
+    "radius": 6,
+    "azimuth": 45
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    30,
+    60
+  ],
+  "script": [
+    {
+      "frame": 30,
+      "camera": {
+        "mode": "game",
+        "target": [
+          -30,
+          -20
+        ],
+        "zoom": 0.6
+      }
+    },
+    {
+      "frame": 45,
+      "camera": {
+        "mode": "game",
+        "target": [
+          -30,
+          -20
+        ],
+        "zoom": 1
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "propSinkMaxCm": 1,
+    "propGroundSamplesMin": 60
+  }
+}

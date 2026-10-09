@@ -54,6 +54,12 @@ async ({ spec, path, backend, tier }) => {
   if ((backend && backend !== options.backend) || (tier && tier !== options.tier)) { await close(); options = { backend: backend ?? options.backend, tier: tier ?? options.tier }; }
   return call<SceneSpec>((s, v) => s.load(v))((path ? readSpec(resolve(path)) : spec ?? {}) as SceneSpec);
 });
+server.registerTool('inspect_level', { description: 'Run a real registered level with normal sim and a detached camera. Returns anchors. bot=true drives the existing complete profile; otherwise courier is a ghost.', inputSchema: { level: z.string(), bot: z.boolean().optional() } },
+call((s, { level, bot }: { level: string; bot?: boolean }) => s.inspectLevel(level, bot)));
+server.registerTool('inspect_camera', { description: 'Fly to a position/target, jump to an anchor, follow a numeric entity id, or set time scale (0 pauses). Operates on the running real level.', inputSchema: { position: z.tuple([z.number(), z.number(), z.number()]).optional(), target: z.tuple([z.number(), z.number(), z.number()]).optional(), anchor: z.string().optional(), follow: z.number().nullable().optional(), timeScale: z.number().min(0).max(20).optional(), lod: z.enum(['game', 'real']).optional() } },
+call((s, args) => page(s).evaluate(a => { const inspect = window.__SS__!.inspect; if (a.position && a.target) inspect.setCamera({ position: a.position, target: a.target }); if (a.anchor) inspect.jump(a.anchor); if (a.follow !== undefined) inspect.follow(a.follow); if (a.timeScale !== undefined) inspect.timeScale(a.timeScale); if (a.lod) inspect.lod(a.lod); return inspect.state(); }, args)));
+server.registerTool('inspect_state', { description: 'Running level camera, anchors, entity snapshots and renderer counters.' },
+call(s => page(s).evaluate(() => ({ ...window.__SS__!.inspect.state(), anchors: window.__SS__!.inspect.anchors(), entities: window.__SS__!.query({}) }))));
 server.registerTool('place', { description: 'Add a static prop by manifest id (e.g. bld.house-a, prop.bench). Reloads the scene (static batches and collision are baked at load), so the frame counter resets.',
   inputSchema: { asset: z.string(), at: z.union([point, z.tuple([z.number(), z.number(), z.number()])]), yaw: z.number().optional().describe('degrees'), scale: z.number().optional(), id: z.string().optional(), tint: z.string().optional() } },
 call((s, prop: PropSpec) => page(s).evaluate(p => window.__SCENE__!.place(p), prop)));
@@ -75,7 +81,7 @@ async ({ name }) => {
   try {
     const s = await ensure(), path = `${out}/${name ?? `shot-${String(++shots).padStart(3, '0')}`}.png`;
     const png = await s.screenshot(path);
-    return { content: [{ type: 'text' as const, text: JSON.stringify({ path, frame: await page(s).evaluate(() => window.__SCENE__!.frame) }) }, { type: 'image' as const, data: thumbnail(png).toString('base64'), mimeType: 'image/png' }] };
+    return { content: [{ type: 'text' as const, text: JSON.stringify({ path, frame: await page(s).evaluate(() => window.__SCENE__?.frame ?? window.__SS__!.tick()) }) }, { type: 'image' as const, data: thumbnail(png).toString('base64'), mimeType: 'image/png' }] };
   } catch (error) { return { ...text(String(error)), isError: true }; }
 });
 server.registerTool('metrics', { description: 'Per-actor foot slide / yaw drift / torso pitch / lift / sink, LOD use, draw calls and triangles, visible-vs-sim counts, vehicle state, console errors. Also written to test-results/scenes/mcp/metrics.json.' },

@@ -7,6 +7,7 @@ import type { AssetQuality } from '../assets/types';
 import { staticBatch } from '../assets/staticBatch';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
+import { isDoor } from '../sim/interact/Interactables';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
 import './interaction.css';
@@ -16,6 +17,17 @@ const assetIds: Record<string, string> = {
   'prop.barricade': 'prop.barricade', 'prop.cone': 'prop.traffic-cone', 'prop.trash-can': 'prop.trash-bin', 'prop.mailbox': 'prop.mailbox-blue',
   'pickup.medkit': 'pick.medkit', 'pickup.soda': 'pick.soda', 'pickup.energy-drink': 'pick.energy-drink', 'device.radio': 'util.radio',
 };
+/** Ground rings are reserved for the currently active mission interaction. */
+export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): boolean {
+  const mission = world.missions;
+  if (!mission || mission.state.phase !== 'playing') return false;
+  return mission.def.steps.some(step => {
+    const axeRack = step.id === 'axe' && step.complete.kind === 'interact' && step.complete.anchor === 'l2-axe-rack';
+    if ((step.optional && !axeRack) || mission.state.steps[step.id]?.status !== 'active' || step.complete.kind !== 'interact') return false;
+    const anchor = mission.def.anchors[step.complete.anchor];
+    return !!anchor && Math.hypot(anchor.x - entity.transform.x, anchor.z - entity.transform.z) <= 0.75;
+  });
+}
 /** Registry objects and a constant-contrast ring/DOM prompt. The sim never reads this view. */
 export class InteractionView extends Group {
   private readonly registry: AssetRegistry;
@@ -176,7 +188,7 @@ export class InteractionView extends Group {
     g.add(ghost, brace); return g;
   }
   update(camera: Camera): void {
-    let selected: EntitySnapshot | null = null, nearest = 64;
+    let selected: EntitySnapshot | null = null, nearest = 64, ringTarget: EntitySnapshot | null = null, ringDistance = 64;
     const player = this.world.entities.get(1);
     for (const e of this.world.entities.iterate()) {
       this.ensure(e);
@@ -197,20 +209,26 @@ export class InteractionView extends Group {
           if (b.intact && age < 12) object.position.x += Math.sin(age * 2) * .045 * (1 - age / 12);
         }
       }
-      if (player && e.interactable && (e.interactable.enabled || e.barricade && !e.barricade.intact) && !e.interactable.completed) {
+      if (player && e.interactable && (e.interactable.enabled || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
         if (d < nearest) { nearest = d; selected = e; }
+        if (d < ringDistance && isMissionInteraction(this.world, e)) { ringDistance = d; ringTarget = e; }
       }
     }
-    this.ring.visible = !!selected; this.panel.hidden = !selected;
-    if (selected) {
-      const c = selected.interactable!;
-      this.ring.position.set(selected.transform.x, .05, selected.transform.z); this.ring.scale.setScalar(c.radius);
+    const inRange = !!selected && !!player && Math.hypot(selected.transform.x - player.transform.x, selected.transform.z - player.transform.z) <= selected.interactable!.radius;
+    this.ring.visible = !!ringTarget;
+    this.panel.hidden = !inRange;
+    if (ringTarget) {
+      const c = ringTarget.interactable!;
+      this.ring.position.set(ringTarget.transform.x, .05, ringTarget.transform.z); this.ring.scale.setScalar(c.radius);
       this.fillGeometry.setDrawRange(0, Math.round(c.progress * 64) * 6);
+    }
+    if (selected && inRange) {
+      const c = selected.interactable!;
       // Leave the survivor's head/torso clear when they stand just behind the device.
       this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
       this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
-      const label = selected.barricade && !selected.barricade.intact ? `${c.label} · ${Math.round(selected.barricade.coverage * 100)}% coverage` : c.label, caption = selected.barricade && !c.enabled ? 'Push props into the rail · 80% needed' : c.hint || (nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
+      const label = selected.barricade && !selected.barricade.intact ? `${c.label} · ${Math.round(selected.barricade.coverage * 100)}% coverage` : c.label, caption = selected.barricade && !c.enabled ? 'Push props into the rail · 80% needed' : c.hint || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;

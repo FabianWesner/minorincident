@@ -1,0 +1,78 @@
+import { afterEach, describe, expect, test } from 'vitest';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadL2 } from '../../tools/sim-runner/l2Bots';
+
+/** PO 10-08: the axe took several tries and boarding "did nothing". One click-to-move from the apron must be enough, on every seed. */
+let world: SimWorld | undefined;
+afterEach(() => { world?.dispose(); world = undefined; });
+const seeds = Array.from({ length: 20 }, (_, i) => i + 1);
+
+async function atAlarm(seed: number) {
+  const l = await loadL2(seed); world = l.world;
+  for (let i = 0; i < 60 * 45 && l.mission.state.l2!.phase === 'calm'; i++) l.world.update();
+  expect(l.mission.state.l2!.phase).toBe('alarm');
+  for (let i = 0; i < 90; i++) l.world.update();
+  return l;
+}
+/** One click: a single moveTarget frame, then hands off. Returns ticks until `done`. */
+function clickAndWait(w: SimWorld, target: { x: number; z: number }, done: () => boolean, maxTicks = 60 * 25): number {
+  w.setInput({ moveTarget: { x: target.x, z: target.z } }); w.update(); w.setInput({ moveTarget: undefined });
+  let n = 1; while (n < maxTicks && !done()) { w.update(); n++; }
+  return n;
+}
+
+describe('L2 one-attempt interactions', () => {
+  test('axe can be taken at 5 s before the alarm, then board normally after it (PO: “L2: Let me take the axe even before the fire alarm”)', async () => {
+    const l = await loadL2(1); world = l.world;
+    for (let i = 0; i < 5 * 60; i++) l.world.update();
+    expect(l.mission.state.l2!.phase).toBe('calm');
+    const anchors = l.mission.def.anchors;
+    const rack = anchors['l2-axe-rack'];
+    clickAndWait(l.world, rack, () => Math.hypot(l.world.entities.get(1)!.transform.x - rack.x, l.world.entities.get(1)!.transform.z - rack.z) <= rack.radius);
+    for (let i = 0; i < 60 && !l.mission.state.l2!.axe; i++) { l.world.setInput({ interact: true }); l.world.update(); }
+    l.world.setInput({ interact: false });
+    expect(l.mission.state.l2!.axe).toBe(true);
+    for (let i = 0; i < 60 * 45 && l.mission.state.l2!.phase === 'calm'; i++) l.world.update();
+    expect(l.mission.state.l2!.phase).toBe('alarm');
+    for (let i = 0; i < 60 * 6; i++) l.world.update();
+    expect(l.world.events.events().some(e => e.type === 'dialogue.line' && e.id === 'L2.axe')).toBe(false);
+    clickAndWait(l.world, anchors['l2-board'], () => l.mission.state.l2!.seated);
+    expect(l.mission.state.l2!.seated).toBe(true);
+  }, 120_000);
+
+  test('axe: one click on the rack picks it up (20 seeds)', async () => {
+    const times: number[] = [];
+    for (const seed of seeds) {
+      const l = await atAlarm(seed), a = l.mission.def.anchors['l2-axe-rack'];
+      times.push(clickAndWait(l.world, a, () => l.mission.state.l2!.axe));
+      expect(l.mission.state.l2!.axe, `seed ${seed}`).toBe(true);
+      l.world.dispose(); world = undefined;
+    }
+    console.log('axe ticks', times.join(','));
+  }, 600_000);
+
+  test('truck: one click on the boarding ring boards (20 seeds), axe first on seeds 1-4', async () => {
+    const times: number[] = [];
+    for (const seed of seeds) {
+      for (const axeFirst of seed <= 4 ? [false, true] : [false]) {
+        const l = await atAlarm(seed), a = l.mission.def.anchors;
+        if (axeFirst) clickAndWait(l.world, a['l2-axe-rack'], () => l.mission.state.l2!.axe);
+        times.push(clickAndWait(l.world, a['l2-board'], () => l.mission.state.l2!.seated));
+        expect(l.mission.state.l2!.seated, `seed ${seed} axeFirst ${axeFirst}`).toBe(true);
+        l.world.dispose(); world = undefined;
+      }
+    }
+    console.log('board ticks', times.join(','));
+  }, 600_000);
+
+  test('standing anywhere in a ring counts: hold at the edge, and E from the edge', async () => {
+    for (const seed of [1, 2, 3]) for (const name of ['l2-board', 'l2-axe-rack']) for (const press of [false, true]) {
+      const l = await atAlarm(seed), a = l.mission.def.anchors[name], p = l.world.entities.get(1)!.transform;
+      p.x = a.x + a.radius * .92; p.z = a.z;
+      const done = () => name === 'l2-board' ? l.mission.state.l2!.seated : l.mission.state.l2!.axe;
+      for (let i = 0; i < 150 && !done(); i++) { l.world.setInput({ interact: press }); l.world.update(); }
+      expect(done(), `${name} seed ${seed} press ${press}`).toBe(true);
+      l.world.dispose(); world = undefined;
+    }
+  }, 600_000);
+});

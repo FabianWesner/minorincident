@@ -1,0 +1,48 @@
+{
+  "assetsValidate": {
+    "command": "npm run assets:validate",
+    "passed": 823,
+    "failed": 0
+  },
+  "selectedTiers": {
+    "passed": 12,
+    "failed": 0
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npm run test:unit -- --maxWorkers=4",
+    "filesPassed": 98,
+    "filesFailed": 0,
+    "testsPassed": 343,
+    "testsFailed": 0
+  },
+  "lights": {
+    "command": "npm run assets:lights",
+    "anchors": 304,
+    "assets": 76,
+    "errors": 0,
+    "unreferencedEmissive": 0
+  },
+  "determinism": {
+    "sourceTiersPassed": 12,
+    "failed": 0
+  },
+  "browser": {
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "headless": true,
+    "angle": "metal",
+    "workers": 1
+  },
+  "directDistanceTier": {
+    "command": "python3 tools/blender/run.py assets/bld.town-hall/build.py --glb assets/bld.town-hall/model.lod2.glb --distance-tier 2",
+    "exitCode": 0
+  }
+}

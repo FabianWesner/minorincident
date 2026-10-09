@@ -35,6 +35,8 @@ import { emptyInput, type EntityFilter, type EntitySnapshot, type GameEvent, typ
 
 /** Headless composition root: survivor gameplay and the preserved E01/E02 cube fixtures. */
 export class SimWorld implements Lifecycle {
+  /** Explicit inspection courier option; false for every normal game and bot run. */
+  inspectionGhost = false;
   readonly physics = new Physics();
   readonly events = new EventBus<GameEvent>();
   readonly entities = new EntityStore();
@@ -67,6 +69,8 @@ export class SimWorld implements Lifecycle {
   barricades: Barricades | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
+  /** Borrowed input before controls resolve it; shared browser/headless bot policies use this. */
+  get deviceInput(): InputFrame { return this.input; }
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
   loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;return next; }
@@ -211,9 +215,9 @@ export class SimWorld implements Lifecycle {
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
-    if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
+    if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     this.events.on('sim.tick',()=>{
-      if(this.tick%60!==0)return;
+      if(this.tick%60!==0 || this.inspectionGhost)return;
       const player=this.entities.get(1)!;
       for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
     },SimPhase.combat);
@@ -239,7 +243,7 @@ export class SimWorld implements Lifecycle {
     this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
     for (const boundary of next.boundaries) this.physics.addStatic(boundary, [0, 0]);
-    this.props?.install(next, props);
+    this.props?.install(next, props, true);
     this.vehicles?.rebuild(true);
     this.hazards?.debris.reset(true); this.explosions?.reset(true); this.interactables?.rebuildBlockers(next.nav, true);
     this.barricades?.rebuild(); this.missions?.rebuildGates(); this.player!.locomotion.reset(); this.physics.world!.step(); rebuildNpcNavigation(this);
@@ -297,6 +301,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
+    this.inspectionGhost = false;
     this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();

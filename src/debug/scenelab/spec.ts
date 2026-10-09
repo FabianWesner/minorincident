@@ -21,7 +21,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -32,13 +32,15 @@ export interface SceneSpec {
   frames?: number;
   shots?: number[];
   video?: number;
+  /** Debug: include each actor's per-frame motion samples (`metrics.actors.<id>.track`: frame, clip/label, speed, feet). */
+  trace?: boolean;
   /** Clipping report options: `ignore` pairs of placement ids or asset ids; `sameAsset` also checks chains of one
    * asset (fence/hedge runs share end posts by design, so they are skipped by default); `slackCm` (default 2) is how far
    * a bone's flesh radius may sink into a prop surface before it is reported. */
   clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
   expect?: Expectations;
 }
-export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; scale?: number | [number, number, number]; tint?: string }
+export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; role?: string }
 export interface ActorSpec {
@@ -73,11 +75,16 @@ export type Action =
   | { infect: { by?: string; instant?: boolean } }
   | { mountBike: string }
   | { dismount: true }
+  | { interact: true }
   | { chase: string }
   | { flee: Point }
   /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
-  | { ally: { role?: 'officer' | 'soldier'; follow?: string; slot?: number } };
+  | { ally: { role?: 'officer' | 'soldier'; follow?: string; slot?: number } }
+  /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
+   * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
+   * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
+  | { handover: { building: string; meet: Point | string; pauseS?: number; /** Arm's length in front of an actor `meet` (default 1.05 m, the L1 clerk; the technician uses 1.4). */ standoff?: number; legacy?: boolean } };
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
 export type EffectSpec =
   | { blast: string; at: Point }
@@ -97,12 +104,33 @@ export interface Expectations {
   footSlideMaxCm?: number;
   /** Deepest sole point below the floor, in cm (feet through the ground). */
   footSinkMaxCm?: number;
+  /** Longest run of consecutive frames in which a courier sole zig-zags vertically by >= 0.8 cm (a bobbing body or foot). */
+  footJitterRunMax?: number;
+  /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
+  bodyOverlapMaxCm?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;
   torsoPitchMaxDeg?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** Frames a living actor stood in a door aperture or leaf sweep (src/data/buildingDoors.ts) while that door was not
+   * fully open (`metrics.doors`). */
+  doorClosedFramesMax?: number;
+  /** Most bone-vs-prop clipping hits (`clipping.actors`, see `clipping` options). */
+  actorHitsMax?: number;
+  /** Deepest drawn tyre point below the drawn ground (raycast against the district's rendered meshes), in cm, for the bike and cars (`metrics.wheels`). */
+  wheelSinkMaxCm?: number;
+  /** Deepest drawn pushable mesh below the drawn ground. */
+  propSinkMaxCm?: number;
+  /** Require actual prop contact samples, preventing an empty scene passing. */
+  propGroundSamplesMin?: number;
+  /** Highest drawn tyre bottom above the drawn ground, in cm (a floating wheel). */
+  wheelFloatMaxCm?: number;
+  /** Frames the courier bike was in view but not drawn, or drawn more than 0.6 m from its sim position (`metrics.bike`). */
+  bikeUndrawnFramesMax?: number;
+  /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
+  wheelSpikeMaxCm?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;
@@ -162,6 +190,12 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [],
   };
+  for (const name of spec.layout?.anchors ?? []) {
+    const anchor = source?.anchors[name];
+    if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
+    layout.anchors[name] = structuredClone(anchor);
+    layout.anchors[name].position[0] += shift[0]; layout.anchors[name].position[2] += shift[1];
+  }
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
   const composition: LevelComposition = {
     id: 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],

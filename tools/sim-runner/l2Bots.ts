@@ -95,7 +95,7 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
     if (opts.stopWhen?.(mission)) break;
     const s = mission.state.l2!, t = world.tick;
     if (s.phase === 'calm') calm.infectedMax = Math.max(calm.infectedMax, world.infected!.active.length);
-    if (s.phase !== 'calm' && !calm.alarmS) { calm.alarmS = (s.alarmAt - start) / 60; calm.axeActive = mission.state.steps.axe.status === 'active'; }
+    if (s.phase !== 'calm' && !calm.alarmS) { calm.alarmS = (s.alarmAt - start) / 60; calm.axeActive = mission.state.steps.axe.status === 'active' || mission.state.steps.axe.status === 'completed'; } // PO 10-08: the axe can be taken before the alarm
     if (s.alarmAt && calm.crewAtTruckS === null && s.crewIds.every(id => world.entities.get(id)?.hidden)) calm.crewAtTruckS = (t - s.alarmAt) / 60;
     if (s.phase === 'ride') seatedEveryTick &&= !!world.entities.get(1)!.hidden && s.crewIds.every(id => !!world.entities.get(id)?.hidden);
     if (s.arrivedAt && !controlAt && !world.storyLock && !world.entities.get(1)!.hidden) controlAt = t;
