@@ -108,7 +108,7 @@ def station(s):
 def flashlight(s):
     dark,red,metal='uiDark','survivorRed','sidewalk'
     # Lens faces +X. Ground touch at Z=0; hand socket is on the rear grip.
-    for name,x,r,depth,token in [('grip',-.035,.037,.20,dark),('head',.09,.065,.08,metal),('bezel',.133,.065,.024,red),('tail',-.146,.041,.035,red),('neck',.039,.045,.026,red)]:
+    for name,x,r,depth,token in [('grip',-.035,.037,.20,dark),('head',.09,.062,.08,metal),('bezel',.133,.065,.024,red),('tail',-.146,.041,.035,red),('neck',.039,.045,.026,red)]:
         s.tube(name,(x,0,.065),r,depth,token,rot=(0,math.pi/2,0),sides=(24,12,8))
     lens=s.tube('lens',(.147,0,.065),.054,.006,dark,rot=(0,math.pi/2,0),sides=(24,12,8))
     lens.data.materials.clear();lens.data.materials.append(palette.mat('picketWhite',True))

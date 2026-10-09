@@ -153,7 +153,7 @@ export default {
       }
     ],
     "source": "public/assets/models/util.flashlight.glb",
-    "hash": "5398cd7687815fb5a43360086525d335da0f2e4fca5540634f7696c21a5edb88"
+    "hash": "c9870e42cc5fee140d49fe7681497f04f5ccf63619de77c13e507cfe76401271"
   },
   "util.radio": {
     "class": "light",
