@@ -1,4 +1,5 @@
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
+import { l2 } from '../../data/l2';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
@@ -138,6 +139,8 @@ export class SceneLab {
     }
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     void outbreak;
+    // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
+    if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
     world.combat!.damage.god = true;
