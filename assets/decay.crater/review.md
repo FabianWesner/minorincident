@@ -1,0 +1,5 @@
+# Visual review
+
+Reviewed production LOD contact and native game-size views. Dark depressed center reads as a hole in all tiers; pale torn plates, radial fragments and irregular raised boundary distinguish it from a flat decal. Near and middle profiles are close; far profile is visibly more polygonal but keeps two macro torn plates. No shipped crater existed before this batch, so integrated decay.burned-facade.brick is a damage-material/style peer, not a shape equivalent. Reference has denser fissures and more uneven inner surfaces. Remaining fault: the radial bowl remains more regular and cleaner than the reference, especially at LOD2. Physical placement requires the explicit terrain interface in notes.md; plain flat ground would occlude/fill it. Own visual review is provisional; orchestrator acceptance is independent.
+
+Evidence: `test-results/l5-war-debris-and-craters/decay.crater/comparison.png`, `lod-contact.png`, `game-reference-peer.jpg`. Headless WebGL2, Metal, shared browser lock, no WebGPU claim.

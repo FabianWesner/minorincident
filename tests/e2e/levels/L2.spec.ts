@@ -108,11 +108,15 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     if (!h.shots.has('l2-cluster')) await snap('l2-cluster');
     for (let i = 0; i < 40 && !(await mission()).l2!.gateClosedAt; i++) await step(15);
     expect((await mission()).l2!.gateClosedAt).toBeGreaterThan(0);
+    const checkpoint = await mission();
     await step(20); await snap('l2-bridge-checkpoint');
     for (let i = 0; i < 40 && (await mission()).phase === 'playing'; i++) await step(15);
+    // The campaign hands over immediately; retain L2 evidence before its state is replaced by L3.
+    await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
+    expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L3');
     const final = await mission();
-    writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ phase: final.phase, stats: final.stats, l2: { axe: final.l2!.axe, deaths: final.stats.deaths }, shots: [...h.shots] }, null, 2) + '\n');
-    expect(['result', 'progression']).toContain(final.phase);
+    writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ phase: final.phase, scenario: 'L3', stats: checkpoint.stats, l2: { axe: checkpoint.l2!.axe, deaths: checkpoint.stats.deaths }, shots: [...h.shots] }, null, 2) + '\n');
+    expect(await page.evaluate(() => window.__SS__!.campaign.state()!.ownedActions)).toContain('weapon.fire-axe');
     expect([...h.shots].sort()).toEqual(['l2-alarm', 'l2-bridge-checkpoint', 'l2-cluster', 'l2-collapse', 'l2-doors-open', 'l2-station-calm', 'l2-streets-w1', 'l2-truck-ride']);
   });
 

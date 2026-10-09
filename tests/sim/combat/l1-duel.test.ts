@@ -1,3 +1,4 @@
+import { l1v2 } from '../../../src/data/l1v2';
 import { expect, test } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { duel, type DuelResult } from './duel';
@@ -9,14 +10,14 @@ const seeds = Array.from({ length: 20 }, (_, i) => i + 1);
 const hp = infectedDef('infected.runner').hp;
 const summary = (rows: DuelResult[]) => ({ won: rows.filter(r => r.won).length, died: rows.filter(r => r.died).length, diedWithin20s: rows.filter(r => r.died && r.seconds <= 20).length, beatenWithin20s: rows.filter(r => r.seconds <= 20 && (r.died || r.hp <= 10)).length, hitsPerKill: rows.reduce((a, r) => a + r.hits, 0) / Math.max(1, rows.reduce((a, r) => a + r.kills, 0)), rows });
 
-test('E19 @E19 @E19-AC14 unarmed never one-shots: every move 9–11 damage, 4–5 hits; bat 2 hits', () => {
+test('E19 @E19 @E19-AC14 unarmed never one-shots: every move 6 damage, 6–7 hits (PO 10-08 fight speed); bat 2 hits', () => {
   expect(hp).toBe(40);
   const fists = action('weapon.fists');
   meleeMoves['weapon.fists'].forEach((_, combo) => {
     const def = comboDefinition(fists, combo);
-    expect(def.damage, `unarmed move ${combo}`).toBeGreaterThanOrEqual(9); expect(def.damage).toBeLessThanOrEqual(11);
+    expect(def.damage, `unarmed move ${combo}`).toBeGreaterThanOrEqual(l1v2.combat.unarmedDamage[0]); expect(def.damage).toBeLessThanOrEqual(l1v2.combat.unarmedDamage[1]);
     expect(def.damage).toBeLessThan(hp);
-    expect(Math.ceil(hp / def.damage)).toBeGreaterThanOrEqual(4); expect(Math.ceil(hp / def.damage)).toBeLessThanOrEqual(5);
+    expect(Math.ceil(hp / def.damage)).toBeGreaterThanOrEqual(l1v2.combat.unarmedHitsToKill[0]); expect(Math.ceil(hp / def.damage)).toBeLessThanOrEqual(l1v2.combat.unarmedHitsToKill[1]);
     // PO 00 §6.2 supersedes the original E19 shove: every unarmed beat is normal.
     expect(def.knockback).toBeLessThanOrEqual(.4); expect(def.stagger).toBeLessThanOrEqual(.25);
     expect(def.knockdown).not.toBe(true);
@@ -24,11 +25,12 @@ test('E19 @E19 @E19-AC14 unarmed never one-shots: every move 9–11 damage, 4–
   const bat = action('weapon.bat'), beats = meleeMoves['weapon.bat'].map((_, combo) => comboDefinition(bat, combo));
   expect(beats.map(b => b.damage)).toEqual([22, 22, 30]);
   for (const b of beats.slice(0, 2)) { expect(b.knockback).toBeLessThanOrEqual(.4); expect(b.stagger).toBeLessThanOrEqual(.25); expect(b.knockdown).not.toBe(true); }
-  expect(beats[2].knockdown).toBe(true); expect(beats[2].knockback).toBe(3.3);
+  // PO 10-08 fight speed: the finisher still knocks down but keeps the body inside the bat's reach (was a 3.3 m fling).
+  expect(beats[2].knockdown).toBe(true); expect(beats[2].knockback).toBeLessThanOrEqual(.5);
   expect(beats[0].damage + beats[1].damage).toBeGreaterThanOrEqual(hp); expect(beats[0].damage).toBeLessThan(hp);
 });
 
-test('E19 @E19 @E19-AC14 duel battery: newbie beats 1 (≥19/20) and 2 (≥14/20) unarmed; standing vs 5 beaten within 20 s (≥18/20, dead ≥15/20); bat kills in 2', async () => {
+test('E19 @E19 @E19-AC14 duel battery: newbie beats 1 (≥19/20) and 2 (≥14/20) unarmed (6–7 hits each); standing vs 5 beaten within 20 s (≥18/20, dead ≥15/20); bat kills in 2', async () => {
   const one: DuelResult[] = [], two: DuelResult[] = [], five: DuelResult[] = [], bat: DuelResult[] = [];
   for (const seed of seeds) {
     one.push(await duel(seed, 1, 'newbie')); two.push(await duel(seed, 2, 'newbie'));
@@ -42,6 +44,6 @@ test('E19 @E19 @E19-AC14 duel battery: newbie beats 1 (≥19/20) and 2 (≥14/20
   // AC14 (criterion fix 2026-10-07): beaten = dead, or a pyrrhic win at <= 10 HP; still dead on >= 15/20.
   expect(report.standFive.beatenWithin20s).toBeGreaterThanOrEqual(18);
   expect(report.standFive.diedWithin20s).toBeGreaterThanOrEqual(15);
-  expect(report.oneUnarmed.hitsPerKill).toBeGreaterThanOrEqual(4); expect(report.oneUnarmed.hitsPerKill).toBeLessThanOrEqual(5);
+  expect(report.oneUnarmed.hitsPerKill).toBeGreaterThanOrEqual(l1v2.combat.unarmedHitsToKill[0]); expect(report.oneUnarmed.hitsPerKill).toBeLessThanOrEqual(l1v2.combat.unarmedHitsToKill[1]);
   for (const row of bat) if (row.kills) expect(row.hits / row.kills).toBe(2);
 }, 300_000);

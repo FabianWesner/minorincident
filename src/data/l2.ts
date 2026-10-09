@@ -11,7 +11,7 @@ export const l2 = {
   /** Beat 1-2: the calm in the bay, then the alarm (seeded inside the window). */
   calm: { alarmAtS: [20, 30] as P, crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
   /** Beat 3: the truck ride (kinematic route through Elm -> Juniper -> Main Row). */
-  ride: { cruiseMs: 7.6, cornerMs: 4.2, accelMs2: 2.6, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
+  ride: { cruiseMs: 7.6, cornerMs: 4, accelMs2: 2.6, brakeMs2: 4, yawRateDegS: 25, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },
   /** Beat 4-5: arrival, doors, release and the ambush reveal. */
   rescue: {
     forceDoorsS: 4, trapped: { high: 30, low: 20 }, releaseOverS: 11, ambush: 24, crewHp: 100,
@@ -85,7 +85,10 @@ export const l2 = {
   cluster: { home: [48, 30] as P, count: 13, radiusM: 7, triggerM: 30 },
   /** Section 5.6: the police bridge checkpoint at the east end of Elm Street. */
   /** Officers hold fire until the evacuee is this close to the gate (they do not clear the approach from the line). */
-  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20 },
+  checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20,
+    /** PO 2026-10-08: the officers visibly fire (allied fighters v2 handguns: seeded hit chance, muzzle flash, tracer); hits knock
+     * infected down per the recover rule, only the closed gate stops them. Shots are loud events (E21 gunfire rule). */
+    gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5 },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
   infectedDamage: 1.8,
   /** Section 4: checkpoints. */
@@ -102,7 +105,7 @@ export const l2Anchors: Record<string, P> = {
   'l2-board': [-68.6, 37.0],
   'l2-bench-1': [-75.7, 45.0], 'l2-bench-2': [-75.7, 43.2], 'l2-bench-3': [-69.0, 43.6],
   'l2-crew-1': [-71.0, 45.6], 'l2-crew-2': [-72.4, 46.4], 'l2-crew-3': [-74.6, 42.4], 'l2-crew-4': [-73.6, 42.0], 'l2-crew-5': [-67.0, 41.2], 'l2-crew-6': [-73.0, 39.0],
-  'l2-truck-stop': [-43.0, -30.4],
+  'l2-truck-stop': [-43.0, -32.25],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],
   'l2-door-loading': [-55.6, -37.3],
@@ -118,5 +121,48 @@ export const l2Anchors: Record<string, P> = {
   'photo-l2-doors-open': [-50, -40], 'photo-l2-collapse': [-48, -36], 'photo-l2-streets-w1': [-37.8, -35.0],
   'photo-l2-cluster': [49, 29], 'photo-l2-bridge-checkpoint': [78, 30],
 };
-/** Truck route (centre line), station apron -> Elm -> Juniper west -> Main Row -> Grove Market forecourt. */
-export const l2TruckRoute: readonly P[] = [[-70.6, 36.7], [-70.6, 30.6], [-30.6, 30.6], [-30.6, -30.4], [-43.0, -30.4]];
+/** Right lane centres: east on Elm z=31.25, north on Juniper x=-28.75, west on Main Row z=-32.25.
+ * Junction connectors are tangent circles (9 m centre radius / 10.7 m outer body radius). The station apron
+ * connector has 6.2 m centre radius / 8.14 m outer body radius. All headings follow the path tangent.
+ */
+export type TruckPathPoint = { x: number; z: number; yaw: number; curvature: number; s: number; limit: number; section: 'apron' | 'elm' | 'juniper' | 'row' | 'junction' };
+function truckPath(): TruckPathPoint[] {
+  const path: TruckPathPoint[] = [];
+  const add = (x: number, z: number, yaw: number, curvature: number, section: TruckPathPoint['section']) => {
+    const prev = path.at(-1), s = prev ? prev.s + Math.hypot(x - prev.x, z - prev.z) : 0;
+    const corner = section === 'apron' || section === 'junction';
+    // Leave room for the Rapier rotation reconstruction at the fixed-step boundary.
+    const limit = Math.min(corner ? l2.ride.cornerMs : l2.ride.cruiseMs, Math.abs(curvature) > .001 ? l2.ride.yawRateDegS * Math.PI / 180 / Math.abs(curvature) * .95 : Infinity);
+    path.push({ x, z, yaw, curvature, s, limit, section });
+  };
+  const line = (ax: number, az: number, bx: number, bz: number, section: TruckPathPoint['section']) => {
+    const n = Math.ceil(Math.hypot(bx - ax, bz - az) / .1);
+    for (let i = 1; i <= n; i++) add(ax + (bx - ax) * i / n, az + (bz - az) * i / n, -Math.atan2(bz - az, bx - ax), 0, section);
+  };
+  const arc = (cx: number, cz: number, r: number, a0: number, a1: number, section: TruckPathPoint['section']) => {
+    const n = Math.ceil(Math.abs(a1 - a0) * r / .05), sign = Math.sign(a1 - a0);
+    for (let i = 0; i <= n; i++) {
+      const a = a0 + (a1 - a0) * i / n, x = cx + Math.cos(a) * r, z = cz + Math.sin(a) * r;
+      if (i === 0 && path.length) continue;
+      add(x, z, -Math.atan2(Math.cos(a) * sign, -Math.sin(a) * sign), -sign / r, section);
+    }
+  };
+  arc(-64.4, 36.7, 6.2, Math.PI, Math.PI * 1.5, 'apron');
+  // Smoothly settle from the station apron into Elm's right lane, with zero slope and curvature at both ends.
+  for (let i = 1; i <= 280; i++) {
+    const t = i / 280, f = 10*t**3 - 15*t**4 + 6*t**5, d = .75/14 * (30*t**2 - 60*t**3 + 30*t**4), dd = .75/14**2 * (60*t - 180*t**2 + 120*t**3);
+    add(-64.4 + t*14, 30.5 + .75*f, -Math.atan(d), -dd/(1+d*d)**1.5, 'elm');
+  }
+  line(-50.4, 31.25, -37.75, 31.25, 'elm');
+  arc(-37.75, 22.25, 9, Math.PI/2, 0, 'junction');
+  line(-28.75, 22.25, -28.75, -23.25, 'juniper');
+  arc(-37.75, -23.25, 9, 0, -Math.PI/2, 'junction');
+  line(-37.75, -32.25, -43, -32.25, 'row');
+  // Backward braking envelope: each sample can reach the next sample's corner cap with <=4 m/s².
+  path.at(-1)!.limit = 0;
+  for (let i = path.length - 2; i >= 0; i--) path[i].limit = Math.min(path[i].limit, Math.sqrt(path[i+1].limit**2 + 2*l2.ride.brakeMs2*(path[i+1].s-path[i].s)));
+  return path;
+}
+export const l2TruckPath: readonly TruckPathPoint[] = truckPath();
+/** Sampled drivable polyline, used by layout clearance and spawn keep-out checks. */
+export const l2TruckRoute: readonly P[] = l2TruckPath.map(p => [p.x, p.z]);

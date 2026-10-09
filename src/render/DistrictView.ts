@@ -48,7 +48,7 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -92,7 +92,7 @@ export class DistrictView extends Group {
     private readonly instanceCapacity?: number,
   ) {
     super();
-    this.name = "sunset-grove";
+    this.name = "sunset-grove"; this.matrixAutoUpdate = false;
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
@@ -140,7 +140,7 @@ export class DistrictView extends Group {
       this.world.districts.map(async (d) => {
         const root = new Group();
         root.name = d.id;
-        root.position.set(d.origin[0], 0, d.origin[1]);
+        root.position.set(d.origin[0], 0, d.origin[1]); root.updateMatrix(); root.matrixAutoUpdate = false;
         this.add(root); this.districtRoots.push({ root, bounds: new Box3(
           new Vector3(d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), -2, d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1]))),
           new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(0, ...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
@@ -154,6 +154,8 @@ export class DistrictView extends Group {
         );
         for (const scene of scenes) {
           const clone = scene.clone(true);
+          // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
+          clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
           clone.traverse((o) => {
             if (d.decay.removed.includes(o.name)) o.visible = false;
           });
@@ -178,7 +180,7 @@ export class DistrictView extends Group {
           )
             return;
           const lit = d.decay.lights.includes(o.userData.lightGroup),
-            key = `${o.userData.assetId}:${lit}`;
+            key = `${o.userData.assetId}:${lit}:`;
           const reference = new Object3D();
           o.matrixWorld.decompose(
             reference.position,
@@ -189,8 +191,8 @@ export class DistrictView extends Group {
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         });
-        // L3 authors parking and emergency dressing in its loaded layout. Its
-        // references must use those positions, rather than the unchanged baked GLB.
+        // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
+        // references must use those placements, rather than the unchanged baked GLB empties.
         if (this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
@@ -205,7 +207,7 @@ export class DistrictView extends Group {
             }
           }
           for (const p of d.decay.placements) {
-            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}`;
+            const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
             const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
             if (p.tint) reference.userData.tint = p.tint;
             if (!references.has(key)) references.set(key, []);
@@ -217,15 +219,15 @@ export class DistrictView extends Group {
         for (const [colors, refs] of crowns) this.foliage.addCrowns(refs, crownTokens.get(colors) ?? ['foliageDark', 'foliageLight'], d.origin);
         await Promise.all(
           [...references].map(async ([key, refs]) => {
-            const [id, power] = key.split(":");
+            const [id, power, variant] = key.split(":"), decay = variant || undefined;
             if (!worldAssets[id]) {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
-              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0');
+              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
               const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
             const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
-            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2')));
+            const prototypes = await Promise.all([nearLoaded ? 'lod1' : 'lod2', farLoaded ? 'lod2' : 'lod1'].map(lod => this.registry.asset(id, power === 'true', lod as 'lod1' | 'lod2', decay)));
             // L1 uses the shared vertex-attribute instancing path; live counts stay
             // unchanged while shader code no longer depends on placement capacity.
             const capacity = Math.max(refs.length, this.instanceCapacity ?? refs.length);
@@ -237,7 +239,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -360,13 +362,6 @@ export class DistrictView extends Group {
       if (node instanceof Mesh) { node.userData.qualityCastShadow ??= node.castShadow; node.castShadow = tier === 'high' && node.userData.qualityCastShadow; }
     });
   }
-  /** L3 collapse extinguishes Civic emissives; ordinary checkpoint restore powers them again. */
-  setEmergencyPower(powered: boolean): void {
-    const root = this.children.find(child => child.name === 'D-CIVIC');
-    root?.traverse(node => {
-      if (node instanceof Mesh && !Array.isArray(node.material) && (node.name === 'window-light' || node.material.name.startsWith('emi_'))) node.visible = powered;
-    });
-  }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
     this.foliage.update(view, player, target); if (player) this.updateRoofs(player);
@@ -406,36 +401,36 @@ export class DistrictView extends Group {
       for (const group of [entry.hero, entry.near, entry.far]) group.traverse(o => { if (o instanceof Mesh && /^roof/.test(o.name)) o.visible = !inside; });
     }
   }
-  /** Door openness (0 closed .. 1 open) per doored building batch, eased toward its target. */
-  private readonly doorOpen = new Map<LodBatch, { k: number; applied: WeakMap<InstancedGroup, number> }>();
+  /** Door openness (0 closed .. 1 open) per doored placement, eased toward its target. */
+  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number }>();
   /**
    * Buildings with animated street doors (src/data/buildingDoors.ts) swing their leaves open while someone stands in or
    * walks up to the doorway (PO 2026-10-08: "door stays closed while the person goes out and in") and close behind them.
+   * `held` doors (SimWorld.openDoors: a threshold point, e.g. a house the L1 residents come out of) stay open. Each
+   * placement swings on its own (several houses share one batch).
    */
-  updateDoors(bodies: Iterable<{ x: number; z: number }>): void {
+  updateDoors(bodies: Iterable<{ x: number; z: number }>, held: Iterable<{ x: number; z: number }> = []): void {
     const seconds = this.frameSeconds;
     const doored = this.lodBatches.filter(entry => buildingDoors[entry.id]?.leaves.length);
     if (!doored.length) return;
-    const list = [...bodies];
+    const list = [...bodies], holds = [...held];
     for (const entry of doored) {
       const def = buildingDoors[entry.id];
-      let state = this.doorOpen.get(entry); if (!state) this.doorOpen.set(entry, state = { k: 0, applied: new WeakMap() });
-      const near = entry.refs.some(ref => {
+      for (const ref of entry.refs) {
+        let state = this.doorOpen.get(ref); if (!state) this.doorOpen.set(ref, state = { entry, k: 0, applied: -1 });
         const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
-        return !!way && list.some(b => doorZone(way, b));
-      });
-      state.k = Math.max(0, Math.min(1, state.k + (near ? 1 : -1) * seconds / doorSwingS));
-      const eased = state.k * state.k * (3 - 2 * state.k);
-      for (const group of [entry.hero, entry.near, entry.far]) {
-        if (state.applied.get(group) === eased) continue;
-        state.applied.set(group, eased);
-        for (const leaf of def.leaves) group.pose(leaf.node, leaf.open * eased);
+        const open = !!way && (holds.some(h => Math.hypot(h.x - way.centre.x, h.z - way.centre.z) < 1) || list.some(b => doorZone(way, b)));
+        state.k = Math.max(0, Math.min(1, state.k + (open ? 1 : -1) * seconds / doorSwingS));
+        const eased = state.k * state.k * (3 - 2 * state.k);
+        if (state.applied === eased) continue;
+        state.applied = eased;
+        for (const group of [entry.hero, entry.near, entry.far]) for (const leaf of def.leaves) group.pose(leaf.node, leaf.open * eased, ref);
       }
     }
   }
-  /** Openness of every doored building (Scene Lab door gate). */
+  /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
-    return [...this.doorOpen].flatMap(([entry, state]) => entry.refs.map(ref => ({ assetId: entry.id, position: [ref.position.x + entry.origin[0], ref.position.y, ref.position.z + entry.origin[1]] as [number, number, number], open: state.k })));
+    return [...this.doorOpen].map(([ref, state]) => ({ assetId: state.entry.id, position: [ref.position.x + state.entry.origin[0], ref.position.y, ref.position.z + state.entry.origin[1]] as [number, number, number], open: state.k }));
   }
   setFoliageVisible(visible: boolean): void { this.foliage.visible = visible; }
   applyLook(): void {
@@ -579,7 +574,7 @@ export class DistrictView extends Group {
   /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
   swapSlot: (() => Promise<void>) | null = null;
   private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
-    const prototype = await this.registry.asset(entry.id, entry.lit, lod);
+    const prototype = await this.registry.asset(entry.id, entry.lit, lod, entry.decay);
     if (this.disposed) return;
     // Allocate full placement capacity, then retain only currently visible refs.
     const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;

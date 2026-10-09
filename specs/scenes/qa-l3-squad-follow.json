@@ -1,0 +1,166 @@
+{
+ "name": "qa-l3-squad-follow",
+ "note": "E21 squad: four officers follow the running courier up Commerce Street (segment 1) and shoot the infected ahead",
+ "ground": "district",
+ "time": "L3",
+ "tier": 2,
+ "layout": {
+  "district": "D-CORRIDOR",
+  "bbox": [
+   [
+    -120,
+    -10
+   ],
+   [
+    -56,
+    10
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -116.0,
+    0.5
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.handgun",
+    "weapon.fire-axe"
+   ],
+   "state": {
+    "run": [
+     [
+      -100,
+      0.5
+     ],
+     [
+      -90,
+      0.5
+     ],
+     [
+      -64,
+      0.5
+     ]
+    ]
+   }
+  },
+  {
+   "id": "officer-1",
+   "kind": "pedestrian",
+   "at": [
+    -119.0,
+    -1.5
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 0
+    }
+   }
+  },
+  {
+   "id": "officer-2",
+   "kind": "pedestrian",
+   "at": [
+    -119.5,
+    2.0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 1
+    }
+   }
+  },
+  {
+   "id": "officer-3",
+   "kind": "pedestrian",
+   "at": [
+    -121.0,
+    0.0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 2
+    }
+   }
+  },
+  {
+   "id": "officer-4",
+   "kind": "pedestrian",
+   "at": [
+    -122.0,
+    1.5
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 3
+    }
+   }
+  },
+  {
+   "id": "ahead",
+   "kind": "infected",
+   "at": [
+    -84.0,
+    0.0
+   ],
+   "count": 3,
+   "spread": 2.0,
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 1.1
+ },
+ "frames": 720,
+ "shots": [
+  0,
+  180,
+  360,
+  540,
+  720
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}
