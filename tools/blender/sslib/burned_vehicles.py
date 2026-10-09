@@ -50,7 +50,7 @@ def build_burned(directory, output):
         police = asset == 'veh.police-sedan'
         # A large central roof section is physically absent, leaving native rim/pillars.
         roof_x = -.13 * L if bus or ambulance else -.02 * L
-        roof_half = .20 * L if bus or ambulance else .095 * L
+        roof_half = .27 * L if bus else .20 * L if ambulance else .11 * L
         roof_z = hi.z * (.86 if bus or ambulance else .81)
         removed_glass = []
         info = {}
@@ -91,11 +91,11 @@ def build_burned(directory, output):
                 continue
             if not wheel:
                 # Local edge splitting only adds authored fold/rupture boundaries.
-                refine(obj, (.40, .65, 1.30)[lod], lambda p: p.z > roof_z or p.x > hi.x-.28*L, passes=1)
+                refine(obj, (.40, .65, 1.30)[lod], lambda p: p.z > roof_z or p.x > hi.x-.28*L, passes=(3, 2, 1)[lod])
                 bm = bmesh.new(); bm.from_mesh(obj.data)
                 kill = [f for f in bm.faces if f.calc_center_median().z > roof_z and
                         abs(f.calc_center_median().x-roof_x) < roof_half and
-                        abs(f.calc_center_median().y) < .24*W and abs(f.normal.z) > .45]
+                        abs(f.calc_center_median().y) < .31*W and abs(f.normal.z) > .45]
                 bmesh.ops.delete(bm, geom=kill, context='FACES'); bm.to_mesh(obj.data); bm.free()
             for i, m in enumerate(list(obj.data.materials)):
                 token = tokens[i]
@@ -108,22 +108,6 @@ def build_burned(directory, output):
                 elif token not in colors:
                     token = 'uiDark'
                 obj.data.materials[i] = palette.mat(token)
-            if not wheel:
-                # Palette faces carry the scorch in the game renderer as well as
-                # vertex AO: runtime palette swaps do not use COLOR_0 as albedo.
-                dark_index = len(obj.data.materials)
-                obj.data.materials.append(palette.mat('uiDark'))
-                rust_index = len(obj.data.materials)
-                obj.data.materials.append(palette.mat('brick'))
-                for face in obj.data.polygons:
-                    c = face.center
-                    patch = n3(c, 2.7, 8.1)
-                    original = obj.data.materials[face.material_index].name
-                    if original != 'pal_uiDark':
-                        if patch < .10 or c.z > .76*H and patch < .32:
-                            face.material_index = dark_index
-                        elif patch > .24:
-                            face.material_index = rust_index
             for v in obj.data.vertices:
                 p = v.co.copy()
                 if wheel:
@@ -159,16 +143,16 @@ def build_burned(directory, output):
             gx = [p.x for p in removed_glass]; gz = [p.z for p in removed_glass]
             cx = (min(gx)+max(gx))/2
             z = max(lo.z+.3, min(gz)-.20)
-            additions = [box('scorchedCabinFloor',(cx,0,z),(max(gx)-min(gx),.54*W,.06),'uiDark')]
+            additions = [box('scorchedCabinFloor',(cx,0,z),(max(gx)-min(gx),.54*W,.06),'sidewalk')]
             for side in (-1,1):
-                additions.append(box('burnedSeatBack',(cx-.08*L,side*.15*W,z+.19*H),(.065*L,.21*W,.23*H),'uiDark',(0,-.18,0)))
+                additions.append(box('burnedSeatBack',(cx-.08*L,side*.15*W,z+.19*H),(.065*L,.21*W,.23*H),'sidewalk',(0,-.18,0)))
             if bus:
                 for x in (-.32*L,-.18*L,-.04*L):
-                    additions.append(box('passengerSeatSkeleton',(x,0,.39*H),(.04*L,.52*W,.20*H),'uiDark'))
+                    additions.append(box('passengerSeatSkeleton',(x,0,.39*H),(.04*L,.52*W,.20*H),'sidewalk'))
             meshes += additions
         # Exposed ribs cross only part of the large tear; the black hole stays readable.
         for x in (roof_x-roof_half*.85, roof_x+roof_half*.85):
-            meshes.append(box('warpedRoofRib',(x,0,roof_z-.09*H),(.028,.62*W,.035),'uiDark',(0,.18,0)))
+            meshes.append(box('warpedRoofRib',(x,0,roof_z-.09*H),(.028,.62*W,.035),'sidewalk',(0,.18,0)))
         for k in range((5,3,2)[lod]):
             meshes.append(box('fallenScorchedPanel',(roof_x+.15*k,-.33*W,lo.z+.055),(.24,.27,.06),'uiDark',(0,.1,k*.7)))
         for obj in meshes:
@@ -194,6 +178,7 @@ def build_burned(directory, output):
         export.merge_by_material(root, set(WHEELS)|{'body'})
         meshes = [o for o in root.children_recursive if o.type == 'MESH']
         ao.bake_all(meshes,16)
+        obj_height, hi_x, length = H, hi.x, L
         for obj in meshes:
             layer = obj.data.color_attributes.active_color
             wheel = obj.parent.name in WHEELS
@@ -202,13 +187,19 @@ def build_burned(directory, output):
                 c = layer.data[loop.index].color
                 # Broad dark burn clouds and rusty edges, rather than clean dark paint.
                 patch = smooth(-.26,.30,n3(p,2.7,8.1))
-                factor = .06+.40*patch
+                body_h = p.z / max(.01, obj_height)
                 if wheel:
-                    tint = (.19,.10,.055)
+                    tint = (.30,.17,.10)
                 elif obj.data.materials[0].name == 'pal_uiDark':
-                    tint = (.26+.40*patch,.23+.20*patch,.24+.16*patch)
+                    tint = (1.0, 1.0, 1.0)
                 else:
-                    tint = (factor, factor*(.57+.25*patch), factor*(.40+.27*patch))
+                    # Soot blackens roof/upper panels and the engine bay; low panels keep
+                    # a rust-brown scorched livery so the vehicle stays recognisable.
+                    front = smooth(hi_x - .30 * length, hi_x, p.x)
+                    soot = min(1.0, smooth(.12, .70, body_h) * (.75 + .55 * patch) + .6 * front)
+                    rust = (.90, .52, .34); char = (.40, .36, .36)
+                    f = (.34 + .50 * patch) * (.82 if lod == 2 else 1.0) * (.68 if obj.data.materials[0].name == "pal_picketWhite" else .80 if bus else 1.0)
+                    tint = tuple(f * (rust[k] * (1 - soot) + char[k] * soot) for k in range(3))
                 layer.data[loop.index].color = (c[0]*tint[0],c[1]*tint[1],c[2]*tint[2],1)
             obj.data.calc_loop_triangles()
         triangles = sum(len(o.data.loop_triangles) for o in meshes)
