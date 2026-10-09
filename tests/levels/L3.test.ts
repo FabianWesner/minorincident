@@ -45,7 +45,7 @@ describe('L3 The Police Collapse', () => {
     for (let guard = 0; guard < 8 && m.state.phase === 'playing'; guard++) m.completeObjective();
     expect(m.state.completedObjectives).toEqual(['armory', 'defend', 'checkpoint']);
     expect(m.state.phase).toBe('progression');
-  });
+  }, 120_000); // Authored defense-wave setup can exceed 30 s under four-worker load.
 
   test('T-E21-02 @E21 @E21-AC02 complete bot finishes 20/20 seeds from L3-default (bat + axe), median time in band', async () => {
     const runs = await complete();
