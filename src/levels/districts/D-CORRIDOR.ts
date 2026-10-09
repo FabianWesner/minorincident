@@ -10,7 +10,11 @@ export const gameplay: DistrictGameplay = {
   spawns: [anchor("player-start")],
   spawnVolumes: [{ center: anchor("player-start"), radius: 1 }],
   triggers: [],
-  objectives: [],
+  // The route up Commerce Street from the station yard to the army zone line (patrol bots and objective reachability, E10-AC02).
+  objectives: [
+    { id: "yard", position: { x: -134, z: 1.5 } }, { id: "segment-1", position: { x: -90, z: 0 } }, { id: "segment-2", position: { x: -10, z: 0 } },
+    { id: "segment-3", position: { x: 60, z: 0 } }, { id: "commerce-east", position: { x: 85, z: -3.4 } }, { id: "army-gate", position: { x: 133, z: 0 } },
+  ],
   interactables: [],
   civilianRoutes: [],
   safePoints: [],
