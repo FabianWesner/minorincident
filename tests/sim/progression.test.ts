@@ -10,7 +10,8 @@ test('T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm mag
   const save=newCampaign();save.ownedActions.push('weapon.bat','weapon.pistol');save.racks={LEFT:['weapon.bat'],RIGHT:['weapon.pistol']};save.upgrades=['upgrade.melee.1','upgrade.handling.1'];applyCampaign(world,save);
   const target=world.spawnDummy('infected.test',{x:1,z:0},{hp:1000});world.setInput({aim:{x:1,z:0},left:{down:true,held:false,up:false}});world.update();world.clearInput();for(let i=0;i<6;i++)world.update();
   const hit=world.events.events().find(e=>e.type==='combat.hit'&&e.targetId===target);expect(hit).toMatchObject({amount:catalog['weapon.bat'].damage*1.2});
-  for(const d of Object.values(catalog).filter(d=>d.category==='ranged')){
+  // Firearms with a magazine (the E21 campaign handgun has none: 00 section 6.1, no ammunition).
+  for(const d of Object.values(catalog).filter(d=>d.category==='ranged'&&d.magazine>0)){
     world.combat!.setLoadout(['weapon.bat'],[d.id]);const l=world.combat!.runner.loadout;
     expect(l.current('RIGHT').magazine).toBe(d.magazine+2);
     const def=l.definition(d.id);for(let i=0;i<def.magazine;i++)l.spend('RIGHT',world.tick,def,false);

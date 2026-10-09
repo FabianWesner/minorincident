@@ -27,7 +27,11 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // PO 10-08 fight speed: one axe swing 0.5 s (was 0.75), the crowd sweep 0.5 s (was 1 s) at 13 per target (was 25), same crowd TTK.
   { ...melee('fire-axe', 'wpn.fire-axe', 45, 2.1, 100, 0.5, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 13, knockback: 2.5, stagger: .8, windup: .12, active: .18, recovery: .2, cooldown: .5, hitStopMs: 60 } },
   melee('katana', 'wpn.katana', 48, 2.3, 130, 0.45, 2, 0.2),
+  // E21 §5.2 handgun (first ranged weapon): 20 damage (2 hits per 40 HP infected), 22 m, 3 shots/s, one target per shot.
+  // No ammunition system (00 §6.1): no magazine, no reload, no reserve; the fire rate is the only limit.
+  // Its own id: 'weapon.pistol' stays the E05 magazine-and-reload reference gun (fixtures, tests); the campaign carries this one.
   fixtures['weapon.pistol'],
+  { ...fixtures['weapon.pistol'], id: 'weapon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
   { ...gun('shotgun', 150, 18, 2, 6, 2, 12), pellets: 8, distanceFalloff: { start: 4, end: 12, minimum: 0.1 }, maxTargets: 8, knockback: 0, stagger: 0.3 },
   { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),

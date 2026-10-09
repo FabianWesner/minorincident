@@ -104,9 +104,23 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 `"vehicles": [{ "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0, "path": [[16, 8]] }]`
 
 - **Vehicle ids:** `vehicle.sedan`, `pickup`, `suv`, `police`, `ambulance`, `school-bus` and `fire-engine`.
+- **L2 passenger ride:** `"l2Ride": { "distanceM": 80, "speedMs": 7.6 }` runs the actual mission driver from that fixture distance. Use `layout.level: "L2"` for its dressing; camera targets may name a vehicle.
 - **Driving:** with a `path`, the real vehicle physics drives the car through a small autopilot (`Vehicles.autopilot`).
 - **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
 - **Traffic:** `traffic` is the kinematic ambient-traffic box.
+
+### House emergence
+
+`"emerge": { "house": "bld.house-a:405", "count": 4, "staggerS": 1.5, "frame": 30 }` runs the game's own L1 beat-9
+emergence (`src/sim/outbreak/HouseEmergence.ts`) at that house placement: from `frame` on, `count` residents are
+spawned inside the house behind the front door, the door swings open with the first one and stays open, and each one
+stumbles out over the threshold, across the porch, down the treads and through the gate before chasing the courier.
+They become actors `resident-0` .. (`id` renames them). Any building whose door has `emerge` data in
+`src/data/buildingDoors.ts` works (currently `bld.house-a` and `bld.clinic-annex`); the door is the same animated leaf the
+hand-over walks use (`metrics.doors`, gate `doorClosedFramesMax`), held open once the first resident steps out (`SimWorld.openDoor`).
+`metrics.emergence` gives the door, the release point and the frame the door opened;
+each resident's `firstDrawn.outM` is how far past the threshold it was first drawn (negative = inside).
+See `specs/scenes/qa-l1-house-emergence*.json`.
 
 ### Effects and timeline
 
@@ -141,13 +155,19 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
+- `vehicleYawRateMaxDegS` (maximum wrapped yaw change per fixed tick, in degrees/second)
+- `vehicleBodyOverlapsMax` (full vehicle footprint against people, vehicles, movable props and static colliders)
+- `vehicleRideRemainingMaxM` (remaining L2 route distance; prevents a stationary ride passing its motion gates)
+- `wheelSinkMaxCm` (drawn tyre tread against drawn ground)
 - `yawDriftMaxDeg`
 - `torsoPitchMaxDeg`
 - `clickMissMax` (clicks on a drawn body that picked another actor or nothing, or did not start a swing within 100 ms / right after the running swing and cooldown; out-of-reach picks count as approaches)
 - `drawCallsMax`
 - `trianglesMax`
+- `emergeOutsideMax` (`emerge` residents first drawn past the door threshold, or never drawn)
+- `farLodCloseMax` (frames any actor drew its far LOD, lod2, within 14 m of the camera; `metrics.actors.<id>.farLodCloseFrames`)
 - `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
-- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime.
+- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime. `emerge` residents pass through their door here too.
 
 `clipping` takes these options:
 

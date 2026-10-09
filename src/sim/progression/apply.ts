@@ -8,7 +8,8 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
   for(const original of Object.values(catalog)){
     const d=structuredClone(original);
     if(d.category==='melee')d.damage*=1+m.melee;
-    if(d.category==='ranged'){d.magazine+=m.magazine;d.reloadTime*=Math.max(.5,1-m.reload);}
+    // A magazine upgrade never gives a weapon without ammunition (the E21 handgun: 00 §6.1) a magazine and reload.
+    if(d.category==='ranged'&&d.magazine>0){d.magazine+=m.magazine;d.reloadTime*=Math.max(.5,1-m.reload);}
     if(d.category==='throwable'){
       d.charges+=m.charges;
       if(d.splash)d.splash.radius*=1+m.radius;
