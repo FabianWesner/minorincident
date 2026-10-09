@@ -74,6 +74,7 @@ export class NavGrid {
   clear(x: number, z: number, radius = 0, rounded = false, ignoreBlocker?: number): boolean {
     if (this.mask && !this.mask(x, z)) return false;
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
+    if (!this.buckets.size && !this.blockers.size) return true;
     for (const w of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     for (const [id, w] of this.blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     return true;
