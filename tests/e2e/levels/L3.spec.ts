@@ -40,6 +40,7 @@ function helpers(page: Page) {
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
+        // A distant checkpoint respawn must still click the canvas, above the weapon HUD.
         const a = window.__SS__!, x = target.x, z = target.z, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
