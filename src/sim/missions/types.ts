@@ -144,7 +144,7 @@ export interface L3State {
   /** Forward pressure: furthest progress (x) and when it last grew; emergences behind it. */
   furthest: number; furthestAt: number; pressureAt: number; pressureIds: number[];
   /** Highest segment entered (-1 yard), squad size at each segment end, last gunshot tick per shooter, infected retired out of view. */
-  segment: number; segmentSquad: number[]; lastShot: Record<number, number>; retired: number;
+  segment: number; cpWait?: string[]; cpSeen?: string[]; segmentSquad: number[]; lastShot: Record<number, number>; retired: number;
   /** Side-street spills per cross-link (count, last tick) and the infected they brought out. */
   spills: Record<string, { n: number; at: number }>; spillIds: number[];
   /** The one avenue without a segment-3 horde pack (seeded). */

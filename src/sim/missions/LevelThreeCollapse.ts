@@ -382,6 +382,7 @@ export class LevelThreeCollapse {
   // ---------------------------------------------------------------------------------------------------------- tick
   update(): void {
     const { world, state } = this.mission, s = state.l3; if (!s) return;
+    if (this.mercyDue) this.mercy();
     const tick = world.tick, player = world.entities.get(1)!;
     if (s.phase === 'yard') {
       if (tick === ticks(l3.armory.briefingAtS)) this.mission.radio('L3.sergeant');
@@ -398,13 +399,26 @@ export class LevelThreeCollapse {
       if (seg > s.segment && seg >= 0) {
         for (let k = Math.max(0, s.segment); k < seg; k++) s.segmentSquad[k] = s.squad.length;
         s.segment = seg; world.events.emit({ type: 'l3.segment', tick, segment: seg, squad: s.squad.length });
-        if (seg === 1) { this.mission.requestCheckpoint('segment-2'); this.mission.radio('L3.dispatch'); }
-        if (seg === 2) this.mission.requestCheckpoint('segment-3');
+        if (seg === 1) this.mission.radio('L3.dispatch');
       }
+      // Segment checkpoints (PO 10-09: plus one mid-way in segments 2 and 3, so a death costs a stretch, not the whole segment).
+      for (const [id, x] of Object.entries(l3.checkpointAt)) if (player.transform.x >= x && !s.cpSeen?.includes(id)) { (s.cpSeen ??= []).push(id); (s.cpWait ??= []).push(id); }
+      this.calmCheckpoint(player);
       this.zone(tick, player);
     }
     // L3 infected (turned adults in the open) hit as hard as L2's (section 5.1 tuning).
     if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l3.infectedDamage;
+  }
+  /**
+   * PO 10-09: a checkpoint taken with a crowd on the courier's heels or at low health respawns the courier into the same fight
+   * (death loops of 15+ on one spot). The segment checkpoints wait for a calm moment: nothing alive within 10 m and health >= 70 %.
+   */
+  private calmCheckpoint(player: EntitySnapshot): void {
+    const s = this.s, w = this.world; if (!s.cpWait?.length || w.tick % 10 !== 0) return;
+    const p = player.transform;
+    if (player.health.current < player.health.max * .7 || w.infected!.active.some(e => e.health.current > 0 && dist(e.transform, p) < 10)) return;
+    for (const id of s.cpWait) this.mission.requestCheckpoint(id);
+    s.cpWait = [];
   }
   private inZone(p: Point): boolean { return p.x >= l3.map.zoneX && p.z >= l3.map.zoneZ[0] && p.z <= l3.map.zoneZ[1]; }
   private zone(tick: number, player: EntitySnapshot): void {
@@ -424,8 +438,23 @@ export class LevelThreeCollapse {
     return false;
   }
   /** Checkpoint restore: shift the timeline. Entities (officers, squad, infected, pickups) come back from the snapshot. */
+  /** Death-loop relief (data: `l3.mercy`), applied on the first tick after a respawn. */
+  private mercyDue = false;
+  /** Respawns per checkpoint (a death loop is several deaths at the same checkpoint, not the level's death total). */
+  private readonly respawns: Record<string, number> = {};
+  private mercy(): void {
+    this.mercyDue = false;
+    const { world } = this.mission, s = this.s, m = l3.mercy, ai = world.infected;
+    const frac = Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths + 1)); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
+    const p = world.entities.get(1)!.transform, [a, b] = m.aheadM, ahead = (x: number) => x > p.x + a && x < p.x + b;
+    const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
+    thin([...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
+    const waiting = (s.pending as Pending[]).filter(q => q.id === 0 && ahead(q.home.x));
+    thin(waiting, q => { s.pending.splice(s.pending.indexOf(q), 1); });
+  }
   restore(delta: number): void {
     const s = this.mission.state.l3; if (!s) return;
+    this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['handgunAt', 'attackAt', 'fallbackAt', 'crossedAt', 'doneAt', 'furthestAt', 'pressureAt'] as const) if (s[key]) s[key] += delta;
     for (const w of s.waves) if (w.at) w.at += delta;
     for (const q of s.pending) if (q.at) q.at += delta;
