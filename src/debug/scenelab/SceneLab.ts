@@ -218,7 +218,7 @@ export class SceneLab {
         player.transform.yaw = yaw; Object.assign(world.previousPlayer!, player.transform);
         if (a.look?.model === 'male' || a.look?.model === 'female') world.player!.select(a.look.model, 0);
         // L1 parity: the courier starts empty-handed (Game.loadLevel clears the L1 loadout); `loadout` arms her.
-        if (a.loadout) world.combat!.setLoadout([a.loadout[0]], [a.loadout[1]]); else world.combat!.clearLoadout();
+        if (a.loadout) world.combat!.setLoadout([a.loadout[0]].flat(), [a.loadout[1]].flat()); else world.combat!.clearLoadout();
         world.combat!.damage.god = a.god ?? true;
       } else if (a.kind === 'pedestrian') {
         const o = world.npcs!.civilians.outbreak!;
@@ -278,7 +278,7 @@ export class SceneLab {
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT' };
-      else if ('select' in a) world.combat!.runner.loadout.state.selectedSide = a.select;
+      else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };

@@ -63,7 +63,7 @@ export interface ActorSpec {
   spread?: number;
   state?: Action;
   /** Courier only: [left, right] weapons, e.g. ["weapon.bat", "weapon.fists"] (default: empty-handed as at the L1 start), and god mode (default true). */
-  loadout?: [string, string];
+  loadout?: [string | string[], string | string[]];
   god?: boolean;
 }
 export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
@@ -77,7 +77,7 @@ export type Action =
   | { turn: number }
   | { sit: string; seconds?: number }
   | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT' }
-  | { select: 'LEFT' | 'RIGHT' }
+  | { select: 'LEFT' | 'RIGHT'; index?: number }
   /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
