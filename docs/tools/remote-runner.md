@@ -22,7 +22,8 @@ sh tools/remote/status.sh        # servers, slots, queue, load, price
 * The remote workspace is a commit-less git repo (index only), because some tests call `git ls-files`. `git log/diff` do not work there.
 * Per-worktree sync cache: `/srv/mi/ws/<worktree>-<hash>`. The first sync of a new worktree seeds from the newest cache (hardlinks); later syncs send only changes. The cache is only written by rsync and the manifest update, under a local sync lock.
 * Every run gets its own job dir `/srv/mi/jobs/<worktree>-<hash>-<pid>-<time>`: a full `cp -a` of the cache (about 270 MB of source, a few seconds). Parallel runs from the same worktree therefore never write into each other's files. Results (`--pull`) are copied back first, then the job dir is deleted, even when the command fails. Job dirs older than 24 h left by a dropped run are removed at the next sync.
-* ssh and rsync use `ServerAliveInterval=15`, `ServerAliveCountMax=8`. The sync steps (connect, rsync, manifest, job copy) are retried up to 3 times when ssh exits 255. The remote command itself is never retried.
+* The job runs detached on the runner (`setsid`, log `<job>.run/log`, exit code `<job>.run/exit`), so a dropped ssh does not kill it. `run.sh` follows the log with a reconnecting loop that resumes at the last byte offset (no duplicated output) and returns the remote exit code; a local SIGINT/SIGTERM kills the remote job.
+* ssh and rsync use `ServerAliveInterval=15`, `ServerAliveCountMax=8`. The sync steps (connect, rsync, manifest, job copy) are retried up to 3 times when ssh exits 255; the follow loop retries up to 10 times with backoff. The remote command itself is never retried.
 * Never put secrets in the command or `--env`. The runner has no `.env`.
 
 ## Pool and scaling
