@@ -1,0 +1,57 @@
+{
+ "name": "lights-window-mainstreet-brick",
+ "extends": "bld-grove-mainstreet-brick.json",
+ "note": "Window glows of bld.mainstreet-brick at night, game camera, two sides (PO 10-09 'Lights are not on right place'): every glow must sit inside its window opening, LOD0 and LOD1 (far).",
+ "time": "night",
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -76.6,
+   3.4,
+   -42.2
+  ],
+  "radius": 20,
+  "azimuth": 45,
+  "polar": 54
+ },
+ "script": [
+  {
+   "frame": 8,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -76.6,
+     3.4,
+     -42.2
+    ],
+    "radius": 20,
+    "azimuth": 225,
+    "polar": 54
+   }
+  },
+  {
+   "frame": 16,
+   "camera": {
+    "mode": "orbit",
+    "target": [
+     -76.6,
+     3.4,
+     -42.2
+    ],
+    "radius": 64,
+    "azimuth": 45,
+    "polar": 54
+   }
+  }
+ ],
+ "frames": 24,
+ "sheet": 8,
+ "shots": [
+  4,
+  12,
+  20
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

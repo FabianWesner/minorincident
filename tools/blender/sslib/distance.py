@@ -220,6 +220,9 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
         from .house_decay import batch
         from .sockets import empty
         lights = empty('lightsFront', parent=root)
+        # The new empty's world matrix is stale until the depsgraph runs: without this the reparented glow keeps
+        # its world matrix against an identity parent and is later shifted by the root's offset (PO 10-09: glows beside windows).
+        bpy.context.view_layer.update()
         for obj in list(root.children_recursive):
             if obj.type == 'MESH' and obj.data.materials[0].name.startswith('emi_'):
                 owner = obj.parent
