@@ -13,6 +13,8 @@ export class NavGrid {
   private readonly parent: Int32Array;
   private readonly cost: Float64Array;
   private readonly open: Uint8Array;
+  private readonly pathSeen: Uint32Array;
+  private pathStamp = 0;
   private readonly heap: { cell: number; score: number }[] = [];
   private readonly buckets = new Map<string, Wall[]>();
   private searchFrom = -1;
@@ -31,6 +33,7 @@ export class NavGrid {
     const count = this.width * this.depth;
     this.blocked = new Uint8Array(count); this.distance = new Int32Array(count); this.queue = new Int32Array(count);
     this.parent = new Int32Array(count); this.cost = new Float64Array(count); this.open = new Uint8Array(count);
+    this.pathSeen = new Uint32Array(count);
     this.distance.fill(-1);
     this.indexWalls();
     for (let cell = 0; cell < count; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), clearance));
@@ -336,7 +339,10 @@ export class NavGrid {
     if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
       this.searchFrom = from; this.searchTo = to; this.searching = true;
       this.heap.length = 0; this.push(from, 0);
-      this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
+      // As with reachPath, stamp visited cells instead of clearing the entire district for each agent.
+      this.pathStamp = (this.pathStamp + 1) >>> 0;
+      if (!this.pathStamp) { this.pathSeen.fill(0); this.pathStamp = 1; }
+      this.pathSeen[from] = this.pathStamp; this.cost[from] = 0; this.parent[from] = -1; this.open[from] = 1;
     }
     const tx = to % this.width, tz = Math.floor(to / this.width);
     while (this.expansions < budget) {
@@ -345,7 +351,7 @@ export class NavGrid {
       if (best < 0) { this.searching = false; return false; }
       this.expansions++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
-      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
+      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
     }
     return false;
   }

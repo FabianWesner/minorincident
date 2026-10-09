@@ -78,3 +78,51 @@ test('@E20 blocker changes keep only unaffected nearest-cell answers', () => {
     for (const offset of [-1, 0, 1]) expect(nav.nearestCell(mutable.x + offset, mutable.z, .35)).toBe(uncached(mutable.x + offset, mutable.z, .35));
   }
 });
+
+
+// Keep the original A* implementation as an exact oracle, including heap tie order and retries.
+type LegacySearch = Pick<NavGrid, 'blocked' | 'width' | 'expansions'> & {
+  searching: boolean; searchFrom: number; searchTo: number; heap: { cell: number; score: number }[];
+  cost: Float64Array; parent: Int32Array; open: Uint8Array;
+  push(cell: number, score: number): void; pop(): number; neighbor(cell: number, direction: number): number;
+};
+function legacyPath(this: LegacySearch, from: number, to: number, result: number[], budget: number): boolean {
+    result.length = 0; this.expansions = 0;
+    if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
+    if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
+      this.searchFrom = from; this.searchTo = to; this.searching = true;
+      this.heap.length = 0; this.push(from, 0);
+      this.cost.fill(Infinity); this.parent.fill(-1); this.open.fill(0); this.cost[from] = 0; this.open[from] = 1;
+    }
+    const tx = to % this.width, tz = Math.floor(to / this.width);
+    while (this.expansions < budget) {
+      let best = -1;
+      while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
+      if (best < 0) { this.searching = false; return false; }
+      this.expansions++; this.open[best] = 2;
+      if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
+      for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n]) { this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
+    }
+    return false;
+  }
+
+test('@E20 stamped A* matches the original routes and expansion budgets across retries and resets', () => {
+  const wall = { x: 0, z: 0, y: 1, halfX: .3, halfZ: 8, halfY: 1 };
+  const current = new NavGrid({ width: 30, depth: 30 }, [wall]), original = new NavGrid({ width: 30, depth: 30 }, [wall]);
+  const legacy = legacyPath.bind(original as unknown as LegacySearch);
+  let seed = 39; const random = () => { seed = Math.imul(seed, 1664525) + 1013904223 >>> 0; return seed / 4294967296; };
+  const actual: number[] = [], expected: number[] = [];
+  for (let i = 0; i < 300; i++) {
+    if (i % 30 === 0) for (const nav of [current, original]) nav.setBlocker(99, { ...wall, x: -3, z: i % 7 }, i % 60 === 0);
+    // Force the generation counter's wrap, which must clear stamps without changing the route.
+    if (i === 150) (current as unknown as { pathStamp: number }).pathStamp = 0xffffffff;
+    const from = current.cell(random() * 28 - 14, random() * 28 - 14), to = current.cell(random() * 28 - 14, random() * 28 - 14);
+    const budget = [1, 3, 10, 1600][i % 4];
+    for (let retry = 0; retry < 12; retry++) {
+      const done = current.path(from, to, actual, budget);
+      expect(done).toBe(legacy(from, to, expected, budget));
+      expect(actual).toEqual(expected); expect(current.expansions).toBe(original.expansions);
+      if (done) break;
+    }
+  }
+});
