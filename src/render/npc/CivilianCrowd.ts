@@ -37,6 +37,32 @@ const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-elderly': ['pal_vest'],
 };
 type Clip = typeof civilianClips[number];
+/** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
+const coreModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];
+type StandingReset = Record<string, { translation: number[]; rotation: number[]; scale: number[] }>;
+/**
+ * Sitting/lying skins ship their joints in a rest pose plus an exported `ss_standingPose` and `restOnlyNodes` (cushion).
+ * The crowd bakes clips (npc-sit, death-side, ...) over the standing rig, so restore it first; ordinary models have none.
+ */
+export function restoreStanding(model: Group): void {
+  model.traverse(node => {
+    const raw = node.userData.ss_standingPose as string | undefined;
+    if (!raw) return;
+    const reset = JSON.parse(raw) as StandingReset;
+    for (const [name, pose] of Object.entries(reset)) {
+      const joint = model.getObjectByName(name);
+      if (joint) { joint.position.fromArray(pose.translation); joint.quaternion.fromArray(pose.rotation); joint.scale.fromArray(pose.scale); }
+    }
+    const rest = node.userData.restOnlyNodes as string[] | string | undefined;
+    for (const name of typeof rest === 'string' ? [rest] : rest ?? []) model.getObjectByName(name)?.removeFromParent();
+  });
+  model.updateMatrixWorld(true);
+}
+/** The crowd model an entity draws with, or null when it is no crowd figure. */
+export function crowdModelOf(e: EntitySnapshot): string | null {
+  const c = e.civilian;
+  return e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
+}
 /** Story clips that cycle (beckoning, glancing, the E20 rescue panic and door forcing); the rest hold their last frame. */
 const loopingStory = new Set<string>(['npc-wave-in', 'npc-glance', 'npc-bang', 'npc-plead', 'npc-press', 'npc-cower', 'npc-hug', 'ff-pry', 'npc-stand-back']);
 const windups = new Map(infectedDefinitions.map(d => [d.id, d.windup]));
@@ -97,6 +123,7 @@ class CivilianBatch extends Group {
     await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
+    if (!placeholder) restoreStanding(model);
     const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
@@ -185,7 +212,7 @@ class CivilianBatch extends Group {
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
       const c = e.civilian;
-      const model = e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
+      const model = crowdModelOf(e);
       if (model !== this.model) continue;
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
       if (e.corpse) { if (this.lod === 'lod1' && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
@@ -317,7 +344,7 @@ export class CivilianCrowd extends Group {
   private readonly presentation = new MotionPresentation(crowdTurnRate);
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
-  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading; this.batches=['npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.civilian-man-a','npc.civilian-man-b','npc.civilian-woman-a','npc.civilian-woman-b','npc.civilian-elderly','npc.depot-clerk','npc.firefighter-alive','npc.police-officer','npc.national-guard'].flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]); this.add(...this.batches); }
+  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading; this.batches=coreModels.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]); this.add(...this.batches); }
   private readonly shading?: Materials;
   private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation); }
   /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
@@ -347,10 +374,21 @@ export class CivilianCrowd extends Group {
     }
   }
   private disposed = false;
+  private readonly known = new Set<string>(coreModels);
+  /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
+  private discover(): void {
+    for (const e of this.world.entities.iterate()) {
+      const model = crowdModelOf(e);
+      if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
+      this.known.add(model);
+      const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
+      this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(() => { if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
+    }
+  }
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }
