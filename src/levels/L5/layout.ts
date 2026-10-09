@@ -8,7 +8,7 @@ import { l4Dressing } from '../L4/layout';
  * Kinds of the W5 "devastated twin" dressing (E23 section 5.1), counted by the static AC06 test. Everything is static: nothing here
  * moves or shoots. `corpse` entries are entities the controller spawns (finished pedestrians); the fires and smoke columns (E27 hazards) are `l5Fires` in the data.
  */
-export type L5DressingKind = 'burned-car' | 'military' | 'bus' | 'glass' | 'collapse' | 'corpse' | 'body-bag'
+export type L5DressingKind = 'burned-car' | 'military' | 'bus' | 'glass' | 'collapse' | 'corpse'
   | 'belongings' | 'weapon' | 'barricade' | 'nest' | 'crater' | 'rubble' | 'cue' | 'barrier' | 'block';
 export interface L5Dressing {
   kind: L5DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; decay?: string; entity?: boolean;
@@ -23,6 +23,8 @@ const H = Math.PI / 2, PI = Math.PI;
 const d = (kind: L5DressingKind, assetId: string, x: number, z: number, more: Partial<L5Dressing> = {}): L5Dressing => ({ kind, assetId, x, z, ...more });
 const corpse = (x: number, z: number, model: string, yaw: number, uniform = false) => d('corpse', model, x, z, { yaw, entity: true, uniform });
 
+/** Only some vehicle models ship `wrecked` / `burned` shells (manifest `decayVariants`): the others (green sedan and SUV, white pickup) stand in as their burnable sibling. */
+const burnable = (assetId: string, i = 0): string => assetId.startsWith('veh.sedan') ? ['veh.sedan-red', 'veh.sedan-blue', 'veh.sedan-white'][i % 3] : assetId.startsWith('veh.suv') ? 'veh.suv-dark' : assetId.startsWith('veh.pickup') ? 'veh.pickup-red' : assetId;
 const route = l4Route(), stations = l4ConvoyStations(route.length);
 const pose = (i: number) => l4RoutePose(route, stations.end[i]);
 
@@ -37,8 +39,8 @@ const convoy = (() => {
 /** Fairhaven's own cars (the parked ones and the six the war set alight in L4), now burned out or wrecked: ten of them exactly where they stood. */
 const carModels: Record<string, string> = { 'vehicle.sedan': 'veh.sedan-white', 'vehicle.suv': 'veh.suv-dark', 'vehicle.pickup': 'veh.pickup-red' };
 const burnedCars: L5Dressing[] = [
-  ...l4Dressing.filter(e => e.kind === 'parked' && !(e.x > 36 && e.x < 44 && e.z < -40)).map((e, i) => d('burned-car', e.assetId, e.x, e.z, { yaw: e.yaw, decay: i % 3 === 2 ? 'wrecked' : 'burned' })),
-  ...l4Cars.map((c, i) => d('burned-car', carModels[c.def] ?? 'veh.sedan-white', c.at[0], c.at[1], { yaw: c.yaw + (i % 2 ? .2 : -.15), decay: 'burned' })),
+  ...l4Dressing.filter(e => e.kind === 'parked' && !(e.x > 36 && e.x < 44 && e.z < -40)).map((e, i) => d('burned-car', burnable(e.assetId, i), e.x, e.z, { yaw: e.yaw, decay: i % 3 === 2 ? 'wrecked' : 'burned' })),
+  ...l4Cars.map((c, i) => d('burned-car', burnable(carModels[c.def] ?? 'veh.sedan-white', i + 1), c.at[0], c.at[1], { yaw: c.yaw + (i % 2 ? .2 : -.15), decay: 'burned' })),
 ];
 
 /** Static W5 dressing manifest (the broken glass and the bullet damage at the frontages are derived from the layout, see below). */
@@ -55,11 +57,10 @@ export const l5Dressing: readonly L5Dressing[] = [
   d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-1'][0], l4Anchors['l4-hmg-1'][1], { yaw: PI + 1.2 }), d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-2'][0], l4Anchors['l4-hmg-2'][1], { yaw: -1.1 }),
   ...([[-78.5, 42.1, .5], [-75.5, 49.9, -.4], [-72.5, 42.3, 0], [81.2, -43.4, H + .2], [81.2, 43.5, H - .3]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
   ...([[-36, 20.6], [-5, 8.6], [-30, 28], [8.4, 3.4], [-14, -17.4], [40, -37.4], [-48, 38.6], [52, 30.4]] as const).map(([x, z], i) => d('rubble', 'decay.rubble-pile', x, z, { yaw: i * 1.3 })),
-  ...([[-17, 9, 'debris.metal'], [-23, -9, 'debris.rubble'], [-28, 14, 'debris.glass'], [-9, -8, 'debris.metal'], [12, 4, 'debris.wood-small'], [30, 35, 'debris.rubble'], [-40, 40, 'debris.glass'], [20, -37, 'debris.metal']] as const)
-    .map(([x, z, assetId], i) => d('rubble', assetId, x, z, { yaw: i * 0.9 })),
+  ...([[-17, 9], [-23, -9], [-28, 14], [-9, -8], [12, 4], [30, 35], [-40, 40], [20, -37]] as const).map(([x, z], i) => d('rubble', 'decay.rubble-pile', x, z, { yaw: i * 0.9, scale: .45 + (i % 3) * .1 })),
   // ---------------------------------------------------------------- three street segments narrowed by wreckage (a 1.4 m or wider gap stays open: the detour round the kerb)
-  d('block', 'veh.military-truck', 31, -42.2, { yaw: H + .12, decay: 'wrecked', fixed: true }), d('block', 'veh.sedan-green', 12.6, 24.6, { yaw: .1, decay: 'burned', fixed: true }),
-  d('block', 'veh.pickup-white', -18, 44.4, { yaw: H - .2, decay: 'wrecked', fixed: true }),
+  d('block', 'veh.military-truck', 31, -42.2, { yaw: H + .12, decay: 'wrecked', fixed: true }), d('block', 'veh.sedan-red', 12.6, 24.6, { yaw: .1, decay: 'burned', fixed: true }),
+  d('block', 'veh.pickup-red', -18, 44.4, { yaw: H - .2, decay: 'wrecked', fixed: true }),
   // ---------------------------------------------------------------- the hiding place that is a wreck on the street: the bus on Lakeshore Avenue (Dale hides in the plaza's convoy truck)
   d('bus', 'veh.school-bus', -45, 46.3, { yaw: .04, decay: 'wrecked', fixed: true }),
   // ---------------------------------------------------------------- the dead: ~36 corpses (a quarter or more in uniform), body bags, belongings, dropped weapons
@@ -73,12 +74,11 @@ export const l5Dressing: readonly L5Dressing[] = [
   corpse(-56.6, 6.4, 'npc.civilian-man-a', 2.3), corpse(-18, -36.6, 'npc.civilian-woman-a', 4.2), corpse(0.6, -41.6, 'npc.civilian-man-b', 1.5), corpse(24, -36.8, 'npc.civilian-elderly', 3.6),
   corpse(12.4, 6, 'npc.civilian-woman-b', 5.7), corpse(14.8, 36, 'npc.civilian-man-a', 0.2), corpse(-6, 45.2, 'npc.civilian-woman-a', 2.9), corpse(26, 44.2, 'npc.civilian-man-b', 4.6),
   corpse(48.6, 8, 'npc.civilian-man-a', 1.0), corpse(51.8, -20, 'npc.civilian-woman-b', 3.0), corpse(62.4, 29.6, 'npc.civilian-elderly', 5.0),
-  ...([[-26, -3.6], [-29.4, 8.6], [-16, 17.4], [-10.6, -11], [3.4, 5.4], [-24.4, 14.8]] as const).map(([x, z], i) => d('body-bag', 'decay.body-bag', x, z, { yaw: i * .8 })),
   ...([[-22, 7], [-14.4, -8], [-30, 0.4], [-8, 8.6], [6, 20], [16, -20], [-47, 2.4], [-16, 38], [34, -42], [58, 30.6]] as const).map(([x, z], i) => d('belongings', 'decay.dropped-belongings', x, z, { yaw: i * 1.9 })),
   ...([[-26.2, -11.4, 'wpn.assault-rifle'], [-24.6, 16, 'wpn.assault-rifle'], [-13.4, -2.6, 'wpn.assault-rifle'], [-31.6, 5.4, 'wpn.machine-gun'], [-9, 12.4, 'wpn.assault-rifle'], [7, -8.4, 'wpn.pistol'], [-20, 4, 'wpn.shotgun'], [-72, 44.8, 'wpn.assault-rifle']] as const)
     .map(([x, z, assetId], i) => d('weapon', assetId, x, z, { yaw: i * 2.1 })),
   // ---------------------------------------------------------------- signs of life (visible cues): the chalk sign and a flashlight + radio at the hiding places
-  d('cue', 'decay.graffiti', -74.6, -45.4, { yaw: 0 }), d('cue', 'util.flashlight', -47.4, 43.3, { yaw: 1.3 }), d('cue', 'util.radio', -79.6, -45.2, { yaw: .4 }),
+  d('cue', 'decay.damaged-sign', -74.6, -45.6, { yaw: 3.0 }), d('cue', 'util.flashlight', -47.4, 43.3, { yaw: 1.3 }), d('cue', 'util.radio', -79.6, -45.2, { yaw: .4 }),
 ];
 
 /** Collapsed facades: whole street fronts that are down, against four buildings (the shops without a `w5` shell take glass, fires and rubble instead). */
@@ -132,7 +132,7 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const p of layout.placements) if (l5ShellAssets.includes(p.assetId)) p.decay = 'w5';
     const obstacles = obstaclesOf(layout, 5);
     const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string, fixed = false) => {
-      const decal = /^decal\.|decay\.(broken-glass|graffiti)/.test(assetId);
+      const decal = /^decal\.|decay\.broken-glass/.test(assetId);
       const p: Placement = { id, assetId, position: [x, decal ? .06 : 0, z], yaw, scale: [scale, scale, scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: /^util\./.test(assetId) ? 'l5-cue' : 'l5', visualAabb: { min: [x - 1, 0, z - 1], max: [x + 1, 1.5, z + 1] } };
       if (decay) p.decay = decay;
       if (!decal && !fixed && assetId.startsWith('veh.') && footprints(p, 0, true).length) {

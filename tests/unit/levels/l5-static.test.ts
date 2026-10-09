@@ -14,7 +14,8 @@ import { campaignMission } from '../../../src/levels/missions';
 import { bakeNav } from '../../../src/sim/world/NavGrid';
 
 /** E23 static criteria: the same city (identical transforms, footprints, road graph and nav), the devastation minimums, the hiding places, the sunset and the photo spots. */
-const manifestIds = new Set((JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as { id: string }[]).map(a => a.id));
+const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as { id: string; decayVariants?: string[] }[];
+const manifestIds = new Set(manifest.map(a => a.id));
 const base = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as DistrictLayout;
 const [l4Layout] = levelFourLayouts([base]);
 const [layout] = levelFiveLayouts([base]);
@@ -55,6 +56,8 @@ describe('L5 static', () => {
   test('T-E23-05a @E23 @E23-AC05 same city: every L4 placement keeps its transform, the road graph is identical and every hero building footprint has IoU >= 0.9 with L4', () => {
     expect(validateLayout(base, worldAssets)).toEqual([]);
     for (const p of layout.placements) expect(manifestIds.has(p.assetId), p.assetId).toBe(true);
+    // Every decay variant exists in the manifest (an unknown variant fails the whole level load in the browser).
+    for (const p of layout.placements.filter(p => p.decay)) expect(manifest.find(a => a.id === p.assetId)?.decayVariants, `${p.id} ${p.assetId}:${p.decay}`).toContain(p.decay);
     expect(layout.roads).toEqual(l4Layout.roads); expect(layout.bounds).toEqual(l4Layout.bounds); expect(layout.district).toBe('D-FAIR');
     const mine = new Map(layout.placements.map(p => [p.id, p]));
     const missing: string[] = [];
