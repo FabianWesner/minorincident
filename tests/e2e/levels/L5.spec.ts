@@ -24,7 +24,7 @@ function helpers(page: Page) {
     await page.evaluate(n => { const a = window.__SS__!; if (n === 'l5-group-of-five' || n === 'l5-metro-shelter') a.vfx.stepRender(.3); a.camera.preset(`D-FAIR/W5/${n}`); }, name);
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${output}/${name}.png` }); shots.add(name);
-    writeFileSync(`${output}/${name}-positions.json`, JSON.stringify(await page.evaluate(() => { const a = window.__SS__!; return { player: a.getState().player!.transform, followers: a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor).map(e => ({ id: e.id, at: e.transform, health: e.health.current })) }; }), null, 1));
+    writeFileSync(`${output}/${name}-positions.json`, JSON.stringify(await page.evaluate(() => { const a = window.__SS__!; return { tick: a.getState().tick, survivors: a.missions.state()?.l5?.survivors, losses: a.events().filter(e => e.type === 'l5.lost'), player: a.getState().player!.transform, followers: a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor).map(e => ({ id: e.id, at: e.transform, health: e.health.current })) }; }), null, 1));
     await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
   };
   /** Aim with the cursor and use the physical side keys: walking clicks select LEFT. */
@@ -32,7 +32,7 @@ function helpers(page: Page) {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const friends = a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor?.mode === 'follow');
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && (a.input.visible(e.transform) || friends.some(f => f.civilian?.survivor?.cover && Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7)) && (a.input.visible(e.transform) || friends.some(f => f.civilian?.survivor?.cover && Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
         .filter(e => e.infected?.l1?.mode === 'chase' || e.infected?.l1?.mode === 'bite' || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 9 || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7))
         .sort((a, b) => {
           const danger = (e: typeof a) => Math.min(Infinity, ...friends.map(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z)));
@@ -40,22 +40,22 @@ function helpers(page: Page) {
             Number(danger(b) < 3) - Number(danger(a) < 3) ||
             Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z);
         })[0];
-      return near ? { id: near.id, close: Math.hypot(near.transform.x - p.x, near.transform.z - p.z) < 2.4, rescue: near.infected?.l1?.mode === 'bite' || !a.input.visible(near.transform), p, at: near.transform } : null;
+      return near ? { id: near.id, close: Math.hypot(near.transform.x - p.x, near.transform.z - p.z) < 1.8, rescue: near.infected?.l1?.mode === 'bite' || !a.input.visible(near.transform), p, at: near.transform } : null;
     }, range);
     if (!target) return false;
     await page.evaluate(({ p, at }) => window.__SS__!.camera.cinematic({ position: [p.x + 24, 29, p.z + 24], target: [(p.x + at.x) / 2, 0, (p.z + at.z) / 2] }, true), target);
     await step(1);
     if (target.rescue && !target.close) {
-      // Sprint beside the grabber before swinging: the victim can shield a distant gunshot.
+      // Sprint within the axe’s 2.1 m reach before swinging at the grabber.
       await page.keyboard.up('Alt'); // Sprint: the grab lasts only one second.
       const dx = target.p.x - target.at.x, dz = target.p.z - target.at.z, d = Math.hypot(dx, dz);
-      const ground = { x: target.at.x + dx / d * 1.7, z: target.at.z + dz / d * 1.7 };
+      const ground = { x: target.at.x + dx / d * 1.1, z: target.at.z + dz / d * 1.1 };
       const point = await page.evaluate(q => window.__SS__!.input.project(q), ground);
       await page.mouse.click(point.x, point.y); await step(1);
       for (let i = 0; i < 30; i++) {
         await step(4);
         const distance = await page.evaluate(id => { const a = window.__SS__!, p = a.getState().player!.transform, e = a.getEntity(id); return e ? Math.hypot(e.transform.x - p.x, e.transform.z - p.z) : 0; }, target.id);
-        if (distance < 2.4) { target.close = true; break; }
+        if (distance < 1.8) { target.close = true; break; }
       }
       await page.keyboard.down('Alt');
     }
@@ -111,12 +111,13 @@ function helpers(page: Page) {
   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
   /** Wait (looking after the group) until every living follower is within 8 m, at most `maxS` seconds. */
   const regroup = async (maxS = 9) => {
-    for (let i = 0; i < maxS * 3; i++) {
+    const until = await page.evaluate(() => window.__SS__!.getState().tick) + maxS * 60;
+    while (await page.evaluate(() => window.__SS__!.getState().tick) < until) {
       const far = await page.evaluate(() => {
         const a = window.__SS__!, p = a.getState().player!.transform, m = a.missions.state()!.l5!;
         return m.survivors.filter(r => r.status === 'following').some(r => { const e = a.getState().entities.find(x => x.id === r.id); return !e || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 6.5; });
       });
-      if (!far) return; await fightNearby(11); await step(20);
+      if (!far) return; await fightNearby(18); await step(4);
     }
   };
   return { step, mission, player, snap, shots, go, fightNearby, interact, regroup };
