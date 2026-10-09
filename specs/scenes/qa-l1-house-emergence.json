@@ -1,0 +1,16 @@
+{
+  "name": "qa-l1-house-emergence",
+  "note": "L1 beat 9 for real (PO P1 10-08 'there is still a zombie spawning out of nowhere'): the game's HouseEmergence brings residents out of the beat-9 house (bld.house-a:405, the nearest camera-facing front door to the Henderson garage) on the baked district ground, at the game camera. Each resident is first drawn inside the house, the front door swings open with the first one and stays open, and every resident stumbles out over the threshold, across the porch, down the treads and through the gate before chasing the courier on Elm Street.",
+  "seed": 1,
+  "ground": "district",
+  "layout": { "district": "D-GROVE", "bbox": [[-8, 12], [20, 38]] },
+  "clipping": { "ignoreFoliage": true },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [8.5, 30.5], "yaw": 90, "loadout": ["weapon.bat", "weapon.fists"] }
+  ],
+  "emerge": { "house": "bld.house-a:405", "count": 4, "staggerS": 1.5, "frame": 30 },
+  "camera": { "mode": "game", "target": [6, 25.5] },
+  "frames": 600,
+  "shots": [28, 50, 70, 100, 150, 200, 260, 400, 596],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "emergeOutsideMax": 0, "doorClosedFramesMax": 0, "farLodCloseMax": 0 }
+}

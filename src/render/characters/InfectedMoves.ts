@@ -65,3 +65,7 @@ export class InfectedMoves {
     return { layers, style };
   }
 }
+
+/** Seconds of the `get-up` clip of a heavy reaction: the rest of the reaction after its 0.7 s knockdown (0.64 s for a
+ * hit; the slower recovery stand-up of InfectedSystem.recover, `infectedRecovery.getUpS`, reads as getting up). */
+export const getUpSpan = (reaction: { started: number; until: number }) => Math.max(.3, (reaction.until - reaction.started) / 60 - .7);
