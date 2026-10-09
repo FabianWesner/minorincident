@@ -109,6 +109,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const through = new Set(layout.placements.filter(p => /fence/.test(p.assetId) && firstOverlap(p, walls, .2) !== undefined).map(p => p.id));
     layout.placements = layout.placements.filter(p => !through.has(p.id));
     layout.colliders = layout.colliders.filter(c => !through.has(c.id.split('/')[0]));
+    for (const p of layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
     const obstacles = obstaclesOf(layout, 2);
     const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string) => {
       const decal = assetId.startsWith('decal.');

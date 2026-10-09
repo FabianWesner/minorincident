@@ -434,6 +434,15 @@ export class DistrictView extends Group {
       }
     }
   }
+  /** The checkpoint can stream in after the mission first raises its arm; cache on each placement. */
+  updateArmyBoom(open: number): void {
+    for (const entry of this.lodBatches) if (entry.id === 'kit.army-checkpoint')
+      for (const ref of entry.refs) {
+        if (ref.userData.armyBoomPose === open) continue;
+        ref.userData.armyBoomPose = open;
+        for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
+      }
+  }
   /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
     return [...this.doorOpen].map(([ref, state]) => ({ assetId: state.entry.id, position: [ref.position.x + state.entry.origin[0], ref.position.y, ref.position.z + state.entry.origin[1]] as [number, number, number], open: state.k }));
