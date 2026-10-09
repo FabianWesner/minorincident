@@ -61,7 +61,7 @@ A reusable NPC role (`ally` faction) used by firefighters (L2), police (E21), so
 ### 5.3 Fire axe (E06 rule, introduced here)
 - Optional pickup on the station wall rack; added to the carried-weapon cycle and auto-equipped.
 - **Single swing:** when fewer than 3 infected are within 2.5 m, a normal frontal swing: 45 damage (one hit kills a 40 HP infected), 100° arc, 2.1 m reach, 0.75 s swing (slower than the bat).
-- **Automatic roundhouse:** when **≥ 3 infected are within 2.5 m** at swing start (orchestrator default for "surrounded"; PO may change), the same input plays a 360° roundhouse: 25 damage to every infected within 2.5 m, knockback 2.0–3.0 m and a 0.8 s stagger, 1.0 s total. It creates space; it does not wipe the crowd.
+- **Automatic roundhouse:** when **≥ 3 infected are within 2.5 m** at swing start (orchestrator default for "surrounded"; PO may change), the same input plays a 360° roundhouse: 13 damage to every infected within 2.5 m, knockback 2.0–3.0 m and a 0.8 s stagger, 0.5 s total (PO 2026-10-08 fight speed: was 25 damage over 1.0 s, same damage per second). The single swing takes 0.5 s (was 0.75 s). It creates space; it does not wipe the crowd.
 - No noise events (melee, as L1). The bat remains carried and selectable.
 
 ### 5.4 Rescue set piece

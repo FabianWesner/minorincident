@@ -1,0 +1,16 @@
+{
+  "name": "qa-l1-lab-exit",
+  "note": "L1 accident exit (PO 10-08: 'they all come from the place where the package was delivered'): lab staff come out of the Medical Annex front double door (bld.clinic-annex:791) with the game's HouseEmergence: first drawn inside behind the door, the animated leaves open with the first one and stay open, then into the forecourt and after the courier. Game camera.",
+  "seed": 1,
+  "ground": "district",
+  "layout": { "district": "D-GROVE", "bbox": [[54, -30], [78, -4]] },
+  "clipping": { "ignoreFoliage": true },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [66, -8], "yaw": 90, "loadout": ["weapon.fists", "weapon.fists"] }
+  ],
+  "emerge": { "house": "bld.clinic-annex:791", "count": 4, "staggerS": 0.35, "frame": 30, "speedMs": 5.3 },
+  "camera": { "mode": "game", "target": [66, -12] },
+  "frames": 420,
+  "shots": [28, 40, 52, 64, 90, 180],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "emergeOutsideMax": 0, "doorClosedFramesMax": 0, "farLodCloseMax": 0 }
+}

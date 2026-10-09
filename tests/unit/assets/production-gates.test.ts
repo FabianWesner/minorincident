@@ -9,7 +9,9 @@ import { fixture } from './fixture';
 test('T-E17-09 @E17-AC09 production gate accepts integrated art and rejects missing exports', () => {
   const assets=manifest as AssetDef[];
   expect(pendingMilestone(assets,['char.survivor-female','inf.common-worker'])).toEqual([]);
-  expect(pendingMilestone(assets,['util.radio','veh.fuel-truck'])).toEqual(['util.radio']);
+  expect(pendingMilestone(assets,['util.radio','veh.fuel-truck'])).toEqual([]);
+  const pending = assets.map(asset => asset.id === 'util.radio' ? { ...asset, status: 'reference' as const } : asset);
+  expect(pendingMilestone(pending,['util.radio','veh.fuel-truck'])).toEqual(['util.radio']);
   expect(pendingMilestone(assets,['veh.fire-engine'])).toEqual([]);
   expect(pendingMilestone(assets,['missing.asset'])).toEqual(['missing.asset']);
 });

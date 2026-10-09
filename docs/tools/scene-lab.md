@@ -91,6 +91,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `{ "turn": deg }` | all | Turn to face that yaw; the courier turns on the spot. |
 | `{ "sit": "<placement id or asset id>" }` | pedestrian | Sit on that prop, using the same seat rule as L1. |
 | `{ "attack": "<actor id>", "seconds": 2 }` | courier | The real target-attack input. |
+| `{ "click": "<actor id>", "part": "head" }` | courier | One click on the drawn body part (`head`, `chest`, `hip`, `feet`) of that actor, resolved by the game's click pick (`src/input/ClickPick.ts`). `metrics.clicks` lists each click (picked actor, swing tick) and `swings`; see `qa-click-group`. |
 | `"chase"` / `{ "chase": "<actor id>" }` | infected | Chase. |
 | `{ "hit": { "from": "<actor id>" or [x, z], "heavy": true } }` | all | A heavy hit is a knockdown. |
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
@@ -103,9 +104,23 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 `"vehicles": [{ "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0, "path": [[16, 8]] }]`
 
 - **Vehicle ids:** `vehicle.sedan`, `pickup`, `suv`, `police`, `ambulance`, `school-bus` and `fire-engine`.
+- **L2 passenger ride:** `"l2Ride": { "distanceM": 80, "speedMs": 7.6 }` runs the actual mission driver from that fixture distance. Use `layout.level: "L2"` for its dressing; camera targets may name a vehicle.
 - **Driving:** with a `path`, the real vehicle physics drives the car through a small autopilot (`Vehicles.autopilot`).
 - **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
 - **Traffic:** `traffic` is the kinematic ambient-traffic box.
+
+### House emergence
+
+`"emerge": { "house": "bld.house-a:405", "count": 4, "staggerS": 1.5, "frame": 30 }` runs the game's own L1 beat-9
+emergence (`src/sim/outbreak/HouseEmergence.ts`) at that house placement: from `frame` on, `count` residents are
+spawned inside the house behind the front door, the door swings open with the first one and stays open, and each one
+stumbles out over the threshold, across the porch, down the treads and through the gate before chasing the courier.
+They become actors `resident-0` .. (`id` renames them). Any building whose door has `emerge` data in
+`src/data/buildingDoors.ts` works (currently `bld.house-a` and `bld.clinic-annex`); the door is the same animated leaf the
+hand-over walks use (`metrics.doors`, gate `doorClosedFramesMax`), held open once the first resident steps out (`SimWorld.openDoor`).
+`metrics.emergence` gives the door, the release point and the frame the door opened;
+each resident's `firstDrawn.outM` is how far past the threshold it was first drawn (negative = inside).
+See `specs/scenes/qa-l1-house-emergence*.json`.
 
 ### Effects and timeline
 
@@ -140,12 +155,19 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
+- `vehicleYawRateMaxDegS` (maximum wrapped yaw change per fixed tick, in degrees/second)
+- `vehicleBodyOverlapsMax` (full vehicle footprint against people, vehicles, movable props and static colliders)
+- `vehicleRideRemainingMaxM` (remaining L2 route distance; prevents a stationary ride passing its motion gates)
+- `wheelSinkMaxCm` (drawn tyre tread against drawn ground)
 - `yawDriftMaxDeg`
 - `torsoPitchMaxDeg`
+- `clickMissMax` (clicks on a drawn body that picked another actor or nothing, or did not start a swing within 100 ms / right after the running swing and cooldown; out-of-reach picks count as approaches)
 - `drawCallsMax`
 - `trianglesMax`
+- `emergeOutsideMax` (`emerge` residents first drawn past the door threshold, or never drawn)
+- `farLodCloseMax` (frames any actor drew its far LOD, lod2, within 14 m of the camera; `metrics.actors.<id>.farLodCloseFrames`)
 - `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
-- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime.
+- `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime. `emerge` residents pass through their door here too.
 
 `clipping` takes these options:
 
@@ -197,6 +219,30 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - **Crowds.** Spawn `count` infected, then check `visibility` (sim against drawn), `perf.drawCalls` and per-actor `lod`.
 - **Effects.** Script a `wreck` or `blast`, record a `video`, and check `consoleErrors`.
 
+## Contact sheets and the scene catalog (the QA sweep)
+
+Agents read images, not videos. A **contact sheet** is ONE `sheet.jpg`: a grid of labelled low-res snapshots (`f120` in each cell, 320 px wide, at most 24 cells, under 400 KB).
+
+```sh
+npm run scene -- specs/scenes/qa-ped-flee.json --sheet 30     # a snapshot every 30 frames -> test-results/scenes/<name>/sheet.jpg
+```
+
+- `--sheet N` (or `"sheet": N` in a spec) overrides nothing else: `--shots` and `--video` still work next to it. More than 24 cells are thinned evenly.
+- MCP `run_scene {path | spec, sheet?, frames?, shots?, video?}` runs a whole scene and returns the gates plus the sheet inline. Use it to look at what happened over time; `screenshot` is for one hi-res frame.
+- **Always open the sheet.** Gates catch numbers; the sheet shows a flat wall, a figure standing inside the courier, a black patch on the ground.
+
+**Catalog.** `specs/scenes/catalog/*.json` holds ready-to-run, gated scenes at the game camera. Names are prefixed by area: `bld-<district>-<family>` (turntable of every building family per district, LOD and clipping check; regenerate with `node tools/scenelab/gen-building-scenes.mjs`), `ped-*`, `inf-*`, `corgi-*`, `courier-*`, `fight-*` (every weapon vs 1 and 3 chasing infected, plus the 4-5 dummy racks), `bike-*`, `car-*`, `door-*`, `fx-*`, `area-grove-*`. Many entries only `extends` a spec in `specs/scenes/`, so the original stays the single source.
+
+```sh
+npm run scene:catalog                              # all scenes, <= 2 browsers (e2e lock), about 6 minutes
+npm run scene:catalog -- --filter 'fight-*'        # a glob on the scene name, comma separated: 'fx-*,car-*'
+npm run scene:catalog -- --list --filter 'bld-grove-*'
+```
+
+It writes `test-results/scene-catalog/index.md` (scene, pass/fail, every gate with value/limit, link to the sheet) and `<scene>/sheet.jpg` + `metrics.json`. No full-size PNGs are kept; re-run one scene with `npm run scene -- specs/scenes/catalog/<x>.json --shots ...` for hi-res frames. Options: `--jobs 1|2`, `--backend webgpu`, `--size 960x540`, `--out dir`. Exit code 1 when a gate fails: a red catalog scene is a real defect at the time of writing, not noise.
+
+**How a lane uses it.** After a gameplay or visual change: (1) run `npm run scene:catalog -- --filter '<your area>*'` (e.g. `fight-*`, `bld-corridor-*`, `ped-*`); (2) open each `sheet.jpg` and describe what you saw in your report; (3) if your change needs a new case, add a spec to `specs/scenes/catalog/` with gates (`consoleErrors`, `undrawnFramesMax`, `clippingMax`, `footSinkMaxCm`, `propSinkMaxCm` as fits) and a `note` saying what to look for. Do not loosen a gate to make a scene pass.
+
 ## MCP server
 
 `npm run scene:mcp` starts a stdio MCP server (`@modelcontextprotocol/sdk` 1.32.1, MIT).
@@ -215,6 +261,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 | `place` | Adds a prop: `{asset, at, yaw, scale, id}`. Reloads the scene. |
 | `spawn_actor` | Spawns an actor: `{kind, id, at, yaw, look, archetype, count, spread, state}`. |
 | `command` | Gives an actor an action: `{actor, action}`. With `actor: "fx"`, the action is an effect. |
+| `run_scene` | Runs a whole scene (path or spec) with `sheet`, `frames`, `shots`, `video`; returns gates and the contact sheet inline. |
 | `step` | Advances the scene: `{frames}`. |
 | `set_time` | Sets the lighting preset: `{preset}`. |
 | `set_camera` | Sets the camera: `{camera}`. |

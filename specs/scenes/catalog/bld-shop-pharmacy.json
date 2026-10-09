@@ -1,0 +1,42 @@
+{
+ "name": "bld-shop-pharmacy",
+ "note": "D-SHOP bld.pharmacy (bld.pharmacy:50) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-SHOP",
+  "bbox": [
+   [
+    6.8,
+    -21.2
+   ],
+   [
+    21.2,
+    -6.8
+   ]
+  ],
+  "ids": [
+   "bld.pharmacy:50"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   14,
+   1.4,
+   -14
+  ],
+  "radius": 24,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

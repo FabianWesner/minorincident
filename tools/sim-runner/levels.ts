@@ -1,4 +1,4 @@
-import { LevelThreeBot, type LevelThreeRoute } from '../../src/debug/bot/LevelThreeBot';
+import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
 import { preset } from '../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../src/sim/progression/apply';
@@ -39,7 +39,7 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200, forcedRoute: LevelThreeRoute = 'market'): Promise<LevelReport> {
+export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200, street: L3StreetChoice = 'auto'): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
   try { world = await loadLevel(level, seed); }
@@ -55,10 +55,9 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
       const bot = new LevelTwoBot(world, policy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L3') {
-      const bot = new LevelThreeBot(world, policy, forcedRoute);
+      // E21: the shared L3 policy (ordinary inputs only), same as the browser bot.
+      const bot = new LevelThreeBot(world, policy, street);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
-      report.timerRemaining = (mission.state.deadlineTicks ?? 0) / 60;
-      report.runovers = mission.state.counters.runovers; report.smashed = mission.state.counters.smashed; report.maxConcurrentInfected = mission.state.counters['max-infected'];
     } else {
       let lastProgress = 0, bestDistance = Infinity, progress = '', frame: InputFrame = emptyInput();
       const route = { path: [] as number[], goal: -1, pathIndex: 0 }, waypoint = { x: 0, z: 0 };

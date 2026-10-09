@@ -3,7 +3,8 @@ import type { Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 export const pickupKinds = ['medkit', 'soda', 'energy-drink', 'throwable', 'weapon', 'item'] as const;
 export type PickupKind = typeof pickupKinds[number];
-export interface Pickup { kind: Exclude<PickupKind, 'weapon'>; item: string | null; radius: number; collected: boolean }
+/** `amount`: fixed heal in HP (E21 medkits: +40); without it a medkit heals 50 % and a soda 15 % of max. */
+export interface Pickup { kind: Exclude<PickupKind, 'weapon'>; item: string | null; radius: number; collected: boolean; amount?: number }
 /** Collection is a one-shot sim transaction, with health/charge caps and respawn-safe inventory. */
 export class Pickups {
   constructor(private readonly world: SimWorld) {}
@@ -23,7 +24,7 @@ export class Pickups {
       if (!p || !('kind' in p) || p.collected || (player.transform.x - e.transform.x) ** 2 + (player.transform.z - e.transform.z) ** 2 > p.radius ** 2) continue;
       if (p.kind === 'medkit' || p.kind === 'soda') {
         if (player.health.current >= player.health.max) continue;
-        player.health.current = Math.min(player.health.max, player.health.current + player.health.max * (p.kind === 'medkit' ? .5 : .15));
+        player.health.current = Math.min(player.health.max, player.health.current + (p.amount ?? player.health.max * (p.kind === 'medkit' ? .5 : .15)));
       } else if (p.kind === 'energy-drink') player.speedBuff = { multiplier: 1.25, until: this.world.tick + 480 };
       else if (p.kind === 'item') this.world.interactables!.giveItem(p.item!);
       else {
