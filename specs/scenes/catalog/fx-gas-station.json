@@ -1,0 +1,43 @@
+{
+ "name": "fx-gas-station",
+ "note": "The scripted gas station blast (pumps, canopy, tanks) on the real D-GROVE station, seen from the game camera. Look for: all three stages firing, canopy and pumps reacting, no invisible leftovers.",
+ "ground": "district",
+ "layout": {
+  "district": "D-GROVE",
+  "bbox": [
+   [
+    -62,
+    22
+   ],
+   [
+    -18,
+    58
+   ]
+  ]
+ },
+ "script": [
+  {
+   "frame": 30,
+   "effect": {
+    "blast": "explosion.gas-station",
+    "at": [
+     -40,
+     40
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -40,
+   40
+  ],
+  "zoom": 1
+ },
+ "frames": 420,
+ "sheet": 26,
+ "expect": {
+  "consoleErrors": 0
+ }
+}
