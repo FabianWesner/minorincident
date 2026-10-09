@@ -115,3 +115,22 @@ export const l3PhotoSpots: readonly (readonly [string, readonly [number, number,
 export function l3Street(z: number): 'blvd' | 'commerce' | 'oak' { return z < -14 ? 'blvd' : z > 14 ? 'oak' : 'commerce'; }
 /** Segment index (0..2) of an X coordinate inside the corridor, -1 before it, 3 past it. */
 export function l3Segment(x: number): number { const s = l3.map.segments; return x < s[0][0] ? -1 : x < s[0][1] ? 0 : x < s[1][1] ? 1 : x < s[2][1] ? 2 : 3; }
+
+/**
+ * Police tactics for engaged officers (L2 bridge, L3 squad). PO 2026-10-09 (verbatim): "When they start to fight, they need to
+ * move like real policemen would do, not standing still". Short steps while facing the threat, a baton strike at arm's length.
+ */
+export const policeTactics = {
+  /** Backstep when an infected is closer than this; step length, step speed, step duration cap and the pause between steps. */
+  backstepM: 3.2, stepM: 1.4, stepMs: 2.4, stepS: .8, stepEveryS: 1.6,
+  /** Never further than this from the post (squad members follow the player instead). */
+  leashM: 3,
+  /** A teammate or the courier closer than this to the line of fire gets a sidestep; neighbours closer than spreadM spread out. */
+  clearM: .6, spreadM: 1.5,
+  /** A routine lateral reposition after this many shots. */
+  repositionShots: 4,
+  /** Baton: reach, damage, cycle, windup. */
+  batonReachM: 1.5, batonDamage: 8, batonS: 1, batonWindupS: .3,
+  /** The two-handed aim is held this long after the last shot. */
+  aimHoldS: 2.5,
+} as const;

@@ -28,10 +28,13 @@ test('parked start, mount at rack, depot and automatic road parking keep both wh
   const w = new SimWorld(); await w.init(); w.loadComposition(compositions['D-GROVE'], [layout], 1);
   try {
     const b = w.vehicles!.bicycle; assertPavement(w);
-    // PO 2026-10-08: the bike waits at the depot rack (anchor bike-start), the courier starts on foot at the cafe.
-    const rack = layout.anchors['bike-start'].position, start = { ...b.entity!.transform }; expect(Math.hypot(start.x - rack[0], start.z - rack[2])).toBeLessThan(.5);
+    // PO 2026-10-09: the bike is parked on the sidewalk in front of the parcel counter (anchor bike-start, ~4.5 m from the pickup
+    // ring); the courier starts on foot at the cafe. Previously the rack in front of the depot (PO 2026-10-08).
+    const parked = layout.anchors['bike-start'].position, start = { ...b.entity!.transform }; expect(Math.hypot(start.x - parked[0], start.z - parked[2])).toBeLessThan(.5);
     teleport(w, start.x + .9, start.z); w.setInput({ interact: true }); step(w, 1); w.setInput({ interact: false });
     expect(b.riding).toBe(true); assertPavement(w);
+    // She mounted inside the depot's 5 m waiting radius, so the arrival dismount only fires after she has left it and come back.
+    teleport(w, -44, -33.5); step(w, 2); expect(b.riding).toBe(true);
     // The existing depot arrival path owns the automatic dismount.
     teleport(w, -37.8, -37.6); step(w, 2); expect(b.riding).toBe(false); assertPavement(w);
     // Move away and return; a parked bike is available to ACTION too.
@@ -85,5 +88,21 @@ test('annex auto-parking leaves a clear rider start and a walking route through 
     w.setInput({ moveTarget: door }); step(w, 1); w.setInput({ moveTarget: undefined });
     for (let i = 0; i < 600 && Math.hypot(p.transform.x - door.x, p.transform.z - door.z) > 1.2; i++) step(w, 1);
     expect(Math.hypot(p.transform.x - door.x, p.transform.z - door.z)).toBeLessThanOrEqual(1.2);
+  } finally { w.dispose(); }
+});
+
+test('a bike parked at the lab gate never seals the forecourt for click-to-move routes @E19', async () => {
+  const { world: w } = await loadL1(1);
+  try {
+    w.combat!.damage.god = true;
+    const b = w.vehicles!.bicycle, p = w.entities.get(1)!, nav = w.infected!.nav!;
+    // Arrive at the fence gap (x 64.5..67.5) from several sides, as the courier does when she rides to the lab door.
+    for (const heading of [-Math.PI / 2, -Math.PI / 4, -.13, -.6, -1.2]) for (const gx of [64.8, 65.5, 66, 66.7, 67.2]) {
+      b.entity!.bicycle!.mounted = true; b.entity!.bicycle!.heading = heading; p.riding = b.entity!.id;
+      teleport(w, gx, -9.8); step(w, 1); teleport(w, gx, -10.5); step(w, 2);
+      expect(b.riding).toBe(false);
+      const route: number[] = [];
+      expect(nav.path(nav.nearestCell(61, -8, .35), nav.nearestCell(62, -11.75, .35), route, 200000), `bike at ${JSON.stringify(b.entity!.transform)} from heading ${heading}, gate x ${gx}`).toBe(true);
+    }
   } finally { w.dispose(); }
 });
