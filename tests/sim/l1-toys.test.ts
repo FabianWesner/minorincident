@@ -32,11 +32,10 @@ describe('L1 v2 bicycle', () => {
     const start = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }; expect(bike().entity?.bicycle?.mounted).toBe(false);
     teleport({ x: start.x + 1, z: start.z }); step(2); press();
     expect(bike().riding).toBe(true);
-    world.setInput({ move: { x: 1, z: 0 } });
-    let peak = 0, prev = pos();
-    for (let i = 0; i < 150; i++) { step(1); const p = pos(); peak = Math.max(peak, Math.hypot(p.x - prev.x, p.z - prev.z) * 60); prev = p; }
-    expect(peak).toBeGreaterThan(7.3); expect(peak).toBeLessThanOrEqual(7.6);
-    const tiers = l1v2.speedTiers; expect(peak).toBeGreaterThan(tiers.athletic.baseMs * 1.06);
+    // The bike waits on the depot sidewalk (PO 2026-10-08) and the courier leaves with the parcel (an empty-handed rider is
+    // parked at the depot by design). A short ride along the sidewalk, stop, dismount: the bike stays where she got off.
+    world.entities.get(1)!.survivor!.carrying = 'prop.package-courier';
+    world.setInput({ move: { x: 1, z: 0 } }); step(20);
     world.setInput({ move: { x: 0, z: 0 } }); step(60); press();
     expect(bike().riding).toBe(false);
     const left = { x: bike().entity!.transform.x, z: bike().entity!.transform.z }, p = pos();
@@ -46,14 +45,25 @@ describe('L1 v2 bicycle', () => {
     const snapshot = world.query({}); const player = world.entities.get(1)!;
     bike().entity!.transform.x += 5; world.entities.restore(snapshot, player);
     expect(bike().entity!.transform.x).toBeCloseTo(left.x, 6);
+    // Remount, pull out onto Main Row, then the straight run east.
+    teleport({ x: left.x + 1, z: left.z - .9 }); step(2); press(); expect(bike().riding).toBe(true);
+    world.setInput({ move: { x: 0, z: 1 } }); step(45);
+    world.setInput({ move: { x: 1, z: 0 } });
+    let peak = 0, prev = pos();
+    for (let i = 0; i < 150; i++) { step(1); const q = pos(); peak = Math.max(peak, Math.hypot(q.x - prev.x, q.z - prev.z) * 60); prev = q; }
+    expect(peak).toBeGreaterThan(7.3); expect(peak).toBeLessThanOrEqual(7.6);
+    const tiers = l1v2.speedTiers; expect(peak).toBeGreaterThan(tiers.athletic.baseMs * 1.06);
   });
   test('T-E19-16f @E19 @E19-AC16 mounting between rack bars steps onto the apron; a stopped rider can pull away from a wall', async () => {
     await grove();
-    teleport({ x: -68.1, z: 7.6 });
-    Object.assign(bike().entity!.transform, { x: -67, z: 7.6 }); press();
+    // Between the bars of the depot rack (PO 2026-10-08: the bike waits there), the bike in front of it; she carries the parcel.
+    const rack = layout.placements.filter(q => q.assetId === 'prop.bike-rack').sort((a, b) => Math.hypot(a.position[0] - anchor('bike-start').x, a.position[2] - anchor('bike-start').z) - Math.hypot(b.position[0] - anchor('bike-start').x, b.position[2] - anchor('bike-start').z))[0];
+    teleport({ x: rack.position[0], z: rack.position[2] }); world.entities.get(1)!.survivor!.carrying = 'prop.package-courier';
+    Object.assign(bike().entity!.transform, anchor('bike-start'), { yaw: Math.PI / 2 }); press();
     expect(bike().riding).toBe(true);
     expect(world.infected!.nav.clear(pos().x, pos().z, .45)).toBe(true);
-    world.setInput({ move: { x: -1, z: 0 } }); step(240);
+    // Nose into the rack and the shop front behind it, then pull away along the sidewalk.
+    world.setInput({ move: { x: 0, z: -1 } }); step(240);
     const stopped = pos();
     world.setInput({ move: { x: 1, z: 0 } }); step(360);
     expect(bike().riding).toBe(true); expect(pos().x - stopped.x).toBeGreaterThan(4);

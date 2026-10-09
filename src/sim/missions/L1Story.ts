@@ -3,6 +3,8 @@ import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { CivilianProp } from '../npc/types';
 import { doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
+import { allyState } from '../outbreak/Allies';
+import { l2 } from '../../data/l2';
 
 const TICKS = 60;
 type BeatId = NonNullable<L1State['beat']>['id'];
@@ -154,23 +156,47 @@ export class L1Story {
     } else { clerk.hidden = true; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; l1.clerkRoute = null; this.finish(); }
   }
 
-  /** A doorway invitation, never a beat: controls and infected AI remain live until actual entry. */
+  /**
+   * A doorway invitation, never a beat: controls and infected AI remain live until actual entry. PO 2026-10-08 ("there was a
+   * firefighter standing here; bring him back. I also liked that Zombies can attack him."): the firefighter stands at the open bay
+   * from the moment the objective starts (visible on the approach, not only within the 14 m bark range), as a real allied
+   * pedestrian: infected target and bite him like anyone, he swings at those within reach and walks back to his spot. If he is
+   * bitten, turned or killed, a colleague steps out of the bay to take over, so the ending is never left without him.
+   */
   private firestation(): void {
     const door = this.anchor('fire-bay-door'), trigger = this.anchor('fire-bay-trigger'), world = this.world;
     const player = world.entities.get(1)!;
-    if (Math.hypot(player.transform.x - door.x, player.transform.z - door.z) > beat.fireTriggerM) return;
     const dx = trigger.x - door.x, dz = trigger.z - door.z, d = Math.hypot(dx, dz) || 1;
-    const waving = { x: door.x - dz / d * 1.45 - dx / d * .6, z: door.z + dx / d * 1.45 - dz / d * .6 };
-    if (!this.l1.firefighterId) this.l1.firefighterId = this.pedestrian(waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
-    const ff = world.entities.get(this.l1.firefighterId ?? 0);
-    if (!ff) return;
-    this.place(ff, waving.x, waving.z, player.transform); this.present(ff, 'npc-wave-in');
+    // Beside the bay mouth, 0.6 m outside, on the side away from the game camera (it looks from +X +Z), so he never stands
+    // between the camera and the floor ring, whichever way the station faces (south onto Main Row since 2026-10-08).
+    const px = -dz / d, pz = dx / d, side = px + pz > 0 ? -1.1 : 1.1;
+    const waving = { x: door.x + px * side - dx / d * .6, z: door.z + pz * side - dz / d * .6 };
+    let ff = world.entities.get(this.l1.firefighterId ?? 0);
+    const gone = !ff || ff.health.current <= 0 || !!ff.infected || !!ff.infection || !ff.civilian;
+    if (gone && (!ff || world.tick >= (this.l1.firefighterNext ?? 0))) {
+      // The colleague comes out of the bay (spawned at the completion spot inside, then walks to the post).
+      const id = this.pedestrian(ff ? trigger : waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
+      if (id) {
+        const e = world.entities.get(id)!;
+        e.civilian!.ally = { ...allyState('firefighter', waving), engaged: true };
+        e.health = { current: l2.allies.firefighter.hp, max: l2.allies.firefighter.hp };
+        this.l1.firefighterId = id; ff = e;
+      } else this.l1.firefighterNext = world.tick + TICKS;
+    }
+    if (!ff || ff.health.current <= 0 || ff.infected || ff.infection || !ff.civilian) { this.l1.firefighterNext ??= world.tick + 2 * TICKS; return; }
+    this.l1.firefighterNext = world.tick + 2 * TICKS;
+    // "Get in!" every 4 s while the courier is within 14 m of the bay, also while he fights.
     const last = this.l1.say;
-    if (last?.id !== ff.id || world.tick - last.at >= 4 * TICKS) {
+    if (Math.hypot(player.transform.x - door.x, player.transform.z - door.z) <= beat.fireTriggerM && (last?.id !== ff.id || world.tick - last.at >= 4 * TICKS)) {
       this.say(ff.id, 'firestation.firefighter');
       // The delivered human bark is available; no recorded "Get in!" voice exists yet.
       world.events.emit({ type: 'civilian.bark', tick: world.tick, id: ff.id, text: 'Hey!', position: { x: ff.transform.x, z: ff.transform.z } });
     }
+    // Fighting (target in sight or a swing under way): the ally layer drives him. Otherwise back to his spot and wave.
+    const ally = ff.civilian.ally;
+    if (ally && (ally.targetId || ally.strikeAt)) return;
+    if (Math.hypot(ff.transform.x - waving.x, ff.transform.z - waving.z) > .4) { world.npcs?.move(ff, waving, 2.4, ff.civilian, .3); return; }
+    this.place(ff, waving.x, waving.z, player.transform); this.present(ff, 'npc-wave-in');
   }
 
   /** Beat 2 presentation hooks, called from the existing technician choreography. */
