@@ -1,0 +1,114 @@
+{
+  "id": "kit.metro-tunnel",
+  "status": "integrated",
+  "authoredLods": true,
+  "determinism": "12/12 geometry hashes match across two final builds",
+  "tiers": {
+    "lod0": {
+      "source": {
+        "triangles": 3418,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 265396,
+        "bounds": {
+          "min": [
+            -6.0,
+            -3.8,
+            0.0
+          ],
+          "max": [
+            6.0,
+            3.8,
+            5.0
+          ]
+        },
+        "dimensions": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 7.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 3418,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 69168
+      },
+      "geometryHash": "2cab3cf5fbba455eac7f07e28124f51b2db534122293d1822b70c202c0abf2c2"
+    },
+    "lod1": {
+      "source": {
+        "triangles": 1506,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 116964,
+        "bounds": {
+          "min": [
+            -6.0,
+            -3.8,
+            0.0
+          ],
+          "max": [
+            6.0,
+            3.8,
+            5.0
+          ]
+        },
+        "dimensions": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 7.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 1506,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 34868
+      },
+      "geometryHash": "01bdadcd35260be7979fd44ec542caf2ce9240fcdd7faeb5eab181d6d5d1d170"
+    },
+    "lod2": {
+      "source": {
+        "triangles": 962,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 79068,
+        "bounds": {
+          "min": [
+            -6.0,
+            -3.8,
+            0.0
+          ],
+          "max": [
+            6.0,
+            3.8,
+            5.0
+          ]
+        },
+        "dimensions": {
+          "x": 12.0,
+          "y": 5.0,
+          "z": 7.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 962,
+        "draws": 8,
+        "materials": 7,
+        "bytes": 26604
+      },
+      "geometryHash": "e896490d63fe7e92f0b9ef7dc5d66eadcc4f3a738eb756f7ede3429b07eb9f34"
+    }
+  },
+  "evidence": {
+    "turntable": "test-results/l6-metro-and-shelter-kit/kit.metro-tunnel/comparison.png",
+    "lods": "test-results/l6-metro-and-shelter-kit/kit.metro-tunnel/lod-contact.png",
+    "gameReferencePeer": "test-results/l6-metro-and-shelter-kit/kit.metro-tunnel/game-reference-peer.png",
+    "loading": "test-results/l6-metro-and-shelter-kit/kit.metro-tunnel/game-reference-peer.json"
+  },
+  "interfaceNotes": "assets/kit.metro-tunnel/notes.md"
+}

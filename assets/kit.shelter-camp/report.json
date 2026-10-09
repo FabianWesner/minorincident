@@ -1,0 +1,114 @@
+{
+  "id": "kit.shelter-camp",
+  "status": "integrated",
+  "authoredLods": true,
+  "determinism": "12/12 geometry hashes match across two final builds",
+  "tiers": {
+    "lod0": {
+      "source": {
+        "triangles": 2668,
+        "draws": 8,
+        "materials": 8,
+        "bytes": 180540,
+        "bounds": {
+          "min": [
+            -2.8,
+            -2.8,
+            0.0
+          ],
+          "max": [
+            2.8,
+            2.8,
+            1.05
+          ]
+        },
+        "dimensions": {
+          "x": 5.6,
+          "y": 1.05,
+          "z": 5.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 2668,
+        "draws": 8,
+        "materials": 8,
+        "bytes": 46856
+      },
+      "geometryHash": "66b29be7249185dfad00d8d308db9a0a9df3d98d503c4b9ff16817922cca9e87"
+    },
+    "lod1": {
+      "source": {
+        "triangles": 2044,
+        "draws": 8,
+        "materials": 8,
+        "bytes": 143776,
+        "bounds": {
+          "min": [
+            -2.8,
+            -2.8,
+            0.0
+          ],
+          "max": [
+            2.8,
+            2.8,
+            1.05
+          ]
+        },
+        "dimensions": {
+          "x": 5.6,
+          "y": 1.05,
+          "z": 5.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 2044,
+        "draws": 8,
+        "materials": 8,
+        "bytes": 39152
+      },
+      "geometryHash": "eeac52deb7082e8feee08904a9ae8fdc429d91582a7757b6177f717abfbb7d0c"
+    },
+    "lod2": {
+      "source": {
+        "triangles": 1428,
+        "draws": 8,
+        "materials": 8,
+        "bytes": 104540,
+        "bounds": {
+          "min": [
+            -2.8,
+            -2.8,
+            0.0
+          ],
+          "max": [
+            2.8,
+            2.8,
+            1.05
+          ]
+        },
+        "dimensions": {
+          "x": 5.6,
+          "y": 1.05,
+          "z": 5.6,
+          "tolerance": 0.03
+        }
+      },
+      "runtime": {
+        "triangles": 1428,
+        "draws": 8,
+        "materials": 8,
+        "bytes": 30480
+      },
+      "geometryHash": "e45d3a7eb60317fa413ce96e270313505afdfb11fafba291a90c3cead34e1213"
+    }
+  },
+  "evidence": {
+    "turntable": "test-results/l6-metro-and-shelter-kit/kit.shelter-camp/comparison.png",
+    "lods": "test-results/l6-metro-and-shelter-kit/kit.shelter-camp/lod-contact.png",
+    "gameReferencePeer": "test-results/l6-metro-and-shelter-kit/kit.shelter-camp/game-reference-peer.png",
+    "loading": "test-results/l6-metro-and-shelter-kit/kit.shelter-camp/game-reference-peer.json"
+  },
+  "interfaceNotes": "assets/kit.shelter-camp/notes.md"
+}
