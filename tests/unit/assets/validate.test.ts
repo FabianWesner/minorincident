@@ -96,3 +96,20 @@ test('@E17-AC02 burned budgets reject oversized siblings without altering existi
     expect(report.errors.some(e => e.startsWith('static drawCalls:'))).toBe(true);
   }
 });
+
+test('living skins count animated material draws and reject duplicate attachment batches', () => {
+  const { doc, def } = fixture();
+  def.category = 'character';
+  def.rigidDrawBase = 'npc.civilian-man-a';
+  def.animatedNodes = ['body'];
+  def.budget.drawCalls = 1;
+  const first = validateDocument(doc, def, 1024);
+  expect(first.animatedDrawCalls).toBe(1);
+  expect(first.errors).toEqual([]);
+  const owner = doc.getRoot().listNodes().find(node => node.getName() === 'body')!;
+  owner.addChild(doc.createNode('bandage').setMesh(owner.getMesh()));
+  const attached = validateDocument(doc, def, 1024);
+  expect(attached.animatedDrawCalls).toBe(2);
+  expect(attached.errors).toContain('drawCalls including animated owners: 2 > 1');
+  expect(attached.errors.join('\n')).toContain('static attachments must share their owner material batch');
+});
