@@ -50,8 +50,8 @@ export class NpcView extends Group {
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (root === this.human || this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
   }
-  update(camera: Camera, alpha = 1): void {
-    this.civilians.update(alpha, camera); let cars = 0;
+  update(camera: Camera, alpha = 1, lodCamera = camera): void {
+    this.civilians.update(alpha, camera, lodCamera); let cars = 0;
     for (const [id, hero] of this.heroes) if (!this.world.entities.get(id)) { this.remove(hero.root); hero.badge?.remove(); this.heroes.delete(id); }
     for (const e of this.world.entities.iterate()) {
       if (e.traffic || e.convoy) { this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, .6, e.transform.z); this.cars.setMatrixAt(cars++, this.transform); continue; }

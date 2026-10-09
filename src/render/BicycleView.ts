@@ -11,6 +11,8 @@ import { l1v2 } from '../data/l1v2';
 /** The delivered cargo bike is courier-sized (2.8 m); the game courier is chibi (1.4 m), so the bike is drawn at toy scale: saddle at the hips, cargo box below the rider's chest. */
 const ASSET = 'veh.courier-bike', WHEEL_R = { F: .335, R: .405 }, SCALE = bicycleGeometry.scale;
 const AXLE = new Vector3(0, 0, 1);
+/** A knocked-over bike tips to ~80 degrees (resting on bar end and pedal) over FALL_TICKS sim ticks. */
+const FALL_ANGLE = 1.4, FALL_TICKS = 21;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 /** Code placeholder with the animated-node contract (wheelF/R, handlebar, crank, pedals) until the production GLB is registered. */
 function bicyclePlaceholder(): Group {
@@ -71,7 +73,7 @@ function tyreRing(profile: Profile, scale: number): Vector3[] {
   }
   return out;
 }
-interface Rig { rings: [Vector3[], Vector3[]]; profiles: [Profile, Profile]; halfWidths: [number, number]; root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; seat?: Object3D; kickstand?: Object3D; kick: number; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number }
+interface Rig { rings: [Vector3[], Vector3[]]; profiles: [Profile, Profile]; halfWidths: [number, number]; root: Group; model: Object3D; wheelF?: Object3D; wheelR?: Object3D; handlebar?: Object3D; crank?: Object3D; pedals: Object3D[]; lean: Group; seat?: Object3D; kickstand?: Object3D; kick: number; parcel: Group; top: Vector3; glint: Mesh; placed: number; offset: number; wheelAngle: number; last: { x: number; z: number } | null; leanAngle: number; fallKey: string; fallLift: number }
 /**
  * Courier bicycle (spec 5.10). Follows the authoritative bicycle entity; wheels roll with the travelled distance, the crank
  * turns with the pedal phase, the handlebar and front wheel steer, and the frame leans into turns like a toy. Uses the
@@ -113,8 +115,10 @@ export class BicycleView extends Group {
     const seat = find('seat') ?? find('driverSeat'), saddle = new Vector3();
     if (seat) { seat.getWorldPosition(saddle); lean.worldToLocal(saddle); }
     const profiles: [Profile, Profile] = [tyreProfile(wheelR, SCALE), tyreProfile(wheelF, SCALE)];
-    this.rig = { rings: [tyreRing(profiles[0], SCALE), tyreRing(profiles[1], SCALE)], profiles, halfWidths: [tyreHalfWidth(profiles[0]), tyreHalfWidth(profiles[1])], seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: -saddle.x, wheelAngle: 0, last: null, leanAngle: 0 };
+    this.rig = { rings: [tyreRing(profiles[0], SCALE), tyreRing(profiles[1], SCALE)], profiles, halfWidths: [tyreHalfWidth(profiles[0]), tyreHalfWidth(profiles[1])], seat: find('seat') ?? find('driverSeat'), kickstand: find('kickstand'), kick: 0, parcel, top, glint, placed: 0, root, model, wheelF, wheelR, handlebar: find('handlebar'), crank: find('crank'), pedals: [find('pedalL') ?? find('pedal_l'), find('pedalR') ?? find('pedal_r')].filter((n): n is Object3D => !!n), lean, offset: -saddle.x, wheelAngle: 0, last: null, leanAngle: 0, fallKey: '', fallLift: 0 };
   }
+  /** The drawn bike's root (Scene Lab presence check); null until the model is built. */
+  drawnRoot(): Object3D | null { return this.rig?.root ?? null; }
   /** Rear and front wheel nodes (tyre meshes below them): Scene Lab measures the drawn tyre against the drawn ground. */
   wheelNodes(): Object3D[] { return this.rig ? [this.rig.wheelR, this.rig.wheelF].filter((n): n is Object3D => !!n) : []; }
   /** World position of the saddle (the `seat` node); the rider's pelvis is placed here every frame. */
@@ -244,15 +248,19 @@ export class BicycleView extends Group {
     // Toy feel: lean into the turn while riding.
     const riding = b.mounted;
     // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
-    rig.kick = riding ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
-    rig.leanAngle = riding ? ride.lean : 0;
+    // Knocked over by an infected (sim `fallen`): the frame tips onto its side over ~0.35 s and lies there, kickstand up.
+    const fallen = riding ? undefined : b.fallen, fall = fallen ? Math.min(1, Math.max(0, (this.world.tick + alpha - fallen.at) / FALL_TICKS)) : 0;
+    rig.kick = riding || fallen ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
+    rig.leanAngle = riding ? ride.lean : fallen ? fallen.side * FALL_ANGLE * fall * fall : 0;
     // Rolled about the tyre contact line, the wide tyre's shoulder dips below the road: lift the frame by that dip
     // (no pedal bob: the wheels stay on the ground and the rider's own ride clip carries the stroke).
     const lift = Math.max(hubAbove(rig.profiles[0], rR, rig.leanAngle) - rR * Math.cos(rig.leanAngle), hubAbove(rig.profiles[1], rF, rig.leanAngle) - rF * Math.cos(rig.leanAngle));
     rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = lift;
+    if (fallen) this.lieOnGround(rig, t, fallen, fall);
+    else rig.fallKey = '';
     // Settle on what is drawn: the posed tyres (steer, lean and pitch together) against the drawn ground under them
     // (a second pass absorbs the shift of the contacts that the re-pitch causes).
-    if (drawn) for (let pass = 0; pass < 2; pass++) {
+    if (drawn && !fallen) for (let pass = 0; pass < 2; pass++) {
       rig.root.updateMatrixWorld(true);
       const cR = this.clearance(rig.wheelR, rig.rings[0]), cF = this.clearance(rig.wheelF, rig.rings[1]);
       if (cR === null || cF === null || Math.max(Math.abs(cR), Math.abs(cF)) < 5e-4) break;
@@ -269,6 +277,21 @@ export class BicycleView extends Group {
     rig.glint.visible = !riding && dist < 30; rig.glint.position.set(0, 1.5 + Math.sin(this.world.tick / 20) * .08, 0); rig.glint.rotation.y = this.world.tick / 25;
     const near = !riding && dist <= 1.6 && !!camera; this.prompt.hidden = !near;
     if (near && camera) { this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
+  }
+  private readonly fallBox = new Box3();
+  /** Lying frame: no pitch, the lowest drawn point (bar end, pedal, tyre side) rests on the highest drawn ground under it.
+   * The settled pose never changes, so its lowest point is measured once and reused (no per-frame vertex walk). */
+  private lieOnGround(rig: NonNullable<BicycleView['rig']>, t: { x: number; z: number; yaw: number }, fallen: { at: number; side: number }, fall: number): void {
+    rig.lean.rotation.z = 0; rig.lean.position.y = 0;
+    const fx = Math.cos(t.yaw), fz = -Math.sin(t.yaw), along = [bicycleGeometry.rearWheel, 0, bicycleGeometry.frontWheel];
+    const ground = Math.max(...along.map(a => this.groundAt(t.x + fx * a, t.z + fz * a)));
+    const key = `${fallen.at}:${fallen.side}`;
+    if (fall < 1 || rig.fallKey !== key) {
+      rig.root.position.y = 0; rig.root.updateMatrixWorld(true);
+      const low = -this.fallBox.setFromObject(rig.model, true).min.y;
+      if (fall >= 1) { rig.fallKey = key; rig.fallLift = low; }
+      rig.root.position.y = ground + low;
+    } else rig.root.position.y = ground + rig.fallLift;
   }
   dispose(): void {
     this.prompt.remove(); this.disposed = true;

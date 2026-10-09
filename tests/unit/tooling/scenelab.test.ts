@@ -32,6 +32,16 @@ describe('Scene Lab spec', () => {
     expect(world.districts[0].decay.colliders.some(c => c.id.startsWith('house/geometry-'))).toBe(true);
     expect(world.playerStart).toEqual([-5, 0]);
   });
+  it('copies requested gameplay anchors with the crop shift, leaving the shipped layout intact', () => {
+    const spec = JSON.parse(readFileSync('docs/scenes/gate-lockin.json', 'utf8')) as SceneSpec;
+    expect(validateSpec(spec, assets)).toEqual([]);
+    const before = structuredClone(grove.anchors['gate-1']);
+    const built = buildScene(spec, assets, grove);
+    expect(Object.keys(built.layout.anchors)).toEqual(['gate-1']);
+    expect(built.layout.anchors['gate-1'].position).toEqual([0, 0, -.5]);
+    expect(grove.anchors['gate-1']).toEqual(before);
+    expect(() => buildScene({ layout: { district: 'D-GROVE', anchors: ['missing'] } }, assets, grove)).toThrow('Unknown layout anchor missing');
+  });
   it('crops a shipped layout by bbox and asset filter, optionally recentred', () => {
     const spec: SceneSpec = { layout: { district: 'D-GROVE', bbox: [[0, 22], [5, 28]], assets: ['prop.flower-bed*', 'prop.picket-fence'], recenter: true } };
     const built = buildScene(spec, assets, grove);
