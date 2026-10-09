@@ -377,7 +377,7 @@ export class GameView implements Lifecycle {
     batch.traverse(object => { saved.push([object, object.frustumCulled]); object.frustumCulled = false; });
     parent.add(batch); batch.updateMatrixWorld(true);
     let compiling: Promise<void>;
-    try { compiling = this.renderer.compileAsync(batch, this.camera, this.scene); }
+    try { compiling = this.postFx ? this.postFx.compile(undefined, batch) : this.renderer.compileAsync(batch, this.camera, this.scene); }
     finally { parent.remove(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
     await compiling;
   }
