@@ -1,13 +1,13 @@
 {
   "openGround": true,
   "kind": "civilian",
-  "archetype": "npc.bathrobe-neighbor",
+  "archetype": "npc.bbq-dad",
   "faction": "civilian",
   "transform": {
-    "x": -26.24838890080451,
-    "z": -2.172973308644791,
+    "x": 21.398816638324035,
+    "z": 26.864526627061604,
     "y": 0.7,
-    "yaw": 0.859200288345741
+    "yaw": 6.6249704148453405
   },
   "health": {
     "current": 100,
@@ -19,112 +19,116 @@
     "adult": true,
     "pet": null,
     "owner": null,
-    "model": "npc.civilian-man-a",
-    "variant": "inf.bathrobe-neighbor",
+    "model": "npc.civilian-man-b",
+    "variant": "inf.bbq-dad",
     "schedule": [
       {
-        "activity": "water",
-        "anchor": "l1/flowers",
+        "activity": "walk",
+        "anchor": "l1/walk",
         "target": {
-          "x": -23.079839999999997,
-          "z": -2.1
+          "x": 17.45,
+          "z": 21
+        },
+        "ticks": 1,
+        "prop": "bag"
+      },
+      {
+        "activity": "look",
+        "anchor": "l1/look",
+        "target": {
+          "x": 17.45,
+          "z": 21
         },
         "facing": {
-          "x": -23.079839999999997,
-          "z": -4
+          "x": 22.27984,
+          "z": 26
         },
-        "ticks": 376,
-        "prop": "watering-can"
+        "ticks": 178,
+        "prop": "bag"
       },
       {
         "activity": "walk",
         "anchor": "l1/walk",
         "target": {
-          "x": -26.279839999999997,
-          "z": -2.1
+          "x": 17.45,
+          "z": 25
         },
         "ticks": 1,
-        "prop": "watering-can"
+        "prop": "bag"
       },
       {
-        "activity": "water",
-        "anchor": "l1/flowers",
+        "activity": "look",
+        "anchor": "l1/look",
         "target": {
-          "x": -26.279839999999997,
-          "z": -2.1
+          "x": 17.45,
+          "z": 25
         },
         "facing": {
-          "x": -26.279839999999997,
-          "z": -4
+          "x": 22.27984,
+          "z": 26
         },
-        "ticks": 342,
-        "prop": "watering-can"
-      },
-      {
-        "activity": "walk",
-        "anchor": "l1/walk",
-        "target": {
-          "x": -23.079839999999997,
-          "z": -2.1
-        },
-        "ticks": 1,
-        "prop": "watering-can"
+        "ticks": 134,
+        "prop": "bag"
       }
     ],
     "scheduleStep": 3,
-    "activityUntil": 0,
-    "activityStarted": 0,
+    "activityUntil": 5656,
+    "activityStarted": 5522,
     "lastTravelProgress": 0,
-    "routine": "chat",
+    "routine": "walk-dog",
     "waypoints": [
       {
-        "x": -23.079839999999997,
-        "z": -2.1
+        "x": 17.45,
+        "z": 21
       },
       {
-        "x": -26.279839999999997,
-        "z": -2.1
+        "x": 17.45,
+        "z": 21
       },
       {
-        "x": -26.279839999999997,
-        "z": -2.1
+        "x": 17.45,
+        "z": 25
       },
       {
-        "x": -23.079839999999997,
-        "z": -2.1
+        "x": 17.45,
+        "z": 25
       }
     ],
     "waypoint": 1,
-    "pauseUntil": 22,
-    "entered": 7393,
-    "until": 7429,
+    "pauseUntil": 42,
+    "entered": 5995,
+    "until": 6031,
     "downTicks": 0,
     "eyesGlow": true,
     "veins": 0.4,
-    "attacker": 123,
+    "attacker": 111,
     "threat": {
-      "x": -25.219329387592282,
-      "z": -1.6958674480480562
+      "x": 22.014658632644124,
+      "z": 27.808963470344906
     },
     "path": [],
     "goal": -1,
-    "pathIndex": 0,
+    "pathIndex": 9,
     "gore": false,
     "knockedUntil": 0,
     "l1": {
-      "walkSpeed": 1.2714125791098922,
-      "fleeSpeed": 3.2805672848224643,
-      "startleTicks": 20,
-      "refuge": null,
-      "target": null,
-      "repickAt": 0,
-      "noticed": 7187,
-      "progressFrom": {
-        "x": -26.3821348778729,
-        "z": -2.1
+      "walkSpeed": 1.2191526965238153,
+      "fleeSpeed": 3.9367417791858315,
+      "startleTicks": 47,
+      "refuge": "refuge-door-30",
+      "target": {
+        "x": 5.051470000000001,
+        "z": 26
       },
-      "progressAt": 7162
-    }
+      "repickAt": 5814,
+      "noticed": 5526,
+      "progressFrom": {
+        "x": 17.44610442772669,
+        "z": 24.700891038800897
+      },
+      "progressAt": 5521
+    },
+    "hold": 2
   },
   "combat": {
     "radius": 0.35,
@@ -135,16 +139,16 @@
     "damageMultiplier": 1,
     "statuses": []
   },
-  "id": 121,
+  "id": 138,
   "appearance": {
-    "entityId": 121,
-    "asset": "npc.civilian-man-a",
-    "tint": "#ac7a91",
+    "entityId": 138,
+    "asset": "npc.civilian-man-b",
+    "tint": "#3178ac",
     "accessories": [
-      "backpack"
+      "scarf"
     ],
     "handProp": null,
-    "tier": "frail"
+    "tier": "average"
   },
   "motion": {
     "velocity": {
@@ -153,7 +157,7 @@
     },
     "speed": 0,
     "moving": false,
-    "distance": 61.17127568705689
+    "distance": 88.04036021728258
   },
   "locomotion": {
     "vx": 0,
@@ -164,12 +168,12 @@
     "updatedAt": -1
   },
   "infection": {
-    "entityId": 121,
-    "progress": 0.8971428571428571,
+    "entityId": 138,
+    "progress": 0.9086294416243654,
     "phase": "rise",
-    "tier": "frail",
-    "startedTick": 7254,
-    "endsTick": 7429,
-    "biteSourceId": 123
+    "tier": "average",
+    "startedTick": 5834,
+    "endsTick": 6031,
+    "biteSourceId": 111
   }
 }
