@@ -81,7 +81,7 @@ def station(s):
     # Sealed street stair: steps remain real solids at each distance tier.
     for i in range((16,12,8)[s.lod]):
         n=(16,12,8)[s.lod];z=.6+3.8*(i+1)/n
-        s.box('streetStep',(6,2+i*6/n,(z+.6)/2),(3.4,6/n,z-.6),stone,bevel=0)
+        structure(s,'streetStep'+str(i),(6,2+i*6/n,(z+.6)/2),(3.4,6/n,z-.6),stone,bevel=0)
     for x in (4.2,7.8):
         s.beam('stairHandrail',(x,2,1.6),(x,8,5.4),.12,dark)
         for y in (2,5,8):s.box('railPost',(x,y,.6+(y-2)*3.8/6+.5),(.12,.12,1),dark)
