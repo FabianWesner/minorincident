@@ -87,3 +87,19 @@ test('annex auto-parking leaves a clear rider start and a walking route through 
     expect(Math.hypot(p.transform.x - door.x, p.transform.z - door.z)).toBeLessThanOrEqual(1.2);
   } finally { w.dispose(); }
 });
+
+test('a bike parked at the lab gate never seals the forecourt for click-to-move routes @E19', async () => {
+  const { world: w } = await loadL1(1);
+  try {
+    w.combat!.damage.god = true;
+    const b = w.vehicles!.bicycle, p = w.entities.get(1)!, nav = w.infected!.nav!;
+    // Arrive at the fence gap (x 64.5..67.5) from several sides, as the courier does when she rides to the lab door.
+    for (const heading of [-Math.PI / 2, -Math.PI / 4, -.13, -.6, -1.2]) for (const gx of [64.8, 65.5, 66, 66.7, 67.2]) {
+      b.entity!.bicycle!.mounted = true; b.entity!.bicycle!.heading = heading; p.riding = b.entity!.id;
+      teleport(w, gx, -9.8); step(w, 1); teleport(w, gx, -10.5); step(w, 2);
+      expect(b.riding).toBe(false);
+      const route: number[] = [];
+      expect(nav.path(nav.nearestCell(61, -8, .35), nav.nearestCell(62, -11.75, .35), route, 200000), `bike at ${JSON.stringify(b.entity!.transform)} from heading ${heading}, gate x ${gx}`).toBe(true);
+    }
+  } finally { w.dispose(); }
+});
