@@ -39,6 +39,7 @@ export function readSpec(path: string): SceneSpec {
 export class SceneSession {
   page!: Page;
   private browser!: Browser;
+  private sceneUrl = '';
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
   constructor(options: SessionOptions = {}) {
@@ -57,15 +58,30 @@ export class SceneSession {
     const query = new URLSearchParams({ test: '1', scenelab: '1', profile: '1', dpr: '1', quality: this.options.tier, audio: 'muted', seed: String(this.options.seed) });
     if (!webgpu) query.set('renderer', 'webgl');
     for (const [key, value] of Object.entries(this.options.query)) query.set(key, value);
-    await this.page.goto(`${origin}/?${query}`);
+    this.sceneUrl = `${origin}/?${query}`;
+    await this.page.goto(this.sceneUrl);
     await this.page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__, null, { timeout: 120_000 });
     await this.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     // Story/HUD overlays are not part of an isolated scene.
     await this.page.addStyleTag({ content: '#hud,.hud,.story-bubble,.mission-subtitle,[data-testid=mission-button]{visibility:hidden!important}' });
   }
-  async load(spec: SceneSpec) { return this.page.evaluate(s => window.__SCENE__!.load(s), spec); }
+  /** Switch from isolation to a real registered mission; use Inspection for camera and time. */
+  async inspectLevel(level: string, bot = false) {
+    await this.page.goto(`${origin}/?test=1&debug=true&inspect=1&level=${encodeURIComponent(level)}&bot=${bot ? 'complete' : 'ghost'}&renderer=webgl&profile=1&audio=muted&quality=${this.options.tier}&seed=${this.options.seed}`);
+    await this.page.waitForFunction(() => !!window.__SS__, null, { timeout: 120_000 });
+    await this.page.evaluate(async () => { await window.__SS__!.ready; });
+    return this.page.evaluate(() => window.__SS__!.inspect.anchors());
+  }
+  async load(spec: SceneSpec) {
+    if (!(await this.page.evaluate(() => !!window.__SCENE__))) {
+      await this.page.goto(this.sceneUrl);
+      await this.page.waitForFunction(() => !!window.__SCENE__, null, { timeout: 120_000 });
+      await this.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
+    }
+    return this.page.evaluate(s => window.__SCENE__!.load(s), spec);
+  }
   async step(frames: number) { return this.page.evaluate(n => window.__SCENE__!.step(n), frames); }
-  async ready() { await this.page.evaluate(() => window.__SCENE__!.ready()); }
+  async ready() { await this.page.evaluate(() => window.__SCENE__ ? window.__SCENE__.ready() : window.__SS__!.screenshotReady()); }
   async metrics() { return this.page.evaluate(() => window.__SCENE__!.metrics()); }
   async clipping() { return this.page.evaluate(() => window.__SCENE__!.clipping()); }
   async describe() { return this.page.evaluate(() => window.__SCENE__!.describe()); }
@@ -104,10 +120,21 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const motion = Object.values(metrics.actors).map(a => a.motion);
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
+  add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
+  add('bodyOverlapMaxCm', Math.max(0, ...(metrics.bodies ?? []).map(b => b.depthCm)), e.bodyOverlapMaxCm);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
   add('drawCallsMax', metrics.perf.drawCalls.max ?? 0, e.drawCallsMax);
   add('trianglesMax', metrics.perf.triangles.max ?? 0, e.trianglesMax);
+  add('actorHitsMax', clipping.actors.length, e.actorHitsMax);
+  add('doorClosedFramesMax', Math.max(0, ...Object.values(metrics.doors ?? {}).map(d => d.closedFrames)), e.doorClosedFramesMax);
+  add('propSinkMaxCm', metrics.props.sinkMaxCm, e.propSinkMaxCm);
+  if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
+  const wheels = Object.values(metrics.wheels ?? {}).flat();
+  add('wheelSinkMaxCm', Math.max(0, ...wheels.map(w => -w.gapMinCm)), e.wheelSinkMaxCm);
+  add('wheelFloatMaxCm', Math.max(0, ...wheels.map(w => w.gapMaxCm)), e.wheelFloatMaxCm);
+  add('bikeUndrawnFramesMax', (metrics.bike?.missedFrames ?? 0) + (metrics.bike?.offFrames ?? 0), e.bikeUndrawnFramesMax);
+  add('wheelSpikeMaxCm', Math.max(0, ...wheels.map(w => w.hubSpikeCm)), e.wheelSpikeMaxCm);
   return { pass: checks.every(c => c.pass), checks };
 }

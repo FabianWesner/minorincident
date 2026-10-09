@@ -351,5 +351,17 @@ export class CourierGroundContacts {
       this.pole.set(1, 0, 0).applyQuaternion(this.footFrame); this.pole.y = 0; this.pole.add(this.forward).normalize();
       foot.ik.solve(foot.target, this.pole, this.footFrame, weight);
     }
+    // Blending in or out (crowd footwork admission, ~0.12 s): the pelvis has moved `weight` of the way to the solved
+    // height but the partially slerped legs fold less than that, so the soles dipped 2-3 cm under the floor (QA: infected
+    // feet under the floor). Lift the pelvis by whatever a heel or toe is below the ground. Crowds (maxSwing) always:
+    // their instance frame can drop under feet locked in world space (a hit pop), dipping the soles up to 5 cm.
+    if (weight < 1 || style?.maxSwing) {
+      let deficit = 0;
+      for (const foot of this.feet) {
+        const end = foot.ik.end; end.getWorldPosition(this.joint); end.getWorldQuaternion(this.footFrame);
+        for (const x of [-heel, toe]) deficit = Math.max(deficit, ground - soleDepth - (this.joint.y + this.delta.set(x, -soleDepth, 0).applyQuaternion(this.footFrame).y));
+      }
+      if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.delta).y; rig.hip.updateWorldMatrix(true, true); }
+    }
   }
 }

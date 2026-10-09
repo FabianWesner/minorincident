@@ -30,7 +30,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // A rescued or startled ally does not run for a refuge: it is a fighter (state stays a live human state).
   if (c.state !== 'calm') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }
   if (c.story && c.story.clip === 'swing' && tick - c.story.start > 30 && tick >= a.forceUntil) c.story = null;
-  if (a.forceUntil > tick) { if (!c.story || c.story.clip !== 'swing' || tick - c.story.start > 40) c.story = { clip: 'swing', start: tick }; return true; }
+  // Forcing the doors: a looping halligan heave (or the directing gesture), seeded per person so the crew never moves in sync.
+  const forcing = a.forceClip ?? 'ff-pry';
+  if (c.story && c.story.clip === forcing && tick >= a.forceUntil) c.story = null;
+  if (a.forceUntil > tick) { if (c.story?.clip !== forcing) c.story = { clip: forcing, start: tick - (e.id * 17) % 40 }; return true; }
   const leader = a.follow ? world.entities.get(a.follow.targetId) : undefined, follower = !!a.follow && !!leader && leader.health.current > 0;
   // Squad: a member that has fallen behind runs to the player first; on the run it only fights what is at arm's length,
   // never a target down the street (a straggler grabbed behind the running group is on his own).

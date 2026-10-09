@@ -1,3 +1,5 @@
+import type { Inspection } from './debug/Inspection';
+import { LevelOneBot } from './debug/bot/LevelOneBot';
 import { LevelThreeBot } from './debug/bot/LevelThreeBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { GameUI } from './ui/GameUI';
@@ -47,7 +49,8 @@ export class Game {
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
-  driver: Driver | LevelThreeBot | LevelTwoBot | null = null;
+  inspect: Inspection | null = null;
+  driver: LevelOneBot | Driver | LevelThreeBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -57,6 +60,8 @@ export class Game {
   /** Level loaded behind the title/menus (load lane): consumed by the matching loadLevel. */
   private speculative: { id: string; seed: number } | null = null;
   private speculativeRunning = false;
+  /** How the current mission level was started (restart replays it; campaign is the state at level start). */
+  private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null } | null = null;
   /** A level pick may arrive before the menu preload finishes its layout/audio awaits. */
   private preloadForeground = false;
   /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
@@ -101,14 +106,15 @@ export class Game {
       if (!this.loading && !this.view.contextLost && this.view.warming) this.view.update(1);
       else if (!this.loading && !this.view.contextLost) {
         if (document.hidden) this.clock.pause();
-        if (!this.clock.paused) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
+        if (!this.clock.paused && !this.inspect?.enabled) this.quality.observe(Math.max(this.frameMs, this.simulatedFrameMs), seconds, Boolean(this.world.missions?.state.cinematic));
         // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
         const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
         if (!this.clock.paused) this.view.frame(seconds * slow);
         const start = performance.now();
         this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
-        if (!this.clock.paused || this.restoredWhilePaused) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
+        this.inspect?.update(seconds);
+        if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       this.ui.update();
       this.overlay?.update(seconds);
@@ -125,10 +131,10 @@ export class Game {
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
     if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
-      this.speculative = null; this.view.missionHidden = false; this.view.unfreeze();
+      this.speculative = null; this.levelStart = null; this.view.missionHidden = false; this.view.unfreeze();
       this.loading = true; this.restoredWhilePaused = false;
       try {
-        await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
+        await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
         if (name !== null) { this.world.loadScenario(name, seed); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
@@ -152,7 +158,7 @@ export class Game {
       // A level already loaded behind the menus only needs the campaign, audio and UI steps it skipped.
       const ready = this.speculative;
       if (!speculative && ready && ready.id === id && (opts?.seed ?? 1) === ready.seed && !opts?.tier && !opts?.checkpoint && !opts?.progression && !performanceScenario && this.world.missions?.def.id === id) {
-        this.speculative = null;
+        this.speculative = null; this.noteLevelStart(id, opts);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if (quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if (this.campaign) { this.applyCampaign(); if (id === 'L1') this.world.combat?.clearLoadout(); this.watchCampaign(); }
@@ -165,15 +171,16 @@ export class Game {
       this.loading=true; this.restoredWhilePaused = false;
       try{
         if(opts?.progression)this.campaign=preset(opts.progression);
+        if (!speculative && !(opts?.checkpoint && this.levelStart?.id === id)) this.noteLevelStart(id, opts, !!performanceScenario);
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); return; }
         if (!speculative) this.campaignUI.reset();
         // Keep the current picture (title backdrop) on screen while the level loads and warms up.
-        if (id === 'L1' && this.params.get('test') !== '1') this.view.freeze();
+        if ((id === 'L1' || id === 'L2') && this.params.get('test') !== '1') this.view.freeze();
         const start=performance.now();
         const {composition,layouts}=opts?.source??await loadLayouts(id,opts?.tier,async(url)=>{const r=await fetch(assetUrl(url));if(!r.ok)throw new Error(`Layout request failed: ${url}`);return r.json();});
         const data=loadMeasure('level:layouts',start);
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -194,6 +201,16 @@ export class Game {
       }catch(error){ this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
+  }
+  private noteLevelStart(id: string, opts?: { seed?: number; tier?: Tier; source?: unknown; setup?: unknown }, perf = false): void {
+    this.levelStart = !perf && !opts?.source && !opts?.setup && missionIds.includes(id as MissionId) ? { id, seed: opts?.seed, tier: opts?.tier, campaign: this.campaign ? structuredClone(this.campaign) : null } : null;
+  }
+  get canRestartLevel(): boolean { return this.levelStart !== null && !this.loading; }
+  /** Restart the current level from its very beginning: same level, campaign state and options as at level start (a seedless level draws a new run seed). */
+  restartLevel(): Promise<void> {
+    const start = this.levelStart; if (!start) return Promise.reject(new Error('No level to restart'));
+    if (start.campaign) this.campaign = structuredClone(start.campaign);
+    return this.loadLevel(start.id, { seed: start.seed, tier: start.tier });
   }
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
@@ -236,7 +253,7 @@ export class Game {
     if (!this.clock.paused) throw new Error('step requires pause()');
     if (!this.world.scenario) throw new Error('step requires a loaded scenario');
     for (let i = 0; i < ticks; i++) this.simTick();
-    await this.refreshView(); this.view.update(1); this.ui.update();
+    await this.refreshView(); this.inspect?.update(0); this.view.update(1); this.ui.update();
   }
   private wasDead = false;
   private simTick(): void {
@@ -250,6 +267,7 @@ export class Game {
     if (this.wasDead && !dead) { this.input.release(); this.world.controls.reset(); }
     this.wasDead = dead;
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
+    else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
@@ -257,7 +275,7 @@ export class Game {
     }
     if (this.world.infected) {
       // The director sees the tick pose, never a render-rate interpolated one (determinism across displays).
-      this.view.view.present(1);
+      this.view.view.present(1, true);
       this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
       this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
     }
@@ -294,5 +312,5 @@ export class Game {
     const restore = this.levelQueue.then(async () => { this.loading = true; try { await this.view.restoreContext(); this.restoredWhilePaused = true; } finally { this.loading = false; this.clock.pause(); this.ticker.reset(); } });
     this.levelQueue = restore.catch(error => console.error(error));
   };
-  dispose(): void { this.campaignUI?.dispose(); this.ui.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
+  dispose(): void { this.inspect?.dispose(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.campaignUI?.dispose(); this.ui.dispose(); document.removeEventListener('visibilitychange', this.visibility); this.view.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost); this.view.renderer.domElement.removeEventListener('webglcontextrestored', this.contextRestored); this.overlay?.dispose(); this.quality.dispose(); this.ticker.dispose(); this.clock.dispose(); this.services.dispose(); }
 }

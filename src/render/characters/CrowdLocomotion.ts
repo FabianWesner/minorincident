@@ -19,7 +19,7 @@ export interface CrowdLayers {
   lurch?: number;
 }
 /** Clips that stand on their feet: footwork locks the feet and turns become steps. */
-const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'civ-startle', 'windup', 'swing', 'hurt']);
+const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'civ-startle', 'windup', 'swing', 'hurt']);
 /** Crowd gait styles: stance (cycle fraction), run blend, knee scale. Shorter stance at speed keeps chibi legs within reach. */
 const gaitStyles: Record<string, { stance: number; run: number; knee?: number }> = {
   walk: { stance: .55, run: 0 }, 'npc-walk': { stance: .55, run: 0 }, 'npc-walk-relaxed': { stance: .56, run: 0, knee: .9 }, 'npc-carry': { stance: .56, run: 0, knee: .9 }, 'npc-cane': { stance: .6, run: 0, knee: .8 },
@@ -58,6 +58,7 @@ export class CrowdLocomotion {
   private readonly world: Matrix4[];
   private readonly inverse = new Matrix4();
   private readonly scale = new Vector3();
+  private readonly point = new Vector3();
   private readonly rotation = new Quaternion();
   private readonly rig: CharacterRig;
   private readonly contacts = new Map<number, GroundContacts>();
@@ -148,7 +149,18 @@ export class CrowdLocomotion {
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       paws.update(phase, stride, 'corgi-trot');
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
+    if (layers && !this.animal) this.ground();
     this.store(pose, instance);
+  }
+  /** Pose layers (hunch, lunge, flinch) pivot the legs with the pelvis: lift the pelvis by whatever heel or toe they
+   * pushed under the floor (QA: infected feet 2-6 cm under the floor at melee range). Same sole points as the probe. */
+  private ground(): void {
+    const { hip, footL, footR } = this.rig;
+    if (!hip || !footL || !footR || !this.sole) return;
+    const floor = this.frame.getWorldPosition(this.point).y;
+    let deficit = 0;
+    for (const foot of [footL, footR]) for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.point.set(x, -this.sole, 0).applyMatrix4(foot.matrixWorld).y);
+    if (deficit > 1e-4) { hip.position.y += deficit / hip.parent!.getWorldScale(this.scale).y; hip.updateMatrixWorld(true); }
   }
   reset(id: number): void { this.contacts.get(id)?.reset(); this.paws.get(id)?.reset(); }
   /**

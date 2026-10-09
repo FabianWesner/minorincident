@@ -1,4 +1,5 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
+import type { Page } from '@playwright/test';
 import { boot, expect, test, testUrl } from './fixtures';
 
 /** Same emulated display pacing as camera-smooth.spec.ts: synthetic RAF timestamps, one virtual frame per real frame. */
@@ -85,4 +86,100 @@ for (const [name, steps] of Object.entries(pacings)) test(`T-E04-present-${name}
   expect(result.blob, 'courier footprint jitter px RMS').toBeLessThanOrEqual(.25);
   expect(result.corgiBlob, 'corgi footprint jitter px RMS').toBeLessThanOrEqual(.25);
   expect(creep, 'planted feet stay put').toBeLessThan(.01);
+});
+
+/** PO (PROD, verbatim): "There is still flickering when I move around, but not always. The figure can run/drive smooth, but
+ * after a pause it's flickering a lot when moving. Dog or area never flickers." / "Flickering happen on bike, not while walking".
+ * Any clock pause (pause menu, hidden tab) zeroes the fixed-step accumulator, which lines the tick boundary up with vsync:
+ * 60 Hz scatter then alternates 0/2 ticks per frame, and every presented transform must still move smoothly. */
+type RideSample = { t: number; tick: number; clip: string; screen: Record<string, number[]>; bikeY: number; world: number[]; hip: number[]; seat: number[] | null };
+const installPacing = (page: Page, pattern: readonly number[]) => page.addInitScript((steps: number[]) => {
+  const real = window.requestAnimationFrame.bind(window);
+  let lastReal = -1, virtual = 0, frame = 0;
+  window.requestAnimationFrame = (callback: FrameRequestCallback) => real((now) => { if (now !== lastReal) { lastReal = now; virtual += steps[frame++ % steps.length]; } callback(virtual); });
+}, [...pattern]);
+/** Holds `keys` for `ms` (virtual) and records every frame after `settle` ms: screen points of bike and rider, sim tick, bike height.
+ * Then lets the bike coast to a stop. */
+const rideFrames = async (page: Page, keys = ['w', 'a'], ms = 2200, settle = 700): Promise<RideSample[]> => {
+  for (const key of keys) await page.keyboard.down(key);
+  const samples = await page.evaluate(({ ms, settle }) => new Promise<RideSample[]>((resolve) => {
+    const api = window.__SS__!, out: RideSample[] = []; let start = -1;
+    const screen = (p: number[]) => { const s = api.camera.project(p[0], p[1], p[2]); return [s[0] * innerWidth / 2, s[1] * innerHeight / 2]; };
+    const record = (now: number) => {
+      if (start < 0) start = now;
+      if (now - start >= settle) {
+        const render = api.getState().render, c = render.character!, b = render.bicycle;
+        const points: Record<string, number[]> = { root: screen(c.position), pelvis: screen(c.pelvis!), head: screen(c.head!), footL: screen(c.feet![0]), footR: screen(c.feet![1]) };
+        if (b) { points.bike = screen(b.position); if (b.seat) points.seat = screen(b.seat); }
+        points.street = screen([-40, 0, 4]); // diagnostic: a fixed point on the pavement (camera presentation only)
+        out.push({ t: now - start, tick: api.tick(), clip: c.clip ?? '', screen: points, bikeY: b?.position[1] ?? 0, world: c.position, hip: c.pelvis!, seat: b?.seat ?? null });
+      }
+      if (now - start < ms) requestAnimationFrame(record); else resolve(out);
+    };
+    requestAnimationFrame(record);
+  }), { ms, settle });
+  for (const key of keys) await page.keyboard.up(key);
+  await page.waitForTimeout(3000);
+  return samples;
+};
+/** `jitter` per screen point, skipping 100 ms windows where the bike changes paving height (kerbs and slabs are real steps). */
+const rideJitter = (samples: RideSample[]): Record<string, number> => {
+  const keep: RideSample[] = [];
+  for (let start = 0; start < samples.length;) {
+    let end = start; while (end < samples.length && samples[end].t - samples[start].t < 100) end++;
+    const ys = samples.slice(start, end).map((s) => s.bikeY);
+    if (Math.max(...ys) - Math.min(...ys) < .001) keep.push(...samples.slice(start, end));
+    start = end;
+  }
+  const t = keep.map((s) => s.t), out: Record<string, number> = { frames: keep.length };
+  for (const key of Object.keys(samples[0].screen)) out[key] = Math.hypot(jitter(t, keep.map((s) => s.screen[key][0])), jitter(t, keep.map((s) => s.screen[key][1])));
+  return out;
+};
+const ticksPerFrame = (samples: RideSample[]) => samples.slice(1).reduce<Record<number, number>>((n, s, i) => { const k = s.tick - samples[i].tick; n[k] = (n[k] ?? 0) + 1; return n; }, {});
+
+test('T-E19-ride-present-after-pause @E19 courier on the bike presents smoothly after idling, a pause and a hidden tab (vsync-60hz)', async ({ page }) => {
+  test.setTimeout(240_000);
+  // Defaults keep the gate short; the lane measured 5/15/30 s idle and a 10 s pause with RIDE_IDLE_MS / RIDE_PAUSE_MS.
+  const idleMs = Number(process.env.RIDE_IDLE_MS ?? 5000), pauseMs = Number(process.env.RIDE_PAUSE_MS ?? 3000);
+  await installPacing(page, pacings['vsync-60hz']);
+  await boot(page, `${testUrl}&skin=1`);
+  await page.evaluate(() => window.__SS__!.loadLevel('L1', { seed: 1 }));
+  await page.getByRole('button', { name: 'Begin mission' }).click();
+  await page.evaluate(async () => {
+    const a = window.__SS__!; a.pause();
+    const bike = a.getState().entities.find(e => e.bicycle)!;
+    a.teleport('player', { x: bike.transform.x + .9, z: bike.transform.z }); a.input.set({ interact: true }); await a.step(1); a.input.set({ interact: false }); await a.step(40);
+    a.input.clear(); a.teleport('player', { x: -34, z: 0 }); await a.step(5); a.resume();
+  });
+  const runs: Record<string, RideSample[]> = {};
+  // Every run rides west down the main road (asphalt z -2.5..2.5) from the same spot; the teleport keeps her seated.
+  // A first unmeasured ride swings the bike round from its parking heading so all runs share the straight line.
+  const back = () => page.evaluate(() => window.__SS__!.teleport('player', { x: -34, z: 0 }));
+  await rideFrames(page); await back();
+  runs.first = await rideFrames(page);
+  await back(); await page.waitForTimeout(idleMs); // standing still on the bike
+  runs.idle = await rideFrames(page);
+  // Pause menu: the same clock.pause()/resume path (accumulator zeroed, ticker reset).
+  await page.evaluate(() => window.__SS__!.pause()); await back(); await page.waitForTimeout(pauseMs); await page.evaluate(() => window.__SS__!.resume());
+  runs.paused = await rideFrames(page);
+  await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); });
+  await back(); await page.waitForTimeout(2000);
+  await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => false }); document.dispatchEvent(new Event('visibilitychange')); window.__SS__!.resume(); });
+  runs.hidden = await rideFrames(page);
+  const report: Record<string, { jitterPx: Record<string, number>; travelM: number; seatedM: number; ticksPerFrame: Record<number, number>; clips: string[] }> = {};
+  for (const [name, samples] of Object.entries(runs)) {
+    const travel = Math.hypot(samples.at(-1)!.world[0] - samples[0].world[0], samples.at(-1)!.world[2] - samples[0].world[2]);
+    const seated = Math.max(...samples.filter((s) => s.seat).map((s) => Math.hypot(s.hip[0] - s.seat![0], s.hip[1] - s.seat![1] + .04, s.hip[2] - s.seat![2])));
+    report[name] = { jitterPx: rideJitter(samples), travelM: travel, seatedM: seated, ticksPerFrame: ticksPerFrame(samples), clips: [...new Set(samples.map((s) => s.clip))] };
+  }
+  mkdirSync('test-results/epics/E19', { recursive: true });
+  writeFileSync('test-results/epics/E19/ride-present-after-pause.json', JSON.stringify(report, null, 2) + '\n');
+  writeFileSync('test-results/epics/E19/ride-present-frames.json', JSON.stringify(runs));
+  for (const [name, r] of Object.entries(report)) {
+    expect(r.clips, `${name}: riding`).toEqual(['ride']);
+    expect(r.travelM, `${name}: the bike moves`).toBeGreaterThan(4);
+    expect(r.jitterPx.frames, `${name}: flat frames measured`).toBeGreaterThan(40);
+    expect(r.seatedM, `${name}: pelvis stays on the saddle`).toBeLessThan(.01);
+    for (const key of ['bike', 'seat', 'root', 'pelvis', 'head', 'footL', 'footR']) expect(r.jitterPx[key], `${name}: ${key} jitter px RMS`).toBeLessThanOrEqual(.25);
+  }
 });

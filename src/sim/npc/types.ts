@@ -26,7 +26,9 @@ export interface Civilian {
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
   /** E20 §5.2 allied fighter: a live, biteable human who engages visible infected instead of fleeing (no immunity). */
   ally?: AllyState;
-  l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number };
+  l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number;
+    /** E20 rescued people: flee along a street route to a safe spot (the bridge checkpoint) instead of a refuge; never removed. */
+    haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number } };
 }
 /** E21 allied fighters v2: a handgun/rifle with a distance-dependent hit chance (one target per shot, no ammunition). */
 export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM: number; hitNear: number; hitFar: number }
@@ -50,8 +52,8 @@ export interface AllyState {
   targetId: number; nextAttack: number; hits: number;
   /** Swing/shot in progress: lands at `strikeAt` on `strikeTarget` if still in reach. */
   strikeAt?: number; strikeTarget?: number;
-  /** Door forcing beat until this tick (halligan swing clip). */
-  forceUntil: number;
+  /** Door forcing beat until this tick (halligan pry clip, or `forceClip`: the crew member directing the people inside). */
+  forceUntil: number; forceClip?: string;
 }
 export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */

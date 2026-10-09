@@ -12,6 +12,8 @@ export type MissionEvent =
   | { tick: number; type: 'gate.changed'; id: string; open: boolean }
   /** E20 set-piece beats, in order (AC06): alarm, departure, arrival, crew exit, crew at the doors, doors open, radio, gate closed. */
   | { tick: number; type: 'l2.alarm' | 'l2.truckDeparted' | 'l2.truckArrived' | 'l2.crewExit' | 'l2.firefightersAtDoors' | 'l2.doorsOpen' | 'l2.radio' | 'l2.gateClosed' }
+  /** E20 rescue set piece sound (PO 10-08): muffled banging and screams behind the glass, the forcing, distant danger. Audio only. */
+  | { tick: number; type: 'l2.cue'; cue: string; position: { x: number; z: number }; gain?: number; lowpass?: number }
   /** E20 §5.2 allied fighter strike (firefighter melee, officer shot); the hit itself is an ordinary `combat.hit`. */
   /** E21 beats: the attack starts, a wave emerges, the fallback (first-of rule), a squad member is lost, a segment is entered, the zone line crossed. */
   | { tick: number; type: 'l3.handgun' | 'l3.attack' | 'l3.crossed' }

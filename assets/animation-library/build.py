@@ -318,13 +318,17 @@ action('civ-grabbed',.8,[(0,p(hip=hip(y=-.06,twist=-12),torso=(0,-22,12),head=(0
 # Corgi warnings (E19 §5.8): stiffen (freeze low, nose and tail straight), growl
 # (head low, lips/body tremor), bark (front-paw push, head snaps up), nervous
 # (tail tucked, glances), and a rotary gallop beside the bicycle.
-stiff=p(body=(0,0,-4,0,-.03,0),head=z(4),tail=(0,0,-8),legFL=z(-8),legFR=z(-8),legBL=z(10),legBR=z(10))
+# The legs are single rigid joints: lowering or pitching the body needs the legs splayed so every paw still
+# rests on the floor (solved against char.corgi, gated by tests/unit/render/corgi-feet.test.ts). Forelegs brace forward.
+stiff=p(body=(0,0,-2,0,-.012,0),head=z(4),tail=(0,0,-8),legFL=z(22),legFR=z(22),legBL=z(2.5),legBR=z(2.5))
 action('corgi-stiffen',.5,[(0,p()),(.3,{**stiff,'head':z(8)}),(1,stiff)],dogs)
-growl=p(body=(0,0,-7,.02,-.06,0),head=z(-14),tail=(0,0,-2),legFL=z(-14),legFR=z(-14),legBL=z(14),legBR=z(14))
-action('corgi-growl',.4,[(0,growl),(.25,{**growl,'body':(0,0,-7.5,.02,-.066,0),'head':(0,1.5,-15)}),(.5,growl),(.75,{**growl,'body':(0,0,-6.5,.02,-.056,0),'head':(0,-1.5,-13)}),(1,growl)],dogs)
-action('corgi-bark',.5,[(0,stiff),(.15,{**stiff,'body':(0,0,-8,-.02,-.06,0),'head':z(-10)}),(.3,{**stiff,'body':(0,0,9,.03,.02,0),'head':z(26),'legFL':z(14),'legFR':z(10)}),
-    (.45,{**stiff,'body':(0,0,2,.01,-.01,0),'head':z(12)}),(.62,{**stiff,'body':(0,0,7,.02,.01,0),'head':z(22)}),(1,stiff)],dogs)
-nervous=p(body=(0,0,-3,0,-.04,0),head=z(-6),tail=(0,0,38),legBL=z(6),legBR=z(6))
+growl=p(body=(0,0,-3.5,.02,-.024,0),head=z(-14),tail=(0,0,-2),legFL=z(34),legFR=z(34),legBL=z(6.5),legBR=z(6.5))
+action('corgi-growl',.4,[(0,growl),(.25,{**growl,'body':(0,0,-3.8,.02,-.027,0),'head':(0,1.5,-15),'legFL':z(36.5),'legFR':z(36.5),'legBL':z(8),'legBR':z(8)}),(.5,growl),
+    (.75,{**growl,'body':(0,0,-3.2,.02,-.021,0),'head':(0,-1.5,-13),'legFL':z(32),'legFR':z(32),'legBL':z(5),'legBR':z(5)}),(1,growl)],dogs)
+action('corgi-bark',.5,[(0,stiff),(.15,{**stiff,'body':(0,0,-4,-.02,-.024,0),'head':z(-10),'legFL':z(36),'legFR':z(36),'legBL':z(4),'legBR':z(4)}),
+    (.3,{**stiff,'body':(0,0,9,.03,.02,0),'head':z(26),'legFL':z(14),'legFR':z(10),'legBL':z(16.5),'legBR':z(16.5)}),
+    (.45,{**stiff,'body':(0,0,1,.01,-.004,0),'head':z(12),'legFL':z(0),'legFR':z(0),'legBL':z(9.5),'legBR':z(9.5)}),(.62,{**stiff,'body':(0,0,7,.02,.01,0),'head':z(22),'legBL':z(17.5),'legBR':z(17.5)}),(1,stiff)],dogs)
+nervous=p(body=(0,0,-1,0,-.008,0),head=z(-6),tail=(0,0,38),legFL=z(14.5),legFR=z(14.5),legBL=z(3.5),legBR=z(3.5))
 action('corgi-nervous',2,[(0,nervous),(.18,{**nervous,'head':(0,35,-2)}),(.3,{**nervous,'head':(0,35,-2)}),(.45,nervous),(.6,{**nervous,'head':(0,-30,0)}),(.7,{**nervous,'head':(0,-30,0)}),(.85,{**nervous,'head':(0,0,-10)}),(1,nervous)],dogs)
 poses=[]
 for i in range(9):
@@ -400,6 +404,37 @@ clip=p(armL=z(46),foreArmL=z(92),handL=z(-30),head=z(-22),torso=z(-6))
 action('npc-sign',.9,[(0,p()),(.15,{**clip,'armR':z(40),'foreArmR':z(98)}),(.28,{**clip,'armR':z(42),'foreArmR':(0,12,100)}),(.4,{**clip,'armR':z(40),'foreArmR':(0,-12,98)}),(.52,{**clip,'armR':z(42),'foreArmR':(0,10,100)}),(.72,reach_out),(1,hold_box)])
 beckon=p(torso=(0,-15,-4),head=(0,15,4),armR=(-25,0,95),foreArmR=z(20),armL=(10,0,10))
 action('npc-wave-in',1,[(0,beckon),(.3,{**beckon,'armR':(-25,35,70),'foreArmR':z(70)}),(.5,{**beckon,'armR':(-25,45,55),'foreArmR':z(95)}),(.75,{**beckon,'armR':(-25,10,90),'foreArmR':z(30)}),(1,beckon)])
+# ---- E20 rescue set piece (PO 10-08 "no emergency"): trapped civilians behind the market glass and the crew forcing the doors.
+# All loop (first key == last key); the mission desyncs them with seeded start offsets.
+def fists(side, up):
+    s = -1 if side == 'R' else 1
+    return {'arm'+side: (s*8, 0, 60 if up else 84), 'foreArm'+side: z(92 if up else 34), 'hand'+side: z(-18)}
+bang_base = p(hip=hip(y=-.012), torso=z(-7), head=z(-4))
+action('npc-bang',.8,[(0,{**bang_base,**fists('L',False),**fists('R',True),'torso':(0,7,-9)}),(.25,{**bang_base,**fists('L',True),**fists('R',True)}),
+    (.5,{**bang_base,**fists('L',True),**fists('R',False),'torso':(0,-7,-9)}),(.75,{**bang_base,**fists('L',True),**fists('R',True)}),(1,{**bang_base,**fists('L',False),**fists('R',True),'torso':(0,7,-9)})])
+def overhead(r, l, bounce=0):
+    return p(hip=hip(y=-.008+bounce), torso=z(3), head=(0, 0, 10), armR=(-r, 0, 14), foreArmR=z(22), armL=(l, 0, 14), foreArmL=z(22))
+action('npc-plead',1.1,[(0,overhead(128,162)),(.25,overhead(146,146,.012)),(.5,overhead(162,128)),(.75,overhead(146,146,.012)),(1,overhead(128,162))])
+def press(lean, head_turn):
+    return p(hip=hip(x=.025, y=-.018), torso=z(-12-lean), head=(0, head_turn, -2), armL=(6, 0, 78+lean), foreArmL=z(28-lean), handL=z(-55), armR=(-6, 0, 78+lean), foreArmR=z(28-lean), handR=z(-55))
+action('npc-press',1.1,[(0,press(0,18)),(.22,press(5,16)),(.4,press(0,-4)),(.6,press(5,-22)),(.8,press(0,-14)),(1,press(0,18))])
+# Crouched with the hands over the face, rocking (crying). Thigh 80 deg forward, shin -40 deg absolute, feet flat.
+def cower(rock, shake=0):
+    return p(hip=hip(y=-.255), legL=z(80), shinL=z(-120), footL=z(40), legR=z(76), shinR=z(-116), footR=z(40),
+        torso=(0, shake, -28-rock), head=(0, -shake, -22), armL=(-12, 0, 40), foreArmL=z(128), handL=z(-20), armR=(12, 0, 40), foreArmR=z(128), handR=z(-20))
+action('npc-cower',1.6,[(0,cower(0)),(.25,cower(8,4)),(.5,cower(0,-4)),(.75,cower(8,4)),(1,cower(0))])
+# Holding a child against the body, glancing back over the shoulder into the shop.
+hold_child = p(hip=hip(y=-.03), torso=z(-14), head=z(-18), armL=(-22, 0, 42), foreArmL=z(78), armR=(22, 0, 42), foreArmR=z(78))
+action('npc-hug',1.4,[(0,hold_child),(.3,{**hold_child,'head':z(-20),'torso':(0,4,-15)}),(.45,{**hold_child,'head':(0,58,2),'torso':(0,16,-10)}),(.62,{**hold_child,'head':(0,52,0),'torso':(0,14,-10)}),(.8,hold_child),(1,hold_child)])
+# Firefighter heaving on a halligan bar wedged at chest height: push in, heave back, strain, reset.
+def pry(lean, back, arm, fore):
+    return p(hip=hip(x=back, y=-.05, twist=-6), legL=z(26), shinL=z(-30), legR=z(-12), shinR=z(-12), torso=(0, 6, lean), head=(0, -6, -lean*.4),
+        armL=(-14, 0, arm), foreArmL=z(fore), handL=z(-10), armR=(14, 0, arm-6), foreArmR=z(fore+6), handR=z(-10))
+action('ff-pry',.9,[(0,pry(-18,.03,70,24)),(.3,pry(10,-.045,46,30)),(.45,pry(13,-.055,44,28)),(.55,pry(10,-.045,46,32)),(.8,pry(-8,.0,60,26)),(1,pry(-18,.03,70,24))])
+# Firefighter waving the people back from the glass: palm out, pumping.
+def stand_back(arm, lean):
+    return p(torso=z(lean), head=(0, -10, 6), armR=(-8, 0, arm), foreArmR=z(10), handR=z(-70), armL=(22, 0, 32), foreArmL=z(44))
+action('npc-stand-back',.8,[(0,stand_back(82,-4)),(.3,stand_back(98,2)),(.5,stand_back(84,-3)),(.75,stand_back(98,2)),(1,stand_back(82,-4))])
 action('rack-grab',2,[(0,p()),(.14,p(armR=(0,0,150),foreArmR=z(20),head=z(22),torso=z(6),hip=hip(y=.02))),(.26,p(armR=(0,0,158),foreArmR=z(28),head=z(24),torso=z(8))),
     (.42,p(armR=z(80),foreArmR=z(60),head=z(-6),armL=z(40),foreArmL=z(60))),(.58,p(hip=hip(y=-.04,twist=-14),torso=(0,-40,6),armR=(0,-40,62),foreArmR=z(95),handR=z(0),armL=(20,-55,56),foreArmL=z(72))),
     (.68,p(hip=hip(x=.06,y=-.03,twist=14),torso=(0,32,-10),armR=(10,45,90),foreArmR=z(8),handR=z(-90),armL=(-10,30,84),foreArmL=z(14))),(.82,p(armR=(0,-20,40),foreArmR=z(125),head=z(4))),(1,p())])
@@ -450,8 +485,10 @@ for name,duration in [('corgi-walk',.7),('corgi-trot',.46)]:
             pose['leg'+side]=z(angles[(i+offset)%8])
         poses.append((i/8,pose))
     action(name,duration,poses,dogs)
-sit=p(body=(0,0,18,0,-.12,0),head=z(-18),legBL=z(-55),legBR=z(-55),legFL=z(-15),legFR=z(-15),tail=(0,15,0))
-action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,12,0,-.08,0)}),(1,sit)],dogs)
+# Sit: the rump rests on the floor, forelegs upright, hind legs folded forward under the belly with the paws on the floor
+# (the old 18 deg / -12 cm sit put the rump 12 cm and the hind paws 23 cm under the floor).
+sit=p(body=(0,0,8,0,-.062,0),head=z(-4),legBL=z(44.5),legBR=z(44.5),legFL=z(1.5),legFR=z(1.5),tail=(0,15,0))
+action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,5,0,-.04,0),'legBL':z(35),'legBR':z(35),'legFL':z(2.5),'legFR':z(2.5)}),(1,sit)],dogs)
 
 action('infected-flight',.35,[(0,p()),(.25,p(wingL=(35,0,0),wingR=(-35,0,0))),(.5,p()),(.75,p(wingL=(-45,0,0),wingR=(45,0,0))),(1,p())],['body','head','wingL','wingR'])
 action('animal-death',.6,[(0,p()),(.35,p(body=(0,0,35,0,-.08,0),head=z(-15))),(.75,p(body=(0,0,85,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15))),(1,p(body=(0,0,90,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15)))],dogs+['wingL','wingR'])

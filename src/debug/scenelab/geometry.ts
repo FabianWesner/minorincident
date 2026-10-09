@@ -88,6 +88,27 @@ export function staticClipping(sets: TriangleSet[], ignore: (a: TriangleSet, b: 
   return out.sort((x, y) => y.intersectingTriangles - x.intersectingTriangles);
 }
 
+/** Shortest distance between segments p0-p1 and q0-q1 (metres). */
+export function segmentDistance(p0: Vec3, p1: Vec3, q0: Vec3, q1: Vec3): number {
+  const d1 = [0, 1, 2].map(k => p1[k] - p0[k]), d2 = [0, 1, 2].map(k => q1[k] - q0[k]), r = [0, 1, 2].map(k => p0[k] - q0[k]);
+  const dot = (a: number[], b: number[]) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const a = dot(d1, d1), e = dot(d2, d2), f = dot(d2, r), clamp = (v: number) => Math.max(0, Math.min(1, v));
+  let s = 0, t = 0;
+  if (a <= 1e-9 && e <= 1e-9) return Math.sqrt(dot(r, r));
+  if (a <= 1e-9) t = clamp(f / e);
+  else {
+    const c = dot(d1, r);
+    if (e <= 1e-9) s = clamp(-c / a);
+    else { const b = dot(d1, d2), den = a * e - b * b; s = den > 1e-9 ? clamp((b * f - c * e) / den) : 0; t = (b * s + f) / e; if (t < 0) { t = 0; s = clamp(-c / a); } else if (t > 1) { t = 1; s = clamp((b - c) / a); } }
+  }
+  return Math.hypot(...[0, 1, 2].map(k => p0[k] + d1[k] * s - q0[k] - d2[k] * t));
+}
+/** Torso-on-torso interpenetration of two actors: deepest overlap (m) of their spine, neck and head capsules, 0 if apart. */
+export function bodyOverlap(a: Bone[], b: Bone[]): number {
+  let depth = 0;
+  for (const x of a) for (const y of b) depth = Math.max(depth, x.radius + y.radius - segmentDistance(x.a, x.b, y.a, y.b));
+  return depth;
+}
 /** A rig bone as a capsule centre line; `radius` approximates the limb's flesh thickness. */
 export interface Bone { name: string; a: Vec3; b: Vec3; radius: number }
 export interface BoneHit { bone: string; prop: string; asset: string; crossing: boolean; clearanceCm: number; /** World point where the bone centre line pierces the surface, in metres. */ at?: Vec3 }
