@@ -29,7 +29,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
-  | { type: 'attack'; target: string; until: number }
+  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT' }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'interact' };
 interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number }
@@ -205,7 +205,8 @@ export class SceneLab {
       if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
-      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2) };
+      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT' };
+      else if ('select' in a) world.combat!.runner.loadout.state.selectedSide = a.select;
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
       else if ('interact' in a) actor.plan = { type: 'interact' };
@@ -385,7 +386,7 @@ export class SceneLab {
     } else if (plan?.type === 'attack') {
       const target = this.actors.get(plan.target);
       if (!target || this.frame >= plan.until) courier.plan = null;
-      else { frame.attackTarget = { id: target.entity, side: 'LEFT' }; frame.left = { down: false, held: true, up: false }; }
+      else { frame.attackTarget = { id: target.entity, side: plan.side }; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'interact') {
       frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
