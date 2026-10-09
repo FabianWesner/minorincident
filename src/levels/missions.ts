@@ -38,9 +38,6 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
     s.onStart = [{ kind: 'spawn', group: id }]; return s;
   };
   const checkpoint = (s: ObjectiveDef) => { def.checkpoints.push(s.id); (s.onStart ??= []).push({ kind: 'checkpoint', id: s.id }); };
-  const defend = (key: string, text: string, at: string, target: string, seconds: number) => {
-    const s = step(key, 'defend', text, at, { kind: 'hold', anchor: at, seconds }); s.fail = [{ trigger: { kind: 'dead', actor: target }, reason: 'target-destroyed' }]; s.onStart = [{ kind: 'spawn', group: target }]; checkpoint(s); return s;
-  };
   let end: string;
   switch (id) {
     case 'L1': {

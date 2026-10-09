@@ -26,7 +26,7 @@ export const l5 = {
   medkits: { heal: 40, positions: [[45.5, 20], [30, -37.2], [-4, -37.2], [-22, 15], [-30.5, -2], [-44, 39.4], [58, 42.5]] as readonly P[] },
   checkpoints: ['outside', 'survivor-1', 'survivor-2', 'survivor-3', 'survivor-4', 'survivor-5'] as const,
   /** Bots (section 8). Bands are provisional until the first green run; never padded. */
-  bots: { seeds: 20, completeMedianS: [120, 240] as P, newbieMedianS: [150, 300] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
+  bots: { seeds: 20, completeMedianS: [100, 240] as P, newbieMedianS: [130, 300] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
 } as const;
 
 /** The L4 end loadout (specs/epic-23 AC12): axe and bat on the left, the machine gun, the handgun and the kick on the right. */
@@ -56,15 +56,15 @@ export interface L5Survivor {
 const column = l4Route(), truck = l4RoutePose(column, l4ConvoyStations(column.length).end[3]);
 export const l5Survivors: readonly L5Survivor[] = [
   { key: 'dale', name: 'Dale', model: 'npc.dale.aftermath', role: 'mechanic', place: 'the cab of a wrecked military truck on the plaza', cover: 'behind', hideAt: [truck.x, truck.z], ringAt: [truck.x, truck.z - 3.1], outAt: [truck.x + 1, truck.z - 3.3],
-    cue: { id: 'l5.cue.dale', text: 'Someone is banging on metal, close by.' }, found: 'You… you\'re real. Take me with you.' },
+    cue: { id: 'L5.cue.dale', text: 'Someone is banging on metal, close by.' }, found: 'You… you\'re real. Take me with you.' },
   { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], outAt: [59.2, 41.9],
-    cue: { id: 'l5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
+    cue: { id: 'L5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
   { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], outAt: [-32.6, -2.7],
-    cue: { id: 'l5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please — take me with you.' },
-  { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-31.9, -49], ringAt: [-30.2, -44.3], outAt: [-30.2, -43.0],
-    cue: { id: 'l5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
-  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-2.5, 46.3], ringAt: [-2.5, 42.6], outAt: [-1.2, 42.6],
-    cue: { id: 'l5.cue.sam', text: 'A flashlight blinks inside a wrecked bus.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
+    cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please — take me with you.' },
+  { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-77.7, -49.2], ringAt: [-76.2, -44.4], outAt: [-76.2, -43.1],
+    cue: { id: 'L5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
+  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], outAt: [-43.8, 42.6],
+    cue: { id: 'L5.cue.sam', text: 'A flashlight blinks inside a wrecked bus.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
 ];
 
 /** Named world points authored into the L5 layout copy (the cellar anchors come from the layout's own cellar placement). */
@@ -72,7 +72,7 @@ export const l5Anchors: Record<string, P> = {
   'l5-out': [67.2, 27.6],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [37.8, -43.4],
-  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-2.5, 42.4], 'photo-l5-group-of-five': [24, -39], 'photo-l5-metro-shelter': [37.8, -43.2],
+  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [24, -39], 'photo-l5-metro-shelter': [37.8, -43.2],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
@@ -82,8 +82,8 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
 
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
 export const l5Wanderers: readonly { at: P; n: number }[] = [
-  { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-30, 5], n: 1 }, { at: [49, -22], n: 1 }, { at: [22, -37.4], n: 1 },
-  { at: [-44, 39.8], n: 2 }, { at: [-52, -12], n: 1 }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
+  { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [49, -22], n: 1 }, { at: [22, -37.4], n: 1 },
+  { at: [-26, 40], n: 2 }, { at: [-52, -12], n: 1 }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [-58, -34], n: 1 }, { at: [10, 13], n: 1 },
 ];
 
