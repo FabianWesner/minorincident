@@ -6,11 +6,16 @@ const target = process.argv[2];
 const selection = selectionFor(target);
 const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
+const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
+// Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
+const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, '--', 'npx', ...simArgs]
+  : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
-  ['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  simCommand,
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],

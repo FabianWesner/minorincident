@@ -110,8 +110,8 @@ export function dopplerRate(emitter: SoundPosition, velocity: SoundPosition, lis
     return Math.max(0.5, Math.min(2, (343 - receiver) / (343 - source)));
 }
 /** Deterministic exponential-noise IR, mono and ≤1.5s. normalize=false preserves authored wet levels. */
-export function impulse(context: BaseAudioContext, preset: ReverbPreset, low = false): AudioBuffer {
-    const rt = reverbPresets[preset].rt60, length = Math.ceil(Math.min(low ? 0.8 : 1.5, rt * 1.2) * context.sampleRate);
+export function impulse(context: BaseAudioContext, preset: ReverbPreset, low = false, damping = 1): AudioBuffer {
+    const rt = reverbPresets[preset].rt60 * damping, length = Math.ceil(Math.min(low ? 0.8 : 1.5, rt * 1.2) * context.sampleRate);
     const buffer = context.createBuffer(1, length, context.sampleRate), data = buffer.getChannelData(0), rng = new Rng(16, preset);
     const scale = 2 / Math.sqrt(context.sampleRate * rt);
     for (let i = 0; i < length; i++) {

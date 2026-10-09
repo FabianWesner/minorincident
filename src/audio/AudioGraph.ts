@@ -146,9 +146,17 @@ export class AudioGraph {
             voice.send.disconnect(); voice.send.connect(this.zones[0].node);
         }
     }
+    weatherDamping = 1;
+    setWeather(kind: string): void {
+        const damping = kind === 'snow' ? .45 : kind === 'fog' ? .6 : kind === 'ash' ? .7 : 1;
+        if (damping === this.weatherDamping) return;
+        this.weatherDamping = damping; this.impulses.clear();
+        for (const zone of this.zones) zone.node.buffer = this.ir(zone.preset);
+        this.ambienceFilter.frequency.value = damping < 1 ? 3500 : 20000;
+    }
     private ir(preset: ReverbPreset): AudioBuffer {
         if (!this.impulses.has(preset))
-            this.impulses.set(preset, impulse(this.context, preset, this.tier === 'low'));
+            this.impulses.set(preset, impulse(this.context, preset, this.tier === 'low', this.weatherDamping));
         return this.impulses.get(preset)!;
     }
     setListener(p: SoundPosition, velocity?: SoundPosition): void {

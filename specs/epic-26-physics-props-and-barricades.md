@@ -25,7 +25,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
-| E26-AC01 | Every movable asset's `ss_physics` validates (class mass bands, collider AABB within 15% of the visual, center of mass inside, explosive refs exist) | static |
+| E26-AC01 | Every movable asset's `ss_physics` validates (environment prop class mass bands; vehicles retain the tuned E09 vehicle mass bands, collider AABB within 15% of the visual, center of mass inside, explosive refs exist) | static |
 | E26-AC02 | Sleeping: in `prop-yard` (300 props) with no interaction, 0 bodies are awake after 1 s, and the instanced matrix upload count is 0 per frame | sim/perf |
 | E26-AC03 | Push: walking into a medium prop (35 kg cart) moves it along the push direction while the player moves at 55% ±5% speed; a heavy prop doesn't move without the upgrade | sim |
 | E26-AC04 | Kick: kicking a cone along the aim launches it at 6 m/s ±0.5; a launched cone hitting a runner at > 4 m/s deals momentum damage and knocks it down (`combat.hit` cause `prop`) | sim |
