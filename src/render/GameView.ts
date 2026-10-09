@@ -59,7 +59,8 @@ export function roundhouseSpin(attack: { started: number; activeAt: number; reco
   return u >= r ? 0 : -.45 + (Math.PI * 2 + .45) * (u - a) / Math.max(1, r - a);
 }
 export class GameView implements Lifecycle {
-  readonly scene = new Scene();
+  // The scene root stays at identity; moving views update their own matrices.
+  readonly scene = Object.assign(new Scene(), { matrixAutoUpdate: false });
   private missionUI: MissionUI | null = null;
   private marker: ObjectiveMarker | null = null;
   private cinematicId: string | null = null;

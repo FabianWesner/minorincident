@@ -35,7 +35,7 @@ export class CrowdPosePalette {
       while (used.has(row)) row++;
       for (let i = 0; i < this.width; i++) this.rows[row * this.width + i] = this.component(frame, i);
       (this.texture.image.data as Float32Array).set(this.rows.subarray(row * this.width, (row + 1) * this.width), row * this.width);
-      this.texture.needsUpdate = true;
+      this.dirty(row);
       state = { clip, frame, row, weight: 1, started: time - this.seconds, seen: time };
       this.states.set(id, state);
     } else if (state.clip !== clip) {
@@ -43,7 +43,7 @@ export class CrowdPosePalette {
       for (let i = 0; i < this.width; i++) this.rows[offset + i] = this.component(state.frame, i) * state.weight + this.rows[offset + i] * (1 - state.weight);
       // clipTexture owns its upload buffer; update only on clip changes.
       (this.texture.image.data as Float32Array).set(this.rows.subarray(offset, offset + this.width), offset);
-      this.texture.needsUpdate = true;
+      this.dirty(state.row);
       state.clip = clip; state.started = time; state.weight = 0;
     } else state.weight = Math.min(1, Math.max(0, (time - state.started) / this.seconds));
     state.frame = frame; state.seen = time;
@@ -67,9 +67,14 @@ export class CrowdPosePalette {
       this.position.lerp(this.previousPosition, 1 - weight); this.rotation.slerp(this.previousRotation, 1 - weight); this.scale.lerp(this.previousScale, 1 - weight);
       this.currentMatrix.compose(this.position, this.rotation, this.scale).toArray(pose, i);
     }
-    correct(pose); this.texture.needsUpdate = true;
+    correct(pose); this.dirty(row);
     this.states.get(id)!.frame = row; this.states.get(id)!.weight = 1;
     return row;
+  }
+  /** Only mutable pose rows change; the baked atlas stays resident on both backends. */
+  private dirty(row: number): void {
+    this.texture.addUpdateRange(row * this.width, this.width);
+    this.texture.needsUpdate = true;
   }
   /** True when every matrix component of atlas row `row` is finite. */
   finite(row: number): boolean {
