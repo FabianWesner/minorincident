@@ -65,7 +65,10 @@ export class EntityAssets extends Group {
         if (!this.disposed && this.world.entities.get(entity.id)) {
           this.records.get(entity.id)?.model.removeFromParent(); this.records.set(entity.id, { model, lod });
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
-          model.rotation.y = entity.transform.yaw; this.add(model);
+          model.rotation.y = entity.transform.yaw;
+          // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
+          if (this.low && entity.kind === 'setpiece' && !id.startsWith('veh.')) model.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+          this.add(model);
         }
       }).finally(() => this.pending.delete(entity.id));
       this.pending.set(entity.id, load);
@@ -74,11 +77,14 @@ export class EntityAssets extends Group {
   }
   update(): void {
     void this.ready();
+    const player0 = this.world.entities.get(1)?.transform;
     for (const [id, { model }] of this.records) {
       const entity = this.world.entities.get(id);
       if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
       model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
       model.rotation.y = entity.transform.yaw; model.visible = !entity.hidden && (entity.kind !== 'obstacle' || entity.health.current > 0);
+      // Phone tier: scripted set pieces (L4 convoy, tank, glass) beyond the light/camera reach are not drawn at all.
+      if (this.low && entity.kind === 'setpiece' && model.visible) { const t = this.view?.cameraTarget ?? player0; if (t && Math.hypot(entity.transform.x - t.x, entity.transform.z - t.z) > 48) model.visible = false; }
       const main = model.getObjectByName('mainRotor'), tail = model.getObjectByName('tailRotor');
       if (main) main.rotation.y = this.world.tick * .62;
       if (tail) tail.rotation.z = this.world.tick * .83;
