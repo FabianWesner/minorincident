@@ -46,7 +46,7 @@ export function l1SpeedTier(asset: string): InfectedSpeedTier {
 /**
  * Run speed of an L1 infected from its tier and a uniform sample `u` in [0, 1): base x (max - (max - low) * u^skew), where low =
  * max(max - spread, minMs / base) (specs/epic-19 section 5.4, PO 2026-10-07). Most infected run a little below today's tier base, a few at the old
- * maximum; some are slower than the running player, so a crowd strings out and fleeing works against part of it.
+ * maximum, so a crowd strings out; since PO 2026-10-09 the floor (4.4 m/s) keeps nearly every chaser a bit faster than the running courier.
  */
 export function l1TierSpeed(tier: InfectedSpeedTier, u: number): number {
   const f = l1v2.speedTiers.factor, base = l1v2.speedTiers[tier].baseMs, low = Math.max(f.max - f.spread, f.minMs / base);
