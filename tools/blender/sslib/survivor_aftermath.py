@@ -210,7 +210,7 @@ def fold_colors(root, identity):
             # Dirty gauze with a blood stain wedge (injury.py) rather than a clean white volume.
             pts = [obj.matrix_world @ v.co for v in obj.data.vertices]
             lo = Vector(tuple(min(q[k] for q in pts) for k in range(3))); hi = Vector(tuple(max(q[k] for q in pts) for k in range(3)))
-            gauze_center, gauze_length, gauze_sign = (lo + hi) / 2, hi.z - lo.z, injury.side_sign(owner)
+            gauze_center, gauze_length, gauze_sign = (lo + hi) / 2, hi.z - lo.z, injury.side_sign(owner, bpy.data.objects['armL'].matrix_world.translation.y, bpy.data.objects['armR'].matrix_world.translation.y)
         for loop in obj.data.loops:
             p = obj.matrix_world @ obj.data.vertices[loop.vertex_index].co
             col = rgb.copy()

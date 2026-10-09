@@ -191,10 +191,11 @@ def build_adult(directory, output):
             return obj
         def paint(obj, owner, length, strength=1.0):
             # Dirty paper white with a blood stain wedge (injury.py) instead of a clean sweatband cylinder.
+            if lod == 0 or (lod == 1 and base != 'npc.civilian-man-b'): injury.add_mid_ring(obj)  # man-b LOD1 sits 11 triangles under its cap
             bpy.context.view_layer.update()
             layer = obj.data.color_attributes.new(name='palette', type='FLOAT_COLOR', domain='CORNER')
             obj.data.color_attributes.active_color = layer
-            c = obj.matrix_world.translation; sign = injury.side_sign(owner, c.y)
+            c = obj.matrix_world.translation; sign = injury.side_sign(owner, joints['armL'].matrix_world.translation.y, joints['armR'].matrix_world.translation.y)
             for loop in obj.data.loops:
                 p = obj.matrix_world @ obj.data.vertices[loop.vertex_index].co
                 layer.data[loop.index].color = injury.wrap_color(p, c, sign, length, strength)
