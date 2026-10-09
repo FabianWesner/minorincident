@@ -37,14 +37,23 @@ LIST=$(mktemp "${TMPDIR:-/tmp}/mi-remote-list.XXXXXX")
 LOCK="${TMPDIR:-/tmp}/mi-remote-sync-$SLUG.lock"
 LOCKED=""
 JOB_STARTED=""
+RUN="$JOB.run"                              # detached-run state on the runner: log, pid, exit (deleted with the job dir)
+CHUNK=$(mktemp "${TMPDIR:-/tmp}/mi-remote-chunk.XXXXXX")
+LAUNCHED=""
 SSHO=""; HOST=""
 cleanup() {
-  rm -f "$LIST"
+  rm -f "$LIST" "$CHUNK"
   [ -n "$LOCKED" ] && rmdir "$LOCK" 2>/dev/null
-  [ -n "$JOB_STARTED" ] && ssh $SSHO "$HOST" "rm -rf -- $JOB" >/dev/null 2>&1
+  [ -n "$JOB_STARTED" ] && ssh $SSHO "$HOST" "rm -rf -- $JOB $RUN" >/dev/null 2>&1
+  return 0
+}
+# kill_remote: TERM the detached job's process group on the runner (the job runs under setsid, so pgid = pid).
+kill_remote() {
+  [ -n "$LAUNCHED" ] && ssh $SSHO "$HOST" "p=\$(cat $RUN/pid 2>/dev/null); [ -n \"\$p\" ] && kill -TERM -- -\$p 2>/dev/null; true" >/dev/null 2>&1
   return 0
 }
 trap cleanup EXIT
+trap 'echo "[remote] interrupted; killing remote job" >&2; kill_remote; exit 130' INT TERM HUP
 
 # File list: tracked + untracked-not-ignored, minus deleted files and dev-only heavy paths (override with --with <path>).
 MI_WITH="$WITH" python3 -I - "$WT" > "$LIST" <<'PY'
@@ -115,8 +124,43 @@ ARGS=""; for a in "$@"; do ARGS="$ARGS $(sq "$a")"; done
 ENVARGS=""; OLDIFS=$IFS; IFS='
 '; for e in $ENVS; do [ -n "$e" ] && ENVARGS="$ENVARGS $(sq "$e")"; done; IFS=$OLDIFS
 echo "[remote] sync $((T1 - T0))s, $(tr -cd '\0' < "$LIST" | wc -c | tr -d ' ') files; job $JOB; queueing for a slot"
-ssh $SSHO -T "$HOST" "cd $JOB && MI_SLUG=$SLUG MI_ENVS=$(sq "$ENVARGS") bash tools/remote/exec.sh --$ARGS"
-RC=$?
+# The job is started detached (own session, output to $RUN/log, exit code to $RUN/exit), so a dropped ssh cannot kill it.
+# Launch is idempotent (skipped when $RUN/pid exists), so ssh retries cannot start the job twice.
+INNER="cd $JOB && MI_SLUG=$SLUG MI_ENVS=$(sq "$ENVARGS") bash tools/remote/exec.sh --$ARGS; echo \$? > $RUN/exit.tmp && mv $RUN/exit.tmp $RUN/exit"
+LAUNCH="mkdir -p $RUN && { [ -f $RUN/pid ] || { nohup setsid sh -c $(sq "$INNER") > $RUN/log 2>&1 < /dev/null & echo \$! > $RUN/pid.tmp && mv $RUN/pid.tmp $RUN/pid; }; } && echo started"
+retry ssh $SSHO -T "$HOST" "$LAUNCH" >/dev/null || { echo "run.sh: could not start remote job" >&2; exit 70; }
+LAUNCHED=1
+
+# Follow the log with a reconnecting loop. Each poll reads the job state, then the log from the last byte offset,
+# so a dropped connection resumes exactly where it stopped (no duplicated or missing output). Gives up after 10 failed polls.
+off=0; fails=0; RC=""
+while [ -z "$RC" ]; do
+  ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=15 $SSHO "$HOST" "p=\$(cat $RUN/pid 2>/dev/null); if [ -n \"\$p\" ] && kill -0 \"\$p\" 2>/dev/null && [ \"\$(ps -o stat= -p \"\$p\" 2>/dev/null | cut -c1)\" != Z ]; then echo MI_STATE running; elif [ -f $RUN/exit ]; then echo MI_STATE \"\$(cat $RUN/exit)\"; else echo MI_STATE lost; fi; tail -c +$((off + 1)) $RUN/log 2>/dev/null" > "$CHUNK" 2>/dev/null
+  st=$(head -n 1 "$CHUNK" 2>/dev/null)
+  case "$st" in
+    "MI_STATE "*)
+      fails=0
+      hl=$(head -n 1 "$CHUNK" | wc -c)
+      total=$(wc -c < "$CHUNK")
+      tail -c +$((hl + 1)) "$CHUNK"
+      off=$((off + total - hl))
+      state=${st#MI_STATE }
+      case "$state" in
+        running) sleep 3 ;;
+        lost) echo "[remote] job process vanished without an exit code" >&2; RC=255 ;;
+        *) RC=$state ;;
+      esac ;;
+    *)
+      fails=$((fails + 1))
+      if [ "$fails" -gt 10 ]; then
+        echo "[remote] lost the connection to $HOST for too long; killing the remote job" >&2
+        kill_remote; RC=255; break
+      fi
+      echo "[remote] connection lost, reconnect $fails/10 (log offset $off)" >&2
+      d=$((fails * 5)); [ "$d" -gt 60 ] && d=60; sleep "$d" ;;
+  esac
+done
+case "$RC" in ''|*[!0-9]*) RC=255 ;; esac
 T2=$(date +%s)
 
 # Results are pulled from the job dir before cleanup (the EXIT trap deletes the job dir).

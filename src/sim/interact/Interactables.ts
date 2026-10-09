@@ -7,8 +7,8 @@ import type { CoverWall } from '../combat/HitQuery';
 
 export const deviceKinds = ['barricade', 'door', 'gate', 'generator', 'breaker', 'switch', 'lever', 'valve', 'button', 'radio', 'rescue', 'car-door'] as const;
 export type DeviceKind = typeof deviceKinds[number];
-const isDoor = (kind: DeviceKind) => kind === 'door' || kind === 'gate' || kind === 'car-door';
-/** Serialized interaction component. Door cycles re-arm on exit, never while standing inside. */
+export const isDoor = (kind: DeviceKind) => kind === 'door' || kind === 'gate' || kind === 'car-door';
+/** Serialized interaction component. Door cycles re-arm on exit or a fresh explicit press. */
 export interface Interactable {
   kind: DeviceKind; radius: number; holdTime: number; instant: boolean; interruptOnDamage: boolean;
   progress: number; completed: boolean; enabled: boolean; hint: string; label: string;
@@ -26,6 +26,7 @@ export class Interactables {
   readonly walls: CoverWall[] = [];
   private readonly authoredWalls = new Map<number, CoverWall>();
   private readonly blockers = new Map<number, { wall: CoverWall; handle: number }>();
+  private interactHeld = false;
   constructor(private readonly world: SimWorld) {
     world.events.on('player.damaged', (e) => {
       if (e.type !== 'player.damaged' || e.amount <= 0) return;
@@ -101,13 +102,17 @@ export class Interactables {
   }
   private readonly doorWalls = new Map<number, CoverWall>();
   update(input: InputFrame): void {
+    const pressed = input.interact && !this.interactHeld;
+    this.interactHeld = input.interact;
     const p = this.world.entities.get(1)!;
     let nearest = Infinity; this.activeId = null;
     for (const e of this.world.entities.iterate()) {
       const c = e.interactable; if (!c) continue;
       if (c.powered && c.kind === 'generator') { c.fuel = Math.max(0, c.fuel - 1 / 60); if (c.fuel <= 1e-9) { c.fuel = 0; c.powered = false; c.completed = false; c.progress = 0; } }
       const distance = (e.transform.x - p.transform.x) ** 2 + (e.transform.z - p.transform.z) ** 2;
-      if (c.completed && isDoor(c.kind) && distance > c.radius ** 2) { c.completed = false; c.progress = 0; c.cycle++; }
+      // A small yard may have no room to leave the ring. A new press must always
+      // permit another toggle; staying nearby or holding E must not repeat it.
+      if (c.completed && isDoor(c.kind) && (distance > c.radius ** 2 || (c.instant && pressed))) { c.completed = false; c.progress = 0; c.cycle++; }
       if (this.world.vehicles?.active == null && p.health.current > 0 && c.enabled && !c.completed && distance <= c.radius ** 2 && distance < nearest) { nearest = distance; this.activeId = e.id; }
     }
     for (const e of this.world.entities.iterate()) {

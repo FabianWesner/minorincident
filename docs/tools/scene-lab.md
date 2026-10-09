@@ -91,6 +91,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `{ "turn": deg }` | all | Turn to face that yaw; the courier turns on the spot. |
 | `{ "sit": "<placement id or asset id>" }` | pedestrian | Sit on that prop, using the same seat rule as L1. |
 | `{ "attack": "<actor id>", "seconds": 2 }` | courier | The real target-attack input. |
+| `{ "click": "<actor id>", "part": "head" }` | courier | One click on the drawn body part (`head`, `chest`, `hip`, `feet`) of that actor, resolved by the game's click pick (`src/input/ClickPick.ts`). `metrics.clicks` lists each click (picked actor, swing tick) and `swings`; see `qa-click-group`. |
 | `"chase"` / `{ "chase": "<actor id>" }` | infected | Chase. |
 | `{ "hit": { "from": "<actor id>" or [x, z], "heavy": true } }` | all | A heavy hit is a knockdown. |
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
@@ -142,6 +143,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
 - `yawDriftMaxDeg`
 - `torsoPitchMaxDeg`
+- `clickMissMax` (clicks on a drawn body that picked another actor or nothing, or did not start a swing within 100 ms / right after the running swing and cooldown; out-of-reach picks count as approaches)
 - `drawCallsMax`
 - `trianglesMax`
 - `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
@@ -250,3 +252,21 @@ tool_timeout_sec = 600
 
 **Smoke test.** `npx tsx tools/scenelab/mcp-smoke.ts` is a scripted client. It runs load, spawn_actor, command, step,
 set_time, screenshot, metrics and clipping.
+
+## Real level inspection
+
+Scene Lab can also operate the full running mission via the [inspection camera](inspect.md):
+
+```sh
+npm run scene -- --inspect-level L2 --bot complete
+npm run scene -- --inspect-level L1 --anchor mission/lab-door --out test-results/inspect/L1
+```
+
+The CLI captures three objective anchors (or the requested anchor) and renderer metrics with console-error gates. MCP adds `inspect_level` (level, optional bot), `inspect_camera` (position/target, anchor, follow, timeScale, LOD distance), and `inspect_state` (camera, anchors, entities). The existing `screenshot` tool captures both isolated scenes and running levels. The same headless browser, shared lock, private server and output rules apply. Use `load_scene` to return to isolated scene tools.
+### Gate interaction regression
+
+`npm run scene -- docs/scenes/gate-lockin.json` isolates the shipped `gate-1` yard gate.
+`layout.anchors` copies named gameplay anchors from the source layout and applies the crop's
+recentering shift. `{ "interact": true }` sends one real courier interaction press. The scene
+closes/reopens the gate on each face and walks through it in both directions; sim regressions
+in `tests/sim/interact/gate-lockin.test.ts` assert the toggle, navigation and sight state.

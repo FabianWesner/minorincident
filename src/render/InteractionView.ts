@@ -7,6 +7,7 @@ import type { AssetQuality } from '../assets/types';
 import { staticBatch } from '../assets/staticBatch';
 import { AssetRegistry } from '../assets/registry';
 import type { SimWorld } from '../sim/world/SimWorld';
+import { isDoor } from '../sim/interact/Interactables';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
 import './interaction.css';
@@ -208,7 +209,7 @@ export class InteractionView extends Group {
           if (b.intact && age < 12) object.position.x += Math.sin(age * 2) * .045 * (1 - age / 12);
         }
       }
-      if (player && e.interactable && (e.interactable.enabled || e.barricade && !e.barricade.intact) && !e.interactable.completed) {
+      if (player && e.interactable && (e.interactable.enabled || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
         if (d < nearest) { nearest = d; selected = e; }
         if (d < ringDistance && isMissionInteraction(this.world, e)) { ringDistance = d; ringTarget = e; }
@@ -227,7 +228,7 @@ export class InteractionView extends Group {
       // Leave the survivor's head/torso clear when they stand just behind the device.
       this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
       this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
-      const label = selected.barricade && !selected.barricade.intact ? `${c.label} · ${Math.round(selected.barricade.coverage * 100)}% coverage` : c.label, caption = selected.barricade && !c.enabled ? 'Push props into the rail · 80% needed' : c.hint || (nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
+      const label = selected.barricade && !selected.barricade.intact ? `${c.label} · ${Math.round(selected.barricade.coverage * 100)}% coverage` : c.label, caption = selected.barricade && !c.enabled ? 'Push props into the rail · 80% needed' : c.hint || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;

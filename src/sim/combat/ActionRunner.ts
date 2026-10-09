@@ -11,6 +11,8 @@ export interface Attack {
   style?: 'roundhouse';
   /** Roundhouse: the (at most maxTargets) nearest infected picked when the sweep starts. */
   sweep?: number[];
+  /** The infected a click command aimed this swing at (set when it starts); a downed one takes the ground hit. */
+  target?: number;
 }
 /** The weapon's crowd-sweep variant of a swing (00 §6.2, E20 §5.3); no chain beat, no knockdown. */
 export function roundhouseDefinition(def: ActionDef): ActionDef {

@@ -167,7 +167,8 @@ export const ttkBands: Record<string, Record<CombatArchetype, readonly [number, 
 Object.assign(ttkBands, {
   'weapon.fists': {
     runner: [1.24, 2.49],
-    crawler: [0.3, 1.07],
+    // PO 10-08 fight speed: 6-damage beats, 5 for a 25 HP crawler (was 3 x 9).
+    crawler: [0.3, 1.4],
     brute: [9.94, 15.53],
     screamer: [1.83, 3.37],
     sprinter: [0.63, 1.57],
@@ -342,7 +343,7 @@ Object.assign(ttkBands, {
     flamingo: [0.01, 0.37],
   },
   'weapon.fire-axe': {
-    // E20 §5.3: 45 per 0.75 s single swing (one hit per 40 HP infected); the roundhouse needs a crowd and is not measured here.
+    // E20 §5.3: 45 per single swing (0.5 s since PO 10-08, was 0.75 s) (one hit per 40 HP infected); the roundhouse needs a crowd and is not measured here.
     runner: [0.01, 0.49],
     crawler: [0.01, 0.49],
     brute: [3.5, 6.07],
@@ -586,3 +587,9 @@ Object.assign(ttkBands, {
     flamingo: [0.01, 0.27],
   },
 } satisfies Record<string, Record<CombatArchetype, readonly [number, number]>>);
+
+/** PO 2026-10-08 fight speed ("Every click needs to be a kick, no matter how fast I click"): the quicker bat finisher
+ * (23 ticks, 0.5 m shove instead of a 3.3 m fling) and the 0.5 s axe swing shorten tough fights; lower bounds follow. */
+for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8]] as const) {
+  for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+(low * factor).toFixed(2), high]; }
+}
