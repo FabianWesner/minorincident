@@ -138,7 +138,7 @@ def cut_collapse(s):
         cut_profile(s, [3.3, 4.4, 5.5, 6.6, 7.7, 8.6], [7.2, 6.3, 5.4, 4.5, 3.6, 2.7], x0 + .1)
     elif not metro:
         # Kessler: the back-left gable and upper floor are blown away as well.
-        cut_profile(s, [.7, 1.7, 2.7, 3.6, 4.5], [7.4, 6.2, 5.0, 4.0, 3.1], x0)
+        cut_profile(s, [.7, 1.7, 2.7, 3.6, 4.6], [7.4, 6.2, 5.0, 4.0, 3.1], -5.0)
     if not metro:
         y0 = -7.45 if row else -3.9
         y1 = -3.1 if row else -.55
