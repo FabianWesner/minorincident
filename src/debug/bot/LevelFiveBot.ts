@@ -99,6 +99,8 @@ export class LevelFiveBot {
     if (fights && covered.length) {
       const f = covered[0], hot = (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && dist(e.transform, f.transform) < 10).sort((x, y) => dist(x.transform, f.transform) - dist(y.transform, f.transform))[0];
       if (hot && dist(p, hot.transform) > 8) { go(hot.transform, 7, `help-${f.id}`); return frame; }
+      // A grabber hides behind its victim from the machine gun: walk up and hit it with the axe (a hit during the grab frees the survivor).
+      if (hot && hot.infected?.l1?.mode === 'bite' && dist(p, hot.transform) > 2) { go(hot.transform, 1.6, `rescue-${hot.id}`); if (dist(p, hot.transform) <= 2.4) strike(hot, 'LEFT'); return frame; }
       if (hot) { strike(hot, dist(p, hot.transform) <= 2.4 ? 'LEFT' : 'RIGHT'); return frame; }
     }
     // A jammed walker steps aside along a connected route.
