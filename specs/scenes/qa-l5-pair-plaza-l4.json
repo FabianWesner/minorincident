@@ -1,0 +1,44 @@
+{
+ "name": "qa-l5-pair-plaza-l4",
+ "note": "E23 recognition (AC18): the Reception Plaza in L4 (clean, intact), the pair camera pair-plaza; compare with qa-l5-pair-plaza-l5.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 0,
+ "layout": {
+  "level": "L4",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -77,
+    -57
+   ],
+   [
+    43,
+    63
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   3,
+   24,
+   23
+  ],
+  "target": [
+   -17,
+   0,
+   3
+  ]
+ },
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

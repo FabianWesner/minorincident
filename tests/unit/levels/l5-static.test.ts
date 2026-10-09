@@ -9,7 +9,7 @@ import { placementColliders } from '../../../src/levels/districts/staticCollisio
 import type { Aabb, DistrictLayout, Point } from '../../../src/levels/districts/types';
 import { validateLayout } from '../../../src/levels/districts/validate';
 import { levelFourLayouts } from '../../../src/levels/L4/layout';
-import { l5Dressing, l5Frontages, levelFiveLayouts } from '../../../src/levels/L5/layout';
+import { l5Dressing, l5Frontages, l5ShellAssets, levelFiveLayouts } from '../../../src/levels/L5/layout';
 import { campaignMission } from '../../../src/levels/missions';
 import { bakeNav } from '../../../src/sim/world/NavGrid';
 
@@ -101,6 +101,7 @@ describe('L5 static', () => {
     expect(military.length).toBeGreaterThanOrEqual(3);
     expect(military.some(d => d.assetId === 'veh.tank')).toBe(true); expect(military.some(d => d.assetId === 'veh.military-apc')).toBe(true);
     expect(l5Fires.filter(f => !f.deep).length).toBeGreaterThanOrEqual(6); expect(l5Fires.length).toBeGreaterThanOrEqual(10); expect(l5Fires.filter(f => f.deep).length).toBeGreaterThanOrEqual(4);
+    expect([...l5ShellAssets].sort()).toEqual(Object.entries(worldAssets).filter(([, a]) => (a as { decayVariants?: string[] }).decayVariants?.includes('w5')).map(([id]) => id).sort());
     const w5 = layout.placements.filter(p => p.decay === 'w5'), collapsed = layout.placements.filter(p => p.assetId === 'decay.collapsed-facade');
     expect(collapsed.length).toBeGreaterThanOrEqual(4); expect(new Set(w5.map(p => p.assetId)).size).toBeGreaterThanOrEqual(4); expect(w5.length).toBeGreaterThanOrEqual(30);
     const corpses = l5Dressing.filter(d => d.kind === 'corpse');
@@ -167,7 +168,7 @@ describe('L5 static', () => {
     const [r, g, b] = [1, 3, 5].map(i => parseInt(p.sky.slice(i, i + 2), 16)); expect(r).toBeGreaterThan(g); expect(b).toBeGreaterThan(g);
   });
 
-  test('T-E23-17a @E23 @E23-AC17 photo spots: the four L4 pair cameras (same anchors and offsets) plus the four L5 spots resolve to walkable points', () => {
+  test('T-E23-17a @E23 @E23-AC17 @E23-AC18 photo spots: the four L4 pair cameras (same anchors and offsets) plus the four L5 spots resolve to walkable points', () => {
     const names = l5PhotoSpots.map(([n]) => n);
     expect(names).toEqual(expect.arrayContaining(['pair-plaza', 'pair-harbor-street', 'pair-metro-entrance', 'pair-kessler-lane', 'l5-basement-exit', 'l5-sign-of-life', 'l5-group-of-five', 'l5-metro-shelter']));
     const spots = compositions.L5.districts[0].overrides!.photoSpots!;

@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, test, expect } from '../e2e/fixtures';
 import { qualityBudgets } from '../../src/core/Quality';
 const output = 'test-results/epics/E18';
-for (const tier of ['high', 'low'] as const) for (const scenario of ['perf-horde-200', 'perf-l6-mainstreet', 'perf-l5-bridge']) {
+for (const tier of ['high', 'low'] as const) for (const scenario of ['perf-horde-200', 'perf-l6-mainstreet', 'perf-l5-aftermath']) {
   test(`T-E18-01-${tier}-${scenario} @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets`, async ({ page }) => {
     test.setTimeout(180_000); await boot(page);
     const name = scenario === 'perf-horde-200' && tier === 'low' ? 'perf-horde-100' : scenario;

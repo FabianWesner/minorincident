@@ -35,7 +35,7 @@ E02, E07 / M4 ship.
 - `Quality` service: explicit setting + `auto`, which picks the starting tier from a heuristic and then adapts if the frame time p90 is over budget for 5 s (it degrades in steps, never during a cinematic).
 - LOD for crowds (E07) and props, the culling distances, the low-tier GLBs (`<id>.low.glb`), and texture/geometry disposal.
 - `perf()` counters and a `?perf` overlay.
-- Perf scenarios: `perf-horde-200`, `perf-l6-mainstreet`, `perf-l5-bridge`.
+- Perf scenarios: `perf-horde-200`, `perf-l6-mainstreet`, `perf-l5-aftermath` (E23: the devastated Fairhaven at the L5 pair-plaza camera; it replaced the retired `perf-l5-bridge`).
 - Mobile specifics: touch, orientation, safe areas, `visibilitychange` pause, WebGL context-loss recovery.
 
 ## Bruno references

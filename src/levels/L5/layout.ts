@@ -1,6 +1,5 @@
 import { l4, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
 import { l5Anchors, l5Survivors } from '../../data/l5';
-import { worldAssets } from '../../assets/worldDefinitions';
 import { findClearSpot, footprints, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 import { l4Dressing } from '../L4/layout';
@@ -18,6 +17,8 @@ export interface L5Dressing {
   /** Free-standing deliberate blockers keep their spot (no clear-spot search). */
   fixed?: boolean;
 }
+/** Buildings with a reviewed devastated `w5` shell (manifest `decayVariants`; the static test keeps this list equal to the manifest). */
+export const l5ShellAssets: readonly string[] = ['bld.apartment-block-a', 'bld.apartment-block-b', 'bld.church', 'bld.kessler-hardware', 'bld.metro-entrance', 'bld.storefront-row', 'bld.town-hall'];
 const H = Math.PI / 2, PI = Math.PI;
 const d = (kind: L5DressingKind, assetId: string, x: number, z: number, more: Partial<L5Dressing> = {}): L5Dressing => ({ kind, assetId, x, z, ...more });
 const corpse = (x: number, z: number, model: string, yaw: number, uniform = false) => d('corpse', model, x, z, { yaw, entity: true, uniform });
@@ -128,7 +129,7 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.anchors[`l5-out-${s.key}`] = { position: [s.outAt[0], 0, s.outAt[1]], yaw: 0 };
     }
     // The same buildings, devastated: every placement with a reviewed `w5` variant.
-    for (const p of layout.placements) if (((worldAssets[p.assetId] as { decayVariants?: string[] } | undefined)?.decayVariants ?? []).includes('w5')) p.decay = 'w5';
+    for (const p of layout.placements) if (l5ShellAssets.includes(p.assetId)) p.decay = 'w5';
     const obstacles = obstaclesOf(layout, 5);
     const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string, fixed = false) => {
       const decal = /^decal\.|decay\.(broken-glass|graffiti)/.test(assetId);

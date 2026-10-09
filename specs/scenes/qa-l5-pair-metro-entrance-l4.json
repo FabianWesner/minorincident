@@ -1,0 +1,44 @@
+{
+ "name": "qa-l5-pair-metro-entrance-l4",
+ "note": "E23 recognition (AC18): the Metro entrance in L4 (clean, intact), the pair camera pair-metro-entrance; compare with qa-l5-pair-metro-entrance-l5.",
+ "ground": "district",
+ "time": "L4",
+ "tier": 0,
+ "layout": {
+  "level": "L4",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -2.200000000000003,
+    -84.2
+   ],
+   [
+    77.8,
+    -4.200000000000003
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   51.8,
+   17,
+   -30.200000000000003
+  ],
+  "target": [
+   37.8,
+   0,
+   -44.2
+  ]
+ },
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

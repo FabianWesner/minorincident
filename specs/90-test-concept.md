@@ -66,7 +66,7 @@ Bots live in `src/debug/bot/` and run in **both** Node and the browser. Each tic
 
 ## 6. Scenarios and fixtures
 
-`tests/fixtures/scenarios/*.ts` are small worlds for focused tests: `empty`, `lookdev`, `combat-arena`, `horde-arena`, `maze`, `civ-street`, `drive-course`, `mission-sandbox`, `vfx-stress`, `bot-gym-*`, `perf-horde-100/200`, `perf-l5-bridge`, `perf-l6-mainstreet`, `light-lab` (the light-tower trailer at night), `reflection-lab`, `night-street`, `prop-yard`, `barricade-lab`, `blast-lab`, `fire-lab`, `smoke-lab`, `gore-probe`, `turning-probe`, `audio-mix`, `animal-lab`, `weather-lab`, `storm-street`. Each declares its `seed`, entities, camera photo spots, and expected invariants.
+`tests/fixtures/scenarios/*.ts` are small worlds for focused tests: `empty`, `lookdev`, `combat-arena`, `horde-arena`, `maze`, `civ-street`, `drive-course`, `mission-sandbox`, `vfx-stress`, `bot-gym-*`, `perf-horde-100/200`, `perf-l5-aftermath`, `perf-l6-mainstreet`, `light-lab` (the light-tower trailer at night), `reflection-lab`, `night-street`, `prop-yard`, `barricade-lab`, `blast-lab`, `fire-lab`, `smoke-lab`, `gore-probe`, `turning-probe`, `audio-mix`, `animal-lab`, `weather-lab`, `storm-street`. Each declares its `seed`, entities, camera photo spots, and expected invariants.
 
 **Progression presets** (`L2-default` … `L6-default`) let any level load with a realistic build, so later levels can be tested without replaying earlier ones.
 
