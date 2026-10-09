@@ -22,11 +22,11 @@ export const l5 = {
   /** Sunset gloom ramp: sun intensity factor from 1 to `endFactor` over the story (time share and the share of survivors accounted for). */
   gloom: { rampS: 240, endFactor: 0.5, atMetroMax: 0.7 },
   /** No music for the first `musicFromS` seconds, then a sparse low drone. */
-  audio: { musicFromS: 60 },
+  audio: { musicFromS: 60, quietDb: -24 },
   medkits: { heal: 40, positions: [[45.5, 20], [30, -37.2], [-4, -37.2], [-22, 15], [-30.5, -2], [-44, 39.4], [58, 42.5]] as readonly P[] },
   checkpoints: ['outside', 'survivor-1', 'survivor-2', 'survivor-3', 'survivor-4', 'survivor-5'] as const,
-  /** Bots (section 8). Bands are provisional until the first green run; never padded. */
-  bots: { seeds: 20, completeMedianS: [100, 240] as P, newbieMedianS: [130, 300] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
+  /** Bots (section 8). Keep the original acceptance bands; never pad bot time. */
+  bots: { seeds: 20, completeMedianS: [120, 240] as P, newbieMedianS: [150, 300] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
 } as const;
 
 /** The L4 end loadout (specs/epic-23 AC12): axe and bat on the left, the machine gun, the handgun and the kick on the right. */
@@ -72,12 +72,12 @@ export const l5Anchors: Record<string, P> = {
   'l5-out': [67.2, 27.6],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [37.8, -43.4],
-  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [24, -39], 'photo-l5-metro-shelter': [37.8, -43.2],
+  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -36], 'photo-l5-metro-shelter': [37.8, -43.2],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ...l4PhotoSpots.filter(([name]) => name.startsWith('pair-')),
-  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-26, 24, 20]], ['l5-metro-shelter', [12, 14, 12]],
+  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-16, 24, 16]], ['l5-metro-shelter', [12, 14, 12]],
 ];
 
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */

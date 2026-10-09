@@ -63,6 +63,7 @@ export interface SSTestApi {
     bindings(): BindingMap; rebind(action: Action, code: string): { ok: boolean; message: string };
     /** Ground → client pixels using the current camera. Tests still send real device events. */
     project(pos: { x: number; z: number }): { x: number; y: number };
+    visible(pos: { x: number; z: number }): boolean;
     /** Body-pick candidates of the last click (normalised capsule distance; <= 1 is a hit). */
     lastPick(): { id: number; score: number; depth: number; drawn: boolean }[];
     /** Begin at scenario tick zero so seed + frames are sufficient for replay. */
@@ -148,6 +149,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       clear: () => { game.input.clear(); game.world.clearInput(); },
       bindings: () => game.input.bindings.get(), rebind: (action, code) => game.input.rebind(action, code),
       lastPick: () => structuredClone(game.input.picker.last),
+      visible: (pos) => { const p = game.world.entities.get(1); return !!p && !!game.world.infected?.nav.visible(p.transform, pos, 0); },
       project: (pos) => {
         game.view.camera.updateMatrixWorld();
         const point = new Vector3(pos.x, 0, pos.z).project(game.view.camera);

@@ -22,18 +22,42 @@ function helpers(page: Page) {
     await page.evaluate(n => window.__SS__!.camera.preset(`D-FAIR/W5/${n}`), name);
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${output}/${name}.png` }); shots.add(name);
+    writeFileSync(`${output}/${name}-positions.json`, JSON.stringify(await page.evaluate(() => { const a = window.__SS__!; return { player: a.getState().player!.transform, followers: a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor).map(e => ({ id: e.id, at: e.transform, health: e.health.current })) }; }), null, 1));
     await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
   };
-  /** Shift + click the nearest infected within `range` (the machine gun shoots it, the axe swings at arm's length). */
+  /** Aim with the cursor and use the physical side keys: walking clicks select LEFT. */
   const fightNearby = async (range = 2.6): Promise<boolean> => {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 3 || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && (e as { infected?: { l1?: { mode?: string } } }).infected?.l1?.mode === 'chase')).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      const point = near ? a.input.project(near.transform) : null;
-      return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? point : null;
+      const friends = a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor?.mode === 'follow');
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && (a.input.visible(e.transform) || friends.some(f => f.civilian?.survivor?.cover && Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
+        .filter(e => e.infected?.l1?.mode === 'chase' || e.infected?.l1?.mode === 'bite' || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 9 || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7))
+        .sort((a, b) => Number(b.infected?.l1?.mode === 'bite') - Number(a.infected?.l1?.mode === 'bite') || Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+      return near ? { id: near.id, close: Math.hypot(near.transform.x - p.x, near.transform.z - p.z) < 2.4, rescue: near.infected?.l1?.mode === 'bite' || !a.input.visible(near.transform), p, at: near.transform } : null;
     }, range);
     if (!target) return false;
-    await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
+    await page.evaluate(({ p, at }) => window.__SS__!.camera.cinematic({ position: [p.x + 24, 29, p.z + 24], target: [(p.x + at.x) / 2, 0, (p.z + at.z) / 2] }, true), target);
+    await step(1);
+    if (target.rescue && !target.close) {
+      // Walk beside the grabber before swinging: the victim can shield a distant gunshot.
+      const dx = target.p.x - target.at.x, dz = target.p.z - target.at.z, d = Math.hypot(dx, dz);
+      const ground = { x: target.at.x + dx / d * 1.7, z: target.at.z + dz / d * 1.7 };
+      const point = await page.evaluate(q => window.__SS__!.input.project(q), ground);
+      await page.mouse.click(point.x, point.y); await step(1);
+      for (let i = 0; i < 30; i++) {
+        await step(4);
+        const distance = await page.evaluate(id => { const a = window.__SS__!, p = a.getState().player!.transform, e = a.getEntity(id); return e ? Math.hypot(e.transform.x - p.x, e.transform.z - p.z) : 0; }, target.id);
+        if (distance < 2.4) { target.close = true; break; }
+      }
+    }
+    const key = target.close ? 'j' : 'k';
+    await page.keyboard.down(key);
+    for (let i = 0; i < 10; i++) {
+      const point = await page.evaluate(id => { const a = window.__SS__!, e = a.getEntity(id); return e && e.health.current > 0 ? a.input.project(e.transform) : null; }, target.id);
+      if (!point) break;
+      await page.mouse.move(point.x, point.y); await step(2);
+    }
+    await page.keyboard.up(key); await page.evaluate(() => window.__SS__!.camera.follow());
     return true;
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
@@ -58,15 +82,15 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
-    let trading = 0;
-    for (let i = 0; i < 700; i++) {
-      await step(20);
+    for (let i = 0; i < 2400; i++) {
+      await step(4);
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
-      // Fight what is close or chasing every other beat (the machine gun's noise draws more of them: never stand and trade forever: after
-      // twelve beats of fighting in a row the courier just walks on for a while), walk on in between.
-      if (trading < 12 && i % 2 === 0 && (await player()).health.current > 0 && await fightNearby(range)) { trading++; await click(); }
-      else { if (trading >= 12 && ++trading > 40) trading = 0; if (i % 4 === 3) await click(); }
+      const lag = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'civilian' }).some(e => e.civilian?.survivor && !e.hidden && e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 6); });
+      // Keep guarding the followers; a nine-second fighting hiatus exceeds their grab/turn window.
+      if ((await player()).health.current > 0 && await fightNearby(Math.max(18, range))) await click();
+      else if (lag) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await step(12); await click(); }
+      else if (i % 4 === 3) await click();
     }
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
   };
@@ -107,6 +131,7 @@ test.describe('L5 Aftermath in the browser', () => {
     await snap('l5-basement-exit'); await step(60 * 11);
     expect((await mission()).l5!.phase).toBe('search');
     await expect(page.getByTestId('survivors-found')).toContainText('0/5');
+    await page.keyboard.down('Alt');
     for (const name of ['pair-kessler-lane', 'pair-plaza', 'pair-harbor-street', 'pair-metro-entrance']) await snap(name);
     // The search: the cheapest tour of the five hiding places; each sign of life is heard (cue event) before the survivor is found.
     const heard = new Set<string>(); let signShot = false;
@@ -114,34 +139,39 @@ test.describe('L5 Aftermath in the browser', () => {
     for (const key of ['rosa', 'sam', 'mia', 'okafor', 'dale']) {
       const target = ring(key);
       await go({ x: target.x, z: target.z }, 1.6, 11);
+      for (let guard = 0; guard < 40 && await fightNearby(18); guard++) { /* clear nearby threats before opening the hiding place */ }
       const cues = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'l5.cue').map(e => (e as { key: string }).key));
       for (const c of cues) heard.add(c);
       if (!signShot) { await snap('l5-sign-of-life'); signShot = true; }
       for (let i = 0; i < 12 && !(await mission()).l5!.survivors.find(r => r.key === key && r.status !== 'hidden'); i++) { await interact(); await step(20); }
       expect((await mission()).l5!.survivors.find(r => r.key === key)!.status, key).not.toBe('hidden');
       await expect(page.getByTestId('survivors-found')).toContainText(`${(await mission()).l5!.found}/5`);
+      for (let guard = 0; guard < 40 && await fightNearby(18); guard++) { /* protect the newly found survivor */ }
       await regroup();
+      writeFileSync(`${output}/real-input-after-${key}.json`, JSON.stringify(await mission(), null, 1));
     }
     expect((await mission()).l5!.found).toBe(5); expect([...heard].sort()).toEqual(['dale', 'mia', 'okafor', 'rosa', 'sam']);
-    // The way to the Metro with whoever is left: the group photo, then the shutter.
+    // Protect all five through the group photo, then enter the Metro: the group photo, then the shutter.
     expect((await mission()).steps.metro.status).toBe('active');
-    await go({ x: 20, z: -39.4 }, 4, 11); await regroup(); await snap('l5-group-of-five');
+    await go({ x: 10, z: -39.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
+    expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
     await go(metroFoot(), 2.4, 11);
-    for (let i = 0; i < 80 && (await mission()).phase === 'playing'; i++) {
-      if (!await fightNearby(11)) await step(15);
-      if ((await mission()).l5!.shutterAt && !h.shots.has('l5-metro-shelter')) {
-        // Show the authored leaf after its two-second closing animation, before handover.
-        const remaining = (await mission()).l5!.shutterAt + 120 - await page.evaluate(() => window.__SS__!.getState().tick);
+    let last = await mission();
+    for (let i = 0; i < 80 && last.phase === 'playing'; i++) {
+      if (last.l5!.shutterAt) {
+        const remaining = last.l5!.shutterAt + 120 - await page.evaluate(() => window.__SS__!.getState().tick);
         if (remaining > 0) await step(remaining);
-        await snap('l5-metro-shelter');
+        last = await mission(); await snap('l5-metro-shelter'); break;
       }
+      if (!await fightNearby(11)) await step(15);
+      last = await mission();
     }
     if (!h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter');
-    const last = await mission();
+    if (!last.l5!.shutterAt) last = await mission();
     for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ stats: last.stats, l5: { survivors: last.l5!.survivors.map(r => `${r.key}:${r.status}`), gloom: last.l5!.gloom, shutterAt: last.l5!.shutterAt }, shots: [...h.shots].sort(), errors }, null, 1));
     expect([...h.shots].sort()).toEqual(['l5-basement-exit', 'l5-group-of-five', 'l5-metro-shelter', 'l5-sign-of-life', 'pair-harbor-street', 'pair-kessler-lane', 'pair-metro-entrance', 'pair-plaza']);
-    expect(last.l5!.survivors.filter(r => r.status === 'sheltered').length).toBeGreaterThanOrEqual(0);
+    expect(last.l5!.survivors.filter(r => r.status === 'sheltered').length).toBeGreaterThanOrEqual(3);
     expect(errors).toEqual([]);
   });
 

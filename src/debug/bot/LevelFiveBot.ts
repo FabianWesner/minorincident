@@ -59,6 +59,8 @@ export class LevelFiveBot {
     const newbie = this.profile === 'newbie';
     if (newbie && w.tick % 15 !== 0) { this.frame.interact = false; return this.frame; }
     const frame = this.frame = emptyInput(), player = w.entities.get(1)!, p = player.transform, a = m.def.anchors;
+    // The inexperienced courier walks cautiously through the silent city.
+    frame.walk = newbie;
     if (player.health.current <= 0) return frame;
     const go = (target: P, stop: number, key: string) => { const dir = this.walker.step(w, target, stop, key); if (dir) frame.move = dir; return !dir; };
     const strike = (target: EntitySnapshot, side: 'LEFT' | 'RIGHT') => {

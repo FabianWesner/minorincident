@@ -71,7 +71,7 @@ test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below
         writeFileSync(`${root}/audio-${level}-production-log.json`, JSON.stringify({ firstTurn, lineBreak, request }, null, 1));
         return request;
     };
-    const war = await render(page, await capture('L4'), 'audio-war-reference'), quiet = await render(page, await capture('L5'), 'audio-l5-quiet');
+    const quiet = await render(page, await capture('L5'), 'audio-l5-quiet'), war = await render(page, await capture('L4'), 'audio-war-reference');
     const loudWar = loudness(war.path), loudQuiet = loudness(quiet.path);
     writeFileSync(`${root}/audio-l5-vs-war.json`, JSON.stringify({ war: loudWar, quiet: loudQuiet, differenceLU: loudWar.lufs - loudQuiet.lufs, cues: [...new Set(quiet.result.events.map(e => e.cue))] }, null, 1));
     expect(quiet.result.events.map(e => e.cue)).toEqual(expect.arrayContaining(['bed.wind', 'bed.fire']));
