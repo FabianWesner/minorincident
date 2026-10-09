@@ -1,0 +1,26 @@
+
+> assets:turntable
+> tsx tools/assets/turntable.ts veh.tank --decay wrecked --lod-contact --output test-results/l5-military-wrecks-and-line
+
+test-results/l5-military-wrecks-and-line/veh.tank.wrecked/lod-contact.png
+
+> assets:turntable
+> tsx tools/assets/turntable.ts veh.tank --decay wrecked --output test-results/l5-military-wrecks-and-line
+
+
+> assets:turntable
+> tsx tools/assets/turntable.ts veh.military-apc --decay wrecked --lod-contact --output test-results/l5-military-wrecks-and-line
+
+test-results/l5-military-wrecks-and-line/veh.military-apc.wrecked/lod-contact.png
+
+> assets:turntable
+> tsx tools/assets/turntable.ts veh.military-apc --decay wrecked --output test-results/l5-military-wrecks-and-line
+
+
+> assets:turntable
+> tsx tools/assets/turntable.ts veh.military-truck --decay wrecked --lod-contact --output test-results/l5-military-wrecks-and-line
+
+test-results/l5-military-wrecks-and-line/veh.military-truck.wrecked/lod-contact.png
+
+> assets:turntable
+> tsx tools/assets/turntable.ts veh.military-truck --decay wrecked --output test-results/l5-military-wrecks-and-line
