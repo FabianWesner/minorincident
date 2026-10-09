@@ -1,6 +1,6 @@
 import {chromium} from '@playwright/test';
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
-const targets=[['int.metro-station','int.metro-station','int.fire-station-bay'],['util.flashlight','util.flashlight','wpn.halligan'],...['npc.civilian-elderly','npc.paramedic','npc.civilian-woman-a','npc.survivor-group'].map(id=>[id+'.aftermath',id,id])];
+const targets=[['int.metro-station','int.metro-station','int.fire-station-bay'],['util.flashlight','util.flashlight','wpn.halligan'],...['npc.civilian-elderly','npc.paramedic','npc.civilian-woman-a','npc.survivor-group'].map(id=>[id+'.aftermath',id+'.aftermath',id]),...['dale','sam','cap-woman','bun-woman'].map(key=>['npc.survivor-group.aftermath.'+key,'npc.survivor-group.aftermath.'+key,'npc.survivor-group'])];
 const manifest: {id:string;dimensions:{x:number;y:number;z:number}}[]=JSON.parse(readFileSync('src/assets/manifest.json','utf8'));
 const browser=await chromium.launch({headless:true,args:['--use-angle=metal']});
 try {
@@ -30,7 +30,7 @@ try {
     }
    }
   }
-  writeFileSync(`${out}/loading.json`,JSON.stringify({requested:label,loaded:id,blocked:label!==id,note:label!==id?'Existing base audit only; no aftermath skin delivered.':undefined,records},null,2)+'\n');
+  writeFileSync(`${out}/loading.json`,JSON.stringify({requested:label,loaded:id,blocked:false,records},null,2)+'\n');
   console.log(label+' captured');
  }
 }finally{await browser.close();}

@@ -5,7 +5,7 @@ copy=Path('/private/tmp/claude-501/-Users-wesner-Workspace-minorincident/80ad236
 for folder in out.iterdir():
  if not folder.is_dir() or not (folder/'loading.json').exists():continue
  import json
- data=json.loads((folder/'loading.json').read_text());id=folder.name;blocked=data['blocked'];ref=Image.open(Path('/Users/wesner/Workspace/minorincident/assets')/id/'reference-upscaled.png').convert('RGB')
+ data=json.loads((folder/'loading.json').read_text());id=folder.name;blocked=data['blocked'];ref_id='npc.survivor-group.aftermath' if id.startswith('npc.survivor-group.aftermath.') else id;ref=Image.open(Path('/Users/wesner/Workspace/minorincident/assets')/ref_id/'reference-upscaled.png').convert('RGB')
  title=id+(' | BLOCKED: existing base only, no aftermath skin' if blocked else ' | authored LODs')
  def paste(s,im,box):
   im=im.copy();im.thumbnail((box[2],box[3]));s.paste(im,(box[0]+(box[2]-im.width)//2,box[1]+(box[3]-im.height)//2))
