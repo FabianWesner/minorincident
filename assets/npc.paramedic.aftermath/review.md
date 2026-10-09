@@ -1,9 +1,11 @@
-# npc.paramedic.aftermath — blocked
+# npc.paramedic.aftermath — delivered
 
-Casting: Rosa. No aftermath GLB or integrated alias is delivered. The unchanged shipped `npc.paramedic` was inspected as the canonical compatibility baseline. This report does not claim its normal clothing is a soot-and-bandage skin.
+Rosa-compatible stock. Derived from the existing shipped source geometry and rigid rig; explicit LOD recipes, no generic decimation. One vertex-palette material per animated owner: 15 draws per person, 60 for the complete group. Revised living-adult contract is enforced against the shipped base at every tier.
 
-Each adult has meshes on fifteen independently animated joint owners, already more than the eight-draw limit even after one-material-per-owner batching. A static join would break the existing animation pivots. The courier's one-draw skin requires a different rig and uses remesh/decimation; the GPU crowd format requires its runtime loader. Neither is an acceptable asset-only alias conversion under this brief. No draw or triangle budget was widened.
+## Visual self-review
 
-Required follow-up: establish a reviewed rig/delivery contract; derive broad soot and clean pale arm wraps from the accepted base, preserve living face/hair/clothing identity, and author explicit 15k/6k/2k recipes. Rosa needs empty hands. Dale/Sam need separate named-member outputs.
+Healthy face, auburn ponytail, uniform, medical backpack and yellow trouser bands remain recognizable. Both hands are empty; the base peer still carries its medical case. Pale cuff and clothing grime are present, though the grime is subtle at 135 px. The far ponytail is a closed authored volume, visibly faceted; small collar trim and rounded eyes simplify.
 
-Audit evidence: `test-results/l5-shelter-arrival-and-skins/npc.paramedic.aftermath/reference-lod-contact.jpg`, `game-reference-peer.jpg`, and `loading.json`. These are labeled existing-base audit only, with the requested compatibility ID; they never masquerade as delivered skin or alias loading. Detailed measured baseline tiers and the blocker are in `docs/reports/l5-shelter-arrival-and-skins.md`. Independent orchestrator acceptance remains pending.
+Inspected final reference/peer sheets at 135 and 190 px and all five angles for every LOD. `test-results/l5-shelter-arrival-and-skins/npc.paramedic.aftermath/` contains `game-reference-peer.jpg`, `reference-lod-contact.jpg`, standard `lod-contact.png` and `loading.json`. These show actual aftermath loading with no placeholder. Independent orchestrator acceptance remains pending.
+
+See `docs/reports/l5-shelter-arrival-and-skins.md` for measured counts, commands and validation results.

@@ -1,9 +1,11 @@
-# npc.civilian-woman-a.aftermath — blocked
+# npc.civilian-woman-a.aftermath — delivered
 
-Casting: Mia. No aftermath GLB or integrated alias is delivered. The unchanged shipped `npc.civilian-woman-a` was inspected as the canonical compatibility baseline. This report does not claim its normal clothing is a soot-and-bandage skin.
+Mia-compatible stock. Derived from the existing shipped source geometry and rigid rig; explicit LOD recipes, no generic decimation. One vertex-palette material per animated owner: 15 draws per person, 60 for the complete group. Revised living-adult contract is enforced against the shipped base at every tier.
 
-Each adult has meshes on fifteen independently animated joint owners, already more than the eight-draw limit even after one-material-per-owner batching. A static join would break the existing animation pivots. The courier's one-draw skin requires a different rig and uses remesh/decimation; the GPU crowd format requires its runtime loader. Neither is an acceptable asset-only alias conversion under this brief. No draw or triangle budget was widened.
+## Visual self-review
 
-Required follow-up: establish a reviewed rig/delivery contract; derive broad soot and clean pale arm wraps from the accepted base, preserve living face/hair/clothing identity, and author explicit 15k/6k/2k recipes. Rosa needs empty hands. Dale/Sam need separate named-member outputs.
+Living face, red floral dress, pale cardigan, bun, tote and red shoes remain. Dust on the hem and broad cardigan soot are feathered vertex fields; the pale arm cuff follows the forearm. The far tier drops the tote botanical motif and small flowers. Face, bun and cardigan become angular compared with the richer shipped peer.
 
-Audit evidence: `test-results/l5-shelter-arrival-and-skins/npc.civilian-woman-a.aftermath/reference-lod-contact.jpg`, `game-reference-peer.jpg`, and `loading.json`. These are labeled existing-base audit only, with the requested compatibility ID; they never masquerade as delivered skin or alias loading. Detailed measured baseline tiers and the blocker are in `docs/reports/l5-shelter-arrival-and-skins.md`. Independent orchestrator acceptance remains pending.
+Inspected final reference/peer sheets at 135 and 190 px and all five angles for every LOD. `test-results/l5-shelter-arrival-and-skins/npc.civilian-woman-a.aftermath/` contains `game-reference-peer.jpg`, `reference-lod-contact.jpg`, standard `lod-contact.png` and `loading.json`. These show actual aftermath loading with no placeholder. Independent orchestrator acceptance remains pending.
+
+See `docs/reports/l5-shelter-arrival-and-skins.md` for measured counts, commands and validation results.
