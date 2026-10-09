@@ -811,6 +811,12 @@ export class InfectedSystem {
     brain.stuckCount = moved < 0.35 ? brain.stuckCount + 1 : 0;
     if (brain.stuckCount < 2) return;
     brain.stuckCount = 0; this.giveUp(e, brain);
+    if (brain.mode === 'search') {
+      // Successive probes can all lie behind the same wall. Step into reachable
+      // open space before trying the next one instead of pressing there all episode.
+      const nav = this.navigation.grid(e.transform), cell = nav.escapeCell(e.transform, e.combat!.radius, 4, false, 1);
+      if (cell >= 0) { brain.escapeX = nav.x(cell); brain.escapeZ = nav.z(cell); brain.escapeUntil = tick + 120; }
+    }
   }
   /**
    * The current goal has no route (A* exhausted its component): back off new route requests for ~0.5 s so the shared
