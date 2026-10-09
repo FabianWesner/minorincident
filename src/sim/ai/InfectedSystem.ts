@@ -143,7 +143,7 @@ export class InfectedSystem {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
-      if (!e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if ((this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if (b.l1) { this.updateL1(e, b, b.l1); continue; }
       if (this.world.inspectionGhost && b.targetId <= 1 && !['idle', 'wander', 'migration'].includes(b.state)) {
         b.state = 'idle'; b.grabUntil = 0; e.combat!.attacking = false;
@@ -253,7 +253,7 @@ export class InfectedSystem {
     for (let d = 0.25; d <= 3; d += 0.25) for (let k = 0; k < 16; k++) {
       const a = (k + (e.id % 16) * 0.5) * Math.PI / 8, x = t.x + Math.cos(a) * d, z = t.z + Math.sin(a) * d;
       if (!nav.clear(x, z, r)) continue;
-      const step = Math.min(d, 4 / 60);
+      const step = Math.min(d, 12 / 60); // every third tick: ~4 m/s
       t.x += Math.cos(a) * step; t.z += Math.sin(a) * step; this.world.spatial.set(e.id, t.x, t.z);
       if (e.infected!.l1) { e.infected!.l1.directTick = -1; e.infected!.path.length = 0; }
       return;
