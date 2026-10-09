@@ -73,7 +73,7 @@ export const l3 = {
       [-138.6, -6.6],
       // Visible sidewalks on every avenue; 30-35 m between packs, plus relief after the larger clusters.
       ...([-100, -66, -32, 2, 36, 60, 88, 108, 122] as const).flatMap(x =>
-        ([-28, 0, 28] as const).map(z => [x, z + ((x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * (z === -28 ? 4.4 : 3.4)] as const)),
+        ([-28, 0, 28] as const).map(z => [x === -100 && z === -28 ? x - 1 : x, z + ((x === -100 && z === -28) || (x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * (z === -28 ? 4.4 : 3.4)] as const)),
     ] as readonly P[],
   },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
