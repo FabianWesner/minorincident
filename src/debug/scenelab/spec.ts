@@ -116,6 +116,10 @@ export interface Expectations {
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
   bodyOverlapMaxCm?: number;
+  /** Corgi trunk/head against the courier's drawn body, including both legs. */
+  corgiCourierOverlapMaxCm?: number;
+  /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */
+  corgiRunLagMaxM?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
   yawDriftMaxDeg?: number;

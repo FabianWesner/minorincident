@@ -154,6 +154,8 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
+- `corgiCourierOverlapMaxCm`: corgi trunk/head/muzzle capsule penetration into the drawn courier body, including both legs (cm). Requires contact samples.
+- `corgiRunLagMaxM`: greatest distance behind the courier along her movement direction while she runs above 2.5 m/s. Requires running samples. Both companion gates report worst frames in `metrics.companion`.
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
 - `vehicleYawRateMaxDegS` (maximum wrapped yaw change per fixed tick, in degrees/second)
 - `vehicleBodyOverlapsMax` (full vehicle footprint against people, vehicles, movable props and static colliders)

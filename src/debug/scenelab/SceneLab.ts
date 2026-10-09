@@ -70,6 +70,7 @@ export class SceneLab {
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
+  private companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 };
   /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
   private handovers = new Map<string, { route: { x: number; z: number }[]; length: number; start: number; pause: number; face?: number }>();
   /** Door gate per doored placement: frames an actor stood in the aperture/leaf sweep while the door was not fully open. */
@@ -112,7 +113,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.vehicleMotion.clear();
-    this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
@@ -514,6 +515,8 @@ export class SceneLab {
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
     const clip = this.frame % 3 === 0 && this.staticSets;
     const torsos: { id: string; bones: Bone[] }[] = [];
+    let courierBody: Bone[] | undefined;
+    const dogBodies: Bone[][] = [];
     for (const actor of this.actors.values()) {
       const e = this.world.entities.get(actor.entity);
       sim[actor.kind] = (sim[actor.kind] ?? 0) + (e && !e.hidden && e.health.current > 0 ? 1 : 0);
@@ -528,10 +531,25 @@ export class SceneLab {
           feet = [footL, footR].map(f => { const heel = f.localToWorld(new Vector3(-.05, -actor.sole!, 0)).toArray(), toe = f.localToWorld(new Vector3(.085, -actor.sole!, 0)).toArray(); return { heel, toe, yaw: footYaw(heel, toe) }; });
           joints = Object.fromEntries((['hip', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR'] as const).map(n => [n, node(n)!.getWorldPosition(this.point).toArray()]));
           forward = [Math.cos(c.getState().yaw), 0, -Math.sin(c.getState().yaw)]; clipName = c.getState().clip;
+          if (visible && !(clipName && unplantedClips.test(clipName))) courierBody = this.bones(joints, joints.armL.map((v, i) => (v + joints!.armR[i]) / 2));
         }
       } else if (actor.kind === 'corgi') {
         const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible; label = probes.npcs?.heroClip(actor.entity);
-        if (root) { root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; }); }
+        if (root) {
+          root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; });
+          // The loaded corgi's trunk and head capsules, including the muzzle; compare with the courier's legs too.
+          const body = root.getObjectByName('body'), head = root.getObjectByName('head');
+          if (visible && body && head) {
+            const at = (node: Object3D, x: number, y = 0) => node.localToWorld(new Vector3(x, y, 0)).toArray() as Vec3;
+            dogBodies.push([{ name: 'body', a: at(body, -.3), b: at(body, .25), radius: .25 }, { name: 'head', a: at(head, .1, .06), b: at(head, .3, -.01), radius: .24 }]);
+          }
+          const player = this.world.entities.get(1), v = player?.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
+          if (e && player && speed > 2.5) {
+            const lag = Math.max(0, ((player.transform.x - e.transform.x) * v!.x + (player.transform.z - e.transform.z) * v!.z) / speed);
+            this.companion.runningSamples++;
+            if (lag > this.companion.runLagMaxM) { this.companion.runLagMaxM = lag; this.companion.runLagFrame = this.frame; }
+          }
+        }
       } else {
         const f = figures.get(actor.entity);
         if (f) {
@@ -560,6 +578,11 @@ export class SceneLab {
         if (!old) this.hits.set(key, { ...h, actor: actor.id, frame: this.frame, count: 1 });
         else { old.count++; if (h.crossing && !old.crossing || h.clearanceCm < old.clearanceCm) Object.assign(old, h, { frame: this.frame }); }
       }
+    }
+    if (courierBody) for (const body of dogBodies) {
+      this.companion.samples++;
+      const depth = bodyOverlap(courierBody, body) * 100;
+      if (depth > this.companion.overlapMaxCm) { this.companion.overlapMaxCm = depth; this.companion.overlapFrame = this.frame; }
     }
     for (const [id, entity] of this.vehicles) {
       const e = this.world.entities.get(entity), motion = this.vehicleMotion.get(id); if (!e || !motion) continue;
@@ -755,7 +778,7 @@ export class SceneLab {
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
-      bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      companion: { ...this.companion }, bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
   }
