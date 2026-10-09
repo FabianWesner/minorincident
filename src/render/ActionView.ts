@@ -11,8 +11,8 @@ import type { PaletteMaterial } from './PaletteMaterial';
 
 interface LoadedActionAsset { model: Object3D; source: 'glb' | 'placeholder'; reason: string | null }
 const sides = ['LEFT', 'RIGHT'] as const;
-/** Input slots: LEFT uses the dominant right hand. */
-const handSide = { LEFT: 'RIGHT', RIGHT: 'LEFT' } as const;
+const restTilt = 0.9, gunLower = 0.4;
+const holsters = { back: { rot: [0, 0, 2.2] as const, pos: [-0.14, 0.02, 0] as const }, hip: { rot: [0, 0, -0.3] as const, pos: [0.02, -0.05, 0.2] as const } };
 
 /** Selected-side telegraph; fixed geometry buffers and reusable projectile meshes.
  * The ribbon update is adapted from Bruno Trails.js (MIT): reuse positions, update in place.
@@ -23,7 +23,7 @@ export class ActionView extends Group {
   private readonly prototypes = new Group();
   private readonly assets = new Map<string, LoadedActionAsset>();
   private readonly bloodMaterials: PaletteMaterial[] = [];
-  private readonly held: Partial<Record<Side, { id: string; model: Object3D }>> = {};
+  private readonly held: Partial<Record<Side, { id: string; model: Object3D; holder: Group; tilt: number }>> = {};
   private readonly pickups = new Map<number, Object3D>();
   private readonly geometry = new BufferGeometry();
   private readonly positions = new Float32Array(256 * 18);
@@ -110,19 +110,36 @@ export class ActionView extends Group {
   private circle(x: number, z: number, radius: number, from = 0, angle = Math.PI * 2): void {
     for (let i = 0; i < 48; i++) { const a = from + angle * i / 48, b = from + angle * (i + 1) / 48; this.segment(x + Math.cos(a) * radius, 0.04, z + Math.sin(a) * radius, x + Math.cos(b) * radius, 0.04, z + Math.sin(b) * radius); }
   }
+  /** Rig node a non-selected weapon rides on: melee on the back, guns on the hip. */
+  private holsterMount(category: string): Object3D | null {
+    if (category !== 'melee' && category !== 'ranged') return null;
+    return this.character.node(category === 'ranged' ? 'hip' : 'torso') ?? null;
+  }
   update(): void {
     this.targetMarkerId = null;
     const combat = this.world.combat, player = this.world.entities.get(1); if (!combat || !player) return;
     if (!player.weapons) {
-      for (const held of Object.values(this.held)) held.model.removeFromParent();
+      for (const held of Object.values(this.held)) held.holder.removeFromParent();
       this.offset = 0; this.geometry.setDrawRange(0, 0); this.trailGeometry.setDrawRange(0, 0); return;
     }
     const loadout = combat.runner.loadout;
+    // One weapon in hand: the selected side's weapon sits in the dominant (right) hand; the other side's melee weapon
+    // rides on the back and its gun on the hip. Fists, kicks, throwables and abilities are never drawn as props.
+    const selectedSide = loadout.state.selectedSide, striking = Object.keys(combat.runner.running).length > 0;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];
-      if (held?.id !== def.id) { const model = this.model(def); if (!model) continue; held?.model.removeFromParent(); held = { id: def.id, model: model.clone(true) }; this.held[side] = held; }
-      const socket = this.character.socket(handSide[side])?.socket; if (!socket) continue; if (held.model.parent !== socket) socket.add(held.model);
-      held.model.visible = !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id);
+      if (held?.id !== def.id) { const model = this.model(def); if (!model) continue; held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group(); holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
+      const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
+      const inHand = side === selectedSide, mount = inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
+      if (mount && held.holder.parent !== mount) mount.add(held.holder);
+      const pose = inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
+      if (pose) { held.holder.rotation.set(pose.rot[0], pose.rot[1], pose.rot[2]); held.holder.position.set(pose.pos[0], pose.pos[1], pose.pos[2]); }
+      else {
+        // In hand: melee weapons rest tilted up and away from the body, guns are lowered; both straighten for the strike or shot.
+        held.tilt += ((striking ? 0 : def.category === 'melee' ? restTilt : def.category === 'ranged' ? -gunLower : 0) - held.tilt) * .25;
+        held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
+      }
+      held.holder.visible = !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
     this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0');
@@ -212,14 +229,14 @@ export class ActionView extends Group {
   getState() {
     this.character.updateMatrixWorld(true);
     const attachments = (['LEFT', 'RIGHT'] as const).map((side) => {
-      const nodes = this.character.socket(handSide[side]), held = this.held[side];
-      if (!nodes) return { side, actionId: held?.id, visible: false, iconUrl: null, socket: null, handDistance: 0, gripDistance: 0, attached: false, source: undefined, sockets: [] as string[] };
+      const nodes = this.character.socket('RIGHT'), held = this.held[side];
+      if (!nodes) return { side, actionId: held?.id, visible: false, iconUrl: null, socket: null, holstered: false, handDistance: 0, gripDistance: 0, attached: false, source: undefined, sockets: [] as string[] };
       nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
       held?.model.getObjectByName('grip')?.getWorldPosition(this.gripPosition);
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
-      return { side, actionId: held?.id, visible: held?.model.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, handDistance: this.socketPosition.distanceTo(this.handPosition), gripDistance: this.gripPosition.distanceTo(this.socketPosition), attached: held?.model.parent === nodes.socket, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
+      return { side, actionId: held?.id, visible: held?.holder.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, holstered: side !== this.selected, handDistance: side === this.selected ? this.socketPosition.distanceTo(this.handPosition) : 0, gripDistance: side === this.selected ? this.gripPosition.distanceTo(this.socketPosition) : 0, attached: !!held?.holder.parent, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
     return { targetMarker: this.targetMarkerId === null ? null : { id: this.targetMarkerId, radius: .5 }, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
-  dispose(): void { for (const held of Object.values(this.held)) held.model.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
+  dispose(): void { for (const held of Object.values(this.held)) held.holder.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }
