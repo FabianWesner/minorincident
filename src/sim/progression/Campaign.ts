@@ -104,7 +104,7 @@ export function preset(name:ProgressionPreset):CampaignSave {
   for(let level=1;level<target;level++){
     // E21 L3-default = bat + axe: the default L2 run takes the optional fire axe from the station rack (the pickup adds it to
     // the owned actions). Later presets keep the E13 default path until their levels are rebuilt (E22-E24).
-    if(level===2&&target>=3&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
+    if(level===2&&(target===3||target===4)&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
     autoRewards(save,level as Level);
   }return save;
 }

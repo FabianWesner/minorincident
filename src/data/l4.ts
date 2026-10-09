@@ -18,7 +18,7 @@ export const l4 = {
   },
   /** Beat 1: the five-vehicle convoy (head first), kinematic along the Lakeshore - Church Road - Harbor - Plaza Way route. */
   convoy: {
-    speedMs: 12.5, accelMs2: 3, brakeMs2: 4, cornerMs: 7.5, gapM: 3, turnRadiusM: 6.5, laneM: 1.75,
+    speedMs: 12.5, accelMs2: 3, brakeMs2: 4, lateralMs2: 7, gapM: 3, leftRadiusM: 7, rightRadiusM: 3.6, laneM: 1.75, laneNsM: 1.25,
     /** `len` is the hull length (manifest), `player` the bus the courier rides in (last in line, so she passes the gate first). */
     vehicles: [
       { id: 'apc', asset: 'veh.military-apc', len: 5.69, wid: 2.95 },
@@ -50,7 +50,7 @@ export const l4 = {
     /** Infected per wave per street edge, the first waves small. */
     waveSize: [2, 3, 3, 4, 4, 5, 5, 6, 6, 6] as readonly number[], edgesPerWave: 3,
     /** Seconds the streets keep emerging after the line break (collapse). */
-    collapseWaveEveryS: 7, collapseWaveSize: 4,
+    collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: 1.5,
@@ -76,7 +76,7 @@ export const l4 = {
   /** Section 5.5: military spectacle (sim-light, view-heavy). */
   tank: {
     /** Enters at turn + enterAfterS from the army gate along Lakeshore, then north through the lake garden gap. */
-    enterAfterS: 45, speedMs: 3.6, fireEveryS: [8, 12] as P, minDistM: 15, shellId: 'explosion.tank-shell', turnRate: .9,
+    enterAfterS: 22, speedMs: 3.6, fireEveryS: [8, 12] as P, minDistM: 15, shellId: 'explosion.tank-shell', turnRate: .9,
     path: [[-70, 43.9], [-26, 43.9], [-20, 37.9], [-20, 22]] as readonly P[],
   },
   heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
@@ -193,48 +193,48 @@ export const l4PhotoSpots: readonly (readonly [string, readonly [number, number,
 ];
 
 // ------------------------------------------------------------------------------------------------ the convoy route
-export interface RoutePoint { x: number; z: number; yaw: number; s: number; corner: boolean }
+export interface RoutePoint { x: number; z: number; yaw: number; s: number; /** Speed limit of the corner this point is on (Infinity on straights). */ limit: number }
 /**
  * The convoy centre line (right-hand lanes), arc-length parametrised: Lakeshore eastbound from the gate, Church Road north,
- * Harbor Street east, Plaza Way south, west through the plaza gap, then north along x = `l4Convoy.endX`. Quarter-circle corners of
- * `turnRadiusM`. Pure data (no sim): the controller, the Scene Lab and the tests share it.
+ * Harbor Street east, Plaza Way south, west through the plaza gap, then north along x = `l4Convoy.endX`. The first corner is a wide left
+ * turn, the others tight right turns that stay inside the intersections (their inside corners are building corners). Corner speeds follow
+ * the lateral acceleration limit. Pure data (no sim): the controller, the Scene Lab and the tests share it.
  */
 export function l4Route(): { pts: RoutePoint[]; length: number } {
-  const c = l4.convoy, R = c.turnRadiusM, lane = c.laneM;
-  const zL = 46 + lane, xC = -58 + lane, zH = -40 + lane, xP = 14 - lane, zG = 5.75, xE = l4Convoy.endX;
-  // Corner arcs (centre, start angle, end angle) in world X/Z; yaw convention: heading angle = atan2(-dz, dx).
+  const c = l4.convoy, RL = c.leftRadiusM, RR = c.rightRadiusM, ew = c.laneM, ns = c.laneNsM;
+  const zL = 46 + ew, xC = -58 + ns, zH = -40 + ew, xP = 14 - ns, zG = 5.7, xE = l4Convoy.endX;
   const pts: RoutePoint[] = []; let s = 0;
-  const push = (x: number, z: number, corner = false) => {
+  const push = (x: number, z: number, limit = Infinity) => {
     const last = pts[pts.length - 1];
     if (last) { const d = Math.hypot(x - last.x, z - last.z); if (d < 1e-6) return; s += d; last.yaw = -Math.atan2(z - last.z, x - last.x); }
-    pts.push({ x, z, yaw: last ? last.yaw : 0, s, corner });
+    pts.push({ x, z, yaw: last ? last.yaw : 0, s, limit });
   };
   const line = (x0: number, z0: number, x1: number, z1: number) => { const n = Math.max(1, Math.round(Math.hypot(x1 - x0, z1 - z0) / 2)); for (let i = 0; i <= n; i++) push(x0 + (x1 - x0) * i / n, z0 + (z1 - z0) * i / n); };
-  const arc = (cx: number, cz: number, a0: number, a1: number) => { const n = 10; for (let i = 1; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; push(cx + Math.cos(a) * R, cz + Math.sin(a) * R, true); } };
+  const arc = (cx: number, cz: number, R: number, a0: number, a1: number) => { const n = 12, limit = Math.sqrt(c.lateralMs2 * R); for (let i = 1; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; push(cx + Math.cos(a) * R, cz + Math.sin(a) * R, limit); } };
   const H = Math.PI / 2;
-  line(-84, zL, xC - R, zL);
-  arc(xC - R, zL - R, H, 0);                       // left turn: east -> north
-  line(xC, zL - R, xC, zH + R);
-  arc(xC + R, zH + R, Math.PI, 3 * H);             // right turn: north -> east
-  line(xC + R, zH, xP - R, zH);
-  arc(xP - R, zH + R, -H, 0);                      // right turn: east -> south
-  line(xP, zH + R, xP, zG - R);
-  arc(xP - R, zG - R, 0, H);                       // right turn: south -> west
-  line(xP - R, zG, xE + R, zG);
-  arc(xE + R, zG - R, H, Math.PI);                 // right turn: west -> north
-  line(xE, zG - R, xE, -21);
+  line(-84, zL, xC - RL, zL);
+  arc(xC - RL, zL - RL, RL, H, 0);                 // left turn: east -> north
+  line(xC, zL - RL, xC, zH + RR);
+  arc(xC + RR, zH + RR, RR, Math.PI, 3 * H);       // right turn: north -> east
+  line(xC + RR, zH, xP - RR, zH);
+  arc(xP - RR, zH + RR, RR, -H, 0);                // right turn: east -> south
+  line(xP, zH + RR, xP, zG - RR);
+  arc(xP - RR, zG - RR, RR, 0, H);                 // right turn: south -> west
+  line(xP - RR, zG, xE + RR, zG);
+  arc(xE + RR, zG - RR, RR, H, Math.PI);           // right turn: west -> north
+  line(xE, zG - RR, xE, -21);
   // The last yaw repeats the previous segment's.
   if (pts.length > 1) pts[pts.length - 1].yaw = pts[pts.length - 2].yaw;
   return { pts, length: s };
 }
 /** Pose on the route at arc length `s` (clamped). */
-export function l4RoutePose(route: ReturnType<typeof l4Route>, s: number): { x: number; z: number; yaw: number; corner: boolean } {
+export function l4RoutePose(route: ReturnType<typeof l4Route>, s: number): { x: number; z: number; yaw: number; limit: number } {
   const pts = route.pts, at = Math.max(0, Math.min(route.length, s));
   let lo = 0, hi = pts.length - 1;
   while (hi - lo > 1) { const k = (lo + hi) >>> 1; if (pts[k].s < at) lo = k; else hi = k; }
   const a = pts[lo], b = pts[hi], f = (at - a.s) / ((b.s - a.s) || 1);
   const delta = Math.atan2(Math.sin(b.yaw - a.yaw), Math.cos(b.yaw - a.yaw));
-  return { x: a.x + (b.x - a.x) * f, z: a.z + (b.z - a.z) * f, yaw: a.yaw + delta * f, corner: a.corner || b.corner };
+  return { x: a.x + (b.x - a.x) * f, z: a.z + (b.z - a.z) * f, yaw: a.yaw + delta * f, limit: Math.min(a.limit, b.limit) };
 }
 /**
  * Arc length of each convoy vehicle at the start (the tail inside the army gate) and when parked (head at the route end, the others

@@ -1,4 +1,5 @@
 import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
+import { LevelFourBot } from '../../src/debug/bot/LevelFourBot';
 import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
 import { preset } from '../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../src/sim/progression/apply';
@@ -27,6 +28,7 @@ export async function loadLevel(level: MissionId, seed: number): Promise<SimWorl
   try {
     await world.init(); const composition = compositions[level];
     world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
+    if (level === 'L4') applyCampaign(world, preset('L4-default'));
     if (level === 'L3') applyCampaign(world, preset('L3-default'));
     if (level === 'L2') applyCampaign(world, preset('L2-default'));
     world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
@@ -53,6 +55,10 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
     } else if (level === 'L2') {
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelTwoBot(world, policy);
+      for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+    } else if (level === 'L4') {
+      // E22: the shared L4 policy (ordinary inputs only), same as the browser bot.
+      const bot = new LevelFourBot(world, policy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L3') {
       // E21: the shared L3 policy (ordinary inputs only), same as the browser bot.

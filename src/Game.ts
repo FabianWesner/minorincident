@@ -1,6 +1,7 @@
 import type { Inspection } from './debug/Inspection';
 import { LevelOneBot } from './debug/bot/LevelOneBot';
 import { LevelThreeBot } from './debug/bot/LevelThreeBot';
+import { LevelFourBot } from './debug/bot/LevelFourBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
@@ -50,7 +51,7 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: LevelOneBot | Driver | LevelThreeBot | LevelTwoBot | null = null;
+  driver: LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();

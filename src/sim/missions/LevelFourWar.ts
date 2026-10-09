@@ -87,7 +87,8 @@ export class LevelFourWar {
       this.gunshot(e.sourceId, e.from, e.weapon === 'hmg' || e.role === 'tank' ? 40 : 20);
       if (e.weapon === 'hmg') this.hmgShot(e.sourceId);
     });
-    world.events.on('combat.kill', e => { if (e.type === 'combat.kill') this.killed(e.sourceId, e.targetId, (e as { downed?: unknown }).downed !== undefined); });
+    // Every knockdown or kill counts as a "kill" for the war balance (the infected recover: PO rule), credited to who dealt it.
+    world.events.on('combat.kill', e => { if (e.type === 'combat.kill') this.killed(e.sourceId, e.targetId); });
   }
   private spawnConvoy(): void {
     const { world } = this.mission, s = this.s;
@@ -189,9 +190,12 @@ export class LevelFourWar {
     const remaining = travel - done;
     let target: number = c.speedMs;
     target = Math.min(target, Math.sqrt(2 * c.brakeMs2 * Math.max(0, remaining)));
-    // Slow for any corner a vehicle is about to enter (all five share one speed, so the column keeps its shape).
-    const look = Math.max(0, s.convoyV * s.convoyV - c.cornerMs * c.cornerMs) / (2 * c.brakeMs2) + 1;
-    for (const at of s.convoyS) for (let d = 0; d <= look; d += 1) if (l4RoutePose(this.route, at + d).corner) { target = Math.min(target, c.cornerMs); break; }
+    // Slow for the corner any vehicle is on or about to enter (all five share one speed, so the column keeps its shape).
+    for (const at of s.convoyS) for (let d = 0; d <= 14; d += 1) {
+      const limit = l4RoutePose(this.route, at + d).limit;
+      if (limit < Infinity && s.convoyV * s.convoyV - limit * limit <= 2 * c.brakeMs2 * Math.max(0, d - 1)) continue;
+      target = Math.min(target, limit);
+    }
     if (remaining > .02) target = Math.max(target, .4);
     s.convoyV += Math.max(-c.brakeMs2 / 60, Math.min(c.accelMs2 / 60, target - s.convoyV));
     const step = Math.min(remaining, s.convoyV / 60);
@@ -311,7 +315,7 @@ export class LevelFourWar {
   private waves(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     const collapse = s.phase === 'collapse', every = collapse ? l4.war.collapseWaveEveryS : l4.war.waveEveryS;
-    if (tick >= (collapse ? s.collapseWaveAt : s.waveAt)) {
+    if (tick >= (collapse ? s.collapseWaveAt : s.waveAt) && !(collapse && world.infected!.director.count >= l4.war.collapseCapInfected)) {
       const w = collapse ? s.collapseWaves : s.wave, scale = this.low ? .5 : 1, base = collapse ? l4.war.collapseWaveSize : l4.war.waveSize[Math.min(w, l4.war.waveSize.length - 1)];
       const n = Math.max(1, Math.ceil(base * scale)), ring = collapse ? 5 : 4, edges: number[] = [];
       for (let k = 0; k < l4.war.edgesPerWave; k++) { const i = (w + k) % ring; edges.push(i); s.pend[i] = Math.min(24, (s.pend[i] ?? 0) + n); }
@@ -440,8 +444,8 @@ export class LevelFourWar {
     if (this.world.tick - last > ticks(1)) { s.hmgBursts++; this.world.events.emit({ type: 'hmg.burst', tick: this.world.tick, sourceId }); }
     s.hmgLastAt[sourceId] = this.world.tick;
   }
-  private killed(sourceId: number, targetId: number, downed: boolean): void {
-    const s = this.mission.state.l4, world = this.world; if (!s || downed || s.phase === 'convoy' || s.phase === 'plaza') return;
+  private killed(sourceId: number, targetId: number): void {
+    const s = this.mission.state.l4, world = this.world; if (!s || s.phase === 'convoy' || s.phase === 'plaza') return;
     if (world.entities.get(targetId)?.faction !== 'infected') return;
     const k = s.kills;
     if (sourceId === 1) k.player++;
