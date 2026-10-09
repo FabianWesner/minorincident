@@ -85,6 +85,26 @@ export class CourierGroundContacts {
   reset(): void { this.pivoting = false; for (const foot of this.feet) { foot.locked = false; foot.fresh = true; foot.swing = undefined; foot.phase = -1; } this.heading = undefined; this.moving = false; this.pelvisHeight = undefined; this.shift = 0; }
   /** Ankle target (world), yaw, pitch and lock state of foot `index`, for tests and evidence. */
   contact(index: number): { target: Vector3; yaw: number; locked: boolean; pitch: number } { const f = this.feet[index]; return { target: f.target, yaw: f.yaw, locked: f.locked, pitch: f.pitch }; }
+  /** Enter detailed footwork from the far solver without blending a planted shoe toward the clip. */
+  inherit(phase: number, contacts: { target: Vector3; yaw: number }[]): void {
+    for (const [i, foot] of this.feet.entries()) {
+      foot.target.copy(contacts[i].target); foot.planted.copy(foot.target);
+      foot.yaw = foot.plantYaw = contacts[i].yaw; foot.pitch = 0;
+      foot.phase = (phase + i * .5) % 1; foot.fresh = false; foot.locked = true; foot.swing = undefined;
+    }
+  }
+  /** Full-body actions keep their authored leg pose, but neither shoe may pass through the floor. */
+  groundPose(): void {
+    const rig = this.rig;
+    rig.root.updateWorldMatrix(true, true);
+    const floor = rig.root.getWorldPosition(this.origin).y, s = this.scaleNode.getWorldScale(this.scale).y;
+    let deficit = 0;
+    for (const foot of this.feet) {
+      foot.ik.end.getWorldPosition(this.joint); foot.ik.end.getWorldQuaternion(this.footFrame);
+      for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.delta.set(x * s, -this.sole * s, 0).applyQuaternion(this.footFrame).add(this.joint).y);
+    }
+    if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; rig.hip.updateWorldMatrix(true, true); }
+  }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle): void {
     const rig = this.rig;
     this.time += dt;
