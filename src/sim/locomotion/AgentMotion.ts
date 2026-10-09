@@ -59,6 +59,12 @@ export function installAgentMotion(world: SimWorld): void {
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
       motion.moving = motion.speed > (motion.moving ? .04 : .12); if (distance < 3) motion.distance += distance;
+      // Companion behaviour runs before automatic braking and crowd separation. Keep its existing
+      // 0.3 rad facing limit against the resolved travel too, including a warning's braking slide.
+      if (e.companion && motion.speed > .5) {
+        const heading = -Math.atan2(dz, dx), error = Math.atan2(Math.sin(heading - e.transform.yaw), Math.cos(heading - e.transform.yaw));
+        if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
+      }
     }
   }, SimPhase.cleanup + .5);
 }
