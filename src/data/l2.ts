@@ -109,7 +109,7 @@ export const l2Station = { x: 38.8, z: -41.05, yaw: -Math.PI / 2 } as const;
 export const stationPoint = (lx: number, lz: number): P => [
   l2Station.x + lx * Math.cos(l2Station.yaw) + lz * Math.sin(l2Station.yaw), l2Station.z - lx * Math.sin(l2Station.yaw) + lz * Math.cos(l2Station.yaw)];
 /** The engine waits on Main Row in front of the open bays, nose west toward Grove Market. */
-const truck = { x: 40.0, z: -32.25, yaw: Math.PI } as const;
+const truck = { x: 40.0, z: -32.0, yaw: Math.PI } as const;
 /** Truck-local (x forward, z to the right of the cab: north while the nose points west) to world. */
 const truckPoint = (lx: number, lz: number): P => [truck.x + Math.cos(truck.yaw) * lx + Math.sin(truck.yaw) * lz, truck.z - Math.sin(truck.yaw) * lx + Math.cos(truck.yaw) * lz];
 export const l2Truck = truck;
@@ -117,8 +117,8 @@ export const l2Truck = truck;
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
   'l2-start': stationPoint(3.8, 2.7),   // on the apron in front of the left bay, clear of the centre pier and its bollards
-  // Stand-to-interact point of the axe rack on the station front, 1.05 m out from the facade (see L2Props).
-  'l2-axe-rack': stationPoint(2.6, -.8),
+  // Stand-to-interact point of the axe rack on the solid wall left of the left bay (z 5.0), 1.05 m out from the facade (see L2Props); the old spot hung on the centre pier in the bay opening.
+  'l2-axe-rack': stationPoint(2.6, 5.0),
   'l2-truck': [truck.x, truck.z],
   // Crew door on the station side of the cab.
   'l2-board': truckPoint(.3, 2.0),
@@ -126,7 +126,7 @@ export const l2Anchors: Record<string, P> = {
   'l2-bench-1': stationPoint(1.3, 2.5), 'l2-bench-2': stationPoint(1.3, .7), 'l2-bench-3': stationPoint(-1.3, 3.8), 'l2-bench-4': stationPoint(-1.3, 2.0),
   'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
   'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(4.0, -3.5),
-  'l2-truck-stop': [-43.0, -32.25],
+  'l2-truck-stop': [-43.0, -32.0],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],
   'l2-door-loading': [-55.6, -37.3],
@@ -145,8 +145,10 @@ export const l2Anchors: Record<string, P> = {
 /** What the crew look at while they wait (gear, the truck), and the alarm beacons above the two bays (x, z). */
 export const l2StationLooks: readonly P[] = [stationPoint(6.4, 5.1), stationPoint(4.6, 5.1), stationPoint(3.4, -.5), stationPoint(2.4, -.1), [truck.x, truck.z], [truck.x, truck.z]];
 export const l2Beacons: readonly P[] = [stationPoint(1.7, -3.1), stationPoint(1.7, 1.7)];
-/** Right lane centre: west on Main Row z=-32.25 (straight, no corners; the arc/apron/junction sections are gone with the old loop). */
+/** Right lane centre: west on Main Row, lane centre z=-32.25, driven at -32.0 (straight, no corners; the arc/apron/junction sections are gone with the old loop). */
 export type TruckPathPoint = { x: number; z: number; yaw: number; curvature: number; s: number; limit: number; section: 'apron' | 'elm' | 'juniper' | 'row' | 'junction' };
+/** Lane line z: 0.25 m south of the lane centre (-32.25) so the cab clears the street lamps on the north kerb (x = -33, -23, ...) and the W1 wrecks on the south side. */
+const ROW_Z = -32.0;
 function truckPath(): TruckPathPoint[] {
   const path: TruckPathPoint[] = [];
   const add = (x: number, z: number, yaw: number, curvature: number, section: TruckPathPoint['section']) => {
@@ -160,9 +162,9 @@ function truckPath(): TruckPathPoint[] {
     const n = Math.ceil(Math.hypot(bx - ax, bz - az) / .1);
     for (let i = 1; i <= n; i++) add(ax + (bx - ax) * i / n, az + (bz - az) * i / n, -Math.atan2(bz - az, bx - ax), 0, section);
   };
-  // Main Row, westbound right lane (north side, z=-32.25), straight from the station to the Grove Market forecourt: no corners.
-  add(l2Truck.x, -32.25, -Math.PI, 0, 'row');
-  line(l2Truck.x, -32.25, -43, -32.25, 'row');
+  // Main Row, westbound right lane (north side), straight from the station to the Grove Market forecourt: no corners.
+  add(l2Truck.x, ROW_Z, -Math.PI, 0, 'row');
+  line(l2Truck.x, ROW_Z, -43, ROW_Z, 'row');
   // Backward braking envelope: each sample can reach the next sample's corner cap with <=4 m/s².
   path.at(-1)!.limit = 0;
   for (let i = path.length - 2; i >= 0; i--) path[i].limit = Math.min(path[i].limit, Math.sqrt(path[i+1].limit**2 + 2*l2.ride.brakeMs2*(path[i+1].s-path[i].s)));

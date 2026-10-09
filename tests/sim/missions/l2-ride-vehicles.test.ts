@@ -10,7 +10,7 @@ test('@E20 truck brakes smoothly and holds for a stationary sedan in its lane', 
   let sedan = 0, held = false, previousV = 0, overlap = false, brakeMax = 0;
   runL2(w, l.mission, 'complete', { maxSeconds: 90, stopWhen: m => {
     const s = m.state.l2!; if (s.phase !== 'ride') return false;
-    if (!sedan) sedan = w.vehicles!.spawn('vehicle.sedan', { x: -55, z: 31.25 }, 0);
+    if (!sedan) sedan = w.vehicles!.spawn('vehicle.sedan', { x: 0, z: -32.25 }, 0);
     const t = w.entities.get(s.truckId)!.transform;
     overlap ||= truckBodyOverlap(t, 7.4, 2.1, w.entities.get(sedan)!, w);
     brakeMax = Math.max(brakeMax, (previousV - s.rideV) * 60); previousV = s.rideV;
@@ -34,7 +34,7 @@ test('@E20 crossing traffic yields outside the truck sweep and lets the ride fin
   let traffic = 0, yielded = false, overlap = false;
   runL2(w, l.mission, 'complete', { maxSeconds: 100, stopWhen: m => {
     const s = m.state.l2!; if (s.arrivedAt) return true; if (s.phase !== 'ride') return false;
-    if (!traffic && s.rideS > 20) traffic = w.npcs!.traffic.spawn([{ x: -40, z: 36.8 }, { x: -40, z: -10 }]);
+    if (!traffic && s.rideS > 8) traffic = w.npcs!.traffic.spawn([{ x: 5, z: -24 }, { x: 5, z: -45 }]);
     if (traffic) {
       const e = w.entities.get(traffic)!;
       yielded ||= (e.traffic!.yieldUntil ?? 0) > w.tick && e.traffic!.stopped;
