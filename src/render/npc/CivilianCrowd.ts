@@ -323,7 +323,7 @@ export class CivilianCrowd extends Group {
    * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
    * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */
   private readonly heroLoads = new Map<string, Promise<void>>();
-  private selectHeroes(camera?: import('three').Camera): void {
+  private selectHeroes(camera?: import('three').Camera): void { // camera = the LOD camera (game camera while a free camera inspects)
     const v = this.visibility, previous = new Set(v.heroes); v.heroes.clear();
     if (this.low || !camera) return;
     const picks: { id: number; model: string; d: number }[] = [];
@@ -349,7 +349,7 @@ export class CivilianCrowd extends Group {
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
-  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.selectHeroes(camera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }
