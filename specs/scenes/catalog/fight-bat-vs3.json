@@ -1,0 +1,91 @@
+{
+ "name": "fight-bat-vs3",
+ "note": "Bat combo; the long chain ends in the roundhouse. 3 chasing infected walk into the courier; she attacks them one after the other with the real target-attack input (every click attacks). Look for: the swing hitting, knockdown reads, bodies not merging, nobody invisible.",
+ "ground": "asphalt",
+ "size": 36,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "z-1",
+   "kind": "infected",
+   "at": [
+    6.58,
+    2.39
+   ],
+   "yaw": 200.0,
+   "state": "chase"
+  },
+  {
+   "id": "z-2",
+   "kind": "infected",
+   "at": [
+    -5.36,
+    4.5
+   ],
+   "yaw": 320.0,
+   "state": "chase"
+  },
+  {
+   "id": "z-3",
+   "kind": "infected",
+   "at": [
+    -1.22,
+    -6.89
+   ],
+   "yaw": 440.0,
+   "state": "chase"
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "attack": "z-1",
+    "seconds": 4
+   }
+  },
+  {
+   "frame": 280,
+   "actor": "courier",
+   "do": {
+    "attack": "z-2",
+    "seconds": 4
+   }
+  },
+  {
+   "frame": 540,
+   "actor": "courier",
+   "do": {
+    "attack": "z-3",
+    "seconds": 4
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": "courier",
+  "radius": 9,
+  "azimuth": 40
+ },
+ "frames": 880,
+ "sheet": 48,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "bodyOverlapMaxCm": 6,
+  "footSinkMaxCm": 1
+ }
+}

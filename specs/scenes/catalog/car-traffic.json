@@ -1,0 +1,69 @@
+{
+ "name": "car-traffic",
+ "note": "Ambient traffic on a flat road: sedan, pickup and SUV pass in both lanes; the courier and nothing else stands on the pavement. Look for: wheels turning and on the road, no popping, bodies not floating.",
+ "ground": "asphalt",
+ "size": 50,
+ "vehicles": [
+  {
+   "id": "sedan",
+   "asset": "vehicle.sedan",
+   "at": [
+    -20,
+    -4
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     20,
+     -4
+    ]
+   ]
+  },
+  {
+   "id": "pickup",
+   "asset": "vehicle.pickup",
+   "at": [
+    20,
+    4
+   ],
+   "yaw": 180,
+   "path": [
+    [
+     -20,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "suv",
+   "asset": "vehicle.suv",
+   "at": [
+    -8,
+    -4
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     20,
+     -4
+    ]
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1.1
+ },
+ "frames": 230,
+ "sheet": 10,
+ "expect": {
+  "consoleErrors": 0,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}

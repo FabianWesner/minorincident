@@ -90,6 +90,33 @@ export class SceneSession {
     await this.ready(); mkdirSync(dirname(path), { recursive: true });
     return this.page.screenshot({ path, type: 'png' });
   }
+  /** Low-res JPEG of the current frame for a contact sheet (waits for streaming like a screenshot). */
+  async snapshot(): Promise<Buffer> { await this.ready(); return this.page.screenshot({ type: 'jpeg', quality: 72 }); }
+  /** One JPG grid of labelled cells ("f<frame>"), composed on a canvas in a scratch page; the file stays under maxKb. */
+  async makeSheet(cells: { frame: number; jpeg: Buffer }[], path: string, cellWidth = 320, maxKb = 380): Promise<{ path: string; cells: number; kb: number }> {
+    const scratch = await this.page.context().newPage();
+    try {
+      const data = cells.map(c => ({ frame: c.frame, src: `data:image/jpeg;base64,${c.jpeg.toString('base64')}` }));
+      const b64 = await scratch.evaluate(async ({ data, cellWidth, maxKb }) => {
+        const images = await Promise.all(data.map(d => new Promise<HTMLImageElement>((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = d.src; })));
+        const aspect = images[0].height / images[0].width, h = Math.round(cellWidth * aspect), n = images.length;
+        const cols = n <= 4 ? n : n <= 12 ? 4 : 6, rows = Math.ceil(n / cols), gap = 2;
+        const c = document.createElement('canvas'); c.width = cols * cellWidth + (cols - 1) * gap; c.height = rows * h + (rows - 1) * gap;
+        const g = c.getContext('2d')!; g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height); g.imageSmoothingQuality = 'high'; g.font = 'bold 14px monospace'; g.textBaseline = 'top';
+        images.forEach((img, i) => {
+          const x = (i % cols) * (cellWidth + gap), y = Math.floor(i / cols) * (h + gap);
+          g.drawImage(img, x, y, cellWidth, h);
+          const label = `f${data[i].frame}`, w = g.measureText(label).width + 8;
+          g.fillStyle = 'rgba(0,0,0,.7)'; g.fillRect(x, y, w, 18); g.fillStyle = '#ffe14d'; g.fillText(label, x + 4, y + 2);
+        });
+        let q = 0.8, url = c.toDataURL('image/jpeg', q);
+        while (url.length * 0.75 > maxKb * 1024 && q > 0.3) { q -= 0.1; url = c.toDataURL('image/jpeg', q); }
+        return url.slice(url.indexOf(',') + 1);
+      }, { data, cellWidth, maxKb });
+      const buffer = Buffer.from(b64, 'base64'); mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, buffer);
+      return { path, cells: cells.length, kb: Math.round(buffer.length / 1024) };
+    } finally { await scratch.close(); }
+  }
   async close(): Promise<void> { this.guard?.dispose(); await this.browser?.close(); }
 }
 
