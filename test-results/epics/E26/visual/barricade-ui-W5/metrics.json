@@ -1,0 +1,219 @@
+{
+  "spec": "specs/scenes/barricade-ui-W5.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 126,
+  "timing": {
+    "openMs": 1999,
+    "loadMs": 4371,
+    "runMs": 1894,
+    "sceneMs": 6265
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 50,
+        "limit": 600
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 63754,
+        "limit": 1500000
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "barricade-ui-W5",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bench",
+        "asset": "prop.bench",
+        "at": [
+          0,
+          0
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "player",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "scene": "barricade-ui-W5",
+    "frame": 126,
+    "tick": 126,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 126,
+      "gaps": [
+        {
+          "id": "D-GROVE/bench",
+          "gapCm": 48.38779916007734
+        }
+      ]
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 48,
+        "p95": 50,
+        "max": 50
+      },
+      "triangles": {
+        "p50": 55562,
+        "p95": 63754,
+        "max": 63754
+      },
+      "shadowDrawCalls": {
+        "p50": 15,
+        "p95": 17,
+        "max": 17
+      },
+      "shadowTriangles": {
+        "p50": 45793,
+        "p95": 45817,
+        "max": 45817
+      },
+      "stepMs": {
+        "p50": 1.9,
+        "p95": 2.6,
+        "max": 15.4
+      },
+      "lastFrame": {
+        "drawCalls": 50,
+        "triangles": 63754,
+        "shadowDrawCalls": 15,
+        "shadowTriangles": 45793,
+        "stepMs": 2,
+        "categories": {
+          "other": 49,
+          "shadows": 15,
+          "props": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "player": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          0,
+          1.3
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 126,
+        "inViewFrames": 126,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 126
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            1.3
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 126,
+          "torsoPitchMinDeg": 2.5,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 126,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bench": "n/a"
+    },
+    "clipping": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "summary": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

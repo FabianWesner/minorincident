@@ -95,6 +95,7 @@ export class Combat {
     if (attack.inPlace && type === 'melee' && target.faction === 'civilian' && target.civilian) {
       this.world.npcs?.civilians.annoy(target, attack.aim); return;
     }
+    if (attack.def.id === 'weapon.kick' && this.world.props?.kick(target.id, attack.aim)) return;
     const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
     this.direction.x = distance ? dx / distance : attack.aim.x; this.direction.z = distance ? dz / distance : attack.aim.z;
     const def = attack.def, distanceFalloff = def.distanceFalloff;

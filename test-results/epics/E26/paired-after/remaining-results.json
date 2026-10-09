@@ -1,0 +1,420 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l2-budgets.spec.ts",
+      "tests/perf/l3-budgets.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--grep",
+      "low|T-E21"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3432 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3432",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/l2-budgets.spec.ts",
+      "file": "perf/l2-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "low",
+          "file": "perf/l2-budgets.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low",
+              "ok": false,
+              "tags": [
+                "E20",
+                "E20-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 120798,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m41.200000000004366\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m41.200000000004366\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l2-budgets.spec.ts:65:100",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l2-budgets.spec.ts",
+                          "column": 100,
+                          "line": 65
+                        },
+                        "snippet": "  63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU\n  64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).\n> 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);\n     |                                                                                                    ^\n  66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);\n  67 |   });\n  68 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l2-budgets.spec.ts",
+                            "column": 100,
+                            "line": 65
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m41.200000000004366\u001b[39m\n\n  63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU\n  64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).\n> 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);\n     |                                                                                                    ^\n  66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);\n  67 |   });\n  68 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l2-budgets.spec.ts:65:100"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":30,\"civilians\":26,\"firefighters\":6},\"drawCalls\":223,\"triangles\":383192,\"revealMaxMs\":36.900000000001455,\"gateMaxMs\":117.10000000000582,\"peakP50\":41.200000000004366,\"peakP95\":53.19999999999709,\"peakMax\":67.30000000000291,\"frames\":247,\"simP95\":30,\"updateP95\":6.5,\"renderP95\":17.5,\"gateClosed\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T14:37:43.895Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l2-budgets.spec.ts",
+                        "column": 100,
+                        "line": 65
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f1639ee64f027cada587-5259dc2234fc51b079d9",
+              "file": "perf/l2-budgets.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l3-budgets.spec.ts",
+      "file": "perf/l3-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l3-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E21-21 @E21 @E21-AC21 @perf L3 station attack, fallback and Grove Boulevard high",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC21",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 48598,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"seed\":2,\"counts\":{\"infected\":30,\"officers\":9},\"attackDrawCalls\":133,\"attackTriangles\":460918,\"blvdDrawCalls\":174,\"blvdTriangles\":995476,\"attackP50\":6.700000000000728,\"attackP95\":9.299999999999272,\"attackMax\":12.899999999997817,\"fallbackMaxMs\":16.10000000000582,\"blvdP50\":5.5,\"blvdP95\":9,\"simP95\":3.09999942779541,\"updateP95\":1.5999994277954102,\"renderP95\":5.199999809265137,\"fallbackFired\":true,\"vfx\":{\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"high\",\"flashReduction\":false,\"time\":18.446100000000087,\"lastSpray\":{\"actionId\":\"weapon.handgun\",\"direction\":{\"x\":0.9874312196408263,\"z\":-0.1580493166028582},\"droplets\":24,\"chunks\":0,\"gravity\":9.81},\"surfaceSplats\":7,\"pendingSplats\":0,\"particles\":1321,\"particleCap\":2048,\"decals\":600,\"decalCap\":600,\"gibs\":0,\"gibCap\":80,\"telegraphs\":[],\"hitStop\":{\"active\":false,\"until\":0,\"started\":0,\"suppressed\":0},\"flash\":0,\"blasts\":{\"blasts\":0,\"puffs\":148,\"puffCap\":400,\"fireballs\":0,\"fireballCap\":48,\"flames\":46,\"glows\":11,\"columns\":11,\"clouds\":0,\"scorch\":0,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":true},\"coverage\":0,\"detached\":0,\"dismemberedKills\":0,\"kills\":68,\"explosionRadius\":0}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T14:39:46.686Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011598d1b7c74d017aad-e6520c67078bcbfa6dcf",
+              "file": "perf/l3-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l3-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E21-21 @E21 @E21-AC21 @perf L3 station attack, fallback and Grove Boulevard low",
+              "ok": false,
+              "tags": [
+                "E21",
+                "E21-AC21",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 92992,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m52.80000000000291\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m52.80000000000291\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l3-budgets.spec.ts:62:33",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l3-budgets.spec.ts",
+                          "column": 33,
+                          "line": 62
+                        },
+                        "snippet": "  60 |     if (tier === 'high') { expect(proof.attackP95).toBeLessThanOrEqual(14); expect(proof.blvdP95).toBeLessThanOrEqual(14); }\n  61 |     else { expect(proof.attackP50).toBeLessThanOrEqual(1000 / 30); expect(proof.blvdP50).toBeLessThanOrEqual(1000 / 30); }\n> 62 |     expect(proof.fallbackMaxMs).toBeLessThanOrEqual(50);\n     |                                 ^\n  63 |   });\n  64 | });\n  65 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l3-budgets.spec.ts",
+                            "column": 33,
+                            "line": 62
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m52.80000000000291\u001b[39m\n\n  60 |     if (tier === 'high') { expect(proof.attackP95).toBeLessThanOrEqual(14); expect(proof.blvdP95).toBeLessThanOrEqual(14); }\n  61 |     else { expect(proof.attackP50).toBeLessThanOrEqual(1000 / 30); expect(proof.blvdP50).toBeLessThanOrEqual(1000 / 30); }\n> 62 |     expect(proof.fallbackMaxMs).toBeLessThanOrEqual(50);\n     |                                 ^\n  63 |   });\n  64 | });\n  65 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l3-budgets.spec.ts:62:33"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":15,\"officers\":9},\"attackDrawCalls\":108,\"attackTriangles\":296118,\"blvdDrawCalls\":135,\"blvdTriangles\":382142,\"attackP50\":25,\"attackP95\":31.39999999999418,\"attackMax\":36.099999999998545,\"fallbackMaxMs\":52.80000000000291,\"blvdP50\":21.80000000000291,\"blvdP95\":30.89999999999418,\"simP95\":14.200000762939453,\"updateP95\":4.40000057220459,\"renderP95\":14.5,\"fallbackFired\":true,\"vfx\":{\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"low\",\"flashReduction\":false,\"time\":16.107499999999987,\"lastSpray\":{\"actionId\":\"weapon.pistol\",\"direction\":{\"x\":0.06899712297954896,\"z\":-0.9976168588293529},\"droplets\":6,\"chunks\":0,\"gravity\":9.81},\"surfaceSplats\":25,\"pendingSplats\":3,\"particles\":336,\"particleCap\":512,\"decals\":600,\"decalCap\":600,\"gibs\":0,\"gibCap\":30,\"telegraphs\":[],\"hitStop\":{\"active\":false,\"until\":0,\"started\":0,\"suppressed\":0},\"flash\":0,\"blasts\":{\"blasts\":0,\"puffs\":71,\"puffCap\":120,\"fireballs\":0,\"fireballCap\":48,\"flames\":46,\"glows\":11,\"columns\":11,\"clouds\":0,\"scorch\":0,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":true},\"coverage\":0,\"detached\":0,\"dismemberedKills\":0,\"kills\":59,\"explosionRadius\":0}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T14:40:35.584Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432/perf-l3-budgets-low-T-E21--8ff2b-ack-and-Grove-Boulevard-low-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3432/perf-l3-budgets-low-T-E21--8ff2b-ack-and-Grove-Boulevard-low-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/perf/l3-budgets.spec.ts",
+                        "column": 33,
+                        "line": 62
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "011598d1b7c74d017aad-307128ade465002a5cd6",
+              "file": "perf/l3-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-09T14:37:43.303Z",
+    "duration": 266135.55100000004,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

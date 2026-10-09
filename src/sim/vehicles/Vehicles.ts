@@ -11,7 +11,7 @@ import { VehicleBody } from './VehicleBody';
 /** Serialized vehicle component. Native handles live only in Vehicles.cars. */
 export interface VehicleState {
   speed: number; forwardSpeed: number; steer: number; braking: boolean; boosting: boolean;
-  driver: number | null; attached: number[]; damage: 'normal' | 'smoking' | 'burning' | 'exploded';
+  braced?: boolean; driver: number | null; attached: number[]; damage: 'normal' | 'smoking' | 'burning' | 'exploded';
   explodeAt: number | null; stuck: boolean; recoveringUntil: number;
 }
 interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number }
@@ -53,6 +53,7 @@ export class Vehicles {
     // Cleanup/respawn runs on foot; a dead driver must leave even when both doors are blocked.
     if (player.health.current <= 0 && this.active !== null) this.eject(this.cars.get(this.active)!);
     for (const car of this.cars.values()) {
+      if (car.entity.vehicle!.braced) continue;
       const state = car.entity.vehicle!, drive = car.physics.intent;
       car.physics.boostScale = this.progressionBoost;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = drive.handbrake = false;

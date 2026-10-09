@@ -41,3 +41,8 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E26-AC14 | The `complete` bot uses barricades: in the `barricade-lab` defense scenario the bot fills and braces ≥ 2 slots during prep and survives the wave with fewer infected reaching the core than without barricades (A/B over 10 seeds, a ≥ 40% reduction) | sim |
 | E26-AC15 | Determinism: a 60 s scripted push/kick/explosion sequence in `prop-yard` gives an identical state hash in Node and in the browser | sim/e2e |
 | E26-AC16 | Visual: the slot ghost outline, the coverage meter, the brace overlay (planks/straps), and the damage states (cracks, shake) render and are readable at W0 and W5 (screenshot set `barricade-ui`); a barricade-break sequence screenshot shows the props in flight | visual/vision |
+
+## Deviations
+
+- AC01 remains incomplete under a literal all-movable-assets reading: E26 environment props pass, but dedicated vehicle metadata exceeds the concept's class mass bands (for example the 6,500 kg school bus); vehicle masses were preserved pending a scope decision.
+- Campaign performance no-regression remains unproved: fresh quiet unchanged-source controls also fail existing L2/L3 gates, while some current L1/L2 frame times increase; thresholds and level missions were preserved.

@@ -414,7 +414,8 @@ export class SceneLab {
   }
   effect(fx: EffectSpec): void {
     const world = this.world;
-    if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
+    if ('barricadeHit' in fx) { const target = world.entities.values().find(e => e.barricade?.slot.id === fx.barricadeHit); if (!target) throw new Error(`Unknown barricade: ${fx.barricadeHit}`); world.hazards!.hit(target.id, fx.amount, 'bullet'); }
+    else if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
     else if ('wreck' in fx) { const id = this.vehicles.get(fx.wreck); if (id === undefined) throw new Error(`wreck: unknown vehicle ${fx.wreck}`); world.vehicles!.damage(id, 1e6); }
     else { const kind = 'fire' in fx ? 'fire' : 'smoke', p = toPoint('fire' in fx ? fx.fire : fx.smoke); world.events.emit({ type: 'vfx.effect', tick: world.tick, kind, position: p, radius: fx.radius ?? 2 } as Parameters<typeof world.events.emit>[0]); }
   }

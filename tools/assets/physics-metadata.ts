@@ -26,7 +26,7 @@ export function physicsMetadata(): Record<string, PhysicsAsset> {
       const size = n.extras!.size as number[], p = n.translation ?? [0, 0, 0];
       const geometry = boxes.length ? [0, 1, 2].map(a => Math.max(...boxes.map(b => b.max[a])) - Math.min(...boxes.map(b => b.min[a]))) : [asset.dimensions.x, asset.dimensions.y, asset.dimensions.z];
       const score = (s: number[]) => s.reduce((sum, v, a) => sum + Math.abs(Math.log(v / Math.max(.01, geometry[a]))), 0);
-      const swapped = [size[0], size[2], size[1]], s = score(swapped) < score(size) ? swapped : size;
+      const swapped = [size[0], size[2], size[1]], s = n.extras!.space === 'gltf' ? size : score(swapped) < score(size) ? swapped : size;
       return { min: p.map((v, a) => v - s[a] / 2), max: p.map((v, a) => v + s[a] / 2) };
     });
     result[asset.id] = { ...physics, boxes: authored.length ? authored : boxes, source: asset.glb, hash: createHash('sha256').update(bytes).digest('hex') };

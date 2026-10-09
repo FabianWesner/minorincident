@@ -11,14 +11,18 @@ export interface BarricadeSlot {
   height: number; depth?: number; boardUp?: boolean; inward?: { x: number; z: number };
   /** Already braced obstacles (e.g. the bridge blockade), rather than a build interaction. */
   initialHp?: number;
+  /** Low sandbag cover permits runners to cross in 72 ticks. */
+  sandbag?: boolean;
 }
 /** Serialized on the slot entity: checkpoints preserve HP, coverage and participating prop IDs. */
-export interface BarricadeState { slot: BarricadeSlot; coverage: number; props: string[]; intact: boolean; hitTick: number; breaks: number }
+export interface BarricadeState { slot: BarricadeSlot; coverage: number; props: string[]; carId?: number; intact: boolean; hitTick: number; breaks: number }
 export type BarricadeEvent = { type: 'barricade.built' | 'barricade.broken' | 'barricade.repaired'; tick: number; id: number; slotId: string; groupId: string };
 
 /** Coverage, brace/board/repair and blocker lifecycle. Uses E11 interactions and E07 damage/navigation. */
 export class Barricades {
   private readonly detour: number[] = [];
+  private readonly obstacles: [EntitySnapshot, CoverWall][] = [];
+  private obstacleTick = -1;
   private readonly decisions = new Map<number, { until: number; id: number; attack: boolean; goalX: number; goalZ: number }>();
   constructor(private readonly world: SimWorld) {
     world.events.on('interact.completed', e => {
@@ -38,7 +42,7 @@ export class Barricades {
       entity.barricade.hitTick = world.tick; this.sound(entity, 'hit');
       if (entity.health.current <= 0) this.break(entity);
     });
-    world.events.on('world.blocker.changed', () => this.decisions.clear());
+    world.events.on('world.blocker.changed', () => { this.decisions.clear(); this.obstacleTick = -1; });
   }
   spawn(slot: BarricadeSlot): number {
     if (this.find(slot.id)) throw new Error(`Duplicate barricade slot: ${slot.id}`);
@@ -84,13 +88,24 @@ export class Barricades {
     for (const [a, b] of intervals) { covered += Math.max(0, b - Math.max(a, end)); end = Math.max(end, b); }
     return { items, coverage: Math.min(1, covered / width) };
   }
+  private car(e: EntitySnapshot) {
+    const s = e.barricade!.slot, dx = s.b.x - s.a.x, dz = s.b.z - s.a.z, width = Math.hypot(dx, dz);
+    for (const car of this.world.vehicles?.cars.values() ?? []) {
+      const t = car.entity.transform, v = car.entity.vehicle!;
+      if (v.driver !== null || v.braced || car.entity.health.current <= 0 || car.physics.speed >= .5) continue;
+      if (Math.abs((t.x - s.a.x) * -dz / width + (t.z - s.a.z) * dx / width) > (s.depth ?? .7) / 2 + car.physics.def.width / 2) continue;
+      const half = (Math.abs(dx / width * Math.cos(t.yaw) - dz / width * Math.sin(t.yaw)) * car.physics.def.length + Math.abs(dx / width * Math.sin(t.yaw) + dz / width * Math.cos(t.yaw)) * car.physics.def.width) / 2;
+      const center = ((t.x - s.a.x) * dx + (t.z - s.a.z) * dz) / width;
+      if (center - half <= 0 && center + half >= width) return car;
+    }
+  }
   /** E11 prompt update before stand-to-interact selects a slot. Movement interrupts board/repair. */
   update(): void {
     for (const e of this.world.entities.iterate()) {
       const b = e.barricade, c = e.interactable; if (!b || !c) continue;
       if (b.intact && e.health.current <= 0) this.break(e);
       const candidates = b.intact ? null : this.candidates(e);
-      b.coverage = b.intact || b.slot.boardUp ? 1 : candidates!.coverage;
+      b.coverage = b.intact || b.slot.boardUp || this.car(e) ? 1 : candidates!.coverage;
       c.label = b.intact ? 'Repair' : b.slot.boardUp ? 'Board up' : 'Brace';
       c.holdTime = b.intact || b.slot.boardUp ? 2 : 1.5;
       c.instant = !b.intact && !b.slot.boardUp;
@@ -99,13 +114,14 @@ export class Barricades {
     }
   }
   private build(e: EntitySnapshot, initialHp?: number): void {
-    const b = e.barricade!, result = this.candidates(e);
-    if (!initialHp && !b.slot.boardUp && result.coverage < .8) return;
-    const items = b.slot.boardUp || initialHp ? [] : result.items;
+    const b = e.barricade!, result = this.candidates(e), car = this.car(e);
+    if (!initialHp && !b.slot.boardUp && !car && result.coverage < .8) return;
+    const items = b.slot.boardUp || initialHp || car ? [] : result.items;
     b.props = items.map(p => p.id); b.intact = true; b.coverage = 1; e.kind = 'barricade';
-    const hp = initialHp ?? (b.slot.boardUp ? 200 : items.reduce((sum, p) => sum + (p.metadata.barricadeHP ?? 80), 0));
+    const hp = initialHp ?? (car ? car.entity.health.current * 2 : b.slot.boardUp ? 200 : items.reduce((sum, p) => sum + (p.metadata.barricadeHP ?? 80), 0));
     e.health = { current: hp, max: hp };
     Object.assign(e.interactable!, { label: 'Repair', holdTime: 2, instant: false, enabled: false });
+    if (car) { b.carId = car.entity.id; car.entity.vehicle!.braced = true; car.physics.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, false); }
     for (const p of items) this.world.props!.brace(p, true);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     this.world.interactables!.block(e.id, this.wall(e)); this.sound(e, 'brace'); this.emit(e, 'barricade.built');
@@ -115,6 +131,11 @@ export class Barricades {
     b.intact = false; b.breaks++; e.kind = 'device'; e.health.current = 0;
     this.world.interactables!.unblock(e.id); this.world.spatial.delete(e.id);
     for (const id of b.props) { const p = this.world.props?.items.find(p => p.id === id); if (p) this.world.props!.brace(p, false, b.slot.inward); }
+    if (b.carId !== undefined) {
+      const car = this.world.vehicles?.cars.get(b.carId);
+      if (car) { car.entity.vehicle!.braced = false; car.physics.body.setBodyType(RAPIER.RigidBodyType.Dynamic, true); const inward = b.slot.inward ?? { x: 0, z: 1 }; car.physics.body.applyImpulse({ x: inward.x * car.physics.def.mass * 2, y: car.physics.def.mass, z: inward.z * car.physics.def.mass * 2 }, true); }
+      delete b.carId;
+    }
     b.props = []; this.sound(e, 'break'); this.emit(e, 'barricade.broken');
     this.world.events.emit({ type: 'vfx.effect', tick: this.world.tick, kind: 'objective', position: e.transform, radius: 1 });
   }
@@ -129,13 +150,21 @@ export class Barricades {
         this.world.interactables!.block(e.id, this.wall(e));
       } else this.world.interactables!.unblock(e.id);
     }
+    for (const car of this.world.vehicles?.cars.values() ?? []) {
+      const intact = this.world.entities.values().some(e => e.barricade?.intact && e.barricade.carId === car.entity.id);
+      car.entity.vehicle!.braced = intact;
+      car.physics.body.setBodyType(intact ? RAPIER.RigidBodyType.KinematicPositionBased : RAPIER.RigidBodyType.Dynamic, false);
+    }
     this.decisions.clear();
   }
   /** Select an obstructing brace. Budgeted and cached: detours <=1.5x are preferred. */
   attackTarget(attacker: EntitySnapshot, goal: { x: number; z: number }): EntitySnapshot | undefined {
-    for (const e of this.world.entities.iterate()) {
-      if (!e.barricade?.intact) continue;
-      const wall = this.wall(e);
+    if (this.obstacleTick !== this.world.tick) {
+      this.obstacleTick = this.world.tick; this.obstacles.length = 0;
+      for (const e of this.world.entities.iterate()) if (e.barricade?.intact) this.obstacles.push([e, this.wall(e)]);
+      for (const [id, wall] of this.world.props?.navWalls ?? []) { const e = this.world.entities.get(id); if (e && e.health.current > 0) this.obstacles.push([e, wall]); }
+    }
+    for (const [e, wall] of this.obstacles) {
       const dx = goal.x - attacker.transform.x, dz = goal.z - attacker.transform.z, length = Math.hypot(dx, dz);
       const projection = ((wall.x - attacker.transform.x) * dx + (wall.z - attacker.transform.z) * dz) / Math.max(.01, length * length);
       const cross = Math.abs((wall.x - attacker.transform.x) * dz - (wall.z - attacker.transform.z) * dx) / Math.max(.01, length);
@@ -149,14 +178,35 @@ export class Barricades {
       if (attack) return e;
     }
   }
+  /** Fixed tick vault over low authored sandbags. Crawlers and heavy archetypes keep attacking. */
+  vault(attacker: EntitySnapshot, target?: EntitySnapshot): boolean {
+    const brain = attacker.infected!;
+    if (!brain.vault && target?.barricade?.slot.sandbag && target.barricade.slot.height < .9 && attacker.archetype === 'infected.runner' && this.withinReach(attacker, target)) {
+      const wall = this.wall(target), from = { x: attacker.transform.x, z: attacker.transform.z };
+      const alongX = wall.halfZ > wall.halfX;
+      const sign = alongX ? Math.sign(wall.x - from.x) || 1 : Math.sign(wall.z - from.z) || 1;
+      brain.vault = { started: this.world.tick, from, to: { x: alongX ? wall.x + sign * (wall.halfX + .7) : from.x, z: alongX ? from.z : wall.z + sign * (wall.halfZ + .7) }, height: target.barricade.slot.height };
+    }
+    const vault = brain.vault; if (!vault) return false;
+    const t = Math.min(1, (this.world.tick - vault.started) / 72);
+    attacker.transform.x = vault.from.x + (vault.to.x - vault.from.x) * t;
+    attacker.transform.z = vault.from.z + (vault.to.z - vault.from.z) * t;
+    attacker.transform.y = .7 + Math.sin(t * Math.PI) * (vault.height + .35);
+    this.world.spatial.set(attacker.id, attacker.transform.x, attacker.transform.z);
+    if (t === 1) { delete brain.vault; brain.path.length = 0; brain.goal = -1; }
+    return true;
+  }
   /** Combat distance to the rail face, rather than its midpoint (wide gates remain attackable). */
   withinReach(attacker: EntitySnapshot, target: EntitySnapshot): boolean {
-    const w = this.wall(target);
+    const w = target.barricade ? this.wall(target) : this.world.props?.navWalls.get(target.id);
+    if (!w) return Math.hypot(attacker.transform.x - target.transform.x, attacker.transform.z - target.transform.z) <= 2;
     return Math.hypot(Math.max(0, Math.abs(attacker.transform.x - w.x) - w.halfX), Math.max(0, Math.abs(attacker.transform.z - w.z) - w.halfZ)) <= 1.5;
   }
   /** Approach the near face when crowd spacing pushes an attacker out of reach. */
   approach(attacker: EntitySnapshot, target: EntitySnapshot): { x: number; z: number } {
-    const w = this.wall(target), pad = (this.world.infected?.nav.clearance ?? .65) + .4;
+    const w = target.barricade ? this.wall(target) : this.world.props?.navWalls.get(target.id);
+    if (!w) return { x: target.transform.x, z: target.transform.z };
+    const pad = (this.world.infected?.nav.clearance ?? .65) + .4;
     const x = Math.max(w.x - w.halfX, Math.min(w.x + w.halfX, attacker.transform.x));
     const z = Math.max(w.z - w.halfZ, Math.min(w.z + w.halfZ, attacker.transform.z));
     const dx = attacker.transform.x - x, dz = attacker.transform.z - z, length = Math.hypot(dx, dz);
