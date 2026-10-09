@@ -36,7 +36,7 @@ function helpers(page: Page) {
     return true;
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
-  const go = async (target: P, stop = 1.2, range = 11) => {
+  const go = async (target: P, stop = 1.2, range = 7) => {
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
@@ -48,14 +48,13 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
-    let fights = 0;
-    for (let i = 0; i < 600; i++) {
+    for (let i = 0; i < 700; i++) {
       await step(20);
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
-      if (fights < 3 && (await player()).health.current > 0 && await fightNearby(range)) { fights++; await click(); }
-      else if (fights >= 3) { if (++fights >= 8) fights = 0; if (fights === 4) await click(); }
-      else if (i % 10 === 9) await click();
+      // Fight what is close every other beat (the machine gun's noise draws more of them: never stand and trade forever), walk on in between.
+      if (i % 2 === 0 && (await player()).health.current > 0 && await fightNearby(range)) await click();
+      else if (i % 4 === 3) await click();
     }
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
   };
@@ -219,8 +218,8 @@ test.describe('L5 Aftermath in the browser', () => {
         const pick = a.query({ kind }).filter(e => !e.hidden && !e.civilian?.pet && e.civilian?.adult !== false && e.health.current > 0 && e.civilian?.state !== 'finished' && (kind === 'infected' || e.civilian?.state === 'calm')).slice(0, 6);
         for (const [i, c] of pick.entries()) a.teleport(c.id, { x: player.x - 5 + (i % 3) * 2.6, z: player.z + 3 + Math.floor(i / 3) * 2.6 });
         await a.step(30); await a.screenshotReady();
-        const list = pick.map(c => a.query({ kind }).find(e => e.id === c.id)!).map(e => ({ id: e.id, head: a.camera.project(e.transform.x, e.transform.y + .95, e.transform.z), chest: a.camera.project(e.transform.x, e.transform.y + .45, e.transform.z) }))
-          .filter(c => Math.abs(c.head[0]) < .85 && Math.abs(c.head[1]) < .85 && Math.abs(c.chest[1]) < .7 && c.head[2] < 1);
+        const list = pick.map(c => a.query({ kind }).find(e => e.id === c.id)!).map(e => ({ id: e.id, head: a.camera.project(e.transform.x, e.transform.y + .95, e.transform.z), chest: a.camera.project(e.transform.x, e.transform.y + (kind === 'infected' ? -.55 : .45), e.transform.z) }))
+          .filter(c => Math.abs(c.head[0]) < .85 && Math.abs(c.head[1]) < .85 && Math.abs(c.chest[1]) < (kind === 'infected' ? .85 : .7) && c.head[2] < 1);
         return { list, backend: a.perf().backend };
       }, { kind });
       const shown = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${dir}/${name}-${renderer}.png` }));
@@ -235,8 +234,8 @@ test.describe('L5 Aftermath in the browser', () => {
         }
         return { id: c.id, changed, area: (bottom - top) * half * 2 };
       });
-      // The sunset is dark: the figure-versus-ground contrast is lower than in L4's daylight check, so the pixel threshold is 14 (L4: 24).
-      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .12 : .25)).length;
+      // The sunset is dark and wanderers may be lunging or crawling: the infected probe covers the whole body (feet to head) and the pixel threshold is 14 (L4: 24).
+      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .08 : .25)).length;
       writeFileSync(`${dir}/${name}-${renderer}.json`, JSON.stringify({ ...before, results, drawn }, null, 2) + '\n');
       expect(before.backend).toBe(renderer); expect(before.list.length, `${name} in view`).toBeGreaterThanOrEqual(3); expect(drawn, `${name} drawn bodies`).toBe(before.list.length);
     };
