@@ -22,6 +22,16 @@ describe('L3 squad and checkpoint', () => {
       expect(p.transform.x, JSON.stringify(p.transform)).toBeGreaterThan(l3.finale.barrierX + 1);
     } finally { w.dispose(); }
   }, 120_000);
+  test('fallback recruits every living human officer, including the yard posts', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const living = m.state.l3!.officerIds.filter(id => { const e = w.entities.get(id)!; return e.health.current > 0 && !e.infection; });
+      expect(living.length).toBeGreaterThan(l3.officers.squad.size);
+      m.completeObjective('armory'); m.completeObjective('defend');
+      expect(m.state.l3!.squad.map(q => q.id).sort()).toEqual([...living].sort());
+      for (const id of living) expect(w.entities.get(id)!.civilian!.ally!.follow?.targetId).toBe(1);
+    } finally { w.dispose(); }
+  }, 120_000);
   test('boom waits for the last living officer; a dead officer cannot prevent closure', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {

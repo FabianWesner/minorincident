@@ -158,7 +158,7 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     // E08 shared NPC movement uses the same obstacle routing/steering as corgi and survivor escorts.
     // Slots trail the courier's facing, leaving her walking line clear even when she changes avenue.
     const forward = world.entities.get(f.targetId)!.transform.yaw;
-    const behind = 4 + Math.floor(f.slot / 2), side = (f.slot % 2 ? 1 : -1) * 1.8;
+    const behind = 4 + Math.floor((f.slot % 6) / 2), side = (f.slot % 2 ? 1 : -1) * (1.8 + Math.floor(f.slot / 6) * 1.8);
     const slot = { x: p.x - Math.cos(forward) * behind + Math.sin(forward) * side,
       z: p.z + Math.sin(forward) * behind + Math.cos(forward) * side };
     const nav = world.infected!.nav;
