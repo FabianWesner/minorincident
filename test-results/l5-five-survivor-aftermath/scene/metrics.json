@@ -1,0 +1,320 @@
+{
+  "spec": "test-results/l5-five-survivor-aftermath/scene.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 120,
+  "timing": {
+    "openMs": 564,
+    "loadMs": 4759,
+    "runMs": 466,
+    "sceneMs": 5225
+  },
+  "checks": {
+    "pass": false,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": false,
+        "value": 120,
+        "limit": 0
+      },
+      {
+        "name": "farLodCloseMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "l5-five-living-survivors",
+    "frame": 0,
+    "placements": [],
+    "actors": [
+      {
+        "id": "dale",
+        "kind": "pedestrian",
+        "entity": 3
+      },
+      {
+        "id": "rosa",
+        "kind": "pedestrian",
+        "entity": 4
+      },
+      {
+        "id": "okafor",
+        "kind": "pedestrian",
+        "entity": 5
+      },
+      {
+        "id": "mia",
+        "kind": "pedestrian",
+        "entity": 6
+      },
+      {
+        "id": "sam",
+        "kind": "pedestrian",
+        "entity": 7
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "scene": "l5-five-living-survivors",
+    "frame": 120,
+    "tick": 120,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 7,
+        "p95": 7,
+        "max": 7
+      },
+      "triangles": {
+        "p50": 9358,
+        "p95": 9358,
+        "max": 9358
+      },
+      "shadowDrawCalls": {
+        "p50": 13,
+        "p95": 13,
+        "max": 13
+      },
+      "shadowTriangles": {
+        "p50": 13,
+        "p95": 13,
+        "max": 13
+      },
+      "stepMs": {
+        "p50": 1.1,
+        "p95": 2.3,
+        "max": 7.7
+      },
+      "lastFrame": {
+        "drawCalls": 7,
+        "triangles": 9358,
+        "shadowDrawCalls": 13,
+        "shadowTriangles": 13,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 7,
+          "shadows": 13
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "dale": {
+        "kind": "pedestrian",
+        "entity": 3,
+        "position": [
+          -2.8,
+          1.01
+        ],
+        "yawDeg": -96.7,
+        "state": "calm",
+        "drawnFrames": 0,
+        "inViewFrames": 120,
+        "missedInViewFrames": 120,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "rosa": {
+        "kind": "pedestrian",
+        "entity": 4,
+        "position": [
+          -1.4,
+          1.816
+        ],
+        "yawDeg": -111.7,
+        "state": "calm",
+        "drawnFrames": 0,
+        "inViewFrames": 120,
+        "missedInViewFrames": 120,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "okafor": {
+        "kind": "pedestrian",
+        "entity": 5,
+        "position": [
+          0,
+          1.421
+        ],
+        "yawDeg": -90.2,
+        "state": "calm",
+        "drawnFrames": 0,
+        "inViewFrames": 120,
+        "missedInViewFrames": 120,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "mia": {
+        "kind": "pedestrian",
+        "entity": 6,
+        "position": [
+          1.4,
+          2.014
+        ],
+        "yawDeg": -109.3,
+        "state": "calm",
+        "drawnFrames": 0,
+        "inViewFrames": 120,
+        "missedInViewFrames": 120,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "sam": {
+        "kind": "pedestrian",
+        "entity": 7,
+        "position": [
+          2.8,
+          1.886
+        ],
+        "yawDeg": -90.6,
+        "state": "calm",
+        "drawnFrames": 0,
+        "inViewFrames": 120,
+        "missedInViewFrames": 120,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 120,
+      "sim": {
+        "pedestrian": 5,
+        "actors": 5
+      },
+      "drawn": {
+        "vehicle": 0
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "summary": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

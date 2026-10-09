@@ -1,0 +1,153 @@
+{
+  "spec": "assets/int.metro-station/qa-scene.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 30,
+  "timing": {
+    "openMs": 550,
+    "loadMs": 4545,
+    "runMs": 358,
+    "sceneMs": 4903
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "l5-lakeshore-arrival-asset",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "lakeshore",
+        "asset": "int.metro-station",
+        "at": [
+          0,
+          0
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [],
+    "vehicles": {}
+  },
+  "metrics": {
+    "scene": "l5-lakeshore-arrival-asset",
+    "frame": 30,
+    "tick": 30,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "triangles": {
+        "p50": 19828,
+        "p95": 19828,
+        "max": 19828
+      },
+      "shadowDrawCalls": {
+        "p50": 13,
+        "p95": 13,
+        "max": 13
+      },
+      "shadowTriangles": {
+        "p50": 13,
+        "p95": 13,
+        "max": 13
+      },
+      "stepMs": {
+        "p50": 2,
+        "p95": 2.8,
+        "max": 7.2
+      },
+      "lastFrame": {
+        "drawCalls": 14,
+        "triangles": 19828,
+        "shadowDrawCalls": 13,
+        "shadowTriangles": 13,
+        "stepMs": 1.5,
+        "categories": {
+          "other": 14,
+          "shadows": 13
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {},
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 30,
+      "sim": {
+        "actors": 0
+      },
+      "drawn": {
+        "vehicle": 0
+      }
+    },
+    "lods": {
+      "lakeshore": "n/a"
+    },
+    "clipping": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "summary": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
