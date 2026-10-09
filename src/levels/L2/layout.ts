@@ -1,6 +1,7 @@
 import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
-import { l2Anchors } from '../../data/l2';
+import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
+import { l2Anchors, l2TruckPath } from '../../data/l2';
 import { findClearSpot, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
 import type { DistrictLayout, Placement, Tier } from '../districts/types';
 
@@ -92,6 +93,9 @@ export function stationKeepOutGap(x: number, z: number): number {
   const corridor = Math.min(...CORRIDORS.map(([a, b]) => segDist(x, z, l2Anchors[a], l2Anchors[b]) - .6));
   return Math.min(ring, corridor);
 }
+/** True when a box of the given half extents centred on (x, z) stays `margin` clear of the fire truck's whole swept lane (sampled every metre). */
+const truckLaneClear = (x: number, z: number, half: readonly number[], margin: number) =>
+  l2TruckPath.every((q, i) => i % 10 !== 0 || !truckWallOverlap(q, 7.4, 2.1, { x, z, y: 0, halfX: half[0], halfZ: half[1], halfY: 1 }, margin));
 const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.includes('fence');
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
@@ -158,11 +162,14 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       // the bench cuts 75 cm into the station's front step, tracked with the L1-route lane that owns that corner).
       if (!decal && d.kind !== 'station' && d.kind !== 'river' && footprints(placement, 0, true).length) {
         const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
+        // The rescue fire truck's lane stays free: a piece that stood off the lane is never slid onto it (T-E20-20: a crashed sedan moved onto the Juniper/Main Row junction).
+        const keepLane = truckLaneClear(d.x, d.z, half, .15);
         const spot = findClearSpot(layout, placement, obstacles, {
           slide: d.assetId.startsWith('veh.'),
           margin: d.assetId.startsWith('veh.') ? .1 : .3, // props keep a hand's width off fences and posts, cars may touch
           accept: (x, z) => {
             if (stationKeepOutGap(x, z) < RING_CLEAR_M) return false;
+            if (keepLane && !truckLaneClear(x, z, half, .15)) return false;
             // Checkpoint barriers and cones close the road: they stand on the asphalt, never beside a mailbox on the pavement.
             const onRoad = overlapsRoad(layout, { min: [x - half[0], 0, z - half[1]], max: [x + half[0], 1.5, z + half[1]] });
             return roadside ? !onRoad : d.kind !== 'checkpoint' || d.assetId.startsWith('veh.') || onRoad;
