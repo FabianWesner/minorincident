@@ -2,6 +2,7 @@ import type { ScenarioDefinition } from '../../levels/loader';
 type Wall = NonNullable<ScenarioDefinition['walls']>[number];
 /** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
 const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
+const marginSteps = [0.002, .005, .01, .02, .04, .06, .08, .1];
 /** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   readonly cellSize = 0.5;
@@ -193,7 +194,13 @@ export class NavGrid {
       if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; continue; }
       if (!touched) {
         touched = true;
-        if (!this.clear(position.x, position.z, radius) && this.clear(position.x, position.z, radius - 0.002)) { radius -= 0.002; i--; continue; }
+        if (!this.clear(position.x, position.z, radius)) {
+          // Rapier or combat can leave a body just inside the baked clearance margin.
+          // Use the largest radius that fits its current position so it can leave or slide,
+          // while still refusing a move deeper into the obstacle.
+          const fit = marginSteps.find(cut => this.clear(position.x, position.z, radius - cut));
+          if (fit !== undefined) { radius -= fit; i--; continue; }
+        }
       }
       if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz;
     }

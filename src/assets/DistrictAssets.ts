@@ -123,7 +123,10 @@ export class DistrictAssets {
       openFireStationBays(id, asset);
       // While a level is playable, batching is sliced over frames (one gate slot per slice).
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
-      const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
+      const leaves = buildingDoors[id]?.leaves;
+      if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
+      // The Metro's authored slide joint remains independent of the static shell at every LOD/decay tier.
+      if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {

@@ -298,7 +298,7 @@ export class GameView implements Lifecycle {
     this.lighting?.setQuality(this.quality); this.districts?.setQuality(this.quality); this.crowd?.setQuality(this.quality);
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
-    this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
+    this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
@@ -626,6 +626,8 @@ export class GameView implements Lifecycle {
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
+    const shutterAt = this.world.missions?.state.l5?.shutterAt;
+    if (shutterAt) this.districts?.updateMetroShutter(Math.min(1, Math.max(0, (this.world.tick - shutterAt) / 120)));
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
