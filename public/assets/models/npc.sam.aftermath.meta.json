@@ -1,39 +1,31 @@
 {
   "id": "npc.sam.aftermath",
   "errors": [],
-  "triangles": 7062,
-  "materials": 1,
-  "drawCalls": 15,
-  "fileKB": 615.01171875,
+  "triangles": 9706,
+  "materials": 3,
+  "drawCalls": 19,
+  "fileKB": 860.2265625,
   "dimensions": [
     0.746366449410963,
     1.8000755711192604,
     0.7468266681507787
   ],
-  "hash": "48b081a10cb09ac6029286ad59e6dc2864e97658791387f1410b524fc4b9418f",
+  "hash": "fecddf5fef09460d966abecad20f9b602022bdc4d6285815965084d60253a6e4",
   "runtime": {
     "id": "npc.sam.aftermath",
     "errors": [],
-    "triangles": 7062,
-    "materials": 1,
-    "drawCalls": 15,
-    "fileKB": 148.84375,
+    "triangles": 9706,
+    "materials": 3,
+    "drawCalls": 19,
+    "fileKB": 198.9609375,
     "dimensions": [
       0.7463650711536023,
-      1.8000722435182464,
+      1.8000722435182461,
       0.7468265253234588
     ],
-    "hash": "0da36a38b54061fdd1a842703797fc2a8f3b5402bc66caa59de0ad5c65afedaa"
+    "hash": "aa0a5ae02b889b2025dc320d0017ae83cca87ceec0e61e0f7d2c3efb983e2603"
   },
   "nodes": [
-    {
-      "name": "body",
-      "pivot": [
-        0,
-        0,
-        0
-      ]
-    },
     {
       "name": "front",
       "pivot": [
@@ -163,7 +155,15 @@
       ]
     },
     {
-      "name": "handL_pal_picketWhite",
+      "name": "foreArmL_pal_skinWarm",
+      "pivot": [
+        0.0223303648787269,
+        0.9924607187888168,
+        -0.2940164878487569
+      ]
+    },
+    {
+      "name": "handL_pal_skinWarm",
       "pivot": [
         0.05582591681832254,
         0.7753599249999998,
@@ -219,7 +219,15 @@
       ]
     },
     {
-      "name": "handR_pal_picketWhite",
+      "name": "foreArmR_pal_skinWarm",
+      "pivot": [
+        0.0223303648787269,
+        0.9924607187888168,
+        0.2940164878487569
+      ]
+    },
+    {
+      "name": "handR_pal_skinWarm",
       "pivot": [
         0.05582591681832254,
         0.7753599249999998,
@@ -267,7 +275,23 @@
       ]
     },
     {
+      "name": "head_pal_eyeBrown",
+      "pivot": [
+        0,
+        1.2839959943913124,
+        0
+      ]
+    },
+    {
       "name": "head_pal_picketWhite",
+      "pivot": [
+        0,
+        1.2839959943913124,
+        0
+      ]
+    },
+    {
+      "name": "head_pal_skinWarm",
       "pivot": [
         0,
         1.2839959943913124,
