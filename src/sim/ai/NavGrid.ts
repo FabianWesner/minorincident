@@ -17,7 +17,7 @@ export class NavGrid {
   private readonly pathSeen: Uint32Array;
   private pathStamp = 0;
   private readonly heap: { cell: number; score: number }[] = [];
-  private readonly buckets = new Map<string, Wall[]>();
+  private readonly buckets = new Map<number, Map<number, Wall[]>>();
   private searchFrom = -1;
   private searchTo = -1;
   private searching = false;
@@ -75,7 +75,7 @@ export class NavGrid {
     if (this.mask && !this.mask(x, z)) return false;
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
     if (!this.buckets.size && !this.blockers.size) return true;
-    for (const w of this.buckets.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    for (const w of this.buckets.get(Math.floor(x / 4))?.get(Math.floor(z / 4)) ?? []) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     for (const [id, w] of this.blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     return true;
   }
@@ -90,7 +90,11 @@ export class NavGrid {
   private indexWalls(): void {
     this.buckets.clear();
     for (const wall of this.walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
-      const key = `${x},${z}`, bucket = this.buckets.get(key) ?? []; bucket.push(wall); this.buckets.set(key, bucket);
+      let column = this.buckets.get(x);
+      if (!column) this.buckets.set(x, column = new Map());
+      let bucket = column.get(z);
+      if (!bucket) column.set(z, bucket = []);
+      bucket.push(wall);
     }
   }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
@@ -152,7 +156,7 @@ export class NavGrid {
       // Consecutive 20 cm samples usually share a 4 m bucket. Collect its walls once.
       const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
       if (bucketX !== previousX || bucketZ !== previousZ) {
-        for (const wall of this.buckets.get(`${bucketX},${bucketZ}`) ?? []) walls.add(wall);
+        for (const wall of this.buckets.get(bucketX)?.get(bucketZ) ?? []) walls.add(wall);
         previousX = bucketX; previousZ = bucketZ;
       }
     }

@@ -42,7 +42,13 @@ test('@E20 navigation visibility keeps the original sample and slab decisions', 
   let seed = 17; const random = () => { seed = Math.imul(seed, 1664525) + 1013904223 >>> 0; return seed / 4294967296; };
   const walls = Array.from({ length: 25 }, () => ({ x: random() * 32 - 16, y: 1, z: random() * 32 - 16, halfX: .02 + random() * 2, halfY: 1, halfZ: .02 + random() * 2 }));
   const nav = new NavGrid({ width: 48, depth: 48 }, walls, .65, { x: 1, z: -1 }, (x, z) => !(x > 8 && x < 10 && z > 5 && z < 7));
-  const legacy = legacyVisible.bind(nav as unknown as ThisParameterType<typeof legacyVisible>);
+  // Keep the original string index independent of the production numeric index.
+  const buckets = new Map<string, Wall[]>();
+  for (const wall of walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
+    const key = `${x},${z}`, bucket = buckets.get(key) ?? []; bucket.push(wall); buckets.set(key, bucket);
+  }
+  const legacy = legacyVisible.bind({ mask: nav.mask, walls, ground: nav.ground, center: nav.center,
+    clear: nav.clear.bind(nav), buckets, blockers: (nav as unknown as { blockers: Map<number, Wall> }).blockers });
   for (let i = 0; i < 3000; i++) {
     if (i % 100 === 0) nav.setBlocker(99, { x: i % 9, y: 1, z: i % 7, halfX: .1, halfY: 1, halfZ: 2 }, i % 200 === 0);
     const from = { x: random() * 50 - 25, z: random() * 50 - 25 }, to = { x: random() * 50 - 25, z: random() * 50 - 25 };
