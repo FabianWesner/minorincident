@@ -1,5 +1,4 @@
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
-import { levelTwoLayouts } from '../../levels/L2/layout';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
@@ -11,6 +10,9 @@ import type { EntitySnapshot } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { SimPhase } from '../../core/EventBus';
+import { l2TruckPath } from '../../data/l2';
+import { levelTwoLayouts } from '../../levels/L2/layout';
+import { L2TruckDrive, truckPoseAt, truckBodyOverlap, truckWallOverlap, type TruckRideState } from '../../sim/vehicles/L2TruckDrive';
 import { installL1Outbreak } from '../../sim/outbreak/install';
 import { doorExit, emergeResident, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../sim/outbreak/HouseEmergence';
 import { seatAnchor } from '../../sim/npc/seats';
@@ -57,6 +59,7 @@ export class SceneLab {
   readonly actors = new Map<string, LabActor>();
   readonly vehicles = new Map<string, number>();
   /** `trace`: per-frame vehicle samples (frame, x, y, z, yaw deg, pitch/roll deg of the presented body, ground under it). */
+  private vehicleMotion = new Map<string, { yaw: number; yawRateMaxDegS: number; overlaps: number; ride?: TruckRideState }>();
   private vehicleTrack = new Map<string, number[][]>();
   private camera: CameraSpec | null = null;
   private perf: { drawCalls: number; triangles: number; shadowDrawCalls: number; shadowTriangles: number; stepMs: number; categories: Record<string, number> }[] = [];
@@ -102,6 +105,8 @@ export class SceneLab {
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
+    if (source && spec.layout?.level === 'L2') source = levelTwoLayouts([source])[0];
+    this.vehicleMotion.clear();
     this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
@@ -132,7 +137,18 @@ export class SceneLab {
     const courier = spec.actors?.find(a => a.kind === 'courier');
     if (!courier) player.hidden = true;
     for (const e of [...world.entities.iterate()]) if (e.companion && !spec.actors?.some(a => a.kind === 'corgi')) { world.entities.delete(e.id); world.spatial.delete(e.id); }
-    for (const v of spec.vehicles ?? []) this.addVehicle(v.id ?? v.asset, v.asset, v.at, v.yaw ?? 0, v.path, v.panic);
+    for (const v of spec.vehicles ?? []) {
+      const id = v.id ?? v.asset, pose = v.l2Ride ? truckPoseAt(v.l2Ride.distanceM ?? 0) : null;
+      const entity = this.addVehicle(id, v.asset, pose ? [pose.x, pose.z] : v.at, pose ? pose.yaw * 180 / Math.PI : v.yaw ?? 0, v.path, v.panic);
+      if (v.l2Ride) {
+        const state = { truckId: entity, rideS: v.l2Ride.distanceM ?? 0, rideV: v.l2Ride.speedMs ?? 0 }, driver = new L2TruckDrive(world, state);
+        driver.prepare();
+        this.vehicleMotion.set(id, { yaw: pose!.yaw, yawRateMaxDegS: 0, overlaps: 0, ride: state });
+        let arrived = false;
+        world.events.on('sim.tick', () => { if (!arrived) arrived = driver.step(); }, SimPhase.missions);
+      }
+      if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
+    }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
     // The emergence runs inside the tick in the mission phase, as LevelOneOutbreak does (motion is published from it).
     world.events.on('sim.tick', () => this.emergeStep(), SimPhase.missions);
@@ -351,7 +367,7 @@ export class SceneLab {
 
   /** Resolve a camera target: actor id, [x, z] or [x, y, z]. */
   private target(t: [number, number, number] | Point | string | undefined, y = .8): [number, number, number] {
-    if (typeof t === 'string') { const a = this.actors.get(t), e = a && this.world.entities.get(a.entity); if (!e) throw new Error(`camera: unknown actor ${t}`); return [e.transform.x, y, e.transform.z]; }
+    if (typeof t === 'string') { const entity = this.actors.get(t)?.entity ?? this.vehicles.get(t), e = entity === undefined ? undefined : this.world.entities.get(entity); if (!e) throw new Error(`camera: unknown actor ${t}`); return [e.transform.x, y, e.transform.z]; }
     if (!t) return [this.built!.center[0], y, this.built!.center[1]];
     return t.length === 3 ? [t[0], t[1], t[2]] : [t[0], y, t[1]];
   }
@@ -493,6 +509,16 @@ export class SceneLab {
         if (!old) this.hits.set(key, { ...h, actor: actor.id, frame: this.frame, count: 1 });
         else { old.count++; if (h.crossing && !old.crossing || h.clearanceCm < old.clearanceCm) Object.assign(old, h, { frame: this.frame }); }
       }
+    }
+    for (const [id, entity] of this.vehicles) {
+      const e = this.world.entities.get(entity), motion = this.vehicleMotion.get(id); if (!e || !motion) continue;
+      const delta = Math.atan2(Math.sin(e.transform.yaw - motion.yaw), Math.cos(e.transform.yaw - motion.yaw));
+      motion.yawRateMaxDegS = Math.max(motion.yawRateMaxDegS, Math.abs(delta) * 60 * 180 / Math.PI); motion.yaw = e.transform.yaw;
+      const def = this.world.vehicles!.cars.get(entity)?.physics.def; if (!def) continue;
+      for (const b of this.world.entities.iterate()) if (b.id !== entity && !b.hidden && (b.civilian || b.infected || b.companion || b.vehicle || b.traffic || b.kind === 'physics-prop')) {
+        if (truckBodyOverlap(e.transform, def.length, def.width, b, this.world)) motion.overlaps++;
+      }
+      for (const wall of this.world.infected!.nav.walls) if (truckWallOverlap(e.transform, def.length, def.width, wall)) motion.overlaps++;
     }
     if (this.spec?.trace) for (const [id, entity] of this.vehicles) {
       const v = this.world.entities.get(entity); if (!v) continue;
@@ -677,7 +703,7 @@ export class SceneLab {
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
-      vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
+      vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       bike: { ...this.bike }, actors, visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };

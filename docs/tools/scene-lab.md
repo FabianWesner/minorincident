@@ -103,6 +103,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 `"vehicles": [{ "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0, "path": [[16, 8]] }]`
 
 - **Vehicle ids:** `vehicle.sedan`, `pickup`, `suv`, `police`, `ambulance`, `school-bus` and `fire-engine`.
+- **L2 passenger ride:** `"l2Ride": { "distanceM": 80, "speedMs": 7.6 }` runs the actual mission driver from that fixture distance. Use `layout.level: "L2"` for its dressing; camera targets may name a vehicle.
 - **Driving:** with a `path`, the real vehicle physics drives the car through a small autopilot (`Vehicles.autopilot`).
 - **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
 - **Traffic:** `traffic` is the kinematic ambient-traffic box.
@@ -153,6 +154,10 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
+- `vehicleYawRateMaxDegS` (maximum wrapped yaw change per fixed tick, in degrees/second)
+- `vehicleBodyOverlapsMax` (full vehicle footprint against people, vehicles, movable props and static colliders)
+- `vehicleRideRemainingMaxM` (remaining L2 route distance; prevents a stationary ride passing its motion gates)
+- `wheelSinkMaxCm` (drawn tyre tread against drawn ground)
 - `yawDriftMaxDeg`
 - `torsoPitchMaxDeg`
 - `drawCallsMax`
