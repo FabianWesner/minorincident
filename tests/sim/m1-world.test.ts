@@ -111,7 +111,8 @@ test('@E19 M1-06 neighbors use five models, safe sidewalk routines and actual mo
   for (let i = 0; i < 1200; i++) {
     world.update();
     for (const e of neighbors) {
-      expect(world.infected!.nav.clear(e.transform.x, e.transform.z, .35)).toBe(true); expect(e.transform.y).toBe(.7);
+      // PO feet-on-drawn-ground change (465c49e6): sidewalks lift the civilian's standing root.
+      expect(world.infected!.nav.clear(e.transform.x, e.transform.z, .35)).toBe(true); expect(e.transform.y).toBe(.7 + world.districts!.groundHeight(e.transform.x, e.transform.z));
       (e.motion!.moving ? moving : idle).add(e.id);
       if (!e.motion!.moving) expect(e.motion!.speed).toBeLessThan(.13);
     }
