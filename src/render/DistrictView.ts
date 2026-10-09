@@ -92,7 +92,7 @@ export class DistrictView extends Group {
     private readonly instanceCapacity?: number,
   ) {
     super();
-    this.name = "sunset-grove";
+    this.name = "sunset-grove"; this.matrixAutoUpdate = false;
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
@@ -140,7 +140,7 @@ export class DistrictView extends Group {
       this.world.districts.map(async (d) => {
         const root = new Group();
         root.name = d.id;
-        root.position.set(d.origin[0], 0, d.origin[1]);
+        root.position.set(d.origin[0], 0, d.origin[1]); root.updateMatrix(); root.matrixAutoUpdate = false;
         this.add(root); this.districtRoots.push({ root, bounds: new Box3(
           new Vector3(d.origin[0] + Math.min(...d.layout.bounds.map(p => p[0])), -2, d.origin[1] + Math.min(...d.layout.bounds.map(p => p[1]))),
           new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(0, ...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
@@ -154,6 +154,8 @@ export class DistrictView extends Group {
         );
         for (const scene of scenes) {
           const clone = scene.clone(true);
+          // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
+          clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
           clone.traverse((o) => {
             if (d.decay.removed.includes(o.name)) o.visible = false;
           });

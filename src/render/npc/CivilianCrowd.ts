@@ -1,3 +1,4 @@
+import { simplifyCrowdLod } from '../characters/crowdLodGeometry';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
@@ -126,6 +127,8 @@ class CivilianBatch extends Group {
     baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
     deinterleaveGeometry(baked.geometry);
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+    // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
+    if (!placeholder) await simplifyCrowdLod(baked.geometry, this.distant ? .01 : .005, this.distant ? .35 : .5);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
@@ -246,8 +249,6 @@ class CivilianBatch extends Group {
       for (const attribute of [this.mesh.instanceMatrix, this.frame, this.tint, this.overlay]) {
         attribute.clearUpdateRanges(); attribute.addUpdateRange(0, index * attribute.itemSize); attribute.needsUpdate = true;
       }
-      const first = this.bakedClip.frames * this.texture.image.width * 4;
-      this.texture.clearUpdateRanges(); this.texture.addUpdateRange(first, this.texture.image.data!.length - first);
     }
   }
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {
