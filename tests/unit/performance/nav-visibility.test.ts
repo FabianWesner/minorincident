@@ -51,3 +51,30 @@ test('@E20 navigation visibility keeps the original sample and slab decisions', 
     expect(nav.visible(from, to, radius), JSON.stringify({ from, to, radius })).toBe(legacy(from, to, radius));
   }
 });
+
+test('@E20 blocker changes keep only unaffected nearest-cell answers', () => {
+  const wall = { x: -12, y: 1, z: -12, halfX: .4, halfY: 1, halfZ: .4 };
+  const nav = new NavGrid({ width: 48, depth: 48 }, [wall]);
+  const uncached = (nav as unknown as { nearestCellUncached(x: number, z: number, radius?: number): number }).nearestCellUncached.bind(nav);
+  const far = nav.nearestCell(-12, -12, .35);
+  const memo = (nav as unknown as { nearestMemo: { x: number; z: number }[] }).nearestMemo;
+  nav.setBlocker(99, { ...wall, x: 10, z: 10 }, true);
+  expect(memo.some(m => m.x === -12 && m.z === -12)).toBe(true);
+  expect(nav.nearestCell(-12, -12, .35)).toBe(far);
+  for (let i = 0; i < 40; i++) {
+    const blocker = { ...wall, x: -12 + i % 6, z: -12 + i % 5, halfX: .8, halfZ: .2 };
+    nav.setBlocker(99, blocker, i % 3 !== 0);
+    for (const [x, z] of [[-12, -12], [-10, -10], [0, 0], [10, 10]]) for (const radius of [undefined, 0, .35, 1.2]) {
+      expect(nav.nearestCell(x, z, radius)).toBe(uncached(x, z, radius));
+    }
+  }
+  const mutable = { ...wall };
+  nav.setBlocker(101, mutable, true);
+  for (let i = 0; i < 10; i++) {
+    if (i % 3 === 0) nav.rebake();
+    nav.nearestCell(mutable.x, mutable.z, .35);
+    mutable.x += .5; mutable.z += .5;
+    nav.setBlocker(101, mutable, i % 2 === 0);
+    for (const offset of [-1, 0, 1]) expect(nav.nearestCell(mutable.x + offset, mutable.z, .35)).toBe(uncached(mutable.x + offset, mutable.z, .35));
+  }
+});
