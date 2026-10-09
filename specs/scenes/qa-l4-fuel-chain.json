@@ -13,7 +13,7 @@
  ],
  "actors": [
   { "id": "courier", "kind": "courier", "at": [-3.5, -4], "yaw": 0, "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": "idle" },
-  { "id": "zed", "kind": "infected", "at": [24, -12], "count": 12, "spread": 5, "yaw": 180, "state": { "chase": "courier" } }
+  { "id": "zed", "kind": "infected", "at": [14, -24], "count": 8, "spread": 1.5, "yaw": 180, "state": { "chase": "courier" } }
  ],
  "script": [
   { "frame": 60, "effect": { "blast": "explosion.fuel-truck", "at": [13.2, -9.5] } }
