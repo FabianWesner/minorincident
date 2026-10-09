@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 import bpy
 from mathutils import Matrix, Vector
-from . import export, palette, sockets
+from . import export, injury, palette, sockets
 
 BASES = {'npc.civilian-elderly.aftermath': 'npc.civilian-elderly',
          'npc.paramedic.aftermath': 'npc.paramedic',
@@ -240,8 +240,11 @@ def tint_and_wrap(root, lod, group):
         wrap.matrix_world = world
         layer = wrap.data.color_attributes.new(name='palette', type='FLOAT_COLOR', domain='CORNER')
         wrap.data.color_attributes.active_color = layer
-        for value in layer.data:
-            value.color = (.98, .98, .95, 1)
+        # Dirty gauze with a blood stain down the outward-front side (injury.py), not a clean cuff.
+        sign = injury.side_sign('foreArmL')
+        for loop in wrap.data.loops:
+            q = wrap.matrix_world @ wrap.data.vertices[loop.vertex_index].co
+            layer.data[loop.index].color = injury.wrap_color(q, wrap.matrix_world.translation, sign, length)
     if lod == 2 and root.get('skinSource') == 'npc.paramedic':
         head = bpy.data.objects['head']
         pony = [o for o in root.children_recursive if o.type == 'MESH' and o.name.startswith('pony sculpt lock')]
