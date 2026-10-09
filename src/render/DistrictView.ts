@@ -434,13 +434,14 @@ export class DistrictView extends Group {
       }
     }
   }
-  private armyBoomPose = -1;
-  /** The army checkpoint's authored boom is split at gateArm across every LOD. */
+  /** The checkpoint can stream in after the mission first raises its arm; cache on each placement. */
   updateArmyBoom(open: number): void {
-    if (open === this.armyBoomPose) return;
-    this.armyBoomPose = open;
     for (const entry of this.lodBatches) if (entry.id === 'kit.army-checkpoint')
-      for (const ref of entry.refs) for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
+      for (const ref of entry.refs) {
+        if (ref.userData.armyBoomPose === open) continue;
+        ref.userData.armyBoomPose = open;
+        for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
+      }
   }
   /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {
