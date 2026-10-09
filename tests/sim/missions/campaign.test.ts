@@ -47,7 +47,7 @@ for (const action of ['left','right','interact','selector','move','pause'] as co
 test('@E12 @E12-AC07 L3 armory -> defend -> fallback -> army checkpoint completes straight into progression',async()=>{
   world=new SimWorld();await world.init();const c=compositions.L3;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))));world.loadMission(resolveCampaignMission('L3',world.districts!));const api=missionControls(world);api.begin();
   api.completeObjective('armory');api.completeObjective('defend');expect(api.state()!.states.fallback).toBe(true);api.completeObjective('checkpoint');expect(api.state()!.phase).toBe('progression');
-});
+}, 120_000); // Advancing the authored defense waves took >30 s under four-worker simulation load.
 test('@E12 @E12-AC05 authored source checkpoint can be loaded fresh and retains its reached snapshot',async()=>{
   world=new SimWorld();await world.init();const c=compositions.L1;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),42);const m=world.loadMission(resolveCampaignMission('L1',world.districts!));m.loadCheckpoint('accident');
   expect(m.state.steps.escape.status).toBe('active');expect(m.state.checkpoint).toBe('accident');expect(world.seed).toBe(42);expect(m.state.completedObjectives).toContain('deliver');
