@@ -1,0 +1,155 @@
+{
+ "name": "qa-newchars-run",
+ "ground": "sidewalk",
+ "size": 30,
+ "time": "L1",
+ "actors": [
+  {
+   "id": "p0",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    -4.8
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.paramedic.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "run": [
+     [
+      6,
+      -4.8
+     ],
+     [
+      -6,
+      -4.8
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p1",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    -2.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.dale.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "run": [
+     [
+      6,
+      -2.4
+     ],
+     [
+      -6,
+      -2.4
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p2",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    0.0
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.mia.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "run": [
+     [
+      6,
+      0.0
+     ],
+     [
+      -6,
+      0.0
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p3",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    2.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.civilian-man-b.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "run": [
+     [
+      6,
+      2.4
+     ],
+     [
+      -6,
+      2.4
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p4",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    4.8
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.shelter-survivor.bandaged",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "run": [
+     [
+      6,
+      4.8
+     ],
+     [
+      -6,
+      4.8
+     ]
+    ],
+    "loop": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1.05
+ },
+ "frames": 240,
+ "shots": [
+  40,
+  90,
+  150
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}
