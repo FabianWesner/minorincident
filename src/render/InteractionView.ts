@@ -178,6 +178,7 @@ export class InteractionView extends Group {
     const ghost = new Group(); ghost.name = 'slot-ghost';
     for (let x = -width / 2; x < width / 2; x += .35) for (const y of [.06, s.height]) {
       const dash = new Mesh(this.box, this.white); dash.scale.set(Math.min(.2, width / 2 - x), .035, .04); dash.position.set(x + dash.scale.x / 2, y, 0); ghost.add(dash);
+      for (const side of [-1, 1]) { const edge = dash.clone(); edge.position.z = side * ((s.depth ?? .7) / 2 + .15); ghost.add(edge); }
     }
     const brace = new Group(); brace.name = 'slot-brace';
     for (const y of [s.height * .3, s.height * .75]) {

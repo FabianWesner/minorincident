@@ -49,3 +49,35 @@ Test API version 1.11.0 adds `barricades.intact/all/slots` and `perf().awakeProp
 Fixtures: `prop-yard` (300 sleeping props), `barricade-lab` (brace and board-up),
 `barricade-stress` (60 awake bodies and 30 attacking runners). Fixture props are
 instanced code boxes; campaign props retain their production GLB batches.
+
+
+## E26 completion
+
+Kicks launch authored kickable props at 6 m/s along aim and 2 m/s upward.
+Bodies moving faster than 4 m/s resolve momentum hits through `Damage`, with
+`combat.hit.cause = 'prop'` and a knockdown. Crowd shoves do not cancel a flight.
+Rapier collider COMs are relative to each collider's offset, while authored COMs
+are relative to the prop origin. Fallen bodies reset to spawn asleep, or disable
+when their authored `reset` flag is `remove`.
+
+Resting medium/heavy furniture displaced more than 25 cm adds its rotated footprint
+to infected navigation every 30 ticks; moving/broken/braced props remove that footprint.
+The existing 1.5x detour rule also selects these loose props for attacks. Slot
+`sandbag: true` allows runners to vault a rail below 0.9 m in 72 ticks; crawlers and
+heavies remain blocked. Front bullet/projectile damage is stopped by intact cover.
+A parked unoccupied car spanning a rail supplies full coverage and twice its current
+HP, stays kinematic while braced, and is released when the rail breaks. Checkpoint
+rebuild reconciles the vehicle body and serialized `carId`/`vehicle.braced` state.
+
+`BarricadeBot` is the complete policy for `barricade-lab`: it approaches furniture
+from behind, pushes it into both prop rails, and stands to brace. The defense A/B
+is a single-seed regular gate; `E26_AB_SEEDS=10` runs the one-time remote evidence.
+`physicsProps.scriptedSequence()` on the query-gated test API replays the shared
+60-second deterministic tape and returns its state hash.
+
+`tools/assets/repair-prop-physics.ts` repairs invalid legacy movable-prop GLB
+metadata without changing mesh/BIN data. It retains valid compound colliders,
+uses explicit GLTF-space collider bounds when repair is needed, corrects class
+bands and the 35 kg AC03 cart, and is idempotent after metadata regeneration.
+After rebuilding a legacy Blender source, run the repair, then
+`tools/assets/physics-metadata.ts` and `npm run assets:collision`.
