@@ -71,6 +71,7 @@ function helpers(page: Page) {
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
   const go = async (target: P, stop = 1.2, range = 7) => {
+    const enterMetro = Math.hypot(target.x - metroFoot().x, target.z - metroFoot().z) < 3.4;
     const click = async () => {
       const start = (await player()).transform;
       await page.evaluate(({ start, target }) => {
@@ -91,15 +92,19 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
+    let lagWait = 0;
     for (let i = 0; i < 2400; i++) {
       await step(4);
+      // The entrance triggers at 3.4 m: stop immediately so combat cannot consume
+      // the three-second shutter-to-L6 window before its required photograph.
+      if (enterMetro && (await mission()).l5!.shutterAt) return;
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
       const lag = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'civilian' }).some(e => e.civilian?.survivor && !e.hidden && e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 6); });
       // Keep guarding the followers; a nine-second fighting hiatus exceeds their grab/turn window.
       if ((await player()).health.current > 0 && await fightNearby(Math.max(18, range))) await click();
-      else if (lag) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await regroup(12); await click(); }
-      else if (i % 4 === 3) await click();
+      else if (lag && lagWait < 300) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await step(12); lagWait += 12; await click(); }
+      else { if (!lag) lagWait = 0; if (i % 4 === 3) await click(); }
     }
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
   };
@@ -120,6 +125,11 @@ const begin = async (page: Page, level = 'L5', progression: string | undefined =
   await boot(page, `${testUrl}&ui=1`);
   await page.evaluate(({ level, progression }) => window.__SS__!.loadLevel(level, { seed: 1, ...(progression ? { progression: progression as 'L5-default' } : {}) }), { level, progression });
   await page.evaluate(() => window.__SS__!.pause());
+  // Pause in the same event turn as the real button click, before wall-clock scheduling adds sim ticks.
+  await page.evaluate(() => {
+    const button = [...document.querySelectorAll('button')].find(b => b.textContent === 'Begin mission')!;
+    button.addEventListener('click', () => queueMicrotask(() => window.__SS__!.pause()), { once: true });
+  });
   await page.getByRole('button', { name: 'Begin mission' }).click();
   await page.evaluate(() => window.__SS__!.pause());
 };
