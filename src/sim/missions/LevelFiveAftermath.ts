@@ -69,6 +69,8 @@ export class LevelFiveAftermath {
     this.spawnMedkits();
     // Every machine-gun burst is a loud event (30 m, E21 section 5.3): non-chasing infected come to the shot.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.army-mg') this.gunshot(e.position, 30); });
+    // A follower more than 10 m behind calls "Wait!" (subtitle; the voice comes from the survivor's position, see AudioService).
+    world.events.on('l5.wait', () => this.mission.radio('L5.wait'));
   }
   /** The courier starts at the stair foot of Kessler's cellar (a walled-off yard), as L4 ended. */
   private placeInCellar(): void {

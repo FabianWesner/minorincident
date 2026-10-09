@@ -28,7 +28,7 @@ function helpers(page: Page) {
   const fightNearby = async (range = 2.6): Promise<boolean> => {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 3 || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && (e as { infected?: { l1?: { mode?: string } } }).infected?.l1?.mode === 'chase')).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
       return near ? a.input.project(near.transform) : null;
     }, range);
     if (!target) return false;
@@ -48,13 +48,15 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
+    let trading = 0;
     for (let i = 0; i < 700; i++) {
       await step(20);
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
-      // Fight what is close every other beat (the machine gun's noise draws more of them: never stand and trade forever), walk on in between.
-      if (i % 2 === 0 && (await player()).health.current > 0 && await fightNearby(range)) await click();
-      else if (i % 4 === 3) await click();
+      // Fight what is close or chasing every other beat (the machine gun's noise draws more of them: never stand and trade forever: after
+      // twelve beats of fighting in a row the courier just walks on for a while), walk on in between.
+      if (trading < 12 && i % 2 === 0 && (await player()).health.current > 0 && await fightNearby(range)) { trading++; await click(); }
+      else { if (trading >= 12 && ++trading > 40) trading = 0; if (i % 4 === 3) await click(); }
     }
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
   };

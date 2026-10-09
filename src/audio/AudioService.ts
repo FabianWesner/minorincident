@@ -541,6 +541,10 @@ export class AudioService implements Lifecycle {
             this.arc?.event(event.type, t);
             return;
         }
+        if (event.type === 'l5.wait') {
+            this.play('civilian.hey', { position, gain: 0.7, rate: 0.9 }, source);
+            return;
+        }
         if (event.type === 'l5.cue') {
             // A sign of life: the knock, the clang, the radio, the voice or the flashlight click of that survivor, positional, with its caption.
             const sound = l5CueSounds[event.key] ?? { cue: 'door.wood', gain: 0.8, rate: 1 };
