@@ -72,3 +72,18 @@ doors, stand at devices, follow objectives, and attack destructibles/threats.
 it asserts completion only, without padding times to match acceptance bands.
 This is a foundation check: missing routes/encounters and finale content still
 need the subsequent content lanes. A graph completion does not prove every epic.
+
+## L5 "Aftermath" (E23, `def.l5`)
+
+`levelFiveMission` (`src/levels/L5/mission.ts`) is a three-step graph, `emerge` (stand at the cellar brace 1.0 s) -> `look` (state `accounted`: all five
+survivors found) -> `metro` (state `sheltered`), with checkpoints `outside` and `survivor-1..5`; no timer, no fail on a death. `LevelFiveAftermath`
+(`LevelFiveAftermath.ts`) owns everything else in `state.l5`: the courier starts in the walled cellar yard (L4 end loadout), steps out at `l5-out`, ten
+silent seconds later the objective appears, each survivor (`src/data/l5.ts`, `l5Survivors`) is a hidden pedestrian (not a human target) until the courier
+stands within 1.7 m of its ring for 1.0 s (or presses E there); a sign of life (`l5.cue`: position + subtitle, every 7 s, only within 25 m) is the only guide.
+Found survivors follow (`src/sim/outbreak/Survivors.ts`: slots behind the courier, 3.8 m/s, "Wait!" at 10 m, crouch within 8 m of an infected) and are
+ordinary biteable humans: lane C's grab/bite/turn lifecycle decides their fate; `losses()` records dead and turned ones. The shutter (`l5.shutter`) closes
+when the courier is at the Metro foot and every living follower is within 15 m, or 10 s later; followers within 15 m are `sheltered`, `level.completed`
+carries their keys in `result.survivors`, and `CampaignUI` stores them in `campaign.survivors` for L6. `gloom` (1 -> 0.5 of the preset sun, monotone) is read
+by `GameView`. Bots: `src/debug/bot/LevelFiveBot.ts` (`complete` tours the five rings by the cheapest permutation and waits for the group), runner
+`tools/sim-runner/l5Bots.ts`, probes `tools/l5/*` (`map.ts` walkability, `bot.ts`, `trace.ts`, `batch.ts` for short tuning runs, never a gate).
+

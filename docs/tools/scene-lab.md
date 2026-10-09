@@ -61,7 +61,7 @@ a yaw-0 actor faces +X.
 
 - **`props`** take any manifest id (`src/assets/manifest.json`): `bld.*`, `prop.*`, `veh.*` (static) or `house.*` kit pieces. They are placed with the same record the Blender layout exporter writes, so collision, navigation, light groups and crowns match a shipped district.
 - **`layout`** copies placements from a shipped district: `{ "district": "D-GROVE", "bbox": [[x0, z0], [x1, z1]], "assets": ["prop.flower-bed*", "prop.picket-fence"], "ids": [...], "recenter": true }`.
-  - `level: "L2"` applies the shipped L2 dressing and road-clearance rules before cropping.
+  - `level: "L2"` applies the shipped L2 dressing and road-clearance rules before cropping. `level: "L4"` / `"L5"` pick the D-FAIR copy (the clean army city / its devastated W5 twin; use `tier: 5`, `time: "L5"`). Scene Lab powers every placement, so the L5 power-out is only visible in the game, not here.
   - `assets` accepts a trailing `*` as a prefix match.
   - `recenter` moves the crop so its centre is at the origin.
   - `ground: "district"` keeps that district's baked roads and paving, and its surface and lawn polygons (so the bicycle's pavement rule and kerb heights work).
@@ -94,6 +94,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `{ "click": "<actor id>", "part": "head" }` | courier | One click on the drawn body part (`head`, `chest`, `hip`, `feet`) of that actor, resolved by the game's click pick (`src/input/ClickPick.ts`). `metrics.clicks` lists each click (picked actor, swing tick) and `swings`; see `qa-click-group`. |
 | `"chase"` / `{ "chase": "<actor id>" }` | infected | Chase. |
 | `{ "hit": { "from": "<actor id>" or [x, z], "heavy": true } }` | all | A heavy hit is a knockdown. |
+| `{ "survivor": { "slot": 0 } }` | pedestrian | An E23 follower: it follows the courier in its slot behind her (alternating sides, 2-5 m, 3.8 m/s) and crouches while an infected is within 8 m. See `qa-l5-group`. |
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
 | `{ "flee": [x, z] }` | pedestrian | Flee from that point. |
 | `{ "mountBike": "<vehicle id>" }`, `{ "dismount": true }` | courier | A real interact press next to the bike. |
