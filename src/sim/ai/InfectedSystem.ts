@@ -143,6 +143,7 @@ export class InfectedSystem {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
+      if (this.world.barricades?.vault(e)) continue;
       if ((this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if (b.l1) { this.updateL1(e, b, b.l1); continue; }
       if (this.world.inspectionGhost && b.targetId <= 1 && !['idle', 'wander', 'migration'].includes(b.state)) {
@@ -203,7 +204,8 @@ export class InfectedSystem {
         // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
         // makes the nearest-cell fallback pull attackers away between their hits.
         if (obstacle) {
-          if (obstacle.barricade && !this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
+          if (this.world.barricades!.vault(e, obstacle)) continue;
+          if (!this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
           else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
           continue;
         }
@@ -298,7 +300,7 @@ export class InfectedSystem {
     const b = e.infected!, player = this.world.entities.get(1)!, def = infectedDef(e.archetype);
     if (b.targetId) {
       const target = this.world.entities.get(b.targetId); b.targetId = 0;
-      if (target && target.health.current > 0 && (target.barricade ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
+      if (target && target.health.current > 0 && (target.barricade || target.kind === 'physics-prop' ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
         const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: target.id, attackId: b.attackId, special: 'barricade', amount });
       }

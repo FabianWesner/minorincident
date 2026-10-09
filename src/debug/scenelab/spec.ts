@@ -25,6 +25,8 @@ export interface SceneSpec {
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
+  /** Real E26 rails in the synthetic district, in world metres. */
+  barricadeSlots?: import('../../sim/interact/Barricades').BarricadeSlot[];
   /** Effects and actor commands on a frame timeline (frame 0 = right after load). */
   script?: ScriptStep[];
   camera?: CameraSpec;
@@ -97,6 +99,7 @@ export type Action =
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
 export type EffectSpec =
   | { blast: string; at: Point }
+  | { barricadeHit: string; amount: number }
   | { wreck: string }
   | { fire: Point; radius?: number }
   | { smoke: Point; radius?: number };
@@ -235,6 +238,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     layout.anchors[name].position[0] += shift[0]; layout.anchors[name].position[2] += shift[1];
   }
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
+  gameplay.barricades = spec.barricadeSlots;
   const composition: LevelComposition = {
     id: 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
     scene: { glb: spec.ground === 'district', ground: spec.ground === 'asphalt' || spec.ground === 'sidewalk' ? spec.ground : 'grass', perimeter: false, courier: true },
