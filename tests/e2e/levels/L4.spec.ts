@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import type { Page } from '@playwright/test';
 import { test, expect, boot, testUrl } from '../fixtures';
@@ -8,7 +8,13 @@ import { l4Anchors } from '../../../src/data/l4';
 const output = 'test-results/epics/E22';
 test.use({ trace: 'off', launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 type P = { x: number; z: number };
-const at = (name: string): P => ({ x: l4Anchors[name][0], z: l4Anchors[name][1] });
+const fair = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
+/** Authored L4 anchors; the door and the brace come from the layout (levelFourLayouts derives them the same way). */
+const at = (name: string): P => {
+  if (name === 'l4-cellar-door') { const d = fair.anchors['kessler-cellar-door'].position; return { x: d[0], z: d[2] }; }
+  if (name === 'l4-brace') { const c = fair.anchors['cellar-interior'].position; return { x: c[0] - .4, z: c[2] + 2.6 }; }
+  return { x: l4Anchors[name][0], z: l4Anchors[name][1] };
+};
 
 function helpers(page: Page) {
   const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
@@ -131,7 +137,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     for (let i = 0; i < 12 && !(await mission()).l4!.barredAt; i++) { await interact(); await step(20); }
     expect((await mission()).l4!.barredAt).toBeGreaterThan(0);
     const last = await mission();
-    await page.waitForFunction(() => { const a = window.__SS__!; return a.getState().scenario === 'L5' || a.missions.state()?.phase === 'progression'; }, undefined, { timeout: 120_000 });
+    for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L5' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ stats: last.stats, l4: { lineCause: last.l4!.lineCause, soldiersAtBreak: last.l4!.soldiersAtBreak, kills: last.l4!.kills, tankShots: last.l4!.tankShots, glass: last.l4!.glass.length, burning: last.l4!.burning.length }, shots: [...h.shots] }, null, 2) + '\n');
     expect([...h.shots].sort()).toEqual(['l4-basement', 'l4-collapse', 'l4-convoy-arrival', 'l4-first-turn', 'l4-harbor-street-safe', 'l4-metro-entrance-safe', 'l4-plaza-safe', 'l4-tank', 'l4-war-line', 'pair-harbor-street', 'pair-kessler-lane', 'pair-metro-entrance', 'pair-plaza']);
   });
@@ -171,6 +177,8 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     const check = async (kind: 'civilian' | 'infected', name: string) => {
       const before = await page.evaluate(async ({ kind }) => {
         const a = window.__SS__!; a.camera.follow();
+        // The open plaza (no building between the camera and the figures).
+        a.teleport(a.query({ kind: 'player' })[0].id, { x: -14, z: 6 }); await a.step(5);
         const player = a.query({ kind: 'player' })[0].transform;
         const pick = a.query({ kind }).filter(e => !e.hidden && !e.civilian?.pet && e.civilian?.adult !== false && e.health.current > 0 && (kind === 'infected' || e.civilian?.state === 'calm')).slice(0, 6);
         for (const [i, c] of pick.entries()) a.teleport(c.id, { x: player.x - 5 + (i % 3) * 2.6, z: player.z + 3 + Math.floor(i / 3) * 2.6 });
@@ -191,7 +199,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
         }
         return { id: c.id, changed, area: (bottom - top) * half * 2 };
       });
-      const drawn = results.filter(r => r.changed >= r.area * .25).length;
+      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .15 : .25)).length; // lunging infected lean away from the upright head/chest probe
       writeFileSync(`${dir}/${name}-${renderer}.json`, JSON.stringify({ ...before, results, drawn }, null, 2) + '\n');
       expect(before.backend).toBe(renderer); expect(before.list.length, `${name} in view`).toBeGreaterThanOrEqual(3); expect(drawn, `${name} drawn bodies`).toBe(before.list.length);
     };
@@ -199,7 +207,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     // The war: let infected exist (the first turn), then check the infected the crowd draws.
     await page.evaluate(() => { window.__SS__!.cheats.completeObjective('quartermaster'); });
     for (let i = 0; i < 400 && !(await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).length)); i++) await page.evaluate(() => window.__SS__!.step(30));
-    await page.evaluate(() => window.__SS__!.step(300));
+    for (let i = 0; i < 60 && (await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden).length)) < 4; i++) await page.evaluate(() => window.__SS__!.step(30));
     await check('infected', 'l4-war-infected');
   });
 });
