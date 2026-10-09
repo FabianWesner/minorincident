@@ -37,6 +37,9 @@ function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequ
 cue('weather.rain', 'ambience', 'bed', 4, 1300, { category: 'weather', initial: false, gain: .25, loop: true, rateSpread: 0 });
 cue('weather.gust', 'ambience', 'noise', 1.5, 160, { category: 'weather', initial: false, gain: .35, antiSpam: 0, rateSpread: 0 });
 cue('weather.thunder', 'ambience', 'noise', 2, 65, { category: 'weather', initial: false, gain: .7, antiSpam: 0, rateSpread: 0 });
+cue('weather.footstep.snow', 'impacts', 'step', .3, 240, { category: 'weather', initial: false, gain: .25, antiSpam: .12 });
+cue('weather.footstep.wet', 'impacts', 'step', .3, 1000, { category: 'weather', initial: false, gain: .25, antiSpam: .12 });
+cue('weather.rain-metal', 'ambience', 'bed', 4, 2600, { category: 'weather', initial: false, gain: .1, loop: true, rateSpread: 0 });
 const captions: Record<string, string> = { screamer: 'Screamer inhaling', runner: 'Runner snarling', crawler: 'Crawler scraping', brute: 'Brute roaring', bloated: 'Bloated gurgling', dog: 'Dog growling', cat: 'Cat hissing', crow: 'Crows cawing', lion: 'Lion roaring', gorilla: 'Gorilla beating its chest' };
 export const telegraphCues: Record<string, string> = {};
 for (const [index, def] of infectedDefinitions.entries()) {

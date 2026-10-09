@@ -604,6 +604,20 @@ export class DistrictView extends Group {
     this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
   }
+  /** Scripted weather blackout reuses the authored unpowered asset variants. */
+  blackout(): void {
+    for (const entry of this.lodBatches) if (entry.lit) {
+      entry.lit = false;
+      const previous = this.pending.get(entry);
+      const work = (async () => {
+        await previous; if (this.disposed) return;
+        if (entry.loaded) await this.loadHero(entry, 'lod0');
+        if (entry.nearLoaded) await this.loadHero(entry, 'lod1');
+        if (entry.farLoaded) await this.loadHero(entry, 'lod2');
+      })().finally(() => { if (this.pending.get(entry) === work) this.pending.delete(entry); });
+      this.pending.set(entry, work);
+    }
+  }
   /** Make the route's close tier resident (LOD0 high, LOD1 low). Props never need LOD1 on low.
    * With a focus, nearest placements load first through a small background download window. */
   async prepare(focus?: { x: number; z: number }, cancelled = () => false, maximumDistance = Infinity): Promise<void> {

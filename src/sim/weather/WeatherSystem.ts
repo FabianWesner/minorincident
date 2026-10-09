@@ -24,6 +24,7 @@ export class WeatherSystem {
   private nextGust = 120;
   private nextLightning = 180;
   private readonly thunder: { at: number; strikeTick: number; position: { x: number; y: number; z: number } }[] = [];
+  powerRevision = 0;
   flashUntil = 0;
   lightning: { x: number; y: number; z: number } | null = null;
   constructor(private readonly world: SimWorld, readonly seed: number) { this.rng = new Rng(seed, 'weather'); this.configure(); }
@@ -90,8 +91,8 @@ export class WeatherSystem {
     const thunderAt = tick + Math.round(Math.hypot(position.x - player.x, position.z - player.z) / 340 * 60);
     this.flashUntil = tick + 8; this.lightning = { ...position }; this.thunder.push({ at: thunderAt, position: { ...position }, strikeTick: tick });
     if (consequence === 'fire') this.world.hazards?.spawn('fire', position);
-    if (consequence === 'blackout') this.world.districts?.districts.forEach(d => d.decay.lights.splice(0));
+    if (consequence === 'blackout') { this.world.districts?.districts.forEach(d => d.decay.lights.splice(0)); this.powerRevision++; }
     this.world.events.emit({ type: 'weather.lightning', tick, position: { ...position }, thunderAt, revealed });
   }
-  snapshot() { return { kind: this.kind, override: this.override, rain: this.rain, fog: this.fog, flakes: this.flakes, clouds: this.clouds, wetness: this.wetness, accumulation: this.accumulation, wind: { ...this.wind }, strength: weatherPresets[this.kind].wind + this.gust, gust: this.gust, flashUntil: this.flashUntil, lightning: this.lightning && { ...this.lightning }, modifiers: { ...this.modifiers }, reveals: [...this.reveals].map(([id, until]) => ({ id, until })), tracks: this.tracks.map(t => ({ ...t })), rng: this.rng.snapshot() }; }
+  snapshot() { return { powerRevision: this.powerRevision, kind: this.kind, override: this.override, rain: this.rain, fog: this.fog, flakes: this.flakes, clouds: this.clouds, wetness: this.wetness, accumulation: this.accumulation, wind: { ...this.wind }, strength: weatherPresets[this.kind].wind + this.gust, gust: this.gust, flashUntil: this.flashUntil, lightning: this.lightning && { ...this.lightning }, modifiers: { ...this.modifiers }, reveals: [...this.reveals].map(([id, until]) => ({ id, until })), tracks: this.tracks.map(t => ({ ...t })), rng: this.rng.snapshot() }; }
 }

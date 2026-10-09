@@ -1,3 +1,4 @@
+import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
 import { DataTexture, FrontSide, NearestFilter, SRGBColorSpace, RGBAFormat, UnsignedByteType, Color, type Node, type Side } from 'three/webgpu';
 import { attribute, color, mix, positionGeometry, positionLocal, sin, uniform, vec2, vec3, texture, luminance, varying } from 'three/tsl';
@@ -108,7 +109,7 @@ export class Materials {
       const ramp = positionGeometry.y.smoothstep(.25, 1.7);
       const tint = mix(this.look.nodes.foliageDark.rgb.div(color('#4a7533').rgb), this.look.nodes.foliageLight.rgb.div(color('#98b94f').rgb), ramp).mul(this.look.nodes.foliage.rgb.div(color('#789c4c').rgb));
       material = this.shaded(world ? varying(this.sample(attribute('_palette', 'float')), 'worldPaletteColor') : attribute('color', 'vec3').mul(tint));
-      const weight = positionGeometry.y.smoothstep(.25, 1.7).mul(.055).mul(this.look.nodes.windStrength);
+      const weight = positionGeometry.y.smoothstep(.25, 1.7).mul(.055).mul(this.look.nodes.windStrength).mul(weatherSurface.windStrength);
       const gust = sin(positionLocal.x.mul(.7).add(positionLocal.z.mul(.4)).add(this.wind.mul(1.2)));
       material.positionNode = positionLocal.add(vec3(gust.mul(weight), 0, gust.mul(weight).mul(.6)));
       material.name = 'pal_wind-foliage'; this.cache.set(key, material);

@@ -64,3 +64,11 @@ test('T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pix
   const before = count(dense), after = count(sparse); expect(before).toBeGreaterThan(100); expect(after).toBeLessThan(before * .5);
   writeFileSync(`${out}/rain-dither.json`, JSON.stringify({ before, after })); await page.evaluate(() => window.__SS__!.weather.probe(null));
 });
+
+test('T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps', async ({ page }) => {
+  const scene = spec('fog'); scene.weather = 'clear'; scene.script = [{ frame: 2, effect: { lightning: [6, -5], consequence: 'fire' } }, { frame: 12, effect: { lightning: [6, -5], consequence: 'blackout' } }];
+  await lab(page, scene); await page.evaluate(() => window.__SCENE__!.step(10)); await shot(page, 'scripted-strike-fire');
+  expect(await page.evaluate(() => window.__SS__!.getState().entities.some(e => e.hazard?.kind === 'fire'))).toBe(true);
+  await page.evaluate(() => window.__SCENE__!.step(30)); await shot(page, 'scripted-strike-blackout');
+  const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.weather!.powerRevision).toBe(1); expect(state.render.districts!.windowMeshes).toBe(0);
+});

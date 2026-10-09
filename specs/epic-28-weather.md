@@ -68,3 +68,10 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E28-AC10 | Performance: the heaviest weather (the storm in `storm-street`, ash at the L5 `pair-plaza`) stays within the E18 budgets (rain/snow particles: 20k high / 6k low) | perf |
 | E28-AC11 | Readability: precipitation within 6 m of the camera-to-player ray is dithered; the HUD weather icon shows the current state | visual/e2e |
 | E28-AC12 | Vision: `weather-lab` frames for clear, overcast, golden-hour haze, storm, fog, and snow pass checklist G (lighting) + a weather-mood check against `initial-drafts/weather-and-time-of-day-moods.png` | vision |
+
+## Deviations
+
+- L5 `pair-plaza` performance evidence is pending E23: the baseline still has the legacy hold-line mission and does not contain the specified fixture.
+- Actual L6 tunnel-to-night-exit weather integration is pending E24: the baseline has no `night-exit` anchor; the weather system uses that anchor when present.
+- Photo weather selection uses the paused game controls because this baseline has no separate photo mode.
+- Quiet L1/L2/L3 before/after frame comparison is pending a Mac load below 3; busy measurements are not accepted as proof.

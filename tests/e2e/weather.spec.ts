@@ -58,9 +58,12 @@ test('T-E28-09b @E28 @E28-AC09 rain bed gain follows intensity and gust/thunder 
   await boot(page); await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('storm-street', { seed: 28 }); a.pause(); await a.audio.unlock(); a.audio.clearLog(); a.weather.override('rain'); await a.step(1); });
   const heavy = await page.evaluate(() => window.__SS__!.audio.emitters().find(v => v.cue === 'weather.rain')!.gain);
   await page.evaluate(async () => { const a = window.__SS__!; a.weather.override('rain', .3); await a.step(1); });
+  await expect.poll(async () => (await page.evaluate(() => window.__SS__!.audio.emitters().find(v => v.cue === 'weather.rain')!.gain)) / heavy).toBeCloseTo(.3, 2);
   const light = await page.evaluate(() => window.__SS__!.audio.emitters().find(v => v.cue === 'weather.rain')!.gain);
   expect(light / heavy).toBeCloseTo(.3, 2);
   await page.evaluate(async () => { const a = window.__SS__!; a.weather.override('thunderstorm'); a.weather.strike({ x: 4, y: 0, z: 0 }); await a.step(200); });
   const cues = await page.evaluate(() => window.__SS__!.audio.snapshot().cues);
   expect(cues.some(c => c.cue === 'weather.gust')).toBe(true); expect(cues.some(c => c.cue === 'weather.thunder')).toBe(true);
+  await page.evaluate(async () => { const a = window.__SS__!; a.weather.override('snow'); a.audio.emit({ type: 'footstep', tick: a.tick(), sourceId: 1, position: { x: 0, y: 0, z: 0 }, actor: 'survivor' }); await a.step(1); });
+  expect((await page.evaluate(() => window.__SS__!.audio.snapshot().cues)).some(c => c.cue === 'weather.footstep.snow')).toBe(true);
 });

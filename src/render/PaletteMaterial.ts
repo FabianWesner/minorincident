@@ -43,7 +43,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const blood = max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)).mul(this.bloodCoverage.greaterThan(0).select(1, 0));
       const snow = float(0).toVar();
       If(weatherSurface.accumulation.greaterThan(0), () => { snow.assign(weatherSurface.accumulation.mul(normalWorld.y.smoothstep(.5, .75)).mul(trackMask().oneMinus())); });
-      const weatherBase = mix(base, mix(color('#9da7b4'), color('#bcb9b5'), weatherSurface.ash), snow);
+      const accumulatedBase = mix(base, mix(color('#9da7b4'), color('#bcb9b5'), weatherSurface.ash), snow).mul(weatherSurface.clouds.mul(-.12).add(1));
+      const puddlePattern = positionWorld.x.mul(.65).sin().mul(positionWorld.z.mul(.5).sin()).mul(.5).add(.5);
+      const puddle = weatherSurface.wetness.greaterThan(.3).select(puddlePattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15)).mul(normalWorld.y.max(0).pow(8)), 0);
+      const weatherBase = mix(accumulatedBase, accumulatedBase.mul(.78), puddle);
       const surface = mix(mix(weatherBase, color('#b3121f'), blood), color('#1d1a18'), this.char);
       const albedo = mix(surface, lighting.bounce, bounce);
       const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(lighting.look.nodes.ambientStrength).mul(lighting.look.nodes.hemisphereIntensity.mul(2));
@@ -60,12 +63,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
-      const fogReadability = vec3(.22).mul(heroMask).mul(weatherSurface.fog);
+      const fogReadability = vec3(.3).mul(heroMask).mul(weatherSurface.fog);
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).add(fogReadability);
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(controlled.add(nodes?.glow ?? 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       const wet = weatherSurface.wetness.greaterThan(.3).select(weatherSurface.wetness, 0).mul(normalWorld.y.max(0));
-      const streak = positionWorld.x.mul(5).sin().abs().pow(12).mul(wet).mul(field).mul(.5);
+      const streak = positionWorld.x.mul(5).sin().abs().pow(12).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
       const fogMask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
       const measured = weatherSurface.probe.equal(1).select(normalWorld.y.greaterThan(.5).select(vec3(1), vec3(0)), weatherSurface.probe.equal(2).select(vec3(snow), weatherSurface.probe.equal(3).select(vec3(wet), vec3(trackMask()))));
       return vec4(weatherSurface.probe.greaterThan(0).select(measured, mix(output.add(streak).add(weatherSurface.flash), lighting.radialFog.add(field.mul(.2)), fogMask).add(this.hitFlash)), this.fade.mul(nodes?.opacity ?? 1));
