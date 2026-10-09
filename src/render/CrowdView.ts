@@ -307,8 +307,6 @@ export class CrowdView extends Group {
       if (batch.count) {
         batch.mesh.instanceMatrix.clearUpdateRanges(); batch.mesh.instanceMatrix.addUpdateRange(0, batch.count * 16); batch.mesh.instanceMatrix.needsUpdate = true;
         for (const attribute of [batch.state, batch.tint]) { attribute.clearUpdateRanges(); attribute.addUpdateRange(0, batch.count * 4); attribute.needsUpdate = true; }
-        const first = batch.poses.clip.frames * batch.texture.image.width * 4;
-        batch.texture.clearUpdateRanges(); batch.texture.addUpdateRange(first, batch.texture.image.data!.length - first);
       }
     }
     for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }

@@ -28,6 +28,16 @@ export function installTextureRanges(value: unknown): void {
       if (resource) uploaded.set(texture, resource);
       texture.clearUpdateRanges(); return;
     }
+    // Pose correction touches adjacent rows and can rewrite a row during a transition.
+    // Merge those ranges so both backends upload each changed span only once.
+    ranges.sort((a, b) => a.start - b.start);
+    let count = 0;
+    for (const range of ranges) {
+      const previous = ranges[count - 1];
+      if (previous && range.start <= previous.start + previous.count) previous.count = Math.max(previous.start + previous.count, range.start + range.count) - previous.start;
+      else ranges[count++] = range;
+    }
+    ranges.length = count;
     const pixels = image.data as Float32Array;
     if (backend.gl) {
       backend.state!.bindTexture(data.glTextureType, data.textureGPU!);

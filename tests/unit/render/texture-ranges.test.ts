@@ -48,3 +48,16 @@ test('@E18-AC01 crowd pose changes upload mutable rows without resending the bak
   expect((palette.texture.image.data as Float32Array)[corrected * 16 + 13]).toBe(.25);
   palette.texture.dispose();
 });
+
+test('@E18-AC01 adjacent and overlapping pose rows upload once with their exact float bytes', () => {
+  const pixels = Float32Array.from({ length: 128 }, (_, i) => i), texture = new DataTexture(pixels, 4, 8, RGBAFormat, FloatType);
+  const resource = { textureGPU: {}, glTextureType: 1, glFormat: 2, glType: 3 }, original = vi.fn(), upload = vi.fn();
+  const backend = { updateTexture: original, get: () => resource, gl: { texSubImage2D: upload }, state: { bindTexture: vi.fn() }, textureUtils: { setTextureParameters: vi.fn() } };
+  installTextureRanges(backend); backend.updateTexture(texture, {});
+  texture.addUpdateRange(48, 16); texture.addUpdateRange(32, 32); texture.addUpdateRange(64, 16);
+  backend.updateTexture(texture, {});
+  expect(upload).toHaveBeenCalledTimes(1);
+  expect(upload).toHaveBeenCalledWith(1, 0, 0, 2, 4, 3, 2, 3, pixels.subarray(32, 80));
+  expect(texture.updateRanges).toHaveLength(0); expect(original).toHaveBeenCalledTimes(1);
+  texture.dispose();
+});

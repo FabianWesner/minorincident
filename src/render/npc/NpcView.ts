@@ -37,7 +37,7 @@ export class NpcView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
   async init(): Promise<void> {
-    await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi');
+    await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
     this.human = createCivilianPlaceholder(); this.placeholders.push(this.human);
     for (const root of [this.dog, this.human]) root.traverse(node => {
