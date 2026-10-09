@@ -1,5 +1,4 @@
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
-import { levelTwoLayouts } from '../../levels/L2/layout';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
@@ -11,7 +10,11 @@ import type { EntitySnapshot } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { SimPhase } from '../../core/EventBus';
+import { l2TruckPath } from '../../data/l2';
+import { levelTwoLayouts } from '../../levels/L2/layout';
+import { L2TruckDrive, truckPoseAt, truckBodyOverlap, truckWallOverlap, type TruckRideState } from '../../sim/vehicles/L2TruckDrive';
 import { installL1Outbreak } from '../../sim/outbreak/install';
+import { doorExit, emergeResident, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../sim/outbreak/HouseEmergence';
 import { seatAnchor } from '../../sim/npc/seats';
 import { allyState } from '../../sim/outbreak/Allies';
 import { l3 } from '../../data/l3';
@@ -36,7 +39,15 @@ type Plan =
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'interact' };
-interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number }
+interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
+  /** First drawn frame and sim position; for `emerge` residents also how far past the door threshold (m, + = outside). */
+  first?: { frame: number; at: [number, number]; outM?: number };
+  /** Frames drawn with the far LOD (lod2) within `closeLodM` of the camera. */
+  farClose: number;
+  /** Spawned by `emerge` (a resident coming out of a building door). */
+  emerge?: boolean }
+/** Camera distance (m) inside which a crowd figure must not draw its far LOD. */
+const closeLodM = 14;
 interface Hit extends BoneHit { actor: string; frame: number; count: number }
 const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] } : p;
 
@@ -52,6 +63,7 @@ export class SceneLab {
   readonly actors = new Map<string, LabActor>();
   readonly vehicles = new Map<string, number>();
   /** `trace`: per-frame vehicle samples (frame, x, y, z, yaw deg, pitch/roll deg of the presented body, ground under it). */
+  private vehicleMotion = new Map<string, { yaw: number; yawRateMaxDegS: number; overlaps: number; ride?: TruckRideState }>();
   private vehicleTrack = new Map<string, number[][]>();
   private camera: CameraSpec | null = null;
   private perf: { drawCalls: number; triangles: number; shadowDrawCalls: number; shadowTriangles: number; stepMs: number; categories: Record<string, number> }[] = [];
@@ -80,6 +92,8 @@ export class SceneLab {
   private readonly registry = new AssetRegistry(() => {});
   private readonly log: string[] = [];
   private readonly point = new Vector3();
+  /** `emerge`: the game's house emergence (HouseEmergence) running in the scene; residents become actors `<id>-N`. */
+  private emergence: (HouseEmergence & { count: number; stagger: [number, number]; start: number; base: string; openFrame: number | null }) | null = null;
   constructor(private readonly game: Game) { CrowdFigureProbe.joints = true; }
   private get world(): SimWorld { return this.game.world; }
 
@@ -97,11 +111,13 @@ export class SceneLab {
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
+    this.vehicleMotion.clear();
     this.spec = structuredClone(spec); this.frame = 0; this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
     await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
     this.game.clock.pause();
+    this.emergence = spec.emerge ? this.emergenceFor(spec.emerge) : null;
     this.game.view.settings({ cameraShake: false, cheapDof: spec.dof ?? true, timeOfDay: spec.time ?? 'L1' });
     this.camera = spec.camera ?? { mode: 'game', target: built.center };
     this.applyCamera();
@@ -126,10 +142,46 @@ export class SceneLab {
     const courier = spec.actors?.find(a => a.kind === 'courier');
     if (!courier) player.hidden = true;
     for (const e of [...world.entities.iterate()]) if (e.companion && !spec.actors?.some(a => a.kind === 'corgi')) { world.entities.delete(e.id); world.spatial.delete(e.id); }
-    for (const v of spec.vehicles ?? []) this.addVehicle(v.id ?? v.asset, v.asset, v.at, v.yaw ?? 0, v.path, v.panic);
+    for (const v of spec.vehicles ?? []) {
+      const id = v.id ?? v.asset, pose = v.l2Ride ? truckPoseAt(v.l2Ride.distanceM ?? 0) : null;
+      const entity = this.addVehicle(id, v.asset, pose ? [pose.x, pose.z] : v.at, pose ? pose.yaw * 180 / Math.PI : v.yaw ?? 0, v.path, v.panic);
+      if (v.l2Ride) {
+        const state = { truckId: entity, rideS: v.l2Ride.distanceM ?? 0, rideV: v.l2Ride.speedMs ?? 0 }, driver = new L2TruckDrive(world, state);
+        driver.prepare();
+        this.vehicleMotion.set(id, { yaw: pose!.yaw, yawRateMaxDegS: 0, overlaps: 0, ride: state });
+        let arrived = false;
+        world.events.on('sim.tick', () => { if (!arrived) arrived = driver.step(); }, SimPhase.missions);
+      }
+      if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
+    }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
+    // The emergence runs inside the tick in the mission phase, as LevelOneOutbreak does (motion is published from it).
+    world.events.on('sim.tick', () => this.emergeStep(), SimPhase.missions);
   }
 
+  /** The house door of `emerge.house` in this scene's layout (the same door table and doorstep rule as L1 beat 9). */
+  private emergenceFor(e: NonNullable<SceneSpec['emerge']>): NonNullable<SceneLab['emergence']> {
+    const doors = layoutHouseDoors(this.built!.layout), door = doors.find(d => d.house === e.house);
+    if (!door) throw new Error(`emerge.house ${e.house}: no house door in the scene; houses: ${doors.map(d => d.house).join(', ') || 'none'}`);
+    const courier = this.world.entities.get(1)!.transform, exit = doorExit(this.world, door, courier);
+    if (!exit) throw new Error(`emerge.house ${e.house}: no way out from the door to the courier`);
+    const stagger: [number, number] = typeof e.staggerS === 'number' ? [e.staggerS, e.staggerS] : e.staggerS ?? [1.5, 4];
+    return { door: door.door, house: door.house, x: door.x, z: door.z, nx: door.nx, nz: door.nz, floor: door.floor, ...exit, next: 0, ids: [], ...(e.speedMs ? { speedMs: e.speedMs } : {}), count: e.count ?? 3, stagger, start: e.frame ?? 30, base: e.id ?? 'resident', openFrame: null };
+  }
+  /** One tick of the emergence: residents step out of the door one by one, then chase the courier (L1 `rush`). */
+  private emergeStep(): void {
+    const em = this.emergence; if (!em) return;
+    const world = this.world, tick = world.tick, courier = world.entities.get(1)!.transform;
+    for (const id of walkResidents(world, em, tick)) world.infected!.rush(id, { x: courier.x, z: courier.z }, tick + 600);
+    if (this.frame < em.start || em.ids.length >= em.count || tick < em.next || !world.infected!.pool.length) return;
+    const entity = emergeResident(world, em, tick), k = em.ids.length;
+    if (em.openFrame === null) em.openFrame = this.frame;
+    const id = `${em.base}-${k}`;
+    this.actors.set(id, { id, kind: 'infected', entity, spec: { id, kind: 'infected' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0, emerge: true });
+    // Deterministic stagger from the scene seed (L1 draws 1.5-4 s from the world seed).
+    const u = ((Math.sin((this.spec?.seed ?? 1) * 12.9898 + k * 78.233) * 43758.5453) % 1 + 1) % 1;
+    em.next = tick + Math.round((em.stagger[0] + u * (em.stagger[1] - em.stagger[0])) * 60);
+  }
   /** Add a static prop. Static instancing and collision are baked at load, so this reloads the scene (frame resets). */
   async place(prop: PropSpec) { if (!this.spec) throw new Error('load_scene first'); (this.spec.props ??= []).push(prop); return this.load(this.spec); }
   /** Spawn an actor into the running scene (also recorded in the spec, so reset() keeps it). */
@@ -165,7 +217,7 @@ export class SceneLab {
         if (a.at) this.teleport(dog, at);
         dog.transform.yaw = yaw;
       }
-      const actor: LabActor = { id, kind: a.kind, entity, spec: a, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0 };
+      const actor: LabActor = { id, kind: a.kind, entity, spec: a, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 };
       this.actors.set(id, actor); ids.push(id);
       if (a.state) this.command(id, a.state);
     }
@@ -328,7 +380,7 @@ export class SceneLab {
 
   /** Resolve a camera target: actor id, [x, z] or [x, y, z]. */
   private target(t: [number, number, number] | Point | string | undefined, y = .8): [number, number, number] {
-    if (typeof t === 'string') { const a = this.actors.get(t), e = a && this.world.entities.get(a.entity); if (!e) throw new Error(`camera: unknown actor ${t}`); return [e.transform.x, y, e.transform.z]; }
+    if (typeof t === 'string') { const entity = this.actors.get(t)?.entity ?? this.vehicles.get(t), e = entity === undefined ? undefined : this.world.entities.get(entity); if (!e) throw new Error(`camera: unknown actor ${t}`); return [e.transform.x, y, e.transform.z]; }
     if (!t) return [this.built!.center[0], y, this.built!.center[1]];
     return t.length === 3 ? [t[0], t[1], t[2]] : [t[0], y, t[1]];
   }
@@ -492,6 +544,9 @@ export class SceneLab {
         if (Math.abs(q[0]) < .95 && Math.abs(q[1]) < .95 && q[2] < 1) { actor.inView++; if (!visible) actor.missed++; }
       }
       if (visible) { actor.drawn++; drawn[actor.kind] = (drawn[actor.kind] ?? 0) + 1; actor.lod[lod] = (actor.lod[lod] ?? 0) + 1; }
+      const em = this.emergence, out = em && e ? (e.transform.x - em.x) * em.nx + (e.transform.z - em.z) * em.nz : 0;
+      if (visible && e && !actor.first) actor.first = { frame: this.frame, at: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], ...(actor.emerge ? { outM: +out.toFixed(3) } : {}) };
+      if (visible && e && lod === 'lod2' && this.game.view.camera.position.distanceTo(this.point.set(e.transform.x, e.transform.y, e.transform.z)) < closeLodM) actor.farClose++;
       const shoulders = joints?.armL && joints.armR ? joints.armL.map((v, k) => (v + joints!.armR[k]) / 2) : undefined;
       const motion = e?.motion?.speed ?? Math.hypot(e?.survivor?.velocity?.x ?? 0, e?.survivor?.velocity?.z ?? 0);
       actor.track.push({ frame: this.frame, floor: e ? this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0 : undefined, clip: clipName ?? (e?.civilian?.state === 'calm' && e.civilian.schedule?.[e.civilian.scheduleStep ?? 0]?.activity === 'sit' && e.civilian.activityUntil ? 'sit' : undefined), feet, speed: motion, ...(label ? { label } : {}), ...(this.spec?.trace && e ? { at: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] } : {}), torsoPitchDeg: joints?.hip && shoulders ? torsoPitch(joints.hip, shoulders, forward) : undefined });
@@ -505,6 +560,16 @@ export class SceneLab {
         if (!old) this.hits.set(key, { ...h, actor: actor.id, frame: this.frame, count: 1 });
         else { old.count++; if (h.crossing && !old.crossing || h.clearanceCm < old.clearanceCm) Object.assign(old, h, { frame: this.frame }); }
       }
+    }
+    for (const [id, entity] of this.vehicles) {
+      const e = this.world.entities.get(entity), motion = this.vehicleMotion.get(id); if (!e || !motion) continue;
+      const delta = Math.atan2(Math.sin(e.transform.yaw - motion.yaw), Math.cos(e.transform.yaw - motion.yaw));
+      motion.yawRateMaxDegS = Math.max(motion.yawRateMaxDegS, Math.abs(delta) * 60 * 180 / Math.PI); motion.yaw = e.transform.yaw;
+      const def = this.world.vehicles!.cars.get(entity)?.physics.def; if (!def) continue;
+      for (const b of this.world.entities.iterate()) if (b.id !== entity && !b.hidden && (b.civilian || b.infected || b.companion || b.vehicle || b.traffic || b.kind === 'physics-prop')) {
+        if (truckBodyOverlap(e.transform, def.length, def.width, b, this.world)) motion.overlaps++;
+      }
+      for (const wall of this.world.infected!.nav.walls) if (truckWallOverlap(e.transform, def.length, def.width, wall)) motion.overlaps++;
     }
     if (this.spec?.trace) for (const [id, entity] of this.vehicles) {
       const v = this.world.entities.get(entity); if (!v) continue;
@@ -681,7 +746,7 @@ export class SceneLab {
     const q = (a: number[], p: number) => a.length ? Math.round(a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)] * 100) / 100 : null;
     const band = (pick: (p: SceneLab['perf'][number]) => number) => { const a = this.perf.map(pick); return { p50: q(a, .5), p95: q(a, .95), max: q(a, 1) }; };
     const actors = Object.fromEntries([...this.actors.values()].map(a => { const e = this.world.entities.get(a.entity); return [a.id, { kind: a.kind, entity: a.entity, position: e ? [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] : null, yawDeg: e ? +(e.transform.yaw * 180 / Math.PI).toFixed(1) : null,
-      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
+      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
@@ -689,8 +754,9 @@ export class SceneLab {
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
-      vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
+      vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       bike: { ...this.bike }, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
   }
   describe() {

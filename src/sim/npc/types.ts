@@ -21,6 +21,8 @@ export interface Civilian {
   /** Harmless swing reaction; resumes the previous routine after a short pause. */
   annoyedFrom?: 'calm' | 'alarmed' | 'flee' | 'hide';
   gore: false; knockedUntil: number;
+  /** Siren: walk to this kerb point and wait, then resume the existing routine. */
+  vehicleYield?: { target: Point; until: number };
   panicReaction?: 'flee' | 'freeze';
   schedule?: CivilianActivity[]; scheduleStep?: number; activityUntil?: number; activityStarted?: number; lastTravelProgress?: number;
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
@@ -60,7 +62,7 @@ export interface Companion { following?: boolean; velocity?: Point; state: 'foll
   warn?: { stage: CorgiWarnStage; threat: number; nervousUntil: number } }
 export type CorgiWarnStage = 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous';
 export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }
-export interface Traffic { route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
+export interface Traffic { yieldUntil?: number; route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
 export interface Convoy { route: Point[]; samples: Point[]; distance: number; length: number; state: 'stop' | 'go' | 'arrived' | 'destroyed'; speed: number; offset: number }
 export type NpcEvent =
   | { tick: number; type: 'civilian.bark'; id: number; text: 'Hey!'; position: Point }

@@ -16,10 +16,10 @@ const H = Math.PI / 2;
 export const l2Dressing: readonly Dressing[] = [
   // Corpses: bystanders killed in the first hours, lying where they fell (dead pedestrians of the civilian crowd, spawned by the
   // L2 controller, so they cost no extra batch; the asset is their crowd model).
-  ...([[-36.8, 8.4, 'npc.civilian-man-a'], [-35.6, 10.2, 'npc.civilian-woman-b'], [10.4, -35.6, 'npc.civilian-man-b'], [12.2, -36.4, 'npc.civilian-woman-a'], [-24, -34.4, 'npc.civilian-elderly'], [44.2, 26.4, 'npc.civilian-man-a'], [-46.4, 32.8, 'npc.civilian-woman-a']] as const)
+  ...([[-36.8, 8.4, 'npc.civilian-man-a'], [-35.6, 10.2, 'npc.civilian-woman-b'], [10.4, -35.6, 'npc.civilian-man-b'], [12.2, -36.4, 'npc.civilian-woman-a'], [-24, -34.4, 'npc.civilian-elderly'], [44.2, 26.4, 'npc.civilian-man-a'], [-46.4, 34.4, 'npc.civilian-woman-a']] as const)
     .map(([x, z, assetId], i) => ({ kind: 'corpse' as const, assetId, x, z, yaw: i * 1.7, entity: true })),
   // Abandoned vehicles, doors open, pulled onto the kerb.
-  { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 28.6, yaw: .12 },
+  { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 26.9, yaw: .12 },
   { kind: 'abandoned', assetId: 'veh.suv-dark', x: -12, z: 32.2, yaw: Math.PI - .2 },
   { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
   { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -33.4, yaw: .1 },
@@ -40,11 +40,11 @@ export const l2Dressing: readonly Dressing[] = [
     .map(([x, z], i) => ({ kind: 'bin' as const, assetId: i % 2 ? 'prop.trash-bags' : 'prop.trash-bin', x, z, yaw: i * 1.3 })),
   // Scattered belongings.
   // Scattered belongings (stand-ins from the town's own props until `decay.dropped-belongings` lands).
-  ...([[-43.6, -35.2], [-28.4, -20], [-8, 34.6], [20, 34.4], [48.4, -20], [-61.6, 20]] as const).map(([x, z], i) => ({ kind: 'belongings' as const, assetId: ['prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.pallet', 'prop.wheelbarrow', 'prop.recycling-bin'][i], x, z, yaw: i })),
+  ...([[-43.6, -35.2], [-33.2, -20], [-8, 34.6], [20, 34.4], [48.4, -20], [-61.6, 20]] as const).map(([x, z], i) => ({ kind: 'belongings' as const, assetId: ['prop.crates', 'prop.broken-chair', 'prop.carpet', 'prop.pallet', 'prop.wheelbarrow', 'prop.recycling-bin'][i], x, z, yaw: i })),
   // Broken shop and house windows (code art in L2Props until `decay.broken-glass` lands: a dark pane and glass on the pavement).
   ...([[-66.2, -38.4, 0], [-35.6, -37.4, 0], [-19.6, -34.6, 0], [5.6, -26.6, Math.PI], [-10.7, 33.6, 0]] as const).map(([x, z, yaw]) => ({ kind: 'broken-window' as const, assetId: 'decay.broken-glass', x, z, yaw, entity: true })),
   // Main Row by the courier depot (the L1 pickup spot): a car run into the kerb, a blood trail, spilled bags.
-  { kind: 'crashed', assetId: 'veh.sedan-red', x: -32.4, z: -29.4, yaw: 2.6 },
+  { kind: 'crashed', assetId: 'veh.sedan-red', x: -35.2, z: -27.4, yaw: Math.PI + .12 },
   { kind: 'blood', assetId: 'decal.blood-trail', x: -35.4, z: -31.4, yaw: 1.2 },
   { kind: 'bin', assetId: 'prop.trash-bags', x: -30.6, z: -35.8, yaw: .4 },
   // Blood trails and pools.
@@ -115,6 +115,14 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const onRoad = new Set(layout.placements.filter(p => pushableProps[p.assetId] && overlapsRoad(layout, p.visualAabb)).map(p => p.id));
     layout.placements = layout.placements.filter(p => !onRoad.has(p.id));
     layout.colliders = layout.colliders.filter(c => !onRoad.has(c.id.split('/')[0]));
+    // Main Row corner: the fire engine's outer front corner clears the lamp only when it is on the pavement.
+    const cornerLamp = layout.placements.find(p => p.assetId === 'prop.street-lamp' && Math.abs(p.position[0] + 37) < .05 && Math.abs(p.position[2] + 34) < .05);
+    if (cornerLamp) {
+      cornerLamp.position[2] -= 1.5;
+      cornerLamp.visualAabb.min[2] -= 1.5; cornerLamp.visualAabb.max[2] -= 1.5;
+      // Compound colliders are rebuilt from this placement by DistrictWorld.
+      layout.colliders = layout.colliders.filter(c => c.id !== cornerLamp.id);
+    }
     layout.placements.push(MARKET);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
