@@ -1,6 +1,6 @@
 {
  "name": "qa-l5-group",
- "note": "E23 beat 3-4 (photo spot l5-group-of-five): the courier leads the five survivors east along Harbor Street at sunset; they follow in their slots (behind, alternating sides, 2-5 m) and keep to the pace; all drawn, no clipping, no skating.",
+ "note": "E23 beat 3-4 (photo spot l5-group-of-five): the courier leads the five survivors east along Harbor Street at sunset, seen from the west down the street; they follow in their slots (behind, alternating sides, 2-5 m) and keep to the pace; all drawn, no clipping, no skating.",
  "ground": "district",
  "time": "L5",
  "tier": 5,
@@ -26,8 +26,8 @@
    "id": "courier",
    "kind": "courier",
    "at": [
-    -14,
-    -39.4
+    8,
+    -39.8
    ],
    "yaw": 0,
    "loadout": [
@@ -37,8 +37,8 @@
    "state": {
     "walk": [
      [
-      22,
-      -39.4
+      34,
+      -39.8
      ]
     ]
    }
@@ -47,8 +47,8 @@
    "id": "dale",
    "kind": "pedestrian",
    "at": [
-    -16,
-    -38.4
+    5,
+    -38.8
    ],
    "yaw": 0,
    "look": {
@@ -64,8 +64,8 @@
    "id": "rosa",
    "kind": "pedestrian",
    "at": [
-    -17,
-    -39.8
+    4.1,
+    -40.199999999999996
    ],
    "yaw": 0,
    "look": {
@@ -81,8 +81,8 @@
    "id": "okafor",
    "kind": "pedestrian",
    "at": [
-    -18,
-    -38.4
+    3.2,
+    -38.8
    ],
    "yaw": 0,
    "look": {
@@ -98,8 +98,8 @@
    "id": "mia",
    "kind": "pedestrian",
    "at": [
-    -19,
-    -39.8
+    2.3,
+    -40.199999999999996
    ],
    "yaw": 0,
    "look": {
@@ -115,8 +115,8 @@
    "id": "sam",
    "kind": "pedestrian",
    "at": [
-    -20,
-    -38.4
+    1.4,
+    -38.8
    ],
    "yaw": 0,
    "look": {
@@ -130,16 +130,24 @@
   }
  ],
  "camera": {
-  "mode": "follow",
-  "actor": "courier",
-  "zoom": 1.15
+  "mode": "pose",
+  "position": [
+   -2,
+   10,
+   -36.5
+  ],
+  "target": [
+   18,
+   0,
+   -39.5
+  ]
  },
- "frames": 480,
+ "frames": 420,
  "shots": [
   30,
   150,
   300,
-  470
+  419
  ],
  "expect": {
   "consoleErrors": 0,
