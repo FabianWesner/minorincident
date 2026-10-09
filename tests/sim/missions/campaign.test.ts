@@ -20,7 +20,8 @@ for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat adv
   // E20: L2 ends on the closing gate with no cinematic or reward screen; the campaign continues straight into L3.
   // E21: the same for L3, which ends at the army zone line and continues into L4.
   // E22: and L4, which ends at the barred cellar door and continues into L5.
-  if (id === 'L2' || id === 'L3' || id === 'L4') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
+  // E23: and L5, which ends at the Metro shutter and continues into L6.
+  if (id === 'L2' || id === 'L3' || id === 'L4' || id === 'L5') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   expect(api.state()!.phase).toBe('cinematic'); world.setInput({ interact: true }); for(let i=0;i<30;i++)world.update();
   expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true);
 });

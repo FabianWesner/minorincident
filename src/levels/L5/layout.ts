@@ -7,9 +7,9 @@ import { l4Dressing } from '../L4/layout';
 
 /**
  * Kinds of the W5 "devastated twin" dressing (E23 section 5.1), counted by the static AC06 test. Everything is static: nothing here
- * moves or shoots. `corpse` / `fire` / `smoke` entries are entities the controller spawns (finished pedestrians, E27 fire hazards).
+ * moves or shoots. `corpse` entries are entities the controller spawns (finished pedestrians); the fires and smoke columns (E27 hazards) are `l5Fires` in the data.
  */
-export type L5DressingKind = 'burned-car' | 'military' | 'bus' | 'fire' | 'smoke' | 'glass' | 'collapse' | 'corpse' | 'body-bag'
+export type L5DressingKind = 'burned-car' | 'military' | 'bus' | 'glass' | 'collapse' | 'corpse' | 'body-bag'
   | 'belongings' | 'weapon' | 'barricade' | 'nest' | 'crater' | 'rubble' | 'cue' | 'barrier' | 'block';
 export interface L5Dressing {
   kind: L5DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; decay?: string; entity?: boolean;
@@ -21,7 +21,6 @@ export interface L5Dressing {
 const H = Math.PI / 2, PI = Math.PI;
 const d = (kind: L5DressingKind, assetId: string, x: number, z: number, more: Partial<L5Dressing> = {}): L5Dressing => ({ kind, assetId, x, z, ...more });
 const corpse = (x: number, z: number, model: string, yaw: number, uniform = false) => d('corpse', model, x, z, { yaw, entity: true, uniform });
-const fire = (x: number, z: number, scale = 1) => d('fire', 'fx.fire', x, z, { scale, entity: true });
 
 const route = l4Route(), stations = l4ConvoyStations(route.length);
 const pose = (i: number) => l4RoutePose(route, stations.end[i]);

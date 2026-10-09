@@ -48,6 +48,8 @@ export class CampaignUI {
     const level=Number(match[1]) as Level;
     if(level===6){this.screen('Campaign complete');this.button('Level select',()=>{this.menuSave=save;this.levelSelect();});this.focus();return;}
     if(level!==save.completedLevels+1){this.screen('Level complete');this.button('Continue',()=>this.game.continueCampaign(save));this.focus();return;}
+    // E23 -> E24: the survivors that reached the station go with the campaign into L6.
+    if(level===5)save.survivors=[...mission.state.result?.survivors??[]];
     // PO decision 2026-10-07: straight on to the next step, no unlock / upgrade / rack screens.
     autoRewards(save,level);this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
   }
