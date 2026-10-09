@@ -131,6 +131,69 @@
       }
     },
     {
+      "id": "officer-4",
+      "kind": "pedestrian",
+      "at": [
+        114,
+        -3.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 4
+        }
+      }
+    },
+    {
+      "id": "officer-5",
+      "kind": "pedestrian",
+      "at": [
+        113,
+        3.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 5
+        }
+      }
+    },
+    {
+      "id": "officer-6",
+      "kind": "pedestrian",
+      "at": [
+        112,
+        -3.2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 6
+        }
+      }
+    },
+    {
       "id": "army-0",
       "kind": "pedestrian",
       "at": [

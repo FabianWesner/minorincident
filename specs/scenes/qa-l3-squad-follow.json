@@ -1,6 +1,6 @@
 {
  "name": "qa-l3-squad-follow",
- "note": "E21 squad: four officers follow the running courier up Commerce Street (segment 1) and shoot the infected ahead",
+ "note": "E21 squad: seven surviving officers follow the running courier up Commerce Street (segment 1) and shoot the infected ahead",
  "ground": "district",
  "time": "L3",
  "tier": 2,
@@ -131,6 +131,69 @@
      "role": "officer",
      "follow": "courier",
      "slot": 3
+    }
+   }
+  },
+  {
+   "id": "officer-5",
+   "kind": "pedestrian",
+   "at": [
+    -119.5,
+    -3.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 4
+    }
+   }
+  },
+  {
+   "id": "officer-6",
+   "kind": "pedestrian",
+   "at": [
+    -119.5,
+    3.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 5
+    }
+   }
+  },
+  {
+   "id": "officer-7",
+   "kind": "pedestrian",
+   "at": [
+    -119.5,
+    -3.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.police-officer",
+    "tint": "#2f4858",
+    "role": "officer"
+   },
+   "state": {
+    "ally": {
+     "role": "officer",
+     "follow": "courier",
+     "slot": 6
     }
    }
   },
