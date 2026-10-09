@@ -8,9 +8,9 @@ const crop = (level, [x, z], r) => ({ level, district: 'D-FAIR', bbox: [[x - r, 
 // ---------------------------------------------------------------- recognition: the four pair cameras, L4 (safe) and L5 (fallen), identical framing
 const pairs = {
   plaza: { at: [-17, 3], offset: [20, 24, 20], r: 60, note: 'the Reception Plaza' },
-  'harbor-street': { at: [-10, -39], offset: [16, 19, 16], r: 50, note: 'Harbor Street' },
+  'harbor-street': { at: [-10, -39], offset: [-22, 13, 4], r: 50, note: 'Harbor Street' },
   'metro-entrance': { at: [37.8, -44.2], offset: [14, 17, 14], r: 40, note: 'the Metro entrance' },
-  'kessler-lane': { at: [68, 28.6], offset: [14, 17, 14], r: 40, note: 'Kessler Lane' },
+  'kessler-lane': { at: [68, 28.6], offset: [-14, 17, -14], r: 40, note: 'Kessler Lane' },
 };
 for (const [key, p] of Object.entries(pairs)) {
   const camera = { mode: 'pose', position: [p.at[0] + p.offset[0], p.offset[1], p.at[1] + p.offset[2]], target: [p.at[0], 0, p.at[1]] };

@@ -17,8 +17,8 @@ const presets = {
   // E22 clean late afternoon (a city the outbreak has not reached): clear air (fog far = L3 + 25 m), saturated warm-neutral sun, polar 1.2 rad (between L3 and the L5 sunset).
   L4: { sun: '#ffe0ae', intensity: 1.3, polar: 1.2, azimuth: -0.85, shadow: '#5f5489', sky: '#c7d6e2', fog: '#dbd1c1', fogNear: 62, fogFar: 165, practical: .12 },
   golden,
-  // E23 sunset (PO: dark red, orange, increasingly gloomy): the sun sits on the horizon (polar 1.48 rad, hue ~16 deg) at 0.65x L4 and the level fades it further (gloom ramp); red-to-violet sky, long shadows, fires carry the image.
-  L5: { sun: '#ff6a2a', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#4a2f5e', sky: '#8c4f6f', fog: '#7a4a62', fogNear: 45, fogFar: 125, practical: .8, rim: .25, aura: .25 },
+  // E23 sunset (PO: dark red, orange, increasingly gloomy): the sun sits on the horizon (polar 1.48 rad, hue ~19 deg) at 0.65x L4 (the low sun leaves roofs and ground in core shadow, so the shadow tint is bright: dusky rose, never black) and the level fades it further (gloom ramp); red-to-violet sky, long shadows, fires carry the image.
+  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#9a5a74', sky: '#7a4a8a', fog: '#b0564c', fogNear: 45, fogFar: 125, practical: .8, rim: .25, aura: .25 },
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 0.85, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
   /** Night segments without fires (L4 blackout blocks, scripted night beats): moonlight only, practicals carry the scene. */
   night: { sun: '#8fa6ff', intensity: 0.2, polar: 0.7, azimuth: 2.4, shadow: '#2f2d55', sky: '#141c33', fog: '#26304d', fogNear: 42, fogFar: 115, practical: 1, rim: .45, aura: .5 },
