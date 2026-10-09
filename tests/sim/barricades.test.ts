@@ -166,6 +166,16 @@ test('T-E26-13 @E26 @E26-AC13 parked car braces at 100% coverage and twice car H
   w.hazards!.hit(id, e.health.max, 'bullet'); expect(car.physics.body.isDynamic()).toBe(true); expect(car.entity.vehicle!.braced).toBe(false);
 });
 
+test('T-E26-11b @E26 @E26-AC11 pooled heavies cannot inherit an interrupted runner vault', async () => {
+  const w = await world('horde-arena');
+  const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: 0, z: 0 }))!;
+  runner.infected!.vault = { started: 0, from: { x: 0, z: 0 }, to: { x: 0, z: 2 }, height: .8 };
+  w.infected!.release(runner);
+  const brute = w.entities.get(w.infected!.spawn('infected.brute', { x: 0, z: 0 }))!;
+  expect(brute).toBe(runner); expect(brute.infected!.vault).toBeUndefined();
+  expect(w.barricades!.vault(brute)).toBe(false);
+});
+
 test('T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes', async () => {
   const { propSequence } = await import('../../src/debug/scenarios/propSequence'); const { stateHash } = await import('../../src/sim/world/stateHash');
   const a = await world('prop-yard'), b = await world('prop-yard'); propSequence(a); propSequence(b);
