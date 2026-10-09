@@ -252,10 +252,40 @@ export class Bicycle {
         const margin = survivor.radius + .1;
         if (rider && Math.abs(rider.x - spot.x - fx * .05) < Math.abs(fx) * .65 + .3 + margin
           && Math.abs(rider.z - spot.z - fz * .05) < Math.abs(fz) * .65 + .3 + margin) continue;
+        if (this.sealsNoBikeEntrance(spot, direction, { x, z })) continue;
         return { ...spot, heading: direction };
       }
     }
     return null;
+  }
+  /**
+   * A frame parked in a gate or doorway blocks the 0.5 m nav grid for the rider's click-to-move (a 3 m fence gap minus the
+   * frame and the capsule clearance leaves only a diagonal squeeze the grid's 4-neighbour routes cannot use), so every far
+   * click from inside the yard routes to the fence and the courier walks back and forth (L1 lab forecourt, 10-09).
+   * True when a no-bike zone the rider just left is routable from her without the frame but not with it.
+   */
+  private sealsNoBikeEntrance(spot: Vec2, heading: number, from: Vec2): boolean {
+    const nav = this.world.infected?.nav;
+    if (!nav || this.inNoBikeZone(from)) return false;
+    const fx = Math.cos(heading), fz = Math.sin(heading);
+    const wall = { x: spot.x + fx * .05, z: spot.z + fz * .05, y: .4, halfX: Math.abs(fx) * .65 + .3, halfZ: Math.abs(fz) * .65 + .3, halfY: .4 };
+    const start = nav.nearestCell(from.x, from.z, survivor.radius), route: number[] = [];
+    for (const zone of this.noBikeZones) {
+      const xs = zone.polygon.map(q => q.x), zs = zone.polygon.map(q => q.z), inside: number[] = [];
+      if (Math.hypot(Math.max(Math.min(...xs) - from.x, 0, from.x - Math.max(...xs)), Math.max(Math.min(...zs) - from.z, 0, from.z - Math.max(...zs))) > 3.5) continue;
+      // Walkable cells inside the zone (the lab yard is mostly its clinic annex: only a strip beside the fence is open).
+      for (let ix = Math.min(...xs) + .75; ix < Math.max(...xs); ix += 1.5) for (let iz = Math.min(...zs) + .75; iz < Math.max(...zs); iz += 1.5) {
+        const cell = nav.cell(ix, iz);
+        if (cell >= 0 && !nav.blocked[cell] && inPolygon({ x: ix, z: iz }, zone.polygon)) inside.push(cell);
+      }
+      const reachable = start < 0 ? [] : inside.filter(cell => nav.path(start, cell, route, 200000));
+      if (!reachable.length) continue; // not routable anyway: nothing to protect
+      nav.setBlocker(this.id, wall, true);
+      const open = reachable.some(cell => nav.path(start, cell, route, 200000));
+      nav.setBlocker(this.id, wall, false);
+      if (!open) return true;
+    }
+    return false;
   }
   /**
    * Parks beside the rider: on level pavement when there is some in reach, else on any clear level ground nearby, else
