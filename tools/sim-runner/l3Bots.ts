@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { Matrix4, PerspectiveCamera, Vector3 } from 'three';
-import { l3Segment, l3Street } from '../../src/data/l3';
+import { l3, l3Segment, l3Street } from '../../src/data/l3';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -106,7 +106,8 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
     if (s.fallbackAt) {
       regression = Math.max(regression, s.furthest - p.x);
       // Streets walked inside the corridor proper (the yard exit and On-ramp Road to the gate are shared by every route).
-      if (s.phase === 'corridor' && p.x > -115 && p.x < 122) streets.add(l3Street(p.z));
+      // An avenue counts once the courier is on it (carriageway and sidewalks, within 8 m of its line), not in a cross street between two.
+      if (s.phase === 'corridor' && p.x > -115 && p.x < 122) { const st = l3Street(p.z); if (Math.abs(p.z - l3.map.streets[st]) <= 8) streets.add(st); }
       const seg = l3Segment(p.x);
       if (seg >= 0 && seg <= 2 && world.tick % 30 === 0) near30[seg].push(world.infected!.active.filter(e => e.health.current > 0 && dist(e.transform, p) <= 30).length);
       // Squad: never teleports (per-tick jump), no protection flag, near the player outside combat.
