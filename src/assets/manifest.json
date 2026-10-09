@@ -16991,5 +16991,248 @@
       "z": 1.8263520002365112,
       "tolerance": 0.1
     }
+  },
+  {
+    "id": "int.metro-exit",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/int.metro-exit/build.py",
+    "sourceGlb": "assets/int.metro-exit/model.glb",
+    "glb": "public/assets/models/int.metro-exit.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 12.0,
+      "y": 5.81,
+      "z": 7.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "interior",
+      "escalator",
+      "body_emi_picketWhite",
+      "body_emi_sirenRed",
+      "light:emergency",
+      "light:exitLamp2.4",
+      "light:exitLamp-2.4",
+      "col:exitGate"
+    ],
+    "animatedNodes": [
+      "exitGate"
+    ],
+    "sockets": [
+      "platformSocket",
+      "stairsBottomSocket",
+      "stairsTopSocket",
+      "escalatorBottomSocket",
+      "escalatorTopSocket",
+      "nightStreetSocket",
+      "gateSocket",
+      "braceSocket",
+      "emergencyMount",
+      "exitLamp2.4Mount",
+      "exitLamp-2.4Mount"
+    ],
+    "budget": {
+      "triangles": 40000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/int.metro-exit.lod1.glb",
+      "lod2": "public/assets/models/int.metro-exit.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 15000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.metro-tunnel",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.metro-tunnel/build.py",
+    "sourceGlb": "assets/kit.metro-tunnel/model.glb",
+    "glb": "public/assets/models/kit.metro-tunnel.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 12.0,
+      "y": 5.0,
+      "z": 7.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof",
+      "interior",
+      "body_emi_picketWhite",
+      "body_emi_sirenRed",
+      "light:emergency",
+      "light:main4",
+      "light:main-4"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "sidePassage-3.8Socket",
+      "sidePassage0Socket",
+      "sidePassage3.8Socket",
+      "gate-3.8Socket",
+      "gate0Socket",
+      "gate3.8Socket",
+      "brace-3.8Socket",
+      "brace0Socket",
+      "brace3.8Socket",
+      "crossPassage-3.7Socket",
+      "crossPassage3.7Socket",
+      "tunnelStartSocket",
+      "tunnelEndSocket",
+      "emergencyMount",
+      "main4Mount",
+      "main-4Mount"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.metro-tunnel.lod1.glb",
+      "lod2": "public/assets/models/kit.metro-tunnel.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.maintenance-corridor",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.maintenance-corridor/build.py",
+    "sourceGlb": "assets/kit.maintenance-corridor/model.glb",
+    "glb": "public/assets/models/kit.maintenance-corridor.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 10.0,
+      "y": 3.9,
+      "z": 4.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "interior",
+      "body_emi_picketWhite",
+      "body_emi_sirenRed",
+      "light:emergency",
+      "light:main3",
+      "light:main-3"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "pumpRoomSocket",
+      "signalRoomSocket",
+      "pumpRoomGateSocket",
+      "signalRoomGateSocket",
+      "pumpRoomBraceSocket",
+      "signalRoomBraceSocket",
+      "startSocket",
+      "endSocket",
+      "roomEquipment-3Socket",
+      "roomEquipment3Socket",
+      "emergencyMount",
+      "main3Mount",
+      "main-3Mount"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.maintenance-corridor.lod1.glb",
+      "lod2": "public/assets/models/kit.maintenance-corridor.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "kit.shelter-camp",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.shelter-camp/build.py",
+    "sourceGlb": "assets/kit.shelter-camp/model.glb",
+    "glb": "public/assets/models/kit.shelter-camp.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 5.6,
+      "y": 1.05,
+      "z": 5.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "body_emi_windowGlow",
+      "light:campLamp0",
+      "light:campLamp1"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "rest-1.25-1.35Socket",
+      "rest-1.251.1Socket",
+      "rest1.25-1.35Socket",
+      "rest1.251.1Socket",
+      "waterShareSocket",
+      "aisleStartSocket",
+      "aisleEndSocket",
+      "campLamp0Mount",
+      "campLamp1Mount"
+    ],
+    "budget": {
+      "triangles": 30000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 1500
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.shelter-camp.lod1.glb",
+      "lod2": "public/assets/models/kit.shelter-camp.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 12000,
+      "lod2": 4000
+    },
+    "decayVariants": []
   }
 ]
