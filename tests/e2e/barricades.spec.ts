@@ -8,8 +8,10 @@ test('T-E26-02-browser @E26-AC02 sleeping prop-yard has zero matrix updates afte
 });
 test('T-E26-16-browser @E26 @E26-AC16 core browser wiring builds, repairs and breaks a real barricade', async ({ page }) => {
   await boot(page); await page.evaluate(async () => {
-    const a = window.__SS__!; await a.loadScenario('barricade-lab'); a.pause(); a.teleport('player', { x: 0, z: 1.3 }); await a.step(90); await a.screenshotReady();
+    const a = window.__SS__!; await a.loadScenario('barricade-lab'); a.pause(); a.teleport('player', { x: 0, z: 1.3 }); await a.step(1); await a.screenshotReady();
   });
+  await expect(page.getByRole('meter', { name: 'Slot coverage' })).toHaveAttribute('aria-valuenow', '95');
+  await page.evaluate(async () => { await window.__SS__!.step(89); await window.__SS__!.screenshotReady(); });
   expect(await page.evaluate(() => window.__SS__!.barricades.intact('door'))).toBe(true);
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E26/barricade-braced.png' });
   await page.evaluate(async () => { const a = window.__SS__!, id = a.barricades.slots().find(s => s.state.slot.id === 'door')!.id; a.interact.hit(id, 150, 'bullet'); await a.step(120); await a.screenshotReady(); });
