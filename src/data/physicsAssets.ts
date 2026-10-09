@@ -1223,6 +1223,127 @@ export default {
     "source": "public/assets/models/decay.burned-facade.glb",
     "hash": "e90071e27f8310e920fb84035945b4cb2b4f98337076c99542dbd1fb9ba7ab4b"
   },
+  "decay.rubble-pile": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.35,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.1899999761581421,
+          -0.10999999403953553,
+          0.2699999868869781
+        ],
+        "max": [
+          -0.609999976158142,
+          0.4100000059604645,
+          0.5699999868869782
+        ]
+      },
+      {
+        "min": [
+          0.5299999928474426,
+          -0.07500000298023224,
+          -0.6650000095367432
+        ],
+        "max": [
+          1.1099999928474427,
+          0.42499999701976776,
+          -0.3150000095367432
+        ]
+      },
+      {
+        "min": [
+          -0.7600000071525574,
+          0.1600000011920929,
+          -0.7349999988079071
+        ],
+        "max": [
+          -0.10000000715255736,
+          0.6500000011920929,
+          -0.2049999988079071
+        ]
+      },
+      {
+        "min": [
+          0.09500000715255735,
+          0.3950000023841858,
+          -0.5449999988079071
+        ],
+        "max": [
+          0.7650000071525573,
+          0.9750000023841858,
+          0.1050000011920929
+        ]
+      },
+      {
+        "min": [
+          0.1549999988079071,
+          -0.0649999988079071,
+          0.294999988079071
+        ],
+        "max": [
+          0.784999998807907,
+          0.37500000119209287,
+          0.6049999880790711
+        ]
+      },
+      {
+        "min": [
+          -0.6299999952316284,
+          -0.06499999791383743,
+          0.5249999856948853
+        ],
+        "max": [
+          -0.12999999523162842,
+          0.29500000208616256,
+          0.7549999856948852
+        ]
+      },
+      {
+        "min": [
+          -0.7449999995529651,
+          -0.034999996423721313,
+          -0.11999999955296517
+        ],
+        "max": [
+          0.7050000004470348,
+          0.7150000035762787,
+          0.08000000044703484
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.rubble-pile.glb",
+    "hash": "ee584af037460d2a40940d756465769e3a703fa39aaf0fd1f4e4bf86f3336879"
+  },
+  "decay.crater": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      -0.15,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [],
+    "source": "public/assets/models/decay.crater.glb",
+    "hash": "1a0d4a7207549d592e84b48ae557044413c77ab29c6638b0364f70b83d9454a0"
+  },
   "prop.light-tower-trailer": {
     "class": "heavy",
     "centerOfMass": [
@@ -5184,5 +5305,66 @@ export default {
     ],
     "source": "public/assets/models/kit.reception-plaza.glb",
     "hash": "6dd3249e7eda6b5d9d6613ee6d44fbd554afb25289c1c5c7e076eb1b1b7dffae"
+  },
+  "decay.fuel-truck-crater": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      -0.15,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [],
+    "source": "public/assets/models/decay.fuel-truck-crater.glb",
+    "hash": "4e3d9746c76166ddcf0ac5a9c7c1c7e280004e69db04ada9bfae4123ec09d10f"
+  },
+  "decay.blown-sandbags": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.35,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.6300000238418579,
+          0.19499999284744263,
+          -0.445
+        ],
+        "max": [
+          1.5700000238418579,
+          0.6949999928474426,
+          0.445
+        ]
+      },
+      {
+        "min": [
+          -1.5700000238418579,
+          0.19499999284744263,
+          -0.445
+        ],
+        "max": [
+          -0.6300000238418579,
+          0.6949999928474426,
+          0.445
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.blown-sandbags.glb",
+    "hash": "f6fab61b989c6a0e6887a4350cf5ae0ff95f3dc3de3d6e080d982c5686a88c92"
   }
 };

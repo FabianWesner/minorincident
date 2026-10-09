@@ -1,0 +1,51 @@
+{
+  "id": "decay.rubble-pile",
+  "status": "integrated",
+  "tiers": [
+    {
+      "tier": 0,
+      "triangles": 1044,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 30612,
+      "dimensions": [
+        2.3830630779266357,
+        1.3079319557308455,
+        2.09717114520989
+      ],
+      "hash": "6513949dd539f8c71d7f1522ba69fbac9a5c04233c7064d61954be3100c19551",
+      "path": "public/assets/models/decay.rubble-pile.glb"
+    },
+    {
+      "tier": 1,
+      "triangles": 444,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 16964,
+      "dimensions": [
+        2.346063017845154,
+        1.3116101084598948,
+        2.027092384448744
+      ],
+      "hash": "94a7d98e6c6943b6439a3708c8363c1ba242432a4a25beec81fd677caaeebba1",
+      "path": "public/assets/models/decay.rubble-pile.lod1.glb"
+    },
+    {
+      "tier": 2,
+      "triangles": 164,
+      "materials": 4,
+      "draws": 4,
+      "bytes": 9680,
+      "dimensions": [
+        2.2979400157928467,
+        1.311635856665963,
+        2.0494003442950026
+      ],
+      "hash": "8de67305f91834a557c7947a97f82986a014a9f671fc64ce161e12e681744ab8",
+      "path": "public/assets/models/decay.rubble-pile.lod2.glb"
+    }
+  ],
+  "authored": true,
+  "deterministicSourceBytes": true,
+  "notes": "See notes.md and review.md; concave crater collision requires terrain/runtime consumption."
+}
