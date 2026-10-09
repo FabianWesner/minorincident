@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 import bpy
 from mathutils import Matrix, Vector
-from . import export, palette, sockets
+from . import export, injury, palette, sockets
 
 ROOT = Path(__file__).resolve().parents[3]
 BASES = {
@@ -189,17 +189,27 @@ def build_adult(directory, output):
             obj.data.materials.append(palette.mat('picketWhite'))
             obj.parent=joints[owner]; obj.matrix_parent_inverse=obj.parent.matrix_world.inverted()
             return obj
+        def paint(obj, owner, length, strength=1.0):
+            # Dirty paper white with a blood stain wedge (injury.py) instead of a clean sweatband cylinder.
+            bpy.context.view_layer.update()
+            layer = obj.data.color_attributes.new(name='palette', type='FLOAT_COLOR', domain='CORNER')
+            obj.data.color_attributes.active_color = layer
+            c = obj.matrix_world.translation; sign = injury.side_sign(owner, c.y)
+            for loop in obj.data.loops:
+                p = obj.matrix_world @ obj.data.vertices[loop.vertex_index].co
+                layer.data[loop.index].color = injury.wrap_color(p, c, sign, length, strength)
         # Pale sleeve wrap remains a broad limb-volume cue even at distance.
         arm = joints['foreArmL']; hand = joints['handL']
         center = (arm.matrix_world.translation + hand.matrix_world.translation) / 2
         w = wrap('paleForearmWrap', 'foreArmL', center, .075, .16)
         w.rotation_euler = (hand.matrix_world.translation-arm.matrix_world.translation).to_track_quat('Z','Y').to_euler()
+        paint(w, 'foreArmL', .16)
         if asset.endswith(('bandaged','sitting')):
             head = joints['head'].matrix_world.translation
-            wrap('broadHeadBandage', 'head', head+Vector((.01,0,.22)), .205, .095)
+            paint(wrap('broadHeadBandage', 'head', head+Vector((.01,0,.22)), .205, .095), 'headL', .095, .9)
         if asset.endswith('bandaged'):
             shoulder=joints['armL'].matrix_world.translation
-            wrap('paleShoulderDressing','armL',shoulder+Vector((0,0,-.065)),.095,.17)
+            paint(wrap('paleShoulderDressing','armL',shoulder+Vector((0,0,-.065)),.095,.17), 'armL', .17, 1.1)
             joints['armL'].rotation_euler.y = -.35
             joints['foreArmL'].rotation_euler.y = -1.1
             joints['head'].rotation_euler.y = .12

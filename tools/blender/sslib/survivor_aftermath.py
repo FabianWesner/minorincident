@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 import bpy
 from mathutils import Matrix, Vector
-from . import palette, sockets, export
+from . import palette, sockets, export, injury
 
 RECIPES = {
     'dale': ('npc.survivor-group', 'glassesMan', 'foreArmR'),
@@ -205,9 +205,18 @@ def fold_colors(root, identity):
         # bakeInfected classifies skin/iris by these stable palette names.
         target = palette.mat('skinWarm') if skin else palette.mat('eyeBrown') if token == 'eyeBrown' else white
         base = target.diffuse_color[:3]
+        gauze = name.startswith('palegauze')
+        if gauze:
+            # Dirty gauze with a blood stain wedge (injury.py) rather than a clean white volume.
+            pts = [obj.matrix_world @ v.co for v in obj.data.vertices]
+            lo = Vector(tuple(min(q[k] for q in pts) for k in range(3))); hi = Vector(tuple(max(q[k] for q in pts) for k in range(3)))
+            gauze_center, gauze_length, gauze_sign = (lo + hi) / 2, hi.z - lo.z, injury.side_sign(owner)
         for loop in obj.data.loops:
             p = obj.matrix_world @ obj.data.vertices[loop.vertex_index].co
             col = rgb.copy()
+            if gauze:
+                layer.data[loop.index].color = injury.wrap_color(p, gauze_center, gauze_sign, gauze_length)
+                continue
             if not is_wrap and owner != 'head' and not skin:
                 # Asymmetric chest/back smudge and dusty garment hem. Smooth
                 # radial masks avoid painted rectangular overlays at any tier.
