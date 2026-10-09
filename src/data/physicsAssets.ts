@@ -1261,7 +1261,7 @@ export default {
     "restitution": 0.05,
     "centerOfMass": [
       0.42584049701690674,
-      2.5046775341033936,
+      2.4983425340615213,
       0
     ],
     "pushable": false,
@@ -1283,7 +1283,7 @@ export default {
       }
     ],
     "source": "public/assets/models/decay.collapsed-facade.glb",
-    "hash": "1cad1ca3d54b2e4435f45a06929f519ceee35255ee903cad4a348e64f4b90868"
+    "hash": "6b3f25dcfb5fcbf624273f4e86a7ad6064419fd8a59c1ada19981bc7ce6055ec"
   },
   "decay.rubble-pile": {
     "class": "fixed",
@@ -1471,7 +1471,7 @@ export default {
       }
     ],
     "source": "public/assets/models/decay.abandoned-checkpoint.glb",
-    "hash": "8b2e32b808f616f3dabbe9987d64a4c5f2a1e852351c44ab3b962365095a7f65"
+    "hash": "442a631e829f07a571a990e18d97be07966094fe78156e85f880cab3d38cd3c1"
   },
   "prop.light-tower-trailer": {
     "class": "heavy",
