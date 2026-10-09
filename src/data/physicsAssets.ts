@@ -124,6 +124,37 @@ export default {
     "source": "public/assets/models/pick.energy-drink.glb",
     "hash": "15c3e47bbd399507ac5a043ca874639563c324e09d11a38c5f5d9cc8529b1cd5"
   },
+  "util.radio": {
+    "class": "light",
+    "mass": 0.75,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      -0.0012499988079071045,
+      0.39500001072883606,
+      -0.014750003814697266
+    ],
+    "pushable": true,
+    "kickable": true,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.12999999523162842,
+          0,
+          -0.1745000034570694
+        ],
+        "max": [
+          0.1274999976158142,
+          0.7900000214576721,
+          0.14499999582767487
+        ]
+      }
+    ],
+    "source": "public/assets/models/util.radio.glb",
+    "hash": "b6788b4697fbfe202c8256b92343076c567412d30f65615b3de3bb2f51d9a97b"
+  },
   "prop.shopping-cart": {
     "class": "medium",
     "mass": 24,
@@ -890,7 +921,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.military-truck.glb",
-    "hash": "91bddd70b7165b0f24d2e0c9f853cc9959a8ab30fbadd7a9e1d0c1bcd35feba5"
+    "hash": "d571e3b1f777d301a16ba130e2598afdcd387fe5596115fdc039fd6d5abc7792"
   },
   "veh.box-truck": {
     "class": "heavy",
@@ -1253,6 +1284,194 @@ export default {
     ],
     "source": "public/assets/models/decay.collapsed-facade.glb",
     "hash": "1cad1ca3d54b2e4435f45a06929f519ceee35255ee903cad4a348e64f4b90868"
+  },
+  "decay.rubble-pile": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.35,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.1899999761581421,
+          -0.10999999403953553,
+          0.2699999868869781
+        ],
+        "max": [
+          -0.609999976158142,
+          0.4100000059604645,
+          0.5699999868869782
+        ]
+      },
+      {
+        "min": [
+          0.5299999928474426,
+          -0.07500000298023224,
+          -0.6650000095367432
+        ],
+        "max": [
+          1.1099999928474427,
+          0.42499999701976776,
+          -0.3150000095367432
+        ]
+      },
+      {
+        "min": [
+          -0.7600000071525574,
+          0.1600000011920929,
+          -0.7349999988079071
+        ],
+        "max": [
+          -0.10000000715255736,
+          0.6500000011920929,
+          -0.2049999988079071
+        ]
+      },
+      {
+        "min": [
+          0.09500000715255735,
+          0.3950000023841858,
+          -0.5449999988079071
+        ],
+        "max": [
+          0.7650000071525573,
+          0.9750000023841858,
+          0.1050000011920929
+        ]
+      },
+      {
+        "min": [
+          0.1549999988079071,
+          -0.0649999988079071,
+          0.294999988079071
+        ],
+        "max": [
+          0.784999998807907,
+          0.37500000119209287,
+          0.6049999880790711
+        ]
+      },
+      {
+        "min": [
+          -0.6299999952316284,
+          -0.06499999791383743,
+          0.5249999856948853
+        ],
+        "max": [
+          -0.12999999523162842,
+          0.29500000208616256,
+          0.7549999856948852
+        ]
+      },
+      {
+        "min": [
+          -0.8640955781936646,
+          0.20331538915634156,
+          -0.0960711058229208
+        ],
+        "max": [
+          0.6559044218063355,
+          1.0533153891563416,
+          0.1039288941770792
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.rubble-pile.glb",
+    "hash": "c5a81a19b51f583ec1095ea11722dcb84bc47463b74e9103f43c6cf4b4e7395d"
+  },
+  "decay.crater": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      -0.15,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [],
+    "source": "public/assets/models/decay.crater.glb",
+    "hash": "1a0d4a7207549d592e84b48ae557044413c77ab29c6638b0364f70b83d9454a0"
+  },
+  "decay.abandoned-checkpoint": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.24000002145767213,
+          -0.1400000023841858,
+          1.3800000524520875
+        ],
+        "max": [
+          0.8400000214576722,
+          0.5199999976158143,
+          1.7600000524520873
+        ]
+      },
+      {
+        "min": [
+          -2.8749999046325683,
+          2.384185793236071e-8,
+          -1.3750000238418578
+        ],
+        "max": [
+          -2.3249999046325684,
+          1.200000023841858,
+          -0.8250000238418579
+        ]
+      },
+      {
+        "min": [
+          -2.65,
+          -0.23999999761581425,
+          1.1400000476837158
+        ],
+        "max": [
+          -0.3500000000000001,
+          0.8600000023841858,
+          1.7600000476837159
+        ]
+      },
+      {
+        "min": [
+          -0.03000004768371589,
+          -0.35999999582767483,
+          -1.389999966621399
+        ],
+        "max": [
+          2.6299999523162843,
+          0.8200000041723251,
+          -0.9299999666213989
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.abandoned-checkpoint.glb",
+    "hash": "8b2e32b808f616f3dabbe9987d64a4c5f2a1e852351c44ab3b962365095a7f65"
   },
   "prop.light-tower-trailer": {
     "class": "heavy",
@@ -5216,6 +5435,67 @@ export default {
     "source": "public/assets/models/kit.reception-plaza.glb",
     "hash": "6dd3249e7eda6b5d9d6613ee6d44fbd554afb25289c1c5c7e076eb1b1b7dffae"
   },
+  "decay.fuel-truck-crater": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      -0.15,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [],
+    "source": "public/assets/models/decay.fuel-truck-crater.glb",
+    "hash": "4e3d9746c76166ddcf0ac5a9c7c1c7e280004e69db04ada9bfae4123ec09d10f"
+  },
+  "decay.blown-sandbags": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.35,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.6250000381469727,
+          0.19499999284744263,
+          -0.445
+        ],
+        "max": [
+          2.0450000381469726,
+          0.6949999928474426,
+          0.445
+        ]
+      },
+      {
+        "min": [
+          -2.0450000381469726,
+          0.19499999284744263,
+          -0.445
+        ],
+        "max": [
+          -0.6250000381469727,
+          0.6949999928474426,
+          0.445
+        ]
+      }
+    ],
+    "source": "public/assets/models/decay.blown-sandbags.glb",
+    "hash": "85c947146ea0e4300d25e8d77a7cd944257c95d05925311e4947e66d7f53324c"
+  },
   "int.metro-exit": {
     "class": "fixed",
     "mass": 0,
@@ -6251,5 +6531,122 @@ export default {
     ],
     "source": "public/assets/models/kit.shelter-camp.glb",
     "hash": "b3f0f010828f3c09836390ca0892bc0708dedd65673da5decccbc8f66cbfd505"
+  },
+  "prop.service-gate": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.03749999403953552,
+      1.2899999618530273,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.1,
+          1.1999999618530273,
+          -2.4100000047683716
+        ],
+        "max": [
+          0.1,
+          1.3799999618530274,
+          0.16999999523162845
+        ]
+      },
+      {
+        "min": [
+          -0.1,
+          1.1999999618530273,
+          -0.16999999523162845
+        ],
+        "max": [
+          0.1,
+          1.3799999618530274,
+          2.4100000047683716
+        ]
+      },
+      {
+        "min": [
+          -0.0525,
+          0.2799999809265137,
+          -2.140000009536743
+        ],
+        "max": [
+          0.0525,
+          2.259999980926514,
+          0.15999999046325675
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.service-gate.glb",
+    "hash": "b614b3b2a5290dcb4e8a1d3cb27e6338254e5282673f6631e3e8c0059ad7d433"
+  },
+  "prop.fluorescent-strip": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.007250003516674042,
+      0.20000000298023224,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.17499999701976776,
+          0,
+          -0.925000011920929
+        ],
+        "max": [
+          0.18950000405311584,
+          0.4000000059604645,
+          0.925000011920929
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.fluorescent-strip.glb",
+    "hash": "d02a34dd1d1fc9fa1539a681b75bfd85df07a8ae140d16882c52123fe8989f42"
+  },
+  "prop.emergency-light": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.07124999910593033,
+      0.36000001430511475,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.07500000298023224,
+          0,
+          -0.1899999976158142
+        ],
+        "max": [
+          0.2175000011920929,
+          0.7200000286102295,
+          0.1899999976158142
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.emergency-light.glb",
+    "hash": "b6f10bb76e55aed95d917996116daa8e120c5458d7df664d62d1c48d41eeefcf"
   }
 };
