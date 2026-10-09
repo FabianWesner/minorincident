@@ -3580,7 +3580,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "sourceScale": 0.91666669,
@@ -3721,7 +3722,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "world": {
@@ -3982,14 +3984,26 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     },
-    "decayTriangleBudget": 15000
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayBudgets": {
+      "burned": {
+        "triangles": 15000,
+        "materials": 8,
+        "drawCalls": 8
+      }
+    }
   },
   {
     "id": "veh.police-suv",
@@ -4097,7 +4111,8 @@
       "drawCalls": 40
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "burned"
     ],
     "sourceForward": "+X",
     "authoredLodTriangles": {
