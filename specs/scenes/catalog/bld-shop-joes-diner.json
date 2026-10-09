@@ -1,0 +1,42 @@
+{
+ "name": "bld-shop-joes-diner",
+ "note": "D-SHOP bld.joes-diner (bld.joes-diner:59) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.",
+ "ground": "district",
+ "layout": {
+  "district": "D-SHOP",
+  "bbox": [
+   [
+    -23.9,
+    4.1
+   ],
+   [
+    -4.1,
+    23.9
+   ]
+  ],
+  "ids": [
+   "bld.joes-diner:59"
+  ]
+ },
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   -14,
+   2.5,
+   14
+  ],
+  "radius": 19.1,
+  "azimuth": 45,
+  "polar": 54,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0
+ }
+}

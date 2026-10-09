@@ -32,6 +32,8 @@ export interface SceneSpec {
   frames?: number;
   shots?: number[];
   video?: number;
+  /** Contact sheet: one low-res snapshot every N frames (max 24 cells) written as one `sheet.jpg` grid, frame number in each cell. */
+  sheet?: number;
   /** Debug: include each actor's per-frame motion samples (`metrics.actors.<id>.track`: frame, clip/label, speed, feet). */
   trace?: boolean;
   /** Clipping report options: `ignore` pairs of placement ids or asset ids; `sameAsset` also checks chains of one
