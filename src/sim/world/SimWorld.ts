@@ -59,6 +59,8 @@ export class SimWorld implements Lifecycle {
   player: Player | null = null;
   combat: Combat | null = null;
   infected: InfectedSystem | null = null;
+  /** Per-level melee hits to down a normal infected (L2 only, see l2.infectedMeleeHits); null = ordinary damage. */
+  infectedMeleeHits: Readonly<Record<string, number>> | null = null;
   npcs: Npcs | null = null;
   interactables: Interactables | null = null;
   /** L1 v2 toys (gates, dumpsters, car alarms, car wash) and the LOS blocker registry; null outside D-GROVE. */
@@ -317,7 +319,7 @@ export class SimWorld implements Lifecycle {
   reset(): void {
     this.inspectionGhost = false;
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }
