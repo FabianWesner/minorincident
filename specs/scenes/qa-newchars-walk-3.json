@@ -1,0 +1,131 @@
+{
+ "name": "qa-newchars-walk-3",
+ "ground": "sidewalk",
+ "size": 30,
+ "time": "L1",
+ "actors": [
+  {
+   "id": "p0",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    -3.5999999999999996
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.marcus.aftermath",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      -3.5999999999999996
+     ],
+     [
+      -6,
+      -3.5999999999999996
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p1",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    -1.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.shelter-survivor.bandaged",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      -1.2
+     ],
+     [
+      -6,
+      -1.2
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p2",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    1.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.shelter-survivor.lying",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      1.2
+     ],
+     [
+      -6,
+      1.2
+     ]
+    ],
+    "loop": true
+   }
+  },
+  {
+   "id": "p3",
+   "kind": "pedestrian",
+   "at": [
+    -6,
+    3.5999999999999996
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.shelter-survivor.sitting",
+    "tint": "#c8c8c8"
+   },
+   "state": {
+    "walk": [
+     [
+      6,
+      3.5999999999999996
+     ],
+     [
+      -6,
+      3.5999999999999996
+     ]
+    ],
+    "loop": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1.05
+ },
+ "frames": 300,
+ "shots": [
+  30,
+  100,
+  180,
+  260
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}
