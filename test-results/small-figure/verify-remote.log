@@ -1,0 +1,375 @@
+
+> verify
+> tsx tools/verify.ts E08
+
+
+Verifying E08: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E08: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E08: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 396 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                            1.57 kB │ gzip:     0.71 kB
+dist/index.html                                    2.32 kB │ gzip:     0.78 kB
+dist/build/basis_transcoder-o4Hde_L7.js           57.53 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm        527.33 kB │ gzip:   244.57 kB
+dist/build/rapier-C6GCbKVJ.wasm                3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-BWyL0Yxb.css                     29.59 kB │ gzip:     6.76 kB
+dist/build/lookViewpoints-BX-OEann.js              0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js      0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js              1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-BTipzkJS.js                  1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                    1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                   1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-06DrzNJQ.js                       2.50 kB │ gzip:     1.33 kB
+dist/build/LevelOneBot-CfGTn0Oy.js                 4.82 kB │ gzip:     2.30 kB
+dist/build/lookPatch-BT7ef7_D.js                   5.26 kB │ gzip:     2.69 kB
+dist/build/l3-BFRWm1Bx.js                          7.27 kB │ gzip:     3.28 kB
+dist/build/l4-B6T7bV2C.js                          7.50 kB │ gzip:     3.27 kB
+dist/build/Inspection-C0MjLGMb.js                 12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-C5QRqbgm.js                14.09 kB │ gzip:     4.53 kB
+dist/build/MotionLab--uokCqgg.js                  19.95 kB │ gzip:     8.39 kB
+dist/build/LevelFiveBot-CKkDmrV-.js               21.41 kB │ gzip:     5.79 kB
+dist/build/testApi-D9WT3kOR.js                    21.51 kB │ gzip:     8.24 kB
+dist/build/index-B3ZSRyoQ.js                      26.79 kB │ gzip:     7.12 kB
+dist/build/SceneLab-DN8-nYRZ.js                   57.10 kB │ gzip:    20.90 kB
+dist/build/Pickups-B7tPX5oi.js                    60.35 kB │ gzip:    20.02 kB
+dist/build/HouseEmergence-Bq8WxGcw.js            120.15 kB │ gzip:    33.85 kB
+dist/build/Debug-DoeeJH5i.js                     155.75 kB │ gzip:    32.99 kB
+dist/build/rapier-B4BYJx26.js                    211.96 kB │ gzip:    36.08 kB
+dist/build/three.module-CG1gesDJ.js              287.60 kB │ gzip:    77.07 kB
+dist/build/install-BMI50pjg.js                   414.28 kB │ gzip:   121.66 kB
+dist/build/registry-CeljIq__.js                  456.32 kB │ gzip:    85.09 kB
+dist/build/WeatherView-1yYE5_Ys.js               710.60 kB │ gzip:   199.75 kB
+dist/build/index-BTCwuNso.js                     931.93 kB │ gzip:   271.16 kB
+dist/build/Physics-CpMLtfwt.js                 1,999.96 kB │ gzip:   364.24 kB
+✓ built in 4.41s
+
+Verifying E08: sh tools/remote/run.sh /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure --pull test-results/epics/E08/vitest.json -- npx vitest run -t @(?:E08)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E08/vitest.json
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure -> 157.90.173.117:/srv/mi/ws/small-figure-ef0c7d
+[remote] sync 17s, 5009 files; job /srv/mi/jobs/small-figure-ef0c7d-92576-1791665996; queueing for a slot
+[runner] slot 0 acquired; load 1.41 1.40 1.48
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/small-figure-ef0c7d-92576-1791665996[39m
+
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L4.test.ts [2m([22m[2m19 tests[22m[2m | [22m[33m19 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L5.test.ts [2m([22m[2m14 tests[22m[2m | [22m[33m14 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L1.test.ts [2m([22m[2m19 tests[22m[2m | [22m[33m19 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/skin-pilot.test.ts [2m([22m[2m18 tests[22m[2m | [22m[33m18 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L3.test.ts [2m([22m[2m20 tests[22m[2m | [22m[33m20 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/l1-toys.test.ts [2m([22m[2m19 tests[22m[2m | [22m[33m19 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/barricades.test.ts [2m([22m[2m21 tests[22m[2m | [22m[33m21 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L2.test.ts [2m([22m[2m16 tests[22m[2m | [22m[33m16 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l5-static.test.ts [2m([22m[2m9 tests[22m[2m | [22m[33m9 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/authored-animation.test.ts [2m([22m[2m17 tests[22m[2m | [22m[33m17 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/combat/combat.test.ts [2m([22m[2m19 tests[22m[2m | [22m[33m18 skipped[39m[2m)[22m[33m 333[2mms[22m[39m
+   [33m[2m✓[22m[39m S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy[33m 330[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/d-grove.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m11 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/courier-bike.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l3-static.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/missions/adapters.test.ts [2m([22m[2m13 tests[22m[2m | [22m[33m13 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/npc/l1-civilians.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/optimize.test.ts [2m([22m[2m12 tests[22m[2m | [22m[33m12 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/missions/objectives.test.ts [2m([22m[2m29 tests[22m[2m | [22m[33m29 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L6.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 2401[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat[33m 2399[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/navigation.test.ts [2m([22m[2m13 tests[22m[2m | [22m[33m13 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/explosions.test.ts [2m([22m[2m14 tests[22m[2m | [22m[33m14 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/animals.test.ts [2m([22m[2m10 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/infected-pursuit.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/m1-world.test.ts [2m([22m[2m10 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/courier-rig-v2.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m11 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/validate.test.ts [2m([22m[2m17 tests[22m[2m | [22m[33m17 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/interact/hazards.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m11 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/performance/nav-visibility.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/civilians.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 11129[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-03 @E08 @E08-AC03 50 seeded cycles retain clothes/body position and exact tick timings/eyes[33m 2178[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass through living people[33m 522[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exceeds L1 cap/chain[33m 772[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes[33m 7275[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/delivery.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/camera-jitter.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l4-static.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m8 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/fast-clicks.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m8 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/followers.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 14723[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction[33m 4881[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-07 @E08 @E08-AC07 2s stand revives 50%; unattended 20s down fails mission[33m 424[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-15 @E08 @E08-AC15 protected kids/brother never bitten, targeted or gored in full L2 duration[33m 8868[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/bicycle-pavement.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L3-follow.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m8 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/weather.test.ts [2m([22m[2m9 tests[22m[2m | [22m[33m9 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/progression/campaign.test.ts [2m([22m[2m12 tests[22m[2m | [22m[33m12 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/props.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/corgi-feet.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/tooling/scenelab.test.ts [2m([22m[2m10 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/specials.test.ts [2m([22m[2m12 tests[22m[2m | [22m[33m12 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/static-batch-equivalence.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/missions/l2-ride-clearance.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/e25-lighting.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/infected-recover.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/runtime-integration.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/crowd-feet.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/vehicles/handling.test.ts [2m([22m[2m13 tests[22m[2m | [22m[33m13 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/l1-grade.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/authored-lods.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/bicycle-knockoff.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/continuity.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/roundhouse.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/l1-firefighter.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/build.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/missions/campaign.test.ts [2m([22m[2m15 tests[22m[2m | [22m[33m15 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/story-bots.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/policies.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/npc.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[32m 145[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/districts.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/assets.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/continuity.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/pre-render.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/progression.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/interact/devices.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l2-static.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/vfx/events.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/l1-arc.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/sit-pose.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/districts.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/texture-ranges.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/clipping.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/m1-feel.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/load-pipeline.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/click-rate.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/streaming.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/lod-fidelity.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/handover-door-route.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/interact/gate-lockin.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/danger.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/l1-look.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L2-boarding.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/infected-bake.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/vehicles/interaction.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/l1-duel.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/vfx/integration.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+[90mstdout[2m | tests/unit/render/crowd-footwork.test.ts[2m > [22m[2mzombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08
+[22m[39m┌─────────┬──────────────────────────┬─────────────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario                    │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼─────────────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ [32m'inf.common-worker.lod1'[39m │ [32m'shamble 1 m/s (drag foot)'[39m │ [33m12[39m       │ [33m0.12[39m       │ [33m0[39m              │ [33m15.4[39m      │ [33m0.16[39m        │ [33m0[39m         │
+│ 1       │ [32m'inf.common-worker.lod1'[39m │ [32m'shamble turn 90°'[39m          │ [33m14[39m       │ [33m0.58[39m       │ [33m0[39m              │ [33m15.4[39m      │ [33m5.65[39m        │ [33m34.69[39m     │
+│ 2       │ [32m'inf.common-worker.lod1'[39m │ [32m'runner lurch 5.1 m/s'[39m      │ [33m23[39m       │ [33m0.17[39m       │ [33m0[39m              │ [33m15.3[39m      │ [33m0.28[39m        │ [33m0[39m         │
+│ 3       │ [32m'inf.common-worker.lod1'[39m │ [32m'runner turn 90°'[39m           │ [33m23[39m       │ [33m0.21[39m       │ [33m0.01[39m           │ [33m15.3[39m      │ [33m5.11[39m        │ [33m15.03[39m     │
+│ 4       │ [32m'inf.common-worker.lod1'[39m │ [32m'face target 150° (snap)'[39m   │ [33m6[39m        │ [33m0.56[39m       │ [33m0[39m              │ [33m10.4[39m      │ [33m44.02[39m       │ [33m118.51[39m    │
+│ 5       │ [32m'inf.common-worker.lod1'[39m │ [32m'lunge-grab attack'[39m         │ [33m5[39m        │ [33m0.86[39m       │ [33m0[39m              │ [33m2.5[39m       │ [33m95.03[39m       │ [33m1.75[39m      │
+│ 6       │ [32m'inf.common-worker.lod1'[39m │ [32m'wander (seeded)'[39m           │ [33m48[39m       │ [33m1.83[39m       │ [33m0.01[39m           │ [33m21.5[39m      │ [33m71.14[39m       │ [33m142.09[39m    │
+│ 7       │ [32m'inf.common-worker.lod1'[39m │ [32m'flinch x4 (fast clicks)'[39m   │ [33m2[39m        │ [33m0[39m          │ [33m0[39m              │ [33m0[39m         │ [33m22.33[39m       │ [33m1.81[39m      │
+│ 8       │ [32m'npc.civilian-woman-b'[39m   │ [32m'shamble 1 m/s (drag foot)'[39m │ [33m12[39m       │ [33m0.57[39m       │ [33m0[39m              │ [33m15.9[39m      │ [33m0.4[39m         │ [33m0[39m         │
+│ 9       │ [32m'npc.civilian-woman-b'[39m   │ [32m'shamble turn 90°'[39m          │ [33m14[39m       │ [33m0.57[39m       │ [33m0[39m              │ [33m15.9[39m      │ [33m6.43[39m        │ [33m32.63[39m     │
+│ 10      │ [32m'npc.civilian-woman-b'[39m   │ [32m'runner lurch 5.1 m/s'[39m      │ [33m22[39m       │ [33m0.14[39m       │ [33m0[39m              │ [33m18.1[39m      │ [33m0.27[39m        │ [33m0[39m         │
+│ 11      │ [32m'npc.civilian-woman-b'[39m   │ [32m'runner turn 90°'[39m           │ [33m22[39m       │ [33m0.15[39m       │ [33m0.01[39m           │ [33m18.1[39m      │ [33m3.61[39m        │ [33m18.67[39m     │
+│ 12      │ [32m'npc.civilian-woman-b'[39m   │ [32m'face target 150° (snap)'[39m   │ [33m6[39m        │ [33m0.4[39m        │ [33m0[39m              │ [33m6.7[39m       │ [33m36.87[39m       │ [33m124.19[39m    │
+│ 13      │ [32m'npc.civilian-woman-b'[39m   │ [32m'lunge-grab attack'[39m         │ [33m2[39m        │ [33m0.58[39m       │ [33m0[39m              │ [33m0.6[39m       │ [33m100.51[39m      │ [33m1.89[39m      │
+│ 14      │ [32m'npc.civilian-woman-b'[39m   │ [32m'wander (seeded)'[39m           │ [33m48[39m       │ [33m1.77[39m       │ [33m0.01[39m           │ [33m23.9[39m      │ [33m69.62[39m       │ [33m142.09[39m    │
+│ 15      │ [32m'npc.civilian-woman-b'[39m   │ [32m'flinch x4 (fast clicks)'[39m   │ [33m2[39m        │ [33m0[39m          │ [33m0[39m              │ [33m0[39m         │ [33m28.53[39m       │ [33m1.89[39m      │
+└─────────┴──────────────────────────┴─────────────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-footwork.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[33m 4804[2mms[22m[39m
+   [33m[2m✓[22m[39m zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08[33m 4801[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/l1-ride-input.test.ts [2m([22m[2m10 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/click-queue.test.ts [2m([22m[2m10 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/crowd.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/roundhouse-pose.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/fire-axe.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/l1-infection-overlay.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/core/foundation.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/foliage.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/crowd-topology.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 12773[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in high lod0 @E08 @E18[33m 5558[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in high lod1 @E08 @E18[33m 1240[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in high lod2 @E08 @E18[33m 958[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in low lod0 @E08 @E18[33m 3463[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in low lod1 @E08 @E18[33m 936[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in low lod2 @E08 @E18[33m 615[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/story-protection.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/vfx/lab-accident.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/motionlab/stage1.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 465[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L2-escape-loop.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/ambience-guard.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/survivor.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/l1-medkits.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l5-footprints.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/lod-policy.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/look-patch.test.ts [2m([22m[2m14 tests[22m[2m | [22m[33m14 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/interact/pickups.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/static-collision.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/l2-toughness.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/registry.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-grip.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 8022[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a fingers clear all routine props[33m 1701[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b fingers clear all routine props[33m 1469[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-a fingers clear all routine props[33m 1344[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-b fingers clear all routine props[33m 1791[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native elderly fingers clear all routine props[33m 1714[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/living-adults.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/registry.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/rack-selection.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/encounter-balance.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/controls.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/permanence.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m[33m 6427[2mms[22m[39m
+   [33m[2m✓[22m[39m 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07[33m 6425[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/catalog-motion.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/medkit-fetch.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1051[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 @E19 medkit stays at its world position at full health (warning-only corgi: false)[33m 649[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/click-pick.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/credits.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/vehicles/interact-integration.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/progression/aftermath.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/motionlab/skin.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/combat/loadout.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/ring-clearance.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/missions/l2-ride-vehicles.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/traffic.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 686[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-09 @E08 @E08-AC09 braking cars stop for player/civilian and cannot overlap crossing walkers[33m 626[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/view.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/import-graph.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/production-gates.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/setup.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/missions/schema.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l2-roads.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l5-shutter.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/d-grove-scaffold.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/buttons.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/arrival-stability.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/interact/infected-integration.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/performance/quality.test.ts [2m([22m[2m4 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/post-fx-streaming.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/npc/l1-motion-clips.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/infected-stuck-l2.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/missions/house-emergence.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/physics-prop-contract.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/l6-power.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/bindings.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/build.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/crowd-sink.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/data/actions.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/l6-static.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/determinism.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[33m 417[2mms[22m[39m
+   [33m[2m✓[22m[39m S-05-foundation @smoke empty scripted 1800-tick golden hash[33m 415[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/recorder.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/references.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/data/explosions.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/integration.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 718[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 rescue lifecycle and tier collision refresh on the retired M1 map (L1 v2 replaced the diner beat)[33m 716[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/data/action-assets.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/vfx/pools.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/l1-walk.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-register.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[32m 3[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/traceability.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/combat/l1-crowd.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/crossval.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/vehicles.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/palette.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/inspection-camera.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/acoustics.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/noise.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/e2e-error-guard.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/performance/deviceEvidence.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/levels/layout-overlap.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/audio/music-beats.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/static.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/weather-materials.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/combat/events.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/walk.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/interaction-marker.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/layouts/visual-bounds.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/commerce-pack.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/ui-telegraphs.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/crowd-visibility.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/ai/turning.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/motionlab/motion.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/missions/l2-reporting.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/performance/assets.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/corgi-scale.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 40[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/render/l3-boom.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/wheel.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L6-campaign.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/missions/dialogue.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/physics-metadata.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/ui-settings.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/performance/gibs.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/army-boom.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/input/raised-floor.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/small-figure.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 15874[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 seed 1 protected children keep child models in sim and appearance at both quality tiers @E08 @E20[33m 15872[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/performance/layouts.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/png-pixels.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/sim/runner.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/tooling/headless-only.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/assets/window-glow-lod.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/ai/l1-perception.test.ts [2m([22m[2m15 tests[22m[2m | [22m[33m15 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/weapons.test.ts [2m([22m[2m73 tests[22m[2m | [22m[33m73 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/vehicles/consequences.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m11 skipped[39m[2m)[22m
+[90mstdout[2m | tests/sim/npc/campaign.test.ts[2m > [22m[2mT-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+[22m[39m{"level":"L1","tier":"high","simMsP95":5.086710999981733,"budget":4}
+
+[90mstdout[2m | tests/sim/npc/campaign.test.ts[2m > [22m[2mT-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+[22m[39m{"level":"L1","tier":"low","simMsP95":2.551666000013938,"budget":6}
+{"level":"L2","tier":"low","simMsP95":3.9671399999933783,"budget":6}
+{"level":"L3","tier":"low","simMsP95":3.40467700001318,"budget":6}
+{"level":"L4","tier":"low","simMsP95":0.838382999994792,"budget":6}
+{"level":"L5","tier":"low","simMsP95":0.8941770000383258,"budget":6}
+
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/npc/campaign.test.ts [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 146665[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds[33m 1171[2mms[22m[39m
+[31m   [31m×[31m T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity[39m[33m 26346[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity[33m 117689[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise[33m 1439[2mms[22m[39m
+   [32m✓[39m @E08 stray cats use systemic grabs and the short pet down/rise lifecycle[32m 18[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m9 tests[22m[2m | [22m[33m9 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/player.test.ts [2m([22m[2m8 tests[22m[2m | [22m[33m8 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/interact/integration.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m6 skipped[39m[2m)[22m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/combat/balance.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m2 skipped[39m[2m)[22m[33m 647[2mms[22m[39m
+   [33m[2m✓[22m[39m S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash[33m 645[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/performance/horde.test.ts [2m([22m[2m3 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/sim/missions/perf.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [2m[90m↓[39m[22m [30m[45m timing [49m[39m tests/unit/progression/perf.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/npc/campaign.test.ts[2m > [22mT-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+[31m[1mAssertionError[22m: L1 high: expected 5.086710999981733 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/npc/campaign.test.ts:[2m56:43[22m[39m
+    [90m 54|[39m     times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(tim…
+    [90m 55|[39m     console.log(JSON.stringify({ level: `L${level}`, tier, simMsP95, b…
+    [90m 56|[39m     expect(simMsP95, `L${level} ${tier}`).toBeLessThanOrEqual(tier ===…
+    [90m   |[39m                                           [31m^[39m
+    [90m 57|[39m     metrics.push({ level: `L${level}`, tier, average, expected, simMsP…
+    [90m 58|[39m   }
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m18 passed[39m[22m[2m | [22m[33m197 skipped[39m[90m (216)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m50 passed[39m[22m[2m | [22m[33m1045 skipped[39m[90m (1096)[39m
+[2m   Start at [22m 21:26:15
+[2m   Duration [22m 334.68s[2m (tests 75%, import 21%, transform 4%)[22m
+
+JSON report written to /srv/mi/jobs/small-figure-ef0c7d-92576-1791665996/test-results/epics/E08/vitest.json
+[remote] pulled test-results/epics/E08/vitest.json
+[remote] done exit=1 (runner 157.90.173.117, sync 17s, remote total 1897s)
