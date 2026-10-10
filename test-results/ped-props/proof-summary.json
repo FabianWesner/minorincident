@@ -1,0 +1,243 @@
+{
+  "revision": "a9046663",
+  "mergedMain": "d27704a2",
+  "validationInProgress": true,
+  "campaign": [
+    {
+      "level": "L1",
+      "ticks": 1200,
+      "capsuleSamples": 73416,
+      "propPenetrationFramesMax": 0,
+      "pass": true
+    },
+    {
+      "level": "L2",
+      "ticks": 1200,
+      "capsuleSamples": 43418,
+      "propPenetrationFramesMax": 0,
+      "pass": true
+    },
+    {
+      "level": "L3",
+      "ticks": 1200,
+      "capsuleSamples": 33033,
+      "propPenetrationFramesMax": 0,
+      "pass": true
+    },
+    {
+      "level": "L4",
+      "ticks": 1200,
+      "capsuleSamples": 74462,
+      "propPenetrationFramesMax": 0,
+      "pass": true
+    },
+    {
+      "level": "L5",
+      "ticks": 1200,
+      "capsuleSamples": 24020,
+      "propPenetrationFramesMax": 0,
+      "pass": true
+    },
+    {
+      "level": "L6",
+      "ticks": 1200,
+      "capsuleSamples": 25221,
+      "propPenetrationFramesMax": 0,
+      "pass": true
+    }
+  ],
+  "isolatedScenes": [
+    {
+      "scene": "ped-props-bench-ally",
+      "ticks": 600,
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "propPenetrationFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "propPenetration": {
+        "samples": 1200,
+        "framesMax": 0,
+        "pairs": []
+      }
+    },
+    {
+      "scene": "ped-props-bench-infected",
+      "ticks": 600,
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "propPenetrationFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "propPenetration": {
+        "samples": 1200,
+        "framesMax": 0,
+        "pairs": []
+      }
+    },
+    {
+      "scene": "ped-props-bench-sidewalk",
+      "ticks": 600,
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "propPenetrationFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "propPenetration": {
+        "samples": 1200,
+        "framesMax": 0,
+        "pairs": []
+      }
+    },
+    {
+      "scene": "ped-props-grove-bench",
+      "ticks": 600,
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "propPenetrationFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "propPenetration": {
+        "samples": 1200,
+        "framesMax": 0,
+        "pairs": []
+      }
+    },
+    {
+      "scene": "authored sidewalk bench 1341",
+      "ticks": 600,
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "propPenetrationFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "propPenetration": {
+        "samples": 1200,
+        "framesMax": 0,
+        "pairs": []
+      }
+    }
+  ],
+  "originalHomeOmission": {
+    "propPenetration": {
+      "samples": 1200,
+      "framesMax": 105,
+      "pairs": [
+        {
+          "actor": "woman",
+          "prop": "D-GROVE/prop.bench:355",
+          "run": 86,
+          "max": 105,
+          "frames": 191
+        }
+      ]
+    }
+  },
+  "remoteUnit": {
+    "files": 131,
+    "passed": 456
+  },
+  "remoteSim": {
+    "files": 67,
+    "passed": 487,
+    "existingSkipped": 6,
+    "bothSlotsReserved": true,
+    "workers": 1
+  },
+  "nativePerfInitial": {
+    "passed": 13,
+    "failed": 1,
+    "unchangedBudgets": true,
+    "failure": "L4 phone collapse: 518872 triangles > 500000"
+  },
+  "productionLevelsInitial": {
+    "passed": 38,
+    "failed": 1,
+    "failure": "Oak test detour crossed resting planter; driver corrected; rerun queued"
+  },
+  "productionLevelsValidated": {
+    "passed": 39,
+    "method": "38 initial passes plus corrected Oak rerun",
+    "oakDeaths": 0,
+    "oakArrivalToleranceUnchanged": 1.2
+  },
+  "currentNode": {
+    "unitFiles": 131,
+    "unitPassed": 456,
+    "unitSeconds": 455.79,
+    "simFiles": 67,
+    "simPassed": 488,
+    "simSkipped": 6,
+    "simSeconds": 967.28,
+    "remoteBothSlotsReserved": true,
+    "workers": 1,
+    "pass": true
+  },
+  "mergedRevision": "4dc4ce08",
+  "mergedUnit": {
+    "files": 132,
+    "passed": 463,
+    "seconds": 457.37,
+    "pass": true
+  }
+}
