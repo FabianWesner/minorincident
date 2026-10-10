@@ -14,7 +14,7 @@ import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positio
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
-import { civilianRoles, l1Pedestrians } from '../../data/npcs';
+import { civilianRoles, l1Pedestrians, coreCivilianModels } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
@@ -43,7 +43,6 @@ const shirtMaterials: Record<string, string[]> = {
 };
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
-const coreModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];
 type StandingReset = Record<string, { translation: number[]; rotation: number[]; scale: number[] }>;
 /**
  * Sitting/lying skins ship their joints in a rest pose plus an exported `ss_standingPose` and `restOnlyNodes` (cushion).
@@ -371,7 +370,7 @@ export class CivilianCrowd extends Group {
   constructor(private readonly world: SimWorld, shading?: Materials) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
-    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:coreModels;
+    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:coreCivilianModels;
     this.known.clear();for(const model of models)this.known.add(model);
     this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);this.add(...this.batches);
   }
@@ -407,7 +406,7 @@ export class CivilianCrowd extends Group {
     this.heroLoads.set(model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
   }
   private disposed = false;
-  private readonly known = new Set<string>(coreModels);
+  private readonly known = new Set<string>(coreCivilianModels);
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
     // L1's people spawn at Begin; L6's attackers keep this rig after turning. Prepare their close tiers before play.

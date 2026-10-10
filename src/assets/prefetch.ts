@@ -3,7 +3,15 @@ import { compositions } from '../levels/compositions';
 import type { DistrictLayout } from '../levels/districts/types';
 import { assetUrl } from './assetUrl';
 import { districtAssetUrls } from './DistrictAssets';
-import { atLeast, type AssetDef } from './types';
+import { coreCivilianModels, l1Pedestrians } from '../data/npcs';
+import { l5Survivors } from '../data/l5';
+import { l6CastModels } from '../data/l6';
+import { levelTwoLayouts } from '../levels/L2/layout';
+import { levelThreeLayouts } from '../levels/L3/layout';
+import { levelFourLayouts } from '../levels/L4/layout';
+import { levelFiveLayouts } from '../levels/L5/layout';
+import { atLeast, variantPath, type AssetDef } from './types';
+import { infectedDef } from '../data/infected';
 import { catalog } from '../data/actions/catalog';
 
 const definitions = new Map((manifest as AssetDef[]).map(def => [def.id, def]));
@@ -13,19 +21,30 @@ const started = new Set<string>();
 /** Warm the HTTP cache with a level's district data (layout JSON + GLB, placement LOD2 models)
  * while the player is still in the menus. Low priority, a few requests at a time; the real load
  * then reads from the cache (or joins the in-flight response). Never throws. */
-export async function prefetchLevel(level: string, concurrency = 4): Promise<void> {
+export async function prefetchLevel(level: string, concurrency = 4, quality: 'high' | 'low' = 'high'): Promise<void> {
   const composition = compositions[level];
-  if (!composition || started.has(level)) return;
-  started.add(level);
+  const key = `${level}:${quality}`;
+  if (!composition || started.has(key)) return;
+  started.add(key);
   const get = (url: string) => fetch(assetUrl(url), { priority: 'low' } as RequestInit);
   try {
-    const layouts = await Promise.all(composition.districts.map(async ({ id }) => (await get(`/assets/layouts/${id}.layout.json`)).json() as Promise<DistrictLayout>));
+    const raw = await Promise.all(composition.districts.map(async ({ id }) => (await get(`/assets/layouts/${id}.layout.json`)).json() as Promise<DistrictLayout>));
+    const layouts = level === 'L2' ? levelTwoLayouts(raw) : level === 'L3' ? levelThreeLayouts(raw) : level === 'L4' ? levelFourLayouts(raw) : level === 'L5' ? levelFiveLayouts(raw) : raw;
     const urls = new Set<string>(composition.districts.map(({ id }) => `/assets/layouts/${id}.base.glb`));
     for (const layout of layouts) for (const placement of layout.placements) {
       if (placement.minTier > composition.tier || placement.maxTier < composition.tier) continue;
       // Both tiers initially draw LOD2 outside the spawn. The real view fetches the
       // close prototypes it needs; prefetch must not undo that policy for the whole map.
-      try { for (const url of districtAssetUrls(placement.assetId, definition, ['lod2'])) urls.add(url); } catch { /* unknown ids surface in the real load */ }
+      try { for (const url of districtAssetUrls(placement.assetId, definition, ['lod2'])) urls.add(variantPath(url, placement.decay)); } catch { /* unknown ids surface in the real load */ }
+    }
+    const actors = new Set(level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...coreCivilianModels, ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
+    actors.add('char.corgi'); actors.add(infectedDef('infected.runner').asset);
+    for (const id of actors) {
+      const def = definitions.get(id); if (!def || !atLeast(def.status, 'integrated')) continue;
+      for (const path of [def.lods?.lod1 ?? def.glb, def.lods?.lod2 ?? def.glb, ...(quality === 'high' ? [def.glb] : [])]) if (path) urls.add('/' + path.replace(/^public\//, ''));
+    }
+    for (const variant of ['female', 'male']) {
+      const def = definitions.get(`char.courier-${variant}`); if (def?.glb) urls.add('/' + def.glb.replace(/\.glb$/, '.skin.glb').replace(/^public\//, ''));
     }
     // Weapon/action view models load one after another in ActionView: warm them too.
     for (const def of Object.values(catalog)) {
@@ -36,5 +55,5 @@ export async function prefetchLevel(level: string, concurrency = 4): Promise<voi
     await Promise.all(Array.from({ length: concurrency }, async () => {
       for (let url = queue.shift(); url; url = queue.shift()) { try { await (await get(url)).arrayBuffer(); } catch { /* best effort */ } }
     }));
-  } catch { /* best effort: the level load reports real failures */ }
+  } catch { started.delete(key); /* best effort: allow a later attempt after a failed layout fetch */ }
 }
