@@ -319,7 +319,14 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
+    // Weather selects the material graph (including underground fog). Select it
+    // before warming hidden batches, so their first appearance uses prepared shaders.
+    if (this.lighting && this.world.weather) {
+      this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
+      this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
+    }
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
@@ -341,7 +348,7 @@ export class GameView implements Lifecycle {
           } finally { pulse.remove(); this.lighting.applyLook(); }
         }
       }
-      finally { restore?.(); unwarm?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); }
     };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
