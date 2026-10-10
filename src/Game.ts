@@ -1,3 +1,4 @@
+import { LevelSixBot } from './debug/bot/LevelSixBot';
 import type { Inspection } from './debug/Inspection';
 import { LevelOneBot } from './debug/bot/LevelOneBot';
 import { LevelThreeBot } from './debug/bot/LevelThreeBot';
@@ -53,7 +54,7 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
+  driver: LevelSixBot | BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   private readonly spawnFrustum = new Matrix4();
@@ -278,6 +279,7 @@ export class Game {
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
     else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
+      this.input.cursor.setGroundHeight(this.world.districts?.groundHeight(player.x, player.z) ?? 0);
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
       this.world.applyInput(frame, this.input.scheme);

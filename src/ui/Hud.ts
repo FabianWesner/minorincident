@@ -255,9 +255,9 @@ export class Hud {
       if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) { this.cueText.hidden = false; text(this.cueText, ' · Hold still or press E: someone is here'); }
     }
   }
-  /** Story bubble from the mission state (`l1.say`): fades in over 10 ticks, out over 15 after its reading time. */
+  /** Story bubble from the mission state (L1/L2/L6): fades in over 10 ticks, out over 15 after its reading time. */
   private updateStory(): void {
-    const world = this.game.world, say = world.missions?.state.l1?.say ?? world.missions?.state.l2?.say, tick = world.tick;
+    const world = this.game.world, say = world.missions?.state.l1?.say ?? world.missions?.state.l2?.say ?? world.missions?.state.l6?.say, tick = world.tick;
     const opacity = say ? Math.min(1, (tick - say.at) / 10, 1 - (tick - say.until) / 15) : 0;
     this.storyBubble.hidden = !say || opacity <= 0;
     if (!say || this.storyBubble.hidden) return;
@@ -265,7 +265,7 @@ export class Hud {
     this.storyBubble.style.opacity = String(Math.max(0, opacity));
     if (say.id === 0) { this.storyBubble.style.left = '50%'; this.storyBubble.style.top = '78%'; return; }
     const speaker = world.entities.get(say.id); if (speaker && !speaker.hidden) { this.storyX = speaker.transform.x; this.storyZ = speaker.transform.z; }
-    const p = this.game.view.project(this.storyX, 2.3, this.storyZ);
+    const p = this.game.view.project(this.storyX, (speaker?.transform.y ?? .7) + 1.6, this.storyZ);
     this.storyBubble.style.left = `${Math.max(14, Math.min(86, (p[0] + 1) * 50))}%`; this.storyBubble.style.top = `${Math.max(16, Math.min(88, (1 - p[1]) * 50))}%`;
   }
   dispose(): void { this.clear(); this.onboarding.dispose(); this.root.remove(); }

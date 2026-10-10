@@ -40,6 +40,24 @@ test('static corpse pages grow beyond the old population cap and survive camera 
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 
+test('L6 prewarmed corpse pages stay empty until a real body joins @E24', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  pool.prepare('runner', baked.geometry, material, baked.clip, frame);
+  const page = pool.children[0] as InstancedMesh, geometry = page.geometry, frozen = page.material;
+  expect(pool.snapshot()).toMatchObject({ instances: 0, draws: 0, figures: [] });
+  pool.prepare('runner', baked.geometry, material, baked.clip, frame);
+  expect(pool.children).toHaveLength(1);
+  const e = { id: 7, corpse: true } as EntitySnapshot;
+  pool.place(e, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4(), new Color('white'), [0, 0, 0]);
+  expect(page.geometry).toBe(geometry); expect(page.material).toBe(frozen);
+  expect(pool.snapshot()).toMatchObject({ instances: 1, draws: 1 });
+  pool.begin(id => id === 7 ? e : undefined);
+  expect(pool.snapshot().instances).toBe(1);
+  pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
 test('opposing crowd rotations keep full size during clip fades @E07', () => {
   const first = new Matrix4(), second = new Matrix4().makeRotationY(Math.PI);
   const palette = new CrowdPosePalette({ parts: ['root'], frames: 2, duration: 1, matrices: [...first.elements, ...second.elements] }, 1, .2);

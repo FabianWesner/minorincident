@@ -1,10 +1,11 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
-import { compositions } from "../../src/levels/compositions";
+import { compositions, districtOrigins } from "../../src/levels/compositions";
 import { districtGameplay } from "../../src/levels/districts";
 import {
   corridorDistrictId,
   fairDistrictId,
+  subwayDistrictId,
   districtIds,
   groveDistrictId,
   type DistrictLayout,
@@ -17,7 +18,7 @@ import { bakeNav } from "../../src/sim/world/NavGrid";
 import { placementColliders } from "../../src/levels/districts/staticCollision";
 import { pushableProps } from "../../src/data/pushableProps";
 const layouts = Object.fromEntries(
-  [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId].map((id) => [
+  [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId].map((id) => [
     id,
     JSON.parse(
       readFileSync(`public/assets/layouts/${id}.layout.json`, "utf8"),
@@ -68,7 +69,7 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
   const world = new SimWorld();
   await world.init();
   try {
-    const comp = { ...compositions.L6, tier: 5 as const };
+    const comp = { id:'L6', timeOfDay:'L6' as const, tier:5 as const, districts:districtIds.map(id=>({id,origin:districtOrigins[id]})) };
     world.loadComposition(comp, Object.values(layouts), 42);
     expect(world.districts!.getState().districts).toHaveLength(8);
     const start = world.districts!.playerStart;
