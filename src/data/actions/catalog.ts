@@ -26,7 +26,8 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   melee('police-baton', 'wpn.police-baton', 22, 1.7, 85, 0.35, 1, 0.3),
   // E20 §5.3: single swing 45 (one hit per 40 HP infected), 100°, 2.1 m, 0.75 s; the same crowd sweep as the bat, stronger: >= 3 within 2.5 m, 25 damage each, 2.5 m push, 0.8 s stagger, 1.0 s total.
   // PO 10-08 fight speed: one axe swing 0.5 s (was 0.75), the crowd sweep 0.5 s (was 1 s) at 13 per target (was 25), same crowd TTK.
-  { ...melee('fire-axe', 'wpn.fire-axe', 45, 2.1, 100, 0.5, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 13, knockback: 2.5, stagger: .8, windup: .12, active: .18, recovery: .2, cooldown: .5, hitStopMs: 60 } },
+  // PO 10-10: axe x1.25.
+  { ...melee('fire-axe', 'wpn.fire-axe', 56, 2.1, 100, 0.5, 2, 0.4), roundhouse: { threshold: 3, radius: 2.5, maxTargets: 1000, damage: 16, knockback: 2.5, stagger: .8, windup: .12, active: .18, recovery: .2, cooldown: .5, hitStopMs: 60 } },
   melee('katana', 'wpn.katana', 48, 2.3, 130, 0.45, 2, 0.2),
   // E21 §5.2 handgun (first ranged weapon): 20 damage (2 hits per 40 HP infected), 22 m, 3 shots/s, one target per shot.
   // No ammunition system (00 §6.1): no magazine, no reload, no reserve; the fire rate is the only limit.
