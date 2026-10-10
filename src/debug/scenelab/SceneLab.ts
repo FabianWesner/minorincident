@@ -423,6 +423,7 @@ export class SceneLab {
     else if ('lightning' in fx) world.weather?.strike({ ...toPoint(fx.lightning), y: 0 }, fx.consequence);
     else if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
     else if ('wreck' in fx) { const id = this.vehicles.get(fx.wreck); if (id === undefined) throw new Error(`wreck: unknown vehicle ${fx.wreck}`); world.vehicles!.damage(id, 1e6); }
+    else if ('hazard' in fx) { const id = world.hazards!.spawn(fx.hazard, toPoint(fx.at), { radius: fx.radius, duration: fx.duration }); if (fx.trigger) world.hazards!.hit(id, 1, fx.trigger); }
     else { const kind = 'fire' in fx ? 'fire' : 'smoke', p = toPoint('fire' in fx ? fx.fire : fx.smoke); world.events.emit({ type: 'vfx.effect', tick: world.tick, kind, position: p, radius: fx.radius ?? 2 } as Parameters<typeof world.events.emit>[0]); }
   }
   setTime(preset: TimeOfDay): void { this.game.view.settings({ timeOfDay: preset }); }
@@ -503,7 +504,7 @@ export class SceneLab {
       if (Math.abs(delta) < rad(2)) courier.plan = null; else frame.move = { x: Math.cos(plan.yaw) * .04, z: -Math.sin(plan.yaw) * .04 };
     } else if (plan?.type === 'attack') {
       const target = this.actors.get(plan.target);
-      if (!target || this.frame >= plan.until) courier.plan = null;
+      if (!target || this.frame >= plan.until) { courier.plan = null; frame.cancelMove = true; }
       else { frame.attackTarget = { id: target.entity, side: plan.side }; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'click') {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).

@@ -177,7 +177,7 @@ export class InfectedSystem {
         e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       if (b.state === 'idle' || b.state === 'wander') {
-        if (!this.world.inspectionGhost && distance <= 14 * (this.world.weather?.modifiers.infectedSight ?? 1) && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
+        if (!this.world.inspectionGhost && distance <= 14 * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1) && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
         if (b.state === 'wander') {
           moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.nav, this.world.tick); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
           if (this.world.tick >= b.until) b.state = 'idle';

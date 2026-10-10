@@ -8,7 +8,7 @@ import type { DamageEvent } from '../combat/Damage';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Vec2 } from '../../input/InputFrame';
-export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
+export const hazardKinds = ['propane', 'barrel', 'gas-can', 'car-alarm', 'fuse-box', 'fire', 'toxic', 'tear-gas', 'extinguisher', 'water', 'metal-fence', 'live-wire', 'fuel-trail'] as const;
 export const destructibleKinds = ['fence', 'crate', 'barricade', 'cone', 'trash-can', 'mailbox', 'glass'] as const;
 export type HazardKind = typeof hazardKinds[number];
 export type DestructibleKind = typeof destructibleKinds[number];
@@ -33,6 +33,7 @@ export class Hazards {
       if (e.type !== 'combat.hit' || e.amount <= 0) return;
       const entity = world.entities.get(e.targetId); if (!entity) return;
       const h = entity.hazard;
+      if (h?.kind === 'extinguisher' && !h.exploded && (e.damageType === 'bullet' || e.damageType === 'melee')) this.extinguish(entity);
       if (h?.kind === 'car-alarm') this.alarm(entity);
       if (h?.kind === 'fuse-box' && e.damageType === 'bullet') this.electrify(entity);
       if (h?.kind === 'gas-can' && e.damageType === 'bullet' && !h.leaked) {
@@ -49,10 +50,10 @@ export class Hazards {
     const isProp = (destructibleKinds as readonly string[]).includes(kind), hp = opts.hp ?? (kind === 'propane' || kind === 'barrel' ? 20 : kind === 'car-alarm' ? 1000 : 60);
     const e = this.world.entities.create({ kind: isProp ? 'prop' : 'hazard', archetype: `${isProp ? 'prop' : 'hazard'}.${kind}`, faction: 'environment', health: { current: hp, max: hp }, transform: { ...pos, y: .7, yaw: 0 } });
     if (kind === 'fire') opts = { ...opts, duration: (opts.duration ?? 30) * (this.world.weather?.modifiers.fireDuration ?? 1) };
-    if (!isProp) e.hazard = { kind: kind as HazardKind, radius: opts.radius ?? (kind === 'propane' || kind === 'barrel' ? 5 : kind === 'car-alarm' ? 20 : 2), fuseAt: 0, exploded: false, activeUntil: kind === 'fire' || kind === 'toxic' || kind === 'live-wire' ? this.world.tick + Math.ceil((opts.duration ?? 30) * 60) : 0, leaked: false };
+    if (!isProp) e.hazard = { kind: kind as HazardKind, radius: opts.radius ?? (kind === 'propane' || kind === 'barrel' ? 5 : kind === 'car-alarm' ? 20 : 2), fuseAt: 0, exploded: false, activeUntil: kind === 'fire' || kind === 'toxic' || kind === 'tear-gas' || kind === 'live-wire' ? this.world.tick + Math.ceil((opts.duration ?? 30) * 60) : 0, leaked: false };
     if (kind === 'fire' && opts.spread) { e.hazard!.spread = opts.spread; e.hazard!.spreadAt = this.world.tick + Math.ceil((opts.duration ?? 30) * 30); }
     if (isProp || kind === 'fuel-trail') e.destructible = { kind: kind as DestructibleKind | 'fuel-trail', flammable: ['fence', 'crate', 'barricade', 'fuel-trail'].includes(kind), exposure: 0, burnTime: opts.burnTime ?? 6, burningUntil: 0, broken: false };
-    const zone = ['fire', 'toxic', 'water', 'live-wire', 'fuel-trail'].includes(kind);
+    const zone = ['fire', 'toxic', 'tear-gas', 'water', 'live-wire', 'fuel-trail'].includes(kind);
     if (!zone) {
       e.combat = { radius: Math.max(opts.halfX ?? .5, opts.halfZ ?? .15) + .1, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
       this.world.interactables!.block(e.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15, entityId: e.id });
@@ -75,6 +76,22 @@ export class Hazards {
       const pieces = e.destructible.kind === 'fuel-trail' ? 0 : this.debris.spawn(e.id, e.transform, this.world.tick);
       this.world.events.emit({ type: 'prop.broken', tick: this.world.tick, id: e.id, pieces });
     }
+  }
+  /** A shot or kick vents the prop once: radial fire suppression, forward 90-degree stun cone. */
+  private extinguish(source: EntitySnapshot): void {
+    source.hazard!.exploded = true;
+    this.world.interactables!.unblock(source.id);
+    this.world.events.emit({ type: 'vfx.effect', tick: this.world.tick, kind: 'smoke', position: { ...source.transform }, radius: 3 });
+    const dx = Math.cos(source.transform.yaw), dz = -Math.sin(source.transform.yaw);
+    for (const e of this.world.entities.iterate()) {
+      const x = e.transform.x - source.transform.x, z = e.transform.z - source.transform.z, distance = Math.hypot(x, z);
+      if (distance > 3) continue;
+      if (e.hazard?.kind === 'fire') e.hazard.activeUntil = this.world.tick;
+      if (e.destructible) { e.destructible.burningUntil = 0; e.destructible.exposure = 0; }
+      if (e.faction === 'infected' && (distance < 1e-6 || (x * dx + z * dz) / distance >= Math.SQRT1_2))
+        this.world.combat!.status.apply(e, { kind: 'stunned', duration: 1, maxStacks: 1, dps: 0, slow: 0 }, source.id, 'hazard.extinguisher');
+    }
+    for (const zone of this.world.combat?.effects.zones ?? []) if (zone.kind === 'fire' && Math.hypot(zone.x - source.transform.x, zone.z - source.transform.z) <= 3) zone.expires = this.world.tick;
   }
   private nearby(e: EntitySnapshot, radius: number): readonly number[] {
     this.area.x = e.transform.x; this.area.z = e.transform.z; this.area.r = radius;
@@ -139,6 +156,11 @@ export class Hazards {
     for (const e of this.world.entities.iterate()) {
       if (e.noiseTarget && tick >= e.noiseTarget.until) delete e.noiseTarget;
       const h = e.hazard, d = e.destructible;
+      if (h?.kind === 'tear-gas' && tick < h.activeUntil) for (const id of this.nearby(e, h.radius)) {
+        const target = this.world.entities.get(id)!;
+        if (target.kind === 'player' || target.faction === 'infected') this.world.combat!.status.apply(target,
+          { kind: 'slowed', duration: 2 / 60, maxStacks: 1, dps: 0, slow: target.kind === 'player' ? .15 : .3 }, e.id, 'hazard.tear-gas');
+      }
       if (h?.fuseAt && tick >= h.fuseAt && !h.exploded) this.explode(e);
       if (h?.kind === 'car-alarm' && tick < h.activeUntil) this.lure(e);
       if (d?.flammable && !d.broken) {

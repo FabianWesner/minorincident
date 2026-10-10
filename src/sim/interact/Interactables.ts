@@ -14,8 +14,11 @@ export interface Interactable {
   progress: number; completed: boolean; enabled: boolean; hint: string; label: string;
   key: string | null; requires: string[]; open: boolean; barricaded: boolean;
   fuel: number; powered: boolean; interruptedAt: number; cycle: number;
+  /** Authored circuit operated by this device; fixed-tick light state owns its response. */
+  powerGroup?: string;
 }
 export interface DeviceOptions {
+  powerGroup?: string;
   radius?: number; holdTime?: number; instant?: boolean; interruptOnDamage?: boolean;
   key?: string; requires?: string[]; fuel?: number; label?: string; halfX?: number; halfZ?: number;
 }
@@ -42,7 +45,7 @@ export class Interactables {
       || (opts.radius ?? 1.5) <= 0 || (opts.holdTime ?? .6) <= 0 || (opts.fuel ?? 0) < 0 || (opts.halfX ?? .5) <= 0 || (opts.halfZ ?? .15) <= 0) throw new RangeError('Invalid device');
     const entity = this.world.entities.create({ kind: 'device', archetype: `device.${kind}`, faction: 'environment', transform: { ...pos, y: .7, yaw: 0 }, health: { current: 100, max: 100 },
       interactable: { kind, radius: opts.radius ?? 1.5, holdTime: opts.holdTime ?? (kind === 'generator' ? 3 : .6), instant: opts.instant ?? true, interruptOnDamage: opts.interruptOnDamage ?? true,
-        progress: 0, completed: false, enabled: true, hint: '', label: opts.label ?? kind, key: opts.key ?? null, requires: opts.requires ?? [], open: false, barricaded: false, fuel: opts.fuel ?? 0, powered: false, interruptedAt: -1, cycle: 0 } });
+        progress: 0, completed: false, enabled: true, hint: '', label: opts.label ?? kind, key: opts.key ?? null, requires: opts.requires ?? [], open: false, barricaded: false, fuel: opts.fuel ?? 0, powered: false, interruptedAt: -1, cycle: 0, ...(opts.powerGroup ? { powerGroup: opts.powerGroup } : {}) } });
     this.world.spatial.set(entity.id, pos.x, pos.z);
     if (isDoor(kind)) this.block(entity.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15 });
     return entity.id;

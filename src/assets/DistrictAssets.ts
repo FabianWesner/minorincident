@@ -13,6 +13,7 @@ import { atLeast } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
+import { anchorsFor } from '../data/placedLights';
 import { staticBatch, staticBatchAsync } from './staticBatch';
 import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
@@ -92,9 +93,12 @@ export class DistrictAssets {
   private share(root: Group): void {
     for (const child of root.children) {
       if (!(child instanceof Mesh) || (child.name !== 'window-light' && child.name !== 'static-body')) continue;
-      const shared = this.sharedMaterials.get(child.name);
+      // Window/gloss graphs require different vertex inputs; sharing solely by
+      // mesh name silently replaced those graphs with the first matte batch.
+      const key = `${child.name}:${(child.material as Material).userData.batchFeatures ?? 'legacy'}`;
+      const shared = this.sharedMaterials.get(key);
       if (shared) { (child.material as Material).dispose(); child.material = shared; }
-      else { this.sharedMaterials.set(child.name, child.material as Material); this.batchMaterials.add(child.material as Material); }
+      else { this.sharedMaterials.set(key, child.material as Material); this.batchMaterials.add(child.material as Material); }
     }
   }
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
@@ -127,6 +131,7 @@ export class DistrictAssets {
       const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
       // Keep the Metro shutter independent of its static shell.
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
+      asset.userData.assetId = id;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {
@@ -144,7 +149,10 @@ export class DistrictAssets {
     // Keep their original materials (including decal alpha/texture) in static instances.
     if (!def) {
       const key = `dressing:${id}:${lod}:${decay ?? ''}`;
-      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod, decay).then(root => { const group = new Group(); group.add(root); return this.remember(group); }));
+      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod, decay).then(root => {
+        if (anchorsFor(id).length && !/^veh\./.test(id)) { root.userData.assetId = id; const batch = staticBatch(root, true, this.materials); this.share(batch); return this.remember(batch); }
+        const group = new Group(); group.add(root); return this.remember(group);
+      }));
       return this.cache.get(key)!;
     }
     const productionId = productionIds[id] ?? id;
@@ -154,7 +162,7 @@ export class DistrictAssets {
       const baseKey = `${id}:batch:${canonical}:${decay ?? ''}`;
       void this.base(id, lod, decay);
       if (!this.cache.has(key)) this.cache.set(key, this.cache.get(baseKey)!.then(source => {
-        if (lit) return source;
+        if (lit || (anchorsFor(id).length && !/^veh\./.test(id))) return source;
         const root = source.clone(true);
         root.traverse(node => {
           if (!(node instanceof Mesh) || node.name !== 'window-light') return;

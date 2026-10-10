@@ -4,6 +4,9 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Crowd } from './crowd';
 import { AssetRegistry, type PlaceholderLog } from './registry';
+import { PaletteMaterial } from '../render/PaletteMaterial';
+import { anchorsFor } from '../data/placedLights';
+import { footprint } from '../render/LightField';
 import { Lighting } from '../render/Lighting';
 import { Materials } from '../render/Materials';
 import manifest from './manifest.json';
@@ -11,6 +14,7 @@ import type { AssetDef } from './types';
 
 export interface AssetViewerApi {
   ready: Promise<void>;
+  lighting?(night: boolean, powered: boolean): Promise<void>;
   view(index: number): Promise<void>;
   visibility(name: string, visible: boolean): Promise<void>;
   inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
@@ -34,7 +38,7 @@ export async function assetViewer(): Promise<void> {
   const camera = new PerspectiveCamera(25, innerWidth / innerHeight, .01, 500);
   const controls = new OrbitControls(camera, renderer.domElement);
   const events: PlaceholderLog[] = [];
-  const inspectionLighting = new Lighting(new Scene());
+  const inspectionLighting = new Lighting(new Scene(), undefined, renderer);
   const inspectionMaterials = new Materials(inspectionLighting);
   const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
     // Explicit inspection shows pending source files without stale registration metadata.
@@ -45,6 +49,7 @@ export async function assetViewer(): Promise<void> {
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
   decay.disabled = !registry.definition(id).decayVariants.length;
   let object: Object3D, extent = 1;
+  let powered = true;
   const center = new Vector3(), size = new Vector3();
   function render(): void {
     // Isolated inspection follows the game's zoom-relative fog convention.
@@ -52,6 +57,7 @@ export async function assetViewer(): Promise<void> {
     const fogOffset = Math.max(0, camera.position.distanceTo(controls.target) - 19);
     inspectionLighting.fogNear.value = 55 + fogOffset;
     inspectionLighting.fogFar.value = 140 + fogOffset;
+    inspectionLighting.field.update(center.x, center.z, 0); inspectionLighting.field.render(renderer);
     renderer.info.reset(); renderer.render(scene,camera);
   }
   async function view(index: number): Promise<void> {
@@ -119,7 +125,13 @@ export async function assetViewer(): Promise<void> {
     await renderer.compileAsync(scene, camera); render(); render();
   }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, inspectionView, visibility: async (name, visible) => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, lighting: async (night, on) => {
+    powered = on; inspectionLighting.set(night ? 'night' : 'golden');
+    inspectionLighting.field.setStatic(anchorsFor(id).filter(a => a.pool).map(anchor => ({ ...footprint(anchor), on })));
+    inspectionLighting.applyLook();
+    object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
+    await view(4);
+  }, deliveryView, inspectionView, visibility: async (name, visible) => {
     const node = object.getObjectByName(name);
     if (!node) throw new Error(`Missing asset node ${name}`);
     node.visible = visible; await view(4);

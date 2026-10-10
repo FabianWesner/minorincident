@@ -95,7 +95,7 @@ const meanLuminance = (png: PNG) => { let s = 0, n = 0; for (let i = 0; i < png.
 test('T-E27-07 @E27 @E27-AC07 flash reduction keeps the full-screen luminance delta per frame ≤ 20 % for every blast class', async ({ page }) => {
   test.setTimeout(180_000);
   const result: Record<string, number> = {};
-  for (const [cls, id] of [['small', 'explosion.pipe-bomb'], ['medium', 'explosion.propane'], ['large', 'explosion.car'], ['mega', 'explosion.gas-tanks']] as const) {
+  for (const [cls, id] of [['small', 'explosion.pipe-bomb'], ['medium', 'explosion.propane'], ['large', 'explosion.car'], ['mega', 'explosion.gas-tanks'], ['incendiary', 'explosion.molotov'], ['toxic', 'explosion.toxic']] as const) {
     await lab(page, { flashReduction: true });
     let previous = meanLuminance(await shot(page)), worst = 0;
     await page.evaluate(id => window.__SS__!.explosions.blast(id, { x: 0, z: 0 }), id);
@@ -144,7 +144,7 @@ test('T-E27-08v @E27 @E27-AC08 smoke grenade cloud reads at the game camera and 
   expect(after.clouds).toBe(0); expect(after.puffs).toBe(0);
 });
 
-test('T-E27-14 @E27 @E27-AC14 mega + chain stays within particle/puff/debris caps and pools return to baseline 30 s after the last flame', async ({ page }) => {
+test('T-E27-14 @E27 @E27-AC14 mega + chain stays bounded at 30 s and pools recover within 30 s of the last source', async ({ page }) => {
   test.setTimeout(150_000);
   await lab(page, {}, 'blast-wide');
   const result = await page.evaluate(async () => {
@@ -155,15 +155,29 @@ test('T-E27-14 @E27 @E27-AC14 mega + chain stays within particle/puff/debris cap
       peak = { particles: Math.max(peak.particles, v.particles), puffs: Math.max(peak.puffs, v.blasts.puffs), fireballs: Math.max(peak.fireballs, v.blasts.fireballs), debris: Math.max(peak.debris, s.interactions?.debris.length ?? 0), parts: Math.max(peak.parts, a.explosions.state()!.parts.length) }; }
     await a.screenshotReady();
     const caps = a.getState().render.vfx!;
-    for (let i = 0; i < 120; i++) { await a.step(60); a.vfx.stepRender(1); }
+    let lastBlast = 0;
+    do {
+      await a.step(60); a.vfx.stepRender(1);
+      lastBlast = Math.max(...a.events(0).filter(e => e.type === 'explosion').map(e => e.tick));
+    } while (a.tick() - lastBlast < 1800);
+    const at30 = a.getState().render.vfx!;
+    // Mega fire and its smoke column deliberately last 45 s. Keep them visible, then measure
+    // recovery from its actual final expiry instead of waiting an arbitrary 120 s.
+    const lastSource = Math.max(lastBlast, ...a.query({ archetype: 'hazard.fire' }).map(e => e.hazard!.activeUntil));
+    while (a.tick() < lastSource + 1800) { const n = Math.min(60, lastSource + 1800 - a.tick()); await a.step(n); a.vfx.stepRender(n / 60); }
     await a.screenshotReady();
     const end = a.getState().render.vfx!;
-    return { base, peak, caps: { particleCap: caps.particleCap, puffCap: caps.blasts.puffCap, fireballCap: caps.blasts.fireballCap }, explosions: a.events(0).filter(e => e.type === 'explosion').length, end, fires: a.query({ archetype: 'hazard.fire' }).filter(e => a.tick() < e.hazard!.activeUntil).length };
+    return { base, peak, at30, lastBlast, lastSource, recoveredAt: a.tick(), caps: { particleCap: caps.particleCap, puffCap: caps.blasts.puffCap, fireballCap: caps.blasts.fireballCap }, explosions: a.events(0).filter(e => e.type === 'explosion').length, end, fires: a.query({ archetype: 'hazard.fire' }).filter(e => a.tick() < e.hazard!.activeUntil).length };
   });
   writeFileSync(`${out}/ac14-budgets.json`, JSON.stringify(result, null, 2));
   expect(result.explosions).toBeGreaterThanOrEqual(5);
   expect(result.peak.particles).toBeLessThanOrEqual(result.caps.particleCap); expect(result.peak.puffs).toBeLessThanOrEqual(result.caps.puffCap);
   expect(result.peak.particles + result.peak.puffs).toBeLessThanOrEqual(6000); expect(result.peak.debris).toBeLessThanOrEqual(120); expect(result.peak.parts).toBeLessThanOrEqual(12);
+  expect(result.at30.blasts).toMatchObject({ fireballs: 0, parts: 0, flash: 0 });
+  expect(result.at30.blasts.transientColumns).toBeGreaterThan(0);
+  expect(result.at30.blasts.fireColumns).toBeGreaterThan(0);
+  expect(result.at30.particles + result.at30.blasts.puffs).toBeLessThanOrEqual(6000);
+  expect(result.recoveredAt - result.lastSource).toBeLessThanOrEqual(1800);
   expect(result.fires).toBe(0);
   for (const key of ['particles', 'gibs'] as const) expect(result.end[key], key).toBeLessThanOrEqual(result.base[key]);
   expect(result.end.blasts).toMatchObject({ puffs: 0, fireballs: 0, flames: 0, glows: 0, columns: 0, clouds: 0, parts: 0 });

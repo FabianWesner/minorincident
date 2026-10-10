@@ -21,6 +21,8 @@ export interface EntitySnapshot {
   interactable?: import('../interact/Interactables').Interactable;
   inventory?: string[];
   hazard?: import('../interact/Hazards').Hazard;
+  /** E25 anchor state: plain, fixed-tick, captured with the existing entity checkpoints. */
+  light?: import('../lighting/LightPower').LampState;
   destructible?: import('../interact/Hazards').Destructible;
   /** E07 consumes this temporary noise target in preference to the player. */
   /** A newborn is rendered in its collapse/rise pose and cannot act until this timer ends. */
@@ -61,7 +63,7 @@ export interface EntitySnapshot {
 /** Presentation events contain only plain authored geometry; views never write back. */
 export type TelegraphKind = 'lunge' | 'charge' | 'splash' | 'bloated';
 export type EffectKind = 'explosion' | 'fire' | 'smoke' | 'toxic' | 'electric' | 'screamer' | 'objective' | 'pickup' | 'ash' | 'vehicle-smoke' | 'vehicle-fire';
-export type GameEvent = import('../weather/WeatherSystem').WeatherEvent | import('../interact/Barricades').BarricadeEvent
+export type GameEvent = import('../lighting/LightPower').LightPowerEvent | import('../weather/WeatherSystem').WeatherEvent | import('../interact/Barricades').BarricadeEvent
   | import('../npc/types').NpcEvent
   | { tick: number; type: 'level.started'; id: string }
   | import('../../data/audioEvents').AudioSystemEvent
@@ -96,7 +98,7 @@ export type GameEvent = import('../weather/WeatherSystem').WeatherEvent | import
   | { tick: number; type: 'vehicle.feedback'; id: number; position: { x: number; z: number }; yaw: number; healthFraction: number; blood: number }
   | { tick: number; type: 'telegraph'; sourceId?: never; attackId: number; kind: TelegraphKind; position: { x: number; z: number }; radius: number; angle: number }
   | { tick: number; type: 'attack.resolved'; attackId: number }
-  | { tick: number; type: 'vfx.effect'; kind: EffectKind; position: { x: number; z: number }; radius: number }
+  | { tick: number; type: 'vfx.effect'; kind: EffectKind; position: { x: number; z: number; y?: number }; radius: number }
   | { tick: number; type: 'ai.alerted'; sourceId: number; targetId: number; cause: 'noise' | 'sight'; position: Transform }
   | { tick: number; type: 'combat.effect'; sourceId: number; actionId: string; kind: import('../../data/actions/schema').ActionEffect['kind']; position: { x: number; y: number; z: number }; radius: number; expires: number }
   | { tick: number; type: 'pickup.collected'; sourceId: number; pickupId: number; side: import('../../data/actions/schema').Side; actionId: string; replaced: string | null }

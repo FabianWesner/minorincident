@@ -1,5 +1,5 @@
 // Adapted from folio-2025 PreRenderer.js by Bruno Simon (MIT), commit 41046b5.
-import { InstancedMesh, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene } from 'three/webgpu';
+import { InstancedMesh, Light, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene } from 'three/webgpu';
 import type { Renderer } from './Renderer';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
@@ -16,7 +16,10 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
   const size = renderer.getSize(new Vector2());
   try {
     scene.traverse(object => {
-      if (object.userData.preventPreRender) return;
+      // Hidden geometry needs warming; hidden lights must retain the gameplay
+      // light list. Enabling the inactive hero spot warmed the wrong node cache
+      // for every daylight batch, leaving distant objects cold on first use.
+      if (object.userData.preventPreRender || object instanceof Light) return;
       const matrices = object instanceof InstancedMesh ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : undefined;
       saved.push({ object, visible: object.visible, culled: object.frustumCulled, ...(object instanceof InstancedMesh ? { count: object.count, matrices } : {}) });
       object.visible = true;

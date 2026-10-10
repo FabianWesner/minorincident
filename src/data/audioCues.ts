@@ -177,6 +177,7 @@ export const l1AccidentCues = ['l1.flicker.buzz', 'l1.blast', 'l1.glass.rattle',
 export const l1ChaosCues = ['l1.chaos.panic', 'l1.chaos.infected', 'l1.chaos.run', 'l1.chaos.car-alarm', 'l1.chaos.fall', 'l1.chaos.distant'] as const;
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
+    'power.on': 'lamp.power-on', 'power.off': 'lamp.power-off', 'light.broken': 'lamp.break',
     'weather.gust': 'weather.gust', 'weather.lightning': 'weather.thunder', 'weather.thunder': 'weather.thunder',
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
     'civilian.bark': 'civilian.hey', 'story.say': 'ui.tick', 'story.thud': 'impact.thump', 'civilian.state': 'ui.tick', 'civilian.eyes': 'civilian.transform', 'civilian.saved': 'stinger.objective', 'civilian.finished': 'ui.tick', 'civilian.turned': 'civilian.transform',

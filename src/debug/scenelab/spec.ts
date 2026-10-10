@@ -53,7 +53,7 @@ export interface SceneSpec {
   armyBoom?: { x: number; z?: number; closed?: boolean };
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
-export interface PropSpec { id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
+export interface PropSpec { powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; role?: string }
 export interface ActorSpec {
@@ -110,6 +110,7 @@ export type EffectSpec =
   | { blast: string; at: Point }
   | { barricadeHit: string; amount: number }
   | { wreck: string }
+  | { hazard: import('../../sim/interact/Hazards').HazardKind; at: Point; radius?: number; duration?: number; trigger?: 'bullet' | 'melee' }
   | { fire: Point; radius?: number }
   | { smoke: Point; radius?: number };
 export type CameraSpec =
@@ -237,8 +238,8 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     roads: { nodes: [], edges: [] }, placements: kept, anchors: {}, zones: {}, buildings: [],
     colliders: solid.map(p => ({ id: p.id, aabb: structuredClone(p.visualAabb), minTier: p.minTier, maxTier: p.maxTier })),
     walkable: { cellSize: 1, excluded: [] }, lawns: spec.ground === 'district' && source ? source.lawns : spec.ground === undefined || spec.ground === 'grass' ? [{ min: [x0, z0], max: [x1, z1] }] : [],
-    decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }], acousticZones: [],
-    surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [],
+    decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }, ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 5 as Tier }))], acousticZones: [],
+    surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [{ tier: 0, remove: [], disableLights: spec.props?.filter(p => p.powerGroup && p.powered === false).map(p => p.powerGroup!) ?? [] }],
   };
   for (const name of spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
@@ -263,6 +264,6 @@ export function placementFor(prop: PropSpec, index: number, assets: Map<string, 
   const yaw = rad(prop.yaw), pos: [number, number, number] = prop.at.length === 3 ? [prop.at[0], prop.at[1], prop.at[2]] : [prop.at[0], 0, prop.at[1]];
   const dims = [def.dimensions.x * scale[0], def.dimensions.y * scale[1], def.dimensions.z * scale[2]];
   const sx = Math.abs(Math.cos(yaw)) * dims[0] + Math.abs(Math.sin(yaw)) * dims[2], sz = Math.abs(Math.sin(yaw)) * dims[0] + Math.abs(Math.cos(yaw)) * dims[2];
-  return { id: prop.id ?? `${prop.asset}:lab${index}`, assetId: prop.asset, position: pos, yaw, scale, minTier: 0, maxTier: 5, allowRoad: true, lightGroup: labLightGroup,
+  return { id: prop.id ?? `${prop.asset}:lab${index}`, assetId: prop.asset, position: pos, yaw, scale, minTier: 0, maxTier: 5, allowRoad: true, lightGroup: prop.powerGroup ?? labLightGroup,
     visualAabb: { min: [pos[0] - sx / 2, pos[1], pos[2] - sz / 2], max: [pos[0] + sx / 2, pos[1] + dims[1], pos[2] + sz / 2] }, ...(prop.tint ? { tint: prop.tint } : {}) };
 }

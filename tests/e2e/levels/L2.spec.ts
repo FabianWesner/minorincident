@@ -43,6 +43,9 @@ function helpers(page: Page) {
       }, { start, target });
       const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
       await page.mouse.click(point.x, point.y);
+      // InputSystem resolves queued screen coordinates on the next sim tick.
+      // Keep the projecting camera until the real click has been consumed.
+      await step(1);
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();

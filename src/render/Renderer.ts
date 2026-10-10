@@ -1,5 +1,5 @@
 // Adapted from folio-2025 Rendering.js / Viewport.js by Bruno Simon (MIT), commit 41046b5.
-import { NodeBuilder, WebGPURenderer, type Object3D, type Camera } from 'three/webgpu';
+import { NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGPURenderer, type Object3D, type Camera } from 'three/webgpu';
 
 import { worldAssets } from '../assets/worldDefinitions';
 import { installTextureRanges } from './TextureRanges';
@@ -53,6 +53,7 @@ export class Renderer extends WebGPURenderer {
   beginProfile(camera: Camera): void { if (this.profile) { this.profile = {}; this.profileAssets = {}; this.profileCamera = camera; } }
   constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {
     super({ antialias: true, forceWebGL: params.get('renderer') === 'webgl', ...(canvas ? { canvas } : {}) });
+    if (params.get('test') === '1' && params.has('tone')) this.toneMapping = params.get('tone') === 'agx' ? AgXToneMapping : ACESFilmicToneMapping;
     if (params.has('profile')) { this.profile = {}; this.profileAssets = {}; }
     // Game owns recovery and pauses before another draw can reach the lost backend.
     const report = this.onDeviceLost;

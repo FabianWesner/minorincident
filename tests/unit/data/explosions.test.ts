@@ -10,12 +10,15 @@ test('T-E27-01 @E27 @E27-AC01 every ExplosionDef and BlastFxPreset validates and
   const explosive = Object.values(catalog).filter(a => a.splash && a.damage > 0 && (a.category === 'throwable' || a.projectile)).map(a => a.id);
   expect(explosive.sort()).toEqual(Object.keys(actionExplosions).sort());
   expect(explosionDefs[vehicleExplosion].class).toBe('large');
+  expect(new Set(Object.values(explosionDefs).map(d => d.class))).toEqual(new Set(blastClasses));
+  expect(new Set(Object.values(explosionDefs).map(d => d.fx))).toEqual(new Set(Object.keys(blastFxPresets)));
   for (const id of scriptedExplosions) expect(explosionDefs[id].stages!.map(s => explosionDefs[s.def].class)).toEqual(['large', 'large', 'mega']);
   // The validator rejects broken data.
   const broken = (patch: object) => () => validateExplosions({ ...explosionDefs, 'explosion.propane': { ...explosionDefs['explosion.propane'], ...patch } });
   expect(broken({ fx: 'blast.none' })).toThrow('missing preset');
   expect(broken({ falloff: 2 })).toThrow('curve');
   expect(broken({ chainDelay: 40 })).toThrow('response');
+  expect(broken({ gas: { kind: 'toxic', seconds: 0 } })).toThrow('gas');
   expect(() => validateExplosions({ ...explosionDefs, 'explosion.gas-station': { ...explosionDefs['explosion.gas-station'], stages: [{ delay: 0, offset: { x: 0, z: 0 }, def: 'explosion.nope' }] } })).toThrow('stage');
   expect(() => validateExplosions({ ...explosionDefs, 'explosion.grenade': { ...explosionDefs['explosion.grenade'], radius: 9 } })).toThrow('diverges');
 });

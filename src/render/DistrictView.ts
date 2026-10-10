@@ -25,6 +25,7 @@ import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
 import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
+import { anchorsFor, placedLightId } from '../data/placedLights';
 import { worldAssets } from "../assets/worldDefinitions";
 import manifest from "../assets/manifest.json";
 import type { AssetDef } from "../assets/types";
@@ -182,6 +183,8 @@ export class DistrictView extends Group {
           const lit = d.decay.lights.includes(o.userData.lightGroup),
             key = `${o.userData.assetId}:${lit}:`;
           const reference = new Object3D();
+          const first = anchorsFor(o.userData.assetId)[0];
+          if (first) reference.userData.lightBase = this.materials.lamps.base(placedLightId(d.id, d.origin, o.userData.name ?? o.name, first.name), anchorsFor(o.userData.assetId));
           o.matrixWorld.decompose(
             reference.position,
             reference.quaternion,
@@ -209,6 +212,8 @@ export class DistrictView extends Group {
           for (const p of d.decay.placements) {
             const lit = d.decay.lights.includes(p.lightGroup), key = `${p.assetId}:${lit}:${p.decay ?? ''}`;
             const reference = new Object3D(); reference.position.fromArray(p.position); reference.rotation.y = p.yaw; reference.scale.fromArray(p.scale);
+            const first = anchorsFor(p.assetId)[0];
+            if (first) reference.userData.lightBase = this.materials.lamps.base(placedLightId(d.id, d.origin, p.id, first.name), anchorsFor(p.assetId));
             if (p.tint) reference.userData.tint = p.tint;
             if (!references.has(key)) references.set(key, []);
             references.get(key)!.push(reference);
