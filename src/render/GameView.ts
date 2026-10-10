@@ -95,6 +95,7 @@ export class GameView implements Lifecycle {
   private preparation: Promise<void> | null = null;
   /** Pending L1 shader warm-up while the briefing is shown (see load()). */
   warming: Promise<void> | null = null;
+  loadProgress?: (completed: number, total: number) => void;
   /** Speculative menu-time level load: keep the mission UI hidden until the player picks the level. */
   missionHidden = false;
   /** Menu-time (speculative) load: pace heavy steps one per frame and yield to player input. */
@@ -325,7 +326,7 @@ export class GameView implements Lifecycle {
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : undefined); }
+      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress); }
       finally { restore?.(); unwarm?.(); restoreGates?.(); }
     };
     const finish = (): void => {
@@ -335,14 +336,12 @@ export class GameView implements Lifecycle {
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
     const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
-    if (groveTown && this.params.get('test') !== '1') {
-      // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
-      // loading screen. Until it finishes the view does not draw and the game clock does not advance
-      // (Game checks `warming`), so 'Begin mission' is never blocked and play starts warmed.
-      // The warm-up draws into a 32x32 buffer: keep the canvas hidden behind the briefing meanwhile.
-      const generation = this.generation, canvas = this.renderer.domElement, done = () => { canvas.style.visibility = ''; this.unfreeze(); };
-      canvas.style.visibility = 'hidden';
-      this.warming = warm().then(() => { done(); if (generation === this.generation) { this.warming = null; finish(); } }, error => { done(); if (generation === this.generation) { this.warming = null; console.error(error); } });
+    if (groveTown && this.background) {
+      const generation = this.generation;
+      this.warming = warm().then(() => {
+        if (generation === this.generation) { this.warming = null; finish(); }
+      });
+      void this.warming.catch(error => console.error(error));
       return;
     }
     if (groveTown) await warm();
