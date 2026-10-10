@@ -4,14 +4,14 @@ import { Rng } from '../../../src/core/Rng';
 import type { GameEvent } from '../../../src/sim/world/types';
 import { arena, equip, fire, step } from './helpers';
 
-/** E20 §5.3 fire axe: frontal swing against one or two, automatic 360 degree roundhouse when surrounded (>= 3 within 2.5 m). */
+/** E20 §5.3 fire axe: frontal swing against one or two, automatic 360 degree roundhouse when surrounded (>= 3 within 2.5 m). PO 10-10: axe x1.25. */
 const runner = (w: Awaited<ReturnType<typeof arena>>, x: number, z: number) => w.spawnDummy('infected.runner', { x, z }, { hp: 40, radius: .35 });
 const events = (w: Awaited<ReturnType<typeof arena>>, type: GameEvent['type']) => w.events.events().filter(e => e.type === type);
 
 test('T-E20-10 @E20 @E20-AC10 axe single vs roundhouse table (single seed); the bat still needs two hits', async () => {
   for (let seed = 1; seed <= 1; seed++) {
     const rng = new Rng(seed, 'axe-table');
-    // One in front plus one behind (outside the 100 degree arc): a single swing, 45 damage, one-hit kill in front only.
+    // One in front plus one behind (outside the 100 degree arc): a single swing, 56 damage, one-hit kill in front only.
     {
       const w = await arena(); equip(w, ['weapon.fire-axe']);
       const front = runner(w, 1.3 + rng.next() * .5, (rng.next() - .5) * .6), back = runner(w, -1.6 - rng.next() * .4, (rng.next() - .5) * .6);
@@ -25,7 +25,7 @@ test('T-E20-10 @E20 @E20-AC10 axe single vs roundhouse table (single seed); the 
       // The full single-swing damage on a sturdier target.
       const sturdy = w.spawnDummy('infected.runner', { x: 1.4, z: 0 }, { hp: 100, radius: .35 });
       fire(w); step(w, 50);
-      expect(w.entities.get(sturdy)!.health.current).toBe(100 - 45);
+      expect(w.entities.get(sturdy)!.health.current).toBe(100 - 56);
       expect(w.entities.get(back)!.health.current).toBe(40);
     }
     // Three to five within 2.5 m all around: the same input is a roundhouse hitting every one of them and pushing each >= 2 m.

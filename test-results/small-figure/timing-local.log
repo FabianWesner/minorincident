@@ -1,0 +1,19 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure
+
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"high","simMsP95":2.1352090000000317,"budget":4}
+{"level":"L2","tier":"high","simMsP95":1.7707080000000133,"budget":4}
+{"level":"L3","tier":"high","simMsP95":2.226875000000291,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.5918339999989257,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.4857499999998254,"budget":4}
+
+ ✓ |timing| tests/sim/npc/campaign.test.ts (5 tests | 4 skipped) 49576ms
+   ✓ T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 49575ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 4 skipped (5)
+   Start at  23:32:34
+   Duration  50.59s (tests 98%, transform 2%)
+
+JSON report written to /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure/test-results/small-figure/timing-local.json
