@@ -10,7 +10,7 @@ import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
 import { NpcAnimator } from '../characters/NpcAnimator';
-import { fitCivilianHeight } from './figureHeight';
+import { civilianHeight, fitCivilianHeight } from './figureHeight';
 interface Hero { humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
@@ -82,7 +82,7 @@ export class NpcView extends Group {
       if (hero.animator) hero.animator.update(time, motion.speed, distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, motion.speed, distance, down);
       if (hero.badge && e.escort) {
-        this.point.set(e.transform.x, e.escort.child ? 1.25 : 1.8, e.transform.z).project(camera);
+        this.point.set(e.transform.x, hero.root.position.y + civilianHeight(e.escort.child ? 'npc.brother' : 'npc.escort') + .15, e.transform.z).project(camera);
         hero.badge.style.left = `${(this.point.x + 1) / 2 * innerWidth}px`; hero.badge.style.top = `${(1 - this.point.y) / 2 * innerHeight}px`; hero.badge.style.display = Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none';
         hero.badge.dataset.order = e.escort.order; hero.badge.dataset.state = e.escort.state; hero.badge.setAttribute('aria-label', `Escort ${e.escort.state}`); hero.badge.textContent = e.escort.state === 'downed' ? '+' : e.escort.state === 'cover' ? '◆' : e.escort.order === 'wait' ? 'Ⅱ' : '↑';
       }
