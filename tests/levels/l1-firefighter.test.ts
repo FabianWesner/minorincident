@@ -28,7 +28,7 @@ test('T-E19-firefighter @E19 the firefighter waits at the bay from the start of 
   w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: 1, targetId: first.id, position: first.transform, turns: false });
   expect(first.civilian?.state, 'cap bite must not leave the objective actor a corpse').not.toBe('finished');
   // An infected outside the bay, facing him: it targets him (closest visible human), and he fights back.
-  const nav = w.infected!.nav, out = { x: first.transform.x + (door.x - mission.def.anchors['fire-bay-trigger'].x) * 4, z: first.transform.z + (door.z - mission.def.anchors['fire-bay-trigger'].z) * 4 };
+  const nav = w.infected!.nav, out = { x: first.transform.x + .3, z: first.transform.z + 2 };
   const cell = nav.nearestCell(out.x, out.z), at = { x: nav.x(cell), z: nav.z(cell) };
   const zid = w.infected!.spawn('infected.runner', at, { state: 'idle', yaw: -Math.atan2(first.transform.z - at.z, first.transform.x - at.x) });
   let targeted = false, attacked = false;
@@ -42,6 +42,7 @@ test('T-E19-firefighter @E19 the firefighter waits at the bay from the start of 
   for (let i = 0; i < 60 * 60; i++) w.update();
   const next = w.entities.get(mission.state.l1!.firefighterId ?? 0)!;
   expect(next.id).toBe(first.id);
+  expect(Math.hypot(next.transform.x - door.x, next.transform.z - door.z), 'invitation stays by the bay').toBeLessThan(3);
   expect(next.infected).toBeFalsy(); expect(next.infection).toBeFalsy();
   expect(next.health.current).toBeGreaterThan(0); expect(next.hidden).not.toBe(true);
   expect(['down', 'rising', 'finished', 'grabbed']).not.toContain(next.civilian?.state);
@@ -65,4 +66,18 @@ test('T-E19-firefighter @E19 the firefighter waits at the bay from the start of 
   expect(storyProtected(w, restored)).toBe(true);
   w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: zid, targetId: restored.id, position: restored.transform, turns: false });
   expect(restored.civilian?.state).not.toBe('finished');
+}, 120_000);
+
+test('T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery)', async () => {
+  const { world: w, mission } = await loadL1(1); world = w;
+  for (let guard = 0; guard < 8 && mission.state.steps.firestation.status !== 'active'; guard++) { mission.setState('exited', true); w.update(); mission.completeObjective(); w.update(); }
+  for (let i = 0; i < 240; i++) w.update();
+  const first = w.entities.get(mission.state.l1!.firefighterId!)!;
+  expect(first.civilian).toBeDefined(); expect(first.health.current).toBeGreaterThan(0);
+  // Exact original corpse signature: HP is positive, no infection, civilian finished.
+  first.civilian!.state = 'finished';
+  for (let i = 0; i < 180; i++) w.update();
+  const next = w.entities.get(mission.state.l1!.firefighterId!)!;
+  expect(next.id).not.toBe(first.id); expect(next.health.current).toBeGreaterThan(0);
+  expect(next.civilian!.state).not.toBe('finished'); expect(storyProtected(w, next)).toBe(true);
 }, 120_000);

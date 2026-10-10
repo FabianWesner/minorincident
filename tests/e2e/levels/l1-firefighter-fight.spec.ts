@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../fixtures';
 import { menuStart } from '../ui-helpers';
 
@@ -6,7 +6,7 @@ import { menuStart } from '../ui-helpers';
  * L1 ending: the "Get in!" firefighter at the open bay of Fire Station 3 (Main Row) fights an infected that reaches him, in the
  * game camera (PO 2026-10-08: "I also liked that Zombies can attack him"). Includes night late-arrival survival, entry and a capture; sim rules are tests/levels/l1-firefighter.test.ts.
  */
-const output = 'test-results/epics/E19/l1v2';
+const output = 'test-results/getin-firefighter';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
 const at = (name: string) => ({ x: layout.anchors[name].position[0], z: layout.anchors[name].position[2] });
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
@@ -34,7 +34,7 @@ test('T-E19-firefighter-fight @E19 the firefighter swings at an infected at the 
   const alive = await page.evaluate(id => window.__SS__!.query({ kind: 'civilian' }).find(e => e.id === id), firefighter);
   expect(alive?.health.current).toBeGreaterThan(0);
   expect(['down', 'rising', 'finished', 'grabbed']).not.toContain(alive?.civilian?.state);
-  await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: door.x - 5, z: door.z + 3.2 });
+  await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: door.x - 2.5, z: door.z + 2.5 });
   await step(5);
   // Fresh arrivals keep visible infected by the invitation while the courier arrives.
   await page.evaluate(out => {
@@ -47,6 +47,15 @@ test('T-E19-firefighter-fight @E19 the firefighter swings at an infected at the 
   }
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/firefighter-fight.png` });
+  const evidence = await page.evaluate(id => {
+    const a = window.__SS__!, firefighter = a.getEntity(id)!, state = a.getState();
+    return { firefighter, player: state.player, lighting: state.render.lighting,
+      infectedNearby: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - firefighter.transform.x, e.transform.z - firefighter.transform.z) < 10),
+      invitation: a.missions.state()!.l1!.say };
+  }, firefighter);
+  writeFileSync(`${output}/night-pressure.json`, JSON.stringify(evidence, null, 2));
+  expect(evidence.lighting?.preset).toBe('night');
+  expect(evidence.infectedNearby.length).toBeGreaterThan(0);
   const invitation = await mission();
   expect(invitation.l1!.say?.text).toBe('Get in!');
   expect(invitation.steps.firestation.status).toBe('active');

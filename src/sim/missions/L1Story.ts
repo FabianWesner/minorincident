@@ -160,7 +160,7 @@ export class L1Story {
    * A doorway invitation, never a beat: controls and infected AI remain live until actual entry. PO 2026-10-08 ("there was a
    * firefighter standing here; bring him back. I also liked that Zombies can attack him."): the firefighter stands at the open bay
    * from the moment the objective starts (visible on the approach, not only within the 14 m bark range), as a real allied
-   * pedestrian: infected still target him, he swings at those within reach and walks back to his spot. The NPC protection
+   * pedestrian: infected still target him, and he holds the bay post while swinging at those within reach. The NPC protection
    * layer prevents bites, death and lasting knockdowns until entry completes. A missing actor is recreated defensively.
    */
   private firestation(): void {
@@ -178,12 +178,12 @@ export class L1Story {
       const id = this.pedestrian(ff ? trigger : waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
       if (id) {
         const e = world.entities.get(id)!;
-        e.civilian!.ally = { ...allyState('firefighter', waving), engaged: true };
+        e.civilian!.ally = { ...allyState('firefighter', waving, true), engaged: true };
         e.health = { current: l2.allies.firefighter.hp, max: l2.allies.firefighter.hp };
         this.l1.firefighterId = id; ff = e;
       } else this.l1.firefighterNext = world.tick + TICKS;
     }
-    if (!ff || ff.health.current <= 0 || ff.infected || ff.infection || !ff.civilian) { this.l1.firefighterNext ??= world.tick + 2 * TICKS; return; }
+    if (!ff || ff.health.current <= 0 || ff.infected || ff.infection || !ff.civilian || ff.civilian.state === 'finished') { this.l1.firefighterNext ??= world.tick + 2 * TICKS; return; }
     this.l1.firefighterNext = world.tick + 2 * TICKS;
     // "Get in!" every 4 s while the courier is within 14 m of the bay, also while he fights.
     const last = this.l1.say;

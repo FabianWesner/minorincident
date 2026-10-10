@@ -40,7 +40,7 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'] as const) {
     // End the audited beats; ordinary allies/followers must still be vulnerable.
     if (s.l1) { s.l1.clerkId = 0; s.l1.delivered = true; }
     if (s.l2) s.l2.doorsOpenAt = 1;
-    if (s.l3) s.l3.fallbackAt = 1;
+    if (s.l3) { s.l3.handgunAt = 1; expect(storyProtected(w, w.entities.get(ids[0])!)).toBe(true); s.l3.handgunAt = 0; s.l3.fallbackAt = 1; }
     if (s.l4) s.l4.gunAt = 1;
     if (s.l5) { s.l5.shutterAt = 1; for (const r of s.l5.survivors) r.status = 'following'; }
     if (s.l6) { s.l6.gateAt = 1; s.l6.breach1At = w.tick; }
