@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6 -> 157.90.173.117:/srv/mi/ws/e24-l6-51ce63
+[remote] sync 29s, 4947 files; job /srv/mi/jobs/e24-l6-51ce63-97375-1791618610; queueing for a slot
+[runner] slot 0 acquired; load 0.24 0.32 0.64
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/e24-l6-51ce63-97375-1791618610[39m
+
+[90mstdout[2m | tests/sim/ai/director.test.ts[2m > [22m[2mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[22m[39m{"scenario":"horde-arena","infected":200,"simMsP95":3.5413319999934174,"budget":4}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 64378[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out[33m 1261[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects[33m 60878[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget[33m 1822[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m9 passed[39m[22m[90m (9)[39m
+[2m   Start at [22m 07:50:40
+[2m   Duration [22m 67.09s[2m (tests 96%, transform 3%, import 1%)[22m
+
+JSON report written to /srv/mi/jobs/e24-l6-51ce63-97375-1791618610/test-results/epics/E24/director-retry.json
+[remote] pulled test-results/epics/E24/director-retry.json
+[remote] done exit=0 (runner 157.90.173.117, sync 29s, remote total 71s)

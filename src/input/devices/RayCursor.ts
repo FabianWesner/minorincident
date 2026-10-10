@@ -8,6 +8,8 @@ export class RayCursor {
   private readonly ground = new Plane(new Vector3(0, 1, 0), 0);
   readonly point = new Vector3();
   constructor(private readonly camera: Camera, private readonly element: HTMLElement) {}
+  /** Aim and ground clicks use the authored floor beneath the player, including raised station platforms. */
+  setGroundHeight(height: number): void { this.ground.constant = -height; }
   project(x: number, y: number): Vector3 | null {
     const rect = this.element.getBoundingClientRect();
     if (!rect.width || !rect.height) return null;

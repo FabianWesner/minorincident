@@ -81,7 +81,7 @@ export class Barricades {
       const yaw = 2 * Math.atan2(p.pose.q[1], p.pose.q[3]);
       const half = (Math.abs(nx * Math.cos(yaw) - nz * Math.sin(yaw)) * p.half[0] + Math.abs(nx * Math.sin(yaw) + nz * Math.cos(yaw)) * p.half[2]) * (p.metadata.barricadeValue ?? 1);
       const center = x * nx + z * nz, a = Math.max(0, center - half), b = Math.min(width, center + half);
-      if (a < b && p.half[1] * 2 >= s.height * .8) { intervals.push([a, b]); items.push(p); }
+      if (a < b && p.half[1] * 2 >= s.height * (e.archetype==='l6.service-gate'?.25:.8)) { intervals.push([a, b]); items.push(p); }
     }
     intervals.sort((a, b) => a[0] - b[0]);
     let covered = 0, end = 0;
@@ -112,6 +112,19 @@ export class Barricades {
       c.enabled = b.intact ? e.health.current < e.health.max && !b.slot.initialHp : b.slot.boardUp === true || b.coverage >= .8;
       if (!c.enabled) c.progress = 0;
     }
+  }
+  /** E24 service leaf uses the same HP, blocker, attack and checkpoint lifecycle as a brace. */
+  closeServiceGate(id: number, hp: number): void {
+    const e=this.world.entities.get(id); if (!e?.barricade || e.barricade.intact) return;
+    e.barricade.slot.initialHp=hp; this.build(e,hp);
+  }
+  /** Props pushed against a closed metro leaf add their normal E26 HP once. */
+  braceServiceGate(id: number): void {
+    const e=this.world.entities.get(id), b=e?.barricade;
+    if(!e || !b?.intact || e.archetype!=='l6.service-gate')return;
+    const items=this.candidates(e).items;
+    for(const p of items){b.props.push(p.id);const hp=p.metadata.barricadeHP??80;e.health.max+=hp;e.health.current+=hp;this.world.props!.brace(p,true);}
+    if(items.length)this.sound(e,'brace');
   }
   private build(e: EntitySnapshot, initialHp?: number): void {
     const b = e.barricade!, result = this.candidates(e), car = this.car(e);

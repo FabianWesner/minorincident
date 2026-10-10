@@ -24,7 +24,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2' | 'L3' | 'L4' | 'L5'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2' | 'L3' | 'L4' | 'L5' | 'L6'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -83,6 +83,7 @@ export type Action =
   | { moveTo: Point; pace?: 'walk' | 'run' }
   | { turn: number }
   | { sit: string; seconds?: number }
+  | { routine: 'sit'|'treat'|'rest'|'talk'|'share' }
   | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT' }
   | { select: 'LEFT' | 'RIGHT'; index?: number }
   /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
@@ -110,7 +111,7 @@ export type EffectSpec =
   | { blast: string; at: Point }
   | { barricadeHit: string; amount: number }
   | { wreck: string }
-  | { fire: Point; radius?: number }
+  | { fire: Point; radius?: number; duration?: number }
   | { smoke: Point; radius?: number };
 export type CameraSpec =
   | { mode: 'game'; target?: Point | string; zoom?: number }
@@ -240,6 +241,9 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [],
   };
+  // Metro assemblies contain traversable rooms: their authored supports and walls
+  // must survive a crop rather than becoming one solid manifest footprint.
+  if(source?.district==='D-SUBWAY')layout.colliders=source.colliders.filter(c=>c.aabb.max[0]>=x0-shift[0]&&c.aabb.min[0]<=x1-shift[0]&&c.aabb.max[2]>=z0-shift[1]&&c.aabb.min[2]<=z1-shift[1]).map(c=>{const out=structuredClone(c);for(const k of ['min','max'] as const){out.aabb[k][0]+=shift[0];out.aabb[k][2]+=shift[1];}return out;});
   for (const name of spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);

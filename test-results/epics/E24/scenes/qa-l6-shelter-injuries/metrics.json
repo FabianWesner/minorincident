@@ -1,0 +1,715 @@
+{
+  "spec": "tools/l6/scenes/qa-l6-shelter-injuries.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 180,
+  "timing": {
+    "openMs": 1910,
+    "loadMs": 6089,
+    "runMs": 4350,
+    "sceneMs": 10439
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-l6-shelter-injuries",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "l6-0",
+        "asset": "int.metro-station",
+        "at": [
+          0,
+          0
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-25",
+        "asset": "kit.shelter-camp",
+        "at": [
+          -8,
+          -2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-26",
+        "asset": "kit.shelter-camp",
+        "at": [
+          0,
+          -2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-28",
+        "asset": "kit.shelter-camp",
+        "at": [
+          -12,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-29",
+        "asset": "kit.shelter-camp",
+        "at": [
+          0,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-38",
+        "asset": "util.radio",
+        "at": [
+          -4,
+          2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-58",
+        "asset": "prop.emergency-light",
+        "at": [
+          -12,
+          8.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-59",
+        "asset": "prop.emergency-light",
+        "at": [
+          0,
+          8.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-60",
+        "asset": "prop.emergency-light",
+        "at": [
+          12,
+          8.8
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "medic",
+        "kind": "pedestrian",
+        "entity": 3
+      },
+      {
+        "id": "patient",
+        "kind": "pedestrian",
+        "entity": 4
+      },
+      {
+        "id": "rest",
+        "kind": "pedestrian",
+        "entity": 5
+      },
+      {
+        "id": "sit",
+        "kind": "pedestrian",
+        "entity": 6
+      },
+      {
+        "id": "water",
+        "kind": "pedestrian",
+        "entity": 7
+      },
+      {
+        "id": "talk",
+        "kind": "pedestrian",
+        "entity": 8
+      },
+      {
+        "id": "guard",
+        "kind": "pedestrian",
+        "entity": 9
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-l6-shelter-injuries",
+    "frame": 180,
+    "tick": 180,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 35,
+        "p95": 35,
+        "max": 35
+      },
+      "triangles": {
+        "p50": 101158,
+        "p95": 101158,
+        "max": 101158
+      },
+      "shadowDrawCalls": {
+        "p50": 31,
+        "p95": 31,
+        "max": 31
+      },
+      "shadowTriangles": {
+        "p50": 73902,
+        "p95": 73902,
+        "max": 73902
+      },
+      "stepMs": {
+        "p50": 2.3,
+        "p95": 3.4,
+        "max": 9.7
+      },
+      "lastFrame": {
+        "drawCalls": 35,
+        "triangles": 101158,
+        "shadowDrawCalls": 31,
+        "shadowTriangles": 73902,
+        "stepMs": 2.40000057220459,
+        "categories": {
+          "other": 21,
+          "shadows": 31,
+          "buildings": 4,
+          "props": 3,
+          "crowd": 7
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          3,
+          8
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3,
+            8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "medic": {
+        "kind": "pedestrian",
+        "entity": 3,
+        "position": [
+          -7,
+          -2
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7,
+            -2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 24.9,
+          "torsoPitchMaxDeg": 32.1,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "patient": {
+        "kind": "pedestrian",
+        "entity": 4,
+        "position": [
+          -5.8,
+          -2
+        ],
+        "yawDeg": 180,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -5.8,
+            -2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "rest": {
+        "kind": "pedestrian",
+        "entity": 5,
+        "position": [
+          -2,
+          -2
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2,
+            -2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0.5,
+          "torsoPitchMaxDeg": 119.1,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "sit": {
+        "kind": "pedestrian",
+        "entity": 6,
+        "position": [
+          1,
+          -2
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            1,
+            -2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "water": {
+        "kind": "pedestrian",
+        "entity": 7,
+        "position": [
+          -3.343,
+          2
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -3.338,
+            2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 4.3,
+          "contacts": 3,
+          "slideMaxCm": 30.6,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 3.9,
+          "liftMaxCm": 62.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      "talk": {
+        "kind": "pedestrian",
+        "entity": 8,
+        "position": [
+          -2.629,
+          2
+        ],
+        "yawDeg": 180,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2.631,
+            2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 4,
+          "slideMaxCm": 15,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 3.9,
+          "liftMaxCm": 62.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "guard": {
+        "kind": "pedestrian",
+        "entity": 9,
+        "position": [
+          6,
+          7
+        ],
+        "yawDeg": 180,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            6,
+            7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 2,
+          "slideMaxCm": 1.6,
+          "slideP95Cm": 1.6,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 180,
+      "sim": {
+        "pedestrian": 7,
+        "courier": 1,
+        "actors": 8
+      },
+      "drawn": {
+        "vehicle": 0,
+        "pedestrian": 7,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "l6-0": "lod0",
+      "l6-25": "lod1",
+      "l6-26": "lod1",
+      "l6-28": "lod1",
+      "l6-29": "lod1",
+      "l6-38": "lod2",
+      "l6-58": "lod2",
+      "l6-59": "lod2",
+      "l6-60": "lod2"
+    },
+    "clipping": {
+      "staticPairs": 4,
+      "actorHits": 2,
+      "piercing": 2
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l6-0",
+        "b": "l6-25",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 138,
+        "region": {
+          "min": [
+            -10.800000190734863,
+            0.5999839901924133,
+            -4.5000762939453125
+          ],
+          "max": [
+            -8.999908447265625,
+            1.134997844696045,
+            -1.4998016357421875
+          ]
+        },
+        "regionCm": [
+          180,
+          54,
+          300
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-28",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 56,
+        "region": {
+          "min": [
+            -12.410351753234863,
+            0.5999839901924133,
+            16.589738845825195
+          ],
+          "max": [
+            -11.590014457702637,
+            0.7199583053588867,
+            17.410078048706055
+          ]
+        },
+        "regionCm": [
+          82,
+          12,
+          82
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-29",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 56,
+        "region": {
+          "min": [
+            -0.41016876697540283,
+            0.5999839901924133,
+            16.589738845825195
+          ],
+          "max": [
+            0.41016876697540283,
+            0.7199583053588867,
+            17.410078048706055
+          ]
+        },
+        "regionCm": [
+          82,
+          12,
+          82
+        ]
+      },
+      {
+        "a": "l6-0",
+        "b": "l6-26",
+        "assetA": "int.metro-station",
+        "assetB": "kit.shelter-camp",
+        "intersectingTriangles": 24,
+        "region": {
+          "min": [
+            2.5104525089263916,
+            0.5999839901924133,
+            -4.800000190734863
+          ],
+          "max": [
+            2.689901351928711,
+            0.7199583053588867,
+            -4.699667453765869
+          ]
+        },
+        "regionCm": [
+          18,
+          12,
+          10
+        ]
+      }
+    ],
+    "actors": [
+      {
+        "bone": "shinL",
+        "prop": "l6-26",
+        "asset": "kit.shelter-camp",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          1.23,
+          0.94,
+          -2.166
+        ],
+        "actor": "sit",
+        "frame": 3,
+        "count": 60
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-25",
+        "asset": "kit.shelter-camp",
+        "crossing": true,
+        "clearanceCm": 2.2,
+        "at": [
+          -6.912,
+          0.94,
+          -2.186
+        ],
+        "actor": "medic",
+        "frame": 3,
+        "count": 60
+      }
+    ],
+    "summary": {
+      "staticPairs": 4,
+      "actorHits": 2,
+      "piercing": 2
+    }
+  }
+}

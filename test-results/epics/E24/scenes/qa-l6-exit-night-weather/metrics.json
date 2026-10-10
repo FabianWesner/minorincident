@@ -1,0 +1,510 @@
+{
+  "spec": "tools/l6/scenes/qa-l6-exit-night-weather.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 180,
+  "timing": {
+    "openMs": 1910,
+    "loadMs": 6913,
+    "runMs": 1420,
+    "sceneMs": 8333
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-l6-exit-night-weather",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "l6-24",
+        "asset": "int.metro-exit",
+        "at": [
+          252,
+          15
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-31",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          269,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-32",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          282,
+          26
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-33",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          283,
+          6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-34",
+        "asset": "prop.crates",
+        "at": [
+          279,
+          24
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-35",
+        "asset": "veh.wreck",
+        "at": [
+          279,
+          22
+        ],
+        "yawDeg": 22.9
+      },
+      {
+        "id": "l6-36",
+        "asset": "bld.backdrop-houses",
+        "at": [
+          284,
+          27
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l6-37",
+        "asset": "decay.fuel-truck-crater",
+        "at": [
+          283,
+          8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-57",
+        "asset": "prop.emergency-light",
+        "at": [
+          246,
+          12
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "medic",
+        "kind": "pedestrian",
+        "entity": 4
+      },
+      {
+        "id": "patient",
+        "kind": "pedestrian",
+        "entity": 5
+      },
+      {
+        "id": "rest",
+        "kind": "pedestrian",
+        "entity": 6
+      },
+      {
+        "id": "sit",
+        "kind": "pedestrian",
+        "entity": 7
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-l6-exit-night-weather",
+    "frame": 180,
+    "tick": 180,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 43,
+        "p95": 43,
+        "max": 43
+      },
+      "triangles": {
+        "p50": 160636,
+        "p95": 160636,
+        "max": 160636
+      },
+      "shadowDrawCalls": {
+        "p50": 36,
+        "p95": 36,
+        "max": 36
+      },
+      "shadowTriangles": {
+        "p50": 66248,
+        "p95": 66248,
+        "max": 66248
+      },
+      "stepMs": {
+        "p50": 2.5,
+        "p95": 3.4,
+        "max": 99.8
+      },
+      "lastFrame": {
+        "drawCalls": 43,
+        "triangles": 160636,
+        "shadowDrawCalls": 36,
+        "shadowTriangles": 66248,
+        "stepMs": 2.09999942779541,
+        "categories": {
+          "other": 27,
+          "shadows": 36,
+          "buildings": 5,
+          "props": 7,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          268,
+          15
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            268,
+            15
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "medic": {
+        "kind": "pedestrian",
+        "entity": 4,
+        "position": [
+          264,
+          17
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            264,
+            17
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 24.9,
+          "torsoPitchMaxDeg": 32.1,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "patient": {
+        "kind": "pedestrian",
+        "entity": 5,
+        "position": [
+          265.4,
+          17
+        ],
+        "yawDeg": 180,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            265.4,
+            17
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "rest": {
+        "kind": "pedestrian",
+        "entity": 6,
+        "position": [
+          266.8,
+          17
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            266.8,
+            17
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0.5,
+          "torsoPitchMaxDeg": 119.1,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "sit": {
+        "kind": "pedestrian",
+        "entity": 7,
+        "position": [
+          268.2,
+          17
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            268.2,
+            17
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 180,
+      "sim": {
+        "pedestrian": 4,
+        "courier": 1,
+        "actors": 5
+      },
+      "drawn": {
+        "vehicle": 0,
+        "pedestrian": 4,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "l6-24": "lod1",
+      "l6-31": "lod2",
+      "l6-32": "lod2",
+      "l6-33": "lod2",
+      "l6-34": "lod2",
+      "l6-35": "lod1",
+      "l6-36": "lod1",
+      "l6-37": "lod1",
+      "l6-57": "lod2"
+    },
+    "clipping": {
+      "staticPairs": 2,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l6-32",
+        "b": "l6-36",
+        "assetA": "prop.jersey-barrier",
+        "assetB": "bld.backdrop-houses",
+        "intersectingTriangles": 414,
+        "region": {
+          "min": [
+            282.4962463378906,
+            3.900041341781616,
+            25.640003204345703
+          ],
+          "max": [
+            283.5,
+            4.849989891052246,
+            26.359996795654297
+          ]
+        },
+        "regionCm": [
+          100,
+          95,
+          72
+        ]
+      },
+      {
+        "a": "l6-33",
+        "b": "l6-37",
+        "assetA": "prop.jersey-barrier",
+        "assetB": "decay.fuel-truck-crater",
+        "intersectingTriangles": 29,
+        "region": {
+          "min": [
+            281.5,
+            3.900009870529175,
+            5.640003681182861
+          ],
+          "max": [
+            284.5,
+            4.2782301902771,
+            6.359996318817139
+          ]
+        },
+        "regionCm": [
+          300,
+          38,
+          72
+        ]
+      }
+    ],
+    "actors": [],
+    "summary": {
+      "staticPairs": 2,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

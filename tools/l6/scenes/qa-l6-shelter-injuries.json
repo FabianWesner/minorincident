@@ -1,0 +1,158 @@
+{
+  "name": "qa-l6-shelter-injuries",
+  "seed": 1,
+  "dof": false,
+  "ground": "district",
+  "tier": 0,
+  "frames": 180,
+  "shots": [
+    1,
+    90,
+    179
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "time": "L6-subway",
+  "layout": {
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        -18,
+        -12
+      ],
+      [
+        18,
+        20
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3,
+        8
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    },
+    {
+      "id": "medic",
+      "kind": "pedestrian",
+      "at": [
+        -7,
+        -2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.rosa.aftermath"
+      },
+      "state": {
+        "routine": "treat"
+      }
+    },
+    {
+      "id": "patient",
+      "kind": "pedestrian",
+      "at": [
+        -5.8,
+        -2
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "routine": "sit"
+      }
+    },
+    {
+      "id": "rest",
+      "kind": "pedestrian",
+      "at": [
+        -2,
+        -2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.shelter-survivor.lying"
+      },
+      "state": {
+        "routine": "rest"
+      }
+    },
+    {
+      "id": "sit",
+      "kind": "pedestrian",
+      "at": [
+        1,
+        -2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.shelter-survivor.sitting"
+      },
+      "state": {
+        "routine": "sit"
+      }
+    },
+    {
+      "id": "water",
+      "kind": "pedestrian",
+      "at": [
+        -3,
+        2
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "routine": "share"
+      }
+    },
+    {
+      "id": "talk",
+      "kind": "pedestrian",
+      "at": [
+        -2.8,
+        2
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": {
+        "routine": "talk"
+      }
+    },
+    {
+      "id": "guard",
+      "kind": "pedestrian",
+      "at": [
+        6,
+        7
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.marcus.aftermath"
+      },
+      "state": {
+        "routine": "talk"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      4
+    ],
+    "zoom": 1.6
+  }
+}

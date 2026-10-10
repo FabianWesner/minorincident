@@ -6,6 +6,7 @@ import { StaticCorpses } from '../characters/StaticCorpses';
 import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from '../characters/InfectedMoves';
 import { infectedDefinitions } from '../../data/infected';
+import { l6CastModels } from '../../data/l6';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
 import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
@@ -13,7 +14,7 @@ import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positio
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
-import { civilianRoles } from '../../data/npcs';
+import { civilianRoles, l1Pedestrians } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
@@ -204,6 +205,8 @@ class CivilianBatch extends Group {
     material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
     material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
     this.mesh.onAfterRender = () => this.probe.draw();
+    // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
+    if (this.world.scenario === 'L6') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false): void {
@@ -348,7 +351,13 @@ export class CivilianCrowd extends Group {
   private readonly presentation = new MotionPresentation(crowdTurnRate);
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
-  constructor(private readonly world: SimWorld, shading?: Materials) { super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading; this.batches=coreModels.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]); this.add(...this.batches); }
+  constructor(private readonly world: SimWorld, shading?: Materials) {
+    super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
+    // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
+    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:coreModels;
+    this.known.clear();for(const model of models)this.known.add(model);
+    this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);this.add(...this.batches);
+  }
   private readonly shading?: Materials;
   private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation); }
   /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
@@ -384,6 +393,8 @@ export class CivilianCrowd extends Group {
   private readonly known = new Set<string>(coreModels);
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
+    // Scripted attackers keep this civilian rig after turning; prepare every tier before the first breach.
+    if(this.world.scenario==='L6')for(const model of this.known)this.loadHero(model);
     for (const e of this.world.entities.iterate()) {
       const model = crowdModelOf(e);
       // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
