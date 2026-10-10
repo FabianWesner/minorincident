@@ -17,6 +17,9 @@ test('T-E25-12s @E25 @E25-AC12 real house windows retain power indices and norma
       const batch = staticBatch(root, true, materials), mesh = batch.getObjectByName('window-light') as Mesh;
       const body = batch.getObjectByName('static-body') as Mesh;
       for (const attribute of ['_light', '_window', '_windowUV', '_surface']) expect(body.geometry.hasAttribute(attribute), `${lod} matte body ${attribute}`).toBe(false);
+      const buffers = new Set(Object.values(mesh.geometry.attributes).map(input => 'data' in input ? input.data : input));
+      // InstancedGroup replaces _lightBase and adds matrix and identity tint.
+      expect(buffers.size + 2, `${lod} portable WebGPU vertex-buffer limit`).toBeLessThanOrEqual(8);
       const mask = mesh.geometry.getAttribute('_window'), power = mesh.geometry.getAttribute('_light'), uv = mesh.geometry.getAttribute('_windowUV');
       const windows = Array.from({ length: mask.count }, (_, i) => i).filter(i => mask.getX(i) === 1);
       expect(windows.length, lod).toBeGreaterThan(0);
