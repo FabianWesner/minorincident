@@ -28,11 +28,13 @@ export class LevelTransition {
     document.querySelector('#game')!.append(this.root);
   }
   begin(id: string): void {
+    const continuing = !this.root.hidden && this.level === id && this.retry.hidden;
     this.level = id; this.retry.hidden = true;
     const number = Number(id.slice(1));
     this.heading.textContent = /^L[1-6]$/.test(id) ? `Level ${number} · ${titles[number - 1]}` : 'Loading neighborhood';
     this.story.textContent = dialogue[`${id}.briefing`] ?? 'Getting the neighborhood ready.';
-    this.progress.value = 0; this.stage = .2; this.root.hidden = false;
+    if (!continuing) { this.progress.value = 0; this.stage = .2; }
+    this.root.hidden = false;
     document.body.classList.remove('ui-hidden');
     this.status.textContent = 'Loading neighborhood…';
   }
@@ -55,7 +57,8 @@ export class LevelTransition {
     this.progress.value = Math.max(this.progress.value, Math.min(1, value));
     this.status.textContent = message;
   }
-  shaders(completed: number, total: number): void {
+  shaders(completed: number, total: number, id = this.level): void {
+    if (id !== this.level) return;
     this.stage = .8; this.update(.8 + .15 * completed / Math.max(1, total), 'Preparing the scene…');
   }
   private stopWatching(): void {

@@ -98,7 +98,7 @@ export class Game {
     }, params));
     this.ui = new GameUI(this);
     this.transition = new LevelTransition(id => { void this.loadLevel(id).catch(() => {}); });
-    this.view.loadProgress = (done, total) => this.transition.shaders(done, total);
+    this.view.loadProgress = (done, total) => this.transition.shaders(done, total, this.world.scenario ?? '');
     this.audio.graph.setTier(this.quality.tier);
     this.quality.onChange(() => this.applyQuality());
     this.view.renderer.domElement.addEventListener('webglcontextlost', this.contextLost);
