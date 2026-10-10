@@ -90,7 +90,8 @@ test.describe('L1 v2 real-input playthrough', () => {
         }))];
         for (let j = 0; j < ground.length; j++) {
           const q = ground[(groundStart + j) % ground.length];
-          const point = await page.evaluate(q => window.__SS__!.input.project(q), q);
+          // RayCursor uses the courier's floor even when the destination bay is raised.
+          const point = await page.evaluate(q => window.__SS__!.input.project(q, 'player'), q);
           const view = page.viewportSize()!;
           expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
           expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
