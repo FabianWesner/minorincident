@@ -4,9 +4,9 @@ import { seeThroughHole } from '../SeeThrough';
 import { Rng } from '../../core/Rng';
 
 /** Opaque accident props that the shared soft particle pool cannot do: dark smoke puffs (alpha-faded billboards with a
- * firm body) and hard glass shards / dark debris with ballistic motion. Pooled plain meshes (about 170 draws at most, only
- * while active; hidden when idle) so no instancing path is involved. They live in the scene from level load, so the
- * pre-render pass compiles their pipelines before the blast. */
+ * firm body) and hard glass shards / dark debris with ballistic motion. Pooled plain meshes are camera culled while
+ * active and hidden when idle. They live in the scene from level load, so the pre-render pass compiles their pipelines
+ * before the blast. */
 const PUFFS = 150, PIECES = 64;
 interface Puff { x: number; y: number; z: number; vx: number; vy: number; vz: number; born: number; life: number; size: number; shade: number }
 interface Piece { x: number; y: number; z: number; vx: number; vy: number; vz: number; born: number; life: number; size: number; spin: number; rot: number; landed: boolean; glass: boolean }
@@ -42,11 +42,11 @@ export class SmokeColumn extends Group {
       // PO #28: the shared courier see-through hole also opens puffs between the camera and the courier.
       material.opacityNode = materialOpacity.mul(seeThroughHole());
       const m = new Mesh(plane, material);
-      m.visible = false; m.frustumCulled = false; m.renderOrder = 3; this.puffMeshes.push(m); this.add(m);
+      m.visible = false; m.renderOrder = 3; this.puffMeshes.push(m); this.add(m);
     }
     const glass = new MeshBasicNodeMaterial({ color: 0xd5f3fa }), dark = new MeshBasicNodeMaterial({ color: 0x25252a });
     for (let i = 0; i < PIECES; i++) {
-      const m = new Mesh(box, i % 3 === 0 ? dark : glass); m.visible = false; m.frustumCulled = false; this.pieceMeshes.push(m); this.add(m);
+      const m = new Mesh(box, i % 3 === 0 ? dark : glass); m.visible = false; this.pieceMeshes.push(m); this.add(m);
     }
   }
   get puffCount(): number { return this.puffs.length; }
