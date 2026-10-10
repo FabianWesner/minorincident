@@ -22,6 +22,7 @@ describe('L1 -> L2 world-state continuity', () => {
     // The scripted L1 destructions happened: the pressure blast and its smoke, the outbreak house broke open.
     expect(events).toEqual(['l1.blast', 'l1.smoke']);
     expect(m1.state.l1!.house?.door).toBe(l1Canon.outbreakHouse.door);
+    expect(m1.state.l1!.house?.house).toBe(l1Canon.outbreakHouse.house);
     const aftermath = captureL1Aftermath(w1);
     expect(validAftermath(aftermath)).toBe(true);
     expect(captureL1Aftermath(w1)).toEqual(aftermath);                         // deterministic record

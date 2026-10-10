@@ -12,7 +12,7 @@ test('T-CONT-01 @continuity L2 shows the L1 aftermath at every carried-over spot
   test.setTimeout(600_000); page.setDefaultTimeout(180_000); mkdirSync(output, { recursive: true });
   await boot(page, testUrl);
   for (const level of ['L1', 'L2'] as const) {
-  await page.evaluate(level => window.__SS__!.loadLevel(level, { seed: 1, progression: level === 'L2' ? 'L2-default' : 'L1-default' }), level);
+  await page.evaluate(level => window.__SS__!.loadLevel(level, { seed: 1, progression: level === 'L2' ? 'L2-default' : undefined }), level);
   await page.evaluate(() => window.__SS__!.pause());
   const begin = page.getByRole('button', { name: 'Begin mission' });
   if (await begin.isVisible().catch(() => false)) { await begin.click(); await page.evaluate(() => window.__SS__!.pause()); }
