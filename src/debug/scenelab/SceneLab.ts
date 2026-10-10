@@ -1,3 +1,4 @@
+import { propFootprint } from '../../sim/interact/PropSystem';
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
 import { ArmyCheckpointBoom } from '../../sim/missions/ArmyCheckpointBoom';
 import { l2 } from '../../data/l2';
@@ -123,7 +124,7 @@ export class SceneLab {
       // ... and its devastated twin hours later (E23, `level: "L5"`): W5 shells, wrecks, craters, glass, the power out.
       if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
-    this.propSinkMaxCm = 0; this.propGroundSamples = 0;
+    this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
@@ -592,7 +593,49 @@ export class SceneLab {
       if (brain.mode === 'chase' && brain.targetId === 1 && speed > 2) p.overshootMaxM = Math.max(p.overshootMaxM, ((e.transform.x - c.transform.x) * v!.x + (e.transform.z - c.transform.z) * v!.z) / speed);
     }
   }
+  private propPenetration = new Map<string, { actor: string; prop: string; run: number; max: number; frames: number }>();
+  private propPenetrationSamples = 0;
+  private propPenetrationTick = -1;
+  /** Capsule ground footprints against sim colliders, independent of rendering/LOD and nav blockers. */
+  /** Sample the current campaign or isolated scene; call once after each fixed sim tick. */
+  samplePropPenetration(reset = false) {
+    if (reset) { this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1; }
+    this.recordPropPenetration();
+    return { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] };
+  }
+  private recordPropPenetration(): void {
+    if (this.propPenetrationTick === this.world.tick) return;
+    this.propPenetrationTick = this.world.tick;
+    const solids = this.world.districts!.districts.flatMap(d => {
+      const assets = new Map(d.decay.placements.map(p => [p.id, p.assetId]));
+      return d.decay.colliders.filter(c => {
+        const asset = assets.get(c.id.split('/')[0]);
+        return !c.walkable && (!asset || /^(prop|veh|haz|kit)\./.test(asset));
+      }).map(c => ({
+      id: `${d.id}/${c.id}`, x: (c.aabb.min[0] + c.aabb.max[0]) / 2 + d.origin[0], z: (c.aabb.min[2] + c.aabb.max[2]) / 2 + d.origin[1],
+      halfX: (c.aabb.max[0] - c.aabb.min[0]) / 2, halfZ: (c.aabb.max[2] - c.aabb.min[2]) / 2,
+    })); }).concat((this.world.props?.items ?? []).filter(p => p.body.isEnabled() && !p.awake).map(p => ({ id: p.id, ...propFootprint(p) })));
+    const touching = new Set<string>();
+    for (const e of this.world.entities.iterate()) {
+      if (!e.infected && !e.civilian && !e.escort && !e.companion && e.id !== 1) continue;
+      const id = [...this.actors.values()].find(a => a.entity === e.id)?.id ?? String(e.id);
+      // Seated residents intentionally occupy their bench; hidden/dead figures have no walking capsule.
+      if (e.hidden || e.corpse || e.health.current <= 0 || e.infectionRise || ['finished', 'down', 'rising', 'infected'].includes(e.civilian?.state ?? '') || e.civilian?.story?.clip === 'npc-sit' || (e.civilian?.schedule?.[(e.civilian.scheduleStep ?? 0)]?.activity === 'sit' && !!e.civilian.activityUntil) || e.infected?.perched || e.infected?.special === 'flock') continue;
+      this.propPenetrationSamples++;
+      const r = (e.combat?.radius ?? .35) - .002;
+      for (const p of solids) {
+        const dx = Math.max(0, Math.abs(e.transform.x - p.x) - p.halfX), dz = Math.max(0, Math.abs(e.transform.z - p.z) - p.halfZ);
+        if (dx * dx + dz * dz >= r * r) continue;
+        const key = `${id}|${p.id}`; touching.add(key);
+        let m = this.propPenetration.get(key);
+        if (!m) { m = { actor: id, prop: p.id, run: 0, max: 0, frames: 0 }; this.propPenetration.set(key, m); }
+        m.run++; m.frames++; m.max = Math.max(m.max, m.run);
+      }
+    }
+    for (const [key, m] of this.propPenetration) if (!touching.has(key)) m.run = 0;
+  }
   private sample(): void {
+    this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
     const clip = this.frame % 3 === 0 && this.staticSets;
@@ -868,6 +911,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+      propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),

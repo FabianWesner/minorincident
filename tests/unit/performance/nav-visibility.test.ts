@@ -132,3 +132,24 @@ test('@E20 stamped A* matches the original routes and expansion budgets across r
     }
   }
 });
+
+test('live furniture broad phase follows replacement, in-place movement, removal and rebake', () => {
+  const nav = new NavGrid({ width: 80, depth: 80 }, []);
+  const wall = { x: -20, y: 1, z: 0, halfX: .5, halfY: 1, halfZ: 1 };
+  nav.setBlocker(91, wall, true);
+  expect(nav.clear(-20, 0, .35)).toBe(false);
+  expect(nav.visible({ x: -22, z: 0 }, { x: -18, z: 0 }, .35)).toBe(false);
+  wall.x = 20; nav.setBlocker(91, wall, true);
+  expect(nav.clear(-20, 0, .35)).toBe(true);
+  expect(nav.blocked[nav.cell(-20, 0)]).toBe(0);
+  expect(nav.clear(20, 0, .35)).toBe(false);
+  expect(nav.visible({ x: 18, z: 0 }, { x: 22, z: 0 }, .35)).toBe(false);
+  nav.rebake(); expect(nav.clear(20, 0, .35)).toBe(false);
+  const replacement = { ...wall, z: 10 }; nav.setBlocker(91, replacement, true);
+  expect(nav.clear(20, 0, .35)).toBe(true);
+  expect(nav.clear(20, 10, .35)).toBe(false);
+  expect(nav.clear(20, 10, .35, false, 91)).toBe(true);
+  nav.setBlocker(91, replacement, false);
+  expect(nav.clear(20, 10, .35)).toBe(true);
+  expect(nav.visible({ x: 18, z: 10 }, { x: 22, z: 10 }, .35)).toBe(true);
+});
