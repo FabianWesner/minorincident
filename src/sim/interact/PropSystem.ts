@@ -157,6 +157,8 @@ export class PropSystem {
     const ranked = this.items.filter(i => i.awake).map(i => ({ i, d: (i.pose.p[0] - player.x) ** 2 + (i.pose.p[2] - player.z) ** 2 }))
       .sort((a, b) => b.d - a.d || (a.i.id < b.i.id ? -1 : 1));
     for (let n = 0; n < awake - budget; n++) { const item = ranked[n].i; item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false; }
+    // Forced rest is a static obstacle now, before the next crowd movement tick.
+    this.updateNavigation();
   }
   /** Launch a kickable prop along the attack aim; speed is independent of mass. */
   kick(entityId: number, aim: { x: number; z: number }): boolean {

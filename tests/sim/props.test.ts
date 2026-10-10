@@ -74,7 +74,20 @@ describe('E26 authored pushable props', () => {
     expect(home).toBeGreaterThan(props.filter(p => withProps.walkable([p.home.p[0], p.home.p[2]])).length);
   });
 
-  test('resting authored benches block civilian, infected and ally navigation from the first frame', async () => {
+  test('@E26 a moved prop frozen by the awake cap blocks its resting footprint in the same tick', async () => {
+    const world = await grove(), props = world.props!;
+    const p = props.items.find(p => p.assetId === 'prop.bench' && !p.fixed)!;
+    p.body.setTranslation({ x: p.home.p[0] + 6, y: p.home.p[1], z: p.home.p[2] }, true);
+    p.body.setLinvel({ x: 1, y: 0, z: 0 }, true); props.updateNavigation();
+    expect(props.navWalls.has(p.entityId)).toBe(false);
+    props.awakeBudget = 0; world.tick = 1; props.postPhysics();
+    expect(p.awake).toBe(false); expect(p.body.isSleeping()).toBe(true);
+    expect(props.navWalls.get(p.entityId)).toBeDefined();
+    const wall = props.navWalls.get(p.entityId)!;
+    expect(world.infected!.nav.clear(wall.x, wall.z, .35)).toBe(false);
+  });
+
+  test('@E26 resting authored benches block civilian, infected and ally navigation from the first frame', async () => {
     const world = await grove(), nav = world.infected!.nav;
     const benches = world.props!.items.filter(p => p.assetId === 'prop.bench');
     const light = world.props!.items.filter(p => p.metadata.class === 'light');
