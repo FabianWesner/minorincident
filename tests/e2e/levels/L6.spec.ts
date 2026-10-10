@@ -25,18 +25,17 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
   const snap=async(name:string)=>{await page.evaluate(async name=>{const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);await a.screenshotReady();},name);await page.screenshot({path:`${out}/real-${name}.png`});shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);};
   await snap('l6-shelter-calm');
   for(let i=0;i<3500;i++){
-    const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform}));const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<18).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];return{m,s,p,friends,input:a.getState().input,controls:a.getState().controls,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
+    const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform}));const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(['shelter','first','fails'].includes(s.phase)?18:7)).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];return{tick:a.getState().tick,m,s,p,friends,input:a.getState().input,controls:a.getState().controls,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
     if(i%100===0)writeFileSync(`${out}/real-progress.json`,JSON.stringify({i,obs},null,2));
     if(obs.m.phase==='result'){writeFileSync(`${out}/real-input.json`,JSON.stringify({result:obs.m.result,shots:[...shots],state:obs.s},null,2));break;}
-    if(obs.s.phase==='first'&&!shots.has('l6-first-breach'))await snap('l6-first-breach');
-    if(obs.s.phase==='fails'&&!shots.has('l6-shelter-fails'))await snap('l6-shelter-fails');
-    if(obs.p.x>96&&!shots.has('l6-tunnel-retreat'))await snap('l6-tunnel-retreat');
+    if(obs.s.phase==='first'&&obs.tick>obs.s.breach1At+120&&!shots.has('l6-first-breach'))await snap('l6-first-breach');
+    if(obs.s.phase==='fails'&&obs.tick>obs.s.breach2At+120&&!shots.has('l6-shelter-fails'))await snap('l6-shelter-fails');
+    if(obs.p.x>107&&!shots.has('l6-tunnel-retreat'))await snap('l6-tunnel-retreat');
     if(obs.p.x>130&&!shots.has('l6-straggler'))await snap('l6-straggler');
     if(obs.p.x>143&&!shots.has('l6-chokepoint'))await snap('l6-chokepoint');
     if(obs.p.x>263&&!shots.has('l6-exit-night'))await snap('l6-exit-night');
     if(obs.m.phase==='cinematic'){await step(60);continue;}
     if(obs.enemy){await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);const xy=await page.evaluate(at=>window.__SS__!.input.project(at),obs.enemy.at);await page.mouse.move(xy.x,xy.y);const key=Math.hypot(obs.enemy.at.x-obs.p.x,obs.enemy.at.z-obs.p.z)<2.2?'j':'k';await page.keyboard.down(key);for(let j=0;j<10;j++){const aim=await page.evaluate(id=>{const a=window.__SS__!,e=a.getEntity(id);return e&&e.health.current>0?a.input.project(e.transform):null;},obs.enemy.id);if(!aim)break;await page.mouse.move(aim.x,aim.y);await step(2);}await page.keyboard.up(key);continue;}
-    if(['shelter','first','fails'].includes(obs.s.phase)){await step(30);continue;}
     let target={x:obs.s.leaderZ<14?6:Math.max(25,obs.s.leaderX-3),z:15};
     const lag=obs.friends.filter(r=>r.straggler&&!r.rejoined).sort((a,b)=>a.at.x-b.at.x)[0];
     if(lag&&!lag.collected)target=lag.at;else if(lag&&obs.p.x-lag.at.x>5){await step(12);continue;}
@@ -44,7 +43,8 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     if(gate)target={x:gate.x+1.4,z:15};
     else if(obs.friends.length&&obs.p.x>Math.min(...obs.friends.map(r=>r.at.x))+6){await step(12);continue;}
     if(obs.p.x>=246){target={x:273,z:obs.p.x<258?14.1:15};if(obs.p.x<249.1)target={x:250,z:14.1};}
-    if(obs.p.x<25&&obs.p.z<14.5)target={x:obs.p.x,z:15};
+    if(obs.p.x<25&&obs.p.z<14.5)target={x:6,z:obs.p.x<5.5?obs.p.z:15};
+    if(['shelter','first','fails'].includes(obs.s.phase))target={x:0,z:4};
     const dx=target.x-obs.p.x,dz=target.z-obs.p.z;
     if(gate&&Math.hypot(dx,dz)<1.2){await page.keyboard.down('e');await step(60);await page.keyboard.up('e');continue;}
     if(Math.hypot(dx,dz)<1){await step(12);continue;}
@@ -54,7 +54,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     for(const key of keys)await page.keyboard.down(key);await step(Math.min(12,Math.max(2,Math.floor(Math.max(Math.abs(dx),Math.abs(dz))*10))));for(const key of keys)await page.keyboard.up(key);
 
   }
-  const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.getByRole('button',{name:'Credits',exact:true}).click();await expect(page.getByRole('heading',{name:'Credits',exact:true})).toBeVisible();await expect(page.getByRole('heading',{name:'Minor Incident',exact:true})).toBeVisible({timeout:16000});
+  const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});await page.getByRole('button',{name:'Credits',exact:true}).click();await expect(page.getByRole('heading',{name:'Credits',exact:true})).toBeVisible();await page.screenshot({path:`${out}/real-credits.png`});await expect(page.getByRole('heading',{name:'Minor Incident',exact:true})).toBeVisible({timeout:16000});
 });
 
 const lum = (r: number, g: number, b: number) => { const c = (v: number) => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * c(r) + .7152 * c(g) + .0722 * c(b); };
