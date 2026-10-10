@@ -15,6 +15,16 @@ function helpers(page: Page) {
   const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
   const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
   const player = () => page.evaluate(() => window.__SS__!.getState().player!);
+  // A projected world point can overlap a HUD button; clicking it would cycle the rack.
+  const projectForClick = (target: P) => page.evaluate(q => {
+    const a = window.__SS__!;
+    let point = a.input.project(q);
+    if (!(document.elementFromPoint(point.x, point.y) instanceof HTMLCanvasElement)) {
+      a.camera.cinematic({ position: [q.x + 22, 26.4, q.z + 22], target: [q.x, 0, q.z] }, true);
+      point = a.input.project(q);
+    }
+    return point;
+  }, target);
   const shots = new Set<string>();
   const snap = async (name: string) => {
     await page.evaluate(n => window.__SS__!.camera.preset(`D-GROVE/W1/${n}`), name);
@@ -27,10 +37,12 @@ function helpers(page: Page) {
     const target = await page.evaluate(() => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.6).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      return near ? a.input.project(near.transform) : null;
+      return near ? { x: near.transform.x, z: near.transform.z } : null;
     });
     if (!target) return false;
-    await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
+    const point = await projectForClick(target);
+    await page.keyboard.down('Shift'); await page.mouse.move(point.x, point.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
+    await page.evaluate(() => window.__SS__!.camera.follow());
     return true;
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
@@ -41,7 +53,7 @@ function helpers(page: Page) {
         const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
-      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
+      const point = await projectForClick(target);
       await page.mouse.click(point.x, point.y);
       // Consume the ground click under the camera that projected it, as in L1/L3.
       await step(1);
