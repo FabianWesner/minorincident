@@ -219,6 +219,8 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     await page.evaluate(() => { window.__SS__!.cheats.completeObjective('quartermaster'); });
     for (let i = 0; i < 400 && !(await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).length)); i++) await page.evaluate(() => window.__SS__!.step(30));
     for (let i = 0; i < 60 && (await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden).length)) < 4; i++) await page.evaluate(() => window.__SS__!.step(30));
+    // Population can precede the crowd renderer's first submitted pose; wait for a stable render frame.
+    await page.evaluate(async () => { await window.__SS__!.step(30); await window.__SS__!.screenshotReady(); });
     await check('infected', 'l4-war-infected');
   });
 });

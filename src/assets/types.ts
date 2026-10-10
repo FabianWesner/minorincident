@@ -21,6 +21,8 @@ export interface AssetDef {
   animatedDrawBase?: string;
   /** Presentation supplied by images, UI or procedural effects rather than a GLB. */
   nonModel?: 'ui' | 'ability' | 'procedural';
+  /** Implementation of a non-model presentation without a shipped image. */
+  presentationSource?: string;
   /** District code placeholder palette and collision ownership. */
   world?: { token: import("../data/palette").PaletteToken; solid: boolean };
   category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui';
