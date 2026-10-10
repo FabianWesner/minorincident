@@ -19,20 +19,20 @@ The newer PO request supersedes E20’s optional-axe and timed-alarm expectation
 |---|---|
 | Typecheck, lint, production build | Pass on final source |
 | Full remote unit suite | 453 passed |
-| Full remote sim suite | 487 passed, six existing skips |
+| Full remote sim suite | 488 passed, six existing skips, after isolated timing retry |
 | New alarm/continuous-objective sim tests | 2/2 passed, including 120 s idle and doors restore |
 | Final-policy rerun | 4/4 passed: new regressions, completion-time band, checkpoint restores |
 | Focused native headless browser | 5/5 passed, including real-input L2→L3 and menu replay |
 | Remote sim smoke | All six selected checks passed |
-| Full native level browser suite + browser smoke | Pending shared GPU queue |
+| Full native level browser suite + browser smoke | Running; pickup, alarm, replay, and rescue set piece passed |
 
-Evidence is in `test-results/l2-axe-objective/`: `browser.json`, `sim.json`, `final-policy.json`, and `full-suite-summary.json`.
+Evidence is in `test-results/l2-axe-objective/`: `browser.json`, `sim.json`, `final-policy.json`, and `final-suite-summary.json`. The fresh full unit/sim run initially passed 939 tests, skipped six, and missed two 4 ms performance thresholds (director p95 4.026 ms; horde p95 5.087 ms). Both complete timing test files passed all 12 checks when retried with one worker and both runner slots reserved. The combined result is 453 unit and 488 sim tests passed, with six skips. Raw results are retained in `final-unit-sim.json` and `timing-retry.json`; `final-source-check.json` records that all 840 source/test/tool TypeScript files matched the local final source.
 
 The broad E20 exploratory run records 34 passed and five failed with a discarded shorter-cover driver. Returning to the original escape policy clears its completion/checkpoint failures. Its final completion time is 207.83 s (existing band 105–210 s), with two deaths (existing survival limit one).
 
 Controlled main `98e9aa79` checks reproduce the broader problems: its unchanged complete policy takes 292.12 s with four deaths, and its civilian-fate test fails on seed 1 with two evacuees still outside the checkpoint. See `main-comparison.log`, `main-fates.json`, and `final-bot.json`. The broader newbie/death and civilian-fate criteria remain unresolved; assertions and weapon damage are retained. `npm run verify -- E20` therefore does not pass the full battery.
 
-The Linux SwiftShader browser attempt was stopped after loading/render timeouts in unrelated L1 tests. Final browser validation uses native Metal, headless, two workers, under the shared e2e lock.
+The Linux SwiftShader browser attempt was stopped after loading/render timeouts in unrelated L1 tests. A second software run could not synchronize because the selected runner's disk was full. Final browser validation uses native Metal, headless, two workers, under the shared e2e lock.
 
 ## Camera review
 
