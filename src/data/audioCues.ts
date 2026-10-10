@@ -248,7 +248,7 @@ export const eventCues = {
     // E23: the silent city. The sign-of-life cue is positional (AudioService picks the cue by survivor); beats are silent but the shutter.
     'l5.emerged': 'ui.tick', 'l5.searching': 'ui.tick', 'l5.accounted': 'ui.tick', 'l5.shutter': 'door.gate', 'l5.sheltered': 'ui.tick', 'l5.cue': 'ui.tick', 'l5.found': 'ui.pickup', 'l5.lost': 'ui.tick', 'l5.wait': 'ui.tick',
     'l1.flicker': 'l1.flicker.buzz', 'l1.blast': 'l1.blast', 'l1.ringing': 'l1.ringing', 'l1.smoke': 'l1.bell', 'l1.screams': 'l1.scream', 'l1.infectedExit': 'l1.chaos.infected',
-  'l6.breach1': 'civilian.scream', 'l6.breach2': 'civilian.scream', 'l6.abandon': 'civilian.hey', 'l6.exit': 'ui.tick', 'l6.straggler': 'civilian.hey', 'l6.collected': 'ui.tick', 'l6.rejoined': 'ui.tick', 'l6.gate-closed': 'door.wood', 'l6.bang': 'door.wood', 'power.off': 'lamp.power-off',
+  'l6.breach1': 'civilian.scream', 'l6.breach2': 'civilian.scream', 'l6.abandon': 'civilian.hey', 'l6.exit': 'ui.tick', 'l6.straggler': 'civilian.hey', 'l6.collected': 'ui.tick', 'l6.rejoined': 'ui.tick', 'l6.gate-closed': 'door.wood', 'l6.bang': 'door.wood',
 } satisfies Record<GameEvent['type'], string>;
 export const audioCategories = [...offsets.keys()];
 export function audioFile(category: string, format: 'webm' | 'm4a'): string { return `/assets/audio/${category}.${format}`; }
