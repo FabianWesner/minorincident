@@ -28,6 +28,7 @@ export class LevelTwoBot {
   finished = false;
   private readonly walker = new Walker();
   private readonly rng: Rng;
+  private readonly axeApproachAt: number;
   private frame: InputFrame = emptyInput();
   private waypoint = 0;
   private detour: (P & { until: number }) | null = null;
@@ -35,7 +36,12 @@ export class LevelTwoBot {
   private retreatAt = 0;
   private alarmed = false;
   private last: P | null = null;
-  constructor(private readonly world: SimWorld, readonly profile: L2Profile = 'complete', readonly opening: L2Opening = 'side') { this.rng = new Rng(world.seed, `l2-bot-${profile}`); }
+  constructor(private readonly world: SimWorld, readonly profile: L2Profile = 'complete', readonly opening: L2Opening = 'side') {
+    this.rng = new Rng(world.seed, `l2-bot-${profile}`);
+    // Survey the station before the required pickup, retaining the battery's seeded human pacing.
+    // The short approach and stand-to-interact take about 0.65 s; only the pickup starts the alarm.
+    this.axeApproachAt = world.tick + Math.round((20 + new Rng(world.seed, 'l2-story').next() * 10 - .65) * 60);
+  }
   private threats(p: P, radius: number): EntitySnapshot[] {
     const w = this.world;
     return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
@@ -61,6 +67,7 @@ export class LevelTwoBot {
     const strike = (target: EntitySnapshot) => { if (this.profile === 'aggressive') { frame.attackTarget = { id: target.id, side: 'LEFT' }; frame.left.held = true; } else aimStrike(target); frame.move = { x: 0, z: 0 }; };
     // Calm and alarm: take the required axe during the calm beat, then board after the alarm.
     if (s.phase === 'calm') {
+      if (w.tick < this.axeApproachAt) return frame;
       if (!s.axe && go(a['l2-axe-rack'], .5, 'axe-wait')) frame.interact = true;
       return frame;
     }
