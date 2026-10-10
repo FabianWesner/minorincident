@@ -240,7 +240,7 @@ describe('L1 v2 mission', () => {
     expect(nearMax).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
   }, HEAVY);
 
-  test('T-E19-provenance @E19 PO rule: no infected enters L1 except the 5 lab exits, the 10 house residents and bitten pedestrians', async () => {
+  test('T-E19-provenance @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians', async () => {
     const report: { seed: number; profile: string; exits: number; house: number; bitten: number; deaths: number }[] = [];
     for (const [seed, profile] of [[1, 'complete'], [2, 'complete'], [3, 'newbie']] as const) {
       const { world: w, mission } = await loadL1(seed); world = w;
@@ -250,7 +250,7 @@ describe('L1 v2 mission', () => {
         const l1 = mission.state.l1!;
         for (const e of w.infected!.active) {
           if (seen.has(e.id)) continue; seen.add(e.id);
-          if (!l1.exitIds.includes(e.id) && !l1.house?.ids.includes(e.id) && !bitten.has(e.id)) bad.push(e.id);
+          if (!l1.exitIds.includes(e.id) && !l1.house?.ids.includes(e.id) && !l1.streetGroups?.some(g => g.ids.includes(e.id)) && !bitten.has(e.id)) bad.push(e.id);
           // PO P1 10-08: every house resident's first position is inside the house, behind the door threshold.
           const h = l1.house; if (h?.ids.includes(e.id) && (e.transform.x - h.x) * h.nx + (e.transform.z - h.z) * h.nz >= 0) outside.push(e.id);
         }

@@ -183,7 +183,7 @@ export class LevelOneOutbreak {
       // Robust start: until the first bite, idle exit infected are re-sent to the nearest pedestrian wherever they are.
       for (const id of l1.exitIds) { const e = world.entities.get(id), t = e && e.health.current > 0 ? this.pedestrianTarget(e.transform, 120) : null; if (t) world.infected!.rush(id, t, tick + 10 * TICKS); }
     }
-    if (l1.phase === 'spread') this.horde(tick, player);
+    if (l1.phase === 'spread') { this.streets(tick); this.horde(tick, player); }
     if (l1.phase === 'spread' && !l1.away) {
       const lab = this.anchor('lab-gate');
       if (Math.hypot(player.transform.x - lab.x, player.transform.z - lab.z) >= story.awayFromLabM) { l1.away = true; this.mission.setState('away', true); }
@@ -349,12 +349,37 @@ export class LevelOneOutbreak {
     return e.id;
   }
 
+  /** Small, fixed street groups (PO 10-10), using L3's off-screen population and wander leash.
+   * No respawn refill: ids remain in the mission state even after a resident is knocked down. */
+  private streets(tick: number): void {
+    const { world } = this.mission, ai = world.infected, outbreak = world.npcs?.civilians.outbreak;
+    if (!ai || !outbreak || tick % 3) return;
+    const p = world.entities.get(1)!.transform, bat = this.anchor('garage-bat'), lab = this.anchor('lab-door');
+    // Populate as the courier leaves the Annex toward the bat, so the streets are occupied before the final leg.
+    // A stationary forecourt/perimeter observer does not start the authored street population.
+    if (!this.l1.streetGroups && (Math.hypot(p.x - bat.x, p.z - bat.z) > 70 || Math.hypot(p.x - lab.x, p.z - lab.z) < 12)) return;
+    const groups = this.l1.streetGroups ??= l1v2.street.groups.map(([x, z]) => ({ x, z, ids: [] }));
+    for (const group of groups) {
+      if (group.ids.length >= l1v2.street.size) continue;
+      if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
+      const cell = ai.nav.nearestCell(group.x + (group.ids.length - 1) * 1.5, group.z, .45);
+      if (cell < 0) continue;
+      const at = { x: ai.nav.x(cell), z: ai.nav.z(cell) };
+      if (!ai.director.safe('infected.runner', at)) continue;
+      const id = outbreak.spawnPedestrian(at), e = world.entities.get(id)!;
+      outbreak.turnNow(e);
+      if (e.infected?.l1) Object.assign(e.infected.l1, { homeX: group.x, homeZ: group.z, leashM: l1v2.street.leashM });
+      group.ids.push(id);
+      return; // One resident per three ticks, matching L3's street cadence.
+    }
+  }
+
   /**
    * Beat 9 (PO rule 2026-10-07, supersedes the section 5.9 top-ups): when the courier leaves the garage with the bat, the
    * residents of ONE house near the garage come out one by one (1.5 to 4 s apart): the front door swings open and stays
    * open, each resident stumbles out of the house over the threshold (HouseEmergence: spawned inside behind the door,
-   * never on the yard or the pavement) and joins the normal AI toward the courier at the doorstep. No other infected ever
-   * enter the world unbitten; growth is bites only.
+   * never on the yard or the pavement) and joins the normal AI toward the courier at the doorstep. The PO 10-10 street
+   * groups supplement these residents along the escape routes.
    */
   private horde(tick: number, player: EntitySnapshot): void {
     const { world, state } = this.mission, l1 = this.l1, outbreak = world.npcs?.civilians.outbreak, ai = world.infected, h = l1v2.house;
