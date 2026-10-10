@@ -19,7 +19,7 @@ test('T-E07-06a @E07 @E07-AC06 screamer alerts every infected within 20 m, not b
 });
 test('T-E07-06b @E07 @E07-AC06 bloated burst damages both factions only within 3 m', async () => {
   const w = await arena(), bloated = spawn(w, 'bloated', 1), near = spawn(w, 'runner', 2, 0, 'idle'), far = spawn(w, 'runner', 5, 0, 'idle'); bloated.health.current = 0; step(w, 61);
-  expect(w.entities.get(1)!.health.current).toBeLessThan(100); expect(near.health.current).toBe(5); expect(far.health.current).toBe(40);
+  expect(w.entities.get(1)!.health.current).toBeLessThan(100); expect(near.health.current).toBe(25); expect(far.health.current).toBe(60); // PO 10-10: infected HP x1.5 (near 5 → 25 after 35 damage; far 40 → 60)
 });
 test('T-E07-06c @E07 @E07-AC06 riot frontal bullets block while flank and explosives hit', async () => {
   const w = await arena(), e = spawn(w, 'riot', 2); e.transform.yaw = Math.PI;
@@ -27,12 +27,13 @@ test('T-E07-06c @E07 @E07-AC06 riot frontal bullets block while flank and explos
 });
 test('T-E07-06d @E07 @E07-AC06 nurse revives one downed runner once', async () => {
   const w = await arena(), runner = spawn(w, 'runner', 2, 0, 'idle'), nurse = spawn(w, 'nurse', 1); runner.health.current = 0; step(w, 25);
-  expect(runner.health.current).toBe(40); expect(nurse.infected!.reviveUsed).toBe(true); runner.health.current = 0; step(w, 120); expect(runner.health.current).toBe(0); expect(w.events.events().filter((e) => e.type === 'infected.revived')).toHaveLength(1);
+  expect(runner.health.current).toBe(60); // PO 10-10: infected HP x1.5 (40 → 60)
+  expect(nurse.infected!.reviveUsed).toBe(true); runner.health.current = 0; step(w, 120); expect(runner.health.current).toBe(0); expect(w.events.events().filter((e) => e.type === 'infected.revived')).toHaveLength(1);
 });
 test('@E07 a nurse can revive a settled static corpse with its original ID', async () => {
   const w = await arena(), runner = spawn(w, 'runner', 2, 0, 'idle'), id = runner.id; runner.health.current = 0; step(w, 180);
   expect(w.entities.get(id)?.corpse).toBe(true); spawn(w, 'nurse', 1); step(w, 30);
-  expect(w.entities.get(id)).toMatchObject({ id, health: { current: 40 }, infected: { revived: true } });
+  expect(w.entities.get(id)).toMatchObject({ id, health: { current: 60 }, infected: { revived: true } }); // PO 10-10: infected HP x1.5 (40 → 60)
   expect(w.entities.get(id)?.corpse).toBeUndefined(); expect(w.infected!.active.some(e => e.id === id)).toBe(true);
 });
 test('T-E07-06e @E07 @E07-AC06 brute charge displaces player at least 3 m after 0.8 s', async () => {
@@ -53,7 +54,8 @@ test('T-E07-14 @E07 @E07-AC14 settled corpses persist past 60 seconds and beyond
 test('T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners crawl with identical gameplay in every gore mode', async () => {
   for (const gore of ['Full', 'Reduced', 'Off'] as const) {
     const w = await arena(); w.infected!.gore = gore; const e = spawn(w, 'runner', 2, 0, 'idle'); hit(w, e.id, 10, 'explosive', 'leg');
-    expect(e.health.current).toBe(30); expect(e.infected!.speed).toBe(2); expect(e.infected!.legLost).toBe(true); expect(e.infected!.detached).toBe(gore === 'Full');
+    expect(e.health.current).toBe(50); // PO 10-10: infected HP x1.5 (40 → 60 max, then 10 damage)
+    expect(e.infected!.speed).toBe(2); expect(e.infected!.legLost).toBe(true); expect(e.infected!.detached).toBe(gore === 'Full');
   }
 });
 

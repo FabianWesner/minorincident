@@ -51,10 +51,10 @@ function knockDown(w: SimWorld, id: number) {
     type: 'melee', knockback: 0, stagger: .4 });
 }
 
-for (const [weapon, count] of [['weapon.fists', 7], ['weapon.bat', 2]] as const) {
-  test(`@E05 @E05-AC03 @E05-AC07 @E06 ten rapid released clicks keep ${weapon} in reach and kill`, async () => {
-    const row = await clickDuel(weapon, 10, true);
-    expect(row.sentClicks).toBe(10); expect(row.killed).toBe(true); expect(row.hits).toHaveLength(count);
+for (const [weapon, count] of [['weapon.fists', 10], ['weapon.bat', 3]] as const) {
+  test(`@E05 @E05-AC03 @E05-AC07 @E06 fifteen rapid released clicks keep ${weapon} in reach and kill`, async () => {
+    const row = await clickDuel(weapon, 15, true); // PO 10-10: infected HP x1.5 (7 → 10 fists; 2 → 3 bat hits)
+    expect(row.sentClicks).toBe(15); expect(row.killed).toBe(true); expect(row.hits).toHaveLength(count); // PO 10-10: infected HP x1.5 (10 → 15 click window)
     for (let i = 1; i < row.hits.length; i++) expect((row.hits[i] - row.hits[i - 1]) / 60).toBeLessThanOrEqual(.6);
     expect(Math.max(...row.distances)).toBeLessThanOrEqual(weapon === 'weapon.fists' ? 1.6 : 1.9);
   });

@@ -1,4 +1,6 @@
 import { l1v2 } from './l1v2';
+/** PO 10-10: every infected spawns with 50% more HP. */
+export const INFECTED_TOUGHNESS = 1.5;
 /** Infected balance in metres/seconds/HP, from concept §7. Human roles and animals share one brain. */
 export interface InfectedDef {
   id: string; hp: number; speed: number; radius: number; damage: number; range: number;
