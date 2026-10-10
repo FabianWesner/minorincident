@@ -392,7 +392,7 @@ export class CivilianCrowd extends Group {
       if (e.corpse || e.hidden || e.infected?.hidden || e.civilian?.pet || (e.health?.current ?? 1) <= 0) continue;
       const turned = !e.civilian && !!e.infected && keepsLook(e);
       if (!turned && (!e.civilian || e.civilian.state === 'infected')) continue;
-      const model = e.appearance?.asset ?? e.civilian?.model; if (!model || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      const model = crowdModelOf(e); if (!model || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = v.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
       if (pixels <= (previous.has(e.id) ? 164 : 196)) continue;
       picks.push({ id: e.id, model, d: Math.hypot(e.transform.x - camera.position.x, e.transform.y - camera.position.y, e.transform.z - camera.position.z) - (previous.has(e.id) ? .75 : 0) });

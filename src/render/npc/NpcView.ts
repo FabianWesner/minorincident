@@ -69,7 +69,7 @@ export class NpcView extends Group {
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort?.child && !this.child.userData.placeholder ? 'glb' : e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
