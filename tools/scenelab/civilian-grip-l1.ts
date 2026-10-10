@@ -22,8 +22,8 @@ try {
     }
     throw new Error('No seated orange-hoodie coffee civilian near the L1 start');
   });
-  await session.page.addStyleTag({ content: '#hud,.hud,.inspect-overlay,.story-bubble,.mission-subtitle,[data-testid=mission-button]{visibility:hidden!important}' });
-  for (const [name, radius] of [['po-angle', 3], ['game-camera', 19]] as const) {
+  await session.page.addStyleTag({ content: '#hud,.hud,[data-testid=inspection],[data-lookdev=panel],.story-bubble,.mission-subtitle,[data-testid=mission-button]{visibility:hidden!important}' });
+  for (const [name, radius] of [['po-angle', 4], ['game-camera', 19]] as const) {
     await session.page.evaluate(({ holder, radius }) => {
       const api = window.__SS__!, y = .7 + holder.lift, delta = radius * Math.sin(Math.PI * .3) / Math.sqrt(2);
       api.inspect.setCamera({ position: [holder.at.x + delta, y + radius * Math.cos(Math.PI * .3), holder.at.z + delta], target: [holder.at.x, y, holder.at.z] });

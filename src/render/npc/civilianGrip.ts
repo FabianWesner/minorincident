@@ -1,4 +1,4 @@
-import { BufferAttribute, Matrix4, Vector3, type BufferGeometry } from 'three';
+import { BufferAttribute, Matrix4, Vector3, Mesh, type Object3D, type BufferGeometry } from 'three';
 
 /** Bend the native fingers around a horizontal handle; the wrist and palm stay attached.
  * Both the shader and Scene Lab use these same positions (no substitute hand mesh). */
@@ -40,20 +40,12 @@ export function prepareGrip(geometry: BufferGeometry, handPart: number): void {
   subdivideHand(geometry, handPart);
   const positions = geometry.getAttribute('position'), parts = geometry.getAttribute('_part_index'), skin = geometry.getAttribute('_shirt');
   const values = new Float32Array(positions.count * 3), point = new Vector3();
-  const normals = new Float32Array(positions.count * 3), normal = new Vector3();
-  const sourceNormals = geometry.getAttribute('normal');
   for (let i = 0; i < positions.count; i++) {
-    point.fromBufferAttribute(positions, i); normal.fromBufferAttribute(sourceNormals, i);
+    point.fromBufferAttribute(positions, i);
     const hand = parts.getX(i) === handPart && skin.getX(i) < 0;
-    if (hand && point.y < -.045 && point.y > -.2) {
-      const angle = Math.min(Math.PI, (-.045 - point.y) / .035), x = normal.x;
-      normal.x = x * Math.cos(angle) - normal.y * Math.sin(angle); normal.y = x * Math.sin(angle) + normal.y * Math.cos(angle);
-    }
-    normal.normalize().toArray(normals, i * 3);
     if (hand) gripPoint(point);
     point.toArray(values, i * 3);
   }
-  geometry.setAttribute('_gripNormal', new BufferAttribute(normals, 3));
   geometry.setAttribute('_gripPosition', new BufferAttribute(values, 3));
 }
 
@@ -74,4 +66,22 @@ export function handTriangles(geometry: BufferGeometry, handPart: number, grippe
     if (parts.getX(v) === handPart && skin.getX(v) < 0) values.push(positions.getX(v), positions.getY(v), positions.getZ(v));
   }
   return new Float32Array(values);
+}
+
+/** Flat props meet the fingertips of each native silhouette with a 1 mm skin margin. */
+export function gripReach(hand: Float32Array): number {
+  let reach = -Infinity;
+  for (let i = 0; i < hand.length; i += 3) reach = Math.max(reach, hand[i]);
+  return Number.isFinite(reach) ? reach + .001 : .07;
+}
+
+/** The elderly asset carries a baked cane; routines supply the one visible cane. */
+export function removeAuthoredCane(root: Object3D): void {
+  const hand = root.getObjectByName('handR'), remove: Object3D[] = [];
+  hand?.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    const materials = Array.isArray(node.material) ? node.material : [node.material];
+    if (materials.every(material => !/^(pal_)?skin/.test(material.name))) remove.push(node);
+  });
+  for (const node of remove) node.removeFromParent();
 }
