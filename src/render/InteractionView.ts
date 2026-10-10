@@ -69,6 +69,13 @@ export class InteractionView extends Group {
     this.coverage.className = 'interaction-meter'; this.coverage.hidden = true; this.coverage.setAttribute('role', 'meter'); this.coverage.setAttribute('aria-label', 'Slot coverage'); this.coverage.setAttribute('aria-valuemin', '0'); this.coverage.setAttribute('aria-valuemax', '100'); this.coverage.append(this.coverageFill);
     this.meter.append(this.meterFill); this.panel.append(this.label, this.coverage, this.meter, this.caption); document.querySelector('#game')!.append(this.panel);
   }
+  /** Warm every service-gate detail tier before L6 begins; later swaps use the registry's cached prototypes. */
+  async prewarmServiceGates(): Promise<() => void> {
+    const lods: AssetQuality[] = this.low ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2'];
+    const models = await Promise.all(lods.map(lod => this.registry.loadAsset('prop.service-gate', lod)));
+    for (const model of models) { model.visible = false; this.add(model); }
+    return () => { for (const model of models) model.removeFromParent(); };
+  }
   /** Asset readiness barrier used at load and screenshotReady, including dynamically spawned objects. */
   async synchronize(): Promise<void> {
     for (const e of this.world.entities.iterate()) {
