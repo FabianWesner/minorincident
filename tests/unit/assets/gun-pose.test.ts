@@ -23,7 +23,7 @@ const point = (pose: Float32Array, name: string) => new Vector3().setFromMatrixP
 for (const archetype of ['char.courier-female.skin', 'char.courier-male.skin', 'npc.police-officer', 'npc.national-guard', 'npc.civilian-man-a', 'npc.civilian-woman-a']) {
   test(`@gun-pose ${archetype}: standing/walking firing arm is at shoulder height and points at the shot`, async () => {
     const model = await load(archetype), upper = model.getObjectByName('armR')!, middle = model.getObjectByName('foreArmR')!, hand = model.getObjectByName('handR')!;
-    const aim = new GunAim(upper, middle, hand), crowd = new CrowdGunAim(model, [...characterNodes]);
+    const aim = new GunAim(upper, middle, hand,model.getObjectByName('torso')), crowd = new CrowdGunAim(model, [...characterNodes]);
     for (const clip of ['idle', 'walk']) for (const phase of [.1, .4, .8]) {
       sampleClip(model, clip, phase); model.updateMatrixWorld(true);
       const feet = ['footL','footR'].map(name => model.getObjectByName(name)!.matrixWorld.clone());

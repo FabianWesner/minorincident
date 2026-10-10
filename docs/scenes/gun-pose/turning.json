@@ -1,8 +1,6 @@
 {
+  "extends": "standing.json",
   "name": "gun-pose-turning",
-  "note": "PO 10-09: the courier's own handgun tracer and muzzle flash must read at the game camera like the allies' tracers. Three infected in a line, shots at game zoom.",
-  "ground": "asphalt",
-  "size": 40,
   "actors": [
     {
       "id": "courier",
@@ -65,27 +63,5 @@
         "seconds": 0.8
       }
     }
-  ],
-  "camera": {
-    "mode": "game",
-    "target": [
-      1,
-      0
-    ],
-    "zoom": 1.8
-  },
-  "frames": 120,
-  "shots": [
-    0,
-    26,
-    32,
-    40,
-    70,
-    115
-  ],
-  "expect": {
-    "consoleErrors": 0,
-    "clippingMax": 0
-  },
-  "sheet": 10
+  ]
 }

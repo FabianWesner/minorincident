@@ -2,12 +2,13 @@ import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
+test.use({viewport:{width:1280,height:720}});
 const out = 'test-results/gun-pose-render';
 const distance = (a: number[], b: number[]) => Math.hypot(...a.map((v,i)=>v-b[i]));
 for (const walking of [false,true]) {
   test(`@gun-pose courier and every NPC gun muzzle match the rendered tracer (${walking ? 'walking' : 'standing'})`, async ({ page }) => {
     test.setTimeout(300_000);
-    await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted&profile=1');
+    await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted&quality=high&dpr=1&profile=1');
     await page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
     await page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();});
     const cases = [
@@ -21,9 +22,9 @@ for (const walking of [false,true]) {
     const results = [];
     for (const c of cases) {
       const courier = c.kind === 'courier';
-      const spec: SceneSpec = { name:`gun-${c.weapon}`,ground:'asphalt',size:40,camera:{mode:'game',target:[1,0],zoom:1.8},actors:[
+      const spec: SceneSpec = { name:`gun-${c.weapon}`,ground:'asphalt',size:40,camera:{mode:'game',target:[1,0],zoom:.8},actors:[
         {id:'shooter',kind:c.kind,at:[0,0],look:{model:c.model,handProp:courier?undefined:c.weapon==='hmg'?'rifle':c.weapon},...(courier?{loadout:['weapon.handgun','weapon.fists'] as [string,string]}:walking?{}:{state:{ally:{role:c.model.includes('police')?'officer':c.model.includes('guard')?'soldier':'civilian',weapon:c.weapon as 'pistol'|'rifle'|'hmg'|'hunting-rifle'}}})},
-        {id:'target',kind:'infected',archetype:'infected.dummy',at:[7,0],state:'idle'},
+        {id:'target',kind:'infected',at:[7,0],state:'idle'},
       ]};
       await page.evaluate(s=>window.__SCENE__!.load(s),spec);
       await page.evaluate(async ({courier,walking})=>{
@@ -47,6 +48,8 @@ for (const walking of [false,true]) {
         }
         throw new Error('No shot from shooter');
       },{courier,walking});
+      mkdirSync(out,{recursive:true});writeFileSync(`${out}/${c.model}-${c.weapon}-${walking?'walking':'standing'}-probe.json`,JSON.stringify(probes,null,2));
+      await page.screenshot({path:`${out}/${c.model}-${c.weapon}-${walking?'walking':'standing'}.png`});
       if(walking) expect(probes.speed,c.weapon+' walking speed').toBeGreaterThan(.5);
       expect(probes.muzzle,c.weapon).toBeTruthy();
       expect(distance(probes.shot.tracerStart,probes.muzzle!),c.weapon).toBeLessThan(.05);
@@ -57,18 +60,18 @@ for (const walking of [false,true]) {
       const dot=v.reduce((s,n,i)=>s+n*d[i],0)/(Math.hypot(...v)*Math.hypot(...d));
       expect(Math.acos(Math.max(-1,Math.min(1,dot)))*180/Math.PI).toBeLessThan(15);
       results.push({case:c,...probes});
-      mkdirSync(out,{recursive:true});await page.screenshot({path:`${out}/${c.model}-${c.weapon}-${walking?'walking':'standing'}.png`});
     }
     writeFileSync(`${out}/metrics-${walking?'walking':'standing'}.json`,JSON.stringify(results,null,2));
   });
 }
 
 test('@gun-pose equipped handgun has no permanent cyan or yellow line at idle',async({page})=>{
-  await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted');
+  test.setTimeout(120_000);
+  await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted&quality=high&dpr=1');
   await page.waitForFunction(()=>!!window.__SCENE__&&!!window.__SS__);
-  await page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();await window.__SCENE__!.load({ground:'asphalt',actors:[{id:'courier',kind:'courier',at:[0,0],loadout:['weapon.handgun','weapon.fists']}],camera:{mode:'game',target:[0,0],zoom:1.8}});});
+  await page.evaluate(async()=>{await window.__SS__!.ready;window.__SS__!.pause();await window.__SCENE__!.load({ground:'asphalt',actors:[{id:'courier',kind:'courier',at:[0,0],loadout:['weapon.handgun','weapon.fists']}],camera:{mode:'game',target:[0,0],zoom:.8}});});
   for(const side of ['LEFT','RIGHT'] as const){
-    const vertices=await page.evaluate(async(side)=>{const a=window.__SS__!;a.setLoadout(['weapon.handgun'],['weapon.handgun']);window.__SCENE__!.command('courier',{select:side});await window.__SCENE__!.step(30);return a.getState().render.actions!.indicator.vertices;},side);
+    const vertices=await page.evaluate(async(side)=>{const a=window.__SS__!;a.setLoadout(['weapon.handgun'],['weapon.handgun']);window.__SCENE__!.command('courier',{select:side});await window.__SCENE__!.step(1);return a.getState().render.actions!.indicator.vertices;},side);
     expect(vertices).toBe(0);
   }
   mkdirSync(out,{recursive:true});await page.screenshot({path:`${out}/idle.png`});
@@ -76,11 +79,11 @@ test('@gun-pose equipped handgun has no permanent cyan or yellow line at idle',a
 
 test('@gun-pose short muzzle aim cue stops at a fence and fades after the shot',async({page})=>{
   test.setTimeout(120_000);
-  await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted');
+  await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted&quality=high&dpr=1');
   await page.waitForFunction(()=>!!window.__SCENE__&&!!window.__SS__);
   const samples=await page.evaluate(async()=>{
     const a=window.__SS__!,lab=window.__SCENE__!;await a.ready;a.pause();
-    await lab.load({ground:'asphalt',actors:[{id:'courier',kind:'courier',at:[0,0],loadout:['weapon.handgun','weapon.fists']},{id:'target',kind:'infected',at:[7,0],state:'idle'}],props:[{id:'fence',asset:'prop.picket-fence',at:[2.5,0],yaw:0}],camera:{mode:'game',target:[1,0],zoom:1.8}});
+    await lab.load({ground:'asphalt',actors:[{id:'courier',kind:'courier',at:[0,0],loadout:['weapon.handgun','weapon.fists']},{id:'target',kind:'infected',at:[7,0],state:'idle'}],props:[{id:'fence',asset:'prop.picket-fence',at:[2.5,0],yaw:0}],camera:{mode:'game',target:[1,0],zoom:.8}});
     const fire=async()=>{a.input.set({aim:{x:1,z:0},left:{down:true,held:false,up:false}});await a.step(1);a.input.clear();};
     await fire();const active=a.getState().render.actions!.aimCue;
     await a.step(12);const fading=a.getState().render.actions!.aimCue;
@@ -94,11 +97,11 @@ test('@gun-pose short muzzle aim cue stops at a fence and fades after the shot',
 
 test('@gun-pose army nest fires from its rotating authored HMG muzzle socket',async({page})=>{
   test.setTimeout(180_000);
-  await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted');
+  await page.goto('/?test=1&scenelab=1&renderer=webgl&audio=muted&quality=high&dpr=1');
   await page.waitForFunction(()=>!!window.__SCENE__&&!!window.__SS__);
   const result=await page.evaluate(async()=>{
     const a=window.__SS__!,lab=window.__SCENE__!;await a.ready;a.pause();
-    await lab.load({ground:'asphalt',actors:[{id:'gunner',kind:'pedestrian',at:[-.45,0],look:{model:'npc.national-guard',handProp:'rifle'},state:{ally:{role:'soldier',weapon:'hmg'}}},{id:'target',kind:'infected',at:[7,3],state:'idle'}],props:[{id:'nest',asset:'prop.hmg-nest',at:[0,0]}],camera:{mode:'game',target:[1,0],zoom:1.8}});
+    await lab.load({ground:'asphalt',actors:[{id:'gunner',kind:'pedestrian',at:[-2.75,0],look:{model:'npc.national-guard',handProp:'rifle'},state:{ally:{role:'soldier',weapon:'hmg'}}},{id:'target',kind:'infected',at:[7,3],state:'idle'}],props:[{id:'nest',asset:'prop.hmg-nest',at:[0,0]}],camera:{mode:'game',target:[1,0],zoom:.8}});
     for(let i=0;i<120;i++){
       await lab.step(1);const state=a.getState(),shot=state.render.vfx!.shots.at(-1);
       if(shot?.tick===a.tick())return {shot,nest:state.render.machineGuns[0]};

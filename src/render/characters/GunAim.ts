@@ -1,4 +1,4 @@
-import { Group, Matrix4, Object3D, Quaternion, Vector3 } from 'three';
+import { Euler, Group, Matrix4, Object3D, Quaternion, Vector3 } from 'three';
 import { LimbIK } from './LimbIK';
 
 /** Last upper-body layer: a nearly straight firing arm, independent of the gait.
@@ -10,11 +10,22 @@ export class GunAim {
   private readonly scale = new Vector3();
   private readonly rotation = new Quaternion();
   private readonly barrel = new Vector3(1, 0, 0);
+  private readonly torsoRotation = new Quaternion();
+  private readonly parentRotation = new Quaternion();
+  private readonly torsoAngles = new Euler(0,0,0,'YXZ');
   private readonly pole = new Vector3(0, -1, 0);
-  constructor(private readonly upper: Object3D, middle: Object3D, end: Object3D) {
+  constructor(private readonly upper: Object3D, middle: Object3D, end: Object3D, private readonly torso?: Object3D) {
     this.arm = new LimbIK(upper, middle, end);
   }
   apply(direction: { x: number; z: number }, barrelAxis = this.barrel): void {
+    if (this.torso?.parent) {
+      this.torso.updateWorldMatrix(true,true);
+      this.torsoAngles.setFromQuaternion(this.torso.getWorldQuaternion(this.torsoRotation),'YXZ');
+      this.torsoAngles.y = -Math.atan2(direction.z,direction.x);
+      this.torsoRotation.setFromEuler(this.torsoAngles);
+      this.torso.parent.getWorldQuaternion(this.parentRotation).invert().multiply(this.torsoRotation);
+      this.torso.quaternion.copy(this.parentRotation); this.torso.updateWorldMatrix(false,true);
+    }
     this.upper.updateWorldMatrix(true, true);
     this.direction.set(direction.x, 0, direction.z).normalize();
     const length = this.arm.middle.position.length() + this.arm.end.position.length();
@@ -52,20 +63,20 @@ export class CrowdGunAim {
       if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.copy(model.getObjectByName(parts[this.parents[i]])!.matrixWorld).invert());
       this.matrix.decompose(node.position, node.quaternion, node.scale);
     });
-    this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')]);
+    this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')]);
   }
-  apply(pose: Float32Array): void {
+  apply(pose: Float32Array, direction: { x: number; z: number } = this.forward): void {
     this.nodes.forEach((node, i) => {
       this.matrix.fromArray(pose, i * 16);
       if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.fromArray(pose, this.parents[i] * 16).invert());
       this.matrix.decompose(node.position, node.quaternion, node.scale);
     });
     this.root.updateMatrixWorld(true);
-    this.aim.apply({ x: this.forward.x, z: this.forward.z }, this.barrel);
+    this.aim.apply(direction, this.barrel);
     this.root.updateMatrixWorld(true);
     this.nodes.forEach((node, i) => {
       let ancestor: Object3D | null = node;
-      while (ancestor && ancestor.name !== 'armR') ancestor = ancestor.parent;
+      while (ancestor && ancestor.name !== 'torso') ancestor = ancestor.parent;
       if (ancestor) node.matrixWorld.toArray(pose, i * 16);
     });
   }

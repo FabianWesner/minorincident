@@ -104,6 +104,7 @@ class CivilianBatch extends Group {
   private mesh!: InstancedMesh;
   private bakedClip!: CrowdClip;
   private readonly hand = new Matrix4();
+  private readonly gunDirection = new Vector3();
   private gripTriangles: Float32Array = new Float32Array();
   private gripReach = .07;
   private texture!: DataTexture;
@@ -290,9 +291,10 @@ class CivilianBatch extends Group {
       if (holding && !weaponProps.has(handProp!)) { frame = this.poses.correct(e.id, frame, ...blend, pose => uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand)); blend[0] = frame; blend[1] = 1; }
       const firing = this.props?.aiming.get(e.id);
       if (holding && ['pistol', 'rifle', 'hunting-rifle'].includes(handProp!) && (c.story?.clip === 'shoot' || firing && firing.until >= this.world.tick)) {
-        // Preserve walking legs and align the torso immediately with the actual shot.
-        if (firing && firing.until >= this.world.tick) this.transform.makeRotationY(-Math.atan2(firing.direction.z, firing.direction.x)).setPosition(presented.x, presented.y - .7, presented.z);
-        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose)); blend[0] = frame; blend[1] = 1;
+        // Only the torso/arm matrices change; the walking legs retain their heading and gait.
+        if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
+        else this.gunDirection.set(1,0,0);
+        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection)); blend[0] = frame; blend[1] = 1;
       }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
@@ -456,7 +458,7 @@ export class CivilianCrowd extends Group {
     return this.muzzle(id);
   }
   muzzle(id: number): Vector3 | null { return this.props.muzzles.get(id)?.clone() ?? null; }
-  gunMeshes() { return this.props.guns; }
+  gunMeshes() { return this.props.guns.filter(g => (this.props.aiming.get(g.entity)?.until ?? -1) >= this.world.tick); }
   heldProps() { return this.props.contacts; }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }
