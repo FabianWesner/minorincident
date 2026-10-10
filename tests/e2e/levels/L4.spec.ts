@@ -170,7 +170,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 1, progression: 'L4-default' }));
     await page.evaluate(() => window.__SS__!.pause());
     await page.getByRole('button', { name: 'Begin mission' }).click();
-    await page.evaluate(() => { const a = window.__SS__!; a.pause(); a.cheats.god(true); a.cheats.completeObjective('ride'); });
+    await page.evaluate(() => { const a = window.__SS__!; a.pause(); a.debug.figureJoints(true); a.cheats.god(true); a.cheats.completeObjective('ride'); });
     await page.evaluate(() => window.__SS__!.step(120));
     const dir = 'test-results/epics/E22/crowd-drawn'; mkdirSync(dir, { recursive: true });
     /** Heads/torsos of `kind` entities moved around the courier must change the pixels when they are moved off screen. */
@@ -183,7 +183,15 @@ test.describe('L4 The Safe City Falls in the browser', () => {
         const pick = a.query({ kind }).filter(e => !e.hidden && !e.civilian?.pet && e.civilian?.adult !== false && e.health.current > 0 && (kind === 'infected' || e.civilian?.state === 'calm')).slice(0, 6);
         for (const [i, c] of pick.entries()) a.teleport(c.id, { x: player.x - 5 + (i % 3) * 2.6, z: player.z + 3 + Math.floor(i / 3) * 2.6 });
         await a.step(30); await a.screenshotReady();
-        const list = pick.map(c => a.query({ kind }).find(e => e.id === c.id)!).map(e => ({ id: e.id, head: a.camera.project(e.transform.x, e.transform.y + .95, e.transform.z), chest: a.camera.project(e.transform.x, e.transform.y + .45, e.transform.z) }))
+        // Probe the submitted pose: a lunging head is not above the simulation's upright origin.
+        const figures = a.crowdFigures();
+        const list = pick.map(c => {
+          const joints = figures.find(f => f.id === c.id && f.drawn)?.joints;
+          if (!joints?.head || !joints.hip) throw new Error(`Missing drawn body joints for ${c.id}`);
+          const hip = joints.hip, neck = joints.head, axis = neck.map((v, i) => v - hip[i]), length = Math.hypot(...axis);
+          const head = neck.map((v, i) => v + axis[i] / length * .12), chest = hip.map((v, i) => v + axis[i] * .6);
+          return { id: c.id, head: a.camera.project(head[0], head[1], head[2]), chest: a.camera.project(chest[0], chest[1], chest[2]) };
+        })
           .filter(c => Math.abs(c.head[0]) < .85 && Math.abs(c.head[1]) < .85 && Math.abs(c.chest[1]) < .7 && c.head[2] < 1);
         return { list, backend: a.perf().backend };
       }, { kind });
@@ -191,15 +199,18 @@ test.describe('L4 The Safe City Falls in the browser', () => {
       await page.evaluate(async (ids) => { const a = window.__SS__!; ids.forEach((id, i) => a.teleport(id, { x: -400 - i * 3, z: -400 })); await a.step(2); await a.screenshotReady(); }, before.list.map(c => c.id));
       const hidden = PNG.sync.read(await page.locator('canvas').screenshot());
       const results = before.list.map(c => {
-        const cx = Math.round((c.head[0] + 1) / 2 * shown.width), top = Math.round((1 - c.head[1]) / 2 * shown.height), bottom = Math.round((1 - c.chest[1]) / 2 * shown.height), half = Math.max(3, Math.round((bottom - top) / 4));
+        const hx = (c.head[0] + 1) / 2 * shown.width, tx = (c.chest[0] + 1) / 2 * shown.width, top = Math.round((1 - c.head[1]) / 2 * shown.height), bottom = Math.round((1 - c.chest[1]) / 2 * shown.height), half = Math.max(3, Math.round((bottom - top) / 4));
         let changed = 0;
-        for (let y = Math.max(0, top); y < Math.min(shown.height, bottom); y++) for (let x = Math.max(0, cx - half); x < Math.min(shown.width, cx + half); x++) {
-          const i = (y * shown.width + x) * 4;
-          if (Math.abs(shown.data[i] - hidden.data[i]) + Math.abs(shown.data[i + 1] - hidden.data[i + 1]) + Math.abs(shown.data[i + 2] - hidden.data[i + 2]) > 24) changed++;
+        for (let y = Math.max(0, top); y < Math.min(shown.height, bottom); y++) {
+          const cx = Math.round(hx + (tx - hx) * (y - top) / (bottom - top));
+          for (let x = Math.max(0, cx - half); x < Math.min(shown.width, cx + half); x++) {
+            const i = (y * shown.width + x) * 4;
+            if (Math.abs(shown.data[i] - hidden.data[i]) + Math.abs(shown.data[i + 1] - hidden.data[i + 1]) + Math.abs(shown.data[i + 2] - hidden.data[i + 2]) > 24) changed++;
+          }
         }
         return { id: c.id, changed, area: (bottom - top) * half * 2 };
       });
-      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .15 : .25)).length; // lunging infected lean away from the upright head/chest probe
+      const drawn = results.filter(r => r.changed >= r.area * (kind === 'infected' ? .15 : .25)).length; // retain the existing pixel coverage thresholds
       writeFileSync(`${dir}/${name}-${renderer}.json`, JSON.stringify({ ...before, results, drawn }, null, 2) + '\n');
       expect(before.backend).toBe(renderer); expect(before.list.length, `${name} in view`).toBeGreaterThanOrEqual(3); expect(drawn, `${name} drawn bodies`).toBe(before.list.length);
     };
