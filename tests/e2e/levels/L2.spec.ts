@@ -94,6 +94,10 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     await snap('l2-streets-w1');
     await go(at('l2-forecourt'), 1.5, async () => (await mission()).l2!.doorsOpenAt > 0);
     for (let i = 0; i < 1200 && !(await mission()).l2!.doorsOpenAt; i++) await step(1);
+    expect((await mission()).steps.bridge.status).toBe('active');
+    expect((await mission()).marker).toBe('l2-gate-inside');
+    await expect(page.getByTestId('objective-text')).toContainText('Reach the police checkpoint at the bridge');
+    await expect(page.getByTestId('minimap-objective')).toBeVisible();
     await snap('l2-doors-open'); await step(300);
     await page.evaluate(n => window.__SS__!.camera.preset(`D-GROVE/W1/${n}`), 'l2-doors-open'); await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${output}/l2-doors-open-5s.png` }); await page.evaluate(() => window.__SS__!.camera.follow());

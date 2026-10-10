@@ -47,14 +47,23 @@ test('T-E20-axe-replay @E20 menu replay still requires the axe even when it is a
   expect((await state()).l2).toMatchObject({ phase: 'calm', axe: false, alarmAt: 0 });
   expect((await state()).marker).toBe('l2-axe-rack');
   // Click the yellow floor ring in the actual follow camera, then interact.
+  await page.evaluate(() => window.__SS__!.step(60));
+  await page.evaluate(() => window.__SS__!.screenshotReady());
   const [x, z] = l2Anchors['l2-axe-rack'];
-  const point = await page.evaluate(p => window.__SS__!.input.project(p), { x, z });
+  const point = await page.evaluate(p => window.__SS__!.input.project(p), { x, y: .4, z });
   await page.mouse.click(point.x, point.y);
   await page.evaluate(() => window.__SS__!.step(1));
+  for (let i = 0; i < 60; i++) {
+    await page.evaluate(() => window.__SS__!.step(5));
+    const p = await page.evaluate(() => window.__SS__!.getState().player!.transform);
+    if (Math.hypot(p.x - x, p.z - z) <= 1.2) break;
+  }
   await page.keyboard.down('e');
   for (let i = 0; i < 60 && !(await state()).l2!.axe; i++) await page.evaluate(() => window.__SS__!.step(5));
   await page.keyboard.up('e');
   expect((await state()).l2).toMatchObject({ phase: 'alarm', axe: true });
   expect((await state()).steps.board.status).toBe('active');
-  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.selectedSide)).toBe('LEFT');
+  const weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
+  expect(weapons.selectedSide).toBe('LEFT');
+  expect(weapons.LEFT.rack.filter(s => s.id === 'weapon.fire-axe')).toHaveLength(1);
 });

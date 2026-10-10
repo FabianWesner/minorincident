@@ -1,5 +1,5 @@
 import { afterEach, expect, test } from 'vitest';
-import { loadL2 } from '../../../tools/sim-runner/l2Bots';
+import { loadL2, runL2 } from '../../../tools/sim-runner/l2Bots';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 
 let world: SimWorld | undefined;
@@ -29,3 +29,29 @@ test('@E20 required axe: 120 s idle stays calm; pickup equips and rings the alar
   expect(alarms).toHaveLength(1);
   expect(l.mission.state.steps.board.status).toBe('active');
 }, 120_000);
+
+
+test('@E20 after the alarm every playing tick has objective text and a marker, including the doors checkpoint', async () => {
+  const l = await loadL2(1); world = l.world;
+  let checked = 0, doorsBeforeRadio = 0, restored = false;
+  const report = runL2(world, l.mission, 'complete', { maxSeconds: 600, stopWhen: m => {
+    if (!m.state.l2!.alarmAt || m.state.phase !== 'playing') return false;
+    const active = m.def.steps.filter(s => m.state.steps[s.id].status === 'active');
+    expect(active.length, `tick ${world!.tick}, phase ${m.state.l2!.phase}`).toBeGreaterThan(0);
+    expect(active[0].text).not.toBe('');
+    expect(m.state.marker).toBe(active[0].anchor);
+    expect(m.def.anchors[m.state.marker!]).toBeDefined();
+    checked++;
+    if (m.state.checkpoint === 'doors' && !m.state.l2!.radioAt) {
+      doorsBeforeRadio++;
+      expect(active[0].id).toBe('bridge');
+      expect(m.state.marker).toBe('l2-gate-inside');
+      if (!restored) { m.restore('doors'); restored = true; expect(m.state.steps.bridge.status).toBe('active'); expect(m.state.marker).toBe('l2-gate-inside'); }
+    }
+    return false;
+  } });
+  expect(report.outcome).toBe('complete');
+  expect(checked).toBeGreaterThan(0);
+  expect(doorsBeforeRadio).toBeGreaterThan(0);
+  expect(restored).toBe(true);
+}, 180_000);

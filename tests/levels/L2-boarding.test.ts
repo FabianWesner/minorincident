@@ -19,7 +19,7 @@ function clickAndWait(w: SimWorld, target: { x: number; z: number }, done: () =>
 }
 
 describe('L2 one-attempt interactions', () => {
-  test('axe can be taken at 5 s before the alarm, then board normally after it (PO: “L2: Let me take the axe even before the fire alarm”)', async () => {
+  test('axe can be taken at 5 s, immediately ringing the alarm, then board normally', async () => {
     const l = await loadL2(1); world = l.world;
     for (let i = 0; i < 5 * 60; i++) l.world.update();
     expect(l.mission.state.l2!.phase).toBe('calm');
@@ -29,7 +29,6 @@ describe('L2 one-attempt interactions', () => {
     for (let i = 0; i < 60 && !l.mission.state.l2!.axe; i++) { l.world.setInput({ interact: true }); l.world.update(); }
     l.world.setInput({ interact: false });
     expect(l.mission.state.l2!.axe).toBe(true);
-    for (let i = 0; i < 60 * 45 && l.mission.state.l2!.phase === 'calm'; i++) l.world.update();
     expect(l.mission.state.l2!.phase).toBe('alarm');
     for (let i = 0; i < 60 * 6; i++) l.world.update();
     expect(l.world.events.events().some(e => e.type === 'dialogue.line' && e.id === 'L2.axe')).toBe(false);
@@ -48,16 +47,14 @@ describe('L2 one-attempt interactions', () => {
     console.log('axe ticks', times.join(','));
   }, 600_000);
 
-  test('truck: one click on the boarding ring boards (single seed), axe first on seeds 1-4', async () => {
+  test('truck: one click on the boarding ring boards after the required axe (single seed)', async () => {
     const times: number[] = [];
     for (const seed of seeds) {
-      for (const axeFirst of seed <= 4 ? [false, true] : [false]) {
-        const l = await atStart(seed), a = l.mission.def.anchors;
-        clickAndWait(l.world, a['l2-axe-rack'], () => l.mission.state.l2!.axe);
-        times.push(clickAndWait(l.world, a['l2-board'], () => l.mission.state.l2!.seated));
-        expect(l.mission.state.l2!.seated, `seed ${seed} axeFirst ${axeFirst}`).toBe(true);
-        l.world.dispose(); world = undefined;
-      }
+      const l = await atStart(seed), a = l.mission.def.anchors;
+      clickAndWait(l.world, a['l2-axe-rack'], () => l.mission.state.l2!.axe);
+      times.push(clickAndWait(l.world, a['l2-board'], () => l.mission.state.l2!.seated));
+      expect(l.mission.state.l2!.seated, `seed ${seed}`).toBe(true);
+      l.world.dispose(); world = undefined;
     }
     console.log('board ticks', times.join(','));
   }, 600_000);
