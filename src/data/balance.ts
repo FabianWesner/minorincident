@@ -639,3 +639,10 @@ Object.assign(ttkBands, {
 for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8]] as const) {
   for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+(low * factor).toFixed(2), high]; }
 }
+
+/** PO 2026-10-10 axe x1.25 (45 -> 56 damage): these profiles need fewer 0.5 s swings.
+ * Remove that saved time from their authored floors; retain the existing pursuit allowances and upper limits. */
+for (const [archetype, savedSwings] of [['brute', 1], ['riot', 1], ['firefighter', 1], ['armored', 3], ['butcher', 3], ['lion', 1], ['gorilla', 5]] as const) {
+  const [low, high] = ttkBands['weapon.fire-axe'][archetype];
+  ttkBands['weapon.fire-axe'][archetype] = [+(low - savedSwings * .5).toFixed(2), high];
+}
