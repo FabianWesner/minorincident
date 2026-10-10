@@ -9,7 +9,7 @@ import { infectedDefinitions } from '../../data/infected';
 import { l6CastModels } from '../../data/l6';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
-import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
+import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, MeshLambertNodeMaterial, BufferAttribute, StreamDrawUsage, type DataTexture } from 'three/webgpu';
 import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos } from 'three/tsl';
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
@@ -33,6 +33,7 @@ import { createCivilianPlaceholder } from './placeholders';
 import { loadMeasure } from '../../assets/loadTiming';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
+import { fitCivilianHeight } from './figureHeight';
 /** Main garment materials per civilian model (first = reference shade) that take the per-person shirt tint. */
 const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-man-a': ['pal_polo', 'pal_poloDark', 'pal_poloLight'],
@@ -66,6 +67,8 @@ export function restoreStanding(model: Group): void {
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
   const c = e.civilian;
+  // Old checkpoints may still contain an adult skin on a protected child.
+  if (c?.adult === false && !c.pet) return 'npc.civilian-kid';
   return e.appearance?.asset ?? c?.model ?? (c ? ['inf.suburban-mom', 'inf.bathrobe-neighbor'].includes(c.variant) ? 'npc.civilian-woman-a' : 'npc.civilian-man-a' : null);
 }
 /** Story clips that cycle (beckoning, glancing, the E20 rescue panic and door forcing); the rest hold their last frame. */
@@ -105,7 +108,6 @@ class CivilianBatch extends Group {
   private gripTriangles: Float32Array = new Float32Array();
   private gripReach = .07;
   private texture!: DataTexture;
-  private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
   private readonly lean = new Matrix4().makeRotationZ(-.34);
   private readonly sway = new Matrix4();
@@ -130,6 +132,7 @@ class CivilianBatch extends Group {
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
     if (!placeholder) restoreStanding(model);
+    fitCivilianHeight(model, this.model);
     if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
     const baked = bakeInfected(model, [], false, civilianClips);
     prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
@@ -264,12 +267,12 @@ class CivilianBatch extends Group {
       let clip: Clip = storyClip && c.state === 'calm' ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
       if (speed > .06 && !strides[clip] && !down && !rising) clip = speed > 2.5 ? civFlee : walkClip;
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
-      const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale * (c.adult ? 1 : .7), speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale * (c.adult ? 1 : .7), motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
       const storyFrame = storyElapsed === null ? null : loopingStory.has(clip) ? storyElapsed % 1 : Math.min(.999, storyElapsed);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       // Convulsions while on the ground: a seeded body shudder that grows with the infection.
-      this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); if (!c.adult) this.transform.scale(this.childScale); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
+      this.transform.makeRotationY(presented.yaw + (down && c.state !== 'finished' ? Math.sin(this.world.tick * .9 + e.id) * Math.max(c.veins, e.infection ? .4 : 0) * (e.infection ? .09 : .012) : 0)); this.transform.setPosition(presented.x, presented.y - .7, presented.z);
       if ((performing || noticingSeated) && activity?.seat) {
         const seatBlend = noticingSeated ? Math.max(0, 1 - noticeElapsed / .6) : activity.activity === 'stand' ? Math.max(0, 1 - elapsed / .6) : Math.min(1, elapsed / .6);
         this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7 + (activity.seatLift ?? 0) * seatBlend, presented.z + (activity.seat.z - presented.z) * seatBlend);
@@ -281,7 +284,7 @@ class CivilianBatch extends Group {
       const sourceFrame = frame;
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
-      frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale * (c.adult ? 1 : .7), speed, renderTick / 60, !this.distant);
+      frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant);
       if (holding && !weaponProps.has(handProp!)) { frame = this.poses.correct(e.id, frame, ...blend, pose => uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand)); blend[0] = frame; blend[1] = 1; }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
