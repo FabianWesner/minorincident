@@ -171,6 +171,18 @@ test('T-E25-15 @E25 @E25-AC15 production asset turntable emits night on/off view
   const { captureTurntable } = await import('../../tools/assets/turntable');
   const coverage = await captureTurntable(page, 'prop.light-tower-trailer', `${out}/turntable`, baseURL!);
   expect(coverage.every(value => value > 0)).toBe(true);
+  // Reusing main's batch viewer must retain night-off for the newly loaded asset.
+  await page.evaluate(async () => {
+    const a = window.__ASSET__!; await a.lighting!(true, false); await a.selectAsset!('prop.jukebox');
+  });
+  const switched = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/turntable/batch-night-off.png` }));
+  await page.evaluate(async () => { await window.__ASSET__!.lighting!(true, false); });
+  const explicit = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/turntable/batch-night-off-explicit.png` }));
+  let difference = 0;
+  for (let i = 0; i < switched.data.length; i++) if (i % 4 !== 3) difference += Math.abs(switched.data[i] - explicit.data[i]);
+  const meanDifference = difference / (switched.width * switched.height * 3);
+  writeFileSync(`${out}/turntable/batch-power.json`, JSON.stringify({ meanDifference }, null, 2));
+  expect(meanDifference).toBeLessThan(.5);
 });
 
 test('T-E25-05v @E25 @E25-AC05 sixty seconds past forty lights: promotion rate and per-frame pool luminance', async ({ page }) => {
