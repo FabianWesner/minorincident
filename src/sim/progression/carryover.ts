@@ -1,5 +1,24 @@
 import { MAX_BODIES, type L1Aftermath } from '../../levels/continuity';
 import type { SimWorld } from '../world/SimWorld';
+import type { MissionResult } from '../missions/types';
+import { autoRewards, type CampaignSave, type Level } from './Campaign';
+
+/** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
+export function completeCampaignLevel(save: CampaignSave, level: Level, result: MissionResult, world: SimWorld): void {
+  if (level === 1) save.world = { ...save.world, L1: captureL1Aftermath(world) };
+  save.results ??= {};
+  save.results[`L${level}`] = structuredClone(result);
+  if (level === 5) save.survivors = [...result.survivors ?? []];
+  if (level !== save.completedLevels + 1) return;
+  if (level === 6) { save.completedLevels = 6; return; }
+  const weapons = level === 5 ? world.entities.get(1)?.weapons : null;
+  const carried = weapons ? { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) } : null;
+  autoRewards(save, level);
+  if (carried) {
+    save.racks = carried;
+    for (const id of [...carried.LEFT, ...carried.RIGHT]) if (!save.ownedActions.includes(id)) save.ownedActions.push(id);
+  }
+}
 
 /** Rounded, and -0 folded to 0 so a JSON round trip of the save reproduces the record exactly. */
 const r2 = (v: number) => Math.round(v * 100) / 100 + 0, r4 = (v: number) => Math.round(v * 1e4) / 1e4 + 0;

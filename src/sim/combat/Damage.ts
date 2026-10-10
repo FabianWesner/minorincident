@@ -1,3 +1,4 @@
+import { storyProtected } from '../npc/storyProtection';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot, GameEvent } from '../world/types';
@@ -46,6 +47,10 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (storyProtected(this.world, target)) {
+      if (hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback);
+      return 0;
+    }
     if (target.id === 1 && (hit.type === 'bullet' || hit.type === 'projectile') && !this.world.combat!.query.visible(hit.origin, target.transform)) return 0;
     if (target.health.current <= 0) {
       // Explosives and fire finish a downed infected for good; any other damaging hit restarts its down time (PO 10-08).

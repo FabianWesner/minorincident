@@ -124,6 +124,9 @@ export type CameraSpec =
 export interface Expectations {
   consoleErrors?: number;
   clippingMax?: number;
+  /** Native hand triangles vs the drawn held prop, sampled every third frame. */
+  heldPropIntersectionsMax?: number;
+  heldPropSamplesMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;

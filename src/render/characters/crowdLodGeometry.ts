@@ -7,7 +7,7 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
   if (!geometry.index) return;
   await MeshoptSimplifier.ready;
   const position = geometry.getAttribute('position'), part = geometry.getAttribute('_part_index');
-  const names = ['normal', 'color', '_shirt', '_emissive', ...(geometry.hasAttribute('_vein') ? ['_vein'] : [])];
+  const names = ['normal', 'color', '_shirt', '_emissive', ...(geometry.hasAttribute('_vein') ? ['_vein'] : []), ...(geometry.hasAttribute('_gripPosition') ? ['_gripPosition'] : [])];
   const attributes = names.map(name => geometry.getAttribute(name));
   const stride = attributes.reduce((n, a) => n + a.itemSize, 0), values = new Float32Array(position.count * stride), locks = new Uint8Array(position.count);
   for (let i = 0; i < position.count; i++) {
@@ -22,7 +22,7 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     if (!groups.has(owner)) groups.set(owner, []);
     groups.get(owner)!.push(a, b, c);
   }
-  const weights = [.001, .001, .001, .05, .05, .05, .1, 1, ...(geometry.hasAttribute('_vein') ? [1] : [])];
+  const weights = [.001, .001, .001, .05, .05, .05, .1, 1, ...(geometry.hasAttribute('_vein') ? [1] : []), ...(geometry.hasAttribute('_gripPosition') ? [1, 1, 1] : [])];
   const result: number[] = [];
   let maximumError = 0;
   for (const indices of groups.values()) {
