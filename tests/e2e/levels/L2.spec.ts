@@ -72,12 +72,12 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     const h = helpers(page), { step, mission, player, snap, go, interact } = h;
     await step(150); await snap('l2-station-calm');
     expect((await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }))).length).toBe(0);
-    for (let i = 0; i < 80 && (await mission()).l2!.phase === 'calm'; i++) await step(30);
-    await step(30); await snap('l2-alarm');
-    // Optional axe: walk to the wall rack and press E.
+    // Required axe: walk to the yellow ring and press E to start the alarm.
     await go(at('l2-axe-rack'), .8); await interact();
     for (let i = 0; i < 10 && !(await mission()).l2!.axe; i++) { await interact(); await step(10); }
     expect((await mission()).l2!.axe).toBe(true);
+    expect((await mission()).l2!.phase).toBe('alarm');
+    await step(30); await snap('l2-alarm');
     expect((await player()).weapons!.LEFT.rack.map(r => r.id)).toContain('weapon.fire-axe');
     // Board at the crew door by interaction.
     await go(at('l2-board'), .6); await interact();
@@ -135,7 +135,7 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L2');
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(() => window.__SS__!.pause());
-    // Walk the L2 graph with the objective cheat, taking the optional axe on the way.
+    // Walk the L2 graph with the objective cheat, taking the required axe on the way.
     for (let i = 0; i < 16; i++) {
       const m = await page.evaluate(() => window.__SS__!.missions.state()!);
       if (m.phase !== 'playing') break;

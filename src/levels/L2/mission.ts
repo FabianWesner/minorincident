@@ -4,7 +4,7 @@ import type { Anchor, MissionDef, ObjectiveDef, Trigger } from '../../sim/missio
 import type { DistrictId } from '../districts/types';
 
 /**
- * L2 "The Failed Rescue" objective graph (E20 section 4): calm -> board (axe optional) -> ride -> doors -> bridge checkpoint.
+ * L2 "The Failed Rescue" objective graph (E20 section 4): axe -> alarm -> board -> ride -> doors -> bridge checkpoint.
  * Beats are driven by `LevelTwoRescue` (def.l2) through mission states; everything after the doors open is systemic.
  * No fail timer, no reward screen: crossing the checkpoint gate completes the level and the campaign continues into L3.
  */
@@ -26,10 +26,10 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   };
   const after = (...ids: string[]): ObjectiveDef['start'] => ({ kind: 'objectives', ids, mode: 'all' });
   const state = (key: string): Trigger => ({ kind: 'state', key, equals: true });
-  step('calm', 'custom', 'Wait for the alarm at Fire Station 3', 'l2-start', state('alarm'), { kind: 'start' });
-  step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('calm'));
-  const axe = step('axe', 'interact', 'Optional: grab the fire axe from the rack by the station door', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, { kind: 'start' });
-  axe.optional = true; axe.onComplete = [{ kind: 'grant', item: 'axe' }];
+  const axe = step('axe', 'interact', 'Take the fire axe', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, { kind: 'start' });
+  axe.onComplete = [{ kind: 'grant', item: 'axe' }];
+  step('calm', 'custom', 'Take the fire axe', 'l2-axe-rack', state('alarm'), { kind: 'start' });
+  step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('axe', 'calm'));
   step('ride', 'custom', 'Ride with Engine 3 to Grove Market', 'l2-truck-stop', state('arrived'), after('board'));
   step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-watch', state('doors-open'), after('ride'));
   step('bridge', 'reach', 'Reach the police checkpoint at the bridge', 'l2-gate-inside', state('crossed'), { kind: 'state', key: 'radio', equals: true });
