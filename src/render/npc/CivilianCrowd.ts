@@ -9,8 +9,8 @@ import { infectedDefinitions } from '../../data/infected';
 import { l6CastModels } from '../../data/l6';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
-import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin } from 'three/tsl';
+import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
+import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos } from 'three/tsl';
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
@@ -19,6 +19,7 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
 import { RoutineProps } from './RoutineProps';
+import { prepareGrip, uprightHand, handTriangles, removeAuthoredCane, gripReach } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
 const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
@@ -101,7 +102,8 @@ class CivilianBatch extends Group {
   private mesh!: InstancedMesh;
   private bakedClip!: CrowdClip;
   private readonly hand = new Matrix4();
-  private readonly nextHand = new Matrix4();
+  private gripTriangles: Float32Array = new Float32Array();
+  private gripReach = .07;
   private texture!: DataTexture;
   private readonly childScale = new Vector3(.7, .7, .7);
   private readonly transform = new Matrix4();
@@ -112,7 +114,7 @@ class CivilianBatch extends Group {
   private readonly colors = civilianRoles.map(d => new Color(d.color));
   private readonly frame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
   private readonly tint = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
-  /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (mouth and bite); w is the
+  /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (negative for a routine grip); w is the
    * displayed pose-atlas row. Packed so the draw stays within WebGPU's 8 vertex buffers (a separate `_pose_frame`
    * buffer made the pipeline invalid: every pedestrian vanished on WebGPU while props and shadows still drew). */
   private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
@@ -128,7 +130,10 @@ class CivilianBatch extends Group {
     const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
     this.source = placeholder ? 'placeholder' : 'glb';
     if (!placeholder) restoreStanding(model);
-    const baked = bakeInfected(model, [], false, civilianClips), color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
+    if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
+    const baked = bakeInfected(model, [], false, civilianClips);
+    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
+    const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
@@ -162,13 +167,24 @@ class CivilianBatch extends Group {
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
     // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
     if (!placeholder) await simplifyCrowdLod(baked.geometry, this.distant ? .01 : .005, this.distant ? .35 : .5);
+    this.gripTriangles = handTriangles(baked.geometry, baked.clip.parts.indexOf('handR'));
+    this.gripReach = gripReach(this.gripTriangles);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
     packCrowdParts(baked.geometry);
+    // Keep all static attributes in one vertex buffer (WebGPU guarantees eight).
+    const staticNames = ['position', 'normal', 'color', '_parts', '_gripPosition'];
+    const staticStride = 16, staticData = new InterleavedBuffer(new Float32Array(baked.geometry.getAttribute('position').count * staticStride), staticStride);
+    let staticOffset = 0;
+    for (const name of staticNames) {
+      const a = baked.geometry.getAttribute(name);
+      for (let i = 0; i < a.count; i++) for (let c = 0; c < a.itemSize; c++) staticData.array[i * staticStride + staticOffset + c] = a.getComponent(i, c);
+      baked.geometry.setAttribute(name, new InterleavedBufferAttribute(staticData, a.itemSize, staticOffset)); staticOffset += a.itemSize;
+    }
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
     // overlay.y >= 2 flags a pedestrian who is turning (eye glow = y - 2); y in 0..1 is the plain eye glow.
-    const overlay = attribute('_overlay', 'vec4'), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
+    const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
     // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
     const clothing = parts.y.greaterThan(0).select(variant.xyz.mul(parts.y), attribute('color', 'vec3'));
     // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
@@ -177,9 +193,9 @@ class CivilianBatch extends Group {
     // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
     const sick = mix(vec3(luminance(clothing)).mul(.6), vec3(.42, .58, .30), .8), skinShift = parts.y.lessThan(0).select(decay.mul(2.5).min(1), 0);
     const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
-    const grimy = clothing.mul(overlay.z.mul(-.42).add(1));
+    const grimy = clothing.mul(dirt.mul(-.42).add(1));
     const skin = mix(grimy, sunken, skinShift);
-    const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(overlay.z).mul(.9));
+    const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(dirt).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), eyeGlow), eye);
     const eyeColor = vec3(1, .005, .02);
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
@@ -189,7 +205,7 @@ class CivilianBatch extends Group {
     // E19-AC23: while turning, a sickly ash-green pulse throbs on the skin only (hair and clothes keep the person's own
     // colours, so it stays recognisably the same person); it reads at the game camera even when the body is down.
     const pulse = sin(time.mul(7.5).add(variant.x.mul(9))).mul(.5).add(.5);
-    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(overlay.z))
+    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(dirt))
       .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(parts.y.lessThan(0).select(1, 0)));
     const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
@@ -202,8 +218,11 @@ class CivilianBatch extends Group {
     const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
     const matrix = crowdBlendedMatrix(this.texture, part, overlay.w, outgoing, weight);
-    material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
-    material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
+    material.positionNode = instance.mul(matrix.mul(vec4(mix(positionGeometry, attribute('_gripPosition', 'vec3'), grip).mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
+    const finger = part.equal(this.bakedClip.parts.indexOf('handR')).and(parts.y.lessThan(0)).and(positionGeometry.y.lessThan(-.045)).and(positionGeometry.y.greaterThan(-.2));
+    const curl = positionGeometry.y.negate().sub(.045).div(.035).clamp(0, Math.PI).mul(finger.select(grip, 0));
+    const bentNormal = vec3(normalGeometry.x.mul(cos(curl)).sub(normalGeometry.y.mul(sin(curl))), normalGeometry.x.mul(sin(curl)).add(normalGeometry.y.mul(cos(curl))), normalGeometry.z);
+    material.normalNode = instance.mul(matrix.mul(vec4(bentNormal, 0))).xyz.transformDirection(cameraViewMatrix);
     this.mesh.onAfterRender = () => this.probe.draw();
     // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
     if (this.world.scenario === 'L6') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
@@ -256,26 +275,24 @@ class CivilianBatch extends Group {
         this.transform.setPosition(presented.x + (activity.seat.x - presented.x) * seatBlend, presented.y - .7 + (activity.seatLift ?? 0) * seatBlend, presented.z + (activity.seat.z - presented.z) * seatBlend);
       }
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
+      const carried = e.appearance?.handProp;
+      const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : undefined);
+      const holding = !!handProp && c.state === 'calm' && !!this.props && !!(c.story || e.appearance?.handProp !== null);
       const sourceFrame = frame;
-    const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
       frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale * (c.adult ? 1 : .7), speed, renderTick / 60, !this.distant);
+      if (holding && !weaponProps.has(handProp!)) { frame = this.poses.correct(e.id, frame, ...blend, pose => uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand)); blend[0] = frame; blend[1] = 1; }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
-      // A dropped hand prop (startle, bite) stays dropped: `appearance.handProp` is cleared by the outbreak layer.
-      const carried = e.appearance?.handProp, weapon = carried && weaponProps.has(carried) ? carried as CivilianProp : undefined;
-      const handProp = (c.story ? c.story.prop : activity?.prop) ?? weapon;
-      if (handProp && c.state === 'calm' && this.props && (c.story || e.appearance?.handProp !== null)) {
-        const part = this.bakedClip.parts.indexOf('handR'), stride = this.bakedClip.parts.length * 16;
-        this.hand.fromArray(this.bakedClip.matrices, Math.floor(sourceFrame) * stride + part * 16);
-        this.nextHand.fromArray(this.bakedClip.matrices, Math.ceil(sourceFrame) * stride + part * 16);
-        const handBlend = sourceFrame % 1;
-        for (let i = 0; i < 16; i++) this.hand.elements[i] += (this.nextHand.elements[i] - this.hand.elements[i]) * handBlend;
-        this.hand.premultiply(this.transform); this.props.place(handProp, this.hand);
+      if (holding) {
+        const part = this.bakedClip.parts.indexOf('handR');
+        this.poses.part(frame, ...blend, part, this.hand).premultiply(this.transform);
+        this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach);
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
-      this.overlay.setXYZ(index, c.veins, Math.max(0, glow) + (e.infection ? 2 : 0), e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
+      this.overlay.setXYZ(index, c.veins, Math.max(0, glow) + (e.infection ? 2 : 0), holding && !weaponProps.has(handProp!) ? -1 : e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
     }
     // Full sun silhouettes matter in the close game camera (high tier; low keeps the shared contact shadows). Wider views retain
     // the shared contact shadows; hysteresis prevents caster toggling at an edge.
@@ -322,7 +339,7 @@ class CivilianBatch extends Group {
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
-      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+    const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
     if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style);
     if (e.corpse) {
       this.tintOf(e, index, 1);
@@ -411,5 +428,6 @@ export class CivilianCrowd extends Group {
   async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  heldProps() { return this.props.contacts; }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

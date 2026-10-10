@@ -30,7 +30,7 @@ test('T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one inf
     expect(table[`${policy}:weapon.bat` + 'x2'].median, `${policy} bat 1v2`).toBeLessThanOrEqual(15);
     expect(table[`${policy}:weapon.bat` + 'x3'].median, `${policy} bat 1v3`).toBeLessThanOrEqual(30);
   }
-  expect(table['engage:weapon.fists' + 'x2'].median, 'engage unarmed 1v2').toBeLessThanOrEqual(15);
+  expect(table['engage:weapon.fists' + 'x2'].median, 'engage unarmed 1v2').toBeLessThanOrEqual(20); // PO 10-10: infected HP x1.5 (15 → 20 HP lost over the longer fight)
   // The old PROD pick (head/chest clicks walked into the lunge) is what cost the PO 16 HP against one infected.
   expect(table['misses:weapon.fists' + 'x1'].median).toBeGreaterThan(table['engage:weapon.fists' + 'x1'].median);
 }, 600_000);
