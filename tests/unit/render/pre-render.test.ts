@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest';
-import { BoxGeometry, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, Vector2 } from 'three/webgpu';
+import { BoxGeometry, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, Vector2, Vector3 } from 'three/webgpu';
 import { compileLanes, preRender } from '../../../src/render/PreRenderer';
 import { Renderer } from '../../../src/render/Renderer';
 
@@ -82,10 +82,27 @@ test('@transition animated warm-up groups cover both driver paths without overla
   await preRender(renderer, scene, new PerspectiveCamera(), () => {
     if (wall.visible) return;
     const visible = actors.filter(mesh => mesh.visible), positions = new Set<string>(); sizes.push(visible.length);
-    actors.forEach((mesh, index) => { if (mesh.visible) { paths[index].add(mesh.count); const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix); positions.add(matrix.elements.slice(12, 15).join(',')); } });
+    actors.forEach((mesh, index) => {
+      if (!mesh.visible) return;
+      paths[index].add(mesh.count); const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
+      positions.add(matrix.elements.slice(12, 15).join(','));
+      const pixel = new Vector3().setFromMatrixPosition(matrix).project(new PerspectiveCamera());
+      expect((pixel.x + 1) * 16 % 1).toBeCloseTo(.5); expect((pixel.y + 1) * 16 % 1).toBeCloseTo(.5);
+    });
     expect(positions.size).toBe(visible.length);
   });
   expect(sizes).toEqual([4, 4, 1, 1]); expect(paths.every(path => path.has(1) && path.has(2))).toBe(true);
   for (const mesh of actors) { const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix); expect(matrix.elements).toEqual(new Matrix4().elements); expect(mesh.count).toBe(0); mesh.dispose(); }
+  geometry.dispose(); material.dispose();
+});
+
+for (const background of [false, true]) test(`@transition WebGPU ${background ? 'background' : 'foreground'} chunks preserve the existing compilation policy`, async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  scene.add(new Mesh(geometry, material));
+  const compile = vi.fn(async () => {}), render = vi.fn(), pause = vi.fn(async () => {});
+  const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), render, compile, pause, undefined, background);
+  expect(compile).toHaveBeenCalledTimes(Number(background));
+  expect(pause).toHaveBeenCalled(); expect(render).toHaveBeenCalled();
   geometry.dispose(); material.dispose();
 });
