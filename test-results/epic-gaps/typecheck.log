@@ -1,0 +1,5 @@
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+tests/e2e/asset-photo-audit.spec.ts(23,88): error TS2367: This comparison appears to be unintentional because the types '"cinematic" | "briefing" | "playing" | "retry" | "result" | "progression" | undefined' and '"complete"' have no overlap.

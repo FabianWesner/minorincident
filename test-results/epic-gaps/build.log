@@ -1,0 +1,44 @@
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 393 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                            1.57 kB │ gzip:     0.70 kB
+dist/index.html                                    2.32 kB │ gzip:     0.78 kB
+dist/build/basis_transcoder-o4Hde_L7.js           57.53 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm        527.33 kB │ gzip:   244.57 kB
+dist/build/rapier-C6GCbKVJ.wasm                3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-BWyL0Yxb.css                     29.59 kB │ gzip:     6.76 kB
+dist/build/lookViewpoints-BX-OEann.js              0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js      0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js              1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-Cq1eQ58h.js                  1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                    1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                   1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-CiBevReI.js                       2.50 kB │ gzip:     1.33 kB
+dist/build/LevelOneBot-CfGTn0Oy.js                 4.82 kB │ gzip:     2.30 kB
+dist/build/lookPatch-BT7ef7_D.js                   5.26 kB │ gzip:     2.69 kB
+dist/build/l3-BFRWm1Bx.js                          7.27 kB │ gzip:     3.28 kB
+dist/build/l4-B6T7bV2C.js                          7.50 kB │ gzip:     3.27 kB
+dist/build/Inspection-DvK-_u47.js                 12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-C5QRqbgm.js                14.09 kB │ gzip:     4.53 kB
+dist/build/MotionLab-C6CB4hpn.js                  19.95 kB │ gzip:     8.39 kB
+dist/build/LevelFiveBot-CKkDmrV-.js               21.41 kB │ gzip:     5.79 kB
+dist/build/testApi-CyKFNuZ8.js                    21.51 kB │ gzip:     8.24 kB
+dist/build/index-kfEnWlSf.js                      26.79 kB │ gzip:     7.12 kB
+dist/build/SceneLab-Djx3ge_k.js                   56.27 kB │ gzip:    20.61 kB
+dist/build/Pickups-DmenV-MN.js                    59.43 kB │ gzip:    19.68 kB
+dist/build/HouseEmergence-CqdNpheK.js            120.15 kB │ gzip:    33.85 kB
+dist/build/Debug-DoeeJH5i.js                     155.75 kB │ gzip:    32.99 kB
+dist/build/rapier-B4BYJx26.js                    211.96 kB │ gzip:    36.08 kB
+dist/build/three.module-DnhzfFbc.js              287.60 kB │ gzip:    77.06 kB
+dist/build/install-CveiIIh8.js                   412.86 kB │ gzip:   121.19 kB
+dist/build/registry-DYOm9vmb.js                  456.32 kB │ gzip:    85.09 kB
+dist/build/WeatherView-8pAXK4vT.js               710.60 kB │ gzip:   199.75 kB
+dist/build/index-BONskTra.js                     928.81 kB │ gzip:   269.85 kB
+dist/build/Physics-CCL5agfb.js                 1,999.96 kB │ gzip:   364.24 kB
+✓ built in 2.35s
