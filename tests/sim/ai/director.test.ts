@@ -54,7 +54,8 @@ test('T-E07-10b @E07 @E07-AC10 recycled archetypes refresh borrowed player-colli
 test('T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it', async () => {
   const w = await arena(), ai = w.infected!, runner = spawn(w, 'runner', 2, 0, 'idle'); runner.health.current = 0; const nurse = spawn(w, 'nurse', 1); ai.director.levelCap = 1;
   step(w, 25); expect(ai.director.count).toBe(1); expect(runner.health.current).toBe(0); expect(nurse.infected!.reviveUsed).toBe(false);
-  ai.director.levelCap = 2; step(w, 100); expect(ai.director.count).toBe(2); expect(runner.health.current).toBe(40);
+  ai.director.levelCap = 2; step(w, 100); expect(ai.director.count).toBe(2); // PO 10-10: infected HP x1.5 (40 → 60)
+  expect(runner.health.current).toBe(60);
 });
 
 test('T-E07-08c @E07 @E07-AC08 a capped scripted migration remains queued and begins when capacity returns', async () => {

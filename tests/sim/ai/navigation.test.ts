@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { Matrix4 } from 'three';
 import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
-import { humanInfected, validateInfected } from '../../../src/data/infected';
+import { animalInfected, humanInfected, INFECTED_TOUGHNESS, validateInfected } from '../../../src/data/infected';
 const worlds: SimWorld[] = [];
 test('navigation lets a capsule leave a shallow collider margin without moving deeper', () => {
   const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, y: 1, z: 0, halfX: 1, halfY: 1, halfZ: 2 }]);
@@ -45,9 +45,10 @@ test('@E19 respawn connectivity distinguishes an unfinished long route from an e
   expect(grid.path(from, goal, path, Infinity)).toBe(true);
 });
 
-test('T-E07-01 @E07 @E07-AC01 all twelve human roles validate and spawn', async () => {
+test('T-E07-01 @E07 @E07-AC01 all human and animal roles validate and spawn', async () => {
   validateInfected(); expect(humanInfected).toHaveLength(12); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
-  const w = await arena(); for (const [i, def] of humanInfected.entries()) { const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }))!; expect(e.health.current).toBe(def.hp); expect(e.infected!.speed).toBe(def.speed); }
+  const w = await arena(); for (const [i, def] of [...humanInfected, ...animalInfected].entries()) { const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }, def.id === 'infected.crow' ? { perched: false } : undefined))!; // PO 10-10: infected HP x1.5
+    expect(e.health.current).toBe(def.hp * INFECTED_TOUGHNESS); expect(e.health.max).toBe(def.hp * INFECTED_TOUGHNESS); expect(e.infected!.speed).toBe(def.speed); }
 });
 test('T-E07-02 @E07 @E07-AC02 sight cone and facing-independent gunshot perception', async () => {
   const w = await arena();

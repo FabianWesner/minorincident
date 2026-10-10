@@ -8,7 +8,7 @@ import { duel, type DuelResult } from './duel';
 const seeds = Array.from({ length: 20 }, (_, i) => i + 1);
 const row = (r: DuelResult) => [r.seed, r.won ? 'W' : r.died ? 'D' : '-', +r.seconds.toFixed(2), r.hp, r.hits, r.kills].join(' ');
 
-test('E19 @E19 @E19-AC14 bat crowd battery: stand vs 4 wins (>= 18/20); stand vs 10 dies within 30 s (>= 18/20); evade vs 10 survives 60 s (>= 16/20)', async () => {
+test('E19 @E19 @E19-AC14 bat crowd battery: stand vs 4 wins (>= 18/20); stand vs 10 dies within 30 s (>= 18/20); evade vs 10 survives 60 s (>= 12/20; PO 10-10)', async () => {
   const four: DuelResult[] = [], ten: DuelResult[] = [], evade: DuelResult[] = [];
   for (const seed of seeds) {
     four.push(await duel(seed, 4, 'stand', 'weapon.bat', 'infected.runner', 40));
@@ -24,5 +24,5 @@ test('E19 @E19 @E19-AC14 bat crowd battery: stand vs 4 wins (>= 18/20); stand vs
   writeFileSync('test-results/epics/E19/crowd-duels.json', JSON.stringify(report, null, 2));
   expect(report.standFour.won).toBeGreaterThanOrEqual(18);
   expect(report.standTen.diedWithin30s).toBeGreaterThanOrEqual(18);
-  expect(report.evadeTen.survived60s).toBeGreaterThanOrEqual(16);
+  expect(report.evadeTen.survived60s).toBeGreaterThanOrEqual(12); // PO 10-10: infected HP x1.5 (16 → 12 survives)
 }, 600_000);
