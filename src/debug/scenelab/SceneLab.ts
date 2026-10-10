@@ -257,7 +257,7 @@ export class SceneLab {
     return ids;
   }
   private teleport(e: EntitySnapshot, p: { x: number; z: number }): void {
-    e.transform.x = p.x; e.transform.z = p.z; this.world.spatial.set(e.id, p.x, p.z);
+    e.transform.x = p.x; e.transform.z = p.z; e.transform.y=(this.world.districts?.groundHeight(p.x,p.z)??0)+.705; this.world.spatial.set(e.id, p.x, p.z);
     if (e.id === 1) { this.world.physics.playerBody!.setTranslation(e.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(e.transform); this.world.player!.setCheckpoint(e.transform); }
   }
   private stand(at: { x: number; z: number }, yaw: number): CivilianActivity {
@@ -311,6 +311,7 @@ export class SceneLab {
       else if ('turn' in a) reset([this.stand(e.transform, rad(a.turn))]);
       else if ('walk' in a || 'run' in a) { const points = ('walk' in a ? a.walk : a.run).map(toPoint); if (c.l1) c.l1.walkSpeed = 'run' in a ? 3.2 : c.l1.walkSpeed; reset(points.map(p => ({ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }))); if (!a.loop) c.schedule!.push(this.stand(points[points.length - 1], e.transform.yaw)); }
       else if ('moveTo' in a) { const p = toPoint(a.moveTo); reset([{ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }, this.stand(p, e.transform.yaw)]); }
+      else if('routine' in a){reset([this.stand(e.transform,e.transform.yaw)]);c.story={clip:a.routine==='sit'?'npc-sit':a.routine==='rest'?'death-side':a.routine==='talk'?'npc-gesture':a.routine==='share'?'npc-give':'npc-cower',start:world.tick};}
       else if ('sit' in a) reset(this.sitSchedule(a.sit, a.seconds));
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
@@ -424,6 +425,7 @@ export class SceneLab {
     else if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
     else if ('wreck' in fx) { const id = this.vehicles.get(fx.wreck); if (id === undefined) throw new Error(`wreck: unknown vehicle ${fx.wreck}`); world.vehicles!.damage(id, 1e6); }
     else if ('hazard' in fx) { const id = world.hazards!.spawn(fx.hazard, toPoint(fx.at), { radius: fx.radius, duration: fx.duration }); if (fx.trigger) world.hazards!.hit(id, 1, fx.trigger); }
+    else if ('fire' in fx && fx.duration !== undefined) world.hazards!.spawn('fire',toPoint(fx.fire),{radius:fx.radius??2,duration:fx.duration});
     else { const kind = 'fire' in fx ? 'fire' : 'smoke', p = toPoint('fire' in fx ? fx.fire : fx.smoke); world.events.emit({ type: 'vfx.effect', tick: world.tick, kind, position: p, radius: fx.radius ?? 2 } as Parameters<typeof world.events.emit>[0]); }
   }
   setTime(preset: TimeOfDay): void { this.game.view.settings({ timeOfDay: preset }); }

@@ -277,12 +277,12 @@ export class Blasts extends Group {
       // Keep a cohort spread over the elapsed render interval when QA advances
       // many fixed ticks at once; newborns must not all overlap at the final tick.
       const born = Math.max(c.born, this.time - (c.acc - 1) / Math.max(c.rate, 1e-9));
-      const j = () => this.rng.next() - .5;
+      const j = () => this.rng.next() - .5, ground = this.world.districts?.groundHeight(c.x, c.z) ?? 0;
       if (c.cloud) {
         // Smoke grenade cloud: low, thick, slow, filling the authored radius.
         const a = this.rng.next() * Math.PI * 2, d = Math.sqrt(this.rng.next()) * c.cloud * .8;
-        this.puff(c.x + Math.cos(a) * d, .4 + this.rng.next() * .8, c.z + Math.sin(a) * d, j() * .3, .18 + this.rng.next() * .2, j() * .3, 4 + this.rng.next() * 1.5, c.size * .45, c.size * (.9 + this.rng.next() * .35), c.heat, c.shade + j() * .08, born);
-      } else this.puff(c.x + j() * .5 * c.size, .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, (c.size >= 2 ? 3 : 1.5) + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .3, c.size * (.85 + this.rng.next() * .45), c.heat, c.shade + j() * .08, born);
+        this.puff(c.x + Math.cos(a) * d, ground + .4 + this.rng.next() * .8, c.z + Math.sin(a) * d, j() * .3, .18 + this.rng.next() * .2, j() * .3, 4 + this.rng.next() * 1.5, c.size * .45, c.size * (.9 + this.rng.next() * .35), c.heat, c.shade + j() * .08, born);
+      } else this.puff(c.x + j() * .5 * c.size, ground + .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, (c.size >= 2 ? 3 : 1.5) + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .3, c.size * (.85 + this.rng.next() * .45), c.heat, c.shade + j() * .08, born);
     }
   }
   /** Fires, burning props/cars and smoke-grenade zones drive persistent emitters. */
@@ -336,7 +336,7 @@ export class Blasts extends Group {
     };
     const pool = (x: number, z: number, radius: number, color: number, intensity: number) => {
       if (glows >= GLOWS) return;
-      this.gl.gOrigin.setXYZW(glows, x, .03, z, radius);
+      this.gl.gOrigin.setXYZW(glows, x, (this.world.districts?.groundHeight(x,z)??0)+.03, z, radius);
       this.gl.gColor.setXYZW(glows, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); glows++;
     };
     for (const [id, c] of this.fireColumns) {
@@ -345,7 +345,7 @@ export class Blasts extends Group {
       const life = e.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1;
       for (let i = 0; i < n; i++) {
         const a = id * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        flame(c.x + Math.cos(a) * d, big ? .55 : .02, c.z + Math.sin(a) * d, id * .13 + i * .37, (big ? 1.1 : .75) * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+        flame(c.x + Math.cos(a) * d, (this.world.districts?.groundHeight(c.x,c.z)??0)+(big ? .55 : .02), c.z + Math.sin(a) * d, id * .13 + i * .37, (big ? 1.1 : .75) * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
       }
       pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + id)) * (.3 + .7 * life));
     }

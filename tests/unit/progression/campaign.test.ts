@@ -1,5 +1,5 @@
 import { describe,expect,test } from 'vitest';
-import { newCampaign,beginRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,offer,eligible,powerScore,rackSize,validRacks,preset,gearTier,weaponChoices,type CampaignSave,type Level } from '../../../src/sim/progression/Campaign';
+import { newCampaign,autoRewards,beginRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,offer,eligible,powerScore,rackSize,validRacks,preset,gearTier,weaponChoices,type CampaignSave,type Level } from '../../../src/sim/progression/Campaign';
 import { upgrades } from '../../../src/data/upgrades';
 import { decodeSave,validateSave,SaveStore } from '../../../src/sim/progression/Save';
 function start(save:CampaignSave,level:Level){beginRewards(save,level);const choices=weaponChoices[level];if(choices)chooseWeapon(save,choices[0]);revealCards(save);}
@@ -63,4 +63,12 @@ describe('campaign',()=>{
   test('@E13 saves round-trip at each pending phase; rewards cannot be claimed twice',()=>{
     const save=newCampaign();save.ownedActions.push('weapon.bat');beginRewards(save,1);expect(validateSave(save)).toBe(true);expect(save.pending!.weaponChosen).toBe(true);expect(()=>chooseWeapon(save,'weapon.machete')).toThrow();revealCards(save);expect(validateSave(save)).toBe(true);pickUpgrades(save,save.pending!.cards.slice(0,2));expect(validateSave(save)).toBe(true);finishRewards(save,save.racks);expect(()=>beginRewards(save,1)).toThrow();
   });
+});
+test('@E24 @E24-AC14 finished L6 save round-trips without granting a sixth reward',()=>{const save=preset('L6-default');save.completedLevels=6;expect(validateSave(save)).toBe(true);expect(decodeSave(JSON.stringify(save))).toEqual({status:'ok',save});});
+
+test('@E24 @E24-AC05 the actual L5 fire axe rack is valid at the L6 handover when existing equipment ownership is recorded',()=>{
+  const save=preset('L5-default');
+  autoRewards(save,5);save.racks={LEFT:['weapon.fire-axe','weapon.bat'],RIGHT:['weapon.army-mg','weapon.handgun','weapon.kick']};
+  for(const id of [...save.racks.LEFT,...save.racks.RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
+  expect(validateSave(save)).toBe(true);
 });

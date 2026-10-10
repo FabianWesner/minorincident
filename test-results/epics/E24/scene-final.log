@@ -1,0 +1,69 @@
+
+> scene
+> sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts tools/l6/scenes/qa-l6-shelter-injuries.json tools/l6/scenes/qa-l6-tunnel-retreat.json tools/l6/scenes/qa-l6-exit-night-weather.json --backend webgl2 --tier high --out test-results/epics/E24/scenes --sheet 60 --shots 1,90,179
+
+[
+  {
+    "scene": "qa-l6-shelter-injuries",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 180,
+    "seconds": 10.439,
+    "failed": [],
+    "clipping": {
+      "staticPairs": 4,
+      "actorHits": 2,
+      "piercing": 2
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-shelter-injuries/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-shelter-injuries/shot-0001.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-shelter-injuries/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-shelter-injuries/shot-0179.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-shelter-injuries/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-shelter-injuries/metrics.json"
+    ]
+  },
+  {
+    "scene": "qa-l6-tunnel-retreat",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 180,
+    "seconds": 11.871,
+    "failed": [],
+    "clipping": {
+      "staticPairs": 16,
+      "actorHits": 88,
+      "piercing": 53
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-tunnel-retreat/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-tunnel-retreat/shot-0001.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-tunnel-retreat/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-tunnel-retreat/shot-0179.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-tunnel-retreat/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-tunnel-retreat/metrics.json"
+    ]
+  },
+  {
+    "scene": "qa-l6-exit-night-weather",
+    "pass": true,
+    "backend": "webgl",
+    "frames": 180,
+    "seconds": 8.333,
+    "failed": [],
+    "clipping": {
+      "staticPairs": 2,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "sheet": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-exit-night-weather/sheet.jpg",
+    "files": [
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-exit-night-weather/shot-0001.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-exit-night-weather/shot-0090.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-exit-night-weather/shot-0179.png",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-exit-night-weather/sheet.jpg",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/epics/E24/scenes/qa-l6-exit-night-weather/metrics.json"
+    ]
+  }
+]

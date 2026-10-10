@@ -1,0 +1,504 @@
+{
+  "policy": "newbie",
+  "reports": [
+    {
+      "level": "L1",
+      "policy": "newbie",
+      "seed": 1,
+      "completed": true,
+      "time": 109.5,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 20,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "pickup",
+          "t": 14.866666666666667
+        },
+        {
+          "id": "deliver",
+          "t": 50.766666666666666
+        },
+        {
+          "id": "escape",
+          "t": 64.78333333333333
+        },
+        {
+          "id": "weapon",
+          "t": 82.08333333333333
+        },
+        {
+          "id": "firestation",
+          "t": 109.5
+        }
+      ],
+      "furthestObjective": "firestation",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "start": {
+        "LEFT": [
+          "weapon.fists"
+        ],
+        "RIGHT": [
+          "weapon.kick"
+        ]
+      },
+      "end": {
+        "LEFT": [
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.fists"
+        ]
+      },
+      "carriedSurvivors": []
+    },
+    {
+      "level": "L2",
+      "policy": "newbie",
+      "seed": 1,
+      "completed": true,
+      "time": 357.5833333333333,
+      "deaths": 4,
+      "kills": 0,
+      "damageTaken": 625.6666666666648,
+      "failures": {
+        "player-died": 4
+      },
+      "objectiveTimeline": [
+        {
+          "id": "axe",
+          "t": 0.7666666666666667
+        },
+        {
+          "id": "calm",
+          "t": 23.15
+        },
+        {
+          "id": "board",
+          "t": 25.133333333333333
+        },
+        {
+          "id": "ride",
+          "t": 41.71666666666667
+        },
+        {
+          "id": "doors",
+          "t": 54.53333333333333
+        },
+        {
+          "id": "bridge",
+          "t": 357.5833333333333
+        }
+      ],
+      "furthestObjective": "bridge",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "start": {
+        "LEFT": [
+          "weapon.bat",
+          "weapon.kick"
+        ],
+        "RIGHT": [
+          "weapon.kick"
+        ]
+      },
+      "end": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.kick"
+        ]
+      },
+      "carriedSurvivors": []
+    },
+    {
+      "level": "L3",
+      "policy": "newbie",
+      "seed": 1,
+      "completed": true,
+      "time": 184.4,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "armory",
+          "t": 4.516666666666667
+        },
+        {
+          "id": "defend",
+          "t": 63.31666666666667
+        },
+        {
+          "id": "checkpoint",
+          "t": 184.4
+        }
+      ],
+      "furthestObjective": "checkpoint",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "start": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "ability.corgi-lure",
+          "weapon.molotov"
+        ]
+      },
+      "end": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ]
+      },
+      "carriedSurvivors": []
+    },
+    {
+      "level": "L4",
+      "policy": "newbie",
+      "seed": 1,
+      "completed": true,
+      "time": 205.26666666666668,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 10,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "ride",
+          "t": 30.366666666666667
+        },
+        {
+          "id": "quartermaster",
+          "t": 39.516666666666666
+        },
+        {
+          "id": "hold",
+          "t": 160.33333333333334
+        },
+        {
+          "id": "hide",
+          "t": 196.76666666666668
+        },
+        {
+          "id": "bar",
+          "t": 198.26666666666668
+        },
+        {
+          "id": "wait",
+          "t": 205.26666666666668
+        }
+      ],
+      "furthestObjective": "wait",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "start": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick"
+        ],
+        "RIGHT": [
+          "weapon.smg",
+          "weapon.handgun",
+          "ability.corgi-lure"
+        ]
+      },
+      "end": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.smg",
+          "weapon.handgun"
+        ]
+      },
+      "carriedSurvivors": []
+    },
+    {
+      "level": "L5",
+      "policy": "newbie",
+      "seed": 1,
+      "completed": true,
+      "time": 244.28333333333333,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "emerge",
+          "t": 2.5166666666666666
+        },
+        {
+          "id": "look",
+          "t": 181.51666666666668
+        },
+        {
+          "id": "metro",
+          "t": 244.28333333333333
+        }
+      ],
+      "furthestObjective": "metro",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "start": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.kick"
+        ],
+        "RIGHT": [
+          "weapon.pipe-bomb",
+          "weapon.rocket-launcher",
+          "weapon.army-mg"
+        ]
+      },
+      "end": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ]
+      },
+      "carriedSurvivors": []
+    },
+    {
+      "level": "L6",
+      "policy": "newbie",
+      "seed": 1,
+      "completed": true,
+      "time": 264.48333333333335,
+      "deaths": 0,
+      "kills": 0,
+      "damageTaken": 0,
+      "failures": {},
+      "objectiveTimeline": [
+        {
+          "id": "shelter",
+          "t": 33.2
+        },
+        {
+          "id": "stop",
+          "t": 69.21666666666667
+        },
+        {
+          "id": "retreat",
+          "t": 242.13333333333333
+        },
+        {
+          "id": "exit",
+          "t": 264.48333333333335
+        }
+      ],
+      "furthestObjective": "exit",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null,
+      "start": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ]
+      },
+      "end": {
+        "LEFT": [
+          "weapon.fire-axe",
+          "weapon.bat"
+        ],
+        "RIGHT": [
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick"
+        ]
+      },
+      "carriedSurvivors": [
+        "dale",
+        "rosa",
+        "okafor",
+        "mia",
+        "sam"
+      ]
+    }
+  ],
+  "save": {
+    "version": 1,
+    "seed": 1,
+    "character": "female",
+    "unlockedLevel": 6,
+    "completedLevels": 5,
+    "ownedActions": [
+      "weapon.fists",
+      "weapon.kick",
+      "weapon.bat",
+      "weapon.fire-axe",
+      "weapon.molotov",
+      "ability.corgi-lure",
+      "weapon.handgun",
+      "weapon.smg",
+      "weapon.army-mg",
+      "weapon.rocket-launcher",
+      "weapon.pipe-bomb"
+    ],
+    "upgrades": [
+      "upgrade.handling.1",
+      "upgrade.melee.1",
+      "upgrade.melee.2",
+      "upgrade.specials.1",
+      "upgrade.handling.2",
+      "upgrade.perk.1",
+      "upgrade.knockback.1",
+      "upgrade.handling.3",
+      "upgrade.throwables.1",
+      "upgrade.perk.2"
+    ],
+    "racks": {
+      "LEFT": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ],
+      "RIGHT": [
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick"
+      ]
+    },
+    "settings": {},
+    "usage": {},
+    "results": {
+      "L1": {
+        "time": 109.5,
+        "kills": 0,
+        "knockdowns": 6,
+        "damage": 20,
+        "deaths": 0,
+        "rescued": 0,
+        "optionalObjectives": [],
+        "delivered": true,
+        "infected": 19,
+        "turned": 10,
+        "escaped": 26
+      },
+      "L2": {
+        "time": 357.5833333333333,
+        "kills": 0,
+        "knockdowns": 41,
+        "damage": 625.6666666666648,
+        "deaths": 4,
+        "rescued": 7,
+        "optionalObjectives": [
+          "axe"
+        ]
+      },
+      "L3": {
+        "time": 184.4,
+        "kills": 0,
+        "knockdowns": 30,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 1,
+        "optionalObjectives": []
+      },
+      "L4": {
+        "time": 205.26666666666668,
+        "kills": 0,
+        "knockdowns": 5,
+        "damage": 10,
+        "deaths": 0,
+        "rescued": 2,
+        "optionalObjectives": []
+      },
+      "L5": {
+        "time": 244.28333333333333,
+        "kills": 0,
+        "knockdowns": 25,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 5,
+        "optionalObjectives": [],
+        "survivors": [
+          "dale",
+          "rosa",
+          "okafor",
+          "mia",
+          "sam"
+        ]
+      },
+      "L6": {
+        "time": 264.48333333333335,
+        "kills": 0,
+        "knockdowns": 38,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 28,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-0",
+          "shelter-1",
+          "shelter-2",
+          "shelter-3",
+          "shelter-4",
+          "shelter-5",
+          "shelter-6",
+          "shelter-8",
+          "shelter-9",
+          "shelter-10",
+          "shelter-11",
+          "shelter-12",
+          "shelter-13",
+          "shelter-14",
+          "shelter-15",
+          "shelter-16",
+          "shelter-17",
+          "shelter-18",
+          "shelter-19",
+          "shelter-20",
+          "shelter-21",
+          "shelter-22",
+          "shelter-23",
+          "dale",
+          "rosa",
+          "okafor",
+          "mia",
+          "sam"
+        ],
+        "survivorsIn": 29
+      }
+    },
+    "survivors": [
+      "dale",
+      "rosa",
+      "okafor",
+      "mia",
+      "sam"
+    ]
+  }
+}

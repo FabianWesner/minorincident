@@ -65,6 +65,7 @@ export interface MissionDef {
   l4?: boolean;
   /** L5 "Aftermath" controller (emerge, five hidden survivors, the escort group, the metro shelter); see LevelFiveAftermath. */
   l5?: boolean;
+  l6?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
@@ -79,6 +80,7 @@ export interface MissionResult {
   delivered?: boolean; infected?: number; turned?: number; escaped?: number;
   /** L5: the survivors that reached the station alive (keys of `l5Survivors`), carried into L6. */
   survivors?: string[];
+  survivorsIn?: number;
 }
 /** Serializable L1 v2 story state; lives in MissionState so checkpoints snapshot it (ticks are shifted on restore). */
 export interface L1State {
@@ -210,6 +212,7 @@ export interface MissionState {
   l4?: L4State;
   /** L5 controller state; checkpoints snapshot it (ticks are shifted on restore). */
   l5?: L5State;
+  l6?: L6State;
   id: string; phase: 'briefing' | 'playing' | 'cinematic' | 'retry' | 'result' | 'progression';
   /** Remaining global gameplay time (cinematics and retry screens pause it). */
   deadlineTicks: number | null;
@@ -225,4 +228,17 @@ export interface MissionCheckpoint {
   tick: number; state: MissionState; entities: EntitySnapshot[];
   /** Snapshots of the optional L1 toy systems (bicycle, yard gates, dumpsters, outbreak overlay). */
   seams?: Record<string, unknown>;
+}
+
+/** E24 checkpoint state. Times are simulation ticks. */
+export interface L6State {
+  /** Checkpointed dialogue uses the same HUD bubble as earlier story levels. */
+  say?: { id: number; text: string; at: number; until: number };
+  phase: 'shelter'|'first'|'fails'|'retreat'|'exit'|'done';
+  startAt:number; breach1At:number; breach2At:number; abandonAt:number; nextWave:number; firstBang:boolean; secondBang:boolean;
+  leaderX:number; leaderZ:number; paused:boolean; flashlight:boolean; mainPower:boolean; emergency:boolean;
+  exitAt:number; gateAt:number; injuryLineAt:number; lastShot:number; mid:boolean; platform:boolean;
+  survivors:{key:string;id:number;injured:boolean;routine:'guard'|'sit'|'talk'|'treat'|'rest'|'share';status:'shelter'|'following'|'dead'|'turned'|'out';straggler:boolean;collected:boolean;rejoined:boolean;hold:number}[];
+  gates:{id:number;x:number;closedAt:number;hold:number}[];
+  infectedIds:number[]; spawnLog:{id:number;door:number;x:number;z:number;tick:number;wave:number;offscreen:boolean}[];
 }

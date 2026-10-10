@@ -504,19 +504,29 @@ export class InfectedSystem {
       return;
     }
     if (b.state === 'attack') {
+      const serviceGate = this.world.entities.get(b.targetId)?.archetype === 'l6.service-gate';
       if (tick >= b.until && (this.struck = 0, this.resolve(e))) {
         // A lunge that missed (she side-stepped or outran it) costs a recovery beat: it stops and turns back onto her.
         // This is the dodge window of a run-away game now that the lunge homes and the chaser no longer loses her.
-        if (b.special === 'lunge' && this.struck !== e.id && brain.targetId === 1) {
+        if (!serviceGate && b.special === 'lunge' && this.struck !== e.id && brain.targetId === 1) {
           const p = this.world.entities.get(1)!.transform;
           brain.pauseUntil = tick + 30; brain.looking = true; brain.lookYaw = -Math.atan2(p.z - e.transform.z, p.x - e.transform.x);
         }
-        b.state = 'chase'; b.cooldown = tick + Math.max(0, l1Ticks(l1v2.infected.attackCycleS) - Math.ceil(infectedDef(e.archetype).windup * 60)); e.combat!.attacking = false;
+        b.state = 'chase'; b.cooldown = tick + (serviceGate ? 60 : Math.max(0, l1Ticks(l1v2.infected.attackCycleS) - Math.ceil(infectedDef(e.archetype).windup * 60))); e.combat!.attacking = false;
         // The lunge ends planted: bleed its 7 m/s impulse so the next step can turn back onto the courier at once.
         const m = e.locomotion, v = m ? Math.hypot(m.vx, m.vz) : 0;
         if (m && v > 2.5) { m.vx *= 2.5 / v; m.vz *= 2.5 / v; m.ax = m.az = 0; }
       }
       return;
+    }
+    // Metro gates stop a remembered pursuit. The goal is the last sighting, never a hidden human's live position.
+    if (this.world.missions?.state.l6 && brain.seenTick > 0 && (brain.mode === 'chase' || brain.mode === 'search' || brain.mode === 'attracted')) {
+      const obstacle=this.world.barricades!.attackTarget(e,{x:brain.seenX,z:brain.seenZ});
+      if(obstacle?.archetype==='l6.service-gate') {
+        if(!this.world.barricades!.withinReach(e,obstacle))this.steerL1(e,brain,this.world.barricades!.approach(e,obstacle),brain.runSpeed,false,false);
+        else if(tick>=b.cooldown){this.windup(e);b.targetId=obstacle.id;}
+        this.world.spatial.set(e.id,e.transform.x,e.transform.z);return;
+      }
     }
     if (brain.mode === 'bite') { this.updateBite(e, b, brain); return; }
     if (brain.cueUntil > 0) { this.herdTurn(e, b, brain); this.world.spatial.set(e.id, e.transform.x, e.transform.z); return; }
