@@ -41,10 +41,9 @@ export class LevelSixSubway {
     for(const at of [{x:281,z:24},{x:286,z:5}]){const id=w.hazards!.spawn('fire',at,{radius:1.3,duration:7200});w.entities.get(id)!.transform.y=3.95;}
     this.power();this.mission.requestCheckpoint('shelter');
     this.say(this.s.survivors.find(r=>r.key==='rosa'||r.routine==='treat')!.id,l6InjuryLines.treatment);
-    this.say(this.s.survivors.find(r=>r.injured)!.id,l6InjuryLines.patient);
     w.events.on('combat.attack',e=>{if(e.type==='combat.attack'&&e.sourceId===1&&e.actionId==='weapon.army-mg'&&w.tick-this.s.lastShot>=30){this.s.lastShot=w.tick;w.events.emit({type:'outbreak.distraction',tick:w.tick,id:500000+w.tick*64,kind:'gunfire',position:e.position,radius:30,until:w.tick+360});}});
   }
-  private say(id: number,text: string):void {const e=this.w.entities.get(id);if(e)this.w.events.emit({type:'story.say',tick:this.w.tick,id,text,position:e.transform});}
+  private say(id: number,text: string):void {const e=this.w.entities.get(id);if(e){this.s.say={id,text,at:this.w.tick,until:this.w.tick+ticks(4.5)};this.w.events.emit({type:'story.say',tick:this.w.tick,id,text,position:e.transform});}}
   private power():void {
     const d=this.w.districts!.districts[0];d.decay.lights=['shelter-camp','self',...(this.s.mainPower?['metro-main']:[]),...(this.s.emergency?['metro-emergency']:[])];
     if(this.w.weather)this.w.weather.powerRevision++;
@@ -91,6 +90,7 @@ export class LevelSixSubway {
   }
   update():void {
     const s=this.s,w=this.w,t=w.tick,p=w.entities.get(1)!.transform;
+    if(s.phase==='shelter'&&t===s.startAt+300)this.say(s.survivors.find(r=>r.injured)!.id,l6InjuryLines.patient);
     for(const r of this.living()){const e=w.entities.get(r.id);if(!e||e.health.current<=0||e.civilian?.state==='finished')r.status='dead';else if(e.infection||e.infected)r.status='turned';}
     if(!s.firstBang&&t>=s.breach1At-120){s.firstBang=true;this.bang(false);}
     if(!s.secondBang&&t>=s.breach2At-120){s.secondBang=true;this.bang(true);}
