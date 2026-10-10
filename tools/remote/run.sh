@@ -173,6 +173,7 @@ for p in $PULL; do
   mkdir -p "$(dirname "$WT/$p")"
   rsync -a -z -e "ssh $SSHO" "$HOST:$JOB/$p" "$(dirname "$WT/$p")/" 2>/dev/null && echo "[remote] pulled $p" || echo "[remote] could not pull $p (missing?)" >&2
 done
+IFS=$OLDIFS
 python3 -I "$D/pool.py" reap >/dev/null 2>&1 &
 echo "[remote] done exit=$RC (runner $IP, sync $((T1 - T0))s, remote total $((T2 - T1))s)"
 exit $RC
