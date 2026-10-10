@@ -1,0 +1,82 @@
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 397 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                            1.65 kB │ gzip:     0.72 kB
+dist/index.html                                    2.49 kB │ gzip:     0.82 kB
+dist/build/basis_transcoder-o4Hde_L7.js           57.53 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm        527.33 kB │ gzip:   244.57 kB
+dist/build/rapier-C6GCbKVJ.wasm                3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-BWyL0Yxb.css                     29.59 kB │ gzip:     6.76 kB
+dist/build/lookViewpoints-BX-OEann.js              0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js      0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js              1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-Dm1gT06O.js                  1.35 kB │ gzip:     0.79 kB
+dist/build/controls-DGdjkqyP.js                    1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                   1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-DRxwbp1Q.js                       2.50 kB │ gzip:     1.33 kB
+dist/build/LevelOneBot-txbhxJsM.js                 4.82 kB │ gzip:     2.30 kB
+dist/build/lookPatch-BT7ef7_D.js                   5.26 kB │ gzip:     2.69 kB
+dist/build/l3-_DgjBdgY.js                          7.27 kB │ gzip:     3.28 kB
+dist/build/l4-C5XxPvAF.js                          7.50 kB │ gzip:     3.28 kB
+dist/build/Inspection-BhGQRcwU.js                 12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-h1Bb_VTM.js                14.09 kB │ gzip:     4.53 kB
+dist/build/MotionLab-B_HABPHJ.js                  20.03 kB │ gzip:     8.43 kB
+dist/build/LevelFiveBot-C71Yc6RX.js               21.41 kB │ gzip:     5.79 kB
+dist/build/testApi-Bktdpjk_.js                    21.43 kB │ gzip:     8.21 kB
+dist/build/index-DZI_WVPS.js                      26.49 kB │ gzip:     7.08 kB
+dist/build/SceneLab-BQBZwErP.js                   56.73 kB │ gzip:    20.79 kB
+dist/build/Pickups-B8_n-SBh.js                    59.22 kB │ gzip:    19.40 kB
+dist/build/light-anchors-DLZq4pRc.js              86.93 kB │ gzip:     6.73 kB
+dist/build/Debug-DoeeJH5i.js                     155.75 kB │ gzip:    32.99 kB
+dist/build/rapier-B4BYJx26.js                    211.96 kB │ gzip:    36.08 kB
+dist/build/HouseEmergence-BA9MVX_8.js            259.15 kB │ gzip:    71.50 kB
+dist/build/install-CfVAYLMz.js                   270.00 kB │ gzip:    81.55 kB
+dist/build/three.module-BYK4pYdT.js              287.60 kB │ gzip:    77.06 kB
+dist/build/registry-CBCCV_Ve.js                  466.22 kB │ gzip:    88.40 kB
+dist/build/WeatherView-sOw7rwUo.js               710.68 kB │ gzip:   199.78 kB
+dist/build/Physics-DhNHl5OE.js                   749.03 kB │ gzip:   165.56 kB
+dist/build/index-HpgQhtuT.js                     851.43 kB │ gzip:   265.17 kB
+dist/build/character-library-DVCXVKAp.js       1,251.10 kB │ gzip:   198.35 kB
+✓ built in 2.89s
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (2.3m)
+  ✘  2 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (18.7s)
+  ✓  3 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (14.1s)
+
+
+  1) [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    -34
+
+      77 |   for(let i=0;i<mask.data.length;i+=4)if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){sum+=lum(image.data[i],image.data[i+1],image.data[i+2]);n++;}
+      78 |   const covered=(p:number[])=>{const i=(Math.round((1-p[1])/2*mask.height)*mask.width+Math.round((p[0]+1)/2*mask.width))*4;return mask.data[i]>240&&mask.data[i+1]<20;};const rings=setup.ring.filter(p=>!covered(p)).map(p=>patch(image,p,5).l),player=sum/n,ring=rings.reduce((a,b)=>a+b,0)/rings.length,contrast=(player+.05)/(ring+.05);
+    > 79 |   const eyes=setup.heads.map(({head,feet})=>{const x0=Math.round((head[0]+1)/2*image.width),y0=Math.round((1-head[1])/2*image.height),y1=Math.round((1-feet[1])/2*image.height),half=Math.max(8,Math.round((y1-y0)*.45));let best={l:-1,r:0,g:0,b:0};for(let y=y0-half;y<=y1;y++)for(let x=x0-half;x<=x0+half;x++){const i=(y*image.width+x)*4,l=lum(image.data[i],image.data[i+1],image.data[i+2]);if(l>best.l)best={l,r:image.data[i],g:image.data[i+1],b:image.data[i+2]};}return best;});writeFileSync(`${out}/${name}-readability.json`,JSON.stringify({n,player,ring,contrast,eyes,setup},null,2));expect(n).toBeGreaterThan(200);expect(contrast).toBeGreaterThanOrEqual(3);expect(setup.lighting!.heroShadow).toBe(1);for(const e of eyes){expect(e.r-Math.max(e.g,e.b)).toBeGreaterThanOrEqual(60);expect(hue(e.r,e.g,e.b)>=330||hue(e.r,e.g,e.b)<=20).toBe(true);}
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^
+      80 | });
+      81 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L6.spec.ts:79:754
+
+    Error Context: test-results/playwright/run-3506/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3506/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3506/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+  2 passed (2.9m)

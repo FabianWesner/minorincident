@@ -1,0 +1,87 @@
+
+Running 31 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/continuity.spec.ts:11:1 › T-CONT-01 @continuity L2 shows the L1 aftermath at every carried-over spot (game camera, near and far) (1.2m)
+  ✓   2 [chromium] › tests/e2e/levels/continuity.spec.ts:38:1 › T-CONT-02 @continuity burned annex twin loads every runtime LOD without placeholders (780ms)
+  ✓   3 [chromium] › tests/e2e/levels/l1-firefighter-fight.spec.ts:14:1 › T-E19-firefighter-fight @E19 the firefighter swings at an infected at the bay (game camera captures) (38.7s)
+  ✓   4 [chromium] › tests/e2e/levels/l1-firestation.spec.ts:17:1 › T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-station bay completes L1 (bay faces the camera, ring on the trigger) (34.7s)
+  ✓   5 [chromium] › tests/e2e/levels/L1.spec.ts:25:3 › L1 v2 real-input playthrough › T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07) (28.8s)
+  ✓   6 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (49.1s)
+  ✓   7 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (1.5m)
+  ✓   8 [chromium] › tests/e2e/levels/l2-apron-alarm.spec.ts:9:1 › T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm (33.5s)
+  ✓   9 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:9:1 › T-E20-axe-findable @E20 the axe rack is visible and marked during calm (35.4s)
+  ✓  10 [chromium] › tests/e2e/levels/l2-rescue-setpiece.spec.ts:12:1 › T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open) (44.4s)
+  ✓  11 [chromium] › tests/e2e/levels/L2.spec.ts:65:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.7m)
+  ✓  12 [chromium] › tests/e2e/levels/L2.spec.ts:127:3 › L2 The Failed Rescue in the browser › T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout (46.8s)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+L3 RESULT street=commerce deaths=0
+  ✓  13 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (1.2m)
+{"attackShotEarly":true,"inFrameAtFallback":6}
+L3 RESULT street=blvd deaths=0
+  ✓  14 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (1.2m)
+{"attackShotEarly":true,"inFrameAtFallback":6}
+  ✘  15 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (3.0m)
+  ✓  16 [chromium] › tests/e2e/levels/L3.spec.ts:179:3 › L3 The Police Collapse in the browser › T-E21-17b @E21 @E21-AC17 campaign: crossing the army zone line loads L4 with the carried loadout and no reward screen (25.1s)
+  ✓  17 [chromium] › tests/e2e/levels/l4-boot.spec.ts:6:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (18.2s)
+  ✓  18 [chromium] › tests/e2e/levels/L4.spec.ts:85:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (37.5s)
+  ✓  19 [chromium] › tests/e2e/levels/L4.spec.ts:145:3 › L4 The Safe City Falls in the browser › T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen (16.0s)
+  ✓  20 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props (22.7s)
+  ✓  21 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props (22.3s)
+  ✓  22 [chromium] › tests/e2e/levels/L5.spec.ts:148:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (1.7m)
+  ✓  23 [chromium] › tests/e2e/levels/L5.spec.ts:220:3 › L5 Aftermath in the browser › T-E23-18 @E23 @E23-AC18 recognition: the four pair cameras in L4 (W0, intact) and L5 (W5, fallen) from the real game, side by side (40.7s)
+  ✓  24 [chromium] › tests/e2e/levels/L5.spec.ts:255:3 › L5 Aftermath in the browser › T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign (45.2s)
+  ✓  25 [chromium] › tests/e2e/levels/L5.spec.ts:288:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgl), not only their props (20.2s)
+  ✓  26 [chromium] › tests/e2e/levels/L5.spec.ts:288:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgpu), not only their props (17.8s)
+  ✓  27 [chromium] › tests/e2e/levels/L6.spec.ts:5:1 › T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights (18.0s)
+  ✓  28 [chromium] › tests/e2e/levels/L6.spec.ts:15:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night (16.9s)
+  ✘  29 [chromium] › tests/e2e/levels/L6.spec.ts:22:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (52.8s)
+  ✓  30 [chromium] › tests/e2e/levels/L6.spec.ts:73:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (17.5s)
+  ✓  31 [chromium] › tests/e2e/levels/L6.spec.ts:73:103 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (16.9s)
+
+
+  1) [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review 
+
+    Error: Could not travel to {"x":118,"z":24} from {"x":106.62232208251953,"y":0.8500000238418579,"z":25.383996963500977,"yaw":-2.9805933854926376} {"hp":100,"deaths":0,"near":0}
+
+      93 |     }
+      94 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
+    > 95 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
+         |           ^
+      96 |   };
+      97 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      98 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/private/tmp/mi-e25-e27-gate/tests/e2e/levels/L3.spec.ts:95:11)
+        at /private/tmp/mi-e25-e27-gate/tests/e2e/levels/L3.spec.ts:156:7
+
+    Error Context: test-results/playwright/run-3500/e2e-levels-L3-L3-The-Polic-a9071-spots-for-the-vision-review-chromium/error-context.md
+
+  2) [chromium] › tests/e2e/levels/L6.spec.ts:22:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      56 |
+      57 |   }
+    > 58 |   const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);expect(m.result!.rescued/m.result!.survivorsIn!).toBeGreaterThanOrEqual(.6);expect(m.l6!.survivors.some(r=>r.straggler&&r.rejoined)).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});await page.getByRole('button',{name:'Credits',exact:true}).click();await expect(page.getByRole('heading',{name:'Credits',exact:true})).toBeVisible();await expect(page.locator('.credits-roll')).toContainText('A community still alive');await expect(page.locator('.credits-roll')).toHaveCSS('opacity','1',{timeout:8000});await page.evaluate(()=>window.__SS__!.vfx.stepRender(.3));await page.screenshot({path:`${out}/real-credits.png`});await expect(page.getByRole('heading',{name:'Minor Incident',exact:true})).toBeVisible({timeout:16000});
+         |                                                                                                                                                                                                                                                                                                                                                          ^
+      59 | });
+      60 |
+      61 | const lum = (r: number, g: number, b: number) => { const c = (v: number) => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * c(r) + .7152 * c(g) + .0722 * c(b); };
+        at /private/tmp/mi-e25-e27-gate/tests/e2e/levels/L6.spec.ts:58:346
+
+    Error Context: test-results/playwright/run-3500/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3500/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3500/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review 
+    [chromium] › tests/e2e/levels/L6.spec.ts:22:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs 
+  29 passed (23.2m)

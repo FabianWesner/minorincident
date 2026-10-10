@@ -1,0 +1,113 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close -> 94.130.181.173:/srv/mi/ws/e25-e27-close-42d11a
+[remote] sync 17s, 4968 files; job /srv/mi/jobs/e25-e27-close-42d11a-29429-1791641537; queueing for a slot
+[runner] slot 0 acquired; load 0.08 0.13 0.31
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+fatal: Needed a single revision
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 397 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mpreview/index.html                        [39m[1m[2m    1.65 kB[22m[1m[22m[2m │ gzip:     0.73 kB[22m
+[2mdist/[22m[32mindex.html                                [39m[1m[2m    2.49 kB[22m[1m[22m[2m │ gzip:     0.82 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-o4Hde_L7.js        [39m[1m[2m   57.53 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-VXdx5NbI.wasm      [39m[1m[2m  527.33 kB[22m[1m[22m[2m │ gzip:   247.62 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mrapier-C6GCbKVJ.wasm                [39m[1m[2m3,082.10 kB[22m[1m[22m[2m │ gzip: 1,176.71 kB[22m
+[2mdist/[22m[2mbuild/[22m[35mindex-BWyL0Yxb.css                  [39m[1m[2m   29.59 kB[22m[1m[22m[2m │ gzip:     6.77 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookViewpoints-BX-OEann.js          [39m[1m[2m    0.23 kB[22m[1m[22m[2m │ gzip:     0.16 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmodulepreload-polyfill-B5Qt9EMX.js  [39m[1m[2m    0.71 kB[22m[1m[22m[2m │ gzip:     0.40 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mpreload-helper-BlTxHScW.js          [39m[1m[2m    1.11 kB[22m[1m[22m[2m │ gzip:     0.65 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowdProbe-Dm1gT06O.js              [39m[1m[2m    1.35 kB[22m[1m[22m[2m │ gzip:     0.79 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcontrols-DGdjkqyP.js                [39m[1m[2m    1.40 kB[22m[1m[22m[2m │ gzip:     0.74 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mworldLook-DT8mxh_z.js               [39m[1m[2m    1.64 kB[22m[1m[22m[2m │ gzip:     0.77 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowd-DRxwbp1Q.js                   [39m[1m[2m    2.50 kB[22m[1m[22m[2m │ gzip:     1.33 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelOneBot-txbhxJsM.js             [39m[1m[2m    4.82 kB[22m[1m[22m[2m │ gzip:     2.32 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookPatch-BT7ef7_D.js               [39m[1m[2m    5.26 kB[22m[1m[22m[2m │ gzip:     2.73 kB[22m
+[2mdist/[22m[2mbuild/[22m[36ml3-_DgjBdgY.js                      [39m[1m[2m    7.27 kB[22m[1m[22m[2m │ gzip:     3.30 kB[22m
+[2mdist/[22m[2mbuild/[22m[36ml4-C5XxPvAF.js                      [39m[1m[2m    7.50 kB[22m[1m[22m[2m │ gzip:     3.30 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mInspection-BhGQRcwU.js              [39m[1m[2m   12.83 kB[22m[1m[22m[2m │ gzip:     4.39 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmeleeCombos-h1Bb_VTM.js             [39m[1m[2m   14.09 kB[22m[1m[22m[2m │ gzip:     4.56 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mMotionLab-B_HABPHJ.js               [39m[1m[2m   20.03 kB[22m[1m[22m[2m │ gzip:     8.46 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelFiveBot-C71Yc6RX.js            [39m[1m[2m   21.41 kB[22m[1m[22m[2m │ gzip:     5.81 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mtestApi-Bktdpjk_.js                 [39m[1m[2m   21.43 kB[22m[1m[22m[2m │ gzip:     8.21 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-DZI_WVPS.js                   [39m[1m[2m   26.49 kB[22m[1m[22m[2m │ gzip:     7.09 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mSceneLab-BQBZwErP.js                [39m[1m[2m   56.73 kB[22m[1m[22m[2m │ gzip:    20.89 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPickups-B8_n-SBh.js                 [39m[1m[2m   59.22 kB[22m[1m[22m[2m │ gzip:    19.46 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlight-anchors-DLZq4pRc.js           [39m[1m[2m   86.93 kB[22m[1m[22m[2m │ gzip:     6.70 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mDebug-DoeeJH5i.js                   [39m[1m[2m  155.75 kB[22m[1m[22m[2m │ gzip:    33.03 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mrapier-B4BYJx26.js                  [39m[1m[2m  211.96 kB[22m[1m[22m[2m │ gzip:    36.09 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mHouseEmergence-BA9MVX_8.js          [39m[1m[2m  259.15 kB[22m[1m[22m[2m │ gzip:    70.79 kB[22m
+[2mdist/[22m[2mbuild/[22m[36minstall-CfVAYLMz.js                 [39m[1m[2m  270.00 kB[22m[1m[22m[2m │ gzip:    81.75 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mthree.module-BYK4pYdT.js            [39m[1m[2m  287.60 kB[22m[1m[22m[2m │ gzip:    77.67 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mregistry-CBCCV_Ve.js                [39m[1m[2m  466.22 kB[22m[1m[22m[2m │ gzip:    88.70 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mWeatherView-sOw7rwUo.js             [39m[1m[2m  710.68 kB[22m[1m[22m[2m │ gzip:   200.39 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPhysics-DhNHl5OE.js                 [39m[1m[2m  749.03 kB[22m[1m[22m[2m │ gzip:   165.40 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-C-jLHvX4.js                   [39m[1m[2m  851.43 kB[22m[1m[22m[2m │ gzip:   266.15 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcharacter-library-DVCXVKAp.js       [39m[1m[2m1,251.10 kB[22m[1m[22m[2m │ gzip:   193.53 kB[22m
+[32m✓ built in 8.32s[39m
+[WebServer] fatal: Needed a single revision
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (40.0m)
+  ✘  2 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (54.1s)
+  ✓  3 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (51.7s)
+
+
+  1) [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors 
+
+    Test timeout of 2400000ms exceeded.
+
+    Error: page.evaluate: Test timeout of 2400000ms exceeded.
+
+      15 |
+      16 | function helpers(page: Page) {
+    > 17 |   const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
+         |                                    ^
+      18 |   const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
+      19 |   const player = () => page.evaluate(() => window.__SS__!.getState().player!);
+      20 |   const shots = new Set<string>();
+        at step (/srv/mi/jobs/e25-e27-close-42d11a-29429-1791641537/tests/e2e/levels/L5.spec.ts:17:36)
+        at go (/srv/mi/jobs/e25-e27-close-42d11a-29429-1791641537/tests/e2e/levels/L5.spec.ts:97:13)
+        at /srv/mi/jobs/e25-e27-close-42d11a-29429-1791641537/tests/e2e/levels/L5.spec.ts:163:9
+
+    Error Context: test-results/playwright/run-3506/e2e-levels-L5-L5-Aftermath-41863-hoto-spots-0-console-errors-chromium/error-context.md
+
+  2) [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    -24
+
+      77 |   for(let i=0;i<mask.data.length;i+=4)if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){sum+=lum(image.data[i],image.data[i+1],image.data[i+2]);n++;}
+      78 |   const covered=(p:number[])=>{const i=(Math.round((1-p[1])/2*mask.height)*mask.width+Math.round((p[0]+1)/2*mask.width))*4;return mask.data[i]>240&&mask.data[i+1]<20;};const rings=setup.ring.filter(p=>!covered(p)).map(p=>patch(image,p,5).l),player=sum/n,ring=rings.reduce((a,b)=>a+b,0)/rings.length,contrast=(player+.05)/(ring+.05);
+    > 79 |   const eyes=setup.heads.map(({head,feet})=>{const x0=Math.round((head[0]+1)/2*image.width),y0=Math.round((1-head[1])/2*image.height),y1=Math.round((1-feet[1])/2*image.height),half=Math.max(8,Math.round((y1-y0)*.45));let best={l:-1,r:0,g:0,b:0};for(let y=y0-half;y<=y1;y++)for(let x=x0-half;x<=x0+half;x++){const i=(y*image.width+x)*4,l=lum(image.data[i],image.data[i+1],image.data[i+2]);if(l>best.l)best={l,r:image.data[i],g:image.data[i+1],b:image.data[i+2]};}return best;});writeFileSync(`${out}/${name}-readability.json`,JSON.stringify({n,player,ring,contrast,eyes,setup},null,2));expect(n).toBeGreaterThan(200);expect(contrast).toBeGreaterThanOrEqual(3);expect(setup.lighting!.heroShadow).toBe(1);for(const e of eyes){expect(e.r-Math.max(e.g,e.b)).toBeGreaterThanOrEqual(60);expect(hue(e.r,e.g,e.b)>=330||hue(e.r,e.g,e.b)<=20).toBe(true);}
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^
+      80 | });
+      81 |
+        at /srv/mi/jobs/e25-e27-close-42d11a-29429-1791641537/tests/e2e/levels/L6.spec.ts:79:754
+
+    Error Context: test-results/playwright/run-3506/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3506/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3506/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/e2e/levels/L5.spec.ts (40.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  2 failed
+    [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors 
+    [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+  1 passed (41.9m)
+[remote] pulled test-results/epics/E25/closure/cutaway-remote.json
+[remote] pulled test-results/epics/E24/l6-shelter-fails-readability.json
+[remote] pulled test-results/epics/E24/l6-shelter-fails-readability.png
+[remote] done exit=1 (runner 94.130.181.173, sync 17s, remote total 2526s)

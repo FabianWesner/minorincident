@@ -1,0 +1,123 @@
+
+Running 29 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/l1-firefighter-fight.spec.ts:14:1 › T-E19-firefighter-fight @E19 the firefighter swings at an infected at the bay (game camera captures) (27.1s)
+  ✓   2 [chromium] › tests/e2e/levels/l1-firestation.spec.ts:17:1 › T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-station bay completes L1 (bay faces the camera, ring on the trigger) (28.5s)
+  ✓   3 [chromium] › tests/e2e/levels/L1.spec.ts:25:3 › L1 v2 real-input playthrough › T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07) (22.3s)
+  ✘   4 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (1.0m)
+  ✓   5 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (46.8s)
+  ✓   6 [chromium] › tests/e2e/levels/l2-apron-alarm.spec.ts:9:1 › T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm (29.5s)
+  ✓   7 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:9:1 › T-E20-axe-findable @E20 the axe rack is visible and marked during calm (30.1s)
+  ✓   8 [chromium] › tests/e2e/levels/l2-rescue-setpiece.spec.ts:12:1 › T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open) (44.4s)
+  ✓   9 [chromium] › tests/e2e/levels/L2.spec.ts:66:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.9m)
+  ✓  10 [chromium] › tests/e2e/levels/L2.spec.ts:128:3 › L2 The Failed Rescue in the browser › T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout (36.5s)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=commerce deaths=0
+  ✓  11 [chromium] › tests/e2e/levels/L3.spec.ts:107:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (1.0m)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=blvd deaths=0
+  ✓  12 [chromium] › tests/e2e/levels/L3.spec.ts:107:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (1.1m)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=oak deaths=0
+  ✓  13 [chromium] › tests/e2e/levels/L3.spec.ts:107:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (1.2m)
+  ✓  14 [chromium] › tests/e2e/levels/L3.spec.ts:177:3 › L3 The Police Collapse in the browser › T-E21-17b @E21 @E21-AC17 campaign: crossing the army zone line loads L4 with the carried loadout and no reward screen (21.8s)
+  ✓  15 [chromium] › tests/e2e/levels/l4-boot.spec.ts:6:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (15.8s)
+  ✓  16 [chromium] › tests/e2e/levels/L4.spec.ts:85:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (47.4s)
+  ✓  17 [chromium] › tests/e2e/levels/L4.spec.ts:145:3 › L4 The Safe City Falls in the browser › T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen (12.8s)
+  ✓  18 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props (19.5s)
+  ✓  19 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props (19.2s)
+  ✘  20 [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (45.2s)
+  ✓  21 [chromium] › tests/e2e/levels/L5.spec.ts:211:3 › L5 Aftermath in the browser › T-E23-18 @E23 @E23-AC18 recognition: the four pair cameras in L4 (W0, intact) and L5 (W5, fallen) from the real game, side by side (35.7s)
+  ✓  22 [chromium] › tests/e2e/levels/L5.spec.ts:246:3 › L5 Aftermath in the browser › T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign (29.1s)
+  ✓  23 [chromium] › tests/e2e/levels/L5.spec.ts:279:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgl), not only their props (16.4s)
+  ✓  24 [chromium] › tests/e2e/levels/L5.spec.ts:279:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgpu), not only their props (17.2s)
+  ✓  25 [chromium] › tests/e2e/levels/L6.spec.ts:5:1 › T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights (17.5s)
+  ✓  26 [chromium] › tests/e2e/levels/L6.spec.ts:15:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night (15.9s)
+  ✓  27 [chromium] › tests/e2e/levels/L6.spec.ts:22:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (1.2m)
+  ✘  28 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (15.1s)
+  ✓  29 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (14.3s)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result 
+
+    Error: Could not travel to {"x":40.029999999999994,"z":-34.449999999999996}; infected within 4 m [] from {"x":59.58228302001953,"y":0.7200000286102295,"z":14.185707092285156,"yaw":-2.7631101135861766}; bicycle=[{"kind":"bicycle","archetype":"veh.courier-bike","faction":"environment","transform":{"x":66.01157172908215,"y":0.05,"z":-7.122782673486087,"yaw":0.09488864121803076},"health":{"current":1,"max":1},"bicycle":{"mounted":false,"heading":-0.09488864121803076,"speed":0,"pedal":210.99093584642094,"steer":0,"lean":0,"standTicks":0,"armed":true,"lockUntil":19104,"fallen":{"at":19086,"side":1}},"id":85}]; lastPick=[] 
+
+      102 |       }
+      103 |       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });
+    > 104 |       throw new Error(`Could not travel to ${JSON.stringify(target)}; infected within 4 m ${JSON.stringify(around)} from ${JSON.stringify((await player()).transform)}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))}; lastPick=${JSON.stringify(await page.evaluate(() => window.__SS__!.input.lastPick()))} `);
+          |             ^
+      105 |     };
+      106 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
+      107 |     /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:104:13)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:215:9
+
+    Error Context: test-results/playwright/run-3500/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3500/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3500/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors 
+
+    Error: page.evaluate: TypeError: Cannot read properties of null (reading 'depthTexture')
+        at Y_.updateShadow (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:35:19251)
+        at Y_.updateBefore (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:35:20903)
+        at tf.updateBeforeNode (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:41:907)
+        at M1.updateBefore (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:41:15556)
+        at w3._renderObjectDirect (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:23978)
+        at w3.renderObject (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:23040)
+        at w3._renderObjects (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:20046)
+        at w3._renderScene (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:6914)
+        at w3.render (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:1354)
+        at hr.updateBefore (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:33:153019)
+        at Y_.updateShadow (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:35:19251)
+        at Y_.updateBefore (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:35:20903)
+        at tf.updateBeforeNode (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:41:907)
+        at M1.updateBefore (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:41:15556)
+        at w3._renderObjectDirect (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:23978)
+        at w3.renderObject (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:23040)
+        at w3._renderObjects (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:20046)
+        at w3._renderScene (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:6914)
+        at w3.render (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:44:1354)
+        at hr.updateBefore (http://127.0.0.1:3500/build/WeatherView-sOw7rwUo.js:33:153019)
+        at step (/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L5.spec.ts:17:36)
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L5.spec.ts:97:13)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L5.spec.ts:169:7
+
+    Error Context: test-results/playwright/run-3500/e2e-levels-L5-L5-Aftermath-41863-hoto-spots-0-console-errors-chromium/error-context.md
+
+  3) [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    -34
+
+      77 |   for(let i=0;i<mask.data.length;i+=4)if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){sum+=lum(image.data[i],image.data[i+1],image.data[i+2]);n++;}
+      78 |   const covered=(p:number[])=>{const i=(Math.round((1-p[1])/2*mask.height)*mask.width+Math.round((p[0]+1)/2*mask.width))*4;return mask.data[i]>240&&mask.data[i+1]<20;};const rings=setup.ring.filter(p=>!covered(p)).map(p=>patch(image,p,5).l),player=sum/n,ring=rings.reduce((a,b)=>a+b,0)/rings.length,contrast=(player+.05)/(ring+.05);
+    > 79 |   const eyes=setup.heads.map(({head,feet})=>{const x0=Math.round((head[0]+1)/2*image.width),y0=Math.round((1-head[1])/2*image.height),y1=Math.round((1-feet[1])/2*image.height),half=Math.max(8,Math.round((y1-y0)*.45));let best={l:-1,r:0,g:0,b:0};for(let y=y0-half;y<=y1;y++)for(let x=x0-half;x<=x0+half;x++){const i=(y*image.width+x)*4,l=lum(image.data[i],image.data[i+1],image.data[i+2]);if(l>best.l)best={l,r:image.data[i],g:image.data[i+1],b:image.data[i+2]};}return best;});writeFileSync(`${out}/${name}-readability.json`,JSON.stringify({n,player,ring,contrast,eyes,setup},null,2));expect(n).toBeGreaterThan(200);expect(contrast).toBeGreaterThanOrEqual(3);expect(setup.lighting!.heroShadow).toBe(1);for(const e of eyes){expect(e.r-Math.max(e.g,e.b)).toBeGreaterThanOrEqual(60);expect(hue(e.r,e.g,e.b)>=330||hue(e.r,e.g,e.b)<=20).toBe(true);}
+         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^
+      80 | });
+      81 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L6.spec.ts:79:754
+
+    Error Context: test-results/playwright/run-3500/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3500/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3500/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result 
+    [chromium] › tests/e2e/levels/L5.spec.ts:139:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors 
+    [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+  26 passed (17.8m)

@@ -1,0 +1,75 @@
+{
+  "ground": "asphalt",
+  "size": 40,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "props": [
+    {
+      "asset": "prop.street-lamp",
+      "at": [
+        -5,
+        3
+      ]
+    },
+    {
+      "asset": "prop.bench",
+      "at": [
+        6,
+        -5
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        4
+      ]
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        5,
+        3
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 900,
+  "shots": [
+    0,
+    2,
+    6,
+    15,
+    40,
+    180,
+    900
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "name": "blast-large",
+  "time": "L3",
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "blast": "explosion.car",
+        "at": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

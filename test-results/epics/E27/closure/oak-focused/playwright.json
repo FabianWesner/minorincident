@@ -1,0 +1,1236 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/L3.spec.ts",
+      "--grep",
+      "fallback, oak",
+      "--repeat-each=2",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3511",
+        "repeatEach": 2,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3511",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3511",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3511",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3511",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3511",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3511 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3511",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/L3.spec.ts",
+      "file": "e2e/levels/L3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L3 The Police Collapse in the browser",
+          "file": "e2e/levels/L3.spec.ts",
+          "line": 108,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC19",
+                "E21-AC04",
+                "E21-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 1800000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 119098,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "T x=-155 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-153 z=0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-150 z=-1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-147 z=-3 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-145 z=-4 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-142 z=-6 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-140 z=-7 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-139 z=-8 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-138 z=-6 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-137 z=-3 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-135 z=-0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "{\"attackShotEarly\":true,\"inFrameAtFallback\":5}\n"
+                        },
+                        {
+                          "text": "T x=-134 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-131 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-129 z=0 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-127 z=1 hp=100 n12=4 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-126 z=3 hp=100 n12=5 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-127 z=5 hp=100 n12=2 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-126 z=5 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-126 z=5 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-126 z=5 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-124 z=5 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-123 z=8 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-123 z=11 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-122 z=14 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-122 z=17 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-121 z=20 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-121 z=21 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-121 z=23 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-120 z=25 hp=100 n12=5 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-120 z=27 hp=100 n12=5 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-120 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-117 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-114 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-111 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-108 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-106 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-103 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-100 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-97 z=28 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-96 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-93 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-91 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-88 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-85 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-82 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-79 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-76 z=28 hp=100 n12=5 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=100 n12=5 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-78 z=29 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-76 z=29 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-74 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-71 z=30 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-68 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-65 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-62 z=29 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-59 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-56 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-55 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-52 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-49 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-47 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-44 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-41 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-39 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-36 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-33 z=28 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-31 z=28 hp=100 n12=4 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-29 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-26 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-25 z=29 hp=100 n12=1 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-23 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-20 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-17 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-14 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-11 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-8 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-5 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-3 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-1 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=2 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=3 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=6 z=27 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=9 z=27 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=11 z=26 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=14 z=26 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=15 z=26 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=18 z=26 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=21 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=24 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=27 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=28 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=31 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=34 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=36 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=39 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=42 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=44 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=47 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=50 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=53 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=56 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=59 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=62 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=65 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=68 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=71 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=74 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=77 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=80 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=83 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=86 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=89 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=90 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=93 z=24 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=94 z=24 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=97 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=100 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=101 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=103 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=104 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=105 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=107 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=109 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=110 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=112 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=113 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=115 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=117 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=118 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=120 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=121 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=123 z=26 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=124 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=23 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=22 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=20 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=18 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=17 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=15 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=14 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=12 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=9 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=6 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=129 z=3 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=129 z=2 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=131 z=2 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=134 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=137 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=140 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=143 z=0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "L3 RESULT street=oak deaths=0\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T20:16:58.030Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-c6a2e1adef1a2ee8a9d5",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 109,
+              "column": 62
+            },
+            {
+              "title": "T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC19",
+                "E21-AC04",
+                "E21-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 1800000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 81421,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "T x=-155 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-153 z=0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-150 z=-1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-147 z=-3 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-145 z=-4 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-142 z=-6 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-140 z=-7 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-139 z=-8 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-138 z=-6 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-137 z=-3 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-135 z=-0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "{\"attackShotEarly\":true,\"inFrameAtFallback\":7}\n"
+                        },
+                        {
+                          "text": "T x=-134 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-131 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-129 z=0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-127 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-126 z=3 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-125 z=6 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-124 z=9 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-124 z=12 hp=100 n12=4 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-124 z=13 hp=100 n12=11 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-123 z=13 hp=89 n12=10 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-123 z=14 hp=89 n12=10 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-123 z=16 hp=78 n12=11 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-122 z=19 hp=78 n12=9 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-122 z=21 hp=67 n12=8 n4=3\n"
+                        },
+                        {
+                          "text": "T x=-121 z=22 hp=67 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-121 z=25 hp=67 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-120 z=26 hp=67 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-117 z=27 hp=67 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-114 z=27 hp=67 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-114 z=27 hp=70 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-111 z=27 hp=71 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-108 z=28 hp=72 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-106 z=28 hp=73 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-103 z=28 hp=74 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-100 z=28 hp=76 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-97 z=28 hp=77 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-95 z=28 hp=79 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-92 z=28 hp=80 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-89 z=28 hp=82 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-87 z=28 hp=84 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-85 z=28 hp=85 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-82 z=28 hp=87 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-78 z=28 hp=88 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-77 z=28 hp=89 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=91 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-75 z=29 hp=92 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-74 z=30 hp=94 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-72 z=30 hp=96 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-69 z=29 hp=98 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-66 z=29 hp=99 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-63 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-61 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-58 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-55 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-52 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-49 z=28 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-46 z=28 hp=100 n12=3 n4=1\n"
+                        },
+                        {
+                          "text": "T x=-45 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-43 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-40 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-38 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-35 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-32 z=28 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-30 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-27 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-26 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-25 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-23 z=29 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-20 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-17 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-14 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-11 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-8 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-6 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-3 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=-1 z=28 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=0 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=3 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=6 z=27 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=8 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=11 z=26 hp=100 n12=3 n4=0\n"
+                        },
+                        {
+                          "text": "T x=13 z=26 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=16 z=26 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=19 z=27 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=22 z=27 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=24 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=27 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=28 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=31 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=34 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=37 z=28 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=39 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=42 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=44 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=47 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=50 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=53 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=56 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=59 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=62 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=65 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=68 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=71 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=74 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=77 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=80 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=83 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=86 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=89 z=28 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=90 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=92 z=24 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=93 z=24 hp=100 n12=2 n4=0\n"
+                        },
+                        {
+                          "text": "T x=94 z=24 hp=100 n12=1 n4=0\n"
+                        },
+                        {
+                          "text": "T x=97 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=100 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=101 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=103 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=104 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=105 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=107 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=108 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=110 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=112 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=113 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=115 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=117 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=118 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=120 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=121 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=123 z=26 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=124 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=27 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=25 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=24 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=126 z=22 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=20 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=19 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=17 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=15 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=127 z=14 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=12 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=10 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=8 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=128 z=5 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=129 z=2 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=132 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=135 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=138 z=1 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=141 z=0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "T x=144 z=0 hp=100 n12=0 n4=0\n"
+                        },
+                        {
+                          "text": "L3 RESULT street=oak deaths=0\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T20:18:57.786Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-8df601dc3059917bcfde",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 109,
+              "column": 62
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-10T20:16:56.789Z",
+    "duration": 202675.862,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

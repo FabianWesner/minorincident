@@ -1,0 +1,6118 @@
+{
+  "before": {
+    "at": 56217.70000076294,
+    "nodes": [
+      {
+        "at": 176.5,
+        "ms": 5.800000190734863,
+        "object": "Output Color Transform",
+        "uuid": "ee7297b8-4967-40a6-bba9-306653935ae6",
+        "material": "outputColorTransform",
+        "lights": []
+      },
+      {
+        "at": 275,
+        "ms": 2.6000003814697266,
+        "object": "Output Color Transform",
+        "uuid": "ee7297b8-4967-40a6-bba9-306653935ae6",
+        "material": "outputColorTransform",
+        "lights": []
+      },
+      {
+        "at": 315.30000019073486,
+        "ms": 1.6999998092651367,
+        "object": "Output Color Transform",
+        "uuid": "ee7297b8-4967-40a6-bba9-306653935ae6",
+        "material": "outputColorTransform",
+        "lights": []
+      },
+      {
+        "at": 7158.10000038147,
+        "ms": 2.8999996185302734,
+        "object": "Output Color Transform",
+        "uuid": "ee7297b8-4967-40a6-bba9-306653935ae6",
+        "material": "outputColorTransform",
+        "lights": []
+      },
+      {
+        "at": 7201.800000190735,
+        "ms": 2.3000001907348633,
+        "object": "Mesh",
+        "uuid": "07f8c13f-f69c-4898-87be-1f55c2349839",
+        "material": "PMREM_equirect",
+        "lights": []
+      },
+      {
+        "at": 7210.900000572205,
+        "ms": 22.59999942779541,
+        "object": "Mesh",
+        "uuid": "0a5acf94-124e-4b18-a652-d67c2a83cf5e",
+        "material": "PMREM_ggx",
+        "lights": []
+      },
+      {
+        "at": 7242.400000572205,
+        "ms": 14.5,
+        "object": "Mesh",
+        "uuid": "0a5acf94-124e-4b18-a652-d67c2a83cf5e",
+        "material": "PMREM_ggx",
+        "lights": []
+      },
+      {
+        "at": 23813.400000572205,
+        "ms": 3.1999998092651367,
+        "object": "Render Pipeline",
+        "uuid": "1f10733d-c93a-46bc-9d1f-a16f771ca84d",
+        "material": "RenderPipeline",
+        "lights": []
+      },
+      {
+        "at": 23825.10000038147,
+        "ms": 0.6000003814697266,
+        "object": "Mesh/slice-perimeter/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "a79bb918-ec6a-46f5-ba10-93c0eed7f053",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23831.400000572205,
+        "ms": 1,
+        "object": "static-body/Group/interactions/Shadow Map [ ID: 19 ]",
+        "uuid": "692ec32a-3849-4420-9746-fd00510f8d44",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23832.5,
+        "ms": 1.7000007629394531,
+        "object": "roof/inst:bld.fire-station/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "de2d6ba2-5b38-4e50-a60b-b29dec755a5b",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23836.400000572205,
+        "ms": 1.5,
+        "object": "roof/inst:bld.fire-station/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "5c10f7fd-2a3a-4d77-b169-5d2bb710a09d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23838,
+        "ms": 1.2000007629394531,
+        "object": "static-body/inst:bld.fire-station/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "084d4338-7597-496e-8ffb-e0b194ef06fc",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23839.20000076294,
+        "ms": 0.5999994277954102,
+        "object": "static-body/inst:bld.fire-station/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "b569ee2e-96d1-4258-8a12-777e3550415f",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23839.800000190735,
+        "ms": 1,
+        "object": "static-body/inst:bld.mainstreet-brick/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "585b751c-5acf-4a73-b6fa-14739882ff2d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23840.800000190735,
+        "ms": 1.3000001907348633,
+        "object": "static-body/inst:bld.mainstreet-brick/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "15b77a1c-f3e2-4bc8-9ae5-be35135203d7",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23842.20000076294,
+        "ms": 1,
+        "object": "roof/inst:bld.cafe-corner/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "3615cab9-0cee-434a-ab47-0c6c38652213",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23843.400000572205,
+        "ms": 0.5999994277954102,
+        "object": "roof/inst:bld.cafe-corner/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "a1cd1f44-eb22-4edd-8b4a-200a748c5192",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23844.10000038147,
+        "ms": 0.8000001907348633,
+        "object": "roof/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "bfcb7245-1229-4643-b2b5-229eee5a33d4",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23845,
+        "ms": 0.5,
+        "object": "roof/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "825c5c16-f7b2-410c-ae6b-17d11be41240",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23845.70000076294,
+        "ms": 1.3999996185302734,
+        "object": "static-body/inst:bld.gas-station/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "0364ee76-02df-4462-9be3-ffe9b1cdaf05",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23847.20000076294,
+        "ms": 0.7999992370605469,
+        "object": "static-body/inst:bld.gas-station/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "6369d6df-be18-458d-a679-785fbbb58331",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23848,
+        "ms": 0.7000007629394531,
+        "object": "roof/inst:bld.courier-depot/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "94ccaf07-daf7-40d8-9b54-f74530870a7c",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23849.10000038147,
+        "ms": 0.6999998092651367,
+        "object": "roof/inst:bld.courier-depot/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "4cd294a8-2ae4-4fc6-98c4-444266fe8d69",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23849.800000190735,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:bld.house-d/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "af39019f-7db7-4da8-acee-4ad144019d65",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23850.60000038147,
+        "ms": 0.10000038146972656,
+        "object": "static-body/inst:bld.house-d/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "584e5f2f-f80a-4b81-8b03-7d1e997bfe20",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23851.60000038147,
+        "ms": 0.5,
+        "object": "roof/inst:bld.garage-detached/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "18481401-0f6a-4dab-996f-4eb78a55eff3",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23852.10000038147,
+        "ms": 1,
+        "object": "roof/inst:bld.garage-detached/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "4435e673-502f-40ca-97f7-ee1f61cf8f2d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23853.10000038147,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:bld.house-b/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "9f16e06c-a648-4de2-8474-4f0699abfe6e",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23854,
+        "ms": 0.10000038146972656,
+        "object": "static-body/inst:bld.house-b/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "48f77b8f-3ef6-4317-b3b2-e3a311d120e5",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23855.20000076294,
+        "ms": 0.09999942779541016,
+        "object": "static-body/inst:bld.river-bridge/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "61a07cb7-d498-42a4-85e1-3fbbd89cb47d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23856,
+        "ms": 0.20000076293945312,
+        "object": "static-body/inst:bld.river-bridge/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "6fd3f1c6-92e6-417b-a79e-99fc1d571836",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23856.20000076294,
+        "ms": 1.1999998092651367,
+        "object": "static-body/inst:bld.house-c/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "e73ca51a-b0c3-4e99-ac8d-923add68ac83",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23857.400000572205,
+        "ms": 1,
+        "object": "static-body/inst:bld.house-c/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "59ffde59-297b-4070-8e44-df2770dcdd41",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23858.400000572205,
+        "ms": 0.19999980926513672,
+        "object": "static-body/inst:bld.house-e/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "1162873d-58ab-4aa9-bbf5-da74d4c96137",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23858.70000076294,
+        "ms": 1.0999994277954102,
+        "object": "static-body/inst:bld.house-e/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "19f872f9-5719-44d7-ab30-5a1164cc686c",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23859.900000572205,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "091fb2d3-8c86-462c-85d6-19dad0b6fff2",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23860.70000076294,
+        "ms": 1,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "2ad9a07a-3f97-4f28-bef5-4318c58ef390",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23862,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:kit.car-wash/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "6c675ba2-81dc-450e-932a-dc1374c1a2c4",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23862.800000190735,
+        "ms": 0.9000005722045898,
+        "object": "static-body/inst:kit.car-wash/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "074ee6a0-3390-4bdb-8277-e03e0886274d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23863.800000190735,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:bld.garage-detached/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "66e995bb-1d2f-4010-b479-3c89d218c2e7",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23864.70000076294,
+        "ms": 1,
+        "object": "static-body/inst:bld.garage-detached/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "f1c378fa-00b6-445d-9c0a-4f6abe3e850a",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23865.70000076294,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "1471352c-91ca-4f16-ae42-807218a98d92",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23866.60000038147,
+        "ms": 1,
+        "object": "static-body/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "445f637c-7c24-4053-bdd7-c47c38237fea",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23868.10000038147,
+        "ms": 0.6999998092651367,
+        "object": "static-body/inst:bld.courier-depot/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "4aa6a5f6-e2fe-4407-94d2-07b79be0102a",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23868.800000190735,
+        "ms": 0.5,
+        "object": "static-body/inst:bld.courier-depot/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "89465e80-c64c-4d7e-9c42-0ec1644c65df",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23869.400000572205,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:bld.cafe-corner/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "0b89f9c3-aca7-4292-a4a9-525475baf293",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23870.300000190735,
+        "ms": 1.1000003814697266,
+        "object": "static-body/inst:bld.cafe-corner/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "8e844d1b-e94e-4ce4-9e0f-1032d85c35b8",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23871.400000572205,
+        "ms": 0.6999998092651367,
+        "object": "static-body/inst:veh.courier-van/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "128fd2e6-8684-4b26-a6a5-c1b914cdbce0",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23872.10000038147,
+        "ms": 0.6999998092651367,
+        "object": "static-body/inst:veh.courier-van/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "d3ea9d13-d040-48c3-a00d-cdbd8ac93b13",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23873.300000190735,
+        "ms": 0.6999998092651367,
+        "object": "static-body/inst:bld.bus-stop/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "860e26eb-fcda-445e-ab5a-572f33f11a53",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23874,
+        "ms": 0.5,
+        "object": "static-body/inst:bld.bus-stop/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "956de2eb-ed2b-4f9b-9269-ef5a56ef8bc6",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23874.5,
+        "ms": 1,
+        "object": "static-body/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "ae6940e1-f4b6-40f5-99c9-4c3c88ed6dc5",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23875.800000190735,
+        "ms": 0.40000057220458984,
+        "object": "static-body/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "bdaf001f-80ae-4157-9c47-d51ae4037c03",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23876.70000076294,
+        "ms": 1.1999998092651367,
+        "object": "static-body/inst:veh.suv-dark/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "c8619201-8edb-4cbe-b9f1-ce60340467dc",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23877.900000572205,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:veh.suv-dark/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "8137c1ca-d422-482a-a94c-551f47f9c44b",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23878.800000190735,
+        "ms": 1.3000001907348633,
+        "object": "static-body/inst:veh.police-suv/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "cf48d80a-e90b-4851-a9ac-636f99f3d787",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23880.800000190735,
+        "ms": 0.19999980926513672,
+        "object": "static-body/inst:veh.police-suv/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "2526cb25-87a4-414d-86b7-8efc2cbaec72",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23881.800000190735,
+        "ms": 0.10000038146972656,
+        "object": "Mesh/gear-tier-3/head/neck/chest/spine/torso/hip/root/courierRig/Scene/Group/Shadow Map [ ID: 19 ]",
+        "uuid": "b2f7ac70-ed62-4407-ab64-d86c145e9fd6",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23882.5,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:veh.pickup-red/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "e99eb996-0320-4465-b4a9-f725e49981ca",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23883.400000572205,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:veh.pickup-red/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "917f6ca1-414c-474b-b96d-00f9ea71e07a",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23884.400000572205,
+        "ms": 1,
+        "object": "static-body/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "11cd3c2d-9fa8-4527-b0c3-ab8e67826637",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23885.400000572205,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:bld.clinic-annex/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "13f1e06b-f92b-461c-b480-446bdfba9d57",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23886.400000572205,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:veh.sedan-green/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "4432b070-940b-47e2-b4b5-731416104f18",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23887.20000076294,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:veh.sedan-green/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "5eb3cdac-5f27-40d8-9e3f-48dbd4beceb3",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23888.10000038147,
+        "ms": 0.19999980926513672,
+        "object": "static-body/inst:veh.pickup-white/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "b969bd20-fdc1-452d-8e26-60b2402fe882",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23888.300000190735,
+        "ms": 1.4000005722045898,
+        "object": "static-body/inst:veh.pickup-white/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "9eb0c0f7-d749-4bc6-9d33-5591e0561c96",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23889.70000076294,
+        "ms": 1,
+        "object": "static-body/inst:veh.sedan-white/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "9f3b6f30-2d27-4efa-a0f8-08fa49d29494",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23890.70000076294,
+        "ms": 0.5999994277954102,
+        "object": "static-body/inst:veh.sedan-white/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "5407559a-e7e4-4dba-a419-cbe817cd40b2",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23891.300000190735,
+        "ms": 1,
+        "object": "static-body/inst:veh.suv-green/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "968526eb-23c8-499f-8ea8-78671a3babe1",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23892.60000038147,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:veh.suv-green/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "90408711-0cf9-4ac4-b3c6-31fb4483e9ac",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23893.400000572205,
+        "ms": 0.8000001907348633,
+        "object": "static-body/inst:veh.police-sedan/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "71fe7ed1-ba6c-4683-8485-66afe5fee08d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23894.20000076294,
+        "ms": 1,
+        "object": "static-body/inst:veh.police-sedan/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "5bf7264d-b84e-4438-ad6a-6db94226751b",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23895.20000076294,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "39e2fe26-71b5-42e7-8171-04a53ea360c4",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23896.10000038147,
+        "ms": 0.8999996185302734,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "afb449a4-683b-4eb5-9cf7-b569b3af0be8",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23897,
+        "ms": 1,
+        "object": "static-body/inst:veh.sedan-blue/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "6f5a21a5-895e-4e6c-9bbb-136fbac574bf",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23898.10000038147,
+        "ms": 0.6000003814697266,
+        "object": "static-body/inst:veh.sedan-blue/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "783fc586-4390-427c-8baf-1e321030e293",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23899.10000038147,
+        "ms": 0.6999998092651367,
+        "object": "static-body/inst:veh.sedan-red/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "edea7343-82e4-4d87-bcf9-c9bd464d4e75",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23899.800000190735,
+        "ms": 0.6000003814697266,
+        "object": "static-body/inst:veh.sedan-red/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "f60bc984-94ef-4ad1-a773-e82ec3c0d610",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23900.900000572205,
+        "ms": 0.09999942779541016,
+        "object": "mesh_0/body/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Shadow Map [ ID: 19 ]",
+        "uuid": "1408d4b6-dfff-41a8-8869-6af62aedd03d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23901,
+        "ms": 12.700000762939453,
+        "object": "courierSkin/courierRig/Scene/Group/Shadow Map [ ID: 19 ]",
+        "uuid": "893d995f-2af6-4589-b82c-6f6d90a2cdee",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23924.900000572205,
+        "ms": 12.800000190734863,
+        "object": "courierSkin/courierRig/Scene/Group/Shadow Map [ ID: 19 ]",
+        "uuid": "d649cdbf-5a4f-497a-9ed2-43d47a573ee5",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23939.20000076294,
+        "ms": 1,
+        "object": "pal_picketWhite/Scene/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "a819fe4e-fbaf-4705-8c26-dcea9756a4e1",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23940.20000076294,
+        "ms": 1.2999992370605469,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "e05200ae-c6da-4607-b88d-97c95c1a6e1f",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23943.400000572205,
+        "ms": 1.0999994277954102,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "631d2f14-84bd-42d5-a9f2-0c95474d62fd",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23945.400000572205,
+        "ms": 0.19999980926513672,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "ab03714f-290f-4ebf-8d76-c59aaf99a50f",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23946.400000572205,
+        "ms": 0.6999998092651367,
+        "object": "Mesh/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "11601315-714a-4f09-b33b-86fab28e5bba",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23947.70000076294,
+        "ms": 0.39999961853027344,
+        "object": "Mesh/e27-blasts/Group/Shadow Map [ ID: 19 ]",
+        "uuid": "5c825906-cede-42af-a18e-ccd9d2b29791",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23948.20000076294,
+        "ms": 0.8999996185302734,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "d5eda6d8-a72c-4f4d-85ed-f0672c099b76",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23949.20000076294,
+        "ms": 0.6999998092651367,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "47b77c8d-116b-4b88-b387-25572f149357",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23950,
+        "ms": 0.8000001907348633,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "8c453001-9fe6-4783-9519-e4ca87937d97",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23950.900000572205,
+        "ms": 0.8000001907348633,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "6cc7bd77-e510-4715-96be-e0564abe8cb3",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23951.70000076294,
+        "ms": 0.19999980926513672,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "f903615c-a14b-4e8a-8715-c828b7cdb96d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23951.900000572205,
+        "ms": 1.1999998092651367,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "1061caae-304e-4a13-a563-ceeba76750ff",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23953.20000076294,
+        "ms": 1,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "c3cd406b-81d9-4fb5-bac4-1a6c1efd69f5",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23954.300000190735,
+        "ms": 0.6000003814697266,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "bd812d99-9342-49aa-a751-1fee10069c15",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23954.900000572205,
+        "ms": 0.6999998092651367,
+        "object": "Mesh/morning-props/Group/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "6d2a55a7-db25-4781-bee9-2ca51bd4f32d",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23956,
+        "ms": 0.10000038146972656,
+        "object": "daisy_3/pal_foliage/Scene/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "ea889159-bfb9-453c-b023-486dfd896291",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 23957.400000572205,
+        "ms": 0.09999942779541016,
+        "object": "Mesh/foam/Group/interactions/Shadow Map [ ID: 19 ]",
+        "uuid": "37b57b6b-24a7-43f0-a3cc-6ba883142155",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 24030.5,
+        "ms": 1.9000005722045898,
+        "object": "Bloom [ High Pass ]",
+        "uuid": "b2612614-a01a-47f4-9ccc-d30d302039cc",
+        "material": "Bloom_highPass",
+        "lights": []
+      },
+      {
+        "at": 24102.900000572205,
+        "ms": 2.3999996185302734,
+        "object": "Bloom [ Blur Horizontal - 0 ]",
+        "uuid": "b2612614-a01a-47f4-9ccc-d30d302039cc",
+        "material": "Bloom_separable",
+        "lights": []
+      },
+      {
+        "at": 24109.60000038147,
+        "ms": 2.6999998092651367,
+        "object": "Bloom [ Blur Horizontal - 1 ]",
+        "uuid": "b2612614-a01a-47f4-9ccc-d30d302039cc",
+        "material": "Bloom_separable",
+        "lights": []
+      },
+      {
+        "at": 24115.900000572205,
+        "ms": 4.199999809265137,
+        "object": "Bloom [ Composite ]",
+        "uuid": "b2612614-a01a-47f4-9ccc-d30d302039cc",
+        "material": "Bloom_comp",
+        "lights": []
+      },
+      {
+        "at": 26002.5,
+        "ms": 3.40000057220459,
+        "object": "Mesh/Scene",
+        "uuid": "d82a1450-9094-48e4-af94-2521796ff333",
+        "material": "keep_lightField",
+        "lights": []
+      },
+      {
+        "at": 33651.400000572205,
+        "ms": 12.5,
+        "object": "Mesh/slice-perimeter/sunset-grove/Scene",
+        "uuid": "cb03dcdd-49b9-4af5-863b-bd3d9e9e0923",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33667.400000572205,
+        "ms": 1,
+        "object": "mesh_0/Group/head/body/root/Scene/npcs/Shadow Map [ ID: 19 ]",
+        "uuid": "bd54a3ec-8a96-4375-8cde-0d2ed5d2bbd5",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33678,
+        "ms": 12,
+        "object": "static-body/inst:bld.fire-station/D-GROVE/sunset-grove/Scene",
+        "uuid": "b569ee2e-96d1-4258-8a12-777e3550415f",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33694.70000076294,
+        "ms": 21.899999618530273,
+        "object": "window-light/inst:bld.fire-station/D-GROVE/sunset-grove/Scene",
+        "uuid": "106351a5-03f5-4835-b32f-1e1c241de663",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33722.900000572205,
+        "ms": 12.300000190734863,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "2ad9a07a-3f97-4f28-bef5-4318c58ef390",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33736.10000038147,
+        "ms": 9.800000190734863,
+        "object": "mesh_0/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "bd54a3ec-8a96-4375-8cde-0d2ed5d2bbd5",
+        "material": "npc:pal_corgiOrange:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33754.5,
+        "ms": 10.100000381469727,
+        "object": "mesh_0_1/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "587453e3-5394-488b-867a-f673179016e6",
+        "material": "npc:pal_corgiOrangeLight:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33765.5,
+        "ms": 8.90000057220459,
+        "object": "mesh_0_2/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "56300930-a176-494b-98f2-d03607279518",
+        "material": "npc:pal_corgiPink:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33775.300000190735,
+        "ms": 9.100000381469727,
+        "object": "mesh_0_3/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "0d43e762-3985-47d1-8f79-d19432643a5c",
+        "material": "npc:pal_corgiTongue:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33784.900000572205,
+        "ms": 8.899999618530273,
+        "object": "mesh_0_4/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "2f7b33fe-f246-40f7-ad3a-6e51664a0cd3",
+        "material": "npc:pal_picketWhite:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33794.400000572205,
+        "ms": 8.899999618530273,
+        "object": "mesh_0_5/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "2efe8fe5-b7a9-4011-8a2b-fe37d011bb01",
+        "material": "npc:pal_uiDark:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33803.5,
+        "ms": 9,
+        "object": "mesh_0_6/Group/head/body/root/Scene/npcs/Scene",
+        "uuid": "16ee3009-dec9-4497-9928-8d93153f632e",
+        "material": "npc:pal_woodWarm:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33813.300000190735,
+        "ms": 10.600000381469727,
+        "object": "static-body/inst:prop.street-tree/D-GROVE/sunset-grove/Scene",
+        "uuid": "07c6e5d7-d182-49f6-9e02-c7045cb93d7b",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33824.60000038147,
+        "ms": 10.199999809265137,
+        "object": "static-body/inst:prop.street-lamp/D-GROVE/sunset-grove/Scene",
+        "uuid": "8252a314-6e55-414d-83d5-4079252b09e4",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33836.5,
+        "ms": 10.5,
+        "object": "static-body/inst:kit.edge-roadwork/D-GROVE/sunset-grove/Scene",
+        "uuid": "62beb456-8992-4bae-be52-1d277452d545",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33847.20000076294,
+        "ms": 9.399999618530273,
+        "object": "mesh_5/Group/packSocket/body/root/Scene/npcs/Scene",
+        "uuid": "8e25ebee-a6d2-47c7-b958-97a167dff544",
+        "material": "npc:pal_backpackTeal:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33857.70000076294,
+        "ms": 9.799999237060547,
+        "object": "mesh_5_1/Group/packSocket/body/root/Scene/npcs/Scene",
+        "uuid": "6a88f844-a1bb-4f1a-853f-0587f9c6cf9b",
+        "material": "npc:pal_backpackTealDark:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33869,
+        "ms": 9.600000381469727,
+        "object": "mesh_5_5/Group/packSocket/body/root/Scene/npcs/Scene",
+        "uuid": "87634b2b-d18f-4989-aa8f-c79acd13fde9",
+        "material": "npc:pal_schoolBusYellow:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33878.800000190735,
+        "ms": 8.600000381469727,
+        "object": "mesh_5_6/Group/packSocket/body/root/Scene/npcs/Scene",
+        "uuid": "495882e8-9182-4eed-aab9-babdbbecd2fa",
+        "material": "npc:pal_survivorRed:2",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33890.20000076294,
+        "ms": 11.899999618530273,
+        "object": "window-light/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "563e158f-0e25-4e19-913d-5aae20bdec0d",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33907,
+        "ms": 10.800000190734863,
+        "object": "static-body/inst:prop.privacy-fence/D-GROVE/sunset-grove/Scene",
+        "uuid": "096a187f-2eb5-468b-9df9-961996d27d29",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33919.900000572205,
+        "ms": 10.199999809265137,
+        "object": "static-body/inst:prop.picket-fence/D-GROVE/sunset-grove/Scene",
+        "uuid": "99e965f0-8457-403c-884d-a096b258b89c",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33930.300000190735,
+        "ms": 20,
+        "object": "static-body/inst:prop.bench/D-GROVE/sunset-grove/Scene",
+        "uuid": "0e7ddbf8-8f5d-4cf6-b9a9-e96389973fb5",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33951.70000076294,
+        "ms": 11.59999942779541,
+        "object": "window-light/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "4ec51eb6-399c-44f2-9646-bf9481b6942d",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33964.20000076294,
+        "ms": 10.799999237060547,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "afb449a4-683b-4eb5-9cf7-b569b3af0be8",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33976,
+        "ms": 10,
+        "object": "pal_uiDark/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "4ce30c69-8a00-43df-b12c-d18d1c8e39ec",
+        "material": "pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 33991.800000190735,
+        "ms": 11.199999809265137,
+        "object": "static-body/inst:prop.trash-bags/D-GROVE/sunset-grove/Scene",
+        "uuid": "c0446da0-7189-4ea1-b1c5-40e163c69d0a",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34003.20000076294,
+        "ms": 5.699999809265137,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "e05200ae-c6da-4607-b88d-97c95c1a6e1f",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34011.400000572205,
+        "ms": 5.09999942779541,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "631d2f14-84bd-42d5-a9f2-0c95474d62fd",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34017.300000190735,
+        "ms": 9.600000381469727,
+        "object": "pal_picketWhite/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "a819fe4e-fbaf-4705-8c26-dcea9756a4e1",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34027,
+        "ms": 10,
+        "object": "pal_denim/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "a25173e5-66a9-4c20-a149-10a91f130dc5",
+        "material": "pal_denim",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34037.10000038147,
+        "ms": 5.699999809265137,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "ab03714f-290f-4ebf-8d76-c59aaf99a50f",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34043.300000190735,
+        "ms": 5,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "d5eda6d8-a72c-4f4d-85ed-f0672c099b76",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34048.300000190735,
+        "ms": 10.699999809265137,
+        "object": "pal_sidewalk/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "a0df2121-dfbc-48cc-991a-2e5c458c4a7f",
+        "material": "pal_sidewalk",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34063.900000572205,
+        "ms": 9.09999942779541,
+        "object": "mesh_0/body/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "1408d4b6-dfff-41a8-8869-6af62aedd03d",
+        "material": "action:wpn.baseball-bat:pal_woodWarm",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34077.5,
+        "ms": 8.40000057220459,
+        "object": "mesh_1/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "5e0989b1-bd5b-46df-99f9-b9bdd2df47ff",
+        "material": "action:wpn.baseball-bat:pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34086.60000038147,
+        "ms": 8.600000381469727,
+        "object": "mesh_1_1/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "7ae5a5a1-eb20-43be-9a57-c8dfcd903aaa",
+        "material": "action:wpn.baseball-bat:pal_brick",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34095.300000190735,
+        "ms": 12.600000381469727,
+        "object": "pal_asphalt/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "55c4a0c4-e818-44b0-af3c-21c0d8672a1a",
+        "material": "pal_asphalt",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34113.10000038147,
+        "ms": 10.800000190734863,
+        "object": "Mesh/npcs/Scene",
+        "uuid": "11601315-714a-4f09-b33b-86fab28e5bba",
+        "material": "pal_survivorRed",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34128.60000038147,
+        "ms": 6.199999809265137,
+        "object": "Mesh/l2-props/Scene",
+        "uuid": "8014f7c8-bdd6-4d88-a336-af8d0a291fa6",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34138.10000038147,
+        "ms": 14.800000190734863,
+        "object": "Mesh/l2-props/Scene",
+        "uuid": "43abdcef-4b78-43fc-a744-486a5b71bf92",
+        "material": "pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34154.10000038147,
+        "ms": 5.199999809265137,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "47b77c8d-116b-4b88-b387-25572f149357",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34160.20000076294,
+        "ms": 13.5,
+        "object": "Mesh/leaf-card-crowns/sunset-grove/Scene",
+        "uuid": "3d720c33-b45f-403e-af6f-59ec128653d4",
+        "material": "pal_leaf-card-crown",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34179,
+        "ms": 6,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "8c453001-9fe6-4783-9519-e4ca87937d97",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34185.70000076294,
+        "ms": 20.399999618530273,
+        "object": "courierSkin/courierRig/Scene/Group/Scene",
+        "uuid": "893d995f-2af6-4589-b82c-6f6d90a2cdee",
+        "material": "character:female",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34214.5,
+        "ms": 12.200000762939453,
+        "object": "Mesh/sunset-grove/Scene",
+        "uuid": "1d4da714-9533-4f8d-a723-e9e5aae671d1",
+        "material": "pal_grass",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34231.70000076294,
+        "ms": 12.799999237060547,
+        "object": "pal_grass/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "41e0e221-0abd-45ff-9c4d-e5bcbc74443f",
+        "material": "pal_grass",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34249.70000076294,
+        "ms": 5.5,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "6cc7bd77-e510-4715-96be-e0564abe8cb3",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34256.20000076294,
+        "ms": 5.59999942779541,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "f903615c-a14b-4e8a-8715-c828b7cdb96d",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34261.900000572205,
+        "ms": 5.199999809265137,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "1061caae-304e-4a13-a563-ceeba76750ff",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34267.10000038147,
+        "ms": 5.600000381469727,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "c3cd406b-81d9-4fb5-bac4-1a6c1efd69f5",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34272.900000572205,
+        "ms": 5,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "bd812d99-9342-49aa-a751-1fee10069c15",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34278.5,
+        "ms": 4.700000762939453,
+        "object": "Mesh/morning-props/Group/npcs/Scene",
+        "uuid": "6d2a55a7-db25-4781-bee9-2ca51bd4f32d",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34283.300000190735,
+        "ms": 10.40000057220459,
+        "object": "pal_woodWarm/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "39bedd08-53fb-44d4-ad25-82e605bb75bc",
+        "material": "pal_woodWarm",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34294,
+        "ms": 5.200000762939453,
+        "object": "Mesh/Group/l2-props/Scene",
+        "uuid": "bc2ea50e-eee3-4953-acc8-4e9e28545e97",
+        "material": "pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34302.300000190735,
+        "ms": 10.600000381469727,
+        "object": "daisy_3/pal_foliage/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "ea889159-bfb9-453c-b023-486dfd896291",
+        "material": "pal_cardiganRose",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34313,
+        "ms": 9.700000762939453,
+        "object": "daisy_1/pal_foliage/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "1692961f-b0b3-4016-b0b8-f6bf257b49d1",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34322.800000190735,
+        "ms": 9.800000190734863,
+        "object": "daisy_2/pal_foliage/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "49353c60-612e-4dc1-b3af-18b62c4768c3",
+        "material": "pal_schoolBusYellow",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34333.5,
+        "ms": 10.700000762939453,
+        "object": "daisy/pal_foliage/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "c2b157b1-bb8d-4aa9-a7d0-700a4513d23f",
+        "material": "pal_foliage",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34345.20000076294,
+        "ms": 9,
+        "object": "grass-gpu-wind/D-GROVE/sunset-grove/Scene",
+        "uuid": "ddb6a8d2-9ada-4da9-8344-46276d68eaaf",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34359.20000076294,
+        "ms": 18.699999809265137,
+        "object": "pal_hairChestnut/Scene/D-GROVE/sunset-grove/Scene",
+        "uuid": "e2f1496e-110c-49f5-b105-8d78c9bbc587",
+        "material": "pal_hairChestnut",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34604.70000076294,
+        "ms": 14.09999942779541,
+        "object": "window-light/inst:prop.street-lamp/D-GROVE/sunset-grove/Scene",
+        "uuid": "2cd8f627-36a3-4553-a76b-e0128fc2d624",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34623.10000038147,
+        "ms": 31.600000381469727,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "54889ee2-15a0-4c54-8d99-465780b80906",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34670.20000076294,
+        "ms": 27.09999942779541,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "bd7b1794-a4af-42a5-b17d-a4ae86861998",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34699.5,
+        "ms": 25.90000057220459,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "a209bbd9-c1b0-48ed-a126-9a264e60c159",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 34728.300000190735,
+        "ms": 25.199999809265137,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "db61f77f-f935-4c1b-9fae-7676c9813471",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35138,
+        "ms": 3.700000762939453,
+        "object": "mesh_0/lightsBrake/root/Scene/Group/Group/Scene",
+        "uuid": "2a6beb56-c5c4-4c3b-b6c1-e13605357b1c",
+        "material": "",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35142.300000190735,
+        "ms": 6.199999809265137,
+        "object": "mesh_8/Group/ladder/root/Scene/Group/Group/Scene",
+        "uuid": "de801cd7-ded5-4a5d-8ab9-121b05c4c5d7",
+        "material": "emi_schoolBusYellow",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35157.400000572205,
+        "ms": 7.199999809265137,
+        "object": "mesh_8_1/Group/ladder/root/Scene/Group/Group/Scene",
+        "uuid": "710aa899-89c5-49cf-85e8-c1f6d1eadd2c",
+        "material": "pal_asphalt",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35189,
+        "ms": 8.200000762939453,
+        "object": "mesh_8_2/Group/ladder/root/Scene/Group/Group/Scene",
+        "uuid": "49260cf7-10c6-45ba-8ade-5f0ee1b60a5a",
+        "material": "pal_blood",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35197.800000190735,
+        "ms": 6.199999809265137,
+        "object": "mesh_8_3/Group/ladder/root/Scene/Group/Group/Scene",
+        "uuid": "410608d8-02a2-4ebc-976f-7302e2f06c48",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35204.900000572205,
+        "ms": 5.399999618530273,
+        "object": "mesh_8_4/Group/ladder/root/Scene/Group/Group/Scene",
+        "uuid": "da3994d7-8e76-44a0-8d99-eddaab10b042",
+        "material": "pal_sidewalk",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35210.5,
+        "ms": 5.100000381469727,
+        "object": "mesh_8_5/Group/ladder/root/Scene/Group/Group/Scene",
+        "uuid": "4c581550-183e-4df2-b28c-6fb99c59ddb5",
+        "material": "pal_survivorRed",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35216.70000076294,
+        "ms": 5.5,
+        "object": "mesh_5/Group/wheelRR/body/root/Scene/Group/Group/Scene",
+        "uuid": "95b57fd0-46fb-4f92-8c6e-590dc662bcd7",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35222.300000190735,
+        "ms": 5.699999809265137,
+        "object": "mesh_5_1/Group/wheelRR/body/root/Scene/Group/Group/Scene",
+        "uuid": "befee099-abd3-4881-9328-e448ee0dc190",
+        "material": "pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35228,
+        "ms": 5.100000381469727,
+        "object": "mesh_7/Group/equipment_body/root/Scene/Group/Group/Scene",
+        "uuid": "ded875e3-16a9-4fa2-99cd-142f09f823ff",
+        "material": "emi_windowGlow",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35234.300000190735,
+        "ms": 5.699999809265137,
+        "object": "mesh_7_5/Group/equipment_body/root/Scene/Group/Group/Scene",
+        "uuid": "47fc3c06-db87-46f4-95bc-7e12207b7e3b",
+        "material": "pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35240,
+        "ms": 5.600000381469727,
+        "object": "mesh_11_1/Group/root/Scene/Group/Group/Scene",
+        "uuid": "b894bbd8-4664-4fb8-a6b3-3afcc5310a20",
+        "material": "emi_sirenRed",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35246.10000038147,
+        "ms": 5.5,
+        "object": "mesh_11_4/Group/root/Scene/Group/Group/Scene",
+        "uuid": "86618d92-0a85-4d0a-8b82-4cbb6ce8602d",
+        "material": "pal_schoolBusYellow",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35376.20000076294,
+        "ms": 11.09999942779541,
+        "object": "mesh_1/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "e29fc5ef-6314-46c9-9c71-570c26824235",
+        "material": "action:wpn.fire-axe:pal_asphalt",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35389,
+        "ms": 7.40000057220459,
+        "object": "mesh_1_1/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "a5281b5a-5a9a-4637-adf4-e4baf444d5af",
+        "material": "action:wpn.fire-axe:pal_brick",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35396.60000038147,
+        "ms": 8.5,
+        "object": "mesh_1_2/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "6ddf8a70-2e9b-414e-8028-b494717c46ad",
+        "material": "action:wpn.fire-axe:pal_sidewalk",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35406.900000572205,
+        "ms": 10.399999618530273,
+        "object": "mesh_1_3/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "b403ca6a-f010-43f5-8048-cab4c4517948",
+        "material": "action:wpn.fire-axe:pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35417.5,
+        "ms": 9.800000190734863,
+        "object": "mesh_1_4/Group/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "100532ba-9907-455e-ae8b-8b1c5e905d7a",
+        "material": "action:wpn.fire-axe:pal_woodWarm",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 35427.900000572205,
+        "ms": 8.5,
+        "object": "mesh_0/body/root/Scene/Group/weaponSocketR/handR/foreArmR/armR/clavicleR/chest/spine/torso/hip/root/courierRig/Scene/Group/Scene",
+        "uuid": "911eda09-9053-4421-bae3-13d032d39066",
+        "material": "action:wpn.fire-axe:pal_survivorRed",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41257.800000190735,
+        "ms": 13.300000190734863,
+        "object": "roof/inst:bld.fire-station/D-GROVE/sunset-grove/Scene",
+        "uuid": "5c10f7fd-2a3a-4d77-b169-5d2bb710a09d",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41421.10000038147,
+        "ms": 14.100000381469727,
+        "object": "static-body/inst:prop.garden-bush/D-GROVE/sunset-grove/Scene",
+        "uuid": "928e2575-0727-4ff4-b7de-b3dcb0ef056c",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41436.900000572205,
+        "ms": 22.899999618530273,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "5323cf4c-2d4d-46d3-941d-e2bc58b42c40",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41462.300000190735,
+        "ms": 14.199999809265137,
+        "object": "Mesh/leaf-card-crowns/sunset-grove/Scene",
+        "uuid": "4a627faf-6bc7-4580-8a00-97ab71fbe7f4",
+        "material": "pal_leaf-card-crown",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41477.60000038147,
+        "ms": 13.399999618530273,
+        "object": "Mesh/leaf-card-crowns/sunset-grove/Scene",
+        "uuid": "ca122cc2-a5b9-484e-a8f2-8c124f6675f1",
+        "material": "pal_leaf-card-crown",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41853.20000076294,
+        "ms": 16.5,
+        "object": "window-light/inst:bld.house-b/D-GROVE/sunset-grove/Scene",
+        "uuid": "2380c19f-27c6-4bd8-9b2b-0827f903d05b",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41870.5,
+        "ms": 12.40000057220459,
+        "object": "static-body/inst:bld.house-b/D-GROVE/sunset-grove/Scene",
+        "uuid": "48f77b8f-3ef6-4317-b3b2-e3a311d120e5",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41885.10000038147,
+        "ms": 13.100000381469727,
+        "object": "static-body/inst:prop.mailbox-blue/D-GROVE/sunset-grove/Scene",
+        "uuid": "3ea6c75f-301c-4cf9-b8ce-6d795d1db058",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41899.800000190735,
+        "ms": 12.40000057220459,
+        "object": "static-body/inst:prop.fire-hydrant/D-GROVE/sunset-grove/Scene",
+        "uuid": "8d4b838d-f211-486e-8433-8028ded2fad2",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41913.800000190735,
+        "ms": 10.699999809265137,
+        "object": "static-body/inst:prop.flower-bed.large/D-GROVE/sunset-grove/Scene",
+        "uuid": "58d5c2ae-f928-4e62-bea7-87e48991b4fe",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 41927.400000572205,
+        "ms": 24.800000190734863,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "02222a78-3065-4563-a919-5eea88befaee",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 42294.60000038147,
+        "ms": 24.199999809265137,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "219f1d93-223f-4ecc-b57e-da878fa20e2a",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 42657.60000038147,
+        "ms": 16.899999618530273,
+        "object": "window-light/inst:veh.suv-green/D-GROVE/sunset-grove/Scene",
+        "uuid": "7d619ddf-640c-44e5-b819-7aca902d8a33",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 42675.900000572205,
+        "ms": 20.199999809265137,
+        "object": "static-body/inst:veh.suv-green/D-GROVE/sunset-grove/Scene",
+        "uuid": "ca973b70-9990-4f2d-8e8d-c03322d924d9",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 43103.300000190735,
+        "ms": 14.699999809265137,
+        "object": "window-light/inst:veh.suv-green/D-GROVE/sunset-grove/Scene",
+        "uuid": "6db5f5e3-2104-4222-9e2c-56f5d7caa7bd",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 43119.20000076294,
+        "ms": 18.699999809265137,
+        "object": "static-body/inst:veh.suv-green/D-GROVE/sunset-grove/Scene",
+        "uuid": "90408711-0cf9-4ac4-b3c6-31fb4483e9ac",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 43538.70000076294,
+        "ms": 13.399999618530273,
+        "object": "window-light/inst:veh.sedan-white/D-GROVE/sunset-grove/Scene",
+        "uuid": "41cf5d7a-ce34-4fbd-8db9-f023355c42bf",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 43553.10000038147,
+        "ms": 18.399999618530273,
+        "object": "static-body/inst:veh.sedan-white/D-GROVE/sunset-grove/Scene",
+        "uuid": "5407559a-e7e4-4dba-a419-cbe817cd40b2",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 43573.70000076294,
+        "ms": 10.899999618530273,
+        "object": "static-body/inst:prop.sprinkler/D-GROVE/sunset-grove/Scene",
+        "uuid": "6658bed8-409a-45bb-a2dd-5d8e73cee1b5",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44314.60000038147,
+        "ms": 2.3000001907348633,
+        "object": "static-body/inst:veh.pickup-white/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "21720126-633b-43ba-a024-588323c05f17",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44318.800000190735,
+        "ms": 12.800000190734863,
+        "object": "static-body/inst:bld.house-e/D-GROVE/sunset-grove/Scene",
+        "uuid": "9a3edca5-5ffa-4be7-b6fc-c49473b5ae7c",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44333.400000572205,
+        "ms": 10.699999809265137,
+        "object": "static-body/inst:prop.trash-bin/D-GROVE/sunset-grove/Scene",
+        "uuid": "5057ee14-c322-4679-8fad-58cceb1f2eb5",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44345,
+        "ms": 10.100000381469727,
+        "object": "static-body/inst:prop.hedge/D-GROVE/sunset-grove/Scene",
+        "uuid": "19791ab3-197d-42f6-8c94-5ed1af0e5152",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44357.60000038147,
+        "ms": 12.5,
+        "object": "Mesh/leaf-card-crowns/sunset-grove/Scene",
+        "uuid": "1b0fbe71-e2f5-4203-8b34-d6ff45b8da0d",
+        "material": "pal_leaf-card-crown",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44747,
+        "ms": 1.4000005722045898,
+        "object": "static-body/inst:bld.house-d/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "ed89ce4f-1b49-4e9b-86b6-eb44fe37fd1a",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 44751.5,
+        "ms": 12.700000762939453,
+        "object": "window-light/inst:bld.house-e/D-GROVE/sunset-grove/Scene",
+        "uuid": "ca2c48a9-3e0a-42bc-a7d8-71362bef4d5b",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45132,
+        "ms": 14.90000057220459,
+        "object": "window-light/inst:bld.house-b/D-GROVE/sunset-grove/Scene",
+        "uuid": "536534d0-e617-4fa3-a2ba-6b21a5f04789",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45147.900000572205,
+        "ms": 13.09999942779541,
+        "object": "static-body/inst:bld.house-b/D-GROVE/sunset-grove/Scene",
+        "uuid": "8a2937d9-b50c-453d-b605-ba1df1c0673f",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45524.800000190735,
+        "ms": 14.40000057220459,
+        "object": "static-body/inst:prop.street-tree-blossom/D-GROVE/sunset-grove/Scene",
+        "uuid": "6b2404ce-482b-4b6f-927e-ec4b0e360b80",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45540.300000190735,
+        "ms": 10.90000057220459,
+        "object": "static-body/inst:prop.street-sign/D-GROVE/sunset-grove/Scene",
+        "uuid": "05934da4-f347-40b4-a573-f195296cbd0f",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45554.10000038147,
+        "ms": 15.399999618530273,
+        "object": "Mesh/leaf-card-crowns/sunset-grove/Scene",
+        "uuid": "dc80935a-bb2b-4601-9225-383710638e07",
+        "material": "pal_leaf-card-crown",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45987,
+        "ms": 1.5,
+        "object": "static-body/inst:bld.house-e/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "4b357886-f14c-48f6-9ee6-d0b5d4844a42",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 45990.300000190735,
+        "ms": 12.600000381469727,
+        "object": "static-body/inst:bld.house-d/D-GROVE/sunset-grove/Scene",
+        "uuid": "01bb7b42-c1d6-464a-8300-6f86ab4060db",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 46006.10000038147,
+        "ms": 12.100000381469727,
+        "object": "static-body/inst:prop.garden-bush-small/D-GROVE/sunset-grove/Scene",
+        "uuid": "71ad51b3-47ef-41be-9fa7-92c597a8bbeb",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 46368.70000076294,
+        "ms": 13.899999618530273,
+        "object": "window-light/inst:bld.house-d/D-GROVE/sunset-grove/Scene",
+        "uuid": "6b6cc619-b9af-4f19-8755-e134a94e87b8",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 46383.70000076294,
+        "ms": 11.199999809265137,
+        "object": "static-body/inst:prop.bbq/D-GROVE/sunset-grove/Scene",
+        "uuid": "49a94883-6e00-4ae0-bb9f-26f8794d2bf0",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 46395.900000572205,
+        "ms": 11.09999942779541,
+        "object": "static-body/inst:prop.crates/D-GROVE/sunset-grove/Scene",
+        "uuid": "fe53e699-e4ff-46d0-b2e7-0636b5490957",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 46795.400000572205,
+        "ms": 14.09999942779541,
+        "object": "static-body/inst:prop.flamingo/D-GROVE/sunset-grove/Scene",
+        "uuid": "7747ac4e-fece-4cd1-b1a4-353f20a2f2ec",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 46815.400000572205,
+        "ms": 10.699999809265137,
+        "object": "static-body/Group/interactions/Scene",
+        "uuid": "f7eaa8e6-a077-4c31-8962-34c7589ec264",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 47721.10000038147,
+        "ms": 14,
+        "object": "window-light/inst:veh.sedan-white/D-GROVE/sunset-grove/Scene",
+        "uuid": "9d254a45-09f3-4630-92c5-d8bb2ec9bf16",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 47736.5,
+        "ms": 19.90000057220459,
+        "object": "static-body/inst:veh.sedan-white/D-GROVE/sunset-grove/Scene",
+        "uuid": "86a97496-1211-4de5-a484-e89ac1a6131f",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 47758.300000190735,
+        "ms": 14.300000190734863,
+        "object": "static-body/inst:prop.carpet/D-GROVE/sunset-grove/Scene",
+        "uuid": "57715bea-971f-45aa-bc4d-5d73ca9c591d",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 48236.20000076294,
+        "ms": 14.399999618530273,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "3dfb694b-866b-4fee-b136-c6074e9ccde4",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 48252,
+        "ms": 13.600000381469727,
+        "object": "window-light/inst:veh.pickup-red/D-GROVE/sunset-grove/Scene",
+        "uuid": "da786e70-01a7-435f-b41f-f5816a42c29c",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 48266.60000038147,
+        "ms": 19.5,
+        "object": "static-body/inst:veh.pickup-red/D-GROVE/sunset-grove/Scene",
+        "uuid": "67aca367-911c-4ddc-9f2a-5d08d3362375",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 48698,
+        "ms": 13.700000762939453,
+        "object": "window-light/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "65fc7615-56fb-4648-883f-6e606143676c",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 49120.20000076294,
+        "ms": 2.299999237060547,
+        "object": "static-body/inst:veh.pickup-red/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "599406c2-ea84-4896-bee0-b927b6af870a",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 49540.5,
+        "ms": 13.700000762939453,
+        "object": "window-light/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "6971c6a0-742f-4160-a15d-a14aa78c41b5",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 49554.300000190735,
+        "ms": 12.300000190734863,
+        "object": "static-body/inst:bld.house-a/D-GROVE/sunset-grove/Scene",
+        "uuid": "d441b61b-86bf-4fb2-9653-7c9199507622",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 49982.70000076294,
+        "ms": 1.5999994277954102,
+        "object": "static-body/inst:bld.house-c/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "e575047c-570a-416e-99dd-9dfddeb8f162",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 50787.20000076294,
+        "ms": 2,
+        "object": "static-body/inst:veh.police-sedan/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "717bc990-f8c2-4365-a391-e5a40275eabc",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 50792.800000190735,
+        "ms": 7.100000381469727,
+        "object": "mesh_0/Group/D-GROVE/sunset-grove/Scene",
+        "uuid": "c7f56470-13f0-4906-ac95-7da2d50ebcd1",
+        "material": "pal_uiDark",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51201.900000572205,
+        "ms": 12.699999809265137,
+        "object": "window-light/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "faac9097-e152-4fd3-87b7-0fb7b693ac54",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51214.900000572205,
+        "ms": 10.899999618530273,
+        "object": "static-body/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "b08ee630-cf1a-4f7f-bbdb-f5f636b67a1f",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51581.60000038147,
+        "ms": 12.5,
+        "object": "roof-light/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "17367a0b-47a6-4878-9c36-768126db78e4",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51595.20000076294,
+        "ms": 10,
+        "object": "roof/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "5883cf90-b550-45f6-891b-8ab92852705c",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51607.5,
+        "ms": 9.90000057220459,
+        "object": "static-body/inst:prop.gnome/D-GROVE/sunset-grove/Scene",
+        "uuid": "6b1a8bd3-8897-44fa-ad28-abe46300f21f",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51967.300000190735,
+        "ms": 18.699999809265137,
+        "object": "static-body/inst:bld.house-c/D-GROVE/sunset-grove/Scene",
+        "uuid": "0d96ccdf-3bc0-4089-a26f-348f7683b4a7",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 51986.300000190735,
+        "ms": 11.5,
+        "object": "window-light/inst:bld.house-c/D-GROVE/sunset-grove/Scene",
+        "uuid": "792e409f-2e94-4066-b2bf-9abc89374849",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52308.900000572205,
+        "ms": 12,
+        "object": "roof-light/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "2e86876b-ff54-4cbe-90a2-513cb30a8afd",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52322.300000190735,
+        "ms": 11.300000190734863,
+        "object": "roof/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "4cd294a8-2ae4-4fc6-98c4-444266fe8d69",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52334.70000076294,
+        "ms": 11.5,
+        "object": "window-light/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "25737ec0-639b-4b6e-bc0a-0f41c2e601a0",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52347.10000038147,
+        "ms": 9.800000190734863,
+        "object": "static-body/inst:bld.courier-depot/D-GROVE/sunset-grove/Scene",
+        "uuid": "89465e80-c64c-4d7e-9c42-0ec1644c65df",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52700.900000572205,
+        "ms": 2,
+        "object": "static-body/inst:veh.sedan-red/D-GROVE/sunset-grove/Shadow Map [ ID: 19 ]",
+        "uuid": "b718915d-3fbb-467f-92f8-d2c52f074e26",
+        "material": "ShadowMaterial",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52704.70000076294,
+        "ms": 11.299999237060547,
+        "object": "static-body/inst:bld.supermarket/D-GROVE/sunset-grove/Scene",
+        "uuid": "ec6eb2aa-176d-47b7-945e-f642fcb27117",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 52716.60000038147,
+        "ms": 11.5,
+        "object": "window-light/inst:bld.supermarket/D-GROVE/sunset-grove/Scene",
+        "uuid": "ea0c5d22-ce33-4869-8719-bdb6e5853a54",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 53017.800000190735,
+        "ms": 12.699999809265137,
+        "object": "static-body/inst:prop.bike-rack/D-GROVE/sunset-grove/Scene",
+        "uuid": "b99e9cd7-324a-46d5-96c1-e85117790217",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 53398.5,
+        "ms": 12,
+        "object": "static-body/inst:prop.pallet/D-GROVE/sunset-grove/Scene",
+        "uuid": "b663c2fd-9c89-40a5-a098-0d8de2153e11",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 53411.70000076294,
+        "ms": 21.399999618530273,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "f4f60e8c-26c5-4ed0-94c6-b2ca7a83aa97",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 53434.60000038147,
+        "ms": 21.600000381469727,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "ef3c7861-e3e3-4643-abd5-4869595e4274",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 53746.10000038147,
+        "ms": 11.600000381469727,
+        "object": "static-body/inst:bld.mainstreet-brick/D-GROVE/sunset-grove/Scene",
+        "uuid": "efbc7d3f-edda-4242-95e1-577bfeb68ebf",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 54057.800000190735,
+        "ms": 13.90000057220459,
+        "object": "window-light/inst:bld.mainstreet-brick/D-GROVE/sunset-grove/Scene",
+        "uuid": "30bc82ba-54c1-4a49-9f57-ebe68a30a536",
+        "material": "emi_static-windows",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 54322.60000038147,
+        "ms": 12.899999618530273,
+        "object": "static-body/inst:prop.recycling-bin/D-GROVE/sunset-grove/Scene",
+        "uuid": "97d6b6c5-b914-4992-bbb8-529955ef6ea4",
+        "material": "pal_static-colors",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      },
+      {
+        "at": 55714.10000038147,
+        "ms": 23,
+        "object": "Mesh/civilian-crowd/Group/npcs/Scene",
+        "uuid": "047641cc-9c88-4297-a150-02cab1649de3",
+        "material": "pal_picketWhite",
+        "lights": [
+          {
+            "name": "",
+            "type": "DirectionalLight",
+            "visible": true,
+            "shadow": true
+          },
+          {
+            "name": "",
+            "type": "HemisphereLight",
+            "visible": true,
+            "shadow": false
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "at": 62032.5,
+    "nodes": [],
+    "perf": {
+      "profile": {
+        "other": {
+          "drawCalls": 131,
+          "triangles": 141264
+        },
+        "shadows": {
+          "drawCalls": 69,
+          "triangles": 118245
+        },
+        "buildings": {
+          "drawCalls": 5,
+          "triangles": 45748
+        },
+        "props": {
+          "drawCalls": 7,
+          "triangles": 4370
+        },
+        "crowd": {
+          "drawCalls": 8,
+          "triangles": 34573
+        }
+      },
+      "profileAssets": {
+        "view:other/Background.mesh/Background.mesh": {
+          "drawCalls": 1,
+          "triangles": 1984
+        },
+        "shadow:other/sunset-grove/Mesh": {
+          "drawCalls": 6,
+          "triangles": 72
+        },
+        "shadow:other/sunset-grove/pal_picketWhite": {
+          "drawCalls": 1,
+          "triangles": 12188
+        },
+        "shadow:other/npcs/Mesh": {
+          "drawCalls": 0,
+          "triangles": 0
+        },
+        "shadow:other/sunset-grove/pal_denim": {
+          "drawCalls": 1,
+          "triangles": 23124
+        },
+        "shadow:other/sunset-grove/pal_sidewalk": {
+          "drawCalls": 1,
+          "triangles": 5588
+        },
+        "shadow:other/sunset-grove/pal_asphalt": {
+          "drawCalls": 1,
+          "triangles": 308
+        },
+        "shadow:other/Group/Mesh": {
+          "drawCalls": 0,
+          "triangles": 0
+        },
+        "shadow:other/sunset-grove/pal_uiDark": {
+          "drawCalls": 1,
+          "triangles": 8652
+        },
+        "shadow:other/sunset-grove/pal_grass": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "shadow:other/sunset-grove/pal_woodWarm": {
+          "drawCalls": 1,
+          "triangles": 352
+        },
+        "shadow:other/sunset-grove/daisy_3": {
+          "drawCalls": 1,
+          "triangles": 1060
+        },
+        "shadow:other/sunset-grove/daisy_2": {
+          "drawCalls": 1,
+          "triangles": 4056
+        },
+        "shadow:other/sunset-grove/daisy_1": {
+          "drawCalls": 1,
+          "triangles": 2320
+        },
+        "shadow:other/sunset-grove/daisy": {
+          "drawCalls": 1,
+          "triangles": 4056
+        },
+        "shadow:other/sunset-grove/pal_hairChestnut": {
+          "drawCalls": 1,
+          "triangles": 308
+        },
+        "shadow:other/interactions/Mesh": {
+          "drawCalls": 2,
+          "triangles": 24
+        },
+        "shadow:other/Group/mesh_0": {
+          "drawCalls": 1,
+          "triangles": 560
+        },
+        "shadow:other/npcs/mesh_0": {
+          "drawCalls": 1,
+          "triangles": 444
+        },
+        "shadow:other/npcs/mesh_0_1": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "shadow:other/npcs/mesh_0_2": {
+          "drawCalls": 1,
+          "triangles": 338
+        },
+        "shadow:other/npcs/mesh_0_3": {
+          "drawCalls": 1,
+          "triangles": 100
+        },
+        "shadow:other/npcs/mesh_0_4": {
+          "drawCalls": 1,
+          "triangles": 884
+        },
+        "shadow:other/npcs/mesh_0_5": {
+          "drawCalls": 1,
+          "triangles": 268
+        },
+        "shadow:other/npcs/mesh_0_6": {
+          "drawCalls": 1,
+          "triangles": 108
+        },
+        "shadow:other/npcs/mesh_6": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "shadow:other/npcs/mesh_6_1": {
+          "drawCalls": 1,
+          "triangles": 330
+        },
+        "shadow:other/npcs/mesh_5": {
+          "drawCalls": 1,
+          "triangles": 226
+        },
+        "shadow:other/npcs/mesh_5_1": {
+          "drawCalls": 1,
+          "triangles": 270
+        },
+        "shadow:other/npcs/mesh_5_2": {
+          "drawCalls": 1,
+          "triangles": 276
+        },
+        "shadow:other/npcs/mesh_5_3": {
+          "drawCalls": 1,
+          "triangles": 48
+        },
+        "shadow:other/npcs/mesh_5_4": {
+          "drawCalls": 1,
+          "triangles": 180
+        },
+        "shadow:other/npcs/mesh_5_5": {
+          "drawCalls": 1,
+          "triangles": 368
+        },
+        "shadow:other/npcs/mesh_5_6": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "shadow:other/npcs/mesh_5_7": {
+          "drawCalls": 1,
+          "triangles": 144
+        },
+        "shadow:other/npcs/mesh_5_8": {
+          "drawCalls": 1,
+          "triangles": 70
+        },
+        "shadow:other/Group/mesh_1": {
+          "drawCalls": 1,
+          "triangles": 6
+        },
+        "shadow:other/Group/mesh_1_1": {
+          "drawCalls": 1,
+          "triangles": 72
+        },
+        "shadow:other/Group/mesh_1_2": {
+          "drawCalls": 1,
+          "triangles": 568
+        },
+        "shadow:other/Group/mesh_1_3": {
+          "drawCalls": 1,
+          "triangles": 2004
+        },
+        "shadow:other/Group/mesh_1_4": {
+          "drawCalls": 1,
+          "triangles": 1356
+        },
+        "shadow:other/npcs/mesh_7": {
+          "drawCalls": 1,
+          "triangles": 660
+        },
+        "shadow:other/npcs/mesh_7_1": {
+          "drawCalls": 1,
+          "triangles": 702
+        },
+        "shadow:other/npcs/mesh_7_2": {
+          "drawCalls": 1,
+          "triangles": 64
+        },
+        "shadow:other/npcs/mesh_7_3": {
+          "drawCalls": 1,
+          "triangles": 180
+        },
+        "shadow:other/npcs/mesh_7_4": {
+          "drawCalls": 1,
+          "triangles": 24
+        },
+        "shadow:other/Group/courierSkin": {
+          "drawCalls": 1,
+          "triangles": 44620
+        },
+        "shadow:other/npcs/mesh_1": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "shadow:other/npcs/mesh_1_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "shadow:other/npcs/mesh_1_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "shadow:other/npcs/mesh_3": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "shadow:other/npcs/mesh_3_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "shadow:other/npcs/mesh_3_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "shadow:other/npcs/mesh_2": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "shadow:other/npcs/mesh_2_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "shadow:other/npcs/mesh_2_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "shadow:other/npcs/mesh_4": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "shadow:other/npcs/mesh_4_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "shadow:other/npcs/mesh_4_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "view:other/sunset-grove/Mesh": {
+          "drawCalls": 8,
+          "triangles": 154
+        },
+        "view:bld.mainstreet-brick": {
+          "drawCalls": 2,
+          "triangles": 3970
+        },
+        "view:bld.house-e": {
+          "drawCalls": 1,
+          "triangles": 2824
+        },
+        "view:prop.street-tree": {
+          "drawCalls": 1,
+          "triangles": 1516
+        },
+        "view:prop.street-lamp": {
+          "drawCalls": 1,
+          "triangles": 634
+        },
+        "view:bld.supermarket": {
+          "drawCalls": 2,
+          "triangles": 38954
+        },
+        "view:prop.privacy-fence": {
+          "drawCalls": 1,
+          "triangles": 1008
+        },
+        "view:prop.recycling-bin": {
+          "drawCalls": 1,
+          "triangles": 62
+        },
+        "view:prop.bike-rack": {
+          "drawCalls": 1,
+          "triangles": 240
+        },
+        "view:other/sunset-grove/pal_uiDark": {
+          "drawCalls": 1,
+          "triangles": 8652
+        },
+        "view:other/npcs/Mesh": {
+          "drawCalls": 0,
+          "triangles": 0
+        },
+        "view:prop.crates": {
+          "drawCalls": 1,
+          "triangles": 288
+        },
+        "view:other/sunset-grove/pal_picketWhite": {
+          "drawCalls": 1,
+          "triangles": 12188
+        },
+        "view:prop.pallet": {
+          "drawCalls": 1,
+          "triangles": 622
+        },
+        "view:other/sunset-grove/pal_denim": {
+          "drawCalls": 1,
+          "triangles": 23124
+        },
+        "view:other/sunset-grove/pal_sidewalk": {
+          "drawCalls": 1,
+          "triangles": 5588
+        },
+        "view:other/sunset-grove/pal_asphalt": {
+          "drawCalls": 1,
+          "triangles": 308
+        },
+        "view:other/l2-props/Mesh": {
+          "drawCalls": 23,
+          "triangles": 1912
+        },
+        "view:other/Group/Mesh": {
+          "drawCalls": 3,
+          "triangles": 2860
+        },
+        "view:other/sunset-grove/pal_grass": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/sunset-grove/pal_woodWarm": {
+          "drawCalls": 1,
+          "triangles": 352
+        },
+        "view:other/sunset-grove/daisy_3": {
+          "drawCalls": 1,
+          "triangles": 1060
+        },
+        "view:other/sunset-grove/daisy_1": {
+          "drawCalls": 1,
+          "triangles": 2320
+        },
+        "view:other/sunset-grove/daisy_2": {
+          "drawCalls": 1,
+          "triangles": 4056
+        },
+        "view:other/sunset-grove/daisy": {
+          "drawCalls": 1,
+          "triangles": 4056
+        },
+        "view:other/sunset-grove/grass-gpu-wind": {
+          "drawCalls": 1,
+          "triangles": 11630
+        },
+        "view:other/sunset-grove/pal_hairChestnut": {
+          "drawCalls": 1,
+          "triangles": 308
+        },
+        "view:other/Group/mesh_0": {
+          "drawCalls": 2,
+          "triangles": 584
+        },
+        "view:other/Group/mesh_8": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_8_1": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_8_2": {
+          "drawCalls": 1,
+          "triangles": 88
+        },
+        "view:other/Group/mesh_8_3": {
+          "drawCalls": 1,
+          "triangles": 168
+        },
+        "view:other/Group/mesh_8_4": {
+          "drawCalls": 1,
+          "triangles": 204
+        },
+        "view:other/Group/mesh_8_5": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_5": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/Group/mesh_5_1": {
+          "drawCalls": 1,
+          "triangles": 240
+        },
+        "view:other/Group/mesh_7": {
+          "drawCalls": 1,
+          "triangles": 24
+        },
+        "view:other/Group/mesh_7_1": {
+          "drawCalls": 1,
+          "triangles": 24
+        },
+        "view:other/Group/mesh_7_2": {
+          "drawCalls": 1,
+          "triangles": 278
+        },
+        "view:other/Group/mesh_7_3": {
+          "drawCalls": 1,
+          "triangles": 96
+        },
+        "view:other/Group/mesh_7_4": {
+          "drawCalls": 1,
+          "triangles": 296
+        },
+        "view:other/Group/mesh_7_5": {
+          "drawCalls": 1,
+          "triangles": 16
+        },
+        "view:other/Group/mesh_11": {
+          "drawCalls": 1,
+          "triangles": 120
+        },
+        "view:other/Group/mesh_11_1": {
+          "drawCalls": 1,
+          "triangles": 208
+        },
+        "view:other/Group/mesh_11_2": {
+          "drawCalls": 1,
+          "triangles": 260
+        },
+        "view:other/Group/mesh_11_3": {
+          "drawCalls": 1,
+          "triangles": 384
+        },
+        "view:other/Group/mesh_11_4": {
+          "drawCalls": 1,
+          "triangles": 120
+        },
+        "view:other/Group/mesh_11_5": {
+          "drawCalls": 1,
+          "triangles": 204
+        },
+        "view:other/Group/mesh_11_6": {
+          "drawCalls": 1,
+          "triangles": 160
+        },
+        "view:other/Group/mesh_11_7": {
+          "drawCalls": 1,
+          "triangles": 204
+        },
+        "view:other/Group/mesh_4": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/Group/mesh_4_1": {
+          "drawCalls": 1,
+          "triangles": 240
+        },
+        "view:other/Group/mesh_6": {
+          "drawCalls": 1,
+          "triangles": 120
+        },
+        "view:other/Group/mesh_6_1": {
+          "drawCalls": 1,
+          "triangles": 32
+        },
+        "view:other/Group/mesh_6_2": {
+          "drawCalls": 1,
+          "triangles": 24
+        },
+        "view:other/Group/mesh_6_3": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_10": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_10_1": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_10_2": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_9": {
+          "drawCalls": 1,
+          "triangles": 12
+        },
+        "view:other/Group/mesh_9_1": {
+          "drawCalls": 1,
+          "triangles": 24
+        },
+        "view:other/Group/mesh_3": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/Group/mesh_3_1": {
+          "drawCalls": 1,
+          "triangles": 240
+        },
+        "view:other/Group/mesh_1": {
+          "drawCalls": 2,
+          "triangles": 150
+        },
+        "view:other/Group/mesh_2": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/Group/mesh_2_1": {
+          "drawCalls": 1,
+          "triangles": 240
+        },
+        "view:other/npcs/mesh_6": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "view:other/npcs/mesh_6_1": {
+          "drawCalls": 1,
+          "triangles": 330
+        },
+        "view:other/npcs/mesh_5": {
+          "drawCalls": 1,
+          "triangles": 226
+        },
+        "view:other/npcs/mesh_5_1": {
+          "drawCalls": 1,
+          "triangles": 270
+        },
+        "view:other/npcs/mesh_5_2": {
+          "drawCalls": 1,
+          "triangles": 276
+        },
+        "view:other/npcs/mesh_5_3": {
+          "drawCalls": 1,
+          "triangles": 48
+        },
+        "view:other/npcs/mesh_5_4": {
+          "drawCalls": 1,
+          "triangles": 180
+        },
+        "view:other/npcs/mesh_5_5": {
+          "drawCalls": 1,
+          "triangles": 368
+        },
+        "view:other/npcs/mesh_5_6": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/npcs/mesh_5_7": {
+          "drawCalls": 1,
+          "triangles": 144
+        },
+        "view:other/npcs/mesh_5_8": {
+          "drawCalls": 1,
+          "triangles": 70
+        },
+        "view:other/npcs/mesh_1": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "view:other/npcs/mesh_1_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/npcs/mesh_1_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "view:other/npcs/mesh_2": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "view:other/npcs/mesh_2_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/npcs/mesh_2_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "view:other/npcs/mesh_7": {
+          "drawCalls": 1,
+          "triangles": 660
+        },
+        "view:other/npcs/mesh_7_1": {
+          "drawCalls": 1,
+          "triangles": 702
+        },
+        "view:other/npcs/mesh_7_2": {
+          "drawCalls": 1,
+          "triangles": 64
+        },
+        "view:other/npcs/mesh_7_3": {
+          "drawCalls": 1,
+          "triangles": 180
+        },
+        "view:other/npcs/mesh_7_4": {
+          "drawCalls": 1,
+          "triangles": 24
+        },
+        "view:other/npcs/mesh_0": {
+          "drawCalls": 1,
+          "triangles": 444
+        },
+        "view:other/npcs/mesh_0_1": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "view:other/npcs/mesh_0_2": {
+          "drawCalls": 1,
+          "triangles": 338
+        },
+        "view:other/npcs/mesh_0_3": {
+          "drawCalls": 1,
+          "triangles": 100
+        },
+        "view:other/npcs/mesh_0_4": {
+          "drawCalls": 1,
+          "triangles": 884
+        },
+        "view:other/npcs/mesh_0_5": {
+          "drawCalls": 1,
+          "triangles": 268
+        },
+        "view:other/npcs/mesh_0_6": {
+          "drawCalls": 1,
+          "triangles": 108
+        },
+        "view:other/npcs/mesh_3": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "view:other/npcs/mesh_3_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/npcs/mesh_3_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "view:other/npcs/mesh_4": {
+          "drawCalls": 1,
+          "triangles": 42
+        },
+        "view:other/npcs/mesh_4_1": {
+          "drawCalls": 1,
+          "triangles": 44
+        },
+        "view:other/npcs/mesh_4_2": {
+          "drawCalls": 1,
+          "triangles": 186
+        },
+        "view:other/Group/courierSkin": {
+          "drawCalls": 1,
+          "triangles": 44620
+        },
+        "view:other/Group/mesh_1_1": {
+          "drawCalls": 1,
+          "triangles": 72
+        },
+        "view:other/Group/mesh_1_2": {
+          "drawCalls": 1,
+          "triangles": 568
+        },
+        "view:other/Group/mesh_1_3": {
+          "drawCalls": 1,
+          "triangles": 2004
+        },
+        "view:other/Group/mesh_1_4": {
+          "drawCalls": 1,
+          "triangles": 1356
+        },
+        "view:other/sunset-grove/root": {
+          "drawCalls": 1,
+          "triangles": 14
+        },
+        "view:other/figure-contact-shadows/figure-contact-shadows": {
+          "drawCalls": 1,
+          "triangles": 114
+        },
+        "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+          "drawCalls": 6,
+          "triangles": 6
+        },
+        "shadow:other/Render Pipeline/Render Pipeline": {
+          "drawCalls": 1,
+          "triangles": 1
+        }
+      },
+      "updateCpuMs": 4.300000190734863,
+      "renderCpuMs": 11.899999618530273,
+      "propUploads": 0,
+      "awakeProps": 0,
+      "fps": 29.94011976047774,
+      "frameMs": 33.400000000001455,
+      "simMs": 10.300000190734863,
+      "uiMs": 0,
+      "drawCalls": 220,
+      "triangles": 344200,
+      "geometries": 744,
+      "textures": 61,
+      "entities": 753,
+      "backend": "webgl",
+      "loadTiming": {
+        "dataMs": 28.699999809265137,
+        "simMs": 6834.300000190735,
+        "viewMs": 27195.79999923706
+      },
+      "quality": {
+        "setting": "low",
+        "tier": "low",
+        "p90Ms": 50.1,
+        "slowSeconds": 0,
+        "budgets": {
+          "frameMs": 33.333333333333336,
+          "infected": 100,
+          "drawCalls": 300,
+          "triangles": 500000,
+          "simMs": 6,
+          "heapMB": 250,
+          "pixelRatio": 1.5,
+          "shadowSize": 1024,
+          "bloomMips": 2,
+          "cullDistance": 45
+        }
+      },
+      "renderedFrames": 273,
+      "contextLost": false,
+      "paused": true,
+      "heapBytes": 703000000,
+      "lighting": {
+        "lightFieldMs": 0,
+        "lightPools": 0,
+        "lightCandidates": 0,
+        "shadowMaps": 1,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "L2"
+      }
+    }
+  },
+  "errors": []
+}
