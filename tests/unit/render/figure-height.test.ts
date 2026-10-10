@@ -44,10 +44,11 @@ for (const quality of ['high', 'low']) for (const lod of ['lod0', 'lod1', 'lod2'
       expect(height / target, `${skin.id}: ${height} m / ${target} m`).toBeLessThanOrEqual(1.08);
       if (npc) {
         const child = /^(npc.civilian-kid|npc.brother)$/.test(skin.id);
-        const archetypes = child ? ['npc.child'] : [...civilianRoles.map(d => `npc.${d.role}`), 'npc.ally', ...infectedDefinitions.map(d => d.id)];
+        const archetypes = [...civilianRoles.map(d => `npc.${d.role}`), 'npc.child', 'npc.ally', ...infectedDefinitions.map(d => d.id)];
         for (const archetype of archetypes) {
-          const e = { archetype, civilian: { adult: !child, model: skin.id }, appearance: { asset: skin.id } } as unknown as EntitySnapshot;
-          expect(crowdModelOf(e)).toBe(child ? 'npc.civilian-kid' : skin.id);
+          const isChild = child || archetype === 'npc.child';
+          const e = { archetype, civilian: { adult: !isChild, model: skin.id }, appearance: { asset: skin.id } } as unknown as EntitySnapshot;
+          expect(crowdModelOf(e)).toBe(isChild ? 'npc.civilian-kid' : skin.id);
         }
       }
       disposeCharacter(model);
