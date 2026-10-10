@@ -309,6 +309,7 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
@@ -319,12 +320,6 @@ export class GameView implements Lifecycle {
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : undefined); }
       finally { restore?.(); unwarm?.(); }
-      // The fluorescent failure is synchronous: compile its emergency materials during the briefing.
-      if(this.world.scenario==='L6') {
-        this.districts?.metroPower(false,true);
-        try {await preRender(this.renderer,this.scene,this.camera,()=>this.postFx?this.postFx.render():this.renderer.render(this.scene,this.camera),partitions=>this.postFx?this.postFx.compile(partitions):Promise.all(partitions.map(apply=>{apply();return this.renderer.compileAsync(this.scene,this.camera);})));}
-        finally {const s=this.world.missions?.state.l6;this.districts?.metroPower(s?.mainPower??true,s?.emergency??false);}
-      }
     };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
