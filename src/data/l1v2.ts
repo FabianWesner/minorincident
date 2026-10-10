@@ -56,7 +56,7 @@ export const l1v2 = {
    * Planned as the courier leaves the Annex for the bat; only clear off-screen ground admits a resident. */
   street: {
     size: 3, leashM: 5,
-    groups: [[14, 24], [14, 4], [14, -16], [28, -34],
+    groups: [[14, 24], [14, 10], [14, -16], [4, -34], [28, -34],
       [-30, 24], [-30, 4], [-30, -16], [-18, -34],
       [50, 24], [66, 4], [50, -12], [50, -32]],
   },
