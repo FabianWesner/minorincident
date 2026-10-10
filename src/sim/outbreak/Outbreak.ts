@@ -30,6 +30,7 @@ export interface OutbreakOptions {
   tier?: 'high' | 'low';
 }
 export interface PedestrianOptions {
+  child?: boolean;
   role?: string; model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: SpeedTier;
   waypoints?: Point[]; faces?: (Point | null)[]; yaw?: number;
   /** m1-civlife schedule (sit/chat/water/look/walk/door/inside). Derived from waypoints/faces when omitted. */
@@ -101,13 +102,13 @@ export class Outbreak {
   spawnPedestrian(position: Point, options: PedestrianOptions = {}): number {
     const civilians = this.world.npcs!.civilians;
     const role = options.role ?? civilianRoles[Math.floor(this.rng.next() * civilianRoles.length)].role;
-    const model = options.model ?? l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
+    const model = options.child ? 'npc.civilian-kid' : options.model ?? l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
     const waypoints = options.waypoints ?? [position];
     // Plain loops become civlife walks; a point with something to face becomes a short look (window, flowers, partner).
     const schedule: CivilianActivity[] = options.schedule ?? waypoints.map((target, i) => options.faces?.[i]
       ? { activity: 'look', anchor: 'l1/look', target, facing: options.faces[i]!, ticks: ticks(2 + this.rng.next() * 6), prop: options.handProp as CivilianProp ?? undefined }
       : { activity: 'walk', anchor: 'l1/walk', target, ticks: 1, prop: options.handProp as CivilianProp ?? undefined });
-    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule });
+    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule, child: options.child });
     const e = this.world.entities.get(id)!, c = e.civilian!;
     e.transform.yaw = options.yaw ?? this.rng.next() * Math.PI * 2;
     const tier: SpeedTier = options.tier ?? (model === 'npc.civilian-elderly' || role === 'bathrobe-neighbor' ? 'frail' : role === 'jogger' || this.rng.next() < l1Pedestrians.athleticShare ? 'athletic' : 'average');
