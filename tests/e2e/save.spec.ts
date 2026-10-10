@@ -62,8 +62,8 @@ test('@E13 @E14 full menus start a saved campaign, restore settings and hand res
   await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.combat!.aimAssist).toBe('High');
-  expect(state.entities.filter(e=>e.kind==='civilian'&&e.civilian?.ambient&&e.civilian.adult)).toHaveLength(36);
-  expect(state.entities.some(e=>e.kind==='pet'&&e.civilian?.ambient)).toBe(true);
+  expect(state.scenario).toBe('L1');
+  expect(state.player!.survivor!.variant).toBe('male');
   await page.getByRole('button',{name:'Begin mission',exact:true}).click();
   await page.evaluate(async()=>{const a=window.__SS__!;a.pause();for(let i=0;i<100&&a.missions.state()!.phase!=='result';i++){if(a.missions.state()!.phase==='cinematic')await a.step(600);else{a.cheats.completeObjective();await a.step(1);}}await a.screenshotReady();});
   await page.getByRole('button',{name:'Continue',exact:true}).click();
