@@ -78,13 +78,17 @@ export async function assetViewer(): Promise<void> {
     if (roll !== undefined) camera.rotateZ(roll);
     await renderer.compileAsync(scene,camera); render(); render();
   }
+  function applyAssetPower(): void {
+    inspectionLighting.field.setStatic(anchorsFor(id).filter(a => a.pool).map(anchor => ({ ...footprint(anchor), on: powered })));
+    object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
+  }
   async function load(): Promise<void> {
     if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
     object = params.has('crowd') && params.has('test')
       ? new Crowd((await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(`/assets/models/${id}.crowd.glb`)).scene,100)
       : await registry.loadAsset(id, (document.querySelector<HTMLSelectElement>('#quality')?.value ?? 'high') as 'high' | 'lod1' | 'lod2', decay.value || undefined);
     exploded = false;
-    scene.add(object);
+    scene.add(object); applyAssetPower();
     new Box3().setFromObject(object).getCenter(center);
     new Box3().setFromObject(object).getSize(size); extent = Math.max(size.x,size.y,size.z);
     await view(4);
@@ -134,9 +138,7 @@ export async function assetViewer(): Promise<void> {
   const ready = load();
   if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, lighting: async (night, on) => {
     powered = on; inspectionLighting.set(night ? 'night' : 'golden');
-    inspectionLighting.field.setStatic(anchorsFor(id).filter(a => a.pool).map(anchor => ({ ...footprint(anchor), on })));
-    inspectionLighting.applyLook();
-    object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
+    applyAssetPower(); inspectionLighting.applyLook();
     await view(4);
   }, frame: ([left, top, right, bottom]) => {
     const height = camera.position.distanceTo(controls.target) * 2 * Math.tan(camera.fov * Math.PI / 360), before = camera.position.clone();
