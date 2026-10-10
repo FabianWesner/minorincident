@@ -20,7 +20,12 @@ test('T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM
       if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) path = node.moduleSpecifier.text;
       if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword && ts.isStringLiteral(node.arguments[0])) path = node.arguments[0].text;
       if (path) {
-        if (path.startsWith('.')) visit(resolve(dirname(file), path.endsWith('.ts') ? path : `${path}.ts`));
+        if (path.startsWith('.')) {
+          // Shared validated anchor/asset tables are plain JSON, not executable
+          // imports. Parse them; keep traversing every TypeScript dependency.
+          if (path.endsWith('.json')) JSON.parse(readFileSync(resolve(dirname(file), path), 'utf8'));
+          else visit(resolve(dirname(file), path.endsWith('.ts') ? path : `${path}.ts`));
+        }
         else if (path === 'three') {
           expect(ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)).toBeTruthy();
           if (ts.isImportDeclaration(node) && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)) {

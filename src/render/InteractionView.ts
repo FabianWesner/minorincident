@@ -1,7 +1,8 @@
 // Adapted from Bruno Simon InteractivePoints.js / RayCursor.js (MIT):
 // highlighted active point above geometry, range-based reveal, separate presentation state.
 import { modelLod } from './lodPolicy';
-import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { uv, vec4 } from 'three/tsl';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
 import { staticBatch } from '../assets/staticBatch';
@@ -13,6 +14,7 @@ import type { Materials } from './Materials';
 import './interaction.css';
 const assetIds: Record<string, string> = {
   'hazard.propane': 'haz.propane-tank', 'hazard.barrel': 'haz.propane-tank', 'hazard.gas-can': 'haz.gas-can',
+  'hazard.extinguisher': 'prop.fire-extinguisher',
   'hazard.car-alarm': 'haz.car-alarm', 'hazard.fuse-box': 'haz.fuse-box', 'prop.fence': 'prop.picket-fence',
   'prop.barricade': 'prop.barricade', 'prop.cone': 'prop.traffic-cone', 'prop.trash-can': 'prop.trash-bin', 'prop.mailbox': 'prop.mailbox-blue',
   'pickup.medkit': 'pick.medkit', 'pickup.soda': 'pick.soda', 'pickup.energy-drink': 'pick.energy-drink', 'device.radio': 'util.radio',
@@ -40,6 +42,8 @@ export class InteractionView extends Group {
   private readonly box = new BoxGeometry(1, 1, 1);
   private readonly led = new SphereGeometry(.06, 8, 6);
   private readonly brush = new CylinderGeometry(.18, .18, 2.2, 8);
+  private readonly gasGeometry = new PlaneGeometry(2, 2).rotateX(-Math.PI / 2);
+  private readonly gasMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
   private readonly foam = new MeshBasicNodeMaterial({ color: '#f4fbff', transparent: true, opacity: .28, depthWrite: false });
   private readonly black = new MeshBasicNodeMaterial({ color: '#151e30', depthTest: false, depthWrite: false, transparent: true });
   private readonly white = new MeshBasicNodeMaterial({ color: '#ffffff', depthTest: false, depthWrite: false, transparent: true });
@@ -61,6 +65,7 @@ export class InteractionView extends Group {
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
+    this.gasMaterial.outputNode = vec4(.3, .55, .12, uv().sub(.5).mul(2).length().smoothstep(1, .3).mul(.18));
     const outline = new Mesh(this.outlineGeometry, this.black), stroke = new Mesh(this.strokeGeometry, this.white);
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;
     this.ring.add(outline, stroke, this.fill); this.ring.rotation.x = -Math.PI / 2; this.add(this.ring);
@@ -166,9 +171,13 @@ export class InteractionView extends Group {
       return (await this.prototypes.get(key)!).clone(true);
     }
     // E27 draws fire hazards (flame cards, light pools, smoke): no placeholder slab.
-    if (e.hazard?.kind === 'fire') return new Group();
+    if (e.hazard?.kind === 'fire' || e.hazard?.kind === 'tear-gas') return new Group();
+    if (e.hazard?.kind === 'toxic') {
+      const g = new Group(), patch = new Mesh(this.gasGeometry, this.gasMaterial);
+      patch.scale.set(e.hazard.radius, 1, e.hazard.radius); patch.position.y = .02; g.add(patch); return g;
+    }
     // Devices without an integrated art entry use gameplay-shaped code placeholders.
-    const g = new Group(), body = new Mesh(this.box, this.materials.get(pickup ? 'backpackTeal' : e.hazard?.kind === 'toxic' ? 'grass' : e.destructible ? 'woodWarm' : 'policeBlue'));
+    const g = new Group(), body = new Mesh(this.box, this.materials.get(pickup ? 'backpackTeal' : e.destructible ? 'woodWarm' : 'policeBlue'));
     if (pickup) body.scale.set(.3, .3, .3);
     else if (e.interactable?.kind === 'door' || e.interactable?.kind === 'gate' || e.interactable?.kind === 'car-door') body.scale.set(.9, 1.4, .15);
     else if (e.hazard && ['fire', 'water', 'toxic', 'live-wire', 'fuel-trail'].includes(e.hazard.kind)) body.scale.set(e.hazard.radius * 2, .03, e.hazard.radius * 2);
@@ -201,6 +210,7 @@ export class InteractionView extends Group {
         const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
         object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw;
         object.visible = !pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
+        if (e.hazard?.kind === 'toxic') object.visible &&= this.world.tick < e.hazard.activeUntil;
         if (e.interactable?.open && !this.world.toys?.gateIds.includes(e.id)) object.rotation.y += Math.PI / 2;
         this.animateToy(e, object);
         if (e.barricade) {
@@ -252,6 +262,7 @@ export class InteractionView extends Group {
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.batchMaterials) material.dispose();
     this.geometries.clear(); this.batchMaterials.clear(); this.prototypes.clear();
     this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
+    this.gasGeometry.dispose(); this.gasMaterial.dispose();
     void this.registry.dispose();
   }
 }

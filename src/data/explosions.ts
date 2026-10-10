@@ -1,6 +1,6 @@
 import { catalog as actions } from './actions/catalog';
 
-/** Spec 07 §5 blast classes. Toxic gas variants are a later E27 increment (no defs yet). */
+/** Spec 07 §5 blast classes. */
 export const blastClasses = ['small', 'medium', 'large', 'mega', 'toxic', 'incendiary'] as const;
 export type BlastClass = typeof blastClasses[number];
 
@@ -27,6 +27,8 @@ export interface ExplosionDef {
   slowMo: { scale: number; seconds: number; within: number } | null;
   /** Scripted multi-stage blasts (mega): later stages fire after `delay` ticks at an offset from the origin. */
   stages?: { delay: number; offset: { x: number; z: number }; def: string }[];
+  /** Persistent gas uses the shared E11/E27 hazard resolver (10 HP/s toxic DoT, Hazmat immunity). */
+  gas?: { kind: 'toxic' | 'tear-gas'; seconds: number };
 }
 
 /** View side: one preset per look. Seconds are render time. */
@@ -60,6 +62,7 @@ export const explosionDefs: Readonly<Record<string, ExplosionDef>> = Object.from
   fromAction('explosion.pipe-bomb', 'weapon.pipe-bomb', 'small', 7),
   fromAction('explosion.rocket', 'weapon.rocket-launcher', 'medium', 8),
   fromAction('explosion.molotov', 'weapon.molotov', 'incendiary', 0, { knockback: 0, stagger: 0 }),
+  def('explosion.toxic', 'toxic', 6, 0, 1, 0, { knockback: 0, stagger: 0, gas: { kind: 'toxic', seconds: 12 } }),
   // E11 propane/barrel retain their tested 100 × (r − d) / r curve and 18-tick (0.3 s) chain fuse.
   def('explosion.propane', 'medium', 5, 100, 1, 8, { fires: { count: 2, radius: 1.1, seconds: 14, spread: 1 } }),
   def('explosion.barrel', 'medium', 5, 100, 1, 8, { fires: { count: 3, radius: 1.2, seconds: 18, spread: 1 } }),
@@ -90,6 +93,7 @@ export const blastFxPresets: Readonly<Record<string, BlastFxPreset>> = Object.fr
   preset('blast.large', { flash: .6, light: { color: 0xff9a40, intensity: 220, range: 24, seconds: .9 }, fireball: { count: 14, size: 2.8, seconds: 1.1, rise: 2.6 }, sparks: 90, dust: 34, smoke: { seconds: 30, rate: 6, size: 2.4, heat: 1 }, scorch: .32, shake: .36, roll: 1 }),
   preset('blast.mega', { flash: .7, light: { color: 0xff8a30, intensity: 420, range: 40, seconds: 1.4 }, fireball: { count: 20, size: 4.5, seconds: 1.6, rise: 4 }, sparks: 140, dust: 48, smoke: { seconds: 45, rate: 8, size: 3.6, heat: 1 }, scorch: .3, shake: .4, roll: 1.4 }),
   preset('blast.incendiary', { flash: .12, light: { color: 0xff8a30, intensity: 50, range: 10, seconds: 1 }, fireball: { count: 4, size: 1.2, seconds: .6, rise: .6 }, sparks: 16, dust: 0, smoke: { seconds: 6, rate: 3, size: 1.3, heat: .9 }, scorch: .4, shake: .05, roll: 0 }),
+  preset('blast.toxic', { flash: .03, light: { color: 0x96d354, intensity: 10, range: 6, seconds: .3 }, fireball: { count: 0, size: 1, seconds: .1, rise: 0 }, sparks: 0, dust: 8, smoke: { seconds: 0, rate: 0, size: 1, heat: 0 }, scorch: 0, shake: .03, roll: 0 }),
 ].map(p => [p.id, p]));
 
 /** Every explosive placement references a def: E11 hazard kinds, throwables/projectiles and scripted blasts. */
@@ -111,6 +115,7 @@ export function validateExplosions(defs: Readonly<Record<string, ExplosionDef>> 
     if (![d.knockback, d.stagger, d.barricade, d.vehicle].every(nonNegative) || !Number.isInteger(d.chainDelay) || d.chainDelay < 9 || d.chainDelay > 18) throw new Error(`Invalid explosion response ${id}`);
     if (!Number.isInteger(d.fires.count) || d.fires.count < 0 || d.fires.count > 8 || !positive(d.fires.radius) || !positive(d.fires.seconds) || !Number.isInteger(d.fires.spread) || d.fires.spread < 0) throw new Error(`Invalid explosion fires ${id}`);
     if (d.slowMo && (!(d.slowMo.scale > 0 && d.slowMo.scale < 1) || !positive(d.slowMo.seconds) || d.slowMo.seconds > 1 || !positive(d.slowMo.within))) throw new Error(`Invalid explosion slow motion ${id}`);
+    if (d.gas && (!['toxic', 'tear-gas'].includes(d.gas.kind) || !positive(d.gas.seconds))) throw new Error(`Invalid explosion gas ${id}`);
     for (const s of d.stages ?? []) if (!defs[s.def] || defs[s.def].stages || !Number.isInteger(s.delay) || s.delay < 0 || ![s.offset.x, s.offset.z].every(Number.isFinite)) throw new Error(`Invalid explosion stage ${id} → ${s.def}`);
   }
   for (const [id, p] of Object.entries(presets)) {

@@ -5,17 +5,22 @@ import { Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, O
 export class InstancedGroup extends Group {
   private readonly batches: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }[] = [];
   private readonly scratch = new Matrix4();
-  private readonly tinted: boolean;
   private readonly color = new Color();
   constructor(prototype: Object3D, readonly references: Object3D[], readonly capacity = references.length) {
-    super(); this.tinted = references.some(r => typeof r.userData.tint === 'string'); prototype.updateWorldMatrix(true, true);
+    super(); prototype.updateWorldMatrix(true, true);
     const inverse = prototype.matrixWorld.clone().invert();
     prototype.traverse((child) => {
       if (!(child instanceof Mesh)) return;
       for (let parent: Object3D | null = child; parent; parent = parent.parent) if (!parent.visible) return;
-      const mesh = new InstancedMesh(child.geometry, child.material, capacity);
+      const powered = child.geometry.hasAttribute('_lightBase');
+      const geometry = powered ? child.geometry.clone() : child.geometry;
+      if (powered) { const bases = new Float32Array(capacity); references.forEach((reference, index) => { bases[index] = reference.userData.lightBase ?? 0; }); geometry.setAttribute('_lightBase', new InstancedBufferAttribute(bases, 1)); }
+      const mesh = new InstancedMesh(geometry, child.material, capacity);
+      mesh.userData.ownedPowerGeometry = powered;
       mesh.count = references.length;
-      if (this.tinted) mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(capacity * 3).fill(1), 3);
+      // White is the identity tint. One vertex-input layout warms the same
+      // pipeline for untinted and charred/tinted placements and every LOD.
+      mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(capacity * 3).fill(1), 3);
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
       const local = new Matrix4().multiplyMatrices(inverse, child.matrixWorld), door = child.userData.door as string | undefined;
       this.batches.push({ mesh, local, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
@@ -69,13 +74,15 @@ export class InstancedGroup extends Group {
   private readonly axisY = new Vector3(0, 1, 0);
   private readonly axisZ = new Vector3(0, 0, 1);
   private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }, i: number): void {
+    const lightBase = batch.mesh.geometry.getAttribute('_lightBase');
+    if (batch.mesh.userData.ownedPowerGeometry) { lightBase.setX(i, this.references[i].userData.lightBase ?? 0); lightBase.needsUpdate = true; }
     this.references[i].updateWorldMatrix(true, false);
     const yaw = batch.door ? (this.references[i].userData.doorYaw as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
     const height = batch.door ? (this.references[i].userData.doorHeight as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
     const local = batch.base && (yaw || height) ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationAxis(batch.door && this.references[i].userData.doorAxis?.[batch.door] === 'x' ? this.axisX : batch.door && this.references[i].userData.doorAxis?.[batch.door] === 'z' ? this.axisZ : this.axisY, yaw)) : batch.local;
     if (height) local.elements[13] += height;
     this.scratch.multiplyMatrices(this.references[i].matrixWorld, local); batch.mesh.setMatrixAt(i, this.scratch);
-    const tint = this.references[i].userData.tint; if (batch.mesh.instanceColor && typeof tint === 'string') batch.mesh.setColorAt(i, this.color.set(tint));
+    const tint = this.references[i].userData.tint; batch.mesh.setColorAt(i, this.color.set(typeof tint === 'string' ? tint : '#ffffff'));
   }
-  dispose(): void { for (const batch of this.batches) batch.mesh.dispose(); this.clear(); this.batches.length = 0; }
+  dispose(): void { for (const batch of this.batches) { if (batch.mesh.userData.ownedPowerGeometry) batch.mesh.geometry.dispose(); batch.mesh.dispose(); } this.clear(); this.batches.length = 0; }
 }
