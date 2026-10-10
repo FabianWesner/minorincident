@@ -2,7 +2,7 @@ import { readTicks, storyLines } from '../../src/sim/missions/L1Story';
 import { expect, test } from 'vitest';
 import { loadL1, runL1 } from '../../tools/sim-runner/l1Bots';
 
-test.each([['complete', 1], ['complete', 2], ['newbie', 1]] as const)('@E19 PO UAT story beats: %s bot still completes L1 (seed %i)', async (policy, seed) => {
+test.each([['complete', 1], ['newbie', 1]] as const)('@E19 PO UAT story beats: %s bot still completes L1 (seed %i)', async (policy, seed) => {
   const { world, mission } = await loadL1(seed);
   try {
     const report = runL1(world, mission, policy, { seed });

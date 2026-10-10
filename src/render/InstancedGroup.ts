@@ -9,6 +9,7 @@ export class InstancedGroup extends Group {
   private readonly color = new Color();
   constructor(prototype: Object3D, readonly references: Object3D[], readonly capacity = references.length) {
     super(); this.tinted = references.some(r => typeof r.userData.tint === 'string'); prototype.updateWorldMatrix(true, true);
+    this.userData.placeholder = prototype.userData.placeholder === true;
     const inverse = prototype.matrixWorld.clone().invert();
     prototype.traverse((child) => {
       if (!(child instanceof Mesh)) return;

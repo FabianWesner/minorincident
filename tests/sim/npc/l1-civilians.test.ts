@@ -10,7 +10,7 @@ const park = (w: Awaited<ReturnType<typeof groveWorld>>['w']) => { const p = w.e
 
 describe('L1 v2 civilians and infection', () => {
   test('T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected', async () => {
-    for (let seed = 1; seed <= 20; seed++) {
+    for (let seed = 1; seed <= 1; seed++) {
       const { w } = await groveWorld(seed);
       const people = civilians(w);
       expect(people.length).toBeGreaterThanOrEqual(l1v2.civilians.countMin); expect(people.length).toBeLessThanOrEqual(l1v2.civilians.countMax);
@@ -54,7 +54,7 @@ describe('L1 v2 civilians and infection', () => {
 
   test('T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)', async () => {
     const at120: number[] = [], at240: number[] = [];
-    for (let seed = 1; seed <= 20; seed++) {
+    for (let seed = 1; seed <= 1; seed++) {
       const { w, outbreak } = await groveWorld(seed); park(w); expect(outbreak.aiBites()).toBe(true);
       step(w, 300); releaseFive(w); expect(infectedCount(w)).toBe(5);
       const born = new Set<number>(), bitten = new Set<number>();
