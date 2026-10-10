@@ -19,7 +19,7 @@ export default defineConfig({
     rollupOptions: {
       input: ['index.html', 'preview/index.html'],
       output: {
-        manualChunks: (id) => id.includes('/@dimforge/rapier3d-compat/') ? 'rapier' : undefined,
+        manualChunks: (id) => id.includes('/@dimforge/rapier3d-compat/') ? 'rapier' : id.endsWith('/src/assets/manifest.json') ? 'asset-manifest' : undefined,
       },
     },
   },
