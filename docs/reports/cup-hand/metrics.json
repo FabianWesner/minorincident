@@ -771,6 +771,39 @@
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
+    },
+    "levelsSerialBeforeHarnessRefinement": {
+      "startTime": "2026-10-10T17:31:35.238Z",
+      "duration": 1139894.628,
+      "expected": 29,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "levelsFocused": {
+      "startTime": "2026-10-10T18:00:02.958Z",
+      "duration": 160137.888,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "levelsFinalGate": "Deferred to orchestrator at deploy cutoff; no final complete green levels run.",
+    "l1AimProjection": "Corrected to courier floor; repeat run interrupted at orchestrator request before a result.",
+    "levelsInterruptedBeforeFloorFix": {
+      "startTime": "2026-10-10T18:03:56.944Z",
+      "duration": 432566.39800000004,
+      "expected": 9,
+      "skipped": 21,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "afterMainMerge": {
+      "mainCommit": "4eaea9b1",
+      "typecheck": "pass",
+      "lint": "pass",
+      "build": "pass"
     }
-  }
+  },
+  "mergedMainCommit": "4eaea9b1"
 }
