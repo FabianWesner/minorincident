@@ -146,7 +146,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
       else route.push({ x, z: sz });
     }
     if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end
-    route.push({ x: 129, z: 0 }, { x: 143.5, z: 0 });
+    route.push({ x: 129, z: 0 }, { x: l3.map.zoneX + 5, z: 0 }); // The 4 m arrival ring stays inside the zone.
     // Crossing the zone line ends L3 and the campaign hands over to L4: keep the last L3 state, stop touching the world then.
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
