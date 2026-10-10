@@ -72,24 +72,30 @@ test.describe('L1 v2 real-input playthrough', () => {
       const activeBefore = Object.entries((await mission()).steps).find(([, s]) => s.status === 'active')?.[0];
       const start = (await player()).transform;
       if (Math.hypot(target.x - start.x, target.z - start.z) <= stop) return;
-      let clicks = 0;
       const clickDestination = async () => {
-        const [sx, sz] = [[1, 1], [-1, 1], [-1, -1], [1, -1]][clicks++ % 4];
         const start = (await player()).transform;
         // Frame both ends for a real ground click. This changes presentation only; routing remains the game's own.
-        await page.evaluate(({ start, target, sx, sz }) => {
+        await page.evaluate(({ start, target }) => {
           const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2;
           const radius = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
           a.camera.preset('D-GROVE/W0/l1-morning');
-          a.camera.cinematic({ position: [x + radius * sx, radius * 1.2, z + radius * sz], target: [x, 0, z] }, true);
-        }, { start, target, sx, sz });
-        const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
-        const view = page.viewportSize()!;
-        expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
-        expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
-        await page.mouse.click(point.x, point.y);
-        // Consume the queued screen click under the camera that projected it (as in L3).
+          a.camera.cinematic({ position: [x + radius, radius * 1.2, z + radius], target: [x, 0, z] }, true);
+        }, { start, target });
+        // Settle the new camera before projecting, as in L5.
         await step(1);
+        // Avoid mistaking a projected destination for an infected standing in front of it (as in L5).
+        const ground = [target, ...Array.from({ length: 16 }, (_, i) => ({
+          x: target.x + Math.cos(i * Math.PI / 8) * stop * .8,
+          z: target.z + Math.sin(i * Math.PI / 8) * stop * .8,
+        }))];
+        for (const q of ground) {
+          const point = await page.evaluate(q => window.__SS__!.input.project(q), q);
+          const view = page.viewportSize()!;
+          expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
+          expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
+          await page.mouse.click(point.x, point.y); await step(1);
+          if (await page.evaluate(() => window.__SS__!.input.lastPick().length === 0)) break;
+        }
         await page.evaluate(() => window.__SS__!.camera.follow());
       };
       await clickDestination();
