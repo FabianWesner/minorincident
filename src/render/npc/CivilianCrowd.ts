@@ -393,8 +393,8 @@ export class CivilianCrowd extends Group {
   private readonly known = new Set<string>(coreModels);
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
-    // Scripted attackers keep this civilian rig after turning; prepare every tier before the first breach.
-    if(this.world.scenario==='L6')for(const model of this.known)this.loadHero(model);
+    // L1's people spawn at Begin; L6's attackers keep this rig after turning. Prepare their close tiers before play.
+    if(this.world.scenario==='L1'||this.world.scenario==='L6')for(const model of this.known)this.loadHero(model);
     for (const e of this.world.entities.iterate()) {
       const model = crowdModelOf(e);
       // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
