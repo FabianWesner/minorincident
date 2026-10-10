@@ -14,24 +14,38 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
     L5: [undefined, 'survivor-5'], L6: [undefined, 'abandon', 'exit-platform'],
   };
   for (const [level, checkpoints] of Object.entries(phases)) {
-    await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level, { seed: level === 'L2' || level === 'L4' ? 2 : 1, progression: level === 'L1' ? undefined : `${level}-default` as ProgressionPreset }); a.pause(); a.missions.begin(); a.camera.follow(); await a.step(1); a.cheats.god(true); a.bot.start('complete'); }, level);
     for (const checkpoint of checkpoints) {
-      if (checkpoint) {
-        // Calm-dependent checkpoints need live simulation, not graph-prefix
-        // reconstruction. This is one partial setup run per level, not a bot battery.
-        await page.evaluate(async checkpoint => {
-          const a = window.__SS__!, deadline = a.tick() + 60 * 600; a.camera.follow();
+      await page.evaluate(async ({ level, checkpoint }) => {
+        const a = window.__SS__!;
+        a.bot.stop();
+        await a.loadLevel(level, { seed: level === 'L2' || level === 'L4' ? 2 : 1, progression: level === 'L1' ? undefined : `${level}-default` as ProgressionPreset });
+        a.pause(); a.missions.begin(); a.cheats.god(true); a.camera.follow(); await a.step(1);
+        if (checkpoint) {
+          const base = level === 'L2' && checkpoint !== 'doors' ? 'doors'
+            : level === 'L3' && checkpoint === 'segment-3b' ? 'fallback'
+              : level === 'L4' && checkpoint !== 'arrival' ? 'arrival'
+                : level === 'L6' && checkpoint === 'exit-platform' ? 'abandon' : checkpoint;
+          await a.loadLevel(level, { checkpoint: base });
+          a.pause(); a.cheats.god(true);
+          // Calm-only respawn checkpoints are not photo-state gates. Stage the
+          // observer and advance ordinary timers without a completion bot.
+          if (level === 'L3' && checkpoint === 'segment-3b') a.missions.teleport('player', { x: 92, z: 0 });
+          if (level === 'L6' && checkpoint === 'exit-platform') a.missions.teleport('player', { x: 240, z: 15 });
+          if (level === 'L2' && checkpoint === 'cluster') a.missions.teleport('player', { x: 49, z: 29 });
           const reached = () => {
             const m = a.missions.state()!;
-            if (!m.l2) return m.checkpoint === checkpoint;
-            if (checkpoint === 'doors') return m.l2.doorsOpenAt > 0;
-            if (checkpoint === 'escape') return m.l2.radioAt > 0;
-            return m.l2.clusterReached;
+            if (m.l2 && checkpoint === 'escape') return m.l2.radioAt > 0;
+            if (m.l2 && checkpoint === 'cluster') return m.l2.clusterReached;
+            if (m.l4 && checkpoint === 'turn') return m.l4.turnAt > 0;
+            if (m.l4 && checkpoint === 'line-break') return m.l4.lineBreakAt > 0;
+            return true;
           };
-          while (!reached() && a.tick() < deadline && !['result', 'progression'].includes(a.missions.state()!.phase)) await a.step(15);
-          if (!reached()) throw new Error(`Photo setup did not reach ${checkpoint}`);
-        }, checkpoint);
-      }
+          const deadline = a.tick() + 60 * 600;
+          while (!reached() && a.tick() < deadline) await a.step(15);
+          if (!reached()) throw new Error(`Photo setup did not reach ${level}/${checkpoint}`);
+        }
+        await a.step(1);
+      }, { level, checkpoint });
       const spots = await page.evaluate(() => window.__SS__!.getState().render.districts!.photoSpots);
       for (const spot of spots.filter(spot => checkpoint === undefined || spot.includes(`/l${level.slice(1)}-`))) {
         const proof = await page.evaluate(async spot => {
@@ -45,9 +59,9 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
             if (point.x < 0 || point.x > innerWidth || point.y < 0 || point.y > innerHeight) return [];
             return [{ id: e.id, assetId: e.appearance?.asset ?? e.archetype, representation: e.traffic || e.convoy ? 'NpcView procedural traffic box' : 'runtime model placeholder' }];
           });
-          return { dynamicPlaceholders, placeholders: [...new Set(batches.filter(b => b.placeholder && b.triangles > 0).map(b => b.assetId))], assets: [...new Set(batches.filter(b => b.triangles > 0).map(b => b.assetId))] };
+          return { tick: a.tick(), runtimeCheckpoint: a.missions.state()!.checkpoint, dynamicPlaceholders, placeholders: [...new Set(batches.filter(b => b.placeholder && b.triangles > 0).map(b => b.assetId))], assets: [...new Set(batches.filter(b => b.triangles > 0).map(b => b.assetId))] };
         }, spot);
-        rows.push({ level, checkpoint: checkpoint ?? 'start', spot, ...proof });
+        rows.push({ level, checkpoint: checkpoint ?? 'start', setup: checkpoint ? 'authored checkpoint + timed observer staging' : 'mission start', spot, ...proof });
         writeFileSync('test-results/epics/E17/photo-assets.json', JSON.stringify(rows, null, 2) + '\n');
       }
     }
