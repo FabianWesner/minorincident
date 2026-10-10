@@ -1,0 +1,335 @@
+{
+ "firstTurn": -1,
+ "lineBreak": -1,
+ "request": {
+  "scenario": "cue-log",
+  "level": "L5",
+  "duration": 60,
+  "cues": [
+   {
+    "cue": "bed.wind",
+    "variant": "bed.wind",
+    "time": 0,
+    "tick": 0,
+    "gain": 0.02852807752788067,
+    "rate": 0.9779022336006165,
+    "lowpass": 20000,
+    "voice": 1
+   },
+   {
+    "cue": "bed.fire",
+    "variant": "bed.fire",
+    "time": 0,
+    "tick": 0,
+    "gain": 0.02852807752788067,
+    "rate": 0.9796608090400696,
+    "lowpass": 20000,
+    "voice": 2
+   },
+   {
+    "cue": "ambient.debris",
+    "variant": "ambient.debris",
+    "time": 0.9166666666666666,
+    "tick": 55,
+    "position": {
+     "x": -5.565800620242953,
+     "z": -15.85061090067029
+    },
+    "gain": 0.022083507850766182,
+    "rate": 0.981606662273407,
+    "lowpass": 20000,
+    "voice": 3
+   },
+   {
+    "cue": "ambient.debris",
+    "variant": "ambient.debris",
+    "time": 6.916666666666667,
+    "tick": 415,
+    "position": {
+     "x": -11.796553106978536,
+     "z": -19.527936354279518
+    },
+    "gain": 0.022083507850766182,
+    "rate": 1.0279557704925537,
+    "lowpass": 20000,
+    "voice": 4
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood",
+    "time": 10,
+    "tick": 600,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.5272836685180664,
+    "rate": 0.8490833044052124,
+    "lowpass": 20000,
+    "voice": 5
+   },
+   {
+    "cue": "dialogue.radio",
+    "variant": "dialogue.radio",
+    "time": 10,
+    "tick": 600,
+    "gain": 0.044167015701532364,
+    "rate": 1,
+    "lowpass": 20000,
+    "voice": 6
+   },
+   {
+    "cue": "ambient.debris",
+    "variant": "ambient.debris",
+    "time": 10.516666666666667,
+    "tick": 631,
+    "position": {
+     "x": -6.458569755777717,
+     "z": 0.05036044865846634
+    },
+    "gain": 0.022083507850766182,
+    "rate": 0.9854338765144348,
+    "lowpass": 20000,
+    "voice": 7
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood.v3",
+    "time": 17,
+    "tick": 1020,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.550805389881134,
+    "rate": 0.8444953560829163,
+    "lowpass": 20000,
+    "voice": 8
+   },
+   {
+    "cue": "ambient.collapse",
+    "variant": "ambient.collapse",
+    "time": 17.516666666666666,
+    "tick": 1051,
+    "position": {
+     "x": -4.931221287697554,
+     "z": -9.634491661563516
+    },
+    "gain": 0.022083507850766182,
+    "rate": 0.9925184845924377,
+    "lowpass": 20000,
+    "voice": 9
+   },
+   {
+    "cue": "ambient.dog",
+    "variant": "ambient.dog",
+    "time": 22.616666666666667,
+    "tick": 1357,
+    "position": {
+     "x": 17.854945538565516,
+     "z": -9.282111832872033
+    },
+    "gain": 0.012619147077202797,
+    "rate": 0.9737738966941833,
+    "lowpass": 20000,
+    "voice": 10
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood",
+    "time": 24,
+    "tick": 1440,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.5024802088737488,
+    "rate": 0.9278080463409424,
+    "lowpass": 20000,
+    "voice": 11
+   },
+   {
+    "cue": "ambient.dog",
+    "variant": "ambient.dog",
+    "time": 26.516666666666666,
+    "tick": 1591,
+    "position": {
+     "x": -11.535340650007129,
+     "z": -19.594688769429922
+    },
+    "gain": 0.012619147077202797,
+    "rate": 1.0034821033477783,
+    "lowpass": 20000,
+    "voice": 12
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood.v2",
+    "time": 31,
+    "tick": 1860,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.6133585572242737,
+    "rate": 0.9580802917480469,
+    "lowpass": 20000,
+    "voice": 13
+   },
+   {
+    "cue": "ambient.collapse",
+    "variant": "ambient.collapse",
+    "time": 31.716666666666665,
+    "tick": 1903,
+    "position": {
+     "x": 14.903235957026482,
+     "z": -16.452288404107094
+    },
+    "gain": 0.022083507850766182,
+    "rate": 1.0270886421203613,
+    "lowpass": 20000,
+    "voice": 14
+   },
+   {
+    "cue": "ambient.dog",
+    "variant": "ambient.dog",
+    "time": 34.71666666666667,
+    "tick": 2083,
+    "position": {
+     "x": 8.372605135664344,
+     "z": 6.902698641642928
+    },
+    "gain": 0.012619147077202797,
+    "rate": 1.001813292503357,
+    "lowpass": 20000,
+    "voice": 15
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood.v1",
+    "time": 38,
+    "tick": 2280,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.490772008895874,
+    "rate": 0.9030799865722656,
+    "lowpass": 20000,
+    "voice": 16
+   },
+   {
+    "cue": "ambient.collapse",
+    "variant": "ambient.collapse",
+    "time": 40.416666666666664,
+    "tick": 2425,
+    "position": {
+     "x": -12.44981317780912,
+     "z": 0.3412960935384035
+    },
+    "gain": 0.022083507850766182,
+    "rate": 1.0297166109085083,
+    "lowpass": 20000,
+    "voice": 17
+   },
+   {
+    "cue": "ambient.dog",
+    "variant": "ambient.dog",
+    "time": 44.516666666666666,
+    "tick": 2671,
+    "position": {
+     "x": 14.970178818330169,
+     "z": 19.154698392376304
+    },
+    "gain": 0.012619147077202797,
+    "rate": 0.9747394919395447,
+    "lowpass": 20000,
+    "voice": 18
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood.v3",
+    "time": 45,
+    "tick": 2700,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.5507964491844177,
+    "rate": 0.9231693744659424,
+    "lowpass": 20000,
+    "voice": 19
+   },
+   {
+    "cue": "ambient.debris",
+    "variant": "ambient.debris",
+    "time": 47.61666666666667,
+    "tick": 2857,
+    "position": {
+     "x": -1.2901206593960524,
+     "z": -13.051890078932047
+    },
+    "gain": 0.022083507850766182,
+    "rate": 0.9956796169281006,
+    "lowpass": 20000,
+    "voice": 20
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood.v2",
+    "time": 52,
+    "tick": 3120,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.6077086925506592,
+    "rate": 0.8598774075508118,
+    "lowpass": 20000,
+    "voice": 21
+   },
+   {
+    "cue": "ambient.debris",
+    "variant": "ambient.debris",
+    "time": 53.21666666666667,
+    "tick": 3193,
+    "position": {
+     "x": 9.265020051971078,
+     "z": -1.7431790474802256
+    },
+    "gain": 0.022083507850766182,
+    "rate": 0.9729154706001282,
+    "lowpass": 20000,
+    "voice": 22
+   },
+   {
+    "cue": "ambient.collapse",
+    "variant": "ambient.collapse",
+    "time": 57.61666666666667,
+    "tick": 3457,
+    "position": {
+     "x": 14.325066907331347,
+     "z": -11.81390100158751
+    },
+    "gain": 0.022083507850766182,
+    "rate": 0.9740618467330933,
+    "lowpass": 20000,
+    "voice": 23
+   },
+   {
+    "cue": "door.wood",
+    "variant": "door.wood.v3",
+    "time": 59,
+    "tick": 3540,
+    "position": {
+     "x": -9.199996948242188,
+     "z": 9.19999961853027
+    },
+    "gain": 0.6121386885643005,
+    "rate": 0.8959707617759705,
+    "lowpass": 20000,
+    "voice": 24
+   }
+  ]
+ }
+}

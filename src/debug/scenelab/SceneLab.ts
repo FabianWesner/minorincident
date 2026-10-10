@@ -24,6 +24,7 @@ import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelFourLayouts } from '../../levels/L4/layout';
+import { levelFiveLayouts } from '../../levels/L5/layout';
 import { inside } from '../../levels/districts/validate';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
@@ -117,7 +118,8 @@ export class SceneLab {
       if (spec.layout.level === 'L2') [source] = levelTwoLayouts([source]);
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
       // Fairhaven likewise (E22): the army reception, sandbag line, nests, parked cars and the L4 anchors.
-      if (spec.layout.district === 'D-FAIR') source = levelFourLayouts([source])[0];
+      // ... and its devastated twin hours later (E23, `level: "L5"`): W5 shells, wrecks, craters, glass, the power out.
+      if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
@@ -333,6 +335,7 @@ export class SceneLab {
         if (leader) c.ally.follow = { targetId: leader, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs };
         e.health = { current: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp, max: role === 'soldier' ? l3.soldiers.hp : l3.officers.hp };
       }
+      else if ('survivor' in a) { c.survivor = { key: id, mode: 'follow', slot: a.survivor.slot ?? 0, leader: 0, cover: false, waitAt: world.tick + 600, foundAt: world.tick }; c.state = 'calm'; c.schedule = [this.stand(e.transform, e.transform.yaw)]; c.scheduleStep = 0; c.pauseUntil = 0; }
       else if ('handover' in a) this.startHandover(actor, e, a.handover);
       return;
     }

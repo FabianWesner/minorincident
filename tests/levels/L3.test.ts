@@ -45,7 +45,7 @@ describe('L3 The Police Collapse', () => {
     for (let guard = 0; guard < 8 && m.state.phase === 'playing'; guard++) m.completeObjective();
     expect(m.state.completedObjectives).toEqual(['armory', 'defend', 'checkpoint']);
     expect(m.state.phase).toBe('progression');
-  });
+  }, 120_000); // Authored defense-wave setup can exceed 30 s under four-worker load.
 
   test('T-E21-02 @E21 @E21-AC02 complete bot finishes 20/20 seeds from L3-default (bat + axe), median time in band', async () => {
     const runs = await complete();
@@ -202,7 +202,7 @@ describe('L3 The Police Collapse', () => {
       expect(forced.filter(r => r.outcome === 'complete').length, street).toBe(seeds.length);
       for (const r of forced) expect(r.streets.filter(s => s !== street).length, `${street} seed ${r.seed} used ${r.streets}`).toBe(0);
     }
-  }, HEAVY);
+  }, HEAVY * 2); // Three existing 20-seed forced routes took 61 minutes on the shared runner.
 
   test('T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded', async () => {
     const runs = await complete();

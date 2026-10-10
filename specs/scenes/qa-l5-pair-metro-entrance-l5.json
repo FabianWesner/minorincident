@@ -1,0 +1,56 @@
+{
+ "name": "qa-l5-pair-metro-entrance-l5",
+ "note": "E23 recognition (AC18): the Metro entrance hours later (W5): the same buildings, burned and shot up, the power out, sunset.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -2.200000000000003,
+    -84.2
+   ],
+   [
+    77.8,
+    -4.200000000000003
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   51.8,
+   17,
+   -30.200000000000003
+  ],
+  "target": [
+   37.8,
+   0,
+   -44.2
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    34.6,
+    -44.6
+   ],
+   "yaw": 0,
+   "state": "idle"
+  }
+ ],
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

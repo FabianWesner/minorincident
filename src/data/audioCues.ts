@@ -104,7 +104,8 @@ export const ambienceTiers = [
     { beds: ['sirens', 'helicopter'], oneShots: ['megaphone', 'radio', 'gunshot'] },
     { beds: ['wind', 'fire', 'hum'], oneShots: ['alarm', 'glass', 'explosion', 'power'] },
     { beds: ['fire-roar', 'moans'], oneShots: ['scream', 'automatic', 'collapse'] },
-    { beds: ['wind', 'fire'], oneShots: ['debris', 'dog', 'helicopter'] },
+    // W5 (E23): a silent burnt city. No helicopter, no siren; only debris settling, a far collapse, a dog.
+    { beds: ['wind', 'fire'], oneShots: ['debris', 'collapse', 'dog'] },
 ] as const;
 for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.beds]))].entries())
     cue(`bed.${id}`, 'ambience', 'bed', ['birds', 'traffic', 'sirens', 'wind'].includes(id) ? 12 : 2, 100 + i * 210, { gain: 0.18, loop: true });
@@ -243,6 +244,8 @@ export const eventCues = {
     'l3.handgun': 'ui.pickup', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'door.gate',
     'l4.convoyStarted': 'ui.tick', 'l4.convoyArrived': 'door.gate', 'l4.gun': 'ui.pickup', 'l4.war': 'vehicle.siren', 'l4.heliWithdrawn': 'ui.tick', 'l4.descended': 'door.gate', 'l4.doorBarred': 'door.gate', 'l4.battle': 'ui.tick',
     'l4.firstTurn': 'ui.tick', 'l4.lineBreaks': 'ui.tick', 'l4.wave': 'ui.tick', 'l4.tankFire': 'ui.tick', 'l4.heliPass': 'ui.tick', 'hmg.burst': 'ui.tick',
+    // E23: the silent city. The sign-of-life cue is positional (AudioService picks the cue by survivor); beats are silent but the shutter.
+    'l5.emerged': 'ui.tick', 'l5.searching': 'ui.tick', 'l5.accounted': 'ui.tick', 'l5.shutter': 'door.gate', 'l5.sheltered': 'ui.tick', 'l5.cue': 'ui.tick', 'l5.found': 'ui.pickup', 'l5.lost': 'ui.tick', 'l5.wait': 'ui.tick',
     'l1.flicker': 'l1.flicker.buzz', 'l1.blast': 'l1.blast', 'l1.ringing': 'l1.ringing', 'l1.smoke': 'l1.bell', 'l1.screams': 'l1.scream', 'l1.infectedExit': 'l1.chaos.infected',
 } satisfies Record<GameEvent['type'], string>;
 export const audioCategories = [...offsets.keys()];

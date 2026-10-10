@@ -1,0 +1,95 @@
+{
+  "profile": "newbie",
+  "seed": 2,
+  "outcome": "complete",
+  "simSeconds": 242,
+  "deaths": 0,
+  "kills": 0,
+  "knockdowns": 25,
+  "damage": 0,
+  "timeline": [
+    {
+      "type": "l5.emerged",
+      "t": 2.5166666666666666
+    },
+    {
+      "type": "objective:emerge",
+      "t": 2.5166666666666666
+    },
+    {
+      "type": "l5.searching",
+      "t": 12.516666666666667
+    },
+    {
+      "type": "l5.accounted",
+      "t": 175.51666666666668
+    },
+    {
+      "type": "objective:look",
+      "t": 175.51666666666668
+    },
+    {
+      "type": "l5.shutter",
+      "t": 239
+    },
+    {
+      "type": "l5.sheltered",
+      "t": 242
+    },
+    {
+      "type": "objective:metro",
+      "t": 242
+    }
+  ],
+  "found": [
+    {
+      "key": "rosa",
+      "t": 26.516666666666666
+    },
+    {
+      "key": "dale",
+      "t": 72.26666666666667
+    },
+    {
+      "key": "okafor",
+      "t": 88.01666666666667
+    },
+    {
+      "key": "sam",
+      "t": 118.26666666666667
+    },
+    {
+      "key": "mia",
+      "t": 175.51666666666668
+    }
+  ],
+  "fates": {
+    "dale": "sheltered",
+    "rosa": "sheltered",
+    "okafor": "sheltered",
+    "mia": "sheltered",
+    "sam": "sheltered"
+  },
+  "rescued": 5,
+  "rescuedKeys": [
+    "dale",
+    "rosa",
+    "okafor",
+    "mia",
+    "sam"
+  ],
+  "maxConcurrent": 19,
+  "infectedAtStart": 18,
+  "maxGroup": 2,
+  "followShare": 0.9970917800017107,
+  "maxFollowerJump": 0.14480122047091346,
+  "lost": [],
+  "deathsAt": [],
+  "gunshots": 28,
+  "audit": {
+    "sightViolations": 0,
+    "nonSightAlerts": 0,
+    "directorQueueMax": 0,
+    "newInfected": 0
+  }
+}

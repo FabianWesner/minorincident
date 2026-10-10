@@ -8,6 +8,7 @@ import {
 } from "./districts/types";
 import { l3PhotoSpots } from "../data/l3";
 import { l4PhotoSpots } from "../data/l4";
+import { l5PhotoSpots } from "../data/l5";
 /** Neighbouring district slabs touch at boundaries; all connected roads are available from load. */
 export const districtOrigins: Record<DistrictId, [number, number]> =
   Object.fromEntries([
@@ -71,6 +72,11 @@ compositions[corridorDistrictId] = { id: corridorDistrictId, tier: 2, timeOfDay:
 compositions.L4 = {
   id: "L4", tier: 0, timeOfDay: "L4",
   districts: [{ id: fairDistrictId, origin: [0, 0], overrides: { photoSpots: l4PhotoSpots.map(([name, offset]) => ({ name, target: { anchor: name.startsWith("pair-") ? name : `photo-${name}` }, offset: [...offset] as [number, number, number] })) } }],
+};
+/** L5 "Aftermath" (E23): the same streets hours later, W5 (devastated, power out) at sunset; the twin is authored in `levels/L5/layout.ts`. */
+compositions.L5 = {
+  id: "L5", tier: 5, timeOfDay: "L5",
+  districts: [{ id: fairDistrictId, origin: [0, 0], overrides: { photoSpots: l5PhotoSpots.map(([name, offset]) => ({ name, target: { anchor: name.startsWith("pair-") ? name : `photo-${name}` }, offset: [...offset] as [number, number, number] })) } }],
 };
 compositions[fairDistrictId] = { id: fairDistrictId, tier: 3, timeOfDay: "L4", districts: [{ id: fairDistrictId, origin: [0, 0] }] };
 /** E25 `night-street` / perf: L1's town (W0, all blocks powered) at night. */

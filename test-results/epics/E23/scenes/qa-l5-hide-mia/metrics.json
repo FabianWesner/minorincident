@@ -1,0 +1,791 @@
+{
+  "spec": "specs/scenes/qa-l5-hide-mia.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 90,
+  "timing": {
+    "openMs": 1193,
+    "loadMs": 5261,
+    "runMs": 867,
+    "sceneMs": 6128
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-l5-hide-mia",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.apartment-block-a:141",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          -67.95009999999999,
+          -28
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:146",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -83,
+          -34.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:147",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -80.2,
+          -34.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:148",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -77.4,
+          -34.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:149",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -74.60000000000001,
+          -34.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:154",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -33.30344827586207
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:155",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -30.71034482758621
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:156",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -28.117241379310347
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:157",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -25.52413793103448
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:158",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -22.93103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:159",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -20.337931034482757
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:183",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -33.30344827586207
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:184",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -30.71034482758621
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:185",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -28.117241379310347
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:186",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -25.52413793103448
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:187",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -22.93103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:188",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -20.337931034482757
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-b:217",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          -77.7,
+          -50.7801
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.storefront-row:218",
+        "asset": "bld.storefront-row",
+        "at": [
+          -63.08,
+          -50.849999999999994
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.privacy-fence:229",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -83.10153846153847,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:230",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -80.50461538461539,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:231",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -77.90769230769232,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:232",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -75.31076923076924,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:233",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -72.71384615384616,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:234",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -70.11692307692309,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:235",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -67.52000000000001,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:236",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -64.92307692307693,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:237",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -62.32615384615385,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:238",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -59.729230769230774,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:239",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -57.13230769230769,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:240",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -54.535384615384615,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:241",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -51.93846153846154,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:242",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -49.34153846153846,
+          -58.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:294",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -57.48
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:295",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -54.839999999999996
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:296",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -52.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:297",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -49.56
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:298",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -84.4,
+          -46.92
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:432",
+        "asset": "prop.street-sign",
+        "at": [
+          -54.3,
+          -44.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:433",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          -61.7,
+          -44.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-cue-124",
+        "asset": "decay.damaged-sign",
+        "at": [
+          -74.6,
+          -45.6
+        ],
+        "yawDeg": 171.9
+      },
+      {
+        "id": "l5-cue-126",
+        "asset": "util.radio",
+        "at": [
+          -79.6,
+          -45.2
+        ],
+        "yawDeg": 22.9
+      },
+      {
+        "id": "l5-glass-0",
+        "asset": "decay.broken-glass",
+        "at": [
+          -77.7,
+          -46.199999999999996
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-11",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.08,
+          -46.19999999999999
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-40",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.19999999999999,
+          -28
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "mia",
+        "kind": "pedestrian",
+        "entity": 3
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "scene": "qa-l5-hide-mia",
+    "frame": 90,
+    "tick": 90,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 40,
+        "p95": 40,
+        "max": 40
+      },
+      "triangles": {
+        "p50": 144817,
+        "p95": 144817,
+        "max": 144817
+      },
+      "shadowDrawCalls": {
+        "p50": 42,
+        "p95": 42,
+        "max": 42
+      },
+      "shadowTriangles": {
+        "p50": 134864,
+        "p95": 134864,
+        "max": 134864
+      },
+      "stepMs": {
+        "p50": 2.4,
+        "p95": 3,
+        "max": 4.4
+      },
+      "lastFrame": {
+        "drawCalls": 40,
+        "triangles": 144817,
+        "shadowDrawCalls": 42,
+        "shadowTriangles": 134864,
+        "stepMs": 1.8000001907348633,
+        "categories": {
+          "other": 33,
+          "shadows": 42,
+          "buildings": 3,
+          "props": 3,
+          "crowd": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -76.2,
+          -44.4
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 90,
+        "inViewFrames": 90,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 90
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -76.2,
+            -44.4
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 90,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 17.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "mia": {
+        "kind": "pedestrian",
+        "entity": 3,
+        "position": [
+          -76.2,
+          -43.1
+        ],
+        "yawDeg": 180,
+        "state": "calm",
+        "drawnFrames": 90,
+        "inViewFrames": 90,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 90
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -76.2,
+            -43.1
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 90,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 8.3,
+          "contacts": 2,
+          "slideMaxCm": 0.8,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 4.1,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 90,
+      "sim": {
+        "pedestrian": 1,
+        "courier": 1,
+        "actors": 2
+      },
+      "drawn": {
+        "vehicle": 0,
+        "pedestrian": 1,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.apartment-block-a:141": "lod1",
+      "prop.privacy-fence:146": "culled",
+      "prop.privacy-fence:147": "culled",
+      "prop.privacy-fence:148": "culled",
+      "prop.privacy-fence:149": "culled",
+      "prop.privacy-fence:154": "culled",
+      "prop.privacy-fence:155": "culled",
+      "prop.privacy-fence:156": "culled",
+      "prop.privacy-fence:157": "culled",
+      "prop.privacy-fence:158": "culled",
+      "prop.privacy-fence:159": "culled",
+      "prop.privacy-fence:183": "culled",
+      "prop.privacy-fence:184": "culled",
+      "prop.privacy-fence:185": "culled",
+      "prop.privacy-fence:186": "culled",
+      "prop.privacy-fence:187": "culled",
+      "prop.privacy-fence:188": "culled",
+      "bld.apartment-block-b:217": "lod0",
+      "bld.storefront-row:218": "lod1",
+      "prop.privacy-fence:229": "lod1",
+      "prop.privacy-fence:230": "lod1",
+      "prop.privacy-fence:231": "lod1",
+      "prop.privacy-fence:232": "lod1",
+      "prop.privacy-fence:233": "culled",
+      "prop.privacy-fence:234": "culled",
+      "prop.privacy-fence:235": "culled",
+      "prop.privacy-fence:236": "culled",
+      "prop.privacy-fence:237": "culled",
+      "prop.privacy-fence:238": "culled",
+      "prop.privacy-fence:239": "culled",
+      "prop.privacy-fence:240": "culled",
+      "prop.privacy-fence:241": "culled",
+      "prop.privacy-fence:242": "culled",
+      "prop.privacy-fence:294": "lod1",
+      "prop.privacy-fence:295": "lod1",
+      "prop.privacy-fence:296": "lod1",
+      "prop.privacy-fence:297": "lod1",
+      "prop.privacy-fence:298": "lod1",
+      "prop.street-sign:432": "culled",
+      "prop.fire-hydrant:433": "culled",
+      "l5-cue-124": "lod0",
+      "l5-cue-126": "n/a",
+      "l5-glass-0": "lod0",
+      "l5-glass-11": "culled",
+      "l5-glass-40": "culled"
+    },
+    "clipping": {
+      "staticPairs": 4,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "bld.storefront-row:218",
+        "b": "l5-glass-11",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 76,
+        "region": {
+          "min": [
+            -64.10494995117188,
+            0.08601163327693939,
+            -46.22491455078125
+          ],
+          "max": [
+            -62.16107940673828,
+            0.14999274909496307,
+            -45.44996643066406
+          ]
+        },
+        "regionCm": [
+          194,
+          6,
+          77
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:141",
+        "b": "l5-glass-40",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            -63.555137634277344,
+            0.08200725167989731,
+            -28.79493522644043
+          ],
+          "max": [
+            -63.15003204345703,
+            0.15399712324142456,
+            -27.133028030395508
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          166
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:217",
+        "b": "l5-glass-0",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 44,
+        "region": {
+          "min": [
+            -78.63036346435547,
+            0.08200725167989731,
+            -46.38521194458008
+          ],
+          "max": [
+            -76.90506744384766,
+            0.15399712324142456,
+            -45.980194091796875
+          ]
+        },
+        "regionCm": [
+          173,
+          7,
+          41
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:217",
+        "b": "l5-cue-124",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.damaged-sign",
+        "intersectingTriangles": 18,
+        "region": {
+          "min": [
+            -75.44983673095703,
+            0.019992295652627945,
+            -46.00503158569336
+          ],
+          "max": [
+            -74.83935546875,
+            0.08000008016824722,
+            -45.980194091796875
+          ]
+        },
+        "regionCm": [
+          61,
+          6,
+          2
+        ]
+      }
+    ],
+    "actors": [],
+    "summary": {
+      "staticPairs": 4,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

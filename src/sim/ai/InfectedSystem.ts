@@ -782,6 +782,8 @@ export class InfectedSystem {
           this.routes++;
           const start = nav.startCell(e.transform, radius * 0.6), found = start >= 0 && nav.path(start, to, b.path, this.budget);
           this.budget -= start >= 0 ? nav.expansions : 0; b.pathIndex = 0; b.goal = to;
+          // Unfinished/empty requests wait before retrying so later agents get a route slot.
+          if (!found || b.path.length < 2) brain.routeAt = tick + 15;
           if (!found && (start < 0 || !nav.pending(start, to))) { this.noRoute(e, brain, nav, survivor, start < 0); if ((brain.escapeUntil ?? 0) > tick) return; }
         }
         while (b.pathIndex < b.path.length && Math.hypot(nav.x(b.path[b.pathIndex]) - e.transform.x, nav.z(b.path[b.pathIndex]) - e.transform.z) < 0.6) b.pathIndex++;

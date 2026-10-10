@@ -306,6 +306,8 @@ describe('L1 v2 mission', () => {
     const victim = w.infected!.active.find(e => e.health.current > 0 && !e.hidden)!;
     w.combat!.damage.apply({ sourceId: 1, targetId: victim.id, attackId: 99, actionId: 'test', origin: victim.transform, direction: { x: 1, z: 0 }, base: 999, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
     for (let i = 0; i < 30; i++) w.update();
+    // A recent ordinary hit can make the intended lethal fixture hit a no-op.
+    while (w.tick < w.entities.get(1)!.survivor!.invulnerableUntil) w.update();
     const snapshot = () => {
       const rows = [...w.entities.iterate()].filter(e => e.id !== 1)
         .map(e => ({ id: e.id, kind: e.kind, dead: e.health.current <= 0, state: e.infected?.state ?? e.civilian?.state ?? '', x: e.transform.x, z: e.transform.z }));

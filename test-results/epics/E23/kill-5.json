@@ -1,0 +1,106 @@
+{
+  "profile": "complete",
+  "seed": 3,
+  "outcome": "complete",
+  "simSeconds": 72.36666666666666,
+  "deaths": 0,
+  "kills": 0,
+  "knockdowns": 12,
+  "damage": 0,
+  "timeline": [
+    {
+      "type": "l5.emerged",
+      "t": 1.2166666666666666
+    },
+    {
+      "type": "objective:emerge",
+      "t": 1.2166666666666666
+    },
+    {
+      "type": "l5.searching",
+      "t": 11.216666666666667
+    },
+    {
+      "type": "l5.accounted",
+      "t": 40.95
+    },
+    {
+      "type": "objective:look",
+      "t": 40.95
+    },
+    {
+      "type": "l5.shutter",
+      "t": 69.36666666666666
+    },
+    {
+      "type": "l5.sheltered",
+      "t": 72.36666666666666
+    },
+    {
+      "type": "objective:metro",
+      "t": 72.36666666666666
+    }
+  ],
+  "found": [
+    {
+      "key": "rosa",
+      "t": 17.65
+    }
+  ],
+  "fates": {
+    "dale": "dead",
+    "rosa": "dead",
+    "okafor": "dead",
+    "mia": "dead",
+    "sam": "dead"
+  },
+  "rescued": 0,
+  "rescuedKeys": [],
+  "maxConcurrent": 19,
+  "infectedAtStart": 18,
+  "maxGroup": 2,
+  "followShare": 1,
+  "maxFollowerJump": 0.06875098257886479,
+  "lost": [
+    {
+      "key": "dale",
+      "cause": "dead",
+      "t": 26.883333333333333
+    },
+    {
+      "key": "mia",
+      "cause": "dead",
+      "t": 30.4
+    },
+    {
+      "key": "okafor",
+      "cause": "dead",
+      "t": 33.916666666666664
+    },
+    {
+      "key": "rosa",
+      "cause": "dead",
+      "t": 37.43333333333333
+    },
+    {
+      "key": "sam",
+      "cause": "dead",
+      "t": 40.95
+    }
+  ],
+  "deathsAt": [],
+  "gunshots": 14,
+  "audit": {
+    "sightViolations": 0,
+    "nonSightAlerts": 0,
+    "directorQueueMax": 0,
+    "newInfected": 0
+  },
+  "killed": [
+    "dale",
+    "mia",
+    "okafor",
+    "rosa",
+    "sam"
+  ]
+}

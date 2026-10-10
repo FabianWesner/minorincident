@@ -5,7 +5,6 @@ import type { BarricadeSlot } from '../sim/interact/Barricades';
 const rails: Record<string, { district: DistrictId; id: string; anchor: string; group: string; width: number; boardUp?: boolean }[]> = {
   'L2': [{ district: 'D-RES', id: 'alvarez-window', anchor: 'safe-house-door', group: 'alvarez', width: 1.4, boardUp: true }, { district: 'D-SCHOOL', id: 'gym-door', anchor: 'gym-door', group: 'gym', width: 2 }],
   'L4': [{ district: 'D-EDGE', id: 'substation-gate', anchor: 'substation-door', group: 'substation', width: 2 }],
-  'L5': ([['D-RES', 'arrival'], ['D-MAIN', 'fuel-shop-door'], ['D-CIVIC', 'checkpoint-door'], ['D-EDGE', 'exit']] as const).map(([district, anchor], i) => ({ district, id: `fallback-${i + 1}`, anchor, group: `fallback-${i + 1}`, width: 2 })),
 };
 export function campaignBarricadeSlots(world: DistrictWorld): BarricadeSlot[] {
   return (rails[world.composition.id] ?? []).flatMap(rail => {

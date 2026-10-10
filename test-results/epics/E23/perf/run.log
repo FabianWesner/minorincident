@@ -1,0 +1,12 @@
+Verifying E23: sh tools/perf/quiet-run.sh npx playwright test tests/perf/l5-budgets.spec.ts --project=chromium --workers=1
+ 2:16  up 62 days,  1:09, 3 users, load averages: 2.69 2.69 2.82
+Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 2 tests using 1 worker
+
+{"tier":"high","counts":{"followers":5,"infected":18,"fires":13,"corpses":37},"baselineDrawCalls":240,"baselineTriangles":391826,"pairDrawCalls":212,"pairTriangles":462184,"followDrawCalls":215,"followTriangles":462456,"p50":5.099999999998545,"p95":7.100000000002183,"max":22.19999999999709}
+  ✓  1 [chromium] › tests/perf/l5-budgets.spec.ts:12:3 › high › T-E23-19 @E23 @E23-AC19 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high (49.6s)
+{"tier":"low","counts":{"followers":5,"infected":12,"fires":13,"corpses":37},"baselineDrawCalls":141,"baselineTriangles":201242,"pairDrawCalls":146,"pairTriangles":274097,"followDrawCalls":146,"followTriangles":274097,"p50":13.19999999999709,"p95":17.5,"max":47.5}
+  ✓  2 [chromium] › tests/perf/l5-budgets.spec.ts:12:3 › low › T-E23-19 @E23 @E23-AC19 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low (57.0s)
+
+  2 passed (1.8m)
