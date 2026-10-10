@@ -84,3 +84,17 @@ test('T-E25-07i @E25 authored lamps preserve gameplay IDs across creation and ch
   expect(entities.create(actor).id).toBe(3);
   expect(entities.createAuxiliary({ ...actor, kind: 'light' }).id).toBe(lamp.id + 1);
 });
+
+test('T-E25-07m @E25 @E25-AC07 authored emergency power survives a district power revision', async () => {
+  world = new SimWorld(); await world.init(); world.loadScenario('L6');
+  const lights = world.lightPower!;
+  const main = [...lights.lamps.values()].filter(lamp => lamp.group === 'metro-main');
+  const emergency = [...lights.lamps.values()].filter(lamp => lamp.group === 'metro-emergency');
+  expect(main.length).toBeGreaterThan(0); expect(emergency.length).toBeGreaterThan(0);
+  expect(main.every(lamp => lights.isOn(lamp.id))).toBe(true);
+  expect(emergency.every(lamp => !lights.isOn(lamp.id))).toBe(true);
+  world.districts!.districts[0].decay.lights = ['shelter-camp', 'self', 'metro-emergency'];
+  world.weather!.powerRevision++; lights.update();
+  expect(main.every(lamp => !lights.isOn(lamp.id))).toBe(true);
+  expect(emergency.every(lamp => lights.isOn(lamp.id))).toBe(true);
+});
