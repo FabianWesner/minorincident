@@ -60,7 +60,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
           await window.__SS__!.screenshotReady(); window.transitionProbe!.ready = performance.now(); window.transitionProbe!.done = true;
         })().catch(error => { window.transitionProbe!.done = true; window.transitionProbe!.error = String(error); });
       }, level);
-      let samples = 0, cardSamples = 0;
+      let samples = 0, cardSamples = 0, emptySamples = 0;
       const progress: number[] = [];
       while (!await page.evaluate(() => window.transitionProbe!.done)) {
         const card = await page.getByTestId('level-transition').isVisible();
@@ -71,6 +71,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
         for (let y = Math.floor(png.height * .4); y < png.height * .65; y += 12) for (let x = Math.floor(png.width * .3); x < png.width * .7; x += 12) {
           const i = (y * png.width + x) * 4; colors.add(`${png.data[i] >> 3},${png.data[i + 1] >> 3},${png.data[i + 2] >> 3}`);
         }
+        if (!card && colors.size <= 8) emptySamples++;
         if (phase !== 'before') expect(card || colors.size > 8, `${level} sample ${samples}: uncovered empty canvas`).toBe(true);
         samples++; await page.waitForTimeout(250);
       }
@@ -88,7 +89,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       await page.evaluate(() => { window.__SS__!.cheats.god(true); const p = window.transitionProbe!; if (!p.ready) p.ready = performance.now(); p.done = true; p.previous = 0; p.recording = true; });
       await page.waitForTimeout(5000);
       const result = await page.evaluate(() => { const p = window.transitionProbe!; p.recording = false; p.stopped = true; return { ms: p.ready - p.start, maxFrame: Math.max(...p.frames), over50: p.frames.filter(ms => ms > 50), frames: p.frames }; });
-      rows.push({ level: restart ? 'restart L6' : level, ...result, samples, cardSamples, progress });
+      rows.push({ level: restart ? 'restart L6' : level, ...result, samples, cardSamples, emptySamples, progress });
       writeFileSync(`${out}/${phase}-${tier}.json`, JSON.stringify({ load: loadavg(), rows }, null, 2));
       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);
     }

@@ -85,4 +85,9 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   expect(requested.some(url => /char\.courier-female\.skin\.glb/.test(url))).toBe(true);
   expect(new Set(requested).size).toBe(requested.length);
   expect(requested.some(url => /prop\.(bench|bbq|picket-fence)\.lod1\.glb/.test(url))).toBe(false);
+  requested.length = 0;
+  const assembleThree = vi.spyOn(await import('../../../src/levels/L3/layout'), 'levelThreeLayouts');
+  await prefetchLevel('L3', 4, 'low');
+  expect(assembleThree).not.toHaveBeenCalled();
+  expect(requested.some(url => /decay\.broken-glass(?:\.lod2)?\.glb/.test(url))).toBe(true);
 });
