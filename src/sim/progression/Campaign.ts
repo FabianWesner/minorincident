@@ -11,6 +11,7 @@ export interface CampaignSave {
   usage:Record<string,number>;
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];
+  results?:Record<string, import('../missions/types').MissionResult>;
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
 }
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
@@ -108,5 +109,9 @@ export function preset(name:ProgressionPreset):CampaignSave {
     // the owned actions). Later presets keep the E13 default path until their levels are rebuilt (E22-E24).
     if(level===2&&(target===3||target===4)&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
     autoRewards(save,level as Level);
-  }return save;
+  }
+  if(target===6&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
+  if(target===6)save.racks={LEFT:["weapon.fire-axe","weapon.bat"],RIGHT:["weapon.army-mg","weapon.handgun","weapon.kick"]};
+  if(target===6)save.survivors=["dale","rosa","okafor","mia","sam"];
+  return save;
 }

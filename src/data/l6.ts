@@ -1,0 +1,19 @@
+/** E24 tuning in metres/seconds. The shelter falls on a seeded clock; losses never fail the mission. */
+export const l6 = {
+  shelter: { high: 24, low: 15 }, breach: { first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
+  follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5 },
+  infected: { high: 60, low: 30 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
+  gates: [90, 150, 210], checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
+} as const;
+export const l6Doors = [{ x: -10, z: -10 }, { x: 10, z: -10 }, ...[54, 126, 198].map(x => ({ x, z: 11.2 }))];
+export const l6PhotoSpots = [
+  ['l6-shelter-calm', [0, 6]], ['l6-first-breach', [-10, -6]], ['l6-shelter-fails', [0, 4]],
+  ['l6-tunnel-retreat', [110, 15]], ['l6-chokepoint', [150, 15]], ['l6-straggler', [130, 15]], ['l6-exit-night', [268, 15]],
+] as const;
+export const l6InjuryLines = {
+  treatment: 'That ankle is swollen. Keep the wrap tight; I will help you stand.',
+  patient: 'It hurts to put weight on it. Please do not leave me behind.',
+  retreat: 'The injured cannot run. Stay with them — I will hold the rear.',
+  straggler: 'My leg… I cannot keep up. Wait for me!',
+  rejoin: 'Lean on me. We will get you to the others.',
+};

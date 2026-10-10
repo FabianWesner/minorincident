@@ -1,0 +1,139 @@
+{
+  "name": "qa-l6-exit-night-weather",
+  "seed": 1,
+  "dof": false,
+  "ground": "district",
+  "tier": 0,
+  "frames": 180,
+  "shots": [
+    1,
+    90,
+    179
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "time": "L6",
+  "weather": "clear",
+  "layout": {
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        244,
+        0
+      ],
+      [
+        288,
+        30
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        268,
+        15
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    },
+    {
+      "id": "medic",
+      "kind": "pedestrian",
+      "at": [
+        264,
+        17
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.rosa.aftermath"
+      },
+      "state": {
+        "routine": "treat"
+      }
+    },
+    {
+      "id": "patient",
+      "kind": "pedestrian",
+      "at": [
+        265.4,
+        17
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "routine": "sit"
+      }
+    },
+    {
+      "id": "rest",
+      "kind": "pedestrian",
+      "at": [
+        266.8,
+        17
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.shelter-survivor.lying"
+      },
+      "state": {
+        "routine": "rest"
+      }
+    },
+    {
+      "id": "sit",
+      "kind": "pedestrian",
+      "at": [
+        268.2,
+        17
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.shelter-survivor.sitting"
+      },
+      "state": {
+        "routine": "sit"
+      }
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          281,
+          24
+        ]
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "smoke": [
+          281,
+          24
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "pose",
+    "position": [
+      283,
+      21,
+      34
+    ],
+    "target": [
+      268,
+      3.9,
+      15
+    ]
+  }
+}

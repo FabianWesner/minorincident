@@ -136,6 +136,12 @@ export class DistrictView extends Group {
       initialLods.set(p.assetId, lods);
     }
     for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);
+    if (this.world.districts.some(d => d.id === 'D-SUBWAY')) {
+      await Promise.all([...initialLods.keys()].flatMap(id => (['lod0', 'lod1', 'lod2'] as const).flatMap(lod => [false, true].map(async on => {
+        const root = await this.registry.asset(id, on, lod);
+        root.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.metroMaterials.set(`${id}/${lod}/${on}`, node.material as Material); });
+      }))));
+    }
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();
@@ -193,7 +199,7 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
           if (lab) {
@@ -621,6 +627,20 @@ export class DistrictView extends Group {
     else { entry.far = replacement; entry.farLoaded = true; }
     this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
+  }
+  private northgateClosed: boolean | null = null;
+  northgate(closed: boolean): void {if(this.northgateClosed===closed)return;this.northgateClosed=closed;for(const e of this.lodBatches)if(e.id==='int.metro-exit')for(const b of [e.hero,e.near,e.far])b.pose('exitGate',closed?0:Math.PI*.55);}
+  private readonly metroMaterials = new Map<string, Material>();
+  /** Preloaded light materials switch synchronously; camp supplies retain their warm lamps. */
+  metroPower(main: boolean, emergency: boolean): void {
+    for (const entry of this.lodBatches) {
+      const on = entry.id === 'prop.emergency-light' ? emergency : entry.id === 'kit.shelter-camp' || entry.id === 'util.radio' ? true : main;
+      entry.lit = on;
+      for (const [lod, batch] of [['lod0', entry.hero], ['lod1', entry.near], ['lod2', entry.far]] as const) {
+        const material = this.metroMaterials.get(`${entry.id}/${lod}/${on}`);
+        if (material) batch.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') node.material = material; });
+      }
+    }
   }
   /** Scripted weather blackout reuses the authored unpowered asset variants. */
   blackout(): void {

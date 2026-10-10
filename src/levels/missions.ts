@@ -1,9 +1,9 @@
+import { levelSixMission } from './L6/mission';
 import { levelFiveMission } from './L5/mission';
 import { levelFourMission } from './L4/mission';
 import { levelThreeMission } from './L3/mission';
 import { levelTwoMission } from './L2/mission';
 import { dialogue } from '../data/dialogue';
-import type { DeviceKind } from '../sim/interact/Interactables';
 import type { DistrictId } from './districts/types';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
 import type { Anchor, MissionDef, ObjectiveDef, ObjectiveType, Trigger } from '../sim/missions/types';
@@ -13,16 +13,13 @@ export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
+  if (id === 'L6') return levelSixMission(resolve);
   if (id === 'L5') return levelFiveMission(resolve);
   if (id === 'L4') return levelFourMission(resolve);
   if (id === 'L3') return levelThreeMission(resolve);
   if (id === 'L2') return levelTwoMission(resolve);
   const def: MissionDef = { id, briefing: dialogue[`${id}.briefing`], anchors: {}, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: [], cinematics: {}, steps: [], finish: [], onStart: [{ kind: 'radio', id: `${id}.briefing` }], onComplete: [{ kind: 'cinematic', id: 'twist' }] };
   const anchor = (key: string, district: DistrictId, name: string) => { def.anchors[key] = resolve(district, name); return key; };
-  const actor = (key: string, at: string, kind: string, hp = 100, boss = false) => {
-    def.actors[key] = { anchor: at, kind, faction: kind === 'infected' ? 'infected' : 'survivor', archetype: `${kind}.${key}`, hp, boss };
-    def.groups[key] = [key]; return key;
-  };
   const step = (key: string, type: ObjectiveType, text: string, at: string, complete: Trigger, after?: string[]): ObjectiveDef => {
     const prev = after ?? (def.steps.length ? [def.steps[def.steps.length - 1].id] : []);
     const s: ObjectiveDef = { id: key, type, text, anchor: at, start: prev.length ? { kind: 'objectives', ids: prev, mode: 'all' } : { kind: 'start' }, complete, fail: [] };
@@ -30,14 +27,6 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
   };
   const reach = (key: string, text: string, at: string, after?: string[]) => step(key, 'reach', text, at, { kind: 'volume', anchor: at, edge: 'inside' }, after);
   const interact = (key: string, text: string, at: string, seconds = 0.6, after?: string[]) => step(key, 'interact', text, at, { kind: 'interact', anchor: at, seconds }, after);
-  const device = (key: string, text: string, at: string, kind: DeviceKind, seconds: number, after?: string[]) => {
-    const id = `device-${key}`;
-    actor(id, at, 'device'); def.actors[id].archetype = `device.${kind}`;
-    def.actors[id].device = { radius: def.anchors[at].radius, holdTime: seconds, instant: false, interruptOnDamage: true, label: text };
-    const s = step(key, 'interact', text, at, { kind: 'interact', anchor: at, seconds, actor: id }, after);
-    s.onStart = [{ kind: 'spawn', group: id }]; return s;
-  };
-  const checkpoint = (s: ObjectiveDef) => { def.checkpoints.push(s.id); (s.onStart ??= []).push({ kind: 'checkpoint', id: s.id }); };
   let end: string;
   switch (id) {
     case 'L1': {
@@ -69,16 +58,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
     }
-    case 'L6': {
-      reach('home','Leave the burning neighborhood',anchor('home','D-RES','arrival'));
-      checkpoint(device('school','Open the schoolyard gate',anchor('school','D-SCHOOL','school-entrance'),'gate',3));
-      checkpoint(reach('mall','Cross the overrun mall',anchor('mall','D-SHOP','mall-door')));
-      const station = anchor('station','D-CIVIC','station-door'), edge = anchor('edge','D-EDGE','arrival'), helipad = anchor('helipad','D-EDGE','safe-point'), engine = actor('fire-engine',station,'vehicle');
-      const s = device('engine','Start the fire engine',station,'switch',3); s.onComplete = [{ kind: 'spawn', group: engine }]; checkpoint(s);
-      checkpoint(step('drive','drive','Drive through Main Street to the town edge',edge,{ kind: 'drive', actor: engine, anchor: edge, exit: true }));
-      for(let i=1;i<=3;i++) device(`flare-${i}`,`Light extraction flare ${i}/3`,helipad,'button',.6);
-      const hold = step('extraction','survive','Hold the helipad until dawn',helipad,{ kind: 'hold', anchor: helipad, seconds: 150 }); checkpoint(hold); end = hold.id; break;
-    }
+
   }
   def.finish = [end]; const at = def.anchors[def.steps.at(-1)!.anchor];
   if (id !== 'L1') def.cinematics.twist = { seconds: 20, caption: dialogue[`${id}.twist`], position: [at.x+18,22,at.z+18], target: [at.x,0,at.z], actions: [{ kind: 'radio', id: `${id}.twist` }] };
