@@ -1,0 +1,33 @@
+{
+  "stats": {
+    "startTime": "2026-10-10T22:36:03.621Z",
+    "duration": 1170145.077,
+    "expected": 28,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "title": "e2e/levels/L2.spec.ts / L2 The Failed Rescue in the browser / T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review",
+      "status": "unexpected",
+      "errors": [
+        "Error: Could not travel to {\"x\":-31,\"z\":30} from {\"x\":-29.109994888305664,\"y\":0.7200000286102295,\"z\":-8.228063583374023,\"yaw\":-1.6139707580038096}"
+      ]
+    },
+    {
+      "title": "e2e/levels/L5.spec.ts / L5 Aftermath in the browser / T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors",
+      "status": "unexpected",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m5\u001b[39m\nReceived length: \u001b[31m4\u001b[39m\nReceived array:  \u001b[31m[{\"cueAt\": 14476, \"foundAt\": 14416, \"hold\": 0, \"id\": 19, \"key\": \"dale\", \"lostAt\": 0, \"status\": \"following\"}, {\"cueAt\": 2160, \"foundAt\": 1800, \"hold\": 0, \"id\": 20, \"key\": \"rosa\", \"lostAt\": 0, \"status\": \"following\"}, {\"cueAt\": 13521, \"foundAt\": 13413, \"hold\": 0, \"id\": 21, \"key\": \"okafor\", \"lostAt\": 0, \"status\": \"following\"}, {\"cueAt\": 11482, \"foundAt\": 11282, \"hold\": 0, \"id\": 22, \"key\": \"mia\", \"lostAt\": 0, \"status\": \"following\"}]\u001b[39m"
+      ]
+    },
+    {
+      "title": "e2e/levels/L6.spec.ts / T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow",
+      "status": "unexpected",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m7\u001b[39m"
+      ]
+    }
+  ]
+}
