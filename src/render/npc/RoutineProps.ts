@@ -8,6 +8,7 @@ import type { CivilianProp } from '../../sim/npc/types';
 export class RoutineProps extends Group {
   readonly contacts: { entity: number; prop: CivilianProp; hand: Float32Array; geometry: BufferGeometry; matrix: Matrix4 }[] = [];
   private readonly meshes = new Map<CivilianProp, InstancedMesh>();
+  private readonly gripMatrix = new Matrix4();
   constructor(shading?: Materials) {
     super(); this.name = 'morning-props';
     const part = (geometry: BufferGeometry, color: string, x = 0, y = 0, z = 0) => {
@@ -16,14 +17,14 @@ export class RoutineProps extends Group {
       geometry.setAttribute('color', new BufferAttribute(values, 3)); return geometry;
     };
     const bar = (length: number, x: number, y: number, z: number, color: string) => part(new CylinderGeometry(.01, .01, length, 8).rotateX(Math.PI / 2), color, x, y, z);
-    const handle = (color: string) => [bar(.15, .035, -.045, .015, color), bar(.15, .035, -.17, .015, color), part(new CylinderGeometry(.01, .01, .125, 8), color, .035, -.1075, -.06)];
+    const handle = (color: string) => [bar(.11, .035, -.045, .005, color), bar(.11, .035, -.17, .005, color), part(new CylinderGeometry(.01, .01, .125, 8), color, .035, -.1075, -.05)];
     const shapes: Record<CivilianProp, BufferGeometry[]> = {
-      coffee: [part(new CylinderGeometry(.07, .055, .16, 12), '#f5e6c7', .035, -.11, .155), part(new CylinderGeometry(.065, .065, .012, 12), '#563c2c', .035, -.024, .155), ...handle('#f5e6c7')],
+      coffee: [part(new CylinderGeometry(.07, .055, .16, 12), '#f5e6c7', .035, -.11, .125), part(new CylinderGeometry(.065, .065, .012, 12), '#563c2c', .035, -.024, .125), ...handle('#f5e6c7')],
       bag: [part(new BoxGeometry(.26, .34, .18), '#ba8c53', .035, -.32), bar(.16, .035, -.045, 0, '#6e5537'), ...[-.08, .08].map(z => part(new CylinderGeometry(.01, .01, .11, 8), '#6e5537', .035, -.1, z)), part(new CylinderGeometry(.028, .035, .23, 8), '#76a14e', .1, -.21)],
-      phone: [part(new BoxGeometry(.018, .12, .065), '#292537', .105, -.03), part(new BoxGeometry(.004, .085, .05), '#75b8cf', .116, -.022)],
+      phone: [part(new BoxGeometry(.018, .12, .065), '#292537', .079, -.03), part(new BoxGeometry(.004, .085, .05), '#75b8cf', .09, -.022)],
       cane: [part(new CylinderGeometry(.018, .021, .73, 8), '#71513e', .035, -.415, .105), bar(.16, .035, -.045, .025, '#493d34'), part(new CylinderGeometry(.027, .027, .035, 8), '#292537', .035, -.795, .105)],
       // E19 story beats: the courier parcel (cardboard, teal Sunset Grove tape), held at the hands.
-      parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .245, -.04), part(new BoxGeometry(.31, .045, .08), '#2aa198', .245, .085), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .245, .082, .08)],
+      parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .22, -.04), part(new BoxGeometry(.3, .045, .08), '#2aa198', .22, .085), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .22, .082, .08)],
       // E22 weapons (code art, held at the right hand): long guns point along the forearm's forward axis, bats and pipes hang along the hand.
       rifle: [part(new BoxGeometry(.07, .09, .95), '#3b3f33', 0, -.02, .38), part(new BoxGeometry(.06, .14, .26), '#2b2d27', 0, -.06, -.1), part(new BoxGeometry(.045, .045, .3), '#1f2120', 0, .02, .75)],
       pistol: [part(new BoxGeometry(.045, .1, .06), '#2d2f33', 0, -.04, 0), part(new BoxGeometry(.05, .06, .2), '#3a3d42', 0, .02, .1)],
@@ -41,12 +42,13 @@ export class RoutineProps extends Group {
     }
   }
   begin(): void { this.contacts.length = 0; for (const mesh of this.meshes.values()) mesh.count = 0; }
-  held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array): void {
-    this.place(prop, matrix);
+  held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07): void {
+    this.gripMatrix.makeTranslation(prop === 'phone' || prop === 'parcel' ? reach - .07 : 0, 0, 0).premultiply(matrix);
+    this.place(prop, this.gripMatrix);
     if (hand && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test')) {
       const world = new Float32Array(hand.length), point = new Vector3();
       for (let i = 0; i < hand.length; i += 3) point.fromArray(hand, i).applyMatrix4(matrix).toArray(world, i);
-      this.contacts.push({ entity, prop, hand: world, geometry: this.meshes.get(prop)!.geometry, matrix: matrix.clone() });
+      this.contacts.push({ entity, prop, hand: world, geometry: this.meshes.get(prop)!.geometry, matrix: this.gripMatrix.clone() });
     }
   }
   place(prop: CivilianProp, matrix: Matrix4): void {

@@ -27,10 +27,10 @@
     "mode": "close",
     "target": [
       0.15,
-      0.8,
+      0.65,
       0
     ],
-    "radius": 3,
+    "radius": 4,
     "azimuth": 45
   },
   "frames": 180,
@@ -41,28 +41,28 @@
   ],
   "script": [
     {
+      "frame": 60,
+      "camera": {
+        "mode": "close",
+        "target": [
+          0.15,
+          0.65,
+          0
+        ],
+        "radius": 4,
+        "azimuth": 90
+      }
+    },
+    {
       "frame": 120,
       "camera": {
         "mode": "close",
         "target": [
           0.15,
-          0.8,
+          0.65,
           0
         ],
-        "radius": 3,
-        "azimuth": 90
-      }
-    },
-    {
-      "frame": 180,
-      "camera": {
-        "mode": "close",
-        "target": [
-          0.15,
-          0.8,
-          0
-        ],
-        "radius": 3,
+        "radius": 4,
         "azimuth": 0
       }
     }
@@ -71,7 +71,9 @@
     "consoleErrors": 0,
     "clippingMax": 0,
     "heldPropIntersectionsMax": 0,
-    "heldPropSamplesMin": 30
+    "heldPropSamplesMin": 30,
+    "undrawnFramesMax": 0,
+    "farLodCloseMax": 0
   },
   "note": "Native palm/fingers grip a visible prop. Inspect PO angle (45), front (90), side (0); no hand/prop intersection."
 }
