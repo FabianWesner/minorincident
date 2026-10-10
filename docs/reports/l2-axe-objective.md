@@ -29,7 +29,7 @@ The newer PO request supersedes E20’s optional-axe and timed-alarm expectation
 | Merge of current main | Clean merge of `d27704a2`, including parallel axe damage and character size changes |
 | Post-merge L2 node/integration checks | 31 passed, three existing battery failures: completion time and two survival criteria |
 | Post-merge escape checkpoint/respawn tests | 2/2 passed |
-| Post-merge L2 browser reruns | Running |
+| Post-merge native L2 browser + smoke | 8/8 passed, including full real-input L2→L3, replay, rescue camera, and both smoke checks |
 
 The full unit/sim suites above were run before merging `d27704a2`; the merged-source node run covers the new mission regressions and the parallel damage/character changes. An additional full unit rerun could not start because the selected runner ran out of disk space while copying its private job.
 
@@ -41,12 +41,14 @@ Controlled main `98e9aa79` checks reproduce the broader problems: its unchanged 
 
 After merging newer main `d27704a2`, the 34-check node/integration rerun passes 31 checks, including both new regressions, all pickup/boarding interactions, checkpoint restores, civilian fates, and the parallel damage/character tests. Its remaining failures are T-E20-02 (248.57 s versus 210 s), T-E20-03 (newbie two deaths versus one), and T-E20-09 (complete two deaths versus one). The previously failing civilian-fate check now passes. `merged-l2-node.json` records the result; the older controlled-main measurements above precede the parallel damage and character changes.
 
-The Linux SwiftShader browser attempt was stopped after loading/render timeouts in unrelated L1 tests. A second software run could not synchronize because the selected runner's disk was full. Final browser validation uses native Metal, headless, two workers, under the shared e2e lock.
+The Linux SwiftShader browser attempt was stopped after loading/render timeouts in unrelated L1 tests. A second software run could not synchronize because the selected runner's disk was full. A focused post-merge software run at half pixel density passed the alarm/ring, rack visibility, and replay checks, then timed out taking a rescue screenshot. It was stopped after the final native run passed. `linux-browser-partial.log` and `linux-l2-browser.sh` retain that attempt. Final browser validation uses native Metal, headless, two workers, under the shared e2e lock.
 
-The full native run is retained in `all-levels-native.json`. Its L2 travel failure occurred after pickup, alarm, and doors-open objective assertions passed; the HUD snapshot still showed “Reach the police checkpoint at the bridge”. The earlier focused real-input run completed L2→L3. The subsequent driver correction and main merge are being checked in the post-merge reruns.
+The full native run is retained in `all-levels-native.json`. Its L2 travel failure occurred after pickup, alarm, and doors-open objective assertions passed; the HUD snapshot still showed “Reach the police checkpoint at the bridge”. An independent `gun-pose` branch run with the original pickup flow also failed L2 travel (`other-branch-l2-travel.log`). After the driver correction and main merge, all eight focused native checks pass (`merged-native-browser.json`). The actual-input route completed L2→L3 in 185.15 simulation seconds with three respawns; the existing browser driver has no survival-limit assertion (`merged-real-input.json`). The full-suite L1/L3 travel failures and the three broader L2 node battery failures remain; this lane does not claim the complete verification battery is green.
 
 ## Camera review
 
 Inspected `test-results/l2-axe-objective/start.png` (1600×900, actual follow camera, WebGL2 on Metal, headless). The red axe head and wood handle are fully visible against the dark board with its pale border, to the right of the bollard. The bright yellow floor circle is visible above the paving in front of the rack, with the objective diamond above it. Engine 3 occupies the foreground without hiding the rack or ring. The HUD reads “Take the fire axe · 3 m”, and the minimap carries the objective pin. The approaching firefighter overlaps part of the ring, but most of the circle remains visible. Also inspected the close follow-camera capture `rack-close.png`: the full red head and handle are readable on the rack, the large yellow ring is unobstructed over most of its circumference, and the HUD identifies the pickup at 0 m.
 
-The inspected doors-open capture (`test-results/l2-axe-objective/outbreak-goal.png`) shows the checkpoint goal text and its orange radar pin while the doors-open dialogue is still playing, before the fallback radio call.
+Refreshed captures after merging main were also inspected: `merged-start.png` and `merged-rack-close.png` (1600×900, native Metal follow camera) retain the fully readable red head and wood handle, large yellow apron circle, diamond, HUD pickup text, and minimap pin. The close capture places the courier inside the interaction ring with the objective at 0 m.
+
+The inspected doors-open captures (`outbreak-goal.png` and post-merge `merged-doors-open.png`) show the checkpoint goal text and orange radar pin while the doors-open dialogue is still playing, before the fallback radio call. The post-merge image also shows the fire axe selected and held, with the bat as the next action.
