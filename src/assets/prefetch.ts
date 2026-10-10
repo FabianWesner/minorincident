@@ -48,6 +48,7 @@ export async function prefetchLevel(level: string, concurrency = 4, quality: 'hi
     for (const entry of dressing) add(entry.assetId, entry.decay);
     if (level === 'L2') add('bld.clinic-annex', 'burned');
     if (level === 'L5') add('decay.collapsed-facade');
+    if (level === 'L3' || level === 'L5') add('decay.broken-glass');
     const actors = new Set(level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...coreCivilianModels, ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
     actors.add('char.corgi'); actors.add(infectedDef('infected.runner').asset);
     for (const id of actors) {
