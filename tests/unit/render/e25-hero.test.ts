@@ -20,3 +20,19 @@ test('T-E25-05 @E25 @E25-AC05 sixty-second walk past forty anchors holds promoti
     lighting.dispose();
   }
 });
+
+
+test('T-E25-05l @E25 @E25-AC05 hero transitions preserve cached shadow nodes and render only one source', () => {
+  const lighting = new Lighting(new Scene()); lighting.set('night');
+  const light = { ...footprint({ type: 'spot', color: 'light_led_white', intensity: 6, range: 8, angle: 70, flicker: 'none', shadow: 'hero', position: [0, 4, 0], direction: [0, -1, 0] }), id: 'lamp' };
+  for (let i = 0; i < 6; i++) {
+    const active = i % 2 === 0;
+    lighting.setHeroLight(active ? light : null, { x: active ? 0 : 100, y: 0, z: 0 }, i * 2);
+    expect(lighting.sun.castShadow).toBe(true);
+    expect(lighting.sun.visible).toBe(!active);
+    expect(lighting.spot.visible).toBe(active);
+    expect(Number(lighting.sun.visible) + Number(lighting.spot.visible)).toBe(1);
+  }
+  lighting.set('L1'); expect(lighting.sun.visible).toBe(true); expect(lighting.spot.visible).toBe(false);
+  lighting.dispose();
+});

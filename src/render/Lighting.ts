@@ -135,7 +135,7 @@ export class Lighting {
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
-    this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.castShadow = true;
+    this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.visible = true;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
@@ -223,7 +223,10 @@ export class Lighting {
     else this.shadowDirection.lerp(this.heroTarget, k).normalize();
     this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
     this.spot.visible = night && !!light;
-    this.sun.castShadow = !this.spot.visible;
+    // Keep castShadow stable: Three disposes its ShadowNode when this flag
+    // flips, while cached material graphs can still reference that node.
+    // Only the active source is visible, so one shadow map is rendered.
+    this.sun.visible = !this.spot.visible;
     if (light) {
       const blend = Math.min(1, Math.max(0, (time - this.promotedAt) / .3));
       this.spot.position.copy(this.promotionPosition).lerp(this.heroTarget.set(light.x, light.y ?? 3, light.z), blend);
