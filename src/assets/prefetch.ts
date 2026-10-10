@@ -6,11 +6,12 @@ import { districtAssetUrls } from './DistrictAssets';
 import { coreCivilianModels, l1Pedestrians } from '../data/npcs';
 import { l5Survivors } from '../data/l5';
 import { l6CastModels } from '../data/l6';
-import { levelTwoLayouts } from '../levels/L2/layout';
-import { levelThreeLayouts } from '../levels/L3/layout';
-import { levelFourLayouts } from '../levels/L4/layout';
-import { levelFiveLayouts } from '../levels/L5/layout';
+import { l2Dressing } from '../levels/L2/layout';
+import { l3Dressing } from '../levels/L3/layout';
+import { l4Dressing } from '../levels/L4/layout';
+import { l5Dressing, l5ShellAssets } from '../levels/L5/layout';
 import { atLeast, variantPath, type AssetDef } from './types';
+import { l1AftermathDressing } from '../levels/continuity';
 import { infectedDef } from '../data/infected';
 import { catalog } from '../data/actions/catalog';
 
@@ -28,15 +29,25 @@ export async function prefetchLevel(level: string, concurrency = 4, quality: 'hi
   started.add(key);
   const get = (url: string) => fetch(assetUrl(url), { priority: 'low' } as RequestInit);
   try {
-    const raw = await Promise.all(composition.districts.map(async ({ id }) => (await get(`/assets/layouts/${id}.layout.json`)).json() as Promise<DistrictLayout>));
-    const layouts = level === 'L2' ? levelTwoLayouts(raw) : level === 'L3' ? levelThreeLayouts(raw) : level === 'L4' ? levelFourLayouts(raw) : level === 'L5' ? levelFiveLayouts(raw) : raw;
+    const layouts = await Promise.all(composition.districts.map(async ({ id }) => (await get(`/assets/layouts/${id}.layout.json`)).json() as Promise<DistrictLayout>));
     const urls = new Set<string>(composition.districts.map(({ id }) => `/assets/layouts/${id}.base.glb`));
+    const add = (id: string, decay?: string) => {
+      try {
+        for (const url of districtAssetUrls(id, definition, ['lod2'])) urls.add(variantPath(url, decay));
+        const decal = definitions.get(id)?.decalTexture; if (decal) urls.add('/' + decal.replace(/^public\//, ''));
+      } catch { /* unknown ids surface in the real load */ }
+    };
     for (const layout of layouts) for (const placement of layout.placements) {
       if (placement.minTier > composition.tier || placement.maxTier < composition.tier) continue;
-      // Both tiers initially draw LOD2 outside the spawn. The real view fetches the
-      // close prototypes it needs; prefetch must not undo that policy for the whole map.
-      try { for (const url of districtAssetUrls(placement.assetId, definition, ['lod2'])) urls.add(variantPath(url, placement.decay)); } catch { /* unknown ids surface in the real load */ }
+      // Both tiers initially draw LOD2 outside the spawn. Do not download never-drawn prop tiers.
+      add(placement.assetId, level === 'L5' && l5ShellAssets.includes(placement.assetId) ? 'w5' : placement.decay);
     }
+    // Read the authored asset lists directly. Building a dressed layout also performs expensive
+    // collision/placement checks; those belong behind the transition card, never in HTTP prefetch.
+    const dressing: readonly { assetId: string; decay?: string }[] = level === 'L2' ? [...l2Dressing, ...l1AftermathDressing] : level === 'L3' ? l3Dressing : level === 'L4' ? l4Dressing : level === 'L5' ? l5Dressing : [];
+    for (const entry of dressing) add(entry.assetId, entry.decay);
+    if (level === 'L2') add('bld.clinic-annex', 'burned');
+    if (level === 'L5') add('decay.collapsed-facade');
     const actors = new Set(level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...coreCivilianModels, ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
     actors.add('char.corgi'); actors.add(infectedDef('infected.runner').asset);
     for (const id of actors) {
