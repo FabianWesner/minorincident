@@ -14,6 +14,8 @@ export interface AssetViewerApi {
   view(index: number, roll?: number): Promise<void>;
   /** Batch inspection reuses the renderer and releases the previous asset. */
   selectAsset?(id: string): Promise<void>;
+  /** Fit the complete visible silhouette, supplied as normalized screen bounds. */
+  frame?(bounds: [number, number, number, number]): void;
   visibility(name: string, visible: boolean): Promise<void>;
   inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
   deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
@@ -67,27 +69,7 @@ export async function assetViewer(): Promise<void> {
     const distance = Math.max(width/camera.aspect,height) / Math.tan(camera.fov*Math.PI/360) * .6;
     camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
     controls.target.copy(center); controls.update(); camera.lookAt(center);
-    if (roll !== undefined) {
-      // Inspection may align a slender silhouette with the frame. Fit actual
-      // visible vertices after rolling, so every part remains inside the image.
-      camera.rotateZ(roll);
-      const point = new Vector3(); object.updateWorldMatrix(true, true);
-      for (let pass = 0; pass < 3; pass++) {
-        camera.updateMatrixWorld(true); let radius = 0;
-        object.traverseVisible(node => {
-          if (!(node instanceof Mesh)) return;
-          const positions = node.geometry.getAttribute('position'), indices = node.geometry.index;
-          const start = node.geometry.drawRange.start, count = Math.min(node.geometry.drawRange.count, (indices?.count ?? positions.count) - start);
-          for (let vertex = start; vertex < start + count; vertex++) {
-            point.fromBufferAttribute(positions, indices ? indices.getX(vertex) : vertex).applyMatrix4(node.matrixWorld).project(camera);
-            radius = Math.max(radius, Math.abs(point.x), Math.abs(point.y));
-          }
-        });
-        if (!radius) break;
-        camera.position.sub(center).multiplyScalar(radius / .85).add(center);
-      }
-      camera.updateMatrixWorld(true);
-    }
+    if (roll !== undefined) camera.rotateZ(roll);
     await renderer.compileAsync(scene,camera); render(); render();
   }
   async function load(): Promise<void> {
@@ -144,7 +126,14 @@ export async function assetViewer(): Promise<void> {
     await renderer.compileAsync(scene, camera); render(); render();
   }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, inspectionView, selectAsset: async next => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, frame: ([left, top, right, bottom]) => {
+    const height = camera.position.distanceTo(controls.target) * 2 * Math.tan(camera.fov * Math.PI / 360), before = camera.position.clone();
+    camera.translateX(((left + right) / 2 - .5) * height * camera.aspect);
+    camera.translateY((.5 - (top + bottom) / 2) * height);
+    controls.target.add(camera.position.clone().sub(before));
+    camera.position.sub(controls.target).multiplyScalar(Math.max(right - left, bottom - top) / .85).add(controls.target);
+    camera.updateMatrixWorld(true); render(); render();
+  }, deliveryView, inspectionView, selectAsset: async next => {
     if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
     await registry.dispose(); events.length = 0; id = next; registry = createRegistry();
     document.querySelector<HTMLSelectElement>('#quality')!.value = 'high';
