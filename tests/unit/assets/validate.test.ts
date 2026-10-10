@@ -154,3 +154,11 @@ test('living adult draw cap counts geometry under animated owners', () => {
   def.budget.triangles = 10;
   expect(validateDocument(doc, def, 1024).errors).toContain('animated-owner drawCalls: 2 > 1');
 });
+
+test('integrated non-model presentation requires a shipped implementation', async () => {
+  const { def } = fixture();
+  def.status = 'integrated'; def.nonModel = 'ability'; def.glb = '';
+  expect((await validateAssets([def]))[0].errors).toEqual(['nonModel: missing presentationSource implementation']);
+  def.presentationSource = 'src/render/ActionView.ts';
+  expect((await validateAssets([def]))[0].errors).toEqual([]);
+});

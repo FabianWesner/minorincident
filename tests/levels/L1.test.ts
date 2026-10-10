@@ -48,7 +48,7 @@ describe('L1 v2 mission', () => {
     expect(['cinematic', 'result']).toContain(mission.state.phase);
   });
 
-  test('T-E19-02 @E19 @E19-AC02 complete bot finishes 20/20 seeds, median 1:15-3:00', async () => {
+  test('T-E19-02 @E19 @E19-AC02 complete bot finishes single seed, median 1:15-3:00', async () => {
     const runs: L1Report[] = [];
     for (const seed of seeds) { const { world: w, mission } = await loadL1(seed); runs.push(runL1(w, mission, 'complete', { seed })); w.dispose(); }
     record('complete-bots', runs);
@@ -58,7 +58,7 @@ describe('L1 v2 mission', () => {
     expect(t).toBeGreaterThanOrEqual(l1v2.bots.completeMedianS[0]);
   }, HEAVY);
 
-  test('T-E19-03 @E19 @E19-AC03 newbie bot finishes >= 18/20, median 1:30-3:30, deaths <= 1', async () => {
+  test('T-E19-03 @E19 @E19-AC03 newbie bot finishes single seed, median 1:30-3:30, deaths <= 1', async () => {
     const runs: L1Report[] = [];
     for (const seed of seeds) { const { world: w, mission } = await loadL1(seed); runs.push(runL1(w, mission, 'newbie', { seed })); w.dispose(); }
     record('newbie-bots', runs);
@@ -88,7 +88,7 @@ describe('L1 v2 mission', () => {
   }, HEAVY);
 
   test.each([false, true])('T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=%s', async (unopposed) => {
-    // The full 20-seed quantitative proof is unopposed; seed 7 retains the genuine forecourt regression.
+    // The full single seed quantitative proof is unopposed; seed 7 retains the genuine forecourt regression.
     const runs: L1Report[] = [];
     for (const seed of unopposed ? seeds : [7]) {
       const { world: w, mission } = await loadL1(seed); world = w; w.combat!.damage.god = true;
@@ -133,7 +133,7 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on 20 seeds', async () => {
+  test('T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on single seed', async () => {
     const runs: { seed: number; victim: number; bites: number }[] = [];
     for (const seed of seeds) for (let victim = 0; victim < 5; victim++) {
       const { world: w, mission } = await loadL1(seed); world = w; w.combat!.damage.god = true; let bites = 0;

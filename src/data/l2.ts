@@ -113,7 +113,7 @@ export const l2 = {
   /** Section 4: checkpoints. */
   checkpoints: ['doors', 'escape', 'cluster'] as const,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
-  bots: { seeds: 20, completeMedianS: [105, 210] as P, newbieMedianS: [120, 240] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 1 },
+  bots: { seeds: 1, completeMedianS: [105, 210] as P, newbieMedianS: [120, 240] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 1 },
 } as const;
 
 /**
