@@ -103,7 +103,11 @@ function helpers(page: Page) {
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
       const lag = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'civilian' }).some(e => e.civilian?.survivor && !e.hidden && e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 6); });
       // Keep guarding the followers; a nine-second fighting hiatus exceeds their grab/turn window.
-      if ((await player()).health.current > 0 && await fightNearby(Math.max(18, range))) await click();
+      if ((await player()).health.current > 0 && await fightNearby(Math.max(18, range))) {
+        // Attacking stops movement. Keep guarding a lagging group instead of
+        // reissuing the route while its followers are pinned in cover.
+        if (!lag) await click();
+      }
       else if (lag && lagWait < 300) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await step(12); lagWait += 12; await click(); }
       else { if (!lag) lagWait = 0; if (i % 4 === 3) await click(); }
     }
@@ -134,6 +138,9 @@ const begin = async (page: Page, level = 'L5', progression: string | undefined =
   });
   await page.getByRole('button', { name: 'Begin mission' }).click();
   await page.evaluate(() => window.__SS__!.pause());
+  // Begin starts streamed scene preparation. Settle the interaction geometry
+  // before paused input runs advance the escort faster than asset loading.
+  await page.evaluate(() => window.__SS__!.screenshotReady());
 };
 
 test.describe('L5 Aftermath in the browser', () => {
