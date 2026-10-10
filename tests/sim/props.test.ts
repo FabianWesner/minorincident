@@ -77,6 +77,13 @@ describe('E26 authored pushable props', () => {
   test('resting authored benches block civilian, infected and ally navigation from the first frame', async () => {
     const world = await grove(), nav = world.infected!.nav;
     const benches = world.props!.items.filter(p => p.assetId === 'prop.bench');
+    const light = world.props!.items.filter(p => p.metadata.class === 'light');
+    expect(light.length).toBeGreaterThan(0);
+    for (const p of light) {
+      const wall = world.props!.navWalls.get(p.entityId)!;
+      expect(wall, p.assetId).toBeDefined();
+      expect(nav.clear(wall.x, wall.z, .35), p.assetId).toBe(false);
+    }
     expect(benches.length).toBeGreaterThan(0);
     for (const p of benches) {
       const wall = world.props!.navWalls.get(p.entityId)!;

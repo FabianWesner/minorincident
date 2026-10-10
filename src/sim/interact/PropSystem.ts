@@ -187,7 +187,7 @@ export class PropSystem {
     for (const p of this.items) {
       // Movable furniture has no static collider in the nav bake. Its home pose
       // must block crowds too; moving/broken props relinquish the blocker.
-      const blocked = !p.braced && p.body.isEnabled() && (p.metadata.class === 'medium' || p.metadata.class === 'heavy')
+      const blocked = !p.braced && p.body.isEnabled()
         && Math.hypot(p.body.linvel().x, p.body.linvel().z) < .5;
       const previous = this.navWalls.get(p.entityId);
       const wall = propFootprint(p);
