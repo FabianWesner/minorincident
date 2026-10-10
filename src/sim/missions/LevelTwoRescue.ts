@@ -418,8 +418,6 @@ export class LevelTwoRescue {
       return;
     }
     if (s.phase === 'alarm') {
-      // The firefighter points at the optional axe a few seconds after the call, while it is still on the wall.
-      if (tick === s.alarmAt + ticks(5.2) && !s.axe && this.mission.state.steps.axe.status === 'active') this.mission.radio('L2.axe');
       for (const id of s.crewIds) {
         const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
         // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.

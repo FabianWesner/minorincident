@@ -21,6 +21,8 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   def.anchors['l2-gate-inside'].radius = 3;
   // Forgiving rings (PO 10-08: the axe took several tries): standing anywhere in them counts.
   def.anchors['l2-board'].radius = 1.8; def.anchors['l2-axe-rack'].radius = 1.5;
+  // The axe ring stands on the station's raised apron (slab top at 0.4 m).
+  def.anchors['l2-axe-rack'].y = .4;
   const step = (id: string, type: ObjectiveDef['type'], text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start']): ObjectiveDef => {
     const s: ObjectiveDef = { id, type, text, anchor, start, complete, fail: [] }; def.steps.push(s); return s;
   };
@@ -32,6 +34,6 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('axe', 'calm'));
   step('ride', 'custom', 'Ride with Engine 3 to Grove Market', 'l2-truck-stop', state('arrived'), after('board'));
   step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-watch', state('doors-open'), after('ride'));
-  step('bridge', 'reach', 'Reach the police checkpoint at the bridge', 'l2-gate-inside', state('crossed'), { kind: 'state', key: 'radio', equals: true });
+  step('bridge', 'reach', 'Reach the police checkpoint at the bridge', 'l2-gate-inside', state('crossed'), after('doors'));
   return def;
 }
