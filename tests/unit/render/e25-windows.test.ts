@@ -79,3 +79,19 @@ test('T-E25-11p T-E25-12p @E25 shared district materials preserve window and pol
   expect(mats[0]).toBe(mats[3]); expect(mats[0]).not.toBe(mats[1]); expect(mats[0]).not.toBe(mats[2]);
   assets.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose();
 });
+
+
+test('T-E25-13b @E25 @E25-AC13 shared light-bearing dressing keeps the player see-through graph', async () => {
+  const { Group, BoxGeometry } = await import('three/webgpu');
+  const { color } = await import('three/tsl');
+  const { DistrictAssets } = await import('../../../src/assets/DistrictAssets');
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), assets = new DistrictAssets(materials);
+  const share = (assets as unknown as { share(root: import('three').Group): void }).share.bind(assets);
+  const geometry = new BoxGeometry();
+  for (const name of ['static-body', 'window-light']) {
+    const root = new Group(), material = materials.shaded(color('#283344'));
+    const mesh = new Mesh(geometry, material); mesh.name = name; root.add(mesh); share(root);
+    expect(material.userData.seeThrough, name).toBe(true);
+  }
+  assets.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose();
+});

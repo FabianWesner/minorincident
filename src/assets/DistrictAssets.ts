@@ -99,6 +99,8 @@ export class DistrictAssets {
       const shared = this.sharedMaterials.get(key);
       if (shared) { (child.material as Material).dispose(); child.material = shared; }
       else { this.sharedMaterials.set(key, child.material as Material); this.batchMaterials.add(child.material as Material); }
+      // Batched light-bearing dressing keeps the world's existing player cutaway.
+      if (child.material instanceof PaletteMaterial) child.material.seeThrough();
     }
   }
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
