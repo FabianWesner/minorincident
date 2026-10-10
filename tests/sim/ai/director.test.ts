@@ -70,3 +70,13 @@ test('T-E07-07b @E07 @E07-AC07 supplied camera volume uses the 10 percent expand
   matrix.multiply(new Matrix4().makeRotationX(Math.PI / 2)).multiply(new Matrix4().makeTranslation(0, -50, 0));
   d.setFrustum(matrix.elements); expect(d.visible({ x: 21.9, z: 0 })).toBe(true); expect(d.visible({ x: 22.1, z: 0 })).toBe(false); expect(d.safe('infected.runner', { x: 21.9, z: 0 })).toBe(false);
 });
+
+test('T-E19-street-reservation @E19 ordinary waves leave slots for scripted house residents without raising the cap', async () => {
+  const w = await arena(), d = w.infected!.director;
+  try {
+    d.levelCap = 6; d.reserved = 2; d.wave('infected.runner', 6); step(w, 1);
+    expect(d.cap).toBe(6); expect(d.count).toBe(4); expect(d.queue).toHaveLength(2);
+    d.reserved = 1; step(w, 1); expect(d.count).toBe(5); expect(d.queue).toHaveLength(1);
+    d.reserved = 0; step(w, 1); expect(d.count).toBe(6); expect(d.queue).toHaveLength(0);
+  } finally { w.dispose(); }
+});
