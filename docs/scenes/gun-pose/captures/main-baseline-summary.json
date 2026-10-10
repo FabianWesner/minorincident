@@ -1,0 +1,64 @@
+{
+  "commit": "d27704a2bc33559a08050b05772a4e2e19147cee",
+  "headless": true,
+  "backend": "native Metal",
+  "tests": {
+    "L6": {
+      "stats": {
+        "startTime": "2026-10-10T23:38:08.905Z",
+        "duration": 17602.361,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": []
+    },
+    "L2": {
+      "stats": {
+        "startTime": "2026-10-10T23:38:26.930Z",
+        "duration": 70029.333,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "errors": [
+        "Error: Could not travel to {\"x\":-50,\"z\":-32} from {\"x\":-46.379337310791016,\"y\":0.7049999833106995,\"z\":-37.799739837646484,\"yaw\":-2.1288778223702884}"
+      ]
+    },
+    "L5": {
+      "stats": {
+        "startTime": "2026-10-10T23:39:37.380Z",
+        "duration": 101027.86099999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": []
+    }
+  },
+  "l5Survivors": [
+    {
+      "key": "dale",
+      "status": "following"
+    },
+    {
+      "key": "rosa",
+      "status": "following"
+    },
+    {
+      "key": "okafor",
+      "status": "following"
+    },
+    {
+      "key": "mia",
+      "status": "following"
+    },
+    {
+      "key": "sam",
+      "status": "following"
+    }
+  ]
+}
