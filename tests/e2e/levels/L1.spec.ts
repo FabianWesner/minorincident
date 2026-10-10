@@ -187,8 +187,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     if (assisted) {
       // Follow a systemic victim for the spread photo: its location depends on the AI, not a scripted photo anchor. Prefer the
       // first bite on open ground (a body behind a fence or hedge is screened from the game camera); else the first one seen.
-      for (const junction of [{ x: 66, z: 0 }, { x: 50, z: 0 }, { x: 50, z: 30 }, { x: 26, z: 30 }]) await go(junction, 1.2);
-      await go(at('garage-door'), 1.5);
+      // Observe spread before travel fills the unchanged director cap with street residents.
       const turning = () => page.evaluate(() => window.__SS__!.getState().entities.filter(e => e.infection && e.infection.phase !== 'rise').map(e => ({ id: e.id, x: e.transform.x, z: e.transform.z })));
       let victimId: number | undefined;
       for (let i = 0; i < 900 && victimId === undefined; i++) {
@@ -206,6 +205,8 @@ test.describe('L1 v2 real-input playthrough', () => {
       expect(victim!.civilian, 'still mid-transformation (rising)').toBeDefined();
       await snap('l1-spread', victim!.transform, false, .75); shots.add('l1-spread');
       writeFileSync(`${output}/spread-victim.json`, JSON.stringify({ openGround: openGround(victim!.transform), ...victim }, null, 2) + '\n');
+      for (const junction of [{ x: 66, z: 0 }, { x: 50, z: 0 }, { x: 50, z: 30 }, { x: 26, z: 30 }]) await go(junction, 1.2);
+      await go(at('garage-door'), 1.5);
     }
     while (guard++ < 400) {
       const m = await mission();
