@@ -309,7 +309,7 @@ export class SceneLab {
       return;
     }
     if (actor.kind === 'pedestrian') {
-      const c = e.civilian!, reset = (schedule: CivilianActivity[]) => { c.schedule = schedule; c.scheduleStep = 0; c.activityUntil = 0; c.activityStarted = 0; c.path.length = 0; c.goal = -1; c.state = 'calm'; };
+      const c = e.civilian!, reset = (schedule: CivilianActivity[]) => { c.schedule = schedule; c.scheduleStep = 0; c.activityUntil = 0; c.activityStarted = 0; c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.state = 'calm'; };
       if ('idle' in a) reset([this.stand(e.transform, e.transform.yaw)]);
       else if ('turn' in a) reset([this.stand(e.transform, rad(a.turn))]);
       else if ('walk' in a || 'run' in a) { const points = ('walk' in a ? a.walk : a.run).map(toPoint); if (c.l1) c.l1.walkSpeed = 'run' in a ? 3.2 : c.l1.walkSpeed; reset(points.map(p => ({ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }))); if (!a.loop) c.schedule!.push(this.stand(points[points.length - 1], e.transform.yaw)); }
