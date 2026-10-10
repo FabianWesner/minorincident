@@ -3,7 +3,9 @@ import { Rng } from '../../core/Rng';
 import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
+import { seatAnchor, sitHipHeight } from '../npc/seats';
 import { l2Dressing } from '../../levels/L2/layout';
+import { clearOfL2Script } from '../../levels/continuity';
 import type { Mission } from './Mission';
 import type { L2State } from './types';
 import type { EntitySnapshot } from '../world/types';
@@ -134,7 +136,13 @@ export class LevelTwoRescue {
     for (let i = 1; i <= l2.calm.civiliansOnBenches; i++) {
       // Seated facing out of the bays (station-local +x).
       const bench = this.anchor(`l2-bench-${Math.min(4, i)}`), seat = { x: bench.x, z: bench.z }, p = this.snap(seat, .35);
-      const id = o.spawnPedestrian(p, { tier: 'frail', schedule: this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat) });
+      const schedule = this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat);
+      const district = this.world.districts!.districts[0], [ox, oz] = district.origin;
+      const prop = district.layout.placements.filter(q => q.id.startsWith('l2-station-') && q.assetId === 'prop.bench')
+        .sort((a, b) => Math.hypot(a.position[0] + ox - seat.x, a.position[2] + oz - seat.z) - Math.hypot(b.position[0] + ox - seat.x, b.position[2] + oz - seat.z))[0];
+      const hip = prop && seatAnchor(prop.assetId, prop.position, prop.yaw, prop.scale, { x: ox, z: oz });
+      if (hip) schedule[0].seatLift = hip.y - sitHipHeight;
+      const id = o.spawnPedestrian(p, { tier: 'frail', schedule });
       this.s.benchIds.push(id);
     }
   }
@@ -159,6 +167,11 @@ export class LevelTwoRescue {
     const o = this.outbreak();
     for (const d of l2Dressing) if (d.entity && d.kind === 'corpse') {
       const p = this.snap({ x: d.x, z: d.z }, .35), id = o.spawnPedestrian(p, { model: d.assetId, yaw: d.yaw, schedule: this.schedule(p, p) }), e = this.world.entities.get(id)!;
+      e.civilian!.state = 'finished'; e.civilian!.entered = this.world.tick - 600; e.appearance!.handProp = null;
+    }
+    // Campaign continuity: the pedestrians who died in this run's L1 still lie where they fell (src/levels/continuity.ts).
+    for (const body of this.world.aftermath?.bodies ?? []) if (clearOfL2Script(body)) {
+      const p = this.snap({ x: body.x, z: body.z }, .35), id = o.spawnPedestrian(p, { model: body.model, tint: body.tint, yaw: body.yaw, schedule: this.schedule(p, p) }), e = this.world.entities.get(id)!;
       e.civilian!.state = 'finished'; e.civilian!.entered = this.world.tick - 600; e.appearance!.handProp = null;
     }
   }

@@ -84,6 +84,8 @@ test.describe('L1 v2 real-input playthrough', () => {
         }, { start, target });
         // A body over the waypoint turns a movement click into an attack. Try clear
         // ground within the same arrival tolerance, consuming each click under its camera.
+        // Settle the new camera before projecting, as in L5.
+        await step(1);
         const ground = [target, ...Array.from({ length: 16 }, (_, i) => ({
           x: target.x + Math.cos(i * Math.PI / 8) * stop * .8,
           z: target.z + Math.sin(i * Math.PI / 8) * stop * .8,

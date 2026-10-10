@@ -1,5 +1,6 @@
 import { weatherKinds, weatherLabels, type WeatherKind } from '../data/weather';
 import type { Game } from '../Game';
+import { captureL1Aftermath } from '../sim/progression/carryover';
 import { autoRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
@@ -51,6 +52,8 @@ export class CampaignUI {
     this.offeredMission=mission;
     const match=/^L([1-6])$/.exec(mission.def.id);if(!match)return;
     const level=Number(match[1]) as Level;
+    // Campaign continuity: the town L2 returns to keeps what this L1 run left behind (latest run wins).
+    if(level===1){save.world={...save.world,L1:captureL1Aftermath(this.game.world)};this.save();}
     save.results ??= {}; if(mission.state.result)save.results[mission.def.id]=structuredClone(mission.state.result);
     if(level===6){save.completedLevels=6;this.save();this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();return;}
     if(level!==save.completedLevels+1){this.screen('Level complete');this.button('Continue',()=>this.game.continueCampaign(save));this.focus();return;}
