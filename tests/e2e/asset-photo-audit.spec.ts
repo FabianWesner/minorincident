@@ -7,13 +7,21 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
   await boot(page, '/?test=1&renderer=webgl&quality=high&audio=muted');
   const rows = [];
   for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6']) {
-    await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); }, level);
+    await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); a.missions.begin(); }, level);
     const spots = await page.evaluate(() => window.__SS__!.getState().render.districts!.photoSpots);
     for (const spot of spots) {
       const proof = await page.evaluate(async spot => {
         const a = window.__SS__!; a.camera.preset(spot); await a.screenshotReady();
-        const batches = a.getState().render.districts!.batches;
-        return { placeholders: [...new Set(batches.filter(b => b.placeholder && b.triangles > 0).map(b => b.assetId))], assets: [...new Set(batches.filter(b => b.triangles > 0).map(b => b.assetId))] };
+        const render = a.getState().render, batches = render.districts!.batches;
+        const actorIds = new Set(render.entityAssets?.actors.filter(e => e.source === 'placeholder').map(e => e.id));
+        const heroIds = new Set(render.npcs?.heroes.filter(e => e.source === 'placeholder').map(e => e.id));
+        const vehicleIds = new Set(render.vehicles.filter(e => e.placeholder).map(e => e.id));
+        const dynamicPlaceholders = a.query({}).filter(e => !e.hidden && (actorIds.has(e.id) || heroIds.has(e.id) || vehicleIds.has(e.id) || e.traffic || e.convoy)).flatMap(e => {
+          const point = a.input.project({ x: e.transform.x, z: e.transform.z });
+          if (point.x < 0 || point.x > innerWidth || point.y < 0 || point.y > innerHeight) return [];
+          return [{ id: e.id, assetId: e.appearance?.asset ?? e.archetype, representation: e.traffic || e.convoy ? 'NpcView procedural traffic box' : 'runtime model placeholder' }];
+        });
+        return { dynamicPlaceholders, placeholders: [...new Set(batches.filter(b => b.placeholder && b.triangles > 0).map(b => b.assetId))], assets: [...new Set(batches.filter(b => b.triangles > 0).map(b => b.assetId))] };
       }, spot);
       rows.push({ level, spot, ...proof });
     }
