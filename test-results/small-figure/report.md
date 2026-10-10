@@ -19,7 +19,11 @@ Both low-tier game-camera comparison captures were inspected at the reported str
 - Final committed code: typecheck, lint and production build passed.
 - Remote full unit suite plus the focused L2 sim regression: 461 passed; remote smoke: 6 passed.
 - First browser batch: 36 passed, 1 failed. Both low-tier reproductions, both crowd-visible outbreak backends, L1–L4, L5 draw captures, L6 and Chromium smoke passed. The L5 real-input group-photo test lost two followers to infection in the first batch; the unchanged test passed in isolation (all five survivors handed over to L6, zero console errors).
-- The 444-case corrected height sweep passed. The same remote sweep with height fitting disabled failed all six cases, first detecting `npc.lab-tech-a` at 1.365 m / 1.8 m (0.758), below the 0.92 minimum.
-- `verify E08` passed typecheck/lint/build and 50 selected remote tests, but stopped on its existing high-tier L1 patrol timing budget (5.087 ms vs 4 ms). The unchanged timing test passed locally under `tools/sim-lock.sh` for all L1–L5 patrols. The separate final E08 browser gate, including high/low × WebGPU/WebGL and device smoke, is pending.
+- The final expanded 444-case height/archetype sweep and checkpoint routing checks passed all 9 tests (2026-10-11). The same remote sweep with height fitting disabled failed all six cases, first detecting `npc.lab-tech-a` at 1.365 m / 1.8 m (0.758), below the 0.92 minimum.
+- `verify E08` passed typecheck/lint/build and 50 selected remote tests, but stopped on its existing high-tier L1 patrol timing budget (5.087 ms vs 4 ms). The unchanged timing test passed locally under `tools/sim-lock.sh` for all L1–L5 patrols. The complete local E08 rerun, including high/low × WebGPU/WebGL and device smoke, could not start: another lane’s stopped validation shell (PID 44077, `STAT T`) held both browser slots via lockf 8012 / parent 69009. The owning session was notified and asked whether that pause was intentional. This job’s waiting command was cancelled; that gate and the high-tier captures remain outstanding. The required low-tier WebGPU/WebGL captures were completed and inspected.
 
 Main was merged into this lane before the final validation. No deployment or merge into main was performed.
+
+## Delivery status
+
+The cause is fixed and the requested low-tier reproduction, visual review, remote units/smoke, level checks (after the isolated L5 retry), and both crowd-visible backends pass. Final full E08 closure is blocked by another lane’s stopped browser-lock holder. High-tier browser regression cases are authored but not yet run. The original PO photograph cannot distinguish which of the two affected children was pictured.
