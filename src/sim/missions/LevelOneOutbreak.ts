@@ -28,6 +28,9 @@ const story = {
   blastPushM: 3.2, blastPushRangeM: 12,
   eventOrder: ['l1.flicker', 'l1.blast', 'l1.ringing', 'l1.smoke', 'l1.screams'] as const,
 };
+/** Authored lab cast, available before the accident for renderer preparation. */
+export const l1LabModels = [story.techModel, ...story.staffModels];
+
 const fresh = (): L1State => ({
   phase: 'morning', carrying: false, delivered: false, away: false, techId: 0, hx: 0, hz: 0,
   handoverAt: 0, deliveredAt: 0, flickerAt: 0, exitAt: 0, warned: false, fired: 0,

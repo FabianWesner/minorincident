@@ -30,6 +30,7 @@ export function placeholder(
         geometries: BufferGeometry[];
       }
     >();
+  root.userData.placeholder = true;
   const add = (
     token: PaletteToken,
     g: BufferGeometry,

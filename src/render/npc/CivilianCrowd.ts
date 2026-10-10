@@ -7,6 +7,7 @@ import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from '../characters/InfectedMoves';
 import { infectedDefinitions } from '../../data/infected';
 import { l6CastModels } from '../../data/l6';
+import { l1LabModels } from '../../sim/missions/LevelOneOutbreak';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
 import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
@@ -408,7 +409,18 @@ export class CivilianCrowd extends Group {
   }
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
-  async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
+  async init(): Promise<void> {
+    const started = performance.now();
+    await Promise.all(this.batches.map(b => b.init()));
+    // The authored L1/L4 cast can enter the close band at any objective transition.
+    // Baking/indexing/simplifying a first LOD0 during play blocks for ~220 ms on desktop.
+    // Prepare the same hero geometry while loading; GameView.ready then warms its programs.
+    const heroes = this.world.scenario === 'L1'
+      ? [...l1Pedestrians.models, ...l1LabModels, 'npc.depot-clerk', 'npc.firefighter-alive']
+      : this.world.scenario === 'L4' ? [...l1Pedestrians.models, 'npc.national-guard'] : [];
+    for (const model of new Set(heroes)) this.loadHero(model);
+    loadMeasure('view:civilian-crowd', started); this.update();
+  }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }

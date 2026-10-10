@@ -68,21 +68,23 @@ The four pair cameras from E22 in the W5 state: `pair-plaza`, `pair-harbor-stree
 
 ## 8. Acceptance criteria
 
-Bots: `complete`, `newbie`, `evade-only` (escorts but never attacks), `idle`. Time bands are **provisional**; recalibrate on the first green 20-seed run (staging §6, never padded).
+Bots: `complete`, `newbie`, `evade-only` (escorts but never attacks), `idle`. Time bands are **provisional**; recalibrate on the first green single-seed run (staging §6, never padded).
+
+> PO 10-09: at most one single-seed complete-bot pass per level is a gate; fun/feel is judged by the PO.
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E23-AC01 | The L5 mission graph (leave basement → find 5 → reach the metro) is structurally completable (E12-AC07) for every find order, with no fail timer and no fail on survivor death | sim |
-| E23-AC02 | The `complete` bot finishes L5 on **20/20 seeds** from `L5-default` (machine gun) without cheats; median sim time **2:00–4:00**; median survivors rescued ≥ 4 | sim |
-| E23-AC03 | The `newbie` bot finishes on ≥ 18/20 seeds, median **2:30–5:00**, median deaths ≤ 1, median survivors rescued ≥ 3 | sim |
+| E23-AC02 | The `complete` bot finishes L5 on **one seed** from `L5-default` (machine gun) without cheats; sim time **2:00–4:00**; survivors rescued ≥ 4 PO 10-09: single seed. | sim |
+| E23-AC03 | The `newbie` bot finishes on one seed, **2:30–5:00**, deaths ≤ 1, survivors rescued ≥ 3 PO 10-09: single seed. | sim |
 | E23-AC04 | **Opening is empty:** at level start and for the first 60 s there are zero allied fighters, zero living civilians except the 5 survivors and the lookout, zero helicopters or moving vehicles, zero non-player gunfire events; 12–20 infected exist, no group > 3 | sim |
 | E23-AC05 | **Same city:** the L5 composition uses the `D-FAIR` layout with an identical road graph; for every L4 hero building the L5 variant has the same transform and its top-down footprint mask has IoU ≥ 0.9 with L4; nav differs only by ≤ 3 debris-blocked segments, each with a detour ≤ 1.5× | unit (layout) |
 | E23-AC06 | **Devastation:** the static W5 dressing manifest meets the §5.1 minimums (burned cars ≥ 10, wrecked military vehicles ≥ 3, fires ≥ 6, broken windows ≥ 70 % of frontages, damaged/collapsed facades ≥ 4, smoke columns ≥ 4, corpses ≥ 30 with ≥ 10 in uniform, destroyed barricades) | static |
 | E23-AC07 | **Sparse, never omniscient:** no director spawn or emergence event fires in L5; concurrent infected ≤ 30; the E20-AC11 omniscience audit passes; machine-gun bursts pull non-chasing infected within 30 m to the shot position (E21-AC06 rule) | sim |
 | E23-AC08 | **Signs of life:** each survivor's cue is perceivable (audio event with position + subtitle, or visual cue in frustum) within 25 m and not beyond 30 m; no objective marker points at a survivor; the hiding places are ≥ 25 m apart and ≥ 4 are inside/behind buildings | sim + static |
 | E23-AC09 | **Group grows and follows:** interaction (1.0 s) makes a survivor follow; the HUD counter steps 0 → 5 as found; followers stay within 8 m of the player ≥ 80 % of non-combat time, never teleport (no jump > 1 m per tick), and are slower than the player's run (3.8 m/s) | sim |
-| E23-AC10 | **Protection matters:** an infected reaching an unprotected survivor bites within 1.5 s; a hit during the 1.0 s grab saves them; a bitten survivor turns in 2.5–3.5 s with identity continuity; the `evade-only` bot rescues a median ≤ 2 survivors while `complete` rescues ≥ 4 (20 seeds) | sim |
-| E23-AC11 | **Losses don't stop the level:** force-killing 1, 3 or all 5 survivors at random points still lets the `complete` bot finish on 20/20 seeds; the result screen and the L6 handover report the rescued count | sim |
+| E23-AC10 | **Protection matters:** an infected reaching an unprotected survivor bites within 1.5 s; a hit during the 1.0 s grab saves them; a bitten survivor turns in 2.5–3.5 s with identity continuity; the `evade-only` bot rescues a ≤ 2 survivors while `complete` rescues ≥ 4 (one seed) PO 10-09: single seed. | sim |
+| E23-AC11 | **Losses don't stop the level:** force-killing 1, 3 or all 5 survivors at random points still lets the `complete` bot finish on one seed; the result screen and the L6 handover report the rescued count PO 10-09: single seed. | sim |
 | E23-AC12 | **No new weapon:** the L5 loadout equals the L4 end loadout at start and at end (no weapon pickups exist in L5) | sim |
 | E23-AC13 | **Sunset and gloom:** `timeOfDay.L5.polar` in 1.45–1.55 rad, sun hue 0–25°, intensity ≤ 0.7× `L4`; the sun intensity decreases monotonically over the level and is ≥ 30 % lower at the metro trigger than at the basement exit | unit + sim |
 | E23-AC14 | **Near-silence:** no music cue in the first 60 s; the mix-bus loudness over L5's first 60 s (offline render) is ≥ 18 LU below the loudness of L4's war phase (`l4.firstTurn` → `l4.lineBreaks`); no battle-layer cues play in L5 | e2e (offline audio) |

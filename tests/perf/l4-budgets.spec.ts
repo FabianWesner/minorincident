@@ -34,6 +34,20 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const turn = await record(`${l4}.turnAt > 0`, 2_000);
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
     await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit'`, 900);
+    // Populate the acceptance peak through the ordinary spawn APIs. The natural route often
+    // kills the early waves before tank entry, so it cannot prove the specified 80/40 stress case.
+    await page.evaluate(tier => {
+      const a = window.__SS__!, targetCivilians = tier === 'high' ? 40 : 20, targetInfected = tier === 'high' ? 80 : 40;
+      let civilians = a.query({}).filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length;
+      for (let i = 0; civilians < targetCivilians && i < 600; i++) {
+        const p = { x: -35 + i % 12 * 3, z: -18 + Math.floor(i / 12) * 2 };
+        try { a.npcs.civilian('cashier', p, { waypoints: [p] }); civilians++; } catch { /* next walkable plaza cell */ }
+      }
+      let infected = a.getState().ai!.count;
+      for (let i = 0; infected < targetInfected; i++, infected++) {
+        a.spawn('infected.runner', { x: -40 + i % 8 * 1.3, z: -28 + Math.floor(i / 8) * 1.3 }, { state: 'chase' });
+      }
+    }, tier);
     const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, soldiers: all.filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length, civilians: all.filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length }; });
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-FAIR/W0/l4-war-line'); await a.screenshotReady(); });
     const warStatic = await page.evaluate(() => window.__SS__!.perf());
@@ -57,8 +71,9 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       simP95: percentile(warCpu.map(c => c.sim), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
-    expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8); expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 20 : 8); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 20 : 10);
+    expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8); expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);
     expect(proof.lineBroke).toBe(true);
+    expect(proof.simP95).toBeLessThanOrEqual(4);
     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle.
     if (tier === 'high') { expect(proof.warP95).toBeLessThanOrEqual(14); expect(proof.collapseP95).toBeLessThanOrEqual(14); }
