@@ -12,6 +12,8 @@ import type { AssetDef } from './types';
 export interface AssetViewerApi {
   ready: Promise<void>;
   view(index: number): Promise<void>;
+  /** Batch inspection reuses the renderer and releases the previous asset. */
+  selectAsset?(id: string): Promise<void>;
   visibility(name: string, visible: boolean): Promise<void>;
   inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
   deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
@@ -23,7 +25,8 @@ declare global { interface Window { __ASSET__?: AssetViewerApi } }
 
 /** The game WebGPU renderer (WebGL2 fallback), palette swap and golden-hour lights. */
 export async function assetViewer(): Promise<void> {
-  const params = new URLSearchParams(location.search), id = params.get('asset') ?? 'veh.fire-engine';
+  const params = new URLSearchParams(location.search);
+  let id = params.get('asset') ?? 'veh.fire-engine';
   const renderer = new WebGPURenderer({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
   renderer.info.autoReset = false;
   renderer.setPixelRatio(1); renderer.setSize(innerWidth, innerHeight); await renderer.init();
@@ -36,11 +39,12 @@ export async function assetViewer(): Promise<void> {
   const events: PlaceholderLog[] = [];
   const inspectionLighting = new Lighting(new Scene());
   const inspectionMaterials = new Materials(inspectionLighting);
-  const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
+  const createRegistry = () => new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
     // Explicit inspection shows pending source files without stale registration metadata.
     manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
       ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [], dimensions: { ...def.dimensions, tolerance: Number.POSITIVE_INFINITY } } : {}) } : def) : undefined,
   });
+  let registry = createRegistry();
   const decay = document.querySelector<HTMLSelectElement>('#decay')!;
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
   decay.disabled = !registry.definition(id).decayVariants.length;
@@ -119,7 +123,15 @@ export async function assetViewer(): Promise<void> {
     await renderer.compileAsync(scene, camera); render(); render();
   }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, inspectionView, visibility: async (name, visible) => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, deliveryView, inspectionView, selectAsset: async next => {
+    if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
+    await registry.dispose(); events.length = 0; id = next; registry = createRegistry();
+    document.querySelector<HTMLSelectElement>('#quality')!.value = 'high';
+    decay.replaceChildren(new Option('Base', ''));
+    for (const name of registry.definition(id).decayVariants) decay.add(new Option(name, name));
+    decay.disabled = !registry.definition(id).decayVariants.length;
+    await load();
+  }, visibility: async (name, visible) => {
     const node = object.getObjectByName(name);
     if (!node) throw new Error(`Missing asset node ${name}`);
     node.visible = visible; await view(4);
