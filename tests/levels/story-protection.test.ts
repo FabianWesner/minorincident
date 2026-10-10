@@ -8,7 +8,7 @@ let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 
 for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'] as const) {
-  test(`story protection ${level} @E${18 + Number(level[1])}: every required actor resists bites, damage and collapse, then releases`, async () => {
+  test(`story protection ${level} @E${18 + Number(level[1])} : every required actor resists bites, damage and collapse, then releases`, async () => {
     const w = world = await loadLevel(level as MissionId, 1), m = w.missions!, s = m.state;
     if (s.l1) new L1Story(m).pickup();
     const ids = s.l1 ? [s.l1.techId, s.l1.clerkId!]

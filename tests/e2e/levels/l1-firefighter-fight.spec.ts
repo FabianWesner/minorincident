@@ -37,9 +37,9 @@ test('T-E19-firefighter-fight @E19 the firefighter swings at an infected at the 
   await page.evaluate(({ x, z }) => window.__SS__!.teleport('player', { x, z }), { x: door.x - 5, z: door.z + 3.2 });
   await step(5);
   // Fresh arrivals keep visible infected by the invitation while the courier arrives.
-  await page.evaluate(post => {
-    for (let i = 0; i < 3; i++) window.__SS__!.spawn('infected.runner', { x: post.x + i * .7, z: post.z + 2.5 }, { state: 'idle', yaw: Math.PI / 2 });
-  }, alive!.transform);
+  await page.evaluate(out => {
+    for (let i = 0; i < 3; i++) window.__SS__!.spawn('infected.runner', out, { state: 'idle', yaw: Math.PI / 2 });
+  }, out);
   let fought = false;
   for (let i = 0; i < 15 && !fought; i++) {
     await step(20);
