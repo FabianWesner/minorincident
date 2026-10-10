@@ -1,0 +1,1149 @@
+{
+  "spec": "specs/scenes/qa-l5-hide-sam.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 90,
+  "timing": {
+    "openMs": 1193,
+    "loadMs": 4987,
+    "runMs": 924,
+    "sceneMs": 5911
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-l5-hide-sam",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.cafe-corner:7",
+        "asset": "bld.cafe-corner",
+        "at": [
+          -49.501000000000005,
+          27.05
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.bench:15",
+        "asset": "prop.bench",
+        "at": [
+          -32.8,
+          18
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:18",
+        "asset": "prop.bench",
+        "at": [
+          -26,
+          33.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.trash-bin:20",
+        "asset": "prop.trash-bin",
+        "at": [
+          -35.3,
+          26
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-tree-blossom:21",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -31,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:22",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -23,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:23",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -15,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:26",
+        "asset": "prop.hedge",
+        "at": [
+          -34.625,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:27",
+        "asset": "prop.hedge",
+        "at": [
+          -31.875,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:28",
+        "asset": "prop.hedge",
+        "at": [
+          -29.125,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:29",
+        "asset": "prop.hedge",
+        "at": [
+          -26.375,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:35",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -51.72727272727273,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:36",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -49.18181818181818,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:37",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -46.63636363636364,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:38",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -44.09090909090909,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:39",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -41.54545454545455,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:40",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -39,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:41",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -36.45454545454545,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:42",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -33.90909090909091,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:43",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -31.363636363636363,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:44",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -28.81818181818182,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:45",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -26.272727272727273,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cafe-corner:145",
+        "asset": "bld.cafe-corner",
+        "at": [
+          -66.499,
+          30.3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:153",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -74.60000000000001,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:202",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          15.965517241379317
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:203",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          18.55862068965518
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:204",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          21.15172413793104
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:205",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          23.744827586206902
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:206",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          26.337931034482764
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:207",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          28.931034482758626
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:208",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          31.524137931034495
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:209",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          34.11724137931035
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:210",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          36.71034482758622
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:211",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          39.303448275862074
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:212",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -72.075,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:213",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -69.425,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:214",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -66.775,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:215",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -64.125,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-lamp:387",
+        "asset": "prop.street-lamp",
+        "at": [
+          -60,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:388",
+        "asset": "prop.street-lamp",
+        "at": [
+          -44,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:389",
+        "asset": "prop.street-lamp",
+        "at": [
+          -28,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.bench:396",
+        "asset": "prop.bench",
+        "at": [
+          -70,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:397",
+        "asset": "prop.bench",
+        "at": [
+          -50,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:398",
+        "asset": "prop.bench",
+        "at": [
+          -30,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-tree:404",
+        "asset": "prop.street-tree",
+        "at": [
+          -64,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:405",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -42,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:412",
+        "asset": "prop.street-lamp",
+        "at": [
+          -48,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:413",
+        "asset": "prop.street-lamp",
+        "at": [
+          -32,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:414",
+        "asset": "prop.street-lamp",
+        "at": [
+          -16,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:434",
+        "asset": "prop.street-sign",
+        "at": [
+          -54.3,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:435",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          -61.7,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-military-5",
+        "asset": "veh.tank",
+        "at": [
+          -19.6,
+          23.5
+        ],
+        "yawDeg": 110.1
+      },
+      {
+        "id": "l5-burned-car-10",
+        "asset": "veh.sedan-red",
+        "at": [
+          -40,
+          43.3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-burned-car-19",
+        "asset": "veh.sedan-blue",
+        "at": [
+          -29.406737353238373,
+          43.389662879484156
+        ],
+        "yawDeg": -8.6
+      },
+      {
+        "id": "l5-burned-car-24",
+        "asset": "veh.pickup-red",
+        "at": [
+          -59.7,
+          20
+        ],
+        "yawDeg": -78.5
+      },
+      {
+        "id": "l5-barricade-30",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -29,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-31",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -22.5,
+          17.6
+        ],
+        "yawDeg": -11.5
+      },
+      {
+        "id": "l5-barricade-32",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -18,
+          17.9
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-38",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          14.275
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-39",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -27.363636363636363,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-40",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -20.090909090909093,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-41",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -15.727272727272727,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barrier-46",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          -72.5,
+          42.3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-49",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -36,
+          20.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-51",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -30,
+          28
+        ],
+        "yawDeg": 149
+      },
+      {
+        "id": "l5-rubble-55",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -48,
+          38.6
+        ],
+        "yawDeg": 446.9
+      },
+      {
+        "id": "l5-rubble-59",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -28,
+          14
+        ],
+        "yawDeg": 103.1
+      },
+      {
+        "id": "l5-rubble-63",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -40,
+          40
+        ],
+        "yawDeg": 309.4
+      },
+      {
+        "id": "l5-block-67",
+        "asset": "veh.pickup-red",
+        "at": [
+          -18,
+          44.4
+        ],
+        "yawDeg": 78.5
+      },
+      {
+        "id": "l5-bus-68",
+        "asset": "veh.school-bus",
+        "at": [
+          -45,
+          46.3
+        ],
+        "yawDeg": 2.3
+      },
+      {
+        "id": "l5-belongings-113",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -16,
+          38
+        ],
+        "yawDeg": 762
+      },
+      {
+        "id": "l5-weapon-117",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -24.6,
+          16
+        ],
+        "yawDeg": 120.3
+      },
+      {
+        "id": "l5-weapon-123",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -72,
+          44.8
+        ],
+        "yawDeg": 842.2
+      },
+      {
+        "id": "l5-cue-125",
+        "asset": "util.flashlight",
+        "at": [
+          -47.4,
+          43.3
+        ],
+        "yawDeg": 74.5
+      },
+      {
+        "id": "l5-glass-1",
+        "asset": "decay.broken-glass",
+        "at": [
+          -46.202,
+          27.05
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-42",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.19999999999999,
+          30.3
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "sam",
+        "kind": "pedestrian",
+        "entity": 9
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "scene": "qa-l5-hide-sam",
+    "frame": 90,
+    "tick": 90,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 54,
+        "p95": 54,
+        "max": 54
+      },
+      "triangles": {
+        "p50": 168244,
+        "p95": 168244,
+        "max": 168244
+      },
+      "shadowDrawCalls": {
+        "p50": 53,
+        "p95": 53,
+        "max": 53
+      },
+      "shadowTriangles": {
+        "p50": 142858,
+        "p95": 142858,
+        "max": 142858
+      },
+      "stepMs": {
+        "p50": 2.4,
+        "p95": 3.5,
+        "max": 4.2
+      },
+      "lastFrame": {
+        "drawCalls": 54,
+        "triangles": 168244,
+        "shadowDrawCalls": 53,
+        "shadowTriangles": 142858,
+        "stepMs": 2.3000001907348633,
+        "categories": {
+          "other": 40,
+          "shadows": 53,
+          "props": 9,
+          "buildings": 4,
+          "crowd": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -45,
+          42.6
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 90,
+        "inViewFrames": 90,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 90
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -45,
+            42.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 90,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "sam": {
+        "kind": "pedestrian",
+        "entity": 9,
+        "position": [
+          -43.8,
+          42.6
+        ],
+        "yawDeg": 180,
+        "state": "calm",
+        "drawnFrames": 90,
+        "inViewFrames": 90,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 90
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -43.8,
+            42.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 90,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 10.6,
+          "contacts": 2,
+          "slideMaxCm": 0.8,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 4.1,
+          "liftMaxCm": 0.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 90,
+      "sim": {
+        "pedestrian": 1,
+        "courier": 1,
+        "actors": 2
+      },
+      "drawn": {
+        "vehicle": 0,
+        "pedestrian": 1,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.cafe-corner:7": "lod1",
+      "prop.bench:15": "culled",
+      "prop.bench:18": "culled",
+      "prop.trash-bin:20": "culled",
+      "prop.street-tree-blossom:21": "culled",
+      "prop.street-tree-blossom:22": "culled",
+      "prop.street-tree-blossom:23": "culled",
+      "prop.hedge:26": "culled",
+      "prop.hedge:27": "culled",
+      "prop.hedge:28": "culled",
+      "prop.hedge:29": "culled",
+      "prop.privacy-fence:35": "lod1",
+      "prop.privacy-fence:36": "lod1",
+      "prop.privacy-fence:37": "lod1",
+      "prop.privacy-fence:38": "lod1",
+      "prop.privacy-fence:39": "lod1",
+      "prop.privacy-fence:40": "lod1",
+      "prop.privacy-fence:41": "lod1",
+      "prop.privacy-fence:42": "culled",
+      "prop.privacy-fence:43": "culled",
+      "prop.privacy-fence:44": "culled",
+      "prop.privacy-fence:45": "culled",
+      "bld.cafe-corner:145": "lod2",
+      "prop.privacy-fence:153": "culled",
+      "prop.privacy-fence:202": "culled",
+      "prop.privacy-fence:203": "culled",
+      "prop.privacy-fence:204": "culled",
+      "prop.privacy-fence:205": "culled",
+      "prop.privacy-fence:206": "culled",
+      "prop.privacy-fence:207": "culled",
+      "prop.privacy-fence:208": "culled",
+      "prop.privacy-fence:209": "culled",
+      "prop.privacy-fence:210": "culled",
+      "prop.privacy-fence:211": "culled",
+      "prop.privacy-fence:212": "culled",
+      "prop.privacy-fence:213": "culled",
+      "prop.privacy-fence:214": "culled",
+      "prop.privacy-fence:215": "culled",
+      "prop.street-lamp:387": "culled",
+      "prop.street-lamp:388": "lod1",
+      "prop.street-lamp:389": "culled",
+      "prop.bench:396": "culled",
+      "prop.bench:397": "culled",
+      "prop.bench:398": "culled",
+      "prop.street-tree:404": "culled",
+      "prop.street-tree-blossom:405": "lod1",
+      "prop.street-lamp:412": "lod0",
+      "prop.street-lamp:413": "culled",
+      "prop.street-lamp:414": "culled",
+      "prop.street-sign:434": "culled",
+      "prop.fire-hydrant:435": "culled",
+      "l5-military-5": "culled",
+      "l5-burned-car-10": "lod0",
+      "l5-burned-car-19": "culled",
+      "l5-burned-car-24": "culled",
+      "l5-barricade-30": "culled",
+      "l5-barricade-31": "culled",
+      "l5-barricade-32": "culled",
+      "l5-barricade-38": "culled",
+      "l5-barricade-39": "culled",
+      "l5-barricade-40": "culled",
+      "l5-barricade-41": "culled",
+      "l5-barrier-46": "culled",
+      "l5-rubble-49": "n/a",
+      "l5-rubble-51": "n/a",
+      "l5-rubble-55": "n/a",
+      "l5-rubble-59": "n/a",
+      "l5-rubble-63": "n/a",
+      "l5-block-67": "culled",
+      "l5-bus-68": "lod0",
+      "l5-belongings-113": "culled",
+      "l5-weapon-117": "n/a",
+      "l5-weapon-123": "n/a",
+      "l5-cue-125": "n/a",
+      "l5-glass-1": "lod2",
+      "l5-glass-42": "culled"
+    },
+    "clipping": {
+      "staticPairs": 6,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l5-barricade-30",
+        "b": "l5-barricade-39",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1669,
+        "region": {
+          "min": [
+            -28.249706268310547,
+            0.000009114761269302107,
+            17.510025024414062
+          ],
+          "max": [
+            -26.97699737548828,
+            0.8900268077850342,
+            18.117231369018555
+          ]
+        },
+        "regionCm": [
+          127,
+          89,
+          61
+        ]
+      },
+      {
+        "a": "l5-barricade-32",
+        "b": "l5-barricade-40",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 648,
+        "region": {
+          "min": [
+            -20.035497665405273,
+            0.000009114761269302107,
+            17.681304931640625
+          ],
+          "max": [
+            -19.22403335571289,
+            0.8900268077850342,
+            18.14868927001953
+          ]
+        },
+        "regionCm": [
+          81,
+          89,
+          47
+        ]
+      },
+      {
+        "a": "l5-barricade-32",
+        "b": "l5-barricade-41",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 541,
+        "region": {
+          "min": [
+            -16.613344192504883,
+            0.000009114761269302107,
+            17.681304931640625
+          ],
+          "max": [
+            -15.976997375488281,
+            0.8900268077850342,
+            18.14868927001953
+          ]
+        },
+        "regionCm": [
+          64,
+          89,
+          47
+        ]
+      },
+      {
+        "a": "l5-barricade-31",
+        "b": "l5-barricade-40",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 377,
+        "region": {
+          "min": [
+            -20.976980209350586,
+            0.000009114761269302107,
+            17.6561222076416
+          ],
+          "max": [
+            -20.512338638305664,
+            0.8900268077850342,
+            18.220935821533203
+          ]
+        },
+        "regionCm": [
+          46,
+          89,
+          56
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:7",
+        "b": "l5-glass-1",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 128,
+        "region": {
+          "min": [
+            -46.87698745727539,
+            0.07800287008285522,
+            26.68169593811035
+          ],
+          "max": [
+            -46.639896392822266,
+            0.14201363921165466,
+            27.627649307250977
+          ]
+        },
+        "regionCm": [
+          24,
+          6,
+          95
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:145",
+        "b": "l5-glass-42",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 128,
+        "region": {
+          "min": [
+            -63.8749885559082,
+            0.07800287008285522,
+            29.93169593811035
+          ],
+          "max": [
+            -63.63789749145508,
+            0.14201363921165466,
+            30.877649307250977
+          ]
+        },
+        "regionCm": [
+          24,
+          6,
+          95
+        ]
+      }
+    ],
+    "actors": [],
+    "summary": {
+      "staticPairs": 6,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
