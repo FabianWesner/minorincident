@@ -84,7 +84,7 @@ export function* l1Frames(world: SimWorld, mission: Mission, profile: L1Profile,
         if (at) detour = { ...at, until: world.tick + 180 };
       }
       if (newbie) {
-        if (!detour && rng.next() < .0006) { const names = Object.keys(mission.def.anchors); const a = anchor(names[Math.floor(rng.next() * names.length)]); detour = { x: a.x, z: a.z, until: world.tick + 360 }; }
+        if (!nearest && !detour && rng.next() < .0006) { const names = Object.keys(mission.def.anchors); const a = anchor(names[Math.floor(rng.next() * names.length)]); detour = { x: a.x, z: a.z, until: world.tick + 360 }; }
         }
       // Raw away-vectors can drive into the garage wall forever. Choose an actual connected escape route.
       // Once near the bay, keep running toward shelter with normal input instead of relying on an ending auto-walk.
@@ -94,10 +94,19 @@ export function* l1Frames(world: SimWorld, mission: Mission, profile: L1Profile,
       }
       if (detour) { goal = detour; stop = .8; key = `detour-${detour.until}`; fight = null; }
       const dir = goal ? walker.step(world, goal, stop, key) : null;
-      move = fight ? { x: 0, z: 0 } : dir ?? { x: 0, z: 0 };
+      // Hold a normal keyboard direction between novice decisions; fractional waypoint braking
+      // made the courier creep toward the bat while faster infected caught up from behind.
+      if (newbie && dir) { const length = Math.hypot(dir.x, dir.z); if (length) { dir.x /= length; dir.z /= length; } }
+      move = fight && !newbie ? { x: 0, z: 0 } : dir ?? { x: 0, z: 0 };
     }
     const target = fight && fight.health.current > 0 ? fight : null;
-    world.setInput(target ? { move, interact: press, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } }   : { move, interact: press, attackTarget: undefined, left: { down: false, held: false, up: false } });
+    if (newbie && target) {
+      // Keep heading for the objective while batting a pursuer; do not auto-approach it and stop in the crowd.
+      const dx = target.transform.x - p.x, dz = target.transform.z - p.z, length = Math.hypot(dx, dz) || 1;
+      world.setInput({ move, interact: press, attackTarget: undefined, aimSource: 'keyboard', aim: { x: dx / length, z: dz / length }, aimPoint: { x: target.transform.x, z: target.transform.z }, left: { down: false, held: true, up: false } });
+    } else {
+      world.setInput(target ? { move, interact: press, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } }   : { move, interact: press, attackTarget: undefined, left: { down: false, held: false, up: false } });
+    }
     yield structuredClone(world.deviceInput);
   }
   } finally { stopBites(); stopCivTurn(); }
