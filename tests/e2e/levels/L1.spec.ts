@@ -110,7 +110,8 @@ test.describe('L1 v2 real-input playthrough', () => {
         const m = await mission();
         // An objective trigger can stop movement and start a beat before the requested stop radius.
         if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || m.phase !== 'playing' || (activeBefore && m.steps[activeBefore].status === 'completed')) return;
-        if (!assisted && (await player()).weapons && await fightNearby(page)) await clickDestination();
+        // God mode prevents damage, but living bodies still block the assisted photo route.
+        if ((await player()).weapons && await fightNearby(page)) await clickDestination();
         else if (i % 12 === 11) await clickDestination();
       }
       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });
