@@ -18,7 +18,7 @@ const openGround = (p: { x: number; z: number }) => !screens.some(q => cameraSid
   && !layout.colliders.some(c => { const q = closest(p, c); return cameraSide(p, q.x, q.z) && Math.hypot(q.x - p.x, q.z - p.z) < 2.2; });
 const goals: Record<string, string> = { pickup: 'parcel-counter', deliver: 'lab-door', escape: 'garage-door', weapon: 'garage-bat', firestation: 'fire-bay-trigger' };
 const caption = 'Delivery complete. Outbreak: not contained.';
-test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test.use({ headless: true }); // Shared config selects Metal on macOS and SwiftShader on the remote runner.
 
 test.describe('L1 v2 real-input playthrough', () => {
 
