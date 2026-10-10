@@ -9,7 +9,7 @@ for (const [name, points] of Object.entries({
   west: [[-30, 30], [-30, -36], [40.03, -36], [40.03, -40.65]],
   east: [[66, 30], [66, 0], [50, 0], [50, -36], [40.03, -36], [40.03, -40.65]],
 })) {
-  if (process.argv[3] && name !== process.argv[3]) continue;
+  if (['direct', 'west', 'east'].includes(process.argv[3]) && name !== process.argv[3]) continue;
   const { world: w, mission: m } = await loadL1(1);
   try {
     runL1(w, m, 'complete', { stopWhen: m => m.state.steps.weapon.status === 'completed' });
@@ -38,8 +38,11 @@ for (const [name, points] of Object.entries({
     const encounters: { m: number; ids: number[] }[] = [];
     for (const n of notices) { const prev = encounters.at(-1); if (!prev || n.m - prev.m >= 10) encounters.push({ m: n.m, ids: [n.id] }); else prev.ids.push(n.id); }
     const positions = [0, ...encounters.map(e => e.m), travelled];
-    const row = { route: name, finished: m.state.steps.firestation.status === 'completed', metres: +travelled.toFixed(1), encounters: encounters.length, noticed: noticed.size, longestGapM: +Math.max(...positions.slice(1).map((v, i) => v - positions[i])).toFixed(1), attacks: hits, damageBeforeProtection: damage, groups: encounters, notices, population: m.state.l1!.streetGroups?.map(g => ({ ...g, members: g.ids.map(id => { const e = w.entities.get(id)!; return { id, hp: e.health.current, x: e.transform.x, z: e.transform.z, mode: e.infected?.l1?.mode, target: e.infected?.l1?.targetId }; }) })) };
-    rows.push(row); console.log(JSON.stringify(row));
+    const row = { route: name, finished: m.state.steps.firestation.status === 'completed', metres: +travelled.toFixed(1), encounters: encounters.length, smallEncounters: encounters.filter(e => e.ids.length <= 4).length, noticed: noticed.size, longestGapM: +Math.max(...positions.slice(1).map((v, i) => v - positions[i])).toFixed(1), attacks: hits, damageBeforeProtection: damage, groups: encounters, notices, population: m.state.l1!.streetGroups?.map(g => ({ ...g, members: g.ids.map(id => { const e = w.entities.get(id)!; return { id, hp: e.health.current, x: e.transform.x, z: e.transform.z, mode: e.infected?.l1?.mode, target: e.infected?.l1?.targetId }; }) })) };
+    rows.push(row); console.log(JSON.stringify({ ...row, notices: undefined, population: undefined }));
   } finally { w.dispose(); }
 }
 writeFileSync(`${out}/routes.json`, JSON.stringify(rows, null, 2) + '\n');
+if (process.argv.includes('--check')) for (const row of rows) {
+  if (!row.finished || row.smallEncounters < 4 || row.noticed < 12 || row.longestGapM > 60 || row.damageBeforeProtection <= 0) throw new Error(`Route coverage failed: ${row.route}`);
+}
