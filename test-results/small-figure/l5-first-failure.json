@@ -1,0 +1,104 @@
+{
+ "tick": 18411,
+ "survivors": [
+  {
+   "key": "dale",
+   "id": 19,
+   "status": "turned",
+   "foundAt": 14013,
+   "cueAt": 14073,
+   "lostAt": 15931,
+   "hold": 0
+  },
+  {
+   "key": "rosa",
+   "id": 20,
+   "status": "following",
+   "foundAt": 1826,
+   "cueAt": 2186,
+   "lostAt": 0,
+   "hold": 0
+  },
+  {
+   "key": "okafor",
+   "id": 21,
+   "status": "following",
+   "foundAt": 13010,
+   "cueAt": 13412,
+   "lostAt": 0,
+   "hold": 0
+  },
+  {
+   "key": "mia",
+   "id": 22,
+   "status": "turned",
+   "foundAt": 10281,
+   "cueAt": 10503,
+   "lostAt": 16178,
+   "hold": 0
+  },
+  {
+   "key": "sam",
+   "id": 23,
+   "status": "following",
+   "foundAt": 6798,
+   "cueAt": 7182,
+   "lostAt": 0,
+   "hold": 0
+  }
+ ],
+ "losses": [
+  {
+   "type": "l5.lost",
+   "tick": 15931,
+   "key": "dale",
+   "id": 19,
+   "cause": "turned"
+  },
+  {
+   "type": "l5.lost",
+   "tick": 16178,
+   "key": "mia",
+   "id": 22,
+   "cause": "turned"
+  }
+ ],
+ "player": {
+  "x": 9.899981498718262,
+  "y": 0.7200000286102295,
+  "z": -41.89806365966797,
+  "yaw": 1.3740489063276793
+ },
+ "followers": [
+  {
+   "id": 20,
+   "at": {
+    "x": 8.477165919200345,
+    "z": -38.83154863675741,
+    "y": 0.7,
+    "yaw": -23.669531751664742
+   },
+   "health": 60
+  },
+  {
+   "id": 21,
+   "at": {
+    "x": 7.792925654970901,
+    "z": -37.72144375030719,
+    "y": 0.7,
+    "yaw": 1.3987329089931602
+   },
+   "health": 60
+  },
+  {
+   "id": 23,
+   "at": {
+    "x": 10.072297473959168,
+    "z": -37.686040016411205,
+    "y": 0.7,
+    "yaw": 7.536943831637987
+   },
+   "health": 60
+  }
+ ]
+}

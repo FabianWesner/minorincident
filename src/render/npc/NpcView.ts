@@ -10,6 +10,7 @@ import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
 import { NpcAnimator } from '../characters/NpcAnimator';
+import { civilianHeight, fitCivilianHeight } from './figureHeight';
 interface Hero { humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
@@ -18,6 +19,7 @@ export class NpcView extends Group {
   private readonly registry: AssetRegistry;
   private dog!: Group;
   private human!: Group;
+  private child!: Group;
   private dogSource = 'placeholder';
   private readonly placeholders: Group[] = [];
   private readonly cars: InstancedMesh;
@@ -42,6 +44,10 @@ export class NpcView extends Group {
     await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
     this.human = createCivilianPlaceholder(); this.placeholders.push(this.human);
+    fitCivilianHeight(this.human, 'npc.escort');
+    this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
+    fitCivilianHeight(this.child, 'npc.brother');
+    this.child.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
     for (const root of [this.dog, this.human]) root.traverse(node => {
       if (!(node instanceof Mesh)) return;
       if (root === this.human && !Array.isArray(node.material) && node.material.name === 'keep_veins') node.visible = false;
@@ -60,16 +66,15 @@ export class NpcView extends Group {
       if (!e.companion && !e.escort && !e.civilian?.pet) continue;
       let hero = this.heroes.get(e.id);
       if (!hero) {
-        const root = (e.escort ? this.human : this.dog).clone(true); if (e.civilian?.pet) { const pack = root.getObjectByName('packSocket'); if (pack) pack.visible = false; }
+        const root = (e.escort ? e.escort.child ? this.child : this.human : this.dog).clone(true); if (e.civilian?.pet) { const pack = root.getObjectByName('packSocket'); if (pack) pack.visible = false; }
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort?.child && !this.child.userData.placeholder ? 'glb' : e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
-      if (e.escort?.child) hero.root.scale.setScalar(.7);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
@@ -78,7 +83,7 @@ export class NpcView extends Group {
       if (hero.animator) hero.animator.update(time, motion.speed, distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, motion.speed, distance, down);
       if (hero.badge && e.escort) {
-        this.point.set(e.transform.x, e.escort.child ? 1.25 : 1.8, e.transform.z).project(camera);
+        this.point.set(e.transform.x, hero.root.position.y + civilianHeight(e.escort.child ? 'npc.brother' : 'npc.escort') + .15, e.transform.z).project(camera);
         hero.badge.style.left = `${(this.point.x + 1) / 2 * innerWidth}px`; hero.badge.style.top = `${(1 - this.point.y) / 2 * innerHeight}px`; hero.badge.style.display = Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none';
         hero.badge.dataset.order = e.escort.order; hero.badge.dataset.state = e.escort.state; hero.badge.setAttribute('aria-label', `Escort ${e.escort.state}`); hero.badge.textContent = e.escort.state === 'downed' ? '+' : e.escort.state === 'cover' ? '◆' : e.escort.order === 'wait' ? 'Ⅱ' : '↑';
       }
