@@ -8,5 +8,5 @@ for(const policy of ['complete','newbie'] as const)test(`T-E24-08 @E24 @E24-AC08
   expect(result.reports).toHaveLength(6);expect(result.reports.every(r=>r.completed)).toBe(true);
   expect(result.reports[5].start).toEqual(result.reports[4].end);
   expect(result.reports[5].carriedSurvivors).toEqual(result.save.results!.L5!.survivors);
-  if(policy==='newbie'){const total=result.reports.reduce((n,r)=>n+r.time,0);expect(total).toBeGreaterThanOrEqual(870);expect(total).toBeLessThanOrEqual(1620);}
+  if(policy==='newbie'){const total=result.reports.reduce((n,r)=>n+r.time,0);expect(total).toBeGreaterThanOrEqual(870);expect(total).toBeLessThanOrEqual(1590);}
 },1_800_000);
