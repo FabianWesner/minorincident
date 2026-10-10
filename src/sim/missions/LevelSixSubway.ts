@@ -55,7 +55,7 @@ export class LevelSixSubway {
       const door=doors[i%doors.length],base=l6Doors[door],at={x:base.x+(i%2)*.8,z:base.z-1.4};
       // Doorway arrivals are the maintenance source. Later side-passages only emerge outside the camera.
       if(wave>2&&!ai.director.offscreen(at))continue;
-      const id=o.spawnPedestrian(this.snap(at),{model:'npc.civilian-man-a.aftermath'}),e=w.entities.get(id)!;o.turnNow(e);
+      const id=o.spawnPedestrian(this.snap(at),{model:l6.breach.model}),e=w.entities.get(id)!;o.turnNow(e);
       this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at)});
     }
   }
