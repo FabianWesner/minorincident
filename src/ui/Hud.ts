@@ -1,3 +1,4 @@
+import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
 import type { Game } from '../Game';
@@ -142,7 +143,11 @@ export class Hud {
     pin.dataset.worldX = String(x); pin.dataset.worldZ = String(z);
     pin.dataset.clamped = String(scale < 1);
   }
+  private readonly weatherIcon = node('output', 'weather-icon');
   update(): void {
+    if (!this.weatherIcon.parentNode) { this.weatherIcon.style.cssText = 'position:absolute;right:16px;top:170px;color:white;background:#182333;padding:5px;border-radius:6px'; this.root.append(this.weatherIcon); }
+    const weather = this.game.world.weather;
+    if (weather) { text(this.weatherIcon, weatherLabels[weather.kind]); this.weatherIcon.dataset.weather = weather.kind; }
     const world = this.game.world, player = world.entities.get(1), mission = world.missions;
     const visible = !!player && document.body.dataset.uiScreen === 'game' && (!mission || ['playing', 'cinematic'].includes(mission.state.phase));
     // Keep HUD visible beneath Pause / Settings, and update independently of the renderer.
@@ -162,7 +167,7 @@ export class Hud {
     const px = player.transform.x, pz = player.transform.z;
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
-      if (entity.faction !== 'infected' || entity.health.current <= 0 || entity.hidden || entity.infected?.hidden || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > 30) continue;
+      if (entity.faction !== 'infected' || entity.health.current <= 0 || ((entity.hidden || entity.infected?.hidden) && !world.weather?.reveals.has(entity.id)) || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > (world.weather?.reveals.has(entity.id) ? 40 : 30)) continue;
       const pin = this.threats[pinCount++]; if (!pin) break;
       pin.hidden = false; pin.dataset.entityId = String(entity.id); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
     }

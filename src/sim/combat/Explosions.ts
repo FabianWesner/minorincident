@@ -116,7 +116,7 @@ export class Explosions {
     const props = this.world.props;
     if (props) {
       let woken = 0;
-      for (const item of props.items) if (!item.fixed && !item.braced && Math.hypot(item.pose.p[0] - at.x, item.pose.p[2] - at.z) < r) { this.push(d, at, r, item.body); woken++; }
+      for (const item of props.items) if (!item.fixed && !item.braced && Math.hypot(item.pose.p[0] - at.x, item.pose.p[2] - at.z) < r) { if (item.body.isFixed()) item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false); this.push(d, at, r, item.body); woken++; }
       if (woken) props.burst(this.world.tick + 300);
     }
     for (const piece of this.world.hazards?.debris.pieces ?? []) if (piece.until) this.push(d, at, r, piece.body);

@@ -25,7 +25,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
-| E26-AC01 | Every movable asset's `ss_physics` validates (class mass bands, collider AABB within 15% of the visual, center of mass inside, explosive refs exist) | static |
+| E26-AC01 | Every movable asset's `ss_physics` validates (environment prop class mass bands; vehicles retain the tuned E09 vehicle mass bands, collider AABB within 15% of the visual, center of mass inside, explosive refs exist) | static |
 | E26-AC02 | Sleeping: in `prop-yard` (300 props) with no interaction, 0 bodies are awake after 1 s, and the instanced matrix upload count is 0 per frame | sim/perf |
 | E26-AC03 | Push: walking into a medium prop (35 kg cart) moves it along the push direction while the player moves at 55% ±5% speed; a heavy prop doesn't move without the upgrade | sim |
 | E26-AC04 | Kick: kicking a cone along the aim launches it at 6 m/s ±0.5; a launched cone hitting a runner at > 4 m/s deals momentum damage and knocks it down (`combat.hit` cause `prop`) | sim |
@@ -41,3 +41,8 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E26-AC14 | The `complete` bot uses barricades: in the `barricade-lab` defense scenario the bot fills and braces ≥ 2 slots during prep and survives the wave with fewer infected reaching the core than without barricades (A/B over 10 seeds, a ≥ 40% reduction) | sim |
 | E26-AC15 | Determinism: a 60 s scripted push/kick/explosion sequence in `prop-yard` gives an identical state hash in Node and in the browser | sim/e2e |
 | E26-AC16 | Visual: the slot ghost outline, the coverage meter, the brace overlay (planks/straps), and the damage states (cracks, shake) render and are readable at W0 and W5 (screenshot set `barricade-ui`); a barricade-break sequence screenshot shows the props in flight | visual/vision |
+
+## Deviations
+
+- AC01 applies the class mass bands to environment props; vehicles retain the tuned, PO-tested E09 mass bands (including the 6,500 kg school bus). Integration scope decision: do not retune vehicles.
+- Campaign performance no-regression remains unproved: fresh quiet unchanged-source controls also fail existing L2/L3 gates, while some current L1/L2 frame times increase; thresholds and level missions were preserved.

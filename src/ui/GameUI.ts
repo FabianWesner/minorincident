@@ -1,5 +1,6 @@
 // Adapted from folio-2025 Menu.js / Modals.js by Bruno Simon (MIT, 41046b5):
 // named screens, visibility classes, first focus, and separate gameplay input context.
+import { weatherKinds, weatherLabels, type WeatherKind } from '../data/weather';
 import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
 import { newCampaign, type Level } from '../sim/progression/Campaign';
@@ -23,6 +24,7 @@ export class GameUI {
   private back: Screen = 'title';
   private variant: 'male' | 'female' = 'female';
   private nextLevel = 'L1';
+  private replayWeather: WeatherKind | null = null;
   private started = false;
   private missionPhase = '';
   private readonly debugEnabled: boolean;
@@ -87,11 +89,16 @@ export class GameUI {
       b.addEventListener('focus', () => { if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; } else lockHint.hidden = true; });
       levels.append(b);
     }
-    levels.append(lockHint);
+    const weather = this.weatherSelect('replay-weather');
+    weather.addEventListener('change', () => { this.replayWeather = (weather.value || null) as WeatherKind | null; });
+    levels.append(weather, lockHint);
     levels.append(button('levels-back', 'Back', () => this.show('character')));
     // PO: pausing freezes the game but leaves the scene fully visible; the menu is a compact bar on top (screenshots).
     const pause = this.panel('pause', 'Paused', 'P / Esc to resume · R to restart · H hides the UI for screenshots');
     pause.setAttribute('aria-modal', 'false');
+    const photoWeather = this.weatherSelect('photo-weather');
+    photoWeather.addEventListener('change', () => { this.game.world.weather?.setOverride((photoWeather.value || null) as WeatherKind | null); this.game.view.update(1); });
+    pause.append(photoWeather);
     pause.append(button('resume-game', 'Resume', () => this.resume()),
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
       button('pause-restart', 'Restart level', () => this.askRestart()),
@@ -202,6 +209,7 @@ export class GameUI {
   }
   private async continueSaved(): Promise<void> {
     const saved = this.game.saves.load(); if (saved.status !== 'ok') return;
+
     this.show('loading');
     try {
       await this.game.continueCampaign(saved.save);
@@ -210,16 +218,23 @@ export class GameUI {
       this.show('title'); this.screens.get('title')!.querySelector('p')!.textContent = 'Could not load saved campaign. Please try again.';
     }
   }
+  private weatherSelect(id: string): HTMLSelectElement {
+    const select = node('select', id); select.setAttribute('aria-label', id === 'photo-weather' ? 'Photo weather' : 'Replay weather (completed levels)');
+    for (const kind of ['', ...weatherKinds] as const) { const option = document.createElement('option'); option.value = kind; option.textContent = kind ? weatherLabels[kind] : 'Story weather'; select.append(option); }
+    return select;
+  }
   private async load(id: string, racks = false): Promise<void> {
     const left: string[] = [], right: string[] = [];
     if (racks) for (const side of ['LEFT', 'RIGHT'] as const) for (let i = 0; i < 3; i++) {
       const value = this.root.querySelector<HTMLSelectElement>(`[data-testid="rack-${side}-${i}"]`)!.value;
       if (value) (side === 'LEFT' ? left : right).push(value);
     }
+    const replay = Number(id.slice(1)) <= (this.game.campaign?.completedLevels ?? 0);
     this.show('loading');
     try {
       if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, Number(id.slice(1)) as Level);
       else { await this.game.loadLevel(id); this.game.world.player?.select(this.variant, 0); }
+      if (replay) this.game.world.weather?.setOverride(this.replayWeather);
       if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
       else if (id === 'L1') this.game.world.combat?.clearLoadout();
       this.applySettings(); this.show(null);

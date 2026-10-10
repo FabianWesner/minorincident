@@ -1,5 +1,5 @@
 import { Color, type UniformNode } from 'three/webgpu';
-import { uniform } from 'three/tsl';
+import { renderGroup, uniform } from 'three/tsl';
 import { worldLook, type WorldLook } from '../data/worldLook';
 import { palette, type PaletteToken } from '../data/palette';
 import { exportLookPatch, validateLookPatch, type LookPatch } from '../data/lookPatch';
@@ -9,7 +9,7 @@ type LookNodes = { [K in keyof WorldLook]: WorldLook[K] extends number ? Uniform
 export class LookUniforms {
   readonly values: WorldLook = { ...worldLook };
   readonly palette: Record<PaletteToken, string> = { ...palette };
-  readonly nodes = Object.fromEntries(Object.entries(worldLook).map(([key, value]) => [key, typeof value === 'number' ? uniform(value) : uniform(new Color(value))])) as LookNodes;
+  readonly nodes = Object.fromEntries(Object.entries(worldLook).map(([key, value]) => [key, (typeof value === 'number' ? uniform(value) : uniform(new Color(value))).setGroup(renderGroup)])) as LookNodes;
   private overrides: Partial<WorldLook> = {};
   has(key: keyof WorldLook): boolean { return Object.hasOwn(this.overrides, key); }
   set(input: LookPatch): void {

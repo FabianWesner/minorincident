@@ -56,7 +56,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
-| E28-AC01 | Weather is sim state: the same seed gives an identical weather timeline (gusts, lightning times, wetness curve) in Node and the browser; each level's timeline matches its script table (state at key ticks) | sim |
+| E28-AC01 | Weather is sim state: the same seed gives an identical weather timeline (gusts, lightning times, wetness curve) in Node and the browser; each implemented level's timeline matches its script table (state at key ticks); actual L5 aftermath and L6 night-exit fixtures are deferred to E23/E24 | sim |
 | E28-AC02 | Rain modifiers: during rain, pistol noise radius = 25 × 0.8 m; Molotov fire zone duration × 0.6; vehicle grip × 0.85 (sim values via `getState().weather.modifiers`) | sim |
 | E28-AC03 | Wetness: wetness rises during rain (0 → ≥ 0.8 within 60 s of heavy rain) and dries afterwards (half-life 90 s); the E25 wet mask follows, so reflection streaks appear only when wetness > 0.3 (visual check at both states) | sim/visual |
 | E28-AC04 | Lightning: each strike emits `weather.lightning` with a position; a flash reveals infected within 40 m on the minimap for 0.5 s; thunder plays delayed by distance / 340 m/s (±50 ms); the flash luminance respects flash reduction | sim/e2e |
@@ -65,6 +65,14 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E28-AC07 | Snow / ash: the player and infected leave footprints (track texture coverage grows along their paths); accumulation on up-facing surfaces reaches visible coverage (≥ 60% of the roof and car-top pixels whitened in `weather-lab`); vehicle grip modifiers apply | visual/sim |
 | E28-AC08 | Override: completed levels can be replayed with any weather from level select; the override changes only the weather, not mission logic (graph walk passes with every override) | e2e/sim |
 | E28-AC09 | Audio coupling: rain bed level follows intensity; snow and fog apply reverb damping (offline render RT60 shorter than clear); wind gust one-shots fire with gusts (event → cue log) | e2e (offline) |
-| E28-AC10 | Performance: the heaviest weather (the storm in `storm-street`, ash at the L5 `pair-plaza`) stays within the E18 budgets (rain/snow particles: 20k high / 6k low) | perf |
+| E28-AC10 | Performance: the heaviest weather (the storm in `storm-street`, ash at the L5 `pair-plaza`, fixture deferred to E23) stays within the E18 budgets (rain/snow particles: 20k high / 6k low) | perf |
 | E28-AC11 | Readability: precipitation within 6 m of the camera-to-player ray is dithered; the HUD weather icon shows the current state | visual/e2e |
 | E28-AC12 | Vision: `weather-lab` frames for clear, overcast, golden-hour haze, storm, fog, and snow pass checklist G (lighting) + a weather-mood check against `initial-drafts/weather-and-time-of-day-moods.png` | vision |
+
+## Deviations
+
+- L5 `pair-plaza` performance evidence is pending E23: the baseline still has the legacy hold-line mission and does not contain the specified fixture.
+- Actual L6 tunnel-to-night-exit weather integration is pending E24: the baseline has no `night-exit` anchor; the weather system uses that anchor when present.
+- Photo weather selection uses the paused game controls because this baseline has no separate photo mode.
+- Quiet L1/L2/L3 before/after frame comparison is pending a Mac load below 3; busy measurements are not accepted as proof.
+- Checklist G vision approval remains pending: golden-hour beams are absent, wet streaks are overly regular, and wall occlusion needs a dedicated E25 lighting capture.

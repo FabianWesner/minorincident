@@ -7,13 +7,14 @@ import type { SimWorld } from '../world/SimWorld';
 import { Status } from './Status';
 /** Arming → persistent effect → expiry follows Bruno's ExplosiveCrates (MIT), on sim time.
  * E07 consumes noise/targets; E27 can replace presentation without changing these definitions. */
-export interface ActionZone extends ActionEffect { x: number; z: number; created: number; expires: number; nextPulse: number; attack: Attack }
+export interface ActionZone extends ActionEffect { x: number; z: number; created: number; expires: number; nextPulse: number; spreadDone?: boolean; attack: Attack }
 export class ActionEffects {
   readonly zones: ActionZone[] = [];
   private readonly direction = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld) {}
   noise(position: Vec2, radius: number, actionId: string, sourceId = 1, kind?: string): void {
     if (!radius) return;
+    radius *= this.world.weather?.modifiers.noiseRadius ?? 1;
     this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId, actionId, position: { x: position.x, y: 0.7, z: position.z }, radius, loudness: kind ? 1 : noiseForAction(actionId).loudness, kind: kind ?? action(actionId).category });
     for (const entity of this.world.entities.iterate()) {
       const brain = entity.hearing;
@@ -24,7 +25,7 @@ export class ActionEffects {
   }
   create(attack: Attack, position: Vec2): void {
     const effect = attack.def.effect; if (!effect) return;
-    const zone: ActionZone = { ...effect, x: position.x, z: position.z, created: this.world.tick, expires: this.world.tick + ticks(effect.duration), nextPulse: this.world.tick, attack };
+    const zone: ActionZone = { ...effect, x: position.x, z: position.z, created: this.world.tick, expires: this.world.tick + ticks(effect.duration * (effect.kind === 'fire' ? this.world.weather?.modifiers.fireDuration ?? 1 : 1)), nextPulse: this.world.tick, attack };
     this.zones.push(zone);
     this.world.events.emit({ type: 'combat.effect', tick: this.world.tick, sourceId: attack.sourceId, actionId: attack.def.id, kind: effect.kind, position: { x: zone.x, y: 0, z: zone.z }, radius: zone.radius, expires: zone.expires });
     if (effect.kind === 'lure') this.noise(position, effect.radius, attack.def.id);
@@ -54,6 +55,9 @@ export class ActionEffects {
           entity.hearing.mode = 'lured'; entity.hearing.target.x = zone.x; entity.hearing.target.z = zone.z; entity.hearing.lureUntil = zone.expires;
         }
       } else if (zone.kind === 'fire') {
+        if (!zone.spreadDone && this.world.tick >= zone.created + (zone.expires - zone.created) / 2) {
+          zone.spreadDone = true; this.world.hazards?.spreadFire(zone, zone.radius, (zone.expires - this.world.tick) / 60, 0, zone.attack.id);
+        }
         const pulse = this.world.tick >= zone.nextPulse;
         for (const entity of this.world.entities.iterate()) if (entity.faction === 'infected' && entity.health.current > 0 && this.contains(zone, entity.transform) && zone.attack.def.status && (pulse || !entity.combat?.statuses.some((s) => s.kind === 'burning'))) this.world.combat!.status.apply(entity, zone.attack.def.status, zone.attack.sourceId, zone.attack.def.id);
         if (pulse) zone.nextPulse += 60;

@@ -1,3 +1,4 @@
+import { weatherRayDither, weatherSurface } from '../render/WeatherView';
 import { LevelOneBot } from './bot/LevelOneBot';
 import type { Inspection } from './Inspection';
 import { LevelThreeBot, type L3Profile, type L3StreetChoice } from './bot/LevelThreeBot';
@@ -5,6 +6,9 @@ import { LevelFourBot, type L4Profile, type L4RouteChoice } from './bot/LevelFou
 import { LevelTwoBot, type L2Opening } from './bot/LevelTwoBot';
 import { missionControls } from '../sim/missions/controls';
 import { installL1Outbreak } from '../sim/outbreak/install';
+import { BarricadeBot } from './bot/BarricadeBot';
+import { stateHash } from '../sim/world/stateHash';
+import { propSequence } from './scenarios/propSequence';
 import { Driver } from './bot/Driver';
 import { runAudioL1Bot } from './audioBot';
 import { renderAudio } from './audioHarness';
@@ -80,6 +84,7 @@ export interface SSTestApi {
     /** E19 presentation hooks (normally set by the bicycle/mission sims). */
     present(patch: { riding?: boolean; carrying?: string | null }): void };
   setLoadout(left: string[], right: string[]): void;
+  physicsProps: { scriptedSequence(): string };
   cheats: { god(on: boolean): void; infiniteCharges(on: boolean): void; killAll(): void; completeObjective(id?: string): void };
   bot: { start(policy?: 'complete' | 'newbie' | 'idle' | 'aggressive' | 'driver' | 'no-axe' | 'evade-only', options?: { street?: L3StreetChoice; route?: L4RouteChoice; opening?: L2Opening }): void; stop(): void; status(): BotStatus };
   /** E02: scenario photo spots, follow, bounded shake, cinematic blend, and NDC world projection. */
@@ -107,6 +112,7 @@ export interface SSTestApi {
   look: { get(): { worldLook: import('../data/worldLook').WorldLook; palette: Record<import('../data/palette').PaletteToken, string> }; set(patch: import('../data/lookPatch').LookPatch): void; export(): import('../data/lookPatch').LookPatch; reset(): void };
   /** E18 synthetic GPU cost in milliseconds; zero clears it. */
   /** Render-only stress probe retains the fixture population when testing low-tier drawing. */
+  weather: { probe(mode: 'up' | 'snow' | 'wet' | 'tracks' | 'precipitation' | 'dense-precipitation' | null, assetId?: string): void; override(kind: import('../data/weather').WeatherKind | null, intensity?: number): void; strike(at: { x: number; y: number; z: number }): void };
   debug: { simulateFrameCost(ms: number): void; renderQuality(tier: 'high' | 'low'): void;
     /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
     figureJoints(on: boolean): void };
@@ -193,8 +199,9 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       },
     },
     setLoadout: (left, right) => { if (!game.world.combat) throw new Error('Load combat-arena before setting loadout'); game.world.combat.setLoadout(left, right); },
+    physicsProps: { scriptedSequence: () => { propSequence(game.world); game.view.update(1); return stateHash(game.world.getState()); } },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) e.health.current = 0; }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
-    bot: { start: (policy, options) => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); if (game.world.scenario === 'L1' && (!policy || policy === 'complete' || policy === 'newbie' || policy === 'idle')) { game.driver = new LevelOneBot(game.world, policy); return; } if (game.world.scenario === 'L2' && policy && policy !== 'driver' && policy !== 'evade-only') { game.driver = new LevelTwoBot(game.world, policy, options?.opening); return; } if (game.world.scenario === 'L3' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelThreeBot(game.world, policy as L3Profile, options?.street); return; } if (game.world.scenario === 'L4' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelFourBot(game.world, policy as L4Profile, options?.route); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof LevelOneBot ? game.driver.profile : game.driver instanceof LevelTwoBot ? game.driver.profile : game.driver instanceof LevelThreeBot ? game.driver.profile : game.driver ? 'driver' : null }) },
+    bot: { start: (policy, options) => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); if (game.world.scenario === 'barricade-lab' && (!policy || policy === 'complete')) { game.driver = new BarricadeBot(game.world); return; } if (game.world.scenario === 'L1' && (!policy || policy === 'complete' || policy === 'newbie' || policy === 'idle')) { game.driver = new LevelOneBot(game.world, policy); return; } if (game.world.scenario === 'L2' && policy && policy !== 'driver' && policy !== 'evade-only') { game.driver = new LevelTwoBot(game.world, policy, options?.opening); return; } if (game.world.scenario === 'L3' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelThreeBot(game.world, policy as L3Profile, options?.street); return; } if (game.world.scenario === 'L4' && policy && ['complete', 'newbie', 'evade-only', 'idle'].includes(policy)) { game.driver = new LevelFourBot(game.world, policy as L4Profile, options?.route); return; } if (policy !== 'driver' || game.world.scenario !== 'drive-course') pending('E19', 'bot.start'); game.driver = new Driver(game.world); }, stop: () => { if (game.driver instanceof LevelOneBot) game.driver.dispose(); game.driver = null; }, status: () => ({ running: !!game.driver && !game.driver.finished, policy: game.driver instanceof BarricadeBot ? game.driver.profile : game.driver instanceof LevelOneBot ? game.driver.profile : game.driver instanceof LevelTwoBot ? game.driver.profile : game.driver instanceof LevelThreeBot ? game.driver.profile : game.driver ? 'driver' : null }) },
     camera: { preset: (name) => game.view.preset(name), follow: () => game.view.view.follow(), shake: (intensity) => game.view.view.shake(intensity), project: (x, y, z) => game.view.project(x, y, z), cinematic: (pose, instant) => game.view.view.cinematic(pose, instant) },
     settings: { set: (patch) => { if (patch.textSize !== undefined || patch.colorblind !== undefined || patch.quality !== undefined) { game.ui.settings.patch(patch); game.ui.applySettings(); } if (patch.aimAssist !== undefined) { if (!['Off', 'Low', 'Default', 'High'].includes(patch.aimAssist)) throw new RangeError('Invalid aim assist'); if (game.world.combat) game.world.combat.assist.setting = patch.aimAssist; } game.audio.set(patch); if (patch.quality !== undefined) game.setQuality(patch.quality); const quality = patch.quality !== undefined ? game.quality.tier : undefined; game.view.settings({ ...patch, quality }); const keys=['cameraShake','flashReduction','gore','quality','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','aimAssist','textSize','colorblind'];game.campaignSettings(Object.fromEntries(Object.entries(patch).filter(([key])=>keys.includes(key))) as CampaignSettings); } },
     vfx: {
@@ -236,6 +243,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
         await new Promise<void>(resolve=>setTimeout(resolve,50));
       },
     },
+    weather: { probe: (mode, assetId) => { game.view.weatherMask(mode === 'precipitation' || mode === 'dense-precipitation' ? 'weather' : mode ? assetId ?? null : null); weatherRayDither.value = mode === 'dense-precipitation' ? 0 : 1; weatherSurface.probe.value = mode === 'up' ? 1 : mode === 'snow' ? 2 : mode === 'wet' ? 3 : mode === 'tracks' ? 4 : 0; game.view.update(1); }, override: (kind, intensity) => { game.world.weather?.setOverride(kind, intensity); game.view.update(1); }, strike: at => game.world.weather?.strike(at) },
     debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; } },
     perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
   };

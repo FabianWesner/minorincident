@@ -1,6 +1,7 @@
 /** Serializable AI and crowd animation intent; all timers are fixed sim ticks. */
 export interface InfectedState {
   state: 'idle' | 'wander' | 'alerted' | 'chase' | 'attack' | 'stagger' | 'dead' | 'migration' | 'scatter' | 'search' | 'attracted' | 'bite';
+  vault?: { started: number; from: { x: number; z: number }; to: { x: number; z: number }; height: number };
   pathGrid: number; grabNextTick: number;
   combo: number;
   targetId: number;
