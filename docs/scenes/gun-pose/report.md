@@ -44,7 +44,7 @@ Courier speed is 2 m/s and NPC walking probe speed is 0.787 m/s. [Raw standing](
 - Native Metal gun-pose render suite: 5/5 pass after the main merge. Before the merge, both native Metal and remote SwiftShader passed all five.
 - Native smoke browser suite: 11/11 pass, including both crowd-render backends. The E05 simulation selection includes all six smoke simulation tests.
 - E05 browser selection: 31/31 pass. The official `npm run verify -- E05` invocation returned zero before the main merge; final merged-source remote simulation selection passes 61/61, including all six smoke simulation tests ([summary](captures/e05-simulation-summary.json)).
-- Native complete levels suite: 28/31 pass. L2 route travel stalls; Sam turns during L5 escort; L6 shelter red-eye sampling fails. Isolated merged-main comparison pending. [Level failure summary](captures/levels-summary.json).
+- Native complete levels suite: 28/31 pass. L2 route travel stalls; Sam turns during L5 escort; L6 shelter red-eye sampling fails. The isolated exact main checkout reproduces L2 route failure (at an earlier waypoint), while L5 and L6 pass alone. Branch retries of L5/L6 are pending. [Level failure summary](captures/levels-summary.json).
 
 Initial broad remote browser attempts encountered loading timeouts and a SwiftShader crowd-render allocation failure. Native smoke replaces those results. Level tests explicitly selecting Metal run on the Mac. The initial logs remain in `test-results/gun-pose-final/`; final native logs are in `test-results/gun-pose-native-validation/`.
 
@@ -54,4 +54,4 @@ Merged main `d27704a2` into this branch (`d3f15be3`). Main's NPC-height merge re
 
 The merged main baseline also fails the E05 fire-axe TTK criterion: the accepted PO 2026-10-10 damage increase from 45 to 56 reduces the swing count, but the authored lower bounds still describe the earlier damage. This reproduces on the isolated exact main commit without gun-pose changes. `83f75fcf` subtracts the saved 0.5-second swings from seven affected lower bounds: brute, riot, firefighter and lion lose one; armored and butcher lose three; gorilla loses five. Existing upper limits, pursuit allowances and gameplay damage remain unchanged. The corrected balance suite passes. No specification files were changed.
 
-Final E05 simulation: 61/61 pass on the corrected merged source. Isolated-main level comparison: pending.
+Final E05 simulation: 61/61 pass on the corrected merged source. [Isolated main comparison](captures/main-baseline-summary.json): L2 route test fails; L5 escort and L6 shelter readability pass alone. L5/L6 branch retries are pending.
