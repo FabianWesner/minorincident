@@ -74,10 +74,10 @@ test('T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP
   for (let i = 0; i < 240; i++) w.update();
   const first = w.entities.get(mission.state.l1!.firefighterId!)!;
   expect(first.civilian).toBeDefined(); expect(first.health.current).toBeGreaterThan(0);
-  // Exact original corpse signature: HP is positive, no infection, civilian finished.
-  first.civilian!.state = 'finished';
+  // Exact original corpse signature: positive HP, no infection, finished, stale combat target.
+  first.civilian!.state = 'finished'; first.civilian!.ally!.targetId = 1;
   for (let i = 0; i < 180; i++) w.update();
   const next = w.entities.get(mission.state.l1!.firefighterId!)!;
-  expect(next.id).not.toBe(first.id); expect(next.health.current).toBeGreaterThan(0);
-  expect(next.civilian!.state).not.toBe('finished'); expect(storyProtected(w, next)).toBe(true);
+  expect(next.civilian!.state).not.toBe('finished');
+  expect(next.id).not.toBe(first.id); expect(next.health.current).toBeGreaterThan(0); expect(storyProtected(w, next)).toBe(true);
 }, 120_000);

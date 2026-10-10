@@ -19,13 +19,13 @@ The L1 firefighter is a civilian allied fighter. Bites use the civilian outbreak
 
 Truck/bus drivers have no separate damageable driver NPC: their ride is scripted/kinematic. L3 dispatch, L4 radio calls, and remaining objective anchors use mission radio/environment actors rather than vulnerable speakers. Ordinary civilians, soldiers, officers, firefighters, and optional rescued followers keep their existing balance and loss rules.
 
-The six audit tests enumerate the actual spawned actors, exercise both grab paths, cap-kill and transforming bite events, direct infection/conversion, all seven damage types, and explosive collapse. They also end each beat and prove the same actors become infectable again.
+The legacy checkpoint case explicitly retains a stale allied target, reproducing the persistent positive-HP corpse on main. The six audit tests enumerate the actual spawned actors, exercise both grab paths, cap-kill and transforming bite events, direct infection/conversion, all seven damage types, and explosive collapse. They also end each beat and prove the same actors become infectable again.
 
 ## Validation and visual review
 
 - Before fix: the new cap-bite and legacy-corpse regressions both fail against main `a93caf8f`; evidence: `test-results/getin-firefighter/before-main.txt`.
 - Final typecheck, lint and production build: passed.
-- Final remote unit + story regressions: **130 files / 453 tests passed** (445 unit tests + six-level audit and both firefighter cases), `test-results/getin-firefighter/final-unit-regressions.json`.
+- Final remote unit + story regressions: **130 files / 453 tests passed** (445 unit tests + six-level audit and both firefighter cases), `test-results/getin-firefighter/final-unit-regressions.json`. The strengthened stale-target fixture and the six-level audit also passed an eight-test remote rerun (`final-corpse-regressions.json`).
 - Remote smoke simulations: **6 passed**. Headless browser smoke, all configured projects: **26 passed**.
 - Final headless level browser suite: **31 passed**, `test-results/getin-firefighter/final-levels.json`. Oak Street also passed its isolated real-input run after tightening the final army-zone click tolerance from 4 m to 1.2 m; unchanged assertions require crossing, campaign handover, and all photo spots. `oak-crossing.json` records the crossing/closure ticks.
 - Full E19 verifier: remote simulation battery still running.

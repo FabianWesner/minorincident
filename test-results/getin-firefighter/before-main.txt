@@ -1,13 +1,41 @@
+Before-fix regression on main a93caf8f. Only the test and its read-only predicate import were copied into the detached baseline; main damage/outbreak/story handlers were unchanged.
+
 
  RUN  v5.0.3 /private/tmp/getin-firefighter-baseline
 
- × |functional| tests/levels/getin-before.test.ts > T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival 475ms
-   → cap bite must not leave the objective actor a corpse: expected 'finished' not to be 'finished' // Object.is equality
- × |functional| tests/levels/getin-before.test.ts > T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery) 1407ms
-   → expected 159 not to be 159 // Object.is equality
+ ❯ |functional| tests/levels/getin-before.test.ts (2 tests | 2 failed) 605ms
+   × T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival 191ms
+   × T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery) 413ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/levels/getin-before.test.ts > T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival
+AssertionError: cap bite must not leave the objective actor a corpse: expected 'finished' not to be 'finished' // Object.is equality
+ ❯ tests/levels/getin-before.test.ts:29:93
+     27|   // A completed bite at the infected cap used to finish him without r…
+     28|   w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: 1, ta…
+     29|   expect(first.civilian?.state, 'cap bite must not leave the objective…
+       |                                                                                             ^
+     30|   // An infected outside the bay, facing him: it targets him (closest …
+     31|   const nav = w.infected!.nav, out = { x: first.transform.x + .3, z: f…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |functional| tests/levels/getin-before.test.ts > T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery)
+AssertionError: expected 'finished' not to be 'finished' // Object.is equality
+ ❯ tests/levels/getin-before.test.ts:81:36
+     79|   for (let i = 0; i < 180; i++) w.update();
+     80|   const next = w.entities.get(mission.state.l1!.firefighterId!)!;
+     81|   expect(next.civilian!.state).not.toBe('finished');
+       |                                    ^
+     82|   expect(next.id).not.toBe(first.id); expect(next.health.current).toBe…
+     83| }, 120_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
 
  Test Files  1 failed (1)
       Tests  2 failed (2)
-   Start at  18:28:24
-   Duration  3.19s (tests 61%, transform 33%, import 6%)
+   Start at  19:24:17
+   Duration  1.15s (tests 55%, transform 37%, import 8%)
 
