@@ -134,6 +134,7 @@ export class GameView implements Lifecycle {
   private wireframe: PhysicsWireframe | null = null;
   readonly look = new LookUniforms();
   private lighting: Lighting | null = null;
+  private gloomShown = 1;
   private materials: Materials | null = null;
   private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
   private districts:DistrictView|null=null;
@@ -208,7 +209,7 @@ export class GameView implements Lifecycle {
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
       // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
       // path, spawn focus and close-view warm-up.
-      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4';
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
       const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
@@ -217,7 +218,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove ? this.view.cameraTarget : undefined;
@@ -302,7 +303,7 @@ export class GameView implements Lifecycle {
     this.lighting?.setQuality(this.quality); this.districts?.setQuality(this.quality); this.crowd?.setQuality(this.quality);
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
-    this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.districts?.ready()]);
+    this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
@@ -320,7 +321,7 @@ export class GameView implements Lifecycle {
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4';
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
     if (groveTown && this.params.get('test') !== '1') {
       // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
       // loading screen. Until it finishes the view does not draw and the game clock does not advance
@@ -540,6 +541,10 @@ export class GameView implements Lifecycle {
     if (cinematic && this.cinematicId !== cinematic.id) { this.cinematicId = cinematic.id; this.view.cinematic(mission!.def.cinematics[cinematic.id]); }
     else if (!cinematic && this.cinematicId) { this.cinematicId = null; this.view.follow(); }
     if (mission?.state.timeOfDay && this.lighting?.preset !== mission.state.timeOfDay) this.lighting?.set(mission.state.timeOfDay);
+    // E23: the sunset fades with the story (the sim owns the target; the picture eases toward it).
+    const target = this.lighting?.preset === 'L5' ? mission?.state.l5?.gloom ?? 1 : 1;
+    this.gloomShown += (target - this.gloomShown) * (Math.abs(target - this.gloomShown) < .002 ? 1 : .04);
+    this.lighting?.setGloom(this.gloomShown);
   }
   /** Presentation glance target for the courier: the locked attack target within 8 m, else the nearest live infected within 6 m (head height). */
   private threat(player: { x: number; z: number }): Vector3 | null {
@@ -633,6 +638,8 @@ export class GameView implements Lifecycle {
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
     }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
+    const shutterAt = this.world.missions?.state.l5?.shutterAt;
+    if (shutterAt) this.districts?.updateMetroShutter(Math.min(1, Math.max(0, (this.world.tick - shutterAt) / 120)));
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;

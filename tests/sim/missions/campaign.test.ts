@@ -20,12 +20,13 @@ for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat adv
   // E20: L2 ends on the closing gate with no cinematic or reward screen; the campaign continues straight into L3.
   // E21: the same for L3, which ends at the army zone line and continues into L4.
   // E22: and L4, which ends at the barred cellar door and continues into L5.
-  if (id === 'L2' || id === 'L3' || id === 'L4') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
-  // PO L1 finale (753e18a3, c5d7474c): walk into the bay with live input, then show the result without a cinematic.
+  // E23: and L5, which ends at the Metro shutter and continues into L6.
+  // E19: L1 now goes directly to its result screen, without the old cinematic.
   if (id === 'L1') { expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
+  if (id === 'L2' || id === 'L3' || id === 'L4' || id === 'L5') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   expect(api.state()!.phase).toBe('cinematic'); world.setInput({ interact: true }); for(let i=0;i<30;i++)world.update();
   expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true);
-});
+}, id === 'L3' ? 120_000 : 30_000); // Match the dedicated L3 graph check's authored-wave setup timeout.
 test('@E12 @E12-AC07 @E22-AC01 L4 ride -> quartermaster -> hold -> hide -> bar -> wait completes straight into progression (no cinematic, no reward screen)',async()=>{
   world=new SimWorld();await world.init();const c=compositions.L4;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))));world.loadMission(resolveCampaignMission('L4',world.districts!));const api=missionControls(world);api.begin();
   api.completeObjective('ride');expect(api.state()!.states.arrived).toBe(true);api.completeObjective('quartermaster');expect(api.state()!.steps.hold.status).toBe('pending');
@@ -46,7 +47,7 @@ for (const action of ['left','right','interact','selector','move','pause'] as co
 test('@E12 @E12-AC07 L3 armory -> defend -> fallback -> army checkpoint completes straight into progression',async()=>{
   world=new SimWorld();await world.init();const c=compositions.L3;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))));world.loadMission(resolveCampaignMission('L3',world.districts!));const api=missionControls(world);api.begin();
   api.completeObjective('armory');api.completeObjective('defend');expect(api.state()!.states.fallback).toBe(true);api.completeObjective('checkpoint');expect(api.state()!.phase).toBe('progression');
-});
+}, 120_000); // Advancing the authored defense waves took >30 s under four-worker simulation load.
 test('@E12 @E12-AC05 authored source checkpoint can be loaded fresh and retains its reached snapshot',async()=>{
   world=new SimWorld();await world.init();const c=compositions.L1;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),42);const m=world.loadMission(resolveCampaignMission('L1',world.districts!));m.loadCheckpoint('accident');
   expect(m.state.steps.escape.status).toBe('active');expect(m.state.checkpoint).toBe('accident');expect(world.seed).toBe(42);expect(m.state.completedObjectives).toContain('deliver');

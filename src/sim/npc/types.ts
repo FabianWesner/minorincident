@@ -30,10 +30,14 @@ export interface Civilian {
   /** L1 v2 panic layer (src/sim/outbreak): seeded speeds, startle length, chosen refuge door or edge. */
   /** E20 §5.2 allied fighter: a live, biteable human who engages visible infected instead of fleeing (no immunity). */
   ally?: AllyState;
+  /** E23 survivor (Dale, Rosa, Okafor, Mia, Sam): hidden at a hiding place until found, then follows the player (unarmed, biteable like anyone). */
+  survivor?: SurvivorState;
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number;
     /** E20 rescued people: flee along a street route to a safe spot (the bridge checkpoint) instead of a refuge; never removed. */
     haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number } };
 }
+/** Serializable E23 survivor state. `leader` = entity id it follows in single file (the player or the follower ahead); ticks are sim ticks. */
+export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: number; leader: number; cover: boolean; waitAt: number; foundAt: number }
 /** E21 allied fighters v2: a handgun/rifle with a distance-dependent hit chance (one target per shot, no ammunition). */
 export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM: number; hitNear: number; hitFar: number }
 /** Serializable allied-fighter task state (firefighters in L2, police from L3, soldiers at the L3 army checkpoint). Ticks are sim ticks. */

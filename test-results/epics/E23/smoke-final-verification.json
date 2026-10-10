@@ -1,0 +1,188 @@
+{
+  "source": "843e8002",
+  "command": "npm run verify -- E23 (includes @smoke)",
+  "sim": [
+    {
+      "name": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed"
+    },
+    {
+      "name": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed"
+    },
+    {
+      "name": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed"
+    },
+    {
+      "name": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed"
+    },
+    {
+      "name": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed"
+    },
+    {
+      "name": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed"
+    }
+  ],
+  "browser": [
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7-landscape",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14-landscape",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "webkit",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7-landscape",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7-landscape",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14-landscape",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14-landscape",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "webkit",
+      "status": "passed",
+      "retry": 0
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "webkit",
+      "status": "passed",
+      "retry": 0
+    }
+  ]
+}

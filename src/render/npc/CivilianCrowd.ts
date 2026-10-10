@@ -371,11 +371,14 @@ export class CivilianCrowd extends Group {
     picks.sort((a, b) => a.d - b.d || a.id - b.id);
     for (const pick of picks.slice(0, 4)) {
       v.heroes.add(pick.id);
-      if (!this.heroLoads.has(pick.model)) {
-        const hero = this.batch(pick.model, 'lod0');
-        this.heroLoads.set(pick.model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); v.heroModels.add(pick.model); }, () => {}));
-      }
+      this.loadHero(pick.model);
     }
+  }
+  /** Starts the LOD0 batch of a model once (the first hero of a model would otherwise hitch the frame it appears in). */
+  private loadHero(model: string): void {
+    if (this.low || this.heroLoads.has(model)) return;
+    const hero = this.batch(model, 'lod0');
+    this.heroLoads.set(model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
   }
   private disposed = false;
   private readonly known = new Set<string>(coreModels);
@@ -383,6 +386,9 @@ export class CivilianCrowd extends Group {
   private discover(): void {
     for (const e of this.world.entities.iterate()) {
       const model = crowdModelOf(e);
+      // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
+      // Bake their close models before shader warm-up: meeting one during play must not parse/bake a rig.
+      if (model && (e.civilian?.survivor || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
       if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
       this.known.add(model);
       const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];

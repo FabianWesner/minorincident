@@ -72,4 +72,4 @@ for (const level of ['L1', 'L2', 'L3']) test(`${level}: every interactive gate h
       press(w); expect(c.open).toBe(false);
     }
   }
-});
+}, level === 'L3' ? 120_000 : 30_000); // L3 composition setup uses the same timeout as its dedicated graph fixture.

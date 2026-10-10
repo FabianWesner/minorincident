@@ -47,7 +47,10 @@ export class L4Spectacle {
   }
   private clearOfAllies(at: Point, metres: number): boolean {
     if (dist(at, this.player.transform) < metres) return false;
-    return this.allies().every(a => dist(at, a.transform) >= metres);
+    // A bitten ally remains human until the outbreak replaces its civilian component.
+    const registered = [...this.s().soldierIds, ...this.s().armed.map(a => a.id)]
+      .map(id => this.world.entities.get(id)).filter(a => a?.civilian && a.health.current > 0 && !a.hidden);
+    return [...this.allies(), ...registered].every(a => dist(at, a!.transform) >= metres);
   }
 
   // ---------------------------------------------------------------------------------------------------- the tank
@@ -163,7 +166,7 @@ export class L4Spectacle {
     const from = tank ? { x: tank.transform.x, z: tank.transform.z } : { x: f.x - 30, z: f.z + 20 };
     this.world.events.emit({ type: 'l4.tankFire', tick, from, to: { x: f.x, z: f.z }, shot: ++s.tankShots });
     this.world.events.emit({ type: 'ally.attack', tick, sourceId: tank?.id ?? 0, targetId: 0, role: 'tank', weapon: 'door-gun', hit: true, from, to: { x: f.x, z: f.z } });
-    this.world.explosions?.blast(f.blast, { x: f.x, z: f.z }, { sourceId: tank?.id ?? 0 });
+    this.world.explosions?.blast(f.blast, { x: f.x, z: f.z }, { sourceId: s.fuelId });
     const truck = this.world.entities.get(s.fuelId);
     if (truck) { truck.hidden = true; const crater = spawnSetPiece(this.world, 'decay.fuel-truck-crater', { x: f.x, z: f.z, y: .7, yaw: f.yaw }); s.craterId = crater.id; }
     this.world.events.emit({ type: 'world.blocker.changed', tick, id: 900_450, blocked: false, wall: { x: f.x, y: 1, z: f.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });

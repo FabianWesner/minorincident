@@ -1,0 +1,56 @@
+{
+ "name": "qa-l5-pair-harbor-street-l5",
+ "note": "E23 recognition (AC18): Harbor Street hours later (W5): the same buildings, burned and shot up, the power out, sunset.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -60,
+    -89
+   ],
+   [
+    40,
+    11
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "pose",
+  "position": [
+   -32,
+   13,
+   -35
+  ],
+  "target": [
+   -10,
+   0,
+   -39
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -10,
+    -39
+   ],
+   "yaw": 0,
+   "state": "idle"
+  }
+ ],
+ "frames": 6,
+ "shots": [
+  5
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}
