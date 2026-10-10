@@ -68,3 +68,21 @@ test('@load caching headers: immutable hashed bundles, long-lived versioned asse
   // Unversioned paths (index.html, UI images) keep revalidation.
   for (const path of ['/', '/index.html', '/assets/ui/portrait-corgi.png']) expect(cache(path)).toEqual([]);
 });
+
+test('@transition outro prefetch warms authored decay assets without assembling a layout or parsing models', async () => {
+  const { prefetchLevel } = await import('../../../src/assets/prefetch');
+  const layoutModule = await import('../../../src/levels/L2/layout');
+  const assemble = vi.spyOn(layoutModule, 'levelTwoLayouts');
+  const source = readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8');
+  const requested: string[] = [];
+  vi.stubGlobal('fetch', vi.fn(async (url: string, options: RequestInit & { priority?: string }) => {
+    expect(options.priority).toBe('low'); requested.push(url);
+    return new Response(url.endsWith('.layout.json') ? source : new Uint8Array([0]));
+  }));
+  await prefetchLevel('L2', 4, 'low');
+  expect(assemble).not.toHaveBeenCalled();
+  expect(requested.some(url => /clinic-annex\.burned\.lod2\.glb/.test(url))).toBe(true);
+  expect(requested.some(url => /char\.courier-female\.skin\.glb/.test(url))).toBe(true);
+  expect(new Set(requested).size).toBe(requested.length);
+  expect(requested.some(url => /prop\.(bench|bbq|picket-fence)\.lod1\.glb/.test(url))).toBe(false);
+});
