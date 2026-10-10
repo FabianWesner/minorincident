@@ -1,13 +1,13 @@
 {
   "openGround": true,
   "kind": "civilian",
-  "archetype": "npc.jogger",
+  "archetype": "npc.bbq-dad",
   "faction": "civilian",
   "transform": {
-    "x": -65.98148086388808,
-    "z": -37.299302396878495,
-    "y": 0.7,
-    "yaw": 141.49050972008433
+    "x": 21.626859054353762,
+    "z": 26.414619452263405,
+    "y": 0.83,
+    "yaw": 4.863929253035997
   },
   "health": {
     "current": 100,
@@ -19,79 +19,116 @@
     "adult": true,
     "pet": null,
     "owner": null,
-    "model": "npc.civilian-man-a",
-    "variant": "inf.jogger",
+    "model": "npc.civilian-man-b",
+    "variant": "inf.bbq-dad",
     "schedule": [
       {
         "activity": "walk",
         "anchor": "l1/walk",
         "target": {
-          "x": -68.35000000000001,
-          "z": -25
+          "x": 17.45,
+          "z": 21
         },
         "ticks": 1,
-        "prop": "phone"
+        "prop": "bag"
+      },
+      {
+        "activity": "look",
+        "anchor": "l1/look",
+        "target": {
+          "x": 17.45,
+          "z": 21
+        },
+        "facing": {
+          "x": 22.27984,
+          "z": 26
+        },
+        "ticks": 178,
+        "prop": "bag"
       },
       {
         "activity": "walk",
         "anchor": "l1/walk",
         "target": {
-          "x": -68.35000000000001,
-          "z": -21
+          "x": 17.45,
+          "z": 25
         },
         "ticks": 1,
-        "prop": "phone"
+        "prop": "bag"
+      },
+      {
+        "activity": "look",
+        "anchor": "l1/look",
+        "target": {
+          "x": 17.45,
+          "z": 25
+        },
+        "facing": {
+          "x": 22.27984,
+          "z": 26
+        },
+        "ticks": 134,
+        "prop": "bag"
       }
     ],
-    "scheduleStep": 1,
+    "scheduleStep": 2,
     "activityUntil": 0,
     "activityStarted": 0,
     "lastTravelProgress": 0,
-    "routine": "jog",
+    "routine": "walk-dog",
     "waypoints": [
       {
-        "x": -68.35000000000001,
-        "z": -25
+        "x": 17.45,
+        "z": 21
       },
       {
-        "x": -68.35000000000001,
-        "z": -21
+        "x": 17.45,
+        "z": 21
+      },
+      {
+        "x": 17.45,
+        "z": 25
+      },
+      {
+        "x": 17.45,
+        "z": 25
       }
     ],
     "waypoint": 1,
-    "pauseUntil": 84,
-    "entered": 9905,
-    "until": 9941,
+    "pauseUntil": 42,
+    "entered": 5976,
+    "until": 6012,
     "downTicks": 0,
     "eyesGlow": true,
     "veins": 0.4,
-    "attacker": 98,
+    "attacker": 158,
     "threat": {
-      "x": -66.1424502410156,
-      "z": -36.25882617107909
+      "x": 22.918783239746826,
+      "z": 26.464384955486633
     },
     "path": [],
     "goal": -1,
-    "pathIndex": 0,
+    "pathIndex": 9,
     "gore": false,
     "knockedUntil": 0,
     "l1": {
-      "walkSpeed": 1.209919382398948,
-      "fleeSpeed": 3.4229693016037346,
-      "startleTicks": 46,
-      "refuge": "refuge-door-5",
+      "walkSpeed": 1.2191526965238153,
+      "fleeSpeed": 3.9367417791858315,
+      "startleTicks": 47,
+      "refuge": "refuge-door-35",
       "target": {
-        "x": -66.14625000000001,
-        "z": -37.5
+        "x": 22.27984,
+        "z": 26
       },
-      "repickAt": 9750,
-      "noticed": 9343,
+      "repickAt": 5790,
+      "noticed": 5442,
       "progressFrom": {
-        "x": -68.35000000000001,
-        "z": -24.398938670651095
+        "x": 17.44999999999998,
+        "z": 23.063296999613772
       },
-      "progressAt": 9329
-    }
+      "progressAt": 5439
+    },
+    "hold": 1
   },
   "combat": {
     "radius": 0.35,
@@ -102,16 +139,16 @@
     "damageMultiplier": 1,
     "statuses": []
   },
-  "id": 154,
+  "id": 138,
   "appearance": {
-    "entityId": 154,
-    "asset": "npc.civilian-man-a",
-    "tint": "#79865b",
+    "entityId": 138,
+    "asset": "npc.civilian-man-b",
+    "tint": "#3178ac",
     "accessories": [
-      "glasses"
+      "scarf"
     ],
     "handProp": null,
-    "tier": "athletic"
+    "tier": "average"
   },
   "motion": {
     "velocity": {
@@ -120,7 +157,7 @@
     },
     "speed": 0,
     "moving": false,
-    "distance": 202.1934126361124
+    "distance": 87.36194027683743
   },
   "locomotion": {
     "vx": 0,
@@ -131,12 +168,12 @@
     "updatedAt": -1
   },
   "infection": {
-    "entityId": 154,
-    "progress": 0.9017341040462428,
+    "entityId": 138,
+    "progress": 0.9137055837563451,
     "phase": "rise",
-    "tier": "athletic",
-    "startedTick": 9768,
-    "endsTick": 9941,
-    "biteSourceId": 98
+    "tier": "average",
+    "startedTick": 5815,
+    "endsTick": 6012,
+    "biteSourceId": 158
   }
 }
