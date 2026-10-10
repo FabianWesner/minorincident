@@ -143,7 +143,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const e = spec.expect ?? {}, checks: { name: string; pass: boolean; value: number; limit: number }[] = [];
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
-  add('clipping', clipping.static.length + clipping.actors.length + clipping.heldProps.length, e.clippingMax);
+  add('clipping', clipping.static.length + clipping.actors.length + clipping.heldProps.length + (clipping.gunBodies?.length ?? 0), e.clippingMax);
   add('heldPropIntersections', clipping.heldProps.length, e.heldPropIntersectionsMax);
   if (e.heldPropSamplesMin !== undefined) checks.push({ name: 'heldPropSamples', pass: metrics.heldProps.samples >= e.heldPropSamplesMin, value: metrics.heldProps.samples, limit: e.heldPropSamplesMin });
   add('staticOverlap', clipping.static.length, e.staticOverlapMax);

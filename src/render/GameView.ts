@@ -284,6 +284,21 @@ export class GameView implements Lifecycle {
     if (this.world.combat && this.materials) {
       this.vehicleFeedback = new VehicleFeedback(this.materials); this.scene.add(this.vehicleFeedback);
       this.vfx = new Vfx(this.world, {
+        muzzle: (id, direction) => {
+          const e = this.world.entities.get(id);
+          if (id === 1 && e?.survivor && this.character && this.actions) {
+            // Events precede the survivor action state; evaluate gait at this tick, then aim.
+            this.character.position.set(e.transform.x, e.transform.y - .7, e.transform.z);
+            this.character.update(e.survivor, this.world.tick, 1);
+            this.actions.aimGun(direction); this.actions.update();
+            return this.actions.muzzle(new Vector3());
+          }
+          if (e?.civilian && this.npcs) {
+            const muzzle = this.npcs.shotMuzzle(id, direction);
+            return e.civilian.ally?.weapon === 'hmg' ? this.districts?.aimMachineGun(e.transform, direction) ?? muzzle : muzzle;
+          }
+          return null; // Vehicle weapons carry their own authored event origin.
+        },
         flash: (id, strength) => { this.crowd?.flash(id, strength); },
         detach: (id, limb) => this.crowd?.detach(id, limb),
         blood: coverage => { this.character?.setBlood(coverage); this.actions?.setBlood(coverage); },
@@ -538,11 +553,11 @@ export class GameView implements Lifecycle {
   /** Scene Lab probes (src/debug/scenelab): the presentation objects it measures. Test/debug use only. */
   /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
-  labProbes() { return { heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
+  labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
-    return { weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+    return { machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null,
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],

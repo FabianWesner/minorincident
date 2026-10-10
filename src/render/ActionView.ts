@@ -49,6 +49,19 @@ export class ActionView extends Group {
   private offset = 0;
   private maxHeight = 0;
   private targetMarkerId: number | null = null;
+  private cue: { origin: number[]; range: number; opacity: number } | null = null;
+  private gunUntil = -1;
+  private readonly gunDirection = { x: 1, z: 0 };
+  /** Shot-time presentation intent (sim events can arrive between rendered frames). */
+  aimGun(direction: { x: number; z: number }): void {
+    Object.assign(this.gunDirection, direction); this.gunUntil = this.world.tick + 24;
+  }
+  muzzle(out: Vector3): Vector3 | null {
+    const held = this.held[this.world.combat?.runner.loadout.state.selectedSide ?? this.selected];
+    const muzzle = held?.model.getObjectByName('muzzle');
+    if (!muzzle || !held?.holder.visible) return null;
+    muzzle.updateWorldMatrix(true, false); return muzzle.getWorldPosition(out);
+  }
   private selected: Side = 'LEFT';
   private shape = 'cone';
   private landing = { x: 0, z: 0 };
@@ -125,7 +138,9 @@ export class ActionView extends Group {
     const loadout = combat.runner.loadout;
     // One weapon in hand: the selected side's weapon sits in the dominant (right) hand; the other side's melee weapon
     // rides on the back and its gun on the hip. Fists, kicks, throwables and abilities are never drawn as props.
-    const selectedSide = loadout.state.selectedSide, striking = Object.keys(combat.runner.running).length > 0;
+    const selectedSide = loadout.state.selectedSide, aiming = this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
+    if (aiming) this.character.aimGun(this.gunDirection);
+    const striking = Object.keys(combat.runner.running).length > 0;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];
       if (held?.id !== def.id) { const model = this.model(def); if (!model) continue; held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group(); holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
@@ -136,15 +151,28 @@ export class ActionView extends Group {
       if (pose) { held.holder.rotation.set(pose.rot[0], pose.rot[1], pose.rot[2]); held.holder.position.set(pose.pos[0], pose.pos[1], pose.pos[2]); }
       else {
         // In hand: melee weapons rest tilted up and away from the body, guns are lowered; both straighten for the strike or shot.
-        held.tilt += ((striking ? 0 : def.category === 'melee' ? restTilt : def.category === 'ranged' ? -gunLower : 0) - held.tilt) * .25;
+        held.tilt += ((striking || aiming ? 0 : def.category === 'melee' ? restTilt : def.category === 'ranged' ? -gunLower : 0) - held.tilt) * .25;
+        if (aiming && def.category === 'ranged') held.tilt = 0;
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
       held.holder.visible = !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
-    this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0');
+    this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
     const aim = state.aim, angle = Math.atan2(aim.z, aim.x), halfArc = def.arc * Math.PI / 360;
-    if (def.aimIndicator === 'line') this.segment(origin.x, 0.04, origin.z, origin.x + aim.x * def.range, 0.04, origin.z + aim.z * def.range);
+    if (def.aimIndicator === 'line') {
+      const muzzle = aiming ? this.muzzle(this.socketPosition) : null;
+      if (muzzle) {
+        const range = combat.query.clearDistance(muzzle, this.gunDirection, Math.min(4, def.range));
+        this.cue = { origin: muzzle.toArray(), range, opacity: this.material.opacity };
+        // Short, tapered and translucent; occlusion uses the same walls/fences as hitscan.
+        for (let i = 0; i < 8; i++) {
+          const a = range * i / 8, b = range * (i + 1) / 8;
+          this.segment(muzzle.x + this.gunDirection.x * a, muzzle.y, muzzle.z + this.gunDirection.z * a,
+            muzzle.x + this.gunDirection.x * b, muzzle.y, muzzle.z + this.gunDirection.z * b, .012 * (1 - i / 8));
+        }
+      }
+    }
     else if (def.aimIndicator === 'cone') {
       this.circle(origin.x, origin.z, def.range, angle - halfArc, halfArc * 2);
       for (let sign = -1; sign <= 1; sign += 2) { const edge = halfArc * sign; this.segment(origin.x, 0.04, origin.z, origin.x + Math.cos(angle + edge) * def.range, 0.04, origin.z + Math.sin(angle + edge) * def.range); }
@@ -226,6 +254,14 @@ export class ActionView extends Group {
     this.trail.visible = this.trailVertices > 0; this.trailGeometry.setDrawRange(0, this.trailVertices); this.trailGeometry.getAttribute('position').needsUpdate = true;
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
+  /** Scene Lab body clearance probes use the actual visible firing gun meshes. */
+  gunMeshes(): { entity: number; geometry: import('three').BufferGeometry; matrix: import('three').Matrix4 }[] {
+    const held = this.held[this.selected], result: { entity: number; geometry: import('three').BufferGeometry; matrix: import('three').Matrix4 }[] = [];
+    if (!held?.holder.visible || this.world.tick > this.gunUntil || action(held.id).category !== 'ranged') return result;
+    held.model.updateWorldMatrix(true,true);
+    held.model.traverse(node => { if (node instanceof Mesh) result.push({ entity:1,geometry:node.geometry,matrix:node.matrixWorld }); });
+    return result;
+  }
   getState() {
     this.character.updateMatrixWorld(true);
     const attachments = (['LEFT', 'RIGHT'] as const).map((side) => {
@@ -234,9 +270,9 @@ export class ActionView extends Group {
       nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
       held?.model.getObjectByName('grip')?.getWorldPosition(this.gripPosition);
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
-      return { side, actionId: held?.id, visible: held?.holder.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, socket: nodes.socket.name, holstered: side !== this.selected, handDistance: side === this.selected ? this.socketPosition.distanceTo(this.handPosition) : 0, gripDistance: side === this.selected ? this.gripPosition.distanceTo(this.socketPosition) : 0, attached: !!held?.holder.parent, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
+      return { side, actionId: held?.id, visible: held?.holder.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, muzzle: held?.model.getObjectByName('muzzle')?.getWorldPosition(new Vector3()).toArray() ?? null, socket: nodes.socket.name, holstered: side !== this.selected, handDistance: side === this.selected ? this.socketPosition.distanceTo(this.handPosition) : 0, gripDistance: side === this.selected ? this.gripPosition.distanceTo(this.socketPosition) : 0, attached: !!held?.holder.parent, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
-    return { targetMarker: this.targetMarkerId === null ? null : { id: this.targetMarkerId, radius: .5 }, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
+    return { aimCue: this.cue, targetMarker: this.targetMarkerId === null ? null : { id: this.targetMarkerId, radius: .5 }, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
   dispose(): void { for (const held of Object.values(this.held)) held.holder.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }

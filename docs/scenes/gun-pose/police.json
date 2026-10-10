@@ -1,0 +1,58 @@
+{
+  "name": "gun-pose-police",
+  "note": "PO 10-09: the courier's own handgun tracer and muzzle flash must read at the game camera like the allies' tracers. Three infected in a line, shots at game zoom.",
+  "ground": "asphalt",
+  "size": 40,
+  "actors": [
+    {
+      "id": "police",
+      "kind": "pedestrian",
+      "look": {
+        "model": "npc.police-officer",
+        "handProp": "pistol"
+      },
+      "at": [
+        0,
+        0
+      ],
+      "state": {
+        "ally": {
+          "role": "officer",
+          "weapon": "pistol"
+        }
+      }
+    },
+    {
+      "id": "z1",
+      "kind": "infected",
+      "at": [
+        7,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [],
+  "camera": {
+    "mode": "game",
+    "target": [
+      1,
+      0
+    ],
+    "zoom": 1.8
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    26,
+    32,
+    40,
+    70,
+    115
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0
+  },
+  "sheet": 10
+}
