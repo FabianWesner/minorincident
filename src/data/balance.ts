@@ -636,7 +636,8 @@ Object.assign(ttkBands, {
 
 /** PO 2026-10-08 fight speed ("Every click needs to be a kick, no matter how fast I click"): the quicker bat finisher
  * (23 ticks, 0.5 m shove instead of a 3.3 m fling) and the 0.5 s axe swing shorten tough fights; lower bounds follow.
- * PO 2026-10-10 adds 25% axe damage, so its minimum TTK receives the additional inverse damage factor. */
+ * PO 2026-10-10 adds 25% axe damage: apply the inverse damage factor and allow one 0.5 s swing
+ * for discrete hits-to-kill rounding (e.g. riot drops from three swings to two). */
 for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8 * .8]] as const) {
-  for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+(low * factor).toFixed(2), high]; }
+  for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+Math.max(.01, low * factor - (weapon === 'weapon.fire-axe' ? .5 : 0)).toFixed(2), high]; }
 }
