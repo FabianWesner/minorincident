@@ -7,7 +7,6 @@ import { CrowdFootwork, CrowdLocomotion } from '../characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from '../characters/InfectedMoves';
 import { infectedDefinitions } from '../../data/infected';
 import { l6CastModels } from '../../data/l6';
-import { l1LabModels } from '../../sim/missions/LevelOneOutbreak';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
 import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
@@ -412,13 +411,9 @@ export class CivilianCrowd extends Group {
   async init(): Promise<void> {
     const started = performance.now();
     await Promise.all(this.batches.map(b => b.init()));
-    // The authored L1/L4 cast can enter the close band at any objective transition.
-    // Baking/indexing/simplifying a first LOD0 during play blocks for ~220 ms on desktop.
-    // Prepare the same hero geometry while loading; GameView.ready then warms its programs.
-    const heroes = this.world.scenario === 'L1'
-      ? [...l1Pedestrians.models, ...l1LabModels, 'npc.depot-clerk', 'npc.firefighter-alive']
-      : this.world.scenario === 'L4' ? [...l1Pedestrians.models, 'npc.national-guard'] : [];
-    for (const model of new Set(heroes)) this.loadHero(model);
+    // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
+    // in discover(); no first-use LOD0 bake/index/simplification during the war.
+    if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
     loadMeasure('view:civilian-crowd', started); this.update();
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }

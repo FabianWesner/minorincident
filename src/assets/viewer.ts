@@ -76,9 +76,10 @@ export async function assetViewer(): Promise<void> {
         camera.updateMatrixWorld(true); let radius = 0;
         object.traverseVisible(node => {
           if (!(node instanceof Mesh)) return;
-          const positions = node.geometry.getAttribute('position');
-          for (let vertex = 0; vertex < positions.count; vertex++) {
-            point.fromBufferAttribute(positions, vertex).applyMatrix4(node.matrixWorld).project(camera);
+          const positions = node.geometry.getAttribute('position'), indices = node.geometry.index;
+          const start = node.geometry.drawRange.start, count = Math.min(node.geometry.drawRange.count, (indices?.count ?? positions.count) - start);
+          for (let vertex = start; vertex < start + count; vertex++) {
+            point.fromBufferAttribute(positions, indices ? indices.getX(vertex) : vertex).applyMatrix4(node.matrixWorld).project(camera);
             radius = Math.max(radius, Math.abs(point.x), Math.abs(point.y));
           }
         });
