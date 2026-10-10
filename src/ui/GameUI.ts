@@ -65,7 +65,11 @@ export class GameUI {
   }
   private build(): void {
     const title = this.panel('title', 'MINOR INCIDENT', 'A quieter neighborhood today · Braver people tomorrow');
-    title.append(button('start-game', 'Start game', () => this.show('character')),
+    title.append(button('start-game', 'Start game', () => {
+      const saved = this.game.saves.load();
+      if (saved.status === 'ok') { this.game.campaign = saved.save; this.show('levels'); }
+      else this.show('character');
+    }),
       button('continue-game', 'Continue', () => { void this.continueSaved(); }),
       button('title-levels', 'Level select', () => { const saved = this.game.saves.load(); if (saved.status === 'ok') { this.game.campaign = saved.save; this.show('levels'); } }),
       button('title-settings', 'Settings', () => { this.back = 'title'; this.show('settings'); }),

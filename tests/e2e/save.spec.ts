@@ -3,6 +3,47 @@ import {boot,expect,test,testUrl} from './fixtures';
 import {preset,newCampaign} from '../../src/sim/progression/Campaign';
 import {SAVE_KEY} from '../../src/sim/progression/Save';
 const dir='test-results/epics/E13';
+test('@E13 @E13-AC05 L1 completion saves before Continue; reload unlocks L2 and restores aftermath from the level menu', async ({ page }) => {
+  test.setTimeout(180_000);
+  await boot(page, `${testUrl}&ui=1`);
+  await page.getByTestId('start-game').click(); await page.getByTestId('character-female').click();
+  await page.getByTestId('level-L1').click();
+  await expect(page.getByRole('button', { name: 'Begin mission', exact: true })).toBeVisible({ timeout: 60_000 });
+  await page.getByRole('button', { name: 'Begin mission', exact: true }).click();
+  const gatePosition = await page.evaluate(async () => {
+    const a = window.__SS__!; a.pause();
+    const bike = a.getState().entities.find(e => e.kind === 'bicycle')!;
+    a.teleport(bike.id, { x: 20, z: 10 });
+    const gate = a.getState().entities.find(e => e.interactable?.label === 'Gate')!;
+    a.teleport('player', { x: gate.transform.x + .8, z: gate.transform.z });
+    a.input.set({ interact: true }); await a.step(1); a.input.clear();
+    if (a.getEntity(gate.id)!.interactable!.open) throw new Error('Gate did not close');
+    for (let i = 0; i < 100 && a.missions.state()!.phase !== 'result'; i++) {
+      if (a.missions.state()!.phase === 'cinematic') await a.step(600);
+      else { a.cheats.completeObjective(); await a.step(1); }
+    }
+    return { x: gate.transform.x, z: gate.transform.z };
+  });
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('result');
+  const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), SAVE_KEY);
+  expect(saved).toMatchObject({ version: 2, unlockedLevel: 2, completedLevels: 1 });
+  expect(saved.world.L1.bike).toMatchObject({ x: 20, z: 10 });
+  expect(saved.world.L1.gatesClosed).toContain('gate-1');
+  expect(saved.results.L1).toBeDefined();
+  // Reload directly from the result screen: no Continue or direct L1 -> L2 transition has run.
+  await page.reload(); await page.waitForFunction(() => !!window.__SS__); await page.evaluate(() => window.__SS__!.ready);
+  await page.getByTestId('start-game').click();
+  await expect(page.getByTestId('level-L1')).toBeEnabled();
+  await expect(page.getByTestId('level-L2')).toBeEnabled();
+  await expect(page.getByTestId('level-L3')).toHaveAttribute('aria-disabled', 'true');
+  await page.getByTestId('level-L2').click();
+  await expect(page.getByRole('button', { name: 'Begin mission', exact: true })).toBeVisible({ timeout: 60_000 });
+  const state = await page.evaluate(() => window.__SS__!.getState());
+  expect(state.scenario).toBe('L2');
+  expect(state.progression!.campaign!.world!.L1).toEqual(saved.world.L1);
+  const carriedGate = state.entities.find(e => e.interactable?.label === 'Gate' && Math.hypot(e.transform.x - gatePosition.x, e.transform.z - gatePosition.z) < .1);
+  expect(carriedGate!.interactable!.open).toBe(false);
+});
 test('@E13 @E14 full menus start a saved campaign, restore settings and hand results to real rewards',async({page})=>{
   test.setTimeout(180_000);
   await page.goto(`${testUrl}&ui=1`);
