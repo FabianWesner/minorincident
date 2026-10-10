@@ -1,0 +1,62 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgl (14.4s)
+  ✘  2 [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgpu (13.5s)
+
+
+  1) [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgl ────────────
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "npc.civilian-kid"
+    Received: "npc.civilian-woman-b"
+
+      41 |     await page.locator('canvas').screenshot({ path: `${dir}/${renderer}-comparison.png` });
+      42 |     expect(result.backend).toBe(renderer);
+    > 43 |     for (const child of result.children) expect(child.appearance?.asset).toBe('npc.civilian-kid');
+         |                                                                          ^
+      44 |     expect(comparison.entity?.civilian?.model).toBe('npc.civilian-kid');
+      45 |     expect(comparison.figures.some(f => f.drawn)).toBe(true);
+      46 |     for (const figure of comparison.figures) expect(figure.scale).toEqual([1, 1, 1]);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure/tests/e2e/small-figure.spec.ts:43:74
+
+    Error Context: test-results/playwright/run-3417/e2e-small-figure-small-figure-L2-seed-1-low-webgl-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3417/e2e-small-figure-small-figure-L2-seed-1-low-webgl-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3417/e2e-small-figure-small-figure-L2-seed-1-low-webgl-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgpu ───────────
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "npc.civilian-kid"
+    Received: "npc.civilian-woman-b"
+
+      41 |     await page.locator('canvas').screenshot({ path: `${dir}/${renderer}-comparison.png` });
+      42 |     expect(result.backend).toBe(renderer);
+    > 43 |     for (const child of result.children) expect(child.appearance?.asset).toBe('npc.civilian-kid');
+         |                                                                          ^
+      44 |     expect(comparison.entity?.civilian?.model).toBe('npc.civilian-kid');
+      45 |     expect(comparison.figures.some(f => f.drawn)).toBe(true);
+      46 |     for (const figure of comparison.figures) expect(figure.scale).toEqual([1, 1, 1]);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure/tests/e2e/small-figure.spec.ts:43:74
+
+    Error Context: test-results/playwright/run-3417/e2e-small-figure-small-figure-L2-seed-1-low-webgpu-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3417/e2e-small-figure-small-figure-L2-seed-1-low-webgpu-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3417/e2e-small-figure-small-figure-L2-seed-1-low-webgpu-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgl ─────────────
+    [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgpu ────────────
