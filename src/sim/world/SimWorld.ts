@@ -2,6 +2,7 @@ import { WeatherSystem } from '../weather/WeatherSystem';
 import { levelFourLayouts } from '../../levels/L4/layout';
 import { levelFiveLayouts } from '../../levels/L5/layout';
 import { levelThreeLayouts } from '../../levels/L3/layout';
+import type { L1Aftermath } from '../../levels/continuity';
 import { levelTwoLayouts } from '../../levels/L2/layout';
 import { ControlIntent } from '../entities/ControlIntent';
 import { installCampaignNpcs, rebuildNpcNavigation, prepareNpcNavigation } from '../npc/install';
@@ -73,6 +74,8 @@ export class SimWorld implements Lifecycle {
   explosions: Explosions | null = null;
   /** PO #15 pushable small props (dynamic Rapier bodies); null outside district compositions. */
   props: PropSystem | null = null;
+  /** L1 player-caused carryover applied to this level (L2 in L1's town); null = scripted canon only (src/levels/continuity.ts). */
+  aftermath: L1Aftermath | null = null;
   barricades: Barricades | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
@@ -217,9 +220,9 @@ export class SimWorld implements Lifecycle {
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
-  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1):void {
-    const districts=new DistrictWorld(composition,composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts):layouts,seed);
-    this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;this.weather = new WeatherSystem(this, seed);
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null):void {
+    const districts=new DistrictWorld(composition,composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
+    this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
     this.interactables!.nav = districts.nav;
     const {min,max}=districts.nav;
@@ -227,7 +230,7 @@ export class SimWorld implements Lifecycle {
     Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
     for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
     for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
-    this.props = new PropSystem(this); this.props.install(districts);
+    this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))));
     this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
     this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
     this.physics.world!.step();
@@ -238,6 +241,7 @@ export class SimWorld implements Lifecycle {
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
     if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
+    if (this.aftermath && this.toys) this.toys.carryOver(this.aftermath);
     this.events.on('sim.tick',()=>{
       if(this.tick%60!==0 || this.inspectionGhost)return;
       const player=this.entities.get(1)!;
@@ -327,7 +331,7 @@ export class SimWorld implements Lifecycle {
     this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
-    this.tick = 0; this.districts = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
+    this.tick = 0; this.districts = null; this.aftermath = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }
   dispose(): void { this.reset(); }
 }

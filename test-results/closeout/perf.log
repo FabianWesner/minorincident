@@ -1,0 +1,81 @@
+12:28  up 62 days, 11:22, 3 users, load averages: 2.37 3.17 4.19
+Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 9 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-morning (23.9s)
+  ✓  2 [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-accident (25.1s)
+  ✓  3 [chromium] › tests/perf/l1-spots.spec.ts:9:63 › T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-horde (25.3s)
+after desktop loading {"dataMs":20.199999809265137,"simMs":112.69999980926514,"viewMs":5339,"warmUp":[{"name":"L1 shader compilation","ms":1337.3999996185303},{"name":"L1 warm-up draw","ms":176.89999961853027},{"name":"L1 driver warm-up","ms":2029},{"name":"L1 warm-up instanced draw","ms":51.90000057220459},{"name":"L1 warm-up solo draws","ms":1800.0999994277954}]}
+after desktop measuring pickup
+after desktop pickup max=218.6ms
+after desktop measuring handover
+after desktop handover max=221.4ms
+after desktop measuring accident
+after desktop accident max=21.4ms
+after desktop measuring infected-exit
+after desktop infected-exit max=232.0ms
+after desktop measuring weapon-pickup
+after desktop weapon-pickup max=26.9ms
+after desktop measuring death-respawn
+after desktop death-respawn max=20.9ms
+after desktop measuring fire-station-end
+after desktop fire-station-end max=20.6ms
+  ✘  4 [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop (49.4s)
+after mobile loading {"dataMs":20.5,"simMs":101.09999942779541,"viewMs":5069.900000572205,"warmUp":[{"name":"L1 shader compilation","ms":1318.8999996185303},{"name":"L1 warm-up draw","ms":211.30000019073486},{"name":"L1 driver warm-up","ms":1927.8000001907349},{"name":"L1 warm-up instanced draw","ms":48.09999942779541},{"name":"L1 warm-up solo draws","ms":1668.4000005722046}]}
+after mobile measuring pickup
+after mobile pickup max=27.9ms
+after mobile measuring handover
+after mobile handover max=20.8ms
+after mobile measuring accident
+after mobile accident max=20.2ms
+after mobile measuring infected-exit
+after mobile infected-exit max=21.7ms
+after mobile measuring weapon-pickup
+after mobile weapon-pickup max=21.3ms
+after mobile measuring death-respawn
+after mobile death-respawn max=19.7ms
+after mobile measuring fire-station-end
+after mobile fire-station-end max=19.7ms
+  ✓  5 [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › mobile › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget mobile (46.1s)
+{"tier":"high","seed":2,"counts":{"infected":31,"civilians":45,"firefighters":6},"drawCalls":278,"triangles":1090165,"revealMaxMs":47.29999999999927,"gateMaxMs":10.80000000000291,"peakP50":6.599999999998545,"peakP95":8.900000000001455,"peakMax":14.700000000000728,"frames":1451,"simP95":2.5,"updateP95":2,"renderP95":4.699999809265137,"gateClosed":true}
+  ✓  6 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high (50.4s)
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":23,"firefighters":6},"drawCalls":222,"triangles":373869,"revealMaxMs":37.200000000004366,"gateMaxMs":37.39999999999418,"peakP50":21.099999999998545,"peakP95":27.30000000000291,"peakMax":36.799999999995634,"frames":467,"simP95":10.600000381469727,"updateP95":4.899999618530273,"renderP95":11.299999237060547,"gateClosed":true}
+  ✓  7 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.6m)
+{"tier":"high","seed":2,"counts":{"infected":47,"soldiers":20,"civilians":23},"warDrawCalls":259,"warTriangles":464366,"collapseDrawCalls":280,"collapseTriangles":1122555,"warP50":5.5,"warP95":7.30000000000291,"warMax":18.600000000002183,"turnMaxMs":15.100000000000364,"tankMaxMs":9.299999999999272,"breakMaxMs":14.19999999999709,"collapseP50":7.099999999998545,"collapseP95":9,"simP95":1.6000003814697266,"updateP95":1.8000001907348633,"renderP95":4.199999809265137,"lineBroke":true}
+  ✓  8 [chromium] › tests/perf/l4-budgets.spec.ts:12:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high (46.1s)
+{"tier":"low","seed":2,"counts":{"infected":26,"soldiers":10,"civilians":8},"warDrawCalls":205,"warTriangles":239349,"collapseDrawCalls":178,"collapseTriangles":494104,"warP50":15.400000000001455,"warP95":29.69999999999709,"warMax":48.30000000000291,"turnMaxMs":35.60000000000218,"tankMaxMs":36.400000000001455,"breakMaxMs":39.599999999998545,"collapseP50":19.900000000001455,"collapseP95":34.80000000000291,"simP95":4.40000057220459,"updateP95":4.299999237060547,"renderP95":9.799999237060547,"lineBroke":true}
+  ✓  9 [chromium] › tests/perf/l4-budgets.spec.ts:12:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low (1.1m)
+
+
+  1) [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop
+
+    Error: desktop pickup max frame ms
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 50
+    Received:    218.60000038146973
+
+       95 |     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));
+       96 |     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i);
+    >  97 |     if (phase !== 'before') for (const [label, sample] of Object.entries(samples)) expect(sample.max, `${mode} ${label} max frame ms`).toBeLessThanOrEqual(50);
+          |                                                                                                                                        ^
+       98 |   });
+       99 | });
+      100 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/perf/l1-transitions.spec.ts:97:136
+
+    Error Context: test-results/playwright/run-3351/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3351/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3351/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop
+  8 passed (7.2m)

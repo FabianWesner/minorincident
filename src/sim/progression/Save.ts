@@ -1,6 +1,7 @@
 import { catalog } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
 import { eligible, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
+import { validAftermath } from './carryover';
 export const SAVE_KEY='minor-incident.campaign';
 export const SAVE_ERROR='Save could not be loaded';
 export type SaveResult={status:'empty'}|{status:'ok';save:CampaignSave}|{status:'error';message:string};
@@ -23,6 +24,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind','slowMotion'].includes(key)||typeof value!=='boolean')return false;
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
+  if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
   const prefix={...save,upgrades:[] as string[]};
   for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
   if(save.completedLevels===6&&save.pending)return false;

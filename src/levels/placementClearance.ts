@@ -23,7 +23,7 @@ const dimensions = new Map<string, { x: number; y: number; z: number }>([['prop.
  * baked boxes (pallet) fall back to their manifest dimensions.
  */
 export function footprints(p: Placement, margin = 0, low = false): Footprint[] {
-  const shape = exempt(p.assetId) ? undefined : staticCollision[p.assetId];
+  const shape = exempt(p.assetId) ? undefined : staticCollision[p.collisionId ?? p.assetId];
   if (!shape) return [];
   const d = dimensions.get(p.assetId), boxes = !shape.boxes.length && low && d ? [{ min: [-d.x / 2, .18, -d.z / 2] as [number, number, number], max: [d.x / 2, .18 + d.y, d.z / 2] as [number, number, number] }] : shape.boxes;
   const c = Math.cos(p.yaw), s = Math.sin(p.yaw);

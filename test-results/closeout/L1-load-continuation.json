@@ -1,0 +1,69 @@
+{
+  "sourceTrace": "test-results/epics/E19/hitch/after-desktop-pickup-trace.json",
+  "evidenceCommit": "main 4970fa9e; browser fixes 5104953d",
+  "units": "milliseconds",
+  "largestCompleteEvents": [
+    {
+      "name": "RunTask",
+      "durationMs": 204.456,
+      "args": {}
+    },
+    {
+      "name": "TimerFire",
+      "durationMs": 204.434,
+      "args": {
+        "data": {
+          "frame": "3B4F397EA5BE415B2101A16427FBFA3E",
+          "timerId": 48
+        }
+      }
+    },
+    {
+      "name": "v8.callFunction",
+      "durationMs": 204.425,
+      "args": {}
+    },
+    {
+      "name": "RunTask",
+      "durationMs": 14.36,
+      "args": {}
+    },
+    {
+      "name": "RunTask",
+      "durationMs": 14.268,
+      "args": {}
+    },
+    {
+      "name": "FireAnimationFrame",
+      "durationMs": 13.656,
+      "args": {
+        "data": {
+          "frame": "3B4F397EA5BE415B2101A16427FBFA3E",
+          "id": 646
+        }
+      }
+    },
+    {
+      "name": "v8.callFunction",
+      "durationMs": 13.651,
+      "args": {}
+    },
+    {
+      "name": "FunctionCall",
+      "durationMs": 13.614,
+      "args": {
+        "data": {
+          "columnNumber": 67655,
+          "frame": "3B4F397EA5BE415B2101A16427FBFA3E",
+          "functionName": "frame",
+          "isolate": "16218890816502177612",
+          "lineNumber": 9,
+          "sampleTraceId": 4122296980146521,
+          "scriptId": "7",
+          "url": "http://127.0.0.1:3351/build/index-KA0FMMkO.js"
+        }
+      }
+    }
+  ],
+  "interpretation": "A LoadGate zero-delay timer releases an awaited asset load. The promise continuation consumes approximately 204 ms; the timer callback itself is short. No slow recorded GL calls. Exact parse/material/clone substage is not established without CPU profiling."
+}

@@ -1,0 +1,1390 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout -> 157.90.173.117:/srv/mi/ws/epic-closeout-992bec
+[remote] sync 14s, 4949 files; job /srv/mi/jobs/epic-closeout-992bec-73342-1791624624; queueing for a slot
+[runner] slot 0 acquired; load 0.53 1.77 1.59
+
+ RUN  v5.0.3 /srv/mi/jobs/epic-closeout-992bec-73342-1791624624
+
+ ✓  functional  tests/unit/levels/l5-static.test.ts (9 tests) 398ms
+ ✓  functional  tests/unit/render/skin-pilot.test.ts (18 tests) 5021ms
+   ✓ courier female walks and runs on world-locked feet with a readable knee arc @E04 428ms
+   ✓ courier female turns with steps instead of pivoting or skating @E04 467ms
+   ✓ courier male turns with steps instead of pivoting or skating @E04 485ms
+   ✓ skin rollout female hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04 384ms
+   ✓ skin rollout male hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04 331ms
+   ✓ courier female chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04 775ms
+   ✓ courier male chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04 724ms
+ ✓  functional  tests/sim/combat/combat.test.ts (19 tests) 415ms
+ ✓  functional  tests/unit/render/authored-animation.test.ts (17 tests) 5247ms
+   ✓ M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (source) 2175ms
+   ✓ M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (production) 1270ms
+   ✓ VQA-13 @E19 settled infected death poses contact the floor across delivered rigs 972ms
+stdout | tests/sim/barricades.test.ts > T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%
+{"barricadeAB":[{"seed":1,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100}]}
+
+ ✓  functional  tests/sim/barricades.test.ts (21 tests) 5705ms
+   ✓ T-E26-02 @E26-AC02 prop-yard 300 authored bodies sleep after 1s without interaction 525ms
+   ✓ T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes 3605ms
+   ✓ T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40% 679ms
+ ✓  functional  tests/unit/layouts/d-grove.test.ts (11 tests) 742ms
+   ✓ D-GROVE layout (11)
+     ✓ T-E19-04 @E19 @E19-AC04 no footprint overlaps between buildings, vehicles, props and tree trunks (asset QA P1-P9) 389ms
+ ✓  functional  tests/sim/missions/adapters.test.ts (13 tests) 3426ms
+   ✓ @E12 @L3-legacy a single 12-minute deadline; graph transitions do not reset it 3000ms
+ ✓  functional  tests/sim/l1-toys.test.ts (19 tests) 12357ms
+   ✓ L1 v2 bicycle (8)
+     ✓ T-E19-16a @E19 @E19-AC16 mount by interact, 7.5 m/s above every infected tier, dismount keeps the bicycle in place 2201ms
+     ✓ T-E19-16f @E19 @E19-AC16 mounting beside the parked bike steps onto the apron; a stopped rider can pull away from a wall 1425ms
+     ✓ T-E19-16g @E19 @E19-AC16 arriving at the depot parks on clear ground and permits remount after the parcel hand-over 997ms
+     ✓ T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside 484ms
+     ✓ T-E19-16d @E19 @E19-AC16 an infected touching the rider stops the bicycle and dismounts, with zero damage 467ms
+   ✓ L1 v2 toys (5)
+     ✓ T-E19-20a @E19 @E19-AC20 a closed yard gate blocks movement and sight, an open one does not 394ms
+     ✓ T-E19-20b @E19 @E19-AC20 dumpster push slides it along its rail and then closes the passage for movement, not sight 326ms
+     ✓ T-E19-20c @E19 @E19-AC11 @E19-AC20 car alarm: 20 s, DistractionEvent, re-arms after 30 s 3081ms
+     ✓ T-E19-20d @E19 @E19-AC20 car wash curtain blocks sight for 15 s and slows infected inside the bay to 50 % 1328ms
+     ✓ T-E19-20e @E19 @E19-AC20 toys are optional: the level boots without touching any 320ms
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Accessor (95)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Mesh (1), Primitive (4), Accessor (12)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Accessor (389)
+
+stdout | tests/unit/assets/optimize.test.ts > T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+prune: Removed types... Mesh (49), Primitive (49), Accessor (513)
+
+ ✓  functional  tests/unit/assets/courier-bike.test.ts (4 tests) 8301ms
+   ✓ @regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm) 8116ms
+ ✓  functional  tests/sim/missions/objectives.test.ts (29 tests) 1923ms
+   ✓ T-E12-04 @E12 @E12-AC04 timeout at exactly 120s, retry restores timer, completing cancels timeout 996ms
+   ✓ @E12 @E12-AC04 a completed timed objective cannot fail while another parallel task continues 563ms
+ ✓  functional  tests/sim/ai/navigation.test.ts (13 tests) 1521ms
+   ✓ T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 percent 828ms
+ ✓  functional  tests/sim/explosions.test.ts (14 tests | 6 skipped) 1110ms
+   ✓ T-E27-05 @E27 @E27-AC05 a car explosion lifts the body ≥ 0.5 m, detaches doors and hood, chars the wreck and leaves fires ≥ 20 s 456ms
+ ✓  functional  tests/unit/assets/optimize.test.ts (12 tests) 7537ms
+   ✓ T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side 605ms
+   ✓ T-E17-height @E17-AC02 standing adult exports stay 1.75–1.85 m at every LOD 3846ms
+   ✓ T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD 1984ms
+   ✓ T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor pivots at every LOD 885ms
+ ✓  functional  tests/sim/ai/animals.test.ts (10 tests) 768ms
+   ✓ T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces 385ms
+stdout | tests/sim/ai/infected-pursuit.test.ts > infected pursuit (PO 2026-10-09) > zigzag and circling courier: the runner stays on her, never runs past (< 2 m ahead), never drops her while she is near
+[pursuit] zigzag#1 swings 4 overshoot 1.17 m lostNear 0; circle#1 swings 2 overshoot 0.00 m lostNear 0; zigzag#2 swings 3 overshoot 1.61 m lostNear 0; circle#2 swings 0 overshoot 0.00 m lostNear 0; zigzag#3 swings 3 overshoot 1.61 m lostNear 0; circle#3 swings 1 overshoot 0.00 m lostNear 0; zigzag#4 swings 3 overshoot 1.26 m lostNear 0; circle#4 swings 2 overshoot 0.00 m lostNear 0; zigzag#5 swings 3 overshoot 1.16 m lostNear 0; circle#5 swings 2 overshoot 0.00 m lostNear 0
+
+ ✓  functional  tests/sim/ai/infected-pursuit.test.ts (7 tests) 2127ms
+   ✓ infected pursuit (PO 2026-10-09) (7)
+     ✓ zigzag and circling courier: the runner stays on her, never runs past (< 2 m ahead), never drops her while she is near 1069ms
+     ✓ D-GROVE porch gate (catalog inf-door-emerge): a resident turned in the 2-cell gate pocket walks out into the yard 615ms
+ ✓  functional  tests/unit/render/courier-rig-v2.test.ts (11 tests) 3455ms
+   ✓ courier female skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it 428ms
+   ✓ courier female living layer is frozen-frame exact and deterministic across runs @E04 578ms
+   ✓ courier male living layer is frozen-frame exact and deterministic across runs @E04 424ms
+   ✓ courier blinks every 2–6 s with the lids closed for about 0.1 s @E04 664ms
+ ✓  functional  tests/sim/m1-world.test.ts (10 tests) 6488ms
+   ✓ @E19 M1-07 every solid L1 prop family stops a real survivor capsule outside its GLB compound 670ms
+   ✓ @E19 M1-08 gas forecourt is reachable from the road and canopy legs/pumps still block 1058ms
+   ✓ @E19 M1-08 gentle joystick pulses step onto raised forecourt paving instead of snagging at its edge 690ms
+   ✓ @E19 M1-07 click navigation string-pulls a path around a hedge, arriving without oscillation 643ms
+   ✓ @E19 M1-04 corgi settles after turns/stops with stable yaw, zero idle speed and no follow-state chatter 1486ms
+   ✓ @E19 M1-06 neighbors use five models, safe sidewalk routines and actual movement/idle states 1225ms
+   ✓ @E19 M1-10 all character bodies separate, even in stationary infected attack states 332ms
+   ✓ @E19 VQA-08 combat spacing still lets broad armored fighters enter melee range 365ms
+ ✓  functional  tests/sim/interact/hazards.test.ts (11 tests) 459ms
+ ✓  functional  tests/unit/performance/nav-visibility.test.ts (3 tests) 350ms
+ ✓  functional  tests/unit/levels/l3-static.test.ts (6 tests) 2524ms
+   ✓ L3 static (6)
+     ✓ T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart 1505ms
+     ✓ T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry 967ms
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (18)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (56)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Mesh (7), Primitive (7), Accessor (77)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Primitive (2), Accessor (63)
+
+ ✓  functional  tests/sim/npc/civilians.test.ts (7 tests) 11372ms
+   ✓ T-E08-03 @E08 @E08-AC03 50 seeded cycles retain clothes/body position and exact tick timings/eyes 2005ms
+   ✓ T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass through living people 484ms
+   ✓ T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exceeds L1 cap/chain 808ms
+   ✓ T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes 7676ms
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (204)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Mesh (33), Primitive (33), Accessor (307)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Primitive (1), Accessor (59)
+
+ ✓  functional  tests/unit/render/camera-jitter.test.ts (4 tests) 134ms
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Accessor (260)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+prune: Removed types... Mesh (32), Primitive (32), Accessor (358)
+
+ ✓  functional  tests/unit/levels/l4-static.test.ts (8 tests) 436ms
+stdout | tests/unit/assets/delivery.test.ts > delivery keeps skin joints and morph animation channels on the geometry node
+prune: Removed types... Accessor (6)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery keeps skin joints and morph animation channels on the geometry node
+prune: Removed types... Skin (1), Accessor (5)
+
+stdout | tests/unit/assets/delivery.test.ts > distance tiers preserve disconnected thin panels inside a large assembly
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/delivery.test.ts > distance tiers preserve disconnected thin panels inside a large assembly
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/delivery.test.ts > distance tiers preserve disconnected thin panels inside a large assembly
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery preserves optional source roof geometry before manifest registration
+prune: Removed types... Accessor (1)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery preserves optional source roof geometry before manifest registration
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/delivery.test.ts > delivery preserves optional source roof geometry before manifest registration
+prune: Removed types... Accessor (3)
+
+ ✓  functional  tests/unit/assets/delivery.test.ts (7 tests) 1813ms
+   ✓ delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette 1693ms
+ ✓  functional  tests/sim/combat/fast-clicks.test.ts (8 tests) 381ms
+ ✓  functional  tests/sim/bicycle-pavement.test.ts (4 tests) 10855ms
+   ✓ parked start, mount at rack, depot and automatic road parking keep both wheels on pavement @E19 836ms
+   ✓ garage bat pickup permits walking back to the parked bike, ACTION remount and riding 30 m @E19 6170ms
+   ✓ annex auto-parking leaves a clear rider start and a walking route through the gate @E19 @E19-AC16 327ms
+   ✓ a bike parked at the lab gate never seals the forecourt for click-to-move routes @E19 3519ms
+ ✓  functional  tests/sim/npc/followers.test.ts (8 tests) 15386ms
+   ✓ T-E08-04 @E08 @E08-AC04 three-minute combat bot: corgi close 95% and no player obstruction 5017ms
+   ✓ T-E08-07 @E08 @E08-AC07 2s stand revives 50%; unattended 20s down fails mission 441ms
+   ✓ T-E08-15 @E08 @E08-AC15 protected kids/brother never bitten, targeted or gored in full L2 duration 9250ms
+ ✓  functional  tests/unit/progression/campaign.test.ts (12 tests) 634ms
+   ✓ campaign (10)
+     ✓ T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers 465ms
+ ✓  functional  tests/sim/props.test.ts (6 tests) 3953ms
+   ✓ E26 authored pushable props (6)
+     ✓ a fallen knocked prop with the spawn flag resets to spawn and keeps its ID and health 372ms
+     ✓ authored movable props are dynamic, sleeping bodies outside the static collision and nav bake 334ms
+     ✓ walking into a trash bin shoves it along, it settles and sleeps; the courier keeps moving 1004ms
+     ✓ push is deterministic (identical prop poses and state hash across runs) 655ms
+     ✓ checkpoint seam restores displaced props and survives a tier rebuild 1432ms
+ ✓  functional  tests/unit/render/corgi-feet.test.ts (4 tests) 1958ms
+   ✓ corgi idle, sit and warning poses keep every paw and the rump on the floor (QA: sit hind paw 17.8 cm under) @E07 1372ms
+ ✓  functional  tests/unit/tooling/scenelab.test.ts (10 tests) 92ms
+ ✓  functional  tests/unit/assets/static-batch-equivalence.test.ts (2 tests) 4296ms
+   ✓ optimized static batch attributes equal the reference loop @load 4287ms
+ ✓  functional  tests/sim/ai/specials.test.ts (12 tests) 997ms
+   ✓ T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion has a sufficient telegraph 495ms
+ ✓  functional  tests/sim/missions/l2-ride-clearance.test.ts (3 tests | 2 skipped) 8315ms
+   ✓ L2 truck ride clearance (3)
+     ✓ @E20 route polyline stays on clear (drivable) cells for the whole truck width 8314ms
+ ✓  functional  tests/unit/render/e25-lighting.test.ts (5 tests) 910ms
+   ✓ T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current 815ms
+ ✓  functional  tests/sim/ai/infected-recover.test.ts (3 tests) 742ms
+   ✓ T-recover-01 @E05 @E19 a lethal melee hit knocks down: 10-20 s on the ground (deterministic per seed), a ground hit restarts the down time (PO 10-08), then up at full HP 517ms
+ ✓  functional  tests/unit/assets/runtime-integration.test.ts (6 tests) 313ms
+stdout | tests/unit/render/crowd-feet.test.ts > crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07
+[{"asset":"npc.civilian-man-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":1.8569929950456976,"afterCm":0.13757419470091503},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":2.0273044329703005,"afterCm":0.26587028315767364},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":12.448116255279686,"afterCm":0.11327046352896883},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":9.806923009769662,"afterCm":0.25941118928743956},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":2.0194144146919504,"afterCm":0.3578158447313593},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.29465786846351927,"afterCm":0.09604809945064159},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":5.752636603367249,"afterCm":0.18874959523004797},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":11.798327354957978,"afterCm":0.07911442111492506},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":10.264620459235259,"afterCm":0.18724213892107838},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":5.741426983167929,"afterCm":0.2813355073254288},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":15.408563850473364,"afterCm":0.1699677158610601},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":0.48173628823627734,"afterCm":0.3381826616803535},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":8.067541419217305,"afterCm":0.1590788697828497},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":3.6863527521918953,"afterCm":0.33121367284033987},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":0.48680447861846676,"afterCm":0.5079144603844108},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.36326975789034405,"afterCm":0.11530132259270039},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":4.380398097680477,"afterCm":0.23925904312618865},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.372625016804154,"afterCm":0.11790627749764136},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.096039974460982,"afterCm":0.2302997645168186},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":4.383559250593167,"afterCm":0.3619659767140931},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.2885414460686889,"afterCm":0.1197995337942584},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":5.914492510222649,"afterCm":0.2149053964432253},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":11.696583237604214,"afterCm":0.06400924683537598},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":10.229205549861694,"afterCm":0.22350018203070132},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":5.9091178132823226,"afterCm":0.24913452994173016},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":2.0902274670899237,"afterCm":0.08368498158902347},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":6.428372467088107,"afterCm":0.1542881012783254},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":9.815800370499002,"afterCm":0.0442677640941852},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":8.954629936860966,"afterCm":0.16799792771419597},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":6.420934674516938,"afterCm":0.20296917529379127},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.3635404117189859,"afterCm":0.059201444740252906},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":4.9502207162237335,"afterCm":0.11562591757090616},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":14.744287840249044,"afterCm":0.0642285011703381},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":12.266295627767434,"afterCm":0.13406881101360799},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":4.957920641478718,"afterCm":0.2503989760784516},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.254478288203292,"afterCm":0.04144101131817721},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":7.345151198456803,"afterCm":0.08099376816203052},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.08080348151266,"afterCm":0.044615558110816245},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.628786399349195,"afterCm":0.09451664229763958},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":7.3468650776122635,"afterCm":0.17796613075552797}]
+
+ ✓  functional  tests/unit/render/crowd-feet.test.ts (3 tests) 1704ms
+   ✓ crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07 1330ms
+   ✓ crowd footwork entering mid-run never produces a non-finite pose @E07 372ms
+ ✓  functional  tests/sim/vehicles/handling.test.ts (13 tests) 399ms
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.hedge","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.street-tree","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.garden-bush-small","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.street-tree-blossom","lod":"lod1","reason":"Error: missing node crown:0"}
+
+stdout | tests/unit/render/l1-grade.test.ts > @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+{"type":"asset.lod-fallback","id":"prop.garden-bush","lod":"lod1","reason":"Error: missing node crown:0"}
+
+ ✓  functional  tests/unit/render/l1-grade.test.ts (4 tests) 824ms
+   ✓ @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials 810ms
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing reviewed authored LODs preserves triangles, sharp normals and provenance
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+prune: Removed types... Accessor (3)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+prune: Removed types... Accessor (8)
+
+stdout | tests/unit/assets/authored-lods.test.ts > packing mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+prune: Removed types... Accessor (6)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+stdout | tests/unit/assets/authored-lods.test.ts > native distance packing enforces absolute triangle caps and decreasing bytes
+prune: Removed types... Accessor (2)
+
+ ✓  functional  tests/unit/assets/authored-lods.test.ts (3 tests) 158ms
+ ✓  functional  tests/sim/bicycle-knockoff.test.ts (3 tests) 3461ms
+   ✓ an infected bump at speed knocks the courier off; the bike tips over beside her, stays, and can be remounted @E19 @E19-AC16 2295ms
+   ✓ an infected reaching a rider who has stopped also tips the bike over beside her, never elsewhere @E19 587ms
+   ✓ riding into a parked car stops the bike with her still on it; the bike stays under her @E19 576ms
+ ✓  functional  tests/sim/combat/roundhouse.test.ts (4 tests) 207ms
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (156)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (226)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (5), Accessor (85)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (13), Primitive (20), Accessor (80)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (284)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (30), Primitive (32), Accessor (396)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (3), Accessor (56)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (7), Primitive (13), Accessor (52)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (204)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (21), Primitive (23), Accessor (279)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (39)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (156)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (226)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (5), Accessor (85)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (13), Primitive (20), Accessor (80)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (284)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (30), Primitive (32), Accessor (396)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Primitive (3), Accessor (56)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (7), Primitive (13), Accessor (52)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Accessor (204)
+
+stdout | tests/unit/assets/build.test.ts > T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+prune: Removed types... Mesh (21), Primitive (23), Accessor (279)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (103)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (17), Primitive (21), Accessor (84)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (164)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (20), Primitive (20), Accessor (263)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (98)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (12), Primitive (16), Accessor (64)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (164)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (20), Primitive (20), Accessor (263)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (71)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (4), Primitive (6), Accessor (24)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Accessor (120)
+
+stdout | tests/unit/assets/build.test.ts > @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+prune: Removed types... Mesh (13), Primitive (13), Accessor (181)
+
+ ✓  functional  tests/sim/weather.test.ts (9 tests) 47647ms
+   ✓ T-E28-08 @E28 @E28-AC08 every override preserves all six mission graph walks 47423ms
+ ✓  functional  tests/unit/assets/build.test.ts (5 tests) 11356ms
+   ✓ T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal 6073ms
+   ✓ T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate 1032ms
+   ✓ @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files 1400ms
+   ✓ @E17-AC02 commerce decay caps are enforced independently of the integrated base 2808ms
+ ✓  functional  tests/unit/render/static-corpses.test.ts (5 tests) 453ms
+ ✓  functional  tests/unit/audio/policies.test.ts (6 tests) 38ms
+ ✓  functional  tests/unit/render/npc.test.ts (3 tests) 2274ms
+   ✓ @E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading 2084ms
+ ✓  functional  tests/unit/layouts/districts.test.ts (4 tests) 203ms
+ ✓  functional  tests/unit/audio/assets.test.ts (4 tests) 282ms
+ ✓  functional  tests/unit/render/pre-render.test.ts (5 tests) 20ms
+ ✓  functional  tests/sim/progression.test.ts (6 tests) 168ms
+ ✓  functional  tests/sim/interact/devices.test.ts (5 tests) 242ms
+ ✓  functional  tests/unit/vfx/events.test.ts (4 tests) 2379ms
+   ✓ T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings 1992ms
+ ✓  functional  tests/unit/audio/l1-arc.test.ts (3 tests) 82ms
+ ✓  functional  tests/unit/render/sit-pose.test.ts (2 tests) 59ms
+ ✓  functional  tests/unit/assets/validate.test.ts (16 tests) 126530ms
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 124491ms
+   ✓ @E17-AC02 decay caps apply to variants without changing the integrated base budget 781ms
+   ✓ @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits 806ms
+ ✓  functional  tests/unit/render/texture-ranges.test.ts (4 tests) 93ms
+ ✓  functional  tests/unit/layouts/clipping.test.ts (2 tests) 1421ms
+   ✓ layout clipping guard (L1 + L2) (1)
+     ✓ @clipping D-GROVE: no hard static props interpenetrate 1206ms
+ ✓  functional  tests/sim/combat/m1-feel.test.ts (4 tests) 366ms
+ ✓  functional  tests/sim/missions/campaign.test.ts (15 tests) 67340ms
+   ✓ T-E12-07-L1 @E12 @E12-AC07 every cheat advances exactly one L1 step to level.completed 484ms
+   ✓ T-E12-07-L2 @E12 @E12-AC07 every cheat advances exactly one L2 step to level.completed 8402ms
+   ✓ T-E12-07-L3 @E12 @E12-AC07 every cheat advances exactly one L3 step to level.completed 28733ms
+   ✓ T-E12-07-L6 @E12 @E12-AC07 every cheat advances exactly one L6 step to level.completed 627ms
+   ✓ @E12 @E12-AC07 L3 armory -> defend -> fallback -> army checkpoint completes straight into progression 28070ms
+   ✓ @E12 @E12-AC05 authored source checkpoint can be loaded fresh and retains its reached snapshot 364ms
+ ✓  functional  tests/unit/levels/l2-static.test.ts (3 tests) 14626ms
+   ✓ T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, exactly one smoking vehicle, nothing post-apocalyptic 7413ms
+   ✓ T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fire Station 3 placement, the L2 copy removes what it replaces, the ambush doors stay by the market 7210ms
+ ✓  functional  tests/unit/assets/load-pipeline.test.ts (6 tests) 466ms
+   ✓ @load asset URLs carry content versions only when the build provides them 443ms
+ ✓  functional  tests/unit/audio/streaming.test.ts (4 tests) 12ms
+ ✓  functional  tests/sim/combat/click-rate.test.ts (1 test) 581ms
+   ✓ @E05 P1 every click is a swing: 10 Hz clicks give one swing per click (minus at most one queued), at the weapon cycle 580ms
+ ✓  functional  tests/unit/assets/lod-fidelity.test.ts (1 test) 1243ms
+   ✓ distance tiers of small props keep their surface (no collapsed LOD2 spikes) @load 1241ms
+ ✓  functional  tests/sim/districts.test.ts (2 tests) 60396ms
+   ✓ T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier 59146ms
+   ✓ T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage only in range, and unload releases resources 1249ms
+ ✓  functional  tests/unit/audio/danger.test.ts (4 tests) 18ms
+ ✓  functional  tests/unit/render/l1-look.test.ts (3 tests) 213ms
+ ✓  functional  tests/unit/render/infected-bake.test.ts (3 tests) 257ms
+ ✓  functional  tests/sim/vehicles/interaction.test.ts (4 tests) 347ms
+ ✓  functional  tests/unit/vfx/integration.test.ts (5 tests) 248ms
+ ✓  functional  tests/sim/combat/l1-duel.test.ts (2 tests | 1 skipped) 11ms
+ ✓  functional  tests/sim/handover-door-route.test.ts (5 tests) 7103ms
+   ✓ @E19 depot clerk walks out of the door and back in (courier at counter %+.1f, %+.1f) 1572ms
+   ✓ @E19 depot clerk walks out of the door and back in (courier at counter %+.1f, %+.1f) 1458ms
+   ✓ @E19 depot clerk walks out of the door and back in (courier at counter %+.1f, %+.1f) 1095ms
+   ✓ @E19 depot clerk walks out of the door and back in (courier at counter %+.1f, %+.1f) 1088ms
+   ✓ @E19 lab technician comes out of the annex door, signs and goes back in through it 1888ms
+ ✓  functional  tests/sim/combat/click-queue.test.ts (10 tests) 356ms
+ ✓  functional  tests/unit/assets/crowd.test.ts (1 test) 516ms
+   ✓ T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times 514ms
+ ✓  functional  tests/unit/render/roundhouse-pose.test.ts (1 test) 305ms
+   ✓ @E04 @E05 roundhouse: full-circle body spin, lead foot pivots on the spot, trail foot lifts and lands 303ms
+ ↓  functional  tests/sim/combat/fire-axe.test.ts (1 test | 1 skipped)
+ ✓  functional  tests/unit/render/l1-infection-overlay.test.ts (1 test) 2130ms
+   ✓ T-E19-18 @E19 @E19-AC18 a turned pedestrian renders as the same person: own model batch, own tint, infection overlay 2128ms
+ ✓  functional  tests/unit/core/foundation.test.ts (5 tests) 121ms
+ ✓  functional  tests/unit/render/foliage.test.ts (3 tests) 88ms
+ ✓  functional  tests/unit/render/crowd-topology.test.ts (1 test) 1176ms
+   ✓ common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07 1175ms
+stderr | tests/unit/vfx/lab-accident.test.ts > T-E19-19b @E19 @E19-AC19 accident FX: flicker, contained blast with short shake, glass, faint-green smoke, infection puff
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+stdout | tests/unit/render/crowd-footwork.test.ts > pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07
+┌─────────┬──────────────────────────┬──────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario             │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼──────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ 'npc.civilian-man-a@1'   │ 'walk 1.4 m/s'       │ 13       │ 0.21       │ 0              │ 11.1      │ 0.21        │ 0         │
+│ 1       │ 'npc.civilian-man-a@1'   │ 'walk turn 90°'      │ 13       │ 0.79       │ 0              │ 12.4      │ 7.34        │ 38.68     │
+│ 2       │ 'npc.civilian-man-a@1'   │ 'walk turn 180°'     │ 14       │ 2.24       │ 0.01           │ 17.6      │ 7.76        │ 41        │
+│ 3       │ 'npc.civilian-man-a@1'   │ 'turn in place 180°' │ 6        │ 0.62       │ 0              │ 5.9       │ 71.98       │ 180       │
+│ 4       │ 'npc.civilian-man-a@1'   │ 'start-stop'         │ 9        │ 0.47       │ 0              │ 12.8      │ 5.43        │ 0         │
+│ 5       │ 'npc.civilian-man-a@1'   │ 'flee 4 m/s'         │ 22       │ 0.08       │ 0              │ 13.6      │ 0.16        │ 0         │
+│ 6       │ 'npc.civilian-man-a@1'   │ 'flee turn 120°'     │ 22       │ 0.2        │ 0.02           │ 19        │ 1.66        │ 7.09      │
+│ 7       │ 'npc.civilian-man-a@1'   │ 'wander (seeded)'    │ 49       │ 2.18       │ 0.01           │ 25.2      │ 64.92       │ 146.81    │
+│ 8       │ 'npc.civilian-woman-a@1' │ 'walk 1.4 m/s'       │ 13       │ 0.13       │ 0              │ 12.8      │ 0.41        │ 0         │
+│ 9       │ 'npc.civilian-woman-a@1' │ 'walk turn 90°'      │ 14       │ 1.48       │ 0.01           │ 14.5      │ 7.45        │ 38.39     │
+│ 10      │ 'npc.civilian-woman-a@1' │ 'walk turn 180°'     │ 14       │ 1.58       │ 0.02           │ 12.7      │ 7.42        │ 38.39     │
+│ 11      │ 'npc.civilian-woman-a@1' │ 'turn in place 180°' │ 6        │ 0.36       │ 0              │ 6.7       │ 75.7        │ 180       │
+│ 12      │ 'npc.civilian-woman-a@1' │ 'start-stop'         │ 9        │ 0.36       │ 0              │ 16.1      │ 11.6        │ 0         │
+│ 13      │ 'npc.civilian-woman-a@1' │ 'flee 4 m/s'         │ 18       │ 0.19       │ 0              │ 18        │ 0.43        │ 0         │
+│ 14      │ 'npc.civilian-woman-a@1' │ 'flee turn 120°'     │ 18       │ 0.21       │ 0.03           │ 18        │ 2.11        │ 10.25     │
+│ 15      │ 'npc.civilian-woman-a@1' │ 'wander (seeded)'    │ 42       │ 1.38       │ 0.04           │ 25.9      │ 100.12      │ 146.81    │
+│ 16      │ 'npc.civilian-man-a@0.7' │ 'walk 1.4 m/s'       │ 16       │ 0.76       │ 0              │ 7.1       │ 0.13        │ 0         │
+│ 17      │ 'npc.civilian-man-a@0.7' │ 'walk turn 90°'      │ 16       │ 0.91       │ 0              │ 7.1       │ 5.9         │ 39.8      │
+│ 18      │ 'npc.civilian-man-a@0.7' │ 'walk turn 180°'     │ 17       │ 2.55       │ 0.01           │ 13.2      │ 4.89        │ 36.95     │
+│ 19      │ 'npc.civilian-man-a@0.7' │ 'turn in place 180°' │ 6        │ 0.43       │ 0              │ 4.2       │ 50.39       │ 180       │
+│ 20      │ 'npc.civilian-man-a@0.7' │ 'start-stop'         │ 12       │ 0.71       │ 0              │ 7.9       │ 17.75       │ 0         │
+│ 21      │ 'npc.civilian-man-a@0.7' │ 'flee 4 m/s'         │ 25       │ 0.13       │ 0              │ 12.4      │ 0.24        │ 0         │
+│ 22      │ 'npc.civilian-man-a@0.7' │ 'flee turn 120°'     │ 26       │ 0.85       │ 0.01           │ 13.2      │ 4.45        │ 12.57     │
+│ 23      │ 'npc.civilian-man-a@0.7' │ 'wander (seeded)'    │ 59       │ 1.93       │ 0.01           │ 18        │ 0           │ 0         │
+└─────────┴──────────────────────────┴──────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+stderr | tests/unit/vfx/lab-accident.test.ts > T-E19-19c @E19 @E19-AC19 reduced flashing never strobes and prewarm leaves nothing alive
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓  functional  tests/unit/vfx/lab-accident.test.ts (2 tests) 210ms
+ ✓  functional  tests/unit/motionlab/stage1.test.ts (3 tests) 348ms
+ ✓  functional  tests/unit/audio/ambience-guard.test.ts (3 tests) 71ms
+ ✓  functional  tests/unit/survivor.test.ts (3 tests) 145ms
+ ✓  functional  tests/unit/levels/l5-footprints.test.ts (1 test) 666ms
+   ✓ T-E23-05c @E23 @E23-AC05 shipped W5 hero geometry retains a top-down footprint mask IoU >= 0.9 664ms
+ ✓  functional  tests/unit/render/lod-policy.test.ts (7 tests) 8ms
+ ✓  functional  tests/unit/render/look-patch.test.ts (14 tests) 15ms
+ ✓  functional  tests/sim/interact/pickups.test.ts (3 tests) 228ms
+stdout | tests/unit/render/crowd-footwork.test.ts > zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08
+┌─────────┬──────────────────────────┬─────────────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario                    │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼─────────────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ 'inf.common-worker.lod1' │ 'shamble 1 m/s (drag foot)' │ 12       │ 0.12       │ 0              │ 15.4      │ 0.16        │ 0         │
+│ 1       │ 'inf.common-worker.lod1' │ 'shamble turn 90°'          │ 14       │ 0.58       │ 0              │ 15.4      │ 5.65        │ 34.69     │
+│ 2       │ 'inf.common-worker.lod1' │ 'runner lurch 5.1 m/s'      │ 23       │ 0.17       │ 0              │ 15.3      │ 0.28        │ 0         │
+│ 3       │ 'inf.common-worker.lod1' │ 'runner turn 90°'           │ 23       │ 0.21       │ 0.01           │ 15.3      │ 5.11        │ 15.03     │
+│ 4       │ 'inf.common-worker.lod1' │ 'face target 150° (snap)'   │ 6        │ 0.56       │ 0              │ 10.4      │ 44.02       │ 118.51    │
+│ 5       │ 'inf.common-worker.lod1' │ 'lunge-grab attack'         │ 5        │ 0.86       │ 0              │ 2.5       │ 95.03       │ 1.75      │
+│ 6       │ 'inf.common-worker.lod1' │ 'wander (seeded)'           │ 48       │ 1.83       │ 0.01           │ 21.5      │ 71.14       │ 142.09    │
+│ 7       │ 'inf.common-worker.lod1' │ 'flinch x4 (fast clicks)'   │ 2        │ 0          │ 0              │ 0         │ 22.33       │ 1.81      │
+│ 8       │ 'npc.civilian-woman-b'   │ 'shamble 1 m/s (drag foot)' │ 12       │ 0.57       │ 0              │ 15.9      │ 0.4         │ 0         │
+│ 9       │ 'npc.civilian-woman-b'   │ 'shamble turn 90°'          │ 14       │ 0.57       │ 0              │ 15.9      │ 6.43        │ 32.63     │
+│ 10      │ 'npc.civilian-woman-b'   │ 'runner lurch 5.1 m/s'      │ 22       │ 0.14       │ 0              │ 18.1      │ 0.27        │ 0         │
+│ 11      │ 'npc.civilian-woman-b'   │ 'runner turn 90°'           │ 22       │ 0.15       │ 0.01           │ 18.1      │ 3.61        │ 18.67     │
+│ 12      │ 'npc.civilian-woman-b'   │ 'face target 150° (snap)'   │ 6        │ 0.4        │ 0              │ 6.7       │ 36.87       │ 124.19    │
+│ 13      │ 'npc.civilian-woman-b'   │ 'lunge-grab attack'         │ 2        │ 0.58       │ 0              │ 0.6       │ 100.51      │ 1.89      │
+│ 14      │ 'npc.civilian-woman-b'   │ 'wander (seeded)'           │ 48       │ 1.77       │ 0.01           │ 23.9      │ 69.62       │ 142.09    │
+│ 15      │ 'npc.civilian-woman-b'   │ 'flinch x4 (fast clicks)'   │ 2        │ 0          │ 0              │ 0         │ 28.53       │ 1.89      │
+└─────────┴──────────────────────────┴─────────────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ ✓  functional  tests/unit/render/crowd-footwork.test.ts (3 tests) 14376ms
+   ✓ pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07 9696ms
+   ✓ zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08 4677ms
+ ✓  functional  tests/unit/assets/registry.test.ts (3 tests) 35ms
+ ✓  functional  tests/unit/assets/living-adults.test.ts (2 tests) 1929ms
+   ✓ living adult shipped tiers obey the base draw ceiling and batch attachments 1820ms
+ ✓  functional  tests/unit/audio/registry.test.ts (3 tests) 16ms
+ ✓  functional  tests/unit/input/rack-selection.test.ts (5 tests) 15ms
+ ✓  functional  tests/sim/controls.test.ts (2 tests) 345ms
+   ✓ T-E03-command-replay @E03 @E03-AC10 @E03-AC15 held target command reaches range, repeats and replays deterministically 333ms
+ ✓  functional  tests/sim/npc/permanence.test.ts (4 tests) 12627ms
+   ✓ quality and density never recycle a visible pedestrian or pet @E07 398ms
+   ✓ decay parks existing traffic without deleting its identity or pose @E07 728ms
+   ✓ 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07 6702ms
+   ✓ a dropped hand prop and an uncollected weapon persist for the level @E07 4797ms
+ ✓  functional  tests/unit/render/catalog-motion.test.ts (6 tests) 634ms
+ ✓  functional  tests/sim/combat/l2-toughness.test.ts (3 tests) 18907ms
+   ✓ L2 mission: the level carries its melee table; a normal runner needs 3 axe, 4 bat, 8 fist hits 11022ms
+   ✓ L2 mission: one bat roundhouse over a crowd of three downs none of them 7701ms
+ ↓  functional  tests/sim/combat/encounter-balance.test.ts (1 test | 1 skipped)
+ ✓  functional  tests/unit/input/click-pick.test.ts (3 tests) 6ms
+ ✓  functional  tests/unit/audio/credits.test.ts (3 tests) 79ms
+ ✓  functional  tests/sim/vehicles/interact-integration.test.ts (3 tests) 216ms
+ ✓  functional  tests/unit/combat/loadout.test.ts (3 tests) 12ms
+ ✓  functional  tests/unit/motionlab/skin.test.ts (2 tests) 593ms
+   ✓ motion lab crowd palettes yield finite landmarks and use one instanced mesh 427ms
+ ✓  functional  tests/sim/interact/gate-lockin.test.ts (6 tests) 38906ms
+   ✓ L1: every interactive gate has a reachable walkable point on both faces, including restored closed gates 668ms
+   ✓ L2: every interactive gate has a reachable walkable point on both faces, including restored closed gates 8599ms
+   ✓ L3: every interactive gate has a reachable walkable point on both faces, including restored closed gates 29401ms
+ ✓  functional  tests/unit/render/view.test.ts (3 tests) 22ms
+ ✓  functional  tests/sim/npc/traffic.test.ts (2 tests) 617ms
+   ✓ T-E08-09 @E08 @E08-AC09 braking cars stop for player/civilian and cannot overlap crossing walkers 555ms
+ ✓  functional  tests/unit/assets/production-gates.test.ts (3 tests) 207ms
+fatal: Needed a single revision
+ ✓  functional  tests/unit/setup.test.ts (3 tests) 1092ms
+   ✓ T-E01-previews @E01 dev server serves optional preview pages 1028ms
+ ✓  functional  tests/unit/missions/schema.test.ts (2 tests) 9ms
+ ✓  functional  tests/unit/import-graph.test.ts (2 tests) 2089ms
+   ✓ T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies 1355ms
+   ✓ T-E01-03b @E01 @E01-AC03 lint rejects unseeded randomness, DOM and renderer imports 731ms
+ ✓  functional  tests/unit/levels/l5-shutter.test.ts (1 test) 150ms
+ ✓  functional  tests/unit/layouts/d-grove-scaffold.test.ts (2 tests) 26ms
+ ✓  functional  tests/unit/input/buttons.test.ts (3 tests) 6ms
+ ✓  functional  tests/sim/arrival-stability.test.ts (3 tests) 2315ms
+   ✓ arrival stays at rest for 3 s beside corgi @E03 @E04 856ms
+   ✓ arrival stays at rest for 3 s beside curb @E03 @E04 751ms
+   ✓ arrival stays at rest for 3 s beside parked bike @E03 @E04 706ms
+ ✓  functional  tests/unit/assets/static-collision.test.ts (3 tests) 178ms
+ ✓  functional  tests/sim/interact/infected-integration.test.ts (3 tests) 247ms
+ ✓  functional  tests/unit/performance/quality.test.ts (4 tests) 15ms
+ ✓  functional  tests/unit/render/post-fx-streaming.test.ts (2 tests) 26ms
+ ✓  functional  tests/unit/levels/l2-roads.test.ts (2 tests) 16528ms
+   ✓ L2 starts with no loose furniture footprint in a driving lane, including inherited and dressed props 8173ms
+   ✓ L2 assembly rejects carried furniture on a road; gameplay/checkpoint restoration keeps a displaced pose 8353ms
+stdout | tests/sim/npc/l1-motion-clips.test.ts > @E19 @E19-AC18 infected clip follows ground speed over a 60 s outbreak (no skating)
+speed/clip mismatch over 2 x 60 s: before 556/89085 (0.62 %), after 0/89085 (0.00 %)
+
+ ✓  functional  tests/sim/npc/l1-motion-clips.test.ts (1 test) 22957ms
+   ✓ @E19 @E19-AC18 infected clip follows ground speed over a 60 s outbreak (no skating) 22956ms
+ ✓  functional  tests/unit/missions/house-emergence.test.ts (2 tests) 16ms
+ ✓  functional  tests/unit/physics-prop-contract.test.ts (1 test) 283ms
+ ✓  functional  tests/unit/render/l6-power.test.ts (1 test) 8ms
+ ✓  functional  tests/unit/input/bindings.test.ts (3 tests) 10ms
+ ✓  functional  tests/unit/layouts/build.test.ts (1 test) 1248ms
+   ✓ T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal 1246ms
+stdout | tests/unit/render/crowd-lod-geometry.test.ts > @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+{ before: 3782, after: 2946 }
+
+ ✓  functional  tests/unit/render/crowd-lod-geometry.test.ts (1 test) 388ms
+   ✓ @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership 387ms
+ ✓  functional  tests/unit/render/crowd-sink.test.ts (7 tests) 1217ms
+ ✓  functional  tests/unit/data/actions.test.ts (3 tests) 16ms
+ ✓  functional  tests/unit/levels/l6-static.test.ts (2 tests) 14ms
+ ✓  functional  tests/sim/determinism.test.ts (3 tests) 823ms
+   ✓ T-E01-04 @E01 @E01-AC04 same seed and script give the same 3600-tick state 520ms
+ ✓  functional  tests/sim/recorder.test.ts (1 test) 367ms
+   ✓ T-E03-10 @E03 @E03-AC10 serialized recording replays identical sim state hashes at every tick 364ms
+ ✓  functional  tests/unit/assets/references.test.ts (2 tests) 104ms
+ ✓  functional  tests/unit/data/explosions.test.ts (1 test) 9ms
+ ✓  functional  tests/sim/npc/integration.test.ts (1 test) 519ms
+   ✓ @E08 rescue lifecycle and tier collision refresh on the retired M1 map (L1 v2 replaced the diner beat) 517ms
+ ✓  functional  tests/unit/data/action-assets.test.ts (2 tests) 80ms
+ ✓  functional  tests/unit/vfx/pools.test.ts (3 tests) 62ms
+ ✓  functional  tests/sim/l1-walk.test.ts (2 tests) 181ms
+ ✓  functional  tests/unit/traceability.test.ts (2 tests) 424ms
+   ✓ T-E01-traceability @E01 every active epic AC has a matching test tag 418ms
+ ✓  functional  tests/unit/layouts/crossval.test.ts (1 test) 356ms
+   ✓ T-E10-11 @E10 @E10-AC11 all TS anchor references, spawn volumes, triggers and objectives validate against layout/nav 354ms
+ ✓  functional  tests/unit/vehicles.test.ts (1 test) 250ms
+ ✓  functional  tests/unit/render/palette.test.ts (2 tests) 10ms
+ ↓  functional  tests/sim/combat/l1-crowd.test.ts (1 test | 1 skipped)
+ ✓  functional  tests/unit/render/inspection-camera.test.ts (2 tests) 239ms
+ ✓  functional  tests/unit/audio/acoustics.test.ts (3 tests) 6ms
+ ✓  functional  tests/unit/audio/noise.test.ts (1 test) 113ms
+ ✓  functional  tests/unit/e2e-error-guard.test.ts (3 tests) 12ms
+ ✓  functional  tests/unit/performance/deviceEvidence.test.ts (2 tests) 8ms
+ ✓  functional  tests/sim/missions/l2-ride-vehicles.test.ts (2 tests) 52969ms
+   ✓ @E20 truck brakes smoothly and holds for a stationary sedan in its lane 34147ms
+   ✓ @E20 crossing traffic yields outside the truck sweep and lets the ride finish 18820ms
+ ✓  functional  tests/unit/render/crowd-register.test.ts (2 tests) 6ms
+ ✓  functional  tests/unit/audio/music-beats.test.ts (2 tests) 9ms
+stdout | tests/sim/ai/infected-stuck-l2.test.ts > L2: infected never stand frozen (single seed, 150 s)
+[l2-stuck] still > 2 s in 1 of 45651 samples (0.00 %); longest 2.1 s (id 163 wander at -45.6,-26.7 t=88 s)
+
+ ✓  functional  tests/sim/ai/infected-stuck-l2.test.ts (1 test) 45748ms
+   ✓ L2: infected never stand frozen (single seed, 150 s) 45746ms
+ ✓  functional  tests/unit/render/weather-materials.test.ts (1 test) 46ms
+ ✓  functional  tests/unit/combat/events.test.ts (1 test) 198ms
+ ✓  functional  tests/unit/input/walk.test.ts (2 tests) 7ms
+ ✓  functional  tests/unit/render/interaction-marker.test.ts (1 test) 4ms
+ ✓  functional  tests/unit/layouts/visual-bounds.test.ts (1 test) 284ms
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (63)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (208)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (26), Primitive (26), Accessor (286)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (54)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (196)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (24), Primitive (24), Accessor (266)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (45)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (180)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (22), Primitive (22), Accessor (244)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (7)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Accessor (48)
+
+stdout | tests/unit/assets/commerce-pack.test.ts > @E17-AC01 packing a base delivers every declared decay and preserves native tiers
+prune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+ ✓  functional  tests/unit/assets/commerce-pack.test.ts (1 test) 2536ms
+   ✓ @E17-AC01 packing a base delivers every declared decay and preserves native tiers 2535ms
+ ✓  functional  tests/unit/ui-telegraphs.test.ts (1 test) 126ms
+ ✓  functional  tests/unit/render/crowd-visibility.test.ts (2 tests) 6ms
+ ✓  functional  tests/sim/ai/turning.test.ts (1 test) 123ms
+ ✓  functional  tests/unit/motionlab/motion.test.ts (2 tests) 68ms
+ ✓  functional  tests/unit/performance/assets.test.ts (1 test) 25ms
+ ✓  functional  tests/unit/render/corgi-scale.test.ts (1 test) 44ms
+ ✓  functional  tests/unit/render/l3-boom.test.ts (1 test) 9ms
+ ✓  functional  tests/unit/input/wheel.test.ts (1 test) 10ms
+ ✓  functional  tests/unit/missions/dialogue.test.ts (1 test) 13ms
+ ✓  functional  tests/unit/physics-metadata.test.ts (1 test) 180ms
+ ✓  functional  tests/unit/ui-settings.test.ts (1 test) 5ms
+ ✓  functional  tests/unit/performance/gibs.test.ts (1 test) 136ms
+ ✓  functional  tests/unit/assets/army-boom.test.ts (1 test) 61ms
+ ✓  functional  tests/unit/input/raised-floor.test.ts (1 test) 6ms
+ ✓  functional  tests/unit/performance/layouts.test.ts (1 test) 82ms
+ ✓  functional  tests/unit/assets/png-pixels.test.ts (1 test) 15ms
+ ✓  functional  tests/sim/runner.test.ts (1 test) 3601ms
+   ✓ T-E01-08 @E01 @E01-AC08 npm sim writes a headless JSON report 3599ms
+ ✓  functional  tests/unit/tooling/headless-only.test.ts (1 test) 125ms
+ ✓  functional  tests/unit/assets/window-glow-lod.test.ts (1 test) 1089ms
+   ✓ window glows stay in their windows in every LOD (1)
+     ✓ LOD1/LOD2 glow patches coincide with the LOD0 patches of every building 1085ms
+ ✓  functional  tests/unit/levels/layout-overlap.test.ts (2 tests) 43413ms
+   ✓ L2 additions on D-GROVE do not cut into any other placement (staticOverlapMax 0) 10075ms
+   ✓ L3 additions on D-CORRIDOR do not cut into any other placement (staticOverlapMax 0) 33335ms
+ ✓  functional  tests/unit/static.test.ts (1 test) 58771ms
+   ✓ T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings 58769ms
+stdout | tests/sim/npc/l1-civilians.test.ts > L1 v2 civilians and infection > T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)
+AC06 infected at +120 s: 27 25 29 30 24 29 30 25 31 24 34 26 29 31 27 30 31 26 29 23; at +240 s: 27 25 29 30 24 29 30 26 32 25 34 26 30 31 29 30 31 26 29 26
+
+ ✓  functional  tests/sim/npc/l1-civilians.test.ts (7 tests) 881693ms
+   ✓ L1 v2 civilians and infection (7)
+     ✓ T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected 41893ms
+     ✓ T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI) 824110ms
+     ✓ T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier 14044ms
+     ✓ @E19 @E19-AC06 at the infected cap a bite kills instead of turning (60 high / 30 low) 1198ms
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-10 @E19 @E19-AC10 search 10-18 s, probe points, double-back, then wander
+[AC10] 200 episodes mean 14.01 s std 2.29 s, double-back 122/200, probes min 3 median 5
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience)
+[AC10c] lost sight -> search on 8/8 seeds; found again by sight on 3
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-herd @E19 @E19-AC26 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)
+[herd] acquired after 0.43-0.43 s on 20/20 seeds
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence
+[yard] open yard escaped 10/10, closed yard gave up 10/10
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12 @E19 @E19-AC12 speed tiers ordered, mostly faster than the running player, persistent spread per entity
+[AC12] frail 4.41-4.89 average 4.41-5.51 athletic 4.41-5.82 m/s; close 10 m median 11.1 s (min 9.9, max 15.7)
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 1 arrival spread 4.68 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 2 arrival spread 2.12 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 3 arrival spread 4.42 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 4 arrival spread 2.75 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 5 arrival spread 3.05 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[perf] 200 L1 infected p50 1.17 ms p95 1.62 ms max 2.81 ms; modes {"chase":141,"bite":17,"search":26,"wander":5,"attracted":11}; bites 17
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[perf] E18 reference p95 2.14 ms
+
+ ✓  timing  tests/sim/ai/l1-perception.test.ts (15 tests) 10968ms
+   ✓ L1 v2 infected perception (15)
+     ✓ T-E19-08b @E19 @E19-AC08 detection follows sight; footsteps, attacks and the bicycle create no perception events 400ms
+     ✓ T-E19-10 @E19 @E19-AC10 search 10-18 s, probe points, double-back, then wander 1857ms
+     ✓ T-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience) 529ms
+     ✓ T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence 672ms
+     ✓ T-E19-11 @E19 @E19-AC11 car alarm attracts non-chasing infected within 30 m; 20 s, then search and wander 2584ms
+     ✓ T-E19-12 @E19 @E19-AC12 speed tiers ordered, mostly faster than the running player, persistent spread per entity 984ms
+     ✓ T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed 463ms
+     ✓ T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms 2132ms
+ ✓  timing  tests/sim/weapons.test.ts (73 tests) 1739ms
+   ✓ T-E06-03 @E06 @E06-AC03 close shotgun / distant SMG role differentiation and heavy ranges 405ms
+   ✓ T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95 783ms
+ ✓  timing  tests/sim/vehicles/consequences.test.ts (11 tests) 898ms
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"high","simMsP95":2.63048599998001,"budget":4}
+{"level":"L2","tier":"high","simMsP95":2.3823290000436828,"budget":4}
+{"level":"L3","tier":"high","simMsP95":3.408322999952361,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.9226110000163317,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.846436999971047,"budget":4}
+
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"low","simMsP95":2.4155419999733567,"budget":6}
+{"level":"L2","tier":"low","simMsP95":2.3270149999298155,"budget":6}
+{"level":"L3","tier":"low","simMsP95":3.123549999902025,"budget":6}
+{"level":"L4","tier":"low","simMsP95":0.83757199998945,"budget":6}
+{"level":"L5","tier":"low","simMsP95":0.8093279998283833,"budget":6}
+
+ ✓  timing  tests/sim/npc/campaign.test.ts (5 tests) 233675ms
+   ✓ @E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds 948ms
+   ✓ T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 118908ms
+   ✓ T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 112893ms
+   ✓ T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise 907ms
+stdout | tests/sim/ai/director.test.ts > T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+{"scenario":"horde-arena","infected":200,"simMsP95":3.2666990000288934,"budget":4}
+
+ ✓  timing  tests/sim/ai/director.test.ts (9 tests) 69582ms
+   ✓ T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out 1174ms
+   ✓ T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects 66260ms
+   ✓ T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 1797ms
+ ✓  timing  tests/sim/player.test.ts (8 tests) 2506ms
+   ✓ T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m 2143ms
+ ✓  timing  tests/sim/interact/integration.test.ts (6 tests) 774ms
+   ✓ T-E11-perf @E11 @perf 100 infected and 200 flammable props stay below 6ms sim p95; debris remains <=32 405ms
+ ✓  timing  tests/sim/combat/balance.test.ts (3 tests) 7012ms
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 6655ms
+ ✓  timing  tests/sim/performance/horde.test.ts (3 tests) 2500ms
+   ✓ T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 1821ms
+   ✓ T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms 669ms
+ ✓  timing  tests/sim/missions/perf.test.ts (1 test) 517ms
+   ✓ @E12 mission-sandbox fixed-step p95 stays within the 4ms high-tier sim budget 515ms
+ ✓  timing  tests/unit/progression/perf.test.ts (1 test) 249ms
+
+ Test Files  189 passed | 3 skipped (192)
+      Tests  913 passed | 12 skipped (925)
+   Start at  09:30:39
+   Duration  1229.52s (tests 96%, import 3%, transform 1%)
+
+JSON report written to /srv/mi/jobs/epic-closeout-992bec-73342-1791624624/test-results/closeout/node.json
+[remote] pulled test-results/closeout/node.json
+[remote] done exit=0 (runner 157.90.173.117, sync 14s, remote total 1234s)

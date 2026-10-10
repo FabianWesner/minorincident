@@ -10183,6 +10183,36 @@
     "decalTexture": "public/assets/decals/blood-pool.png"
   },
   {
+    "id": "decal.scorch",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "",
+    "dimensions": {
+      "x": 1,
+      "y": 0.015,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 30
+    },
+    "decayVariants": [],
+    "decalTexture": "public/assets/decals/scorch.png"
+  },
+  {
     "id": "decal.blood-trail",
     "category": "prop",
     "status": "integrated",
@@ -13289,7 +13319,13 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "burned"
+    ],
+    "decayAuthoredLodTriangles": {
+      "lod1": 14400,
+      "lod2": 4200
+    },
     "world": {
       "token": "brick",
       "solid": true
