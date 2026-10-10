@@ -24,7 +24,7 @@ export class RoutineProps extends Group {
       phone: [part(new BoxGeometry(.018, .12, .065), '#292537', .079, -.03), part(new BoxGeometry(.004, .085, .05), '#75b8cf', .09, -.022)],
       cane: [part(new CylinderGeometry(.018, .021, .73, 8), '#71513e', .035, -.415, .105), bar(.16, .035, -.045, .025, '#493d34'), part(new CylinderGeometry(.027, .027, .035, 8), '#292537', .035, -.795, .105)],
       // E19 story beats: the courier parcel (cardboard, teal Sunset Grove tape), held at the hands.
-      parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .22, -.04), part(new BoxGeometry(.3, .045, .08), '#2aa198', .22, .085), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .22, .082, .08)],
+      parcel: [part(new BoxGeometry(.3, .24, .26), '#b98a55', .035, -.32), part(new BoxGeometry(.31, .045, .08), '#2aa198', .035, -.195), part(new BoxGeometry(.12, .006, .09), '#f3efe2', .035, -.198, .08), bar(.16, .035, -.045, 0, '#2aa198'), ...[-.08, .08].map(z => part(new CylinderGeometry(.01, .01, .16, 8), '#2aa198', .035, -.125, z))],
       // E22 weapons (code art, held at the right hand): long guns point along the forearm's forward axis, bats and pipes hang along the hand.
       rifle: [part(new BoxGeometry(.07, .09, .95), '#3b3f33', 0, -.02, .38), part(new BoxGeometry(.06, .14, .26), '#2b2d27', 0, -.06, -.1), part(new BoxGeometry(.045, .045, .3), '#1f2120', 0, .02, .75)],
       pistol: [part(new BoxGeometry(.045, .1, .06), '#2d2f33', 0, -.04, 0), part(new BoxGeometry(.05, .06, .2), '#3a3d42', 0, .02, .1)],
@@ -43,7 +43,7 @@ export class RoutineProps extends Group {
   }
   begin(): void { this.contacts.length = 0; for (const mesh of this.meshes.values()) mesh.count = 0; }
   held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07): void {
-    this.gripMatrix.makeTranslation(prop === 'phone' || prop === 'parcel' ? reach - .07 : 0, 0, 0).premultiply(matrix);
+    this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
     this.place(prop, this.gripMatrix);
     if (hand && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test')) {
       const world = new Float32Array(hand.length), point = new Vector3();

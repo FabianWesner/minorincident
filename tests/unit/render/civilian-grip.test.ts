@@ -29,7 +29,7 @@ for (const model of models) test(`@E08 native ${model} fingers clear all routine
     const positions = mesh.geometry.getAttribute('position'), index = mesh.geometry.index;
     const tris = new Float32Array((index?.count ?? positions.count) * 3);
     for (let i = 0; i < tris.length / 3; i++) point.fromBufferAttribute(positions, index ? index.getX(i) : i).applyMatrix4(propMatrix).toArray(tris, i * 3);
-    if (prop === 'phone' || prop === 'parcel') expect(boxOf(tris).min[0] - boxOf(hand).max[0]).toBeCloseTo(.001, 5);
+    if (prop === 'phone') expect(boxOf(tris).min[0] - boxOf(hand).max[0]).toBeCloseTo(.001, 5);
     const sets: TriangleSet[] = [{ id: 'hand', assetId: model, tris: hand, box: boxOf(hand) }, { id: prop, assetId: prop, tris, box: boxOf(tris) }];
     expect(staticClipping(sets), `${model}/${prop}`).toEqual([]);
   }
