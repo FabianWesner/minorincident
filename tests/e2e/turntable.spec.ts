@@ -1,3 +1,6 @@
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import type { AssetDef } from '../../src/assets/types';
+const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
 import { expect, test } from '@playwright/test';
 import { captureTurntable } from '../../tools/assets/turntable';
 import { boot } from './fixtures';
@@ -39,4 +42,24 @@ test('T-E17-05c @E17-AC05 missing production art renders a logged placeholder', 
   const info=await page.evaluate(()=>window.__ASSET__!.info());
   expect(info.placeholder).toBe(true);
   expect(info.events[0]).toMatchObject({type:'asset.placeholder',id:'util.radio'});
+});
+
+/** E17-AC08 inventory proof: one renderer, released assets, five views for every modeled GLB. */
+test('T-E17-08-all @E17 @E17-AC08 all modeled assets have five game renderer views', async ({ page, baseURL }) => {
+  test.setTimeout(1_800_000);
+  const directory = 'test-results/epics/E17/turntables';
+  mkdirSync(directory, { recursive: true });
+  const results: { id: string; coverage?: number[]; error?: string }[] = [];
+  const selected = manifest.filter(a => ['modeled', 'integrated', 'final'].includes(a.status) && a.glb && existsSync(a.glb));
+  for (const asset of selected) {
+    try {
+      await page.setViewportSize(asset.dimensions.y > Math.max(asset.dimensions.x, asset.dimensions.z) ? { width: 360, height: 640 } : { width: 640, height: 360 });
+      const coverage = await captureTurntable(page, asset.id, `${directory}/${asset.id}`, baseURL!);
+      const info = await page.evaluate(() => window.__ASSET__!.info());
+      results.push({ id: asset.id, coverage, ...(info.placeholder ? { error: 'placeholder' } : coverage.some(c => c < .1 || c > .8) ? { error: 'coverage outside 10–80%' } : {}) });
+    } catch (error) { results.push({ id: asset.id, error: String(error) }); }
+    writeFileSync(`${directory}/summary.json`, JSON.stringify(results, null, 2) + '\n');
+  }
+  expect(results.filter(a => a.error)).toEqual([]);
+  expect(results).toHaveLength(selected.length);
 });
