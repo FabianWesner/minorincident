@@ -2,6 +2,7 @@ import { Rng } from '../../core/Rng';
 import { catalog } from '../../data/actions/catalog';
 import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
 import type { GearTier, SurvivorVariant } from '../../data/survivor';
+import type { L1Aftermath } from '../../levels/continuity';
 export type Level = 1|2|3|4|5|6;
 export type ProgressionPreset = `L${2|3|4|5|6}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
@@ -12,6 +13,8 @@ export interface CampaignSave {
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
+  /** Campaign world-state continuity: what this run's L1 left behind in the town (src/levels/continuity.ts). */
+  world?:{L1?:L1Aftermath};
 }
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
