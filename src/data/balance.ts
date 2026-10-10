@@ -635,7 +635,11 @@ Object.assign(ttkBands, {
 } satisfies Record<string, Record<CombatArchetype, readonly [number, number]>>);
 
 /** PO 2026-10-08 fight speed ("Every click needs to be a kick, no matter how fast I click"): the quicker bat finisher
- * (23 ticks, 0.5 m shove instead of a 3.3 m fling) and the 0.5 s axe swing shorten tough fights; lower bounds follow. */
-for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8]] as const) {
+ * (23 ticks, 0.5 m shove instead of a 3.3 m fling) and the 0.5 s axe swing shorten tough fights; lower bounds follow.
+ * PO 2026-10-10 also raises axe damage x1.25; its TTK lower bounds follow that ratio. */
+for (const [weapon, factor] of [['weapon.bat', .7], ['weapon.fire-axe', .8 / 1.25]] as const) {
   for (const archetype of Object.keys(ttkBands[weapon]) as CombatArchetype[]) { const [low, high] = ttkBands[weapon][archetype]; ttkBands[weapon][archetype] = [+(low * factor).toFixed(2), high]; }
 }
+// 56 damage crosses the 140/150 HP three-hit threshold (was four at 45): one fewer 0.5 s swing.
+// Preserve the previous 1.45 s lower bound's timing margin after removing that swing.
+for (const archetype of ['riot', 'firefighter'] as const) ttkBands['weapon.fire-axe'][archetype] = [.95, ttkBands['weapon.fire-axe'][archetype][1]];
