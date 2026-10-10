@@ -15,7 +15,11 @@ import type { AssetDef } from './types';
 export interface AssetViewerApi {
   ready: Promise<void>;
   lighting?(night: boolean, powered: boolean): Promise<void>;
-  view(index: number): Promise<void>;
+  view(index: number, roll?: number): Promise<void>;
+  /** Batch inspection reuses the renderer and releases the previous asset. */
+  selectAsset?(id: string): Promise<void>;
+  /** Fit the complete visible silhouette, supplied as normalized screen bounds. */
+  frame?(bounds: [number, number, number, number]): void;
   visibility(name: string, visible: boolean): Promise<void>;
   inspectionView?(quality: 'high' | 'lod1' | 'lod2', azimuth: number, roofVisible?: boolean): Promise<void>;
   deliveryView?(quality: 'high' | 'lod1' | 'lod2', distance: number): Promise<void>;
@@ -27,7 +31,8 @@ declare global { interface Window { __ASSET__?: AssetViewerApi } }
 
 /** The game WebGPU renderer (WebGL2 fallback), palette swap and golden-hour lights. */
 export async function assetViewer(): Promise<void> {
-  const params = new URLSearchParams(location.search), id = params.get('asset') ?? 'veh.fire-engine';
+  const params = new URLSearchParams(location.search);
+  let id = params.get('asset') ?? 'veh.fire-engine';
   const renderer = new WebGPURenderer({ antialias: true, forceWebGL: params.get('renderer') === 'webgl' });
   renderer.info.autoReset = false;
   renderer.setPixelRatio(1); renderer.setSize(innerWidth, innerHeight); await renderer.init();
@@ -40,11 +45,12 @@ export async function assetViewer(): Promise<void> {
   const events: PlaceholderLog[] = [];
   const inspectionLighting = new Lighting(new Scene(), undefined, renderer);
   const inspectionMaterials = new Materials(inspectionLighting);
-  const registry = new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
+  const createRegistry = () => new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
     // Explicit inspection shows pending source files without stale registration metadata.
     manifest: (import.meta.env.DEV || params.has('test')) && params.has('production')
       ? (manifest as AssetDef[]).map(def => def.id === id ? { ...def, status: 'integrated', ...(params.has('inspection') ? { requiredNodes: [], animatedNodes: [], sockets: [], dimensions: { ...def.dimensions, tolerance: Number.POSITIVE_INFINITY } } : {}) } : def) : undefined,
   });
+  let registry = createRegistry();
   const decay = document.querySelector<HTMLSelectElement>('#decay')!;
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
   decay.disabled = !registry.definition(id).decayVariants.length;
@@ -60,7 +66,7 @@ export async function assetViewer(): Promise<void> {
     inspectionLighting.field.update(center.x, center.z, 0); inspectionLighting.field.render(renderer);
     renderer.info.reset(); renderer.render(scene,camera);
   }
-  async function view(index: number): Promise<void> {
+  async function view(index: number, roll?: number): Promise<void> {
     const angle = index === 4 ? Math.PI / 4 : index * Math.PI / 2;
     const elevation = index === 4 ? Math.PI * .2 : .32;
     const width = Math.abs(Math.sin(angle))*size.x + Math.abs(Math.cos(angle))*size.z;
@@ -69,6 +75,7 @@ export async function assetViewer(): Promise<void> {
     const distance = Math.max(width/camera.aspect,height) / Math.tan(camera.fov*Math.PI/360) * .6;
     camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
     controls.target.copy(center); controls.update(); camera.lookAt(center);
+    if (roll !== undefined) camera.rotateZ(roll);
     await renderer.compileAsync(scene,camera); render(); render();
   }
   async function load(): Promise<void> {
@@ -131,7 +138,22 @@ export async function assetViewer(): Promise<void> {
     inspectionLighting.applyLook();
     object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
     await view(4);
-  }, deliveryView, inspectionView, visibility: async (name, visible) => {
+  }, frame: ([left, top, right, bottom]) => {
+    const height = camera.position.distanceTo(controls.target) * 2 * Math.tan(camera.fov * Math.PI / 360), before = camera.position.clone();
+    camera.translateX(((left + right) / 2 - .5) * height * camera.aspect);
+    camera.translateY((.5 - (top + bottom) / 2) * height);
+    controls.target.add(camera.position.clone().sub(before));
+    camera.position.sub(controls.target).multiplyScalar(Math.max(right - left, bottom - top) / .85).add(controls.target);
+    camera.updateMatrixWorld(true); render(); render();
+  }, deliveryView, inspectionView, selectAsset: async next => {
+    if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
+    await registry.dispose(); events.length = 0; id = next; registry = createRegistry();
+    document.querySelector<HTMLSelectElement>('#quality')!.value = 'high';
+    decay.replaceChildren(new Option('Base', ''));
+    for (const name of registry.definition(id).decayVariants) decay.add(new Option(name, name));
+    decay.disabled = !registry.definition(id).decayVariants.length;
+    await load();
+  }, visibility: async (name, visible) => {
     const node = object.getObjectByName(name);
     if (!node) throw new Error(`Missing asset node ${name}`);
     node.visible = visible; await view(4);

@@ -136,6 +136,7 @@ export class DistrictAssets {
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
       asset.userData.assetId = id;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
+      root.userData.placeholder = asset.userData.placeholder === true;
       this.share(root);
       if (id === 'bld.joes-diner') {
         const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);

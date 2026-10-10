@@ -220,6 +220,15 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       if (!existsSync(def.icon)) results.push({ id: def.id, errors: [`missing image ${def.icon}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' });
       continue;
     }
+    // Procedural actions and DOM HUD have no model/LOD contract. Their integrated
+    // manifest state still requires a concrete, shipped implementation.
+    if (def.nonModel && !def.glb) {
+      const errors = !def.presentationSource || !existsSync(def.presentationSource)
+        ? ['nonModel: missing presentationSource implementation'] : [];
+      const bytes = errors.length ? Buffer.alloc(0) : readFileSync(def.presentationSource!);
+      results.push({ id: def.id, errors, triangles: 0, materials: 0, drawCalls: 0, fileKB: bytes.length / 1024, dimensions: [], hash: createHash('sha256').update(bytes).digest('hex') });
+      continue;
+    }
     const source = sourcePath && existsSync(sourcePath) ? await io.read(sourcePath) : undefined;
     const paths = [def.glb, def.lods?.lod1, def.lods?.lod2];
     let base: Validation | undefined;
