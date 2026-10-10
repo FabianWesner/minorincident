@@ -1,0 +1,1129 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28 -> 94.130.181.173:/srv/mi/ws/integrate-e26-e28-4b964a
+[remote] sync 26s, 4877 files; job /srv/mi/jobs/integrate-e26-e28-4b964a-65090-1791592387; queueing for a slot
+[runner] slot 0 acquired; load 0.46 1.55 1.15
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/integrate-e26-e28-4b964a-65090-1791592387[39m
+
+ [32m✓[39m tests/unit/layouts/d-grove.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 933[2mms[22m[39m
+   [32m✓[39m D-GROVE layout [2m(11)[22m
+     [33m[2m✓[22m[39m T-E19-04 @E19 @E19-AC04 no overlapping solid props (colliders, 0.15 m tolerance)[33m 357[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-04 @E19 @E19-AC04 no footprint overlaps between buildings, vehicles, props and tree trunks (asset QA P1-P9)[33m 477[2mms[22m[39m
+ [32m✓[39m tests/unit/render/skin-pilot.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 4502[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female walks and runs on world-locked feet with a readable knee arc @E04[33m 514[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male walks and runs on world-locked feet with a readable knee arc @E04[33m 446[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female turns with steps instead of pivoting or skating @E04[33m 515[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male turns with steps instead of pivoting or skating @E04[33m 380[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04[33m 689[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04[33m 618[2mms[22m[39m
+ [32m✓[39m tests/unit/render/authored-animation.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 4688[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (source)[33m 1569[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (production)[33m 1211[2mms[22m[39m
+   [33m[2m✓[22m[39m VQA-13 @E19 settled infected death poses contact the floor across delivered rigs[33m 908[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Accessor (95)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Mesh (1), Primitive (4), Accessor (12)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Accessor (389)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Mesh (49), Primitive (49), Accessor (513)
+
+ [32m✓[39m tests/unit/render/courier-rig-v2.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 3091[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it[33m 444[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female living layer is frozen-frame exact and deterministic across runs @E04[33m 510[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male living layer is frozen-frame exact and deterministic across runs @E04[33m 328[2mms[22m[39m
+   [33m[2m✓[22m[39m courier blinks every 2–6 s with the lids closed for about 0.1 s @E04[33m 706[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/courier-bike.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 8354[2mms[22m[39m
+   [33m[2m✓[22m[39m @regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm)[33m 8004[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (18)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (56)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (7), Primitive (7), Accessor (77)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Primitive (2), Accessor (63)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (204)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (33), Primitive (33), Accessor (307)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Primitive (1), Accessor (59)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (260)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (32), Primitive (32), Accessor (358)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery keeps skin joints and morph animation channels on the geometry node
+[22m[39mprune: Removed types... Accessor (6)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery keeps skin joints and morph animation channels on the geometry node
+[22m[39mprune: Removed types... Skin (1), Accessor (5)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (3)
+
+ [32m✓[39m tests/unit/assets/delivery.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1854[2mms[22m[39m
+   [33m[2m✓[22m[39m delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette[33m 1693[2mms[22m[39m
+ [32m✓[39m tests/unit/render/camera-jitter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 142[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/optimize.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 6766[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side[33m 615[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-height @E17-AC02 standing adult exports stay 1.75–1.85 m at every LOD[33m 3286[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD[33m 2040[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor pivots at every LOD[33m 666[2mms[22m[39m
+ [32m✓[39m tests/unit/levels/l4-static.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 482[2mms[22m[39m
+ [32m✓[39m tests/unit/performance/nav-visibility.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 408[2mms[22m[39m
+ [32m✓[39m tests/unit/tooling/scenelab.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 105[2mms[22m[39m
+ [32m✓[39m tests/unit/progression/campaign.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 628[2mms[22m[39m
+   [32m✓[39m campaign [2m(10)[22m
+     [33m[2m✓[22m[39m T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers[33m 458[2mms[22m[39m
+ [32m✓[39m tests/unit/render/corgi-feet.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1993[2mms[22m[39m
+   [33m[2m✓[22m[39m instanced infected dog paws remain planted while the root travels @E07[33m 316[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi idle, sit and warning poses keep every paw and the rump on the floor (QA: sit hind paw 17.8 cm under) @E07[33m 1377[2mms[22m[39m
+ [32m✓[39m tests/unit/render/e25-lighting.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 541[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current[33m 442[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/runtime-integration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 287[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-feet.test.ts[2m > [22m[2mcrowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07
+[22m[39m[{"asset":"npc.civilian-man-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":1.8569929950456976,"afterCm":0.13757419470091503},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":2.0273044329703005,"afterCm":0.26587028315767364},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":12.448116255279686,"afterCm":0.11327046352896883},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":9.806923009769662,"afterCm":0.25941118928743956},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":2.0194144146919504,"afterCm":0.3578158447313593},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.29465786846351927,"afterCm":0.09604809945064159},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":5.752636603367249,"afterCm":0.18874959523004797},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":11.798327354957978,"afterCm":0.07911442111492506},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":10.264620459235259,"afterCm":0.18724213892107838},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":5.741426983167929,"afterCm":0.2813355073254288},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":15.408563850473364,"afterCm":0.1699677158610601},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":0.48173628823627734,"afterCm":0.3381826616803535},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":8.067541419217305,"afterCm":0.1590788697828497},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":3.6863527521918953,"afterCm":0.33121367284033987},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":0.48680447861846676,"afterCm":0.5079144603844108},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.36326975789034405,"afterCm":0.11530132259270039},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":4.380398097680477,"afterCm":0.23925904312618865},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.372625016804154,"afterCm":0.11790627749764136},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.096039974460982,"afterCm":0.2302997645168186},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":4.383559250593167,"afterCm":0.3619659767140931},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.2885414460686889,"afterCm":0.1197995337942584},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":5.914492510222649,"afterCm":0.2149053964432253},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":11.696583237604214,"afterCm":0.06400924683537598},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":10.229205549861694,"afterCm":0.22350018203070132},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":5.9091178132823226,"afterCm":0.24913452994173016},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":2.0902274670899237,"afterCm":0.08368498158902347},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":6.428372467088107,"afterCm":0.1542881012783254},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":9.815800370499002,"afterCm":0.0442677640941852},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":8.954629936860966,"afterCm":0.16799792771419597},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":6.420934674516938,"afterCm":0.20296917529379127},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.3635404117189859,"afterCm":0.059201444740252906},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":4.9502207162237335,"afterCm":0.11562591757090616},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":14.744287840249044,"afterCm":0.0642285011703381},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":12.266295627767434,"afterCm":0.13406881101360799},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":4.957920641478718,"afterCm":0.2503989760784516},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.254478288203292,"afterCm":0.04144101131817721},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":7.345151198456803,"afterCm":0.08099376816203052},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.08080348151266,"afterCm":0.044615558110816245},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.628786399349195,"afterCm":0.09451664229763958},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":7.3468650776122635,"afterCm":0.17796613075552797}]
+
+ [32m✓[39m tests/unit/render/crowd-feet.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1744[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07[33m 1351[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd footwork entering mid-run never produces a non-finite pose @E07[33m 390[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.hedge","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.street-tree","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.garden-bush-small","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.street-tree-blossom","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.garden-bush","lod":"lod1","reason":"Error: missing node crown:0"}
+
+ [32m✓[39m tests/unit/assets/static-batch-equivalence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4814[2mms[22m[39m
+   [33m[2m✓[22m[39m optimized static batch attributes equal the reference loop @load[33m 4807[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+ [32m✓[39m tests/unit/render/l1-grade.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 798[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials[33m 786[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+[22m[39mprune: Removed types... Accessor (8)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+[22m[39mprune: Removed types... Accessor (6)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+ [32m✓[39m tests/unit/assets/authored-lods.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 178[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/policies.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (39)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (156)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (226)
+
+ [32m✓[39m tests/unit/render/npc.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2501[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading[33m 2304[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (5), Accessor (85)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (13), Primitive (20), Accessor (80)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (284)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (30), Primitive (32), Accessor (396)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (3), Accessor (56)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (7), Primitive (13), Accessor (52)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (204)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (21), Primitive (23), Accessor (279)
+
+ [32m✓[39m tests/unit/layouts/districts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 203[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/assets.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 215[2mms[22m[39m
+ [32m✓[39m tests/unit/render/pre-render.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (39)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (156)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (226)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (5), Accessor (85)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (13), Primitive (20), Accessor (80)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (284)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (30), Primitive (32), Accessor (396)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (3), Accessor (56)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (7), Primitive (13), Accessor (52)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (204)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (21), Primitive (23), Accessor (279)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (103)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (17), Primitive (21), Accessor (84)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (164)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (20), Primitive (20), Accessor (263)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (98)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (12), Primitive (16), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (164)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (20), Primitive (20), Accessor (263)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (71)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (4), Primitive (6), Accessor (24)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (120)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (13), Primitive (13), Accessor (181)
+
+ [32m✓[39m tests/unit/vfx/events.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 3037[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings[33m 2533[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/l1-arc.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 90[2mms[22m[39m
+ [32m✓[39m tests/unit/render/sit-pose.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 61[2mms[22m[39m
+ [32m✓[39m tests/unit/render/texture-ranges.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 71[2mms[22m[39m
+ [32m✓[39m tests/unit/layouts/clipping.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1338[2mms[22m[39m
+   [32m✓[39m layout clipping guard (L1 + L2) [2m(1)[22m
+     [33m[2m✓[22m[39m @clipping D-GROVE: no hard static props interpenetrate[33m 1128[2mms[22m[39m
+ [32m✓[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 397[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/build.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 12318[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal[33m 6491[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate[33m 1234[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files[33m 1474[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 commerce decay caps are enforced independently of the integrated base[33m 3052[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/load-pipeline.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 294[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/streaming.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/lod-fidelity.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1179[2mms[22m[39m
+   [33m[2m✓[22m[39m distance tiers of small props keep their surface (no collapsed LOD2 spikes) @load[33m 1177[2mms[22m[39m
+ [32m✓[39m tests/unit/levels/l3-static.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2671[2mms[22m[39m
+   [32m✓[39m L3 static [2m(6)[22m
+     [33m[2m✓[22m[39m T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart[33m 1622[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry[33m 1004[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/danger.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m tests/unit/render/l1-look.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 190[2mms[22m[39m
+ [32m✓[39m tests/unit/render/infected-bake.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 294[2mms[22m[39m
+ [32m✓[39m tests/unit/vfx/integration.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 472[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/crowd.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 638[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times[33m 636[2mms[22m[39m
+ [32m✓[39m tests/unit/render/roundhouse-pose.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 315[2mms[22m[39m
+   [33m[2m✓[22m[39m @E04 @E05 roundhouse: full-circle body spin, lead foot pivots on the spot, trail foot lifts and lands[33m 313[2mms[22m[39m
+ [32m✓[39m tests/unit/render/l1-infection-overlay.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2209[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E19-18 @E19 @E19-AC18 a turned pedestrian renders as the same person: own model batch, own tint, infection overlay[33m 2206[2mms[22m[39m
+ [32m✓[39m tests/unit/render/foliage.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 123[2mms[22m[39m
+ [32m✓[39m tests/unit/render/crowd-topology.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1208[2mms[22m[39m
+   [33m[2m✓[22m[39m common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07[33m 1207[2mms[22m[39m
+[90mstderr[2m | tests/unit/vfx/lab-accident.test.ts[2m > [22m[2mT-E19-19b @E19 @E19-AC19 accident FX: flicker, contained blast with short shake, glass, faint-green smoke, infection puff
+[22m[39mTHREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+[90mstderr[2m | tests/unit/vfx/lab-accident.test.ts[2m > [22m[2mT-E19-19c @E19 @E19-AC19 reduced flashing never strobes and prewarm leaves nothing alive
+[22m[39mTHREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ [32m✓[39m tests/unit/vfx/lab-accident.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 182[2mms[22m[39m
+ [32m✓[39m tests/unit/motionlab/stage1.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 550[2mms[22m[39m
+   [33m[2m✓[22m[39m stage1 navigation capsule and NPC traces meet motion budgets @smoke[33m 343[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/ambience-guard.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 103[2mms[22m[39m
+ [32m✓[39m tests/unit/survivor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 136[2mms[22m[39m
+ [32m✓[39m tests/unit/render/lod-policy.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/render/look-patch.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-footwork.test.ts[2m > [22m[2mpedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07
+[22m[39m┌─────────┬──────────────────────────┬──────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario             │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼──────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'walk 1.4 m/s'[39m       │ [33m13[39m       │ [33m0.21[39m       │ [33m0[39m              │ [33m11.1[39m      │ [33m0.21[39m        │ [33m0[39m         │
+│ 1       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'walk turn 90°'[39m      │ [33m13[39m       │ [33m0.79[39m       │ [33m0[39m              │ [33m12.4[39m      │ [33m7.34[39m        │ [33m38.68[39m     │
+│ 2       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'walk turn 180°'[39m     │ [33m14[39m       │ [33m2.24[39m       │ [33m0.01[39m           │ [33m17.6[39m      │ [33m7.76[39m        │ [33m41[39m        │
+│ 3       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'turn in place 180°'[39m │ [33m6[39m        │ [33m0.62[39m       │ [33m0[39m              │ [33m5.9[39m       │ [33m71.98[39m       │ [33m180[39m       │
+│ 4       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'start-stop'[39m         │ [33m9[39m        │ [33m0.47[39m       │ [33m0[39m              │ [33m12.8[39m      │ [33m5.43[39m        │ [33m0[39m         │
+│ 5       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'flee 4 m/s'[39m         │ [33m22[39m       │ [33m0.08[39m       │ [33m0[39m              │ [33m13.6[39m      │ [33m0.16[39m        │ [33m0[39m         │
+│ 6       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'flee turn 120°'[39m     │ [33m22[39m       │ [33m0.2[39m        │ [33m0.02[39m           │ [33m19[39m        │ [33m1.66[39m        │ [33m7.09[39m      │
+│ 7       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'wander (seeded)'[39m    │ [33m49[39m       │ [33m2.18[39m       │ [33m0.01[39m           │ [33m25.2[39m      │ [33m64.92[39m       │ [33m146.81[39m    │
+│ 8       │ [32m'npc.civilian-woman-a@1'[39m │ [32m'walk 1.4 m/s'[39m       │ [33m13[39m       │ [33m0.13[39m       │ [33m0[39m              │ [33m12.8[39m      │ [33m0.41[39m        │ [33m0[39m         │
+│ 9       │ [32m'npc.civilian-woman-a@1'[39m │ [32m'walk turn 90°'[39m      │ [33m14[39m       │ [33m1.48[39m       │ [33m0.01[39m           │ [33m14.5[39m      │ [33m7.45[39m        │ [33m38.39[39m     │
+│ 10      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'walk turn 180°'[39m     │ [33m14[39m       │ [33m1.58[39m       │ [33m0.02[39m           │ [33m12.7[39m      │ [33m7.42[39m        │ [33m38.39[39m     │
+│ 11      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'turn in place 180°'[39m │ [33m6[39m        │ [33m0.36[39m       │ [33m0[39m              │ [33m6.7[39m       │ [33m75.7[39m        │ [33m180[39m       │
+│ 12      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'start-stop'[39m         │ [33m9[39m        │ [33m0.36[39m       │ [33m0[39m              │ [33m16.1[39m      │ [33m11.6[39m        │ [33m0[39m         │
+│ 13      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'flee 4 m/s'[39m         │ [33m18[39m       │ [33m0.19[39m       │ [33m0[39m              │ [33m18[39m        │ [33m0.43[39m        │ [33m0[39m         │
+│ 14      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'flee turn 120°'[39m     │ [33m18[39m       │ [33m0.21[39m       │ [33m0.03[39m           │ [33m18[39m        │ [33m2.11[39m        │ [33m10.25[39m     │
+│ 15      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'wander (seeded)'[39m    │ [33m42[39m       │ [33m1.38[39m       │ [33m0.04[39m           │ [33m25.9[39m      │ [33m100.12[39m      │ [33m146.81[39m    │
+│ 16      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'walk 1.4 m/s'[39m       │ [33m16[39m       │ [33m0.76[39m       │ [33m0[39m              │ [33m7.1[39m       │ [33m0.13[39m        │ [33m0[39m         │
+│ 17      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'walk turn 90°'[39m      │ [33m16[39m       │ [33m0.91[39m       │ [33m0[39m              │ [33m7.1[39m       │ [33m5.9[39m         │ [33m39.8[39m      │
+│ 18      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'walk turn 180°'[39m     │ [33m17[39m       │ [33m2.55[39m       │ [33m0.01[39m           │ [33m13.2[39m      │ [33m4.89[39m        │ [33m36.95[39m     │
+│ 19      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'turn in place 180°'[39m │ [33m6[39m        │ [33m0.43[39m       │ [33m0[39m              │ [33m4.2[39m       │ [33m50.39[39m       │ [33m180[39m       │
+│ 20      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'start-stop'[39m         │ [33m12[39m       │ [33m0.71[39m       │ [33m0[39m              │ [33m7.9[39m       │ [33m17.75[39m       │ [33m0[39m         │
+│ 21      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'flee 4 m/s'[39m         │ [33m25[39m       │ [33m0.13[39m       │ [33m0[39m              │ [33m12.4[39m      │ [33m0.24[39m        │ [33m0[39m         │
+│ 22      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'flee turn 120°'[39m     │ [33m26[39m       │ [33m0.85[39m       │ [33m0.01[39m           │ [33m13.2[39m      │ [33m4.45[39m        │ [33m12.57[39m     │
+│ 23      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'wander (seeded)'[39m    │ [33m59[39m       │ [33m1.93[39m       │ [33m0.01[39m           │ [33m18[39m        │ [33m0[39m           │ [33m0[39m         │
+└─────────┴──────────────────────────┴──────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ [32m✓[39m tests/unit/assets/registry.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/living-adults.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2177[2mms[22m[39m
+   [33m[2m✓[22m[39m living adult shipped tiers obey the base draw ceiling and batch attachments[33m 2027[2mms[22m[39m
+ [32m✓[39m tests/unit/levels/l2-static.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 17014[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, exactly one smoking vehicle, nothing post-apocalyptic[33m 8854[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fire Station 3 placement, the L2 copy removes what it replaces, the ambush doors stay by the market[33m 8157[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/registry.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/input/rack-selection.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m tests/unit/core/foundation.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 184[2mms[22m[39m
+ [32m✓[39m tests/unit/input/click-pick.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/render/catalog-motion.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 680[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/credits.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 92[2mms[22m[39m
+ [32m✓[39m tests/unit/combat/loadout.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-footwork.test.ts[2m > [22m[2mzombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08
+[22m[39m┌─────────┬──────────────────────────┬─────────────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario                    │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼─────────────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ [32m'inf.common-worker.lod1'[39m │ [32m'shamble 1 m/s (drag foot)'[39m │ [33m12[39m       │ [33m0.12[39m       │ [33m0[39m              │ [33m15.4[39m      │ [33m0.16[39m        │ [33m0[39m         │
+│ 1       │ [32m'inf.common-worker.lod1'[39m │ [32m'shamble turn 90°'[39m          │ [33m14[39m       │ [33m0.58[39m       │ [33m0[39m              │ [33m15.4[39m      │ [33m5.65[39m        │ [33m34.69[39m     │
+│ 2       │ [32m'inf.common-worker.lod1'[39m │ [32m'runner lurch 5.1 m/s'[39m      │ [33m23[39m       │ [33m0.17[39m       │ [33m0[39m              │ [33m15.3[39m      │ [33m0.28[39m        │ [33m0[39m         │
+│ 3       │ [32m'inf.common-worker.lod1'[39m │ [32m'runner turn 90°'[39m           │ [33m23[39m       │ [33m0.21[39m       │ [33m0.01[39m           │ [33m15.3[39m      │ [33m5.11[39m        │ [33m15.03[39m     │
+│ 4       │ [32m'inf.common-worker.lod1'[39m │ [32m'face target 150° (snap)'[39m   │ [33m6[39m        │ [33m0.56[39m       │ [33m0[39m              │ [33m10.4[39m      │ [33m44.02[39m       │ [33m118.51[39m    │
+│ 5       │ [32m'inf.common-worker.lod1'[39m │ [32m'lunge-grab attack'[39m         │ [33m5[39m        │ [33m0.86[39m       │ [33m0[39m              │ [33m2.5[39m       │ [33m95.03[39m       │ [33m1.75[39m      │
+│ 6       │ [32m'inf.common-worker.lod1'[39m │ [32m'wander (seeded)'[39m           │ [33m48[39m       │ [33m1.83[39m       │ [33m0.01[39m           │ [33m21.5[39m      │ [33m71.14[39m       │ [33m142.09[39m    │
+│ 7       │ [32m'inf.common-worker.lod1'[39m │ [32m'flinch x4 (fast clicks)'[39m   │ [33m2[39m        │ [33m0[39m          │ [33m0[39m              │ [33m0[39m         │ [33m22.33[39m       │ [33m1.81[39m      │
+│ 8       │ [32m'npc.civilian-woman-b'[39m   │ [32m'shamble 1 m/s (drag foot)'[39m │ [33m12[39m       │ [33m0.57[39m       │ [33m0[39m              │ [33m15.9[39m      │ [33m0.4[39m         │ [33m0[39m         │
+│ 9       │ [32m'npc.civilian-woman-b'[39m   │ [32m'shamble turn 90°'[39m          │ [33m14[39m       │ [33m0.57[39m       │ [33m0[39m              │ [33m15.9[39m      │ [33m6.43[39m        │ [33m32.63[39m     │
+│ 10      │ [32m'npc.civilian-woman-b'[39m   │ [32m'runner lurch 5.1 m/s'[39m      │ [33m22[39m       │ [33m0.14[39m       │ [33m0[39m              │ [33m18.1[39m      │ [33m0.27[39m        │ [33m0[39m         │
+│ 11      │ [32m'npc.civilian-woman-b'[39m   │ [32m'runner turn 90°'[39m           │ [33m22[39m       │ [33m0.15[39m       │ [33m0.01[39m           │ [33m18.1[39m      │ [33m3.61[39m        │ [33m18.67[39m     │
+│ 12      │ [32m'npc.civilian-woman-b'[39m   │ [32m'face target 150° (snap)'[39m   │ [33m6[39m        │ [33m0.4[39m        │ [33m0[39m              │ [33m6.7[39m       │ [33m36.87[39m       │ [33m124.19[39m    │
+│ 13      │ [32m'npc.civilian-woman-b'[39m   │ [32m'lunge-grab attack'[39m         │ [33m2[39m        │ [33m0.58[39m       │ [33m0[39m              │ [33m0.6[39m       │ [33m100.51[39m      │ [33m1.89[39m      │
+│ 14      │ [32m'npc.civilian-woman-b'[39m   │ [32m'wander (seeded)'[39m           │ [33m48[39m       │ [33m1.77[39m       │ [33m0.01[39m           │ [33m23.9[39m      │ [33m69.62[39m       │ [33m142.09[39m    │
+│ 15      │ [32m'npc.civilian-woman-b'[39m   │ [32m'flinch x4 (fast clicks)'[39m   │ [33m2[39m        │ [33m0[39m          │ [33m0[39m              │ [33m0[39m         │ [33m28.53[39m       │ [33m1.89[39m      │
+└─────────┴──────────────────────────┴─────────────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ [32m✓[39m tests/unit/render/crowd-footwork.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 15038[2mms[22m[39m
+   [33m[2m✓[22m[39m pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07[33m 10297[2mms[22m[39m
+   [33m[2m✓[22m[39m zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08[33m 4736[2mms[22m[39m
+ [32m✓[39m tests/unit/render/view.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m tests/unit/motionlab/skin.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 645[2mms[22m[39m
+   [33m[2m✓[22m[39m motion lab crowd palettes yield finite landmarks and use one instanced mesh[33m 479[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/production-gates.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 112[2mms[22m[39m
+ [32m✓[39m tests/unit/missions/schema.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+fatal: Needed a single revision
+ [32m✓[39m tests/unit/setup.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1387[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-previews @E01 dev server serves optional preview pages[33m 1375[2mms[22m[39m
+ [32m✓[39m tests/unit/layouts/d-grove-scaffold.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 53[2mms[22m[39m
+ [32m✓[39m tests/unit/input/buttons.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/import-graph.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2095[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies[33m 1237[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-03b @E01 @E01-AC03 lint rejects unseeded randomness, DOM and renderer imports[33m 856[2mms[22m[39m
+ [32m✓[39m tests/unit/performance/quality.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/static-collision.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 181[2mms[22m[39m
+ [32m✓[39m tests/unit/render/post-fx-streaming.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m tests/unit/missions/house-emergence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m tests/unit/input/bindings.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/physics-prop-contract.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 293[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-lod-geometry.test.ts[2m > [22m[2m@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+[22m[39m{ before: [33m3782[39m, after: [33m2946[39m }
+
+ [32m✓[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 371[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership[33m 369[2mms[22m[39m
+ [32m✓[39m tests/unit/layouts/build.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1058[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal[33m 1053[2mms[22m[39m
+ [32m✓[39m tests/unit/data/actions.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/references.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 120[2mms[22m[39m
+ [32m✓[39m tests/unit/data/explosions.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/data/action-assets.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m tests/unit/render/crowd-sink.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1418[2mms[22m[39m
+   [33m[2m✓[22m[39m baked crowd standing and gait frames keep both soles on the floor: inf.common-worker.lod1 @E07[33m 304[2mms[22m[39m
+   [33m[2m✓[22m[39m baked crowd standing and gait frames keep both soles on the floor: npc.civilian-man-a @E07[33m 307[2mms[22m[39m
+ [32m✓[39m tests/unit/vfx/pools.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 66[2mms[22m[39m
+ [32m✓[39m tests/unit/traceability.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 183[2mms[22m[39m
+ [32m✓[39m tests/unit/layouts/crossval.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 342[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E10-11 @E10 @E10-AC11 all TS anchor references, spawn volumes, triggers and objectives validate against layout/nav[33m 341[2mms[22m[39m
+ [32m✓[39m tests/unit/render/palette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/vehicles.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 257[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/acoustics.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/render/inspection-camera.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 203[2mms[22m[39m
+ [32m✓[39m tests/unit/performance/deviceEvidence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/noise.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 206[2mms[22m[39m
+ [32m✓[39m tests/unit/render/crowd-register.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m tests/unit/audio/music-beats.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/levels/l2-roads.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 17327[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 starts with no loose furniture footprint in a driving lane, including inherited and dressed props[33m 8477[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 assembly rejects carried furniture on a road; gameplay/checkpoint restoration keeps a displaced pose[33m 8848[2mms[22m[39m
+ [32m✓[39m tests/unit/render/weather-materials.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/combat/events.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 390[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E05-12 @E05 @E05-AC12 attack/hit/kill carry stable entity IDs, positions and one lethal event[33m 389[2mms[22m[39m
+ [32m✓[39m tests/unit/input/walk.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m tests/unit/render/interaction-marker.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/layouts/visual-bounds.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 186[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (63)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (208)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (26), Primitive (26), Accessor (286)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (54)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (196)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (24), Primitive (24), Accessor (266)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (45)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (180)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (22), Primitive (22), Accessor (244)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+ [32m✓[39m tests/unit/assets/commerce-pack.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2494[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC01 packing a base delivers every declared decay and preserves native tiers[33m 2493[2mms[22m[39m
+ [32m✓[39m tests/unit/ui-telegraphs.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 233[2mms[22m[39m
+ [32m✓[39m tests/unit/render/crowd-visibility.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m tests/unit/motionlab/motion.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 70[2mms[22m[39m
+ [32m✓[39m tests/unit/performance/assets.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m tests/unit/progression/perf.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 355[2mms[22m[39m
+   [33m[2m✓[22m[39m @E13 @perf progression combat-arena sim timing and power progression counters[33m 350[2mms[22m[39m
+ [32m✓[39m tests/unit/render/corgi-scale.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 57[2mms[22m[39m
+ [32m✓[39m tests/unit/render/l3-boom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m tests/unit/input/wheel.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/missions/dialogue.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m tests/unit/physics-metadata.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 144[2mms[22m[39m
+ [32m✓[39m tests/unit/ui-settings.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m tests/unit/performance/gibs.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 258[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/army-boom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 82[2mms[22m[39m
+ [32m✓[39m tests/unit/performance/layouts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 155[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/png-pixels.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32m✓[39m tests/unit/tooling/headless-only.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 119[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/window-glow-lod.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 883[2mms[22m[39m
+   [32m✓[39m window glows stay in their windows in every LOD [2m(1)[22m
+     [33m[2m✓[22m[39m LOD1/LOD2 glow patches coincide with the LOD0 patches of every building[33m 881[2mms[22m[39m
+ [32m✓[39m tests/unit/levels/layout-overlap.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 43634[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 additions on D-GROVE do not cut into any other placement (staticOverlapMax 0)[33m 10010[2mms[22m[39m
+   [33m[2m✓[22m[39m L3 additions on D-CORRIDOR do not cut into any other placement (staticOverlapMax 0)[33m 33622[2mms[22m[39m
+ [32m✓[39m tests/unit/static.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 57257[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings[33m 57254[2mms[22m[39m
+ [32m✓[39m tests/unit/assets/validate.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 132272[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts[33m 130148[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 decay caps apply to variants without changing the integrated base budget[33m 841[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits[33m 864[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m120 passed[39m[22m[90m (120)[39m
+[2m      Tests [22m [1m[32m417 passed[39m[22m[90m (417)[39m
+[2m   Start at [22m 00:33:35
+[2m   Duration [22m 141.70s[2m (tests 87%, import 11%, transform 2%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 26s, remote total 146s)

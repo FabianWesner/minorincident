@@ -1,0 +1,36 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/visual/e25-lighting.spec.ts:43:1 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels (6.3s)
+  ✓  2 [chromium] › tests/visual/e25-lighting.spec.ts:83:1 › T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black (5.6s)
+
+
+  1) [chromium] › tests/visual/e25-lighting.spec.ts:43:1 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    7
+
+      78 |   expect(contrast).toBeGreaterThanOrEqual(3);
+      79 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).
+    > 80 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }
+         |                                                                    ^
+      81 | });
+      82 |
+      83 | test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/visual/e25-lighting.spec.ts:80:68
+
+    Error Context: test-results/playwright/run-3401/visual-e25-lighting-T-E25--ec78b--are-their-brightest-pixels-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3401/visual-e25-lighting-T-E25--ec78b--are-their-brightest-pixels-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3401/visual-e25-lighting-T-E25--ec78b--are-their-brightest-pixels-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/visual/e25-lighting.spec.ts:43:1 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels
+  1 passed (13.3s)

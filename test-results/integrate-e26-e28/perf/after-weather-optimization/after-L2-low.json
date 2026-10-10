@@ -1,0 +1,1351 @@
+{
+  "level": "L2",
+  "tier": "low",
+  "seed": 28,
+  "frameP50": 19,
+  "frameP95": 34.30000000000291,
+  "cpuP95": 15,
+  "counters": {
+    "profile": {
+      "other": {
+        "drawCalls": 117,
+        "triangles": 137866
+      },
+      "shadows": {
+        "drawCalls": 69,
+        "triangles": 139924
+      },
+      "buildings": {
+        "drawCalls": 6,
+        "triangles": 12393
+      },
+      "props": {
+        "drawCalls": 7,
+        "triangles": 21928
+      },
+      "crowd": {
+        "drawCalls": 4,
+        "triangles": 39177
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "shadow:other/sunset-grove/Mesh": {
+        "drawCalls": 6,
+        "triangles": 72
+      },
+      "shadow:bld.fire-station": {
+        "drawCalls": 1,
+        "triangles": 6773
+      },
+      "shadow:bld.house-a": {
+        "drawCalls": 2,
+        "triangles": 5266
+      },
+      "shadow:other/sunset-grove/pal_picketWhite": {
+        "drawCalls": 1,
+        "triangles": 12188
+      },
+      "shadow:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/sunset-grove/pal_denim": {
+        "drawCalls": 1,
+        "triangles": 23124
+      },
+      "shadow:other/sunset-grove/pal_sidewalk": {
+        "drawCalls": 1,
+        "triangles": 5588
+      },
+      "shadow:other/sunset-grove/pal_asphalt": {
+        "drawCalls": 1,
+        "triangles": 308
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/sunset-grove/pal_uiDark": {
+        "drawCalls": 1,
+        "triangles": 8652
+      },
+      "shadow:other/sunset-grove/pal_grass": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "shadow:other/sunset-grove/pal_woodWarm": {
+        "drawCalls": 1,
+        "triangles": 352
+      },
+      "shadow:other/sunset-grove/daisy_3": {
+        "drawCalls": 1,
+        "triangles": 1060
+      },
+      "shadow:other/sunset-grove/daisy_2": {
+        "drawCalls": 1,
+        "triangles": 4056
+      },
+      "shadow:other/sunset-grove/daisy_1": {
+        "drawCalls": 1,
+        "triangles": 2320
+      },
+      "shadow:other/sunset-grove/daisy": {
+        "drawCalls": 1,
+        "triangles": 4056
+      },
+      "shadow:other/sunset-grove/pal_hairChestnut": {
+        "drawCalls": 1,
+        "triangles": 308
+      },
+      "shadow:other/sunset-grove/pal_silver": {
+        "drawCalls": 1,
+        "triangles": 10692
+      },
+      "shadow:other/interactions/static-body": {
+        "drawCalls": 1,
+        "triangles": 1906
+      },
+      "shadow:other/npcs/mesh_0": {
+        "drawCalls": 1,
+        "triangles": 444
+      },
+      "shadow:other/npcs/mesh_0_1": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "shadow:other/npcs/mesh_0_2": {
+        "drawCalls": 1,
+        "triangles": 338
+      },
+      "shadow:other/npcs/mesh_0_3": {
+        "drawCalls": 1,
+        "triangles": 100
+      },
+      "shadow:other/npcs/mesh_0_4": {
+        "drawCalls": 1,
+        "triangles": 884
+      },
+      "shadow:other/npcs/mesh_0_5": {
+        "drawCalls": 1,
+        "triangles": 268
+      },
+      "shadow:other/npcs/mesh_0_6": {
+        "drawCalls": 1,
+        "triangles": 108
+      },
+      "shadow:other/Group/mesh_0": {
+        "drawCalls": 1,
+        "triangles": 508
+      },
+      "shadow:other/Group/mesh_1": {
+        "drawCalls": 1,
+        "triangles": 844
+      },
+      "shadow:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 280
+      },
+      "shadow:other/npcs/mesh_5": {
+        "drawCalls": 1,
+        "triangles": 226
+      },
+      "shadow:other/npcs/mesh_5_1": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "shadow:other/npcs/mesh_5_2": {
+        "drawCalls": 1,
+        "triangles": 276
+      },
+      "shadow:other/npcs/mesh_5_3": {
+        "drawCalls": 1,
+        "triangles": 48
+      },
+      "shadow:other/npcs/mesh_5_4": {
+        "drawCalls": 1,
+        "triangles": 180
+      },
+      "shadow:other/npcs/mesh_5_5": {
+        "drawCalls": 1,
+        "triangles": 368
+      },
+      "shadow:other/npcs/mesh_5_6": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "shadow:other/npcs/mesh_5_7": {
+        "drawCalls": 1,
+        "triangles": 144
+      },
+      "shadow:other/npcs/mesh_5_8": {
+        "drawCalls": 1,
+        "triangles": 70
+      },
+      "shadow:other/npcs/mesh_6": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "shadow:other/npcs/mesh_6_1": {
+        "drawCalls": 1,
+        "triangles": 330
+      },
+      "shadow:other/npcs/mesh_7": {
+        "drawCalls": 1,
+        "triangles": 660
+      },
+      "shadow:other/npcs/mesh_7_1": {
+        "drawCalls": 1,
+        "triangles": 702
+      },
+      "shadow:other/npcs/mesh_7_2": {
+        "drawCalls": 1,
+        "triangles": 64
+      },
+      "shadow:other/npcs/mesh_7_3": {
+        "drawCalls": 1,
+        "triangles": 180
+      },
+      "shadow:other/npcs/mesh_7_4": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "shadow:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 44620
+      },
+      "shadow:other/npcs/mesh_4": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "shadow:other/npcs/mesh_4_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "shadow:other/npcs/mesh_4_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "shadow:other/npcs/mesh_2": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "shadow:other/npcs/mesh_2_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "shadow:other/npcs/mesh_2_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "shadow:other/npcs/mesh_3": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "shadow:other/npcs/mesh_3_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "shadow:other/npcs/mesh_3_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "shadow:other/npcs/mesh_1": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "shadow:other/npcs/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "shadow:other/npcs/mesh_1_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/sunset-grove/Mesh": {
+        "drawCalls": 6,
+        "triangles": 130
+      },
+      "view:other/Group/mesh_0": {
+        "drawCalls": 2,
+        "triangles": 532
+      },
+      "view:other/Group/mesh_8": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_8_1": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_8_2": {
+        "drawCalls": 1,
+        "triangles": 88
+      },
+      "view:other/Group/mesh_8_3": {
+        "drawCalls": 1,
+        "triangles": 168
+      },
+      "view:other/Group/mesh_8_4": {
+        "drawCalls": 1,
+        "triangles": 204
+      },
+      "view:other/Group/mesh_8_5": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_5": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_5_1": {
+        "drawCalls": 1,
+        "triangles": 240
+      },
+      "view:other/Group/mesh_7": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "view:other/Group/mesh_7_1": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "view:other/Group/mesh_7_2": {
+        "drawCalls": 1,
+        "triangles": 278
+      },
+      "view:other/Group/mesh_7_3": {
+        "drawCalls": 1,
+        "triangles": 96
+      },
+      "view:other/Group/mesh_7_4": {
+        "drawCalls": 1,
+        "triangles": 296
+      },
+      "view:other/Group/mesh_7_5": {
+        "drawCalls": 1,
+        "triangles": 16
+      },
+      "view:other/Group/mesh_11": {
+        "drawCalls": 1,
+        "triangles": 120
+      },
+      "view:other/Group/mesh_11_1": {
+        "drawCalls": 1,
+        "triangles": 208
+      },
+      "view:other/Group/mesh_11_2": {
+        "drawCalls": 1,
+        "triangles": 260
+      },
+      "view:other/Group/mesh_11_3": {
+        "drawCalls": 1,
+        "triangles": 384
+      },
+      "view:other/Group/mesh_11_4": {
+        "drawCalls": 1,
+        "triangles": 120
+      },
+      "view:other/Group/mesh_11_5": {
+        "drawCalls": 1,
+        "triangles": 204
+      },
+      "view:other/Group/mesh_11_6": {
+        "drawCalls": 1,
+        "triangles": 160
+      },
+      "view:other/Group/mesh_11_7": {
+        "drawCalls": 1,
+        "triangles": 204
+      },
+      "view:other/Group/mesh_4": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_4_1": {
+        "drawCalls": 1,
+        "triangles": 240
+      },
+      "view:other/Group/mesh_6": {
+        "drawCalls": 1,
+        "triangles": 120
+      },
+      "view:other/Group/mesh_6_1": {
+        "drawCalls": 1,
+        "triangles": 32
+      },
+      "view:other/Group/mesh_6_2": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "view:other/Group/mesh_6_3": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_10": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_10_1": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_10_2": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_9": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_9_1": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "view:other/Group/mesh_3": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_3_1": {
+        "drawCalls": 1,
+        "triangles": 240
+      },
+      "view:other/Group/mesh_1": {
+        "drawCalls": 2,
+        "triangles": 988
+      },
+      "view:other/Group/mesh_2": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/Group/mesh_2_1": {
+        "drawCalls": 1,
+        "triangles": 240
+      },
+      "view:bld.fire-station": {
+        "drawCalls": 2,
+        "triangles": 7007
+      },
+      "view:bld.house-a": {
+        "drawCalls": 4,
+        "triangles": 5386
+      },
+      "view:other/npcs/mesh_0": {
+        "drawCalls": 1,
+        "triangles": 444
+      },
+      "view:other/npcs/mesh_0_1": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/npcs/mesh_0_2": {
+        "drawCalls": 1,
+        "triangles": 338
+      },
+      "view:other/npcs/mesh_0_3": {
+        "drawCalls": 1,
+        "triangles": 100
+      },
+      "view:other/npcs/mesh_0_4": {
+        "drawCalls": 1,
+        "triangles": 884
+      },
+      "view:other/npcs/mesh_0_5": {
+        "drawCalls": 1,
+        "triangles": 268
+      },
+      "view:other/npcs/mesh_0_6": {
+        "drawCalls": 1,
+        "triangles": 108
+      },
+      "view:prop.street-tree": {
+        "drawCalls": 1,
+        "triangles": 3032
+      },
+      "view:prop.street-lamp": {
+        "drawCalls": 1,
+        "triangles": 634
+      },
+      "view:other/npcs/mesh_4": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/npcs/mesh_4_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/npcs/mesh_4_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/npcs/mesh_3": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/npcs/mesh_3_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/npcs/mesh_3_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/npcs/mesh_5": {
+        "drawCalls": 1,
+        "triangles": 226
+      },
+      "view:other/npcs/mesh_5_1": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "view:other/npcs/mesh_5_2": {
+        "drawCalls": 1,
+        "triangles": 276
+      },
+      "view:other/npcs/mesh_5_3": {
+        "drawCalls": 1,
+        "triangles": 48
+      },
+      "view:other/npcs/mesh_5_4": {
+        "drawCalls": 1,
+        "triangles": 180
+      },
+      "view:other/npcs/mesh_5_5": {
+        "drawCalls": 1,
+        "triangles": 368
+      },
+      "view:other/npcs/mesh_5_6": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/npcs/mesh_5_7": {
+        "drawCalls": 1,
+        "triangles": 144
+      },
+      "view:other/npcs/mesh_5_8": {
+        "drawCalls": 1,
+        "triangles": 70
+      },
+      "view:other/npcs/mesh_7": {
+        "drawCalls": 1,
+        "triangles": 660
+      },
+      "view:other/npcs/mesh_7_1": {
+        "drawCalls": 1,
+        "triangles": 702
+      },
+      "view:other/npcs/mesh_7_2": {
+        "drawCalls": 1,
+        "triangles": 64
+      },
+      "view:other/npcs/mesh_7_3": {
+        "drawCalls": 1,
+        "triangles": 180
+      },
+      "view:other/npcs/mesh_7_4": {
+        "drawCalls": 1,
+        "triangles": 24
+      },
+      "view:kit.edge-roadwork": {
+        "drawCalls": 1,
+        "triangles": 11724
+      },
+      "view:other/npcs/mesh_2": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/npcs/mesh_2_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/npcs/mesh_2_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:other/npcs/mesh_6": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/npcs/mesh_6_1": {
+        "drawCalls": 1,
+        "triangles": 330
+      },
+      "view:prop.privacy-fence": {
+        "drawCalls": 1,
+        "triangles": 4032
+      },
+      "view:other/npcs/mesh_1": {
+        "drawCalls": 1,
+        "triangles": 42
+      },
+      "view:other/npcs/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/npcs/mesh_1_2": {
+        "drawCalls": 1,
+        "triangles": 186
+      },
+      "view:prop.picket-fence": {
+        "drawCalls": 1,
+        "triangles": 310
+      },
+      "view:prop.bench": {
+        "drawCalls": 1,
+        "triangles": 1092
+      },
+      "view:other/sunset-grove/pal_uiDark": {
+        "drawCalls": 1,
+        "triangles": 8652
+      },
+      "view:prop.trash-bags": {
+        "drawCalls": 1,
+        "triangles": 1104
+      },
+      "view:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 280
+      },
+      "view:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/sunset-grove/pal_picketWhite": {
+        "drawCalls": 1,
+        "triangles": 12188
+      },
+      "view:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 44620
+      },
+      "view:other/sunset-grove/pal_denim": {
+        "drawCalls": 1,
+        "triangles": 23124
+      },
+      "view:other/sunset-grove/pal_sidewalk": {
+        "drawCalls": 1,
+        "triangles": 5588
+      },
+      "view:other/sunset-grove/pal_asphalt": {
+        "drawCalls": 1,
+        "triangles": 308
+      },
+      "view:other/l2-props/Mesh": {
+        "drawCalls": 14,
+        "triangles": 1496
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 3,
+        "triangles": 2860
+      },
+      "view:other/sunset-grove/pal_grass": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/sunset-grove/pal_woodWarm": {
+        "drawCalls": 1,
+        "triangles": 352
+      },
+      "view:other/sunset-grove/daisy_3": {
+        "drawCalls": 1,
+        "triangles": 1060
+      },
+      "view:other/sunset-grove/daisy_1": {
+        "drawCalls": 1,
+        "triangles": 2320
+      },
+      "view:other/sunset-grove/daisy_2": {
+        "drawCalls": 1,
+        "triangles": 4056
+      },
+      "view:other/sunset-grove/daisy": {
+        "drawCalls": 1,
+        "triangles": 4056
+      },
+      "view:other/sunset-grove/grass-gpu-wind": {
+        "drawCalls": 1,
+        "triangles": 11630
+      },
+      "view:other/sunset-grove/pal_hairChestnut": {
+        "drawCalls": 1,
+        "triangles": 308
+      },
+      "view:other/sunset-grove/root": {
+        "drawCalls": 1,
+        "triangles": 10
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 94
+      },
+      "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+        "drawCalls": 6,
+        "triangles": 6
+      },
+      "shadow:other/Render Pipeline/Render Pipeline": {
+        "drawCalls": 1,
+        "triangles": 1
+      }
+    },
+    "updateCpuMs": 3.3000001907348633,
+    "renderCpuMs": 10.300000190734863,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 2499.999999990905,
+    "frameMs": 0.4000000000014552,
+    "simMs": 0,
+    "uiMs": 0,
+    "drawCalls": 203,
+    "triangles": 351288,
+    "geometries": 690,
+    "textures": 55,
+    "entities": 171,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 42.10000038146973,
+      "simMs": 6571.60000038147,
+      "viewMs": 16640.599999427795
+    },
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 32.7,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 729,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 536731020,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroShadow": 0,
+      "preset": "L2"
+    }
+  },
+  "frames": [
+    23.599999999998545,
+    54.60000000000218,
+    20.099999999998545,
+    27.900000000001455,
+    26.5,
+    21.899999999997817,
+    21.799999999999272,
+    19.80000000000291,
+    21.5,
+    27.099999999998545,
+    20.700000000000728,
+    22.200000000000728,
+    22.899999999997817,
+    19.299999999999272,
+    79.60000000000218,
+    30.700000000000728,
+    28.5,
+    29.599999999998545,
+    22.700000000000728,
+    23.399999999997817,
+    22.700000000000728,
+    23.700000000000728,
+    59.900000000001455,
+    19.599999999998545,
+    27.299999999999272,
+    21.900000000001455,
+    24.099999999998545,
+    23.299999999999272,
+    23.900000000001455,
+    25.799999999999272,
+    77.20000000000073,
+    20.099999999998545,
+    32.60000000000218,
+    22.5,
+    22.5,
+    24.899999999997817,
+    21.80000000000291,
+    24.19999999999709,
+    21.700000000000728,
+    25,
+    20.700000000000728,
+    20.400000000001455,
+    24,
+    20.899999999997817,
+    19.900000000001455,
+    25.200000000000728,
+    21.399999999997817,
+    20.600000000002183,
+    24.69999999999709,
+    20,
+    19.30000000000291,
+    23.799999999999272,
+    20.200000000000728,
+    20.69999999999709,
+    24.100000000002183,
+    22.5,
+    23.5,
+    113.20000000000073,
+    50.89999999999782,
+    34,
+    62.29999999999927,
+    21.100000000002183,
+    28.299999999999272,
+    24.5,
+    24,
+    57.400000000001455,
+    21,
+    28.19999999999709,
+    24.100000000002183,
+    20.799999999999272,
+    21.5,
+    22.5,
+    28.299999999999272,
+    20.900000000001455,
+    4.099999999998545,
+    18.5,
+    34.20000000000073,
+    21.900000000001455,
+    39.599999999998545,
+    27,
+    21.400000000001455,
+    23.5,
+    20.5,
+    20,
+    24.19999999999709,
+    25.200000000000728,
+    27.600000000002183,
+    25.399999999997817,
+    23.200000000000728,
+    23.700000000000728,
+    31.099999999998545,
+    33.10000000000218,
+    25.899999999997817,
+    23.600000000002183,
+    18.69999999999709,
+    23.700000000000728,
+    25.900000000001455,
+    21.599999999998545,
+    23.200000000000728,
+    21.799999999999272,
+    39.60000000000218,
+    22,
+    23,
+    20.19999999999709,
+    27,
+    21.900000000001455,
+    24.5,
+    22.599999999998545,
+    23.100000000002183,
+    26.599999999998545,
+    20.5,
+    28.100000000002183,
+    55.79999999999927,
+    25.399999999997817,
+    23.900000000001455,
+    24.099999999998545,
+    25.30000000000291,
+    18.599999999998545,
+    25.200000000000728,
+    18.599999999998545,
+    24.100000000002183,
+    21.5,
+    18.19999999999709,
+    23.900000000001455,
+    19.400000000001455,
+    25.19999999999709,
+    19.700000000000728,
+    24.799999999999272,
+    18.80000000000291,
+    21.899999999997817,
+    25,
+    24.400000000001455,
+    19.5,
+    23.200000000000728,
+    22.299999999999272,
+    19.899999999997817,
+    21.600000000002183,
+    22.200000000000728,
+    20.69999999999709,
+    19.5,
+    20.5,
+    55.900000000001455,
+    20.400000000001455,
+    29.69999999999709,
+    24.80000000000291,
+    19.299999999999272,
+    25.899999999997817,
+    19.5,
+    23.600000000002183,
+    23.899999999997817,
+    21.900000000001455,
+    23.099999999998545,
+    56.60000000000218,
+    24.599999999998545,
+    26.299999999999272,
+    20.400000000001455,
+    23.400000000001455,
+    19.899999999997817,
+    20.200000000000728,
+    23.799999999999272,
+    18.799999999999272,
+    21.700000000000728,
+    20.100000000002183,
+    22.599999999998545,
+    21.400000000001455,
+    19.899999999997817,
+    20.100000000002183,
+    24.799999999999272,
+    76.59999999999854,
+    29.100000000002183,
+    7.899999999997817,
+    18.700000000000728,
+    33.400000000001455,
+    17.69999999999709,
+    4,
+    36.400000000001455,
+    22.200000000000728,
+    21,
+    18.599999999998545,
+    17.5,
+    0.7000000000007276,
+    18.099999999998545,
+    30.700000000000728,
+    0.2999999999992724,
+    18.200000000000728,
+    13.100000000002183,
+    17.69999999999709,
+    13.100000000002183,
+    16.5,
+    16.200000000000728,
+    16.5,
+    35.79999999999927,
+    18.5,
+    23.099999999998545,
+    23.299999999999272,
+    6.600000000002183,
+    35.70000000000073,
+    19,
+    18.19999999999709,
+    1.5,
+    16.600000000002183,
+    30.700000000000728,
+    17.69999999999709,
+    3.900000000001455,
+    16.69999999999709,
+    13.700000000004366,
+    34.599999999998545,
+    19.5,
+    18.099999999998545,
+    1.3000000000029104,
+    16.599999999998545,
+    12.599999999998545,
+    17.200000000004366,
+    16.799999999995634,
+    15.80000000000291,
+    16.299999999995634,
+    18.200000000004366,
+    16.799999999995634,
+    16.200000000004366,
+    34.799999999995634,
+    18.10000000000582,
+    18.89999999999418,
+    18.30000000000291,
+    2.1999999999970896,
+    17,
+    31.5,
+    18,
+    19.30000000000291,
+    0.19999999999708962,
+    16.200000000004366,
+    31.69999999999709,
+    20.599999999998545,
+    16.900000000001455,
+    0.8000000000029104,
+    16.799999999995634,
+    32.30000000000291,
+    17.400000000001455,
+    4,
+    17,
+    32.799999999995634,
+    21.200000000004366,
+    18.799999999995634,
+    19.10000000000582,
+    1.6999999999970896,
+    17.80000000000291,
+    31.19999999999709,
+    19,
+    18.30000000000291,
+    0.5,
+    16.5,
+    32.299999999995634,
+    18.599999999998545,
+    3.5,
+    18.10000000000582,
+    31.69999999999709,
+    21,
+    18.599999999998545,
+    22.30000000000291,
+    0.6999999999970896,
+    17.200000000004366,
+    14.89999999999418,
+    18,
+    16.80000000000291,
+    16.69999999999709,
+    16.10000000000582,
+    16.89999999999418,
+    16.700000000004366,
+    16.299999999995634,
+    16.400000000001455,
+    34.700000000004366,
+    18.5,
+    3.099999999998545,
+    17,
+    16.5,
+    16.5,
+    17.799999999995634,
+    36.10000000000582,
+    19.299999999995634,
+    19.80000000000291,
+    1.4000000000014552,
+    16.19999999999709,
+    29.69999999999709,
+    17.60000000000582,
+    1.5,
+    17.19999999999709,
+    31.19999999999709,
+    18,
+    1.1000000000058208,
+    16.19999999999709,
+    13.5,
+    17.099999999998545,
+    35.5,
+    17,
+    3.2000000000043656,
+    16.299999999995634,
+    13.30000000000291,
+    16,
+    16.19999999999709,
+    16,
+    15.900000000001455,
+    35.30000000000291,
+    18.19999999999709,
+    20.19999999999709,
+    0.6000000000058208,
+    16.69999999999709,
+    13.5,
+    35.099999999998545,
+    17.5,
+    21.099999999998545,
+    18.30000000000291,
+    4.5,
+    17.599999999998545,
+    13.5,
+    17.400000000001455,
+    16.900000000001455,
+    16.299999999995634,
+    16.10000000000582,
+    17.5,
+    16,
+    16.099999999998545,
+    16.19999999999709,
+    32.700000000004366,
+    17.19999999999709,
+    22.599999999998545,
+    19.200000000004366,
+    18.799999999995634,
+    0.9000000000014552,
+    17.099999999998545,
+    30.700000000004366,
+    1.2999999999956344,
+    16.5,
+    12.5,
+    16.599999999998545,
+    16.5,
+    16.60000000000582,
+    16.19999999999709,
+    17.69999999999709,
+    16.10000000000582,
+    16.799999999995634,
+    16.400000000001455,
+    16.599999999998545,
+    33.700000000004366,
+    19.099999999998545,
+    0.7999999999956344,
+    17.80000000000291,
+    32.099999999998545,
+    19.400000000001455,
+    20.400000000001455,
+    1.5,
+    18.599999999998545,
+    32.900000000001455,
+    19.19999999999709,
+    20.599999999998545,
+    18.30000000000291,
+    18.80000000000291,
+    2.5,
+    18.799999999995634,
+    12.5,
+    36.80000000000291,
+    17.400000000001455,
+    3.2999999999956344,
+    17.599999999998545,
+    32,
+    19.5,
+    19.900000000001455,
+    20.700000000004366,
+    21,
+    20.799999999995634,
+    0.5999999999985448,
+    16.900000000001455,
+    14.5,
+    17.400000000001455,
+    16.5,
+    17.900000000001455,
+    17.299999999995634,
+    32.700000000004366,
+    19.299999999995634,
+    17.700000000004366,
+    0.5,
+    16.799999999995634,
+    13.700000000004366,
+    32.599999999998545,
+    19,
+    17.400000000001455,
+    18.799999999995634,
+    16.900000000001455,
+    0.5999999999985448,
+    33.5,
+    18.60000000000582,
+    20.39999999999418,
+    17.60000000000582,
+    17.39999999999418,
+    0.8000000000029104,
+    17,
+    13.599999999998545,
+    17.700000000004366,
+    16.299999999995634,
+    17.200000000004366,
+    16.69999999999709,
+    16.30000000000291,
+    33.19999999999709,
+    18.30000000000291,
+    2.6999999999970896,
+    16.69999999999709,
+    29.10000000000582,
+    17.099999999998545,
+    0.6999999999970896,
+    15.900000000001455,
+    29.5,
+    17,
+    22.900000000001455,
+    17.299999999995634,
+    1.1000000000058208,
+    15.89999999999418,
+    13.5,
+    16.5,
+    15.400000000001455,
+    16.80000000000291,
+    34.19999999999709,
+    0.5,
+    17.700000000004366,
+    32.5,
+    18.69999999999709,
+    1.3000000000029104,
+    16.799999999995634,
+    14.30000000000291,
+    35.599999999998545,
+    19.400000000001455,
+    18.900000000001455,
+    18,
+    20.099999999998545,
+    1.7999999999956344,
+    17.80000000000291,
+    12.400000000001455,
+    17.099999999998545,
+    18.30000000000291,
+    16.69999999999709,
+    33.599999999998545,
+    17.700000000004366,
+    20.599999999998545,
+    17,
+    2.099999999998545,
+    17.80000000000291,
+    12.599999999998545,
+    17.19999999999709,
+    17.30000000000291,
+    17.19999999999709,
+    16.900000000001455,
+    16.900000000001455,
+    17.799999999995634,
+    34.200000000004366,
+    17.099999999998545,
+    2.099999999998545,
+    34.30000000000291,
+    20.099999999998545,
+    2.6999999999970896,
+    17.900000000001455,
+    13.700000000004366,
+    32.599999999998545,
+    0.4000000000014552,
+    18.599999999998545,
+    13.400000000001455,
+    16.69999999999709,
+    16.30000000000291,
+    15.799999999995634,
+    33,
+    19.200000000004366,
+    4.399999999994179,
+    17.60000000000582,
+    13.39999999999418,
+    17.400000000001455,
+    17.5,
+    34.80000000000291,
+    16.799999999995634,
+    20.10000000000582,
+    21,
+    19.299999999995634,
+    23.30000000000291,
+    20.69999999999709,
+    22,
+    18.099999999998545,
+    26.400000000001455,
+    21.099999999998545,
+    20.80000000000291,
+    21.900000000001455,
+    19.5,
+    20,
+    19.799999999995634,
+    23.30000000000291,
+    20.19999999999709,
+    20.5,
+    18.700000000004366,
+    22.299999999995634,
+    18,
+    20.5,
+    19.30000000000291,
+    20.19999999999709,
+    18.400000000001455,
+    0,
+    17.599999999998545,
+    30.80000000000291,
+    20.80000000000291,
+    1.8999999999941792,
+    17.400000000001455,
+    30.30000000000291,
+    21,
+    19,
+    0.6999999999970896,
+    16.900000000001455,
+    31.69999999999709,
+    20.30000000000291,
+    21,
+    22.30000000000291,
+    20.39999999999418,
+    21.900000000001455,
+    20.599999999998545,
+    4.80000000000291,
+    18.80000000000291,
+    34,
+    18.89999999999418,
+    19.900000000001455,
+    18.700000000004366,
+    4.899999999994179,
+    18.700000000004366,
+    15,
+    37.19999999999709,
+    20.599999999998545,
+    22.80000000000291,
+    7.400000000001455,
+    18.69999999999709,
+    33.700000000004366,
+    18.599999999998545,
+    1.5999999999985448,
+    18.5,
+    34,
+    21.30000000000291,
+    2.7999999999956344,
+    16.599999999998545,
+    14.30000000000291,
+    17.599999999998545,
+    16.900000000001455,
+    16.400000000001455,
+    15.900000000001455,
+    15.89999999999418,
+    32.700000000004366,
+    17.19999999999709,
+    21,
+    18,
+    19.80000000000291,
+    18,
+    19.599999999998545,
+    0.8000000000029104,
+    16.5,
+    29.89999999999418,
+    0.20000000000436557,
+    18.5,
+    33.099999999998545,
+    19.30000000000291,
+    3.1999999999970896,
+    18.69999999999709,
+    32.400000000001455,
+    20.700000000004366,
+    18,
+    0.2999999999956344,
+    18,
+    13.5,
+    17.400000000001455,
+    16.19999999999709,
+    16.5,
+    17.60000000000582,
+    33.19999999999709,
+    17.19999999999709,
+    3.6000000000058208,
+    17.19999999999709,
+    13.599999999998545,
+    16.599999999998545,
+    16.700000000004366,
+    34.69999999999709,
+    18.900000000001455,
+    1.6999999999970896,
+    17.200000000004366,
+    13.19999999999709,
+    32.700000000004366,
+    19.299999999995634,
+    19.200000000004366,
+    1.5,
+    18.299999999995634,
+    13.599999999998545,
+    18.5,
+    16.900000000001455,
+    16,
+    17.400000000001455,
+    34.69999999999709,
+    20.60000000000582,
+    20.299999999995634,
+    17.599999999998545,
+    18.30000000000291,
+    18,
+    19.099999999998545,
+    0.4000000000014552
+  ],
+  "loadBefore": [
+    2.65283203125,
+    3.767578125,
+    4.28857421875
+  ],
+  "measuredAt": "2026-10-09T23:06:56.929Z"
+}

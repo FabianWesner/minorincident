@@ -44,5 +44,5 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 ## Deviations
 
-- AC01 remains incomplete under a literal all-movable-assets reading: E26 environment props pass, but dedicated vehicle metadata exceeds the concept's class mass bands (for example the 6,500 kg school bus); vehicle masses were preserved pending a scope decision.
+- AC01 applies the class mass bands to environment props; vehicles retain the tuned, PO-tested E09 mass bands (including the 6,500 kg school bus). Integration scope decision: do not retune vehicles.
 - Campaign performance no-regression remains unproved: fresh quiet unchanged-source controls also fail existing L2/L3 gates, while some current L1/L2 frame times increase; thresholds and level missions were preserved.

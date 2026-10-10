@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
-import { weatherSurface, trackMask } from './WeatherView';
+import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
 import { Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
@@ -18,8 +18,13 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly char = uniform(0);
   /** E25 night readability: 1 on crowd figures (infected/civilians) for a moonlit silhouette rim. */
   readonly figureRim = uniform(0);
+  // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
+  private readonly _outputs = new Map<number, Node>();
+  private outputFor: (mode: number) => Node;
+  private readonly newCopy: () => PaletteMaterial;
+  private weatherMode = -1;
   constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'> }) {
-    super(); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
+    super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
     // a different texture coordinate literal in every fragment program.
@@ -27,7 +32,15 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     const base = !swatch && !vertexSwatches && !nodes && !emissive ? surfaceDetail(token, original, lighting.look.nodes) : original;
     const caughtShadow = float(1).toVar();
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(shadow.r); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;
-    this.outputNode = Fn(() => {
+    this.outputFor = mode => Fn(() => {
+      const flags = weatherMaterialFlags, probe = mode >> flags.probeShift;
+      // Diagnostics use their own graph, rather than adding mask samplers to game shaders.
+      if (probe) {
+        const snow = weatherSurface.accumulation.mul(normalWorld.y.smoothstep(.5, .75)).mul(trackMask().oneMinus());
+        const wet = weatherSurface.wetness.greaterThan(.3).select(weatherSurface.wetness, 0).mul(normalWorld.y.max(0));
+        const mask = probe === 1 ? normalWorld.y.greaterThan(.5).select(vec3(1), vec3(0)) : probe === 2 ? vec3(snow) : probe === 3 ? vec3(wet) : vec3(trackMask());
+        return vec4(mask, this.fade.mul(nodes?.opacity ?? 1));
+      }
       const core = normalWorld.dot(lighting.direction).smoothstep(lighting.coreShadowEdgeHigh, lighting.coreShadowEdgeLow);
       const shadow = max(core, caughtShadow.oneMinus()).clamp(0, 1).mul(lighting.look.nodes.shadowIntensity);
       const bounce = normalWorld.y.negate().smoothstep(-.2, 1).mul(positionWorld.y.max(0).div(2).oneMinus().max(0).pow(2)).mul(lighting.look.nodes.bounceStrength);
@@ -41,12 +54,18 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         return distance.smoothstep(radius.mul(size), radius.mul(size).add(edge)).oneMinus();
       };
       const blood = max(max(splat(.07, .09, 1), splat(-.1, -.06, .7)), splat(-.16, .15, .5)).mul(this.bloodCoverage.greaterThan(0).select(1, 0));
-      const snow = float(0).toVar();
-      If(weatherSurface.accumulation.greaterThan(0), () => { snow.assign(weatherSurface.accumulation.mul(normalWorld.y.smoothstep(.5, .75)).mul(trackMask().oneMinus())); });
-      const accumulatedBase = mix(base, mix(color('#9da7b4'), color('#bcb9b5'), weatherSurface.ash), snow).mul(weatherSurface.clouds.mul(-.12).add(1));
-      const puddlePattern = positionWorld.x.mul(.65).sin().mul(positionWorld.z.mul(.5).sin()).mul(.5).add(.5);
-      const puddle = weatherSurface.wetness.greaterThan(.3).select(puddlePattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15)).mul(normalWorld.y.max(0).pow(8)), 0);
-      const weatherBase = mix(accumulatedBase, accumulatedBase.mul(.78), puddle);
+      // Build only the active surface sections; continuous strengths remain uniforms.
+      const snow = float(0).toVar(), weatherBase = base.toVar(), puddle = float(0).toVar();
+      if (mode & flags.accumulation) If(weatherSurface.accumulation.greaterThan(0), () => {
+        snow.assign(weatherSurface.accumulation.mul(normalWorld.y.smoothstep(.5, .75)).mul(trackMask().oneMinus()));
+        weatherBase.assign(mix(base, mix(color('#9da7b4'), color('#bcb9b5'), weatherSurface.ash), snow));
+      });
+      if (mode & flags.clouds) weatherBase.mulAssign(weatherSurface.clouds.mul(-.12).add(1));
+      if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
+        const pattern = positionWorld.x.mul(.65).sin().mul(positionWorld.z.mul(.5).sin()).mul(.5).add(.5);
+        puddle.assign(pattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15)).mul(normalWorld.y.max(0).pow(8)));
+        weatherBase.assign(mix(weatherBase, weatherBase.mul(.78), puddle));
+      });
       const surface = mix(mix(weatherBase, color('#b3121f'), blood), color('#1d1a18'), this.char);
       const albedo = mix(surface, lighting.bounce, bounce);
       const ambient = mix(lighting.groundAmbient, lighting.skyAmbient, normalWorld.y.mul(0.5).add(0.5)).mul(lighting.look.nodes.ambientStrength).mul(lighting.look.nodes.hemisphereIntensity.mul(2));
@@ -54,34 +73,67 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // E25 light field: practical pools (lamps, windows, headlights, fires) light ground, walls and figures.
       // At night the moon/hero shadow map also darkens the pools behind casters (fieldShadow).
       // Inside a hero shadow the pool keeps a dim bounce in the shadow tint (specs/06 §4: colored, never black).
-      const pool = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65));
-      const shadowedPool = mix(vec3(luminance(pool)).mul(lighting.shadowHue).mul(.3), pool, caughtShadow);
-      const field = mix(pool, shadowedPool, lighting.fieldShadow);
+      const field = vec3(0).toVar();
+      if (mode & flags.field) {
+        const pool = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65));
+        const shadowedPool = mix(vec3(luminance(pool)).mul(lighting.shadowHue).mul(.3), pool, caughtShadow);
+        field.assign(mix(pool, shadowedPool, lighting.fieldShadow));
+      }
       // Night rim: the survivor (a world-space capsule around the feet) and flagged crowd figures.
       const fresnel = normalView.dot(positionViewDirection).clamp(0, 1).oneMinus().smoothstep(.62, .95);
-      const heroMask = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3));
+      const heroMask = float(0).toVar();
+      if (mode & (flags.hero | flags.fog)) {
+        heroMask.assign(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(1.3, .6).mul(positionWorld.y.sub(lighting.hero.y).smoothstep(.1, .3)));
+      }
       const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
-      const fogReadability = vec3(.3).mul(heroMask).mul(weatherSurface.fog);
-      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).add(fogReadability);
+      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).toVar();
+      if (mode & flags.fog) { shaded.addAssign(surface.mul(.7).add(vec3(.18, .16, .14)).mul(heroMask).mul(weatherSurface.fog)); }
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(controlled.add(nodes?.glow ?? 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
-      const wet = weatherSurface.wetness.greaterThan(.3).select(weatherSurface.wetness, 0).mul(normalWorld.y.max(0));
-      const streak = positionWorld.x.mul(5).sin().abs().pow(12).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
-      const fogMask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
-      const measured = weatherSurface.probe.equal(1).select(normalWorld.y.greaterThan(.5).select(vec3(1), vec3(0)), weatherSurface.probe.equal(2).select(vec3(snow), weatherSurface.probe.equal(3).select(vec3(wet), vec3(trackMask()))));
-      return vec4(weatherSurface.probe.greaterThan(0).select(measured, mix(output.add(streak).add(weatherSurface.flash), lighting.radialFog.add(field.mul(.2)), fogMask).add(this.hitFlash)), this.fade.mul(nodes?.opacity ?? 1));
+      const result = output.toVar();
+      if (mode & flags.flash) result.addAssign(weatherSurface.flash);
+      if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
+        const wet = weatherSurface.wetness.mul(normalWorld.y.max(0));
+        const streak = positionWorld.x.mul(4.1).add(positionWorld.z.mul(.7).sin().mul(1.8)).sin().abs().pow(12).mul(positionWorld.z.mul(1.3).sin().mul(.3).add(.7)).mul(wet).mul(puddle).mul(field).mul(.2).clamp(0, .08);
+        result.addAssign(streak);
+      });
+      if (mode & flags.fog) {
+        const mask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
+        result.assign(mix(result, lighting.radialFog.add(field.mul(.2)), mask));
+      }
+      result.addAssign(this.hitFlash);
+      return vec4(result, this.fade.mul(nodes?.opacity ?? 1));
     })();
+    lighting.paletteMaterials.add(this);
+    this.addEventListener('dispose', () => lighting.paletteMaterials.delete(this));
+    this.setWeatherMode(lighting.weatherMode);
     // Fog is applied above; avoid a second neutral scene-fog blend.
     this.fog = false;
   }
-  /** Opt this (world) material into the shared dithered player see-through hole. Idempotent; the
-   * shadow pass uses its own override material, so cast shadows stay whole. */
+  /** Frozen geometry keeps the source shading uniforms and follows future weather changes. */
+  frozenCopy(): PaletteMaterial {
+    const copy = this.newCopy(); copy.copy(this); copy.outputFor = this.outputFor;
+    copy._outputs.clear(); copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
+    return copy;
+  }
+  setWeatherMode(mode: number): void {
+    if (mode === this.weatherMode) return;
+    this.weatherMode = mode;
+    let output = this._outputs.get(mode);
+    if (!output) {
+      const base = this.outputFor(mode);
+      output = this.userData.seeThrough ? Fn(() => { Discard(seeThroughKeep().not()); return base; })() : base;
+      this._outputs.set(mode, output);
+    }
+    this.outputNode = output; this.needsUpdate = true;
+  }
+  /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
   seeThrough(): this {
     if (this.userData.seeThrough) return this;
-    const output = this.outputNode!;
-    this.outputNode = Fn(() => { Discard(seeThroughKeep().not()); return output; })();
-    this.userData.seeThrough = true; this.needsUpdate = true; return this;
+    this.userData.seeThrough = true; this._outputs.clear();
+    const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);
+    return this;
   }
 }

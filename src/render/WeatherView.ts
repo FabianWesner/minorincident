@@ -1,21 +1,25 @@
 // GPU precipitation wraps around the camera focus, following Bruno RainLines/Snow (MIT).
 import { BufferAttribute, BufferGeometry, LineSegments, LineBasicNodeMaterial, DataTexture, FloatType, Group, InstancedBufferAttribute, InstancedBufferGeometry, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RedFormat, SphereGeometry, Vector3 } from 'three/webgpu';
-import { attribute, cameraPosition, cameraWorldMatrix, uv, Discard, dot, Fn, fract, mix, positionWorld, screenCoordinate, texture, uniform, vec2, vec3, vec4 } from 'three/tsl';
+import { attribute, cameraPosition, cameraWorldMatrix, uv, Discard, dot, Fn, fract, mix, positionWorld, renderGroup, screenCoordinate, texture, uniform, vec2, vec3, vec4 } from 'three/tsl';
 import { timeOfDay } from '../data/timeOfDay';
 import { weatherPresets } from '../data/weather';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Lighting } from './Lighting';
 import type { View } from './View';
 
+/** Surface graph flags; state changes reuse Three node materials and cached output graphs. */
+export const weatherMaterialFlags = { clouds: 1, wet: 2, accumulation: 4, fog: 8, flash: 16, field: 32, hero: 64, probeShift: 7 } as const;
 export const weatherSurface = {
-  clouds: uniform(0), windStrength: uniform(1), probe: uniform(0), wetness: uniform(0), accumulation: uniform(0), ash: uniform(0), fog: uniform(0), flash: uniform(0),
+  // Global weather values are shared across world materials: update once per render,
+  // rather than checking the same values again for every building/prop draw.
+  clouds: uniform(0).setGroup(renderGroup), windStrength: uniform(1).setGroup(renderGroup), probe: uniform(0).setGroup(renderGroup), wetness: uniform(0).setGroup(renderGroup), accumulation: uniform(0).setGroup(renderGroup), ash: uniform(0).setGroup(renderGroup), fog: uniform(0).setGroup(renderGroup), flash: uniform(0).setGroup(renderGroup),
   tracks: new DataTexture(new Float32Array(1024 * 1024), 1024, 1024, RedFormat, FloatType),
 };
 weatherSurface.tracks.needsUpdate = true;
 export const trackMask = () => texture(weatherSurface.tracks, fract(positionWorld.xz.div(64).add(.5))).r;
 /** Actual 6m world-space ray distance; all precipitation shares this ordered dither. */
-export const weatherRayDither = uniform(1);
-export const weatherHero = uniform(new Vector3());
+export const weatherRayDither = uniform(1).setGroup(renderGroup);
+export const weatherHero = uniform(new Vector3()).setGroup(renderGroup);
 export const precipitationKeep = () => {
   const ray = weatherHero.sub(cameraPosition), t = dot(positionWorld.sub(cameraPosition), ray).div(dot(ray, ray)).clamp(0, 1);
   const distance = positionWorld.sub(cameraPosition.add(ray.mul(t))).length();
@@ -35,6 +39,9 @@ export class WeatherView extends Group {
   private readonly ripples: Mesh;
   private readonly rippleGeometry: InstancedBufferGeometry;
   private readonly rippleMaterial: MeshBasicNodeMaterial;
+  private readonly shaftGeometry = new PlaneGeometry(2, 16);
+  private readonly shaftMaterial = new MeshBasicNodeMaterial({ color: '#ffd591', transparent: true, depthWrite: false, side: 2 });
+  private readonly shafts = new Group();
   private readonly breathGeometry = new SphereGeometry(.1, 8, 6);
   private readonly breathMaterial = new MeshBasicNodeMaterial({ color: 0xb8c8d9, transparent: true, opacity: .12, depthWrite: false });
   private readonly breath = new Mesh(this.breathGeometry, this.breathMaterial);
@@ -49,6 +56,11 @@ export class WeatherView extends Group {
   flash = 0;
   constructor(private readonly world: SimWorld, private readonly lighting: Lighting) {
     super(); this.name = 'weather';
+    // Soft depth-tested cards use the same inexpensive mesh path as precipitation;
+    // no screen-space pass or additional shadow map is needed for golden haze.
+    this.shaftMaterial.opacityNode = uv().x.sub(.5).abs().mul(2).oneMinus().pow(2).mul(uv().y.smoothstep(0, .2)).mul(uv().y.smoothstep(1, .7)).mul(.16);
+    for (let i = 0; i < 3; i++) { const shaft = new Mesh(this.shaftGeometry, this.shaftMaterial); shaft.frustumCulled = false; this.shafts.add(shaft); }
+    this.shafts.name = 'golden-haze-shafts'; this.shafts.visible = false; this.add(this.shafts);
     this.boltGeometry.setAttribute('position', new BufferAttribute(new Float32Array(18 * 3), 3)); this.bolt.frustumCulled = false; this.bolt.visible = false; this.add(this.bolt);
     this.stop = world.events.on('weather.lightning', event => {
       if (event.type !== 'weather.lightning') return;
@@ -87,6 +99,11 @@ export class WeatherView extends Group {
   update(view: View, tier: 'high' | 'low', reduced: boolean): void {
     const w = this.world.weather; if (!w) return; this.reducedFlash = reduced;
     weatherSurface.windStrength.value = w.kind === 'none' ? 0 : 1 + Math.max(0, weatherPresets[w.kind].wind - .12) * 1.5 + w.gust;
+    this.shafts.visible = w.kind === 'haze';
+    if (this.shafts.visible) this.shafts.children.forEach((shaft, i) => {
+      shaft.position.set(view.focus.x + (i - 1) * 6, 6, view.focus.z - 5 + i * 2);
+      shaft.quaternion.copy(view.camera.quaternion); shaft.rotateZ(-.5);
+    });
     const player = this.world.entities.get(1)?.transform;
     if (player) weatherHero.value.set(player.x, player.y, player.z);
     this.focus.value.set(view.focus.x, 0, view.focus.z); this.clock.value = this.world.tick / 60;
@@ -110,6 +127,8 @@ export class WeatherView extends Group {
     this.lighting.sun.intensity = this.lighting.intensity.value;
     this.lighting.sun.shadow.radius = w.clouds > .5 ? Math.max(5, look.values.shadowRadius) : look.values.shadowRadius;
     weatherSurface.clouds.value = w.clouds;
+    const flags = weatherMaterialFlags;
+    this.lighting.setWeatherMode((w.clouds > 0 ? flags.clouds : 0) | (w.rain > 0 || w.wetness > .3 ? flags.wet : 0) | (w.flakes > 0 || w.accumulation > 0 ? flags.accumulation : 0) | (w.fog > 0 ? flags.fog : 0) | (w.kind === 'thunderstorm' || this.flash > 0 ? flags.flash : 0) | (weatherSurface.probe.value << flags.probeShift));
     const trackTick = w.tracks.at(-1)?.tick ?? -1;
     if (trackTick !== this.lastTrackTick) {
       const data = weatherSurface.tracks.image.data as Float32Array; data.fill(0); this.trackPixels = 0;
@@ -124,5 +143,5 @@ export class WeatherView extends Group {
     }
   }
   snapshot() { return { particles: this.particles, flash: this.flash, rayDitherRadius: 6, wetness: weatherSurface.wetness.value, accumulation: weatherSurface.accumulation.value, tracks: this.world.weather?.tracks.length ?? 0, trackPixels: this.trackPixels }; }
-  dispose(): void { weatherSurface.clouds.value = 0; weatherRayDither.value = weatherSurface.windStrength.value = 1; this.stop(); this.boltGeometry.dispose(); this.boltMaterial.dispose(); this.rippleGeometry.dispose(); this.rippleMaterial.dispose(); this.breathGeometry.dispose(); this.breathMaterial.dispose(); this.geometry.dispose(); this.material.dispose(); this.clear(); weatherSurface.probe.value = weatherSurface.wetness.value = weatherSurface.accumulation.value = weatherSurface.fog.value = weatherSurface.flash.value = 0; (weatherSurface.tracks.image.data as Float32Array).fill(0); weatherSurface.tracks.needsUpdate = true; }
+  dispose(): void { weatherSurface.clouds.value = 0; weatherRayDither.value = weatherSurface.windStrength.value = 1; this.stop(); this.boltGeometry.dispose(); this.boltMaterial.dispose(); this.rippleGeometry.dispose(); this.rippleMaterial.dispose(); this.breathGeometry.dispose(); this.breathMaterial.dispose(); this.shaftGeometry.dispose(); this.shaftMaterial.dispose(); this.geometry.dispose(); this.material.dispose(); this.clear(); weatherSurface.probe.value = weatherSurface.wetness.value = weatherSurface.accumulation.value = weatherSurface.fog.value = weatherSurface.flash.value = 0; (weatherSurface.tracks.image.data as Float32Array).fill(0); weatherSurface.tracks.needsUpdate = true; }
 }

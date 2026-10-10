@@ -1,0 +1,212 @@
+ 1:53  up 62 days, 47 mins, 3 users, load averages: 2.62 2.89 3.20
+Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 8 tests using 1 worker
+
+{"level":"L1","tier":"high","frameP50":8.5,"frameP95":15,"cpuP95":4.59999942779541}
+  ✘  1 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L1 high @perf (15.3s)
+{"level":"L2","tier":"high","frameP50":9.099999999998545,"frameP95":16.100000000000364,"cpuP95":5.09999942779541}
+  ✘  2 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L2 high @perf (16.9s)
+{"level":"L3","tier":"high","frameP50":7.799999999999272,"frameP95":15.5,"cpuP95":4}
+  ✘  3 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L3 high @perf (19.8s)
+{"level":"L4","tier":"high","frameP50":6.100000000000364,"frameP95":15.200000000000728,"cpuP95":4.600000381469727}
+  ✘  4 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L4 high @perf (13.5s)
+{"level":"L1","tier":"low","frameP50":19,"frameP95":35.700000000004366,"cpuP95":13.600000381469727}
+  ✓  5 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L1 low @perf (35.4s)
+{"level":"L2","tier":"low","frameP50":19.599999999998545,"frameP95":35.099999999998545,"cpuP95":15}
+  ✓  6 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L2 low @perf (40.9s)
+{"level":"L3","tier":"low","frameP50":17.5,"frameP95":36.60000000000582,"cpuP95":12.299999237060547}
+  ✓  7 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L3 low @perf (56.2s)
+{"level":"L4","tier":"low","frameP50":12.200000000000728,"frameP95":20.899999999997817,"cpuP95":10.300000190734863}
+  ✘  8 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L4 low @perf (26.6s)
+
+
+  1) [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L1 high @perf ────
+
+    Error: L1 high p95 regression must not exceed 5%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 13.230000000000382
+    Received:    15
+
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+    > 40 |       expect(result.frameP95, `${level} ${tier} p95 regression must not exceed 5%`).toBeLessThanOrEqual(before.frameP95 * 1.05);
+         |                                                                                     ^
+      41 |     }
+      42 |   });
+      43 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:40:85
+
+    Error Context: test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L1-high-perf-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L1-high-perf-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L1-high-perf-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L2 high @perf ────
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14
+    Received:    16.100000000000364
+
+      34 |     expect(result.counters.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
+      35 |     // Record both absolute budgets and paired regression results even if main already exceeds a budget.
+    > 36 |     if (tier === 'high') expect.soft(result.frameP95).toBeLessThanOrEqual(level === 'L1' ? 16.7 : 14);
+         |                                                       ^
+      37 |     else expect(result.frameP50).toBeLessThanOrEqual(1000 / 30);
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:36:55
+
+    Error: L2 high p95 regression must not exceed 5%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14.700000000000001
+    Received:    16.100000000000364
+
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+    > 40 |       expect(result.frameP95, `${level} ${tier} p95 regression must not exceed 5%`).toBeLessThanOrEqual(before.frameP95 * 1.05);
+         |                                                                                     ^
+      41 |     }
+      42 |   });
+      43 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:40:85
+
+    Error Context: test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L2-high-perf-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L2-high-perf-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L2-high-perf-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L3 high @perf ────
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14
+    Received:    15.5
+
+      34 |     expect(result.counters.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
+      35 |     // Record both absolute budgets and paired regression results even if main already exceeds a budget.
+    > 36 |     if (tier === 'high') expect.soft(result.frameP95).toBeLessThanOrEqual(level === 'L1' ? 16.7 : 14);
+         |                                                       ^
+      37 |     else expect(result.frameP50).toBeLessThanOrEqual(1000 / 30);
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:36:55
+
+    Error: L3 high p95 regression must not exceed 5%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14.385000000000765
+    Received:    15.5
+
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+    > 40 |       expect(result.frameP95, `${level} ${tier} p95 regression must not exceed 5%`).toBeLessThanOrEqual(before.frameP95 * 1.05);
+         |                                                                                     ^
+      41 |     }
+      42 |   });
+      43 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:40:85
+
+    Error Context: test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L3-high-perf-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L3-high-perf-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L3-high-perf-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L4 high @perf ────
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14
+    Received:    15.200000000000728
+
+      34 |     expect(result.counters.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
+      35 |     // Record both absolute budgets and paired regression results even if main already exceeds a budget.
+    > 36 |     if (tier === 'high') expect.soft(result.frameP95).toBeLessThanOrEqual(level === 'L1' ? 16.7 : 14);
+         |                                                       ^
+      37 |     else expect(result.frameP50).toBeLessThanOrEqual(1000 / 30);
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:36:55
+
+    Error: L4 high p95 regression must not exceed 5%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 13.54500000000153
+    Received:    15.200000000000728
+
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+    > 40 |       expect(result.frameP95, `${level} ${tier} p95 regression must not exceed 5%`).toBeLessThanOrEqual(before.frameP95 * 1.05);
+         |                                                                                     ^
+      41 |     }
+      42 |   });
+      43 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:40:85
+
+    Error Context: test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L4-high-perf-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L4-high-perf-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3406/perf-integrate-e26-e28-high-integration-L4-high-perf-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L4 low @perf ──────
+
+    Error: L4 low p95 regression must not exceed 5%
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 18.794999999999618
+    Received:    20.899999999997817
+
+      38 |     if (process.env.INTEGRATION_PHASE === 'after') {
+      39 |       const before = JSON.parse(readFileSync(`${dir}/before-${level}-${tier}.json`, 'utf8')) as { frameP95: number };
+    > 40 |       expect(result.frameP95, `${level} ${tier} p95 regression must not exceed 5%`).toBeLessThanOrEqual(before.frameP95 * 1.05);
+         |                                                                                     ^
+      41 |     }
+      42 |   });
+      43 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/integrate-e26-e28/tests/perf/integrate-e26-e28.spec.ts:40:85
+
+    Error Context: test-results/playwright/run-3406/perf-integrate-e26-e28-low-integration-L4-low-perf-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3406/perf-integrate-e26-e28-low-integration-L4-low-perf-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3406/perf-integrate-e26-e28-low-integration-L4-low-perf-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L1 high @perf ─────
+    [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L2 high @perf ─────
+    [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L3 high @perf ─────
+    [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L4 high @perf ─────
+    [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L4 low @perf ───────
+  3 passed (3.8m)
