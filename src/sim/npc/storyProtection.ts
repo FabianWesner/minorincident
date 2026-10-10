@@ -25,10 +25,11 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   }
   if (s.l6) {
     if (id === s.l6.survivors[0]?.id && !s.l6.gateAt) return true;
+    // Injured followers still carry the straggler/help beat after the first breach.
+    if (s.l6.survivors.some(r => r.id === id && r.injured && !r.rejoined && r.status !== 'out')) return true;
     if (world.tick < s.l6.breach1At) {
       const medic = s.l6.survivors.find(r => r.key === 'rosa' || r.routine === 'treat');
-      const patient = s.l6.survivors.find(r => r.injured);
-      if (id === medic?.id || id === patient?.id) return true;
+      if (id === medic?.id) return true;
     }
   }
   return false;
