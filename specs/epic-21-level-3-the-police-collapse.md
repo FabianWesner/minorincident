@@ -98,21 +98,23 @@ Noticeably more than L2: ≥ 6 fires (≥ 1 per street, E27 small/medium), ≥ 1
 
 ## 8. Acceptance criteria
 
-Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Time bands are **provisional** and are recalibrated on the first green 20-seed run (staging §6, never padded).
+Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Time bands are **provisional** and are recalibrated on the first green single-seed run (staging §6, never padded).
+
+> PO 10-09: at most one single-seed complete-bot pass per level is a gate; fun/feel is judged by the PO.
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E21-AC01 | The L3 mission graph (armory → defend station → fallback → reach army checkpoint) is structurally completable (E12-AC07) and has no fail timer | sim |
-| E21-AC02 | The `complete` bot finishes L3 on **20/20 seeds** from the `L3-default` progression (bat + axe) without cheats; median sim time **2:00–3:45** | sim |
-| E21-AC03 | The `newbie` bot finishes on ≥ 18/20 seeds, median sim time **2:30–4:30**, median deaths ≤ 2 | sim |
+| E21-AC02 | The `complete` bot finishes L3 on **one seed** from the `L3-default` progression (bat + axe) without cheats; sim time **2:00–3:45** PO 10-09: single seed. | sim |
+| E21-AC03 | The `newbie` bot finishes on one seed, sim time **2:30–4:30**, deaths ≤ 2 PO 10-09: single seed. | sim |
 | E21-AC04 | **Handgun:** acquired only at the armory (the `complete` bot has it within 40 s of start); each shot hits at most 1 target (no pierce), a 40 HP infected needs 2 hits, range 22 m; 600 continuous shots never produce a reload, an empty state or an ammo HUD element; bat and axe remain selectable | sim + e2e |
 | E21-AC05 | **Ranged before contact:** in `complete` runs the median distance of handgun kills is ≥ 6 m, while axe/bat kills are ≤ 2.5 m (the weapons have different roles) | sim |
-| E21-AC06 | **Gunfire loud events:** a shot pulls every non-chasing infected within 20 m to within 4 m of the shot position within 10 s, then they search; infected beyond 20 m or already chasing are unaffected; the E20-AC11 omniscience audit passes over 20 `complete` runs | sim |
-| E21-AC07 | **Station attack:** 8–10 armed officers defend from cover; waves come from ≥ 3 directions ≥ 60° apart; ≥ 1 officer is bitten and turns (same entity id, uniform) during the attack on ≥ 15/20 seeds; `l3.fallback` fires by its first-of rule (60 s / 3 turned / 8 inside), and with the `idle` bot it still fires (the station cannot be held indefinitely) | sim |
-| E21-AC08 | **Squad forms:** at the fallback 3–4 living officers join as followers on ≥ 19/20 seeds; no officer has a damage-immunity or scripted-survival flag at any tick | sim |
-| E21-AC09 | **Squad feels strong first:** in segment 1, officers make ≥ 60 % of infected kills and the player's median damage taken is ≤ 15 HP (20 `complete` seeds); squad members stay within 8 m of the player ≥ 80 % of non-combat time and never teleport (no position jump > 1 m per tick) | sim |
-| E21-AC10 | **Squad falls apart (systemically):** the median squad size at the ends of segments 1, 2, 3 is non-increasing and is ≤ 2 at the army checkpoint; all 4 arrive on ≤ 15 % of seeds; ≥ 1 officer turns during the corridor on ≥ 50 % of seeds; every squad loss is a `bite`/`combat.kill` event or a separation > 40 m (no scripted removal) | sim |
-| E21-AC11 | **Linear corridor layout:** length 280–340 m, three parallel streets, ≥ 6 cross-links spaced ≤ 60 m, sight blockers every ≤ 25 m, no dead end > 30 m; the `complete` bot's progress coordinate never regresses by > 15 m, and on each of three forced-street runs (one per street) it completes on 20/20 seeds | sim (layout + sim) |
+| E21-AC06 | **Gunfire loud events:** a shot pulls every non-chasing infected within 20 m to within 4 m of the shot position within 10 s, then they search; infected beyond 20 m or already chasing are unaffected; the E20-AC11 omniscience audit passes over one `complete` run PO 10-09: single seed. | sim |
+| E21-AC07 | **Station attack:** 8–10 armed officers defend from cover; waves come from ≥ 3 directions ≥ 60° apart; ≥ 1 officer is bitten and turns (same entity id, uniform) during the attack on one seed; `l3.fallback` fires by its first-of rule (60 s / 3 turned / 8 inside), and with the `idle` bot it still fires (the station cannot be held indefinitely) PO 10-09: single seed. | sim |
+| E21-AC08 | **Squad forms:** at the fallback 3–4 living officers join as followers on one seed; no officer has a damage-immunity or scripted-survival flag at any tick PO 10-09: single seed. | sim |
+| E21-AC09 | **Squad feels strong first:** in segment 1, officers make ≥ 60 % of infected kills and the player's damage taken is ≤ 15 HP (one `complete` seed); squad members stay within 8 m of the player ≥ 80 % of non-combat time and never teleport (no position jump > 1 m per tick) PO 10-09: single seed. | sim |
+| E21-AC10 | **Squad falls apart (systemically):** the squad size at the ends of segments 1, 2, 3 is non-increasing and is ≤ 2 at the army checkpoint; at most 3 arrive; ≥ 1 officer turns during the corridor on one seed; every squad loss is a `bite`/`combat.kill` event or a separation > 40 m (no scripted removal) PO 10-09: single seed. | sim |
+| E21-AC11 | **Linear corridor layout:** length 280–340 m, three parallel streets, ≥ 6 cross-links spaced ≤ 60 m, sight blockers every ≤ 25 m, no dead end > 30 m; the `complete` bot's progress coordinate never regresses by > 15 m, and on each of three forced-street runs (one per street) it completes on one seed PO 10-09: single seed. | sim (layout + sim) |
 | E21-AC12 | **Escalation:** pre-populated infected per segment are within ±20 % of 10 / 25 / 40; the median live infected count within 30 m of the player rises from segment 1 to segment 3; caps 80 (high) / 40 (low) are never exceeded | sim |
 | E21-AC13 | **Forward pressure:** when the player idles 20 s behind the furthest progress line, emergence behind that line starts (1–3 infected per 10 s from doors 15–35 m behind, outside the frustum) and stops when the player advances | sim |
 | E21-AC14 | **Medkits:** ≥ 2 per street and ≥ 7 total; a pickup restores 40 HP (capped) and is consumed; the `newbie` bot picks up ≥ 2 per run (median); the time-weighted share of the `newbie` run spent below 20 % HP is ≤ 10 % | sim |

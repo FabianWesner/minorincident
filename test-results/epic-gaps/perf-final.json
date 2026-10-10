@@ -1,0 +1,738 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l1-transitions.spec.ts",
+      "tests/perf/l1-spots.spec.ts",
+      "tests/perf/l4-budgets.spec.ts",
+      "tests/perf/e18-download.spec.ts",
+      "tests/e2e/audio/l1-arc.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3363 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3363",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/audio/l1-arc.spec.ts",
+      "file": "e2e/audio/l1-arc.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E19-19d @E19 @E19-AC19 @E19-AC21 accident events produce the cue order and no frame above 50 ms",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC19",
+            "E19-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17851,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T15:52:32.375Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69b89615098b5dbd8edc-18c70c724a646706b167",
+          "file": "e2e/audio/l1-arc.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/e18-download.spec.ts",
+      "file": "perf/e18-download.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip through level.started",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T15:52:50.301Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-68fef0e3002c2f99c7e1",
+          "file": "perf/e18-download.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/l1-spots.spec.ts",
+      "file": "perf/l1-spots.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-morning",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26802,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T15:52:59.959Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a9119440162611b8d57-afb184977afbd32faf17",
+          "file": "perf/l1-spots.spec.ts",
+          "line": 9,
+          "column": 63
+        },
+        {
+          "title": "T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-accident",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27755,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T15:53:28.491Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a9119440162611b8d57-7bf02bfbb4c3bf1f84dc",
+          "file": "perf/l1-spots.spec.ts",
+          "line": 9,
+          "column": 63
+        },
+        {
+          "title": "T-E19-24 @E19 @E19-AC24 @perf high-tier budgets at l1-horde",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC24",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27757,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-10T15:53:56.257Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a9119440162611b8d57-a160d50b12448262d9e2",
+          "file": "perf/l1-spots.spec.ts",
+          "line": 9,
+          "column": 63
+        }
+      ]
+    },
+    {
+      "title": "perf/l1-transitions.spec.ts",
+      "file": "perf/l1-transitions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop",
+          "file": "perf/l1-transitions.spec.ts",
+          "line": 16,
+          "column": 57,
+          "specs": [
+            {
+              "title": "@E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC24",
+                "E19-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 50701,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "after desktop loading {\"dataMs\":20.699999809265137,\"simMs\":97.69999980926514,\"viewMs\":8770.5,\"warmUp\":[{\"name\":\"L1 shader compilation\",\"ms\":1432.1000003814697},{\"name\":\"L1 warm-up draw\",\"ms\":281.5},{\"name\":\"L1 driver warm-up\",\"ms\":2933.0999994277954},{\"name\":\"L1 warm-up instanced draw\",\"ms\":51.30000019073486},{\"name\":\"L1 warm-up solo draws\",\"ms\":2600.199999809265}]}\n"
+                        },
+                        {
+                          "text": "after desktop measuring pickup\n"
+                        },
+                        {
+                          "text": "after desktop pickup max=23.3ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring handover\n"
+                        },
+                        {
+                          "text": "after desktop handover max=42.3ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring accident\n"
+                        },
+                        {
+                          "text": "after desktop accident max=19.5ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring infected-exit\n"
+                        },
+                        {
+                          "text": "after desktop infected-exit max=25.7ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring weapon-pickup\n"
+                        },
+                        {
+                          "text": "after desktop weapon-pickup max=20.6ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring death-respawn\n"
+                        },
+                        {
+                          "text": "after desktop death-respawn max=19.8ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring fire-station-end\n"
+                        },
+                        {
+                          "text": "after desktop fire-station-end max=20.1ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T15:54:24.352Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15e6047bf7bc763321d4-9ce25e671181ccf18481",
+              "file": "perf/l1-transitions.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "mobile",
+          "file": "perf/l1-transitions.spec.ts",
+          "line": 16,
+          "column": 57,
+          "specs": [
+            {
+              "title": "@E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget mobile",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC24",
+                "E19-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 46307,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "after mobile loading {\"dataMs\":20.200000762939453,\"simMs\":99.19999980926514,\"viewMs\":5053.599999427795,\"warmUp\":[{\"name\":\"L1 shader compilation\",\"ms\":1337.5},{\"name\":\"L1 warm-up draw\",\"ms\":184.29999923706055},{\"name\":\"L1 driver warm-up\",\"ms\":1900.8999996185303},{\"name\":\"L1 warm-up instanced draw\",\"ms\":49.90000057220459},{\"name\":\"L1 warm-up solo draws\",\"ms\":1666.6999998092651}]}\n"
+                        },
+                        {
+                          "text": "after mobile measuring pickup\n"
+                        },
+                        {
+                          "text": "after mobile pickup max=26.5ms\n"
+                        },
+                        {
+                          "text": "after mobile measuring handover\n"
+                        },
+                        {
+                          "text": "after mobile handover max=21.5ms\n"
+                        },
+                        {
+                          "text": "after mobile measuring accident\n"
+                        },
+                        {
+                          "text": "after mobile accident max=19.9ms\n"
+                        },
+                        {
+                          "text": "after mobile measuring infected-exit\n"
+                        },
+                        {
+                          "text": "after mobile infected-exit max=21.6ms\n"
+                        },
+                        {
+                          "text": "after mobile measuring weapon-pickup\n"
+                        },
+                        {
+                          "text": "after mobile weapon-pickup max=21.4ms\n"
+                        },
+                        {
+                          "text": "after mobile measuring death-respawn\n"
+                        },
+                        {
+                          "text": "after mobile death-respawn max=20.9ms\n"
+                        },
+                        {
+                          "text": "after mobile measuring fire-station-end\n"
+                        },
+                        {
+                          "text": "after mobile fire-station-end max=21.7ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T15:55:15.130Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "15e6047bf7bc763321d4-549ce6ed42d8cacdf0d4",
+              "file": "perf/l1-transitions.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l4-budgets.spec.ts",
+      "file": "perf/l4-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 11,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 47385,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"seed\":2,\"counts\":{\"infected\":80,\"soldiers\":20,\"civilians\":40},\"firingSoldiers\":19,\"warDrawCalls\":262,\"warTriangles\":502842,\"collapseDrawCalls\":283,\"collapseTriangles\":1098727,\"warP50\":5.700000000000728,\"warP95\":8,\"warMax\":17.099999999998545,\"turnMaxMs\":13.899999999999636,\"tankMaxMs\":10.099999999998545,\"breakMaxMs\":15,\"collapseP50\":6.900000000001455,\"collapseP95\":8.900000000001455,\"simP95\":2.200000762939453,\"simFrameP95\":2,\"updateP95\":1.8999996185302734,\"renderP95\":4,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T15:56:01.727Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-42c898189b52048cc908",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 11,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low",
+              "ok": false,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 67541,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m8\u001b[39m\nReceived:    \u001b[31m7\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m8\u001b[39m\nReceived:    \u001b[31m7\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests/perf/l4-budgets.spec.ts:83:28",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests/perf/l4-budgets.spec.ts",
+                          "column": 28,
+                          "line": 83
+                        },
+                        "snippet": "  81 |     console.log(JSON.stringify(proof));\n  82 |     expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8); expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);\n> 83 |     expect(firingSoldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8);\n     |                            ^\n  84 |     expect(proof.lineBroke).toBe(true);\n  85 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  86 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests/perf/l4-budgets.spec.ts",
+                            "column": 28,
+                            "line": 83
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m8\u001b[39m\nReceived:    \u001b[31m7\u001b[39m\n\n  81 |     console.log(JSON.stringify(proof));\n  82 |     expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8); expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);\n> 83 |     expect(firingSoldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8);\n     |                            ^\n  84 |     expect(proof.lineBroke).toBe(true);\n  85 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  86 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests/perf/l4-budgets.spec.ts:83:28"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":40,\"soldiers\":10,\"civilians\":20},\"firingSoldiers\":7,\"warDrawCalls\":206,\"warTriangles\":248217,\"collapseDrawCalls\":183,\"collapseTriangles\":460461,\"warP50\":16.799999999995634,\"warP95\":33,\"warMax\":55.80000000000291,\"turnMaxMs\":32.70000000000073,\"tankMaxMs\":35.900000000001455,\"breakMaxMs\":36.900000000001455,\"collapseP50\":18.80000000000291,\"collapseP95\":34.200000000004366,\"simP95\":4.699999809265137,\"simFrameP95\":6.5,\"updateP95\":4.90000057220459,\"renderP95\":10,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T15:56:49.390Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/test-results/playwright/run-3363/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-gaps/tests/perf/l4-budgets.spec.ts",
+                        "column": 28,
+                        "line": 83
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-81e59d30aafd40784017",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-10T15:52:31.775Z",
+    "duration": 326434.61000000004,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "epicGapsScope": {
+    "superseded": "The L4 low fixture had only seven firing soldiers; l4-final.json is the final strengthened full-load gate. All other eight tests in this run passed."
+  }
+}
