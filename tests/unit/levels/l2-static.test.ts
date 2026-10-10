@@ -24,11 +24,14 @@ test('T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, 
   expect(count(['fighting'])).toBeGreaterThanOrEqual(1);
   // Every referenced id is a manifest asset (non-integrated ones render as registry placeholders).
   for (const d of l2Dressing) expect(manifest.has(d.assetId), d.assetId).toBe(true);
-  // The L2 town at its W1 tier carries no burned facades, collapsed buildings, building fires or rubble.
+  // The L2 town at its W1 tier carries no generic burned facades, collapsed buildings, building fires or rubble. The one
+  // exception is the L1 story carryover (PO 2026-10-08): the annex the lab blast burned, with its debris (`carry-*` ids).
   const [layout] = levelTwoLayouts([grove]), tier = compositions.L2.tier;
   expect(tier).toBe(1);
-  const live = layout.placements.filter(p => p.minTier <= tier && p.maxTier >= tier).map(p => p.assetId);
+  const inTier = layout.placements.filter(p => p.minTier <= tier && p.maxTier >= tier), live = inTier.filter(p => !p.id.startsWith('carry-')).map(p => p.assetId);
   for (const banned of ['decay.burned-facade', 'decay.collapsed-facade', 'decay.rubble-pile', 'decay.crater']) expect(live).not.toContain(banned);
+  expect(inTier.filter(p => p.decay).map(p => p.id)).toEqual(['bld.clinic-annex:791']);
+  for (const p of inTier.filter(p => p.id.startsWith('carry-annex'))) expect(Math.hypot(p.position[0] - 66, p.position[2] + 15)).toBeLessThan(8);
   expect(live).toContain('bld.supermarket'); expect(live).toContain('veh.police-suv'); expect(live).toContain('prop.barricade'); expect(live).toContain('bld.river-bridge');
 });
 

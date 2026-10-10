@@ -56,6 +56,8 @@ export class Toys {
   readonly dumpsterIds: number[] = [];
   readonly alarmIds: number[] = [];
   carwashId = -1;
+  /** Anchor name (`gate-N`, `dumpster-N`) of each gate/dumpster device: the campaign carryover keys on these. */
+  readonly anchorOf = new Map<number, string>();
   /** Car-wash bay polygon (world metres); empty when the level has none. */
   bay: Vec2[] = [];
   private readonly walls = new Map<number, { x: number; z: number; hx: number; hz: number }>();
@@ -92,8 +94,8 @@ export class Toys {
         const spot = w.vehicles.bicycle.clearSpot(depot.x, depot.z + 1, Math.PI / 2);
         w.vehicles.bicycle.parkPoints.push({ x: depot.x, z: depot.z, radius: 5, ...(spot ? { spot } : {}) });
       }
-      for (let i = 1; i <= l1v2.toys.yardGates; i++) { const a = at(`gate-${i}`); if (a) this.gate(`gate-${i}`, a); }
-      for (let i = 1; at(`dumpster-${i}`); i++) { const a = at(`dumpster-${i}`), end = at(`dumpster-${i}-end`); if (a && end) this.dumpster(a, end); }
+      for (let i = 1; i <= l1v2.toys.yardGates; i++) { const a = at(`gate-${i}`); if (a) this.anchorOf.set(this.gate(`gate-${i}`, a), `gate-${i}`); }
+      for (let i = 1; at(`dumpster-${i}`); i++) { const a = at(`dumpster-${i}`), end = at(`dumpster-${i}-end`); if (a && end) this.anchorOf.set(this.dumpster(a, end), `dumpster-${i}`); }
       for (let i = 1; at(`alarm-car-${i}`); i++) { const a = at(`alarm-car-${i}`); if (a) this.alarm(a); }
       const wash = at('carwash-start'); if (wash && this.bay.length) this.carwash(wash);
     }
@@ -103,21 +105,44 @@ export class Toys {
     return this.world.entities.get(id)!;
   }
   /** Yard gate: starts open; closing blocks movement (collider + nav) and sight (LOS blocker). */
-  private gate(id: string, a: Vec2 & { yaw: number }): void {
+  private gate(id: string, a: Vec2 & { yaw: number }): number {
     const along = Math.abs(Math.sin(a.yaw)) > .7, hx = along ? GATE_THICK : GATE_HALF, hz = along ? GATE_HALF : GATE_THICK;
     const e = this.device('gate', a, 'Gate', { halfX: hx, halfZ: hz, radius: 1.8 });
     (this.world.interactables as unknown as { complete(id: number): void })['complete'](e.id); // opens it, unblocking the collider
     Object.assign(e.interactable!, { completed: false, progress: 0, cycle: 0 });
     e.transform.yaw = along ? Math.PI / 2 : 0; this.gateIds.push(e.id); this.walls.set(e.id, { x: a.x, z: a.z, hx, hz });
     this.los.register({ id, shape: aabb(a.x, a.z, hx, hz), active: false, source: 'gate' });
+    return e.id;
   }
   /** Dumpster: one interaction slides it along its rail into the passage. */
-  private dumpster(from: Vec2, to: Vec2): void {
+  private dumpster(from: Vec2, to: Vec2): number {
     const e = this.device('lever', from, 'Push dumpster', { radius: 2.2 });
     const rail = Math.abs(to.z - from.z) > Math.abs(to.x - from.x), hx = rail ? DUMPSTER_LONG : DUMPSTER_SHORT, hz = rail ? DUMPSTER_SHORT : DUMPSTER_LONG;
     this.world.interactables!.unblock(e.id); // devices of kind lever are not doors; make sure no stray collider exists
     e.toy = { kind: 'dumpster', until: 0, rearmAt: 0, from: { x: from.x, z: from.z }, to: { x: to.x, z: to.z }, progress: 0, pushing: false };
     this.walls.set(e.id, { x: from.x, z: from.z, hx, hz }); this.dumpsterIds.push(e.id); this.placeDumpster(e);
+    return e.id;
+  }
+  /** Campaign carryover: what the run left behind (pushed dumpsters, closed gates), by anchor name, in install order. */
+  carried(): { dumpsters: string[]; gatesClosed: string[] } {
+    const w = this.world;
+    return {
+      dumpsters: this.dumpsterIds.filter(id => { const t = w.entities.get(id)?.toy; return !!t && (t.pushing || t.progress > 0); }).map(id => this.anchorOf.get(id)!),
+      gatesClosed: this.gateIds.filter(id => w.entities.get(id)?.interactable?.open === false).map(id => this.anchorOf.get(id)!),
+    };
+  }
+  /** Restores a carried state at level start: dumpsters at the end of their rail (blocking it), the named gates closed. */
+  carryOver(state: { dumpsters: readonly string[]; gatesClosed: readonly string[] }): void {
+    for (const [id, name] of this.anchorOf) {
+      const e = this.world.entities.get(id); if (!e?.interactable) continue;
+      if (e.toy?.kind === 'dumpster' && state.dumpsters.includes(name)) {
+        Object.assign(e.toy, { progress: 1, pushing: false }); Object.assign(e.interactable, { label: 'Dumpster pushed', enabled: false, completed: false, progress: 0 }); this.placeDumpster(e);
+      } else if (!e.toy && state.gatesClosed.includes(name) && e.interactable.open) {
+        (this.world.interactables as unknown as { complete(id: number): void })['complete'](id); // closes it, blocking collider + nav
+        Object.assign(e.interactable, { completed: false, progress: 0, cycle: 0 });
+      }
+    }
+    this.update();
   }
   private alarm(a: Vec2): void {
     const e = this.device('button', a, 'Car alarm', { radius: ALARM_RING_M });

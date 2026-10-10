@@ -1,3 +1,4 @@
+import { applyL1Aftermath, type L1Aftermath } from '../continuity';
 import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
 import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
@@ -108,8 +109,9 @@ const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', positio
 /**
  * L2 copy of the D-GROVE layout (same town as L1, a few hours later): authored L2 anchors, the market, the W1 dressing,
  * the checkpoint at the east end of Elm Street, and no courier bicycle. Feeds collision, navigation and rendering alike.
+ * The L1 aftermath (burned annex, outbreak house, and this run's own carryover when the save has it) is applied on top.
  */
-export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
+export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermath | null = null): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-GROVE') return layout;
     delete layout.anchors['bike-start'];
@@ -190,6 +192,6 @@ export function levelTwoLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     layout.placements.push({ id: 'l2-alarm-car-5', assetId: 'veh.sedan-white', position: [48.6, 0, 12.4], yaw: H, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [47.6, 0, 10.2], max: [49.6, 1.6, 14.6] } });
     layout.lightGroups.push({ id: 'l2', offAt: 5 });
-    return layout;
+    return applyL1Aftermath(layout, aftermath);
   });
 }

@@ -16,7 +16,7 @@ const show = (o: ReturnType<typeof addedOverlaps>) => o.map(x => `${x.a} (${x.as
 
 test('L2 additions on D-GROVE do not cut into any other placement (staticOverlapMax 0)', () => {
   const [layout] = levelTwoLayouts([load('D-GROVE.layout.json')]);
-  expect(show(addedOverlaps(layout, 1, p => p.id.startsWith('l2-') && !p.id.startsWith('l2-station-') || p.assetId.startsWith('veh.')))).toEqual([]);
+  expect(show(addedOverlaps(layout, 1, p => p.id.startsWith('carry-') || p.id.startsWith('l2-') && !p.id.startsWith('l2-station-') || p.assetId.startsWith('veh.')))).toEqual([]);
 }, 90_000); // the clearance searches take ~10 s locally and >30 s on the cx33 runners
 
 test('L3 additions on D-CORRIDOR do not cut into any other placement (staticOverlapMax 0)', () => {
