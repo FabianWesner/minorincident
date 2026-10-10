@@ -111,7 +111,7 @@ export type EffectSpec =
   | { blast: string; at: Point }
   | { barricadeHit: string; amount: number }
   | { wreck: string }
-  | { fire: Point; radius?: number }
+  | { fire: Point; radius?: number; duration?: number }
   | { smoke: Point; radius?: number };
 export type CameraSpec =
   | { mode: 'game'; target?: Point | string; zoom?: number }
