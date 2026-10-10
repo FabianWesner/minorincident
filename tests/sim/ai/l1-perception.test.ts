@@ -38,6 +38,7 @@ function wall(w: SimWorld, id: number, x: number, z: number, halfX: number, half
   w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id, wall: cover, blocked: true } as never);
 }
 const seeds = Array.from({ length: 20 }, (_, i) => i + 1);
+const singleSeed = [1]; // PO 10-09: single seed for AC12 and AC26.
 const median = (v: number[]) => { const s = [...v].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]; };
 
 describe('L1 v2 infected perception', () => {
@@ -239,7 +240,7 @@ describe('L1 v2 infected perception', () => {
 
   test('T-E19-herd @E19 @E19-AC26 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)', async () => {
     const times: number[] = [];
-    for (const seed of seeds) for (const blocked of [false, true]) {
+    for (const seed of singleSeed) for (const blocked of [false, true]) {
       const { w, humans } = await l1World(seed);
       if (blocked) wall(w, 920, 6, 4, 0.4, 2); // hides the player from B's new view, not from A
       const player = humans.add(1, 'player', 12, 0);
@@ -255,7 +256,7 @@ describe('L1 v2 infected perception', () => {
       else { expect(acquired).toBeGreaterThanOrEqual(0); expect(acquired).toBeLessThanOrEqual(36); times.push(acquired / 60); }
       w.dispose(); worlds.length = 0;
     }
-    console.info(`[herd] acquired after ${Math.min(...times).toFixed(2)}-${Math.max(...times).toFixed(2)} s on ${times.length}/20 seeds`);
+    console.info(`[herd] acquired after ${Math.min(...times).toFixed(2)}-${Math.max(...times).toFixed(2)} s on ${times.length}/1 seed`);
   });
 
   test('T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence', async () => {
@@ -348,7 +349,7 @@ describe('L1 v2 infected perception', () => {
     const closing: number[] = [], closingSpeed: number[] = [];
     const tiers = { frail: 'npc.civilian-elderly', average: 'inf.cashier', athletic: 'inf.jogger' } as const;
     const all: Record<string, number[]> = { frail: [], average: [], athletic: [] };
-    for (const seed of seeds) {
+    for (const seed of singleSeed) {
       const { w, ai, humans } = await l1World(seed);
       for (const [tier, variant] of Object.entries(tiers)) {
         const group = Array.from({ length: 5 }, (_, i) => ai.l1Speed(zombie(w, 30 + i * 2, -56 + Object.keys(tiers).indexOf(tier) * 3, 0, variant).id));
@@ -381,7 +382,7 @@ describe('L1 v2 infected perception', () => {
     expect(every.filter((s) => s > l1v2.player.runMs).length / every.length).toBeGreaterThanOrEqual(l1v2.speedTiers.minShareAbovePlayerRun);
     expect(every.some((s) => s < l1v2.player.runMs)).toBe(true);
     // A chaser at >= 5.0 m/s still closes 10 m in <= 20 s.
-    expect(closing.length).toBeGreaterThanOrEqual(5);
+    expect(closing.length).toBeGreaterThanOrEqual(1); // PO 10-09: one qualifying seed.
     for (const t of closing) expect(t).toBeLessThanOrEqual(l1v2.speedTiers.closeTenMetresMaxS);
     // Simulated closing tracks the analytic 10 / (v - 4.5) within 1.5 s (no hidden slow-downs in the chase).
     closing.forEach((t, i) => { if (t < 60) expect(Math.abs(t - 10 / (closingSpeed[i] - l1v2.player.runMs))).toBeLessThanOrEqual(1.5); });

@@ -709,6 +709,7 @@ export class DistrictView extends Group {
       batches: this.batches.map((b) => ({
         assetId: b.name.slice(5),
         instances: b.references.length,
+        placeholder: b.userData.placeholder === true,
         meshes: b.children.filter((c) => c instanceof InstancedMesh).length,
         // Submitted geometry per batch, before shadow/post passes (test/perf diagnostics).
         triangles: b.visible ? b.children.reduce((n, c) => n + (c instanceof InstancedMesh && c.visible ? (c.geometry.index?.count ?? c.geometry.getAttribute('position').count) / 3 * c.count : 0), 0) : 0,
