@@ -44,8 +44,9 @@ export async function captureTurntable(page: Page, id: string, directory: string
     const png = await page.locator('canvas').screenshot({ path });
     images.push(path); occupancies.push(coverage(png));
   }
-  await comparison(images, referenceFor(`${id}${decay ? `.${decay}` : ''}`), `${directory}/comparison.png`);
-  writeFileSync(`${directory}/turntable.json`,JSON.stringify({ id, decay, coverage: occupancies, ...await page.evaluate(() => window.__ASSET__!.info()) },null,2)+'\n');
+  const reference = referenceFor(`${id}${decay ? `.${decay}` : ''}`);
+  await comparison(images, reference, `${directory}/comparison.png`);
+  writeFileSync(`${directory}/turntable.json`,JSON.stringify({ id, decay, reference, referenceAvailable: existsSync(reference), coverage: occupancies, ...await page.evaluate(() => window.__ASSET__!.info()) },null,2)+'\n');
   return occupancies;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
