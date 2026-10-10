@@ -102,9 +102,10 @@ export const l2 = {
   infectedDamage: 1.8,
   /**
    * PO 10-09 "the final fight is far too easy": melee hits that knock down a normal infected (40 HP runner). Damage.ts caps each
-   * melee hit at maxHP / hits, so a runner takes 3 fire-axe, 4 bat (roundhouse too) or 6 fist hits. Guns, kicks and L1 are unchanged.
+   * melee hit at maxHP / hits, so axe damage is capped at maxHP / 2.4, bat at / 4 and fists at / 8. Guns, kicks and L1 are unchanged.
    */
-  infectedMeleeHits: { 'weapon.fire-axe': 3, 'weapon.bat': 4, 'weapon.fists': 8 } as Readonly<Record<string, number>>,
+  // PO 10-10: axe x1.25.
+  infectedMeleeHits: { 'weapon.fire-axe': 2.4, 'weapon.bat': 4, 'weapon.fists': 8 } as Readonly<Record<string, number>>,
   /**
    * PO 10-09 (as l3.mercy): the escape and cluster checkpoints wait for a calm moment (nothing alive within `calmM`, health >= `calmHealth`).
    * From the `fromDeaths`-th respawn at the same checkpoint on, each respawn releases `stepFrac` (max `maxFrac`) of the infected within `nearM` of the courier.

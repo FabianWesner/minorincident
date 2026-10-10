@@ -1,0 +1,53 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure -> 157.90.173.117:/srv/mi/ws/small-figure-ef0c7d
+[remote] sync 17s, 5009 files; job /srv/mi/jobs/small-figure-ef0c7d-74711-1791665728; queueing for a slot
+[runner] slot 0 acquired; load 1.48 1.44 1.60
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/small-figure-ef0c7d-74711-1791665728[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[33m 8796[2mms[22m[39m
+[31m   [31m×[31m every civilian, ally and infected skin has its age/species height in high lod0 @E08 @E18[39m[33m 3494[2mms[22m[39m
+[31m   [31m×[31m every civilian, ally and infected skin has its age/species height in high lod1 @E08 @E18[39m[33m 695[2mms[22m[39m
+[31m   [31m×[31m every civilian, ally and infected skin has its age/species height in high lod2 @E08 @E18[39m[33m 637[2mms[22m[39m
+[31m   [31m×[31m every civilian, ally and infected skin has its age/species height in low lod0 @E08 @E18[39m[33m 2822[2mms[22m[39m
+[31m   [31m×[31m every civilian, ally and infected skin has its age/species height in low lod1 @E08 @E18[39m[33m 672[2mms[22m[39m
+[31m   [31m×[31m every civilian, ally and infected skin has its age/species height in low lod2 @E08 @E18[39m[33m 472[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 6 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts[2m > [22mevery civilian, ally and infected skin has its age/species height in high lod0 @E08 @E18
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts[2m > [22mevery civilian, ally and infected skin has its age/species height in high lod1 @E08 @E18
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts[2m > [22mevery civilian, ally and infected skin has its age/species height in low lod0 @E08 @E18
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts[2m > [22mevery civilian, ally and infected skin has its age/species height in low lod1 @E08 @E18
+[31m[1mAssertionError[22m: npc.lab-tech-a: 1.3650687038898468 m / 1.8 m: expected 0.758371502161026 to be greater than or equal to 0.92[39m
+[36m [2m❯[22m tests/unit/render/figure-height.test.ts:[2m43:72[22m[39m
+    [90m 41|[39m         height = max - min; baked.geometry.dispose();
+    [90m 42|[39m       }
+    [90m 43|[39m       expect(height / target, `${skin.id}: ${height} m / ${target} m`)…
+    [90m   |[39m                                                                        [31m^[39m
+    [90m 44|[39m       expect(height / target, `${skin.id}: ${height} m / ${target} m`)…
+    [90m 45|[39m       if (npc) {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts[2m > [22mevery civilian, ally and infected skin has its age/species height in high lod2 @E08 @E18
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts[2m > [22mevery civilian, ally and infected skin has its age/species height in low lod2 @E08 @E18
+[31m[1mAssertionError[22m: npc.lab-tech-a: 1.3579228520393372 m / 1.8 m: expected 0.7544015844662983 to be greater than or equal to 0.92[39m
+[36m [2m❯[22m tests/unit/render/figure-height.test.ts:[2m43:72[22m[39m
+    [90m 41|[39m         height = max - min; baked.geometry.dispose();
+    [90m 42|[39m       }
+    [90m 43|[39m       expect(height / target, `${skin.id}: ${height} m / ${target} m`)…
+    [90m   |[39m                                                                        [31m^[39m
+    [90m 44|[39m       expect(height / target, `${skin.id}: ${height} m / ${target} m`)…
+    [90m 45|[39m       if (npc) {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[90m (6)[39m
+[2m   Start at [22m 21:10:33
+[2m   Duration [22m 9.96s[2m (tests 90%, transform 8%, import 3%)[22m
+
+JSON report written to /srv/mi/jobs/small-figure-ef0c7d-74711-1791665728/test-results/small-figure/height-before.json
+[remote] pulled test-results/small-figure/height-before.json
+[remote] done exit=0 (runner 157.90.173.117, sync 17s, remote total 899s)
