@@ -2,6 +2,8 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot } from './fixtures';
 import type { ProgressionPreset } from '../../src/sim/progression/Campaign';
 
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+
 /** Honest inventory of placeholders submitted by the level photo cameras. */
 test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ page }) => {
   test.setTimeout(600_000);
@@ -47,7 +49,17 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
         await a.step(1);
       }, { level, checkpoint });
       const spots = await page.evaluate(() => window.__SS__!.getState().render.districts!.photoSpots);
+      // DistrictView registers W0–W5 aliases with the exact same camera pose;
+      // camera.preset does not change district wear. Inventory each physical
+      // view once and retain all alias names as equivalent evidence.
+      const views = new Map<string, string[]>();
       for (const spot of spots.filter(spot => checkpoint === undefined || spot.includes(`/l${level.slice(1)}-`))) {
+        const key = spot.replace(/\/W[0-5]\//, '/');
+        if (!views.has(key)) views.set(key, []);
+        views.get(key)!.push(spot);
+      }
+      for (const equivalentSpots of views.values()) {
+        const spot = equivalentSpots[0];
         const proof = await page.evaluate(async spot => {
           const a = window.__SS__!; a.camera.preset(spot); await a.screenshotReady();
           const render = a.getState().render, batches = render.districts!.batches;
@@ -61,7 +73,7 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
           });
           return { tick: a.tick(), runtimeCheckpoint: a.missions.state()!.checkpoint, dynamicPlaceholders, placeholders: [...new Set(batches.filter(b => b.placeholder && b.triangles > 0).map(b => b.assetId))], assets: [...new Set(batches.filter(b => b.triangles > 0).map(b => b.assetId))] };
         }, spot);
-        rows.push({ level, checkpoint: checkpoint ?? 'start', setup: checkpoint ? 'authored checkpoint + timed observer staging' : 'mission start', spot, ...proof });
+        rows.push({ level, checkpoint: checkpoint ?? 'start', setup: checkpoint ? 'authored checkpoint + timed observer staging' : 'mission start', spot, equivalentSpots, ...proof });
         writeFileSync('test-results/epics/E17/photo-assets.json', JSON.stringify(rows, null, 2) + '\n');
       }
     }
