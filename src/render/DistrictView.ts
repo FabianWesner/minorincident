@@ -20,6 +20,7 @@ import {
   type BufferGeometry,
   type Material,
 } from "three/webgpu";
+import { attribute, luminance, uniform } from 'three/tsl';
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
@@ -136,12 +137,6 @@ export class DistrictView extends Group {
       initialLods.set(p.assetId, lods);
     }
     for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);
-    if (this.world.districts.some(d => d.id === 'D-SUBWAY')) {
-      await Promise.all([...initialLods.keys()].flatMap(id => (['lod0', 'lod1', 'lod2'] as const).flatMap(lod => [false, true].map(async on => {
-        const root = await this.registry.asset(id, on, lod);
-        root.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.metroMaterials.set(`${id}/${lod}/${on}`, node.material as Material); });
-      }))));
-    }
     await Promise.all(
       this.world.districts.map(async (d) => {
         const root = new Group();
@@ -630,16 +625,25 @@ export class DistrictView extends Group {
   }
   private northgateClosed: boolean | null = null;
   northgate(closed: boolean): void {if(this.northgateClosed===closed)return;this.northgateClosed=closed;for(const e of this.lodBatches)if(e.id==='int.metro-exit')for(const b of [e.hero,e.near,e.far])b.pose('exitGate',closed?0:Math.PI*.55);}
-  private readonly metroMaterials = new Map<string, Material>();
-  /** Preloaded light materials switch synchronously; camp supplies retain their warm lamps. */
+  private readonly metroMaterials = new Map<string, { material: Material; power: { value: number } }>();
+  /** One resident shader per light group; power changes only its uniform. */
   metroPower(main: boolean, emergency: boolean): void {
     for (const entry of this.lodBatches) {
       const on = entry.id === 'prop.emergency-light' ? emergency : entry.id === 'kit.shelter-camp' || entry.id === 'util.radio' ? true : main;
       entry.lit = on;
-      for (const [lod, batch] of [['lod0', entry.hero], ['lod1', entry.near], ['lod2', entry.far]] as const) {
-        const material = this.metroMaterials.get(`${entry.id}/${lod}/${on}`);
-        if (material) batch.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') node.material = material; });
-      }
+      let state = this.metroMaterials.get(entry.id);
+      for (const batch of [entry.hero, entry.near, entry.far]) batch.traverse(node => {
+        if (!(node instanceof Mesh) || node.name !== 'window-light') return;
+        if (!state) {
+          const power = uniform(on ? 1 : 0), base = this.materials.sample(attribute('_palette', 'float'));
+          const glow = base.div(luminance(base).max(.001)).mul(2).mul(power);
+          const material = this.materials.shaded(base.mul(power.oneMinus().mul(.08)), glow).seeThrough();
+          material.name = 'emi_static-windows';
+          state = { material, power }; this.metroMaterials.set(entry.id, state);
+        }
+        if (node.material !== state.material) node.material = state.material;
+      });
+      if (state) state.power.value = on ? 1 : 0;
     }
   }
   /** Scripted weather blackout reuses the authored unpowered asset variants. */
@@ -724,6 +728,7 @@ export class DistrictView extends Group {
   }
   dispose(): void {
     this.disposed = true;
+    for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.ambient?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
