@@ -78,15 +78,17 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       // Each still executes the ordinary and instanced driver paths, but shares the GPU fence
       // and presented frame with its neighbors instead of paying two frames per actor.
       const right = new Vector3().setFromMatrixColumn(camera.matrixWorld, 0), up = new Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
+      const halfWidth = 20 / Math.abs(camera.projectionMatrix.elements[0]), halfHeight = 20 / Math.abs(camera.projectionMatrix.elements[5]);
+      const scale = Math.min(.45, halfWidth * .25, halfHeight * .25);
       for (let from = 0; from < solo.length; from += soloChunk) {
         const group = solo.slice(from, from + soloChunk);
         group.forEach(({ object, matrices }, i) => {
           object.visible = true;
-          const center = focus.clone().addScaledVector(right, (i % 2 ? 1 : -1) * 1.1).addScaledVector(up, (i < 2 ? -1 : 1) * 1.1);
+          const center = focus.clone().addScaledVector(right, (i % 2 ? 1 : -1) * halfWidth * .4).addScaledVector(up, (i < 2 ? -1 : 1) * halfHeight * .4);
           const mesh = object as InstancedMesh;
           for (let instance = 0; instance < matrices!.length; instance++) {
-            const local = object.worldToLocal(center.clone().addScaledVector(right, instance * .2));
-            mesh.setMatrixAt(instance, new Matrix4().makeScale(.45, .45, .45).setPosition(local));
+            const local = object.worldToLocal(center.clone().addScaledVector(right, instance * scale * .4));
+            mesh.setMatrixAt(instance, new Matrix4().makeScale(scale, scale, scale).setPosition(local));
           }
           mesh.instanceMatrix.needsUpdate = true;
         });
