@@ -139,14 +139,15 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
   const s = mission.state.l2!;
   for (const q of s.pending) if (q.id > 0 && q.x !== undefined) { audit.emerged++; if (dist({ x: q.x, z: q.z! }, mission.def.anchors[q.door]) > 3) audit.emergeFar++; if (q.seen) audit.emergeSeen++; }
   if (gate) gate.infectedInsideAfter = insideAfter;
-  const arrived = s.arrivedAt ? s.arrivedAt : 0;
+  // Checkpoint restoration rebases mission ticks; controlAt belongs to the first ride.
+  const arrived = timeline.find(e => e.type === 'l2.truckArrived')?.t ?? s.arrivedAt / 60;
   return {
     profile, opening: opts.opening ?? 'side', seed: opts.seed ?? world.seed, outcome: mission.state.phase === 'result' || mission.state.phase === 'progression' ? 'complete' : 'timeout',
     simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, knockdowns: mission.state.stats.knockdowns, damage: mission.state.stats.damage, axe: s.axe,
     timeline, infectedAt, firefighterHits: ffHits, firefightersTurnedBy90: turnedCrew.size, firstDeathS: firstDeath,
     killsNearDoors, clusterKilled, clusterSize: s.clusterIds.length, minHp: Number.isFinite(minHp) ? minHp : 100, deathsAt,
     calm: calm.alarmS ? calm : null,
-    ride: arrived ? { passenger, seconds: (s.arrivedAt - s.departAt) / 60, seatedEveryTick, crewExitS: (s.crewExitAt - s.arrivedAt) / 60, controlS: (controlAt - s.arrivedAt) / 60 } : null,
+    ride: arrived ? { passenger, seconds: (s.arrivedAt - s.departAt) / 60, seatedEveryTick, crewExitS: (s.crewExitAt - s.arrivedAt) / 60, controlS: controlAt / 60 - arrived } : null,
     doors: s.doorsOpenAt ? doors : null, crewTurns, audit, radio, cluster, gate, diedBy120,
   };
 }
