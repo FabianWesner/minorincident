@@ -151,7 +151,9 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `consoleErrors` (default 0)
 - `propSinkMaxCm`: deepest drawn pushable vertex below the drawn ground; use `1` for the 1 cm furniture contact gate.
 - `propGroundSamplesMin`: minimum contact samples, so an empty or undrawn fixture cannot pass.
-- `clippingMax`
+- `clippingMax` (static placement, actor bone, and native hand versus held-prop mesh intersections)
+- `heldPropIntersectionsMax` (native hand triangles versus the held prop, after the actual LOD reduction; use `0`)
+- `heldPropSamplesMin` (minimum sampled hand/prop pairs, preventing an absent prop from passing)
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)

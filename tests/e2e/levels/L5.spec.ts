@@ -31,13 +31,14 @@ function helpers(page: Page) {
   const fightNearby = async (range = 2.6): Promise<boolean> => {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
+      // Clear threats beside followers before they grab, including ones beyond the courier's line of sight.
       const friends = a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor?.mode === 'follow');
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7)) && (a.input.visible(e.transform) || friends.some(f => f.civilian?.survivor?.cover && Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7)) && (a.input.visible(e.transform) || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
         .filter(e => e.infected?.l1?.mode === 'chase' || e.infected?.l1?.mode === 'bite' || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 9 || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7))
         .sort((a, b) => {
           const danger = (e: typeof a) => Math.min(Infinity, ...friends.map(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z)));
           return Number(b.infected?.l1?.mode === 'bite') - Number(a.infected?.l1?.mode === 'bite') ||
-            Number(danger(b) < 3) - Number(danger(a) < 3) ||
+            danger(a) - danger(b) ||
             Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z);
         })[0];
       // Shoot visible grabbers immediately; sprinting to axe range can consume the rescue window.
