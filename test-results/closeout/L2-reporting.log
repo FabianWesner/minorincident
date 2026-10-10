@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout -> 157.90.173.117:/srv/mi/ws/epic-closeout-992bec
+[remote] sync 19s, 4950 files; job /srv/mi/jobs/epic-closeout-992bec-56170-1791627826; queueing for a slot
+[runner] slot 0 acquired; load 0.23 0.46 0.78
+
+ RUN  v5.0.3 /srv/mi/jobs/epic-closeout-992bec-56170-1791627826
+
+ ✓  functional  tests/sim/missions/l2-reporting.test.ts (1 test) 19373ms
+   ✓ @E20-AC05 ride control latency stays on its observed clock after checkpoint respawn 19370ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  10:24:07
+   Duration  22.09s (tests 88%, transform 10%, import 2%)
+
+JSON report written to /srv/mi/jobs/epic-closeout-992bec-56170-1791627826/test-results/closeout/L2-reporting.json
+[remote] pulled test-results/closeout/L2-reporting.json
+[remote] done exit=0 (runner 157.90.173.117, sync 19s, remote total 26s)

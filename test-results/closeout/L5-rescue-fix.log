@@ -1,0 +1,27 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L5.spec.ts:151:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (2.1m)
+
+
+  1) [chromium] › tests/e2e/levels/L5.spec.ts:151:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 5
+    Received length: 3
+    Received array:  [{"cueAt": 13619, "foundAt": 13580, "hold": 0, "id": 19, "key": "dale", "lostAt": 0, "status": "following"}, {"cueAt": 12665, "foundAt": 12555, "hold": 0, "id": 21, "key": "okafor", "lostAt": 0, "status": "following"}, {"cueAt": 10639, "foundAt": 10440, "hold": 0, "id": 22, "key": "mia", "lostAt": 0, "status": "following"}]
+
+      197 |     await go({ x: 10, z: -37.6 }, 1.6, 11);
+      198 |     await go({ x: 10, z: -42.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
+    > 199 |     expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
+          |                                                                                   ^
+      200 |     await go(metroFoot(), 2.4, 11);
+      201 |     let last = await mission();
+      202 |     for (let i = 0; i < 80 && last.phase === 'playing'; i++) {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/e2e/levels/L5.spec.ts:199:83
+
+    Error Context: test-results/playwright/run-3357/e2e-levels-L5-L5-Aftermath-41863-hoto-spots-0-console-errors-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L5.spec.ts:151:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors

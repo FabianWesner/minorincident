@@ -1,0 +1,362 @@
+{
+  "id": "L1",
+  "phase": "result",
+  "completedObjectives": [
+    "pickup",
+    "deliver",
+    "escape",
+    "weapon",
+    "firestation"
+  ],
+  "volumes": [
+    true
+  ],
+  "killedBosses": [],
+  "deadlineTicks": null,
+  "steps": {
+    "pickup": {
+      "status": "completed",
+      "started": 0,
+      "kills": [],
+      "events": {},
+      "interaction": 60
+    },
+    "deliver": {
+      "status": "completed",
+      "started": 961,
+      "kills": [],
+      "events": {
+        "l1.delivered:*": 1
+      },
+      "interaction": 498
+    },
+    "escape": {
+      "status": "completed",
+      "started": 3613,
+      "kills": [],
+      "events": {},
+      "interaction": 0
+    },
+    "weapon": {
+      "status": "completed",
+      "started": 3614,
+      "kills": [
+        168,
+        166,
+        158,
+        164,
+        162
+      ],
+      "events": {
+        "player.damaged:*": 5,
+        "combat.kill:*": 5
+      },
+      "interaction": 27
+    },
+    "firestation": {
+      "status": "completed",
+      "started": 5715,
+      "kills": [
+        132,
+        168,
+        166,
+        134,
+        158,
+        191,
+        187,
+        181,
+        143,
+        202,
+        186,
+        162,
+        135,
+        211,
+        234,
+        238,
+        230,
+        242,
+        1,
+        245,
+        253,
+        255,
+        257,
+        270,
+        259,
+        261,
+        266,
+        264,
+        272,
+        277,
+        274,
+        198
+      ],
+      "events": {
+        "player.damaged:*": 69,
+        "combat.kill:*": 67,
+        "pickup.collected:*": 2,
+        "civilian.saved:*": 1,
+        "player.died:*": 5
+      },
+      "interaction": 1
+    }
+  },
+  "actors": {},
+  "items": [
+    "parcel",
+    "bat"
+  ],
+  "states": {
+    "delivered": true,
+    "exited": true,
+    "away": true,
+    "safe": true
+  },
+  "counters": {},
+  "gates": {
+    "fire-shutter": false
+  },
+  "marker": null,
+  "checkpoint": "bat",
+  "tier": 0,
+  "timeOfDay": null,
+  "subtitle": {
+    "id": "L1.twist",
+    "text": "Delivery complete. Outbreak: not contained.",
+    "until": 17701
+  },
+  "cinematic": null,
+  "failure": null,
+  "stats": {
+    "time": 291.01666666666665,
+    "kills": 0,
+    "knockdowns": 62,
+    "damage": 691.6999999999985,
+    "deaths": 5,
+    "rescued": 1,
+    "optionalObjectives": []
+  },
+  "result": {
+    "time": 291.01666666666665,
+    "kills": 0,
+    "knockdowns": 62,
+    "damage": 691.6999999999985,
+    "deaths": 5,
+    "rescued": 1,
+    "optionalObjectives": [],
+    "delivered": true,
+    "infected": 54,
+    "turned": 47,
+    "escaped": 38
+  },
+  "l1": {
+    "phase": "spread",
+    "carrying": false,
+    "delivered": true,
+    "away": true,
+    "techId": 158,
+    "hx": 66.61529646622657,
+    "hz": -12.93243315186324,
+    "handoverAt": 2393,
+    "deliveredAt": 2773,
+    "flickerAt": 3057,
+    "exitAt": 3613,
+    "warned": true,
+    "fired": 5,
+    "exitIds": [
+      158,
+      162,
+      164,
+      166,
+      168
+    ],
+    "exitHeadingsDeg": [
+      125,
+      95,
+      170,
+      215,
+      250
+    ],
+    "runs": [],
+    "turnedIds": [
+      134,
+      135,
+      132,
+      179,
+      145,
+      186,
+      143,
+      200,
+      138,
+      211,
+      218,
+      226,
+      109,
+      140,
+      230,
+      150,
+      234,
+      238,
+      151,
+      242,
+      245,
+      104,
+      247,
+      251,
+      253,
+      255,
+      257,
+      259,
+      261,
+      264,
+      120,
+      266,
+      270,
+      272,
+      274,
+      277,
+      284,
+      96,
+      100,
+      153,
+      98,
+      290,
+      123,
+      156,
+      300,
+      119,
+      155,
+      304
+    ],
+    "escapedIds": [
+      131,
+      117,
+      130,
+      146,
+      133,
+      147,
+      125,
+      144,
+      127,
+      128,
+      139,
+      107,
+      106,
+      137,
+      108,
+      148,
+      136,
+      116,
+      142,
+      141,
+      115,
+      114,
+      111,
+      110,
+      149,
+      126,
+      152,
+      102,
+      97,
+      99,
+      101,
+      112,
+      113,
+      124,
+      121,
+      157,
+      154,
+      118
+    ],
+    "graceUntil": 0,
+    "house": {
+      "door": 30,
+      "house": "bld.house-a:405",
+      "x": 5.01147,
+      "z": 22.33275,
+      "nx": 0,
+      "nz": 1,
+      "floor": [
+        [
+          1.59,
+          0.54
+        ],
+        [
+          1.85,
+          0.36
+        ],
+        [
+          2.11,
+          0.2
+        ]
+      ],
+      "sx": 5.01147,
+      "sz": 25.028750000000002,
+      "route": [
+        [
+          5.051470000000001,
+          26
+        ],
+        [
+          5.801470000000001,
+          26
+        ]
+      ],
+      "ox": 5.801470000000001,
+      "oz": 26,
+      "next": 7566,
+      "ids": [
+        181,
+        187,
+        191,
+        198,
+        202,
+        209,
+        213,
+        216,
+        219,
+        223
+      ],
+      "walking": []
+    },
+    "labExit": {
+      "door": 0,
+      "house": "bld.clinic-annex:822",
+      "x": 66.18,
+      "z": -14.9135,
+      "nx": 0,
+      "nz": 1,
+      "floor": [],
+      "sx": 66.18,
+      "sz": -13.743500000000001,
+      "route": [],
+      "ox": 66.18,
+      "oz": -13.743500000000001,
+      "next": 0,
+      "ids": [
+        162,
+        164,
+        166,
+        168
+      ],
+      "speedMs": 5.3,
+      "walking": []
+    },
+    "clerkId": 0,
+    "clerkRoute": null,
+    "beat": null,
+    "say": {
+      "id": 309,
+      "text": "Get in!",
+      "at": 17240,
+      "until": 17390
+    },
+    "beatsDone": [
+      "pickup",
+      "handover",
+      "garage"
+    ],
+    "techRoute": null,
+    "firefighterId": 309,
+    "firefighterNext": 17581
+  }
+}

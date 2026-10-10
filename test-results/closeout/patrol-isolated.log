@@ -1,0 +1,24 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout -> 2.31.51.253:/srv/mi/ws/epic-closeout-992bec
+[remote] sync 19s, 4950 files; job /srv/mi/jobs/epic-closeout-992bec-39407-1791631481; queueing for a slot
+[runner] slot 0 acquired; load 0.07 0.02 0.27
+
+ RUN  v5.0.3 /srv/mi/jobs/epic-closeout-992bec-39407-1791631481
+
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"high","simMsP95":3.0288820000005217,"budget":4}
+{"level":"L2","tier":"high","simMsP95":2.8760970000003,"budget":4}
+{"level":"L3","tier":"high","simMsP95":3.213315999993938,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.9174910000001546,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.7704479999956675,"budget":4}
+
+ ✓  timing  tests/sim/npc/campaign.test.ts (5 tests | 4 skipped) 122383ms
+   ✓ T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 122382ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 4 skipped (5)
+   Start at  11:25:03
+   Duration  124.61s (tests 98%, transform 1%)
+
+JSON report written to /srv/mi/jobs/epic-closeout-992bec-39407-1791631481/test-results/closeout/patrol-isolated.json
+[remote] pulled test-results/closeout/patrol-isolated.json
+[remote] done exit=0 (runner 2.31.51.253, sync 19s, remote total 129s)

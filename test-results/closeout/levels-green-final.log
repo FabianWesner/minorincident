@@ -1,0 +1,67 @@
+
+Running 29 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/l1-firefighter-fight.spec.ts:14:1 › T-E19-firefighter-fight @E19 the firefighter swings at an infected at the bay (game camera captures) (22.2s)
+  ✓   2 [chromium] › tests/e2e/levels/l1-firestation.spec.ts:17:1 › T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-station bay completes L1 (bay faces the camera, ring on the trigger) (23.8s)
+  ✓   3 [chromium] › tests/e2e/levels/L1.spec.ts:25:3 › L1 v2 real-input playthrough › T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07) (14.1s)
+  ✘   4 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (1.2m)
+  ✓   5 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (37.7s)
+  ✓   6 [chromium] › tests/e2e/levels/l2-apron-alarm.spec.ts:9:1 › T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm (29.0s)
+  ✓   7 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:9:1 › T-E20-axe-findable @E20 the axe rack is visible and marked during calm (29.5s)
+  ✓   8 [chromium] › tests/e2e/levels/l2-rescue-setpiece.spec.ts:12:1 › T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open) (35.5s)
+  ✓   9 [chromium] › tests/e2e/levels/L2.spec.ts:63:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.4m)
+  ✓  10 [chromium] › tests/e2e/levels/L2.spec.ts:125:3 › L2 The Failed Rescue in the browser › T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout (25.3s)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+L3 RESULT street=commerce deaths=0
+  ✓  11 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (51.7s)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+L3 RESULT street=blvd deaths=0
+  ✓  12 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (53.9s)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+L3 RESULT street=oak deaths=0
+  ✓  13 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (57.0s)
+  ✓  14 [chromium] › tests/e2e/levels/L3.spec.ts:179:3 › L3 The Police Collapse in the browser › T-E21-17b @E21 @E21-AC17 campaign: crossing the army zone line loads L4 with the carried loadout and no reward screen (16.1s)
+  ✓  15 [chromium] › tests/e2e/levels/l4-boot.spec.ts:6:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (15.2s)
+  ✓  16 [chromium] › tests/e2e/levels/L4.spec.ts:85:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (39.8s)
+  ✓  17 [chromium] › tests/e2e/levels/L4.spec.ts:145:3 › L4 The Safe City Falls in the browser › T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen (11.3s)
+  ✓  18 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props (21.8s)
+  ✓  19 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props (18.6s)
+  ✓  20 [chromium] › tests/e2e/levels/L5.spec.ts:146:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (1.6m)
+  ✓  21 [chromium] › tests/e2e/levels/L5.spec.ts:218:3 › L5 Aftermath in the browser › T-E23-18 @E23 @E23-AC18 recognition: the four pair cameras in L4 (W0, intact) and L5 (W5, fallen) from the real game, side by side (34.6s)
+  ✓  22 [chromium] › tests/e2e/levels/L5.spec.ts:253:3 › L5 Aftermath in the browser › T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign (36.6s)
+  ✓  23 [chromium] › tests/e2e/levels/L5.spec.ts:286:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgl), not only their props (17.6s)
+  ✓  24 [chromium] › tests/e2e/levels/L5.spec.ts:286:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgpu), not only their props (17.2s)
+  ✓  25 [chromium] › tests/e2e/levels/L6.spec.ts:5:1 › T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights (14.4s)
+  ✓  26 [chromium] › tests/e2e/levels/L6.spec.ts:15:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night (13.6s)
+  ✓  27 [chromium] › tests/e2e/levels/L6.spec.ts:22:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (53.7s)
+  ✓  28 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (13.7s)
+  ✓  29 [chromium] › tests/e2e/levels/L6.spec.ts:72:103 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (13.5s)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result
+
+    Error: Could not travel to {"x":40.029999999999994,"z":-40.65}; infected within 4 m [{"id":253,"x":36.43,"z":-30.78,"hp":4,"state":"chase","mode":"chase"}] from {"x":34.917762756347656,"y":0.8500000238418579,"z":-34.19871139526367,"yaw":0.7195395722136031}; bicycle=[{"kind":"bicycle","archetype":"veh.courier-bike","faction":"environment","transform":{"x":66.35972515122117,"y":0.05,"z":-9.078393274008276,"yaw":-0.21489233877365788},"health":{"current":1,"max":1},"bicycle":{"mounted":false,"heading":0.21489233877365788,"speed":0,"pedal":218.32216096722965,"steer":0,"lean":0,"standTicks":0,"armed":true,"lockUntil":2279},"id":85}]
+
+      112 |       }
+      113 |       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });
+    > 114 |       throw new Error(`Could not travel to ${JSON.stringify(target)}; infected within 4 m ${JSON.stringify(around)} from ${JSON.stringify((await player()).transform)}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))} `);
+          |             ^
+      115 |     };
+      116 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
+      117 |     /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/e2e/levels/L1.spec.ts:114:13)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/e2e/levels/L1.spec.ts:243:7
+
+    Error Context: test-results/playwright/run-3355/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3355/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3355/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result
+  28 passed (16.3m)

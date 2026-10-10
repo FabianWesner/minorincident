@@ -1,0 +1,175 @@
+{
+  "openGround": true,
+  "kind": "civilian",
+  "archetype": "npc.jogger",
+  "faction": "civilian",
+  "transform": {
+    "x": 14.295631977362248,
+    "z": 31.802848858259246,
+    "y": 0.7,
+    "yaw": -14.01792129005648
+  },
+  "health": {
+    "current": 100,
+    "max": 100
+  },
+  "civilian": {
+    "state": "rising",
+    "ambient": false,
+    "adult": true,
+    "pet": null,
+    "owner": null,
+    "model": "npc.civilian-woman-a",
+    "variant": "inf.jogger",
+    "schedule": [
+      {
+        "activity": "chat",
+        "anchor": "l1/chat",
+        "target": {
+          "x": 14.580904487034866,
+          "z": 31.75257605995117
+        },
+        "facing": {
+          "x": 13.8,
+          "z": 32.199999999999996
+        },
+        "ticks": 574,
+        "prop": "coffee"
+      },
+      {
+        "activity": "look",
+        "anchor": "l1/look",
+        "target": {
+          "x": 14.580904487034866,
+          "z": 31.75257605995117
+        },
+        "facing": {
+          "x": 13.8,
+          "z": 32.199999999999996
+        },
+        "ticks": 146,
+        "prop": "coffee"
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 19.786934400600636,
+          "z": 28.76974979295901
+        },
+        "ticks": 1,
+        "prop": "coffee"
+      },
+      {
+        "activity": "walk",
+        "anchor": "l1/walk",
+        "target": {
+          "x": 14.580904487034866,
+          "z": 31.75257605995117
+        },
+        "ticks": 1,
+        "prop": "coffee"
+      }
+    ],
+    "scheduleStep": 0,
+    "activityUntil": 5828,
+    "activityStarted": 5254,
+    "lastTravelProgress": 0,
+    "routine": "jog",
+    "waypoints": [
+      {
+        "x": 14.580904487034866,
+        "z": 31.75257605995117
+      },
+      {
+        "x": 14.580904487034866,
+        "z": 31.75257605995117
+      },
+      {
+        "x": 19.786934400600636,
+        "z": 28.76974979295901
+      },
+      {
+        "x": 14.580904487034866,
+        "z": 31.75257605995117
+      }
+    ],
+    "waypoint": 1,
+    "pauseUntil": 47,
+    "entered": 5798,
+    "until": 5834,
+    "downTicks": 0,
+    "eyesGlow": true,
+    "veins": 0.4,
+    "attacker": 168,
+    "threat": {
+      "x": 15.41677319553688,
+      "z": 31.953351734372383
+    },
+    "path": [],
+    "goal": -1,
+    "pathIndex": 0,
+    "gore": false,
+    "knockedUntil": 0,
+    "l1": {
+      "walkSpeed": 1.2907511969329788,
+      "fleeSpeed": 3.4472231648862364,
+      "startleTicks": 38,
+      "refuge": null,
+      "target": null,
+      "repickAt": 0,
+      "noticed": 5564,
+      "progressFrom": {
+        "x": 14.837342395231374,
+        "z": 31.605648412373146
+      },
+      "progressAt": 5253
+    }
+  },
+  "combat": {
+    "radius": 0.35,
+    "armor": 0,
+    "shield": false,
+    "staggerUntil": 0,
+    "attacking": false,
+    "damageMultiplier": 1,
+    "statuses": []
+  },
+  "id": 108,
+  "appearance": {
+    "entityId": 108,
+    "asset": "npc.civilian-woman-a",
+    "tint": "#e08a3c",
+    "accessories": [
+      "glasses"
+    ],
+    "handProp": null,
+    "tier": "athletic"
+  },
+  "motion": {
+    "velocity": {
+      "x": 0,
+      "z": 0
+    },
+    "speed": 0,
+    "moving": false,
+    "distance": 62.88254609761554
+  },
+  "locomotion": {
+    "vx": 0,
+    "vz": 0,
+    "ax": 0,
+    "az": 0,
+    "omega": 0,
+    "updatedAt": -1
+  },
+  "infection": {
+    "entityId": 108,
+    "progress": 0.9137055837563451,
+    "phase": "rise",
+    "tier": "athletic",
+    "startedTick": 5637,
+    "endsTick": 5834,
+    "biteSourceId": 168
+  }
+}

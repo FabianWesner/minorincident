@@ -1,0 +1,31 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout -> 94.130.181.173:/srv/mi/ws/epic-closeout-992bec
+[remote] sync 17s, 4948 files; job /srv/mi/jobs/epic-closeout-992bec-60314-1791624193; queueing for a slot
+[runner] slot 0 acquired; load 0.34 0.09 0.12
+
+ RUN  v5.0.3 /srv/mi/jobs/epic-closeout-992bec-60314-1791624193
+
+ ✓  functional  tests/levels/L2.test.ts (16 tests | 14 skipped) 17809ms
+   ✓ L2 The Failed Rescue (16)
+     ✓ T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer 8838ms
+     ✓ T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes 8968ms
+ ✓  functional  tests/levels/L4.test.ts (19 tests | 14 skipped) 55844ms
+   ✓ L4 The Safe City Falls (19)
+     ✓ T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer 2876ms
+     ✓ T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower) 34937ms
+     ✓ T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 45-55 civilians, >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold 309ms
+     ✓ T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view 17598ms
+ ✓  functional  tests/levels/L1.test.ts (19 tests | 15 skipped) 107307ms
+   ✓ L1 v2 mission (19)
+     ✓ T-E19-01 @E19 @E19-AC01 mission graph is completable, no fail timer 798ms
+     ✓ T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout 17963ms
+     ✓ T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart 20977ms
+     ✓ T-E19-19 @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm 67566ms
+
+ Test Files  3 passed (3)
+      Tests  11 passed | 43 skipped (54)
+   Start at  09:23:31
+   Duration  109.57s (tests 97%, transform 3%, import 1%)
+
+JSON report written to /srv/mi/jobs/epic-closeout-992bec-60314-1791624193/test-results/closeout/mechanical.json
+[remote] pulled test-results/closeout/mechanical.json
+[remote] done exit=0 (runner 94.130.181.173, sync 17s, remote total 113s)
