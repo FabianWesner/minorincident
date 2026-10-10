@@ -16,12 +16,20 @@ reloads, attacks, and checkpoints consume the same definitions. Earlier-level re
 truncate equipped racks to that level's capacity without deleting the saved setup.
 
 `SaveStore` receives a storage adapter; the browser supplies localStorage under
-`minor-incident.campaign`. Version 1 stores character, seed, unlocked/completed levels,
+`minor-incident.campaign`. Version 2 stores character, seed, unlocked/completed levels,
 owned actions, upgrades, racks, settings, usage, and an optional reward transaction.
 No physics, health, combat timers or mid-level position is persisted. Continue restarts
 an unlocked level at its briefing or resumes pending upgrade choices. Corrupt, invalid,
 unknown-version, and inaccessible saves return an error result; CampaignUI displays
-Start new. Version 0 compatibility renames `level` to `unlockedLevel` before validation.
+Start new. Version 0 compatibility renames `level` to `unlockedLevel`; version 1 migrates
+to version 2 while retaining any existing world aftermath, survivor list and results.
+
+`level.completed` immediately records rewards, the next unlocked level, and results,
+before the result screen or automatic transition. L1's player-caused aftermath lives in
+`world.L1` (L2 always applies the scripted burned annex and outbreak house); L5's rescued
+survivor keys live in `survivors` for L6. Replays refresh these outcomes without granting
+rewards twice. Missing records use the existing level defaults. Start game opens the
+saved level selection when progress exists; CampaignUI's Start new starts a fresh run.
 
 E14's title/character/level menus now start or continue this same campaign. Its
 pause/settings/HUD remain active during gameplay; progression hands off to

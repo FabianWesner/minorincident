@@ -7,12 +7,14 @@ export const SAVE_ERROR='Save could not be loaded';
 export type SaveResult={status:'empty'}|{status:'ok';save:CampaignSave}|{status:'error';message:string};
 const record=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const strings=(v:unknown):v is string[]=>Array.isArray(v)&&v.every(s=>typeof s==='string')&&new Set(v).size===v.length;
-/** Unreleased v0 used `level` instead of `unlockedLevel`. Migration does not infer lost choices. */
+/** v0 renamed level; v2 persists completion before navigation. Existing v1 aftermath is retained; absent records keep level defaults. */
 export function migrate(raw:unknown):unknown {
-  if(record(raw)&&raw.version===0){const {level,...rest}=raw;return {...rest,version:1,unlockedLevel:level};}return raw;
+  if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
+  if(record(raw)&&raw.version===1)return {...raw,version:2};
+  return raw;
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
-  if(!record(raw)||raw.version!==1||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>6||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>6||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(raw.completedLevels===6&&raw.unlockedLevel===6)))return false;
+  if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>6||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>6||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(raw.completedLevels===6&&raw.unlockedLevel===6)))return false;
   if(!strings(raw.ownedActions)||!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
   if(!validRacks(save,save.racks)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;
@@ -25,6 +27,8 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
+  if(save.survivors!==undefined&&(!strings(save.survivors)||save.survivors.some(k=>!['dale','rosa','okafor','mia','sam'].includes(k))))return false;
+  if(save.results!==undefined&&(!record(save.results)||Object.entries(save.results).some(([id,result])=>!/^L[1-6]$/.test(id)||!record(result)||!['time','kills','knockdowns','damage','deaths','rescued'].every(k=>typeof result[k]==='number'&&Number.isFinite(result[k])&&Number(result[k])>=0)||!strings(result.optionalObjectives)||result.survivors!==undefined&&!strings(result.survivors))))return false;
   const prefix={...save,upgrades:[] as string[]};
   for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
   if(save.completedLevels===6&&save.pending)return false;
