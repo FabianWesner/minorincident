@@ -205,6 +205,8 @@ class CivilianBatch extends Group {
     material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
     material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
     this.mesh.onAfterRender = () => this.probe.draw();
+    // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
+    if (this.world.scenario === 'L6') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false): void {
