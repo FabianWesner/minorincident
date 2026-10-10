@@ -7,7 +7,7 @@ export class CrowdFigureProbe {
   private readonly enabled = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   /** Detail tier of the batch that drew the figure (guards against close figures in the far silhouette tier). */
   lod?: 'lod0' | 'lod1' | 'lod2';
-  readonly figures: { id: number; instanceKey?: string; lod?: 'lod0' | 'lod1' | 'lod2'; clip: string; phase: number; drawn: boolean; feet: number[][]; soles?: number[][]; joints?: Record<string, number[]>; forward?: number[] }[] = [];
+  readonly figures: { id: number; instanceKey?: string; lod?: 'lod0' | 'lod1' | 'lod2'; clip: string; phase: number; drawn: boolean; feet: number[][]; scale?: number[]; soles?: number[][]; joints?: Record<string, number[]>; forward?: number[] }[] = [];
   /** Scene Lab: also record every rig part pivot (world metres) and the figure's forward axis. */
   static joints = false;
   private readonly matrix = new Matrix4();
@@ -39,6 +39,7 @@ export class CrowdFigureProbe {
       for (const [part, name] of palette.clip.parts.entries()) joints[name] = this.point.setFromMatrixPosition(this.matrix.fromArray(pose, part * 16)).applyMatrix4(instance).toArray();
       forward = this.point.set(1, 0, 0).transformDirection(instance).toArray();
     }
-    this.figures.push({ id, lod: this.lod, clip, phase, drawn: false, feet, soles, joints, forward });
+    const scale = this.point.setFromMatrixScale(instance).toArray();
+    this.figures.push({ id, lod: this.lod, clip, phase, drawn: false, feet, scale, soles, joints, forward });
   }
 }
