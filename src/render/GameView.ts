@@ -321,12 +321,6 @@ export class GameView implements Lifecycle {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
-    // Weather selects the material graph (including underground fog). Select it
-    // before warming hidden batches, so their first appearance uses prepared shaders.
-    if (this.lighting && this.world.weather) {
-      this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
-      this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
-    }
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
