@@ -5,7 +5,8 @@ import { pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
 import { spawnSync } from 'node:child_process';
 import { comparison } from './comparison';
-import assetManifest from '../../src/assets/manifest.json';
+import type { AssetDef } from '../../src/assets/types';
+const assetManifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
 
 export function coverage(bytes: Buffer): number {
   const png = PNG.sync.read(bytes), background = [...png.data.subarray(0,3)];
@@ -50,7 +51,29 @@ export async function captureTurntable(page: Page, id: string, directory: string
   for (let i=0;i<5;i++) {
     await page.evaluate((view) => window.__ASSET__!.view(view),i);
     const path = `${directory}/turntable_${i}.png`;
-    const png = await page.locator('canvas').screenshot({ path });
+    let png = await page.locator('canvas').screenshot();
+    let roll: number | undefined;
+    // A single landscape/portrait viewport leaves thin tools and flat panels
+    // below 10%. Fit the viewport to their rendered silhouette, then render
+    // again; the camera still fits the complete model (no image crop).
+    for (let attempt = 0; attempt < 4 && coverage(png) < .1; attempt++) {
+      const pixels = PNG.sync.read(png), background = [...pixels.data.subarray(0, 3)];
+      let left = pixels.width, top = pixels.height, right = 0, bottom = 0, count = 0, sumX = 0, sumY = 0, sumXX = 0, sumYY = 0, sumXY = 0;
+      for (let y = 0; y < pixels.height; y++) for (let x = 0; x < pixels.width; x++) {
+        const offset = (y * pixels.width + x) * 4;
+        if (background.some((v, c) => Math.abs(pixels.data[offset + c] - v) > 8)) {
+          left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y);
+          count++; sumX += x; sumY += y; sumXX += x * x; sumYY += y * y; sumXY += x * y;
+        }
+      }
+      if (left > right || top > bottom) break;
+      if (attempt >= 2) roll = (roll ?? 0) - .5 * Math.atan2(2 * (sumXY / count - sumX * sumY / count ** 2), sumXX / count - (sumX / count) ** 2 - sumYY / count + (sumY / count) ** 2);
+      const aspect = attempt === 2 ? 2 : (right - left + 1) / (bottom - top + 1);
+      await page.setViewportSize(aspect > 1 ? { width: 1280, height: Math.max(64, Math.round(1280 / aspect)) } : { width: Math.max(64, Math.round(1280 * aspect)), height: 1280 });
+      await page.evaluate(({ view, roll }) => window.__ASSET__!.view(view, roll), { view: i, roll });
+      png = await page.locator('canvas').screenshot();
+    }
+    writeFileSync(path, png);
     images.push(path); occupancies.push(coverage(png));
   }
   const reference = referenceFor(`${id}${decay ? `.${decay}` : ''}`);

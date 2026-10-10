@@ -7,7 +7,7 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
   await boot(page, '/?test=1&renderer=webgl&quality=high&audio=muted');
   const rows = [];
   for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6']) {
-    await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); a.missions.begin(); }, level);
+    await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); a.missions.begin(); await a.step(1); }, level);
     const spots = await page.evaluate(() => window.__SS__!.getState().render.districts!.photoSpots);
     for (const spot of spots) {
       const proof = await page.evaluate(async spot => {

@@ -11,7 +11,7 @@ import type { AssetDef } from './types';
 
 export interface AssetViewerApi {
   ready: Promise<void>;
-  view(index: number): Promise<void>;
+  view(index: number, roll?: number): Promise<void>;
   /** Batch inspection reuses the renderer and releases the previous asset. */
   selectAsset?(id: string): Promise<void>;
   visibility(name: string, visible: boolean): Promise<void>;
@@ -58,7 +58,7 @@ export async function assetViewer(): Promise<void> {
     inspectionLighting.fogFar.value = 140 + fogOffset;
     renderer.info.reset(); renderer.render(scene,camera);
   }
-  async function view(index: number): Promise<void> {
+  async function view(index: number, roll?: number): Promise<void> {
     const angle = index === 4 ? Math.PI / 4 : index * Math.PI / 2;
     const elevation = index === 4 ? Math.PI * .2 : .32;
     const width = Math.abs(Math.sin(angle))*size.x + Math.abs(Math.cos(angle))*size.z;
@@ -67,6 +67,26 @@ export async function assetViewer(): Promise<void> {
     const distance = Math.max(width/camera.aspect,height) / Math.tan(camera.fov*Math.PI/360) * .6;
     camera.position.set(center.x + Math.cos(angle) * Math.cos(elevation) * distance, center.y + Math.sin(elevation) * distance, center.z + Math.sin(angle) * Math.cos(elevation) * distance);
     controls.target.copy(center); controls.update(); camera.lookAt(center);
+    if (roll !== undefined) {
+      // Inspection may align a slender silhouette with the frame. Fit actual
+      // visible vertices after rolling, so every part remains inside the image.
+      camera.rotateZ(roll);
+      const point = new Vector3(); object.updateWorldMatrix(true, true);
+      for (let pass = 0; pass < 3; pass++) {
+        camera.updateMatrixWorld(true); let radius = 0;
+        object.traverseVisible(node => {
+          if (!(node instanceof Mesh)) return;
+          const positions = node.geometry.getAttribute('position');
+          for (let vertex = 0; vertex < positions.count; vertex++) {
+            point.fromBufferAttribute(positions, vertex).applyMatrix4(node.matrixWorld).project(camera);
+            radius = Math.max(radius, Math.abs(point.x), Math.abs(point.y));
+          }
+        });
+        if (!radius) break;
+        camera.position.sub(center).multiplyScalar(radius / .85).add(center);
+      }
+      camera.updateMatrixWorld(true);
+    }
     await renderer.compileAsync(scene,camera); render(); render();
   }
   async function load(): Promise<void> {

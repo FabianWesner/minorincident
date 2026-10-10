@@ -1,5 +1,6 @@
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import manifest from '../../src/assets/manifest.json';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import type { AssetDef } from '../../src/assets/types';
+const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
 import { expect, test } from '@playwright/test';
 import { captureTurntable } from '../../tools/assets/turntable';
 import { boot } from './fixtures';
