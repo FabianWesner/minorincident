@@ -16,7 +16,7 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'] as const) {
       : s.l3 ? [s.l3.squadIds[0]]
       : s.l4 ? [s.l4.qmId]
       : s.l5 ? [s.l5.lookoutId, ...s.l5.survivors.map(r => r.id)]
-      : [s.l6!.survivors[0].id, s.l6!.survivors.find(r => r.key === 'rosa' || r.routine === 'treat')!.id, s.l6!.survivors.find(r => r.injured)!.id];
+      : [s.l6!.survivors[0].id, s.l6!.survivors.find(r => r.key === 'rosa' || r.routine === 'treat')!.id, ...s.l6!.survivors.filter(r => r.injured).map(r => r.id)];
     expect(ids.length).toBeGreaterThan(0);
     const o = w.npcs!.civilians.outbreak!, nav = w.infected!.nav, player = w.entities.get(1)!;
     const cell = nav.nearestCell(player.transform.x, player.transform.z);
@@ -43,7 +43,13 @@ for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'] as const) {
     if (s.l3) { s.l3.handgunAt = 1; expect(storyProtected(w, w.entities.get(ids[0])!)).toBe(true); s.l3.handgunAt = 0; s.l3.fallbackAt = 1; }
     if (s.l4) s.l4.gunAt = 1;
     if (s.l5) { s.l5.shutterAt = 1; for (const r of s.l5.survivors) r.status = 'following'; }
-    if (s.l6) { s.l6.gateAt = 1; s.l6.breach1At = w.tick; }
+    if (s.l6) {
+      s.l6.gateAt = 1; s.l6.breach1At = w.tick;
+      for (const r of s.l6.survivors.filter(r => r.injured)) {
+        r.collected = true; expect(storyProtected(w, w.entities.get(r.id)!)).toBe(true);
+        r.rejoined = true;
+      }
+    }
     for (const id of ids) {
       const e = w.entities.get(id)!; expect(storyProtected(w, e)).toBe(false);
       o.infect(e, zid); expect(e.infection, `released ${level} actor ${id} remains biteable`).toBeDefined();
