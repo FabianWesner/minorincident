@@ -51,3 +51,23 @@ test('animated animal mesh nodes retain their pivot and move in the crowd clip @
   expect(pose(infectedClips.indexOf('run') * framesPerClip + 6).distanceTo(rest)).toBeGreaterThan(.01);
   baked.geometry.dispose(); geometry.dispose(); material.dispose();
 });
+
+test('@transition cached crowd bakes reuse immutable clips but keep scene geometry independent', () => {
+  const first = bakeInfected(createInfectedPlaceholder('runner'), [], false, ['idle'], 'transition-cache-runner');
+  const original = first.geometry.getAttribute('position').getX(0);
+  first.geometry.getAttribute('position').setX(0, 999); first.geometry.dispose();
+  const second = bakeInfected(createInfectedPlaceholder('runner'), [], false, ['idle'], 'transition-cache-runner');
+  expect(second.clip).toBe(first.clip); expect(second.geometry).not.toBe(first.geometry);
+  expect(second.geometry.getAttribute('position').getX(0)).toBe(original);
+  expect(second.clip.matrices.every(Number.isFinite)).toBe(true);
+  const different = bakeInfected(createInfectedPlaceholder('runner'), [], false, ['walk'], 'transition-cache-runner');
+  expect(different.clip).not.toBe(second.clip);
+  second.geometry.dispose(); different.geometry.dispose();
+});
+
+test('@transition crowd bake cache evicts old CPU templates at its fixed limit', () => {
+  const first = bakeInfected(createInfectedPlaceholder('runner'), [], false, ['idle'], 'transition-cache-oldest'); first.geometry.dispose();
+  for (let i = 0; i < 64; i++) bakeInfected(createInfectedPlaceholder('runner'), [], false, ['idle'], `transition-cache-limit-${i}`).geometry.dispose();
+  const reloaded = bakeInfected(createInfectedPlaceholder('runner'), [], false, ['idle'], 'transition-cache-oldest');
+  expect(reloaded.clip).not.toBe(first.clip); reloaded.geometry.dispose();
+});

@@ -41,6 +41,9 @@ const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-woman-b': ['pal_lavender', 'pal_lavenderLight', 'pal_lavenderShadow'],
   'npc.civilian-elderly': ['pal_vest'],
 };
+// Cache prepared CPU geometry, including LOD simplification; each scene owns a clone.
+const preparedCrowds = new Map<string, ReturnType<typeof bakeInfected>>();
+const preparedCrowdLimit = 64;
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 type StandingReset = Record<string, { translation: number[]; rotation: number[]; scale: number[] }>;
@@ -130,11 +133,14 @@ class CivilianBatch extends Group {
     this.source = placeholder ? 'placeholder' : 'glb';
     if (!placeholder) restoreStanding(model);
     if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
-    const baked = bakeInfected(model, [], false, civilianClips);
-    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
-    const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
+    const key = placeholder ? undefined : `${this.model}:${this.lod}`;
+    const cached = key && preparedCrowds.get(key);
+    const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : bakeInfected(model, [], false, civilianClips);
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
+    if (!cached) {
+    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
+    const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
     // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
     const garment = shirtMaterials[this.model], shirtColors: Color[] = [];
@@ -166,6 +172,15 @@ class CivilianBatch extends Group {
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
     // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
     if (!placeholder) await simplifyCrowdLod(baked.geometry, this.distant ? .01 : .005, this.distant ? .35 : .5);
+    }
+    if (key) {
+      preparedCrowds.delete(key);
+      preparedCrowds.set(key, cached || { ...baked, geometry: baked.geometry.clone(), shirtColor: baked.shirtColor?.clone() });
+      if (preparedCrowds.size > preparedCrowdLimit) {
+        const oldest = preparedCrowds.keys().next().value!;
+        preparedCrowds.get(oldest)!.geometry.dispose(); preparedCrowds.delete(oldest);
+      }
+    }
     this.gripTriangles = handTriangles(baked.geometry, baked.clip.parts.indexOf('handR'));
     this.gripReach = gripReach(this.gripTriangles);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
