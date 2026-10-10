@@ -181,6 +181,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     if (assisted) {
       // Follow a systemic victim for the spread photo: its location depends on the AI, not a scripted photo anchor. Prefer the
       // first bite on open ground (a body behind a fence or hedge is screened from the game camera); else the first one seen.
+      for (const junction of [{ x: 66, z: 0 }, { x: 50, z: 0 }, { x: 50, z: 30 }, { x: 26, z: 30 }]) await go(junction, 1.2);
       await go(at('garage-door'), 1.5);
       const turning = () => page.evaluate(() => window.__SS__!.getState().entities.filter(e => e.infection && e.infection.phase !== 'rise').map(e => ({ id: e.id, x: e.transform.x, z: e.transform.z })));
       let victimId: number | undefined;
@@ -227,6 +228,9 @@ test.describe('L1 v2 real-input playthrough', () => {
         const door = at('fire-bay-door'), inside = at('fire-bay-trigger'), len = Math.hypot(inside.x - door.x, inside.z - door.z);
         const outside = { x: door.x - (inside.x - door.x) / len * 5, z: door.z - (inside.z - door.z) / len * 5 };
         if (!assisted && Math.hypot((await player()).transform.x - at('garage-bat').x, (await player()).transform.z - at('garage-bat').z) < 8) await go(at('garage-door'), 1.2);
+        // Follow the street junctions instead of clicking diagonally across the fenced residential lots.
+        // A fight/respawn can otherwise leave the long destination click on the wrong side of a garden wall.
+        if (!assisted) for (const junction of [{ x: 14, z: 30 }, { x: 14, z: -36 }, { x: 40.03, z: -36 }]) await go(junction, 1.2);
         await go(outside, 1);
         await step(20);
         expect((await mission()).phase).toBe('playing');
@@ -243,6 +247,9 @@ test.describe('L1 v2 real-input playthrough', () => {
           await page.screenshot({ path: `${output}/firestation-invitation.png` });
           await page.evaluate(() => window.__SS__!.camera.follow());
         }
+      }
+      if (active === 'weapon' && Math.hypot((await player()).transform.x - at('garage-door').x, (await player()).transform.z - at('garage-door').z) > 12) {
+        for (const junction of [{ x: 66, z: 0 }, { x: 50, z: 0 }, { x: 50, z: 30 }, { x: 26, z: 30 }]) await go(junction, 1.2);
       }
       const goal = at(goals[active]);
       await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? .25 : 1.5);
