@@ -138,6 +138,10 @@ class CivilianBatch extends Group {
     if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
     const key = placeholder ? undefined : `${this.model}:${this.lod}`;
     const cached = key && preparedCrowds.get(key);
+    // bakeInfected supplies absent rigid-part joints; cached clips need the same rig shape.
+    if (cached) for (const name of cached.clip.parts) if (!model.getObjectByName(name)) {
+      const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
+    }
     const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : bakeInfected(model, [], false, civilianClips);
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
