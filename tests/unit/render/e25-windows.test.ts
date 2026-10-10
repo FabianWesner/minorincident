@@ -53,12 +53,13 @@ test('T-E25-11s @E25 @E25-AC11 shipped car primitives preserve gloss paint, envi
 });
 
 test('T-E25-05p @E25 tinted and plain instances use one warmed vertex-input layout and clear old tint', async () => {
-  const { BoxGeometry, Group, Object3D, MeshLambertNodeMaterial, Color } = await import('three/webgpu');
+  const { BoxGeometry, Group, Object3D, MeshLambertNodeMaterial, Color, DynamicDrawUsage } = await import('three/webgpu');
   const { InstancedGroup } = await import('../../../src/render/InstancedGroup');
   const geometry = new BoxGeometry(), material = new MeshLambertNodeMaterial(), prototype = new Group(); prototype.add(new Mesh(geometry, material));
   const plain = new Object3D(), tinted = new Object3D(); tinted.userData.tint = '#713b22';
   const batch = new InstancedGroup(prototype, [tinted, plain]), mesh = batch.children[0] as import('three').InstancedMesh;
   expect(mesh.instanceColor).not.toBeNull();
+  expect(mesh.instanceMatrix.usage).toBe(DynamicDrawUsage);
   const color = new Color(); mesh.getColorAt(1, color); expect(color.getHex()).toBe(0xffffff);
   batch.references.splice(0, 2, plain, tinted); batch.update(); mesh.getColorAt(0, color); expect(color.getHex()).toBe(0xffffff);
   mesh.getColorAt(1, color); expect(color.getHex()).toBe(0x713b22);

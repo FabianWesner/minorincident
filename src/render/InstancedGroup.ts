@@ -1,5 +1,5 @@
 // Adapted from folio-2025 InstancedGroup.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
+import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
@@ -16,6 +16,9 @@ export class InstancedGroup extends Group {
       const geometry = powered ? child.geometry.clone() : child.geometry;
       if (powered) { const bases = new Float32Array(capacity); references.forEach((reference, index) => { bases[index] = reference.userData.lightBase ?? 0; }); geometry.setAttribute('_lightBase', new InstancedBufferAttribute(bases, 1)); }
       const mesh = new InstancedMesh(geometry, child.material, capacity);
+      // Warm-up and LOD repartition both rewrite these transforms. Three's
+      // generated interleaved matrix buffer must upload after either change.
+      mesh.instanceMatrix.setUsage(DynamicDrawUsage);
       mesh.userData.ownedPowerGeometry = powered;
       mesh.count = references.length;
       // White is the identity tint. One vertex-input layout warms the same
