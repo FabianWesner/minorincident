@@ -125,7 +125,8 @@ test.describe('L1 v2 real-input playthrough', () => {
       const target = await page.evaluate(skip => {
         const a = window.__SS__!, p = a.getState().player!.transform;
         const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !skip.includes(e.id) && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.6).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-        return near ? { id: near.id, hp: near.health.current, ...a.input.project(near.transform) } : null;
+        // Aim on RayCursor's courier floor, including the raised fire-station apron.
+        return near ? { id: near.id, hp: near.health.current, ...a.input.project(near.transform, 'player') } : null;
       }, skip);
       if (!target) return false;
       const seen = futile.get(target.id);
