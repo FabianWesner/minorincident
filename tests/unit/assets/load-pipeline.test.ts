@@ -91,3 +91,21 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   expect(assembleThree).not.toHaveBeenCalled();
   expect(requested.some(url => /decay\.broken-glass(?:\.lod2)?\.glb/.test(url))).toBe(true);
 });
+
+test('@transition preload adoption keeps progress and another level cannot advance its card', async () => {
+  const elements: { dataset: Record<string, string>; value: number }[] = [];
+  vi.stubGlobal('document', {
+    createElement: () => { const element = { dataset: {}, value: 0, append: vi.fn(), remove: vi.fn(), setAttribute: vi.fn(), addEventListener: vi.fn() }; elements.push(element); return element; },
+    querySelector: () => ({ append: vi.fn() }), body: { classList: { remove: vi.fn() } },
+  });
+  const { LevelTransition } = await import('../../../src/ui/LevelTransition');
+  const card = new LevelTransition(() => {}), progress = () => elements.find(element => element.dataset.testid === 'transition-progress')!.value;
+  try {
+    card.begin('L1'); card.shaders(1, 2, 'L1'); const before = progress();
+    card.begin('L1'); expect(progress()).toBe(before);
+    card.begin('L2'); expect(progress()).toBe(0);
+    card.shaders(2, 2, 'L1'); expect(progress()).toBe(0);
+    card.shaders(1, 2, 'L2'); expect(progress()).toBeGreaterThan(0);
+    card.fail(); card.begin('L2'); expect(progress()).toBe(0);
+  } finally { card.dispose(); }
+});

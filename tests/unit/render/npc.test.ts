@@ -77,7 +77,7 @@ test('@transition prepared civilian geometry survives scene disposal without sha
     const model = createCivilianPlaceholder(); delete model.userData.placeholder; return model;
   });
   const first = new CivilianCrowd(world), second = new CivilianCrowd(world);
-  const meshes = (crowd: CivilianCrowd) => { const out: InstancedMesh[] = []; crowd.traverse(n => { if (n instanceof InstancedMesh && n.geometry.hasAttribute('_clip_frame')) out.push(n); }); return out; };
+  const meshes = (crowd: InstanceType<typeof CivilianCrowd>) => { const out: InstancedMesh[] = []; crowd.traverse(n => { if (n instanceof InstancedMesh && n.geometry.hasAttribute('_clip_frame')) out.push(n); }); return out; };
   try {
     await first.init(); const original = meshes(first), x = original[0].geometry.getAttribute('position').getX(0);
     original[0].geometry.getAttribute('position').setX(0, 999); first.dispose();
