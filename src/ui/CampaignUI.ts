@@ -1,4 +1,3 @@
-import { weatherKinds, weatherLabels, type WeatherKind } from '../data/weather';
 import type { Game } from '../Game';
 import { chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
@@ -38,10 +37,7 @@ export class CampaignUI {
   private levelSelect():void {
     this.screen('Level select');const save=this.menuSave??this.game.campaign;if(!save)return;
     const hint=document.createElement('p');hint.className='lock-hint';hint.setAttribute('role','status');hint.hidden=true;
-    const weather = document.createElement('select'); weather.dataset.testid = 'campaign-replay-weather'; weather.setAttribute('aria-label', 'Replay weather (completed levels)');
-    for (const kind of ['', ...weatherKinds] as const) { const option = document.createElement('option'); option.value = kind; option.textContent = kind ? weatherLabels[kind] : 'Story weather'; weather.append(option); }
-    this.content.append(weather);
-    for(let level=1;level<=6;level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level); if (level <= save.completedLevels) this.game.world.weather?.setOverride((weather.value || null) as WeatherKind | null); this.game.view.update(1);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
+    for(let level=1;level<=6;level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level); this.game.view.update(1);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
     this.content.append(hint);this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
   }
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */
