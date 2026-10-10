@@ -73,6 +73,22 @@ export async function captureTurntable(page: Page, id: string, directory: string
       await page.evaluate(({ view, roll }) => window.__ASSET__!.view(view, roll), { view: i, roll });
       png = await page.locator('canvas').screenshot();
     }
+    // The projected GLB box can include invisible joints or loose buffer bounds.
+    // Reframe from the actual rendered silhouette, keeping 15% border in the
+    // renderer itself. Capture remains a full canvas image, with no image crop.
+    for (let fit = 0; fit < 2 && coverage(png) < .1; fit++) {
+      const pixels = PNG.sync.read(png), background = [...pixels.data.subarray(0, 3)];
+      let left = pixels.width, top = pixels.height, right = 0, bottom = 0;
+      for (let y = 0; y < pixels.height; y++) for (let x = 0; x < pixels.width; x++) {
+        const offset = (y * pixels.width + x) * 4;
+        if (background.some((v, c) => Math.abs(pixels.data[offset + c] - v) > 8)) {
+          left = Math.min(left, x); right = Math.max(right, x); top = Math.min(top, y); bottom = Math.max(bottom, y);
+        }
+      }
+      if (left > right || top > bottom) break;
+      await page.evaluate(bounds => window.__ASSET__!.frame?.(bounds), [left / pixels.width, top / pixels.height, (right + 1) / pixels.width, (bottom + 1) / pixels.height] as [number, number, number, number]);
+      png = await page.locator('canvas').screenshot();
+    }
     writeFileSync(path, png);
     images.push(path); occupancies.push(coverage(png));
   }
