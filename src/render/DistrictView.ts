@@ -20,6 +20,7 @@ import {
   type BufferGeometry,
   type Material,
 } from "three/webgpu";
+import { attribute, luminance, uniform } from 'three/tsl';
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
@@ -193,7 +194,7 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
           if (lab) {
@@ -622,6 +623,29 @@ export class DistrictView extends Group {
     this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
   }
+  private northgateClosed: boolean | null = null;
+  northgate(closed: boolean): void {if(this.northgateClosed===closed)return;this.northgateClosed=closed;for(const e of this.lodBatches)if(e.id==='int.metro-exit')for(const b of [e.hero,e.near,e.far])b.pose('exitGate',closed?0:Math.PI*.55);}
+  private readonly metroMaterials = new Map<string, { material: Material; power: { value: number } }>();
+  /** One resident shader per light group; power changes only its uniform. */
+  metroPower(main: boolean, emergency: boolean): void {
+    for (const entry of this.lodBatches) {
+      const on = entry.id === 'prop.emergency-light' ? emergency : entry.id === 'kit.shelter-camp' || entry.id === 'util.radio' ? true : main;
+      entry.lit = on;
+      let state = this.metroMaterials.get(entry.id);
+      for (const batch of [entry.hero, entry.near, entry.far]) batch.traverse(node => {
+        if (!(node instanceof Mesh) || node.name !== 'window-light') return;
+        if (!state) {
+          const power = uniform(on ? 1 : 0), base = this.materials.sample(attribute('_palette', 'float'));
+          const glow = base.div(luminance(base).max(.001)).mul(2).mul(power);
+          const material = this.materials.shaded(base.mul(power.oneMinus().mul(.08)), glow).seeThrough();
+          material.name = 'emi_static-windows';
+          state = { material, power }; this.metroMaterials.set(entry.id, state);
+        }
+        if (node.material !== state.material) node.material = state.material;
+      });
+      if (state) state.power.value = on ? 1 : 0;
+    }
+  }
   /** Scripted weather blackout reuses the authored unpowered asset variants. */
   blackout(): void {
     for (const entry of this.lodBatches) if (entry.lit) {
@@ -704,6 +728,7 @@ export class DistrictView extends Group {
   }
   dispose(): void {
     this.disposed = true;
+    for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.ambient?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
