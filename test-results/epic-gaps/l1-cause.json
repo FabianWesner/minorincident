@@ -1,0 +1,16 @@
+{
+  "baseline": "cfbbca51 plus seed/asset audit changes; before civilian LOD0 preparation",
+  "transitionMaxMs": {
+    "pickup": 233.30000019073486,
+    "handover": 225.30000019073486,
+    "accident": 19.800000190734863,
+    "infected-exit": 237,
+    "weapon-pickup": 27.300000190734863,
+    "death-respawn": 20.5,
+    "fire-station-end": 20.5
+  },
+  "blockingTaskMs": 218.47,
+  "cause": "CivilianBatch.init: first-use LOD0 standing rig bake, vertex indexing, infection attributes and Meshopt simplification on the main thread",
+  "shaderLinkCallsDuringPickup": 0,
+  "fix": "Prepare the authored L1/L4 close cast during loading, before renderer program warm-up; geometry and hero selection unchanged."
+}
