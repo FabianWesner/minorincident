@@ -5,7 +5,7 @@ import { CrowdFigureProbe } from './CrowdFigureProbe';
 import { PaletteMaterial } from '../PaletteMaterial';
 
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe }
-/** Frozen, baked death geometry in growing 128-body pages. No per-frame pose
+/** Frozen, baked death geometry in growing 128-body pages within 16 m cells. No per-frame pose
  * texture uploads, AI, physics or population cap for settled bodies. */
 export class StaticCorpses extends Group {
   private readonly bodies = new Map<string, EntitySnapshot>();
@@ -21,9 +21,15 @@ export class StaticCorpses extends Group {
   place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = []): void {
     if (this.bodies.has(instanceKey)) return;
     this.bodies.set(instanceKey, e);
-    let page = this.chunks.get(key)?.at(-1);
+    // Keep distant bodies in separate bounds so ordinary frustum culling skips their geometry.
+    const cellKey = `${key}/${Math.floor(instance.elements[12] / 16)}/${Math.floor(instance.elements[14] / 16)}`;
+    const prepared = this.chunks.get(key);
+    if (!this.chunks.has(cellKey) && prepared?.every(page => page.mesh.count === 0)) {
+      this.chunks.delete(key); this.chunks.set(cellKey, prepared);
+    }
+    let page = this.chunks.get(cellKey)?.at(-1);
     if (!page || page.mesh.count >= 128) {
-      page = this.createPage(key, source, material, clip, frame, hiddenParts);
+      page = this.createPage(cellKey, source, material, clip, frame, hiddenParts);
     }
     const index = page.mesh.count++;
     page.mesh.setMatrixAt(index, instance); page.tint.setXYZW(index, tint.r, tint.g, tint.b, 1);
@@ -36,7 +42,7 @@ export class StaticCorpses extends Group {
   }
   /** L6 prepares the fixed cast's frozen death pages before shader warm-up. */
   prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number): void {
-    if (!this.chunks.has(key)) this.createPage(key, source, material, clip, frame, []);
+    if (![...this.chunks.keys()].some(k => k === key || k.startsWith(`${key}/`))) this.createPage(key, source, material, clip, frame, []);
   }
   private createPage(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[]): Chunk {
     let pages = this.chunks.get(key);
