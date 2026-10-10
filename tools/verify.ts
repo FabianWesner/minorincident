@@ -50,11 +50,11 @@ const commands: string[][] = [
           // The station-attack and Boulevard frame budgets (desktop high, throttled phone low) run alone on the native GPU.
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l3-budgets.spec.ts', '--project=chromium', '--workers=1'],
         ]
-      : target === 'E23'
+      : target === 'E23' || target === 'E24'
         ? [
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
           // Reserve both browser slots for the native GPU frame budgets.
-          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l5-budgets.spec.ts', '--project=chromium', '--workers=1'],
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', target==='E24'?'tests/perf/l6-budgets.spec.ts':'tests/perf/l5-budgets.spec.ts', '--project=chromium', '--workers=1'],
         ]
       : target === 'E25'
         ? [
@@ -71,7 +71,7 @@ for (const [command, ...args] of commands) {
   if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
   if (target === 'E19' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l1-transitions.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);
-  if (target === 'E23' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l5-budgets.spec.ts') ? 'gpu' : 'headless'}.json`);
+  if ((target === 'E23' || target === 'E24') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.some(a=>a==='tests/perf/l5-budgets.spec.ts'||a==='tests/perf/l6-budgets.spec.ts') ? 'gpu' : 'headless'}.json`);
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');
   if (result.error || result.status !== 0) {

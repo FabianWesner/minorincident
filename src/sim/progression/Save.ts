@@ -12,12 +12,12 @@ export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;return {...rest,version:1,unlockedLevel:level};}return raw;
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
-  if(!record(raw)||raw.version!==1||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>6||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>5||Number(raw.completedLevels)>=Number(raw.unlockedLevel))return false;
+  if(!record(raw)||raw.version!==1||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>6||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>6||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(raw.completedLevels===6&&raw.unlockedLevel===6)))return false;
   if(!strings(raw.ownedActions)||!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
-  if(!validRacks(save,save.racks)||save.upgrades.length!==save.completedLevels*2)return false;
+  if(!validRacks(save,save.racks)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;
   const expectedLevel=save.completedLevels+((save.pending?.phase==='unlock'||save.pending?.phase==='cards')?2:1);
-  if(save.unlockedLevel!==expectedLevel)return false;
+  if(save.unlockedLevel!==Math.min(6,expectedLevel))return false;
   for(const [key,value]of Object.entries(save.settings)){
     if(key==='textSize'){if(![1,1.25,1.5].includes(value as number))return false;continue;}
     const enums:Record<string,string[]>={gore:['Off','Reduced','Full'],quality:['high','low','auto'],aimAssist:['Off','Low','Default','High']};
@@ -27,6 +27,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
   const prefix={...save,upgrades:[] as string[]};
   for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
+  if(save.completedLevels===6&&save.pending)return false;
   if(save.pending){const p=save.pending;
     if(!record(p)||!Number.isInteger(p.level)||p.level<1||p.level>5||!['unlock','cards','racks'].includes(p.phase)||typeof p.weaponChosen!=='boolean'||!strings(p.cards)||p.cards.some(id=>!Object.hasOwn(upgrades,id))||save.unlockedLevel!==p.level+1)return false;
     if(p.phase==='racks'){if(save.completedLevels!==p.level||p.cards.length!==3||p.cards.filter(id=>save.upgrades.includes(id)).length!==2)return false;}

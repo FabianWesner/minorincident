@@ -29,7 +29,7 @@ export function layoutLights(world: DistrictWorld): FieldLight[] {
         if (!a.pool) continue;
         const placed = placeAnchor(a, [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]], p.yaw, p.scale);
         const light = footprint({ ...a, ...placed }, p.position[1], lights.length * 1.37);
-        light.on = lit.has(p.lightGroup); lights.push(light);
+        light.on = lit.has(world.composition.id === 'L6' && ['metro-main', 'metro-emergency', 'shelter-camp'].includes(a.powerGroup) ? a.powerGroup : p.lightGroup); lights.push(light);
       }
     }
   }

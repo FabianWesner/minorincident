@@ -36,7 +36,7 @@ export class MissionUI {
     this.map.className = 'mission-minimap'; this.map.setAttribute('aria-label','Objective minimap');
     this.panel.className = 'mission-panel'; this.panel.setAttribute('aria-label','Mission');
     this.button.type = 'button'; this.button.addEventListener('click',this.accept);
-    for (const [key,label] of [['time','Time (seconds)'],['knockdowns','Knockdowns'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Rescued'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
+    for (const [key,label] of [['time','Time (seconds)'],['knockdowns','Knockdowns'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Survivors out'],['survivorsIn','Survivors in'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
       const title=document.createElement('dt'), value=document.createElement('dd'); title.textContent=label; title.dataset.testid=`result-label-${key}`; value.dataset.testid=`result-${key}`; value.dataset.stat=key; this.result.append(title,value); this.rows.set(key,value);
     }
     this.panel.append(this.heading,this.detail,this.result,this.button);
@@ -62,7 +62,7 @@ export class MissionUI {
     this.result.hidden=state.phase!=='result';
     if(this.phase!==state.phase){
       this.phase=state.phase;
-      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
+      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
       const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
@@ -105,5 +105,10 @@ export class MissionUI {
     }
   }
   reset(): void {this.displayedMission=null;this.root.hidden=true;this.phase=this.active='';for(const pin of this.pins.values())pin.remove();this.pins.clear();}
+  private campaignSummary():string {
+    const result=this.world.missions?.state.result,previous=this.world.progression?.campaign?.results??{};
+    const results={...previous,...(result?{L6:result}:{})},all=Object.values(results);
+    return `Campaign summary · ${all.length} levels · Time ${all.reduce((n,r)=>n+r.time,0).toFixed(1)} s · Deaths ${all.reduce((n,r)=>n+r.deaths,0)} · Rescued ${all.reduce((n,r)=>n+r.rescued,0)}`;
+  }
   dispose(): void {this.button.removeEventListener('click',this.accept);this.root.remove();}
 }

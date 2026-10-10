@@ -1,0 +1,380 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l6-budgets.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/playwright/run-3666",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/playwright/run-3666",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/playwright/run-3666",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/playwright/run-3666",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/playwright/run-3666",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/test-results/playwright/run-3666",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e24-l6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3666 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3666",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/l6-budgets.spec.ts",
+      "file": "perf/l6-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 6,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight high",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 25493,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"perf\":{\"profile\":{\"other\":{\"drawCalls\":40,\"triangles\":75235},\"shadows\":{\"drawCalls\":57,\"triangles\":198788},\"buildings\":{\"drawCalls\":6,\"triangles\":9636},\"props\":{\"drawCalls\":1,\"triangles\":64},\"crowd\":{\"drawCalls\":15,\"triangles\":172370}},\"profileAssets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:kit.metro-tunnel\":{\"drawCalls\":2,\"triangles\":7792},\"shadow:kit.maintenance-corridor\":{\"drawCalls\":1,\"triangles\":1664},\"shadow:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":800},\"shadow:other/Group/Mesh\":{\"drawCalls\":10,\"triangles\":120},\"shadow:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":3003},\"shadow:other/Group/mesh_1_1\":{\"drawCalls\":2,\"triangles\":644},\"shadow:other/Group/mesh_1_2\":{\"drawCalls\":2,\"triangles\":838},\"shadow:other/Group/mesh_1_3\":{\"drawCalls\":2,\"triangles\":2452},\"shadow:other/Group/mesh_1_4\":{\"drawCalls\":2,\"triangles\":2416},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/Group/mesh_1_5\":{\"drawCalls\":1,\"triangles\":36},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":4,\"triangles\":48},\"shadow:prop.jersey-barrier\":{\"drawCalls\":1,\"triangles\":64},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":5,\"triangles\":50},\"view:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":800},\"view:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":3003},\"view:other/Group/mesh_1_1\":{\"drawCalls\":2,\"triangles\":644},\"view:other/Group/mesh_1_2\":{\"drawCalls\":2,\"triangles\":838},\"view:other/Group/mesh_1_3\":{\"drawCalls\":2,\"triangles\":2452},\"view:other/Group/mesh_1_4\":{\"drawCalls\":2,\"triangles\":2416},\"view:other/Group/mesh_1_5\":{\"drawCalls\":1,\"triangles\":36},\"view:other/Group/Mesh\":{\"drawCalls\":19,\"triangles\":18330},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:kit.metro-tunnel\":{\"drawCalls\":4,\"triangles\":7936},\"view:kit.maintenance-corridor\":{\"drawCalls\":2,\"triangles\":1700},\"view:prop.jersey-barrier\":{\"drawCalls\":1,\"triangles\":64},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":62},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}},\"updateCpuMs\":2.1999998092651367,\"renderCpuMs\":2.3000001907348633,\"propUploads\":0,\"awakeProps\":0,\"fps\":196.0784313724651,\"frameMs\":5.100000000002183,\"simMs\":0,\"uiMs\":0,\"drawCalls\":119,\"triangles\":456093,\"geometries\":676,\"textures\":82,\"entities\":113,\"backend\":\"webgl\",\"loadTiming\":{\"dataMs\":3.3999996185302734,\"simMs\":286,\"viewMs\":14109.300000190735},\"quality\":{\"setting\":\"high\",\"tier\":\"high\",\"p90Ms\":0,\"slowSeconds\":0,\"budgets\":{\"frameMs\":16.7,\"infected\":200,\"drawCalls\":600,\"triangles\":1500000,\"simMs\":4,\"heapMB\":400,\"pixelRatio\":2,\"shadowSize\":2048,\"bloomMips\":5,\"cullDistance\":60}},\"renderedFrames\":175,\"contextLost\":false,\"paused\":true,\"heapBytes\":680142845,\"lighting\":{\"lightFieldMs\":0.10000038146972656,\"lightPools\":19,\"lightCandidates\":19,\"shadowMaps\":1,\"heroShadow\":1,\"preset\":\"L6-subway\"}},\"survivors\":29,\"infected\":40,\"p50\":5.5,\"p95\":7.399999999997817,\"max\":16.600000000002183,\"tasks\":[],\"endSurvivors\":29}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T08:29:34.299Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-89ad6bb686309e3cd1d1",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 6,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44186,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"perf\":{\"profile\":{\"other\":{\"drawCalls\":40,\"triangles\":64483},\"shadows\":{\"drawCalls\":36,\"triangles\":59394},\"buildings\":{\"drawCalls\":2,\"triangles\":4518},\"props\":{\"drawCalls\":3,\"triangles\":184},\"crowd\":{\"drawCalls\":7,\"triangles\":24868}},\"profileAssets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:kit.metro-tunnel\":{\"drawCalls\":1,\"triangles\":4410},\"shadow:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":800},\"shadow:other/Group/Mesh\":{\"drawCalls\":10,\"triangles\":120},\"shadow:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":3003},\"shadow:other/Group/mesh_1_1\":{\"drawCalls\":2,\"triangles\":644},\"shadow:other/Group/mesh_1_2\":{\"drawCalls\":2,\"triangles\":838},\"shadow:other/Group/mesh_1_3\":{\"drawCalls\":2,\"triangles\":2452},\"shadow:other/Group/mesh_1_4\":{\"drawCalls\":2,\"triangles\":2416},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/Group/mesh_1_5\":{\"drawCalls\":1,\"triangles\":36},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":4,\"triangles\":48},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":5,\"triangles\":50},\"view:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":800},\"view:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":3003},\"view:other/Group/mesh_1_1\":{\"drawCalls\":2,\"triangles\":644},\"view:other/Group/mesh_1_2\":{\"drawCalls\":2,\"triangles\":838},\"view:other/Group/mesh_1_3\":{\"drawCalls\":2,\"triangles\":2452},\"view:other/Group/mesh_1_4\":{\"drawCalls\":2,\"triangles\":2416},\"view:other/Group/mesh_1_5\":{\"drawCalls\":1,\"triangles\":36},\"view:other/Group/Mesh\":{\"drawCalls\":19,\"triangles\":7586},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:kit.metro-tunnel\":{\"drawCalls\":2,\"triangles\":4518},\"view:prop.jersey-barrier\":{\"drawCalls\":1,\"triangles\":28},\"view:prop.emergency-light\":{\"drawCalls\":2,\"triangles\":156},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":54},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}},\"updateCpuMs\":4.800000190734863,\"renderCpuMs\":7.699999809265137,\"propUploads\":0,\"awakeProps\":0,\"fps\":68.49315068493833,\"frameMs\":14.599999999998545,\"simMs\":0,\"uiMs\":0,\"drawCalls\":88,\"triangles\":153447,\"geometries\":613,\"textures\":60,\"entities\":98,\"backend\":\"webgl\",\"loadTiming\":{\"dataMs\":8.199999809265137,\"simMs\":1147.9000005722046,\"viewMs\":15566.300000190735},\"quality\":{\"setting\":\"low\",\"tier\":\"low\",\"p90Ms\":0,\"slowSeconds\":0,\"budgets\":{\"frameMs\":33.333333333333336,\"infected\":100,\"drawCalls\":300,\"triangles\":500000,\"simMs\":6,\"heapMB\":250,\"pixelRatio\":1.5,\"shadowSize\":1024,\"bloomMips\":2,\"cullDistance\":45}},\"renderedFrames\":165,\"contextLost\":false,\"paused\":true,\"heapBytes\":350318560,\"lighting\":{\"lightFieldMs\":0.10000038146972656,\"lightPools\":15,\"lightCandidates\":15,\"shadowMaps\":1,\"heroShadow\":1,\"preset\":\"L6-subway\"}},\"survivors\":25,\"infected\":30,\"p50\":13.599999999998545,\"p95\":16.69999999999709,\"max\":64,\"tasks\":[{\"start\":24964.900000572205,\"duration\":64}],\"endSurvivors\":25}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T08:30:00.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-609c9fb8b983d13b6d4e",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 8,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "transitions high",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 20,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame high",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16382,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T08:30:44.262Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-a3e8ee26905c1bd84ab8",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 22,
+              "column": 1
+            }
+          ]
+        },
+        {
+          "title": "transitions low",
+          "file": "perf/l6-budgets.spec.ts",
+          "line": 20,
+          "column": 48,
+          "specs": [
+            {
+              "title": "T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame low",
+              "ok": true,
+              "tags": [
+                "E24",
+                "E24-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21125,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T08:31:00.656Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0fd2100468a6c0facc4f-6606e2ce10f5733c21ac",
+              "file": "perf/l6-budgets.spec.ts",
+              "line": 22,
+              "column": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-10T08:29:33.714Z",
+    "duration": 108162.86700000001,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

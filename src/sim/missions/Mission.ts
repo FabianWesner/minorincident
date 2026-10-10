@@ -1,3 +1,4 @@
+import { LevelSixSubway } from './LevelSixSubway';
 // Zones enter/leave latching and named respawns adapted from Bruno Simon folio-2025
 // Zones.js / Respawns.js (MIT, 41046b5). State belongs to the fixed-step sim.
 import { LevelOneOutbreak } from './LevelOneOutbreak';
@@ -38,6 +39,7 @@ export class Mission {
   /** E22 controller (def.l4). */
   readonly l4: LevelFourWar | null;
   /** E23 controller (def.l5). */
+  readonly l6: LevelSixSubway | null;
   readonly l5: LevelFiveAftermath | null;
   private readonly startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
@@ -46,6 +48,7 @@ export class Mission {
     this.l2 = def.l2 ? new LevelTwoRescue(this) : null;
     this.l3 = def.l3 ? new LevelThreeCollapse(this) : null;
     this.l4 = def.l4 ? new LevelFourWar(this) : null;
+    this.l6 = def.l6 ? new LevelSixSubway(this) : null;
     this.l5 = def.l5 ? new LevelFiveAftermath(this) : null;
     this.startTick = world.tick;
     this.state = {
@@ -75,7 +78,7 @@ export class Mission {
   /** A briefing is explicit; callers may accept it immediately for deterministic fixtures. */
   begin(): void {
     if (this.state.phase !== 'briefing') return;
-    this.l1?.prepare(); this.l2?.prepare(); this.l3?.prepare(); this.l4?.prepare(); this.l5?.prepare();
+    this.l1?.prepare(); this.l2?.prepare(); this.l3?.prepare(); this.l4?.prepare(); this.l5?.prepare(); this.l6?.prepare();
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.checkpoints.set('start', this.capture());
     this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });
@@ -135,7 +138,7 @@ export class Mission {
   }
   private update(): void {
     if (this.state.phase !== 'playing') return;
-    this.l1?.update(); this.l2?.update(); this.l3?.update(); this.l4?.update(); this.l5?.update();
+    this.l1?.update(); this.l2?.update(); this.l3?.update(); this.l4?.update(); this.l5?.update(); this.l6?.update();
     const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
     if (this.state.deadlineTicks !== null && --this.state.deadlineTicks <= 0) { this.state.deadlineTicks = 0; this.fail('timeout'); return; }
@@ -175,7 +178,7 @@ export class Mission {
   }
   private complete(def: ObjectiveDef): void {
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
-    this.l1?.completed(def.id); this.l2?.completed(def.id); this.l3?.completed(def.id); this.l4?.completed(def.id); this.l5?.completed(def.id);
+    this.l1?.completed(def.id); this.l2?.completed(def.id); this.l3?.completed(def.id); this.l4?.completed(def.id); this.l5?.completed(def.id); this.l6?.completed(def.id);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
     if (def.choice) for (const sibling of this.def.steps) if (sibling.id !== def.id && sibling.choice === def.choice) this.state.steps[sibling.id].status = 'cancelled';
     if (def.type === 'escort' && def.complete.kind === 'escort') this.rescue(this.state.actors[def.complete.actor]);
@@ -185,7 +188,7 @@ export class Mission {
   completeObjective(id?: string): void {
     if (this.state.phase !== 'playing') throw new Error('Mission is not playing');
     let def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id));
-    if (!def && (this.l1?.advance() || this.l2?.advance() || this.l3?.advance() || this.l4?.advance() || this.l5?.advance())) { this.activate(); def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id)); }
+    if (!def && (this.l1?.advance() || this.l2?.advance() || this.l3?.advance() || this.l4?.advance() || this.l5?.advance() || this.l6?.advance())) { this.activate(); def = this.def.steps.find(s => this.state.steps[s.id].status === 'active' && (id === undefined || s.id === id)); }
     if (!def) throw new Error(`No active objective: ${id ?? ''}`);
     this.complete(def); this.activate(); this.finish(); this.flushCheckpoint();
   }
@@ -197,7 +200,7 @@ export class Mission {
   private result(): void {
     this.state.phase = 'result'; this.state.stats.time = (this.world.tick - this.startTick) / 60;
     const l5 = this.l5?.result();
-    this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result(), ...l5 };
+    this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result(), ...l5, ...this.l6?.result() };
     this.emit({ type: 'level.completed', id: this.def.id, result: this.state.result });
     // E20/E21: no caption card or reward screen after L2 and L3; the campaign continues straight into the next level.
     if (this.def.l2 || this.def.l3 || this.def.l4 || this.def.l5) this.continue();
@@ -365,7 +368,7 @@ export class Mission {
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
-    this.l2?.restore(delta); this.l3?.restore(delta); this.l4?.restore(delta); this.l5?.restore(delta);
+    this.l2?.restore(delta); this.l3?.restore(delta); this.l4?.restore(delta); this.l5?.restore(delta); this.l6?.restore(delta);
     this.emit({ type: 'checkpoint.restored', id });
   }
   dispose(): void { this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }

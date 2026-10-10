@@ -50,7 +50,7 @@ import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
 import { lodPolicy } from './lodPolicy';
 import { layoutLights } from './WorldLights';
-import { auraLight, pickupLight } from './LightField';
+import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
@@ -209,7 +209,7 @@ export class GameView implements Lifecycle {
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
       // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
       // path, spawn focus and close-view warm-up.
-      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
       const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
@@ -218,7 +218,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove ? this.view.cameraTarget : undefined;
@@ -230,8 +230,13 @@ export class GameView implements Lifecycle {
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
         // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
         // The rest of the route and its unused LOD1 tier stream after the mission begins.
-        if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
-        this.pendingPreparation = { shared, instanceCapacity };
+        if (this.world.scenario === 'L6') {
+          // The short confined route stays resident: building native LOD batches during the retreat hitches.
+          await this.districts.prepare(this.view.cameraTarget);
+        } else {
+          if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
+          this.pendingPreparation = { shared, instanceCapacity };
+        }
       }
       this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts));this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
@@ -304,6 +309,7 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
@@ -321,7 +327,7 @@ export class GameView implements Lifecycle {
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     if (groveTown && this.params.get('test') !== '1') {
       // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
       // loading screen. Until it finishes the view does not draw and the game clock does not advance
@@ -625,7 +631,7 @@ export class GameView implements Lifecycle {
     this.flashOverlay.style.opacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
-    if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); this.districts?.blackout(); }
+    if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }
     this.lighting?.update(this.view); this.updateLights();
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
     this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false); this.districts?.updateLods(this.view);
@@ -706,17 +712,24 @@ export class GameView implements Lifecycle {
   get lightField() { return this.lighting?.field ?? null; }
   /** E25 light field: layout pools plus per-frame vehicle lamps and the survivor aura, one pass before the scene. */
   private updateLights(): void {
+    const metro=this.world.missions?.state.l6;if(metro)this.districts?.northgate(metro.gateAt>0);
     const lighting = this.lighting; if (!lighting) return;
+    let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
     if (field.active) {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
+      if (hero && this.world.missions?.state.l6?.flashlight) {
+        const yaw=this.world.entities.get(1)!.transform.yaw;
+        flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
+        field.push(flashlight);
+      }
       this.vehicles?.pushLights(field);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
-    lighting.setHeroLight(hero && field.active ? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
+    lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

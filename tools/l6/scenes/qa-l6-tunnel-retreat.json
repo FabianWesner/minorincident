@@ -1,0 +1,556 @@
+{
+  "name": "qa-l6-tunnel-retreat",
+  "seed": 1,
+  "dof": false,
+  "ground": "district",
+  "tier": 0,
+  "frames": 180,
+  "shots": [
+    1,
+    90,
+    179
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "time": "L6-subway",
+  "layout": {
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        80,
+        10
+      ],
+      [
+        130,
+        20
+      ]
+    ]
+  },
+  "props": [
+    {
+      "asset": "prop.emergency-light",
+      "at": [
+        105,
+        3.2,
+        12
+      ],
+      "yaw": 90
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        101,
+        15
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": {
+        "walk": [
+          [
+            109,
+            15
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-0",
+      "kind": "pedestrian",
+      "at": [
+        103,
+        14
+      ],
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-1",
+      "kind": "pedestrian",
+      "at": [
+        103,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-2",
+      "kind": "pedestrian",
+      "at": [
+        103,
+        15.6
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-3",
+      "kind": "pedestrian",
+      "at": [
+        104.5,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-4",
+      "kind": "pedestrian",
+      "at": [
+        104.5,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-5",
+      "kind": "pedestrian",
+      "at": [
+        104.5,
+        15.6
+      ],
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-6",
+      "kind": "pedestrian",
+      "at": [
+        106,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-7",
+      "kind": "pedestrian",
+      "at": [
+        106,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-8",
+      "kind": "pedestrian",
+      "at": [
+        106,
+        15.6
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-9",
+      "kind": "pedestrian",
+      "at": [
+        107.5,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-10",
+      "kind": "pedestrian",
+      "at": [
+        107.5,
+        14.8
+      ],
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-11",
+      "kind": "pedestrian",
+      "at": [
+        107.5,
+        15.6
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-12",
+      "kind": "pedestrian",
+      "at": [
+        109,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-13",
+      "kind": "pedestrian",
+      "at": [
+        109,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-14",
+      "kind": "pedestrian",
+      "at": [
+        109,
+        15.6
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-15",
+      "kind": "pedestrian",
+      "at": [
+        110.5,
+        14
+      ],
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-16",
+      "kind": "pedestrian",
+      "at": [
+        110.5,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-17",
+      "kind": "pedestrian",
+      "at": [
+        110.5,
+        15.6
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-18",
+      "kind": "pedestrian",
+      "at": [
+        112,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-19",
+      "kind": "pedestrian",
+      "at": [
+        112,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-20",
+      "kind": "pedestrian",
+      "at": [
+        112,
+        15.6
+      ],
+      "look": {
+        "model": "npc.shelter-survivor.bandaged"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-21",
+      "kind": "pedestrian",
+      "at": [
+        113.5,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-22",
+      "kind": "pedestrian",
+      "at": [
+        113.5,
+        14.8
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14.8
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-23",
+      "kind": "pedestrian",
+      "at": [
+        113.30865828381745,
+        15.138060233744357
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            15.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "adult-24",
+      "kind": "pedestrian",
+      "at": [
+        115,
+        14
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            123,
+            14
+          ]
+        ]
+      }
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        92,
+        15
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      107,
+      15
+    ],
+    "zoom": 1.4
+  }
+}

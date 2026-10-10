@@ -26,9 +26,9 @@ test('@E08 campaign steering mask preserves polygon edges, offsets, winding and 
     }
   } finally { w.dispose(); }
 });
-for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC11 @E08-AC17 L1-L6 first three-minute objective-patrol runs: density and immunity`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity`, async () => {
   const w = new SimWorld(); await w.init();
-  for (let level = 1; level <= 6; level++) {
+  for (let level = 1; level <= 5; level++) {
     const composition = compositions[`L${level}`]; w.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 42);
     w.npcs!.setQuality(tier);
     for (const e of w.entities.iterate()) if (e.civilian) expect(w.districts!.nav.walkable([e.transform.x, e.transform.z])).toBe(true);
@@ -57,7 +57,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E08-11-${tier} @E08 @E08-AC
     metrics.push({ level: `L${level}`, tier, average, expected, simMsP95, ticks: w.tick, distance, attacks });
   }
   w.dispose(); mkdirSync('test-results/epics/E08', { recursive: true }); writeFileSync('test-results/epics/E08/campaign.json', JSON.stringify(metrics, null, 2));
-// Six 10,800-tick patrols plus district assembly; per-tick budgets above remain unchanged.
+// Five 10,800-tick patrols plus district assembly; per-tick budgets above remain unchanged.
 }, 600_000);
 test('T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise', async () => {
   let turned = 0; const durations = new Set<number>();
@@ -79,3 +79,5 @@ test('@E08 stray cats use systemic grabs and the short pet down/rise lifecycle',
   expect(pet.civilian!.state).toBe('down'); expect(pet.civilian!.downTicks).toBeGreaterThanOrEqual(120); expect(pet.civilian!.downTicks).toBeLessThanOrEqual(240);
   step(w, pet.civilian!.until - w.tick + 72); expect(w.events.events().find(event => event.type === 'civilian.turned' && event.id === id)).toMatchObject({ variant: 'inf.cat-tabby' }); w.dispose();
 });
+
+// E24 supersedes the old ambient L6 density: adults belong to the mission community.
