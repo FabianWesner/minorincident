@@ -95,3 +95,18 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
   });
 });
 
+
+test('@transition compact controls HUD also covers L2 to L3 loading', async ({ page }) => {
+  test.skip(phase === 'before', 'Regression assertion for the shared card');
+  test.setTimeout(180_000);
+  await page.goto('/?test=1&renderer=webgl&quality=high&audio=muted');
+  await page.waitForFunction(() => !!window.__SS__);
+  await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L2', { progression: 'L2-default' }); a.pause(); });
+  await page.evaluate(() => { void window.__SS__!.loadLevel('L3', { progression: 'L3-default' }); });
+  await expect(page.getByTestId('level-transition')).toBeVisible();
+  await expect(page.getByTestId('transition-title')).toHaveText('Level 3 · The Police Collapse');
+  await expect(page.getByTestId('transition-story')).not.toHaveText('');
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  await expect(page.getByTestId('level-transition')).toBeHidden();
+  expect(await page.evaluate(() => window.__SS__!.perf().renderedFrames)).toBeGreaterThan(0);
+});
