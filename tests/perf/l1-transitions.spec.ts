@@ -28,7 +28,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
     const samples: Record<string, { max: number; frames: Frame[]; glCalls?: GlCall[] }> = {};
     const measure = async (label: string, action: () => Promise<unknown>, duration: number) => {
       console.log(`${phase} ${mode} measuring ${label}`);
-      if (process.env.HITCH_CPU_PROFILE === '1' && label === 'pickup') { await cdp.send('Profiler.enable'); await cdp.send('Profiler.start'); }
+      if ((process.env.HITCH_CPU_PROFILE === '1' || phase === 'before') && label === 'pickup') { await cdp.send('Profiler.enable'); await cdp.send('Profiler.start'); }
       await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8,blink.user_timing,disabled-by-default-devtools.timeline', transferMode: 'ReturnAsStream' });
       await page.evaluate(async () => {
         const h: Recording = { frames: [], stopped: false, previous: 0 }; window.hitchRecording = h;
@@ -38,7 +38,7 @@ for (const mode of ['desktop', 'mobile'] as const) test.describe(mode, () => {
       });
       await action(); await page.waitForTimeout(duration);
       const frames = await page.evaluate(() => { const h = window.hitchRecording!; h.stopped = true; window.__SS__!.pause(); return h.frames; });
-      if (process.env.HITCH_CPU_PROFILE === '1' && label === 'pickup') { const profile = await cdp.send('Profiler.stop'); writeFileSync(`${output}/${phase}-${mode}-cpu-profile.json`, JSON.stringify(profile)); }
+      if ((process.env.HITCH_CPU_PROFILE === '1' || phase === 'before') && label === 'pickup') { const profile = await cdp.send('Profiler.stop'); writeFileSync(`${output}/${phase}-${mode}-cpu-profile.json`, JSON.stringify(profile)); }
       samples[label] = { max: Math.max(...frames.map(f => f.ms)), frames, glCalls: await page.evaluate(() => window.hitchGlCalls!.splice(0)) };
       writeFileSync(`${output}/${phase}-${mode}-samples.json`, JSON.stringify(samples, null, 2));
       console.log(`${phase} ${mode} ${label} max=${samples[label].max.toFixed(1)}ms`);

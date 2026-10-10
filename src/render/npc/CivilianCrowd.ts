@@ -428,7 +428,14 @@ export class CivilianCrowd extends Group {
   }
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
-  async init(): Promise<void> { const started = performance.now(); await Promise.all(this.batches.map(b=>b.init())); loadMeasure('view:civilian-crowd', started); this.update(); }
+  async init(): Promise<void> {
+    const started = performance.now();
+    await Promise.all(this.batches.map(b => b.init()));
+    // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
+    // in discover(); no first-use LOD0 bake/index/simplification during the war.
+    if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
+    loadMeasure('view:civilian-crowd', started); this.update();
+  }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   heldProps() { return this.props.contacts; }

@@ -74,19 +74,21 @@ E20 §5.1 outbreak rules apply (sight-only, no omniscience, bitten survivors tur
 
 ## 8. Acceptance criteria
 
-Bots: `complete` (covers the rear, closes gates, collects stragglers), `newbie`, `evade-only` (never attacks), `idle` (stays in the shelter). Time bands are **provisional**; recalibrate on the first green 20-seed run (staging §6, never padded; the group's walking pace sets the floor).
+Bots: `complete` (covers the rear, closes gates, collects stragglers), `newbie`, `evade-only` (never attacks), `idle` (stays in the shelter). Time bands are **provisional**; recalibrate on the first green single-seed run (staging §6, never padded; the group's walking pace sets the floor).
+
+> PO 10-09: at most one single-seed complete-bot pass per level is a gate; fun/feel is judged by the PO.
 
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E24-AC01 | The L6 mission graph (shelter → stop the first infected → cover the retreat → exit) is structurally completable (E12-AC07), with no fail timer and no fail on survivor death | sim |
-| E24-AC02 | The `complete` bot finishes L6 on **20/20 seeds** from `L6-default` (machine gun, 5 rescued survivors) without cheats; median sim time **3:00–4:30**; median ≥ 60 % of all survivors exit | sim |
-| E24-AC03 | The `newbie` bot finishes on ≥ 18/20 seeds, median **3:15–5:00**, median deaths ≤ 2, median ≥ 40 % of survivors exit | sim |
+| E24-AC02 | The `complete` bot finishes L6 on **one seed** from `L6-default` (machine gun, 5 rescued survivors) without cheats; sim time **3:00–4:30**; ≥ 60 % of all survivors exit PO 10-09: single seed. | sim |
+| E24-AC03 | The `newbie` bot finishes on one seed, **3:15–5:00**, deaths ≤ 2, ≥ 40 % of survivors exit PO 10-09: single seed. | sim |
 | E24-AC04 | **Shelter:** at start 20–30 shelter survivors (15 on low) plus exactly the L5 rescued ids are present; all non-guard survivors are in routines (sit/talk/treat/rest/share, each present), none idle facing nowhere > 3 s; zero infected and zero `combat.*` events before `l6.breach1` | sim |
 | E24-AC05 | **No new weapon:** the loadout at L6 start and end equals the L5 end loadout; no weapon pickup exists in `D-SUBWAY` | sim |
 | E24-AC06 | **Breach comes from below:** every infected in L6 first appears within 3 m of a maintenance/service door or side passage outside the frustum, or arrives through the tunnel; none enters through the street stair; breach1 releases 1–2 infected, breach2 (+20–30 s) 6–10 from ≥ 2 accesses; each breach is telegraphed by door-bang audio ≥ 1.5 s before | sim |
 | E24-AC07 | **Shelter fails:** `l6.abandon` fires by its first-of rule (breach2 + 15 s / ≥ 3 bitten), also with the `idle` bot; `power.off metro-main` fires within 1 frame of breach2 and emergency lights + the weapon flashlight turn on | sim |
-| E24-AC08 | **Full campaign:** the `complete` bot plays L1 → L6 continuously on **10 seeds** in the sim runner with no reward screens, loadouts carrying over (bat → axe → handgun → machine gun) and the L5 rescued ids arriving in L6; the `newbie` total sim time is within the sum of the six per-level newbie bands | sim |
-| E24-AC09 | **Covering the retreat matters:** the `evade-only` bot gets a median ≤ 30 % of survivors out, the `complete` bot ≥ 60 % (20 seeds); the group pauses at a chokepoint when infected are within 20 m of its tail and the player is > 12 m away | sim |
+| E24-AC08 | **Full campaign:** the `complete` bot plays L1 → L6 continuously on **one seed** in the sim runner with no reward screens, loadouts carrying over (bat → axe → handgun → machine gun) and the L5 rescued ids arriving in L6; the `newbie` total sim time is within the sum of the six per-level newbie bands. PO 10-09: single seed. | sim |
+| E24-AC09 | **Covering the retreat matters:** the `evade-only` bot gets a ≤ 30 % of survivors out, the `complete` bot ≥ 60 % (one seed); the group pauses at a chokepoint when infected are within 20 m of its tail and the player is > 12 m away PO 10-09: single seed. | sim |
 | E24-AC10 | **Stragglers:** injured survivors move at 1.4 m/s and become stragglers (`l6.straggler`) when > 15 m behind the tail; a straggler within 3 m of the player follows the player until rejoining; the `complete` bot rejoins ≥ 70 % of stragglers (median) | sim |
 | E24-AC11 | **Chokepoints and doors:** ≥ 3 chokepoints ≤ 2.5 m wide along the route; a closed gate blocks movement and sight and holds 8–12 s against 5 infected (+ the braced HP per E26-AC09/AC10); a gate refuses to close with a survivor within 2 m of its line | sim |
 | E24-AC12 | **Confined layout:** main tunnel width ≤ 8 m; no open area > 30 × 30 m outside the two stations; tunnel length 200–260 m; ≥ 3 side passages, ≥ 2 cross-passages; sight blockers every ≤ 25 m (layout test) | unit (layout) |
