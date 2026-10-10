@@ -1,3 +1,4 @@
+import { storyProtected } from '../npc/storyProtection';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { SimPhase } from '../../core/EventBus';
@@ -20,7 +21,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     radii.clear(); let maximumRadius = 0;
     for (const e of world.entities.iterate()) { const r = radius(e); radii.set(e.id, r); maximumRadius = Math.max(maximumRadius, r); }
     for (let pass = 0; pass < 3; pass++) for (const e of world.entities.iterate()) {
-      const r = radii.get(e.id)!; if (!r || e.survivor || e.civilian?.state === 'grabbed') continue;
+      const r = radii.get(e.id)!; if (!r || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       if (world.districts && e.infected && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') e.transform.y = .7 + world.districts.groundHeight(e.transform.x, e.transform.z);
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + .45; // covers the largest gap below
       world.spatial.query(query, neighbors, false);
@@ -43,7 +44,9 @@ export function installCharacterSeparation(world: SimWorld): void {
         if (squared >= reach * reach) continue;
         const distance = Math.sqrt(squared), overlap = reach - distance;
         if (overlap <= .001) continue;
-        const angle = e.id * 2.399963, scale = other.survivor || other.civilian?.state === 'grabbed' || (other.companion && !other.companion.following && other.companion.state === 'follow') ? 1 : .5;
+        // A protected story actor holding a post is authoritative like the courier;
+        // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
+        const angle = e.id * 2.399963, scale = other.survivor || (other.civilian?.ally?.hold && storyProtected(world, other)) || other.civilian?.state === 'grabbed' || (other.companion && !other.companion.following && other.companion.state === 'follow') ? 1 : .5;
         nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);
       }
       world.spatial.set(e.id, e.transform.x, e.transform.z);
