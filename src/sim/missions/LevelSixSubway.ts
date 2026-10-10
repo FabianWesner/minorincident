@@ -114,7 +114,7 @@ export class LevelSixSubway {
     for(const gate of s.gates){const e=w.entities.get(gate.id)!;const crossed=live.every(r=>w.entities.get(r.id)!.transform.x>gate.x+2),near=distance(p,{x:gate.x+1.4,z:15})<1.7;
       e.interactable!.label=gate.closedAt?'Brace service gate':'Close service gate';e.interactable!.enabled=false;
       if(gate.closedAt&&near&&w.inputFrame.interact)w.barricades!.braceServiceGate(gate.id);
-      if(!gate.closedAt&&crossed&&near){gate.hold++;if(gate.hold>=60){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
+      if(!gate.closedAt&&crossed&&near&&(gate.hold>0||w.inputFrame.interact)){gate.hold++;if(gate.hold>=60){gate.closedAt=t;w.barricades!.closeServiceGate(gate.id,Math.round(w.barricades!.dps('infected.runner')*5*10));w.events.emit({type:'l6.gate-closed',tick:t,id:gate.id});}}else gate.hold=0;
     }
     if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
