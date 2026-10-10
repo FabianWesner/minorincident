@@ -8,7 +8,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   test(`L1 occupied escape street ${tier} @E19 @E19-AC24 @perf unchanged E18 budgets`, async ({ page, context }) => {
     test.setTimeout(240_000);
     if (tier === 'low') { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
-    await boot(page, `/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}`);
+    await boot(page, `/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}${process.env.MI_L1_STREET_PROFILE === '1' ? '&profile' : ''}`);
     await page.evaluate(async () => {
       const a = window.__SS__!; await a.loadLevel('L1', { seed: 1 }); a.missions.begin(); a.pause(); a.cheats.god(true);
       for (let i = 0; i < 8 && a.missions.state()!.steps.weapon.status !== 'active'; i++) a.cheats.completeObjective();
@@ -17,14 +17,15 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     });
     const proof = await page.evaluate(async () => {
       const a = window.__SS__!, ms: number[] = []; let last = 0, draws = 0, triangles = 0;
+      let peak: ReturnType<typeof a.perf> | undefined;
       a.resume(); const start = performance.now();
       for (let i = 0; i < 720 || performance.now() - start < 12_000; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
         if (i >= 120 && last) ms.push(now - last); last = now;
-        const p = a.perf(); draws = Math.max(draws, p.drawCalls); triangles = Math.max(triangles, p.triangles);
+        const p = a.perf(); if (p.drawCalls > draws) peak = p; draws = Math.max(draws, p.drawCalls); triangles = Math.max(triangles, p.triangles);
       }
       a.pause(); ms.sort((a, b) => a - b);
-      return { p50: ms[Math.ceil(ms.length * .5) - 1], p95: ms[Math.ceil(ms.length * .95) - 1], draws, triangles, infected: a.getState().ai!.count, perf: a.perf(), groups: a.missions.state()!.l1!.streetGroups };
+      return { p50: ms[Math.ceil(ms.length * .5) - 1], p95: ms[Math.ceil(ms.length * .95) - 1], draws, triangles, infected: a.getState().ai!.count, peak, perf: a.perf(), groups: a.missions.state()!.l1!.streetGroups };
     });
     const output = 'test-results/l1-street-infected/perf'; mkdirSync(output, { recursive: true });
     writeFileSync(`${output}/${tier}.json`, JSON.stringify(proof, null, 2) + '\n');
