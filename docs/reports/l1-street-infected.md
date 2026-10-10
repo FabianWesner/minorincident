@@ -8,7 +8,7 @@ The ten residents still emerge visibly from the original garage house. The new P
 
 ## Route coverage
 
-Baseline: `3ff5d036`. Final measurement: `a8f7a8d6`. Both use the same measurement tool, seed 1, normal complete policy through bat acquisition, then input-only movement along the stated streets without attacks. The game's default on-foot pace is 4.5 m/s. At the bat the fixture restores full health and clears any pending setup death; after its first real hit it enables protection so the whole route can be measured without a respawn changing the route. No perception or attack logic is bypassed. The probe uses the game's default follow-camera geometry for off-screen spawn checks rather than the headless director's generic 64 m camera envelope.
+Baseline: current main `98e9aa79` (the initial `3ff5d036` baseline reproduces exactly). Final measurement: `a8f7a8d6`; subsequent changes affect novice and browser test tactics, not the complete-policy probe. Both use the same measurement tool, seed 1, normal complete policy through bat acquisition, then input-only movement along the stated streets without attacks. The game's default on-foot pace is 4.5 m/s. At the bat the fixture restores full health and clears any pending setup death; after its first real hit it enables protection so the whole route can be measured without a respawn changing the route. No perception or attack logic is bypassed. The probe uses the game's default follow-camera geometry for off-screen spawn checks rather than the headless director's generic 64 m camera envelope.
 
 A detection means a living infected's real L1 brain targets the courier in chase/bite mode. Each infected is counted once. Encounter windows start at the first detection and a new window starts at least 10 m farther along the walked route. The small encounter count includes only windows of 1–4 newly noticing infected. Larger systemic contacts remain in the raw evidence, detection total and gap calculation.
 
@@ -26,7 +26,7 @@ Reproduce the gated measurement remotely:
 sh tools/remote/run.sh . --pull test-results/l1-street-infected/checked -- npx tsx tools/sim-runner/l1StreetRoute.ts test-results/l1-street-infected/checked --check
 ```
 
-Raw comparable evidence: `test-results/l1-street-infected/{before-camera,final-routes}/routes.json`; final `--check` exited zero. Final complete seed-1 bot: 137.77 simulation seconds, zero deaths, 16 bat knockdowns and 150 damage (`final-complete.json`). Final merged node and browser suites also check completion.
+Raw comparable evidence: `test-results/l1-street-infected/{main-before,final-routes}/routes.json`; final `--check` exited zero. Final complete seed-1 bot: 137.77 simulation seconds, zero deaths, 16 bat knockdowns and 150 damage (`final-complete.json`). Final merged node and browser suites also check completion.
 
 The denser streets exposed the novice policy's stationary auto-approach fighting. It now holds a normal keyboard movement direction while aiming bat swings at pursuers, and does not choose a random sightseeing detour with a visible threat nearby. Its 250 ms reaction and 15% missed attacks remain. Final remote novice proof: 105.13 seconds, zero deaths, three knockdowns and 30 damage (`final-newbie.json`). The remote complete, novice and ten-house-resident/cap regressions all passed (`tactics-node.json`). The real-input route uses actual ground clicks at street junctions instead of long diagonal clicks through fenced gardens.
 
