@@ -16,6 +16,8 @@
     "test:e2e:webkit": "sh tools/e2e-lock.sh playwright test --project=webkit",
     "test:visual": "sh tools/e2e-lock.sh playwright test tests/visual --project=chromium",
     "test:perf": "sh tools/e2e-lock.sh playwright test tests/perf --project=chromium",
+    "test:perf:l5": "sh tools/perf/quiet-run.sh npx playwright test tests/perf/l5-budgets.spec.ts --project=chromium --workers=1",
+    "test:e2e:l5-audio": "sh tools/e2e-lock.sh playwright test tests/e2e/audio/l5.spec.ts --project=chromium --workers=1",
     "test:smoke": "sh tools/sim-lock.sh vitest run -t @smoke --maxWorkers=2 && sh tools/e2e-lock.sh playwright test --grep @smoke",
     "verify": "tsx tools/verify.ts",
     "sim": "tsx tools/sim-runner/index.ts",

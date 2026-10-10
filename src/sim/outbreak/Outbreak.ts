@@ -8,6 +8,7 @@ import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../np
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import { updateAlly } from './Allies';
+import { updateSurvivor } from './Survivors';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
 const ticks = (seconds: number) => Math.round(seconds * 60);
@@ -157,6 +158,8 @@ export class Outbreak {
       if (c.state === 'finished' || c.state === 'infected') continue;
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
+      // E23: a found survivor follows the courier (unarmed, biteable, no flight).
+      if (c.survivor && updateSurvivor(world, e)) continue;
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
         this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);

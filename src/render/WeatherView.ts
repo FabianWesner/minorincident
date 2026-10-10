@@ -123,7 +123,7 @@ export class WeatherView extends Group {
     // Scene Lab and live look controls can reset the lighting after assembly.
     const look = this.lighting.look, preset = this.lighting.preset;
     const baseIntensity = look.has('sunIntensity') || preset === 'L1' ? look.values.sunIntensity : timeOfDay[preset].intensity;
-    this.lighting.intensity.value = baseIntensity * (1 - w.clouds * .4) * (snowfall ? .7 : 1);
+    this.lighting.intensity.value = baseIntensity * this.lighting.gloom * (1 - w.clouds * .4) * (w.kind === 'snow' ? .7 : 1);
     this.lighting.sun.intensity = this.lighting.intensity.value;
     this.lighting.sun.shadow.radius = w.clouds > .5 ? Math.max(5, look.values.shadowRadius) : look.values.shadowRadius;
     weatherSurface.clouds.value = w.clouds;

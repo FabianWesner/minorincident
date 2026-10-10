@@ -1,6 +1,7 @@
 import { afterEach, expect, test } from 'vitest';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL1 } from '../../tools/sim-runner/l1Bots';
+import { missionControls } from '../../src/sim/missions/controls';
 
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
@@ -16,7 +17,13 @@ async function mounted(seed = 1) {
 test('E19 @E19 QA1-01 arriving at the depot counter on the bicycle without the parcel parks the bike; E picks up the parcel', async () => {
   const { world: w, mission } = await mounted();
   const step = mission.def.steps.find(s => s.id === 'pickup')!, anchor = mission.def.anchors[(step.complete as { anchor: string }).anchor];
-  const player = w.entities.get(1)!; Object.assign(player.transform, { x: anchor.x, z: anchor.z }); w.physics.playerBody!.setTranslation(player.transform, true); w.update(); w.update();
+  const player = w.entities.get(1)!, controls = missionControls(w);
+  // Mounting inside the depot suppresses re-parking until the rider leaves its radius.
+  // Establish an actual outside-to-depot arrival before testing the automatic hop-off.
+  const park = w.vehicles!.bicycle.parkPoints[0];
+  controls.teleport('player', { x: park.x, z: park.z + park.radius + 2 }); w.update();
+  expect(w.vehicles!.bicycle.riding).toBe(true);
+  controls.teleport('player', anchor); w.update(); w.update();
   expect(w.vehicles!.bicycle.riding).toBe(false); // the courier hops off at the depot (PO: bike parked visibly by the checkpoint)
   const bike = w.vehicles!.bicycle.entity!.transform; expect(Math.hypot(bike.x - anchor.x, bike.z - anchor.z)).toBeLessThan(8);
   w.setInput({ interact: true }); w.update(); w.clearInput(); w.update();

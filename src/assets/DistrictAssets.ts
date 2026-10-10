@@ -125,6 +125,8 @@ export class DistrictAssets {
       if (ROOFED.has(id)) asset.userData.splitRoof = true;
       if (id === 'kit.army-checkpoint' || id === 'prop.checkpoint-gate') asset.userData.splitDoors = ['gateArm'];
       const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
+      // Keep the Metro shutter independent of its static shell.
+      if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       this.share(root);
       if (id === 'bld.joes-diner') {

@@ -59,7 +59,11 @@ export async function runDuel(opts: { seed: number; count: number; weapon: 'unar
       target = living.sort((a, b) => dist(a.transform, player.transform) - dist(b.transform, player.transform))[0];
       miss = opts.skill === 'newbie' && rng.next() < .15;
     }
-    world.setInput(target && !miss ? { move: { x: 0, z: 0 }, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } } : { move: { x: 0, z: 0 }, attackTarget: undefined, left: { down: false, held: false, up: false } });
+    if (opts.skill === 'standing' && target) {
+      // An attackTarget command auto-approaches; standing play must only aim and swing.
+      const dx = target.transform.x - player.transform.x, dz = target.transform.z - player.transform.z, d = Math.hypot(dx, dz) || 1;
+      world.setInput({ move: { x: 0, z: 0 }, attackTarget: undefined, aimSource: 'keyboard', aim: { x: dx / d, z: dz / d }, aimPoint: { x: target.transform.x, z: target.transform.z }, left: { down: false, held: true, up: false } });
+    } else world.setInput(target && !miss ? { move: { x: 0, z: 0 }, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } } : { move: { x: 0, z: 0 }, attackTarget: undefined, left: { down: false, held: false, up: false } });
     world.update();
   }
   const killed = ids.filter(id => (world.entities.get(id)?.health.current ?? 0) <= 0).length;
