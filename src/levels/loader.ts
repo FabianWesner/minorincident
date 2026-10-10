@@ -37,7 +37,7 @@ export interface ScenarioDefinition extends InteractionPlacements {
   player: { x: number; y: number; z: number };
 }
 export function loadScenarioDefinition(name: string): ScenarioDefinition {
-  const definition = name === 'drive-course' ? driveCourse : name === 'interact-yard' ? interactYard : name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : barricadeScenarios[name] ?? blastScenarios[name] ?? performanceScenarios[name] ?? npcScenarios[name] ?? survivorScenarios[name] ?? infectedScenarios[name] ?? vfxScenarios[name] ?? null;
+  const definition = name === 'weather-lab' || name === 'storm-street' ? { ...combatArena, name } : name === 'drive-course' ? driveCourse : name === 'interact-yard' ? interactYard : name === 'mission-sandbox' ? { ...combatArena, name } : name === 'combat-arena' ? combatArena : name === 'empty' ? empty : name === 'lookdev' ? lookdev : barricadeScenarios[name] ?? blastScenarios[name] ?? performanceScenarios[name] ?? npcScenarios[name] ?? survivorScenarios[name] ?? infectedScenarios[name] ?? vfxScenarios[name] ?? null;
   if (!definition) throw new Error(`Unknown scenario: ${name}`);
   if (definition.ground.width <= 0 || definition.ground.depth <= 0 || !Object.values(definition.player).every(Number.isFinite)) throw new Error(`Invalid ${name} scenario`);
   return structuredClone(definition);

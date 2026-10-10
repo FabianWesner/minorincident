@@ -1,0 +1,25 @@
+ 2:09  up 62 days,  1:02, 3 users, load averages: 2.93 2.92 2.95
+Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+ 2:09  up 62 days,  1:02, 3 users, load averages: 2.77 2.89 2.94
+Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 8 tests using 1 worker
+
+{"level":"L1","tier":"high","frameP50":8,"frameP95":12.099999999998545,"cpuP95":4.200000762939453}
+  ✓  1 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L1 high @perf (15.2s)
+{"level":"L2","tier":"high","frameP50":8.5,"frameP95":13,"cpuP95":4.59999942779541}
+  ✓  2 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L2 high @perf (14.9s)
+{"level":"L3","tier":"high","frameP50":7.5,"frameP95":13.5,"cpuP95":4}
+  ✓  3 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L3 high @perf (19.9s)
+{"level":"L4","tier":"high","frameP50":5.600000000000364,"frameP95":12.800000000001091,"cpuP95":4.100000381469727}
+  ✓  4 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › high › integration L4 high @perf (13.5s)
+{"level":"L1","tier":"low","frameP50":16.5,"frameP95":34.70000000000073,"cpuP95":12.5}
+  ✓  5 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L1 low @perf (30.9s)
+{"level":"L2","tier":"low","frameP50":17,"frameP95":34,"cpuP95":13.800000190734863}
+  ✓  6 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L2 low @perf (36.6s)
+{"level":"L3","tier":"low","frameP50":15.099999999998545,"frameP95":34.599999999998545,"cpuP95":11}
+  ✓  7 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L3 low @perf (52.3s)
+{"level":"L4","tier":"low","frameP50":11.30000000000291,"frameP95":17.299999999999272,"cpuP95":9.800000190734863}
+  ✓  8 [chromium] › tests/perf/integrate-e26-e28.spec.ts:10:58 › low › integration L4 low @perf (23.3s)
+
+  8 passed (3.5m)

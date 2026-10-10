@@ -108,6 +108,7 @@ export class InfectedSystem {
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
+    delete entity.infected!.vault;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -143,6 +144,7 @@ export class InfectedSystem {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
+      if (this.world.barricades?.vault(e)) continue;
       if ((this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if (b.l1) { this.updateL1(e, b, b.l1); continue; }
       if (this.world.inspectionGhost && b.targetId <= 1 && !['idle', 'wander', 'migration'].includes(b.state)) {
@@ -175,7 +177,7 @@ export class InfectedSystem {
         e.transform.x = player.transform.x; e.transform.y = player.transform.y + 0.3; e.transform.z = player.transform.z; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
       if (b.state === 'idle' || b.state === 'wander') {
-        if (!this.world.inspectionGhost && distance <= 14 && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
+        if (!this.world.inspectionGhost && distance <= 14 * (this.world.weather?.modifiers.infectedSight ?? 1) && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180)) && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform)) this.alert(e);
         if (b.state === 'wander') {
           moveAgent(e, b.dx * b.speed / 2, b.dz * b.speed / 2, this.nav, this.world.tick); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
           if (this.world.tick >= b.until) b.state = 'idle';
@@ -203,7 +205,8 @@ export class InfectedSystem {
         // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
         // makes the nearest-cell fallback pull attackers away between their hits.
         if (obstacle) {
-          if (obstacle.barricade && !this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
+          if (this.world.barricades!.vault(e, obstacle)) continue;
+          if (!this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.world.spatial.set(e.id, e.transform.x, e.transform.z); }
           else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
           continue;
         }
@@ -298,7 +301,7 @@ export class InfectedSystem {
     const b = e.infected!, player = this.world.entities.get(1)!, def = infectedDef(e.archetype);
     if (b.targetId) {
       const target = this.world.entities.get(b.targetId); b.targetId = 0;
-      if (target && target.health.current > 0 && (target.barricade ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
+      if (target && target.health.current > 0 && (target.barricade || target.kind === 'physics-prop' ? this.world.barricades!.withinReach(e, target) : Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2)) {
         const amount = this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: b.attackId, actionId: e.archetype, origin: e.transform, direction: { x: 0, z: 0 }, base: this.barricadeDamage(e.id, def.damage), multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
         this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: target.id, attackId: b.attackId, special: 'barricade', amount });
       }

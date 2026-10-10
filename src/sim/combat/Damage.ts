@@ -5,7 +5,7 @@ import type { SimWorld } from '../world/SimWorld';
 export interface DamageEvent {
   attackId: number; actionId: string; sourceId: number; targetId: number; origin: Vec2; direction: Vec2;
   part?: 'leg'; radius?: number; spread?: number;
-  base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle'; knockback: number; stagger: number;
+  base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle' | 'prop' | 'projectile'; knockback: number; stagger: number;
   /** Authored melee impact freeze (render-only); absent = 50 ms. */
   hitStopMs?: number; knockdown?: boolean;
   /** Crowd sweep (roundhouse): keeps its authored shove/stagger beyond the normal-hit caps, without a knockdown. */
@@ -46,6 +46,7 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (target.id === 1 && (hit.type === 'bullet' || hit.type === 'projectile') && !this.world.combat!.query.visible(hit.origin, target.transform)) return 0;
     if (target.health.current <= 0) {
       // Explosives and fire finish a downed infected for good; any other damaging hit restarts its down time (PO 10-08).
       if (downed(target) && damageAmount(hit, target) > 0) {
@@ -74,7 +75,7 @@ export class Damage {
     const normal = source.id === 1 && hit.type === 'melee' && !special && !hit.sweep;
     const knockback = normal ? Math.min(.4, hit.knockback) : hit.knockback;
     const stagger = normal ? Math.min(.25, hit.stagger) : hit.stagger;
-    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...(hit.type === 'vehicle' ? { cause: 'vehicle' as const } : {}) };
+    const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...((hit.type === 'vehicle' || hit.type === 'prop') ? { cause: hit.type } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
       if (target.combat && stagger > 0) { target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + Math.ceil(stagger * 60)); target.combat.attacking = false; }

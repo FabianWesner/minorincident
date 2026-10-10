@@ -1,0 +1,17 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --filter weather-*,barricade-* --jobs 1 --size 1280x720 --out test-results/integrate-e26-e28/catalog
+
+[catalog] 11 scenes, 1 browser(s), 1280x720, webgl2
+[catalog] 1/11 pass barricade-ui-W0 (5.1 s)
+[catalog] 2/11 pass barricade-ui-W5 (4.9 s)
+[catalog] 3/11 pass weather-ash (6.0 s)
+[catalog] 4/11 pass weather-clear (6.1 s)
+[catalog] 5/11 pass weather-fog (7.6 s)
+[catalog] 6/11 pass weather-haze (6.1 s)
+[catalog] 7/11 pass weather-overcast (7.6 s)
+[catalog] 8/11 pass weather-rain (9.3 s)
+[catalog] 9/11 pass weather-snow (6.0 s)
+[catalog] 10/11 pass weather-thunderstorm (6.1 s)
+[catalog] 11/11 pass weather-wind (6.0 s)
+11/11 pass in 72 s -> test-results/integrate-e26-e28/catalog/index.md

@@ -6,11 +6,20 @@ const target = process.argv[2];
 const selection = selectionFor(target);
 const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
+const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
+// Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
+const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, '--', 'npx', ...simArgs]
+  : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
-  ['npm', 'run', 'build'],
+  // These lane checks share a preview build with their queued browser runs.
+  // Keep rebuilding dist from deleting chunks underneath an active capture.
+  target === 'E26' || target === 'E28'
+    ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
+    : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
-  ['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`],
+  simCommand,
   ...(target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
@@ -47,7 +56,7 @@ const commands: string[][] = [
           // Lighting frame budgets (desktop high, throttled phone low) run alone on the native GPU.
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e25-lighting.spec.ts', '--project=chromium', '--workers=1'],
         ]
-        : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern]]),
+        : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, ...(target === 'E26' || target === 'E28' ? ['--workers=1'] : [])]]),
 ];
 const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {

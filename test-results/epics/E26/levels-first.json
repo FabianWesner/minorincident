@@ -1,0 +1,1189 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels",
+      "tests/e2e/barricades.spec.ts",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3426 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3426",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/barricades.spec.ts",
+      "file": "e2e/barricades.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E26-02-browser @E26-AC02 sleeping prop-yard has zero matrix updates after settling",
+          "ok": true,
+          "tags": [
+            "E26-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:10:40.274Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "442b9bf2b81d337ead34-ac74f5e0f382a1b2d27d",
+          "file": "e2e/barricades.spec.ts",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "T-E26-16-browser @E26 @E26-AC16 core browser wiring builds, repairs and breaks a real barricade",
+          "ok": true,
+          "tags": [
+            "E26",
+            "E26-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6592,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:10:40.278Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "442b9bf2b81d337ead34-47bd88998284a46e016c",
+          "file": "e2e/barricades.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "T-E26-15-browser @E26 @E26-AC15 Node and browser match the 60s physics tape hash",
+          "ok": true,
+          "tags": [
+            "E26",
+            "E26-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:10:43.940Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "442b9bf2b81d337ead34-098ca13eb53c85cd9039",
+          "file": "e2e/barricades.spec.ts",
+          "line": 24,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l1-firefighter-fight.spec.ts",
+      "file": "e2e/levels/l1-firefighter-fight.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E19-firefighter-fight @E19 the firefighter swings at an infected at the bay (game camera captures)",
+          "ok": true,
+          "tags": [
+            "E19"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 22639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:10:47.373Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "07d04c66b4b2800bf998-25896879add129b46b96",
+          "file": "e2e/levels/l1-firefighter-fight.spec.ts",
+          "line": 14,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l1-firestation.spec.ts",
+      "file": "e2e/levels/l1-firestation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-station bay completes L1 (bay faces the camera, ring on the trigger)",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26716,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:10:50.112Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0911bc7a39a0dfb60296-adc2b620f751a1a3204c",
+          "file": "e2e/levels/l1-firestation.spec.ts",
+          "line": 17,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L1.spec.ts",
+      "file": "e2e/levels/L1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L1 v2 real-input playthrough",
+          "file": "e2e/levels/L1.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)",
+              "ok": true,
+              "tags": [
+                "E19"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 16866,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:11:10.476Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-aadf7800cb23eb71a315",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC22",
+                "E19-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 80049,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:11:17.376Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-7fa6530376bdfd10f8c9",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            },
+            {
+              "title": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC23"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 53855,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:11:27.560Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-b5e26ec2edcca053a2dc",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l2-apron-alarm.spec.ts",
+      "file": "e2e/levels/l2-apron-alarm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm",
+          "ok": true,
+          "tags": [
+            "E20"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 25344,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:12:22.149Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "381e74e9a2e6e890a2ed-0defabb19eb3935ec3da",
+          "file": "e2e/levels/l2-apron-alarm.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l2-axe-findable.spec.ts",
+      "file": "e2e/levels/l2-axe-findable.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E20-axe-findable @E20 the axe rack is visible and marked during calm",
+          "ok": true,
+          "tags": [
+            "E20"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25000,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:12:38.099Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d0abe8b5cb8689fa32f8-52b153eb367d888faf63",
+          "file": "e2e/levels/l2-axe-findable.spec.ts",
+          "line": 9,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l2-rescue-setpiece.spec.ts",
+      "file": "e2e/levels/l2-rescue-setpiece.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open)",
+          "ok": true,
+          "tags": [
+            "E20"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 43327,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:12:48.156Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "600280999eb1e9e80e62-5b6860a8df5484c588cd",
+          "file": "e2e/levels/l2-rescue-setpiece.spec.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L2.spec.ts",
+      "file": "e2e/levels/L2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L2 The Failed Rescue in the browser",
+          "file": "e2e/levels/L2.spec.ts",
+          "line": 62,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E20",
+                "E20-AC18",
+                "E20-AC16",
+                "E20-AC19"
+              ],
+              "tests": [
+                {
+                  "timeout": 1500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 94970,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:13:03.653Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "20fba22d13ed7119e36b-9e9b82a62ab50e7ae1da",
+              "file": "e2e/levels/L2.spec.ts",
+              "line": 63,
+              "column": 3
+            },
+            {
+              "title": "T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout",
+              "ok": true,
+              "tags": [
+                "E20",
+                "E20-AC14"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 28438,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:13:32.108Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "20fba22d13ed7119e36b-b9e8dea0715195493f78",
+              "file": "e2e/levels/L2.spec.ts",
+              "line": 125,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L3.spec.ts",
+      "file": "e2e/levels/L3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L3 The Police Collapse in the browser",
+          "file": "e2e/levels/L3.spec.ts",
+          "line": 82,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC19",
+                "E21-AC04",
+                "E21-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 1800000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 49484,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"attackShotEarly\":true,\"inFrameAtFallback\":2}\n"
+                        },
+                        {
+                          "text": "L3 RESULT street=commerce deaths=0\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:14:01.066Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-019ef7a9865ab0b21230",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 83,
+              "column": 62
+            },
+            {
+              "title": "T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC19",
+                "E21-AC04",
+                "E21-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 1800000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 58101,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"attackShotEarly\":true,\"inFrameAtFallback\":2}\n"
+                        },
+                        {
+                          "text": "L3 death #1 near x=-155 z=-5\n"
+                        },
+                        {
+                          "text": "L3 RESULT street=blvd deaths=1\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:14:39.103Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-fa29c4709f10606ecc1e",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 83,
+              "column": 62
+            },
+            {
+              "title": "T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC19",
+                "E21-AC04",
+                "E21-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 1800000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 123773,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"attackShotEarly\":true,\"inFrameAtFallback\":2}\n"
+                        },
+                        {
+                          "text": "L3 death #1 near x=35 z=1\n"
+                        },
+                        {
+                          "text": "L3 death #2 near x=84 z=5\n"
+                        },
+                        {
+                          "text": "L3 death #3 near x=56 z=2\n"
+                        },
+                        {
+                          "text": "L3 death #4 near x=55 z=2\n"
+                        },
+                        {
+                          "text": "L3 RESULT street=oak deaths=4\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:14:50.649Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-c6a2e1adef1a2ee8a9d5",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 83,
+              "column": 62
+            },
+            {
+              "title": "T-E21-17b @E21 @E21-AC17 campaign: crossing the army zone line loads L4 with the carried loadout and no reward screen",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC17"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18596,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:15:37.313Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-5deab18379ce848da214",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 146,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-boot.spec.ts",
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+          "ok": true,
+          "tags": [
+            "E22",
+            "E22-AC18",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15872,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T13:15:56.468Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91bae058919b3638343a-5ef68a1f589b66b3ebd2",
+          "file": "e2e/levels/l4-boot.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L4.spec.ts",
+      "file": "e2e/levels/L4.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L4 The Safe City Falls in the browser",
+          "file": "e2e/levels/L4.spec.ts",
+          "line": 84,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+              "ok": false,
+              "tags": [
+                "E22",
+                "E22-AC18",
+                "E22-AC19"
+              ],
+              "tests": [
+                {
+                  "timeout": 2400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 50232,
+                      "error": {
+                        "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 11\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod2.glb?v=840a0590c4\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod2.glb?v=840a0590c4 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod1.glb?v=81c0b3cd17\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod1.glb?v=81c0b3cd17 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.glb?v=4e3d9746c7\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.glb?v=4e3d9746c7 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 11\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod2.glb?v=840a0590c4\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod2.glb?v=840a0590c4 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod1.glb?v=81c0b3cd17\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod1.glb?v=81c0b3cd17 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.glb?v=4e3d9746c7\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.glb?v=4e3d9746c7 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/e2e/fixtures.ts:22:81)",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/e2e/fixtures.ts",
+                          "column": 81,
+                          "line": 22
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39me2e/fixtures.ts:22\n\n  20 |     const guard = attachErrorGuard(page);\n  21 |     await use(); guard.dispose();\n> 22 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  23 |   }, { auto: true }],\n  24 | });\n  25 | export { expect };"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/e2e/fixtures.ts",
+                            "column": 81,
+                            "line": 22
+                          },
+                          "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 11\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod2.glb?v=840a0590c4\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod2.glb?v=840a0590c4 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod1.glb?v=81c0b3cd17\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.lod1.glb?v=81c0b3cd17 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.glb?v=4e3d9746c7\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3426/assets/models/decay.fuel-truck-crater.glb?v=4e3d9746c7 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:22\n\n  20 |     const guard = attachErrorGuard(page);\n  21 |     await use(); guard.dispose();\n> 22 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  23 |   }, { auto: true }],\n  24 | });\n  25 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/e2e/fixtures.ts:22:81)"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:16:13.233Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/test-results/playwright/run-3426/e2e-levels-L4-L4-The-Safe--c8249-hoto-spots-and-pair-cameras-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e26/tests/e2e/fixtures.ts",
+                        "column": 81,
+                        "line": 22
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-a772483a81f93398a9a0",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 85,
+              "column": 3
+            },
+            {
+              "title": "T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 13342,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:16:55.128Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-413e3c4541c29250ea33",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 145,
+              "column": 3
+            },
+            {
+              "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20734,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:17:04.012Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-7a66144ca41943cbda57",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 162,
+              "column": 56
+            },
+            {
+              "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 19633,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-09T13:17:08.627Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-2f2ef2b5ed1e41a2e9bc",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 162,
+              "column": 56
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-09T13:10:38.857Z",
+    "duration": 409509.364,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

@@ -46,7 +46,9 @@ test('T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring
   const setup = await page.evaluate(async () => {
     const a = window.__SS__!; await a.loadLevel('night-street'); a.pause(); a.cheats.god(true);
     const spot = { x: 51, z: -32.5 }; a.teleport('player', spot);
-    const ids = [0, 1, 2].map(i => a.spawn('infected.runner', { x: spot.x - 3 + i * 1.6, z: spot.z + 3.5 }, { state: 'idle', yaw: -Math.PI / 4 }));
+    // The AI turns idle threats towards the courier during the warm-up. Keep them
+    // southwest on the open road, outside the contrast ring, with faces in the viewport.
+    const ids = [0, 1, 2].map(i => a.spawn('infected.runner', { x: spot.x - 6 - i * .8, z: spot.z + 3.5 }, { state: 'idle', yaw: -Math.PI / 4 }));
     a.camera.follow(); await a.step(90); await a.screenshotReady();
     const p = a.query({ kind: 'player' })[0]?.transform ?? a.getEntity(1)!.transform;
     const ring = [0, 1, 2, 3, 4, 5, 6, 7].map(k => a.camera.project(p.x + 2 * Math.cos(k * Math.PI / 4), .05, p.z + 2 * Math.sin(k * Math.PI / 4)));
@@ -54,6 +56,7 @@ test('T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring
     return { ring, heads, lighting: a.perf().lighting, pools: a.lights.state() };
   });
   expect(setup.lighting!.preset).toBe('night');
+  for (const { head } of setup.heads) for (const ndc of head.slice(0, 2)) expect(Math.abs(ndc), 'Eyes must be inside the camera viewport').toBeLessThan(.95);
   const image = await shot(page, 'night-street');
   await page.evaluate(async () => { window.__SS__!.settings.set({ idPass: true }); await window.__SS__!.screenshotReady(); });
   const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/night-street-player-mask.png` }));

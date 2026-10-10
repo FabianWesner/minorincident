@@ -1,7 +1,7 @@
 // Light-field pass adapted from Bruno Simon folio-2025 Tracks.js (MIT): a moving top-down orthographic
 // render target around the focus that world materials sample by world XZ.
-import { AdditiveBlending, Color, HalfFloatType, InstancedMesh, LinearFilter, Matrix4, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, Quaternion, RenderTarget, RendererUtils, Scene, Vector3, type WebGPURenderer, type Node } from 'three/webgpu';
-import { positionWorld, texture, uniform, uv, vec2, vec3 } from 'three/tsl';
+import { AdditiveBlending, Color, HalfFloatType, InstancedMesh, InstancedBufferAttribute, LinearFilter, Matrix4, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, Quaternion, RenderTarget, RendererUtils, Scene, Vector3, type WebGPURenderer, type Node } from 'three/webgpu';
+import { attribute, dot, positionWorld, texture, uniform, uv, vec2, vec3 } from 'three/tsl';
 import { lightPalette, type LightAnchor, type LightToken } from '../data/lights';
 
 /** World-space light footprint. `aim` is the horizontal pool offset; `stretch` elongates it along the aim (spots). */
@@ -19,6 +19,8 @@ export interface FieldLight {
   on: boolean;
   /** Source height and `shadow: hero` eligibility (the night hero-shadow selection). */
   y?: number; hero?: boolean;
+  /** Window spill stays on the outward side of its source facade. */
+  facadeX?: number; facadeZ?: number;
 }
 export interface TransientLight { remove(): void }
 /** Light field strength per normalized §6 intensity unit (intensity 10 → 3 HDR at the pool centre). */
@@ -48,7 +50,7 @@ export function footprint(anchor: Pick<LightAnchor, 'type' | 'color' | 'intensit
     aimX = dx / horizontal * radius * .45; aimZ = dz / horizontal * radius * .45;
   }
   const c = linear(anchor.color), strength = anchor.intensity * fieldGain * (anchor.type === 'window' ? .7 : 1);
-  return { x, z, r: c.r * strength, g: c.g * strength, b: c.b * strength, radius, aimX, aimZ, stretch, flicker: anchor.flicker === 'fire' || anchor.type === 'fire' ? 1 : anchor.flicker === 'damaged' || anchor.flicker === 'fluorescent' ? 2 : 0, strobe: !!anchor.strobe || anchor.type === 'beacon', seed, on: true, y, hero: anchor.shadow === 'hero' };
+  return { x, z, r: c.r * strength, g: c.g * strength, b: c.b * strength, radius, aimX, aimZ, stretch, flicker: anchor.flicker === 'fire' || anchor.type === 'fire' ? 1 : anchor.flicker === 'damaged' || anchor.flicker === 'fluorescent' ? 2 : 0, strobe: !!anchor.strobe || anchor.type === 'beacon', seed, on: true, facadeX: anchor.type === 'window' && horizontal > .3 ? dx / horizontal : 0, facadeZ: anchor.type === 'window' && horizontal > .3 ? dz / horizontal : 0, y, hero: anchor.shadow === 'hero' };
 }
 
 /** Layer 2 of the lighting concept (specs/06 §3): one additive instanced draw into a small HDR target.
@@ -62,6 +64,7 @@ export class LightField {
   private readonly scene = new Scene();
   private readonly camera = new OrthographicCamera(-40, 40, 40, -40, .1, 200);
   private readonly mesh: InstancedMesh;
+  private readonly facadeClip = new InstancedBufferAttribute(new Float32Array(tierSettings.high.capacity * 3), 3);
   private statics: FieldLight[] = [];
   private readonly transients: { light: FieldLight; born: number; ttl: number; intensity: number }[] = [];
   private readonly dynamics: FieldLight[] = [];
@@ -88,7 +91,10 @@ export class LightField {
     material.name = 'keep_lightField';
     // Soft quadratic pool; the instance colour carries hue x intensity (three multiplies it into the diffuse colour).
     const d = uv().sub(.5).mul(2).length();
-    material.colorNode = vec3(d.mul(d).oneMinus().clamp(0, 1).pow(2));
+    geometry.setAttribute('facadeClip', this.facadeClip);
+    const clip = attribute('facadeClip', 'vec3');
+    const outward = dot(uv().sub(.5).mul(2), clip.xy).add(clip.z).smoothstep(-.02, .02);
+    material.colorNode = vec3(d.mul(d).oneMinus().clamp(0, 1).pow(2).mul(outward));
     this.mesh = new InstancedMesh(geometry, material, settings.capacity);
     this.mesh.frustumCulled = false; this.mesh.count = 0;
     this.mesh.setColorAt(0, color.setRGB(0, 0, 0));
@@ -171,12 +177,14 @@ export class LightField {
       const angle = l.stretch > 1 ? Math.atan2(l.aimX, l.aimZ) : 0;
       this.position.set(l.x + l.aimX, 0, l.z + l.aimZ); this.rotation.setFromAxisAngle(this.up, angle);
       this.scale.set(l.radius * 2, 1, l.radius * 2 * l.stretch);
+      const nx = l.facadeX ?? 0, nz = l.facadeZ ?? 0;
+      this.facadeClip.setXYZ(count, nx, -nz, nx || nz ? (l.aimX * nx + l.aimZ * nz) / l.radius : 1);
       this.mesh.setMatrixAt(count, this.matrix.compose(this.position, this.rotation, this.scale));
       this.mesh.setColorAt(count, color.setRGB(l.r * k, l.g * k, l.b * k));
       count++;
     }
     this.mesh.count = count; this.drawn = count;
-    this.mesh.instanceMatrix.needsUpdate = true; if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
+    this.facadeClip.needsUpdate = true; this.mesh.instanceMatrix.needsUpdate = true; if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
     this.dynamics.length = 0;
     this.ms = performance.now() - start;
   }

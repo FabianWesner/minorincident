@@ -1,0 +1,77 @@
+{
+  "command": "sh tools/remote/run.sh \"$PWD\" --env E26_AB_SEEDS=10 -- npx vitest run tests/sim/barricades.test.ts -t T-E26-14 --maxWorkers=2",
+  "results": [
+    {
+      "seed": 1,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 2,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 3,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 4,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 5,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 6,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 7,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 8,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 9,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    },
+    {
+      "seed": 10,
+      "braced": 2,
+      "withBarricades": 0,
+      "withoutBarricades": 8,
+      "hp": 100
+    }
+  ],
+  "reduction": 1,
+  "note": "One-time remote A/B run; default test uses one seed."
+}

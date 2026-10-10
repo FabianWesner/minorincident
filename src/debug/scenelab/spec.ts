@@ -16,6 +16,9 @@ export interface SceneSpec {
   size?: number;
   /** Lighting preset (src/data/timeOfDay.ts): L1 (game morning), L2, L3, L4/golden, L5, L6, night. */
   time?: TimeOfDay;
+  weather?: import('../../data/weather').WeatherKind;
+  /** Evolve only the weather before assembly (seconds of precipitation accumulation). */
+  weatherWarmup?: number;
   /** Decay tier W0-W5 (placements with minTier/maxTier outside it are dropped). */
   tier?: Tier;
   /** Depth of field as in L1 (default true). */
@@ -25,6 +28,8 @@ export interface SceneSpec {
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
+  /** Real E26 rails in the synthetic district, in world metres. */
+  barricadeSlots?: import('../../sim/interact/Barricades').BarricadeSlot[];
   /** Effects and actor commands on a frame timeline (frame 0 = right after load). */
   script?: ScriptStep[];
   camera?: CameraSpec;
@@ -97,9 +102,11 @@ export type Action =
    * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
    * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
   | { handover: { building: string; meet: Point | string; pauseS?: number; /** Arm's length in front of an actor `meet` (default 1.05 m, the L1 clerk; the technician uses 1.4). */ standoff?: number; legacy?: boolean } };
-export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay });
+export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay } | { weather: import('../../data/weather').WeatherKind });
 export type EffectSpec =
+  | { lightning: Point; consequence?: 'fire' | 'blackout' }
   | { blast: string; at: Point }
+  | { barricadeHit: string; amount: number }
   | { wreck: string }
   | { fire: Point; radius?: number }
   | { smoke: Point; radius?: number };
@@ -238,6 +245,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     layout.anchors[name].position[0] += shift[0]; layout.anchors[name].position[2] += shift[1];
   }
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
+  gameplay.barricades = spec.barricadeSlots;
   const composition: LevelComposition = {
     id: 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
     scene: { glb: spec.ground === 'district', ground: spec.ground === 'asphalt' || spec.ground === 'sidewalk' ? spec.ground : 'grass', perimeter: false, courier: true },
