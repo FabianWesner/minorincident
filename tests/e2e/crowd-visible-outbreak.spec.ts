@@ -37,18 +37,20 @@ for (const renderer of ['webgl', 'webgpu'] as const) {
       for (const [i, c] of walkers.slice(0, 16).entries()) a.teleport(c.id, { x: me.x + 3 + i % 4 * 1.5, z: me.z - 4 + Math.floor(i / 4) * 1.5 });
       const start = a.tick(), misses: object[] = [];
       let frames = 0, samples = 0, infectedSamples = 0, missed = 0, lastTick = start;
-      const began = performance.now(); a.resume();
-      while (performance.now() - began < seconds * 1000) {
+      // Forty seconds of gameplay regardless of render throughput under parallel load.
+      // Keep the sim paused and inspect every rendered frame after two fixed ticks.
+      while (a.tick() - start < seconds * 60) {
+        await a.step(2);
         await new Promise(requestAnimationFrame); frames++;
         const player = a.getEntity(1)!.transform;
-        // Until an infected has struck the courier (at most 15 s) she walks into the nearest infected without swinging: with the
+        // Until an infected has struck the courier she walks into the nearest infected without swinging: with the
         // L1 balance (bat roundhouse, varied speeds) an eager courier kills every attacker before the first strike lands
         // and the strike precondition below flakes; standing still instead lets them go for the walkers.
-        if (frames % 20 === 0) {
-          const struck = a.events(start).some(e => e.type === 'infected.attack' && e.targetId === 1) || a.tick() - start > 900;
+        if ((a.tick() - start) % 20 === 0) {
+          const struck = a.events(start).some(e => e.type === 'infected.attack' && e.targetId === 1);
           const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.corpse).map(e => ({ e, d: Math.hypot(e.transform.x - player.x, e.transform.z - player.z) })).sort((x, y) => x.d - y.d)[0];
           if (near && near.d < 5 && struck) a.input.set({ attackTarget: { id: near.e.id, side: 'LEFT' } });
-          else if (near && (frames % 120 === 0 || !struck && near.d > 1.5)) a.input.set({ moveTarget: { x: near.e.transform.x, z: near.e.transform.z } });
+          else if (near && ((a.tick() - start) % 120 === 0 || !struck && near.d > 1.5)) a.input.set({ moveTarget: { x: near.e.transform.x, z: near.e.transform.z } });
         }
         // Live crowd figures drawn last frame (static corpse pages carry an instanceKey and never count).
         const drawn = new Map<number, number[][][]>();
