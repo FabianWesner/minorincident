@@ -75,7 +75,10 @@ PY
 [ -s "$LIST" ] || { echo "run.sh: empty file list" >&2; exit 70; }
 
 # Pick the least-loaded runner with a free slot (waits; adds a runner after 5 min of waiting, max 4).
-IP=$(python3 -I "$D/pool.py" pick) || { echo "run.sh: no runner available" >&2; exit 69; }
+IP="${MI_RUNNER_IP:-}"
+if [ -z "$IP" ]; then
+  IP=$(python3 -I "$D/pool.py" pick) || { echo "run.sh: no runner available" >&2; exit 69; }
+fi
 HOST="runner@$IP"
 SSHO="-i $KEY -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=$HOME/.ssh/known_hosts_mi-runner -o LogLevel=ERROR -o ControlMaster=auto -o ControlPath=$HOME/.ssh/cm-mir-%C -o ControlPersist=5m -o ServerAliveInterval=15 -o ServerAliveCountMax=8"
 
@@ -166,13 +169,14 @@ case "$RC" in ''|*[!0-9]*) RC=255 ;; esac
 T2=$(date +%s)
 
 # Results are pulled from the job dir before cleanup (the EXIT trap deletes the job dir).
-IFS='
+OLDIFS=$IFS; IFS='
 '
 for p in $PULL; do
   [ -n "$p" ] || continue
   mkdir -p "$(dirname "$WT/$p")"
   rsync -a -z -e "ssh $SSHO" "$HOST:$JOB/$p" "$(dirname "$WT/$p")/" 2>/dev/null && echo "[remote] pulled $p" || echo "[remote] could not pull $p (missing?)" >&2
 done
+IFS=$OLDIFS
 python3 -I "$D/pool.py" reap >/dev/null 2>&1 &
 echo "[remote] done exit=$RC (runner $IP, sync $((T1 - T0))s, remote total $((T2 - T1))s)"
 exit $RC
