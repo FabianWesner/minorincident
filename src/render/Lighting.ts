@@ -55,6 +55,8 @@ export class Lighting {
   readonly fogB = this.fogColor;
   readonly fogGradient;
   preset: TimeOfDay = 'golden';
+  /** E23 sunset gloom: the sun intensity factor (1 = the preset's full sun), applied by `applyLook`. */
+  gloom = 1;
   /** E25 layer 2: practical-light pools around the focus (LightField). */
   readonly field = new LightField();
   /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
@@ -125,12 +127,18 @@ export class Lighting {
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
     this.applyLook();
   }
+  /** The L5 gloom ramp (quantised to 0.5 % so a slow fade does not re-apply the look every frame). */
+  setGloom(factor: number): void {
+    const next = Math.round(Math.max(0, Math.min(1, factor)) * 200) / 200;
+    if (next === this.gloom) return;
+    this.gloom = next; this.applyLook();
+  }
   /** Reapply authored presets plus explicit live overrides; gameplay never reads these values. */
   applyLook(): void {
     const p = timeOfDay[this.preset], v = this.look.values;
     this.direction.value.setFromSphericalCoords(1, (this.look.has('sunPolar') || this.preset === 'L1') ? v.sunPolar : p.polar, (this.look.has('sunAzimuth') || this.preset === 'L1') ? v.sunAzimuth : p.azimuth);
     this.color.value.set((this.look.has('sun') || this.preset === 'L1') ? v.sun : p.sun); this.sun.color.copy(this.color.value);
-    this.intensity.value = (this.look.has('sunIntensity') || this.preset === 'L1') ? v.sunIntensity : p.intensity; this.sun.intensity = this.intensity.value;
+    this.intensity.value = ((this.look.has('sunIntensity') || this.preset === 'L1') ? v.sunIntensity : p.intensity) * this.gloom; this.sun.intensity = this.intensity.value;
     this.shadow.value.set((this.look.has('shadow') || this.preset === 'L1') ? v.shadow : p.shadow);
     const s = this.shadow.value; this.shadowHue.value.copy(s).multiplyScalar(1 / Math.max(s.r, s.g, s.b, 1e-3));
     this.skyAmbient.value.set(v.skyAmbient); this.groundAmbient.value.set(v.groundAmbient); this.hemisphere.intensity = v.hemisphereIntensity;

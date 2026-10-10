@@ -139,8 +139,13 @@ export class PropSystem {
           item.body.setEnabled(false); item.awake = false;
           this.world.entities.get(item.entityId)!.health.current = 0;
           this.world.spatial.delete(item.entityId);
-        } else this.place(item, item.home);
-        awake--; continue;
+          awake--; continue;
+        }
+        if (item.metadata.reset === 'spawn') { this.place(item, item.home); awake--; continue; }
+        const r = item.body.rotation(), ground = this.world.districts?.groundHeight(t.x, t.z) ?? 0;
+        // A physics escape retains the knocked prop's location, orientation and identity.
+        this.place(item, { p: [t.x, ground + Math.hypot(...item.half) * 2, t.z], q: [r.x, r.y, r.z, r.w] });
+        item.body.wakeUp(); item.awake = true; continue;
       }
       this.mirror(item);
       this.momentum(item);

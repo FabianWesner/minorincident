@@ -44,9 +44,10 @@ async function push(assetId = 'prop.trash-bin') {
 }
 
 describe('E26 authored pushable props', () => {
-  test('a fallen knocked prop resets to spawn and keeps its ID and health', async () => {
+  test('a fallen knocked prop with the spawn flag resets to spawn and keeps its ID and health', async () => {
     const world = await grove(), prop = world.props!.items.find(p => !p.fixed)!;
     const hp = world.entities.get(prop.entityId)!.health.current, x = prop.home.p[0] + 3, z = prop.home.p[2] + 3;
+    prop.metadata = { ...prop.metadata, reset: 'spawn' };
     prop.body.setTranslation({ x, y: -6, z }, true); world.props!.postPhysics();
     expect(world.entities.get(prop.entityId)!.health.current).toBe(hp);
     expect(prop.body.isEnabled()).toBe(true); expect(prop.pose).toEqual(prop.home);

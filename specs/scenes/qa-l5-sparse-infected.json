@@ -1,0 +1,114 @@
+{
+ "name": "qa-l5-sparse-infected",
+ "note": "E23 section 5.2: a few infected loiter in the ruined plaza (ones and twos) around the burned convoy column; the courier approaches with the machine gun. Silent, wide.",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -54,
+    -34
+   ],
+   [
+    26,
+    46
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    4,
+    2
+   ],
+   "yaw": 180,
+   "loadout": [
+    "weapon.fire-axe",
+    "weapon.army-mg"
+   ],
+   "state": {
+    "walk": [
+     [
+      -4,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "id": "w1",
+   "kind": "infected",
+   "at": [
+    -24,
+    8
+   ],
+   "yaw": 20,
+   "state": "idle"
+  },
+  {
+   "id": "w2",
+   "kind": "infected",
+   "at": [
+    -22.6,
+    9.2
+   ],
+   "yaw": 200,
+   "state": "idle"
+  },
+  {
+   "id": "w3",
+   "kind": "infected",
+   "at": [
+    -14,
+    -8
+   ],
+   "yaw": 90,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -12.4,
+     8
+    ]
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -20,
+     24.6
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -12,
+   4
+  ],
+  "zoom": 1.6
+ },
+ "frames": 180,
+ "shots": [
+  1,
+  90,
+  179
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

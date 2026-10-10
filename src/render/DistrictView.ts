@@ -193,7 +193,7 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
           if (lab) {
@@ -442,6 +442,15 @@ export class DistrictView extends Group {
         ref.userData.armyBoomPose = open;
         for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
       }
+  }
+  private metroShutterClosed = -1;
+  /** L5 closes the existing Metro shutter from its authored half-open offset (1.2 m) onto the platform. */
+  updateMetroShutter(closed: number): void {
+    if (closed === this.metroShutterClosed) return;
+    this.metroShutterClosed = closed;
+    for (const entry of this.lodBatches) if (entry.id === 'bld.metro-entrance') for (const ref of entry.refs) {
+      for (const group of [entry.hero, entry.near, entry.far]) group.slide('shutter', -1.2 * closed, ref);
+    }
   }
   /** Openness of every doored placement (Scene Lab door gate). */
   doorState(): { assetId: string; position: [number, number, number]; open: number }[] {

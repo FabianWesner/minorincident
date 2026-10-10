@@ -11,7 +11,8 @@ export const performanceScenarios: Record<string, ScenarioDefinition> = {
 export const performanceLevels: Record<string, { level: string; spot: string }> = {
   'perf-l1-foliage-200': { level: 'L1', spot: 'V5' },
   'perf-l6-mainstreet': { level: 'L6', spot: 'D-MAIN/W5/overview' },
-  'perf-l5-bridge': { level: 'L5', spot: 'D-EDGE/W4/overview' },
+  /** E23: the devastated Fairhaven (W5) at the pair-plaza camera with the worst-cap crowd (the retired L5 convoy bridge was the old stress scene). */
+  'perf-l5-aftermath': { level: 'L5', spot: 'D-FAIR/W5/pair-plaza' },
   /** E25 night budget: L1's town at night, 41 street lamps (plus windows/signs) in the high light-field window, 60 runners. */
   'perf-night-street': { level: 'night-street', spot: '' },
 };
@@ -27,7 +28,7 @@ export function populateHorde(world: SimWorld, count: number): void {
  * Only the debug scenario installs this load; campaign ownership remains with its level epic. */
 export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name: string): void {
   if (name === 'perf-night-street') { installNightStreet(world); return; }
-  const district = world.districts!.districts.find(d => d.id === (name === 'perf-l1-foliage-200' || name === 'perf-l6-mainstreet' ? 'D-MAIN' : 'D-EDGE'))!;
+  const district = world.districts!.districts.find(d => d.id === (name === 'perf-l1-foliage-200' || name === 'perf-l6-mainstreet' ? 'D-MAIN' : name === 'perf-l5-aftermath' ? 'D-FAIR' : 'D-EDGE'))!;
   const { min, max } = world.districts!.nav;
   const walls: NonNullable<ScenarioDefinition['walls']> = [];
   for (const d of world.districts!.districts) for (const box of d.decay.colliders.map(c => c.aabb).concat(d.blockers)) walls.push({ x: (box.min[0] + box.max[0]) / 2 + d.origin[0], y: (box.min[1] + box.max[1]) / 2, z: (box.min[2] + box.max[2]) / 2 + d.origin[1], halfX: (box.max[0] - box.min[0]) / 2, halfY: (box.max[1] - box.min[1]) / 2, halfZ: (box.max[2] - box.min[2]) / 2 });

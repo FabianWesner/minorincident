@@ -191,7 +191,8 @@ export const l4Pockets: readonly { at: P[]; foes: P }[] = [
 export const l4PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ['l4-convoy-arrival', [18, 22, 18]], ['l4-plaza-safe', [20, 24, 20]], ['l4-harbor-street-safe', [16, 19, 16]], ['l4-metro-entrance-safe', [14, 17, 14]],
   ['l4-first-turn', [14, 17, 14]], ['l4-war-line', [22, 26, 22]], ['l4-tank', [20, 24, 20]], ['l4-collapse', [-26, 28, 26]], ['l4-basement', [9, 11, 9]],
-  ['pair-plaza', [20, 24, 20]], ['pair-harbor-street', [16, 19, 16]], ['pair-metro-entrance', [14, 17, 14]], ['pair-kessler-lane', [14, 17, 14]],
+  // E23: Harbor Street and Kessler Lane are seen from where the rooflines do not hide them (down the street from the west; from the north-west over the lane).
+  ['pair-plaza', [20, 24, 20]], ['pair-harbor-street', [-22, 13, 4]], ['pair-metro-entrance', [14, 17, 14]], ['pair-kessler-lane', [-14, 17, -14]],
 ];
 
 // ------------------------------------------------------------------------------------------------ the convoy route

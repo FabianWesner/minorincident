@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, test } from '../e2e/fixtures';
 
 // Diagnostic only: retain the category/asset causes of remaining campaign gates.
-for (const tier of ['high', 'low'] as const) for (const scenario of ['perf-l6-mainstreet', 'perf-l5-bridge']) {
+for (const tier of ['high', 'low'] as const) for (const scenario of ['perf-l6-mainstreet', 'perf-l5-aftermath']) {
   test(`remaining world budget profile ${scenario} ${tier} @profile`, async ({ page }) => {
     test.setTimeout(180_000);
     await boot(page, `/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=1&profile`);

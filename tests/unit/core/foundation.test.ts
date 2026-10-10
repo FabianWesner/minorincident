@@ -65,3 +65,17 @@ test('T-E01-spatial @E01 spatial hash handles negative cells, moves and reset', 
   hash.reset();
   expect(hash.query({ x: 0, z: 0, r: 100 })).toEqual([]);
 });
+
+
+test('spatial buckets retain insertion order and reuse positions without stale IDs', () => {
+  const hash = new SpatialHash(), query = { x: 0, z: 0, r: 2 };
+  hash.set(3, 0, 0); hash.set(1, 1, 0); hash.set(2, 0, 1);
+  hash.set(3, .5, .5);
+  expect(hash.query(query, [], false)).toEqual([3, 1, 2]);
+  expect(hash.query(query)).toEqual([1, 2, 3]);
+  hash.delete(1); hash.set(8, 1, 0);
+  expect(hash.query(query, [], false)).toEqual([3, 2, 8]);
+  hash.set(3, -5, 0); hash.set(3, 0, 0);
+  expect(hash.query(query, [], false)).toEqual([2, 8, 3]);
+  for (const bad of [NaN, Infinity, -1]) expect(() => hash.query({ ...query, r: bad })).toThrow(RangeError);
+});

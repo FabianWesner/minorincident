@@ -203,7 +203,24 @@ describe('L2 The Failed Rescue', () => {
       const l = await loadL2(seed); world = l.world; const m = l.mission, w = l.world;
       const turned = new Set<number>(), removed = new Set<number>();
       const off = w.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') turned.add(e.id); });
-      const r = runL2(w, m, 'complete', { seed, stopWhen: mm => { for (const id of mm.state.l2!.trappedIds) if (!w.entities.get(id) && !turned.has(id)) removed.add(id); return false; } });
+      const observe = () => { for (const id of m.state.l2!.trappedIds) if (!w.entities.get(id) && !turned.has(id)) removed.add(id); };
+      runL2(w, m, 'complete', { seed, stopWhen: () => {
+        observe(); const p = w.entities.get(1)!.transform;
+        return p.x >= 80 && p.z > l2.checkpoint.gateZ[1] && p.z < 39;
+      } });
+      // The courier can beat the slower evacuees to the gate. Keep observing the
+      // authored late-arrival route before asserting their eventual gate/turn fate.
+      for (let tick = 0; tick < 30 * 60; tick++) {
+        const traveling = m.state.l2!.trappedIds.some(id => {
+          const e = w.entities.get(id), c = e?.civilian;
+          return !!e && !!c && !turned.has(id) && !['down', 'finished', 'bitten', 'rising', 'grabbed'].includes(c.state)
+            && !inCheckpointZone(e.transform) && !(e.transform.x >= 60 && Math.abs(e.transform.z - 30) <= 8);
+        });
+        if (!traveling) break;
+        w.update();
+        observe();
+      }
+      const r = runL2(w, m, 'complete', { seed, stopWhen: () => { observe(); return false; } });
       off(); expect(r.outcome).toBe('complete'); expect([...removed], `seed ${seed} removed`).toEqual([]);
       const s = m.state.l2!, fates: Record<string, number> = {};
       for (const id of s.trappedIds) {

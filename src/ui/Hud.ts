@@ -7,6 +7,7 @@ import { actionIconUrl } from '../assets/icons';
 import { button, node, text } from './dom';
 import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
+import type { Mission } from '../sim/missions/Mission';
 const sides = ['LEFT', 'RIGHT'] as const;
 const clamp = (x: number): number => Math.max(0, Math.min(1, x));
 export class Hud {
@@ -24,6 +25,10 @@ export class Hud {
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
   private readonly homePin = this.pin('home', '⌂');
+  /** E23: the direction of the sign of life the courier just heard (4 s), and the survivors counter beside the objective. */
+  private readonly cuePin = this.pin('cue', '♪');
+  private readonly survivorText = node('span', 'survivors-found');
+  private readonly cueText = node('span', 'sign-of-life');
   private readonly threats: HTMLSpanElement[] = [];
   private readonly tracker = node('div', 'objective-tracker');
   private readonly slots = sides.map(side => this.card(side));
@@ -56,10 +61,11 @@ export class Hud {
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
-    this.map.append(north, this.playerPin, this.objectivePin, this.homePin);
+    this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
+    this.map.append(north, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
-    this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText);
+    this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText, this.survivorText, this.cueText);
     this.detail.className = 'hud-objective-detail hud-panel';
     this.detail.setAttribute('aria-label', 'Current objective');
     this.detail.append(this.fullText, button('objective-close', 'Close', () => this.detail.close()));
@@ -195,6 +201,7 @@ export class Hud {
       if (inRing?.optional) text(this.trackerText, `Hold still or press E · ${inRing.text.replace(/^Optional: /, '')}`);
       else if (optional.length) text(this.trackerText, `${this.trackerText.textContent} · ${optional[0].text}`);
     }
+    this.updateSurvivors(mission, px, pz);
     for (let i = 0; i < sides.length; i++) {
       const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.l1;
       if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
@@ -231,6 +238,22 @@ export class Hud {
     this.civilianBark.hidden = world.tick > this.civilianBarkUntil;
     this.updateStory();
     this.onboarding.update(this.game.input.scheme, visible);
+  }
+  /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
+  private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {
+    const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
+    this.survivorText.hidden = !show; this.cueText.hidden = true; this.cuePin.hidden = true;
+    if (!show || !l5 || !mission) return;
+    text(this.survivorText, ` · Survivors found ${l5.found}/5`);
+    const tick = this.game.world.tick, cue = l5.cue && l5.cue.until > tick ? l5.cue : null;
+    if (cue) {
+      this.cuePin.hidden = false; this.place(this.cuePin, cue.x, cue.z, px, pz, true);
+      this.cueText.hidden = false; text(this.cueText, ` · ${cue.text}`);
+    }
+    for (const r of l5.survivors) {
+      const ring = mission.def.anchors[`l5-ring-${r.key}`];
+      if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) { this.cueText.hidden = false; text(this.cueText, ' · Hold still or press E: someone is here'); }
+    }
   }
   /** Story bubble from the mission state (`l1.say`): fades in over 10 ticks, out over 15 after its reading time. */
   private updateStory(): void {

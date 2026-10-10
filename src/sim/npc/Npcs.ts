@@ -54,7 +54,7 @@ export class Npcs {
     if (!offscreen && placed !== count) throw new Error('Insufficient safe civilian routines');
   }
   /** Per-level campaign authoring entry point; density is quality-scaled and pets are separate. */
-  configure(level: number, tier: 'high' | 'low' = 'high', count = npcs.density[level - 1] * (tier === 'low' ? .6 : 1)): void {
+  configure(level: number, tier: 'high' | 'low' = 'high', count = Math.round(npcs.density[level - 1] * (tier === 'low' ? .6 : 1))): void {
     if (!Number.isInteger(level) || level < 1 || level > 6) throw new RangeError('Invalid NPC level');
     this.civilians.level = level; this.world.infected!.director.levelCap = npcs.caps[level - 1]; this.world.infected!.director.tier = tier; this.ambientTarget = count; this.populate(Math.floor(count));
   }
@@ -102,6 +102,7 @@ export class Npcs {
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
+      if (c?.survivor?.waitAt) c.survivor.waitAt += delta;
       const l1 = e.civilian?.l1; if (l1) { l1.repickAt += delta; if (l1.noticed >= 0) l1.noticed += delta; if (l1.graceUntil) l1.graceUntil += delta; if (l1.progressAt !== undefined) l1.progressAt += delta; if (l1.doorAt !== undefined) l1.doorAt += delta; }
       if (e.infection) { e.infection.startedTick += delta; e.infection.endsTick += delta; }
       if (e.infected) for (const key of ['until', 'cooldown', 'activeUntil', 'grabUntil', 'grabNextTick', 'scatterUntil'] as const) if (e.infected[key]) e.infected[key] += delta;
@@ -116,7 +117,7 @@ export class Npcs {
     if(this.slice)return;
     if (this.civilians.outbreak) { this.world.infected!.director.tier = tier; return; }
     this.world.infected!.director.setTier(tier);
-    this.ambientTarget = npcs.density[this.civilians.level - 1] * (tier === 'low' ? .6 : 1);
+    this.ambientTarget = Math.round(npcs.density[this.civilians.level - 1] * (tier === 'low' ? .6 : 1));
   }
   private density(): void {
     if (!this.ambientTarget || this.world.tick % 60 !== 0) return;
