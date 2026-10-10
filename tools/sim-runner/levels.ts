@@ -1,8 +1,10 @@
+import { LevelSixBot } from '../../src/debug/bot/LevelSixBot';
 import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { LevelFourBot } from '../../src/debug/bot/LevelFourBot';
 import { LevelFiveBot } from '../../src/debug/bot/LevelFiveBot';
 import { LevelTwoBot } from '../../src/debug/bot/LevelTwoBot';
-import { preset } from '../../src/sim/progression/Campaign';
+import { followFrustum } from './l3Bots';
+import { preset, type CampaignSave } from '../../src/sim/progression/Campaign';
 import { applyCampaign } from '../../src/sim/progression/apply';
 import { readFileSync } from 'node:fs';
 import { Rng } from '../../src/core/Rng';
@@ -24,15 +26,17 @@ export interface LevelReport {
   outcome: 'complete' | 'stalled' | 'tick-budget' | 'load-error' | 'mission-failed';
   blocker: null | { objective: string | null; detail: string; player?: { x: number; z: number }; distance?: number; actors?: Record<string, { x: number; z: number; hp: number; state?: string; driver?: number | null; speed?: number; yaw?: number }> };
 }
-export async function loadLevel(level: MissionId, seed: number): Promise<SimWorld> {
+export async function loadLevel(level: MissionId, seed: number, campaign?: CampaignSave): Promise<SimWorld> {
   const world = new SimWorld();
   try {
     await world.init(); const composition = compositions[level];
     world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
-    if (level === 'L5') applyCampaign(world, preset('L5-default'));
-    if (level === 'L4') applyCampaign(world, preset('L4-default'));
-    if (level === 'L3') applyCampaign(world, preset('L3-default'));
-    if (level === 'L2') applyCampaign(world, preset('L2-default'));
+    if(campaign)applyCampaign(world,campaign);
+    if (!campaign && level === 'L6') applyCampaign(world, preset('L6-default'));
+    if (!campaign && level === 'L5') applyCampaign(world, preset('L5-default'));
+    if (!campaign && level === 'L4') applyCampaign(world, preset('L4-default'));
+    if (!campaign && level === 'L3') applyCampaign(world, preset('L3-default'));
+    if (!campaign && level === 'L2') applyCampaign(world, preset('L2-default'));
     world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
     return world;
   } catch (error) { world.dispose(); throw error; }
@@ -43,10 +47,10 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200, street: L3StreetChoice = 'auto'): Promise<LevelReport> {
+export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
-  try { world = await loadLevel(level, seed); }
+  try { world = await loadLevel(level, seed, campaign); }
   catch (error) { report.outcome = 'load-error'; report.failures['load-error'] = 1; report.blocker = { objective: null, detail: String(error) }; return report; }
   try {
     const mission = world.missions!, walker = new Walker(), rng = new Rng(seed, `campaign-${policy}`);
@@ -58,6 +62,9 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelTwoBot(world, policy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+    } else if (level === 'L6') {
+      const bot = new LevelSixBot(world, policy);
+      for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
     } else if (level === 'L5') {
       // E23: the shared L5 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelFiveBot(world, policy);
@@ -151,6 +158,12 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
       const actors = Object.fromEntries(Object.entries(mission.state.actors).filter(([, entity]) => world.entities.get(entity)).map(([id, entity]) => { const e = world.entities.get(entity)!; return [id, { x: e.transform.x, z: e.transform.z, hp: e.health.current, state: e.escort?.state ?? e.interactable?.hint ?? e.vehicle?.damage, ...(e.vehicle ? { driver: e.vehicle.driver, speed: e.vehicle.speed, yaw: e.transform.yaw } : {}) }]; }));
       report.failures[report.outcome] = (report.failures[report.outcome] ?? 0) + 1;
       report.blocker = { objective: step?.id ?? null, detail: mission.state.failure ?? `${report.outcome}: ${step?.text ?? 'no active objective'}`, player: { x: player.transform.x, z: player.transform.z }, ...(anchor ? { distance: distance(player.transform, anchor) } : {}), actors };
+    }
+    if(campaign&&report.completed){
+      campaign.results??={};campaign.results[level]=structuredClone(mission.state.result!);
+      const weapons=world.entities.get(1)!.weapons!;campaign.racks={LEFT:weapons.LEFT.rack.map(s=>s.id),RIGHT:weapons.RIGHT.rack.map(s=>s.id)};
+      campaign.ownedActions=[...new Set([...campaign.ownedActions,...campaign.racks.LEFT,...campaign.racks.RIGHT])];
+      if(level==='L5')campaign.survivors=[...mission.state.result?.survivors??[]];
     }
     return report;
   } finally { world.dispose(); }

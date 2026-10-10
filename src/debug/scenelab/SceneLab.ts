@@ -257,7 +257,7 @@ export class SceneLab {
     return ids;
   }
   private teleport(e: EntitySnapshot, p: { x: number; z: number }): void {
-    e.transform.x = p.x; e.transform.z = p.z; this.world.spatial.set(e.id, p.x, p.z);
+    e.transform.x = p.x; e.transform.z = p.z; e.transform.y=(this.world.districts?.groundHeight(p.x,p.z)??0)+.705; this.world.spatial.set(e.id, p.x, p.z);
     if (e.id === 1) { this.world.physics.playerBody!.setTranslation(e.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(e.transform); this.world.player!.setCheckpoint(e.transform); }
   }
   private stand(at: { x: number; z: number }, yaw: number): CivilianActivity {
@@ -311,6 +311,7 @@ export class SceneLab {
       else if ('turn' in a) reset([this.stand(e.transform, rad(a.turn))]);
       else if ('walk' in a || 'run' in a) { const points = ('walk' in a ? a.walk : a.run).map(toPoint); if (c.l1) c.l1.walkSpeed = 'run' in a ? 3.2 : c.l1.walkSpeed; reset(points.map(p => ({ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }))); if (!a.loop) c.schedule!.push(this.stand(points[points.length - 1], e.transform.yaw)); }
       else if ('moveTo' in a) { const p = toPoint(a.moveTo); reset([{ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }, this.stand(p, e.transform.yaw)]); }
+      else if('routine' in a){reset([this.stand(e.transform,e.transform.yaw)]);c.story={clip:a.routine==='sit'?'npc-sit':a.routine==='rest'?'death-side':a.routine==='talk'?'npc-gesture':a.routine==='share'?'npc-give':'npc-cower',start:world.tick};}
       else if ('sit' in a) reset(this.sitSchedule(a.sit, a.seconds));
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }

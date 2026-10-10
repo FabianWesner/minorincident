@@ -9,7 +9,7 @@ export function missionControls(world: SimWorld) {
     teleport: (id: number | 'player', pos: { x: number; z: number }) => {
       if (![pos.x,pos.z].every(Number.isFinite)) throw new RangeError('Position must be finite');
       const entity=world.entities.get(id==='player'?1:id);if(!entity)throw new Error(`Unknown entity: ${id}`);
-      Object.assign(entity.transform,pos);world.spatial.set(entity.id,pos.x,pos.z);
+      Object.assign(entity.transform,pos,{y:(world.districts?.groundHeight(pos.x,pos.z)??0)+.72});world.spatial.set(entity.id,pos.x,pos.z);
       if(entity.id===1){world.previousPlayer={...entity.transform};world.physics.playerBody!.setTranslation(entity.transform,true);}
     },
     damageActor: (actor: string, amount: number) => {

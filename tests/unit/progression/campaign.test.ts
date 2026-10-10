@@ -64,3 +64,4 @@ describe('campaign',()=>{
     const save=newCampaign();save.ownedActions.push('weapon.bat');beginRewards(save,1);expect(validateSave(save)).toBe(true);expect(save.pending!.weaponChosen).toBe(true);expect(()=>chooseWeapon(save,'weapon.machete')).toThrow();revealCards(save);expect(validateSave(save)).toBe(true);pickUpgrades(save,save.pending!.cards.slice(0,2));expect(validateSave(save)).toBe(true);finishRewards(save,save.racks);expect(()=>beginRewards(save,1)).toThrow();
   });
 });
+test('@E24 @E24-AC14 finished L6 save round-trips without granting a sixth reward',()=>{const save=preset('L6-default');save.completedLevels=6;expect(validateSave(save)).toBe(true);expect(decodeSave(JSON.stringify(save))).toEqual({status:'ok',save});});

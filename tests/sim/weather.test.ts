@@ -81,9 +81,10 @@ test('T-E28-08 @E28 @E28-AC08 every override preserves all six mission graph wal
   const { missionIds, resolveCampaignMission } = await import('../../src/levels/missions');
   const rows = [];
   for (const id of missionIds) {
-    const w = new SimWorld(); await w.init(); const c = compositions[id];
-    w.loadComposition(c, c.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), 28);
+    const w = new SimWorld(); await w.init(); const c = compositions[id], layouts=c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8')));
+    w.loadComposition(c,layouts,28);
     for (const kind of weatherKinds) {
+    if(id==='L6'&&kind!==weatherKinds[0]){w.reset();w.loadComposition(c,layouts,28);}
     const m = w.loadMission(resolveCampaignMission(id, w.districts!)); w.weather!.setOverride(kind); m.begin();
     let guard = 0;
     while (m.state.phase === 'playing' && guard++ < 100) m.completeObjective();

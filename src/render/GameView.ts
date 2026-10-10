@@ -50,7 +50,7 @@ import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
 import { lodPolicy } from './lodPolicy';
 import { layoutLights } from './WorldLights';
-import { auraLight, pickupLight } from './LightField';
+import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
@@ -209,7 +209,7 @@ export class GameView implements Lifecycle {
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
       // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
       // path, spawn focus and close-view warm-up.
-      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
       const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
@@ -314,6 +314,12 @@ export class GameView implements Lifecycle {
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : undefined); }
       finally { restore?.(); unwarm?.(); }
+      // The fluorescent failure is synchronous: compile its emergency materials during the briefing.
+      if(this.world.scenario==='L6') {
+        this.districts?.metroPower(false,true);
+        try {await preRender(this.renderer,this.scene,this.camera,()=>this.postFx?this.postFx.render():this.renderer.render(this.scene,this.camera),partitions=>this.postFx?this.postFx.compile(partitions):Promise.all(partitions.map(apply=>{apply();return this.renderer.compileAsync(this.scene,this.camera);})));}
+        finally {const s=this.world.missions?.state.l6;this.districts?.metroPower(s?.mainPower??true,s?.emergency??false);}
+      }
     };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
@@ -321,7 +327,7 @@ export class GameView implements Lifecycle {
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5';
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     if (groveTown && this.params.get('test') !== '1') {
       // Load lane: the shader warm-up runs while the mission briefing is up instead of behind the
       // loading screen. Until it finishes the view does not draw and the game clock does not advance
@@ -625,7 +631,7 @@ export class GameView implements Lifecycle {
     this.flashOverlay.style.opacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
-    if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); this.districts?.blackout(); }
+    if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }
     this.lighting?.update(this.view); this.updateLights();
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
     this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false); this.districts?.updateLods(this.view);
@@ -706,17 +712,24 @@ export class GameView implements Lifecycle {
   get lightField() { return this.lighting?.field ?? null; }
   /** E25 light field: layout pools plus per-frame vehicle lamps and the survivor aura, one pass before the scene. */
   private updateLights(): void {
+    const metro=this.world.missions?.state.l6;if(metro)this.districts?.northgate(metro.gateAt>0);
     const lighting = this.lighting; if (!lighting) return;
+    let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
     if (field.active) {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
+      if (hero && this.world.missions?.state.l6?.flashlight) {
+        const yaw=this.world.entities.get(1)!.transform.yaw;
+        flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
+        field.push(flashlight);
+      }
       this.vehicles?.pushLights(field);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
-    lighting.setHeroLight(hero && field.active ? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
+    lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

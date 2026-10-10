@@ -76,6 +76,7 @@ export class AudioService implements Lifecycle {
     private readonly loops = new Map<string, GraphVoice>();
     private readonly individualVocals = new Map<number, GraphVoice>();
     private readonly stemVoices = new Map<string, GraphVoice>();
+    private metroAmbientAt = -600;
     private readonly footsteps = new Map<number, {
         x: number;
         z: number;
@@ -486,7 +487,7 @@ export class AudioService implements Lifecycle {
             if (v)
                 this.stemVoices.set(layer, v);
         }
-        for (const bed of ambienceTiers[this.tier].beds)
+        for (const bed of this.level === 'L6' ? ['hum'] : ambienceTiers[this.tier].beds)
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: this.tier === 5 ? dbGain(-16) : 1 });
     }
     /** L5 music: silent until 60 s into the level, then the calm score alone (no layers, no danger music, no stems). */
@@ -544,6 +545,7 @@ export class AudioService implements Lifecycle {
             this.arc?.event(event.type, t);
             return;
         }
+        if (event.type === 'l6.bang') { this.play('door.wood', { position: event.position, gain: 1, lowpass: 1800 }); return; }
         if (event.type === 'l5.wait') {
             this.play('civilian.hey', { position, gain: 0.7, rate: 0.9 }, source);
             return;
@@ -925,7 +927,9 @@ export class AudioService implements Lifecycle {
             }
         if (this.arc)
             this.updateArc(player.transform, t);
-        const ambient = this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
+        const metro=this.world.missions?.state.l6;
+        if(metro?.phase==='shelter'&&this.world.tick-this.metroAmbientAt>=600){this.metroAmbientAt=this.world.tick;this.play('dialogue.radio',{position:{x:-4,z:2},gain:.15,lowpass:1800});}
+        const ambient = metro || this.arc && this.arc.phase !== 'calm' ? null : this.ambience.update(t);
         if (ambient)
             this.play(ambient.cue, { position: { x: player.transform.x + ambient.x, z: player.transform.z + ambient.z }, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
         let changed = false;
@@ -987,7 +991,7 @@ export class AudioService implements Lifecycle {
         this.loops.clear();
         this.stemVoices.clear();
         this.individualVocals.clear();
-        this.footsteps.clear();
+        this.metroAmbientAt=-600;this.footsteps.clear();
         this.log.length = 0;
         this.captions.length = 0;
         this.clearRings();
