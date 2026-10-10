@@ -1,0 +1,100 @@
+{
+  "name": "ped-props-grove-bench",
+  "seed": 2,
+  "ground": "district",
+  "size": 30,
+  "time": "L1",
+  "props": [],
+  "actors": [
+    {
+      "id": "woman",
+      "kind": "pedestrian",
+      "at": [
+        -20.70484,
+        7.1
+      ],
+      "look": {
+        "model": "npc.civilian-woman-a",
+        "accessories": [
+          "shoulder-bag"
+        ]
+      },
+      "state": {
+        "walk": [
+          [
+            -12.70484,
+            7.1
+          ],
+          [
+            -20.70484,
+            7.1
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "man",
+      "kind": "pedestrian",
+      "at": [
+        -12.70484,
+        9.1
+      ],
+      "look": {
+        "model": "npc.civilian-man-a"
+      },
+      "state": {
+        "walk": [
+          [
+            -20.70484,
+            9.1
+          ],
+          [
+            -12.70484,
+            9.1
+          ]
+        ],
+        "loop": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -16.70484,
+      7.1
+    ],
+    "zoom": 1.45
+  },
+  "frames": 600,
+  "shots": [
+    0,
+    120,
+    240,
+    360,
+    600
+  ],
+  "sheet": 30,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "propPenetrationFramesMax": 0
+  },
+  "layout": {
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -24.70484,
+        -0.9
+      ],
+      [
+        -8.70484,
+        15.1
+      ]
+    ],
+    "ids": [
+      "prop.bench:355"
+    ],
+    "recenter": false
+  }
+}

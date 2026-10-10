@@ -8,7 +8,7 @@ import type { SimWorld } from '../world/SimWorld';
 
 /** Plain pose mirror of a body: render sync and snapshots never touch WASM. Quaternion is x, y, z, w. */
 export interface PropPose { p: [number, number, number]; q: [number, number, number, number] }
-export interface PushProp { entityId: number; half: number[]; metadata: import('../../data/pushableProps').PhysicsAsset; braced: boolean; id: string; assetId: string; mass: number; radius: number; home: PropPose; pose: PropPose; body: RAPIER.RigidBody; collider: RAPIER.Collider; awake: boolean; fixed: boolean }
+export interface PushProp { entityId: number; half: number[]; center: number[]; metadata: import('../../data/pushableProps').PhysicsAsset; braced: boolean; id: string; assetId: string; mass: number; radius: number; home: PropPose; pose: PropPose; body: RAPIER.RigidBody; collider: RAPIER.Collider; awake: boolean; fixed: boolean }
 export type PropSnapshot = { id: string; p: [number, number, number]; q: [number, number, number, number] }[];
 
 /** Simultaneously simulated props; the farthest settle first beyond this (Bruno keeps most asleep). */
@@ -24,7 +24,7 @@ export class PropSystem {
   /** Fixture-only stress override; production keeps the established 12-body cap. */
   awakeBudget = MAX_AWAKE_PROPS;
   private burstUntil = 0;
-  /** Resting displaced furniture participates in AI navigation, sampled at 2 Hz. */
+  /** Resting furniture participates in AI navigation from assembly onward, sampled at 2 Hz. */
   readonly navWalls = new Map<number, import('../combat/HitQuery').CoverWall>();
   private readonly momentumHits = new Map<string, number>();
   /** E27: a blast lets launched props fly (up to the spec 07 §8 low-tier cap of 60) instead of freezing mid-air at 12. */
@@ -35,7 +35,7 @@ export class PropSystem {
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit') return;
       const item = this.items.find(i => i.entityId === e.targetId);
-      if (item && this.world.entities.get(item.entityId)!.health.current <= 0) { item.body.setEnabled(false); item.awake = false; this.world.spatial.delete(item.entityId); this.world.events.emit({ type: 'prop.broken', tick: world.tick, id: item.entityId, pieces: 0 }); }
+      if (item && this.world.entities.get(item.entityId)!.health.current <= 0) { item.body.setEnabled(false); item.awake = false; this.updateNavigation(); this.world.spatial.delete(item.entityId); this.world.events.emit({ type: 'prop.broken', tick: world.tick, id: item.entityId, pieces: 0 }); }
     });
   }
   /** (Re)create every pushable of the district set in its placement order; `saved` poses survive a tier rebuild/checkpoint. */
@@ -60,6 +60,7 @@ export class PropSystem {
     for (const previous of previousItems) if (!this.items.some(p => p.id === previous.id)) { this.world.spatial.delete(previous.entityId); this.world.entities.delete(previous.entityId); }
     this.settle(poses); this.rebuildingIds.clear();
     for (const p of this.items) p.body.setEnabled((this.world.entities.get(p.entityId)?.health.current ?? 0) > 0);
+    this.updateNavigation();
   }
   /** Spawn one authored prop, also used by deterministic prop-yard fixtures. */
   spawn(placement: Placement, origin: [number, number] = [0, 0], restored?: PropSnapshot[number], id = placement.id): PushProp {
@@ -82,7 +83,7 @@ export class PropSystem {
       const hp = metadata.breakable?.hp ?? metadata.barricadeHP ?? 80;
       const entityId = this.rebuildingIds.get(id) ?? this.world.entities.create({ kind: 'physics-prop', archetype: placement.assetId, faction: 'environment', transform: { x: pose.p[0], y: pose.p[1], z: pose.p[2], yaw: placement.yaw }, health: { current: hp, max: hp }, combat: { radius: Math.max(half[0], half[2]), armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }).id;
       this.world.spatial.set(entityId, pose.p[0], pose.p[2]);
-      const item = { entityId, half, metadata, braced: false, id, assetId: placement.assetId, mass, radius: Math.hypot(half[0], half[2]), home, pose, body, collider, awake: false, fixed: false };
+      const item = { entityId, half, center, metadata, braced: false, id, assetId: placement.assetId, mass, radius: Math.hypot(half[0], half[2]), home, pose, body, collider, awake: false, fixed: false };
       this.items.push(item); return item;
   }
   settle(poses = new Map<string, PropSnapshot[number]>()): void {
@@ -182,14 +183,14 @@ export class PropSystem {
     for (const [id, wall] of this.navWalls) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, wall, blocked: false });
     this.navWalls.clear();
   }
-  private updateNavigation(): void {
+  updateNavigation(): void {
     for (const p of this.items) {
-      // Authored furniture was excluded from the bake; only gameplay displacement adds blockers.
+      // Movable furniture has no static collider in the nav bake. Its home pose
+      // must block crowds too; moving/broken props relinquish the blocker.
       const blocked = !p.braced && p.body.isEnabled() && (p.metadata.class === 'medium' || p.metadata.class === 'heavy')
-        && Math.hypot(p.pose.p[0] - p.home.p[0], p.pose.p[2] - p.home.p[2]) > .25 && Math.hypot(p.body.linvel().x, p.body.linvel().z) < .5;
+        && Math.hypot(p.body.linvel().x, p.body.linvel().z) < .5;
       const previous = this.navWalls.get(p.entityId);
-      const yaw = 2 * Math.atan2(p.pose.q[1], p.pose.q[3]), c = Math.abs(Math.cos(yaw)), s = Math.abs(Math.sin(yaw));
-      const wall = { x: p.pose.p[0], z: p.pose.p[2], y: p.pose.p[1] + p.half[1], halfY: p.half[1], halfX: c * p.half[0] + s * p.half[2], halfZ: s * p.half[0] + c * p.half[2], entityId: p.entityId };
+      const wall = propFootprint(p);
       if (blocked && (!previous || Math.abs(previous.x - wall.x) + Math.abs(previous.z - wall.z) + Math.abs(previous.halfX - wall.halfX) + Math.abs(previous.halfZ - wall.halfZ) > .05)) {
         this.navWalls.set(p.entityId, wall); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: p.entityId, wall, blocked: true });
       } else if (!blocked && previous) {
@@ -226,6 +227,8 @@ export class PropSystem {
     item.braced = on; item.body.setBodyType(on ? RAPIER.RigidBodyType.KinematicPositionBased : RAPIER.RigidBodyType.Dynamic, false);
     if (on) { item.body.sleep(); item.awake = false; }
     else { item.body.applyImpulse({ x: inward.x * item.mass * 2, y: item.mass * 3.5, z: inward.z * item.mass * 2 }, true); item.awake = true; }
+    // The slot owns collision while braced; breaking must reopen navigation in this tick.
+    this.updateNavigation();
   }
   private mirror(item: PushProp): void {
     const t = item.body.translation(), r = item.body.rotation();
@@ -252,4 +255,16 @@ export class PropSystem {
     for (const item of this.items) { item.body.setEnabled((this.world.entities.get(item.entityId)?.health.current ?? 0) > 0); if (!item.fixed) this.place(item, poses.get(item.id) ?? item.home); }
     this.updateNavigation();
   }
+}
+
+/** World AABB of the actual E26 cuboid, including its local centre and tipped poses. */
+export function propFootprint(p: PushProp): import('../combat/HitQuery').CoverWall {
+  const t = p.body.translation(), q = p.body.rotation(), [hx, hy, hz] = p.half, [cx, cy, cz] = p.center;
+  const xx = 1 - 2 * (q.y * q.y + q.z * q.z), xy = 2 * (q.x * q.y - q.z * q.w), xz = 2 * (q.x * q.z + q.y * q.w);
+  const yx = 2 * (q.x * q.y + q.z * q.w), yy = 1 - 2 * (q.x * q.x + q.z * q.z), yz = 2 * (q.y * q.z - q.x * q.w);
+  const zx = 2 * (q.x * q.z - q.y * q.w), zy = 2 * (q.y * q.z + q.x * q.w), zz = 1 - 2 * (q.x * q.x + q.y * q.y);
+  return { x: t.x + xx * cx + xy * cy + xz * cz, y: t.y + yx * cx + yy * cy + yz * cz, z: t.z + zx * cx + zy * cy + zz * cz, entityId: p.entityId,
+    halfX: Math.abs(xx) * hx + Math.abs(xy) * hy + Math.abs(xz) * hz,
+    halfY: Math.abs(yx) * hx + Math.abs(yy) * hy + Math.abs(yz) * hz,
+    halfZ: Math.abs(zx) * hx + Math.abs(zy) * hy + Math.abs(zz) * hz };
 }

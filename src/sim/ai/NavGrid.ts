@@ -25,6 +25,7 @@ export class NavGrid {
   private head = 0;
   private tail = 0;
   private readonly blockers = new Map<number, Wall>();
+  private readonly blockerBuckets = new Map<number, Map<number, Map<number, Wall>>>();
   /** Optional active-district footprint, supplied by campaign assembly without importing render data. */
   mask: ((x: number, z: number) => boolean) | null = null;
   target = -1;
@@ -77,7 +78,7 @@ export class NavGrid {
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
     if (!this.buckets.size && !this.blockers.size) return true;
     for (const w of this.buckets.get(Math.floor(x / 4))?.get(Math.floor(z / 4)) ?? []) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
-    for (const [id, w] of this.blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
+    for (const [id, w] of this.blockerBuckets.get(Math.floor(x / 4))?.get(Math.floor(z / 4)) ?? []) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     return true;
   }
   private intersects(w: Wall, x: number, z: number, radius: number): boolean {
@@ -114,15 +115,30 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
-    const previous = this.blockers.get(id), previousBounds = this.nearestBlockers.get(id);
-    if (blocked) this.blockers.set(id, wall); else this.blockers.delete(id);
+    const previousBounds = this.nearestBlockers.get(id);
+    if (previousBounds) this.indexBlocker(id, previousBounds);
+    if (blocked) { this.blockers.set(id, wall); this.indexBlocker(id, wall, wall); } else this.blockers.delete(id);
     // Keep old bounds even when the caller mutates its retained wall object in place.
     if (blocked) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ }); else this.nearestBlockers.delete(id);
-    if (previous && previous !== wall) this.updateBlockerCells(previous);
+    if (previousBounds) this.updateBlockerCells(previousBounds);
     this.updateBlockerCells(wall);
     this.target = -1; this.searching = false;
     if (previousBounds) this.invalidateNearest(previousBounds);
     this.invalidateNearest(wall);
+  }
+  /** Live furniture uses the same local 4 m broad phase as static walls. */
+  private indexBlocker(id: number, bounds: Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>, wall?: Wall): void {
+    for (let x = Math.floor((bounds.x - bounds.halfX - 2) / 4); x <= Math.floor((bounds.x + bounds.halfX + 2) / 4); x++) {
+      let column = this.blockerBuckets.get(x);
+      if (!column && wall) this.blockerBuckets.set(x, column = new Map());
+      if (!column) continue;
+      for (let z = Math.floor((bounds.z - bounds.halfZ - 2) / 4); z <= Math.floor((bounds.z + bounds.halfZ + 2) / 4); z++) {
+        let bucket = column.get(z);
+        if (wall) { if (!bucket) column.set(z, bucket = new Map()); bucket.set(id, wall); }
+        else { bucket?.delete(id); if (!bucket?.size) column.delete(z); }
+      }
+      if (!column.size) this.blockerBuckets.delete(x);
+    }
   }
   private invalidateNearest(wall: Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>): void {
     for (let i = this.nearestMemo.length - 1; i >= 0; i--) {
@@ -133,7 +149,7 @@ export class NavGrid {
       if (Math.abs(memo.x - wall.x) <= wall.halfX + pad && Math.abs(memo.z - wall.z) <= wall.halfZ + pad) this.nearestMemo.splice(i, 1);
     }
   }
-  private updateBlockerCells(wall: Wall): void {
+  private updateBlockerCells(wall: Pick<Wall, 'x' | 'z' | 'halfX' | 'halfZ'>): void {
     const pad = this.clearance + this.cellSize;
     const x0 = Math.max(0, Math.floor((wall.x - wall.halfX - pad - this.center.x + this.ground.width / 2) / this.cellSize));
     const x1 = Math.min(this.width - 1, Math.ceil((wall.x + wall.halfX + pad - this.center.x + this.ground.width / 2) / this.cellSize));
@@ -148,7 +164,7 @@ export class NavGrid {
     if (!this.mask && !this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
     if (!this.clear(to.x, to.z, radius)) return false;
-    const walls = new Set(this.blockers.values());
+    const walls = new Set<Wall>();
     let previousX = Infinity, previousZ = Infinity;
     for (let i = 0; i <= steps; i++) {
       const x = from.x + dx * i / Math.max(1, steps), z = from.z + dz * i / Math.max(1, steps);
@@ -158,6 +174,7 @@ export class NavGrid {
       const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
       if (bucketX !== previousX || bucketZ !== previousZ) {
         for (const wall of this.buckets.get(bucketX)?.get(bucketZ) ?? []) walls.add(wall);
+        for (const wall of this.blockerBuckets.get(bucketX)?.get(bucketZ)?.values() ?? []) walls.add(wall);
         previousX = bucketX; previousZ = bucketZ;
       }
     }

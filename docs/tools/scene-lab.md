@@ -327,3 +327,21 @@ The CLI captures three objective anchors (or the requested anchor) and renderer 
 recentering shift. `{ "interact": true }` sends one real courier interaction press. The scene
 closes/reopens the gate on each face and walks through it in both directions; sim regressions
 in `tests/sim/interact/gate-lockin.test.ts` assert the toggle, navigation and sight state.
+
+## Crowd and street furniture gate
+
+`propPenetrationFramesMax` gates the longest consecutive run of actor capsule ground-footprint intersections
+with non-walkable street-furniture/parked-vehicle colliders or resting E26 cuboids (2 mm contact tolerance). The metric uses simulation
+geometry independently of the navigation blockers and render LOD, samples each fixed tick, and reports every
+actor/prop pair under `metrics.propPenetration`. Hidden/dead/downed actors, seated residents and flying/perched infected
+are excluded.
+
+```sh
+npm run scene -- tests/scenes/ped-props/grove-bench.json
+SCENE_PORT=3377 sh tools/e2e-lock.sh npx tsx tools/scenelab/prop-penetration.ts
+```
+
+The second command runs the shipped L1–L6 populations with the complete bot for 1,200 ticks per level,
+and writes one capsule report per level to `test-results/ped-props/campaign/`. Any penetration lasting
+more than two consecutive ticks fails the gate. `tests/e2e/levels/prop-penetration.spec.ts` applies the same
+gate to the production build.

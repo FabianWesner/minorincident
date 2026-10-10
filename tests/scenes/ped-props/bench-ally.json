@@ -1,0 +1,43 @@
+{
+  "extends": "bench-sidewalk.json",
+  "name": "ped-props-bench-ally",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ]
+    },
+    {
+      "id": "ally",
+      "kind": "pedestrian",
+      "at": [
+        -4,
+        0
+      ],
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 0
+        }
+      },
+      "look": {
+        "model": "npc.police-officer"
+      }
+    }
+  ],
+  "shots": [
+    0,
+    120,
+    240,
+    360,
+    600
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "propPenetrationFramesMax": 0
+  }
+}
