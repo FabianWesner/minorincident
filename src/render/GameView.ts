@@ -728,7 +728,7 @@ export class GameView implements Lifecycle {
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
-    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
   }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
