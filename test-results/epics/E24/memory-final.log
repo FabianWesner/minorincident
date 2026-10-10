@@ -1,0 +1,9 @@
+10:19  up 62 days,  9:13, 3 users, load averages: 2.06 2.87 2.85
+Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (1.9m)
+  ✓  2 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (38.8s)
+
+  2 passed (2.5m)

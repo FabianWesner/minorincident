@@ -1,0 +1,2975 @@
+{
+  "spec": "tools/l6/scenes/qa-l6-tunnel-retreat.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 180,
+  "timing": {
+    "openMs": 1910,
+    "loadMs": 6590,
+    "runMs": 5281,
+    "sceneMs": 11871
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-l6-tunnel-retreat",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "l6-5",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          84,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          96,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          108,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "at": [
+          120,
+          15
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-44",
+        "asset": "prop.emergency-light",
+        "at": [
+          90,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-45",
+        "asset": "prop.emergency-light",
+        "at": [
+          102,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-46",
+        "asset": "prop.emergency-light",
+        "at": [
+          114,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-47",
+        "asset": "prop.emergency-light",
+        "at": [
+          126,
+          12
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-61",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          90,
+          12.65
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-62",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          90,
+          17.35
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-69",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          114,
+          17.35
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l6-74",
+        "asset": "prop.crates",
+        "at": [
+          87,
+          13.1
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l6-75",
+        "asset": "prop.crates",
+        "at": [
+          87,
+          16.9
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.emergency-light:lab0",
+        "asset": "prop.emergency-light",
+        "at": [
+          105,
+          12
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "adult-0",
+        "kind": "pedestrian",
+        "entity": 5
+      },
+      {
+        "id": "adult-1",
+        "kind": "pedestrian",
+        "entity": 6
+      },
+      {
+        "id": "adult-2",
+        "kind": "pedestrian",
+        "entity": 7
+      },
+      {
+        "id": "adult-3",
+        "kind": "pedestrian",
+        "entity": 8
+      },
+      {
+        "id": "adult-4",
+        "kind": "pedestrian",
+        "entity": 9
+      },
+      {
+        "id": "adult-5",
+        "kind": "pedestrian",
+        "entity": 10
+      },
+      {
+        "id": "adult-6",
+        "kind": "pedestrian",
+        "entity": 11
+      },
+      {
+        "id": "adult-7",
+        "kind": "pedestrian",
+        "entity": 12
+      },
+      {
+        "id": "adult-8",
+        "kind": "pedestrian",
+        "entity": 13
+      },
+      {
+        "id": "adult-9",
+        "kind": "pedestrian",
+        "entity": 14
+      },
+      {
+        "id": "adult-10",
+        "kind": "pedestrian",
+        "entity": 15
+      },
+      {
+        "id": "adult-11",
+        "kind": "pedestrian",
+        "entity": 16
+      },
+      {
+        "id": "adult-12",
+        "kind": "pedestrian",
+        "entity": 17
+      },
+      {
+        "id": "adult-13",
+        "kind": "pedestrian",
+        "entity": 18
+      },
+      {
+        "id": "adult-14",
+        "kind": "pedestrian",
+        "entity": 19
+      },
+      {
+        "id": "adult-15",
+        "kind": "pedestrian",
+        "entity": 20
+      },
+      {
+        "id": "adult-16",
+        "kind": "pedestrian",
+        "entity": 21
+      },
+      {
+        "id": "adult-17",
+        "kind": "pedestrian",
+        "entity": 22
+      },
+      {
+        "id": "adult-18",
+        "kind": "pedestrian",
+        "entity": 23
+      },
+      {
+        "id": "adult-19",
+        "kind": "pedestrian",
+        "entity": 24
+      },
+      {
+        "id": "adult-20",
+        "kind": "pedestrian",
+        "entity": 25
+      },
+      {
+        "id": "adult-21",
+        "kind": "pedestrian",
+        "entity": 26
+      },
+      {
+        "id": "adult-22",
+        "kind": "pedestrian",
+        "entity": 27
+      },
+      {
+        "id": "adult-23",
+        "kind": "pedestrian",
+        "entity": 28
+      },
+      {
+        "id": "adult-24",
+        "kind": "pedestrian",
+        "entity": 29
+      },
+      {
+        "id": "infected",
+        "kind": "infected",
+        "entity": 30
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-l6-tunnel-retreat",
+    "frame": 180,
+    "tick": 180,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 32,
+        "p95": 32,
+        "max": 32
+      },
+      "triangles": {
+        "p50": 161719,
+        "p95": 161719,
+        "max": 161719
+      },
+      "shadowDrawCalls": {
+        "p50": 33,
+        "p95": 33,
+        "max": 33
+      },
+      "shadowTriangles": {
+        "p50": 133006,
+        "p95": 133006,
+        "max": 133006
+      },
+      "stepMs": {
+        "p50": 3.2,
+        "p95": 4.3,
+        "max": 16.4
+      },
+      "lastFrame": {
+        "drawCalls": 32,
+        "triangles": 161719,
+        "shadowDrawCalls": 33,
+        "shadowTriangles": 133006,
+        "stepMs": 2.6999998092651367,
+        "categories": {
+          "other": 20,
+          "shadows": 33,
+          "buildings": 4,
+          "props": 4,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {
+        "infected": {
+          "stuckRunMax": 3,
+          "stuckFrame": 39,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          106.96,
+          15
+        ],
+        "yawDeg": 0,
+        "state": "walk",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            101.01,
+            15
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 4.9,
+          "contacts": 16,
+          "slideMaxCm": 1.8,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 19.1,
+          "sinkMaxCm": 0.4,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-0": {
+        "kind": "pedestrian",
+        "entity": 5,
+        "position": [
+          105.234,
+          13.813
+        ],
+        "yawDeg": -0.5,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            103,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 2.7,
+          "contacts": 8,
+          "slideMaxCm": 28.1,
+          "slideP95Cm": 14.6,
+          "yawDriftMaxDeg": 4.3,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-1": {
+        "kind": "pedestrian",
+        "entity": 6,
+        "position": [
+          105.594,
+          14.43
+        ],
+        "yawDeg": -1.3,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            103,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 7,
+          "slideMaxCm": 102,
+          "slideP95Cm": 64.2,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 52.6,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-2": {
+        "kind": "pedestrian",
+        "entity": 7,
+        "position": [
+          105.985,
+          15.61
+        ],
+        "yawDeg": 1.2,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            103,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 10,
+          "slideMaxCm": 31,
+          "slideP95Cm": 17.4,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-3": {
+        "kind": "pedestrian",
+        "entity": 8,
+        "position": [
+          106.73,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            104.5,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 6,
+          "slideMaxCm": 88.2,
+          "slideP95Cm": 19.4,
+          "yawDriftMaxDeg": 4.3,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-4": {
+        "kind": "pedestrian",
+        "entity": 9,
+        "position": [
+          107.529,
+          14.658
+        ],
+        "yawDeg": -0.1,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            104.5,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 11,
+          "slideMaxCm": 26.6,
+          "slideP95Cm": 14.5,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 53,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-5": {
+        "kind": "pedestrian",
+        "entity": 10,
+        "position": [
+          107.408,
+          15.546
+        ],
+        "yawDeg": 1.1,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            104.5,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -0.9,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 9,
+          "slideMaxCm": 31.2,
+          "slideP95Cm": 21.5,
+          "yawDriftMaxDeg": 4.7,
+          "liftMaxCm": 52.7,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-6": {
+        "kind": "pedestrian",
+        "entity": 11,
+        "position": [
+          108.419,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            106,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 8,
+          "slideMaxCm": 31.1,
+          "slideP95Cm": 22.1,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-7": {
+        "kind": "pedestrian",
+        "entity": 12,
+        "position": [
+          108.227,
+          14.809
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            106,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 8,
+          "slideMaxCm": 26.1,
+          "slideP95Cm": 20.9,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-8": {
+        "kind": "pedestrian",
+        "entity": 13,
+        "position": [
+          109.173,
+          15.536
+        ],
+        "yawDeg": 1.2,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            106,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 10,
+          "slideMaxCm": 26.6,
+          "slideP95Cm": 15.9,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 51.9,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-9": {
+        "kind": "pedestrian",
+        "entity": 14,
+        "position": [
+          109.616,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            107.5,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 8,
+          "slideMaxCm": 24.4,
+          "slideP95Cm": 19.8,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 52.4,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-10": {
+        "kind": "pedestrian",
+        "entity": 15,
+        "position": [
+          109.715,
+          14.8
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            107.5,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 2.7,
+          "contacts": 7,
+          "slideMaxCm": 46.4,
+          "slideP95Cm": 23.9,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-11": {
+        "kind": "pedestrian",
+        "entity": 16,
+        "position": [
+          109.984,
+          15.535
+        ],
+        "yawDeg": 1.2,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            107.5,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 8,
+          "slideMaxCm": 37.1,
+          "slideP95Cm": 30.2,
+          "yawDriftMaxDeg": 4.7,
+          "liftMaxCm": 53,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-12": {
+        "kind": "pedestrian",
+        "entity": 17,
+        "position": [
+          111.164,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            109,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 9,
+          "slideMaxCm": 22.5,
+          "slideP95Cm": 14.1,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 51.5,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-13": {
+        "kind": "pedestrian",
+        "entity": 18,
+        "position": [
+          112.663,
+          14.8
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            109,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 11,
+          "slideMaxCm": 23.1,
+          "slideP95Cm": 19.3,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 50.8,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-14": {
+        "kind": "pedestrian",
+        "entity": 19,
+        "position": [
+          110.698,
+          15.563
+        ],
+        "yawDeg": 1.4,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            109,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 7,
+          "slideMaxCm": 35.6,
+          "slideP95Cm": 20,
+          "yawDriftMaxDeg": 4.1,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-15": {
+        "kind": "pedestrian",
+        "entity": 20,
+        "position": [
+          113.202,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            110.5,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -0.9,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 8,
+          "slideMaxCm": 71.1,
+          "slideP95Cm": 17.6,
+          "yawDriftMaxDeg": 4.3,
+          "liftMaxCm": 53.6,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-16": {
+        "kind": "pedestrian",
+        "entity": 21,
+        "position": [
+          113.377,
+          14.8
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            110.5,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 11,
+          "slideMaxCm": 23.1,
+          "slideP95Cm": 14,
+          "yawDriftMaxDeg": 4.2,
+          "liftMaxCm": 51.6,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-17": {
+        "kind": "pedestrian",
+        "entity": 22,
+        "position": [
+          112.447,
+          15.53
+        ],
+        "yawDeg": 2.1,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            110.5,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 6,
+          "slideMaxCm": 94.2,
+          "slideP95Cm": 20.7,
+          "yawDriftMaxDeg": 6.3,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-18": {
+        "kind": "pedestrian",
+        "entity": 23,
+        "position": [
+          114.732,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            112,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 9,
+          "slideMaxCm": 31.6,
+          "slideP95Cm": 16.8,
+          "yawDriftMaxDeg": 4.3,
+          "liftMaxCm": 53.1,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-19": {
+        "kind": "pedestrian",
+        "entity": 24,
+        "position": [
+          114.116,
+          14.8
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            112,
+            14.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 8,
+          "slideMaxCm": 27.6,
+          "slideP95Cm": 24.6,
+          "yawDriftMaxDeg": 4.3,
+          "liftMaxCm": 52,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-20": {
+        "kind": "pedestrian",
+        "entity": 25,
+        "position": [
+          113.87,
+          15.472
+        ],
+        "yawDeg": 1.5,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            112,
+            15.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 2.7,
+          "contacts": 7,
+          "slideMaxCm": 20.4,
+          "slideP95Cm": 16.1,
+          "yawDriftMaxDeg": 6,
+          "liftMaxCm": 52.8,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-21": {
+        "kind": "pedestrian",
+        "entity": 26,
+        "position": [
+          116.193,
+          13.901
+        ],
+        "yawDeg": -0.8,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            113.493,
+            13.95
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 9,
+          "slideMaxCm": 20.1,
+          "slideP95Cm": 19.9,
+          "yawDriftMaxDeg": 4.1,
+          "liftMaxCm": 52.6,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 100
+        }
+      },
+      "adult-22": {
+        "kind": "pedestrian",
+        "entity": 27,
+        "position": [
+          115.729,
+          14.622
+        ],
+        "yawDeg": -1.4,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            113.616,
+            14.629
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 11,
+          "slideMaxCm": 25.1,
+          "slideP95Cm": 20.2,
+          "yawDriftMaxDeg": 4.1,
+          "liftMaxCm": 52.9,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-23": {
+        "kind": "pedestrian",
+        "entity": 28,
+        "position": [
+          115.765,
+          15.357
+        ],
+        "yawDeg": -1.9,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            113.253,
+            15.236
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2.7,
+          "torsoPitchMaxDeg": -2,
+          "contacts": 10,
+          "slideMaxCm": 21.8,
+          "slideP95Cm": 17.8,
+          "yawDriftMaxDeg": 4,
+          "liftMaxCm": 52.5,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "adult-24": {
+        "kind": "pedestrian",
+        "entity": 29,
+        "position": [
+          118.205,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 180,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            115,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": -2,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 10,
+          "slideMaxCm": 17.1,
+          "slideP95Cm": 16.7,
+          "yawDriftMaxDeg": 4.3,
+          "liftMaxCm": 52.8,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      "infected": {
+        "kind": "infected",
+        "entity": 30,
+        "position": [
+          102.1,
+          15
+        ],
+        "yawDeg": 0,
+        "state": "chase",
+        "drawnFrames": 180,
+        "inViewFrames": 82,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            92,
+            15
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 19.6,
+          "torsoPitchMaxDeg": 48.3,
+          "contacts": 3,
+          "slideMaxCm": 1098.6,
+          "slideP95Cm": 895.6,
+          "yawDriftMaxDeg": 38.8,
+          "liftMaxCm": 5.5,
+          "sinkMaxCm": 10,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 180,
+      "sim": {
+        "pedestrian": 25,
+        "infected": 1,
+        "courier": 1,
+        "actors": 27
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 1,
+        "pedestrian": 25,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "l6-5": "lod1",
+      "l6-6": "lod1",
+      "l6-7": "lod0",
+      "l6-8": "lod1",
+      "l6-44": "culled",
+      "l6-45": "lod2",
+      "l6-46": "lod2",
+      "l6-47": "culled",
+      "l6-61": "lod2",
+      "l6-62": "lod2",
+      "l6-69": "lod1",
+      "l6-74": "culled",
+      "l6-75": "culled",
+      "prop.emergency-light:lab0": "lod2"
+    },
+    "clipping": {
+      "staticPairs": 16,
+      "actorHits": 88,
+      "piercing": 53
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l6-5",
+        "b": "l6-74",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 1797,
+        "region": {
+          "min": [
+            86.39823913574219,
+            0.5999799370765686,
+            12.594615936279297
+          ],
+          "max": [
+            87.59588623046875,
+            0.9000295400619507,
+            13.200017929077148
+          ]
+        },
+        "regionCm": [
+          120,
+          30,
+          61
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-75",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.crates",
+        "intersectingTriangles": 1224,
+        "region": {
+          "min": [
+            86.39823913574219,
+            0.6127251386642456,
+            16.79998207092285
+          ],
+          "max": [
+            87.60176086425781,
+            0.9000295400619507,
+            17.40786361694336
+          ]
+        },
+        "regionCm": [
+          120,
+          29,
+          61
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-44",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            90,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            90.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "l6-45",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            102,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            102.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "l6-46",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 388,
+        "region": {
+          "min": [
+            114,
+            3.314997434616089,
+            11.782495498657227
+          ],
+          "max": [
+            114.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          61,
+          29
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-44",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            89.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            90,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-45",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            101.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            102,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "l6-46",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            113.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            114,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "l6-47",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 347,
+        "region": {
+          "min": [
+            125.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            126,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          19,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "prop.emergency-light:lab0",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.emergency-light",
+        "intersectingTriangles": 334,
+        "region": {
+          "min": [
+            104.80999755859375,
+            3.285003900527954,
+            11.782495498657227
+          ],
+          "max": [
+            105.19000244140625,
+            3.9200000762939453,
+            12.075004577636719
+          ]
+        },
+        "regionCm": [
+          38,
+          63,
+          29
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-61",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 191,
+        "region": {
+          "min": [
+            90,
+            0.6000099182128906,
+            11.200078964233398
+          ],
+          "max": [
+            90.35999298095703,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-6",
+        "b": "l6-62",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            90,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            90.35999298095703,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-8",
+        "b": "l6-69",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            114,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            114.35999298095703,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-61",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 169,
+        "region": {
+          "min": [
+            89.64000701904297,
+            0.6000099182128906,
+            11.200078964233398
+          ],
+          "max": [
+            90,
+            1.5499900579452515,
+            14.149999618530273
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-5",
+        "b": "l6-62",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 158,
+        "region": {
+          "min": [
+            89.64000701904297,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            90,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      },
+      {
+        "a": "l6-7",
+        "b": "l6-69",
+        "assetA": "kit.metro-tunnel",
+        "assetB": "prop.jersey-barrier",
+        "intersectingTriangles": 158,
+        "region": {
+          "min": [
+            113.64000701904297,
+            0.6000099182128906,
+            15.850000381469727
+          ],
+          "max": [
+            114,
+            1.5499900579452515,
+            18.7999210357666
+          ]
+        },
+        "regionCm": [
+          36,
+          95,
+          295
+        ]
+      }
+    ],
+    "actors": [
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          103.116,
+          0.77,
+          15.759
+        ],
+        "actor": "adult-2",
+        "frame": 54,
+        "count": 60
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          104.768,
+          0.97,
+          15.73
+        ],
+        "actor": "adult-5",
+        "frame": 51,
+        "count": 44
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          106.436,
+          0.77,
+          15.684
+        ],
+        "actor": "adult-5",
+        "frame": 126,
+        "count": 57
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          106.011,
+          0.77,
+          15.756
+        ],
+        "actor": "adult-8",
+        "frame": 30,
+        "count": 60
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          109.022,
+          0.77,
+          15.757
+        ],
+        "actor": "adult-14",
+        "frame": 102,
+        "count": 60
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          111.253,
+          0.759,
+          14.13
+        ],
+        "actor": "adult-15",
+        "frame": 96,
+        "count": 36
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          111.565,
+          0.91,
+          15.681
+        ],
+        "actor": "adult-17",
+        "frame": 135,
+        "count": 53
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          112.229,
+          0.77,
+          15.713
+        ],
+        "actor": "adult-20",
+        "frame": 108,
+        "count": 55
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          92.169,
+          0.73,
+          14.81
+        ],
+        "actor": "infected",
+        "frame": 3,
+        "count": 35
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          113.694,
+          0.73,
+          14.452
+        ],
+        "actor": "adult-22",
+        "frame": 81,
+        "count": 19
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          106.329,
+          0.73,
+          14.682
+        ],
+        "actor": "adult-4",
+        "frame": 123,
+        "count": 24
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          98.13,
+          0.693,
+          15.151
+        ],
+        "actor": "infected",
+        "frame": 138,
+        "count": 24
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0,
+        "at": [
+          116.151,
+          0.726,
+          14.022
+        ],
+        "actor": "adult-21",
+        "frame": 180,
+        "count": 20
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          103.078,
+          0.758,
+          14.18
+        ],
+        "actor": "adult-0",
+        "frame": 81,
+        "count": 34
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          107.506,
+          0.77,
+          15.756
+        ],
+        "actor": "adult-11",
+        "frame": 9,
+        "count": 55
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          109.378,
+          0.859,
+          15.755
+        ],
+        "actor": "adult-14",
+        "frame": 114,
+        "count": 50
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          111.753,
+          0.73,
+          14.918
+        ],
+        "actor": "adult-13",
+        "frame": 129,
+        "count": 20
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          104.766,
+          0.73,
+          14.923
+        ],
+        "actor": "adult-4",
+        "frame": 33,
+        "count": 16
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          110.741,
+          0.73,
+          13.877
+        ],
+        "actor": "adult-15",
+        "frame": 60,
+        "count": 14
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          105.593,
+          0.77,
+          14.303
+        ],
+        "actor": "adult-1",
+        "frame": 171,
+        "count": 35
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          103.235,
+          0.73,
+          13.834
+        ],
+        "actor": "adult-0",
+        "frame": 84,
+        "count": 6
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          106.348,
+          0.727,
+          14.984
+        ],
+        "actor": "adult-7",
+        "frame": 81,
+        "count": 1
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          114.242,
+          0.73,
+          15.183
+        ],
+        "actor": "adult-23",
+        "frame": 108,
+        "count": 12
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          108.338,
+          0.73,
+          14.676
+        ],
+        "actor": "adult-10",
+        "frame": 117,
+        "count": 13
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          108.799,
+          0.73,
+          14.923
+        ],
+        "actor": "adult-10",
+        "frame": 135,
+        "count": 15
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          110.643,
+          0.718,
+          15.419
+        ],
+        "actor": "adult-17",
+        "frame": 105,
+        "count": 8
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.1,
+        "at": [
+          107.311,
+          0.73,
+          13.882
+        ],
+        "actor": "adult-6",
+        "frame": 123,
+        "count": 14
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          113.251,
+          0.73,
+          15.358
+        ],
+        "actor": "adult-23",
+        "frame": 27,
+        "count": 23
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          107.799,
+          0.73,
+          14.122
+        ],
+        "actor": "adult-6",
+        "frame": 156,
+        "count": 48
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          113.209,
+          0.73,
+          14.118
+        ],
+        "actor": "adult-18",
+        "frame": 108,
+        "count": 31
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          112.852,
+          0.722,
+          14.679
+        ],
+        "actor": "adult-16",
+        "frame": 150,
+        "count": 12
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          115.171,
+          0.73,
+          13.877
+        ],
+        "actor": "adult-24",
+        "frame": 51,
+        "count": 20
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          108.775,
+          0.73,
+          15.426
+        ],
+        "actor": "adult-8",
+        "frame": 153,
+        "count": 12
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          107.854,
+          0.721,
+          15.41
+        ],
+        "actor": "adult-11",
+        "frame": 72,
+        "count": 1
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          105.322,
+          0.73,
+          13.882
+        ],
+        "actor": "adult-3",
+        "frame": 108,
+        "count": 14
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          112.22,
+          0.73,
+          14.682
+        ],
+        "actor": "adult-13",
+        "frame": 150,
+        "count": 15
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.2,
+        "at": [
+          110.188,
+          0.73,
+          15.456
+        ],
+        "actor": "adult-14",
+        "frame": 147,
+        "count": 12
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.3,
+        "at": [
+          117.269,
+          0.73,
+          14.119
+        ],
+        "actor": "adult-24",
+        "frame": 132,
+        "count": 37
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.3,
+        "at": [
+          105.837,
+          0.73,
+          15.495
+        ],
+        "actor": "adult-2",
+        "frame": 165,
+        "count": 11
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.3,
+        "at": [
+          113.248,
+          0.73,
+          14.919
+        ],
+        "actor": "adult-16",
+        "frame": 165,
+        "count": 7
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.3,
+        "at": [
+          110.266,
+          0.73,
+          13.881
+        ],
+        "actor": "adult-12",
+        "frame": 126,
+        "count": 7
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.3,
+        "at": [
+          114.176,
+          0.73,
+          14.122
+        ],
+        "actor": "adult-18",
+        "frame": 159,
+        "count": 8
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.4,
+        "at": [
+          109.839,
+          0.73,
+          14.119
+        ],
+        "actor": "adult-9",
+        "frame": 180,
+        "count": 36
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.4,
+        "at": [
+          107.691,
+          0.73,
+          13.878
+        ],
+        "actor": "adult-9",
+        "frame": 93,
+        "count": 8
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.5,
+        "at": [
+          106.341,
+          0.908,
+          15.747
+        ],
+        "actor": "adult-8",
+        "frame": 45,
+        "count": 41
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.6,
+        "at": [
+          105.175,
+          0.73,
+          14.525
+        ],
+        "actor": "adult-1",
+        "frame": 150,
+        "count": 15
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.6,
+        "at": [
+          112.337,
+          0.73,
+          13.817
+        ],
+        "actor": "adult-18",
+        "frame": 72,
+        "count": 1
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 0.8,
+        "at": [
+          106.736,
+          0.73,
+          14.12
+        ],
+        "actor": "adult-3",
+        "frame": 171,
+        "count": 43
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 1,
+        "at": [
+          107.813,
+          0.73,
+          14.589
+        ],
+        "actor": "adult-10",
+        "frame": 96,
+        "count": 1
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 1.1,
+        "at": [
+          113.268,
+          0.73,
+          15.121
+        ],
+        "actor": "adult-23",
+        "frame": 18,
+        "count": 9
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 2.1,
+        "at": [
+          101.178,
+          0.73,
+          14.848
+        ],
+        "actor": "infected",
+        "frame": 171,
+        "count": 6
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 2.6,
+        "at": [
+          94.848,
+          0.727,
+          15.149
+        ],
+        "actor": "infected",
+        "frame": 99,
+        "count": 7
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": true,
+        "clearanceCm": 3,
+        "at": [
+          110.824,
+          0.73,
+          15.412
+        ],
+        "actor": "adult-17",
+        "frame": 105,
+        "count": 1
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0,
+        "actor": "adult-22",
+        "frame": 69,
+        "count": 19
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.1,
+        "actor": "adult-2",
+        "frame": 126,
+        "count": 40
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.1,
+        "actor": "adult-11",
+        "frame": 105,
+        "count": 15
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.1,
+        "actor": "adult-18",
+        "frame": 141,
+        "count": 15
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.2,
+        "actor": "adult-11",
+        "frame": 90,
+        "count": 42
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.2,
+        "actor": "adult-17",
+        "frame": 123,
+        "count": 43
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.2,
+        "actor": "adult-19",
+        "frame": 99,
+        "count": 8
+      },
+      {
+        "bone": "foreArmR",
+        "prop": "l6-69",
+        "asset": "prop.jersey-barrier",
+        "crossing": false,
+        "clearanceCm": 0.3,
+        "actor": "adult-20",
+        "frame": 174,
+        "count": 2
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.4,
+        "actor": "adult-12",
+        "frame": 162,
+        "count": 40
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.4,
+        "actor": "adult-7",
+        "frame": 96,
+        "count": 7
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.4,
+        "actor": "adult-23",
+        "frame": 129,
+        "count": 6
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.5,
+        "actor": "adult-22",
+        "frame": 117,
+        "count": 7
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.7,
+        "actor": "adult-20",
+        "frame": 96,
+        "count": 41
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.8,
+        "actor": "adult-1",
+        "frame": 51,
+        "count": 1
+      },
+      {
+        "bone": "foreArmL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.9,
+        "actor": "adult-1",
+        "frame": 51,
+        "count": 1
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 0.9,
+        "actor": "adult-18",
+        "frame": 180,
+        "count": 5
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.1,
+        "actor": "adult-21",
+        "frame": 153,
+        "count": 10
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-8",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.2,
+        "actor": "adult-22",
+        "frame": 135,
+        "count": 5
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.3,
+        "actor": "adult-20",
+        "frame": 150,
+        "count": 5
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.3,
+        "actor": "infected",
+        "frame": 177,
+        "count": 1
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.5,
+        "actor": "adult-1",
+        "frame": 147,
+        "count": 22
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.5,
+        "actor": "adult-7",
+        "frame": 81,
+        "count": 1
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.6,
+        "actor": "adult-19",
+        "frame": 120,
+        "count": 2
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.7,
+        "actor": "adult-21",
+        "frame": 69,
+        "count": 5
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-6",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.8,
+        "actor": "courier",
+        "frame": 21,
+        "count": 3
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.8,
+        "actor": "courier",
+        "frame": 51,
+        "count": 11
+      },
+      {
+        "bone": "shinL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 1.8,
+        "actor": "courier",
+        "frame": 84,
+        "count": 4
+      },
+      {
+        "bone": "shinR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 2.1,
+        "actor": "adult-21",
+        "frame": 9,
+        "count": 4
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 3.6,
+        "actor": "adult-0",
+        "frame": 81,
+        "count": 1
+      },
+      {
+        "bone": "thighL",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 3.7,
+        "actor": "adult-4",
+        "frame": 21,
+        "count": 1
+      },
+      {
+        "bone": "thighR",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 4.5,
+        "actor": "adult-6",
+        "frame": 90,
+        "count": 1
+      },
+      {
+        "bone": "spine",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 5.5,
+        "actor": "adult-11",
+        "frame": 72,
+        "count": 1
+      },
+      {
+        "bone": "spine",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 6,
+        "actor": "adult-2",
+        "frame": 54,
+        "count": 1
+      },
+      {
+        "bone": "spine",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 6.5,
+        "actor": "adult-17",
+        "frame": 105,
+        "count": 1
+      },
+      {
+        "bone": "spine",
+        "prop": "l6-7",
+        "asset": "kit.metro-tunnel",
+        "crossing": false,
+        "clearanceCm": 7.8,
+        "actor": "adult-5",
+        "frame": 51,
+        "count": 1
+      }
+    ],
+    "summary": {
+      "staticPairs": 16,
+      "actorHits": 88,
+      "piercing": 53
+    }
+  }
+}

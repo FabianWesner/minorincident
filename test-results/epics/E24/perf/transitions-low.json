@@ -1,0 +1,858 @@
+[
+  {
+    "beat": "breach2",
+    "max": 34.29999999999927,
+    "frames": [
+      19.799999999999272,
+      25.400000000001455,
+      20.799999999999272,
+      13.700000000000728,
+      33.599999999998545,
+      18,
+      20.900000000001455,
+      1.5,
+      18.799999999999272,
+      13.900000000001455,
+      33.5,
+      21,
+      0.2999999999992724,
+      17.5,
+      34.29999999999927,
+      4,
+      16.900000000001455,
+      12.5,
+      14.899999999997817,
+      14.5,
+      15.5,
+      16.700000000000728,
+      15.200000000000728,
+      16.299999999999272,
+      15.200000000000728,
+      13.599999999998545,
+      14.600000000002183,
+      16.200000000000728,
+      14.799999999999272,
+      16.799999999999272,
+      17.400000000001455
+    ],
+    "state": {
+      "phase": "retreat",
+      "startAt": 0,
+      "breach1At": 1992,
+      "breach2At": 3253,
+      "abandonAt": 3253,
+      "nextWave": 3853,
+      "firstBang": true,
+      "secondBang": true,
+      "leaderX": 6,
+      "leaderZ": -0.8633333333333346,
+      "paused": false,
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 10,
+          "injured": false,
+          "routine": "guard",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 11,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 12,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 13,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 14,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 15,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 16,
+          "injured": false,
+          "routine": "sit",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 17,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 18,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 19,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 20,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 21,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 22,
+          "injured": false,
+          "routine": "talk",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 23,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 24,
+          "injured": false,
+          "routine": "rest",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 25,
+          "injured": true,
+          "routine": "share",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 26,
+          "injured": false,
+          "routine": "treat",
+          "status": "following",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 27,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 28,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 29,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        }
+      ],
+      "gates": [
+        {
+          "id": 30,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 31,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 32,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "infectedIds": [
+        35,
+        37,
+        45,
+        47,
+        49,
+        51,
+        53,
+        55,
+        57,
+        59
+      ],
+      "spawnLog": [
+        {
+          "id": 35,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        },
+        {
+          "id": 37,
+          "door": 0,
+          "x": -9.391341716182545,
+          "z": -10.938060233744357,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        },
+        {
+          "id": 45,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 47,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 49,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 51,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 53,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 55,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 57,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 59,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        }
+      ],
+      "flashlight": true,
+      "mainPower": false,
+      "emergency": true,
+      "exitAt": 0,
+      "gateAt": 0,
+      "injuryLineAt": 0,
+      "lastShot": 0,
+      "mid": false,
+      "platform": false,
+      "say": {
+        "id": 10,
+        "text": "Into the tunnel! Everybody, move!",
+        "at": 3253,
+        "until": 3523
+      }
+    }
+  },
+  {
+    "beat": "abandon",
+    "max": 35,
+    "frames": [
+      17.299999999999272,
+      13.900000000001455,
+      15.200000000000728,
+      15.399999999997817,
+      15.400000000001455,
+      14.700000000000728,
+      14.799999999999272,
+      15.099999999998545,
+      14.400000000001455,
+      14,
+      15,
+      12.399999999997817,
+      14.80000000000291,
+      14.299999999999272,
+      18.299999999999272,
+      17,
+      15.099999999998545,
+      15,
+      15.900000000001455,
+      16.200000000000728,
+      33.29999999999927,
+      2.599999999998545,
+      15.900000000001455,
+      13.099999999998545,
+      14.400000000001455,
+      16.700000000000728,
+      13.799999999999272,
+      15.099999999998545,
+      15.900000000001455,
+      17.099999999998545,
+      15.900000000001455,
+      16.5,
+      17.799999999999272,
+      16.700000000000728,
+      35
+    ],
+    "state": {
+      "phase": "retreat",
+      "startAt": 0,
+      "breach1At": 1992,
+      "breach2At": 3253,
+      "abandonAt": 3253,
+      "nextWave": 4453,
+      "firstBang": true,
+      "secondBang": true,
+      "leaderX": 23.15999999999984,
+      "leaderZ": 15,
+      "paused": false,
+      "survivors": [
+        {
+          "key": "shelter-0",
+          "id": 10,
+          "injured": false,
+          "routine": "guard",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-1",
+          "id": 11,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-2",
+          "id": 12,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-3",
+          "id": 13,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-4",
+          "id": 14,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-5",
+          "id": 15,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-6",
+          "id": 16,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-7",
+          "id": 17,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-8",
+          "id": 18,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-9",
+          "id": 19,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-10",
+          "id": 20,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-11",
+          "id": 21,
+          "injured": false,
+          "routine": "sit",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-12",
+          "id": 22,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-13",
+          "id": 23,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "shelter-14",
+          "id": 24,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "dale",
+          "id": 25,
+          "injured": true,
+          "routine": "share",
+          "status": "dead",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 26,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 27,
+          "injured": false,
+          "routine": "talk",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 28,
+          "injured": false,
+          "routine": "treat",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 29,
+          "injured": false,
+          "routine": "rest",
+          "status": "turned",
+          "straggler": false,
+          "collected": false,
+          "rejoined": false,
+          "hold": 0
+        }
+      ],
+      "gates": [
+        {
+          "id": 30,
+          "x": 90,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 31,
+          "x": 150,
+          "closedAt": 0,
+          "hold": 0
+        },
+        {
+          "id": 32,
+          "x": 210,
+          "closedAt": 0,
+          "hold": 0
+        }
+      ],
+      "infectedIds": [
+        35,
+        37,
+        45,
+        47,
+        49,
+        51,
+        53,
+        55,
+        57,
+        59,
+        70,
+        72,
+        74
+      ],
+      "spawnLog": [
+        {
+          "id": 35,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        },
+        {
+          "id": 37,
+          "door": 0,
+          "x": -9.391341716182545,
+          "z": -10.938060233744357,
+          "tick": 1992,
+          "wave": 1,
+          "offscreen": true
+        },
+        {
+          "id": 45,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 47,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 49,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 51,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 53,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 55,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 57,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 59,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3253,
+          "wave": 2,
+          "offscreen": true
+        },
+        {
+          "id": 70,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3853,
+          "wave": 3,
+          "offscreen": true
+        },
+        {
+          "id": 72,
+          "door": 1,
+          "x": 10.8,
+          "z": -11.4,
+          "tick": 3853,
+          "wave": 3,
+          "offscreen": true
+        },
+        {
+          "id": 74,
+          "door": 0,
+          "x": -10,
+          "z": -11.4,
+          "tick": 3853,
+          "wave": 3,
+          "offscreen": true
+        }
+      ],
+      "flashlight": true,
+      "mainPower": false,
+      "emergency": true,
+      "exitAt": 0,
+      "gateAt": 0,
+      "injuryLineAt": 0,
+      "lastShot": 0,
+      "mid": false,
+      "platform": false,
+      "say": {
+        "id": 10,
+        "text": "Into the tunnel! Everybody, move!",
+        "at": 3253,
+        "until": 3523
+      }
+    }
+  }
+]
