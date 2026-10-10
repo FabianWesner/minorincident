@@ -176,8 +176,8 @@ export class LevelTwoRescue {
     const o = this.outbreak(), ids: number[] = [], out = this.snap({ x: -49.6, z: -42.2 });
     for (let i = 0; i < count; i++) {
       const glass = l2.rescue.atGlass[i];
-      // Children wear an adult look scaled down by the crowd (never the elderly model); they are never targets (E08 rule).
-      const id = o.spawnPedestrian(out, { schedule: this.schedule(out, { x: -44, z: -36 }), ...(glass?.[3] === 'child' ? { model: i % 2 ? 'npc.civilian-woman-b' : 'npc.civilian-man-b' } : {}) });
+      // Protected children use the authored child proportions at native scale (E08 rule).
+      const id = o.spawnPedestrian(out, { schedule: this.schedule(out, { x: -44, z: -36 }), ...(glass?.[3] === 'child' ? { model: 'npc.civilian-kid', child: true } : {}) });
       const e = this.world.entities.get(id)!;
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; ids.push(id);
       // The first sixteen panic behind the east and south glass, each on its own loop; the rest wait out of sight inside.
