@@ -53,6 +53,10 @@ test('distant corpse pages cull independently while every body persists @E07', (
   const visible = pool.children.filter(mesh => frustum.intersectsObject(mesh));
   expect(visible.reduce((count, mesh) => count + (mesh as InstancedMesh).count, 0)).toBe(2);
   expect(pool.snapshot().instances).toBe(4);
+  const pages = pool.children as InstancedMesh[];
+  expect(pages[1].material).toBe(pages[0].material);
+  expect(pages[1].geometry.getAttribute('position')).toBe(pages[0].geometry.getAttribute('position'));
+  expect(pages[1].geometry.getAttribute('_variant')).not.toBe(pages[0].geometry.getAttribute('_variant'));
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 

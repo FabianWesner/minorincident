@@ -10,6 +10,7 @@ interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: 
 export class StaticCorpses extends Group {
   private readonly bodies = new Map<string, EntitySnapshot>();
   private readonly chunks = new Map<string, Chunk[]>();
+  private readonly frozen = new Map<string, { geometry: BufferGeometry; material: MeshLambertNodeMaterial }>();
   private readonly partMatrix = new Matrix4();
   private readonly point = new Vector3();
   has(id: number): boolean { return this.bodies.has(String(id)); }
@@ -47,37 +48,47 @@ export class StaticCorpses extends Group {
   private createPage(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[]): Chunk {
     let pages = this.chunks.get(key);
     if (!pages) { pages = []; this.chunks.set(key, pages); }
-    const geometry = new BufferGeometry(), parts = source.getAttribute('_parts');
-    const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-    const kept = Array.from({ length: parts.count }, (_, i) => i).filter(i => !hidden.has(parts.getX(i)));
-    for (const name of ['position', 'normal', 'color', '_parts']) {
-      const original = source.getAttribute(name), data = new Float32Array(kept.length * original.itemSize);
-      for (const [output, i] of kept.entries()) {
-        if (name === 'position' || name === 'normal') {
-          this.partMatrix.fromArray(clip.matrices, (Math.floor(frame) * clip.parts.length + parts.getX(i)) * 16);
-          this.point.fromBufferAttribute(original, i);
-          if (name === 'position') this.point.applyMatrix4(this.partMatrix); else this.point.transformDirection(this.partMatrix);
-          this.point.toArray(data, output * 3);
-        } else for (let c = 0; c < original.itemSize; c++) data[output * original.itemSize + c] = original.getComponent(i, c);
+    const frozenKey = `${source.uuid}/${material.uuid}/${frame}/${hiddenParts.join(',')}`;
+    let frozen = this.frozen.get(frozenKey);
+    if (!frozen) {
+      const geometry = new BufferGeometry(), parts = source.getAttribute('_parts');
+      const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
+      const kept = Array.from({ length: parts.count }, (_, i) => i).filter(i => !hidden.has(parts.getX(i)));
+      for (const name of ['position', 'normal', 'color', '_parts']) {
+        const original = source.getAttribute(name), data = new Float32Array(kept.length * original.itemSize);
+        for (const [output, i] of kept.entries()) {
+          if (name === 'position' || name === 'normal') {
+            this.partMatrix.fromArray(clip.matrices, (Math.floor(frame) * clip.parts.length + parts.getX(i)) * 16);
+            this.point.fromBufferAttribute(original, i);
+            if (name === 'position') this.point.applyMatrix4(this.partMatrix); else this.point.transformDirection(this.partMatrix);
+            this.point.toArray(data, output * 3);
+          } else for (let c = 0; c < original.itemSize; c++) data[output * original.itemSize + c] = original.getComponent(i, c);
+        }
+        geometry.setAttribute(name, new BufferAttribute(data, original.itemSize));
       }
-      geometry.setAttribute(name, new BufferAttribute(data, original.itemSize));
-    }
-    // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
-    const index = source.getIndex();
-    if (index) {
-      const renumber = new Map(kept.map((old, i) => [old, i])), triangles: number[] = [];
-      for (let i = 0; i < index.count; i += 3) {
-        const a = renumber.get(index.getX(i)), b = renumber.get(index.getX(i + 1)), c = renumber.get(index.getX(i + 2));
-        if (a !== undefined && b !== undefined && c !== undefined) triangles.push(a, b, c);
+      // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
+      const index = source.getIndex();
+      if (index) {
+        const renumber = new Map(kept.map((old, i) => [old, i])), triangles: number[] = [];
+        for (let i = 0; i < index.count; i += 3) {
+          const a = renumber.get(index.getX(i)), b = renumber.get(index.getX(i + 1)), c = renumber.get(index.getX(i + 2));
+          if (a !== undefined && b !== undefined && c !== undefined) triangles.push(a, b, c);
+        }
+        geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
       }
-      geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
+      const frozenMaterial = material instanceof PaletteMaterial ? material.frozenCopy() : new MeshLambertNodeMaterial().copy(material);
+      frozenMaterial.positionNode = null; frozenMaterial.normalNode = null;
+      frozen = { geometry, material: frozenMaterial }; this.frozen.set(frozenKey, frozen);
     }
+    // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
+    const geometry = new BufferGeometry();
+    for (const name of ['position', 'normal', 'color', '_parts']) geometry.setAttribute(name, frozen.geometry.getAttribute(name));
+    geometry.setIndex(frozen.geometry.getIndex());
     const state = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
-    const frozen = material instanceof PaletteMaterial ? material.frozenCopy() : new MeshLambertNodeMaterial().copy(material); frozen.positionNode = null; frozen.normalNode = null;
-    const mesh = new InstancedMesh(geometry, frozen, 128); mesh.count = 0;
+    const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const probe = new CrowdFigureProbe(); mesh.onAfterRender = () => probe.draw();
     const page = { mesh, tint: colors, overlay: stains, probe }; pages.push(page); this.add(mesh);
@@ -85,8 +96,9 @@ export class StaticCorpses extends Group {
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.filter(page => page.mesh.count > 0).length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }
   reset(): void {
-    for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
-    this.chunks.clear(); this.bodies.clear(); this.clear();
+    for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); mesh.dispose(); }
+    for (const frozen of this.frozen.values()) { frozen.geometry.dispose(); frozen.material.dispose(); }
+    this.frozen.clear(); this.chunks.clear(); this.bodies.clear(); this.clear();
   }
   dispose(): void { this.reset(); }
 }
