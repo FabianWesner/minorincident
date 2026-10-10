@@ -377,8 +377,8 @@ export class GameView implements Lifecycle {
       for (let i = 0; i < 30; i++) await frame();
       if (stale()) return;
       // A preload may finish while a briefing is still open. Downloads start only after
-      // gameplay has advanced; test mode keeps readiness even with a paused sim.
-      while (this.world.missions?.state.phase === 'briefing' || this.playSeconds === 0 && this.params.get('test') !== '1') { await frame(); if (stale()) return; }
+      // the first five seconds of gameplay have settled; test mode keeps readiness with a paused sim.
+      while (this.world.missions?.state.phase === 'briefing' || this.playSeconds < 5 && this.params.get('test') !== '1') { await frame(); if (stale()) return; }
       loadGate.setPaced(true);
       for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
       const start = performance.now();

@@ -98,6 +98,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       await page.evaluate(() => { window.__SS__!.cheats.god(true); const p = window.transitionProbe!; if (!p.ready) p.ready = performance.now(); p.done = true; p.previous = 0; p.recording = true; });
       await page.waitForTimeout(5000);
       const result = await page.evaluate(() => { const p = window.transitionProbe!; p.recording = false; p.stopped = true; return { loadTiming: window.__SS__!.perf().loadTiming, phases: performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })), ms: p.ready - p.start, maxFrame: Math.max(...p.frames), over50: p.frames.filter(ms => ms > 50), frames: p.frames }; });
+      if (phase !== 'before' && tier === 'high') expect(result.over50, `${level}: no new hitch in the first five seconds`).toHaveLength(0);
       rows.push({ level: restart ? 'restart L6' : level, ...result, samples, cardSamples, emptySamples, progress });
       writeFileSync(`${out}/${phase}-${tier}.json`, JSON.stringify({ load: loadavg(), rows }, null, 2));
       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);
