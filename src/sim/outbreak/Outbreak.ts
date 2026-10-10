@@ -368,7 +368,7 @@ export class Outbreak {
   private canTurn(): boolean {
     const ai = this.world.infected!; let turning = 0;
     for (const e of this.world.entities.iterate()) if (e.infection) turning++;
-    return ai.pool.length > turning && ai.director.count + turning < ai.director.cap;
+    return ai.pool.length > turning && ai.director.count + turning < ai.director.cap - ai.director.reserved;
   }
   private bite(e: EntitySnapshot, attacker: EntitySnapshot): void {
     const turns = this.canTurn(); this.state(e, 'bitten');

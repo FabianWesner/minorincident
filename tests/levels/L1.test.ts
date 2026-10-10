@@ -196,9 +196,10 @@ describe('L1 v2 mission', () => {
     const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>(), path = new Map<number, number[]>();
     w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doors.push({ id: e.id, tick: e.tick }); });
     const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
-    let nearMax = 0;
+    let nearMax = 0, maxCount = 0;
     // The courier takes the bat and heads for the fire station (complete bot); every tick, note new residents where they appear.
     w.events.on('sim.tick', () => {
+      maxCount = Math.max(maxCount, w.infected!.director.count);
       const h = mission.state.l1?.house;
       for (const id of h?.ids ?? []) {
         const t = w.entities.get(id)!.transform; if (!appear.has(id)) appear.set(id, { tick: w.tick, x: t.x, z: t.z });
@@ -218,6 +219,7 @@ describe('L1 v2 mission', () => {
     expect(house.house).toMatch(/^bld\.house-/); expect(house.nx + house.nz).toBeGreaterThan(0);
     expect(Math.hypot(house.x - g.x, house.z - g.z)).toBeLessThanOrEqual(l1v2.house.doorM[1]);
     expect(house.ids).toHaveLength(l1v2.house.count);
+    expect(maxCount).toBeLessThanOrEqual(w.infected!.director.cap);
     // PO P1 10-08: the door opens once with the first resident and stays open (one bang), the residents follow 1.5 to 4 s apart.
     // (The lab annex door opened for the accident staff earlier; only house doors count here.)
     expect(doors.filter(d => !d.id.includes("clinic-annex"))).toEqual([{ id: `door-${house.door}`, tick: appear.get(house.ids[0])!.tick - 1 }]);
