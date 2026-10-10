@@ -29,7 +29,16 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
         await page.evaluate(async final => {
           const a = window.__SS__!; a.pause();
           for (let i = 0; i < 80 && a.missions.state()!.steps[final]?.status !== 'active'; i++) {
-            a.missions.completeObjective();
+            const state = a.missions.state()!;
+            const active = Object.entries(state.steps).find(([id, step]) => id !== final && step.status === 'active');
+            if (active) a.missions.completeObjective(active[0]);
+            else {
+              // completeObjective() in a scripted gap also completes the newly activated goal.
+              // Set the gap signal separately so the final goal remains available for the timed handoff.
+              const level = a.getState().scenario;
+              const key = level === 'L1' ? 'exited' : level === 'L2' ? 'radio' : level === 'L3' ? state.states.attack ? 'fallback' : 'attack' : level === 'L4' ? state.states.turned ? 'line-broken' : 'turned' : 'searching';
+              a.missions.setState(key, true);
+            }
             if (a.missions.state()!.steps[final]?.status !== 'active') await a.step(1);
           }
         }, finalObjective);
@@ -38,7 +47,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
         await page.waitForTimeout(2000);
       }
       await page.evaluate(({ level, restart, finalObjective }) => {
-        const a = window.__SS__!;
+        const a = window.__SS__!; performance.clearMeasures();
         const probe: NonNullable<Window['transitionProbe']> = window.transitionProbe = { done: false, start: performance.now(), ready: 0, frames: [] as number[], previous: 0, recording: false, stopped: false };
         const frame = (now: number) => { if (probe.recording && probe.previous) probe.frames.push(now - probe.previous); probe.previous = now; if (!probe.stopped) requestAnimationFrame(frame); };
         requestAnimationFrame(frame);
@@ -88,7 +97,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       }
       await page.evaluate(() => { window.__SS__!.cheats.god(true); const p = window.transitionProbe!; if (!p.ready) p.ready = performance.now(); p.done = true; p.previous = 0; p.recording = true; });
       await page.waitForTimeout(5000);
-      const result = await page.evaluate(() => { const p = window.transitionProbe!; p.recording = false; p.stopped = true; return { ms: p.ready - p.start, maxFrame: Math.max(...p.frames), over50: p.frames.filter(ms => ms > 50), frames: p.frames }; });
+      const result = await page.evaluate(() => { const p = window.transitionProbe!; p.recording = false; p.stopped = true; return { loadTiming: window.__SS__!.perf().loadTiming, phases: performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })), ms: p.ready - p.start, maxFrame: Math.max(...p.frames), over50: p.frames.filter(ms => ms > 50), frames: p.frames }; });
       rows.push({ level: restart ? 'restart L6' : level, ...result, samples, cardSamples, emptySamples, progress });
       writeFileSync(`${out}/${phase}-${tier}.json`, JSON.stringify({ load: loadavg(), rows }, null, 2));
       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);

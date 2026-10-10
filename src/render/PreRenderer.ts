@@ -47,7 +47,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so
     // node builds and pipeline creation never form one long task; the full draw below is then cheap.
     const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
-    const chunk = 16, soloChunk = 4, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
+    const chunk = renderer.selectedBackend === 'webgl' ? 64 : 16, soloChunk = 4, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
     let completed = 1; progress?.(completed, total);
     if (pause) {
       for (let from = 0; from < leaves.length; from += chunk) {

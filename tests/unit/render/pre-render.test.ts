@@ -61,12 +61,12 @@ test('@E19 animated batches execute both driver paths without opaque occluders',
 
 test('@transition prewarm yields between small draw groups, reports completed work and restores the scene on failure', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
-  const meshes = Array.from({ length: 40 }, () => new Mesh(geometry, material)); scene.add(...meshes);
+  const meshes = Array.from({ length: 100 }, () => new Mesh(geometry, material)); scene.add(...meshes);
   const size = new Vector2(1600, 900), groups: number[] = [], progress: number[] = [];
   const pause = vi.fn(async () => {});
   const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.copy(size), setSize: (x: number, y: number) => size.set(x, y), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => {}) } as unknown as Renderer;
   await preRender(renderer, scene, new PerspectiveCamera(), () => { groups.push(meshes.filter(m => m.visible).length); }, undefined, pause, (done, total) => progress.push(done / total));
-  expect(groups.slice(0, 3)).toEqual([16, 16, 8]); expect(pause.mock.calls.length).toBeGreaterThanOrEqual(3);
+  expect(groups.slice(0, 2)).toEqual([64, 36]); expect(pause.mock.calls.length).toBeGreaterThanOrEqual(2);
   expect(progress.at(-1)).toBe(1); expect(progress.every((p, i) => i === 0 || p >= progress[i - 1])).toBe(true);
   await expect(preRender(renderer, scene, new PerspectiveCamera(), () => { throw new Error('GPU lost'); }, undefined, pause)).rejects.toThrow('GPU lost');
   expect(size.toArray()).toEqual([1600, 900]); expect(meshes.every(m => m.visible && m.frustumCulled)).toBe(true);
