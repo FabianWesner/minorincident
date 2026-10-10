@@ -7,7 +7,7 @@ export type Level = 1|2|3|4|5|6;
 export type ProgressionPreset = `L${2|3|4|5|6}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
-  version:1; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
+  version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
   ownedActions:string[]; upgrades:string[]; racks:{LEFT:string[];RIGHT:string[]}; settings:CampaignSettings;
   usage:Record<string,number>;
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
@@ -28,7 +28,7 @@ export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as co
 export const weaponChoices:Partial<Record<Level,readonly string[]>>={3:['weapon.smg','weapon.hunting-rifle']};
 export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
-  return {version:1,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
+  return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
 }
 export function rackSize(level:number):number {return level<2?1:level<4?2:3;}
 export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel):boolean {

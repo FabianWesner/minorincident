@@ -10,6 +10,7 @@ import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
+import { completeCampaignLevel } from './sim/progression/carryover';
 import type { SurvivorVariant } from './data/survivor';
 import { performanceLevels, installPerformanceLevel } from '../tests/fixtures/scenarios/performance';
 import { Quality, type QualitySetting } from './core/Quality';
@@ -243,6 +244,11 @@ export class Game {
   campaignSettings(patch:CampaignSettings):void {if(this.campaign){Object.assign(this.campaign.settings,patch);this.saveCampaign();}}
   private watchCampaign():void {
     const save=this.campaign!;
+    this.world.events.on('level.completed',event=>{
+      if(event.type!=='level.completed'||!/^L[1-6]$/.test(event.id))return;
+      completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
+      this.saveCampaign();
+    });
     this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
     this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});
   }

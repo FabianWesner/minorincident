@@ -1,7 +1,6 @@
 import { weatherKinds, weatherLabels, type WeatherKind } from '../data/weather';
 import type { Game } from '../Game';
-import { captureL1Aftermath } from '../sim/progression/carryover';
-import { autoRewards,chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -52,15 +51,9 @@ export class CampaignUI {
     this.offeredMission=mission;
     const match=/^L([1-6])$/.exec(mission.def.id);if(!match)return;
     const level=Number(match[1]) as Level;
-    // Campaign continuity: the town L2 returns to keeps what this L1 run left behind (latest run wins).
-    if(level===1){save.world={...save.world,L1:captureL1Aftermath(this.game.world)};this.save();}
-    save.results ??= {}; if(mission.state.result)save.results[mission.def.id]=structuredClone(mission.state.result);
-    if(level===6){save.completedLevels=6;this.save();this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();return;}
-    if(level!==save.completedLevels+1){this.screen('Level complete');this.button('Continue',()=>this.game.continueCampaign(save));this.focus();return;}
-    // E23 -> E24: the survivors that reached the station go with the campaign into L6.
-    if(level===5)save.survivors=[...mission.state.result?.survivors??[]];
-    // PO decision 2026-10-07: straight on to the next step, no unlock / upgrade / rack screens.
-    const carried=level===5?{LEFT:this.game.world.entities.get(1)!.weapons!.LEFT.rack.map(s=>s.id),RIGHT:this.game.world.entities.get(1)!.weapons!.RIGHT.rack.map(s=>s.id)}:null; autoRewards(save,level);if(carried){save.racks=carried;for(const id of [...carried.LEFT,...carried.RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);}this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
+    // Game persists completion and aftermath on level.completed, before this navigation can unload the world.
+    if(level===6){this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();return;}
+    void this.game.continueCampaign(save);
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
