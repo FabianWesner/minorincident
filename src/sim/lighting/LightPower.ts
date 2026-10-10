@@ -98,7 +98,8 @@ export class LightPower {
     const revision = this.world.weather?.powerRevision ?? 0;
     if (revision !== this.weatherRevision) {
       this.weatherRevision = revision;
-      for (const group of new Set([...this.lamps.values()].map(lamp => lamp.group))) this.setGroup(group, false);
+      const sources = this.world.districts ? placedLights(this.world.districts) : [];
+      for (const group of new Set([...this.lamps.values()].map(lamp => lamp.group))) this.setGroup(group, sources.some(source => source.group === group && source.on), false);
     }
     for (const [id, group] of this.generators) if (!this.world.entities.get(id)?.interactable?.powered) {
       this.generators.delete(id); this.setGroup(group, false);

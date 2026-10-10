@@ -33,7 +33,7 @@ export function placedLights(world: import('../sim/world/DistrictWorld').Distric
         id: placedLightId(district.id, district.origin, placement.id, anchor.name), placementId: placement.id, assetId: placement.assetId,
         group: anchor.powerGroup === 'self' ? placement.lightGroup : anchor.powerGroup, anchor,
         ...placeAnchor(anchor, [placement.position[0] + district.origin[0], placement.position[1], placement.position[2] + district.origin[1]], placement.yaw, placement.scale),
-        ground: placement.position[1], on: lit.has(placement.lightGroup),
+        ground: placement.position[1], on: lit.has(world.composition.id === 'L6' && ['metro-main', 'metro-emergency', 'shelter-camp'].includes(anchor.powerGroup) ? anchor.powerGroup : placement.lightGroup),
       });
     }
   }

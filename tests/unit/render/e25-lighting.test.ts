@@ -72,7 +72,7 @@ test('T-E25-U2 @E25 light field budget, spot footprints and the E27 transient ho
 });
 
 test('T-E25-U3 @E25 level moods: morning, midday and afternoon skip the field; dusk and night are lit and readable', () => {
-  expect(['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].map(id => compositions[id].timeOfDay)).toEqual(['L1', 'L2', 'L3', 'L4', 'L5', 'L6']);
+  expect(['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].map(id => compositions[id].timeOfDay)).toEqual(['L1', 'L2', 'L3', 'L4', 'L5', 'L6-subway']);
   for (const id of ['L1', 'L2', 'L3'] as const) expect(timeOfDay[id].practical ?? 0).toBe(0);
   for (const id of ['L5', 'L6', 'night'] as const) { expect(timeOfDay[id].practical).toBeGreaterThan(.5); expect(timeOfDay[id].rim).toBeGreaterThan(0); expect(timeOfDay[id].aura).toBeGreaterThan(0); }
   expect(compositions['night-street'].timeOfDay).toBe('night');

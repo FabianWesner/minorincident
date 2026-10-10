@@ -130,6 +130,7 @@ export class DistrictAssets {
       if (id === 'kit.army-checkpoint' || id === 'prop.checkpoint-gate') asset.userData.splitDoors = ['gateArm'];
       const leaves = buildingDoors[id]?.leaves; if (leaves?.length) asset.userData.splitDoors = leaves.map(l => l.node);
       // Keep the Metro shutter independent of its static shell.
+      if(id==='int.metro-exit')asset.userData.splitDoors=['exitGate'];
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
       asset.userData.assetId = id;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));

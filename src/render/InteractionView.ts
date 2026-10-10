@@ -89,7 +89,8 @@ export class InteractionView extends Group {
     const load = this.create(e, lod).then(object => {
       if (!this.disposed) {
         this.objects.get(e.id)?.removeFromParent(); this.objects.set(e.id, object); this.lods.set(e.id, lod);
-        object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw; this.add(object);
+        object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:0, e.transform.z); object.rotation.y = e.transform.yaw;
+        if(e.archetype==='l6.service-gate'){const leaf=object.getObjectByName('gate');if(leaf)leaf.rotation.y=e.barricade?.intact?0:-Math.PI/2;} this.add(object);
       }
       this.pending.delete(e.id);
     });
@@ -97,7 +98,7 @@ export class InteractionView extends Group {
   }
   private assetId(e: EntitySnapshot): string | undefined {
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
-    return pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
+    return e.archetype === 'l6.service-gate' ? 'prop.service-gate' : pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
   }
   /** L1 v2 toys: gameplay-shaped code art (hinged gate leaf, dumpster, car-alarm LED + beacons, car-wash foam curtain and brushes). */
   private toyObject(e: EntitySnapshot): Group {
@@ -151,11 +152,12 @@ export class InteractionView extends Group {
     } else if (e.toy?.kind === 'carwash') {
       const foam = object.getObjectByName('foam')!, active = tick < e.toy.until; foam.visible = active;
       if (active) foam.traverse(c => { if (c.name === 'brush') c.rotation.y += .3; });
-    } else if (!e.toy && e.interactable) {
+    } else if (!e.toy && e.interactable && e.archetype!=='l6.service-gate') {
       const hinge = object.getObjectByName('gate'); if (hinge) hinge.rotation.y += ((e.interactable.open ? -Math.PI / 2 : 0) - hinge.rotation.y) * .25;
     }
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
+    if (e.archetype === 'l6.service-gate') return this.registry.loadAsset('prop.service-gate', lod);
     if (e.barricade) return this.barricadeObject(e);
     if (e.toy || this.world.toys?.gateIds.includes(e.id)) { const object = this.toyObject(e); await this.attachModels(e, object); return object; }
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
@@ -208,12 +210,13 @@ export class InteractionView extends Group {
       const object = this.objects.get(e.id);
       if (object) {
         const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
-        object.position.set(e.transform.x, 0, e.transform.z); object.rotation.y = e.transform.yaw;
+        object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:0, e.transform.z); object.rotation.y = e.transform.yaw;
+        if(e.archetype==='l6.service-gate'){const leaf=object.getObjectByName('gate');if(leaf)leaf.rotation.y=e.barricade?.intact?0:-Math.PI/2;}
         object.visible = !pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
         if (e.hazard?.kind === 'toxic') object.visible &&= this.world.tick < e.hazard.activeUntil;
         if (e.interactable?.open && !this.world.toys?.gateIds.includes(e.id)) object.rotation.y += Math.PI / 2;
         this.animateToy(e, object);
-        if (e.barricade) {
+        if (e.barricade && e.archetype!=='l6.service-gate') {
           const b = e.barricade, s = b.slot;
           object.rotation.y = -Math.atan2(s.b.z - s.a.z, s.b.x - s.a.x);
           object.getObjectByName('slot-ghost')!.visible = !b.intact && !!player && Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) <= 8;

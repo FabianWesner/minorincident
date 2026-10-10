@@ -11,6 +11,7 @@ export class CampaignUI {
   private readonly heading=document.createElement('h1');
   private readonly content=document.createElement('div');
   private readonly message=document.createElement('p');
+  private creditsTimer: ReturnType<typeof setTimeout> | undefined;
   private picks:string[]=[];
   private offeredMission:object|null=null;
   private menuSave:CampaignSave|null=null;
@@ -50,12 +51,13 @@ export class CampaignUI {
     this.offeredMission=mission;
     const match=/^L([1-6])$/.exec(mission.def.id);if(!match)return;
     const level=Number(match[1]) as Level;
-    if(level===6){this.screen('Campaign complete');this.button('Level select',()=>{this.menuSave=save;this.levelSelect();});this.focus();return;}
+    save.results ??= {}; if(mission.state.result)save.results[mission.def.id]=structuredClone(mission.state.result);
+    if(level===6){save.completedLevels=6;this.save();this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();return;}
     if(level!==save.completedLevels+1){this.screen('Level complete');this.button('Continue',()=>this.game.continueCampaign(save));this.focus();return;}
     // E23 -> E24: the survivors that reached the station go with the campaign into L6.
     if(level===5)save.survivors=[...mission.state.result?.survivors??[]];
     // PO decision 2026-10-07: straight on to the next step, no unlock / upgrade / rack screens.
-    autoRewards(save,level);this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
+    const carried=level===5?{LEFT:this.game.world.entities.get(1)!.weapons!.LEFT.rack.map(s=>s.id),RIGHT:this.game.world.entities.get(1)!.weapons!.RIGHT.rack.map(s=>s.id)}:null; autoRewards(save,level);if(carried){save.racks=carried;for(const id of [...carried.LEFT,...carried.RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);}this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
@@ -83,6 +85,6 @@ export class CampaignUI {
       this.button('Mission briefing',async()=>{finishRewards(save,racks);this.save();await this.game.continueCampaign(save);});
     }this.focus();
   }
-  reset():void {this.offeredMission=null;this.picks=[];this.hide();}
-  dispose():void {this.hide();this.root.remove();}
+  reset():void {clearTimeout(this.creditsTimer);this.offeredMission=null;this.picks=[];this.hide();}
+  dispose():void {clearTimeout(this.creditsTimer);this.hide();this.root.remove();}
 }

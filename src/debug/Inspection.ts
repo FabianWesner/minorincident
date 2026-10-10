@@ -1,3 +1,4 @@
+import { LevelSixBot } from './bot/LevelSixBot';
 import { Plane, Raycaster, Vector2, Vector3 } from 'three';
 import type { Game } from '../Game';
 import type { CameraPose } from '../render/View';
@@ -80,6 +81,7 @@ export class Inspection {
     else if (world.scenario === 'L2') this.game.driver = new LevelTwoBot(world);
     else if (world.scenario === 'L3') this.game.driver = new LevelThreeBot(world, 'complete');
     else if (world.scenario === 'L4') this.game.driver = new LevelFourBot(world, 'complete');
+    else if (world.scenario === 'L6') this.game.driver = new LevelSixBot(world, 'complete');
     else if (world.scenario === 'L5') this.game.driver = new LevelFiveBot(world, 'complete');
     else throw new Error(`No complete bot registered for ${world.scenario}`);
   }
