@@ -279,6 +279,7 @@ export class Game {
     if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
     else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
+      this.input.cursor.setGroundHeight(this.world.districts?.groundHeight(player.x, player.z) ?? 0);
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
       this.world.applyInput(frame, this.input.scheme);
