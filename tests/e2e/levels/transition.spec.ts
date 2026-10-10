@@ -117,6 +117,7 @@ test('@transition compact controls HUD also covers L2 to L3 loading', async ({ p
   await expect(page.getByTestId('level-transition')).toBeVisible();
   await expect(page.getByTestId('transition-title')).toHaveText('Level 3 · The Police Collapse');
   await expect(page.getByTestId('transition-story')).not.toHaveText('');
+  if (process.env.TRANSITION_VISUAL_QA === '1') writeFileSync('/tmp/level-transition-card.png', await page.screenshot());
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await expect(page.getByTestId('level-transition')).toBeHidden();
   expect(await page.evaluate(() => window.__SS__!.perf().renderedFrames)).toBeGreaterThan(0);
