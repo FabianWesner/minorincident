@@ -28,7 +28,10 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       if (level !== 'L1' && !restart) {
         await page.evaluate(async final => {
           const a = window.__SS__!; a.pause();
-          for (let i = 0; i < 80 && a.missions.state()!.steps[final]?.status !== 'active'; i++) { a.missions.completeObjective(); await a.step(1); }
+          for (let i = 0; i < 80 && a.missions.state()!.steps[final]?.status !== 'active'; i++) {
+            a.missions.completeObjective();
+            if (a.missions.state()!.steps[final]?.status !== 'active') await a.step(1);
+          }
         }, finalObjective);
         expect(await page.evaluate(final => window.__SS__!.missions.state()!.steps[final]?.status, finalObjective)).toBe('active');
         // Standardized final-objective/outro window for the next level's HTTP prefetch.
