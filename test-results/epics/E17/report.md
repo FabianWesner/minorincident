@@ -1,155 +1,45 @@
-# E17 asset pipeline report — 2026-10-05
+# E17 closeout audit — in progress
 
-The authorized E17-AC01–AC08 pipeline/fire-engine increment is complete.
-AC09 milestone production and AC11 infected gore-probe vision are assigned to
-later production batches by the orchestrator. They remain pending, and
-`specs/status.json` deliberately records E17 as `in-progress`.
+Audited main `4970fa9e` before fixes; this table preserves the initial criterion-by-criterion audit and records the closeout evidence. PASS is scoped where explicitly stated. Test tags alone are not proof of the full criterion. No deployment.
 
-## Delivered and acceptance evidence
+| AC | Criterion | Main / closeout verdict | Test / evidence |
+| --- | --- | --- | --- |
+| E17-AC01 | `npm run assets:build -- <id>` runs headless Blender 5.2 (`BLENDER_BIN`), exits non-zero on any script error, and produces `<id>.glb` + `<id>.meta.json`; a second run gives an identical geometry hash (determinism) | PASS historical + current staged tests — acceptance.json records real Blender determinism; installed Blender 5.2.2 | `tests/unit/assets/commerce-pack.test.ts`<br>`tests/unit/assets/build.test.ts` |
+| E17-AC02 | `npm run assets:validate` checks every manifest entry at status ≥ `modeled`: dimensions ± tolerance, required and animated nodes present and **not joined**, sockets, forward +X, triangle, material, and file-size budgets, materials restricted to `pal_*`/`emi_*`/`keep_*` with known tokens, no NaN or degenerate geometry | PASS except DEFERRED E24 — 1,012/1,013 validated slots; D-SUBWAY lacks meshopt/quantization | `tests/unit/assets/validate.test.ts`<br>`tests/unit/assets/optimize.test.ts`<br>`tests/unit/assets/build.test.ts`<br>`tests/e2e/asset-conformance.spec.ts` |
+| E17-AC03 | The optimization keeps manifest nodes addressable: after `join`, every `requiredNodes` and `animatedNodes` entry still exists as its own node with its original pivot (world-space pivot delta ≤ 1 mm vs the raw export) | PASS — optimize node/pivot tests and fresh browser direction/conformance | `tests/unit/assets/runtime-integration.test.ts`<br>`tests/unit/assets/optimize.test.ts`<br>`tests/e2e/asset-conformance.spec.ts` |
+| E17-AC04 | **Fire engine rebuilt in Blender:** `assets/veh.fire-engine/build.py` produces a GLB that matches the legacy spec dimensions (length 7.4, width 2.1, roof 3.55 ±5%), has nodes `body, wheel*, ladder, sirenL/R`, passes validate, and passes vision checklist C against `reference-upscaled.png` | PASS — dimensions/LOD tests, existing checklist C and fresh five-view turntable | `tests/unit/assets/build.test.ts`<br>`tests/e2e/turntable.spec.ts` |
+| E17-AC05 | Every asset ID referenced by data (actions, infected, vehicles, districts, levels) exists in the manifest; a missing GLB falls back to its placeholder with an `asset.placeholder` log, never a crash | PASS — registry/reference tests and fresh deliberately missing-GLB fallback | `tests/unit/assets/runtime-integration.test.ts`<br>`tests/unit/assets/references.test.ts`<br>`tests/unit/assets/registry.test.ts`<br>`tests/e2e/turntable.spec.ts` |
+| E17-AC06 | Inventory sync: every asset in the dated `05-asset-inventory.md` snapshot exists in the manifest at or above its snapshot status; the manifest records current integration status (parser test) | PASS — dated inventory parser test | `tests/unit/assets/validate.test.ts` |
+| E17-AC07 | Crowd bake: a baked infected renders 100 instances in one draw call per material; the GPU-animated pose matches the node-hierarchy pose within 0.02 m per part at 5 sampled clip times | PASS — bake/pose tables and fresh 100-instance browser gate | `tests/unit/render/infected-bake.test.ts`<br>`tests/unit/assets/crowd.test.ts`<br>`tests/e2e/crowd.spec.ts` |
+| E17-AC08 | Turntable: 5 images per asset rendered in the game renderer, the object covering 10–80% of the frame, plus a comparison sheet with the reference | PARTIAL — five-view browser test covers fire engine, not every modeled asset | `tests/e2e/turntable.spec.ts` |
+| E17-AC09 | Milestone production: all P0 assets ≥ `integrated` at M1, P1 at M2, P2 at M3, and no placeholder visible at the milestone's level photo spots (ID-pass check for the placeholder material) | FAIL — manifest still has P0/P1/P2 production below integrated; sample production-gate test is insufficient | `tests/unit/assets/runtime-integration.test.ts`<br>`tests/unit/assets/production-gates.test.ts`<br>`tests/e2e/art-integration.spec.ts` |
+| E17-AC10 | For each asset at `final`, `assets/<id>/review.md` exists with the vision checklist filled in, a pass verdict, and the comparison image path; assets marked `needs-human` are listed in the milestone report | PASS — all final assets checked by production-gates.test.ts; needs-human listing below | `tests/unit/assets/production-gates.test.ts` |
+| E17-AC11 | Dismemberment readiness: every infected GLB contains its stump-cap nodes, hidden by default, and detaching a limb in the `gore-probe` scenario shows the cap with no visible holes (vision) | PASS — validator/cap tests and fresh three-model gore-probe visual inspection | `tests/unit/assets/optimize.test.ts`<br>`tests/unit/assets/production-gates.test.ts`<br>`tests/unit/assets/registry.test.ts`<br>`tests/e2e/asset-conformance.spec.ts` |
 
-| Criterion | Result | Evidence |
-| --- | --- | --- |
-| AC01 | PASS | Two real Blender exports have equal raw geometry hashes; injected script errors are fatal (`build.test.ts`) |
-| AC02 | PASS | Geometry, dimensions, materials, naming, front markers, budgets and all three fire-engine LODs validate; independent negative cases fail |
-| AC03 | PASS | Actual join/quantize/meshopt roundtrip preserves named parts and world pivots within 1 mm; texture-free and fatal encoder-failure paths tested |
-| AC04 | PASS | Legacy dimensions match; five screenshots and comparison receive checklist C PASS in `review.md` |
-| AC05 | PASS | Cached/cloned registry, missing-art and below-integrated placeholders, LOD paths, catalog references, every supplied source export and E04 placeholder logs tested |
-| AC06 | PASS | All 207 concrete inventory rows and their statuses match; registry has 223 unique IDs, including 16 additional supplied exports |
-| AC07 | PASS | Source hierarchy and baked vertices at five clip times; 100 GPU instances use one draw per material and pass pose readback |
-| AC08 | PASS | Five actual game-renderer views, toolbar hidden, occupied pixels between 10% and 80%; comparison generated |
-| AC09 | PENDING | Later milestone asset-production batches; readiness rejection tests do not certify finished production |
-| AC10 | PASS (tooling) | Final-review gate requires evidence and comparison; negative review cases rejected. Existing needs-human reviews remain pending |
-| AC11 | PENDING | Hidden-cap/detachment readiness tests pass; actual infected gore-probe vision evidence belongs to later production batches |
+## Validation and constraints
 
-`acceptance.json` maps every AC01–AC08 ID to passing tagged tests. AC09/AC11
-are explicitly pending; their passing readiness tests are not counted as
-completed production or vision.
+- Main merged before validation. Typecheck, lint and build passed. Initial headless level gate: 25/25; WebGPU strike and assisted L1 capture: 3/3 each while another browser job held a slot. E17 browser gate passed 14/14. Quiet native performance passed 8/9; L1 desktop transitions failed the unchanged 50 ms bound. Detailed evidence is in `test-results/closeout/summary.md`.
+- Exactly one complete bot seed each for L1, L2 and L4; all completed with zero deaths. Evidence: `test-results/closeout/*-seed1.json`. No additional completion/newbie/idle/aggressive batteries were launched.
+- Remote unit/sim filter excludes `20 seeds`, `battery`, and `T-E05-encounter`; the initial broader invocation was stopped when it included unlabelled batteries. No test assertions, budgets or skip markers were changed.
+- `npm run verify -- E17` is not claimed: its unfiltered selection would launch prohibited bot batteries. Component gates and exact exclusions are recorded in `test-results/closeout/summary.md`.
+- Status remains `in-progress`: the non-deferred gaps above prevent honest closure. Deferred L6/lighting/VFX work belongs to E24/E25/E27.
 
-The implementation extends the existing renderer, loaders and test API and
-adapts Bruno references. It includes Blender palette/primitives, pivots,
-sockets, colliders, decay, AO/export helpers; a staged three-LOD build;
-contract validation/optimization; registry/material/placeholder integration;
-rigid crowd bake and shader; preview/crop/turntable tools; and authoring/review
-templates. Runtime crowd updates change one scalar uniform without per-frame
-array allocations. Blender uses three threads, four shared global slots and
-one CPU Cycles render slot using the reference lock protocol.
+## Production gaps
 
-## Final verification
+The manifest still lists `decal.footprints`, `decal.papers`, `ui.logo`, `ui.hud-layout`, `ui.palette-swatches` and `decal.arterial-spray` below integrated (P0). P1 includes keys, batteries, lockpick-kit, hazard props and debris; P2 includes additional hazards/abilities and decay assets. Some zoo/special-infected assets are retired by the redesign, but that does not retire every unfinished entry. The unit production gate checks selected samples, not the entire priority inventory. AC09 cannot be marked done by replacing its scope with those samples.
 
-Pinned main `b3c4e07` is merged through `da91b4e`, including E02 camera/rendering,
-E03 input and E04 survivor behavior. Integration commits `7a77925` and
-`2a0c3f1` register supplied sources and enforce the required below-integrated
-placeholder rule for survivor art. Code rigs preserve animation, gear,
-selection and cleanup behavior; integrated art loads via manifest URLs.
-The E04 extra GLB-only assertion now follows asset status; its conditional
-vision test records pending placeholders rather than reusing a GLB art review.
-No E04 acceptance criterion was changed. E01–E04 retain their done statuses.
+`assets:validate` checks 1,013 slots. The only delivery failure is `D-SUBWAY.base.glb`: missing meshopt/quantization. This is deferred to E24 because this lane must not edit L6. `validate.json` preserves the full result. AC08 has only a fire-engine five-view browser gate; it does not prove five views and comparison sheets for every asset.
 
-All required gates exit 0 with no new warnings:
+Manifest audit: zero `final` and zero `needs-human` entries. AC10 currently passes vacuously for final assets; it is not evidence that the production inventory is finished. Installed headless Blender is **5.2.2 LTS**. The build unit test mocks the Blender subprocess, so its deterministic optimizer test is not a fresh Blender geometry-hash proof.
 
-| Command | Result | Evidence |
-| --- | --- | --- |
-| `npm run typecheck` | 0 | `finish/logs/typecheck.log`, also rerun by verify |
-| `npm run lint` | 0 | `finish/logs/lint.log`, also rerun by verify |
-| `npm run build` | 0 | `finish/logs/build.log`, `finish/logs/artifacts-build.log` |
-| `npm run test:unit` | 0; 43 tests / 19 files | `finish/logs/unit.log` |
-| `E2E_PORT=3313 npm run test:smoke` | 0; 1 Vitest + 12 browser tests | `finish/logs/smoke.log` |
-| `E2E_PORT=3313 npm run verify -- E17` | 0; 19 Vitest + 16 browser tests | `checks.json`, `vitest.json`, `finish/verify-browser.json`, `finish/logs/verify-E17.log` |
-| `npm run test:sim` | 0; 13 tests | `finish/logs/sim.log` |
-| `npm run assets:validate` | 0; three LODs | `validate.json`, `finish/logs/validate.log` |
-| Final generated-asset browser capture | 0; 16 tests | `finish/artifacts-browser.json`, `finish/logs/artifacts-browser.log` |
+Final remote unit/sim gate: **914 passed, 6 excluded battery tests and 6 existing E27 deferred tests**, exit 0 (`test-results/closeout/node-final-head.json`, final head `ad9e7961`). The broad final-code run failed only the L3 patrol timing bound; its isolated retry and the complete serial gate passed the unchanged budgets. Typecheck, lint and build passed after the L5 guard and exact L1 debug-projector fixes. The final-head remote gate passed after `git merge main`; the original performance bounds remain unchanged.
 
-Playwright uses two workers; Vitest caps threads at four. Production previews
-use port 3313. After verify regenerated the GLBs, the final bundle was rebuilt
-and its browser captures refreshed. Whole diff reviewed and whitespace checks
-pass. No deployment, push, .env read or shared-3300 server operation occurred.
-Main is pinned to the already-merged base as requested by the finish job.
+Smoke gate: **6 Node tests and 26 browser tests passed**, including desktop, mobile viewports and WebKit (`test-results/closeout/smoke-final-pass.log/json`, final head after main merge).
 
-Earlier merge regression evidence is retained under `merge/`: E01 verify
-16 Vitest + 19 browser, E02 verify 6 Vitest + 26 browser, and E03 45 browser tests
-passed. E04 placeholder integration passed 20 combined E04/E17/smoke browser
-tests, including a 3,600-tick animation bot with zero missing mappings, movement,
-selection, cleanup, five gear tiers and conditional pending-art vision. These
-are historical checks on their recorded merge versions; current final checks
-are listed above.
+Final L3 route gate: **9/9 passed**, three consecutive runs each for Commerce, Boulevard and Oak, all zero deaths. Shared-slot load is recorded in `test-results/closeout/L3-slot-load.jsonl`. These focused repeats complement the initial 25-test gate; the subsequent complete 29-test final-head gate is recorded in the closeout summary. No test skip markers were added.
 
-## Measurements
+E17 browser contracts: **14/14 passed** (`test-results/closeout/E17-browser.json`). Fresh detached worker arm, suburban-mom head and riot-cop forearm show closed red caps with bone centers, no visible joint holes. This is representative visual coverage plus full manifest cap validation. The arterial-spray/VFX asset portion of AC09 belongs to E27; non-VFX priority inventory gaps remain.
 
-| Fire-engine tier | Triangles | Materials | Asset draws | KiB | X/Y/Z (m) |
-| --- | ---: | ---: | ---: | ---: | --- |
-| lod0 | 66335 | 11 | 39 | 3664.96 | 7.40000 / 3.55000 / 2.09997 |
-| lod1 | 10821 | 11 | 39 | 873.63 | 7.34186 / 3.54062 / 2.09997 |
-| lod2 | 2505 | 11 | 38 | 283.27 | 7.27126 / 3.51235 / 2.09997 |
+Needs-human inventory: **none** (zero manifest entries).
 
-LOD0 ceilings: 80,000 triangles, 40 static draws, 32 materials, 6,000 KiB;
-LOD1 12,000 triangles; LOD2 4,000. Dimensions target 7.4 / 3.55 / 2.1 m ±5%.
-Viewer presentation adds one draw/triangle (40 / 66,336).
-Raw geometry hash: `56d574a236126f1b45e5b5604db9319b98d23fb71c212d2e6c9411d48844a93c`.
-Hashing compares exact triangle positions/winding and named transforms,
-independent of normal-induced vertex numbering and GLB serialization.
-AO/normal serialization and lower-tier simplification vary slightly between
-builds; raw and runtime LOD0 geometry hashes stay stable. Final lower tiers pass
-all declared budgets. Committed GLBs and screenshots correspond to the last build.
-
-Crowd: 100 instances, 8 materials, 8 asset draw calls; maximum pose error
-7.49297796688e-08 m against a 0.02 m limit at five times; baked file 943.39 KiB.
-Five screenshot coverages: 11.11%, 51.42%, 11.25%, 51.26%, 16.06%.
-These are WebGL2/SwiftShader proofs; native WebGPU frame-time budgets were not
-measured or inferred from software-renderer timings.
-
-## Deviations and known issues
-
-- AC09/AC11 production and vision increments remain pending by explicit
-  orchestrator decision; E17 stays in-progress.
-- Shared Blender queues exceeded the original 120-second integration-test
-  timeout. `f190d85` allows 30 minutes including queue wait, without changing
-  assertions. Final real-build tests pass.
-- The outdated fire-engine inventory status was updated to integrated for
-  the delivered registry/turntable proof. No acceptance criterion was weakened.
-- All 63 supplied standalone source GLBs and available LODs are registered
-  unchanged. The source audit inspects 140 export/LOD slots: 15 pass and 125
-  have findings. Exit 1 is intentional for this findings audit, separate from
-  the passing modeled/integrated-assets gate. Findings include missing LODs,
-  front markers, palette names, dimensions, budgets, degenerate geometry,
-  required separate parts and hidden cap metadata (`validate-production.json`).
-  No supplied production build.py or source model was rewritten or rebuilt.
-- The matte light trim is stylized rather than photographic chrome; hidden
-  sides are inferred from the reference. All checklist C must/should items pass.
-- Hero simplification ratios 0.12/0.035 follow the updated three-tier budgets.
-- Textured atlas production requires absent `toktx` (`TOKTX_BIN`). Texture-free
-  builds and fatal encoder failure are tested; no textured KTX2 asset was produced.
-- Native WebGPU timing, milestone photo spots and gore-probe vision await
-  their integration/production increments.
-- Existing needs-human reviews remain unchanged: char.corgi collar/ruff and
-  palette-token review; char.survivor-male final hero art-quality sign-off.
-
-## Commits
-
-Core implementation: `bc2b57a`, `aa222a6`, `0952781`, `e2d565a`, `67b9b9b`.
-Merge/integration: `a09d09a`, `986d036`, `94b4d2a`, `23a7008`, `c6a66c0`,
-`7a77925`, `da91b4e`, `2a0c3f1`. Final generated assets and evidence are committed
-with this report. No push.
-
-## Asset conformance follow-up
-
-The production audit now has zero forward, missing-LOD, unknown-palette and degenerate-triangle findings across 163 slots. See [conformance/report.md](conformance/report.md) for pipeline changes, verification, reviewed screenshots, density exceptions and remaining source-contract findings.
-
-## Main registry reconciliation (2026-10-06)
-
-`T-E17-sources` now enumerates git-tracked source exports rather than unreviewed working files, and checks registered runtime outputs exist. All 88 accepted standalone sources are registered and their 192 declared runtime exports exist.
-
-Optimized the accepted elderly civilian source with `sourceScale = 1.27233734`; measured LOD heights are 1.780, 1.779 and 1.775 m. Registered its 17 source palette colors without changing source geometry or build scripts. Also registered and optimized the tunnel portal, civilian kid, living firefighter and national guard accepted in `bce6bc2` during this reconciliation. The two adults normalize to 1.80 m; the explicitly modeled child retains its source height and is excluded from the adult-height check. Seven child palette colors were added from the export. Asset statuses remain inventory-controlled. No specs, reference images or asset build scripts changed.
-
-Validation: typecheck, lint and production build pass; unit suite 66/66; smoke 3 Node tests and 12 browser tests pass; `verify -- E17` passes 28 Node tests and 25 browser tests. Browser suites used the shared e2e lock, port 3324 and two workers.
-
-## Accepted asset reconciliation after M1 integration (2026-10-06)
-
-Registered 36 newly accepted assets and committed their 102 optimized exports. The complete tracked-source audit covers 135 accepted standalone sources and 317 declared runtime exports, all present. Additional source-only commits `0c527cf` and `3caadd7` arrived during validation and are included.
-
-Registered IDs: `bld.dugout`, `bld.fire-station`, `bld.gazebo`, `bld.hospital-exterior`, `bld.power-substation`, `bld.restroom-block`, `bld.river-bridge`, `bld.safe-house`, `bld.shed`, `inf.armored-football`, `inf.butcher`, `inf.cat-black`, `inf.cat-tabby`, `inf.construction-worker`, `inf.corpse-poses`, `inf.crow`, `inf.dog-dachshund`, `inf.dog-k9`, `inf.dog-retriever`, `inf.firefighter`, `inf.flamingo`, `inf.gorilla`, `inf.hazmat`, `inf.lion`, `inf.nurse`, `inf.skater`, `int.diner`, `int.gym-cafeteria`, `kit.bleachers`, `kit.creek-bridge-wood`, `kit.highway-onramp`, `kit.river-terrain`, `npc.survivor-group`, `prop.dumpster`, `prop.fire-extinguisher`, `prop.folding-chair`.
-
-Production reports generally omit bounds; dimensions were measured directly from committed GLBs in Y-up metres. Human exports normalize to 1.80 m; every survivor in the compound group is checked individually at every LOD (LOD2: 1.760–1.782 m). The prone/seated corpse pack uses the authored 1.4 m human rest height converted to 1.8 m, rather than treating its posed vertical envelope as a standing adult. Animals preserve proportions at species-specific sizes: cats 0.4 m including tail; dachshund 0.4 m, retriever 0.8 m, K9 0.9 m, gorilla 1.8 m, lion 1.3 m, flamingo 1.6 m; crow wingspan 1 m. Buildings, terrain and props retain measured authored dimensions. Existing accepted weapons/vehicles already had registrations and exports.
-
-Added 15 source palette colors. Preserved compound character joints, animal jaw/tail/wing pivots and prefixed corpse stump caps. Distant generated caps use six sides; the corpse pack LOD2 is 3,817 triangles. The simplifier now retains extrema faces when a small part would disappear, instead of restoring its full original density. Manifest `generatedLodRatios` makes regeneration reproducible for supplied LODs that violate size/density contracts. Side assets also export supplied LOD chains; the hero-only 15% LOD1 rule no longer applies to side assets. The creek bridge retains its 15 accepted materials, and the on-ramp/river-terrain kits use the Hero tier declared by their production reports. Fire-station collision/zone metadata was conformed to the accepted dimensions.
-
-Validation: all 102 new export slots pass full asset validation with zero findings; typecheck, lint and build pass; unit 97/97; smoke 3 Node + 19 browser tests; verify E17 30 Node + 32 browser tests. Browser runs used the shared lock, port 3324 and two workers. No specs, source build scripts, reference images or untracked production assets were changed. Asset statuses remain inventory-controlled; this reconciliation does not promote visual review status.
+Final complete headless level gate: **29/29 passed** on `ad9e7961` after `git merge main` (`test-results/closeout/levels-final-pass.json`). L1 assisted and unassisted each also passed three consecutive repeats with the exact input-floor projection. No assertions, tolerances or timeouts were loosened.

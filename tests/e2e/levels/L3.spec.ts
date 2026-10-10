@@ -62,7 +62,7 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
-    let fights = 0;
+    let fights = 0, retreatAt = -Infinity;
     for (let i = 0; i < 600; i++) {
       await step(20);
       if (process.env.L3_TRACE && i % 2 === 0) console.log(await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!, inf = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 12); return `T x=${p.transform.x.toFixed(0)} z=${p.transform.z.toFixed(0)} hp=${p.health.current.toFixed(0)} n12=${inf.length} n4=${inf.filter(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).length}`; }));
@@ -74,7 +74,9 @@ function helpers(page: Page) {
       // Fight a few, then break away (PO: fight a few, flee from many; knocked-down infected get up again).
       const crowd = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 10).length; });
       // Many ahead: back off along the street for a moment (they string out), then push on.
-      if (crowd >= 4) {
+      if (crowd >= 4 && i - retreatAt >= 30) {
+        // Give the forward click time to pass the pack before retreating again.
+        retreatAt = i;
         const p0 = (await player()).transform, back = { x: p0.x - 10, z: p0.z };
         const point = await page.evaluate(q => { const p = window.__SS__!.input.project(q); return document.elementFromPoint(p.x, p.y)?.tagName === 'CANVAS' ? p : null; }, back);
         if (point) { await page.mouse.click(point.x, point.y); await step(45); }
@@ -139,8 +141,8 @@ test.describe('L3 The Police Collapse in the browser', () => {
     if (sz !== 0) route.push({ x: -120, z: sz });
     for (let x = -105; x <= 105; x += 15) {
       // Oak's crashed pickup blocks the straight centre-line approach from the west.
-      // Use the clear north side of the street, as a player would click around the wreck.
-      if (street === 'oak' && x === 105) route.push({ x: 92, z: 24 }, { x: 105, z: 24 });
+      // Stay on the clear north side until past the entire wreck before returning to the centre line.
+      if (street === 'oak' && x === 105) route.push({ x: 92, z: 24 }, { x: 105, z: 24 }, { x: 118, z: 24 });
       else route.push({ x, z: sz });
     }
     if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end

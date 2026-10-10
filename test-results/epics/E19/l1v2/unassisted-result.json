@@ -23,59 +23,52 @@
     },
     "deliver": {
       "status": "completed",
-      "started": 1023,
+      "started": 963,
       "kills": [],
       "events": {
         "l1.delivered:*": 1
       },
-      "interaction": 469
+      "interaction": 493
     },
     "escape": {
       "status": "completed",
-      "started": 3663,
+      "started": 3610,
       "kills": [],
       "events": {},
       "interaction": 0
     },
     "weapon": {
       "status": "completed",
-      "started": 3664,
+      "started": 3611,
       "kills": [
-        164,
-        166,
         162,
         168,
-        107,
-        109
+        164,
+        166,
+        158
       ],
       "events": {
-        "player.damaged:*": 17,
-        "combat.kill:*": 8
+        "player.damaged:*": 8,
+        "combat.kill:*": 5,
+        "civilian.saved:*": 1
       },
-      "interaction": 20
+      "interaction": 27
     },
     "firestation": {
       "status": "completed",
-      "started": 7892,
+      "started": 5597,
       "kills": [
-        145,
-        107,
-        206,
-        168,
-        166,
-        204,
-        162,
-        115,
-        249,
-        232,
-        225,
-        222,
-        214
+        146,
+        199,
+        208,
+        134,
+        191,
+        179,
+        222
       ],
       "events": {
-        "combat.kill:*": 18,
-        "pickup.collected:*": 3,
-        "player.damaged:*": 9,
+        "player.damaged:*": 7,
+        "combat.kill:*": 7,
         "civilian.saved:*": 1
       },
       "interaction": 1
@@ -103,31 +96,31 @@
   "subtitle": {
     "id": "L1.twist",
     "text": "Delivery complete. Outbreak: not contained.",
-    "until": 11755
+    "until": 8183
   },
   "cinematic": null,
   "failure": null,
   "stats": {
-    "time": 191.91666666666666,
+    "time": 132.38333333333333,
     "kills": 0,
-    "knockdowns": 20,
-    "damage": 237.5,
+    "knockdowns": 12,
+    "damage": 90,
     "deaths": 0,
-    "rescued": 1,
+    "rescued": 2,
     "optionalObjectives": []
   },
   "result": {
-    "time": 191.91666666666666,
+    "time": 132.38333333333333,
     "kills": 0,
-    "knockdowns": 20,
-    "damage": 237.5,
+    "knockdowns": 12,
+    "damage": 90,
     "deaths": 0,
-    "rescued": 1,
+    "rescued": 2,
     "optionalObjectives": [],
     "delivered": true,
-    "infected": 30,
-    "turned": 23,
-    "escaped": 39
+    "infected": 22,
+    "turned": 14,
+    "escaped": 27
   },
   "l1": {
     "phase": "spread",
@@ -135,12 +128,12 @@
     "delivered": true,
     "away": true,
     "techId": 158,
-    "hx": 66.26238790778515,
-    "hz": -13.230898629823837,
-    "handoverAt": 2474,
-    "deliveredAt": 2823,
-    "flickerAt": 3107,
-    "exitAt": 3663,
+    "hx": 66.57159651337378,
+    "hz": -12.986411883377201,
+    "handoverAt": 2395,
+    "deliveredAt": 2770,
+    "flickerAt": 3054,
+    "exitAt": 3610,
     "warned": true,
     "fired": 5,
     "exitIds": [
@@ -159,70 +152,50 @@
     ],
     "runs": [],
     "turnedIds": [
-      130,
-      133,
-      132,
-      138,
+      134,
+      146,
+      144,
+      127,
+      179,
+      191,
       107,
+      199,
+      138,
+      208,
       109,
-      142,
-      145,
-      152,
-      115,
-      204,
-      214,
+      110,
       222,
-      97,
-      102,
-      232,
-      249,
-      118,
-      156,
-      155,
-      153,
-      253,
-      119
+      140,
+      151
     ],
     "escapedIds": [
       131,
+      130,
       117,
-      134,
+      133,
       147,
-      146,
+      135,
+      125,
+      132,
+      128,
+      145,
       136,
+      148,
+      106,
       143,
+      137,
+      108,
       116,
       139,
-      106,
-      108,
-      137,
-      148,
+      142,
+      114,
       111,
+      115,
       141,
-      110,
       149,
       150,
-      140,
-      125,
-      135,
-      127,
-      128,
-      144,
-      126,
-      151,
-      120,
-      114,
-      98,
-      100,
-      113,
-      101,
-      96,
-      99,
-      157,
-      124,
-      112,
-      123,
-      154
+      152,
+      126
     ],
     "graceUntil": 0,
     "house": {
@@ -260,18 +233,18 @@
       ],
       "ox": 5.801470000000001,
       "oz": 26,
-      "next": 9743,
+      "next": 7448,
       "ids": [
+        180,
+        186,
+        189,
+        196,
+        203,
         206,
-        209,
-        212,
-        215,
-        218,
-        220,
-        225,
-        228,
-        238,
-        241
+        214,
+        219,
+        224,
+        227
       ],
       "walking": []
     },
@@ -302,10 +275,10 @@
     "clerkRoute": null,
     "beat": null,
     "say": {
-      "id": 259,
+      "id": 229,
       "text": "Get in!",
-      "at": 11377,
-      "until": 11527
+      "at": 7860,
+      "until": 8010
     },
     "beatsDone": [
       "pickup",
@@ -313,7 +286,7 @@
       "garage"
     ],
     "techRoute": null,
-    "firefighterId": 259,
-    "firefighterNext": 11635
+    "firefighterId": 229,
+    "firefighterNext": 8063
   }
 }

@@ -1,0 +1,56 @@
+
+Running 15 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu) (26.9s)
+  ✓   2 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu) (27.7s)
+  ✓   3 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu) (27.6s)
+  ✓   4 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (40.0s)
+  ✓   5 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (40.1s)
+  ✓   6 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (40.0s)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=commerce deaths=0
+  ✓   7 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (55.6s)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=blvd deaths=0
+  ✓   8 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (55.8s)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=oak deaths=0
+  ✓   9 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (57.1s)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+L3 RESULT street=commerce deaths=0
+  ✓  10 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (56.1s)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=blvd deaths=0
+  ✓  11 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (1.0m)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=oak deaths=0
+  ✓  12 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (1.0m)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+L3 RESULT street=commerce deaths=0
+  ✓  13 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (56.7s)
+{"attackShotEarly":true,"inFrameAtFallback":2}
+L3 RESULT street=blvd deaths=0
+  ✓  14 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (56.0s)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+  ✘  15 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (1.9m)
+
+
+  1) [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review
+
+    Error: Could not travel to {"x":128,"z":28} from {"x":106.00732421875,"y":0.7200000286102295,"z":25.747724533081055,"yaw":2.878442711495542} {"hp":100,"deaths":0,"near":0}
+
+      93 |     }
+      94 |     const why = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!; return { hp: p.health.current, deaths: a.missions.state()!.stats.deaths, near: a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length }; });
+    > 95 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)} ${JSON.stringify(why)}`);
+         |           ^
+      96 |   };
+      97 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      98 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/e2e/levels/L3.spec.ts:95:11)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/e2e/levels/L3.spec.ts:156:7
+
+    Error Context: test-results/playwright/run-3347/e2e-levels-L3-L3-The-Polic-a9071-spots-for-the-vision-review-chromium-repeat2/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review
+  14 passed (13.0m)
