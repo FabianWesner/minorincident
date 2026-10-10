@@ -5,6 +5,18 @@ import { staticCollision } from '../../../src/assets/staticCollision';
 import manifest from '../../../src/assets/manifest.json';
 import { placementColliders } from '../../../src/levels/districts/staticCollision';
 import type { Placement } from '../../../src/levels/districts/types';
+import { footprints } from '../../../src/levels/placementClearance';
+
+test('annex rubble opts into compound geometry without changing existing district rubble', () => {
+  const aabb: Placement['visualAabb'] = { min: [-1, 0, -1], max: [1, 1, 1] };
+  const p: Placement = { id: 'existing-rubble', assetId: 'decay.rubble-pile', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, lightGroup: '', allowRoad: false, visualAabb: aabb };
+  const fallback = { id: p.id, aabb, minTier: 0 as const, maxTier: 5 as const };
+  expect(placementColliders([p], [fallback])).toEqual([fallback]);
+  expect(footprints(p, 0, true)).toEqual([]);
+  const carried = { ...p, collisionId: 'carry.annex-rubble' };
+  expect(placementColliders([carried], [fallback])).toHaveLength(staticCollision[carried.collisionId].boxes.length);
+  expect(footprints(carried, 0, true)).toHaveLength(staticCollision[carried.collisionId].boxes.length);
+});
 
 test('@E19 M1-07 baked static collision is current with delivered GLBs and has finite body-height geometry', () => {
   for (const [id, data] of Object.entries(staticCollision)) {

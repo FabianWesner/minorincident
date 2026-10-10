@@ -19,7 +19,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
     // Low flower strips reuse the hedge mesh, but never its walking obstacle
     // or a stale district footprint from an earlier export.
     if (p.assetId === 'prop.flower') return [];
-    const shape = sources[p.assetId];
+    const shape = sources[p.collisionId ?? p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
     const boxes = shape.boxes.concat(extraSupports[p.assetId] ?? []);
     return boxes.flatMap((box, index) => {

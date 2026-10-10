@@ -33,6 +33,8 @@ export interface Aabb {
 export interface Placement extends PlacementTransform {
   id: string;
   assetId: string;
+  /** Optional baked collision record; visuals still use assetId (L2 annex rubble opts in without rebaking L5). */
+  collisionId?: string;
   scale: [number, number, number];
   minTier: Tier;
   maxTier: Tier;

@@ -107,7 +107,7 @@ export function applyL1Aftermath(layout: DistrictLayout, aftermath: L1Aftermath 
   annex.decay = l1Canon.annex.decay; annex.lightGroup = 'carry-dark';
   for (const d of l1AftermathDressing) place(layout, d);
   for (const r of l1Canon.annex.rubble) {
-    const placement: Placement = { id: r.id, assetId: 'decay.rubble-pile', position: [r.x, pavingAt(layout, r.x, r.z), r.z], yaw: r.yaw, scale: [r.scale, r.scale, r.scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [r.x - r.half[0], 0, r.z - r.half[1]], max: [r.x + r.half[0], 1.4 * r.scale, r.z + r.half[1]] } };
+    const placement: Placement = { id: r.id, assetId: 'decay.rubble-pile', collisionId: 'carry.annex-rubble', position: [r.x, pavingAt(layout, r.x, r.z), r.z], yaw: r.yaw, scale: [r.scale, r.scale, r.scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [r.x - r.half[0], 0, r.z - r.half[1]], max: [r.x + r.half[0], 1.4 * r.scale, r.z + r.half[1]] } };
     placeClear(layout, placement);
     layout.colliders.push(blocker(r.id, placement.position[0], placement.position[2], r.half[0], r.half[1], 1.4 * r.scale));
   }

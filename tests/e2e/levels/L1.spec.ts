@@ -72,15 +72,17 @@ test.describe('L1 v2 real-input playthrough', () => {
       const activeBefore = Object.entries((await mission()).steps).find(([, s]) => s.status === 'active')?.[0];
       const start = (await player()).transform;
       if (Math.hypot(target.x - start.x, target.z - start.z) <= stop) return;
+      let clicks = 0;
       const clickDestination = async () => {
+        const [sx, sz] = [[1, 1], [-1, 1], [-1, -1], [1, -1]][clicks++ % 4];
         const start = (await player()).transform;
         // Frame both ends for a real ground click. This changes presentation only; routing remains the game's own.
-        await page.evaluate(({ start, target }) => {
+        await page.evaluate(({ start, target, sx, sz }) => {
           const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2;
           const radius = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
           a.camera.preset('D-GROVE/W0/l1-morning');
-          a.camera.cinematic({ position: [x + radius, radius * 1.2, z + radius], target: [x, 0, z] }, true);
-        }, { start, target });
+          a.camera.cinematic({ position: [x + radius * sx, radius * 1.2, z + radius * sz], target: [x, 0, z] }, true);
+        }, { start, target, sx, sz });
         const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
         const view = page.viewportSize()!;
         expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
