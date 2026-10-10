@@ -43,28 +43,28 @@ export const l1Canon = {
     /** Debris blown out over the forecourt: rubble heaps under the window and beside the doors (fixed, blocked nav cells).
      * They leave the door approach (x 65..67) and the gate open: L2 refuge door 47 and the L1 markers stay reachable. */
     rubble: [
-      { id: 'carry-annex-rubble-1', x: 63.0, z: -12.35, yaw: 0, scale: 1, half: [1.4, .72] },
-      { id: 'carry-annex-rubble-2', x: 68.4, z: -12.45, yaw: 2.6, scale: .62, half: [.85, .62] },
+      { id: 'carry-annex-rubble-1', x: 63.0, z: -11.7, yaw: 0, scale: 1, half: [1.4, .72] },
+      { id: 'carry-annex-rubble-2', x: 68.4, z: -11.7, yaw: 2.6, scale: .62, half: [.85, .62] },
     ],
   },
   /** Beat 9: the residents of one house break out through its yard gate (refuge door 30, LevelOneOutbreak.houseDoor). */
-  outbreakHouse: { door: 30, gate: { x: 22.28, z: 26 }, house: 'bld.house-b:474', entry: { x: 25.5, z: 20.9 } },
+  outbreakHouse: { door: 30, gate: { x: 5.05147, z: 26 }, house: 'bld.house-a:405', entry: { x: 5.01147, z: 22.33275 } },
 } as const;
 
 type Dressing = { id: string; assetId: string; x: number; z: number; yaw?: number; scale?: [number, number, number] };
 /** Static aftermath dressing (canon). Decals lie flat on the paving; props keep their own collision. */
 export const l1AftermathDressing: readonly Dressing[] = [
   // Annex forecourt: scorch fanning out of the doors and the blown window, glass on the paving.
-  { id: 'carry-annex-scorch-1', assetId: 'decal.scorch', x: 64.4, z: -12.3, yaw: .2, scale: [3.4, 1, 2.2] },
-  { id: 'carry-annex-scorch-2', assetId: 'decal.scorch', x: 66.6, z: -12.0, yaw: 1.4, scale: [2.0, 1, 2.4] },
+  { id: 'carry-annex-scorch-1', assetId: 'decal.scorch', x: 65.1, z: -10.15, yaw: .2, scale: [1.6, 1, 1.0] },
+  { id: 'carry-annex-scorch-2', assetId: 'decal.scorch', x: 67, z: -10, yaw: 1.4, scale: [1.2, 1, 1.0] },
   { id: 'carry-annex-glass-1', assetId: 'decay.broken-glass', x: 65.3, z: -12.0, yaw: .3, scale: [.55, .55, .55] },
-  { id: 'carry-annex-glass-2', assetId: 'decay.broken-glass', x: 66.9, z: -11.9, yaw: 2.1, scale: [.5, .5, .5] },
+  { id: 'carry-annex-glass-2', assetId: 'decay.broken-glass', x: 66.5, z: -12.4, yaw: 2.1, scale: [.5, .5, .5] },
   // Outbreak house: a smeared trail from the house through the yard gate to the pavement, dropped belongings.
-  { id: 'carry-house-blood-1', assetId: 'decal.blood-trail', x: 23.1, z: 23.6, yaw: .1, scale: [1.3, 1, 2.6] },
-  { id: 'carry-house-blood-2', assetId: 'decal.blood-trail', x: 22.7, z: 26.4, yaw: -.3, scale: [1.3, 1, 2.2] },
-  { id: 'carry-house-blood-3', assetId: 'decal.blood-pool', x: 23.4, z: 21.9, yaw: 0, scale: [1.2, 1, 1.2] },
-  { id: 'carry-house-blood-4', assetId: 'decal.blood-splats', x: 24.4, z: 27.6, yaw: .7, scale: [1.6, 1, 1.6] },
-  { id: 'carry-house-belongings', assetId: 'decay.dropped-belongings', x: 25.3, z: 27.3, yaw: .8 },
+  { id: 'carry-house-blood-1', assetId: 'decal.blood-trail', x: 5.05, z: 25.3, yaw: .1, scale: [.7, 1, .8] },
+  { id: 'carry-house-blood-2', assetId: 'decal.blood-trail', x: 5.85, z: 26.8, yaw: -.3, scale: [.6, 1, 1.2] },
+  { id: 'carry-house-blood-3', assetId: 'decal.blood-pool', x: 5.05, z: 24.9, yaw: 0, scale: [.7, 1, .7] },
+  { id: 'carry-house-blood-4', assetId: 'decal.blood-splats', x: 6.7, z: 28.3, yaw: .7, scale: [1.1, 1, 1.1] },
+  { id: 'carry-house-belongings', assetId: 'decay.dropped-belongings', x: 7, z: 27.3, yaw: .8 },
 ];
 
 /** World AABB blocker for a placement without baked collision boxes (physics + navigation, `placementColliders` fallback). */
@@ -135,5 +135,5 @@ export function clearOfL2Script(p: { x: number; z: number }, margin = 3): boolea
 export const carryoverSites = [
   { id: 'annex', event: 'L1 beat 5: lab pressure blast in the Medical Annex', kind: 'scripted', at: { x: 65.5, z: -14.5 }, stand: { x: 66, z: -11.6 } },
   { id: 'annex-forecourt', event: 'L1 beat 5: debris blown over the forecourt', kind: 'scripted', at: { x: 64.5, z: -12.4 }, stand: { x: 65.2, z: -9.4 } },
-  { id: 'outbreak-house', event: 'L1 beat 9: residents break out of the outbreak house', kind: 'scripted', at: { x: 23.5, z: 25 }, stand: { x: 23.4, z: 27.6 } },
+  { id: 'outbreak-house', event: 'L1 beat 9: residents break out of the outbreak house', kind: 'scripted', at: { x: 5.05, z: 25 }, stand: { x: 5.4, z: 27.6 } },
 ] as const;

@@ -3,6 +3,7 @@ import { Rng } from '../../core/Rng';
 import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
+import { seatAnchor, sitHipHeight } from '../npc/seats';
 import { l2Dressing } from '../../levels/L2/layout';
 import { clearOfL2Script } from '../../levels/continuity';
 import type { Mission } from './Mission';
@@ -135,7 +136,13 @@ export class LevelTwoRescue {
     for (let i = 1; i <= l2.calm.civiliansOnBenches; i++) {
       // Seated facing out of the bays (station-local +x).
       const bench = this.anchor(`l2-bench-${Math.min(4, i)}`), seat = { x: bench.x, z: bench.z }, p = this.snap(seat, .35);
-      const id = o.spawnPedestrian(p, { tier: 'frail', schedule: this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat) });
+      const schedule = this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat);
+      const district = this.world.districts!.districts[0], [ox, oz] = district.origin;
+      const prop = district.layout.placements.filter(q => q.id.startsWith('l2-station-') && q.assetId === 'prop.bench')
+        .sort((a, b) => Math.hypot(a.position[0] + ox - seat.x, a.position[2] + oz - seat.z) - Math.hypot(b.position[0] + ox - seat.x, b.position[2] + oz - seat.z))[0];
+      const hip = prop && seatAnchor(prop.assetId, prop.position, prop.yaw, prop.scale, { x: ox, z: oz });
+      if (hip) schedule[0].seatLift = hip.y - sitHipHeight;
+      const id = o.spawnPedestrian(p, { tier: 'frail', schedule });
       this.s.benchIds.push(id);
     }
   }
