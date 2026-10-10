@@ -2,6 +2,7 @@ import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { CrowdFigureProbe } from './CrowdFigureProbe';
+import { PaletteMaterial } from '../PaletteMaterial';
 
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe }
 /** Frozen, baked death geometry in growing 128-body pages. No per-frame pose
@@ -53,7 +54,7 @@ export class StaticCorpses extends Group {
       const colors = new InstancedBufferAttribute(new Float32Array(128 * 4), 4);
       const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
       geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
-      const frozen = new MeshLambertNodeMaterial().copy(material); frozen.positionNode = null; frozen.normalNode = null;
+      const frozen = material instanceof PaletteMaterial ? material.frozenCopy() : new MeshLambertNodeMaterial().copy(material); frozen.positionNode = null; frozen.normalNode = null;
       const mesh = new InstancedMesh(geometry, frozen, 128); mesh.count = 0;
       mesh.castShadow = false; mesh.receiveShadow = true;
       const probe = new CrowdFigureProbe(); mesh.onAfterRender = () => probe.draw();

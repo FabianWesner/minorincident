@@ -86,6 +86,8 @@ test.describe('L1 v2 real-input playthrough', () => {
         expect(point.x).toBeGreaterThan(20); expect(point.x).toBeLessThan(view.width - 20);
         expect(point.y).toBeGreaterThan(20); expect(point.y).toBeLessThan(view.height - 20);
         await page.mouse.click(point.x, point.y);
+        // Consume the queued screen click under the camera that projected it (as in L3).
+        await step(1);
         await page.evaluate(() => window.__SS__!.camera.follow());
       };
       await clickDestination();

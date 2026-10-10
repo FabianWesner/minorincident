@@ -1,12 +1,14 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
 import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
-import { uniform, mix, vec2, viewportUV, Fn, texture, reference, float } from 'three/tsl';
+import { renderGroup, uniform, mix, vec2, viewportUV, Fn, texture, reference, float } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
 import { LookUniforms } from './LookUniforms';
 import { LightField } from './LightField';
+import { weatherMaterialFlags } from './WeatherView';
+import type { PaletteMaterial } from './PaletteMaterial';
 
 // r186's default PCF rotates five taps with per-pixel noise. A fixed weighted
 // grid keeps the soft penumbra without stipple, including the WebGL2 fallback.
@@ -77,7 +79,21 @@ export class Lighting {
   private heroTime = -1;
   /** Name of the promoted hero light for diagnostics (null: the sun/moon casts). */
   heroLight: string | null = null;
+  readonly paletteMaterials = new Set<PaletteMaterial>();
+  weatherMode = 0;
+  private weatherFeatures = 0;
+  /** Compile only the surface effects currently needed, including residual wetness/snow. */
+  setWeatherMode(features: number): void {
+    this.weatherFeatures = features;
+    const flags = weatherMaterialFlags;
+    const mode = features | (this.field.active ? flags.field : 0) | (this.rim.value > 0 || this.heroFill.value > 0 ? flags.hero : 0);
+    if (mode === this.weatherMode) return;
+    this.weatherMode = mode;
+    for (const material of this.paletteMaterials) material.setWeatherMode(mode);
+  }
   constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
+    // These values describe the entire view; they are identical for every world draw.
+    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
     this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
@@ -125,7 +141,7 @@ export class Lighting {
     this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.radialFog;
     if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
     this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
-    this.sun.shadow.needsUpdate = true;
+    this.sun.shadow.needsUpdate = true; this.setWeatherMode(this.weatherFeatures);
   }
   update(view: View): void {
     // Portrait framing pulls the camera back to retain the playable circle.

@@ -52,7 +52,14 @@ test('T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=
   expect(after).toBeGreaterThan(before); await shot(page, 'snow-tracks'); writeFileSync(`${out}/snow-coverage.json`, JSON.stringify({ roof, car, before, after }));
 });
 for (const kind of ['clear', 'overcast', 'haze', 'thunderstorm', 'fog', 'snow']) test(`T-E28-12-${kind} @E28 @E28-AC12 @vision game-camera weather mood ${kind}`, async ({ page }) => {
-  await lab(page, spec(kind)); await page.evaluate(() => window.__SCENE__!.step(61)); await shot(page, `mood-${kind}`);
+  await lab(page, spec(kind)); await page.evaluate(() => window.__SCENE__!.step(61));
+  if (kind === 'thunderstorm') {
+    // Frame 60 is the scripted strike: retain its flash, then review the sustained mood.
+    await shot(page, 'mood-thunderstorm-flash');
+    await page.evaluate(() => window.__SCENE__!.step(58));
+    expect(await page.evaluate(() => window.__SS__!.getState().render.weather!.flash)).toBe(0);
+  }
+  await shot(page, `mood-${kind}`);
   expect(await page.evaluate(() => window.__SS__!.getState().weather!.kind)).toBe(kind);
 });
 
@@ -72,4 +79,11 @@ test('T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers do
   await page.evaluate(() => window.__SCENE__!.step(30)); const dark = await shot(page, 'scripted-strike-blackout');
   const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.weather!.powerRevision).toBe(1); const bright = (p: PNG) => { let n = 0; for (let i = 0; i < p.data.length; i += 4) if (p.data[i] > 200 && p.data[i + 1] > 200 && p.data[i + 2] > 200) n++; return n; };
   expect(bright(lit)).toBeGreaterThan(100); expect(bright(dark)).toBeLessThan(bright(lit) * .5);
+});
+
+/** Supplement the weather moods with facade/hero-shadow evidence for checklist G. */
+test('T-E28-12-wall @E28 @E28-AC12 @vision window spill stays outside the house facade at the game camera', async ({ page }) => {
+  await lab(page, { ...spec('fog'), weather: 'clear', vehicles: [], props: [{ id: 'house', asset: 'bld.house-a', at: [-3, -3], yaw: 180 }], camera: { mode: 'game', target: [-2, -1], zoom: 1.6 } });
+  await shot(page, 'window-wall-occlusion');
+  expect(await page.evaluate(() => window.__SS__!.getState().render.lighting!.lightField.drawn)).toBeGreaterThan(0);
 });
