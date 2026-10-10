@@ -83,13 +83,13 @@ test('T-E25-11p T-E25-12p @E25 shared district materials preserve window and pol
 
 test('T-E25-13b @E25 @E25-AC13 shared light-bearing dressing keeps the player see-through graph', async () => {
   const { Group, BoxGeometry } = await import('three/webgpu');
-  const { color } = await import('three/tsl');
+  const { vec3 } = await import('three/tsl');
   const { DistrictAssets } = await import('../../../src/assets/DistrictAssets');
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), assets = new DistrictAssets(materials);
   const share = (assets as unknown as { share(root: import('three').Group): void }).share.bind(assets);
   const geometry = new BoxGeometry();
   for (const name of ['static-body', 'window-light']) {
-    const root = new Group(), material = materials.shaded(color('#283344'));
+    const root = new Group(), material = materials.shaded(vec3(.1, .2, .3));
     const mesh = new Mesh(geometry, material); mesh.name = name; root.add(mesh); share(root);
     expect(material.userData.seeThrough, name).toBe(true);
   }
