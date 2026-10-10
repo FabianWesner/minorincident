@@ -86,8 +86,9 @@ test('T-E25-07i @E25 authored lamps preserve gameplay IDs across creation and ch
 });
 
 test('T-E25-07m @E25 @E25-AC07 authored emergency power survives a district power revision', async () => {
-  world = new SimWorld(); await world.init(); world.loadScenario('L6');
-  const lights = world.lightPower!;
+  const { loadL6 } = await import('../../tools/sim-runner/l6Bots');
+  world = (await loadL6()).world;
+  const lights = world.lightPower!; lights.update();
   const main = [...lights.lamps.values()].filter(lamp => lamp.group === 'metro-main');
   const emergency = [...lights.lamps.values()].filter(lamp => lamp.group === 'metro-emergency');
   expect(main.length).toBeGreaterThan(0); expect(emergency.length).toBeGreaterThan(0);
