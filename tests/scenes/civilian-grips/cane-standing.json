@@ -1,0 +1,77 @@
+{
+  "name": "grip-cane-standing",
+  "ground": "sidewalk",
+  "size": 20,
+  "props": [],
+  "actors": [
+    {
+      "id": "holder",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.civilian-man-b",
+        "tint": "#df8b29",
+        "accessories": [
+          "cap"
+        ],
+        "handProp": "cane"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      0.15,
+      0.8,
+      0
+    ],
+    "radius": 3,
+    "azimuth": 45
+  },
+  "frames": 180,
+  "shots": [
+    60,
+    120,
+    180
+  ],
+  "script": [
+    {
+      "frame": 120,
+      "camera": {
+        "mode": "close",
+        "target": [
+          0.15,
+          0.8,
+          0
+        ],
+        "radius": 3,
+        "azimuth": 90
+      }
+    },
+    {
+      "frame": 180,
+      "camera": {
+        "mode": "close",
+        "target": [
+          0.15,
+          0.8,
+          0
+        ],
+        "radius": 3,
+        "azimuth": 0
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "heldPropIntersectionsMax": 0,
+    "heldPropSamplesMin": 30
+  },
+  "note": "Native palm/fingers grip a visible prop. Inspect PO angle (45), front (90), side (0); no hand/prop intersection."
+}
