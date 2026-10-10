@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { l2 } from '../../src/data/l2';
+import type { L1Aftermath } from '../../src/levels/continuity';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -34,10 +35,11 @@ export interface L2Report {
   /** Died within 120 s of the doors opening. */
   diedBy120: boolean;
 }
-export async function loadL2(seed: number, tier: 'high' | 'low' = 'high'): Promise<{ world: SimWorld; mission: Mission }> {
+/** `aftermath`: an L1 run's carryover (CampaignSave.world.L1); null = scripted canon only (level select). */
+export async function loadL2(seed: number, tier: 'high' | 'low' = 'high', aftermath: L1Aftermath | null = null): Promise<{ world: SimWorld; mission: Mission }> {
   const world = new SimWorld(); await world.init();
   const composition = compositions.L2;
-  world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
+  world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, aftermath);
   if (tier === 'low') { world.infected!.director.setTier('low'); world.npcs!.setQuality('low'); }
   applyCampaign(world, preset('L2-default'));
   const mission = world.loadMission(resolveCampaignMission('L2', world.districts!)); mission.begin();

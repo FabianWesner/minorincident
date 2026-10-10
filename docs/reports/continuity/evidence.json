@@ -1,0 +1,364 @@
+{
+  "baseline": "4970fa9e",
+  "unit_and_continuity": {
+    "passed": 447,
+    "files": 129
+  },
+  "performance": {
+    "before": {
+      "high": {
+        "drawCalls": 278,
+        "triangles": 1090165,
+        "peakP50": 6.799999999999272,
+        "peakP95": 8.900000000001455,
+        "revealMaxMs": 43.599999999998545,
+        "gateMaxMs": 16.69999999999709,
+        "gateClosed": true
+      },
+      "low": {
+        "drawCalls": 222,
+        "triangles": 373869,
+        "peakP50": 21.5,
+        "peakP95": 26.69999999999709,
+        "revealMaxMs": 36.80000000000291,
+        "gateMaxMs": 37.19999999999709,
+        "gateClosed": true
+      }
+    },
+    "after": {
+      "high": {
+        "drawCalls": 276,
+        "triangles": 851839,
+        "peakP50": 6.5,
+        "peakP95": 8.600000000002183,
+        "revealMaxMs": 36.899999999999636,
+        "gateMaxMs": 15.69999999999709,
+        "gateClosed": true
+      },
+      "low": {
+        "drawCalls": 223,
+        "triangles": 431985,
+        "peakP50": 23.30000000000291,
+        "peakP95": 28.299999999995634,
+        "revealMaxMs": 37.400000000001455,
+        "gateMaxMs": 37.5,
+        "gateClosed": true
+      }
+    }
+  },
+  "performance_conditions": "{\"at\":\"2026-10-10T10:45:20.958Z\",\"load\":[2.720703125,3.796875,3.9423828125],\"otherHeadlessChrome\":0,\"browserSlots\":[0,1],\"command\":[\"sh\",\"/tmp/continuity-perf-pair.sh\"]}",
+  "scenelab": {
+    "l2-grid-r0c0": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r0c1": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r0c2": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r0c3": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r1c0": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r1c1": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r1c2": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r1c3": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r2c0": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r2c1": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r2c2": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "l2-grid-r2c3": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "staticOverlap",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    }
+  },
+  "l1_to_l2": {
+    "l1": {
+      "simSeconds": 106.36666666666666
+    },
+    "l2": {
+      "simSeconds": 155.96666666666667,
+      "deaths": 1
+    }
+  },
+  "levels_browser": {
+    "passed": 31,
+    "workers": 2,
+    "headless": true,
+    "log": "/tmp/continuity-levels-final.log",
+    "duration": "9.0m"
+  },
+  "bot_batteries": {
+    "complete": {
+      "completed": 20,
+      "seeds": 20,
+      "median_seconds": 164.7,
+      "median_deaths": 1
+    },
+    "newbie": {
+      "completed": 20,
+      "seeds": 20,
+      "median_seconds": 276.8333333333333,
+      "median_deaths": 3,
+      "limits_pass": false,
+      "baseline_comparison": "Main also exceeds the one-death median limit; continuity additionally exceeds the 240-second median time limit."
+    }
+  },
+  "smoke": {
+    "simulation_passed": 6,
+    "browser_passed": 26,
+    "headless": true,
+    "workers": 2
+  },
+  "baseline_newbie": {
+    "completed": 20,
+    "seeds": 20,
+    "median_seconds": 222.08333333333334,
+    "median_deaths": 3,
+    "limits_pass": false,
+    "test": "T-E20-03",
+    "revision": "4970fa9e"
+  },
+  "baseline_diagnostic": [
+    {
+      "seed": 7,
+      "radio": {
+        "infected": 60,
+        "escapeArea": 33,
+        "groupsOf4": 3,
+        "chasingPlayer": 6
+      },
+      "cluster": {
+        "atApproach": 13,
+        "size": 13
+      },
+      "clusterKilled": 4,
+      "simSeconds": 156.15,
+      "deaths": 1
+    },
+    {
+      "seed": 20,
+      "radio": {
+        "infected": 60,
+        "escapeArea": 31,
+        "groupsOf4": 3,
+        "chasingPlayer": 10
+      },
+      "cluster": {
+        "atApproach": 10,
+        "size": 10
+      },
+      "clusterKilled": 0,
+      "simSeconds": 291.01666666666665,
+      "deaths": 3
+    }
+  ],
+  "status": "hold: E20 verification fails; no test or budget limits changed",
+  "E20_verify": {
+    "passed": 32,
+    "failed": 3,
+    "failed_tests": [
+      {
+        "id": "T-E20-03",
+        "actual_median_deaths": 3,
+        "maximum": 1,
+        "reproduced_on_main": true
+      },
+      {
+        "id": "T-E20-12",
+        "seed": 20,
+        "actual_chasing": 13,
+        "maximum": 12,
+        "reproduced_on_main": false
+      },
+      {
+        "id": "T-E20-13",
+        "seed": 7,
+        "actual_cluster": 10,
+        "minimum": 12,
+        "main_seed20_cluster": 10
+      }
+    ]
+  }
+}
