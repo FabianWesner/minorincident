@@ -372,7 +372,8 @@ export class LevelOneOutbreak {
       if (cell < 0) continue;
       const at = { x: ai.nav.x(cell), z: ai.nav.z(cell) };
       if (!ai.director.safe('infected.runner', at)) continue;
-      const id = outbreak.spawnPedestrian(at), e = world.entities.get(id)!;
+      // Already-infected street residents have no carried prop to drop at population time.
+      const id = outbreak.spawnPedestrian(at, { handProp: null }), e = world.entities.get(id)!;
       outbreak.turnNow(e);
       if (e.infected?.l1) Object.assign(e.infected.l1, { homeX: group.x, homeZ: group.z, leashM: l1v2.street.leashM });
       group.ids.push(id);

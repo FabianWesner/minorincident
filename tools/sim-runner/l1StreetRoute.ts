@@ -1,5 +1,7 @@
 /** Measures real perception along three bat-to-station street routes, with normal walking input. */
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { Matrix4 } from 'three';
+import { View } from '../../src/render/View';
 import { loadL1, runL1, Walker } from './l1Bots';
 const out = process.argv[2] ?? 'test-results/l1-street-infected/after';
 mkdirSync(out, { recursive: true });
@@ -12,7 +14,17 @@ for (const [name, points] of Object.entries({
   if (['direct', 'west', 'east'].includes(process.argv[3]) && name !== process.argv[3]) continue;
   const { world: w, mission: m } = await loadL1(1);
   try {
-    runL1(w, m, 'complete', { stopWhen: m => m.state.steps.weapon.status === 'completed' });
+    // Supply the same tick-pose frustum as Game.update; the generic 64 m fallback is too wide for L1.
+    const view = new View(), matrix = new Matrix4(); view.cameraShake = false;
+    const start = w.entities.get(1)!.transform; view.focus.set(start.x, 0, start.z); view.update(start, 0);
+    const camera = () => {
+      view.driving = !!w.vehicles?.bicycle?.riding; view.update(w.entities.get(1)!.transform, 1 / 60); view.present(1, true);
+      matrix.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse);
+      w.infected!.director.setFrustum(matrix.elements, view.camera.position);
+    };
+    runL1(w, m, 'complete', { onTick: camera, stopWhen: m => m.state.steps.weapon.status === 'completed' });
+    // Start this route fixture at full health; clear a pending setup death so a respawn cannot count as walking.
+    w.player!.restoreVitals(w.tick);
     // After the first real damage, protect the observer so the entire route can be sampled.
     w.combat!.damage.god = false;
     const initialHP = w.entities.get(1)!.health.current; let damage = 0;
@@ -31,7 +43,7 @@ for (const [name, points] of Object.entries({
       const goal = { x: points[leg][0], z: points[leg][1] };
       if (Math.hypot(p.x - goal.x, p.z - goal.z) < (leg === points.length - 1 ? .25 : 1.2) && leg < points.length - 1) { leg++; walker.reset(); }
       w.setInput({ move: walker.step(w, { x: points[leg][0], z: points[leg][1] }, leg === points.length - 1 ? .25 : 1, String(leg)) ?? { x: 0, z: 0 }, left: { down: false, held: false, up: false }, attackTarget: undefined });
-      w.update();
+      camera(); w.update();
     }
     stop();
     // New encounters begin after 10 m of walking since the previous encounter's first detection.
