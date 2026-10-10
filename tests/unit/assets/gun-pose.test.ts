@@ -22,7 +22,9 @@ const point = (pose: Float32Array, name: string) => new Vector3().setFromMatrixP
 
 for (const archetype of ['char.courier-female.skin', 'char.courier-male.skin', 'npc.police-officer', 'npc.national-guard', 'npc.civilian-man-a', 'npc.civilian-woman-a']) {
   test(`@gun-pose ${archetype}: standing/walking firing arm is at shoulder height and points at the shot`, async () => {
+    for (const scale of archetype.startsWith('char.') ? [1] : [1, 1.3]) {
     const model = await load(archetype), upper = model.getObjectByName('armR')!, middle = model.getObjectByName('foreArmR')!, hand = model.getObjectByName('handR')!;
+    model.scale.setScalar(scale); model.updateMatrixWorld(true);
     const aim = new GunAim(upper, middle, hand,model.getObjectByName('torso')), crowd = new CrowdGunAim(model, [...characterNodes]);
     for (const clip of ['idle', 'walk']) for (const phase of [.1, .4, .8]) {
       sampleClip(model, clip, phase); model.updateMatrixWorld(true);
@@ -43,6 +45,7 @@ for (const archetype of ['char.courier-female.skin', 'char.courier-male.skin', '
       }
       // The override must never touch the animated feet.
       for (const [i,name] of ['footL','footR'].entries()) expect(model.getObjectByName(name)!.matrixWorld.elements).toEqual(feet[i].elements);
+    }
     }
   });
 }
