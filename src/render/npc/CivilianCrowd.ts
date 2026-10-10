@@ -26,6 +26,7 @@ const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe',
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
+import { CrowdGunAim } from '../characters/GunAim';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
@@ -98,6 +99,7 @@ class CivilianBatch extends Group {
   private readonly corpses = new StaticCorpses();
   private readonly probe = new CrowdFigureProbe();
   private locomotion!: CrowdLocomotion;
+  private gunAim!: CrowdGunAim;
   private poses!: CrowdPosePalette;
   private mesh!: InstancedMesh;
   private bakedClip!: CrowdClip;
@@ -131,7 +133,9 @@ class CivilianBatch extends Group {
     this.source = placeholder ? 'placeholder' : 'glb';
     if (!placeholder) restoreStanding(model);
     if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
+    model.getObjectByName('rifle')?.removeFromParent(); // The live weapon follows the hand, including aiming.
     const baked = bakeInfected(model, [], false, civilianClips);
+    this.gunAim = new CrowdGunAim(model, baked.clip.parts);
     prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
     const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
@@ -228,11 +232,12 @@ class CivilianBatch extends Group {
     if (this.world.scenario === 'L6') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
-  update(alpha = 1, low = false): void {
+  update(alpha = 1, low = false, shotId?: number): void {
     this.probe.begin(); this.corpses.begin(id => this.world.entities.get(id));
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
-    for (const e of this.world.entities.iterate()) {
+    const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
+    for (const e of shot ? [shot] : this.world.entities.iterate()) {
       if (index >= 350 && !e.corpse) continue;
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
@@ -242,9 +247,9 @@ class CivilianBatch extends Group {
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
       if (e.corpse) { if (this.lod === 'lod1' && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
-      if (!this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      if (shotId === undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if (this.visibility.band(e.id, pixels, this.model) !== this.lod) continue;
+      if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, pixels, this.model)) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
@@ -276,13 +281,19 @@ class CivilianBatch extends Group {
       }
       let frame = civilianClips.indexOf(clip) * framesPerClip + (storyFrame ?? phase) * (framesPerClip - 1);
       const carried = e.appearance?.handProp;
-      const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : undefined);
-      const holding = !!handProp && c.state === 'calm' && !!this.props && !!(c.story || e.appearance?.handProp !== null);
+      const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : c.ally?.gun ? c.ally.role === 'officer' ? 'pistol' : 'rifle' : undefined);
+      const holding = !!handProp && c.state === 'calm' && !!this.props && !!(c.story || c.ally?.gun || e.appearance?.handProp !== null);
       const sourceFrame = frame;
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
       frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale * (c.adult ? 1 : .7), speed, renderTick / 60, !this.distant);
       if (holding && !weaponProps.has(handProp!)) { frame = this.poses.correct(e.id, frame, ...blend, pose => uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand)); blend[0] = frame; blend[1] = 1; }
+      const firing = this.props?.aiming.get(e.id);
+      if (holding && ['pistol', 'rifle', 'hunting-rifle'].includes(handProp!) && (c.story?.clip === 'shoot' || firing && firing.until >= this.world.tick)) {
+        // Preserve walking legs and align the torso immediately with the actual shot.
+        if (firing && firing.until >= this.world.tick) this.transform.makeRotationY(-Math.atan2(firing.direction.z, firing.direction.x)).setPosition(presented.x, presented.y - .7, presented.z);
+        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose)); blend[0] = frame; blend[1] = 1;
+      }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       if (holding) {
@@ -294,6 +305,7 @@ class CivilianBatch extends Group {
       const glow = c.eyesGlow ? e.infection ? Math.min(1, (this.world.tick - (e.infection.endsTick - 78)) / 30) : Math.min(1, Math.max(0, (c.veins - .12) / .65)) : 0;
       this.overlay.setXYZ(index, c.veins, Math.max(0, glow) + (e.infection ? 2 : 0), holding && !weaponProps.has(handProp!) ? -1 : e.infection ? Math.min(1, Math.max(0, (e.infection.progress - .35) / .4)) : 0); index++; shadowPixels = Math.max(shadowPixels, pixels);
     }
+    if (shotId !== undefined) return; // The next render rebuilds the complete batch once.
     // Full sun silhouettes matter in the close game camera (high tier; low keeps the shared contact shadows). Wider views retain
     // the shared contact shadows; hysteresis prevents caster toggling at an edge.
     this.mesh.castShadow = !low && !this.distant && shadowPixels > (this.mesh.castShadow ? 128 : 156);
@@ -433,8 +445,18 @@ export class CivilianCrowd extends Group {
     if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
     loadMeasure('view:civilian-crowd', started); this.update();
   }
-  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
-  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  aimGun(id: number, direction: { x: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
+  shotMuzzle(id: number, direction: { x: number; z: number }): Vector3 | null {
+    this.aimGun(id,direction);
+    const entity = this.world.entities.get(id); if (!entity) return null;
+    const model = crowdModelOf(entity);
+    for (const batch of this.batches) if (batch.model === model) batch.update(1,this.low,id);
+    return this.muzzle(id);
+  }
+  muzzle(id: number): Vector3 | null { return this.props.muzzles.get(id)?.clone() ?? null; }
+  gunMeshes() { return this.props.guns; }
   heldProps() { return this.props.contacts; }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

@@ -14,6 +14,8 @@ export type Gore = 'Full' | 'Reduced' | 'Off';
 export type { EffectKind, TelegraphKind } from '../../sim/world/types';
 export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low'; slowMotion?: boolean }
 export interface VfxTargets {
+  /** Resolve and pose the rendered gun synchronously at the shot tick. */
+  muzzle?(id: number, direction: { x: number; z: number }): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
   detach(id: number, limb: number): { x: number; y: number; z: number } | void;
   blood(coverage: number): void;
@@ -70,6 +72,19 @@ export class Vfx extends Group {
   dismemberedKills = 0;
   kills = 0;
   lastExplosionRadius = 0;
+  readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
+  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }): void {
+    const muzzle = this.targets.muzzle?.(sourceId, direction) ?? { x: fallback.x, y: 1.15, z: fallback.z };
+    const distance = this.world.combat?.query.clearDistance(muzzle, direction, range) ?? range;
+    const start = [muzzle.x, muzzle.y, muzzle.z];
+    this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y, muzzle.z + direction.z * distance] });
+    if (this.shots.length > 64) this.shots.shift();
+    this.burst(muzzle.x, muzzle.y, muzzle.z, 0xfff1b8, 8, .3, .12, 0);
+    this.particles.spawn(this.time, .1, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .75, 0, 0xffffff);
+    const spacing = this.quality === 'high' ? .3 : .6;
+    // The first tracer particle is at the muzzle, then follows the visual hit ray.
+    for (let i = 0; i <= Math.min(80, Math.floor(distance / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, muzzle.x + direction.x * i * spacing, muzzle.y, muzzle.z + direction.z * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
+  }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
@@ -202,23 +217,11 @@ export class Vfx extends Group {
       // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
       if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
       if (def?.category === 'ranged') {
-        // PO 10-09: the courier's own shot must read from the game camera like the allies' tracers: a bright flash at the muzzle and
-        // a tracer that spans the shot (to the first wall or the weapon range) and lingers a few frames.
-        const p = event.position, d = Math.min(def.range, this.world.combat?.query.clearDistance({ x: p.x, z: p.z }, event.direction, def.range) ?? def.range);
-        const mx = p.x + event.direction.x * .7, mz = p.z + event.direction.z * .7;
-        this.burst(mx, 1.15, mz, 0xfff1b8, 8, .4, .12, 0);
-        this.particles.spawn(this.time, .1, mx, 1.15, mz, 0, 0, 0, .75, 0, 0xffffff);
-        const spacing = this.quality === 'high' ? .3 : .6, lift = (1.15 - .9) / Math.max(d, 1);
-        for (let i = 1; i <= Math.min(80, Math.floor(d / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, p.x + event.direction.x * i * spacing, 1.15 - lift * i * spacing, p.z + event.direction.z * i * spacing, 0, 0, 0, .3, 0, 0xfff6c8);
-        if (this.quality === 'high') this.burst(p.x, 0.9, p.z, 0xd7af65, 1, 0.08, 2);
+        this.gunshot(event.sourceId, event.direction, def.range, event.position);
       }
     } else if (event.type === 'ally.attack' && event.from && event.to) {
-      // E21 officers and soldiers: a muzzle flash and a short tracer toward the target (hit or miss), as the courier's handgun.
-      const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, d = Math.hypot(dx, dz) || 1, ux = dx / d, uz = dz / d;
-      // PO 2026-10-08 (L2 checkpoint): the firing must read from the game camera, so the tracer spans the whole shot and lingers.
-      this.burst(event.from.x + ux * .6, 1.2, event.from.z + uz * .6, 0xfff1b8, 8, .3, .16, 0);
-      const spacing = this.quality === 'high' ? .35 : .7, lift = (1.15 - .9) / d;
-      for (let i = 1; i <= Math.min(64, Math.floor(d / spacing)); i++) this.particles.spawn(this.time, .18 - i * .001, event.from.x + ux * i * spacing, 1.15 - lift * i * spacing, event.from.z + uz * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
+      const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
+      this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from);
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'explosion') {
@@ -327,7 +330,7 @@ export class Vfx extends Group {
   }
   get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6), this.blasts.flash) : 0; }
   snapshot() {
-    return { enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
+    return { shots: this.shots, enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
       lastSpray: this.lastSpray, surfaceSplats: this.surfaceSplats.count, pendingSplats: this.landings.filter(l => l.at < Infinity).length, particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
       telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
       flash: this.flash, blasts: this.blasts.snapshot(), coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };

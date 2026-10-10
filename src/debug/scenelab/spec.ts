@@ -84,7 +84,7 @@ export type Action =
   | { turn: number }
   | { sit: string; seconds?: number }
   | { routine: 'sit'|'treat'|'rest'|'talk'|'share' }
-  | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT' }
+  | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT'; /** Simultaneous walking direction for firing-layer QA. */ move?: Point }
   | { select: 'LEFT' | 'RIGHT'; index?: number }
   /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
