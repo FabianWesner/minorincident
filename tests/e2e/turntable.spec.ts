@@ -31,6 +31,8 @@ test('T-E17-05e @E17-AC05 integrated survivor art uses accepted rigs without pla
   expect(events.filter(event => event.id.startsWith('char.survivor-'))).toEqual([]);
 });
 test('T-E17-05c @E17-AC05 missing production art renders a logged placeholder', async ({page,baseURL}) => {
+  // The radio is now integrated. Fail its real export request to exercise missing-art fallback.
+  await page.route('**/assets/models/util.radio*.glb*', route => route.abort());
   await page.goto(`${baseURL}/preview/?asset=util.radio&test=1&renderer=webgl`);
   await page.waitForFunction(()=>!!window.__ASSET__);
   await page.evaluate(()=>window.__ASSET__!.ready);
