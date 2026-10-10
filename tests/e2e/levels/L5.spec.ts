@@ -40,7 +40,8 @@ function helpers(page: Page) {
             Number(danger(b) < 3) - Number(danger(a) < 3) ||
             Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z);
         })[0];
-      return near ? { id: near.id, close: Math.hypot(near.transform.x - p.x, near.transform.z - p.z) < 1.8, rescue: near.infected?.l1?.mode === 'bite' || !a.input.visible(near.transform), p, at: near.transform } : null;
+      // Shoot visible grabbers immediately; sprinting to axe range can consume the rescue window.
+      return near ? { id: near.id, close: Math.hypot(near.transform.x - p.x, near.transform.z - p.z) < 1.8, rescue: !a.input.visible(near.transform), p, at: near.transform } : null;
     }, range);
     if (!target) return false;
     await page.evaluate(({ p, at }) => window.__SS__!.camera.cinematic({ position: [p.x + 24, 29, p.z + 24], target: [(p.x + at.x) / 2, 0, (p.z + at.z) / 2] }, true), target);
