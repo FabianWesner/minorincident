@@ -43,8 +43,8 @@ export const l1Canon = {
     /** Debris blown out over the forecourt: rubble heaps under the window and beside the doors (fixed, blocked nav cells).
      * They leave the door approach (x 65..67) and the gate open: L2 refuge door 47 and the L1 markers stay reachable. */
     rubble: [
-      { id: 'carry-annex-rubble-1', x: 63.0, z: -11.7, yaw: 0, scale: 1, half: [1.4, .72] },
-      { id: 'carry-annex-rubble-2', x: 68.4, z: -11.7, yaw: 2.6, scale: .62, half: [.85, .62] },
+      { id: 'carry-annex-rubble-1', x: 63.1, z: -12.12, yaw: 0, scale: .88, half: [1.4, .72] },
+      { id: 'carry-annex-rubble-2', x: 68.5, z: -12.22, yaw: 2.6, scale: .62, half: [.85, .62] },
     ],
   },
   /** Beat 9: the residents of one house break out through its yard gate (refuge door 30, LevelOneOutbreak.houseDoor). */
