@@ -1,0 +1,13 @@
+
+ RUN  v5.0.3 /private/tmp/getin-firefighter-baseline
+
+ × |functional| tests/levels/getin-before.test.ts > T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival 475ms
+   → cap bite must not leave the objective actor a corpse: expected 'finished' not to be 'finished' // Object.is equality
+ × |functional| tests/levels/getin-before.test.ts > T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery) 1407ms
+   → expected 159 not to be 159 // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  18:28:24
+   Duration  3.19s (tests 61%, transform 33%, import 6%)
+

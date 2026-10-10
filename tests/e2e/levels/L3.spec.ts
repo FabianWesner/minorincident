@@ -151,8 +151,8 @@ test.describe('L3 The Police Collapse in the browser', () => {
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
     for (const wp of route) {
-      // Reach the wreck detour itself before cutting back across the road.
-      const stop = street === 'oak' && wp.z === 24 ? 1.2 : sz === 0 ? 2 : 4;
+      // Reach the wreck detour before cutting back, and finish the final click inside the army zone.
+      const stop = wp.x > l3.map.zoneX || (street === 'oak' && wp.z === 24) ? 1.2 : sz === 0 ? 2 : 4;
       await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
       if (!await inL3()) break;
       const m = await mission(), p = (await player()).transform;
@@ -169,7 +169,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     // Still on L3 with its state (result screen) or already handing over / on L4 (the L3 state is gone: use the last one seen).
     const handedOver = scenario !== 'L3' || !now?.l3;
     const final = !handedOver ? now : { ...last, phase: 'progression' as const, l3: { ...last.l3!, crossedAt: last.l3!.crossedAt || (scenario === 'L4' ? 1 : 0) } };
-    writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ phase: final.phase, stats: final.stats, street, l3: { fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
+    writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
     console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);
     expect(['result', 'progression']).toContain(final.phase);
     expect(final.l3!.crossedAt).toBeGreaterThan(0);
