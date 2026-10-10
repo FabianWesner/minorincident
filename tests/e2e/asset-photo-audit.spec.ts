@@ -6,10 +6,15 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
   test.setTimeout(600_000);
   await boot(page, '/?test=1&renderer=webgl&quality=high&audio=muted');
   const rows = [];
-  for (const level of ['L1', 'L2', 'L3', 'L4', 'L5', 'L6']) {
-    await page.evaluate(async level => { const a = window.__SS__!; await a.loadLevel(level); a.pause(); a.missions.begin(); await a.step(1); }, level);
+  const phases: Record<string, (string | undefined)[]> = {
+    L1: [undefined, 'accident', 'bat'], L2: [undefined, 'doors', 'escape', 'cluster'],
+    L3: [undefined, 'fallback', 'segment-3b'], L4: [undefined, 'arrival', 'turn', 'line-break'],
+    L5: [undefined, 'survivor-5'], L6: [undefined, 'abandon', 'exit-platform'],
+  };
+  for (const [level, checkpoints] of Object.entries(phases)) for (const checkpoint of checkpoints) {
+    await page.evaluate(async ({ level, checkpoint }) => { const a = window.__SS__!; await a.loadLevel(level, { checkpoint }); a.pause(); a.missions.begin(); await a.step(1); }, { level, checkpoint });
     const spots = await page.evaluate(() => window.__SS__!.getState().render.districts!.photoSpots);
-    for (const spot of spots) {
+    for (const spot of spots.filter(spot => checkpoint === undefined || spot.includes(`/l${level.slice(1)}-`))) {
       const proof = await page.evaluate(async spot => {
         const a = window.__SS__!; a.camera.preset(spot); await a.screenshotReady();
         const render = a.getState().render, batches = render.districts!.batches;
@@ -23,7 +28,7 @@ test('T-E17-09-photo @E17 @E17-AC09 level photo spot asset inventory', async ({ 
         });
         return { dynamicPlaceholders, placeholders: [...new Set(batches.filter(b => b.placeholder && b.triangles > 0).map(b => b.assetId))], assets: [...new Set(batches.filter(b => b.triangles > 0).map(b => b.assetId))] };
       }, spot);
-      rows.push({ level, spot, ...proof });
+      rows.push({ level, checkpoint: checkpoint ?? 'start', spot, ...proof });
     }
   }
   mkdirSync('test-results/epics/E17', { recursive: true });

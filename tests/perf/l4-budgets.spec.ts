@@ -1,5 +1,4 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { l4Posts } from '../../src/data/l4';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
 
@@ -38,22 +37,26 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit'`, 900);
     // Populate the acceptance peak through the ordinary spawn APIs. The natural route often
     // kills the early waves before tank entry, so it cannot prove the specified 80/40 stress case.
-    await page.evaluate(({ tier, posts }) => {
-      const a = window.__SS__!, targetCivilians = tier === 'high' ? 40 : 20, targetInfected = tier === 'high' ? 80 : 40;
+    await page.evaluate(tier => {
+      const a = window.__SS__!, targetCivilians = tier === 'high' ? 40 : 20, targetInfected = tier === 'high' ? 80 : 48;
       let civilians = a.query({}).filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length;
       for (let i = 0; civilians < targetCivilians && i < 600; i++) {
         const p = { x: -35 + i % 12 * 3, z: -18 + Math.floor(i / 12) * 2 };
         try { a.npcs.civilian('cashier', p, { waypoints: [p] }); civilians++; } catch { /* next walkable plaza cell */ }
       }
+      // Posts are snapped to walkable cells by the mission; use the actual soldiers,
+      // not their authored anchors, to put targets on open approaches to every gun.
+      const posts = a.query({}).filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').map(e => ({ at: e.transform, yaw: e.transform.yaw }));
       let infected = a.getState().ai!.count;
       for (let i = 0; infected < targetInfected && i < 800; i++) {
-        const post = posts[i % posts.length], dx = post.face[0] - post.at[0], dz = post.face[1] - post.at[1];
-        const angle = Math.atan2(dz, dx) + Math.floor(i / posts.length) * Math.PI / 8;
+        const post = posts[i % posts.length];
+        const angle = -post.yaw + Math.floor(i / posts.length) * Math.PI / 8;
+        const radius = 3 + Math.floor(i / (posts.length * 16)) % 4;
         try {
-          a.spawn('infected.runner', { x: post.at[0] + Math.cos(angle) * 6, z: post.at[1] + Math.sin(angle) * 6 }, { state: 'chase' }); infected++;
+          a.spawn('infected.runner', { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++;
         } catch { /* try the next open approach around a soldier post */ }
       }
-    }, { tier, posts: tier === 'high' ? l4Posts : l4Posts.filter((p, i) => p.role === 'qm' || p.role === 'hmg' || i % 2 === 0).slice(0, 10) });
+    }, tier);
     const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, soldiers: all.filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length, civilians: all.filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length }; });
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-FAIR/W0/l4-war-line'); await a.screenshotReady(); });
     const warStatic = await page.evaluate(() => window.__SS__!.perf());

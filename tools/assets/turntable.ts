@@ -48,10 +48,26 @@ export async function captureTurntable(page: Page, id: string, directory: string
   }
   await page.locator('#toolbar').evaluate((toolbar) => { toolbar.style.visibility = 'hidden'; });
   const images: string[] = [], occupancies: number[] = [];
+  const touchesEdge = (png: Buffer): boolean => {
+    const pixels = PNG.sync.read(png), background = [...pixels.data.subarray(0, 3)];
+    const foreground = (x: number, y: number) => background.some((v, c) => Math.abs(pixels.data[(y * pixels.width + x) * 4 + c] - v) > 8);
+    for (let x = 0; x < pixels.width; x++) if (foreground(x, 0) || foreground(x, pixels.height - 1)) return true;
+    for (let y = 0; y < pixels.height; y++) if (foreground(0, y) || foreground(pixels.width - 1, y)) return true;
+    return false;
+  };
+  const fullCanvas = async (): Promise<Buffer> => {
+    let png = await page.locator('canvas').screenshot();
+    for (let attempt = 0; touchesEdge(png) && attempt < 8; attempt++) {
+      await page.evaluate(() => window.__ASSET__!.frame?.([-.1, -.1, 1.1, 1.1]));
+      png = await page.locator('canvas').screenshot();
+    }
+    if (touchesEdge(png)) throw new Error(`${id}: visible geometry still touches the canvas boundary`);
+    return png;
+  };
   for (let i=0;i<5;i++) {
     await page.evaluate((view) => window.__ASSET__!.view(view),i);
     const path = `${directory}/turntable_${i}.png`;
-    let png = await page.locator('canvas').screenshot();
+    let png = await fullCanvas();
     let roll: number | undefined;
     // A single landscape/portrait viewport leaves thin tools and flat panels
     // below 10%. Fit the viewport to their rendered silhouette, then render
@@ -71,7 +87,7 @@ export async function captureTurntable(page: Page, id: string, directory: string
       const aspect = attempt === 2 ? 2 : (right - left + 1) / (bottom - top + 1);
       await page.setViewportSize(aspect > 1 ? { width: 1280, height: Math.max(64, Math.round(1280 / aspect)) } : { width: Math.max(64, Math.round(1280 * aspect)), height: 1280 });
       await page.evaluate(({ view, roll }) => window.__ASSET__!.view(view, roll), { view: i, roll });
-      png = await page.locator('canvas').screenshot();
+      png = await fullCanvas();
     }
     // The projected GLB box can include invisible joints or loose buffer bounds.
     // Reframe from the actual rendered silhouette, keeping 15% border in the
@@ -87,7 +103,7 @@ export async function captureTurntable(page: Page, id: string, directory: string
       }
       if (left > right || top > bottom) break;
       await page.evaluate(bounds => window.__ASSET__!.frame?.(bounds), [left / pixels.width, top / pixels.height, (right + 1) / pixels.width, (bottom + 1) / pixels.height] as [number, number, number, number]);
-      png = await page.locator('canvas').screenshot();
+      png = await fullCanvas();
     }
     writeFileSync(path, png);
     images.push(path); occupancies.push(coverage(png));
