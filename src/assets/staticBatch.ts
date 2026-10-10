@@ -1,5 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { Box3, BufferAttribute, BufferGeometry, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { Box3, BufferAttribute, BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
 import { attribute, luminance, varying, cameraPosition, normalWorld, positionWorld, vec3 } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import { anchorsFor } from '../data/placedLights';
@@ -164,6 +164,21 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     if (!hasSurface) geometry.deleteAttribute('_surface');
     if (!emissive) geometry.deleteAttribute('_light');
     if (!hasWindows) { geometry.deleteAttribute('_window'); geometry.deleteAttribute('_windowUV'); }
+    // Power/window/gloss inputs share one vertex buffer. With position, normal,
+    // color, palette, per-instance power/tint and matrix this stays within the
+    // portable WebGPU limit of eight buffers (separate window inputs needed nine).
+    const packedInputs = ['_light', '_surface', '_window', '_windowUV'].filter(name => geometry.hasAttribute(name)).map(name => ({ name, input: geometry.getAttribute(name) }));
+    if (packedInputs.length > 1) {
+      const stride = packedInputs.reduce((n, { input }) => n + input.itemSize, 0), count = geometry.getAttribute('position').count;
+      const values = new Float32Array(count * stride);
+      for (let vertex = 0; vertex < count; vertex++) {
+        let offset = 0;
+        for (const { input } of packedInputs) { for (let c = 0; c < input.itemSize; c++) values[vertex * stride + offset + c] = input.getComponent(vertex, c); offset += input.itemSize; }
+        if (vertex % slice === slice - 1) yield;
+      }
+      const data = new InterleavedBuffer(values, stride); let offset = 0;
+      for (const { name, input } of packedInputs) { geometry.setAttribute(name, new InterleavedBufferAttribute(data, input.itemSize, offset)); offset += input.itemSize; }
+    }
     const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchorList.length ? .08 : 1) : attribute('color', 'vec3');
     const local = attribute('_light', 'float'), power = materials ? materials.lamps.sample(local.lessThan(0).select(0, attribute('_lightBase', 'float').greaterThan(0).select(attribute('_lightBase', 'float').add(local), 0))) : undefined;
     const view = cameraPosition.sub(positionWorld).normalize(), tangent = vec3(0, 1, 0).cross(normalWorld).normalize();
