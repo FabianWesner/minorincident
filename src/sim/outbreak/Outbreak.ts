@@ -1,3 +1,4 @@
+import { storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import { l1v2 } from '../../data/l1v2';
@@ -82,7 +83,7 @@ export class Outbreak {
   aiBites(): boolean { return !!this.world.infected?.l1; }
   private grabbedBy(targetId: number, sourceId: number): void {
     const e = this.world.entities.get(targetId), c = e?.civilian, attacker = this.world.entities.get(sourceId);
-    if (!e || !c?.l1 || e.infection || !attacker || !mobile.has(c.state)) return;
+    if (!e || storyProtected(this.world, e) || !c?.l1 || e.infection || !attacker || !mobile.has(c.state)) return;
     delete c.l1.doorAt; c.attacker = sourceId; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; this.dropProp(e);
     this.state(e, 'grabbed', ticks(civ.grabS)); this.face(e, attacker.transform, Math.PI); this.hear(e.transform);
   }
@@ -337,6 +338,7 @@ export class Outbreak {
   }
   /** Public for scripted beats and tests: start the 1.0 s grab of `targetId` by infected `sourceId`. */
   grab(e: EntitySnapshot, attacker: EntitySnapshot): void {
+    if (storyProtected(this.world, e)) return;
     const c = e.civilian!, tick = this.world.tick;
     delete c.l1!.doorAt; c.attacker = attacker.id; c.threat.x = attacker.transform.x; c.threat.z = attacker.transform.z; this.dropProp(e);
     this.world.npcs!.civilians.hold(attacker.id); this.rescue.delete(attacker.id);
@@ -378,7 +380,7 @@ export class Outbreak {
   /** Lane C may report a completed bite itself; the victim is handled exactly once. */
   private externalBite(event: BiteEvent): void {
     const e = this.world.entities.get(event.targetId), c = e?.civilian;
-    if (!e || !c?.l1 || e.infection || !(mobile.has(c.state) || c.state === 'grabbed')) return;
+    if (!e || storyProtected(this.world, e) || !c?.l1 || e.infection || !(mobile.has(c.state) || c.state === 'grabbed')) return;
     this.stats.bites++;
     if (c.state === 'grabbed') this.world.npcs!.civilians.release(c.attacker);
     if (event.turns && this.canTurn()) this.infect(e, event.sourceId); else this.kill(e);
@@ -390,6 +392,7 @@ export class Outbreak {
 
   /** Start the 3.0 +/- 0.5 s transformation of the same entity (stagger, collapse, eyes, rise). */
   infect(e: EntitySnapshot, sourceId: number): void {
+    if (storyProtected(this.world, e)) return;
     const tick = this.world.tick, total = ticks(civ.transformS + (this.rng.next() * 2 - 1) * civ.transformJitterS);
     this.dropProp(e);
     e.infection = { entityId: e.id, progress: 0, phase: 'stagger', tier: e.appearance?.tier ?? 'average', startedTick: tick, endsTick: tick + total, biteSourceId: sourceId };
@@ -451,6 +454,7 @@ export class Outbreak {
    * of sight, e.g. the lab technician inside the facility or the off-screen horde. Not counted as a bite.
    */
   turnNow(e: EntitySnapshot, tier?: SpeedTier): void {
+    if (storyProtected(this.world, e)) return;
     if (tier && e.appearance) e.appearance.tier = tier;
     e.infection = { entityId: e.id, progress: 1, phase: 'infected', tier: e.appearance?.tier ?? 'average', startedTick: this.world.tick, endsTick: this.world.tick, biteSourceId: 0 };
     e.hidden = false; this.rise(e, false);

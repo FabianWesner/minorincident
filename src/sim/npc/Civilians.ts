@@ -1,3 +1,4 @@
+import { storyProtected } from './storyProtection';
 import { Rng } from '../../core/Rng';
 import { civilianRoles, npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
@@ -56,7 +57,7 @@ export class Civilians {
   /** Story beats use the same deterministic cycle as systemic grabs, bypassing only the chance roll. */
   grab(id: number, attackerId: number, scripted = false): boolean {
     const e = this.world.entities.get(id), source = this.world.entities.get(attackerId), c = e?.civilian;
-    if (!e || !c?.adult || !source?.infected || source.health.current <= 0 || source.infectionRise || !mobileStates.has(c.state) || this.turns >= npcs.turnChainLimit[this.level - 1]) return false;
+    if (!e || storyProtected(this.world, e) || !c?.adult || !source?.infected || source.health.current <= 0 || source.infectionRise || !mobileStates.has(c.state) || this.turns >= npcs.turnChainLimit[this.level - 1]) return false;
     if (this.holds(attackerId)) return false;
     if (!scripted && !this.world.infected!.tryGrabCivilian(attackerId, { id, adult: c.adult, variant: c.variant, position: e.transform })) return false;
     if (scripted) this.world.events.emit({ type: 'civilian.grabbed', tick: this.world.tick, sourceId: attackerId, targetId: id, variant: c.variant, rescueUntil: this.world.tick + npcs.grabTicks });
@@ -72,6 +73,7 @@ export class Civilians {
   private down(e: EntitySnapshot): void { const c = e.civilian!; c.downTicks = this.duration(c.outbreak ? [54, 66] : c.pet ? npcs.petDownTicks : npcs.downTicks); this.state(e, 'down', c.downTicks); }
   /** Called before generic damage. Living civilians have no health damage or hit events. */
   hit(e: EntitySnapshot, type: string): void {
+    if (storyProtected(this.world, e)) return;
     const c = e.civilian!;
     if (c.adult && c.eyesGlow && (c.state === 'down' || c.state === 'rising') && (type === 'melee' || type === 'bullet')) {
       if (c.risingInfectedId) { const newborn = this.world.entities.get(c.risingInfectedId); if (newborn) this.world.infected!.release(newborn); delete c.risingInfectedId; e.hidden = false; }
