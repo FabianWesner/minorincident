@@ -5,6 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
 import { spawnSync } from 'node:child_process';
 import { comparison } from './comparison';
+import assetManifest from '../../src/assets/manifest.json';
 
 export function coverage(bytes: Buffer): number {
   const png = PNG.sync.read(bytes), background = [...png.data.subarray(0,3)];
@@ -21,7 +22,15 @@ export function referenceFor(id: string): string {
   if (existsSync(local)) return local;
   const common = spawnSync('git', ['rev-parse', '--git-common-dir'], { encoding: 'utf8' }).stdout.trim();
   const main = resolve(common, '..');
-  return id === 'veh.fire-engine' ? `${main}/assets/fire-engine/reference-upscaled.png` : `${main}/assets/${id}/reference-upscaled.png`;
+  const path = id === 'veh.fire-engine' ? `${main}/assets/fire-engine/reference-upscaled.png` : `${main}/assets/${id}/reference-upscaled.png`;
+  if (existsSync(path)) return path;
+  // Aliases share the authored reference; rigid derivatives are compared with
+  // their declared base, rather than inventing a reference for unreviewed art.
+  const def = assetManifest.find(a => a.id === id);
+  const canonical = def?.aliasOf ?? def?.sourceGlb?.split('/')[1] ?? def?.glb.split('/').at(-1)?.replace(/\.glb$/, '');
+  if (canonical && canonical !== id) return referenceFor(canonical);
+  if (def?.rigidDrawBase && def.rigidDrawBase !== id) return referenceFor(def.rigidDrawBase);
+  return path;
 }
 export async function captureTurntable(page: Page, id: string, directory: string, baseURL: string, decay?: string): Promise<number[]> {
   mkdirSync(directory, { recursive: true });
