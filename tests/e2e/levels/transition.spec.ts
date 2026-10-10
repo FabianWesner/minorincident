@@ -15,7 +15,8 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
   if (tier === 'phone') test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true });
   test(`@transition menu and every campaign load retain a picture ${tier}`, async ({ page, context }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(180_000); mkdirSync(out, { recursive: true });
-    if (tier === 'phone') await (await context.newCDPSession(page)).send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    const cdp = await context.newCDPSession(page);
+    if (tier === 'phone') await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
     // Exercise production prewarming, including its asynchronous briefing path in the baseline.
     await page.goto(`/?debug=true&renderer=webgl&quality=${tier === 'high' ? 'high' : 'low'}&dpr=1&audio=muted&seed=1&preload=0`);
     await page.waitForFunction(() => !!window.__SS__);
@@ -69,21 +70,33 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
           await window.__SS__!.screenshotReady(); window.transitionProbe!.ready = performance.now(); window.transitionProbe!.done = true;
         })().catch(error => { window.transitionProbe!.done = true; window.transitionProbe!.error = String(error); });
       }, level);
-      let samples = 0, cardSamples = 0, emptySamples = 0;
-      const progress: number[] = [];
-      while (!await page.evaluate(() => window.transitionProbe!.done)) {
-        const card = await page.getByTestId('level-transition').isVisible();
-        if (card) { cardSamples++; progress.push(await page.getByTestId('transition-progress').evaluate(element => (element as HTMLProgressElement).value)); }
-        const png = PNG.sync.read(await page.screenshot());
-        // Central canvas region avoids hint bars, menus and controls. A flat clear color has no variation.
+      let samples = 0, emptySamples = 0, finished = false, failure: unknown;
+      const ready = page.waitForFunction(() => window.transitionProbe!.done).then(() => { finished = true; }, error => { failure = error; finished = true; });
+      // Keep DOM work off the capture loop: it cannot run while layout assembly blocks JS.
+      const observations = page.evaluate(async () => {
+        let cardSamples = 0; const progress: number[] = [];
+        while (!window.transitionProbe!.done) {
+          const card = document.querySelector<HTMLElement>('[data-testid=level-transition]');
+          if (card && !card.hidden) { cardSamples++; progress.push((card.querySelector('progress') as HTMLProgressElement).value); }
+          await new Promise(resolve => requestAnimationFrame(resolve));
+        }
+        return { cardSamples, progress };
+      });
+      while (!finished) {
+        const start = Date.now();
+        const captured = await cdp.send('Page.captureScreenshot', { format: 'png', fromSurface: true, captureBeyondViewport: false, optimizeForSpeed: true });
+        const png = PNG.sync.read(Buffer.from(captured.data, 'base64'));
+        // Central canvas region avoids hint bars and controls; either a card or a level has varied pixels.
         const colors = new Set<string>();
         for (let y = Math.floor(png.height * .4); y < png.height * .65; y += 12) for (let x = Math.floor(png.width * .3); x < png.width * .7; x += 12) {
           const i = (y * png.width + x) * 4; colors.add(`${png.data[i] >> 3},${png.data[i + 1] >> 3},${png.data[i + 2] >> 3}`);
         }
-        if (!card && colors.size <= 8) emptySamples++;
-        if (phase !== 'before') expect(card || colors.size > 8, `${level} sample ${samples}: uncovered empty canvas`).toBe(true);
-        samples++; await page.waitForTimeout(250);
+        if (colors.size <= 8) emptySamples++;
+        if (phase !== 'before') expect(colors.size, `${level} sample ${samples}: uncovered empty canvas`).toBeGreaterThan(8);
+        samples++; await page.waitForTimeout(Math.max(0, 250 - (Date.now() - start)));
       }
+      await ready; if (failure) throw failure;
+      const { cardSamples, progress } = await observations;
       {
         const result = await page.evaluate(() => window.transitionProbe!);
         expect(result.error).toBeUndefined();
