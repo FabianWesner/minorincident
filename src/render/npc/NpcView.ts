@@ -47,6 +47,7 @@ export class NpcView extends Group {
     fitCivilianHeight(this.human, 'npc.escort');
     this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
     fitCivilianHeight(this.child, 'npc.brother');
+    this.child.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
     for (const root of [this.dog, this.human]) root.traverse(node => {
       if (!(node instanceof Mesh)) return;
       if (root === this.human && !Array.isArray(node.material) && node.material.name === 'keep_veins') node.visible = false;
