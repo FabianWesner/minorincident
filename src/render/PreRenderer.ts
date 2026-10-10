@@ -9,7 +9,7 @@ import type { Renderer } from './Renderer';
  * KHR_parallel_shader_compile work on several programs (L1: 7.4 s -> 2.3 s under load). */
 export const compileLanes = 6;
 export type CompilePartitions = (() => void)[];
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void): Promise<void> {
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[] }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -42,7 +42,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // synchronous pipeline creation of the warm-up draw (L1: 1.6-2.8 s vs +0.2 s).
     // Background (menu-time) warm-up on WebGPU: three's compileAsync builds node graphs asynchronously,
     // yielding between objects, so the big material builds do not land in one long task.
-    try { if (renderer.selectedBackend === 'webgl') await compile(partitions); else if (pause) await compile([() => {}]); } finally { for (const leaf of leaves) leaf.visible = true; }
+    try { if (renderer.selectedBackend === 'webgl') await compile(partitions); else if (background) await compile([() => {}]); } finally { for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start, end: performance.now() });
     // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so
     // node builds and pipeline creation never form one long task; the full draw below is then cheap.
@@ -74,17 +74,18 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // pipelines but seconds of frame pacing in these solo draws, so they run on WebGL only.
     if (solo.length) {
       for (const { object } of saved) if (object instanceof Mesh || object instanceof Sprite) object.visible = false;
-      // Four separated, smaller actors fit the tiny target without occluding each other.
+      // Four separated actors fit the tiny target without occluding each other.
       // Each still executes the ordinary and instanced driver paths, but shares the GPU fence
       // and presented frame with its neighbors instead of paying two frames per actor.
       const right = new Vector3().setFromMatrixColumn(camera.matrixWorld, 0), up = new Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
       const halfWidth = 20 / Math.abs(camera.projectionMatrix.elements[0]), halfHeight = 20 / Math.abs(camera.projectionMatrix.elements[5]);
-      const scale = Math.min(.45, halfWidth * .25, halfHeight * .25);
+      // Align actor centers with pixel centers in the 32px target so narrow meshes cover samples.
+      const scale = Math.min(1, halfWidth * .25, halfHeight * .25);
       for (let from = 0; from < solo.length; from += soloChunk) {
         const group = solo.slice(from, from + soloChunk);
         group.forEach(({ object, matrices }, i) => {
           object.visible = true;
-          const center = focus.clone().addScaledVector(right, (i % 2 ? 1 : -1) * halfWidth * .4).addScaledVector(up, (i < 2 ? -1 : 1) * halfHeight * .4);
+          const center = focus.clone().addScaledVector(right, (i % 2 ? 1 : -1) * halfWidth * .40625).addScaledVector(up, (i < 2 ? -1 : 1) * halfHeight * .40625);
           const mesh = object as InstancedMesh;
           for (let instance = 0; instance < matrices!.length; instance++) {
             const local = object.worldToLocal(center.clone().addScaledVector(right, instance * scale * .4));
