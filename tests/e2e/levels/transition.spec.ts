@@ -110,3 +110,18 @@ test('@transition compact controls HUD also covers L2 to L3 loading', async ({ p
   await expect(page.getByTestId('level-transition')).toBeHidden();
   expect(await page.evaluate(() => window.__SS__!.perf().renderedFrames)).toBeGreaterThan(0);
 });
+
+test('@transition selecting a production menu preload retains the card until the scene is drawn', async ({ page }) => {
+  test.skip(phase === 'before', 'Regression assertion for the shared card');
+  test.setTimeout(180_000);
+  await page.goto('/?debug=true&renderer=webgl&quality=high&dpr=1&audio=muted&seed=1');
+  await page.waitForFunction(() => window.__SS__?.getState().scenario === 'L1');
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('character-female').click();
+  await page.getByTestId('level-L1').click();
+  await expect(page.getByTestId('level-transition')).toBeVisible();
+  await expect(page.getByTestId('transition-title')).toHaveText('Level 1 · Stop the Outbreak');
+  await expect(page.getByTestId('level-transition')).toBeHidden({ timeout: 120_000 });
+  await expect(page.getByRole('button', { name: 'Begin mission' })).toBeVisible();
+  expect(await page.evaluate(() => window.__SS__!.perf().renderedFrames)).toBeGreaterThan(0);
+});
