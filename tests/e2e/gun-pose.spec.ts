@@ -24,7 +24,7 @@ for (const walking of [false,true]) {
       const courier = c.kind === 'courier';
       const spec: SceneSpec = { name:`gun-${c.weapon}`,ground:'asphalt',size:40,camera:{mode:'game',target:[1,0],zoom:.8},actors:[
         {id:'shooter',kind:c.kind,at:[0,0],look:{model:c.model,handProp:courier?undefined:c.weapon==='hmg'?'rifle':c.weapon},...(courier?{loadout:['weapon.handgun','weapon.fists'] as [string,string]}:walking?{}:{state:{ally:{role:c.model.includes('police')?'officer':c.model.includes('guard')?'soldier':'civilian',weapon:c.weapon as 'pistol'|'rifle'|'hmg'|'hunting-rifle'}}})},
-        {id:'target',kind:'infected',at:[7,0],state:'idle'},
+        {id:'target',kind:'infected',at:[walking&&!courier?15:7,0],state:'idle'},
       ]};
       await page.evaluate(s=>window.__SCENE__!.load(s),spec);
       await page.evaluate(async ({courier,walking})=>{
@@ -32,7 +32,7 @@ for (const walking of [false,true]) {
         if(courier){lab.command('shooter',{attack:'target',seconds:2,...(walking?{move:[0,1] as [number,number]}:{})});if(walking)await lab.step(20);}
         else if(walking)lab.command('shooter',{walk:[[0,0],[0,4]]});
         // NPC walking uses the production event bus probe at the real walking rig pose.
-        if(!courier && walking){await lab.step(20);const id=lab.actors.get('shooter')!.entity;a.audio.emit({type:'ally.attack',tick:a.tick(),sourceId:id,targetId:lab.actors.get('target')!.entity,role:'soldier',from:{x:0,z:0},to:{x:7,z:0}});}
+        if(!courier && walking){await lab.step(20);const id=lab.actors.get('shooter')!.entity;a.audio.emit({type:'ally.attack',tick:a.tick(),sourceId:id,targetId:lab.actors.get('target')!.entity,role:'soldier',from:{x:0,z:0},to:{x:15,z:0}});}
       },{courier,walking});
       const probes = await page.evaluate(async ({courier,walking})=>{
         const lab=window.__SCENE__!,a=window.__SS__!,id=lab.actors.get('shooter')!.entity;
@@ -101,7 +101,7 @@ test('@gun-pose army nest fires from its rotating authored HMG muzzle socket',as
   await page.waitForFunction(()=>!!window.__SCENE__&&!!window.__SS__);
   const result=await page.evaluate(async()=>{
     const a=window.__SS__!,lab=window.__SCENE__!;await a.ready;a.pause();
-    await lab.load({ground:'asphalt',actors:[{id:'gunner',kind:'pedestrian',at:[-2.75,0],look:{model:'npc.national-guard',handProp:'rifle'},state:{ally:{role:'soldier',weapon:'hmg'}}},{id:'target',kind:'infected',at:[7,3],state:'idle'}],props:[{id:'nest',asset:'prop.hmg-nest',at:[0,0]}],camera:{mode:'game',target:[1,0],zoom:.8}});
+    await lab.load({ground:'asphalt',actors:[{id:'gunner',kind:'pedestrian',at:[0,2.75],look:{model:'npc.national-guard',handProp:'rifle'},state:{ally:{role:'soldier',weapon:'hmg'}}},{id:'target',kind:'infected',at:[7,3],state:'idle'}],props:[{id:'nest',asset:'prop.hmg-nest',at:[0,0]}],camera:{mode:'game',target:[1,0],zoom:.8}});
     for(let i=0;i<120;i++){
       await lab.step(1);const state=a.getState(),shot=state.render.vfx!.shots.at(-1);
       if(shot?.tick===a.tick())return {shot,nest:state.render.machineGuns[0]};
