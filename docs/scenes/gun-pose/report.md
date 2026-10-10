@@ -55,3 +55,8 @@ Merged main `d27704a2` into this branch (`d3f15be3`). Main's NPC-height merge re
 The merged main baseline also fails the E05 fire-axe TTK criterion: the accepted PO 2026-10-10 damage increase from 45 to 56 reduces the swing count, but the authored lower bounds still describe the earlier damage. This reproduces on the isolated exact main commit without gun-pose changes. `83f75fcf` subtracts the saved 0.5-second swings from seven affected lower bounds: brute, riot, firefighter and lion lose one; armored and butcher lose three; gorilla loses five. Existing upper limits, pursuit allowances and gameplay damage remain unchanged. The corrected balance suite passes. No specification files were changed.
 
 Final E05 simulation: 61/61 pass on the corrected merged source. [Isolated main comparison](captures/main-baseline-summary.json): L2 route test fails; L5 escort and L6 shelter readability pass alone. L5/L6 branch retries are pending.
+
+
+## Static readability capture correction
+
+The original L6 readability frame includes a white guard tracer across the infected group. The test scans an entire character rectangle, so its brightest-pixel measurement can select foreground shot particles rather than a pixel of the infected model. E24-AC15 specifies the brightest pixels **of each infected**. The L6 fixture now advances ordinary simulation/render ticks into the gap between live guard bursts (at least 20 ticks after the last shot), then takes the static readability capture. All effects and guard firing stay enabled; no tracers or muzzle flashes are removed or hidden. Contrast, red-dominance, hue and shadow thresholds are unchanged. Both L6 captures and the L5/L2 branch retries are pending.
