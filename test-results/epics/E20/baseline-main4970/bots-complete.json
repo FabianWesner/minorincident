@@ -1,0 +1,3165 @@
+[
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 1,
+    "outcome": "complete",
+    "simSeconds": 134.25,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 7,
+    "damage": 144,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 23.15
+      },
+      {
+        "type": "objective:calm",
+        "t": 23.15
+      },
+      {
+        "type": "objective:board",
+        "t": 24.733333333333334
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 24.75
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 41.31666666666667
+      },
+      {
+        "type": "objective:ride",
+        "t": 41.31666666666667
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 42.11666666666667
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 48.25
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 52.25
+      },
+      {
+        "type": "objective:doors",
+        "t": 52.25
+      },
+      {
+        "type": "l2.radio",
+        "t": 64.8
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 132.25
+      },
+      {
+        "type": "objective:bridge",
+        "t": 134.25
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 62,
+        "rescue": 29
+      }
+    },
+    "firefighterHits": 6,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 7.066666666663764,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 23.15,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 30,
+      "groupsOf4": 3,
+      "chasingPlayer": 8
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 2,
+    "outcome": "complete",
+    "simSeconds": 138.8,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 5,
+    "damage": 162,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 27.466666666666665
+      },
+      {
+        "type": "objective:calm",
+        "t": 27.466666666666665
+      },
+      {
+        "type": "objective:board",
+        "t": 29.05
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 29.066666666666666
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 45.63333333333333
+      },
+      {
+        "type": "objective:ride",
+        "t": 45.63333333333333
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 46.43333333333333
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 52.833333333333336
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 56.833333333333336
+      },
+      {
+        "type": "objective:doors",
+        "t": 56.833333333333336
+      },
+      {
+        "type": "l2.radio",
+        "t": 69.38333333333334
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 136.8
+      },
+      {
+        "type": "objective:bridge",
+        "t": 138.8
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 26,
+        "rescue": 26
+      },
+      "60": {
+        "all": 64,
+        "rescue": 32
+      }
+    },
+    "firefighterHits": 13,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 10,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 27.466666666666665,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 29,
+      "groupsOf4": 3,
+      "chasingPlayer": 7
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 3,
+    "outcome": "complete",
+    "simSeconds": 161.53333333333333,
+    "deaths": 1,
+    "kills": 0,
+    "knockdowns": 13,
+    "damage": 240.0999999999951,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 25.766666666666666
+      },
+      {
+        "type": "objective:calm",
+        "t": 25.766666666666666
+      },
+      {
+        "type": "objective:board",
+        "t": 27.35
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 27.366666666666667
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 43.93333333333333
+      },
+      {
+        "type": "objective:ride",
+        "t": 43.93333333333333
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 44.733333333333334
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 52.75
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 56.75
+      },
+      {
+        "type": "objective:doors",
+        "t": 56.75
+      },
+      {
+        "type": "l2.radio",
+        "t": 69.3
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 159.53333333333333
+      },
+      {
+        "type": "objective:bridge",
+        "t": 161.53333333333333
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 67,
+        "rescue": 35
+      }
+    },
+    "firefighterHits": 19,
+    "firefightersTurnedBy90": 2,
+    "firstDeathS": 131.58333333333334,
+    "killsNearDoors": 0,
+    "clusterKilled": 3,
+    "clusterSize": 13,
+    "minHp": 0,
+    "deathsAt": [
+      "132s@70,48/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 25.766666666666666,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -20.583333333333332
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [
+      {
+        "id": 124,
+        "seconds": 3.4,
+        "sameAsset": true
+      },
+      {
+        "id": 126,
+        "seconds": 3.1333333333333333,
+        "sameAsset": true
+      }
+    ],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 32
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 31,
+      "groupsOf4": 3,
+      "chasingPlayer": 11
+    },
+    "cluster": {
+      "atApproach": 11,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 4,
+    "outcome": "complete",
+    "simSeconds": 157.03333333333333,
+    "deaths": 1,
+    "kills": 0,
+    "knockdowns": 10,
+    "damage": 266.83333333332894,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 22.216666666666665
+      },
+      {
+        "type": "objective:calm",
+        "t": 22.216666666666665
+      },
+      {
+        "type": "objective:board",
+        "t": 23.8
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 23.816666666666666
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 40.38333333333333
+      },
+      {
+        "type": "objective:ride",
+        "t": 40.38333333333333
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 41.18333333333333
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 49.2
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 53.2
+      },
+      {
+        "type": "objective:doors",
+        "t": 53.2
+      },
+      {
+        "type": "l2.radio",
+        "t": 65.75
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 155.03333333333333
+      },
+      {
+        "type": "objective:bridge",
+        "t": 157.03333333333333
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 66,
+        "rescue": 34
+      }
+    },
+    "firefighterHits": 17,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": 128.05,
+    "killsNearDoors": 0,
+    "clusterKilled": 3,
+    "clusterSize": 13,
+    "minHp": 0,
+    "deathsAt": [
+      "128s@73,48/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 22.216666666666665,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -17.216666666666665
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 32
+    },
+    "radio": {
+      "infected": 59,
+      "escapeArea": 32,
+      "groupsOf4": 3,
+      "chasingPlayer": 9
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 5,
+    "outcome": "complete",
+    "simSeconds": 132.1,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 5,
+    "damage": 126,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 21.033333333333335
+      },
+      {
+        "type": "objective:calm",
+        "t": 21.033333333333335
+      },
+      {
+        "type": "objective:board",
+        "t": 22.616666666666667
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 22.633333333333333
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 39.2
+      },
+      {
+        "type": "objective:ride",
+        "t": 39.2
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 40
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 46.1
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 50.1
+      },
+      {
+        "type": "objective:doors",
+        "t": 50.1
+      },
+      {
+        "type": "l2.radio",
+        "t": 62.65
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 130.1
+      },
+      {
+        "type": "objective:bridge",
+        "t": 132.1
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 64,
+        "rescue": 31
+      }
+    },
+    "firefighterHits": 10,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 45.26666666666466,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 21.033333333333335,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 31,
+      "groupsOf4": 3,
+      "chasingPlayer": 8
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 6,
+    "outcome": "complete",
+    "simSeconds": 141.31666666666666,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 8,
+    "damage": 90,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 28.333333333333332
+      },
+      {
+        "type": "objective:calm",
+        "t": 28.333333333333332
+      },
+      {
+        "type": "objective:board",
+        "t": 29.916666666666668
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 29.933333333333334
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 46.5
+      },
+      {
+        "type": "objective:ride",
+        "t": 46.5
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 47.3
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 55.31666666666667
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 59.31666666666667
+      },
+      {
+        "type": "objective:doors",
+        "t": 59.31666666666667
+      },
+      {
+        "type": "l2.radio",
+        "t": 71.86666666666666
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 139.31666666666666
+      },
+      {
+        "type": "objective:bridge",
+        "t": 141.31666666666666
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 24,
+        "rescue": 24
+      },
+      "60": {
+        "all": 61,
+        "rescue": 31
+      }
+    },
+    "firefighterHits": 2,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 46,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 28.333333333333332,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 31
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 28,
+      "groupsOf4": 3,
+      "chasingPlayer": 9
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 7,
+    "outcome": "complete",
+    "simSeconds": 156.15,
+    "deaths": 1,
+    "kills": 0,
+    "knockdowns": 12,
+    "damage": 255.16666666666399,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 20.6
+      },
+      {
+        "type": "objective:calm",
+        "t": 20.6
+      },
+      {
+        "type": "objective:board",
+        "t": 22.183333333333334
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 22.2
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 38.766666666666666
+      },
+      {
+        "type": "objective:ride",
+        "t": 38.766666666666666
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 39.56666666666667
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 45.7
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 49.7
+      },
+      {
+        "type": "objective:doors",
+        "t": 49.7
+      },
+      {
+        "type": "l2.radio",
+        "t": 62.25
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 154.15
+      },
+      {
+        "type": "objective:bridge",
+        "t": 156.15
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 66,
+        "rescue": 33
+      }
+    },
+    "firefighterHits": 8,
+    "firefightersTurnedBy90": 2,
+    "firstDeathS": 126.45,
+    "killsNearDoors": 0,
+    "clusterKilled": 4,
+    "clusterSize": 13,
+    "minHp": 0,
+    "deathsAt": [
+      "126s@80,47/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 20.6,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -21.95
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [
+      {
+        "id": 126,
+        "seconds": 3.1666666666666665,
+        "sameAsset": true
+      },
+      {
+        "id": 123,
+        "seconds": 2.9833333333333334,
+        "sameAsset": true
+      }
+    ],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 33,
+      "groupsOf4": 3,
+      "chasingPlayer": 6
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 8,
+    "outcome": "complete",
+    "simSeconds": 133.2,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 8,
+    "damage": 108,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 22.116666666666667
+      },
+      {
+        "type": "objective:calm",
+        "t": 22.116666666666667
+      },
+      {
+        "type": "objective:board",
+        "t": 23.7
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 23.716666666666665
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 40.28333333333333
+      },
+      {
+        "type": "objective:ride",
+        "t": 40.28333333333333
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 41.083333333333336
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 47.2
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 51.2
+      },
+      {
+        "type": "objective:doors",
+        "t": 51.2
+      },
+      {
+        "type": "l2.radio",
+        "t": 63.75
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 131.2
+      },
+      {
+        "type": "objective:bridge",
+        "t": 133.2
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 64,
+        "rescue": 31
+      }
+    },
+    "firefighterHits": 8,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 2,
+    "clusterSize": 13,
+    "minHp": 46,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 22.116666666666667,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 31,
+      "groupsOf4": 3,
+      "chasingPlayer": 6
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 9,
+    "outcome": "complete",
+    "simSeconds": 140.16666666666666,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 7,
+    "damage": 18,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 27.183333333333334
+      },
+      {
+        "type": "objective:calm",
+        "t": 27.183333333333334
+      },
+      {
+        "type": "objective:board",
+        "t": 28.766666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 28.783333333333335
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 45.35
+      },
+      {
+        "type": "objective:ride",
+        "t": 45.35
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 46.15
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 54.166666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 58.166666666666664
+      },
+      {
+        "type": "objective:doors",
+        "t": 58.166666666666664
+      },
+      {
+        "type": "l2.radio",
+        "t": 70.71666666666667
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 138.16666666666666
+      },
+      {
+        "type": "objective:bridge",
+        "t": 140.16666666666666
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 64,
+        "rescue": 33
+      }
+    },
+    "firefighterHits": 6,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 82,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 27.183333333333334,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 31
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 29,
+      "groupsOf4": 3,
+      "chasingPlayer": 6
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 10,
+    "outcome": "complete",
+    "simSeconds": 327.5833333333333,
+    "deaths": 4,
+    "kills": 0,
+    "knockdowns": 38,
+    "damage": 617.1666666666629,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 21.683333333333334
+      },
+      {
+        "type": "objective:calm",
+        "t": 21.683333333333334
+      },
+      {
+        "type": "objective:board",
+        "t": 23.266666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 23.283333333333335
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 39.85
+      },
+      {
+        "type": "objective:ride",
+        "t": 39.85
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 40.65
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 48.666666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 52.666666666666664
+      },
+      {
+        "type": "objective:doors",
+        "t": 52.666666666666664
+      },
+      {
+        "type": "l2.radio",
+        "t": 65.21666666666667
+      },
+      {
+        "type": "l2.radio",
+        "t": 106.23333333333333
+      },
+      {
+        "type": "l2.radio",
+        "t": 172.33333333333334
+      },
+      {
+        "type": "l2.radio",
+        "t": 237.43333333333334
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 325.5833333333333
+      },
+      {
+        "type": "objective:bridge",
+        "t": 327.5833333333333
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 61,
+        "rescue": 22
+      }
+    },
+    "firefighterHits": 154,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": 97.68333333333334,
+    "killsNearDoors": 0,
+    "clusterKilled": 4,
+    "clusterSize": 7,
+    "minHp": 0,
+    "deathsAt": [
+      "98s@-1,48/escape",
+      "164s@58,48/escape",
+      "229s@58,48/escape",
+      "298s@65,48/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 21.683333333333334,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -196.83333333333334
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 12,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 22
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 27,
+      "groupsOf4": 3,
+      "chasingPlayer": 8
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 11,
+    "outcome": "complete",
+    "simSeconds": 137.38333333333333,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 7,
+    "damage": 108,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 24.966666666666665
+      },
+      {
+        "type": "objective:calm",
+        "t": 24.966666666666665
+      },
+      {
+        "type": "objective:board",
+        "t": 26.55
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 26.566666666666666
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 43.13333333333333
+      },
+      {
+        "type": "objective:ride",
+        "t": 43.13333333333333
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 43.93333333333333
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 50.333333333333336
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 54.333333333333336
+      },
+      {
+        "type": "objective:doors",
+        "t": 54.333333333333336
+      },
+      {
+        "type": "l2.radio",
+        "t": 66.88333333333334
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 135.38333333333333
+      },
+      {
+        "type": "objective:bridge",
+        "t": 137.38333333333333
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 64,
+        "rescue": 32
+      }
+    },
+    "firefighterHits": 10,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 46.466666666664594,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 24.966666666666665,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 32,
+      "groupsOf4": 3,
+      "chasingPlayer": 4
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 12,
+    "outcome": "complete",
+    "simSeconds": 160.7,
+    "deaths": 1,
+    "kills": 0,
+    "knockdowns": 10,
+    "damage": 183.76666666666688,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 22.233333333333334
+      },
+      {
+        "type": "objective:calm",
+        "t": 22.233333333333334
+      },
+      {
+        "type": "objective:board",
+        "t": 23.816666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 23.833333333333332
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 40.4
+      },
+      {
+        "type": "objective:ride",
+        "t": 40.4
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 41.2
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 49.21666666666667
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 53.21666666666667
+      },
+      {
+        "type": "objective:doors",
+        "t": 53.21666666666667
+      },
+      {
+        "type": "l2.radio",
+        "t": 65.76666666666667
+      },
+      {
+        "type": "l2.radio",
+        "t": 90.16666666666667
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 158.7
+      },
+      {
+        "type": "objective:bridge",
+        "t": 160.7
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 66,
+        "rescue": 27
+      }
+    },
+    "firefighterHits": 5,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": 81.61666666666666,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 0,
+    "deathsAt": [
+      "82s@-46,32/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 22.233333333333334,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -30.4
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 39
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 30,
+      "groupsOf4": 3,
+      "chasingPlayer": 12
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 13,
+    "outcome": "complete",
+    "simSeconds": 194.7,
+    "deaths": 2,
+    "kills": 0,
+    "knockdowns": 22,
+    "damage": 301.23333333333164,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 20.35
+      },
+      {
+        "type": "objective:calm",
+        "t": 20.35
+      },
+      {
+        "type": "objective:board",
+        "t": 21.933333333333334
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 21.95
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 38.516666666666666
+      },
+      {
+        "type": "objective:ride",
+        "t": 38.516666666666666
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 39.31666666666667
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 47.333333333333336
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 51.333333333333336
+      },
+      {
+        "type": "objective:doors",
+        "t": 51.333333333333336
+      },
+      {
+        "type": "l2.radio",
+        "t": 64.5
+      },
+      {
+        "type": "l2.radio",
+        "t": 82.86666666666666
+      },
+      {
+        "type": "l2.radio",
+        "t": 124.23333333333333
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 192.7
+      },
+      {
+        "type": "objective:bridge",
+        "t": 194.7
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 24,
+        "rescue": 24
+      },
+      "60": {
+        "all": 47,
+        "rescue": 14
+      }
+    },
+    "firefighterHits": 96,
+    "firefightersTurnedBy90": 2,
+    "firstDeathS": 74.31666666666666,
+    "killsNearDoors": 1,
+    "clusterKilled": 0,
+    "clusterSize": 10,
+    "minHp": 0,
+    "deathsAt": [
+      "74s@-66,18/escape",
+      "116s@-2,47/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 20.35,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -66.35
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 18,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [
+      {
+        "id": 123,
+        "seconds": 2.7,
+        "sameAsset": true
+      },
+      {
+        "id": 124,
+        "seconds": 2.5833333333333335,
+        "sameAsset": true
+      }
+    ],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 31,
+      "groupsOf4": 3,
+      "chasingPlayer": 8
+    },
+    "cluster": {
+      "atApproach": 10,
+      "size": 10
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 14,
+    "outcome": "complete",
+    "simSeconds": 240.11666666666667,
+    "deaths": 3,
+    "kills": 0,
+    "knockdowns": 27,
+    "damage": 446.5666666666665,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 25.033333333333335
+      },
+      {
+        "type": "objective:calm",
+        "t": 25.033333333333335
+      },
+      {
+        "type": "objective:board",
+        "t": 26.616666666666667
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 26.633333333333333
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 43.2
+      },
+      {
+        "type": "objective:ride",
+        "t": 43.2
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 44
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 50.1
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 54.1
+      },
+      {
+        "type": "objective:doors",
+        "t": 54.1
+      },
+      {
+        "type": "l2.radio",
+        "t": 66.65
+      },
+      {
+        "type": "l2.radio",
+        "t": 107.91666666666667
+      },
+      {
+        "type": "l2.radio",
+        "t": 127.16666666666667
+      },
+      {
+        "type": "l2.radio",
+        "t": 169.58333333333334
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 238.11666666666667
+      },
+      {
+        "type": "objective:bridge",
+        "t": 240.11666666666667
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 32,
+        "rescue": 10
+      }
+    },
+    "firefighterHits": 111,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": 99.36666666666666,
+    "killsNearDoors": 0,
+    "clusterKilled": 3,
+    "clusterSize": 7,
+    "minHp": 0,
+    "deathsAt": [
+      "99s@-0,48/escape",
+      "119s@-66,22/escape",
+      "161s@3,47/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 25.033333333333335,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -108.93333333333334
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 12,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 22
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 31,
+      "groupsOf4": 3,
+      "chasingPlayer": 7
+    },
+    "cluster": {
+      "atApproach": 7,
+      "size": 7
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 15,
+    "outcome": "complete",
+    "simSeconds": 144.16666666666666,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 11,
+    "damage": 108,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 29.933333333333334
+      },
+      {
+        "type": "objective:calm",
+        "t": 29.933333333333334
+      },
+      {
+        "type": "objective:board",
+        "t": 31.516666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 31.533333333333335
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 48.1
+      },
+      {
+        "type": "objective:ride",
+        "t": 48.1
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 48.9
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 56.916666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 60.916666666666664
+      },
+      {
+        "type": "objective:doors",
+        "t": 60.916666666666664
+      },
+      {
+        "type": "l2.radio",
+        "t": 73.46666666666667
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 142.16666666666666
+      },
+      {
+        "type": "objective:bridge",
+        "t": 144.16666666666666
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 63,
+        "rescue": 32
+      }
+    },
+    "firefighterHits": 6,
+    "firefightersTurnedBy90": 1,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 4,
+    "clusterSize": 13,
+    "minHp": 28,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 29.933333333333334,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [
+      {
+        "id": 123,
+        "seconds": 2.9166666666666665,
+        "sameAsset": true
+      }
+    ],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 33
+    },
+    "radio": {
+      "infected": 59,
+      "escapeArea": 32,
+      "groupsOf4": 3,
+      "chasingPlayer": 6
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 16,
+    "outcome": "complete",
+    "simSeconds": 138.73333333333332,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 7,
+    "damage": 162,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 25.75
+      },
+      {
+        "type": "objective:calm",
+        "t": 25.75
+      },
+      {
+        "type": "objective:board",
+        "t": 27.333333333333332
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 27.35
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 43.916666666666664
+      },
+      {
+        "type": "objective:ride",
+        "t": 43.916666666666664
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 44.71666666666667
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 52.733333333333334
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 56.733333333333334
+      },
+      {
+        "type": "objective:doors",
+        "t": 56.733333333333334
+      },
+      {
+        "type": "l2.radio",
+        "t": 69.28333333333333
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 136.73333333333332
+      },
+      {
+        "type": "objective:bridge",
+        "t": 138.73333333333332
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 65,
+        "rescue": 31
+      }
+    },
+    "firefighterHits": 7,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 1,
+    "clusterSize": 13,
+    "minHp": 16.199999999996137,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 25.75,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 34
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 30,
+      "groupsOf4": 3,
+      "chasingPlayer": 8
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 17,
+    "outcome": "complete",
+    "simSeconds": 141.76666666666668,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 5,
+    "damage": 72,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 28.783333333333335
+      },
+      {
+        "type": "objective:calm",
+        "t": 28.783333333333335
+      },
+      {
+        "type": "objective:board",
+        "t": 30.366666666666667
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 30.383333333333333
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 46.95
+      },
+      {
+        "type": "objective:ride",
+        "t": 46.95
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 47.75
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 55.766666666666666
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 59.766666666666666
+      },
+      {
+        "type": "objective:doors",
+        "t": 59.766666666666666
+      },
+      {
+        "type": "l2.radio",
+        "t": 72.31666666666666
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 139.76666666666668
+      },
+      {
+        "type": "objective:bridge",
+        "t": 141.76666666666668
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 64,
+        "rescue": 32
+      }
+    },
+    "firefighterHits": 9,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 13,
+    "minHp": 64,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 28.783333333333335,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 32
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 30,
+      "groupsOf4": 3,
+      "chasingPlayer": 9
+    },
+    "cluster": {
+      "atApproach": 8,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 18,
+    "outcome": "complete",
+    "simSeconds": 134.4,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 9,
+    "damage": 108,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 21.416666666666668
+      },
+      {
+        "type": "objective:calm",
+        "t": 21.416666666666668
+      },
+      {
+        "type": "objective:board",
+        "t": 23
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 23.016666666666666
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 39.583333333333336
+      },
+      {
+        "type": "objective:ride",
+        "t": 39.583333333333336
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 40.38333333333333
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 48.4
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 52.4
+      },
+      {
+        "type": "objective:doors",
+        "t": 52.4
+      },
+      {
+        "type": "l2.radio",
+        "t": 64.95
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 132.4
+      },
+      {
+        "type": "objective:bridge",
+        "t": 134.4
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 24,
+        "rescue": 24
+      },
+      "60": {
+        "all": 61,
+        "rescue": 29
+      }
+    },
+    "firefighterHits": 6,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 1,
+    "clusterSize": 13,
+    "minHp": 46,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 21.416666666666668,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 32
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 29,
+      "groupsOf4": 3,
+      "chasingPlayer": 11
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 19,
+    "outcome": "complete",
+    "simSeconds": 131.1,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 8,
+    "damage": 144,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 20.033333333333335
+      },
+      {
+        "type": "objective:calm",
+        "t": 20.033333333333335
+      },
+      {
+        "type": "objective:board",
+        "t": 21.616666666666667
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 21.633333333333333
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 38.2
+      },
+      {
+        "type": "objective:ride",
+        "t": 38.2
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 39
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 45.1
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 49.1
+      },
+      {
+        "type": "objective:doors",
+        "t": 49.1
+      },
+      {
+        "type": "l2.radio",
+        "t": 61.65
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 129.1
+      },
+      {
+        "type": "objective:bridge",
+        "t": 131.1
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 24,
+        "rescue": 24
+      },
+      "60": {
+        "all": 65,
+        "rescue": 33
+      }
+    },
+    "firefighterHits": 10,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": null,
+    "killsNearDoors": 0,
+    "clusterKilled": 1,
+    "clusterSize": 13,
+    "minHp": 44.93333333332828,
+    "deathsAt": [],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 20.033333333333335,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": 0
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 21,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 32
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 33,
+      "groupsOf4": 3,
+      "chasingPlayer": 7
+    },
+    "cluster": {
+      "atApproach": 13,
+      "size": 13
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": false
+  },
+  {
+    "profile": "complete",
+    "opening": "side",
+    "seed": 20,
+    "outcome": "complete",
+    "simSeconds": 291.01666666666665,
+    "deaths": 3,
+    "kills": 0,
+    "knockdowns": 41,
+    "damage": 484.89999999999714,
+    "axe": true,
+    "timeline": [
+      {
+        "type": "objective:axe",
+        "t": 0.65
+      },
+      {
+        "type": "l2.alarm",
+        "t": 21.033333333333335
+      },
+      {
+        "type": "objective:calm",
+        "t": 21.033333333333335
+      },
+      {
+        "type": "objective:board",
+        "t": 22.616666666666667
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 22.633333333333333
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 39.2
+      },
+      {
+        "type": "objective:ride",
+        "t": 39.2
+      },
+      {
+        "type": "l2.crewExit",
+        "t": 40
+      },
+      {
+        "type": "l2.firefightersAtDoors",
+        "t": 46.1
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 50.1
+      },
+      {
+        "type": "objective:doors",
+        "t": 50.1
+      },
+      {
+        "type": "l2.radio",
+        "t": 63.18333333333333
+      },
+      {
+        "type": "l2.radio",
+        "t": 110.6
+      },
+      {
+        "type": "l2.radio",
+        "t": 153.66666666666666
+      },
+      {
+        "type": "l2.radio",
+        "t": 220.48333333333332
+      },
+      {
+        "type": "l2.gateClosed",
+        "t": 289.01666666666665
+      },
+      {
+        "type": "objective:bridge",
+        "t": 291.01666666666665
+      }
+    ],
+    "infectedAt": {
+      "0": {
+        "all": 0,
+        "rescue": 0
+      },
+      "10": {
+        "all": 25,
+        "rescue": 25
+      },
+      "60": {
+        "all": 47,
+        "rescue": 14
+      }
+    },
+    "firefighterHits": 137,
+    "firefightersTurnedBy90": 0,
+    "firstDeathS": 102.05,
+    "killsNearDoors": 0,
+    "clusterKilled": 0,
+    "clusterSize": 7,
+    "minHp": 0,
+    "deathsAt": [
+      "102s@15,48/escape",
+      "145s@2,47/escape",
+      "212s@60,48/escape"
+    ],
+    "calm": {
+      "infectedMax": 0,
+      "combatEvents": 0,
+      "alarmS": 21.033333333333335,
+      "crewAtTruckS": 1.6,
+      "axeActive": true
+    },
+    "ride": {
+      "passenger": true,
+      "seconds": 16.566666666666666,
+      "seatedEveryTick": true,
+      "crewExitS": 0.8,
+      "controlS": -163.83333333333334
+    },
+    "doors": {
+      "order": [
+        "l2.alarm",
+        "l2.truckDeparted",
+        "l2.truckArrived",
+        "l2.crewExit",
+        "l2.firefightersAtDoors",
+        "l2.doorsOpen",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.radio",
+        "l2.gateClosed"
+      ],
+      "nearBefore": 0,
+      "firstCivOutS": 0,
+      "firstAmbushVisibleS": 0.05,
+      "emerged3s": 12,
+      "doors3s": [
+        "refuge-door-2",
+        "refuge-door-19",
+        "refuge-door-10"
+      ],
+      "allOutS": 10.633333333333333,
+      "nonBiteNearRescue": 0
+    },
+    "crewTurns": [],
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emergeFar": 0,
+      "emergeSeen": 0,
+      "emerged": 22
+    },
+    "radio": {
+      "infected": 60,
+      "escapeArea": 31,
+      "groupsOf4": 3,
+      "chasingPlayer": 10
+    },
+    "cluster": {
+      "atApproach": 10,
+      "size": 10
+    },
+    "gate": {
+      "closeS": 0.6,
+      "infectedInsideAfter": 0
+    },
+    "diedBy120": true
+  }
+]

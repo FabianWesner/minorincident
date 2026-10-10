@@ -1,0 +1,25 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout -> 94.130.181.173:/srv/mi/ws/epic-closeout-992bec
+[remote] WARNING: mi-runner-1 has 7 GB free after prune (under 8 GB)
+[remote] sync 17s, 4949 files; job /srv/mi/jobs/epic-closeout-992bec-1182-1791625643; queueing for a slot
+[runner] slot 0 acquired; load 0.19 0.37 0.83
+
+ RUN  v5.0.3 /srv/mi/jobs/epic-closeout-992bec-1182-1791625643
+
+ ✓  functional  tests/levels/L4.test.ts (19 tests | 12 skipped) 113457ms
+   ✓ L4 The Safe City Falls (19)
+     ✓ T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop 3247ms
+     ✓ T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts 7130ms
+     ✓ T-E22-07 @E22 @E22-AC07 the turn: 40-50 s after the gun (or arrival + 100 s), 1-3 evacuees tagged L3-bus turn with >= 10 humans within 10 m 33796ms
+     ✓ T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune 14879ms
+     ✓ T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing 24117ms
+     ✓ T-E22-13 @E22 @E22-AC13 the line breaks by its first-of rule (also with the idle bot): fuel-truck mega chain, objective "Find somewhere to hide", the helicopter withdraws 26909ms
+     ✓ T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed 3378ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed | 12 skipped (19)
+   Start at  09:47:41
+   Duration  116.17s (tests 98%, transform 2%)
+
+JSON report written to /srv/mi/jobs/epic-closeout-992bec-1182-1791625643/test-results/closeout/L4-mechanics.json
+[remote] pulled test-results/closeout/L4-mechanics.json
+[remote] done exit=0 (runner 94.130.181.173, sync 17s, remote total 119s)

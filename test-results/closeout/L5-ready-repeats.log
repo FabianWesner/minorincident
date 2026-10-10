@@ -1,0 +1,29 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/L5.spec.ts:142:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (1.9m)
+  ✘  2 [chromium] › tests/e2e/levels/L5.spec.ts:142:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (2.0m)
+
+
+  1) [chromium] › tests/e2e/levels/L5.spec.ts:142:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 5
+    Received length: 3
+    Received array:  [{"cueAt": 2103, "foundAt": 1743, "hold": 0, "id": 20, "key": "rosa", "lostAt": 0, "status": "following"}, {"cueAt": 10824, "foundAt": 10618, "hold": 0, "id": 22, "key": "mia", "lostAt": 0, "status": "following"}, {"cueAt": 7029, "foundAt": 6656, "hold": 0, "id": 23, "key": "sam", "lostAt": 0, "status": "following"}]
+
+      188 |     await go({ x: 10, z: -37.6 }, 1.6, 11);
+      189 |     await go({ x: 10, z: -42.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
+    > 190 |     expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
+          |                                                                                   ^
+      191 |     await go(metroFoot(), 2.4, 11);
+      192 |     let last = await mission();
+      193 |     for (let i = 0; i < 80 && last.phase === 'playing'; i++) {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/epic-closeout/tests/e2e/levels/L5.spec.ts:190:83
+
+    Error Context: test-results/playwright/run-3357/e2e-levels-L5-L5-Aftermath-41863-hoto-spots-0-console-errors-chromium-repeat1/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L5.spec.ts:142:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors
+  1 passed (3.9m)
