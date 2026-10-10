@@ -57,7 +57,7 @@ export class CampaignUI {
     // E23 -> E24: the survivors that reached the station go with the campaign into L6.
     if(level===5)save.survivors=[...mission.state.result?.survivors??[]];
     // PO decision 2026-10-07: straight on to the next step, no unlock / upgrade / rack screens.
-    const carried=level===5?{LEFT:this.game.world.entities.get(1)!.weapons!.LEFT.rack.map(s=>s.id),RIGHT:this.game.world.entities.get(1)!.weapons!.RIGHT.rack.map(s=>s.id)}:null; autoRewards(save,level);if(carried)save.racks=carried;this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
+    const carried=level===5?{LEFT:this.game.world.entities.get(1)!.weapons!.LEFT.rack.map(s=>s.id),RIGHT:this.game.world.entities.get(1)!.weapons!.RIGHT.rack.map(s=>s.id)}:null; autoRewards(save,level);if(carried){save.racks=carried;for(const id of [...carried.LEFT,...carried.RIGHT])if(!save.ownedActions.includes(id))save.ownedActions.push(id);}this.save();this.game.applyCampaign();void this.game.continueCampaign(save);
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
