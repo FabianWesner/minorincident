@@ -51,6 +51,14 @@ export class Companion {
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
   }
+  /** Warning-only companions leave loot in place; health pickups are useful only while hurt.
+   * Recheck pending fetches too: healing or restoring a checkpoint can invalidate the target. */
+  private canFetch(entity: EntitySnapshot | undefined, player: EntitySnapshot): boolean {
+    const pickup = entity?.pickup;
+    if (this.safe || !pickup) return false;
+    if ('kind' in pickup) return !pickup.collected && !((pickup.kind === 'medkit' || pickup.kind === 'soda') && player.health.current >= player.health.max);
+    return pickup.armed;
+  }
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
@@ -63,9 +71,9 @@ export class Companion {
         continue;
       }
       let pickup = c.pickup === null ? undefined : this.world.entities.get(c.pickup);
-      if (pickup?.pickup && 'kind' in pickup.pickup && pickup.pickup.collected) pickup = undefined;
-      if (!pickup && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 4) {
-        for (const candidate of this.world.entities.iterate()) if (candidate.pickup && !('kind' in candidate.pickup && candidate.pickup.collected) && !('armed' in candidate.pickup && !candidate.pickup.armed) && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) > 1 && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) <= 6 && ai.nav.visible(e.transform, candidate.transform, .35)) { pickup = candidate; break; }
+      if (!this.canFetch(pickup, player)) { pickup = undefined; c.pickup = null; }
+      if (!this.safe && !pickup && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 4) {
+        for (const candidate of this.world.entities.iterate()) if (this.canFetch(candidate, player) && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) > 1 && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) <= 6 && ai.nav.visible(e.transform, candidate.transform, .35)) { pickup = candidate; break; }
         c.pickup = pickup?.id ?? null;
       }
       c.state = pickup ? 'fetch' : 'follow';
