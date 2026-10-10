@@ -12,6 +12,7 @@ export async function menuStart(page: Page): Promise<void> {
   await page.goto(menuUrl);
   await expect(page.getByTestId('menu-title')).toBeVisible();
   await page.getByTestId('start-game').click(); await page.getByTestId('character-female').click(); await page.getByTestId('level-L1').click();
+  await expect(page.getByTestId('mission-button')).toBeVisible({ timeout: 180_000 });
   // MissionUI focuses this button; activate it with real keys without waiting for a software-rendered RAF pair.
   await keyboardActivate(page, 'mission-button');
   await expect(page.getByTestId('pause-button')).toBeVisible();
