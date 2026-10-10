@@ -1,6 +1,6 @@
 {
   "name": "gun-pose-standing",
-  "note": "PO 10-09: the courier's own handgun tracer and muzzle flash must read at the game camera like the allies' tracers. Three infected in a line, shots at game zoom.",
+  "note": "PO 10-10: shoulder-height handgun aim, barrel-aligned forearm, muzzle flash/tracer from the visible muzzle, and no gun/body clipping. Frames 0/115 are idle; 26/32/40 show firing at the game camera angle.",
   "ground": "asphalt",
   "size": 40,
   "actors": [
@@ -64,7 +64,7 @@
       1,
       0
     ],
-    "zoom": 1.8
+    "zoom": 0.65
   },
   "frames": 120,
   "shots": [
@@ -79,5 +79,6 @@
     "consoleErrors": 0,
     "clippingMax": 0
   },
-  "sheet": 10
+  "sheet": 10,
+  "time": "L3"
 }

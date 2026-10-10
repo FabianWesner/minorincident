@@ -1,4 +1,4 @@
-import { Group, Mesh, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -128,7 +128,17 @@ export class DistrictAssets {
       // Keep the Metro shutter independent of its static shell.
       if(id==='int.metro-exit')asset.userData.splitDoors=['exitGate'];
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
+      // Preserve the HMG's authored barrel frame and socket through static batching.
+      const machineGun = id === 'prop.hmg-nest' ? asset.getObjectByName('gun') : undefined;
+      const muzzle = machineGun && asset.getObjectByName('muzzle');
+      asset.updateWorldMatrix(true,true);
+      const muzzleLocal = machineGun && muzzle ? machineGun.worldToLocal(muzzle.getWorldPosition(new Vector3())) : undefined;
+      if (machineGun) asset.userData.splitDoors = ['gun'];
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
+      if (muzzleLocal) {
+        const gun = root.children.find(n => n.userData.door === 'gun');
+        if (gun) { gun.name = 'gun'; const socket = new Object3D(); socket.name = 'muzzle'; socket.position.copy(muzzleLocal); gun.add(socket); }
+      }
       root.userData.placeholder = asset.userData.placeholder === true;
       this.share(root);
       if (id === 'bld.joes-diner') {

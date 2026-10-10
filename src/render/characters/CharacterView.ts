@@ -125,7 +125,7 @@ export class CharacterView extends Group {
       }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     this.makeParcel(materials);
   }
@@ -277,8 +277,6 @@ export class CharacterView extends Group {
   }
   /** Applied after living/ride layers, preserving the animated legs. */
   aimGun(direction: { x: number; z: number }): void {
-    this.facing = -Math.atan2(direction.z, direction.x);
-    this.quaternion.setFromAxisAngle(this.facingAxis, this.facing);
     this.lookWeight = 0;
     this.characters.get(this.variant)?.aim.apply(direction);
     this.updateMatrixWorld(true);
