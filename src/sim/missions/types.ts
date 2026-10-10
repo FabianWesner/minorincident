@@ -232,6 +232,8 @@ export interface MissionCheckpoint {
 
 /** E24 checkpoint state. Times are simulation ticks. */
 export interface L6State {
+  /** Checkpointed dialogue uses the same HUD bubble as earlier story levels. */
+  say?: { id: number; text: string; at: number; until: number };
   phase: 'shelter'|'first'|'fails'|'retreat'|'exit'|'done';
   startAt:number; breach1At:number; breach2At:number; abandonAt:number; nextWave:number; firstBang:boolean; secondBang:boolean;
   leaderX:number; leaderZ:number; paused:boolean; flashlight:boolean; mainPower:boolean; emergency:boolean;
