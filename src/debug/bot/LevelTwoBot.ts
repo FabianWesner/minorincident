@@ -92,8 +92,7 @@ export class LevelTwoBot {
     // Before the doors open: stand by the forecourt, out of the crew's way.
     if (!s.doorsOpenAt) { go(a['l2-forecourt'], 1.5, 'forecourt'); return frame; }
     // Fight a little at the doors, then disengage before the crowd closes in.
-    // The bridge goal is visible as the doors open: react to it after a brief cover window.
-    if (!this.retreatAt) this.retreatAt = s.doorsOpenAt + (newbie ? 4 : 2) * 60;
+    if (!this.retreatAt) this.retreatAt = s.doorsOpenAt + (newbie ? 10 : 6) * 60;
     if (near.length >= 3 || player.health.current < 70) this.retreatAt = Math.min(this.retreatAt, w.tick);
     const leaving = w.tick >= this.retreatAt;
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
