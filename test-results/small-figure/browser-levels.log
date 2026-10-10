@@ -1,0 +1,71 @@
+
+Running 37 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu) (35.0s)
+  ✓   2 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgl @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgl) (38.4s)
+  ✓   4 [chromium] › tests/e2e/levels/continuity.spec.ts:38:1 › T-CONT-02 @continuity burned annex twin loads every runtime LOD without placeholders (746ms)
+  ✓   5 [chromium] › tests/e2e/levels/l1-firefighter-fight.spec.ts:14:1 › T-E19-firefighter-fight @E19 the firefighter swings at an infected at the bay (game camera captures) (31.7s)
+  ✓   3 [chromium] › tests/e2e/levels/continuity.spec.ts:11:1 › T-CONT-01 @continuity L2 shows the L1 aftermath at every carried-over spot (game camera, near and far) (55.8s)
+  ✓   6 [chromium] › tests/e2e/levels/l1-firestation.spec.ts:17:1 › T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-station bay completes L1 (bay faces the camera, ring on the trigger) (30.6s)
+  ✓   7 [chromium] › tests/e2e/levels/L1.spec.ts:25:3 › L1 v2 real-input playthrough › T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07) (21.7s)
+  ✓   8 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (40.6s)
+  ✓  10 [chromium] › tests/e2e/levels/l2-apron-alarm.spec.ts:9:1 › T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm (25.6s)
+  ✓  11 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:9:1 › T-E20-axe-findable @E20 the axe rack is visible and marked during calm (25.5s)
+  ✓   9 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (1.7m)
+  ✓  12 [chromium] › tests/e2e/levels/l2-rescue-setpiece.spec.ts:12:1 › T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open) (40.3s)
+  ✓  14 [chromium] › tests/e2e/levels/L2.spec.ts:127:3 › L2 The Failed Rescue in the browser › T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout (34.9s)
+  ✓  13 [chromium] › tests/e2e/levels/L2.spec.ts:65:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.3m)
+{"attackShotEarly":true,"inFrameAtFallback":9}
+{"attackShotEarly":true,"inFrameAtFallback":6}
+L3 death #1 near x=-111 z=-28
+L3 RESULT street=commerce deaths=0
+  ✓  15 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (57.9s)
+L3 RESULT street=blvd deaths=1
+  ✓  16 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (1.1m)
+{"attackShotEarly":true,"inFrameAtFallback":6}
+  ✓  18 [chromium] › tests/e2e/levels/L3.spec.ts:179:3 › L3 The Police Collapse in the browser › T-E21-17b @E21 @E21-AC17 campaign: crossing the army zone line loads L4 with the carried loadout and no reward screen (21.5s)
+  ✓  19 [chromium] › tests/e2e/levels/l4-boot.spec.ts:6:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (17.5s)
+L3 RESULT street=oak deaths=0
+  ✓  17 [chromium] › tests/e2e/levels/L3.spec.ts:109:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (1.2m)
+  ✓  21 [chromium] › tests/e2e/levels/L4.spec.ts:145:3 › L4 The Safe City Falls in the browser › T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen (15.9s)
+  ✓  20 [chromium] › tests/e2e/levels/L4.spec.ts:85:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (36.3s)
+  ✓  22 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props (20.1s)
+  ✓  23 [chromium] › tests/e2e/levels/L4.spec.ts:162:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props (18.4s)
+  ✓  25 [chromium] › tests/e2e/levels/L5.spec.ts:220:3 › L5 Aftermath in the browser › T-E23-18 @E23 @E23-AC18 recognition: the four pair cameras in L4 (W0, intact) and L5 (W5, fallen) from the real game, side by side (37.5s)
+  ✓  26 [chromium] › tests/e2e/levels/L5.spec.ts:255:3 › L5 Aftermath in the browser › T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign (45.2s)
+  ✓  27 [chromium] › tests/e2e/levels/L5.spec.ts:288:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgl), not only their props (19.0s)
+  ✘  24 [chromium] › tests/e2e/levels/L5.spec.ts:148:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (2.0m)
+  ✓  28 [chromium] › tests/e2e/levels/L5.spec.ts:288:56 › L5 Aftermath in the browser › T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgpu), not only their props (17.2s)
+  ✓  29 [chromium] › tests/e2e/levels/L6.spec.ts:5:1 › T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights (18.0s)
+  ✓  30 [chromium] › tests/e2e/levels/L6.spec.ts:15:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night (17.5s)
+  ✓  32 [chromium] › tests/e2e/levels/L6.spec.ts:73:103 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (16.8s)
+  ✓  33 [chromium] › tests/e2e/levels/L6.spec.ts:73:103 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (17.1s)
+  ✓  34 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (450ms)
+  ✓  35 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (472ms)
+  ✓  36 [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgl (14.3s)
+  ✓  31 [chromium] › tests/e2e/levels/L6.spec.ts:22:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (1.0m)
+  ✓  37 [chromium] › tests/e2e/small-figure.spec.ts:8:3 › small-figure L2 seed 1 low webgpu (12.8s)
+
+
+  1) [chromium] › tests/e2e/levels/L5.spec.ts:148:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 5
+    Received length: 3
+    Received array:  [{"cueAt": 2186, "foundAt": 1826, "hold": 0, "id": 20, "key": "rosa", "lostAt": 0, "status": "following"}, {"cueAt": 13412, "foundAt": 13010, "hold": 0, "id": 21, "key": "okafor", "lostAt": 0, "status": "following"}, {"cueAt": 7182, "foundAt": 6798, "hold": 0, "id": 23, "key": "sam", "lostAt": 0, "status": "following"}]
+
+      194 |     await go({ x: 10, z: -37.6 }, 1.6, 11);
+      195 |     await go({ x: 10, z: -42.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
+    > 196 |     expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
+          |                                                                                   ^
+      197 |     await go(metroFoot(), 2.4, 11);
+      198 |     let last = await mission();
+      199 |     for (let i = 0; i < 80 && last.phase === 'playing'; i++) {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/small-figure/tests/e2e/levels/L5.spec.ts:196:83
+
+    Error Context: test-results/playwright/run-3417/e2e-levels-L5-L5-Aftermath-41863-hoto-spots-0-console-errors-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L5.spec.ts:148:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors 
+  36 passed (10.8m)
