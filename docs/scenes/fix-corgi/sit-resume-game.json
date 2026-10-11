@@ -1,0 +1,54 @@
+{
+  "extends": "../../../specs/scenes/qa-corgi-sit.json",
+  "name": "fix-corgi-sit-resume-game",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 0.6
+  },
+  "sheet": 30,
+  "shots": [
+    15,
+    240,
+    270,
+    420,
+    480,
+    510,
+    540,
+    600,
+    720,
+    840
+  ],
+  "note": "PKG-15: visible sole and rump contact; seated support, then resume and turn without sinking or knee flips.",
+  "frames": 840,
+  "script": [
+    {
+      "frame": 480,
+      "actor": "courier",
+      "do": {
+        "walk": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 660,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            0,
+            3
+          ]
+        ]
+      }
+    }
+  ]
+}

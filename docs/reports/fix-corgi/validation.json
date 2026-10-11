@@ -1,0 +1,30 @@
+{
+  "unit": {
+    "command": "npm run test:unit -- --maxWorkers=4",
+    "filesPassed": 156,
+    "testsPassed": 802,
+    "testsFailed": 0
+  },
+  "focused": {
+    "command": "npx vitest run tests/unit/render/authored-animation.test.ts tests/unit/render/corgi-feet.test.ts --maxWorkers=4",
+    "filesPassed": 2,
+    "testsPassed": 22,
+    "testsFailed": 0
+  },
+  "visual": {
+    "acceptanceScenesPassed": 5,
+    "catalogScenesPassed": 3,
+    "reviewedBeforeAfterImages": 16,
+    "backend": "headless WebGL2 / ANGLE Metal"
+  },
+  "verify": {
+    "selectedSimUnitPassed": 52,
+    "selectedSimUnitFailed": 0,
+    "browserPassed": 34,
+    "browserFailed": 1,
+    "knownFailure": "T-E13-05 save/continue weapon rack mismatch",
+    "initialTimingMissMs": 4.139041,
+    "rerunTimingMs": 1.016208,
+    "timingLimitMs": 4
+  }
+}
