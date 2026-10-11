@@ -55,7 +55,7 @@ export class VehicleView extends Group {
         if (material instanceof PaletteMaterial) {
           const token = material.name.startsWith('pal_') ? material.token : paletteTokens[this.materials.nearest(material.color)];
           copy = this.materials.uniqueWorld(token, material.vertexColors);
-          copy.transparent = material.transparent; copy.side = material.side;
+          copy.transparent = material.transparent; copy.opacity = material.opacity; copy.depthWrite = material.depthWrite; copy.forceSinglePass = material.forceSinglePass; copy.side = material.side;
           (copy as PaletteMaterial).fade.value = material.fade.value;
         }
         else {

@@ -1,0 +1,262 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/private/tmp/fix-vehicle-glass-baseline/node_modules/.bin/playwright",
+      "test",
+      "tests/visual/e25-closure.spec.ts",
+      "--grep",
+      "T-E25-11",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/private/tmp/fix-vehicle-glass-baseline/playwright.config.ts",
+    "rootDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3474 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3474",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "visual/e25-closure.spec.ts",
+      "file": "visual/e25-closure.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth",
+          "ok": false,
+          "tags": [
+            "E25",
+            "E25-AC11",
+            "E25-AC12"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15087,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m200\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m200\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m\n    at /private/tmp/fix-vehicle-glass-baseline/tests/visual/e25-closure.spec.ts:136:57",
+                    "location": {
+                      "file": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/e25-closure.spec.ts",
+                      "column": 57,
+                      "line": 136
+                    },
+                    "snippet": "  134 |     evidence.push({ subject: subject.name, angle, lighting: await page.evaluate(() => window.__SS__!.getState().render.lighting) });\n  135 |     if (subject === house) {\n> 136 |       const line = await windowLine(page); expect(line).toHaveLength(200);\n      |                                                         ^\n  137 |       const luminance = line.map(point => patch(image, point, 1));\n  138 |       // Exclude the physical perimeter/middle mullion. The room's far wall\n  139 |       // ends at a bright-to-dark boundary inside the central panes."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/e25-closure.spec.ts",
+                        "column": 57,
+                        "line": 136
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m200\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m\n\n  134 |     evidence.push({ subject: subject.name, angle, lighting: await page.evaluate(() => window.__SS__!.getState().render.lighting) });\n  135 |     if (subject === house) {\n> 136 |       const line = await windowLine(page); expect(line).toHaveLength(200);\n      |                                                         ^\n  137 |       const luminance = line.map(point => patch(image, point, 1));\n  138 |       // Exclude the physical perimeter/middle mullion. The room's far wall\n  139 |       // ends at a bright-to-dark boundary inside the central panes.\n    at /private/tmp/fix-vehicle-glass-baseline/tests/visual/e25-closure.spec.ts:136:57"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T14:29:56.561Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/e25-closure.spec.ts",
+                    "column": 57,
+                    "line": 136
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "04c96ecdbc5af3424834-0bf5c6bc84f47ca013ec",
+          "file": "visual/e25-closure.spec.ts",
+          "line": 125,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T14:29:55.331Z",
+    "duration": 17784.147999999997,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

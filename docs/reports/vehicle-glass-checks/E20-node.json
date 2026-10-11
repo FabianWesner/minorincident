@@ -1,0 +1,38 @@
+{
+  "numPassedTests": 42,
+  "numFailedTests": 1,
+  "numPendingTests": 1514,
+  "success": false,
+  "failedTests": [
+    {
+      "ancestorTitles": [
+        "L2 The Failed Rescue"
+      ],
+      "fullName": "L2 The Failed Rescue T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down",
+      "status": "failed",
+      "title": "T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down",
+      "duration": 30858.155415999994,
+      "failureMessages": [
+        "AssertionError: seed 2 {\"turned\":8,\"checkpoint\":14,\"elsewhere 5,30\":1,\"elsewhere 30,30\":1,\"elsewhere 51,30\":1,\"elsewhere 42,30\":1,\"elsewhere 50,31\":1,\"elsewhere 41,30\":1,\"elsewhere 47,30\":1,\"elsewhere 49,30\":1}: expected [ 'elsewhere 5,30', \u2026(7) ] to deeply equal []\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-vehicle-glass/tests/levels/L2.test.ts:233:114\n    at file:///Users/wesner/Workspace/minorincident/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ],
+      "meta": {},
+      "tags": [],
+      "benchmarks": []
+    }
+  ],
+  "rideTest": [
+    {
+      "ancestorTitles": [
+        "L2 The Failed Rescue"
+      ],
+      "fullName": "L2 The Failed Rescue T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time",
+      "status": "passed",
+      "title": "T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time",
+      "duration": 1026.8704999999973,
+      "failureMessages": [],
+      "meta": {},
+      "tags": [],
+      "benchmarks": []
+    }
+  ]
+}
