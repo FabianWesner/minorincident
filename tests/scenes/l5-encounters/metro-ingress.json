@@ -1,0 +1,476 @@
+{
+  "name": "l5-metro-ingress",
+  "note": "L5-E1 real metro stair supports, 24 station residents, five followers crossing the shutter; game camera. Inspect foot height, facing, crowd overlap and visible shutter closure.",
+  "ground": "district",
+  "time": "L5",
+  "tier": 5,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        7,
+        -104
+      ],
+      [
+        69,
+        -35
+      ]
+    ],
+    "assets": [
+      "bld.metro-entrance",
+      "int.metro-station"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        37.7854,
+        -43.5
+      ],
+      "state": {
+        "walk": [
+          [
+            38.1854,
+            -50.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "follower-0",
+      "kind": "pedestrian",
+      "at": [
+        37.2854,
+        -43.5
+      ],
+      "look": {
+        "model": "npc.dale.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            37.385400000000004,
+            -48.53
+          ]
+        ]
+      },
+      "supportFeet": true
+    },
+    {
+      "id": "follower-1",
+      "kind": "pedestrian",
+      "at": [
+        38.2854,
+        -42.7
+      ],
+      "look": {
+        "model": "npc.rosa.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            38.1854,
+            -48.53
+          ]
+        ]
+      },
+      "supportFeet": true
+    },
+    {
+      "id": "follower-2",
+      "kind": "pedestrian",
+      "at": [
+        37.2854,
+        -41.9
+      ],
+      "look": {
+        "model": "npc.mr-okafor.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            37.385400000000004,
+            -49.58
+          ]
+        ]
+      },
+      "supportFeet": true
+    },
+    {
+      "id": "follower-3",
+      "kind": "pedestrian",
+      "at": [
+        38.2854,
+        -41.1
+      ],
+      "look": {
+        "model": "npc.mia.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            38.1854,
+            -49.58
+          ]
+        ]
+      },
+      "supportFeet": true
+    },
+    {
+      "id": "follower-4",
+      "kind": "pedestrian",
+      "at": [
+        37.2854,
+        -40.3
+      ],
+      "look": {
+        "model": "npc.sam.aftermath"
+      },
+      "state": {
+        "walk": [
+          [
+            37.385400000000004,
+            -50.63
+          ]
+        ]
+      },
+      "supportFeet": true
+    },
+    {
+      "id": "resident-0",
+      "kind": "pedestrian",
+      "at": [
+        27.785400000000003,
+        -63.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-1",
+      "kind": "pedestrian",
+      "at": [
+        30.785400000000003,
+        -63.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-2",
+      "kind": "pedestrian",
+      "at": [
+        34.7854,
+        -63.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-3",
+      "kind": "pedestrian",
+      "at": [
+        40.7854,
+        -63.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-4",
+      "kind": "pedestrian",
+      "at": [
+        44.7854,
+        -63.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-5",
+      "kind": "pedestrian",
+      "at": [
+        47.7854,
+        -63.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-6",
+      "kind": "pedestrian",
+      "at": [
+        27.785400000000003,
+        -62.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-7",
+      "kind": "pedestrian",
+      "at": [
+        30.785400000000003,
+        -62.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-8",
+      "kind": "pedestrian",
+      "at": [
+        34.7854,
+        -62.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-9",
+      "kind": "pedestrian",
+      "at": [
+        40.7854,
+        -62.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-10",
+      "kind": "pedestrian",
+      "at": [
+        44.7854,
+        -62.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-11",
+      "kind": "pedestrian",
+      "at": [
+        47.7854,
+        -62.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-12",
+      "kind": "pedestrian",
+      "at": [
+        27.785400000000003,
+        -61.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-13",
+      "kind": "pedestrian",
+      "at": [
+        30.785400000000003,
+        -61.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-14",
+      "kind": "pedestrian",
+      "at": [
+        34.7854,
+        -61.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-15",
+      "kind": "pedestrian",
+      "at": [
+        40.7854,
+        -61.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-16",
+      "kind": "pedestrian",
+      "at": [
+        44.7854,
+        -61.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-17",
+      "kind": "pedestrian",
+      "at": [
+        47.7854,
+        -61.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-18",
+      "kind": "pedestrian",
+      "at": [
+        27.785400000000003,
+        -60.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-19",
+      "kind": "pedestrian",
+      "at": [
+        30.785400000000003,
+        -60.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-20",
+      "kind": "pedestrian",
+      "at": [
+        34.7854,
+        -60.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-21",
+      "kind": "pedestrian",
+      "at": [
+        40.7854,
+        -60.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-22",
+      "kind": "pedestrian",
+      "at": [
+        44.7854,
+        -60.4
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b.aftermath"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "resident-23",
+      "kind": "pedestrian",
+      "at": [
+        47.7854,
+        -60.4
+      ],
+      "look": {
+        "model": "npc.civilian-man-b.aftermath"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      37.7854,
+      -48
+    ],
+    "zoom": 1
+  },
+  "frames": 720,
+  "shots": [
+    1,
+    400,
+    719
+  ],
+  "sheet": 60,
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "metroShutter": 0
+      }
+    },
+    {
+      "frame": 570,
+      "effect": {
+        "metroShutter": 0.5
+      }
+    },
+    {
+      "frame": 630,
+      "effect": {
+        "metroShutter": 1
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "clippingMax": 0
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  }
+}

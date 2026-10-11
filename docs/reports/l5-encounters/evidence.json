@@ -1,0 +1,564 @@
+{
+  "unit": {
+    "numTotalTests": 817,
+    "numPassedTests": 817,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "success": true,
+    "startTime": 1791761959734
+  },
+  "e23": {
+    "numTotalTests": 1639,
+    "numPassedTests": 48,
+    "numFailedTests": 0,
+    "numPendingTests": 1591,
+    "success": true,
+    "startTime": 1791762170801
+  },
+  "newbie": {
+    "profile": "newbie",
+    "seed": 2,
+    "outcome": "complete",
+    "simSeconds": 260.28333333333336,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 20,
+    "damage": 55,
+    "timeline": [
+      {
+        "type": "l5.emerged",
+        "t": 2.0166666666666666
+      },
+      {
+        "type": "objective:emerge",
+        "t": 2.0166666666666666
+      },
+      {
+        "type": "l5.searching",
+        "t": 12.016666666666667
+      },
+      {
+        "type": "l5.accounted",
+        "t": 182.76666666666668
+      },
+      {
+        "type": "objective:look",
+        "t": 182.76666666666668
+      },
+      {
+        "type": "l5.shutter",
+        "t": 257.28333333333336
+      },
+      {
+        "type": "l5.sheltered",
+        "t": 260.28333333333336
+      },
+      {
+        "type": "objective:metro",
+        "t": 260.28333333333336
+      }
+    ],
+    "found": [
+      {
+        "key": "rosa",
+        "t": 26.016666666666666
+      },
+      {
+        "key": "dale",
+        "t": 71.76666666666667
+      },
+      {
+        "key": "okafor",
+        "t": 88.01666666666667
+      },
+      {
+        "key": "sam",
+        "t": 120.76666666666667
+      },
+      {
+        "key": "mia",
+        "t": 182.76666666666668
+      }
+    ],
+    "fates": {
+      "dale": "sheltered",
+      "rosa": "sheltered",
+      "okafor": "sheltered",
+      "mia": "sheltered",
+      "sam": "sheltered"
+    },
+    "rescued": 5,
+    "rescuedKeys": [
+      "dale",
+      "rosa",
+      "okafor",
+      "mia",
+      "sam"
+    ],
+    "maxConcurrent": 18,
+    "infectedAtStart": 18,
+    "maxGroup": 2,
+    "followShare": 0.994973521227897,
+    "maxFollowerJump": 0.11028479633279639,
+    "lost": [],
+    "deathsAt": [],
+    "gunshots": 38,
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "directorQueueMax": 0,
+      "newInfected": 0
+    }
+  },
+  "realInput": {
+    "statsAtShutter": {
+      "time": 317.4166666666667,
+      "kills": 0,
+      "knockdowns": 25,
+      "damage": 37.5,
+      "deaths": 0,
+      "rescued": 1,
+      "optionalObjectives": []
+    },
+    "handover": {
+      "level": "L6",
+      "survivors": [
+        "dale",
+        "rosa",
+        "okafor",
+        "mia",
+        "sam"
+      ]
+    },
+    "l5": {
+      "survivors": [
+        "dale:sheltered",
+        "rosa:sheltered",
+        "okafor:sheltered",
+        "mia:sheltered",
+        "sam:sheltered"
+      ],
+      "gloom": 0.5,
+      "shutterAt": 18925
+    },
+    "shots": [
+      "l5-basement-exit",
+      "l5-group-of-five",
+      "l5-metro-doors",
+      "l5-metro-shelter",
+      "l5-sign-of-life",
+      "pair-harbor-street",
+      "pair-kessler-lane",
+      "pair-metro-entrance",
+      "pair-plaza"
+    ],
+    "errors": []
+  },
+  "scenes": {
+    "final/l5-metro-ingress": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 31,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 113938,
+            "limit": 1500000
+          }
+        ]
+      },
+      "backend": "webgl",
+      "tier": "high",
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "final/l5-metro-residents": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 23,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 121402,
+            "limit": 1500000
+          }
+        ]
+      },
+      "backend": "webgl",
+      "tier": "high",
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "final-low/l5-metro-ingress-low": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 31,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 100997,
+            "limit": 1500000
+          }
+        ]
+      },
+      "backend": "webgl",
+      "tier": "low",
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "final-low/l5-metro-residents-low": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 21,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 105978,
+            "limit": 1500000
+          }
+        ]
+      },
+      "backend": "webgl",
+      "tier": "low",
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "final-alpha/qa-alpha-charge": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 95,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 81642,
+            "limit": 1500000
+          }
+        ]
+      },
+      "backend": "webgl",
+      "tier": "high",
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "final-alpha/qa-alpha-ground-slam": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 23,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 98252,
+            "limit": 1500000
+          }
+        ]
+      },
+      "backend": "webgl",
+      "tier": "high",
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  "perf": {
+    "high": {
+      "baselineDrawCalls": 408,
+      "baselineTriangles": 967995,
+      "pairDrawCalls": 318,
+      "pairTriangles": 957607,
+      "followDrawCalls": 316,
+      "followTriangles": 957079,
+      "p50": 7.200000000000728,
+      "p95": 9.69999999999709,
+      "max": 15.200000000000728,
+      "counts": {
+        "followers": 5,
+        "infected": 18,
+        "fires": 13,
+        "corpses": 37
+      },
+      "weather": {
+        "sim": {
+          "kind": "ash",
+          "flakes": 0.35,
+          "fog": 0.12
+        },
+        "render": {
+          "particles": 1750,
+          "flash": 0,
+          "rayDitherRadius": 6,
+          "wetness": 0,
+          "accumulation": 0.15263888888888713,
+          "tracks": 384,
+          "trackPixels": 4109
+        }
+      }
+    },
+    "low": {
+      "baselineDrawCalls": 179,
+      "baselineTriangles": 323823,
+      "pairDrawCalls": 207,
+      "pairTriangles": 359986,
+      "followDrawCalls": 207,
+      "followTriangles": 359986,
+      "p50": 25,
+      "p95": 33.900000000001455,
+      "max": 50,
+      "counts": {
+        "followers": 5,
+        "infected": 12,
+        "fires": 13,
+        "corpses": 37
+      },
+      "weather": {
+        "sim": {
+          "kind": "ash",
+          "flakes": 0.35,
+          "fog": 0.12
+        },
+        "render": {
+          "particles": 525,
+          "flash": 0,
+          "rayDitherRadius": 6,
+          "wetness": 0,
+          "accumulation": 0.15263888888888713,
+          "tracks": 237,
+          "trackPixels": 3865
+        }
+      }
+    }
+  },
+  "campaignHandover": {
+    "stats": {
+      "startTime": "2026-10-11T22:37:41.465Z",
+      "duration": 192774.523,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "duration": 160579
+          }
+        ]
+      }
+    ]
+  },
+  "saveRackRegression": {
+    "stats": {
+      "startTime": "2026-10-11T23:06:01.937Z",
+      "duration": 7803.451,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "audio": {
+    "war": {
+      "lufs": -14,
+      "truePeak": -1.4
+    },
+    "quiet": {
+      "lufs": -40.6,
+      "truePeak": -23.6
+    },
+    "differenceLU": 26.6,
+    "cues": [
+      "bed.wind",
+      "bed.fire",
+      "ambient.debris",
+      "door.wood",
+      "dialogue.radio",
+      "ambient.collapse",
+      "ambient.dog"
+    ]
+  },
+  "finalVerification": {
+    "status": "incomplete",
+    "reason": "3-hour budget reached during remote audio reference test",
+    "pending": [
+      "live L4\u2192L5\u2192L6 handover after the L4 rack-carryover fix",
+      "remaining combined browser/capture/performance stages"
+    ],
+    "lastCompletedRemoteBrowserRun": {
+      "passed": 16,
+      "failed": 1,
+      "failure": "T-E23-15b L4 rack carryover; fixed and covered by the passing unit regression"
+    },
+    "commandsPassed": [
+      "typecheck",
+      "lint",
+      "build",
+      "full unit: 817/817",
+      "E23 simulation: 48/48"
+    ],
+    "audioFixtureOptimization": "removed; canonical production-graph assertions and capture fixture retained"
+  }
+}

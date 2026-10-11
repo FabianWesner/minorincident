@@ -83,6 +83,8 @@ export interface MissionResult {
   /** L5: the survivors that reached the station alive (keys of `l5Survivors`), carried into L6. */
   survivors?: string[];
   survivorsIn?: number;
+  stationOccupants?: EntitySnapshot[];
+  rescuedSurvivors?: EntitySnapshot[];
 }
 /** Serializable L1 v2 story state; lives in MissionState so checkpoints snapshot it (ticks are shifted on restore). */
 export interface L1State {
@@ -197,7 +199,7 @@ export interface L5State {
   startAt: number; emergedAt: number; searchAt: number; accountedAt: number; metroAt: number; shutterAt: number; doneAt: number;
   /** The five survivors in casting order: entity id and fate (`hidden` until found, then `following`, `dead` or `turned`). */
   survivors: { key: string; id: number; status: 'hidden' | 'following' | 'dead' | 'turned' | 'sheltered'; foundAt: number; cueAt: number; lostAt: number; hold: number }[];
-  found: number; lookoutId: number; infectedIds: number[]; medkitIds: number[]; corpseIds: number[]; fireIds: number[];
+  found: number; lookoutId: number; stationIds: number[]; infectedIds: number[]; medkitIds: number[]; corpseIds: number[]; fireIds: number[];
   /** Sunset gloom, 1 = full sun at the basement exit, falling monotonically; the sun intensity factor the renderer applies. */
   gloom: number;
   /** The latest sign of life the courier heard (HUD ping), and the "Wait!" bark. */

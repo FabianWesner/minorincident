@@ -2,11 +2,21 @@ import { catalog } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
 import { eligible, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
 import { validAftermath } from './carryover';
+import type { EntitySnapshot } from '../world/types';
 export const SAVE_KEY='minor-incident.campaign';
 export const SAVE_ERROR='Save could not be loaded';
 export type SaveResult={status:'empty'}|{status:'ok';save:CampaignSave}|{status:'error';message:string};
 const record=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const strings=(v:unknown):v is string[]=>Array.isArray(v)&&v.every(s=>typeof s==='string')&&new Set(v).size===v.length;
+/** Bounded L5 carryover records preserve the people, rather than respawning replacements. */
+function validCivilian(e: unknown): e is EntitySnapshot {
+  if (!record(e) || !record(e.transform) || !record(e.health) || !record(e.civilian) || !record(e.appearance)) return false;
+  const transform = e.transform;
+  return Number.isSafeInteger(e.id) && Number(e.id) > 1 && e.kind === 'civilian'
+    && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(transform[k]))
+    && Number.isFinite(e.health.current) && Number.isFinite(e.health.max)
+    && typeof e.appearance.asset === 'string' && e.appearance.asset.startsWith('npc.');
+}
 /** v0 renamed level; v2 persists completion before navigation. Existing v1 aftermath is retained; absent records keep level defaults. */
 export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
@@ -27,7 +37,14 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
+  if(save.stationOccupants!==undefined&&(!Array.isArray(save.stationOccupants)||save.stationOccupants.length<20||save.stationOccupants.length>30||!save.stationOccupants.every(validCivilian)||new Set(save.stationOccupants.map(e=>e.id)).size!==save.stationOccupants.length))return false;
   if(save.survivors!==undefined&&(!strings(save.survivors)||save.survivors.some(k=>!['dale','rosa','okafor','mia','sam'].includes(k))))return false;
+  if(save.rescuedSurvivors!==undefined){
+    if(!Array.isArray(save.rescuedSurvivors)||save.rescuedSurvivors.length>5||!save.rescuedSurvivors.every(validCivilian))return false;
+    if(!save.rescuedSurvivors.every(e=>save.survivors?.includes(e.civilian!.survivor?.key??'')))return false;
+    const people=[...save.stationOccupants??[],...save.rescuedSurvivors];
+    if(new Set(people.map(e=>e.id)).size!==people.length)return false;
+  }
   if(save.results!==undefined&&(!record(save.results)||Object.entries(save.results).some(([id,result])=>!/^L[1-6]$/.test(id)||!record(result)||!['time','kills','knockdowns','damage','deaths','rescued'].every(k=>typeof result[k]==='number'&&Number.isFinite(result[k])&&Number(result[k])>=0)||!strings(result.optionalObjectives)||result.survivors!==undefined&&!strings(result.survivors))))return false;
   const prefix={...save,upgrades:[] as string[]};
   for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}

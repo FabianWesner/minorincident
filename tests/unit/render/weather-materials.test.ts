@@ -35,4 +35,16 @@ describe('weather surface graphs', () => {
     expect(lighting.paletteMaterials.size).toBe(0);
     texture.dispose(); lighting.field.dispose();
   });
+  it('@E23 @E23-AC15 a solid shutter copy keeps weather graphs without the player cutaway', () => {
+    const lighting = new Lighting(new Scene()); lighting.set('L5'); lighting.setWeatherMode(0);
+    const texture = new DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
+    const shell = new PaletteMaterial('asphalt', texture, lighting).seeThrough();
+    const shutter = shell.frozenCopy().seeThrough(false), clear = shutter.outputNode;
+    expect(shell.userData.seeThrough).toBe(true); expect(shutter.userData.seeThrough).toBe(false);
+    lighting.setWeatherMode(weatherMaterialFlags.fog);
+    expect(shutter.outputNode).not.toBe(clear); expect(shutter.userData.seeThrough).toBe(false);
+    lighting.setWeatherMode(0); expect(shutter.outputNode).toBe(clear);
+    shutter.dispose(); shell.dispose(); texture.dispose(); lighting.dispose();
+  });
+
 });

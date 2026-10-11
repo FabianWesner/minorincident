@@ -25,10 +25,11 @@ const navOf = (l: DistrictLayout) => bakeNav([{ layout: l, origin: [0, 0], colli
 const nav = navOf(layout), navL4 = navOf(l4Layout);
 const at = (name: string): Point => { const a = layout.anchors[name]; if (!a) throw new Error(`missing anchor ${name}`); return [a.position[0], a.position[2]]; };
 const dist = (a: Point | readonly [number, number], b: Point | readonly [number, number]) => Math.hypot(a[0] - b[0], a[1] - b[1]);
-/** Top-down footprint mask of the solid geometry of a placement (0.25 m raster) and the IoU of two masks. */
+/** Top-down footprint mask includes physical stair/platform supports; walkability changes navigation, not the building footprint.
+ * Mask of the solid geometry of a placement (0.25 m raster) and the IoU of two masks. */
 function mask(l: DistrictLayout, id: string): Set<string> {
   const out = new Set<string>();
-  for (const c of placementColliders(l.placements.filter(p => p.id === id), []).filter(c => !c.walkable)) {
+  for (const c of placementColliders(l.placements.filter(p => p.id === id), [])) {
     for (let x = Math.floor(c.aabb.min[0] * 4); x < Math.ceil(c.aabb.max[0] * 4); x++) for (let z = Math.floor(c.aabb.min[2] * 4); z < Math.ceil(c.aabb.max[2] * 4); z++) out.add(`${x},${z}`);
   }
   return out;
@@ -171,9 +172,9 @@ describe('L5 static', () => {
     const [r, g, b] = [1, 3, 5].map(i => parseInt(p.sky.slice(i, i + 2), 16)); expect(r).toBeGreaterThan(g); expect(b).toBeGreaterThan(g);
   });
 
-  test('T-E23-17a @E23 @E23-AC17 @E23-AC18 photo spots: the four L4 pair cameras (same anchors and offsets) plus the four L5 spots resolve to walkable points', () => {
+  test('T-E23-17a @E23 @E23-AC17 @E23-AC18 photo spots: the four L4 pair cameras (same anchors and offsets) plus the L5 spots and closing-door view resolve to walkable points', () => {
     const names = l5PhotoSpots.map(([n]) => n);
-    expect(names).toEqual(expect.arrayContaining(['pair-plaza', 'pair-harbor-street', 'pair-metro-entrance', 'pair-kessler-lane', 'l5-basement-exit', 'l5-sign-of-life', 'l5-group-of-five', 'l5-metro-shelter']));
+    expect(names).toEqual(expect.arrayContaining(['pair-plaza', 'pair-harbor-street', 'pair-metro-entrance', 'pair-kessler-lane', 'l5-basement-exit', 'l5-sign-of-life', 'l5-group-of-five', 'l5-metro-shelter', 'l5-metro-doors']));
     const spots = compositions.L5.districts[0].overrides!.photoSpots!;
     for (const name of names) { expect(spots.some(s => s.name === name), name).toBe(true); const key = name.startsWith('pair-') ? name : `photo-${name}`, p = at(key), i = nav.index(p[0], p[1]); expect(i >= 0 && nav.cells[i] === 1, name).toBe(true); }
     // The pair cameras are the L4 ones: identical anchors and framing offsets.

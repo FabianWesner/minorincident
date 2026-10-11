@@ -89,6 +89,7 @@ export class SceneLab {
   /** Door gate per doored placement: frames an actor stood in the aperture/leaf sweep while the door was not fully open. */
   private doors = new Map<string, { way: Doorway; closedFrames: number; firstClosedFrame: number | null; inDoorwayFrames: number; maxOpen: number }>();
   private staticSets: TriangleSet[] | null = null;
+  private metroClosed = 0;
   private staticClips: StaticClip[] | null = null;
   private visible: { frame: number; sim: Record<string, number>; drawn: Record<string, number> } | null = null;
   /** Drawn tyre bottom against the drawn ground per vehicle wheel: `${vehicle}|${wheel}` -> gap range (spawn frames 0-2 excluded). */
@@ -130,7 +131,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
-    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
@@ -274,6 +275,7 @@ export class SceneLab {
         const e = world.entities.get(entity)!; e.transform.y = a.floorY + .7;
         if (e.civilian) e.civilian.floorY = a.floorY;
       }
+      if (a.supportFeet && world.entities.get(entity)?.civilian) world.entities.get(entity)!.civilian!.supportFeet = true;
       const actor: LabActor = { id, kind: a.kind, entity, spec: a, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 };
       this.actors.set(id, actor); ids.push(id);
       if (a.state) this.command(id, a.state);
@@ -450,7 +452,16 @@ export class SceneLab {
   }
   effect(fx: EffectSpec): void {
     const world = this.world;
-    if ('metroShutter' in fx) this.game.view.metroShutter(fx.metroShutter);
+    if ('metroShutter' in fx) {
+      const closed = Math.max(0, Math.min(1, fx.metroShutter)), dy = -1.9 * (closed - this.metroClosed);
+      this.game.view.metroShutter(closed);
+      for (const set of this.staticSets ?? []) if (set.id.endsWith('/shutter')) {
+        for (let i = 1; i < set.tris.length; i += 3) set.tris[i] += dy;
+        set.box.min[1] += dy; set.box.max[1] += dy;
+      }
+      this.metroClosed = closed;
+      this.staticClips = null;
+    }
     else if ('weaponPickup' in fx) { const id = world.combat!.pickups.spawn(fx.weaponPickup, toPoint(fx.at), false, { surfaceY: fx.surfaceY, retain: true, interactTicks: 36 }); world.entities.get(id)!.transform.yaw = (fx.yaw ?? 0) * Math.PI / 180; }
     else if ('barricadeHit' in fx) { const target = world.entities.values().find(e => e.barricade?.slot.id === fx.barricadeHit); if (!target) throw new Error(`Unknown barricade: ${fx.barricadeHit}`); world.hazards!.hit(target.id, fx.amount, 'bullet'); }
     else if ('lightning' in fx) world.weather?.strike({ ...toPoint(fx.lightning), y: 0 }, fx.consequence);
@@ -931,16 +942,19 @@ export class SceneLab {
       const root = await this.registry.loadAsset(p.assetId, 'lod0');
       openFireStationBays(p.assetId, root);
       const holder = new Object3D(); holder.position.fromArray(p.position); holder.rotation.y = p.yaw; holder.scale.fromArray(p.scale); holder.add(root); holder.updateMatrixWorld(true);
-      const tris: number[] = [], leaves = buildingDoors[p.assetId]?.leaves.map(l => l.node) ?? [];
+      const tris: number[] = [], shutterTris: number[] = [], leaves = buildingDoors[p.assetId]?.leaves.map(l => l.node) ?? [];
       root.traverse(node => {
         if (!(node instanceof Mesh) || !node.visible || node.name.startsWith('stump_')) return;
         // Animated door leaves swing at runtime: the door gate (metrics.doors) checks them, not the rest pose.
         for (let q: Object3D | null = node; q; q = q.parent) if (leaves.includes(q.name)) return;
+        let shutter = false;
+        for (let q: Object3D | null = node; q; q = q.parent) if (p.assetId === 'bld.metro-entrance' && q.name === 'shutter') shutter = true;
         const position = node.geometry.getAttribute('position') as BufferAttribute | InterleavedBufferAttribute, index = node.geometry.index;
         matrix.copy(node.matrixWorld);
         const count = index ? index.count : position.count;
-        for (let i = 0; i < count; i++) { v.fromBufferAttribute(position, index ? index.getX(i) : i).applyMatrix4(matrix); tris.push(v.x, v.y, v.z); }
+        for (let i = 0; i < count; i++) { v.fromBufferAttribute(position, index ? index.getX(i) : i).applyMatrix4(matrix); (shutter ? shutterTris : tris).push(v.x, v.y + (shutter ? .7 - 1.9 * this.metroClosed : 0), v.z); }
       });
+      if (shutterTris.length) { const leaf = new Float32Array(shutterTris); sets.push({ id: `${p.id}/shutter`, assetId: p.assetId, tris: leaf, box: boxOf(leaf) }); }
       const array = new Float32Array(tris);
       if (array.length) sets.push({ id: p.id, assetId: p.assetId, tris: array, box: boxOf(array) });
     }

@@ -116,7 +116,7 @@ export class InfectedSystem {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
-    delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
+    delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
@@ -155,6 +155,21 @@ export class InfectedSystem {
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       if (this.world.barricades?.vault(e)) continue;
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (this.world.scenario === 'L5' && e.archetype === 'infected.alpha' && !b.specialAttack) {
+        const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
+        if (seen) {
+          delete b.investigate; b.heardTargetId = seen.id;
+          if (b.state === 'attracted') b.state = 'idle';
+          if (b.state === 'idle' || b.state === 'wander') { this.alert(e); this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: seen.id, targetId: e.id, cause: 'sight', position: { ...e.transform } }); }
+        } else {
+          b.heardTargetId = 0; e.combat!.attacking = false;
+          if (b.investigate && this.world.tick < b.until) {
+            if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.investigate.x, e.transform.z - b.investigate.z) > 1.5) this.seek(e, b.investigate);
+            this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+          }
+          delete b.investigate; b.state = 'idle';
+        }
+      }
       if (this.updateSpecial(e)) continue;
       if (b.l1) { this.updateL1(e, b, b.l1); continue; }
       if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }
@@ -538,6 +553,12 @@ export class InfectedSystem {
     return true;
   }
   private distraction(event: DistractionEvent): void {
+    if (this.world.scenario === 'L5' && event.kind === 'gunfire') for (const e of this.active) {
+      const b = e.infected!;
+      if (e.archetype === 'infected.alpha' && e.health.current > 0 && !b.specialAttack && ['idle', 'wander', 'attracted'].includes(b.state) && Math.hypot(e.transform.x - event.position.x, e.transform.z - event.position.z) <= event.radius) {
+        b.investigate = { ...event.position }; b.until = event.until; b.state = 'attracted';
+      }
+    }
     if (!this.l1) return;
     const [low, high] = l1v2.infected.attracted.extraS, rng = this.l1Rng!;
     for (const e of this.active) {

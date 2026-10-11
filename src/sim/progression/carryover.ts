@@ -8,10 +8,10 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   if (level === 1) save.world = { ...save.world, L1: captureL1Aftermath(world) };
   save.results ??= {};
   save.results[`L${level}`] = structuredClone(result);
-  if (level === 5) save.survivors = [...result.survivors ?? []];
+  if (level === 5) { save.survivors = [...result.survivors ?? []]; save.stationOccupants = structuredClone(result.stationOccupants); save.rescuedSurvivors = structuredClone(result.rescuedSurvivors); }
   if (level !== save.completedLevels + 1) return;
   if (level === 6) { save.completedLevels = 6; return; }
-  const weapons = level === 5 ? world.entities.get(1)?.weapons : null;
+  const weapons = level === 4 || level === 5 ? world.entities.get(1)?.weapons : null;
   const carried = weapons ? { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) } : null;
   autoRewards(save, level);
   if (carried) {
