@@ -20,8 +20,8 @@ export class WeatherSystem {
   timeline: readonly WeatherKey[];
   readonly modifiers: WeatherModifiers = { noiseRadius: 1, fireDuration: 1, fireSpread: 1, vehicleGrip: 1, playerSpeed: 1, infectedSight: 1 };
   readonly reveals = new Map<number, number>();
-  readonly tracks: { id: number; x: number; z: number; yaw: number; tick: number }[] = [];
-  private readonly lastTrack = new Map<number, { x: number; z: number }>();
+  readonly tracks: { id: number; x: number; y: number; z: number; yaw: number; tick: number; length: number; paw: boolean; side: number }[] = [];
+  private readonly lastTrack = new Map<number, { x: number; z: number; distance: number; side: number }>();
   private readonly rng: Rng;
   private nextGust = 120;
   private nextLightning = 180;
@@ -95,14 +95,34 @@ export class WeatherSystem {
       const t = this.thunder.splice(i, 1)[0]; this.world.events.emit({ type: 'weather.thunder', tick, position: t.position, strikeTick: t.strikeTick });
     }
     for (const [id, until] of this.reveals) if (tick >= until) this.reveals.delete(id);
+    if (this.flakes <= 0) this.lastTrack.clear();
+    else for (const [id] of this.lastTrack) if (!this.world.entities.get(id)) this.lastTrack.delete(id);
     if (this.flakes > 0) for (const e of this.world.entities.iterate()) {
-      if ((e.id !== 1 && e.faction !== 'infected') || e.health.current <= 0 || e.hidden) continue;
-      const last = this.lastTrack.get(e.id), at = e.transform;
-      if (last && Math.hypot(last.x - at.x, last.z - at.z) < .45) continue;
-      this.lastTrack.set(e.id, { x: at.x, z: at.z });
-      this.tracks.push({ id: e.id, x: at.x, z: at.z, yaw: at.yaw, tick });
+      if ((e.id !== 1 && e.faction !== 'infected' && !e.infected && !e.civilian && !e.escort && !e.companion) || e.health.current <= 0 || e.hidden) continue;
+      const at = e.transform, last = this.lastTrack.get(e.id);
+      if (!last) { this.lastTrack.set(e.id, { x: at.x, z: at.z, distance: 0, side: 1 }); continue; }
+      const dx = at.x - last.x, dz = at.z - last.z, distance = Math.hypot(dx, dz);
+      last.x = at.x; last.z = at.z;
+      const paw = !!e.companion || !!e.civilian?.pet || /infected\.(dog|cat)$/.test(e.archetype);
+      const child = !!e.escort?.child || /child|kid/.test(e.civilian?.model ?? e.appearance?.asset ?? '');
+      const length = paw ? .12 : child ? .2 : .28, stride = paw ? .23 : child ? .36 : .5;
+      const y = at.y - (e.companion || e.civilian?.pet ? .3 : .7);
+      const support = this.world.districts?.groundHeight(at.x, at.z) ?? this.world.physics.floorHeight(at.x, at.z);
+      // Never join teleports, rides, vaults, airborne actors or perched animals into a trail.
+      if (distance > 1 || e.riding !== undefined || e.infected?.vault || e.infected?.perched || e.archetype === 'infected.crow' || Math.abs(y - support) > .12) { last.distance = 0; continue; }
+      last.distance += distance;
+      if (distance < .001 || last.distance < stride) continue;
+      last.distance %= stride;
+      const yaw = -Math.atan2(dz, dx), lateral = last.side * (paw ? .045 : child ? .065 : .085);
+      const x = at.x + Math.sin(yaw) * lateral, z = at.z + Math.cos(yaw) * lateral;
+      const footSupport = this.world.districts?.groundHeight(x, z) ?? this.world.physics.floorHeight(x, z);
+      // The alternating foot may straddle a bridge edge/barrier even when the body is supported.
+      if (Math.abs(footSupport - support) > .08) continue;
+      this.tracks.push({ id: e.id, x, y: support, z, yaw, tick, length, paw, side: last.side });
+      last.side *= -1;
       if (this.tracks.length > 1024) this.tracks.shift();
     }
+    while (this.tracks.length && tick - this.tracks[0].tick >= 3600) this.tracks.shift();
   }
   /** Shared strike entry for scripted tall-prop hits and deterministic fixtures. */
   strike(position: { x: number; y: number; z: number }, consequence?: 'fire' | 'blackout'): void {
