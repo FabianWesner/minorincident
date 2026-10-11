@@ -9,6 +9,7 @@ import { placeholder } from './placeholders';
 import type { Materials } from '../render/Materials';
 import { AssetMaterials } from './materials';
 import { loadGltf } from './loadGate';
+import { applyVehicleDecay, vehicleDecayFallback } from './vehicleDecay';
 
 export type PlaceholderLog = { type: 'asset.placeholder'; id: string; reason: string };
 type Loader = (url: string) => Promise<Object3D>;
@@ -43,7 +44,7 @@ export class AssetRegistry {
   async loadAsset(id: string, quality: AssetQuality = 'high', decay?: string): Promise<Object3D> {
     const def = this.definition(id), requested = quality === 'high' ? 'lod0' : quality === 'low' ? 'lod1' : quality;
     const lod = requested !== 'lod0' && !def.lods?.[requested] ? 'lod0' : requested;
-    if (decay && !def.decayVariants.includes(decay)) throw new Error(`Unknown decay variant ${id}:${decay}`);
+    if (decay && !def.decayVariants.includes(decay) && !vehicleDecayFallback(def, decay)) throw new Error(`Unknown decay variant ${id}:${decay}`);
     const key = `${id}:${quality === 'low' && def.lowGlb ? 'low' : lod}:${decay ?? ''}`;
     let pending = this.cache.get(key);
     if (!pending) {
@@ -68,7 +69,7 @@ export class AssetRegistry {
     if (!path) return fallback(`missing ${lod}`);
     let root: Object3D | undefined;
     try {
-      root = await this.load('/' + variantPath(path,decay).replace(/^public\//, ''));
+      root = await this.load('/' + variantPath(path, vehicleDecayFallback(def, decay) ? undefined : decay).replace(/^public\//, ''));
       for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
       root.traverse((node) => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
       if (lod !== 'lod0' && def.lods?.[lod]) {
@@ -83,6 +84,7 @@ export class AssetRegistry {
       root.userData.assetId = def.id;
       root.userData.diner = def.id === 'bld.joes-diner';
       root.userData.paletteWorld = !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
+      if (vehicleDecayFallback(def, decay)) applyVehicleDecay(root, decay!);
       this.materials.swap(root, !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');
       return root;
     } catch (error) {

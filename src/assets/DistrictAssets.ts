@@ -22,6 +22,7 @@ import staticBakes from './staticBakes.json';
 import { decodeStaticBake } from './staticBakeData';
 import { decompressCivilianBake } from './civilianBakeData';
 import { openFireStationBays } from './fireStationBays';
+import { vehicleDecayFallback } from './vehicleDecay';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'], decay?: string): string[] {
   const def = definition(productionIds[id] ?? id);
@@ -30,7 +31,7 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
     const canonical = def.lods?.[lod] ? lod : 'lod0';
     const baked = (staticBakes as Record<string, string>)[`${id}:${canonical}:${decay ?? ''}`];
     const path = def.lods?.[lod] ?? def.glb;
-    return baked ?? (path ? '/' + variantPath(path, decay).replace(/^public\//, '') : undefined);
+    return baked ?? (path ? '/' + variantPath(path, vehicleDecayFallback(def, decay) ? undefined : decay).replace(/^public\//, '') : undefined);
   }).filter((path): path is string => Boolean(path)))];
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
