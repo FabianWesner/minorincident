@@ -1,0 +1,55 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { boot, expect, test } from '../e2e/fixtures';
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync', '--js-flags=--expose-gc'] } });
+for (const tier of ['high', 'low'] as const) test(`T-E29-19-rocket @E29-AC19 @perf ${tier} repeated rocket hits at the 200/100 infected cap`, async ({ page, context }) => {
+  test.setTimeout(180_000);
+  if (tier === 'low') {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  }
+  await boot(page, `/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=1&profile=1`);
+  const result = await page.evaluate(async tier => {
+    const a = window.__SS__!, cap = tier === 'high' ? 200 : 100;
+    await a.loadScenario(tier === 'high' ? 'perf-horde-200' : 'perf-horde-100'); a.cheats.god(true); a.camera.preset('perf-horde');
+    a.settings.set({ slowMotion: false }); await a.screenshotReady(); a.resume();
+    const warm = performance.now(); while (performance.now() - warm < 3000) await new Promise(r => requestAnimationFrame(r));
+    (window as unknown as { gc(): void }).gc();
+    const frames: number[] = [], sims: number[] = [], draws: number[] = [], triangles: number[] = [], heaps: number[] = [], particles: number[] = [], puffs: number[] = [], debris: number[] = [], gibs: number[] = [];
+    let previous = 0, lastBlast = 0, lastProbe = 0, peakInfected = 0, blasts = 0;
+    const start = performance.now();
+    while (performance.now() - start < 8000) {
+      const now = await new Promise<number>(r => requestAnimationFrame(r));
+      if (previous) frames.push(now - previous); previous = now;
+      const perf = a.perf();
+      sims.push(perf.simMs); draws.push(perf.drawCalls); triangles.push(perf.triangles); heaps.push(perf.heapBytes ?? 0);
+
+      if (now - lastBlast >= 1250) {
+        const live = a.query({ kind: 'infected' }).filter(e => e.health.current > 0);
+        const at = live[0]?.transform ?? { x: 10, z: 0 };
+        a.explosions.blast('explosion.rocket', at); blasts++; lastBlast = now;
+
+      }
+      // Full debug snapshots clone the whole crowd; sample them at 10Hz so the probe does not dominate frame time.
+      if (now - lastProbe >= 100) {
+        lastProbe = now;
+        const state = a.getState(), ai = state.ai!, vfx = state.render.vfx!;
+        debris.push(vfx.blasts.parts); gibs.push(vfx.gibs); particles.push(vfx.particles); puffs.push(vfx.blasts.puffs); peakInfected = Math.max(peakInfected, ai.count);
+        const missing = Math.min(cap - ai.count, ai.pool.available);
+        for (let i = 0; i < missing; i++) a.spawn('infected.runner', { x: 8 + i % 10 * .5, z: -2 + Math.floor(i / 10) * .25 });
+      }
+    }
+    a.pause(); (window as unknown as { gc(): void }).gc();
+    const p95 = (values: number[]) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * .95) - 1];
+    return { tier, blasts, peakInfected, frameP95: p95(frames), simP95: p95(sims), draws: Math.max(...draws), triangles: Math.max(...triangles), heapMB: (a.perf().heapBytes ?? 0) / 1048576, peakHeapMB: Math.max(...heaps) / 1048576, particles: Math.max(...particles), puffs: Math.max(...puffs), debris: Math.max(...debris), gibs: Math.max(...gibs), perf: a.perf() };
+  }, tier);
+  mkdirSync('test-results/epics/E29', { recursive: true }); writeFileSync(`test-results/epics/E29/rocket-perf-${tier}.json`, JSON.stringify(result, null, 2));
+  console.log(JSON.stringify(result));
+  expect(result.blasts).toBeGreaterThanOrEqual(6); expect(result.peakInfected).toBe(tier === 'high' ? 200 : 100);
+  expect(result.draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(result.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
+  expect(result.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6); expect(result.heapMB).toBeLessThanOrEqual(tier === 'high' ? 400 : 250);
+  expect(result.particles + result.puffs).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000);
+  expect(result.puffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120);
+  expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);
+  expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
+  expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);
+});

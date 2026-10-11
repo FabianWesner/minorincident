@@ -112,6 +112,10 @@ export class Combat {
   }
   private splash(attack: Attack, position: Vec2): void {
     const def = attack.def, splash = def.splash!;
+    if (def.id === 'weapon.rocket-launcher' && this.world.explosions) {
+      this.world.explosions.blast(actionExplosions[def.id], position, { sourceId: attack.sourceId, radius: splash.radius, attackId: attack.id, actionId: def.id, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1 });
+      return;
+    }
     for (const target of this.query.splash(position, splash.radius)) {
       const distance = Math.hypot(target.transform.x - position.x, target.transform.z - position.z, target.transform.y - 0.7);
       const falloff = Math.max(0, 1 - splash.falloff * distance / splash.radius);
@@ -122,7 +126,7 @@ export class Combat {
   /** E27: physics impulses, props/barricades/vehicles, fx and chains for an already-resolved splash (damage stays here). */
   private blast(attack: Attack, at: Vec2): void {
     const id = actionExplosions[attack.def.id];
-    if (id) this.world.explosions?.blast(id, at, { sourceId: attack.sourceId, radius: attack.def.splash!.radius, damage: false });
+    if (id && attack.def.id !== 'weapon.rocket-launcher') this.world.explosions?.blast(id, at, { sourceId: attack.sourceId, radius: attack.def.splash!.radius, damage: false });
   }
   private readonly resolve = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!, def = attack.def;

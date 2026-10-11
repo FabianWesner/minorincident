@@ -71,6 +71,7 @@ export class CrowdView extends Group {
   /** Corpses persist until a level/checkpoint resets their sim IDs. */
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
+  private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
   private readonly physicalArrowScale = new Matrix4().makeScale(1.15, .025, 1.8);
   private readonly telegraphs: InstancedMesh[] = [];
@@ -98,15 +99,16 @@ export class CrowdView extends Group {
     const allDefinitions = [...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
+    const regularCrowd = this.world.scenario === 'L7' || this.world.scenario?.startsWith('perf-horde-');
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
-    const l1Roles = new Set<string>(this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     for (const entity of this.world.entities.iterate()) if (entity.infected) l1Roles.add(entity.archetype);
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
-    if (this.world.scenario === 'L4' || this.world.scenario === 'L5')
+    if (this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7')
       for (const def of allDefinitions) if (def.asset === 'inf.alpha') l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
-    const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
+    const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
       this.definitions.set(def.id, def);
       if (!this.low) {
@@ -134,8 +136,13 @@ export class CrowdView extends Group {
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
       if (lod === 'lod2' && !fallback) {
-        await simplifyCrowdLod(baked.geometry);
-        if (this.disposed) { baked.geometry.dispose(); return; }
+        // Phone crowd silhouettes tolerate a 2.5 cm surface bound; preserve colors, eyes and rigid-part ownership.
+        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? .2 : .35);
+        // Settled bodies retain identity and color but need no living figure detail.
+        const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1);
+        if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
+        packCrowdParts(corpse);
+        this.corpseGeometry.set(def.id, corpse);
       }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
@@ -248,8 +255,8 @@ export class CrowdView extends Group {
         this.bounds.radius = Math.max(this.bounds.radius, Math.hypot(p[bird * 3] - this.bounds.center.x, p[bird * 3 + 1] - this.bounds.center.y, p[bird * 3 + 2] - this.bounds.center.z) + .5);
       }
       if (view && !e.corpse && !this.frustum.intersectsSphere(this.bounds)) continue;
-      let lod: 'lod0' | 'lod1' | 'lod2' = this.low ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
-      if (heroes.has(e.id)) {
+      let lod: 'lod0' | 'lod1' | 'lod2' = this.low || e.health.current <= 0 || (this.world.infected?.active.length ?? 0) >= 100 ? 'lod2' : this.roleLods.get(key) ?? 'lod2';
+      if (e.health.current > 0 && heroes.has(e.id)) {
         if (this.batches.has(`${key}:lod0`)) lod = 'lod0';
         else if (!this.pending.has(key)) {
           this.pending.set(key, this.loadBatch(def, 'lod0').finally(() => this.pending.delete(key)));
@@ -296,7 +303,7 @@ export class CrowdView extends Group {
         if (e.corpse) {
           const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
           const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
-          this.staticCorpses.place(e, `${key}:${death}:${mask}`, batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts);
+          this.staticCorpses.place(e, `${key}:${death}:${mask}`, this.corpseGeometry.get(key) ?? batch.mesh.geometry, batch.mesh.material as MeshLambertNodeMaterial, batch.poses.clip, infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1, this.transform, tint, [0, 0, 0], String(e.id), hiddenParts);
           continue;
         }
         // Close pixel band (hysteresis): the courier's footwork plus the zombie move set; further out stance plants only.
@@ -386,6 +393,8 @@ export class CrowdView extends Group {
     this.disposed = true; this.staticCorpses.dispose();
     for (const mesh of this.heroSlots.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); }
     this.heroSlots.clear();
+    for (const geometry of this.corpseGeometry.values()) geometry.dispose();
+    this.corpseGeometry.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [...this.telegraphs, this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.corpses.clear(); this.clear(); void this.registry.dispose();
