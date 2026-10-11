@@ -706,7 +706,9 @@ export class DistrictView extends Group {
         this.pending.set(entry, pending); await pending.finally(() => this.pending.delete(entry));
       }
     };
-    await Promise.all(Array.from({ length: 4 }, worker));
+    // Live shader warm-up yields between stages, but parallel workers resume their
+    // node builds together and can stall a phone frame. Loading keeps four lanes.
+    await Promise.all(Array.from({ length: this.warmHero ? 1 : 4 }, worker));
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */
