@@ -1,0 +1,11 @@
+21:39  up 62 days, 20:33, 3 users, load averages: 2.02 2.30 2.45
+Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 2 tests using 1 worker
+
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":23,"firefighters":6},"drawCalls":225,"triangles":402733,"revealMaxMs":41.69999999999709,"gateMaxMs":40.90000000000873,"peakP50":25.30000000000291,"peakP95":30,"peakMax":34.79999999998836,"frames":393,"simP95":11.5,"updateP95":6.300000190734863,"renderP95":12,"gateClosed":true}
+  ✓  1 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.9m)
+{"tier":"low","seed":2,"counts":{"infected":26,"soldiers":10,"civilians":8},"warDrawCalls":207,"warTriangles":238763,"collapseDrawCalls":184,"collapseTriangles":499733,"warP50":16.400000000001455,"warP95":33.400000000001455,"warMax":102,"turnMaxMs":36,"tankMaxMs":36.89999999999418,"breakMaxMs":46,"collapseP50":23,"collapseP95":28.80000000000291,"simP95":5.399999618530273,"updateP95":4.59999942779541,"renderP95":10.200000762939453,"lineBroke":true}
+  ✓  2 [chromium] › tests/perf/l4-budgets.spec.ts:12:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low (1.2m)
+
+  2 passed (3.1m)

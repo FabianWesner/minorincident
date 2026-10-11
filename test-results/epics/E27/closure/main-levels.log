@@ -1,0 +1,28 @@
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (39.7s)
+  ✓  2 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (26.8s)
+  ✓  3 [chromium] › tests/e2e/levels/L2.spec.ts:63:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.3m)
+  ✘  4 [chromium] › tests/e2e/levels/L2.spec.ts:63:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (2.0m)
+
+
+  1) [chromium] › tests/e2e/levels/L2.spec.ts:63:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review 
+
+    Error: Could not travel to {"x":20,"z":48} from {"x":-46.467071533203125,"y":0.7049999833106995,"z":-37.93520736694336,"yaw":2.3198236284882405}
+
+      54 |       else if (i % 10 === 9) await click();
+      55 |     }
+    > 56 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
+         |           ^
+      57 |   };
+      58 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      59 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/private/tmp/mi-e25-e27-main-check/tests/e2e/levels/L2.spec.ts:56:11)
+        at /private/tmp/mi-e25-e27-main-check/tests/e2e/levels/L2.spec.ts:105:7
+
+    Error Context: test-results/playwright/run-3453/e2e-levels-L2-L2-The-Faile-7d55c-spots-for-the-vision-review-chromium-repeat1/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L2.spec.ts:63:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review 
+  3 passed (4.4m)

@@ -13,6 +13,7 @@ import { atLeast } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
+import { anchorsFor } from '../data/placedLights';
 import { staticBatch, staticBatchAsync } from './staticBatch';
 import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
@@ -91,10 +92,17 @@ export class DistrictAssets {
   private readonly sharedMaterials = new Map<string, Material>();
   private share(root: Group): void {
     for (const child of root.children) {
-      if (!(child instanceof Mesh) || (child.name !== 'window-light' && child.name !== 'static-body')) continue;
-      const shared = this.sharedMaterials.get(child.name);
+      // Split roofs use the same feature graphs as bodies/windows. Share them
+      // across LODs too, so a streamed roof does not rebuild nodes during play.
+      if (!(child instanceof Mesh) || !['window-light', 'static-body', 'roof', 'roof-light'].includes(child.name)) continue;
+      // Window/gloss graphs require different vertex inputs; sharing solely by
+      // mesh name silently replaced those graphs with the first matte batch.
+      const key = `${child.name}:${(child.material as Material).userData.batchFeatures ?? 'legacy'}`;
+      const shared = this.sharedMaterials.get(key);
       if (shared) { (child.material as Material).dispose(); child.material = shared; }
-      else { this.sharedMaterials.set(child.name, child.material as Material); this.batchMaterials.add(child.material as Material); }
+      else { this.sharedMaterials.set(key, child.material as Material); this.batchMaterials.add(child.material as Material); }
+      // Batched light-bearing dressing keeps the world's existing player cutaway.
+      if (child.material instanceof PaletteMaterial) child.material.seeThrough();
     }
   }
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
@@ -134,6 +142,7 @@ export class DistrictAssets {
       asset.updateWorldMatrix(true,true);
       const muzzleLocal = machineGun && muzzle ? machineGun.worldToLocal(muzzle.getWorldPosition(new Vector3())) : undefined;
       if (machineGun) asset.userData.splitDoors = ['gun'];
+      asset.userData.assetId = id;
       const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
       if (muzzleLocal) {
         const gun = root.children.find(n => n.userData.door === 'gun');
@@ -156,7 +165,10 @@ export class DistrictAssets {
     // Keep their original materials (including decal alpha/texture) in static instances.
     if (!def) {
       const key = `dressing:${id}:${lod}:${decay ?? ''}`;
-      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod, decay).then(root => { const group = new Group(); group.add(root); return this.remember(group); }));
+      if (!this.cache.has(key)) this.cache.set(key, this.assets.loadAsset(id, lod, decay).then(root => {
+        if (anchorsFor(id).length && !/^veh\./.test(id)) { root.userData.assetId = id; const batch = staticBatch(root, true, this.materials); this.share(batch); return this.remember(batch); }
+        const group = new Group(); group.add(root); return this.remember(group);
+      }));
       return this.cache.get(key)!;
     }
     const productionId = productionIds[id] ?? id;
@@ -166,7 +178,7 @@ export class DistrictAssets {
       const baseKey = `${id}:batch:${canonical}:${decay ?? ''}`;
       void this.base(id, lod, decay);
       if (!this.cache.has(key)) this.cache.set(key, this.cache.get(baseKey)!.then(source => {
-        if (lit) return source;
+        if (lit || (anchorsFor(id).length && !/^veh\./.test(id))) return source;
         const root = source.clone(true);
         root.traverse(node => {
           if (!(node instanceof Mesh) || node.name !== 'window-light') return;

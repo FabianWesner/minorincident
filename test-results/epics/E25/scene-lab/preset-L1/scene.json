@@ -1,0 +1,55 @@
+{
+  "ground": "asphalt",
+  "size": 40,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "props": [
+    {
+      "asset": "prop.street-lamp",
+      "at": [
+        -5,
+        3
+      ]
+    },
+    {
+      "asset": "prop.bench",
+      "at": [
+        6,
+        -5
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        4
+      ]
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        5,
+        3
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 180,
+  "shots": [],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "name": "preset-L1",
+  "time": "L1"
+}

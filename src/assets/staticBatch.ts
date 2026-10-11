@@ -1,7 +1,8 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { Box3, BufferAttribute, BufferGeometry, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
-import { attribute, luminance, varying } from 'three/tsl';
+import { Box3, BufferAttribute, BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { attribute, luminance, varying, cameraPosition, normalWorld, positionWorld, vec3 } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
+import { anchorsFor } from '../data/placedLights';
 import type { Materials } from '../render/Materials';
 
 /** Elements processed between cooperative yield points of the batching steps. */
@@ -42,7 +43,7 @@ function* transform(position: Float32Array, normal: Float32Array, matrix: Matrix
     if (i % (slice * 3) === 0) yield;
   }
 }
-type Part = { position: Float32Array; normal: Float32Array; color: Float32Array; palette: Float32Array; index: ArrayLike<number> | null };
+type Part = { position: Float32Array; normal: Float32Array; color: Float32Array; palette: Float32Array; light: Float32Array; surface: Float32Array; window: Float32Array; windowUv: Float32Array; index: ArrayLike<number> | null };
 /** BufferGeometryUtils.mergeGeometries for the batch attributes (same order, values and index type). */
 function* merge(parts: Part[]): Generator<void, BufferGeometry> {
   const geometry = new BufferGeometry(), indexed = parts.some(part => part.index);
@@ -58,7 +59,7 @@ function* merge(parts: Part[]): Generator<void, BufferGeometry> {
     // setIndex(array) semantics: 16-bit unless a value reaches 65535.
     geometry.setIndex(new BufferAttribute(max >= 65535 ? index : Uint16Array.from(index), 1));
   }
-  const attributes: [string, keyof Part, number][] = [['position', 'position', 3], ['normal', 'normal', 3], ['color', 'color', 3], ['_palette', 'palette', 1]];
+  const attributes: [string, keyof Part, number][] = [['position', 'position', 3], ['normal', 'normal', 3], ['color', 'color', 3], ['_palette', 'palette', 1], ['_light', 'light', 1], ['_surface', 'surface', 1], ['_window', 'window', 1], ['_windowUV', 'windowUv', 2]];
   for (const [name, key, size] of attributes) {
     const merged = new Float32Array(vertices * size); let at = 0;
     for (const part of parts) { merged.set(part[key] as Float32Array, at); at += (part[key] as Float32Array).length; yield; }
@@ -78,6 +79,14 @@ function* merge(parts: Part[]): Generator<void, BufferGeometry> {
  * background loader can spread one large prototype over several frames (staticBatchAsync). */
 function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage = false): Generator<void, Group> {
   source.updateMatrixWorld(true);
+  const anchorList = (/^veh\./.test(source.userData.assetId ?? '') ? [] : anchorsFor(source.userData.assetId ?? ''));
+  const emissiveAnchors = new Map<string, number>();
+  source.traverse(node => {
+    if (!node.userData.ss_light) return;
+    const data = typeof node.userData.ss_light === 'string' ? JSON.parse(node.userData.ss_light) : node.userData.ss_light;
+    const index = anchorList.findIndex(a => a.name === (node.userData.name ?? node.name));
+    if (index >= 0) for (const name of data.emissiveNodes ?? []) emissiveAnchors.set(name, index);
+  });
   const world = source.userData.paletteWorld !== false;
   const buckets = new Map<number, Part[]>(), meshes: Mesh[] = [], split = source.userData.splitRoof === true;
   // Animated door leaves (src/data/buildingDoors.ts) stay separate meshes in their hinge frame, so the view can swing them.
@@ -124,7 +133,23 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     }
     const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0) + (door >= 0 ? 4 * (door + 1) : 0);
     if (!buckets.has(bucket)) buckets.set(bucket, []);
-    buckets.get(bucket)!.push({ position, normal, color: colors, palette: indices, index: node.geometry.index ? node.geometry.index.array : null });
+    // Delivery bundling combines material primitives under their semantic parent.
+    // Match the authored parent + material reference through that hierarchy.
+    let anchorIndex = -1;
+    for (let part: Object3D | null = node; part && anchorIndex < 0; part = part.parent) {
+      const name = part.userData.name ?? part.name;
+      anchorIndex = emissiveAnchors.get(name) ?? emissiveAnchors.get(`${name}_${material.name}`) ?? -1;
+    }
+    const light = new Float32Array(count).fill(anchorIndex);
+    const window = new Float32Array(count).fill(anchorList[anchorIndex]?.type === 'window' ? 1 : 0), windowUv = new Float32Array(count * 2);
+    if (window[0] > 0) {
+      const positions = node.geometry.getAttribute('position'), box = new Box3(), point = new Vector3();
+      for (let i = 0; i < count; i++) { box.expandByPoint(point.set(positions.getX(i), positions.getY(i), positions.getZ(i))); if (i % slice === slice - 1) yield; }
+      const horizontal = box.max.x - box.min.x > box.max.z - box.min.z ? 0 : 2;
+      for (let i = 0; i < count; i++) { windowUv[i * 2] = (positions.getComponent(i, horizontal) - box.min.getComponent(horizontal)) / Math.max(.01, box.max.getComponent(horizontal) - box.min.getComponent(horizontal)); windowUv[i * 2 + 1] = (positions.getY(i) - box.min.y) / Math.max(.01, box.max.y - box.min.y); if (i % slice === slice - 1) yield; }
+    }
+
+    buckets.get(bucket)!.push({ position, normal, color: colors, palette: indices, light, window, windowUv, surface: new Float32Array(count).fill(material.userData.surfaceClass ?? 0), index: node.geometry.index ? node.geometry.index.array : null });
   }
   const result = new Group();
   for (const [bucket, parts] of buckets) {
@@ -132,10 +157,41 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     // Keep shared vertices: expanding detailed meshes to triangle soup triples
     // the retained position/normal/color arrays. Normalize only mixed primitives.
     const geometry = yield* merge(parts);
-    const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit ? .08 : 1) : attribute('color', 'vec3');
-    const glow = emissive && lit ? base.div(luminance(base).max(.001)).mul(2) : undefined;
-    const material = materials ? foliage ? materials.foliage(world) : materials.shaded(base, glow) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
+    const hasSurface = parts.some(part => part.surface[0] > 0);
+    const hasWindows = emissive && parts.some(part => part.window[0] > 0);
+    // Matte building bodies need neither reflection sampling nor window inputs.
+    // Keep those graphs/vertex buffers only on batches which actually use them.
+    if (!hasSurface) geometry.deleteAttribute('_surface');
+    if (!emissive) geometry.deleteAttribute('_light');
+    if (!hasWindows) { geometry.deleteAttribute('_window'); geometry.deleteAttribute('_windowUV'); }
+    // Power/window/gloss inputs share one vertex buffer. With position, normal,
+    // color, palette, per-instance power/tint and matrix this stays within the
+    // portable WebGPU limit of eight buffers (separate window inputs needed nine).
+    const packedInputs = ['_light', '_surface', '_window', '_windowUV'].filter(name => geometry.hasAttribute(name)).map(name => ({ name, input: geometry.getAttribute(name) }));
+    if (packedInputs.length > 1) {
+      const stride = packedInputs.reduce((n, { input }) => n + input.itemSize, 0), count = geometry.getAttribute('position').count;
+      const values = new Float32Array(count * stride);
+      for (let vertex = 0; vertex < count; vertex++) {
+        let offset = 0;
+        for (const { input } of packedInputs) { for (let c = 0; c < input.itemSize; c++) values[vertex * stride + offset + c] = input.getComponent(vertex, c); offset += input.itemSize; }
+        if (vertex % slice === slice - 1) yield;
+      }
+      const data = new InterleavedBuffer(values, stride); let offset = 0;
+      for (const { name, input } of packedInputs) { geometry.setAttribute(name, new InterleavedBufferAttribute(data, input.itemSize, offset)); offset += input.itemSize; }
+    }
+    const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchorList.length ? .08 : 1) : attribute('color', 'vec3');
+    const local = attribute('_light', 'float'), power = materials ? materials.lamps.sample(local.lessThan(0).select(0, attribute('_lightBase', 'float').greaterThan(0).select(attribute('_lightBase', 'float').add(local), 0))) : undefined;
+    const view = cameraPosition.sub(positionWorld).normalize(), tangent = vec3(0, 1, 0).cross(normalWorld).normalize();
+    const parallax = view.dot(tangent).div(view.dot(normalWorld).abs().max(.2)).mul(.3);
+    const interiorUv = attribute('_windowUV', 'vec2');
+    const rooms = interiorUv.x.add(parallax).fract().smoothstep(.35, .5).mul(interiorUv.y.smoothstep(.05, .3)).mul(.75).add(.08);
+    const interior = hasWindows ? attribute('_window', 'float').greaterThan(.5).select(rooms, 1) : undefined;
+    const glow = emissive && (lit || anchorList.length) ? base.div(luminance(base).max(.001)).mul(hasWindows ? attribute('_window', 'float').greaterThan(.5).select(.6, 2) : 2).mul(power ?? 1).mul(interior ?? 1) : undefined;
+    // InstancedGroup owns the placement-specific base; direct prototype renders use texel zero.
+    if (emissive) geometry.setAttribute('_lightBase', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count), 1));
+    const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
     material.userData.emissiveStrength = emissive && lit ? 2 : 0;
+    material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
     material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
     const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
     if (door >= 0) { mesh.userData.door = doorNames[door]; doorNodes[door]!.matrixWorld.decompose(mesh.position, mesh.quaternion, mesh.scale); }

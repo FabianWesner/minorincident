@@ -108,6 +108,11 @@ export async function captureTurntable(page: Page, id: string, directory: string
     writeFileSync(path, png);
     images.push(path); occupancies.push(coverage(png));
   }
+  if (await page.evaluate(() => !!window.__ASSET__!.lighting)) {
+    for (const on of [true, false]) { await page.evaluate(async on => { await window.__ASSET__!.lighting!(true, on); }, on); await page.locator('canvas').screenshot({ path: `${directory}/night-${on ? 'on' : 'off'}.png` }); }
+    await comparison([`${directory}/night-on.png`, `${directory}/night-off.png`], referenceFor(id), `${directory}/night-on-off.png`);
+    await page.evaluate(async () => { await window.__ASSET__!.lighting!(false, true); });
+  }
   const reference = referenceFor(`${id}${decay ? `.${decay}` : ''}`);
   await comparison(images, reference, `${directory}/comparison.png`);
   writeFileSync(`${directory}/turntable.json`,JSON.stringify({ id, decay, reference, referenceAvailable: existsSync(reference), coverage: occupancies, ...await page.evaluate(() => window.__ASSET__!.info()) },null,2)+'\n');

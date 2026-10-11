@@ -1,0 +1,35 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close -> 157.90.173.117:/srv/mi/ws/e25-e27-close-42d11a
+[remote] sync 19s, 5024 files; job /srv/mi/jobs/e25-e27-close-42d11a-1113-1791660572; queueing for a slot
+[runner] slot 0 acquired; load 0.15 0.07 0.32
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/e25-e27-close-42d11a-1113-1791660572[39m
+
+[90mstdout[2m | tests/unit/render/crowd-lod-geometry.test.ts[2m > [22m[2m@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+[22m[39m{ before: [33m3782[39m, after: [33m2946[39m }
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 627[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership[33m 307[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels[33m 317[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-grip.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7801[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a fingers clear all routine props[33m 1611[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b fingers clear all routine props[33m 1500[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-a fingers clear all routine props[33m 1628[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-b fingers clear all routine props[33m 1537[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native elderly fingers clear all routine props[33m 1519[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m7 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 19:30:35
+[2m   Duration [22m 9.27s[2m (tests 93%, import 4%, transform 3%)[22m
+
+JSON report written to /srv/mi/jobs/e25-e27-close-42d11a-1113-1791660572/test-results/epics/E25/closure/grip-regressions.json
+[remote] pulled test-results/epics/E25/closure/grip-regressions.json
+[remote] done exit=0 (runner 157.90.173.117, sync 19s, remote total 54s)

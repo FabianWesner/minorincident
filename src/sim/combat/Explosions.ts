@@ -57,6 +57,7 @@ export class Explosions {
     this.queueImpulses(d, at, r);
     if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
     this.ignite(d, at, r);
+    if (d.gas) this.world.hazards?.spawn(d.gas.kind, at, { radius: r, duration: d.gas.seconds });
     const player = this.world.entities.get(1);
     if (d.slowMo && player && player.health.current > 0 && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) <= d.slowMo.within)
       this.world.events.emit({ type: 'explosion.slowmo', tick, defId: id, scale: d.slowMo.scale, seconds: d.slowMo.seconds });

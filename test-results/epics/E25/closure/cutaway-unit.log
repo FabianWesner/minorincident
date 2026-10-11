@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close -> 157.90.173.117:/srv/mi/ws/e25-e27-close-42d11a
+[remote] sync 24s, 4968 files; job /srv/mi/jobs/e25-e27-close-42d11a-94535-1791638421; queueing for a slot
+[runner] slot 0 acquired; load 0.36 0.33 0.50
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/e25-e27-close-42d11a-94535-1791638421[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-windows.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 578[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD[33m 422[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 13:20:47
+[2m   Duration [22m 1.24s[2m (tests 52%, transform 32%, import 16%)[22m
+
+JSON report written to /srv/mi/jobs/e25-e27-close-42d11a-94535-1791638421/test-results/epics/E25/closure/cutaway-unit.json
+[remote] pulled test-results/epics/E25/closure/cutaway-unit.json
+[remote] done exit=0 (runner 157.90.173.117, sync 24s, remote total 4s)

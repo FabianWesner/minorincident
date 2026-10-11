@@ -1,0 +1,65 @@
+{
+  "name": "reflection-lab",
+  "ground": "asphalt",
+  "size": 50,
+  "time": "night",
+  "weather": "rain",
+  "weatherWarmup": 120,
+  "dof": false,
+  "props": [
+    {
+      "id": "neon",
+      "asset": "prop.jukebox",
+      "at": [
+        -3,
+        0
+      ]
+    },
+    {
+      "id": "lamp",
+      "asset": "prop.street-lamp",
+      "at": [
+        3,
+        0
+      ]
+    },
+    {
+      "asset": "veh.sedan-green",
+      "at": [
+        0,
+        -4
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -12,
+        -8
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "pose",
+    "position": [
+      15,
+      18,
+      20
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "frames": 120,
+  "shots": [
+    120
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

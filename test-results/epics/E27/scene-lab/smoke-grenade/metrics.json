@@ -1,0 +1,287 @@
+{
+  "spec": "test-results/epics/E27/scene-lab/smoke-grenade/scene.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 1200,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 5072,
+    "runMs": 4038,
+    "sceneMs": 9110
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "smoke-grenade",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "prop.street-lamp:lab0",
+        "asset": "prop.street-lamp",
+        "at": [
+          -5,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.bench:lab1",
+        "asset": "prop.bench",
+        "at": [
+          6,
+          -5
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "target",
+        "kind": "infected",
+        "entity": 4
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "smoke-grenade",
+    "frame": 1200,
+    "tick": 1200,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 2400,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 1200,
+      "gaps": [
+        {
+          "id": "D-GROVE/prop.bench:lab1",
+          "gapCm": 0
+        }
+      ]
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 26,
+        "p95": 27,
+        "max": 29
+      },
+      "triangles": {
+        "p50": 142374,
+        "p95": 150566,
+        "max": 151590
+      },
+      "shadowDrawCalls": {
+        "p50": 25,
+        "p95": 25,
+        "max": 25
+      },
+      "shadowTriangles": {
+        "p50": 55665,
+        "p95": 55665,
+        "max": 55665
+      },
+      "stepMs": {
+        "p50": 0.7,
+        "p95": 1.2,
+        "max": 141.4
+      },
+      "lastFrame": {
+        "drawCalls": 26,
+        "triangles": 71206,
+        "shadowDrawCalls": 25,
+        "shadowTriangles": 55665,
+        "stepMs": 0.6999998092651367,
+        "categories": {
+          "other": 21,
+          "shadows": 25,
+          "props": 3,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {
+        "target": {
+          "stuckRunMax": 4,
+          "stuckFrame": 59,
+          "lostNearFrames": 85,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 20,
+      "courierAttacks": 19,
+      "firstAttackFrame": 188,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -4,
+          4
+        ],
+        "yawDeg": 45,
+        "state": "idle",
+        "drawnFrames": 1200,
+        "inViewFrames": 1200,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 1200
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -4,
+            4
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 1200,
+          "torsoPitchMinDeg": 1.5,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 22
+        }
+      },
+      "target": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          -3.201,
+          3.273
+        ],
+        "yawDeg": -137.7,
+        "state": "attack",
+        "drawnFrames": 1200,
+        "inViewFrames": 1200,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 1200
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 1200,
+          "torsoPitchMinDeg": 22.1,
+          "torsoPitchMaxDeg": 139.8,
+          "contacts": 18,
+          "slideMaxCm": 25.9,
+          "slideP95Cm": 15.2,
+          "yawDriftMaxDeg": 10.4,
+          "liftMaxCm": 23.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 574
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": [
+        "6:smoke-grenade"
+      ]
+    },
+    "visibility": {
+      "frame": 1200,
+      "sim": {
+        "infected": 1,
+        "courier": 1,
+        "actors": 2
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 1,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "prop.street-lamp:lab0": "lod1",
+      "prop.bench:lab1": "lod2"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

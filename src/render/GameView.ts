@@ -204,10 +204,10 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene, this.look),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
+        const lighting=new Lighting(this.scene, this.look, this.renderer),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
-      const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);this.lighting.set(this.world.districts.composition.timeOfDay);
+      const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
       // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
       // path, spawn focus and close-view warm-up.
       const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
@@ -231,20 +231,21 @@ export class GameView implements Lifecycle {
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
         // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
         // The rest of the route and its unused LOD1 tier stream after the mission begins.
-        if (this.world.scenario === 'L6') {
-          // The short confined route stays resident: building native LOD batches during the retreat hitches.
-          await this.districts.prepare(this.view.cameraTarget);
+        if (this.world.scenario === 'L6' || this.quality === 'low') {
+          // Phone node builds exceed the frame budget even when compiled asynchronously.
+          // Keep its smaller LODs resident and warm them while loading, like the L6 route.
+          await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget)));
         } else {
           if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
           this.pendingPreparation = { shared, instanceCapacity };
         }
       }
-      this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts));this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
+      this.scene.add(this.districts);this.lighting.field.setStatic(layoutLights(this.world.districts));this.lighting.practicalEffects.install(this.world.districts);this.postFx=new PostFx(this.renderer,this.scene,this.camera,this.quality,this.look);
       this.dofEnabled = this.world.districts.composition.id === 'L1'; this.postFx.setDof(this.dofEnabled);
       this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene, this.look); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look, this.renderer); this.materials = new Materials(this.lighting);
       const ground = new Mesh(new PlaneGeometry(this.world.combat?.definition.ground.width ?? 100, this.world.combat?.definition.ground.depth ?? 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.scenario === 'horde-readability') {
@@ -254,7 +255,7 @@ export class GameView implements Lifecycle {
       this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene, this.look); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look, this.renderer); this.materials = new Materials(this.lighting);
       this.lookdev = new Lookdev(this.materials, this.occlusion); this.scene.add(this.lookdev);
       this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
     } else {
@@ -309,6 +310,9 @@ export class GameView implements Lifecycle {
         shake: strength => this.view.shake(strength),
         roll: strength => this.view.roll(strength), focus: () => this.view.focus,
         light: (x, z, hex, intensity, radius, ttl, flicker) => this.lightField?.addTransient({ x, z }, hex, intensity, radius, ttl, flicker) ?? null,
+        field: this.lightField ?? undefined,
+        ambient: this.lighting?.intensity,
+        sunDirection: () => this.lighting!.direction.value,
       });
       this.vfx.set({ ...this.vfxSettings, quality: this.quality }); this.scene.add(this.vfx);
       if (this.world.scenario === 'L1') { const targets = labAccidentTargets(this.scene, s => this.view.shake(s), (x, z, w) => this.view.pull(x, z, w)); this.labWindows = targets; this.labAccident = new LabAccidentFx(this.world, this.vfx, targets, anchorLookup(this.world)); this.labAccident.flashReduction = !!this.vfxSettings.flashReduction; this.labAccident.facing = this.camera.quaternion; this.labAccident.column.camera = this.camera; this.scene.add(this.labAccident.column); }
@@ -322,17 +326,18 @@ export class GameView implements Lifecycle {
     }
     this.lighting?.applyLook(); this.materials?.applyLook(); this.postFx?.applyLook(); this.districts?.applyLook();
     this.lighting?.setQuality(this.quality); this.districts?.setQuality(this.quality); this.crowd?.setQuality(this.quality);
+    // Warm the level's actual surface graph, including haze/ash/rain, rather
+    // than clear weather. A daylight fire adds the field bit to that graph;
+    // compiling field-only here left L3's haze + field shaders cold at fallback.
+    if (this.lighting && this.world.weather) {
+      this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
+      this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
+    }
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
-    // Weather selects the material graph (including underground fog). Select it
-    // before warming hidden batches, so their first appearance uses prepared shaders.
-    if (this.lighting && this.world.weather) {
-      this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
-      this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
-    }
     t = loadMeasure('view:lod-ready', t);
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
@@ -341,7 +346,19 @@ export class GameView implements Lifecycle {
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      try { await preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background); }
+      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background);
+      try {
+        await prepare();
+        // Daylight blasts enable a different palette graph and the HDR field pass.
+        // Warm both while loading, before a fire or fallback can stall gameplay.
+        if (this.lighting && this.lighting.field.strength.value === 0) {
+          const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 0, 1, Infinity);
+          try {
+            this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
+            await prepare();
+          } finally { pulse.remove(); this.lighting.applyLook(); }
+        }
+      }
       finally { restore?.(); unwarm?.(); restoreGates?.(); }
     };
     const finish = (): void => {
@@ -420,7 +437,7 @@ export class GameView implements Lifecycle {
     if (!next) return false;
     if (this.districts) this.districts.visible = false;
     this.districts = next; next.visible = true; next.setQuality(this.quality);
-    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay); this.lighting?.field.setStatic(layoutLights(next.world));
+    next.updateLods(this.view); this.lighting?.set(next.world.composition.timeOfDay); this.lighting?.field.setStatic(layoutLights(next.world)); this.lighting?.practicalEffects.install(next.world);
     return true;
   }
   /** Close the bay only after the player enters. No ending camera, fade or scripted movement. */
@@ -727,7 +744,7 @@ export class GameView implements Lifecycle {
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
-    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? 1 : 0, heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
   }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
@@ -735,9 +752,12 @@ export class GameView implements Lifecycle {
   private updateLights(): void {
     const metro=this.world.missions?.state.l6;if(metro)this.districts?.northgate(metro.gateAt>0);
     const lighting = this.lighting; if (!lighting) return;
+    lighting.lamps.state = this.world.lightPower; lighting.lamps.update();
+    if (this.world.lightPower) lighting.field.syncPower(id => this.world.lightPower!.isOn(id));
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
+    lighting.setPlayerSmoke(!!hero && (this.world.combat?.effects.inSmoke(hero) ?? false));
     if (field.active) {
       const aura = timeOfDayPresets[lighting.preset].aura ?? 0;
       if (hero && aura > 0) field.push(auraLight(hero.x, hero.z, aura));
@@ -792,7 +812,7 @@ export class GameView implements Lifecycle {
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
     if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
     if(this.materials!==this.districtResources?.materials)this.materials?.dispose();this.materials=null;
-    if(this.lighting===this.districtResources?.lighting)this.scene.remove(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere);else this.lighting?.dispose();this.lighting=null;
+    if(this.lighting===this.districtResources?.lighting)this.scene.remove(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);else this.lighting?.dispose();this.lighting=null;
     this.districtResources?.registry.dispose(); this.districtResources?.grassMaterial.dispose(); this.districtResources?.materials.dispose(); this.districtResources?.lighting.dispose(); this.districtResources = null;
     this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.backgroundNode = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
     for (const mesh of this.meshes) {

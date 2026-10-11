@@ -1,7 +1,7 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
 import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
-import { Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection } from 'three/tsl';
+import { Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
@@ -10,6 +10,7 @@ import { seeThroughKeep } from './SeeThrough';
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
 export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly fade = uniform(1);
+  readonly emissivePower = uniform(1);
   /** Accumulated blood amount controls broad surface splats, not a fragment probability. */
   readonly bloodCoverage = uniform(0);
   /** Render-only emissive hit pulse. */
@@ -23,7 +24,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'>; surface?: Node<'float'>; interior?: Node<'float'> }) {
     super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
@@ -90,8 +91,16 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).toVar();
       if (mode & flags.fog) { shaded.addAssign(surface.mul(.7).add(vec3(.18, .16, .14)).mul(heroMask).mul(weatherSurface.fog)); }
+      if (nodes?.surface) If(nodes.surface.greaterThan(0), () => {
+        const view = cameraPosition.sub(positionWorld).normalize(), reflected = reflect(view.negate(), normalWorld);
+        const metal = nodes.surface!.greaterThan(1.5).select(1, 0);
+        const environment = lighting.environmentNode.context({ getUV: () => reflected, getTextureLevel: () => float(.2) });
+        const half = view.add(lighting.direction).normalize();
+        const highlight = normalWorld.dot(half).max(0).pow(70).mul(lighting.intensity).mul(.8);
+        shaded.assign(mix(shaded, environment.rgb.mul(mix(vec3(1), surface, metal)), metal.mul(.75).add(.18)).add(highlight));
+      });
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
-      const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive) : mix(controlled.add(nodes?.glow ?? 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
+      const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive).mul(this.emissivePower) : mix(controlled.add(nodes?.glow ? nodes.glow.mul(this.emissivePower) : 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       const result = output.toVar();
       if (mode & flags.flash) result.addAssign(weatherSurface.flash);
       if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
