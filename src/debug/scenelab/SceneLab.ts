@@ -638,6 +638,7 @@ export class SceneLab {
       }).map(c => ({
       id: `${d.id}/${c.id}`, x: (c.aabb.min[0] + c.aabb.max[0]) / 2 + d.origin[0], z: (c.aabb.min[2] + c.aabb.max[2]) / 2 + d.origin[1],
       halfX: (c.aabb.max[0] - c.aabb.min[0]) / 2, halfZ: (c.aabb.max[2] - c.aabb.min[2]) / 2,
+      y: (c.aabb.min[1] + c.aabb.max[1]) / 2, halfY: (c.aabb.max[1] - c.aabb.min[1]) / 2,
     })); }).concat((this.world.props?.items ?? []).filter(p => p.body.isEnabled() && !p.awake).map(p => ({ id: p.id, ...propFootprint(p) })));
     const touching = new Set<string>();
     for (const e of this.world.entities.iterate()) {
@@ -648,6 +649,10 @@ export class SceneLab {
       this.propPenetrationSamples++;
       const r = (e.combat?.radius ?? .35) - .002;
       for (const p of solids) {
+        // A raised guard touches its authored deck with its soles. Exempt only
+        // that supporting top: the tower posts and rails still count as solids.
+        const floor = e.civilian?.floorY;
+        if (floor !== undefined && Math.abs(p.y + (p.halfY ?? 0) - floor) <= .002 && Math.abs(e.transform.y - .7 - floor) <= .002) continue;
         const dx = Math.max(0, Math.abs(e.transform.x - p.x) - p.halfX), dz = Math.max(0, Math.abs(e.transform.z - p.z) - p.halfZ);
         if (dx * dx + dz * dz >= r * r) continue;
         const key = `${id}|${p.id}`; touching.add(key);
