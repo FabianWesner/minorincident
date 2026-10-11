@@ -48,6 +48,7 @@ test('@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; t
       // Isolate locomotion from the separate complete-bot combat pass.
       state.pending=[];for(const e of w.infected!.active) e.health.current=0;
       followFrustum(w);w.applyInput({...emptyInput(),moveTarget:goal,navigation:true},'mouse-only');w.update();
+      if(tick%120===0 && m.state.marker === 'l3-route') expect(nav.visible(player.transform,m.def.anchors['l3-route'],.35),'objective guides to visible walkable route').toBe(true);
     }
     expect(player.transform.x,JSON.stringify(player.transform)).toBeGreaterThan(205);
     for(let tick=0;tick<300;tick++) {w.applyInput(emptyInput(),'mouse-only');w.update();}
