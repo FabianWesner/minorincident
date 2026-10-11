@@ -30,7 +30,7 @@ test('T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, 
   expect(tier).toBe(1);
   const inTier = layout.placements.filter(p => p.minTier <= tier && p.maxTier >= tier), live = inTier.filter(p => !p.id.startsWith('carry-')).map(p => p.assetId);
   for (const banned of ['decay.burned-facade', 'decay.collapsed-facade', 'decay.rubble-pile', 'decay.crater']) expect(live).not.toContain(banned);
-  expect(inTier.filter(p => p.decay).map(p => p.id)).toEqual(['bld.clinic-annex:822']);
+  expect(inTier.filter(p => p.decay).map(p => p.id)).toEqual(['bld.clinic-annex:791']);
   for (const p of inTier.filter(p => p.id.startsWith('carry-annex'))) expect(Math.hypot(p.position[0] - 66, p.position[2] + 15)).toBeLessThan(8);
   expect(live).toContain('bld.supermarket'); expect(live).toContain('veh.police-suv'); expect(live).toContain('prop.barricade'); expect(live).toContain('bld.river-bridge');
 });
@@ -48,15 +48,22 @@ test('T-E20-16 @E20 @E20-AC16 midday preset: high sun (polar <= 0.40, >= 0.30 ab
 test('T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fire Station 3 placement, the L2 copy removes what it replaces, the ambush doors stay by the market', () => {
   const station = grove.placements.filter(p => p.assetId === 'bld.fire-station');
   expect(station).toHaveLength(1);
+  expect(l2Station).toEqual({ x: -77, z: 42.5, yaw: 0 });
+  // Main Row regains both original north-strip homes and the station lot has no replacement houses.
+  const houses = grove.placements.filter(p => /^bld.house-/.test(p.assetId));
+  expect(houses.filter(p => p.position[0] > 18.5 && p.position[0] < 45.5 && p.position[2] < -35).map(p => p.assetId)).toEqual(['bld.house-b', 'bld.house-a']);
+  expect(houses.filter(p => p.position[0] < -53 && p.position[2] > 34.5)).toHaveLength(0);
   expect(station[0].position[0]).toBeCloseTo(l2Station.x, 2); expect(station[0].position[2]).toBeCloseTo(l2Station.z, 2); expect(station[0].yaw).toBeCloseTo(l2Station.yaw, 3);
   // The L1 completion trigger lies in the bay the L2 station-local frame describes (right bay, 1.2 m inside).
   const [tx, tz] = stationPoint(.4, -1.23), trigger = grove.anchors['fire-bay-trigger'].position;
   expect(Math.hypot(trigger[0] - tx, trigger[2] - tz)).toBeLessThan(.05);
-  // Superseded placements are matched by asset and position: all ten (four at the market, the roadwork kit and five fences at the closing gate) still find their placement (no silent no-op after a rebuild).
+  // Superseded placements are matched by asset and position: all fourteen (market and gate replacements plus loose props cleared from the restored station approaches) still find their placement (no silent no-op after a rebuild).
   const [layout] = levelTwoLayouts([grove]);
-  expect(grove.placements.length - layout.placements.filter(p => !p.id.startsWith('l2-') && !p.id.startsWith('carry-')).length).toBe(10);
+  expect(grove.placements.length - layout.placements.filter(p => !p.id.startsWith('l2-') && !p.id.startsWith('carry-')).length).toBe(14);
   // The three ambush doors are the same physical doors as when L2 was tuned (door numbers follow the layout's door order).
   const expected = [[-76.65, -37.5], [-19.62, -35], [-50.82, -4]];
   for (const [i, [door]] of l2.rescue.ambushDoors.entries()) { const p = grove.anchors[door].position; expect(Math.hypot(p[0] - expected[i][0], p[2] - expected[i][1]), door).toBeLessThan(.05); }
   expect(l2Anchors['l2-start']).toBeDefined();
+  // Neither south perimeter canopy may screen the left bay's highlighted axe rack.
+  expect(layout.placements.filter(p => p.assetId.startsWith('prop.street-tree') && p.position[2] > 48 && p.position[0] >= -80 && p.position[0] <= -72)).toHaveLength(0);
 });

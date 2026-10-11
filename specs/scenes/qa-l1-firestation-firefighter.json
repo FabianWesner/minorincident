@@ -1,81 +1,81 @@
 {
- "name": "qa-l1-firestation-firefighter",
- "note": "L1 final leg end with the 'Get in!' firefighter standing at his post beside the open bay (bay floor 0.3-0.4 m): courier and corgi walk in from Main Row; feet must stand on the raised floor (footSinkMaxCm) and nothing clips. The courier stops 0.45 m before the trigger (the mission completes inside its 0.5 m radius, so the real courier never goes deeper).",
- "ground": "district",
- "layout": {
-  "district": "D-GROVE",
-  "bbox": [
-   [
-    10,
-    -51
-   ],
-   [
-    52,
-    -24
-   ]
-  ]
- },
- "clipping": {
-  "ignoreFoliage": true
- },
- "actors": [
-  {
-   "id": "courier",
-   "kind": "courier",
-   "at": [
-    18.0,
-    -29.5
-   ],
-   "loadout": [
-    "weapon.bat",
-    "weapon.fists"
-   ],
-   "state": {
-    "moveTo": [
-     40.03,
-     -40.2
+  "name": "qa-l1-firestation-firefighter",
+  "note": "Restored original south-west Fire Station 3: east-facing open bay, raised floor and game-camera approach from Elm Street.",
+  "ground": "district",
+  "layout": {
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -84,
+        25
+      ],
+      [
+        -48,
+        50
+      ]
     ]
-   }
   },
-  {
-   "id": "corgi",
-   "kind": "corgi",
-   "at": [
-    17.0,
-    -29.0
-   ]
+  "clipping": {
+    "ignoreFoliage": true
   },
-  {
-   "id": "firefighter",
-   "kind": "pedestrian",
-   "at": [
-    38.93,
-    -38.85
-   ],
-   "yaw": 180,
-   "look": {
-    "model": "npc.firefighter-alive"
-   },
-   "state": "idle"
-  }
- ],
- "camera": {
-  "mode": "follow",
-  "actor": "courier",
-  "zoom": 1
- },
- "frames": 480,
- "shots": [
-  0,
-  150,
-  300,
-  479
- ],
- "expect": {
-  "consoleErrors": 0,
-  "clippingMax": 0,
-  "undrawnFramesMax": 0,
-  "footSinkMaxCm": 2
- },
- "trace": true
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -56,
+        30
+      ],
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "state": {
+        "moveTo": [
+          -76.15,
+          41.27
+        ]
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -55,
+        30
+      ]
+    },
+    {
+      "id": "firefighter",
+      "kind": "pedestrian",
+      "at": [
+        -74.8,
+        40.17
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.firefighter-alive"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 480,
+  "shots": [
+    0,
+    150,
+    300,
+    479
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "footSinkMaxCm": 2
+  },
+  "trace": true
 }

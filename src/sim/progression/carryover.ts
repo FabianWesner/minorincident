@@ -1,4 +1,4 @@
-import { MAX_BODIES, type L1Aftermath } from '../../levels/continuity';
+import { clearOfL2Script, MAX_BODIES, type L1Aftermath } from '../../levels/continuity';
 import type { SimWorld } from '../world/SimWorld';
 import type { MissionResult } from '../missions/types';
 import { autoRewards, type CampaignSave, type Level } from './Campaign';
@@ -35,6 +35,8 @@ export function captureL1Aftermath(world: SimWorld): L1Aftermath {
   for (const e of [...world.entities.iterate()].sort((a, b) => a.id - b.id)) {
     if (bodies.length >= MAX_BODIES) break;
     if (!e.civilian?.l1 || e.civilian.state !== 'finished' || e.infection || e.hidden || !e.appearance) continue;
+    // L2 clears its set pieces; record only bodies it can actually restore, before applying the body cap.
+    if (!clearOfL2Script(e.transform)) continue;
     bodies.push({ x: r2(e.transform.x), z: r2(e.transform.z), yaw: r2(e.transform.yaw), model: e.appearance.asset, tint: e.appearance.tint });
   }
   const bike = world.vehicles?.bicycle.entity?.transform;

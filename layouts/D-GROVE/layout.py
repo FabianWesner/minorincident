@@ -212,14 +212,10 @@ houses += row('r1c4s', *C4, 'S', *R1S, ['c', 'e', 'd'], [1, -1, 1])
 # north strip: houses face south onto Main Row, deep back yards, alley behind (z = -48.5)
 NFRONT = -35.5
 houses += row('nstrip-w', *C2, 'S', NFRONT, -47.0, ['a', 'd', 'e'], [1, -1, 0])
-# PO 2026-10-08 (route): Fire Station 3 takes the east part of the north strip (see the hero section); one house stays west of it.
-FS_LOT_X = 32.4
-houses += row('nstrip-e', C3[0], FS_LOT_X, 'S', NFRONT, -47.0, ['a'], [-1])
+houses += row('nstrip-e', *C3, 'S', NFRONT, -47.0, ['b', 'a'], [0, 1])
 # south strip: houses face north onto Elm Street, alley behind (z = 48)
 SFRONT = 34.5
 houses += row('sstrip-w', *C2, 'N', SFRONT, 46.0, ['e', 'c', 'd'], [0, 1, -1])
-# south-west corner (the old Fire Station 3 lot until 2026-10-08): three houses facing Elm Street, west of the car wash (from the end of the barrier wing at x -80.4)
-houses += row('sstrip-sw', -80.2, -53.0, 'N', SFRONT, 46.0, ['a', 'e', 'd'], [-1, 0, 1])
 houses += row('sstrip-e', *C4, 'N', SFRONT, 46.0, ['c', 'd', 'a'], [1, 0, -1])
 
 # ------------------------------------------------------------------------------------------------ hero buildings
@@ -398,7 +394,7 @@ cw = 'kit.car-wash'
 cwx, cwy, cwz = dims(cw)
 CW_X, CW_Z = -50.0, 41.5
 g.place(cw, CW_X, CW_Z, 0.0)
-# (the west lot-line fence of the car wash is the east lot line of sstrip-sw)
+g.fence('privacy', CW_X - 3.0, SFRONT + .3, CW_X - 3.0, 46.0)
 anchors['carwash-start'] = (CW_X, SFRONT + 1.4)
 gs = 'bld.gas-station'
 gsd, gsh, gsw = dims(gs)
@@ -407,17 +403,13 @@ g.place(gs, GS_X, SFRONT + gsd / 2 + .2, FACE_YAW['N'])
 g.place('prop.fire-hydrant', -54.6, 33.3, 0, .8, soft=True)
 g.hedge(-46.0, 46.2, -35.0, 46.2, scale=1.15)
 
-# --- Fire Station 3 (north strip, Main Row, east end)
-# PO 2026-10-08 (verbatim): "At the moment the user is moving away from the Zombies, so he might never see any. So why not moving
-# the firefighting place so the user has to get closer?" The station moved from the south-west corner to the north strip between the
-# depot and the Annex: from the bat the courier runs back north across the outbreak's spread (Larch Street passes the Annex gate).
-# The open bays face SOUTH onto Main Row; the game camera looks from +X +Z, so it sees the open bay, the waving firefighter and the
-# ring inside. The asset's own apron (local x 1.5..5.85) reaches the kerb; the shell (local x -5.7..3.1) stays clear of the alley.
+# --- Fire Station 3 (original south-west corner, restored PO 2026-10-11)
+# East-facing bays at the pre-Main-Row frame (fa482fa7^); L1 ends here and L2 starts here.
 fs = 'bld.fire-station'
 fdx, fdy, fdz = dims(fs)
-FS_YAW = FACE_YAW['S']
-FS_X = FS_LOT_X + 6.4                   # local z +-6.1 -> world x 32.7..44.9: clear of the lot-line fence and the Larch Street sidewalk (45.5)
-FS_Z = -41.05                           # foundation local x -5.8..5.8 -> z -46.85 (2 cm off the alley fence) .. -35.25 (0.25 m onto the sidewalk)
+FS_YAW = FACE_YAW['E']
+FS_X = -77.0
+FS_Z = SFRONT + 6.1 + 1.9
 FS_PID = g.place(fs, FS_X, FS_Z, FS_YAW)
 # The apron (paving, curbs, bollards) is part of the asset but too low to count as a solid: keep kerb lamps and hydrants off it.
 _ap = [rot(FS_YAW, lx, lz) for lx, lz in ((1.5, -6.2), (5.9, 6.2))]
@@ -437,10 +429,7 @@ anchors['fire-bay-door'] = (FS_X + fx, FS_Z + fz)
 fx, fz = rot(FS_YAW, .4, -1.23)
 anchors['fire-bay-trigger'] = (FS_X + fx, FS_Z + fz)
 doors.append(anchors['fire-bay-door'])
-# The lot around the station: lot-line fence to the house (west), plank fence on the Larch Street side and along the alley.
-g.fence('privacy', FS_X + 6.45, NFRONT - .15, FS_X + 6.45, -47.0)
-g.fence('privacy', FS_LOT_X, -47.0, C3[1], -47.0)
-g.place('prop.fire-hydrant', FS_X - 7.6, NFRONT + .6, 0, .8, soft=True)
+g.place('prop.fire-hydrant', -68.2, 36.2, 0, .8, soft=True)
 
 # Fire Station 3 interior: muffled interior + outro sting (lane H). Polygon = collision shell (local x -5.7..3.1, z +-6.1).
 _c = [rot(FS_YAW, lx, lz) for lx, lz in ((-5.7, -6.1), (3.1, 6.1))]

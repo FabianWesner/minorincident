@@ -1,24 +1,66 @@
 {
- "name": "qa-l1-firestation-entry-east",
- "note": "L1 final leg end (route of 2026-10-08): the courier arrives up Larch Street from the south-east and walks into the open bay with click-to-move; must end inside the bay at the trigger",
- "ground": "district",
- "layout": {
-  "district": "D-GROVE",
-  "bbox": [[14, -51], [56, -18]]
- },
- "clipping": {
-  "ignoreFoliage": true
- },
- "actors": [
-  { "id": "courier", "kind": "courier", "at": [47.0, -22.0], "loadout": ["weapon.bat", "weapon.fists"], "state": { "moveTo": [40.03, -40.2] } },
-  { "id": "corgi", "kind": "corgi", "at": [47.0, -21.0] }
- ],
- "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
- "frames": 480,
- "shots": [0, 150, 300, 479],
- "expect": {
-  "consoleErrors": 0,
-  "clippingMax": 0,
-  "undrawnFramesMax": 0
- }
+  "name": "qa-l1-firestation-entry-east",
+  "note": "Restored original south-west Fire Station 3: east-facing open bay, raised floor and game-camera approach from Elm Street.",
+  "ground": "district",
+  "layout": {
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -84,
+        25
+      ],
+      [
+        -48,
+        50
+      ]
+    ]
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -66,
+        30
+      ],
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "state": {
+        "moveTo": [
+          -76.15,
+          41.27
+        ]
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -65,
+        30
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 480,
+  "shots": [
+    0,
+    150,
+    300,
+    479
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0
+  }
 }

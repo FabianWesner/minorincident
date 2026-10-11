@@ -121,7 +121,7 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
   const hub = anchor('player-start') ?? patio, nearStart = hub ? runs.filter(run => run.some(q => Math.hypot(q.x - hub.x, q.z - hub.z) < 18)) : [];
   let maple = Math.min(6, nearStart.length * 3);
   // ...and the beat 9 stretch from the garage to Fire Station 3 gets a dense share of the walkers and joggers: every sidewalk run
-  // within 14 m of the straight garage -> station line (route of 2026-10-08: Elm Street by the garage, Juniper east, Main Row).
+  // within 14 m of the straight garage -> station line (restored route of 2026-10-11: Elm Street west from the garage to the station).
   const fire = anchor('fire-bay-door'), onElm = (q: Point) => {
     if (!garage || !fire) return false;
     const dx = fire.x - garage.x, dz = fire.z - garage.z, k = Math.max(0, Math.min(1, ((q.x - garage.x) * dx + (q.z - garage.z) * dz) / (dx * dx + dz * dz || 1)));
