@@ -141,8 +141,9 @@ test.describe('L3 The Police Collapse in the browser', () => {
     if (sz !== 0) route.push({ x: -120, z: sz });
     for (let x = -105; x <= 105; x += 15) {
       // Oak's crashed pickup blocks the straight centre-line approach from the west.
-      // Stay on the clear north side until past the entire wreck before returning to the centre line.
-      if (street === 'oak' && x === 105) route.push({ x: 92, z: 24 }, { x: 105, z: 24 }, { x: 118, z: 24 });
+      // The north strip also contains a resting planter. Use the clear south side
+      // until past the entire wreck before returning to the centre line.
+      if (street === 'oak' && x === 105) route.push({ x: 92, z: 32 }, { x: 105, z: 32 }, { x: 118, z: 32 });
       else route.push({ x, z: sz });
     }
     if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end
@@ -152,7 +153,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     let last = await mission();
     for (const wp of route) {
       // Reach the wreck detour before cutting back, and finish the final click inside the army zone.
-      const stop = wp.x > l3.map.zoneX || (street === 'oak' && wp.z === 24) ? 1.2 : sz === 0 ? 2 : 4;
+      const stop = wp.x > l3.map.zoneX || (street === 'oak' && wp.z === 32) ? 1.2 : sz === 0 ? 2 : 4;
       await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
       if (!await inL3()) break;
       const m = await mission(), p = (await player()).transform;

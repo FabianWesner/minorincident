@@ -121,6 +121,8 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Longest consecutive capsule/static-prop footprint penetration (2 mm contact tolerance), sampled every frame. */
+  propPenetrationFramesMax?: number;
   consoleErrors?: number;
   clippingMax?: number;
   /** Native hand triangles vs the drawn held prop, sampled every third frame. */
