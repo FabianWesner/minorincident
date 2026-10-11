@@ -1,4 +1,4 @@
-import { humanInfected } from '../../data/infected';
+import { humanInfected, infectedSpecialMoves } from '../../data/infected';
 import type { EntitySnapshot } from '../world/types';
 import type { InfectedSystem } from './InfectedSystem';
 
@@ -7,11 +7,17 @@ export class AlphaSupportMoves {
   constructor(private readonly ai: InfectedSystem) {}
   private regular(e: EntitySnapshot): boolean { return e.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === e.archetype); }
   tryStart(e: EntitySnapshot, target: EntitySnapshot): boolean {
+    if (e.archetype !== 'infected.alpha') return false;
+    const b = e.infected!, tick = this.ai.world.tick;
+    if (tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0)) return false;
+    const grabReady = tick + infectedSpecialMoves['alpha.grab-throw'].windup >= (b.specialCooldowns?.['alpha.grab-throw'] ?? 0);
+    const roarReady = tick + infectedSpecialMoves['alpha.roar'].windup >= (b.specialCooldowns?.['alpha.roar'] ?? 0);
+    if (!grabReady && !roarReady) return false;
     const p = e.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
-    if (e.archetype !== 'infected.alpha' || distance > 15 || !this.ai.hearing.sees(e, t)) return false;
+    if (distance > 15 || !this.ai.hearing.sees(e, t)) return false;
     const locked = { id: target.id, x: t.x, z: t.z }, area = { x: p.x, z: p.z, radius: 1, dx: dx / (distance || 1), dz: dz / (distance || 1) };
-    if (this.ai.props.nearestObject(e, 2) && this.ai.startSpecial(e.id, 'alpha.grab-throw', locked, area)) return true;
-    if (this.ai.active.some(other => other.health.current > 0 && this.regular(other) && Math.hypot(other.transform.x - p.x, other.transform.z - p.z) <= 18)) return this.ai.startSpecial(e.id, 'alpha.roar', locked, { ...area, radius: 18 });
+    if (grabReady && this.ai.props.nearestObject(e, 2) && this.ai.startSpecial(e.id, 'alpha.grab-throw', locked, area)) return true;
+    if (roarReady && this.ai.active.some(other => other.health.current > 0 && this.regular(other) && Math.hypot(other.transform.x - p.x, other.transform.z - p.z) <= 18)) return this.ai.startSpecial(e.id, 'alpha.roar', locked, { ...area, radius: 18 });
     return false;
   }
   update(e: EntitySnapshot): void {

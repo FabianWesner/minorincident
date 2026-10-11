@@ -11,17 +11,17 @@ export const characterNodes = ['root', 'hip', 'torso', 'head', 'armL', 'armR', '
 export type CharacterNode = typeof characterNodes[number];
 export const actionStates = ['swing', 'shoot', 'throw', 'kick', 'interact', 'enter-car', 'mount', 'dismount', 'hand-over', 'equip', 'receive', 'rack-grab'] as const;
 export type ActionState = typeof actionStates[number];
-export type AnimationState = 'knockdown' | 'get-up' | 'idle' | 'walk' | 'run' | 'hurt' | 'die' | ActionState;
+export type AnimationState = 'idle' | 'walk' | 'run' | 'hurt' | 'die' | 'knockdown' | 'get-up' | ActionState;
 /** Action duration is presentation intent; damage/charges remain owned by E05/E06. */
 export const actionTicks: Record<ActionState, number> = { swing: 30, shoot: 12, throw: 36, kick: 30, interact: 45, 'enter-car': 60, mount: 24, dismount: 24, 'hand-over': 60, equip: 54, receive: 54, 'rack-grab': 120 };
 export interface SurvivorState {
+  /** Physical enemy hit: serialized fixed-tick fall/stand interval. */
+  knockdown?: { started: number; until: number };
   /** Plain combat timing for authored clips and trails. */
   attack?: { actionId: string; combo: number; started: number; activeAt: number; recoveryAt: number; endsAt: number; style?: 'roundhouse' };
   variant: SurvivorVariant; gearTier: GearTier; animation: AnimationState; animationTick: number;
   /** E19 presentation hook set by the mission sim (E) while the parcel is held; render-only. */
   carrying?: string;
-  /** Authored physical-special fall/recovery, independent of invulnerability. */
-  knockedAt?: number; knockedUntil?: number;
   velocity: { x: number; z: number }; grounded: boolean; invulnerableUntil: number;
   checkpoint: { x: number; y: number; z: number }; diedAt: number | null;
 }

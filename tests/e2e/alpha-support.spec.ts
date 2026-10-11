@@ -38,3 +38,19 @@ for (const move of ['grab-throw', 'roar'] as const) test(`T-E07-06-${move}-brows
     expect(expired.entities.find(e => e.id === regularId)!.infected!.roar).toBeUndefined();
   }
 });
+
+test('T-E07-06-all-specials-browser @E07-AC05 @E07-AC06 one Alpha activates all four moves in the merged Scene Lab', async ({ page }) => {
+  test.setTimeout(120_000);
+  const spec = JSON.parse(readFileSync('tests/scenes/alpha-s3/qa-alpha-all-specials.json', 'utf8')) as SceneSpec;
+  await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');
+  await page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
+  const observed = await page.evaluate(async s => {
+    await window.__SS__!.ready; await window.__SCENE__!.load(s);
+    await window.__SCENE__!.step(900); await window.__SCENE__!.ready();
+    return { id: window.__SCENE__!.actors.get('alpha')!.entity, events: window.__SS__!.events() };
+  }, spec);
+  const activations = observed.events.flatMap(e => e.type === 'infected.special' && e.sourceId === observed.id && e.stage === 'active' ? [e.move] : []);
+  expect(new Set(activations)).toEqual(new Set(['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar']));
+  expect(observed.events.some(e => e.type === 'infected.prop-thrown' && e.sourceId === observed.id)).toBe(true);
+  expect(observed.events.some(e => e.type === 'infected.roar-buff' && e.sourceId === observed.id && e.stage === 'active')).toBe(true);
+});

@@ -42,6 +42,7 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
   expect(e.health.current).toBe(280); expect(e.combat!.reaction!.heavy).toBe(false); expect(e.infected!.recoverAt).toBe(-1);
   const soldier = w.entities.get(w.npcs!.civilians.spawn('officer', { x: 6.8, z: 0 }))!;
   soldier.civilian!.ally = allyState('soldier');
+  e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000 };
   e.combat!.staggerUntil = 0; e.infected!.heardTargetId = soldier.id; e.infected!.state = 'chase';
   step(w, 1); const active = e.infected!.until;
   step(w, active - w.tick - 1); expect(soldier.health.current).toBe(100);
@@ -53,7 +54,7 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
 });
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
   test(`T-E07-05-scheduler-${move} @E07-AC05 locked telegraph, independent cooldown, recovery and serialized state`, async () => {
-    const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move];
+    const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move]; w.inspectionGhost = true;
     vi.spyOn(ai.alphaSupport, 'update').mockImplementation(() => {}); // Test scheduling independently of move effects.
     // The scheduler also serves the later zoo lanes; no animal effects are claimed here.
     e.archetype = timing.archetype;
@@ -61,12 +62,17 @@ for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
     expect(ai.startSpecial(e.id, move, target, area)).toBe(false); expect(ai.specialHit(e.id, 1)).toBe(false);
     const attack = e.infected!.specialAttack!, hp = w.entities.get(1)!.health.current;
     expect(attack.target.x).toBe(0); expect(attack.activeTick - attack.startTick).toBe(timing.windup);
-    expect(w.events.events().find(ev => ev.type === 'telegraph')).toMatchObject({ sourceId: e.id, move, attackId: attack.attackId, startTick: 0, activeTick: timing.windup, cooldownExpiry: timing.windup + timing.cooldown, target, area });
+    expect(w.events.events().find(ev => ev.type === 'telegraph')).toMatchObject({ sourceId: e.id, move, attackId: attack.attackId, startTick: 0, activeTick: timing.windup, cooldownExpiry: timing.windup + timing.cooldown, target, area: attack.area });
     step(w, timing.windup - 1); expect(attack.stage).toBe('telegraph'); expect(w.entities.get(1)!.health.current).toBe(hp);
     // A paused sim runs no updates: snapshots do not consume timers.
     const paused = JSON.stringify(e.infected); ai.snapshot(); expect(JSON.stringify(e.infected)).toBe(paused);
-    step(w, 1); expect(attack.stage).toBe('active'); expect(ai.specialHit(e.id, 1)).toBe(true); expect(ai.specialHit(e.id, 1)).toBe(false);
-    expect(ai.finishSpecial(e.id)).toBe(true); expect(ai.finishSpecial(e.id)).toBe(false);
+    // Resolve through the activation event to isolate the shared scheduler from each lane's effects.
+    w.events.on('infected.special', ev => {
+      if (ev.type !== 'infected.special' || ev.sourceId !== e.id || ev.stage !== 'active') return;
+      expect(ai.specialHit(e.id, 1)).toBe(true); expect(ai.specialHit(e.id, 1)).toBe(false);
+      expect(ai.finishSpecial(e.id)).toBe(true); expect(ai.finishSpecial(e.id)).toBe(false);
+    });
+    step(w, 1); expect(attack.stage).toBe('recovery');
     step(w, 35); expect(ai.startSpecial(e.id, move, target, area)).toBe(false);
     const restored = JSON.parse(JSON.stringify(e.infected)); e.infected = restored;
     const expiry = restored.specialCooldowns[move]; w.tick += 100; ai.restoreSpecialTimers(restored, 100);
@@ -92,7 +98,7 @@ for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs
 });
 
 test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and retargeting never resets the first', async () => {
-  const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle');
+  const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'); w.inspectionGhost = true;
   expect(ai.startSpecial(e.id, 'alpha.charge', target, area)).toBe(true); step(w, 48);
   const expiry = e.infected!.specialCooldowns!['alpha.charge'];
   expect(ai.finishSpecial(e.id)).toBe(true); step(w, 36);
@@ -118,3 +124,24 @@ for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3
   expect(span).toBeGreaterThanOrEqual((hits - 1) / catalog[`weapon.${weapon}`].fireRate!);
   expect(span).toBeLessThanOrEqual(maxSpan);
 });
+
+for (const move of ['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar'] as const) {
+  test(`T-E07-06-alpha-selection-${move} @E07-AC05 @E07-AC06 chase selects each available move through the merged scheduler`, async () => {
+    const w = await arena(), e = spawn(w, 'alpha', move === 'alpha.ground-slam' ? 3 : 6);
+    e.transform.yaw = Math.PI;
+    e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000, 'alpha.grab-throw': 10000, 'alpha.roar': 10000, [move]: 0 };
+    if (move === 'alpha.grab-throw') {
+      const body = spawn(w, 'runner', 7, 1, 'idle');
+      body.health.current = 0; body.corpse = true; body.infected!.state = 'dead'; body.infected!.deadAt = -120; body.infected!.recoverAt = -1;
+    }
+    if (move === 'alpha.roar') spawn(w, 'runner', 10, 2, 'idle');
+    step(w, 1);
+    const attack = e.infected!.specialAttack!;
+    expect(attack.move).toBe(move); expect(attack.stage).toBe('telegraph');
+    const timing = infectedSpecialMoves[move];
+    step(w, timing.windup);
+    expect(e.infected!.specialCooldowns![move]).toBe(attack.activeTick + timing.cooldown);
+    expect(w.events.events().filter(ev => ev.type === 'infected.special' && ev.attackId === attack.attackId && ev.stage === 'active')).toHaveLength(1);
+    for (const other of ['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar'] as const) if (other !== move) expect(e.infected!.specialCooldowns![other]).toBe(10000);
+  });
+}

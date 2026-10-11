@@ -1,0 +1,1044 @@
+[
+  {
+    "path": "docs/reports/alpha-s2/after/qa-alpha-charge/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 95,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 81642,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 11.4,
+      "torsoPitchMaxDeg": 33.3,
+      "contacts": 13,
+      "slideMaxCm": 0.2,
+      "slideP95Cm": 0.1,
+      "yawDriftMaxDeg": 0.1,
+      "liftMaxCm": 17.2,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 3,
+      "worstSlideFrame": 6
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 122,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod0": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 91,
+        "p95": 95,
+        "max": 95
+      },
+      "triangles": {
+        "p50": 79242,
+        "p95": 81642,
+        "max": 81642
+      },
+      "shadowDrawCalls": {
+        "p50": 16,
+        "p95": 18,
+        "max": 18
+      },
+      "shadowTriangles": {
+        "p50": 53330,
+        "p95": 53354,
+        "max": 53354
+      },
+      "stepMs": {
+        "p50": 1.8,
+        "p95": 2.9,
+        "max": 17.8
+      },
+      "lastFrame": {
+        "drawCalls": 89,
+        "triangles": 73420,
+        "shadowDrawCalls": 16,
+        "shadowTriangles": 53330,
+        "stepMs": 1.1999998092651367,
+        "categories": {
+          "other": 85,
+          "shadows": 16,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/after/qa-alpha-ground-slam/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 23,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 98252,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 4.9,
+      "torsoPitchMaxDeg": 26,
+      "contacts": 8,
+      "slideMaxCm": 0.5,
+      "slideP95Cm": 0.3,
+      "yawDriftMaxDeg": 0.1,
+      "liftMaxCm": 18.3,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 2,
+      "worstSlideFrame": 70
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod0": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 23,
+        "max": 23
+      },
+      "triangles": {
+        "p50": 80754,
+        "p95": 98252,
+        "max": 98252
+      },
+      "shadowDrawCalls": {
+        "p50": 16,
+        "p95": 16,
+        "max": 16
+      },
+      "shadowTriangles": {
+        "p50": 53330,
+        "p95": 77948,
+        "max": 77948
+      },
+      "stepMs": {
+        "p50": 1,
+        "p95": 2,
+        "max": 19.8
+      },
+      "lastFrame": {
+        "drawCalls": 23,
+        "triangles": 98252,
+        "shadowDrawCalls": 16,
+        "shadowTriangles": 77948,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 18,
+          "shadows": 16,
+          "crowd": 5
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/before/before-alpha-charge/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 17,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 70180,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 19.8,
+      "torsoPitchMaxDeg": 22.4,
+      "contacts": 3,
+      "slideMaxCm": 0.7,
+      "slideP95Cm": 0,
+      "yawDriftMaxDeg": 0.6,
+      "liftMaxCm": 16.2,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 0,
+      "worstSlideFrame": 6
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod0": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 17,
+        "p95": 17,
+        "max": 17
+      },
+      "triangles": {
+        "p50": 70180,
+        "p95": 70180,
+        "max": 70180
+      },
+      "shadowDrawCalls": {
+        "p50": 18,
+        "p95": 18,
+        "max": 18
+      },
+      "shadowTriangles": {
+        "p50": 53354,
+        "p95": 53354,
+        "max": 53354
+      },
+      "stepMs": {
+        "p50": 1.2,
+        "p95": 2.4,
+        "max": 6.1
+      },
+      "lastFrame": {
+        "drawCalls": 17,
+        "triangles": 70180,
+        "shadowDrawCalls": 18,
+        "shadowTriangles": 53354,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 13,
+          "shadows": 18,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/before/before-alpha-ground-slam/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 22,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 81820,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 12.4,
+      "torsoPitchMaxDeg": 30.7,
+      "contacts": 11,
+      "slideMaxCm": 1.1,
+      "slideP95Cm": 0.7,
+      "yawDriftMaxDeg": 0.6,
+      "liftMaxCm": 16.9,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 0,
+      "worstSlideFrame": 55
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod0": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 19,
+        "p95": 22,
+        "max": 22
+      },
+      "triangles": {
+        "p50": 80748,
+        "p95": 81820,
+        "max": 81820
+      },
+      "shadowDrawCalls": {
+        "p50": 16,
+        "p95": 16,
+        "max": 16
+      },
+      "shadowTriangles": {
+        "p50": 53330,
+        "p95": 53330,
+        "max": 53330
+      },
+      "stepMs": {
+        "p50": 1,
+        "p95": 2.1,
+        "max": 33.5
+      },
+      "lastFrame": {
+        "drawCalls": 19,
+        "triangles": 80748,
+        "shadowDrawCalls": 16,
+        "shadowTriangles": 53330,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 15,
+          "shadows": 16,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/landscape/qa-alpha-charge-low/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 95,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 57834,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 11.4,
+      "torsoPitchMaxDeg": 33.3,
+      "contacts": 13,
+      "slideMaxCm": 0.4,
+      "slideP95Cm": 0.1,
+      "yawDriftMaxDeg": 0.5,
+      "liftMaxCm": 17.2,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 3,
+      "worstSlideFrame": 6
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod2": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 93,
+        "p95": 95,
+        "max": 95
+      },
+      "triangles": {
+        "p50": 55762,
+        "p95": 57834,
+        "max": 57834
+      },
+      "shadowDrawCalls": {
+        "p50": 8,
+        "p95": 10,
+        "max": 10
+      },
+      "shadowTriangles": {
+        "p50": 44627,
+        "p95": 44651,
+        "max": 44651
+      },
+      "stepMs": {
+        "p50": 1,
+        "p95": 1.8,
+        "max": 14.4
+      },
+      "lastFrame": {
+        "drawCalls": 92,
+        "triangles": 55762,
+        "shadowDrawCalls": 8,
+        "shadowTriangles": 44627,
+        "stepMs": 1.1000003814697266,
+        "categories": {
+          "other": 88,
+          "shadows": 8,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/landscape/qa-alpha-ground-slam-low/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 23,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 63196,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 4.9,
+      "torsoPitchMaxDeg": 26,
+      "contacts": 8,
+      "slideMaxCm": 0.5,
+      "slideP95Cm": 0.4,
+      "yawDriftMaxDeg": 0.5,
+      "liftMaxCm": 18.3,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 2,
+      "worstSlideFrame": 70
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod2": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 23,
+        "max": 23
+      },
+      "triangles": {
+        "p50": 62220,
+        "p95": 63196,
+        "max": 63196
+      },
+      "shadowDrawCalls": {
+        "p50": 8,
+        "p95": 8,
+        "max": 8
+      },
+      "shadowTriangles": {
+        "p50": 44627,
+        "p95": 44627,
+        "max": 44627
+      },
+      "stepMs": {
+        "p50": 0.9,
+        "p95": 1.5,
+        "max": 18.5
+      },
+      "lastFrame": {
+        "drawCalls": 23,
+        "triangles": 62220,
+        "shadowDrawCalls": 8,
+        "shadowTriangles": 44627,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 18,
+          "shadows": 8,
+          "crowd": 5
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/phone/qa-alpha-charge-low/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 95,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 64084,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 11.4,
+      "torsoPitchMaxDeg": 33.3,
+      "contacts": 10,
+      "slideMaxCm": 0.3,
+      "slideP95Cm": 0.1,
+      "yawDriftMaxDeg": 0.3,
+      "liftMaxCm": 17.2,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 3,
+      "worstSlideFrame": 6
+    },
+    "drawnFrames": 126,
+    "inViewFrames": 101,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod2": 126
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 89,
+        "p95": 95,
+        "max": 95
+      },
+      "triangles": {
+        "p50": 61684,
+        "p95": 64084,
+        "max": 64084
+      },
+      "shadowDrawCalls": {
+        "p50": 8,
+        "p95": 10,
+        "max": 10
+      },
+      "shadowTriangles": {
+        "p50": 44627,
+        "p95": 44651,
+        "max": 44651
+      },
+      "stepMs": {
+        "p50": 1.2,
+        "p95": 2,
+        "max": 15.7
+      },
+      "lastFrame": {
+        "drawCalls": 87,
+        "triangles": 61335,
+        "shadowDrawCalls": 8,
+        "shadowTriangles": 44627,
+        "stepMs": 1,
+        "categories": {
+          "other": 85,
+          "shadows": 8,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/phone/qa-alpha-ground-slam-low/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 23,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 63196,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 4.9,
+      "torsoPitchMaxDeg": 26,
+      "contacts": 8,
+      "slideMaxCm": 0.5,
+      "slideP95Cm": 0.3,
+      "yawDriftMaxDeg": 0.3,
+      "liftMaxCm": 18.3,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 2,
+      "worstSlideFrame": 70
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod2": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 23,
+        "max": 23
+      },
+      "triangles": {
+        "p50": 62220,
+        "p95": 63196,
+        "max": 63196
+      },
+      "shadowDrawCalls": {
+        "p50": 8,
+        "p95": 8,
+        "max": 8
+      },
+      "shadowTriangles": {
+        "p50": 44627,
+        "p95": 44627,
+        "max": 44627
+      },
+      "stepMs": {
+        "p50": 1.3,
+        "p95": 1.8,
+        "max": 20.8
+      },
+      "lastFrame": {
+        "drawCalls": 23,
+        "triangles": 62220,
+        "shadowDrawCalls": 8,
+        "shadowTriangles": 44627,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 18,
+          "shadows": 8,
+          "crowd": 5
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/walls/qa-alpha-charge-wall/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 20,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 70346,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 11.4,
+      "torsoPitchMaxDeg": 33.2,
+      "contacts": 7,
+      "slideMaxCm": 1.5,
+      "slideP95Cm": 0.4,
+      "yawDriftMaxDeg": 0.5,
+      "liftMaxCm": 16.8,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 2,
+      "worstSlideFrame": 10
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod0": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 19,
+        "p95": 20,
+        "max": 20
+      },
+      "triangles": {
+        "p50": 70322,
+        "p95": 70346,
+        "max": 70346
+      },
+      "shadowDrawCalls": {
+        "p50": 17,
+        "p95": 17,
+        "max": 17
+      },
+      "shadowTriangles": {
+        "p50": 53490,
+        "p95": 53490,
+        "max": 53490
+      },
+      "stepMs": {
+        "p50": 1.5,
+        "p95": 2.3,
+        "max": 9.4
+      },
+      "lastFrame": {
+        "drawCalls": 19,
+        "triangles": 70322,
+        "shadowDrawCalls": 17,
+        "shadowTriangles": 53490,
+        "stepMs": 0.9000005722045898,
+        "categories": {
+          "other": 14,
+          "shadows": 17,
+          "props": 1,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  },
+  {
+    "path": "docs/reports/alpha-s2/walls/qa-alpha-ground-slam-wall/metrics.json",
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 25,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 106644,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "motion": {
+      "frames": 150,
+      "torsoPitchMinDeg": 4.9,
+      "torsoPitchMaxDeg": 26,
+      "contacts": 8,
+      "slideMaxCm": 0.5,
+      "slideP95Cm": 0.4,
+      "yawDriftMaxDeg": 0.5,
+      "liftMaxCm": 18.3,
+      "sinkMaxCm": 0,
+      "jitterRunMax": 2,
+      "worstSlideFrame": 70
+    },
+    "drawnFrames": 150,
+    "inViewFrames": 150,
+    "missedInViewFrames": 0,
+    "lod": {
+      "lod0": 150
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 24,
+        "p95": 25,
+        "max": 25
+      },
+      "triangles": {
+        "p50": 89146,
+        "p95": 106644,
+        "max": 106644
+      },
+      "shadowDrawCalls": {
+        "p50": 18,
+        "p95": 18,
+        "max": 18
+      },
+      "shadowTriangles": {
+        "p50": 61720,
+        "p95": 86338,
+        "max": 86338
+      },
+      "stepMs": {
+        "p50": 1.5,
+        "p95": 2.5,
+        "max": 25.8
+      },
+      "lastFrame": {
+        "drawCalls": 25,
+        "triangles": 106644,
+        "shadowDrawCalls": 18,
+        "shadowTriangles": 86338,
+        "stepMs": 1.6000003814697266,
+        "categories": {
+          "other": 18,
+          "shadows": 18,
+          "props": 1,
+          "crowd": 6
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  }
+]

@@ -14,6 +14,7 @@ from . import export, palette
 
 LIMITS = (15000, 6000, 2000)
 WHEELS = {'wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'}
+DOORS = {'doorL', 'doorR'}
 
 
 def smooth(a, b, x):
@@ -35,6 +36,7 @@ def build_damage(directory, output, decay):
         bpy.context.view_layer.update()
         root = next(o for o in bpy.context.scene.objects if o.type == 'EMPTY' and o.parent is None)
         anchors = {o.name: [list(row) for row in o.matrix_world] for o in root.children_recursive if o.type == 'EMPTY'}
+        assert DOORS <= anchors.keys(), 'rebuild pristine LODs with cab door hinges first'
         meshes = [o for o in root.children_recursive if o.type == 'MESH']
         for obj in meshes:
             owners = []; ancestor = obj.parent
@@ -44,9 +46,9 @@ def build_damage(directory, output, decay):
             tokens = [m.name.removeprefix('pal_').removeprefix('emi_').split('.')[0] for m in obj.data.materials]
             matrix = obj.matrix_world.copy(); inverse = matrix.inverted()
             bm = bmesh.new(); bm.from_mesh(obj.data)
-            # Glass fractures expose the existing hollow cab and native seating.
+            # Impact fractures expose the cab; heat leaves smoke-black panes.
             glass = [f for f in bm.faces if tokens[f.material_index] == 'backpackTeal' and
-                     (burned or (matrix @ f.calc_center_median()).x > 2.35)]
+                     not burned and (matrix @ f.calc_center_median()).x > 2.35]
             bmesh.ops.delete(bm, geom=glass, context='FACES')
             bm.to_mesh(obj.data); bm.free()
             for v in obj.data.vertices:
@@ -77,7 +79,9 @@ def build_damage(directory, output, decay):
                 if material.name.startswith('emi_'):
                     obj.data.materials[i] = palette.mat('uiDark')
                 elif burned and not wheel:
-                    obj.data.materials[i] = palette.mat('blood' if token in ('survivorRed', 'blood') else 'asphalt' if token in ('picketWhite', 'sidewalk') else 'uiDark')
+                    # Charred paint and smoke-dark glass must read black even when
+                    # the runtime replaces palette materials by their token names.
+                    obj.data.materials[i] = palette.mat('asphalt' if token in ('picketWhite', 'sidewalk') else 'uiDark')
             # Soot variation uses the existing AO vertex layer, preserving native detail.
             layer = obj.data.color_attributes.active_color
             if burned and layer and not wheel:
@@ -99,7 +103,7 @@ def build_damage(directory, output, decay):
                 obj['damagedLightOff'] = True
         root['decay'] = decay
         root['damagedLightsOff'] = True
-        export.merge_by_material(root, WHEELS | {'body', 'ladder', 'sirenL', 'sirenR', 'lightsFront', 'lightsBrake'}, preserve_vertex_colors=True)
+        export.merge_by_material(root, WHEELS | DOORS | {'body', 'ladder', 'sirenL', 'sirenR', 'lightsFront', 'lightsBrake'}, preserve_vertex_colors=True)
         meshes = [o for o in root.children_recursive if o.type == 'MESH']
         for obj in meshes:
             obj.data.calc_loop_triangles()
