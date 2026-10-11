@@ -1,0 +1,71 @@
+{
+  "passed": 76,
+  "failed": [
+    {
+      "project": "chromium",
+      "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.27\u001b[39m\nReceived:    \u001b[31m0.2726152425609449\u001b[39m\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+      ]
+    },
+    {
+      "project": "pixel-7",
+      "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.27\u001b[39m\nReceived:    \u001b[31m0.2726152425609449\u001b[39m\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+      ]
+    },
+    {
+      "project": "pixel-7-landscape",
+      "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.27\u001b[39m\nReceived:    \u001b[31m0.2726152425609449\u001b[39m\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+      ]
+    },
+    {
+      "project": "iphone-14",
+      "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.27\u001b[39m\nReceived:    \u001b[31m0.2726152425609449\u001b[39m\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+      ]
+    },
+    {
+      "project": "iphone-14-landscape",
+      "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.27\u001b[39m\nReceived:    \u001b[31m0.2726152425609449\u001b[39m\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+      ]
+    },
+    {
+      "project": "chromium",
+      "title": "T-E14-04 @E14 @E14-AC04 active mouse/keyboard/touch glyphs, including rebind; once per action per save",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeHidden\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('onboarding-prompt')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeHidden\" getByTestId('onboarding-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('onboarding-prompt')\u001b[22m\n\u001b[2m    13 \u00d7 locator resolved to <div role=\"status\" data-scheme=\"touch\" data-action=\"selector\" class=\"onboarding hud-panel\" data-testid=\"onboarding-prompt\">Swipe up LEFT / RIGHT \u00b7 Cycle the selected rack</div>\u001b[22m\n\u001b[2m       - unexpected value \"visible\"\u001b[22m\n\n\n  20 |   await page.reload(); await page.waitForFunction(() => Boolean(window.__SS__)); await page.evaluate(() => window.__SS__!.ready);\n  21 |   await page.evaluate(async def => { const api = window.__SS__!; await api.loadScenario('mission-sandbox'); api.pause(); api.missions.load(def); api.missions.begin(); await api.step(1); }, def);\n> 22 |   await expect(prompt).toBeHidden();\n     |                        ^\n  23 | });\n  24 | test('@E14 @E14-AC04 onboarding presents L2 selector and second side; L3 vehicle only when present', async ({ page }) => {\n  25 |   await hudStart(page);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/onboarding.spec.ts:22:24"
+      ]
+    },
+    {
+      "project": "chromium",
+      "title": "@E14 @E14-AC04 onboarding presents L2 selector and second side; L3 vehicle only when present",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('onboarding-prompt')\nExpected: \u001b[32m\"se\u001b[7mcond-side\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"se\u001b[7mlector\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" getByTestId('onboarding-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('onboarding-prompt')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <div hidden=\"\" role=\"status\" data-action=\"selector\" data-scheme=\"keyboard\" class=\"onboarding hud-panel\" data-testid=\"onboarding-prompt\">Q \u00b7 Cycle the selected rack</div>\u001b[22m\n\u001b[2m       - unexpected value \"selector\"\u001b[22m\n\n\n  28 |   await expect(page.getByTestId('onboarding-prompt')).toHaveAttribute('data-action', 'selector');\n  29 |   await page.keyboard.press('KeyQ'); await page.evaluate(() => window.__SS__!.step(16));\n> 30 |   await expect(page.getByTestId('onboarding-prompt')).toHaveAttribute('data-action', 'second-side');\n     |                                                       ^\n  31 |   await page.keyboard.press('KeyK'); await page.evaluate(() => window.__SS__!.step(1));\n  32 |   await expect(page.getByTestId('onboarding-prompt')).toBeHidden();\n  33 |   await page.goto(menuUrl); await page.waitForFunction(() => Boolean(window.__SS__)); await page.evaluate(() => window.__SS__!.ready);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/onboarding.spec.ts:30:55"
+      ]
+    },
+    {
+      "project": "chromium",
+      "title": "@E14 @E14-AC04 L1 move \u2192 evade \u2192 interact \u2192 weapon pickup \u2192 attack uses real sim events",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeHidden\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('onboarding-prompt')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeHidden\" getByTestId('onboarding-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('onboarding-prompt')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <div role=\"status\" data-scheme=\"touch\" data-action=\"selector\" class=\"onboarding hud-panel\" data-testid=\"onboarding-prompt\">Swipe up LEFT / RIGHT \u00b7 Cycle the selected rack</div>\u001b[22m\n\u001b[2m       - unexpected value \"visible\"\u001b[22m\n\n\n  57 |   await expect(prompt).toHaveAttribute('data-action', 'attack');\n  58 |   await page.getByTestId('touch-left').tap(); await page.evaluate(() => window.__SS__!.step(1));\n> 59 |   await expect(prompt).toBeHidden();\n     |                        ^\n  60 | });\n  61 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/onboarding.spec.ts:59:24"
+      ]
+    },
+    {
+      "project": "chromium",
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n  83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n> 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n     |                                                                                                                                                                                                               ^\n  85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n  86 | });\n  87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/save.spec.ts:84:207"
+      ]
+    }
+  ],
+  "criteria": {
+    "T-E14-08": "T-E14-08 @E14 @E14-AC08 pause freezes tick while HUD/settings remain responsive"
+  }
+}

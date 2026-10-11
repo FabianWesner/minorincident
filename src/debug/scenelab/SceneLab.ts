@@ -975,6 +975,8 @@ export class SceneLab {
       actors: [...this.actors.values()].map(a => ({ id: a.id, kind: a.kind, entity: a.entity })), vehicles: Object.fromEntries(this.vehicles) };
   }
   async reset() { if (!this.spec) throw new Error('load_scene first'); return this.load(this.spec); }
+  /** Lightweight state to sample beside pixels during same-browser reload batches. */
+  renderDiagnostics() { return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, ...this.game.view.renderDiagnostics() }; }
   /** Screenshot readiness: streamed LOD0 and pending assets resolved, two presented frames. */
   ready(): Promise<void> { return this.game.screenshotReady(); }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
