@@ -2,7 +2,9 @@
 // from the shipped layouts (public/assets/layouts/*.layout.json). Re-run after a layout adds a building family:
 //   node tools/scenelab/gen-building-scenes.mjs
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-const out = 'specs/scenes/catalog';
+const args = process.argv.slice(2);
+const out = args.includes('--out') ? args[args.indexOf('--out') + 1] : 'specs/scenes/catalog';
+const filter = args.includes('--filter') ? new Set(args[args.indexOf('--filter') + 1].split(',')) : null;
 mkdirSync(out, { recursive: true });
 const r = n => Math.round(n * 10) / 10;
 let written = 0;
@@ -16,6 +18,7 @@ for (const file of readdirSync('public/assets/layouts').filter(f => f.endsWith('
     const w = max[0] - min[0], d = max[2] - min[2], h = max[1] - min[1], diag = Math.hypot(w, d);
     const kit = layout.placements.filter(k => k.assetId.startsWith('house.') && k.position[0] >= min[0] - 3 && k.position[0] <= max[0] + 3 && k.position[2] >= min[2] - 3 && k.position[2] <= max[2] + 3).map(k => k.id);
     const half = Math.max(w, d) / 2 + 4, family = p.assetId.slice(4), name = `bld-${district.slice(2).toLowerCase()}-${family}`;
+    if (filter && !filter.has(name)) continue;
     const spec = {
       name,
       note: `${district} ${p.assetId} (${p.id}) alone on its baked ground, game-camera turntable (one full turn in 6 s). Look for: missing walls or roof, floating or sunk parts, flat or boxy shells, wrong LOD swaps while the camera orbits.`,

@@ -82,6 +82,21 @@ def station(s):
         for y in (-7.01,1.01):
             s.box('sideWindow',(x,y,4.50),(1.10,.035,1.35),'policeBlue')
             s.box('sideGlass',(x,y+(-.025 if y<0 else .025),4.5),(.85,.02,1.08),'uiDark')
+    # Carry the front's civic courses and framed glazing around the rear block.
+    for z in (.45,3.08,6.10):
+        s.box('rearCourse',(-5.025,-3,z),(.10,8,.22),'picketWhite')
+    for y in (-6.5,.5):
+        s.box('rearPilaster',(-5.08,y,3.22),(.16,.32,5.65),'picketWhite')
+    for z in (1.60,4.50):
+        for y in (-5.55,-3,-.45):
+            s.box('rearWindowBorder',(-5.03,y,z),(.10,1.10,1.60),'picketWhite')
+            s.box('rearWindowFrame',(-5.095,y,z),(.07,.90,1.38),'policeBlue')
+            s.box('rearGlazing',(-5.14,y,z),(.025,.68,1.15),'uiDark')
+            if L<2:
+                s.box('rearMullion',(-5.162,y,z),(.02,.06,1.15),'policeBlue')
+    for y in (2,4):
+        s.box('armoryRearFrame',(-5.04,y,1.75),(.10,.95,.90),'picketWhite')
+        s.box('armoryRearGlass',(-5.105,y,1.75),(.03,.72,.68),'uiDark')
     # Badge shield and star are readable even when the sign lettering is subpixel.
     vs=[(3.16,y,z) for y,z in [(-3.6,5.75),(-2.4,5.75),(-2.50,5.08),(-3,4.80),(-3.50,5.08)]]
     s.mesh('civicShield',vs,[(0,1,2,3,4)],'policeBlue')

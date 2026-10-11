@@ -11736,7 +11736,7 @@
   {
     "id": "bld.park-lodge",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/bld.park-lodge.glb",
     "dimensions": {
@@ -11746,8 +11746,14 @@
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
@@ -11760,12 +11766,23 @@
     "world": {
       "token": "woodWarm",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.park-lodge/model.glb",
+    "script": "assets/bld.park-lodge/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.park-lodge.lod1.glb",
+      "lod2": "public/assets/models/bld.park-lodge.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 3000
     }
   },
   {
     "id": "bld.zoo-gate",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/bld.zoo-gate.glb",
     "dimensions": {
@@ -11775,8 +11792,14 @@
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
@@ -11789,12 +11812,23 @@
     "world": {
       "token": "schoolBusYellow",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.zoo-gate/model.glb",
+    "script": "assets/bld.zoo-gate/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.zoo-gate.lod1.glb",
+      "lod2": "public/assets/models/bld.zoo-gate.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 3000
     }
   },
   {
     "id": "bld.reptile-house",
     "category": "building",
-    "status": "placeholder",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/bld.reptile-house.glb",
     "dimensions": {
@@ -11804,8 +11838,14 @@
       "tolerance": 0.1
     },
     "forward": "+X",
-    "frontNodes": [],
-    "requiredNodes": [],
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "roof"
+    ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
@@ -11818,6 +11858,17 @@
     "world": {
       "token": "backpackTeal",
       "solid": true
+    },
+    "sourceGlb": "assets/bld.reptile-house/model.glb",
+    "script": "assets/bld.reptile-house/build.py",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/bld.reptile-house.lod1.glb",
+      "lod2": "public/assets/models/bld.reptile-house.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 3000
     }
   },
   {

@@ -69,7 +69,9 @@ class Layout:
             if tier>=3:
                 self.box(f'char-{tier}', 'uiDark', [2,.03,2], [14,.1,-8+tier], tier)
                 self.box(f'board-{tier}', 'woodWarm', [3,.25,.2], [-14,1.5,9.9], tier)
-        self.box('collapse-canopy', 'schoolBusYellow', [5,.2,2], [14,3,-8])
+        # Retain the legacy decay target as an inert marker; its unsupported
+        # demo slab must never render in the delivered districts.
+        self.empties.append(empty('collapse-canopy', [14,3,-8]))
         self.data['layers'][4]['remove'].append('collapse-canopy')
         self.data['layers'][2]['disableLights'] = ['block-0','block-2']
         self.data['layers'][4]['disableLights'] = ['block-1','block-3']

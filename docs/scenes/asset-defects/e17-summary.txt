@@ -1,0 +1,46 @@
+  1) [chromium] › tests/e2e/turntable.spec.ts:48:1 › T-E17-08-all @E17 @E17-AC08 all modeled assets have five game renderer views
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 13
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "coverage": Array [
+    +       0.1247750486381323,
+    +       0.07393273305084745,
+    +       0.11488173890063424,
+    +       0.17120110993657506,
+    +       0.16397341906946264,
+    +     ],
+    +     "error": "coverage outside 10–80%",
+    +     "id": "decay.broken-glass",
+    +   },
+    + ]
+
+      61 |     writeFileSync(`${directory}/summary.json`, JSON.stringify(results, null, 2) + '\n');
+      62 |   }
+    > 63 |   expect(results.filter(a => a.error)).toEqual([]);
+         |                                        ^
+      64 |   expect(results).toHaveLength(selected.length);
+      65 | });
+      66 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/asset-defects/tests/e2e/turntable.spec.ts:63:40
+
+    Error Context: test-results/playwright/run-3361/e2e-turntable-T-E17-08-all-4b821-ve-five-game-renderer-views-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3361/e2e-turntable-T-E17-08-all-4b821-ve-five-game-renderer-views-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3361/e2e-turntable-T-E17-08-all-4b821-ve-five-game-renderer-views-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/e2e/asset-photo-audit.spec.ts (5.8m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/e2e/turntable.spec.ts:48:1 › T-E17-08-all @E17 @E17-AC08 all modeled assets have five game renderer views
+  41 passed (8.6m)

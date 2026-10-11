@@ -4490,7 +4490,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.police-station.glb",
-    "hash": "ffb6dbaa7b25f56b2ba2964a5b6e510aaac15cd6f7b9649ea1761212a3102561"
+    "hash": "5453203fd610597516dea0498d3de3e34912e14d4b755022b618fe059195e8ad"
   },
   "bld.storefront-row": {
     "class": "fixed",
