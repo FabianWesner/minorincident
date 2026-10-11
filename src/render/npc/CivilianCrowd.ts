@@ -216,11 +216,11 @@ class CivilianBatch extends Group {
       if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'hunting-rifle'].includes(handProp!) ) {
         // Only the torso/arm matrices change; the walking legs retain their heading and gait.
         const target = c.ally?.targetId ? this.world.entities.get(c.ally.targetId) : undefined;
-        if (target) this.gunDirection.set(target.transform.x - e.transform.x,0,target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
-        else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
+        if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y,target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
+        else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,firing.direction.y ?? 0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
         else this.gunDirection.set(1,0,0);
         const aiming = c.story?.clip === 'shoot' || !!firing && firing.until >= this.world.tick;
-        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? 0 : -.75, aiming ? .995 : .8)); blend[0] = frame; blend[1] = 1;
+        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : -.75, aiming ? .995 : .8)); blend[0] = frame; blend[1] = 1;
       }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
@@ -377,8 +377,8 @@ export class CivilianCrowd extends Group {
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
-  aimGun(id: number, direction: { x: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
-  shotMuzzle(id: number, direction: { x: number; z: number }): Vector3 | null {
+  aimGun(id: number, direction: { x: number; y?: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
+  shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {
     this.aimGun(id,direction);
     const entity = this.world.entities.get(id); if (!entity) return null;
     const model = crowdModelOf(entity);

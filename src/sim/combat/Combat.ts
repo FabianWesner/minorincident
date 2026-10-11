@@ -147,12 +147,12 @@ export class Combat {
       for (let i = 0; i < count; i++) {
         const direction = angle + (i / (count - 1) - 0.5) * def.spread * Math.PI / 180;
         this.pelletDirection.x = Math.cos(direction); this.pelletDirection.z = Math.sin(direction);
-        const target = this.query.ray(source.id, source.transform, this.pelletDirection, def.range);
+        const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, this.pelletDirection, def.range);
         if (target) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
       }
       for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
     } else {
-      const target = this.query.ray(source.id, source.transform, attack.aim, def.range);
+      const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range);
       if (target) this.hit(attack, target, source.transform, 'bullet');
     }
   };

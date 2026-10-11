@@ -19474,5 +19474,49 @@
     },
     "animatedDrawBase": "npc.civilian-man-a",
     "budgetNote": "Living adult: per-owner material draws capped by shipped npc.civilian-man-a at each tier; attachments batch inside owners."
+  },
+  {
+    "id": "kit.guard-tower",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.guard-tower/build.py",
+    "glb": "public/assets/models/kit.guard-tower.glb",
+    "sourceGlb": "assets/kit.guard-tower/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.guard-tower.lod1.glb",
+      "lod2": "public/assets/models/kit.guard-tower.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.08,
+      "y": 4.9,
+      "z": 2.8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 8
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 1200,
+      "lod2": 400
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
   }
 ]
