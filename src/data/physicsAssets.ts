@@ -4902,7 +4902,7 @@ export default {
       }
     ],
     "source": "public/assets/models/int.basement-cellar.glb",
-    "hash": "b7f31560e03970b7df195387a59a3d98a535b59a6fdcdf24c07216d00998e45b"
+    "hash": "4834d2bb38f17fd07c79e5bf1aff4d69f5b0d163cdf6ec92d614d0465593692c"
   },
   "bld.apartment-block-a": {
     "class": "fixed",

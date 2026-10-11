@@ -436,13 +436,19 @@ export class DistrictView extends Group {
     }
     return false;
   }
-  /** Unique enterable buildings (garage, depot, annex, cafe) lift their roof while the courier is inside the footprint: in-house action stays visible. */
-  private updateRoofs(player: { x: number; z: number }): void {
+  private readonly roofPoint = new Vector3();
+  /** Only the courier's own placement lifts its roof. Test in asset space so yaw, scale and rectangular footprints agree. */
+  private updateRoofs(player: { x: number; y?: number; z: number }): void {
     for (const entry of this.lodBatches) {
       if (!ROOFED.has(entry.id)) continue;
-      const { x, z } = worldAssets[entry.id].dimensions, half = Math.min(x, z) * .45;
-      const inside = entry.refs.some(r => Math.abs(player.x - (r.position.x + entry.origin[0])) < half && Math.abs(player.z - (r.position.z + entry.origin[1])) < half);
-      for (const group of [entry.hero, entry.near, entry.far]) group.traverse(o => { if (o instanceof Mesh && /^roof/.test(o.name)) o.visible = !inside; });
+      const { x, y, z } = worldAssets[entry.id].dimensions;
+      for (const ref of entry.refs) {
+        ref.updateWorldMatrix(true, false);
+        ref.worldToLocal(this.roofPoint.set(player.x - entry.origin[0], player.y ?? 0, player.z - entry.origin[1]));
+        const inside = Math.abs(this.roofPoint.x) < x / 2 - .2 && Math.abs(this.roofPoint.z) < z / 2 - .2 && this.roofPoint.y >= -.1 && this.roofPoint.y < y;
+        if (Boolean(ref.userData.roofHidden) === inside) continue;
+        for (const group of [entry.hero, entry.near, entry.far]) group.roofVisible(!inside, ref);
+      }
     }
   }
   /** Door openness (0 closed .. 1 open) per doored placement, eased toward its target. */

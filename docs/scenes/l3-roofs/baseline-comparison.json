@@ -1,0 +1,26 @@
+{
+  "baselineCommit": "5a9d26820dbf913734c06aeb23f82188b25ad425",
+  "sameFailingTests": true,
+  "changedFailures": {
+    "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band": "AssertionError: expected 273.8833333333333 to be less than or equal to 225",
+    "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition": "AssertionError: expected 60 to be 40 // Object.is equality",
+    "L3 The Police Collapse T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 6 m, axe/bat at <= 2.5 m (median, complete runs)": "AssertionError: expected 4.325737543825676 to be greater than or equal to 6",
+    "L3 The Police Collapse T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag": "AssertionError: expected 0 to be greater than or equal to 1",
+    "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports": "AssertionError: expected 0.19230769230769232 to be greater than or equal to 0.6",
+    "L3 The Police Collapse T-E21-11 @E21 @E21-AC11 progress never regresses by > 15 m (complete), and each forced street completes 20/20": "AssertionError: oak: expected +0 to be 1 // Object.is equality",
+    "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded": "AssertionError: expected 50 to be less than or equal to 12",
+    "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them": "AssertionError: expected 0 to be greater than or equal to 1",
+    "L3 The Police Collapse T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits": "AssertionError: expected 'segment-3' to be 'segment-2b' // Object.is equality"
+  },
+  "baselineFailures": {
+    "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band": "AssertionError: expected 273.8833333333333 to be less than or equal to 225",
+    "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition": "AssertionError: expected 60 to be 40 // Object.is equality",
+    "L3 The Police Collapse T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 6 m, axe/bat at <= 2.5 m (median, complete runs)": "AssertionError: expected 4.325737543825676 to be greater than or equal to 6",
+    "L3 The Police Collapse T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag": "AssertionError: expected 0 to be greater than or equal to 1",
+    "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports": "AssertionError: expected 0.19230769230769232 to be greater than or equal to 0.6",
+    "L3 The Police Collapse T-E21-11 @E21 @E21-AC11 progress never regresses by > 15 m (complete), and each forced street completes 20/20": "AssertionError: oak: expected +0 to be 1 // Object.is equality",
+    "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded": "AssertionError: expected 50 to be less than or equal to 12",
+    "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them": "AssertionError: expected 0 to be greater than or equal to 1",
+    "L3 The Police Collapse T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits": "AssertionError: expected 'segment-3' to be 'segment-2b' // Object.is equality"
+  }
+}
