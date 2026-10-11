@@ -2,7 +2,7 @@ import { afterEach, expect, test } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { allyState, updateAlly } from '../../../src/sim/outbreak/Allies';
 import type { CoverWall } from '../../../src/sim/combat/HitQuery';
-import { l3 } from '../../../src/data/l3';
+import { l3, l3ArmyOffset } from '../../../src/data/l3';
 import { loadL3 } from '../../../tools/sim-runner/l3Bots';
 
 let world: SimWorld | undefined;
@@ -56,7 +56,7 @@ test('@E21 checkpoint guard feet stay on all four tower decks', async () => {
   expect(guards).toHaveLength(8);
   for (const e of guards) {
     expect(e.transform.y - .7).toBeCloseTo(l3.soldiers.deckY);
-    expect(e.transform.x).toBe(138.5);
+    expect(e.transform.x).toBe(138.5 + l3ArmyOffset);
     expect(e.civilian!.ally?.weapon).toBe('rifle');
   }
   for (let i = 0; i < 60; i++) world.update();

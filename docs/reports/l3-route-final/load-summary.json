@@ -1,0 +1,198 @@
+{
+  "baselineCommit": "83969f51",
+  "conditions": "headless Chromium, native Apple WebGPU, local HTTP/2 TLS + Pages headers + Brotli, CDP 50 Mbit/s and 20 ms, fresh browser profile per version, high tier; shared Mac load recorded",
+  "summaries": [
+    {
+      "label": "baseline-final",
+      "cache": "cold",
+      "backend": "webgpu",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "cardMs": 8783,
+      "clickToPlayableMs": 8829.7,
+      "frameSummary": {
+        "count": 600,
+        "p50": 16.69999999999891,
+        "p95": 16.700000000000728,
+        "max": 33.399999999999636,
+        "over50": 0
+      },
+      "load": [
+        24.71875,
+        29.166015625,
+        22.14990234375
+      ],
+      "errors": [],
+      "trainRequests": [],
+      "measures": [
+        {
+          "name": "view:warm-up",
+          "at": 1246.0999994277954,
+          "ms": 189.10000038146973
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1795.7999992370605,
+          "ms": 318.70000076293945
+        },
+        {
+          "name": "view:warm-up",
+          "at": 5622,
+          "ms": 4590.699999809265
+        }
+      ]
+    },
+    {
+      "label": "baseline-final",
+      "cache": "warm",
+      "backend": "webgpu",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "cardMs": 4116.5,
+      "clickToPlayableMs": 4123.10000038147,
+      "frameSummary": {
+        "count": 601,
+        "p50": 16.69999999999891,
+        "p95": 16.700000000000728,
+        "max": 16.80000000000109,
+        "over50": 0
+      },
+      "load": [
+        25.32666015625,
+        29.08984375,
+        22.24560546875
+      ],
+      "errors": [],
+      "trainRequests": [],
+      "measures": [
+        {
+          "name": "view:warm-up",
+          "at": 655,
+          "ms": 229
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1312.3000001907349,
+          "ms": 363.79999923706055
+        },
+        {
+          "name": "view:warm-up",
+          "at": 2914.800000190735,
+          "ms": 2273.699999809265
+        }
+      ]
+    },
+    {
+      "label": "candidate-final",
+      "cache": "cold",
+      "backend": "webgpu",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "cardMs": 5349.8,
+      "clickToPlayableMs": 5594.40000038147,
+      "frameSummary": {
+        "count": 601,
+        "p50": 16.69999999999891,
+        "p95": 16.700000000000728,
+        "max": 16.80000000000291,
+        "over50": 0
+      },
+      "load": [
+        24.36376953125,
+        28.54052734375,
+        22.244140625
+      ],
+      "errors": [],
+      "trainRequests": [
+        {
+          "url": "https://127.0.0.1:3377/assets/models/veh.train-freight.lod2.glb?v=eeed67ba65",
+          "bytes": 34190,
+          "cached": false
+        }
+      ],
+      "measures": [
+        {
+          "name": "view:warm-up",
+          "at": 1891.8000001907349,
+          "ms": 217.5
+        },
+        {
+          "name": "level:world+nav",
+          "at": 2375.199999809265,
+          "ms": 368.80000019073486
+        },
+        {
+          "name": "view:warm-up",
+          "at": 6282.800000190735,
+          "ms": 1247.8000001907349
+        }
+      ]
+    },
+    {
+      "label": "candidate-final",
+      "cache": "warm",
+      "backend": "webgpu",
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      },
+      "cardMs": 2883.2,
+      "clickToPlayableMs": 3277.899999809265,
+      "frameSummary": {
+        "count": 601,
+        "p50": 16.69999999999891,
+        "p95": 16.799999999999272,
+        "max": 16.80000000000109,
+        "over50": 0
+      },
+      "load": [
+        24.4931640625,
+        28.4248046875,
+        22.2763671875
+      ],
+      "errors": [],
+      "trainRequests": [
+        {
+          "url": "https://127.0.0.1:3377/assets/models/veh.train-freight.lod2.glb?v=eeed67ba65",
+          "bytes": 0,
+          "cached": true
+        }
+      ],
+      "measures": [
+        {
+          "name": "view:warm-up",
+          "at": 423.80000019073486,
+          "ms": 185.5999994277954
+        },
+        {
+          "name": "level:world+nav",
+          "at": 1161.6999998092651,
+          "ms": 394.30000019073486
+        },
+        {
+          "name": "view:warm-up",
+          "at": 2513.300000190735,
+          "ms": 1336.5
+        }
+      ]
+    }
+  ]
+}

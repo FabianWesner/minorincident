@@ -1,4 +1,5 @@
-import { l3Anchors, l3Street } from '../../data/l3';
+import { highwayPoint } from './highway';
+import { l3Anchors, l3ArmyOffset, l3Street } from '../../data/l3';
 import { FootprintIndex, findClearSpot, firstOverlap, footprints, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 
@@ -73,6 +74,8 @@ export const l3Dressing: readonly L3Dressing[] = [
   fire('oak', 14, 29.4, 1.1), fire('oak', -72, 26.8, .9),
   // Fires deep inside the blocks (unreachable service strips): their smoke columns stand over every street.
   d('smoke', 'commerce', 'fx.fire', -18, -13.5, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', -44, 13.4, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', 30, 13.4, { scale: 1.6, entity: true }), d('smoke', 'blvd', 'fx.fire', 88, -13.5, { scale: 1.6, entity: true }),
+  d('abandoned', 'commerce', 'veh.sedan-white', 130, 2.2, {decay:'wrecked'}),
+  d('abandoned', 'commerce', 'veh.pickup-red', 209, 1.1, {decay:'wrecked'}),
   // ---------------------------------------------------------------- the station yard and the bridgehead (W1, organized)
   d('station', 'yard', 'prop.armory-table', -140.6, -8.4, { yaw: H }),
   d('station', 'yard', 'veh.police-sedan', -148, 10.4, { yaw: .1, lit: true }), d('station', 'yard', 'veh.police-suv', -140.6, 12.6, { yaw: -.2, lit: true }),
@@ -86,7 +89,13 @@ export const l3Dressing: readonly L3Dressing[] = [
   d('army', 'army', 'prop.light-tower', 145.6, -18.6), d('army', 'army', 'prop.light-tower', 145.6, 16.4, { yaw: PI }),
   ...([[141.2, -9.6], [141.2, 9.6], [141.2, -15.0], [141.2, 15.0], [146.0, -6.4], [146.0, 6.4]] as const).map(([x, z]) => d('army', 'army', 'prop.sandbag-pallet', x, z, { yaw: H })),
   ...([[154.0, -4.6], [154.0, 4.6], [162.0, -1.0]] as const).map(([x, z]) => d('army', 'army', 'prop.jersey-barrier', x, z, { yaw: 0 })),
-];
+].map(entry => entry.street === 'army' ? { ...entry, x: entry.x + l3ArmyOffset } : entry);
+
+/** Two staggered crash lines force Oak -> Boulevard; their ends overlap the solid lot frontages. */
+export const l3Roadblocks = [
+  {x:-72,z:0,halfWidth:5}, {x:-72,z:-28,halfWidth:6},
+  {x:12,z:0,halfWidth:5}, {x:12,z:28,halfWidth:5},
+] as const;
 
 /** Commerce Street shop fronts: broken glass at every frontage (E21 section 5.8), one per shop door. */
 export function commerceFrontages(layout: DistrictLayout): { x: number; z: number; facing: 1 | -1 }[] {
@@ -101,6 +110,25 @@ export function commerceFrontages(layout: DistrictLayout): { x: number; z: numbe
 export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-CORRIDOR') return layout;
+    for (const p of layout.placements) if (p.assetId === 'kit.highway-onramp') p.lightGroup = 'l3-highway';
+    const ramps = layout.placements.filter(p => p.assetId === 'kit.highway-onramp');
+    if (ramps.length === 2) {
+      const points: [number,number][] = [[133,0]];
+      for(const p of ramps) {
+        for(let i=0;i<=24;i++) {const v=highwayPoint(p,p.yaw>1?1-i/24:i/24);points.push([v[0],v[2]]);}
+      }
+      points.push([216,0]);
+      const entry = layout.roads.nodes.find(n => n.point[0] === 133 && n.point[1] === 0)!;
+      layout.roads.nodes.push({id:'l3-highway-exit',point:points.at(-1)!});
+      layout.roads.edges.push({id:'l3-highway',start:entry.id,end:'l3-highway-exit',points,laneWidth:4.62});
+    }
+    for (const c of layout.colliders) {
+      if (c.id.startsWith('dressing:highway-lip') || c.id.startsWith('dressing:highway-deck')) c.walkable = true;
+      if (c.id.startsWith('dressing:highway-jersey')) c.aabb.navBlocker = true;
+    }
+    // The central elevated span and entry lips support every walker just like the ramp strips.
+    layout.colliders.push({id:'l3-highway-deck',aabb:{min:[167.5,5.2,-2.31],max:[179.5,5.7,2.31]},walkable:true,minTier:0,maxTier:5});
+    for (let i=0;i<14;i++) for (const x of [139.3+i*.3,207.7-i*.3]) layout.colliders.push({id:`l3-highway-lip-${x}`,aabb:{min:[x-.155,0,-2.31],max:[x+.155,(i+1)*.05,2.31]},walkable:true,minTier:0,maxTier:5});
     for (const [name, [x, z]] of Object.entries(l3Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     // Placement rule shared with L2: dressing never cuts into a fence, wall, lamp, tree or another prop and stays out of
     // gardens; a piece that would moves to the nearest clear spot (cars slide along their own axis first, bumper to obstacle).
@@ -109,7 +137,20 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const through = new Set(layout.placements.filter(p => /fence/.test(p.assetId) && firstOverlap(p, walls, .2) !== undefined).map(p => p.id));
     layout.placements = layout.placements.filter(p => !through.has(p.id));
     layout.colliders = layout.colliders.filter(c => !through.has(c.id.split('/')[0]));
-    for (const p of layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
+    for (const p of layout.placements) {
+      if (p.assetId.startsWith('kit.')) p.allowRoad = true;
+      if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
+      if (p.assetId === 'prop.street-lamp' && l3Roadblocks.some(b=>Math.abs(p.position[0]-b.x)<4 && Math.abs(p.position[2]-b.z)<b.halfWidth+1)) {
+        p.position[0]+=7;p.visualAabb.min[0]+=7;p.visualAabb.max[0]+=7;
+      }
+      // Mount the span's lamp on the elevated deck, so its night pool lights the walking surface.
+      if(p.assetId === 'prop.street-lamp' && p.position[0]===174) {
+        p.navBlocker=true;p.allowRoad=true;
+        const dy=5.7-p.position[1], dz=-2.1-p.position[2];p.position[1]+=dy;p.position[2]+=dz;
+        p.visualAabb.min[1]+=dy;p.visualAabb.max[1]+=dy;p.visualAabb.min[2]+=dz;p.visualAabb.max[2]+=dz;
+      }
+      if(p.assetId === 'prop.street-lamp' && p.position[0]===136) {p.position[2]-=4;p.visualAabb.min[2]-=4;p.visualAabb.max[2]-=4;}
+    }
     const obstacles = obstaclesOf(layout, 2);
     const index = new FootprintIndex(obstacles);
     const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string) => {
@@ -129,11 +170,42 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, f] of commerceFrontages(layout).entries()) add(`l3-broken-window-${i}`, 'decay.broken-glass', f.x, f.z, f.facing > 0 ? 0 : Math.PI);
     // Authored decks stay at exact posts; automatic dressing clearance must not move the support away from its guards.
     for (const [i, z] of [-18, -7.6, 7.6, 18].entries()) {
-      layout.placements.push({ id: `l3-watchtower-${i}`, assetId: 'kit.guard-tower', position: [138.5, 0, z], yaw: 0,
+      layout.placements.push({ id: `l3-watchtower-${i}`, assetId: 'kit.guard-tower', position: [138.5 + l3ArmyOffset, 0, z], yaw: 0,
         scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'l3',
-        visualAabb: { min: [137.1, 0, z - 1.4], max: [140.18, 4.9, z + 1.4] } });
+        visualAabb: { min: [137.1 + l3ArmyOffset, 0, z - 1.4], max: [140.18 + l3ArmyOffset, 4.9, z + 1.4] } });
     }
-    layout.lightGroups.push({ id: 'l3', offAt: 5 });
+    // Deliberate pile-ups bypass the ordinary clearance relocation: bumper overlaps seal both pavements.
+    for (const [i, block] of l3Roadblocks.entries()) {
+      for (const [j, z] of [-(block.halfWidth-2), 0, block.halfWidth-2].entries()) {
+        const x = block.x + (j === 1 ? 1 : 0);
+        const wreck: Placement = {id:`l3-roadblock-${i}-${j}`,assetId:j===1?'veh.school-bus':'veh.sedan-blue',position:[x,0,block.z+z],yaw:Math.PI/2+(j-1)*.08,scale:j===1?[1,1,1]:[.65,.65,.65],decay:j===1?'burned':'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[x-1.7,0,block.z+z-4],max:[x+1.7,3.4,block.z+z+4]}};
+        if(j!==1) for(let k=0;k<15 && firstOverlap(wreck,walls,0)!==undefined;k++) wreck.position[2]+=(j===0?.1:-.1);
+        layout.placements.push(wreck);
+      }
+      // The compacted bodywork closes seams between the three overlapping wreck silhouettes.
+      layout.colliders.push({id:`l3-roadblock-${i}`,aabb:{min:[block.x-1.55,0,block.z-block.halfWidth],max:[block.x+2.55,2.2,block.z+block.halfWidth]},minTier:0,maxTier:5});
+    }
+    // Join each low ramp end to the city/base gate with visible jersey barriers, sealing ground-level bypasses.
+    for (const p of layout.placements.filter(p => p.assetId === 'kit.highway-onramp')) {
+      for (const side of [-1, 1]) {
+        const end = highwayPoint(p, 1, side * 2.6), entry = p.yaw > 1 ? [132.7, side * 4.5] : [212, -side * 4];
+        const dx=end[0]-entry[0], dz=end[2]-entry[1], length=Math.hypot(dx,dz), n=Math.ceil(length/2.8);
+        for (let i=0;i<n;i++) {
+          const x=entry[0]+dx*(i+.5)/n, z=entry[1]+dz*(i+.5)/n;
+          layout.placements.push({id:`l3-highway-edge-${p.id}-${side}-${i}`,assetId:'prop.jersey-barrier',position:[x,0,z],yaw:-Math.atan2(dz,dx),scale:[length/n/3,1,1],minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[x-2,0,z-2],max:[x+2,1,z+2]}});
+        }
+      }
+    }
+    for (const z of [-45.6,45.6]) {
+      const n=Math.ceil((212-132.6)/2.6), step=(212-132.6)/n;
+      for(let i=0;i<n;i++) {
+        const x=132.6+(i+.5)*step;
+        layout.placements.push({id:`l3-outskirts-fence-${z}-${i}`,assetId:'prop.privacy-fence',position:[x,0,z],yaw:Math.PI/2,scale:[1,1,step/2.6],minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[x-step/2-.05,0,z-.135],max:[x+step/2+.05,1.8,z+.135]}});
+      }
+    }
+    layout.placements.push({id:'l3-highway-train',assetId:'veh.train-freight',position:[175,0,17],yaw:0,scale:[1,1,1],minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[162.6,0,15],max:[187.4,4.9,19]}});
+    layout.placements.push({id:'l3-highway-car',navBlocker:true,assetId:'veh.sedan-blue',position:[173,5.7,1.1],yaw:0,scale:[1,1,1],decay:'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[170.7,5.7,0],max:[175.3,7.4,2.2]}});
+    layout.lightGroups.push({ id: 'l3-highway', offAt: 5 }, { id: 'l3', offAt: 5 });
     return layout;
   });
 }

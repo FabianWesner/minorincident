@@ -1,3 +1,4 @@
+import { highwayColliders } from '../L3/highway';
 import { staticCollision } from '../../assets/staticCollision';
 import type { Placement, StaticCollider, Aabb } from './types';
 
@@ -18,6 +19,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
   return authored.concat(placements.flatMap(p => {
     // Low flower strips reuse the hedge mesh, but never its walking obstacle
     // or a stale district footprint from an earlier export.
+    if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') return highwayColliders(p);
     if (p.assetId === 'prop.flower') return [];
     const shape = sources[p.collisionId ?? p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);
@@ -30,6 +32,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
         const point = [sx * Math.cos(p.yaw) + sz * Math.sin(p.yaw) + p.position[0], y * p.scale[1] + p.position[1], -sx * Math.sin(p.yaw) + sz * Math.cos(p.yaw) + p.position[2]];
         for (let axis = 0; axis < 3; axis++) { aabb.min[axis] = Math.min(aabb.min[axis], point[axis]); aabb.max[axis] = Math.max(aabb.max[axis], point[axis]); }
       }
+      if(p.navBlocker) aabb.navBlocker = true;
       return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: box.max[1] < .45 || extraSupports[p.assetId]?.includes(box), minTier: p.minTier, maxTier: p.maxTier }];
     });
   }));

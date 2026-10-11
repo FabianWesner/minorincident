@@ -5,6 +5,8 @@
  * Progress is the X coordinate. Times in seconds, speeds in m/s. Every number is read by the L3 controller, bots and tests.
  */
 type P = readonly [number, number];
+/** PO 2026-10-11: checkpoint compound translated east, preserving its internal layout. */
+export const l3ArmyOffset = 76;
 export const l3 = {
   /** Section 5.1: the corridor. Streets are E-W lines (z); segments are X ranges of the corridor proper. */
   map: {
@@ -12,7 +14,7 @@ export const l3 = {
     /** Corridor entrance (yard gate) -> On-ramp Road; S1 / S2 / S3 boundaries. */
     corridor: [-126, 128] as P, segments: [[-126, -40], [-40, 50], [50, 128]] as readonly P[],
     /** Entrance to the army compound; the rendezvous ring further inside ends the level. */
-    zoneX: 140, zoneZ: [-4.4, 4.4] as P,
+    zoneX: 140 + l3ArmyOffset, zoneZ: [-4.4, 4.4] as P,
     /** Station yard fence (the "inside" of the 8-inside fallback rule). */
     yard: { x0: -160, x1: -126, z0: -22, z1: 22 },
   },
@@ -50,7 +52,7 @@ export const l3 = {
       [[-30, 'commerce', 4], [-22, 'blvd', 3], [-8, 'oak', 3], [2, 'commerce', 3], [10, 'blvd', 3], [22, 'oak', 3], [30, 'commerce', 3], [44, 'blvd', 2]],
       // S3 (x 50..128): about 40: one dense cluster per street (7) staggered along the corridor, plus groups between them.
       // PO 10-09: the clusters of 8 are two waves of 4 about 14 m apart (a lull to back off, take the medkit and set up), not one blob.
-      [[62, 'commerce', 4], [76, 'commerce', 4], [86, 'commerce', 3], [92, 'blvd', 3], [80, 'blvd', 3], [58, 'blvd', 2], [70, 'oak', 4], [82, 'oak', 4], [92, 'oak', 3]],
+      [[146, 'commerce', 2], [174, 'commerce', 2], [199, 'commerce', 2], [62, 'commerce', 4], [76, 'commerce', 4], [86, 'commerce', 3], [92, 'blvd', 3], [80, 'blvd', 3], [58, 'blvd', 2], [70, 'oak', 4], [82, 'oak', 4], [92, 'oak', 3]],
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
@@ -65,7 +67,7 @@ export const l3 = {
     caps: { high: 80, low: 40 },
   },
   /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
-  finale: { startX: 65, packs: [[72, 8], [94, 12], [116, 15]] as readonly P[], chaseS: 40, barrierX: 137.1, passX: 138.2, closeS: .7 },
+  finale: { startX: 65, packs: [[72, 8], [94, 12], [116, 15]] as readonly P[], chaseS: 40, barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */
   medkits: {
     heal: 40,
@@ -74,6 +76,7 @@ export const l3 = {
       // Visible sidewalks on every avenue; 30-35 m between packs, plus relief after the larger clusters.
       ...([-100, -66, -32, 2, 36, 60, 88, 108, 122] as const).flatMap(x =>
         ([-28, 0, 28] as const).map(z => [x === -100 && z === -28 ? x - 1 : x, z + ((x === -100 && z === -28) || (x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * (z === -28 ? 4.4 : 3.4)] as const)),
+      [147, 3.3], [178, -1.2], [201, -3.3],
     ] as readonly P[],
   },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
@@ -88,7 +91,7 @@ export const l3 = {
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
-  bots: { seeds: 1, completeMedianS: [120, 225] as P, newbieMedianS: [150, 270] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 2 },
+  bots: { seeds: 1, completeMedianS: [120, 405] as P, newbieMedianS: [150, 270] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 2 },
 } as const;
 
 /** Named world points authored into the L3 layout copy (resolved through the ordinary mission anchor lookup). */
@@ -97,7 +100,8 @@ export const l3Anchors: Record<string, P> = {
   'l3-armory': [-139.2, -8.4],
   'l3-yard': [-142, 2],
   'l3-gate': [-127.5, 0],
-  'l3-zone': [149, 0],
+  'l3-zone': [149 + l3ArmyOffset, 0],
+  'l3-route': [-120, 0],
   'l3-sergeant': [-140.4, -5.6],
   // Squad (start near the armory) and the six yard posts behind sandbags at the gates.
   'l3-squad-1': [-141.6, -6.4], 'l3-squad-2': [-137.2, -6.0], 'l3-squad-3': [-138.4, -3.4], 'l3-squad-4': [-136.0, -8.8],
@@ -111,6 +115,7 @@ export const l3Anchors: Record<string, P> = {
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
   'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
 };
+for (const [name, point] of Object.entries(l3Anchors)) if (name.startsWith('l3-soldier-') || name === 'photo-l3-army-checkpoint') l3Anchors[name] = [point[0] + l3ArmyOffset, point[1]];
 /** Photo spots (section 6): name and camera offset, same framing scale as the L2 spots. */
 export const l3PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ['l3-station-yard', [16, 20, 16]], ['l3-station-attack', [18, 22, 18]], ['l3-squad-strong', [16, 20, 16]], ['l3-oak-avenue', [18, 22, 18]],
