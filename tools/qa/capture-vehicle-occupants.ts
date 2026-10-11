@@ -22,7 +22,7 @@ try {
  }
  if (process.argv[3] !== 'cars') {
  await session.inspectLevel('L2');
- await session.page.evaluate(async()=>{const a=window.__SS__!;a.pause();a.missions.begin();a.missions.completeObjective('axe');a.missions.completeObjective('calm');a.missions.completeObjective('board');await a.step(170);a.camera.preset('vehicle');});
+ await session.page.evaluate(async()=>{const a=window.__SS__!;a.inspect.enable(true,{courier:'unchanged'});a.pause();a.missions.begin();a.missions.completeObjective('axe');a.missions.completeObjective('calm');a.missions.completeObjective('board');await a.step(170);a.inspect.enable(false);a.camera.follow();});
  await session.screenshot(`${out}/l2-game.png`);
  writeJson(`${out}/l2-ride.json`,await session.page.evaluate(()=>window.__SS__!.getState()));
  const cells=[];
@@ -33,8 +33,11 @@ try {
  }
  await session.makeSheet(cells,`${out}/l2-ride-sheet.jpg`,640);
  await session.page.evaluate(async()=>{const a=window.__SS__!;while(!a.missions.state()!.l2!.arrivedAt)await a.step(60);await a.step(60);});
- await session.page.evaluate(()=>{const a=window.__SS__!,t=a.getEntity(a.missions.state()!.l2!.truckId)!.transform,r=19,polar=Math.PI*.3;a.inspect.setCamera({target:[t.x,1,t.z],position:[t.x+r*Math.sin(polar)/Math.sqrt(2),1+r*Math.cos(polar),t.z+r*Math.sin(polar)/Math.sqrt(2)]});});
+ await session.page.evaluate(()=>{const a=window.__SS__!;a.inspect.enable(false);a.camera.follow();});
  await session.screenshot(`${out}/l2-exit.png`);
  writeJson(`${out}/l2.json`,await session.page.evaluate(()=>window.__SS__!.getState()));
+ await session.page.evaluate(async()=>{const a=window.__SS__!;a.input.set({move:{x:1,z:0}});await a.step(90);a.input.clear();});
+ await session.screenshot(`${out}/l2-control.png`);
+ writeJson(`${out}/l2-control.json`,await session.page.evaluate(()=>window.__SS__!.getState()));
  }
 } finally {await session.close();stopServer();}
