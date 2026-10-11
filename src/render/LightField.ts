@@ -124,11 +124,7 @@ export class LightField {
     const fieldUv = local.add(.5);
     const edge = local.abs().max(local.yx.abs()).x.smoothstep(.5, .42);
     const height = positionWorld.y.div(5).oneMinus().clamp(.15, 1);
-    return Fn(() => {
-      const radiance = vec3(0).toVar();
-      If(this.enabled.greaterThan(0), () => { radiance.assign(texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height)); });
-      return radiance;
-    })();
+    return texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height).mul(this.enabled);
   }
   setQuality(tier: 'high' | 'low'): void {
     if (tier === this.tier) return;

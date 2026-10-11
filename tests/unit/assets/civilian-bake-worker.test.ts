@@ -32,6 +32,13 @@ test('invalid data falls back without disabling later preparation', async () => 
   const next = pool.loadCivilianBake('next', 'lod1'); slots[0].onmessage!({ data: { bytes: new ArrayBuffer(1) } } as MessageEvent);
   expect(await next).toEqual({ geometry: 'prepared' });
 });
+test('counts generated assets only after their transferred payload decodes successfully', async () => {
+  const pool = await import('../../../src/assets/civilianBake');
+  const job = pool.loadCivilianBake('model', 'lod1');
+  slots[0].onmessage!({ data: { bytes: new ArrayBuffer(1), prebuilt: true } } as MessageEvent);
+  expect(await job).toEqual({ geometry: 'prepared' });
+  expect(pool.civilianBakeStats.prebuilt).toBe(1);
+});
 test('worker failure releases active and queued jobs and disables the failed pool', async () => {
   const pool = await import('../../../src/assets/civilianBake');
   const jobs = Array.from({ length: 6 }, () => pool.loadCivilianBake('model', 'lod1'));
