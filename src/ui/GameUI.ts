@@ -313,6 +313,14 @@ export class GameUI {
     if (this.game.campaign) this.settings.patch(this.game.campaign.settings, false);
     this.applySettings(); this.hud.loaded();
   }
+  async prepareHud(): Promise<void> {
+    if (!this.enabled || !this.started) return;
+    await this.hud.prepare();
+    const hidden = this.pauseButton.hidden;
+    this.pauseButton.style.visibility = 'hidden'; this.pauseButton.hidden = false;
+    this.pauseButton.getBoundingClientRect();
+    this.pauseButton.hidden = hidden; this.pauseButton.style.visibility = '';
+  }
   update(): void {
     if (!this.enabled) return;
     const start = performance.now();

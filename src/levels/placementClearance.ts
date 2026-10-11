@@ -47,7 +47,18 @@ function polysOverlap(a: readonly Pt[], b: readonly Pt[]): boolean {
   }
   return true;
 }
-const bounds = (poly: readonly Pt[]) => ({ x0: Math.min(...poly.map(p => p[0])), x1: Math.max(...poly.map(p => p[0])), z0: Math.min(...poly.map(p => p[1])), z1: Math.max(...poly.map(p => p[1])) });
+type Bounds = { x0: number; x1: number; z0: number; z1: number };
+// Footprints are immutable snapshots of placements; reuse their broad-phase bounds.
+const footprintBounds = new WeakMap<readonly Pt[], Bounds>();
+const bounds = (poly: readonly Pt[]): Bounds => {
+  let box = footprintBounds.get(poly);
+  if (!box) {
+    box = { x0: Infinity, x1: -Infinity, z0: Infinity, z1: -Infinity };
+    for (const [x, z] of poly) { box.x0 = Math.min(box.x0, x); box.x1 = Math.max(box.x1, x); box.z0 = Math.min(box.z0, z); box.z1 = Math.max(box.z1, z); }
+    footprintBounds.set(poly, box);
+  }
+  return box;
+};
 export const footprintsOverlap = (a: Footprint, b: Footprint): boolean => {
   if (a.y1 <= b.y0 || b.y1 <= a.y0) return false;
   const p = bounds(a.poly), q = bounds(b.poly);
@@ -76,16 +87,42 @@ export function obstaclesOf(layout: DistrictLayout, tier: Tier, skip: ReadonlySe
 /** Front gardens: the loose-prop and vehicle rules keep dressing out of them. */
 export const inLawn = (layout: DistrictLayout, x: number, z: number): boolean => layout.lawns.some(l => x >= l.min[0] && x <= l.max[0] && z >= l.min[1] && z <= l.max[1]);
 
+/** Append-only obstacle index for one dressing pass. Footprints are immutable. */
+export class FootprintIndex {
+  readonly buckets = new Map<number, Map<number, Footprint[]>>();
+  constructor(obstacles: readonly Footprint[]) { this.add(obstacles); }
+  add(obstacles: readonly Footprint[]): void {
+    const buckets = this.buckets;
+    for (const obstacle of obstacles) {
+      const box = bounds(obstacle.poly);
+      for (let x = Math.floor(box.x0 / 4); x <= Math.floor(box.x1 / 4); x++) {
+        let column = buckets.get(x); if (!column) buckets.set(x, column = new Map());
+        for (let z = Math.floor(box.z0 / 4); z <= Math.floor(box.z1 / 4); z++) {
+          let bucket = column.get(z); if (!bucket) column.set(z, bucket = []);
+          bucket.push(obstacle);
+        }
+      }
+    }
+  }
+}
+
 /**
  * Nearest clear spot for `p`, same yaw. Vehicles first slide along their own axis (a car pulled back until its bumper just
  * touches the post reads as parked against it, never driven through it), then everything spirals outwards. A spot must be
  * inside the district, outside every garden and clear of all `obstacles` by `margin`; `accept` adds level-specific rules.
  */
-export function findClearSpot(layout: DistrictLayout, p: Placement, obstacles: readonly Footprint[], opts: { margin?: number; slide?: boolean; lawnOk?: boolean; accept?: (x: number, z: number) => boolean; maxRadius?: number } = {}): [number, number] | undefined {
+export function findClearSpot(layout: DistrictLayout, p: Placement, obstacles: readonly Footprint[], opts: { margin?: number; slide?: boolean; lawnOk?: boolean; accept?: (x: number, z: number) => boolean; maxRadius?: number; index?: FootprintIndex } = {}): [number, number] | undefined {
   const margin = opts.margin ?? .1, [x0, , z0] = p.position;
+  const buckets = (opts.index ?? new FootprintIndex(obstacles)).buckets;
   const at = (x: number, z: number): boolean => {
     if (!inside([x, z], layout.bounds) || (!opts.lawnOk && inLawn(layout, x, z)) || opts.accept?.(x, z) === false) return false;
-    return firstOverlap({ ...p, position: [x, p.position[1], z] }, obstacles, margin) === undefined;
+    for (const mine of footprints({ ...p, position: [x, p.position[1], z] }, margin, true)) {
+      const box = bounds(mine.poly);
+      for (let bx = Math.floor(box.x0 / 4); bx <= Math.floor(box.x1 / 4); bx++) for (let bz = Math.floor(box.z0 / 4); bz <= Math.floor(box.z1 / 4); bz++) {
+        for (const obstacle of buckets.get(bx)?.get(bz) ?? []) if (footprintsOverlap(mine, obstacle)) return false;
+      }
+    }
+    return true;
   };
   if (at(x0, z0)) return [x0, z0];
   if (opts.slide) for (let d = .1; d <= 4; d += .1) for (const k of [d, -d]) {
@@ -117,15 +154,17 @@ export function addedOverlaps(layout: DistrictLayout, tier: Tier, added: (p: Pla
  */
 export function resolveOverlaps(layout: DistrictLayout, tier: Tier, movable: (p: Placement) => boolean, opts: { maxRadius?: number } = {}): string[] {
   const live = layout.placements.filter(p => p.minTier <= tier && p.maxTier >= tier), moved: string[] = [];
+  const occupied = new Map(live.map(p => [p, footprints(p)]));
   for (const p of live) {
     if (!movable(p) || !footprints(p, 0, true).length) continue;
-    const others = live.filter(q => q.id !== p.id).flatMap(q => footprints(q));
+    const others = live.filter(q => q.id !== p.id).flatMap(q => occupied.get(q)!);
     if (firstOverlap(p, others) === undefined) continue;
     const spot = findClearSpot(layout, p, others, { slide: p.assetId.startsWith('veh.'), maxRadius: opts.maxRadius ?? 6 });
     if (!spot) continue;
     const [dx, dz] = [spot[0] - p.position[0], spot[1] - p.position[2]];
     p.position = [spot[0], p.position[1], spot[1]];
     p.visualAabb = { min: [p.visualAabb.min[0] + dx, p.visualAabb.min[1], p.visualAabb.min[2] + dz], max: [p.visualAabb.max[0] + dx, p.visualAabb.max[1], p.visualAabb.max[2] + dz] };
+    occupied.set(p, footprints(p));
     moved.push(p.id);
   }
   return moved;

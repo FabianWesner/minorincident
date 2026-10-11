@@ -47,6 +47,16 @@ export class Onboarding {
     if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB attack · Shift+LMB in place' : lesson === 'second-side' ? 'RMB cycle · LMB attack' : lesson === 'selector' ? 'RMB / Q · switch weapons' : 'Stand / F / MMB';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
+  /** Prime native font fallback/text shaping without selecting or consuming a lesson. */
+  prepare(scheme: Scheme): void {
+    const hidden = this.element.hidden, value = this.element.textContent;
+    this.element.hidden = false;
+    for (const lesson of lessons) {
+      text(this.element, `${this.glyph(lesson, scheme)} · ${descriptions[lesson]}`);
+      this.element.getBoundingClientRect();
+    }
+    this.element.textContent = value; this.element.hidden = hidden;
+  }
   update(scheme: Scheme, playing: boolean): void {
     const level = this.world.missions?.def.id ?? this.world.scenario;
     if (!playing || !level || !/^L[1-6]$/.test(level)) { this.element.hidden = true; return; }

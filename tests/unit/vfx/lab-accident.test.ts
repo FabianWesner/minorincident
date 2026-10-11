@@ -80,3 +80,17 @@ test('T-E19-19d @E19 @E19-AC19 lab smoke and debris remain alive but are camera 
   expect(column.pieceCount).toBe(1);
   column.dispose();
 });
+
+test('@transition smoke puffs share one shader graph and retain independent colors and opacity', () => {
+  const column = new SmokeColumn(), puffs = column.children.slice(0, 150) as Mesh[];
+  const materials = puffs.map(mesh => mesh.material as import('three/webgpu').MeshBasicNodeMaterial);
+  expect(new Set(materials).size).toBe(150);
+  expect(new Set(materials.map(material => material.opacityNode)).size).toBe(1);
+  expect(new Set(materials.map(material => material.customProgramCacheKey())).size).toBe(1);
+  const rng = new Rng(1, 'independent-puffs');
+  column.spawnPuff(0, rng, 0, 0, -10); column.spawnPuff(.25, rng, 0, 0, -10);
+  column.advance(.3, .3, new Quaternion());
+  expect(materials[0].opacity).not.toBe(materials[1].opacity);
+  expect(materials[0].color.toArray()).not.toEqual(materials[1].color.toArray());
+  column.dispose();
+});

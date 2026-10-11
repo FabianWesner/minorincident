@@ -14,7 +14,9 @@ export function visibilityPolygon(source: { x: number; z: number }, reach: numbe
     let distance = reach;
     for (const a of nearby) {
       let near = 0, far = distance;
-      for (const [origin, direction, min, max] of [[source.x, dx, a.min[0], a.max[0]], [source.z, dz, a.min[2], a.max[2]]]) {
+      for (let axis = 0; axis < 2; axis++) {
+        const origin = axis === 0 ? source.x : source.z, direction = axis === 0 ? dx : dz;
+        const min = a.min[axis * 2], max = a.max[axis * 2];
         if (Math.abs(direction) < 1e-9) { if (origin < min || origin > max) { far = -1; break; } }
         else {
           const t1 = (min - origin) / direction, t2 = (max - origin) / direction;
