@@ -1,3 +1,4 @@
+import { gunCarryElevation, gunHoldOffset } from './characters/GunAim';
 import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
@@ -11,7 +12,7 @@ import type { PaletteMaterial } from './PaletteMaterial';
 
 interface LoadedActionAsset { model: Object3D; source: 'glb' | 'placeholder'; reason: string | null }
 const sides = ['LEFT', 'RIGHT'] as const;
-const restTilt = 0.9, gunLower = 0.4;
+const restTilt = 0.9;
 const holsters = { back: { rot: [0, 0, 2.2] as const, pos: [-0.14, 0.02, 0] as const }, hip: { rot: [0, 0, -0.3] as const, pos: [0.02, -0.05, 0.2] as const } };
 
 /** Selected-side telegraph; fixed geometry buffers and reusable projectile meshes.
@@ -51,9 +52,15 @@ export class ActionView extends Group {
   private targetMarkerId: number | null = null;
   private cue: { origin: number[]; range: number; opacity: number } | null = null;
   private gunUntil = -1;
+  private gunId = '';
+  private gunSide: Side = 'LEFT';
+  private readyWeight = 0;
+  private readyTick = -1;
   private readonly gunDirection = { x: 1, z: 0 };
   /** Shot-time presentation intent (sim events can arrive between rendered frames). */
   aimGun(direction: { x: number; z: number }): void {
+    this.gunSide = this.world.combat!.runner.loadout.state.selectedSide;
+    this.gunId = this.world.combat!.runner.loadout.current(this.gunSide).id;
     Object.assign(this.gunDirection, direction); this.gunUntil = this.world.tick + 24;
   }
   muzzle(out: Vector3): Vector3 | null {
@@ -136,26 +143,59 @@ export class ActionView extends Group {
       this.offset = 0; this.geometry.setDrawRange(0, 0); this.trailGeometry.setDrawRange(0, 0); return;
     }
     const loadout = combat.runner.loadout;
-    // One weapon in hand: the selected side's weapon sits in the dominant (right) hand; the other side's melee weapon
-    // rides on the back and its gun on the hip. Fists, kicks, throwables and abilities are never drawn as props.
-    const selectedSide = loadout.state.selectedSide, aiming = this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
-    if (aiming) this.character.aimGun(this.gunDirection);
+    // Draw the selected weapon in the dominant hand and hide the other slot.
+    const selectedSide = loadout.state.selectedSide, aiming = selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
+    const selectedId = loadout.current(selectedSide).id;
+    if (this.held[selectedSide]?.id !== selectedId || selectedSide !== this.selected) {
+      this.readyWeight = 0; this.readyTick = -1;
+      if (!aiming) this.gunUntil = -1;
+    }
+    const gun = action(loadout.current(selectedSide).id).category === 'ranged';
+    if (gun && !player.riding && this.character.rideWeight === 0 && player.health.current > 0) {
+      const age = this.gunUntil < 0 ? Infinity : this.world.tick - (this.gunUntil - 24);
+      const input = this.world.inputFrame;
+      const fire = selectedSide === 'LEFT' ? input.left : input.right;
+      const aimingInput = !!input.aim && (!!input.pointerTarget || input.aimSource === 'keyboard' || input.aimSource === 'touch' || fire.down || fire.held);
+      const dt = this.readyTick < 0 || this.world.tick < this.readyTick ? 1 / 60 : Math.max(0, this.world.tick - this.readyTick) / 60;
+      this.readyWeight += ((aimingInput ? 1 : 0) - this.readyWeight) * (1 - Math.exp(-18 * dt));
+      this.readyTick = this.world.tick;
+      if (aimingInput && input.aim && age !== 0) {
+        const yaw = Math.atan2(this.gunDirection.z, this.gunDirection.x);
+        const delta = Math.atan2(Math.sin(Math.atan2(input.aim.z, input.aim.x) - yaw), Math.cos(Math.atan2(input.aim.z, input.aim.x) - yaw));
+        const next = yaw + delta * (1 - Math.exp(-18 * dt));
+        this.gunDirection.x = Math.cos(next); this.gunDirection.z = Math.sin(next);
+      }
+      // Keep the whole grip/barrel frame rigid in the palm. Lower the arm, never
+      // rotate a gun independently through the fingers. Ease back to low ready.
+      const release = Math.max(0, Math.min(1, (age - 12) / 24));
+      const shotWeight = aiming || age < 36 ? 1 - release * release * (3 - 2 * release) : 0;
+      const weight = Math.max(this.readyWeight, shotWeight);
+      const direction = this.handPosition.set(1, 0, 0).applyQuaternion(this.character.quaternion);
+      const facing = Math.atan2(direction.z, direction.x), target = Math.atan2(this.gunDirection.z, this.gunDirection.x);
+      const heading = facing + Math.atan2(Math.sin(target - facing), Math.cos(target - facing)) * weight;
+      direction.set(Math.cos(heading), 0, Math.sin(heading));
+      const recoil = age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .035 : 0;
+      // Long stocks/tubes extend behind the palm. Hold them outside the
+      // shoulder line instead of letting the stock sweep through torso/head.
+      const asset = action(selectedId).viewAssetId, lateral = gunHoldOffset(asset);
+      this.character.aimGun(direction, gunCarryElevation(asset) * (1 - weight), .995 - recoil, weight > .001, lateral);
+    }
     const striking = Object.keys(combat.runner.running).length > 0;
     for (const side of sides) {
       const def = action(loadout.current(side).id); let held = this.held[side];
-      if (held?.id !== def.id) { const model = this.model(def); if (!model) continue; held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group(); holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
+      if (held?.id !== def.id) { const model = this.model(def); if (!model) { if (held) held.holder.visible = false; continue; } held?.holder.removeFromParent(); const clone = model.clone(true), holder = new Group(); holder.add(clone); held = { id: def.id, model: clone, holder, tilt: 0 }; this.held[side] = held; }
       const prop = def.category === 'melee' || def.category === 'ranged' || (def.category === 'throwable' && held.model.userData.placeholder !== true);
       const inHand = side === selectedSide, mount = inHand ? this.character.socket('RIGHT')?.socket ?? null : this.holsterMount(def.category);
       if (mount && held.holder.parent !== mount) mount.add(held.holder);
       const pose = inHand ? null : holsters[def.category === 'ranged' ? 'hip' : 'back'];
       if (pose) { held.holder.rotation.set(pose.rot[0], pose.rot[1], pose.rot[2]); held.holder.position.set(pose.pos[0], pose.pos[1], pose.pos[2]); }
       else {
-        // In hand: melee weapons rest tilted up and away from the body, guns are lowered; both straighten for the strike or shot.
-        held.tilt += ((striking || aiming ? 0 : def.category === 'melee' ? restTilt : def.category === 'ranged' ? -gunLower : 0) - held.tilt) * .25;
+        // Melee rests tilted away from the body; gun pitch belongs to the arm pose.
+        held.tilt += ((striking || aiming ? 0 : def.category === 'melee' ? restTilt : 0) - held.tilt) * .25;
         if (aiming && def.category === 'ranged') held.tilt = 0;
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
-      held.holder.visible = !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
+      held.holder.visible = inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
@@ -254,10 +294,10 @@ export class ActionView extends Group {
     this.trail.visible = this.trailVertices > 0; this.trailGeometry.setDrawRange(0, this.trailVertices); this.trailGeometry.getAttribute('position').needsUpdate = true;
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
-  /** Scene Lab body clearance probes use the actual visible firing gun meshes. */
+  /** Scene Lab checks the visible gun in every state, including low ready. */
   gunMeshes(): { entity: number; geometry: import('three').BufferGeometry; matrix: import('three').Matrix4 }[] {
     const held = this.held[this.selected], result: { entity: number; geometry: import('three').BufferGeometry; matrix: import('three').Matrix4 }[] = [];
-    if (!held?.holder.visible || this.world.tick > this.gunUntil || action(held.id).category !== 'ranged') return result;
+    if (!held?.holder.visible || action(held.id).category !== 'ranged') return result;
     held.model.updateWorldMatrix(true,true);
     held.model.traverse(node => { if (node instanceof Mesh) result.push({ entity:1,geometry:node.geometry,matrix:node.matrixWorld }); });
     return result;
@@ -270,7 +310,7 @@ export class ActionView extends Group {
       nodes.socket.getWorldPosition(this.socketPosition); nodes.hand.getWorldPosition(this.handPosition);
       held?.model.getObjectByName('grip')?.getWorldPosition(this.gripPosition);
       const def = held && action(held.id), asset = def && this.assets.get(def.viewAssetId);
-      return { side, actionId: held?.id, visible: held?.holder.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, muzzle: held?.model.getObjectByName('muzzle')?.getWorldPosition(new Vector3()).toArray() ?? null, socket: nodes.socket.name, holstered: side !== this.selected, handDistance: side === this.selected ? this.socketPosition.distanceTo(this.handPosition) : 0, gripDistance: side === this.selected ? this.gripPosition.distanceTo(this.socketPosition) : 0, attached: !!held?.holder.parent, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
+      return { side, actionId: held?.id, visible: held?.holder.visible ?? false, iconUrl: def ? actionIconUrl(def.iconId) : null, barrel: held ? new Vector3(1, 0, 0).transformDirection(held.model.matrixWorld).toArray() : null, muzzle: held?.model.getObjectByName('muzzle')?.getWorldPosition(new Vector3()).toArray() ?? null, socket: nodes.socket.name, holstered: side !== this.selected, handDistance: side === this.selected ? this.socketPosition.distanceTo(this.handPosition) : 0, gripDistance: side === this.selected ? this.gripPosition.distanceTo(this.socketPosition) : 0, attached: !!held?.holder.parent, source: asset?.source, sockets: def ? ['grip', def.category === 'ranged' ? 'muzzle' : 'tip'].filter((name) => held?.model.getObjectByName(name)) : [] };
     });
     return { aimCue: this.cue, targetMarker: this.targetMarkerId === null ? null : { id: this.targetMarkerId, radius: .5 }, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }

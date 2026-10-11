@@ -276,9 +276,9 @@ export class CharacterView extends Group {
     this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing + spin); this.facingTime = time;
   }
   /** Applied after living/ride layers, preserving the animated legs. */
-  aimGun(direction: { x: number; z: number }): void {
+  aimGun(direction: { x: number; z: number }, elevation = 0, reach = .995, turnTorso = true, lateral = 0): void {
     this.lookWeight = 0;
-    this.characters.get(this.variant)?.aim.apply(direction);
+    this.characters.get(this.variant)?.aim.apply(direction, undefined, elevation, reach, turnTorso, lateral);
     this.updateMatrixWorld(true);
   }
   private facing = 0;

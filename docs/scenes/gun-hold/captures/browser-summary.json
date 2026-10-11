@@ -1,0 +1,232 @@
+{
+  "stats": {
+    "startTime": "2026-10-11T08:08:43.638Z",
+    "duration": 137776.788,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6353
+        }
+      ]
+    },
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 32435
+        }
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 30990
+        }
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 30328
+        }
+      ]
+    },
+    {
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5569
+        }
+      ]
+    },
+    {
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3693
+        }
+      ]
+    },
+    {
+      "title": "@gun-hold selected weapon alone is visible through input, pickup, reload and restore",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6405
+        }
+      ]
+    },
+    {
+      "title": "@gun-hold low ready, aim blend, recoil and turning keep the gun fixed to the palm",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15863
+        }
+      ]
+    },
+    {
+      "title": "@gun-pose courier and every NPC gun muzzle match the rendered tracer (standing)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 27907
+        }
+      ]
+    },
+    {
+      "title": "@gun-pose courier and every NPC gun muzzle match the rendered tracer (walking)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 24059
+        }
+      ]
+    },
+    {
+      "title": "@gun-pose equipped handgun has no permanent cyan or yellow line at idle",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5750
+        }
+      ]
+    },
+    {
+      "title": "@gun-pose short muzzle aim cue stops at a fence and fades after the shot",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6150
+        }
+      ]
+    },
+    {
+      "title": "@gun-pose army nest fires from its rotating authored HMG muzzle socket",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7143
+        }
+      ]
+    },
+    {
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 17364
+        }
+      ]
+    },
+    {
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 14654
+        }
+      ]
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11006
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 446
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 511
+        }
+      ]
+    },
+    {
+      "title": "T-E06-08c @E06 @E06-AC08 all roster actions attach to the dominant hand when either slot is selected across both hero rigs",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5736
+        }
+      ]
+    },
+    {
+      "title": "T-E06-pickup-view @E06 pickup spawn and walk-over wire through the browser API",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3119
+        }
+      ]
+    }
+  ]
+}
