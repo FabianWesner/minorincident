@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
-import { l3Anchors } from '../../../src/data/l3';
+import { l3, l3Anchors } from '../../../src/data/l3';
 
 test('L3 defence waypoint @E21: game camera and explained destinations', async ({ page }) => {
   test.setTimeout(180_000);
@@ -37,22 +37,27 @@ test('L3 defence waypoint @E21: game camera and explained destinations', async (
   await expect(page.locator('.hud-tracker')).toContainText('Help defend the station');
   await page.screenshot({ path: `${output}/after-defend.png` });
   writeFileSync(`${output}/after-defend.json`, JSON.stringify(state, null, 2));
-  await page.evaluate(async () => {
+  const fallbackMarker = await page.evaluate(async () => {
     const api = window.__SS__!;
     api.cheats.completeObjective('defend');
+    // The objective names the destination; the next tick installs connected-route guidance.
+    const marker = api.missions.state()!.marker;
     await api.step(1);
     await api.screenshotReady();
+    return marker;
   });
-  expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('l3-zone');
+  expect(fallbackMarker).toBe('l3-zone');
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('l3-route');
   await expect(page.locator('.hud-tracker')).toContainText('Reach the rendezvous ring inside the army checkpoint');
   await page.screenshot({ path: `${output}/after-fallback.png` });
-  await page.evaluate(async () => {
+  await page.evaluate(async ([x, z]) => {
     const api = window.__SS__!;
-    api.teleport('player', { x: 149, z: 0 });
+    // Shortcut arrival must finish without walking the route guidance first.
+    api.teleport('player', { x, z });
     await api.step(20);
     api.camera.follow();
     await api.screenshotReady();
-  });
+  }, l3Anchors['l3-zone']);
   const arrived = await page.evaluate(() => window.__SS__!.missions.state()!);
   expect(arrived.l3!.crossedAt).toBeGreaterThan(0);
   expect(arrived.marker).toBeNull();
@@ -67,20 +72,22 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, progression: 'L3-default' }));
   await page.getByRole('button', { name: 'Begin mission' }).click();
   await page.evaluate(() => window.__SS__!.pause());
-  await page.evaluate(async () => {
+  const blockerId = await page.evaluate(async ({ barrierX, ring }) => {
     const api = window.__SS__!;
     api.inspect.enable(false); api.pause(); api.cheats.god(true);
     api.cheats.completeObjective('armory');
     await api.step(310);
     api.cheats.completeObjective('defend');
-    api.npcs.civilian('resident', { x: 137.1, z: 0 }, { waypoints: [{ x: 137.1, z: 0 }] });
-    api.teleport('player', { x: 145, z: 0 });
+    const id = api.npcs.civilian('resident', { x: barrierX, z: 0 }, { waypoints: [{ x: barrierX, z: 0 }] });
+    api.teleport('player', { x: ring[0] - 4, z: ring[1] });
     await api.step(60);
     api.camera.follow(); await api.screenshotReady();
-  });
+    return id;
+  }, { barrierX: l3.finale.barrierX, ring: l3Anchors['l3-zone'] });
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.l3!.crossedAt)).toBe(0);
   await expect(page.locator('.hud-tracker')).toContainText('Reach the rendezvous ring inside the army checkpoint');
   await page.screenshot({ path: `${output}/after-compound-rendezvous.png` });
-  const click = await page.evaluate(x => window.__SS__!.input.project({ x, z: 0 }), l3Anchors['l3-zone'][0]);
+  const click = await page.evaluate(([x, z]) => window.__SS__!.input.project({ x, z }), l3Anchors['l3-zone']);
   await page.mouse.click(click.x, click.y);
   let arrived = false;
   for (let i = 0; i < 120; i++) {
@@ -91,6 +98,10 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   expect(arrived).toBe(true);
   const state = await page.evaluate(() => window.__SS__!.missions.state()!);
   expect(state.l3!.barrierClosedAt ?? 0).toBe(0);
+  const blocker = await page.evaluate(id => window.__SS__!.getEntity(id)!, blockerId);
+  expect(blocker.health.current).toBeGreaterThan(0);
+  expect(Math.abs(blocker.transform.x - l3.finale.barrierX)).toBeLessThan(.6);
+  expect(Math.abs(blocker.transform.z)).toBeLessThan(2.2);
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/after-finale-entry.png` });
   await page.evaluate(() => window.__SS__!.step(90));
