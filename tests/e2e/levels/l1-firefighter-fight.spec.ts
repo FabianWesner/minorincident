@@ -1,9 +1,10 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../fixtures';
 import { menuStart } from '../ui-helpers';
+import { stationPoint } from '../../../src/data/l2';
 
 /**
- * L1 ending: the "Get in!" firefighter at the open bay of Fire Station 3 (Main Row) fights an infected that reaches him, in the
+ * L1 ending: the "Get in!" firefighter at the open bay of Fire Station 3 fights an infected that reaches him, in the
  * game camera (PO 2026-10-08: "I also liked that Zombies can attack him"). Includes night late-arrival survival, entry and a capture; sim rules are tests/levels/l1-firefighter.test.ts.
  */
 const output = 'test-results/getin-firefighter';
@@ -25,7 +26,8 @@ test('T-E19-firefighter-fight @E19 the firefighter swings at an infected at the 
   const firefighter = (await mission()).l1!.firefighterId!;
   expect(firefighter).toBeGreaterThan(0);
   const post = await page.evaluate(id => window.__SS__!.query({ kind: 'civilian' }).find(e => e.id === id)!.transform, firefighter);
-  const out = { x: post.x + .3, z: post.z + 2.5 };
+  const [spawnX, spawnZ] = stationPoint(5.2, -1.2);
+  const out = { x: spawnX, z: spawnZ };
   await page.evaluate(({ out, post }) => {
     for (let i = 0; i < 10; i++) window.__SS__!.spawn('infected.runner', out, { state: 'idle', yaw: -Math.atan2(post.z - out.z, post.x - out.x) });
   }, { out, post });
