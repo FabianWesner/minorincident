@@ -23,6 +23,7 @@ import { seatAnchor } from '../../sim/npc/seats';
 import { allyState } from '../../sim/outbreak/Allies';
 import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
+import { cameraFraming } from '../../data/cameraFraming';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelFourLayouts } from '../../levels/L4/layout';
 import { levelFiveLayouts } from '../../levels/L5/layout';
@@ -449,9 +450,11 @@ export class SceneLab {
       const s = Math.sin(polar) * radius;
       view.preset('scene-lab', { target, position: [target[0] + s * Math.sin(azimuth), target[1] + Math.cos(polar) * radius, target[2] + s * Math.cos(azimuth)] });
     };
-    // The game camera: 25° FOV, polar 0.30π, azimuth π/4, radius 19 (View.ts).
-    if (c.mode === 'game') spherical(this.target(c.target, 0), 19 * (c.zoom ?? 1), view.polar, view.azimuth);
-    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), 19 * (c.zoom ?? 1), view.polar, view.azimuth);
+    // Match View.resize's portrait framing as well as the desktop game camera.
+    const aspect = view.camera.aspect, { radiusM, portraitWidthM, fovDeg } = cameraFraming;
+    const radius = aspect >= 1 ? radiusM : Math.max(radiusM, portraitWidthM / (2 * Math.tan(fovDeg * Math.PI / 360) * aspect));
+    if (c.mode === 'game') spherical(this.target(c.target, 0), radius * (c.zoom ?? 1), view.polar, view.azimuth);
+    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), radius * (c.zoom ?? 1), view.polar, view.azimuth);
     else if (c.mode === 'close') spherical(this.target(c.target), c.radius ?? 5, view.polar, c.azimuth === undefined ? view.azimuth : rad(c.azimuth));
     else if (c.mode === 'orbit') spherical(this.target(c.target), c.radius ?? 10, rad(c.polar ?? 54), rad((c.azimuth ?? 45) + (c.spin ?? 0) * this.frame / 60));
     else view.preset('scene-lab', { position: c.position, target: c.target });
