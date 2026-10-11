@@ -1,3 +1,4 @@
+import { healthFraction } from './health';
 import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
@@ -178,7 +179,7 @@ export class Hud {
     if (this.root.style.visibility !== visibility) this.root.style.visibility = visibility;
     if (!player || hidden && !preparing) return;
     if (this.loadedScenario !== world.scenario) this.loaded();
-    const hp = clamp(player.health.current / player.health.max);
+    const hp = healthFraction(player.health.current, player.health.max);
     this.health.fill.style.width = `${hp * 100}%`; text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
     this.health.root.setAttribute('aria-valuenow', String(hp * 100));
     const shield = world.combat?.effects.shielded(player.transform) || player.combat?.shield ? 1 : player.combat?.armor ?? 0;

@@ -3,6 +3,8 @@ import { l1v2 } from './l1v2';
 export const INFECTED_TOUGHNESS = 1.5;
 /** Infected balance in metres/seconds/HP, from concept §7. Human roles and animals share one brain. */
 export interface InfectedDef {
+  /** Shared world-space health bar; healthy animals never qualify. */
+  bar?: boolean;
   id: string; hp: number; speed: number; radius: number; damage: number; range: number;
   windup: number; attackInterval?: number; special: string; weight: number; grabChance: number; asset: string;
 }
@@ -21,8 +23,8 @@ export const humanInfected: readonly InfectedDef[] = [
 export const animalInfected: readonly InfectedDef[] = [
   role('dog', 30, 7, 'pounce', 0.3, 0.4), role('cat', 15, 6, 'cling', 0.2, 0.4),
   { ...role('crow', 20, 9, 'dive', 1, 0.6), weight: 5 },
-  role('lion', 400, 7.5, 'pin', 0.6, 0.6), role('gorilla', 1200, 4.5, 'prop-throw', 0.7, 0.8),
-  role('flamingo', 10, 5, 'peck', 0.25),
+  { ...role('lion', 400, 7.5, 'pin', 0.6, 0.6), bar: true }, { ...role('gorilla', 1200, 4.5, 'prop-throw', 0.7, 0.8), bar: true },
+  { ...role('flamingo', 10, 5, 'peck', 0.25), bar: true },
 ];
 export const infectedDefinitions = [...humanInfected, ...animalInfected];
 export function infectedDef(id: string): InfectedDef {

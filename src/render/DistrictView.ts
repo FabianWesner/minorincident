@@ -11,6 +11,9 @@ import {
   Frustum,
   Matrix4,
   Sphere,
+  Raycaster,
+  type Intersection,
+  type PerspectiveCamera,
   Vector3,
   InstancedMesh,
   Mesh,
@@ -432,6 +435,35 @@ export class DistrictView extends Group {
           if (enter > exit) break;
         }
         if (enter <= exit && enter < .98) return true;
+      }
+    }
+    return false;
+  }
+  private readonly barRay = new Raycaster();
+  private readonly barBox = new Box3();
+  private readonly barHit = new Vector3();
+  private readonly barHits: Intersection[] = [];
+  private readonly barChecked = new Set<InstancedGroup>();
+  /** Enemy bars test drawn solid geometry: navigation boxes intentionally omit roofs and upper walls. */
+  occludesBar(camera: PerspectiveCamera, target: Vector3): boolean {
+    this.barRay.set(camera.position, this.barHit.copy(target).sub(camera.position).normalize());
+    this.barRay.far = camera.position.distanceTo(target) - .01;
+    this.barChecked.clear();
+    for (const entry of this.lodBatches) {
+      if (entry.height < 1.1 || worldAssets[entry.id].foliage || !worldAssets[entry.id].world.solid) continue;
+      for (let i = 0; i < entry.refs.length; i++) {
+        const ref = entry.refs[i], band = entry.bands[i];
+        if (band === undefined || ref.userData.propEnabled === false) continue;
+        const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1];
+        const half = entry.half * Math.max(ref.scale.x, ref.scale.z);
+        this.barBox.min.set(x - half, ref.position.y, z - half);
+        this.barBox.max.set(x + half, ref.position.y + entry.height * ref.scale.y, z + half);
+        if (!this.barRay.ray.intersectBox(this.barBox, this.barHit) || this.barHit.distanceTo(camera.position) > this.barRay.far) continue;
+        const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
+        if (this.barChecked.has(batch)) continue;
+        this.barChecked.add(batch); this.barHits.length = 0;
+        this.barRay.intersectObject(batch, true, this.barHits);
+        if (this.barHits.length) return true;
       }
     }
     return false;

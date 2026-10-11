@@ -8,6 +8,8 @@ import { lookViewpoints } from '../data/lookViewpoints';
 import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
+import { NoToneMapping, ColorManagement } from 'three/webgpu';
+import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
 import { ObjectiveMarker } from './ObjectiveMarker';
@@ -93,6 +95,9 @@ export class GameView implements Lifecycle {
   private actions: ActionView | null = null;
   private contactShadows: ContactShadows | null = null;
   private crowd: CrowdView | null = null;
+  private healthBars: HealthBars | null = null;
+  private readonly barScene = new Scene();
+  private readonly barOccluded = (target: Vector3) => this.districts?.occludesBar(this.camera, target) ?? false;
   private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private pendingPreparation: { shared: NonNullable<GameView['districtResources']>; instanceCapacity?: number } | null = null;
   private preparation: Promise<void> | null = null;
@@ -369,6 +374,7 @@ export class GameView implements Lifecycle {
         } else await prepare();
       }
       finally { restore?.(); unwarm?.(); restoreGates?.(); }
+      if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
@@ -396,7 +402,7 @@ export class GameView implements Lifecycle {
     if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; }
-    if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
+    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
     if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
@@ -586,7 +592,7 @@ export class GameView implements Lifecycle {
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
     return { machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null,
-      vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, actions: this.actions?.getState() ?? null,
+      vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
       probes: this.lookdev ? { lamp: this.project(...this.lookdev.lampHead.position.toArray() as [number, number, number]), shadow: this.project(...this.lookdev.shadowProbe.position.toArray() as [number, number, number]) } : null };
@@ -695,6 +701,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
@@ -757,7 +764,19 @@ export class GameView implements Lifecycle {
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    // Health bars keep their CSS size and contrast through DOF, bloom and vignette.
+    if (this.healthBars?.count && !this.idPass && !this.windowMask && !this.foliageMask) {
+      this.renderBars();
+    }
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
+  }
+  private renderBars(): void {
+    const renderer = this.renderer, autoClear = renderer.autoClear, tone = renderer.toneMapping, color = renderer.outputColorSpace;
+    try {
+      // The material performs its own color conversion, like RenderPipeline's output quad.
+      renderer.autoClear = false; renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
+      renderer.render(this.barScene, this.camera);
+    } finally { renderer.autoClear = autoClear; renderer.toneMapping = tone; renderer.outputColorSpace = color; }
   }
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
@@ -827,6 +846,8 @@ export class GameView implements Lifecycle {
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
     this.preparedDistrictViews.clear(); this.districts = null;
     this.frozenStarted = -1; this.frozenPose = null;
+    pickBodies.reset();
+    if (this.healthBars) { this.healthBars.removeFromParent(); this.healthBars.dispose(); this.healthBars = null; }
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }
