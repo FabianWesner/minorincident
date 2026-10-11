@@ -1,13 +1,23 @@
 import { readFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import { BufferAttribute, BufferGeometry, Color, type Group } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { expect, test } from 'vitest';
-import { encodeCivilianBake, decodeCivilianBake } from '../../../src/assets/civilianBakeData';
+import { encodeCivilianBake, decodeCivilianBake, decompressCivilianBake } from '../../../src/assets/civilianBakeData';
 import { AssetRegistry } from '../../../src/assets/registry';
 import { prepareCivilianGeometry, prepareCivilianRig } from '../../../src/render/npc/prepareCivilianGeometry';
 import { loadCivilianSource, disposeCivilianSource } from '../../../src/assets/civilianSource';
 import { CrowdGunAim } from '../../../src/render/characters/GunAim';
+
+test('handles raw gzip and fetch responses already decompressed by Content-Encoding', async () => {
+  const bytes = new Uint8Array([8, 0, 0, 0, 1, 2, 3, 4]).buffer;
+  expect(await decompressCivilianBake(bytes)).toBe(bytes);
+  const zipped = gzipSync(new Uint8Array(bytes));
+  const compressed = zipped.buffer.slice(zipped.byteOffset, zipped.byteOffset + zipped.byteLength);
+  expect(Buffer.from(await decompressCivilianBake(compressed)).equals(Buffer.from(bytes))).toBe(true);
+  await expect(decompressCivilianBake(new Uint8Array([0x1f, 0x8b, 0]).buffer)).rejects.toThrow();
+});
 
 test('civilian transfer preserves every geometry/pose byte and display field', () => {
   const geometry = new BufferGeometry();

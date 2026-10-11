@@ -6,15 +6,15 @@ import { test, expect } from '../fixtures';
 
 const phase = process.env.TRANSITION_PHASE ?? 'after';
 const out = 'test-results/level-transition';
+// Screencast/DOM tracing competes with the phone's post-card frame budget.
+// Persist raw RAF samples and optional CPU profiles after recording instead.
+test.use({ trace: 'off' });
 declare global {
   interface Window {
     transitionProbe?: { done: boolean; error?: string; start: number; ready: number; recordingStart: number; begin: number; frames: number[]; previous: number; recording: boolean; stopped: boolean };
   }
 }
 for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
-  // Screencast/DOM tracing competes with the phone's post-card frame budget.
-  // Persist raw RAF samples and optional CPU profiles after recording instead.
-  test.use({ trace: 'off' });
   if (tier === 'phone') test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true });
   test(`@transition menu and every campaign load retain a picture ${tier}`, async ({ page, context }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(180_000); mkdirSync(out, { recursive: true });

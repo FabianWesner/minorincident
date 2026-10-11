@@ -52,6 +52,7 @@ import { lodPolicy } from './lodPolicy';
 import { layoutLights } from './WorldLights';
 import { footprint, auraLight, pickupLight } from './LightField';
 import { timeOfDay as timeOfDayPresets } from '../data/timeOfDay';
+import { Environment } from './lighting/Environment';
 
 /** Presentation composition: E01 fixture or E02 lookdev, with state flowing only from sim to view. */
 /** Bat roundhouse body turn (presentation only; the sim sweep strikes each target as this angle passes it):
@@ -73,6 +74,7 @@ export class GameView implements Lifecycle {
   readonly view = new View();
   readonly camera = this.view.camera;
   renderer: Renderer;
+  private environment?: Environment;
   contextLost = false;
   private lostRendererDisposal: Promise<void> | null = null;
   renderedFrames = 0;
@@ -195,7 +197,7 @@ export class GameView implements Lifecycle {
   retireLostRenderer(): void { this.lostRendererDisposal = this.renderer.dispose(); }
   async restoreContext(): Promise<void> {
     const canvas = this.renderer.domElement;
-    this.reset(); await this.lostRendererDisposal; this.lostRendererDisposal = null;
+    this.reset(); this.environment?.dispose(); this.environment = undefined; await this.lostRendererDisposal; this.lostRendererDisposal = null;
     this.renderer = new Renderer(this.params, canvas); await this.renderer.init();
     this.resize(); await this.load(); this.contextLost = false; this.update(1);
   }
@@ -208,7 +210,7 @@ export class GameView implements Lifecycle {
     if (this.world.districts) {
       this.renderer.shadowMap.enabled=true;
       if(!this.districtResources){
-        const lighting=new Lighting(this.scene, this.look, this.renderer),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
+        const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)),materials=new Materials(lighting),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
         this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
       }
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
@@ -249,7 +251,7 @@ export class GameView implements Lifecycle {
       this.scene.add(this.character);
     } else if (this.world.player) {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene, this.look, this.renderer); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)); this.materials = new Materials(this.lighting);
       const ground = new Mesh(new PlaneGeometry(this.world.combat?.definition.ground.width ?? 100, this.world.combat?.definition.ground.depth ?? 100), this.materials.get('sidewalk')); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
       this.meshes.push(ground); this.scene.add(ground);
       if (this.world.scenario === 'horde-readability') {
@@ -259,7 +261,7 @@ export class GameView implements Lifecycle {
       this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
-      this.lighting = new Lighting(this.scene, this.look, this.renderer); this.materials = new Materials(this.lighting);
+      this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)); this.materials = new Materials(this.lighting);
       this.lookdev = new Lookdev(this.materials, this.occlusion); this.scene.add(this.lookdev);
       this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
     } else {
@@ -370,10 +372,14 @@ export class GameView implements Lifecycle {
         // Execute the shared shader's fire branch and its HDR field pass while
         // loading. The final full-size draw also executes the daylight branch.
         if (this.lighting && this.lighting.field.strength.value === 0) {
-          const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 0, 1, Infinity);
+          const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 1, 1, Infinity);
           try {
             this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
             await prepare();
+            // Execute a lit full-size frame too: native driver specialization
+            // must finish before the first accident/fire frame in gameplay.
+            if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+            await this.renderer.finishWarmUp();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
       }
@@ -849,5 +855,5 @@ export class GameView implements Lifecycle {
   }
   /** Newly spawned E11 objects are loaded before screenshot/shader readiness resolves. */
   async synchronizeInteractions(): Promise<void> { await this.interactions?.synchronize(); }
-  dispose(): void { this.reset(); this.missionUI?.dispose(); this.missionUI=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); this.flashOverlay.remove(); }
+  dispose(): void { this.reset(); this.environment?.dispose(); this.environment = undefined; this.missionUI?.dispose(); this.missionUI=null; window.removeEventListener('resize', this.resize); this.idPlayer.dispose(); this.idBackground.dispose(); this.renderer.dispose(); this.renderer.domElement.remove(); this.flashOverlay.remove(); }
 }

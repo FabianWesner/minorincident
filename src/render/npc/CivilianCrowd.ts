@@ -36,7 +36,9 @@ import { prepareCivilianGeometry, prepareCivilianRig, type PreparedCivilian } fr
 export { restoreStanding } from './prepareCivilianGeometry';
 // Cache prepared CPU geometry, including LOD simplification; each scene owns a clone.
 const preparedCrowds = new Map<string, PreparedCivilian>();
-const preparedCrowdLimit = 64;
+// Retain at most the twelve core models' two common tiers. Different campaign casts
+// must not accumulate pose atlases across repeated L1/L6 loads.
+const preparedCrowdLimit = coreCivilianModels.length * 2;
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
@@ -149,7 +151,9 @@ class CivilianBatch extends Group {
     this.mesh.userData.staticInstancePosition = material.positionNode;
     this.mesh.onAfterRender = () => this.probe.draw();
     // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
-    if (this.world.scenario === 'L6') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
+    // Settled bodies are always placed through LOD1 below. LOD0/LOD2 never
+    // populate these pages, so preparing them repeats the bake and node build.
+    if (this.world.scenario === 'L6' && this.lod === 'lod1') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false, shotId?: number): void {

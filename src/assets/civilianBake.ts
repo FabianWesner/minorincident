@@ -1,6 +1,6 @@
 import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 import { decodeCivilianBake } from './civilianBakeData';
-export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, failed: 0 };
+export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, prebuilt: 0, failed: 0 };
 type Job = { id: number; model: string; lod: string; resolve: (value: PreparedCivilian | undefined) => void };
 const queue: Job[] = [], workers: { worker: Worker; job?: Job }[] = [];
 let sequence = 0, unavailable = false, idle: ReturnType<typeof setTimeout> | undefined;
@@ -13,12 +13,14 @@ function drain(): void {
     try { worker = new Worker(new URL('../render/npc/civilianBake.worker.ts', import.meta.url), { type: 'module' }); }
     catch { unavailable = true; for (const slot of workers.splice(0)) { slot.job?.resolve(undefined); slot.worker.terminate(); } drain(); return; }
     const slot: typeof workers[number] = { worker }; workers.push(slot); civilianBakeStats.workers++;
-    worker.onmessage = (event: MessageEvent<{ bytes?: ArrayBuffer }>) => {
+    worker.onmessage = (event: MessageEvent<{ bytes?: ArrayBuffer; prebuilt?: boolean }>) => {
       const job = slot.job; slot.job = undefined;
       if (job) {
         try {
           if (!event.data.bytes) throw new Error('Worker preparation failed');
-          const baked = decodeCivilianBake(event.data.bytes); civilianBakeStats.completed++; job.resolve(baked);
+          const baked = decodeCivilianBake(event.data.bytes); civilianBakeStats.completed++;
+          if (event.data.prebuilt) civilianBakeStats.prebuilt++;
+          job.resolve(baked);
         } catch { civilianBakeStats.failed++; job.resolve(undefined); }
       }
       drain();

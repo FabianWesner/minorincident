@@ -1,8 +1,8 @@
-1. load-times: work in progress on `lane/load-times`, based on main `57189968`; final native runs are queued behind other lanes.
-2. Fixes: exact placement indexing, worker crowd preparation, shared matrix/pose shaders, one daylight/fire graph, cast preparation, physics-copy warm-up and overlapping L1 compilation.
-3. Last measured high (packed), L1–L6/restart: 3.46 / 2.56 / 2.38 / 1.38 / 2.01 / 2.34 / 1.64 s; six of seven meet 3 s.
-4. Provisional phone (packed; late machine load 4.10): 7.82 / 6.82 / 8.88 / 4.62 / 4.70 / 6.17 / 4.70 s; repeat pending against 5 s.
-5. Original L3 assertion reproduced a 183.4 ms hitch; packed L3 and every high transition peak at 16.8 ms with zero post-card frames above 50 ms.
-6. Typecheck/lint/build and remote 529 tests in 145 files pass; memory, context recovery and GPU gun poses are queued; five of 13 broader sim failures reproduce on untouched base.
-7. Inspected packed captures: L2 crew, seated civilians, firetruck, props and shadows render coherently; L5 retains its cellar-wall occlusion; 88 unselected captures/profiles/traces deleted.
-8. Targets remain unfulfilled and the latest candidate is unmeasured; no deployment or merge; methods, experimental timings and limits: [metrics](load-times-metrics.json).
+1. load-times progress checkpoint on `lane/load-times`, base main `57189968`; all seven high transitions pass, phone work continues.
+2. Fixes include indexed placement, one nav bake, actual cast preparation, shared shaders, lossless civilian bakes (72 assets/46.37 MiB gzip) and bounded CPU caching.
+3. Strict native high (inflated), L1–L6/restart: 1.98 / 2.31 / 1.92 / 1.43 / 1.49 / 1.67 / 1.43 s; all seven meet 3 s; preflight load 2.00/no other browsers.
+4. Strict phone: 6.18 / 4.40 / 6.48 / 3.67 / 3.57 / 3.93 / 3.56 s; L1/L3 exceed 5 s; L1 retains two post-card hitches (116.6 ms peak).
+5. Original L3 assertion reproduced 183.4 ms; latest L3 peaks at 16.8 ms high/33.4 ms phone; every high row has zero frames above 50 ms.
+6. Remote 607 tests/147 files pass; all 72 bakes match runtime bytes; focused loader/environment checks pass; context recovery/gun poses pass; phone memory ratio remains red.
+7. Inspected captures retained in [captures](load-times-captures/): L2 crew/truck/corgi/shadows intact, L5 cellar occlusion preserved, rifle/pistol align with hands/tracers.
+8. Latest shared environment/full-size fire warm-up is awaiting native validation; targets remain unfulfilled; no deploy/merge; [methods and metrics](load-times-metrics.json).

@@ -4,6 +4,13 @@ import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 type ArraySpec = { name: string; size: number; length: number; uint?: boolean; normalized?: boolean; stride?: number; offset?: number; shared?: string };
 type RigNode = { name: string; position: number[]; rotation: number[]; scale: number[]; matrix: number[]; auto: boolean; worldAuto: boolean; children: RigNode[] };
 type Header = { gripReach?: number; rig?: RigNode; version: number; arrays: ArraySpec[]; clip: { parts: string[]; frames: number; duration: number }; shirt?: number[]; doubleSided: boolean; strideScale: number; userData: Record<string, unknown> };
+/** Fetch may already decompress Content-Encoding: gzip; raw static-host bytes
+ * still need inflation. Both responses contain the identical lossless payload. */
+export async function decompressCivilianBake(bytes: ArrayBuffer): Promise<ArrayBuffer> {
+  const header = new Uint8Array(bytes, 0, Math.min(2, bytes.byteLength));
+  if (header[0] !== 0x1f || header[1] !== 0x8b) return bytes;
+  return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+}
 /** Lossless build output: a small JSON header followed by aligned Float32/Uint32 arrays. */
 export function encodeCivilianBake(baked: PreparedCivilian): Uint8Array {
   const arrays: { spec: ArraySpec; data?: Float32Array | Uint32Array }[] = [];

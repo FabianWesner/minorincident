@@ -100,6 +100,13 @@ existing comparison, all must items passing and at least 70% of should items.
 Milestone production and the infected gore-probe review remain separate batch
 work; a passing readiness guard does not complete those criteria.
 
+`npm run assets:bake-civilians` generates content-addressed, gzip-compressed
+lossless civilian geometry, pose atlases and rigs for all three authored tiers.
+Run it after changing civilian GLBs, palette, clips or preparation code. The
+generated manifest and binaries are committed together; unit tests compare
+every shipped byte against the runtime preparation path. Missing output uses
+the same worker preparation during loading.
+
 `E2E_PORT=3349 sh tools/e2e-lock.sh npx tsx tools/assets/lod-check.ts <id> ...`
 saves small 3×2 contact sheets to each asset’s `renders/lod-check.png`, using
 shipped GLBs, game palette/light, 36° elevation, and 45°/225° azimuths. It uses
