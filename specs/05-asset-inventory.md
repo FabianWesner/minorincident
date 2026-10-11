@@ -1,6 +1,6 @@
 # 05 · Asset Inventory
 
-Snapshot date: **2026-10-05**. The status lifecycle is defined in `03-asset-pipeline.md` §9. Production pipeline: Codex imagegen → upscaled reference → `bpy` build script → GLB (no img2threejs).
+Historical snapshot date: **2026-10-05**. **Current campaign delta (verified 2026-10-11) is §7**; it supersedes older per-level need/status notes below for L4–L9. Historical counts are not current manifest totals. The status lifecycle is defined in `03-asset-pipeline.md` §9. Production pipeline: Codex imagegen → upscaled reference → `bpy` build script → GLB (no img2threejs).
 
 ## 1. Summary
 
@@ -409,4 +409,52 @@ The PO redesigned L2–L6 ([`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10
 
 ### 6.6 No longer needed by the campaign (kept in the repo)
 
-The zoo kit and animals (`D-ZOO`), the substation and rail crossing, the helipad and flare stands, the school/gym and baseball-field sets for L2, the brother and Mrs. Alvarez escorts, the special-infected archetype models (§3.2) are not used by the redesigned L2–L6. They stay integrated for tests, photo modes and later levels.
+The zoo kit and animals (`D-ZOO`), the substation and rail crossing, the helipad and flare stands, the school/gym and baseball-field sets for L2, the brother and Mrs. Alvarez escorts, the special-infected archetype models (§3.2) are not used by the redesigned L2–L6. They stay available for reuse. **Superseded 2026-10-11:** D-ZOO and animals are required by E30/L8 (§7); the helipad/helicopter ending remains retired.
+
+## 7. PO L4–L9 update: verified reuse and new asset needs (2026-10-11)
+
+Source: [`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), including later health-bar/special-move updates. This section supersedes older campaign assignments (rocket in L4, zoo in L4, helicopter finale). Check `src/assets/manifest.json`, actual `assets/<id>/build.py`/GLBs and source systems; integrated status does not imply a new variant or drivable behavior is built.
+
+> PO, verbatim: "Alpha should have a health bar and special moves"; "Same for Zoo animals".
+
+### 7.1 Reuse before new builds
+
+| Existing asset/system | Verified state / campaign use | Required change |
+| --- | --- | --- |
+| `inf.common-worker` | integrated, `assets/inf.common-worker/build.py`, GLB + LOD1/2; existing rigid-part human base | derive **`inf.alpha`**, never a new unrelated human rig |
+| `wpn.shotgun`, `icon.shotgun` | integrated; `weapon.shotgun` catalog with 8 pellets, damage/falloff | L5 basement pickup/campaign no-ammo config; no new weapon model |
+| `wpn.rocket-launcher`, `icon.rocket-launcher` | integrated; existing projectile and `explosion.rocket`/E27 pools | L7 wreck pickup/unlimited config/crowd radius; `proj.rocket` is reference-only, reuse existing procedural projectile before building a model |
+| `veh.evac-bus` | integrated GLB/LOD1/2, used in L4 | L7 working boarding/departure, skyline cinematic; no new bus |
+| `veh.military-truck`, `veh.military-apc`, `veh.tank` | integrated GLB/LOD1/2 + wrecked variants | L4 spectacle, L5/L7 wrecks; APC needs unarmed variant and E09 drivable data/anchors for L8–L9 (not currently a drivable catalog definition) |
+| D-FAIR buildings: apartment blocks, storefronts, town hall, church, Kessler hardware, metro entrance | integrated W0 models and W5 `decayVariants`; `src/levels/L4/layout.ts` / `L5/layout.ts` | retain landmark footprints; derive W6 variants/edge route, do not rebuild the city |
+| `decay.collapsed-facade`, `decay.rubble-pile`, `decay.crater`, `decay.blown-sandbags`, fuel-truck crater | source GLBs/LOD1/2 exist, decay props shipped | reuse for W6 severe ruin modules and broken defensive lines |
+| `int.basement-cellar`, `int.metro-station`, `int.metro-exit`, `kit.metro-tunnel` | integrated models/LOD1/2 | L5 pickup/visible entrance closure and L6/L7 shared Northgate exit |
+| `inf.lion`, `inf.gorilla`, `inf.flamingo`, `inf.cat-tabby`/black | integrated models/LOD1/2; lion/gorilla/flamingo/cat brains in `src/data/infected.ts` | healthy lion/gorilla/flamingo variants, shared bars/special extensions; cat/pet is a reuse reference, not a substitute for required zoo species |
+| `amb.elephant`, `amb.zebra` | **manifest placeholders, no production `assets/<id>/` model directories** | build normal bases once; derive **`inf.elephant` / `inf.zebra`**, shared rig/LOD/silhouette |
+| `bld.zoo-gate`, existing D-ZOO layout | gate integrated; `layouts/D-ZOO/layout.py` / district data exist | extend campaign zoo with walls/enclosures/staff/service network; inspect each kit piece before treating it as integrated |
+| `npc.national-guard`, civilian/paramedic/survivor bases, `prop.sandbag-pallet`, light-tower trailer | integrated; weapon sockets/routines, E25 lights/E26 props already exist | zoo staff tint/accessories, normal-animal care poses, Alpha line-break props; no duplicate soldier/civilian base |
+| Road tiles, `kit.highway-onramp`, `kit.river-terrain`, existing rock/tree/grass/building kits | existing road/layout stock and scenery LOD | D-CROSSING uses dry/terrain subsets; terrain chunk streamer/collider/nav residency is **new systems work**, not an existing art capability |
+
+### 7.2 New/derived assets and budgets
+
+All numeric production targets below are **orchestrator defaults** and triangle counts are **per asset/chunk**, LOD0 / LOD1 / LOD2; aggregate **E18** budgets still govern (desktop 1.5M/600 draws, phone 500k/300 draws). Budgets include hidden parts/stump caps. Reuse palette/materials; new asset or variant GLBs have the same forward axis/scale and existing pipeline contracts. Placeholders may unblock gameplay, but not final asset acceptance.
+
+| New need / asset ID | Levels | Reuse/derivation | Triangle budgets LOD0 / 1 / 2; other caps | Priority/status |
+| --- | --- | --- | --- | --- |
+| `inf.alpha` | L4 2–3; L5 1–2; L7 4–6; L8 3–5 (both tiers) | `inf.common-worker` base, 1.35–1.5× height/heavy torso and limbs, shared human clips; extra charge/slam/throw/roar poses | **8,000 / 3,000 / 1,000**, ≤ 4 palette materials, ≤ 800 KB LOD0, pooled/crowd-baked view; no unique texture per Alpha | P2, missing derived asset |
+| Healthy zoo variants `amb.lion`, `amb.gorilla`, `amb.flamingo` | L8 calm | existing infected bases with healthy appearance/eyes, same rig/species/silhouette; normal animals have no bar | **12,000 / 4,000 / 1,500** lion/gorilla; **2,000 / 800 / 300** flamingo; ≤ 4 materials, ≤ 1 MB LOD0 | P2, missing variants |
+| Normal bases `amb.elephant`, `amb.zebra` | L8 calm | existing placeholder IDs/concept sources; one normal build per species, reusable normal/infected rigs | **12,000 / 4,000 / 1,500** elephant; **6,000 / 2,000 / 700** zebra; ≤ 4 materials, ≤ 1 MB / 600 KB LOD0 | P2, placeholder→build |
+| **`inf.elephant`** | L8 outbreak | **derive from `amb.elephant`** with infected eye/blood/pose variant; reuse charge/swipe and stump contracts, no unrelated elephant mesh | **12,000 / 4,000 / 1,500**, ≤ 4 palette materials, ≤ 1 MB LOD0 | P2, missing infected derivative |
+| **`inf.zebra`** | L8 outbreak | **derive from `amb.zebra`** with infected appearance; shared rig, rear-kick/herd-stampede poses | **6,000 / 2,000 / 700**, ≤ 4 palette materials, ≤ 600 KB LOD0 | P2, missing infected derivative |
+| Shared world-space HP bars and move telegraphs (procedural view) | Alphas L4/L5/L7/L8; all infected zoo species L8 | reuse palette, pooled billboard/instance buffers, HUD health fill math; no bitmap art needed | bar ≤ 12 triangles/entity, shared ≤ 2 draw calls; ring/arc/sweep marker ≤ 256 triangles/active move, pooled; phone ≥ 48×6 CSS px/contrast ≥ 3:1; count in E18 | P2, new shared view |
+| `D-FAIR` `w6` variants + edge corridor ruin kit | L7 and L6 exit preview | existing hero W5 shells, collapsed-facade/rubble/vehicle wrecks, same landmark footprint | facade module **20,000 / 8,000 / 3,000**, rubble **4,000 / 1,500 / 500**, ≤ 4 materials, ≤ 1.5 MB/module; lights/smoke per E18 | P2, new W6 layer/variants |
+| Visible metro entrance door/shutter state | L5 end / L6 start | existing metro building/service-gate door pattern; moving leaf/hinge/slide nodes and collider | **1,500 / 600 / 200**, ≤ 2 materials, ≤ 150 KB; closed state observable; sound-only event insufficient | P2, inspect existing closure, fill missing geometry/animation |
+| Zoo wall/enclosure/path/service kit | L8 | gate and existing zoo layout, fence kits, normal infrastructure; ≥ 3 internal tunnel mouths | wall segment **1,000 / 400 / 150**; enclosure/service module **8,000 / 3,000 / 1,000**; tunnel mouth **3,000 / 1,200 / 400**, ≤ 4 materials, ≤ 800 KB/module; instanced repeats | P2, inspect/reuse existing pieces, missing modules only |
+| Staff healthy/infected looks | L8 | civilian bases with uniform tint/accessory and infection overlay; no new full character | accessory **≤ 500 / 200 / 80**, ≤ 1 extra material, ≤ 80 KB; shared body LOD budgets | P2, new composition/tint |
+| `veh.military-apc` unarmed transport + broken/damage variant | L8–L9 | integrated APC base; remove HMG geometry/action, keep driver/wheels/exit anchors and grouped-passenger roster | **12,000 / 5,000 / 2,000** per derived state, ≤ 4 materials, ≤ 1 MB LOD0; shared damage overlays, no repair art | P2, missing variants/driveable contract |
+| D-CROSSING terrain/road/countryside/dry chunk kit + distant next-city silhouette | L9 | existing roads/rocks/grass/tree/countryside buildings, shared palette; only missing terrain/silhouette modules new | terrain 100 m chunk **10,000 / 3,000 / 800**; road chunk **3,000 / 1,000 / 300**; horizon silhouette **≤ 10,000** combined, ≤ 2 materials, ≤ 1 MB/chunk; residency ≤ 25/9 high/low plus coarse horizon | P2, new district/chunk art; streaming is E31 system |
+| Lighting/decay review key frames `kf-l7-w6-night`, `kf-l8-zoo-calm-outbreak`, `kf-l9-open-crossing` | L7–L9 | fixed in-game pair captures first, existing night/fire references as look targets | procedural captures, ≤ 1 image per state at review resolution; no runtime download/new texture dependency | P2, pending review artifacts |
+
+### 7.3 Production order and validation
+
+E07 Alpha derived rig/LODs + bar/four-move views → L4 line-break and L5 shotgun/metro closure → L7 W6/corridor using existing rocket/E27/bus → L8 healthy zoo variants + normal elephant/zebra bases and infected derivatives/all ten moves → L9 unarmed APC state/terrain chunks. Existing assets stay in use; no protected reference images are edited. Validate GLB axis/nodes/LODs/budgets and E18 mixed-scene counters; all 14 special moves get their own planned Scene Lab scene per E07/E30. No new animal rig is assumed built from placeholder status.

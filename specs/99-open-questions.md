@@ -1,6 +1,6 @@
 # 99 · Decision Log
 
-All open questions were answered by the product owner on **2026-10-05**. The specs already reflect each decision. To change one, edit the referenced files and add a new row here (keep the history).
+Historical decisions below were answered by the product owner on **2026-10-05**. **The 2026-10-11 campaign source and subsequent updates supersede conflicting historical rows** (notably Q5/Q6/Q7/A1/W1); the current decision/pending section is at the end. To change one, edit the referenced files and add a new row here (keep the history).
 
 | # | Question | Decision | Reflected in |
 | --- | --- | --- | --- |
@@ -38,4 +38,18 @@ All open questions were answered by the product owner on **2026-10-05**. The spe
 | S1 | Sound | All sound improvements adopted: audio telegraphs, shared noise system, acoustics, adaptive layered music + diegetic sources, tier ambience, system sounds, mix and loudness targets, captions, haptics, offline-render testing | 09, E16 (rewritten) |
 | M1 | Background music | MIT-compatible music (CC0 / CC-BY only) researched per level and slot, with a starter set. Pixabay, Mixkit, Zapsplat, and the YouTube Audio Library are excluded; Scott Buckley and Clement Panchout have extra conditions. Bruno's CC0 tracks are reusable, his SFX are not. **Open:** a human listening pass for style coherence; stems need to be made by us | 10-music-sources.md, 09 §5 |
 
-No open questions remain.
+At the original 2026-10-05 snapshot no design questions remained. The current pending PO input is listed below.
+
+## Campaign decisions and actual pending PO input (2026-10-11)
+
+Source of truth: [`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), including later verbatim statements. Earlier ammunition/reload, zoo-in-L4, helicopter finale, dawn timeline and no-Alpha-bar defaults do not override this source.
+
+| Decision | Current PO wording / implementation default | Reflected in |
+| --- | --- | --- |
+| Campaign | L4 internal evacuee outbreak/first Alphas → L5 shotgun/five-survivor rescue/populated metro closure → L6 subway/night handover → L7 unlimited rocket/W6 bus escape → L8 zoo failure → L9 temporary armored crossing | overview, E22–E24, E29–E31 |
+| Alpha | PO verbatim: "Alpha should have a health bar and special moves". Source defaults specify Charge, Ground slam, Grab and throw, Roar; shared world-space bar, ≥ 0.6 s telegraphs and cooldowns. Earlier no-bar/no-special wording superseded. | E07, E22, E29, E30, inventory |
+| Zoo animals | PO verbatim: "Same for Zoo animals". All five infected zoo species have bars/specials; elephant/zebra derive from normal bases. Normal animals have no bars. | E07, E30, inventory, test plan |
+| Level 10 | PO verbatim: "Level 10 will be the grande finale then, I will provide story line tomorrow". Use **Grand finale — storyline from the PO pending**; no epic yet. | overview, README, E31 continuation |
+| Defaults, not questions | E07 resistance/HP/move tuning, W6 dressing counts, night/dry L8/L9 presets, L9 collision damage/chunk residency and provisional timing are explicitly orchestrator defaults. Implement/measure before seeking changes; these do not block specs. | affected epic implementation plans |
+
+**Only pending story input:** the PO's L10 grand-finale storyline (promised for the next day). Once provided, specify the finale/next-city content and an epic; do not invent it now. No additional L4–L9 design questions are left open by this rewrite. Music selection/listening in historical M1 is a production review task, not a new unanswered campaign story question.
