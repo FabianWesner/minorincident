@@ -1,6 +1,8 @@
 // Fireball: TSL noise-dissolved spheres with a fire gradient, adapted from Bruno Simon folio-2025 World/Fireballs.js (MIT, 41046b5).
 // Roll kick by distance and bullet time ramp: adapted from folio-2025 Explosions.js and Time.js bulletTime (MIT, 41046b5).
 import { AdditiveBlending, BoxGeometry, DoubleSide, DynamicDrawUsage, Group, IcosahedronGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, MeshLambertNodeMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type BufferGeometry, type Node } from 'three/webgpu';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { attribute, cameraPosition, cameraWorldMatrix, dot, float, Fn, fract, mix, mx_noise_float, normalView, normalWorld, positionGeometry, positionWorld, screenCoordinate, smoothstep, uniform, uv, vec2, vec3, vec4 } from 'three/tsl';
 import { Rng } from '../../core/Rng';
 import { blastFxPresets, type BlastFxPreset } from '../../data/explosions';
@@ -55,6 +57,7 @@ export class Blasts extends Group {
   private readonly cloudColumns = new Map<number, Column>();
   private readonly glowList: Glow[] = [];
   private readonly partMatrix = new Matrix4(); private readonly quat = new Quaternion(); private readonly pos = new Vector3(); private readonly scl = new Vector3();
+  private readonly hoodTurn = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI / 2);
   private time = 0;
   private flashPeak = 0; private flashAt = -1;
   private bullet = { scale: 1, remaining: 0, progress: 0 };
@@ -165,8 +168,17 @@ export class Blasts extends Group {
       })();
       this.glows.renderOrder = 1;
     }
-    // Detached doors/hood: charred panels following the sim bodies.
-    this.parts = new InstancedMesh(new BoxGeometry(1, 1, 1), new MeshLambertNodeMaterial({ color: 0x2b2624 }), PARTS);
+    // Detached sheet metal has rolled edges and raised reinforcement, readable
+    // while tumbling. The normalized volume still follows each sim body's bounds.
+    const panel = new RoundedBoxGeometry(.96, .96, .86, 1, .065);
+    const ribs = [-.30, .30].map(y => new BoxGeometry(.78, .055, .10).translate(0, y, .45).toNonIndexed());
+    const panelGeometry = mergeGeometries([panel, ...ribs], true)!;
+    panel.dispose(); for (const rib of ribs) rib.dispose();
+    this.parts = new InstancedMesh(panelGeometry, [
+      new MeshLambertNodeMaterial({ color: 0x9a8074 }),
+      new MeshLambertNodeMaterial({ color: 0xb6bcc2 }),
+      new MeshLambertNodeMaterial({ color: 0xb6bcc2 }),
+    ], PARTS);
     this.parts.count = 0; this.parts.frustumCulled = false; this.parts.castShadow = true;
     const shadowGeometry = new PlaneGeometry(1, 1); shadowGeometry.rotateX(-Math.PI / 2);
     const shadowMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
@@ -364,7 +376,12 @@ export class Blasts extends Group {
     for (const part of this.world.explosions?.parts ?? []) {
       if (!part.until || n >= PARTS || !part.body.isValid()) continue;
       const t = part.body.translation(), q = part.body.rotation();
-      this.partMatrix.compose(this.pos.set(t.x, t.y, t.z), this.quat.set(q.x, q.y, q.z, q.w), this.scl.set(part.half[0] * 2, part.half[1] * 2, part.half[2] * 2));
+      this.quat.set(q.x, q.y, q.z, q.w);
+      if (part.kind === 'hood') {
+        this.quat.multiply(this.hoodTurn);
+        this.scl.set(part.half[0] * 2, part.half[2] * 2, part.half[1] * 2);
+      } else this.scl.set(part.half[0] * 2, part.half[1] * 2, part.half[2] * 2);
+      this.partMatrix.compose(this.pos.set(t.x, t.y, t.z), this.quat, this.scl);
       this.parts.setMatrixAt(n++, this.partMatrix);
     }
     this.parts.count = n; if (n) this.parts.instanceMatrix.needsUpdate = true;
@@ -402,7 +419,7 @@ export class Blasts extends Group {
   }
   dispose(): void {
     this.reset(); this.scorch.dispose();
-    for (const mesh of [this.fireballs, this.puffs, this.flames, this.glows, this.parts, this.columnShadows]) { mesh.dispose(); mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); }
+    for (const mesh of [this.fireballs, this.puffs, this.flames, this.glows, this.parts, this.columnShadows]) { mesh.dispose(); mesh.geometry.dispose(); for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) material.dispose(); }
     this.clear();
   }
 }
