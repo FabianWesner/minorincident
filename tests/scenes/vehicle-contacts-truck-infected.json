@@ -1,0 +1,73 @@
+{
+  "name": "vehicle-contacts-truck-infected",
+  "seed": 1,
+  "ground": "district",
+  "time": "L2",
+  "layout": {
+    "district": "D-GROVE",
+    "level": "L2",
+    "bbox": [
+      [
+        0,
+        -40
+      ],
+      [
+        30,
+        -24
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "engine",
+      "asset": "vehicle.fire-engine",
+      "at": [
+        22,
+        -32
+      ],
+      "l2Ride": {
+        "distanceM": 18,
+        "speedMs": 5.6
+      }
+    }
+  ],
+  "actors": [
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        14,
+        -32
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "brute",
+      "kind": "infected",
+      "archetype": "infected.brute",
+      "at": [
+        9,
+        -32.3
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "engine",
+    "zoom": 1.7
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    48,
+    96,
+    180
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "vehicleBodyOverlapsMax": 0
+  }
+}

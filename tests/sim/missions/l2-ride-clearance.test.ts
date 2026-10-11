@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
 import { l2TruckRoute, l2TruckPath } from '../../../src/data/l2';
 import { loadL2, runL2 } from '../../../tools/sim-runner/l2Bots';
-import { truckBodyOverlap, truckPoseAt, truckWallOverlap } from '../../../src/sim/vehicles/L2TruckDrive';
+import { truckBodyOverlap, truckPoseAt, truckWallOverlap, L2TruckDrive } from '../../../src/sim/vehicles/L2TruckDrive';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 
 /** L2 beat 3: the kinematic fire truck never overlaps a pedestrian, infected, corgi, car, prop or static collider (PO: "Firefighting car went over a ped"). */
@@ -100,4 +100,42 @@ describe('L2 truck ride clearance', () => {
     }
     mkdirSync('test-results/epics/E20', { recursive: true }); writeFileSync(`test-results/epics/E20/ride-clearance-${mode}.json`, JSON.stringify(report, null, 2) + '\n');
   }, 3_600_000);
+});
+
+
+test('@E20 truck sweeps living and downed infected aside without braking for them', async () => {
+  const { SimWorld } = await import('../../../src/sim/world/SimWorld');
+  world = new SimWorld(); await world.init(); world.loadScenario('horde-arena');
+  const start = truckPoseAt(18), id = world.vehicles!.spawn('vehicle.fire-engine', start, start.yaw);
+  const state = { truckId: id, rideS: 18, rideV: 5.6 }, drive = new L2TruckDrive(world, state);
+  drive.prepare();
+  const ahead = truckPoseAt(22);
+  const infected = world.infected!.spawn('infected.runner', ahead);
+  const target = world.entities.get(infected)!;
+  drive.step();
+  expect(state.rideV).toBeGreaterThanOrEqual(5.6);
+  expect(target.health.current).toBe(0);
+  expect(target.combat!.reaction!.heavy).toBe(true);
+  expect(truckBodyOverlap(truckPoseAt(state.rideS), L, W, target, world)).toBe(false);
+  // A fallen body put back in the sweep is pushed again, without holding the ride.
+  Object.assign(target.transform, truckPoseAt(state.rideS + 4));
+  const speed = state.rideV; drive.step();
+  expect(state.rideV).toBeGreaterThanOrEqual(speed);
+  expect(truckBodyOverlap(truckPoseAt(state.rideS), L, W, target, world)).toBe(false);
+});
+
+
+test('@E20 slow scripted truck knocks down infected instead of attaching them to its chassis', async () => {
+  const { SimWorld } = await import('../../../src/sim/world/SimWorld');
+  world = new SimWorld(); await world.init(); world.loadScenario('horde-arena');
+  const start = truckPoseAt(18), id = world.vehicles!.spawn('vehicle.fire-engine', start, start.yaw);
+  const state = { truckId: id, rideS: 18, rideV: .5 }, drive = new L2TruckDrive(world, state);
+  drive.prepare();
+  const infected = world.infected!.spawn('infected.brute', start);
+  world.update(); drive.step();
+  const target = world.entities.get(infected)!;
+  expect(target.attachedTo).toBeUndefined();
+  expect(target.health.current).toBeLessThan(target.health.max);
+  expect(target.combat!.reaction!.heavy).toBe(true);
+  expect(truckBodyOverlap(truckPoseAt(state.rideS), L, W, target, world)).toBe(false);
 });

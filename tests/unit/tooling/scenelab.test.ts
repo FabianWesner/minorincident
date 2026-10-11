@@ -14,6 +14,10 @@ const tri = (...v: number[]) => new Float32Array(v);
 const set = (id: string, tris: Float32Array): TriangleSet => ({ id, assetId: id, tris, box: boxOf(tris) });
 
 describe('Scene Lab spec', () => {
+  it('retains authored vehicle decay on static placements', () => {
+    const p = placementFor({ asset: 'veh.sedan-red', at: [0, 0], decay: 'wrecked' }, 0, assets);
+    expect(p.decay).toBe('wrecked');
+  });
   it('reports readable validation errors', () => {
     const errors = validateSpec({ props: [{ asset: 'prop.nope', at: [0, 0] }], actors: [{ kind: 'courier' }, { kind: 'courier' }], ground: 'district' }, assets);
     expect(errors.join('\n')).toMatch(/unknown manifest id prop\.nope/);
