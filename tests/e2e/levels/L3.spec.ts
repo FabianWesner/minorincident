@@ -5,7 +5,7 @@ import { l3, l3Anchors } from '../../../src/data/l3';
 
 /** E21 L3 browser runs. Browser runs only through tools/e2e-lock.sh, headless. */
 const output = 'test-results/epics/E21';
-test.use({ trace: 'off', launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test.use({ trace: 'off' }); // Inherit the platform-specific headless GPU flags from playwright.config.ts.
 const at = (name: string) => ({ x: l3Anchors[name][0], z: l3Anchors[name][1] });
 type P = { x: number; z: number };
 
@@ -62,7 +62,7 @@ function helpers(page: Page) {
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
-    let fights = 0, retreatAt = -Infinity;
+    let fights = 0, dodgeAt = -Infinity;
     for (let i = 0; i < 600; i++) {
       await step(20);
       if (process.env.L3_TRACE && i % 2 === 0) console.log(await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!, inf = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 12); return `T x=${p.transform.x.toFixed(0)} z=${p.transform.z.toFixed(0)} hp=${p.health.current.toFixed(0)} n12=${inf.length} n4=${inf.filter(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).length}`; }));
@@ -73,12 +73,12 @@ function helpers(page: Page) {
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
       // Fight a few, then break away (PO: fight a few, flee from many; knocked-down infected get up again).
       const crowd = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 10).length; });
-      // Many ahead: back off along the street for a moment (they string out), then push on.
-      if (crowd >= 4 && i - retreatAt >= 30) {
-        // Give the forward click time to pass the pack before retreating again.
-        retreatAt = i;
-        const p0 = (await player()).transform, back = { x: p0.x - 10, z: p0.z };
-        const point = await page.evaluate(q => { const p = window.__SS__!.input.project(q); return document.elementFromPoint(p.x, p.y)?.tagName === 'CANVAS' ? p : null; }, back);
+      // Police now cover visible threats rather than clearing the next pack offscreen. Pass a dense
+      // group along the street edge; repeatedly retreating feeds L3's pressure/emergence loop.
+      if (crowd >= 4 && i - dodgeAt >= 30) {
+        dodgeAt = i;
+        const p0 = (await player()).transform, flank = { x: Math.min(target.x, p0.x + 4), z: target.z + (p0.z <= target.z ? 1.5 : -1.5) };
+        const point = await page.evaluate(q => { const p = window.__SS__!.input.project(q); return document.elementFromPoint(p.x, p.y)?.tagName === 'CANVAS' ? p : null; }, flank);
         if (point) { await page.mouse.click(point.x, point.y); await step(45); }
         await click(); fights = 0;
       }
@@ -170,6 +170,10 @@ test.describe('L3 The Police Collapse in the browser', () => {
     // Still on L3 with its state (result screen) or already handing over / on L4 (the L3 state is gone: use the last one seen).
     const handedOver = scenario !== 'L3' || !now?.l3;
     const final = !handedOver ? now : { ...last, phase: 'progression' as const, l3: { ...last.l3!, crossedAt: last.l3!.crossedAt || (scenario === 'L4' ? 1 : 0) } };
+    if (final.phase === 'playing') {
+      const actors = await page.evaluate(x => window.__SS__!.getState().entities.filter(e => e.health.current > 0 && (e.civilian?.ally?.follow || Math.abs(e.transform.x - x) < .6 && Math.abs(e.transform.z) < 2.2)), l3.finale.barrierX);
+      writeFileSync(`${output}/checkpoint-blockers-${street}.json`, JSON.stringify(actors, null, 2));
+    }
     writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
     console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);
     expect(['result', 'progression']).toContain(final.phase);

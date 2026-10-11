@@ -2,6 +2,7 @@ import { Rng } from '../../core/Rng';
 import { l2 } from '../../data/l2';
 import { l4 } from '../../data/l4';
 import { policeTactics as pt } from '../../data/l3';
+import { policeTargetInView, policeShotRangeM } from '../../data/cameraFraming';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { AllyGun, AllyState, Point } from '../npc/types';
@@ -30,6 +31,8 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  */
 export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean): boolean {
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
+  const player = world.entities.get(1);
+  const policeCanEngage = (target: EntitySnapshot) => a.role !== 'officer' || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
   if (a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0)) return false;
   if (a.role === 'civilian' && a.engaged && (tick + e.id) % 6 === 0) {
@@ -59,7 +62,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Moving beyond the follow leash ends even an existing fight: the squad catches up through shared E08 navigation.
   const breakout = follower && (a.follow!.breakoutUntil ?? 0) > tick;
   if (follower && a.engaged && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
-    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id)) : undefined;
+    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;
   }
@@ -69,12 +72,14 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     const ff = a.melee ? { ...l2.allies.firefighter, damage: a.melee.damage, reachM: a.melee.reachM, swingS: a.melee.swingS } : l2.allies.firefighter;
     const reachM = gun ? (a.follow ? Math.min(gun.rangeM, a.follow.engageM) : gun.rangeM) : shooter ? l2.allies.officer.rangeM + 4 : ff.engageM;
     let target = a.targetId ? world.entities.get(a.targetId) : undefined;
+    // Drop a cached target immediately when it leaves the player's view (not only on the scan tick).
+    if (target && !policeCanEngage(target)) { target = undefined; a.targetId = 0; }
     if (!forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % 6 === 0)) {
       // Re-acquire: biting infected first (rescue), then the nearest visible one.
       let best: EntitySnapshot | undefined, score = Infinity;
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       for (const o of ai.active) {
-        if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise) continue;
+        if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise || !policeCanEngage(o)) continue;
         const dx = o.transform.x - e.transform.x, dz = o.transform.z - e.transform.z, d = Math.hypot(dx, dz);
         if (d > reachM) continue;
         if (a.cover && dist(o.transform, a.cover) > (a.range ?? reachM)) continue;
@@ -92,7 +97,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     // A swing in progress lands after its windup on whatever is still in reach (no tracking, it can whiff).
     if (a.strikeAt && tick >= a.strikeAt) {
       const victim = world.entities.get(a.strikeTarget ?? 0); a.strikeAt = 0;
-      if (victim?.infected && victim.health.current > 0 && world.combat) {
+      const allowed = !!victim && policeCanEngage(victim) && (a.role !== 'officer' || (!victim.hidden && !victim.infected?.hidden && !victim.infectionRise && sees(e.transform, victim.transform, victim.id)));
+      if (!allowed) a.baton = false;
+      if (allowed && victim?.infected && victim.health.current > 0 && world.combat) {
         const dx = victim.transform.x - e.transform.x, dz = victim.transform.z - e.transform.z, d = Math.hypot(dx, dz);
         if (a.baton) {
           // Police shove/baton at arm's length: heavy stagger and knockback, little damage.
@@ -112,6 +119,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     }
     if (a.strikeAt) return true;
     if (target) {
+      if (a.role === 'officer' && !sees(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       const reach = gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
       if (d > reach * .9 && !a.hold && !a.follow) { npcs.move(e, target.transform, a.runSpeed, c, reach * .8); return true; }
