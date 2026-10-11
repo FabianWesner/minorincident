@@ -36,3 +36,16 @@ test('downed civilians and building interiors have no street-furniture walking c
   building.actor.transform.x = (wall.min[0] + wall.max[0]) / 2; building.actor.transform.z = (wall.min[2] + wall.max[2]) / 2;
   expect(building.lab.samplePropPenetration(true).framesMax).toBe(0);
 });
+
+
+test('raised guard deck contact excludes only the supporting surface, retaining tower posts, rails and sinking', () => {
+  const { world, actor, lab } = fixture('kit.guard-tower');
+  actor.civilian!.floorY = 4.26; actor.transform.y = 4.96;
+  expect(lab.samplePropPenetration(true).framesMax).toBe(0);
+  actor.transform.z = 1.3; world.tick++;
+  expect(lab.samplePropPenetration(true).pairs.some(p => p.prop.endsWith('/geometry-5'))).toBe(true);
+  actor.transform.x = 1.2; actor.transform.z = 1.2; world.tick++;
+  expect(lab.samplePropPenetration(true).pairs.some(p => p.prop.endsWith('/geometry-3'))).toBe(true);
+  actor.transform.x = 0; actor.transform.z = 0; actor.transform.y -= .1; world.tick++;
+  expect(lab.samplePropPenetration(true).pairs.some(p => p.prop.endsWith('/geometry-0'))).toBe(true);
+});
