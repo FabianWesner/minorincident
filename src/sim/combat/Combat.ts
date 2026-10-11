@@ -63,7 +63,7 @@ export class Combat {
     if (!player.weapons) return;
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
     this.updateProjectiles();
-    this.effects.update(); this.pickups.update();
+    this.effects.update(); this.pickups.update(frame);
   }
   /** Living infected a sweep of `radius` reaches from the player now (cover blocks; civilians never count). */
   private readonly crowd = (radius: number): number => {

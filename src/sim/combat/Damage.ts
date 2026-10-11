@@ -1,3 +1,4 @@
+import { alphaDamageMultiplier, humanInfected } from '../../data/infected';
 import { storyProtected } from '../npc/storyProtection';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
@@ -27,6 +28,7 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
     const dot = distance ? (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance : 1;
     if (dot >= 0.5 - 1e-8) return 0;
   }
+  if (target.archetype === 'infected.alpha') return Math.max(0, amount * alphaDamageMultiplier(hit.actionId, hit.type));
   if (target.infected?.special === 'armor' && hit.type !== 'explosive' && hit.type !== 'status') {
     const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.25;
@@ -47,6 +49,8 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    // Newer campaign PO: shotgun HP depletion kills ordinary human infected permanently.
+    if (hit.actionId === 'weapon.shotgun' && /^L[5-9]$/.test(this.world.scenario ?? '') && target.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === target.archetype)) hit = { ...hit, permanent: true };
     if (storyProtected(this.world, target)) {
       if (hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback);
       return 0;

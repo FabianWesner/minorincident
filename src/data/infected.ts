@@ -65,3 +65,9 @@ export function l1ReactionS(u: number): number {
  * lethal burn kill for good. `getUpS` is the stand-up after a recovery (CrowdView and CivilianCrowd play the `get-up` clip from 0.7 s of the heavy reaction over these seconds; PO 10-08: it must read as standing up from the ground, 0.64 s read as a pop).
  */
 export const infectedRecovery = { downS: [10, 20] as const, getUpS: 1.3 };
+
+/** Applied after pellet/blast falloff. Alpha never stacks generic armor on these multipliers. */
+export function alphaDamageMultiplier(actionId: string, type: string): number {
+  if (actionId === 'weapon.shotgun') return 0.8;
+  return type === 'bullet' ? 0.5 : 1;
+}
