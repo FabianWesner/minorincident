@@ -1,5 +1,5 @@
 import { expect, test, vi } from 'vitest';
-import { BoxGeometry, DirectionalLight, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
+import { BoxGeometry, DirectionalLight, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, DataTexture, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
 import { compileLanes, preRender, warmUpSize } from '../../../src/render/PreRenderer';
 import { Renderer } from '../../../src/render/Renderer';
 
@@ -120,13 +120,13 @@ test('@transition animated warm-up groups cover both driver paths without overla
   geometry.dispose(); material.dispose();
 });
 
-for (const background of [false, true]) test(`@transition WebGPU ${background ? 'background' : 'foreground'} chunks preserve the existing compilation policy`, async () => {
+for (const background of [false, true]) test(`@transition WebGPU ${background ? 'background' : 'foreground'} chunks compile pipelines asynchronously`, async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
   scene.add(new Mesh(geometry, material));
   const compile = vi.fn(async () => {}), render = vi.fn(), pause = vi.fn(async () => {});
   const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
-  await preRender(renderer, scene, new PerspectiveCamera(), render, compile, pause, undefined, background);
-  expect(compile).toHaveBeenCalledTimes(Number(background));
+  await preRender(renderer, scene, new PerspectiveCamera(), render, compile, pause, undefined, background, true);
+  expect(compile).toHaveBeenCalledOnce();
   expect(pause).toHaveBeenCalled(); expect(render).toHaveBeenCalled();
   geometry.dispose(); material.dispose();
 });
@@ -137,4 +137,29 @@ for (const background of [false, true]) test(`@transition ${background ? 'backgr
     expect(renderer.foregroundCompile).toBe(!background); throw Error('Compile failed');
   }, undefined, undefined, background)).rejects.toThrow('Compile failed');
   expect(renderer.foregroundCompile).toBe(false);
+});
+
+
+test('@E18 WebGPU pose uploads yield within 4 MiB and finish before pipeline compilation', async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  const textures = Array.from({ length: 3 }, () => new DataTexture(new Float32Array(600_000), 75, 2000));
+  const leaves = textures.map(texture => { const mesh = new Mesh(geometry, material); mesh.userData.preRenderTextures = [texture]; return mesh; });
+  scene.add(...leaves);
+  const calls: string[] = [], initTexture = vi.fn(() => calls.push('upload'));
+  const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), initTexture } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), vi.fn(), async () => { calls.push('compile'); }, async () => { calls.push('pause'); }, undefined, false, true);
+  expect(calls.slice(0, 7)).toEqual(['upload', 'pause', 'upload', 'pause', 'upload', 'pause', 'compile']);
+  expect(initTexture).toHaveBeenCalledTimes(3);
+  geometry.dispose(); material.dispose(); textures.forEach(texture => texture.dispose());
+});
+
+
+test('@E18 other WebGPU levels retain foreground compilation and draw batching', async () => {
+  const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  const leaves = Array.from({ length: 130 }, () => new Mesh(geometry, material)); scene.add(...leaves);
+  const compile = vi.fn(async () => {}), groups: number[] = [];
+  const renderer = { selectedBackend: 'webgpu', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), () => { groups.push(leaves.filter(leaf => leaf.visible).length); }, compile, async () => {});
+  expect(compile).not.toHaveBeenCalled(); expect(groups).toEqual([130, 130, 130]);
+  geometry.dispose(); material.dispose();
 });
