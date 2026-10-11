@@ -80,3 +80,17 @@ test('@gun-pose courier and NPC firing poses still resolve with the user VFX pre
     expect(vfx.shots).toHaveLength(0);
   } finally { vfx.dispose(); world.dispose(); }
 });
+
+for (const variant of ['female', 'male']) test(`@gun-hold ${variant}: low-ready and recoil preserve the palm frame and gait`, async () => {
+  const model = await load(`char.courier-${variant}.skin`);
+  const upper = model.getObjectByName('armR')!, middle = model.getObjectByName('foreArmR')!, hand = model.getObjectByName('handR')!;
+  const aim = new GunAim(upper, middle, hand, model.getObjectByName('torso'));
+  for (const clip of ['idle', 'walk', 'run']) for (const elevation of [-.75, -.4, 0]) for (const reach of [.96, .995]) {
+    sampleClip(model, clip, .4); model.updateMatrixWorld(true);
+    const feet = ['footL', 'footR'].map(name => model.getObjectByName(name)!.matrixWorld.clone());
+    const direction = new Vector3(Math.cos(elevation), Math.sin(elevation), 0);
+    aim.apply({ x: 1, z: 0 }, undefined, elevation, reach); model.updateMatrixWorld(true);
+    expect(new Vector3(1, 0, 0).transformDirection(hand.matrixWorld).angleTo(direction)).toBeLessThan(.001);
+    for (const [i, name] of ['footL', 'footR'].entries()) expect(model.getObjectByName(name)!.matrixWorld.elements).toEqual(feet[i].elements);
+  }
+});

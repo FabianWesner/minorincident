@@ -1,0 +1,33 @@
+{
+  "commit": "96dc52d0",
+  "passed": 1,
+  "failed": 3,
+  "tests": [
+    {
+      "name": "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+      "status": "failed",
+      "failures": [
+        "AssertionError: expected 60 to be 40 // Object.is equality\n    at /srv/mi/jobs/minor-incident-gun-hold-baseline-99d375-97177-1791704779/tests/levels/L3.test.ts:81:46\n    at file:///srv/mi/jobs/minor-incident-gun-hold-baseline-99d375-97177-1791704779/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "L3 The Police Collapse T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "name": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+      "status": "failed",
+      "failures": [
+        "AssertionError: expected 50 to be less than or equal to 12\n    at /srv/mi/jobs/minor-incident-gun-hold-baseline-99d375-97177-1791704779/tests/levels/L3.test.ts:209:184"
+      ]
+    },
+    {
+      "name": "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them",
+      "status": "failed",
+      "failures": [
+        "AssertionError: expected 0 to be greater than or equal to 1\n    at /srv/mi/jobs/minor-incident-gun-hold-baseline-99d375-97177-1791704779/tests/levels/L3.test.ts:226:31\n    at file:///srv/mi/jobs/minor-incident-gun-hold-baseline-99d375-97177-1791704779/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}
