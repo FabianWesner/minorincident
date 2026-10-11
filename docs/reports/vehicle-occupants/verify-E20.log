@@ -1,0 +1,357 @@
+
+> verify
+> tsx tools/verify.ts E20
+
+
+Verifying E20: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E20: npm run lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Verifying E20: npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 418 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.48 kB │ gzip:     0.81 kB
+dist/build/civilianBakeData-Du84-aJY.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-DIHN-RY5.js          8.73 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-EQs4dTDV.js             360.15 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prepareCivilianGeometry-BXL3YL-R.js  2,017.19 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-Hd_Xs3QC.css                      30.32 kB │ gzip:     6.86 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-LAkuAjlm.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-BFav_7U4.js                        2.22 kB │ gzip:     1.21 kB
+dist/build/LevelOneBot-DFfQfYWK.js                  5.13 kB │ gzip:     2.40 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/l3-DdMQgoOz.js                           7.30 kB │ gzip:     3.29 kB
+dist/build/l4-C5XxPvAF.js                           7.50 kB │ gzip:     3.28 kB
+dist/build/Inspection-BXZsheDy.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-mToWFCv8.js                 14.09 kB │ gzip:     4.53 kB
+dist/build/MotionLab-D8ForNyY.js                   20.03 kB │ gzip:     8.43 kB
+dist/build/testApi-CBB8B3J_.js                     21.51 kB │ gzip:     8.25 kB
+dist/build/LevelFiveBot-DjpbnLEj.js                21.58 kB │ gzip:     5.86 kB
+dist/build/index-Bse8LfUG.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/Pickups-CL8S6rMG.js                     61.86 kB │ gzip:    20.41 kB
+dist/build/SceneLab-D3rzpWl-.js                    62.15 kB │ gzip:    22.49 kB
+dist/build/Physics-BXnzQ8Od.js                     64.32 kB │ gzip:    22.20 kB
+dist/build/light-anchors-D5appa6E.js               90.38 kB │ gzip:     6.79 kB
+dist/build/PropSystem-DufPqtKp.js                 130.82 kB │ gzip:    37.74 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/rapier-B4BYJx26.js                     211.96 kB │ gzip:    36.08 kB
+dist/build/three.module-CCUSDdOQ.js               287.61 kB │ gzip:    77.06 kB
+dist/build/install-D58WJ4RG.js                    425.49 kB │ gzip:   125.32 kB
+dist/build/registry-C_VSsMVh.js                   469.42 kB │ gzip:    88.93 kB
+dist/build/WeatherView-DIMq-goW.js                713.70 kB │ gzip:   201.00 kB
+dist/build/index-Ahra_s6W.js                      910.38 kB │ gzip:   284.33 kB
+dist/build/character-clips-BgcRYFdn.js          1,939.70 kB │ gzip:   341.78 kB
+✓ built in 3.40s
+
+Verifying E20: sh tools/sim-lock.sh npx vitest run -t @(?:E20)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E20/vitest.json
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-vehicle-occupants
+
+ ↓ |functional| tests/sim/npc/ally-defence.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/levels/L3.test.ts (20 tests | 20 skipped)
+ ↓ |functional| tests/unit/physics-metadata.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/validate.test.ts (17 tests | 17 skipped)
+ ↓ |functional| tests/levels/L1.test.ts (19 tests | 19 skipped)
+ ↓ |functional| tests/unit/static.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/civilian-bake-build.test.ts (72 tests | 72 skipped)
+ ↓ |functional| tests/levels/L3-follow.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/unit/render/crowd-footwork.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/assets/build.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/figure-height.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/levels/campaign-nav-preparation.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/assets/courier-bike.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/optimize.test.ts (12 tests | 12 skipped)
+ ↓ |functional| tests/unit/render/civilian-grip.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/assets/static-batch-equivalence.test.ts (2 tests | 2 skipped)
+ ✓ |functional| tests/sim/npc/permanence.test.ts (4 tests | 3 skipped) 1358ms
+   ✓ 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07 1357ms
+ ↓ |functional| tests/unit/render/authored-animation.test.ts (17 tests | 17 skipped)
+ ↓ |functional| tests/unit/render/skin-pilot.test.ts (18 tests | 18 skipped)
+ ↓ |functional| tests/unit/render/npc.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/civilian-bake.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/levels/l3-static.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/assets/static-bakes.test.ts (140 tests | 140 skipped)
+ ↓ |functional| tests/unit/vfx/events.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/levels/continuity.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/courier-rig-v2.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/assets/commerce-pack.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/living-adults.test.ts (2 tests | 2 skipped)
+ ✓ |functional| tests/levels/story-protection.test.ts (6 tests | 5 skipped) 247ms
+ ↓ |functional| tests/sim/combat/shot-cover.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/layouts/build.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l1-infection-overlay.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/corgi-feet.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/delivery.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/levels/layout-overlap.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/crowd-feet.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/levels/l2-roads.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/layouts/clipping.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/l1-grade.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/lod-fidelity.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/crowd-topology.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/crowd-sink.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/assets/window-glow-lod.test.ts (1 test | 1 skipped)
+ ✓ |functional| tests/unit/levels/l2-static.test.ts (3 tests) 172ms
+ ↓ |functional| tests/unit/levels/placement-clearance-cache.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/crowd-lod-geometry.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/progression/campaign.test.ts (12 tests | 12 skipped)
+ ✓ |functional| tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 90ms
+ ↓ |functional| tests/unit/render/e25-lighting.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/levels/l5-footprints.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/load-pipeline.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/render/e25-windows.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/infected-bake.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/catalog-motion.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/motionlab/skin.test.ts (2 tests | 2 skipped)
+ ✓ |functional| tests/unit/motionlab/stage1.test.ts (4 tests | 2 skipped) 123ms
+ ↓ |functional| tests/unit/layouts/d-grove.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/gun-pose.test.ts (11 tests | 11 skipped)
+ ✓ |functional| tests/sim/determinism.test.ts (3 tests | 2 skipped) 112ms
+ ↓ |functional| tests/unit/render/static-corpses.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/assets/crowd.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/vfx/integration.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/levels/l5-static.test.ts (9 tests | 9 skipped)
+ ✓ |functional| tests/unit/performance/nav-visibility.test.ts (4 tests | 1 skipped) 73ms
+ ↓ |functional| tests/unit/levels/l4-static.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/missions/objectives.test.ts (30 tests | 30 skipped)
+ ↓ |functional| tests/unit/combat/events.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/physics-prop-contract.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/performance/gibs.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/runtime-integration.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/audio/noise.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/sim/police-range.test.ts (18 tests | 18 skipped)
+ ↓ |functional| tests/unit/physics-preparation.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/ui-telegraphs.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/roundhouse-pose.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/audio/assets.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/progression/aftermath.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/vehicles.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/layouts/crossval.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/vfx/lab-accident.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/layouts/visual-bounds.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/inspection-camera.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/tooling/headless-only.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l1-look.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/layouts/districts.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/e25-hero.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/production-gates.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/assets/static-collision.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/authored-lods.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/core/foundation.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/levels/l5-shutter.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/survivor.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/tooling/scenelab.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/render/foliage.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/texture-ranges.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/camera-jitter.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/audio/l1-arc.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/pre-render.test.ts (17 tests | 17 skipped)
+ ↓ |functional| tests/unit/tooling/prop-penetration.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/references.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/e27-blasts.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/performance/layouts.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/audio/credits.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/motionlab/motion.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/registry.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/data/action-assets.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/vfx/pools.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/sit-pose.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/army-boom.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/footprints.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/weather-materials.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/static-instance-attributes.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/audio/ambience-guard.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/registry.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/material-variants.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/corgi-scale.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/texture-upload.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/layouts/d-grove-scaffold.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/civilian-bake-worker.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/civilian-material.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/performance/assets.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/png-pixels.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/view.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/missions/house-emergence.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/audio/policies.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/environment-lifetime.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/missions/dialogue.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/post-fx-streaming.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/palette.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/look-patch.test.ts (14 tests | 14 skipped)
+ ↓ |functional| tests/unit/data/actions.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/input/rack-selection.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/audio/streaming.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/roof-cutaway.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/input/bindings.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/missions/schema.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/audio/danger.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/l3-boom.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/crowd-visibility.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/input/buttons.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/performance/quality.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/data/explosions.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/audio/acoustics.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/levels/l6-static.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/combat/loadout.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/combat/gun-raise.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/lod-policy.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/e2e-error-guard.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/input/wheel.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l6-power.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/input/raised-floor.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/crowd-register.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/stride-scale.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/performance/deviceEvidence.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/audio/music-beats.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/input/walk.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/ui-settings.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/e25-visibility.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/input/click-pick.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/interaction-marker.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/levels/L2-boarding.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/levels/L2-escape-loop.test.ts (2 tests | 2 skipped)
+ ❯ |functional| tests/levels/L2.test.ts (16 tests | 1 failed) 125168ms
+   ❯ L2 The Failed Rescue (16)
+     ✓ T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer 280ms
+     ✓ T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band 7790ms
+     ✓ T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed 24038ms
+     ✓ T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the pickup alarm; crew at the truck within 8 s; axe rack live 0ms
+     ✓ T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time 1136ms
+     ✓ T-E20-06 @E20 @E20-AC06 set piece: event order, empty forecourt, release and ambush timing, three directions 0ms
+     ✓ T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites 11952ms
+     ✓ T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity 4095ms
+     ✓ T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives 14971ms
+     ✓ T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight or close hearing alerts with clear LOS, emergence at doors out of view 0ms
+     ✓ T-E20-12 @E20 @E20-AC12 escape population at the radio: >= 25 spread infected, >= 3 groups of >= 4, <= 20 % on the courier 0ms
+     ✓ T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes 175ms
+     ✓ T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice 10737ms
+     ✓ T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3 8855ms
+     × T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down 33269ms
+     ✓ T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons 7868ms
+ ↓ |functional| tests/levels/L4.test.ts (19 tests | 19 skipped)
+ ↓ |functional| tests/levels/L5.test.ts (14 tests | 14 skipped)
+ ↓ |functional| tests/levels/L6-campaign.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/L6.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/levels/continuity.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/l1-firefighter.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/l1-medkits.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/levels/l1-ride-input.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/levels/ring-clearance.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/story-bots.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/arrival-stability.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/barricades.test.ts (21 tests | 21 skipped)
+ ↓ |functional| tests/sim/bicycle-knockoff.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/bicycle-pavement.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/sim/controls.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/districts.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/explosion-extinguisher.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/explosion-gas.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/explosions.test.ts (9 tests | 9 skipped)
+ ↓ |functional| tests/sim/handover-door-route.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/l1-toys.test.ts (19 tests | 19 skipped)
+ ↓ |functional| tests/sim/l1-walk.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/light-power.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/m1-world.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/progression.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/props.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/recorder.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/runner.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/weather.test.ts (15 tests | 15 skipped)
+ ↓ |functional| tests/sim/ai/animals.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/ai/infected-hearing.test.ts (83 tests | 83 skipped)
+ ↓ |functional| tests/sim/ai/infected-pursuit.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/ai/infected-recover.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/ai/infected-stuck-l2.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/ai/navigation.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/sim/ai/specials.test.ts (12 tests | 12 skipped)
+ ↓ |functional| tests/sim/ai/turning.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/click-queue.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/combat/click-rate.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/encounter-balance.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/fast-clicks.test.ts (8 tests | 8 skipped)
+ ✓ |functional| tests/sim/combat/fire-axe.test.ts (1 test) 87ms
+ ↓ |functional| tests/sim/combat/l1-crowd.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/l1-duel.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/combat/l2-toughness.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/combat/m1-feel.test.ts (4 tests | 4 skipped)
+ ✓ |functional| tests/sim/combat/roundhouse.test.ts (4 tests | 3 skipped) 78ms
+ ↓ |functional| tests/sim/interact/devices.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/interact/gate-lockin.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/interact/hazards.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/sim/interact/infected-integration.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/interact/pickups.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/missions/adapters.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/sim/missions/campaign.test.ts (15 tests | 15 skipped)
+ ✓ |functional| tests/sim/missions/l2-axe-objective.test.ts (2 tests) 11489ms
+   ✓ @E20 required axe: 120 s idle stays calm; pickup equips and rings the alarm in the same tick 2773ms
+   ✓ @E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint 8715ms
+ ✓ |functional| tests/sim/missions/l2-reporting.test.ts (1 test) 3656ms
+   ✓ @E20-AC05 ride control latency stays on its observed clock after checkpoint respawn 3655ms
+ ✓ |functional| tests/sim/missions/l2-ride-clearance.test.ts (5 tests) 7137ms
+   ✓ L2 truck ride clearance (3)
+     ✓ @E20 route polyline stays on clear (drivable) cells for the whole truck width 532ms
+     ✓ @E20 single seed (natural): no body or static collider overlaps the truck footprint during the ride; ride stays in the time band 3454ms
+     ✓ @E20 single seed (planted): no body or static collider overlaps the truck footprint during the ride; ride stays in the time band 3143ms
+ ✓ |functional| tests/sim/missions/l2-ride-vehicles.test.ts (2 tests) 8130ms
+   ✓ @E20 truck brakes smoothly and holds for a stationary sedan in its lane 5113ms
+   ✓ @E20 crossing traffic yields outside the truck sweep and lets the ride finish 3017ms
+ ↓ |functional| tests/sim/missions/preparation.test.ts (6 tests | 6 skipped)
+ ✓ |functional| tests/sim/missions/small-figure.test.ts (1 test) 458ms
+   ✓ L2 seed 1 protected children keep child models in sim and appearance at both quality tiers @E08 @E20 457ms
+ ↓ |functional| tests/sim/npc/civilians.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/npc/followers.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/npc/integration.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/npc/l1-civilians.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/npc/l1-motion-clips.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/npc/medkit-fetch.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/npc/traffic.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/vehicles/handling.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/sim/vehicles/interact-integration.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/vehicles/interaction.test.ts (4 tests | 4 skipped)
+ ✓ |timing| tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 141ms
+ ↓ |timing| tests/unit/progression/perf.test.ts (1 test | 1 skipped)
+ ↓ |timing| tests/sim/player.test.ts (8 tests | 8 skipped)
+ ↓ |timing| tests/sim/weapons.test.ts (73 tests | 73 skipped)
+ ↓ |timing| tests/sim/ai/director.test.ts (10 tests | 10 skipped)
+ ↓ |timing| tests/sim/ai/l1-perception.test.ts (15 tests | 15 skipped)
+ ↓ |timing| tests/sim/interact/integration.test.ts (6 tests | 6 skipped)
+ ↓ |timing| tests/sim/missions/perf.test.ts (1 test | 1 skipped)
+ ↓ |timing| tests/sim/npc/campaign.test.ts (5 tests | 5 skipped)
+ ↓ |timing| tests/sim/performance/horde.test.ts (3 tests | 3 skipped)
+ ↓ |timing| tests/sim/vehicles/consequences.test.ts (13 tests | 13 skipped)
+
+ Test Files  1 failed | 15 passed | 231 skipped (247)
+      Tests  1 failed | 41 passed | 1509 skipped (1551)
+   Start at  16:39:56
+   Duration  185.28s (tests 90%, import 8%, transform 2%)
+
+JSON report written to /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-vehicle-occupants/test-results/epics/E20/vitest.json

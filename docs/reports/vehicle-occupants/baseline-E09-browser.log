@@ -1,0 +1,126 @@
+[WebServer] fatal: not a git repository (or any of the parent directories): .git
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/harness.spec.ts:35:1 › T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs (1.0s)
+  ✘  2 [chromium] › tests/visual/vehicles.spec.ts:5:1 › T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels (6.0s)
+
+
+  1) [chromium] › tests/e2e/harness.spec.ts:35:1 › T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 6
+
+    @@ -3,23 +3,28 @@
+        "barricades",
+        "bot",
+        "camera",
+        "campaign",
+        "cheats",
+    +   "crowdFigures",
+        "debug",
+        "events",
+    +   "explosions",
+        "getEntity",
+        "getState",
+        "input",
+    +   "inspect",
+        "interact",
+    +   "lights",
+        "loadLevel",
+        "loadScenario",
+        "look",
+        "missions",
+        "npcs",
+        "pause",
+        "perf",
+    +   "physicsProps",
+        "query",
+        "ready",
+        "resume",
+        "screenshotReady",
+        "setLoadout",
+    @@ -31,6 +36,7 @@
+        "teleport",
+        "tick",
+        "unloadScenario",
+        "version",
+        "vfx",
+    +   "weather",
+      ]
+
+      59 |   });
+      60 |   expect(surface.version).toMatch(/^\d+\.\d+\.\d+$/);
+    > 61 |   expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'debug', 'barricades', 'look', 'perf', 'screenshotReady'].sort());
+         |                        ^
+      62 |   expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality', 'l1Outbreak', 'l1Stats'].sort());
+      63 |   expect(surface.campaignKeys).toEqual(['state', 'menu', 'save', 'restore'].sort());
+      64 |   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');
+        at /private/tmp/fix-vehicle-occupants-baseline/tests/e2e/harness.spec.ts:61:24
+
+    Error Context: test-results/playwright/run-3361/e2e-harness-T-E01-05-E01-E-578c3-ds-and-remaining-epic-stubs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3361/e2e-harness-T-E01-05-E01-E-578c3-ds-and-remaining-epic-stubs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3361/e2e-harness-T-E01-05-E01-E-578c3-ds-and-remaining-epic-stubs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/visual/vehicles.spec.ts:5:1 › T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      61073 pixels (ratio 0.05 of all image pixels) are different.
+
+      Snapshot: vehicle-brake-siren-right.png
+
+    Call log:
+      - Expect "toHaveScreenshot(vehicle-brake-siren-right.png)" with timeout 5000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 61073 pixels (ratio 0.05 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 61073 pixels (ratio 0.05 of all image pixels) are different.
+
+
+       7 |   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); a.teleport('player', { x: .2, z: 13.45 }); await a.step(36); a.camera.preset('vehicle'); await a.screenshotReady(); });
+       8 |   const first = await page.evaluate(() => window.__SS__!.getState().render.vehicles.find(v => v.id === 3)!);
+    >  9 |   const capture = async (name: string) => { await page.evaluate(async () => { await window.__SS__!.screenshotReady(); }); const png = PNG.sync.read(await page.screenshot({ path: `${output}/${name}.png` })); await expect(page).toHaveScreenshot(`vehicle-${name}.png`, { threshold: .1, maxDiffPixelRatio: .015 }); return png; };
+         |                                                                                                                                                                                                                                   ^
+      10 |   // The integrated cruiser has two rear lamps, rather than the placeholder's central bar.
+      11 |   const brakePoint = async () => page.evaluate(() => { const a = window.__SS__!, p = a.getEntity(3)!.transform; return [-1, 1].map(side => a.camera.project(p.x - Math.cos(p.yaw) * 2.49 + Math.sin(p.yaw) * side * .72, p.y - .79 + .8, p.z + Math.sin(p.yaw) * 2.49 + Math.cos(p.yaw) * side * .72)); });
+      12 |   const firstBrake = await brakePoint();
+        at capture (/private/tmp/fix-vehicle-occupants-baseline/tests/visual/vehicles.spec.ts:9:227)
+        at /private/tmp/fix-vehicle-occupants-baseline/tests/visual/vehicles.spec.ts:13:14
+
+    attachment #1: vehicle-brake-siren-right (image/png) ───────────────────────────────────────────
+    Expected: tests/visual/__goldens__/vehicle-brake-siren-right.png
+    Received: test-results/playwright/run-3361/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-brake-siren-right-actual.png
+    Diff:     test-results/playwright/run-3361/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-brake-siren-right-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playwright/run-3361/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3361/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3361/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/harness.spec.ts:35:1 › T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs 
+    [chromium] › tests/visual/vehicles.spec.ts:5:1 › T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels 
