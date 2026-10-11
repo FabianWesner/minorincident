@@ -28,7 +28,7 @@ test('T-E05-02 @E05 @E05-AC02 selected rack wraps both ways, locks for 15 ticks 
   expect(rack.state.LEFT.index).toBe(2); expect(rack.state.RIGHT.index).toBe(0);
   w.setInput({ left: { down: false, held: true, up: false } }); step(w, 14);
   expect(w.events.events().filter((e) => e.type === 'combat.attack')).toHaveLength(0);
-  step(w, 1); w.clearInput();
+  step(w, 1); w.clearInput(); step(w, 6);
   expect(w.events.events().filter((e) => e.type === 'combat.attack')).toHaveLength(1);
   expect(w.events.events()).toContainEqual({ tick: 16, type: 'loadout.switched', sourceId: 1, side: 'LEFT', actionId: 'weapon.machine-gun' });
   w.setInput({ selector: 1 }); step(w, 1); w.clearInput(); expect(rack.state.LEFT.index).toBe(0);
@@ -53,12 +53,12 @@ test('T-E05-03 @E05 @E05-AC03 bat arc/range/maxTargets boundaries, once per swin
 
 test('T-E05-04 @E05 @E05-AC04 held pistol fires every 15 ticks, reloads empty at 60 ticks with infinite reserve', async () => {
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5, 0, 10000);
-  w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 76);
+  w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 82);
   const slot = w.combat!.runner.loadout.current('LEFT');
-  expect(w.events.events().filter((e) => e.type === 'combat.attack').map((e) => e.tick)).toEqual([1, 16, 31, 46, 61, 76]);
-  expect(slot.magazine).toBe(0); expect(slot.reloadUntil).toBe(136); expect(slot.reserve).toBe('infinite');
+  expect(w.events.events().filter((e) => e.type === 'combat.attack').map((e) => e.tick)).toEqual([7, 22, 37, 52, 67, 82]);
+  expect(slot.magazine).toBe(0); expect(slot.reloadUntil).toBe(142); expect(slot.reserve).toBe('infinite');
   step(w, 59); expect(slot.magazine).toBe(0); step(w, 1); expect(slot.magazine).toBe(5); expect(slot.reserve).toBe('infinite');
-  expect(w.events.events().filter((e) => e.type === 'combat.attack').map((e) => e.tick)).toEqual([1, 16, 31, 46, 61, 76, 136]);
+  expect(w.events.events().filter((e) => e.type === 'combat.attack').map((e) => e.tick)).toEqual([7, 22, 37, 52, 67, 82, 142]);
 });
 
 test('T-E05-05 @E05 @E05-AC05 grenade landing clamps to range, fuse/falloff and cover LOS', async () => {
@@ -177,7 +177,7 @@ test('T-E05-statuses @E05 stunned gates attacks/movement, slowed/toxic reduce sp
   expect(player.transform.x).toBeCloseTo(0, 4); expect(w.events.events().filter((e) => e.type === 'combat.attack')).toHaveLength(1);
   step(w, 1); expect(player.transform.x).toBeGreaterThan(0);
   w.combat!.status.apply(player, { kind: 'slowed', duration: 2, maxStacks: 1, dps: 0, slow: 0.5 }, id, 'test.slow');
-  step(w, 20); expect(w.player!.locomotion.velocity.x).toBeCloseTo(2.25);
+  step(w, 26); expect(w.player!.locomotion.velocity.x).toBeCloseTo(2.25);
   w.combat!.status.apply(target, { kind: 'toxic', duration: 1, maxStacks: 1, dps: 5, slow: 0.25 }, 1, 'test.toxic');
   expect(Status.speed(target)).toBe(0.75); w.clearInput(); step(w, 60); expect(health(w, id)).toBe(35);
 });
@@ -221,7 +221,7 @@ test('T-E05-held-selection @E05 @E05-AC01 cooling held gun does not steal select
   w.setInput({ aim: { x: 0, z: 1 }, right: { down: false, held: false, up: false } }); step(w, 1);
   const state = w.entities.get(1)!.weapons!;
   expect(state.selectedSide).toBe('RIGHT'); expect(state.RIGHT.aim).toEqual({ x: 0, z: 1 }); expect(state.LEFT.aim).toEqual({ x: 1, z: 0 });
-  step(w, 4); expect(state.selectedSide).toBe('LEFT');
+  step(w, 10); expect(state.selectedSide).toBe('LEFT');
   w.setInput({ aim: { x: -1, z: 0 } }); step(w, 1); expect(state.LEFT.aim).toEqual({ x: -1, z: 0 }); expect(state.RIGHT.aim).toEqual({ x: 0, z: 1 });
 });
 

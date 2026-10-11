@@ -24,8 +24,11 @@ for (const walking of [false,true]) {
       const courier = c.kind === 'courier';
       // The walking NPC target stays beyond the 16 m sight radius so the gun is not dropped in panic.
       const spec: SceneSpec = { name:`gun-${c.weapon}`,ground:'asphalt',size:40,camera:{mode:'game',target:[1,0],zoom:.8},actors:[
+        // Without a courier Scene Lab parks the simulation player off-map; the police's player-centred gate then rejects every target.
+        ...(!courier && !walking && c.model==='npc.police-officer' ? [{id:'observer',kind:'courier' as const,at:[0,-1] as [number,number]}] : []),
         {id:'shooter',kind:c.kind,at:[0,0],look:{model:c.model,handProp:courier?undefined:c.weapon==='hmg'?'rifle':c.weapon},...(courier?{loadout:['weapon.handgun','weapon.fists'] as [string,string]}:walking?{}:{state:{ally:{role:c.model.includes('police')?'officer':c.model.includes('guard')?'soldier':'civilian',weapon:c.weapon as 'pistol'|'rifle'|'hmg'|'hunting-rifle'}}})},
-        {id:'target',kind:'infected',at:[walking&&!courier?19:7,0],state:'idle'},
+        // Police acquisition now requires the conservative player view (4.55 m); walking uses an explicit event probe below.
+        {id:'target',kind:'infected',at:[walking&&!courier?19:c.model==='npc.police-officer'?3:7,0],state:'idle'},
       ]};
       await page.evaluate(s=>window.__SCENE__!.load(s),spec);
       await page.evaluate(async ({courier,walking})=>{
@@ -85,7 +88,7 @@ test('@gun-pose short muzzle aim cue stops at a fence and fades after the shot',
   const samples=await page.evaluate(async()=>{
     const a=window.__SS__!,lab=window.__SCENE__!;await a.ready;a.pause();
     await lab.load({ground:'asphalt',actors:[{id:'courier',kind:'courier',at:[0,0],loadout:['weapon.handgun','weapon.fists']},{id:'target',kind:'infected',at:[7,0],state:'idle'}],props:[{id:'fence',asset:'prop.picket-fence',at:[2.5,0],yaw:0}],camera:{mode:'game',target:[1,0],zoom:.8}});
-    const fire=async()=>{a.input.set({aim:{x:1,z:0},left:{down:true,held:false,up:false}});await a.step(1);a.input.clear();};
+    const fire=async()=>{a.input.set({aim:{x:1,z:0},left:{down:true,held:false,up:false}});await a.step(1);a.input.clear();await a.step(6);};
     await fire();const active=a.getState().render.actions!.aimCue;
     await a.step(12);const fading=a.getState().render.actions!.aimCue;
     await a.step(14);const idle=a.getState().render.actions!.aimCue;

@@ -1,0 +1,177 @@
+[
+  {
+    "profile": "complete",
+    "street": "auto",
+    "seed": 1,
+    "outcome": "complete",
+    "simSeconds": 229.61666666666667,
+    "deaths": 0,
+    "kills": 0,
+    "knockdowns": 30,
+    "damage": 11,
+    "timeline": [
+      {
+        "type": "l3.handgun",
+        "t": 4.45
+      },
+      {
+        "type": "objective:armory",
+        "t": 4.45
+      },
+      {
+        "type": "l3.attack",
+        "t": 9.45
+      },
+      {
+        "type": "l3.wave",
+        "t": 9.45
+      },
+      {
+        "type": "l3.wave",
+        "t": 29.45
+      },
+      {
+        "type": "l3.wave",
+        "t": 49.45
+      },
+      {
+        "type": "l3.fallback",
+        "t": 61.65
+      },
+      {
+        "type": "objective:defend",
+        "t": 61.65
+      },
+      {
+        "type": "l3.squad-lost",
+        "t": 63.68333333333333
+      },
+      {
+        "type": "l3.segment",
+        "t": 64.11666666666666
+      },
+      {
+        "type": "l3.segment",
+        "t": 135.38333333333333
+      },
+      {
+        "type": "l3.segment",
+        "t": 197.76666666666668
+      },
+      {
+        "type": "l3.segment",
+        "t": 224.38333333333333
+      },
+      {
+        "type": "l3.crossed",
+        "t": 227.05
+      },
+      {
+        "type": "objective:checkpoint",
+        "t": 229.61666666666667
+      }
+    ],
+    "handgunS": 4.45,
+    "handgunShots": 133,
+    "attack": {
+      "officers": 10,
+      "directions": [
+        "river",
+        "blvd",
+        "oak"
+      ],
+      "turnedDuring": 2,
+      "sameLook": true,
+      "fallbackCause": "inside",
+      "fallbackAfterS": 52.2
+    },
+    "squad": {
+      "atFallback": 8,
+      "segmentEnds": [
+        7,
+        7,
+        7
+      ],
+      "atCheckpoint": 7,
+      "losses": [
+        {
+          "cause": "bite",
+          "t": 63.68333333333333
+        }
+      ],
+      "turnedInCorridor": 0,
+      "protected": 0,
+      "maxJumpM": 0.36604767159974805,
+      "near8Share": 0.6351829988193625
+    },
+    "s1": {
+      "officerKills": 77,
+      "playerKills": 11,
+      "damage": 11
+    },
+    "killDistances": {
+      "gun": [
+        3.3510543339334924,
+        4.920066852292853,
+        4.8497569807498495,
+        3.2697047661358734,
+        13.974321146083064,
+        10.95775161683838,
+        4.677911548132917,
+        11.890102827235069,
+        11.432466249284392,
+        14.133915545844431,
+        7.606129119032484,
+        12.783397607276989,
+        12.65557353223232,
+        12.65244655778181,
+        11.744189744048061,
+        13.194919725227185,
+        14.453546263696603,
+        11.810684500240372,
+        6.497044636591213,
+        4.609379172492055,
+        7.084950272329077,
+        7.854840582780622,
+        7.416587372860468
+      ],
+      "melee": [
+        1.3857953588370933,
+        1.7850951712093295,
+        1.494619380083005,
+        1.4733976471831332,
+        1.2916723148433782,
+        1.079482305576449,
+        1.3767268860297572
+      ]
+    },
+    "regressionM": 4.085624694824219,
+    "streets": [
+      "commerce",
+      "blvd"
+    ],
+    "density": {
+      "prepopulated": [
+        50,
+        120,
+        200
+      ],
+      "near30": [
+        15,
+        10,
+        24
+      ],
+      "maxConcurrent": 80,
+      "cap": 80
+    },
+    "medkits": 0,
+    "lowHpShare": 0,
+    "audit": {
+      "sightViolations": 0,
+      "nonSightAlerts": 0,
+      "emerged": 370,
+      "emergeSeen": 0
+    },
+    "deathsAt": []
+  }
+]
