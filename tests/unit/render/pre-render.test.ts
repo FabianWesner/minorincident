@@ -1,7 +1,14 @@
 import { expect, test, vi } from 'vitest';
-import { BoxGeometry, Group, InstancedMesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, Vector2 } from 'three/webgpu';
+import { BoxGeometry, DirectionalLight, Group, InstancedMesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, SpotLight, Vector2 } from 'three/webgpu';
 import { compileLanes, preRender } from '../../../src/render/PreRenderer';
 import { Renderer } from '../../../src/render/Renderer';
+
+test('T-E25-14g @E25 warm-up preserves the active gameplay light list', async () => {
+  const scene = new Scene(), sun = new DirectionalLight(), spot = new SpotLight(); spot.visible = false; scene.add(sun, spot);
+  const check = () => { expect(sun.visible).toBe(true); expect(spot.visible).toBe(false); };
+  const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => check()) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), check); check(); sun.dispose(); spot.dispose();
+});
 
 for (const fails of [false, true]) test(`@E19 pre-render warms hidden zero-count variants and restores state on ${fails ? 'failure' : 'success'}`, async () => {
   const scene = new Scene(), group = new Group(), mesh = new InstancedMesh(new BoxGeometry(), new MeshBasicNodeMaterial(), 2);

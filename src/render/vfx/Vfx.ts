@@ -1,4 +1,4 @@
-import { Group, type BufferGeometry } from 'three/webgpu';
+import { Group, type BufferGeometry, type Node } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
 import { infectedDef } from '../../data/infected';
 import { catalog as actions } from '../../data/actions/catalog';
@@ -28,6 +28,10 @@ export interface VfxTargets {
   focus?(): { x: number; z: number };
   /** E25 light field transient pools (fires, blast flashes, mega tint). */
   light?: import('./Blasts').BlastLight;
+  /** Shared practical-light radiance for smoke, including powered strobes. */
+  field?: import('../LightField').LightField;
+  ambient?: Node<'float'>;
+  sunDirection?(): { x: number; y: number; z: number };
 }
 const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
@@ -89,7 +93,7 @@ export class Vfx extends Group {
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
-    this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null });
+    this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null, field: targets.field, ambient: targets.ambient, sunDirection: targets.sunDirection });
     this.add(this.blasts, this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
     for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
   }
@@ -263,7 +267,7 @@ export class Vfx extends Group {
       if (p) this.sickPuff(p.x, p.z, rise ? 18 : 10, rise ? .2 : .14, rise ? .7 : .3);
     }
     else if (event.type === 'pickup.collected') { const e = this.world.entities.get('id' in event ? event.id : event.sourceId); if (e) this.effect('pickup', e.transform.x, e.transform.z, 1); }
-    else if (event.type === 'vfx.effect') this.effect(event.kind, event.position.x, event.position.z, event.radius);
+    else if (event.type === 'vfx.effect') this.effect(event.kind, event.position.x, event.position.z, event.radius, event.position.y);
   };
   private updateVehicle(id: number, blood = this.vehicles.get(id)?.blood ?? 0): void {
     const e = this.world.entities.get(id); if (!e?.vehicle) return;
@@ -276,7 +280,7 @@ export class Vfx extends Group {
     last.tick = tick; last.x = x; last.z = z; this.effect('explosion', x, z, radius);
   }
   /** Radius is in metres. Shockwave max diameter is exactly 2 × splash radius. */
-  effect(kind: EffectKind, x: number, z: number, radius = 2): void {
+  effect(kind: EffectKind, x: number, z: number, radius = 2, height = .7): void {
     if (!this.enabled) return;
     if (kind === 'explosion') {
       this.lastExplosionRadius = radius; this.flashUntil = this.time + 0.1;
@@ -288,8 +292,8 @@ export class Vfx extends Group {
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
     } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, 0xef92ff, 1);
     else if (kind === 'electric') {
-      this.burst(x, 0.7, z, 0x94ecff, 12, 0.07, 0.25, 0);
-      for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, 0.7 + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
+      this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0);
+      for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, height + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
     }
     else {
       const smoke = kind.includes('smoke') || kind === 'toxic', sparkle = kind === 'objective' || kind === 'pickup';

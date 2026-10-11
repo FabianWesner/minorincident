@@ -4,13 +4,14 @@ import type { NavGrid } from '../ai/NavGrid';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { faceMotion, motionResponse, resetResponse, respond } from './MotionResponse';
+import { Status } from '../combat/Status';
 
 /** Navigation/behaviour supplies intent; static sweeps remain authoritative. */
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = e.combat?.radius ?? .35, impulse = false): void {
   const state = e.locomotion ??= motionResponse();
   if (state.updatedAt === tick) return;
   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
-  else respond(state, vx, vz);
+  else { const speed = Status.speed(e); respond(state, vx * speed, vz * speed); }
   state.updatedAt = tick;
   const x = e.transform.x, z = e.transform.z;
   if (state.vx !== 0 || state.vz !== 0) nav.move(e.transform, state.vx * FIXED_DT, state.vz * FIXED_DT, radius);
