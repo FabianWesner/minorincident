@@ -15,9 +15,12 @@ test('T-E16-02 @E16 @E16-AC02 a pistol emits one 25m noise heard by AI and audio
         world.combat!.setLoadout(['weapon.pistol'], ['weapon.fists']);
         world.setInput({ left: { down: true, held: true, up: false }, aim: { x: 0, z: 1 } });
         world.update();
+        expect(audio).toHaveLength(0); // The tap raises the gun; the noise belongs to the discharge.
+        world.clearInput();
+        for (let i = 0; i < 6; i++) world.update();
         const events = world.events.events().filter(e => e.type === 'noise');
         expect(events).toHaveLength(1);
-        expect(events[0]).toMatchObject({ radius: noise.pistol.radius, loudness: 1, actionId: 'weapon.pistol' });
+        expect(events[0]).toMatchObject({ tick: 7, radius: noise.pistol.radius, loudness: 1, actionId: 'weapon.pistol' });
         expect(audio).toEqual(events);
         expect(world.entities.get(inside)!.infected!.state).toBe('alerted');
         expect(world.entities.get(outside)!.infected!.state).toBe('idle');

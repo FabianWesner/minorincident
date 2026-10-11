@@ -54,9 +54,11 @@ export class ActionView extends Group {
   private gunUntil = -1;
   private gunId = '';
   private gunSide: Side = 'LEFT';
-  private readyWeight = 0;
   private readyTick = -1;
   private readonly gunDirection = { x: 1, z: 0 };
+  private carryYaw = 0;
+  private raiseId = -1;
+  private raiseYaw = 0;
   /** Shot-time presentation intent (sim events can arrive between rendered frames). */
   aimGun(direction: { x: number; z: number }): void {
     this.gunSide = this.world.combat!.runner.loadout.state.selectedSide;
@@ -147,7 +149,7 @@ export class ActionView extends Group {
     const selectedSide = loadout.state.selectedSide, aiming = selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
     const selectedId = loadout.current(selectedSide).id;
     if (this.held[selectedSide]?.id !== selectedId || selectedSide !== this.selected) {
-      this.readyWeight = 0; this.readyTick = -1;
+      this.readyTick = -1;
       if (!aiming) this.gunUntil = -1;
     }
     const gun = action(loadout.current(selectedSide).id).category === 'ranged';
@@ -157,7 +159,6 @@ export class ActionView extends Group {
       const fire = selectedSide === 'LEFT' ? input.left : input.right;
       const aimingInput = !!input.aim && (!!input.pointerTarget || input.aimSource === 'keyboard' || input.aimSource === 'touch' || fire.down || fire.held);
       const dt = this.readyTick < 0 || this.world.tick < this.readyTick ? 1 / 60 : Math.max(0, this.world.tick - this.readyTick) / 60;
-      this.readyWeight += ((aimingInput ? 1 : 0) - this.readyWeight) * (1 - Math.exp(-18 * dt));
       this.readyTick = this.world.tick;
       if (aimingInput && input.aim && age !== 0) {
         const yaw = Math.atan2(this.gunDirection.z, this.gunDirection.x);
@@ -169,10 +170,18 @@ export class ActionView extends Group {
       // rotate a gun independently through the fingers. Ease back to low ready.
       const release = Math.max(0, Math.min(1, (age - 12) / 24));
       const shotWeight = aiming || age < 36 ? 1 - release * release * (3 - 2 * release) : 0;
-      const weight = Math.max(this.readyWeight, shotWeight);
+      const pending = combat.runner.running[selectedSide];
+      const raising = pending?.def.category === 'ranged' && !pending.resolved;
+      const preparation = combat.runner.gunReady.ticks / 6;
+      const progress = raising ? Math.min(1, (6 - (pending.activeAt - pending.started) + this.world.tick - pending.started) / 6) : preparation;
+      const raiseWeight = progress * progress * (3 - 2 * progress);
+      const weight = Math.max(raiseWeight, shotWeight);
+      if (raising) Object.assign(this.gunDirection, pending.aim);
       const direction = this.handPosition.set(1, 0, 0).applyQuaternion(this.character.quaternion);
-      const facing = Math.atan2(direction.z, direction.x), target = Math.atan2(this.gunDirection.z, this.gunDirection.x);
+      if (raising && pending.id !== this.raiseId) { this.raiseId = pending.id; this.raiseYaw = this.carryYaw; }
+      const facing = raising ? this.raiseYaw : Math.atan2(direction.z, direction.x), target = Math.atan2(this.gunDirection.z, this.gunDirection.x);
       const heading = facing + Math.atan2(Math.sin(target - facing), Math.cos(target - facing)) * weight;
+      this.carryYaw = heading;
       direction.set(Math.cos(heading), 0, Math.sin(heading));
       const recoil = age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .035 : 0;
       // Long stocks/tubes extend behind the palm. Hold them outside the

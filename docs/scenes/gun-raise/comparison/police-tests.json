@@ -1,0 +1,37 @@
+{
+  "passed": 2,
+  "failed": 4,
+  "total": 20,
+  "assertions": [
+    {
+      "title": "T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+      "status": "failed",
+      "failure": "AssertionError: expected 362.81666666666666 to be less than or equal to 225"
+    },
+    {
+      "title": "T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag",
+      "status": "failed",
+      "failure": "AssertionError: expected 0 to be greater than or equal to 1"
+    },
+    {
+      "title": "T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports",
+      "status": "failed",
+      "failure": "AssertionError: expected 0 to be greater than or equal to 0.6"
+    },
+    {
+      "title": "T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+      "status": "passed",
+      "failure": null
+    },
+    {
+      "title": "T-E21-11 @E21 @E21-AC11 progress never regresses by > 15 m (complete), and each forced street completes 20/20",
+      "status": "failed",
+      "failure": "AssertionError: oak: expected +0 to be 1 // Object.is equality"
+    },
+    {
+      "title": "T-E21-bots @E21 evade-only never attacks and still reaches the army zone",
+      "status": "passed",
+      "failure": null
+    }
+  ]
+}
