@@ -23,7 +23,13 @@ export class PawContacts {
       const bounds = new Box3(); original.traverse(node => { if (node instanceof Mesh) bounds.expandByObject(node); });
       if (bounds.isEmpty()) return [];
       const paw = bounds.getCenter(new Vector3()); paw.y = bounds.min.y;
-      return [{ leg, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole: bounds.min.y - this.origin.y, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
+      const vertices: Vector3[] = [];
+      original.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        const positions = node.geometry.attributes.position, indices = node.geometry.index;
+        for (let i = 0; i < (indices?.count ?? positions.count); i++) vertices.push(original.worldToLocal(new Vector3().fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld)));
+      });
+      return [{ leg, vertices, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole: bounds.min.y - this.origin.y, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
         /** Last drawn paw point (world), standing-hold state and the current settle step (-1: none). */
         last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
     });
@@ -83,12 +89,15 @@ export class PawContacts {
    * moves over it (stop, creep, turning on the spot, the warning shifts), instead of following the root and skating.
    * Once its authored spot is more than 6 cm away it takes a short lifted step there, diagonal pairs at a time, so a
    * stop from a gait settles into the stance in steps rather than a one-frame jump. Authored lifts (bark) still lift. */
-  hold(dt: number): void {
+  hold(dt: number, grounded = false): void {
     this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
     const floor = this.origin.y, partner = [3, 2, 1, 0];
     for (const [index, foot] of this.feet.entries()) {
       const spot = this.spot.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld), lifted = spot.y, sole = floor + foot.sole;
       spot.y = sole;
+      // The spawn capsule settles vertically before standing still. Keep the
+      // horizontal anchor, but follow its floor rather than the spawn height.
+      foot.planted.y = sole; foot.from.y = sole;
       if (!foot.held) { foot.held = true; foot.step = -1; foot.planted.copy(foot.last && foot.last.distanceTo(spot) < 1 ? foot.last : spot).setY(sole); }
       const away = Math.hypot(spot.x - foot.planted.x, spot.z - foot.planted.z);
       if (away > 1) { foot.planted.copy(spot); foot.step = -1; }
@@ -99,7 +108,12 @@ export class PawContacts {
         desired.lerpVectors(foot.from, spot, smooth(foot.step)); desired.y = sole + arc(foot.step);
         if (foot.step >= 1) { foot.planted.copy(spot); foot.step = -1; }
       } else desired.copy(foot.planted);
-      desired.y = Math.max(desired.y, lifted);
+      if (grounded) {
+        // A folded rear paw has a different lowest vertex from the bind pose.
+        // Ground the drawn sole, retaining clearance during a settling step.
+        const bottom = Math.min(...foot.vertices.map(v => this.offset.copy(v).applyMatrix4(foot.leg.matrixWorld).y));
+        desired.y = lifted + floor - bottom + Math.max(0, desired.y - sole);
+      } else desired.y = Math.max(desired.y, lifted);
       const target = foot.leg.parent!.worldToLocal(desired);
       foot.correction.copy(target).sub(this.offset.copy(foot.paw).multiply(foot.leg.scale).applyQuaternion(foot.leg.quaternion)).sub(foot.leg.position);
       foot.release.copy(foot.correction);
