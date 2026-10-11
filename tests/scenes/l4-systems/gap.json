@@ -1,0 +1,167 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "name": "qa-l4-systems-gap",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -10,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "at": [
+        4,
+        0
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    },
+    {
+      "id": "regular-0",
+      "kind": "infected",
+      "at": [
+        7,
+        -1.5
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "regular-1",
+      "kind": "infected",
+      "at": [
+        7,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "regular-2",
+      "kind": "infected",
+      "at": [
+        7,
+        1.5
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "soldier-a",
+      "kind": "pedestrian",
+      "at": [
+        -10,
+        -4
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "soldier-b",
+      "kind": "pedestrian",
+      "at": [
+        -10,
+        4
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    }
+  ],
+  "barricadeSlots": [
+    {
+      "id": "l4-line",
+      "groupId": "l4-line",
+      "a": {
+        "x": 0,
+        "z": -5
+      },
+      "b": {
+        "x": 0,
+        "z": 5
+      },
+      "height": 0.85,
+      "depth": 0.7,
+      "initialHp": 300,
+      "sandbag": true
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 90,
+      "actor": "regular-0",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 90,
+      "actor": "regular-1",
+      "do": {
+        "chase": "courier"
+      }
+    },
+    {
+      "frame": 90,
+      "actor": "regular-2",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "frames": 450,
+  "shots": [
+    27,
+    90,
+    450
+  ]
+}

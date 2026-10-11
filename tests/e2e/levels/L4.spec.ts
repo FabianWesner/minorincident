@@ -6,7 +6,7 @@ import { l4Anchors } from '../../../src/data/l4';
 
 /** E22 L4 browser runs. Browser runs only through tools/e2e-lock.sh, headless. */
 const output = 'test-results/epics/E22';
-test.use({ trace: 'off', launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test.use({ trace: 'off' }); // Use the shared platform backend: Metal on Mac, SwiftShader on Hetzner.
 type P = { x: number; z: number };
 const fair = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
 /** Authored L4 anchors; the door and the brace come from the layout (levelFourLayouts derives them the same way). */

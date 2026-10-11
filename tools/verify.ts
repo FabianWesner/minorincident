@@ -50,6 +50,12 @@ const commands: string[][] = [
           // The station-attack and Boulevard frame budgets (desktop high, throttled phone low) run alone on the native GPU.
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l3-budgets.spec.ts', '--project=chromium', '--workers=1'],
         ]
+      : target === 'E22'
+        ? [
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1'],
+          // Hetzner runs the functional gates; native Metal timing stays on the Mac.
+          ...(process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l4-budgets.spec.ts', '--project=chromium', '--workers=1']] : []),
+        ]
       : target === 'E23' || target === 'E24'
         ? [
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
