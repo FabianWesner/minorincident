@@ -25,13 +25,16 @@
 | [E19](epic-19-level-1-stop-the-outbreak.md) | Level 1: Stop the Outbreak | M1 | E04–E08, E10–E12, E14 |
 | [E20](epic-20-level-2-the-failed-rescue.md) | Level 2: The Failed Rescue (redesigned 2026-10-07) | M2 | E19, E06, E08, E09, E25, E26 |
 | [E21](epic-21-level-3-the-police-collapse.md) | Level 3: The Police Collapse (redesigned 2026-10-07) | M2 | E20, E06, E08, E27 |
-| [E22](epic-22-level-4-the-safe-city-falls.md) | Level 4: The Safe City Falls (redesigned 2026-10-07) | M3 | E21, E18, E25, E26, E27 |
-| [E23](epic-23-level-5-aftermath.md) | Level 5: Aftermath (redesigned 2026-10-07) | M3 | E22, E08, E10 |
-| [E24](epic-24-level-6-the-subway.md) | Level 6: The Subway (redesigned 2026-10-07) | M3 | E23, E25, E26 |
+| [E22](epic-22-level-4-the-safe-city-falls.md) | Level 4: The Safe City Falls (updated 2026-10-11) | M3 | E21, E18, E25, E26, E27 |
+| [E23](epic-23-level-5-aftermath.md) | Level 5: Aftermath (updated 2026-10-11) | M3 | E22, E08, E10 |
+| [E24](epic-24-level-6-the-subway.md) | Level 6: The Subway (updated 2026-10-11) | M3 | E23, E25, E26 |
 | [E25](epic-25-lighting-shadows-reflections.md) | Lighting, shadows and reflections | M1 → M3 | E02, E10, E17 |
 | [E26](epic-26-physics-props-and-barricades.md) | Physics props and barricades | M1 → M2 | E04, E05, E07, E09, E10, E11 |
 | [E27](epic-27-explosions-fire-smoke.md) | Explosions, fire and smoke | M2 → M3 | E05, E11, E15, E25, E26 |
 | [E28](epic-28-weather.md) | Weather (sun, clouds, rain, storm, fog, wind, snow, ash) | M2 → M3 | E02, E16, E25, E27 |
+| [E29](epic-29-level-7-the-ruined-city.md) | Level 7: The Ruined City | M3 | E24, E06, E07, E08–E10, E18, E25–E28 |
+| [E30](epic-30-level-8-the-zoo.md) | Level 8: The Zoo | M3 | E29, E07–E10, E17, E18, E25–E28 |
+| [E31](epic-31-level-9-the-crossing.md) | Level 9: The Crossing | M3 | E30, E09, E10, E12–E14, E18 |
 
 ## 2. Milestones
 
@@ -40,7 +43,7 @@
 | **M0 Foundation** | Empty town plane with the camera, loop, input, test API, and asset registry | `npm run verify -- M0` green |
 | **M1 Vertical slice** | **L1 fully playable** from greybox to final P0 assets: unarmed evasion → melee → Patient Zero → twist | the bot completes L1 on 20 seeds; human-feel review passes |
 | **M2 Core campaign** | L2–L3: fire axe, handgun, allied fighters (firefighters, police squad), rides, medkits, save | bot completes L1→L3 as a campaign |
-| **M3 Full campaign** | L4–L6: machine gun, the L4 war scene, the devastated L5 twin, survivor escort, the subway, night exit | bot completes the full campaign on 10 seeds (E24-AC08); times in band |
+| **M3 Designed campaign through L9** | L4–L9: first Alphas/war, shotgun/quiet rescue, subway, W6 rocket power fantasy, zoo outbreak/animal specials, temporary armored crossing | one-seed campaign L1→L9 (E31-AC20), segment L1→L6 (E24-AC08); per-level budgets, handovers and reviews pass; L10 storyline pending |
 | **M4 Ship** | Performance, mobile, accessibility, polish, audio mix | release suite green on all platforms in the test matrix |
 
 Epics marked "M1 → M3" deliver in increments. Each increment's acceptance criteria are tagged with the milestone (e.g. `[M1]`).
@@ -83,10 +86,39 @@ An epic is done only when **all** of these hold:
 
 From the remaining-scope gap audit. Nothing is cut; the order changes so that every level is playable before the expensive extras land.
 
-- **Order:** (0) close L1 acceptance, register the 25 finished art exports, campaign foundation (real vehicle/device mission adapters, per-level runners) → (1) E26 core barricades, E25 light pools + night readability, L2/L3 content, campaign bots → (2) E27 core blasts/fire/smoke, finish L2/L3 (M2) → (3) L4 + zoo, E28 rain/wind/fog/ash, E25 shadows + cheap reflections → (4) L5, L6 + ending, mega spectacle, decay W4/W5 → (5) release closure: balance, visual reviews, performance, then the extras (SSR/GTAO/planar water, snow override, unused gas variants, freeform construction).
+- **Order:** (0) close L1 acceptance, register the 25 finished art exports, campaign foundation (real vehicle/device mission adapters, per-level runners) → (1) E26 core barricades, E25 light pools + night readability, L2/L3 content, campaign bots → (2) E27 core blasts/fire/smoke, finish L2/L3 (M2) → (3) L4, E28 rain/wind/fog/ash, E25 shadows + cheap reflections → (4) L5, L6 + L7 handover, mega spectacle, decay W4/W5 → (5) release closure: balance, visual reviews, performance, then the extras (SSR/GTAO/planar water, snow override, unused gas variants, freeform construction).
 - **Bot timing:** level time bands are calibrated against the `newbie` bot and human play; levels are never padded with idle delays to hit a band.
 - **Budgets** (awake props, particles, lights) are upper bounds, not targets.
 - **WebGPU** is checked manually; automated browser runs are headless WebGL2 (repo rule overrides the headed WebGPU wording in 90/91).
 - **Campaign flow:** no reward screens between levels (PO decision); rewards auto-apply.
 - **Levels 2–6 redesign (PO, 2026-10-07):** the PO's verbatim design is [`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10-07.md) and wins over the epics where they disagree. E20–E24 were rewritten and renamed (The Failed Rescue, The Police Collapse, The Safe City Falls, Aftermath, The Subway); all five are `todo` (E21 was `done` for the old L3 and was reopened). The **old L2–L6 content in code** (`src/levels/missions.ts` L2/L4/L5/L6 cases, `src/levels/L3/`, the old compositions and their `@E21`/`@E22` tests) **is superseded**, but its **systems are reused**: outbreak simulation, escort follower, defend/device steps, gates, checkpoints, vehicles as kinematic rides, barricades (E26), blasts and fire (E27), lighting presets (E25), weather (E28, optional). New shared pieces: allied fighters (E20 §5.2, extended in E21/E22), the group follower (E24), districts `D-CORRIDOR`, `D-FAIR` (+ W5 twin) and `D-SUBWAY`. Where the PO text leaves something open the epics mark an "(orchestrator default — PO may change)".
-- **Order after the redesign:** L2 → L3 (M2), then L4 (needs the E18 war-scene budgets and E27 mega blasts) → L5 (decay twin of L4) → L6 (E25 power groups, E26 gates). Level time bands in E20–E24 are provisional until their first green 20-seed run.
+- **Order after the redesign:** L2 → L3 (M2), then L4 (needs the E18 war-scene budgets and E27 mega blasts) → L5 (decay twin of L4) → L6 (E25 power groups, E26 gates). Level time bands remain provisional until their first green single-seed run (PO 10-09 supersedes older 20-seed gate wording).
+
+## 7. Campaign update L4–L9 (PO 2026-10-11)
+
+[`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), including later PO updates at the end, **wins over all older campaign/story/weapon/world notes**. Preserve built content where compatible. E22 reopens for Alpha/ending changes; E07 reopens for added Alpha/animal bars and specials; E29–E31 start `todo`. E23 stays in progress and E24 stays todo. New criteria are pending implementation, even if an old tagged test passes.
+
+| Level | Epic / title | New gameplay power | World / campaign progression | Ending / handover |
+| --- | --- | --- | --- | --- |
+| L1 | E19 · Stop the Outbreak | Bat | intact · Sunset Grove | fire station → L2 |
+| L2 | E20 · The Failed Rescue | Axe | wounded · rescue collapses | police bridgehead → L3 |
+| L3 | E21 · The Police Collapse | Handgun | collapsing · police corridor | army convoy → L4 |
+| L4 | E22 · The Safe City Falls | Machine gun | war zone · D-FAIR W0→W3; internal evacuee outbreak, first 2–3 Alphas, armed civilians/military vehicles | player alone in hardware basement → L5 |
+| L5 | E23 · Aftermath | Shotgun in basement at start | silent ruins · same D-FAIR W5, five survivors, scattered infected incl. 1–2 Alphas | metro with 20–30 additional survivors, doors close → L6 |
+| L6 | E24 · The Subway | none | underground · D-SUBWAY calm/breach/power failure/group retreat | night exit with surviving group → L7 |
+| L7 | E29 · The Ruined City | Rocket launcher, unlimited | completely destroyed · same D-FAIR W6 night, huge regular groups/multiple Alphas, no zoo animals | final horde/corridor, bus departure with burning skyline → L8 |
+| L8 | E30 · The Zoo | none | zoo sanctuary fails · D-ZOO, 60 s no-objective calm, ≥ 3 internal tunnel breaches, five infected zoo species | surviving group escapes in armored vehicle → L9 |
+| L9 | E31 · The Crossing | armored vehicle as temporary power | open-country escape · D-CROSSING, road/off-road choices, no gun/repair, collision/attack durability, zero→on foot | next-city outskirts; L10 continuation pending |
+| L10 | Grand finale — storyline from the PO pending | pending | pending | no epic file yet |
+
+Weapon progression: **Bat → Axe → Handgun → Machine gun → Shotgun → none → Rocket launcher → none → armored vehicle**. Here `none` means no new weapon; acquired weapons stay selectable.
+
+> PO, verbatim: "Bat → Axe → Handgun → Machine gun → Shotgun → no new weapon → Rocket launcher → no new weapon → armored vehicle as temporary gameplay power"
+>
+> "intact → wounded → collapsing → war zone → silent ruins → underground → completely destroyed → zoo sanctuary fails → open-country escape."
+>
+> Later PO, verbatim: "Alpha should have a health bar and special moves"; "Same for Zoo animals"; "Level 10 will be the grande finale then, I will provide story line tomorrow".
+
+Use E07's world-space bar and four Alpha/ten zoo move tables, telegraphs ≥ 0.6 s and per-move Scene Lab scenes. Infected elephant/zebra derive from normal `amb.elephant`/`amb.zebra` bases; healthy animals have no bars. W6 is a new **decay tier**, not a quality tier. E31 streaming/LOD must hold E18 budgets on desktop and phone.
+
+**Implementation order:** specs → E07 Alpha systems/assets → L4 Alphas/solitary ending + L5 shotgun/metro ending → L6 continuation → L7 → E07 zoo extensions + L8 → L9. Every affected epic's Implementation plan uses ordered lanes ≤ 3 h: systems first, district/assets, encounters, then Scene Lab and headless browser e2e. These are future implementation lanes; this update changes specs only. L10 is held for the PO storyline, without inventing an epic or ending.

@@ -7,7 +7,8 @@ This folder holds the specification for **Minor Incident**, a colorful isometric
 | File | Purpose |
 | --- | --- |
 | [00-game-concept.md](00-game-concept.md) | Full game concept: pillars, core loop, controls, combat, progression, vehicles, enemies, campaign |
-| [po-levels-2-6-2026-10-07.md](po-levels-2-6-2026-10-07.md) | The product owner's verbatim Level 2–6 design (source of truth for E20–E24; wins on any disagreement) |
+| [po-levels-4-9-2026-10-11.md](po-levels-4-9-2026-10-11.md) | Highest-priority PO campaign source for L4–L9 and later Alpha/zoo health-bar/special-move and L10 updates; wins over older specs |
+| [po-levels-2-6-2026-10-07.md](po-levels-2-6-2026-10-07.md) | Earlier verbatim L2–L6 design; still authoritative for L2–L3 and compatible L4–L6 content |
 | [01-art-direction.md](01-art-direction.md) | Visual language taken from `initial-drafts/`: palette, lighting, world-decay tiers, gore policy |
 | [02-technical-architecture.md](02-technical-architecture.md) | Runtime architecture, conventions, the sim/render split, the test API contract |
 | [03-asset-pipeline.md](03-asset-pipeline.md) | Codex imagegen → upscaled reference → Blender `bpy` build script → GLB → gltf-transform → game, plus asset contracts and validation |
@@ -33,12 +34,29 @@ This folder holds the specification for **Minor Incident**, a colorful isometric
 
 ## ID conventions
 
-- Epics: `E01` … `E28`
+- Epics: `E01` … `E31`
 - Acceptance criteria: `E05-AC03`
 - Tests: `T-E05-03` (normally 1:1 with an acceptance criterion; extra tests get a suffix such as `T-E05-03b`)
-- Levels: `L1` … `L6`. Districts: `D-GROVE` (L1), `D-RES`, `D-MAIN`, `D-SCHOOL`, `D-SHOP`, `D-CIVIC`, `D-PARK`, `D-ZOO`, `D-EDGE`, `D-CORRIDOR` (L3), `D-FAIR` (L4–L5, Fairhaven), `D-SUBWAY` (L6)
-- World-state tiers: `W0` (normal) … `W5` (destroyed)
+- Levels: `L1` … `L9` designed; L10 grand finale storyline pending. Districts: `D-GROVE` (L1), `D-RES`, `D-MAIN`, `D-SCHOOL`, `D-SHOP`, `D-CIVIC`, `D-PARK`, `D-ZOO`, `D-EDGE`, `D-CORRIDOR` (L3), `D-FAIR` (L4/L5/L7, Fairhaven), `D-SUBWAY` (L6), `D-CROSSING` (L9); existing `D-ZOO` becomes the L8 zoo campaign district
+- World-state tiers: `W0` (normal) … `W5` (destroyed) → new `W6` (completely destroyed Fairhaven, L7)
 
 ## Language rule for criteria
 
 Each acceptance criterion is written as an **observable, machine-checkable statement**: a value in the state snapshot, an event in the event log, a pixel or screenshot property, a performance counter, or a file that exists and validates. Criteria that need visual judgment name the screenshot spot and the review checklist the agent applies (see [90-test-concept.md](90-test-concept.md) §7).
+
+## Campaign epic index
+
+| Level | Specification |
+| --- | --- |
+| L1 | [E19 · Stop the Outbreak](epic-19-level-1-stop-the-outbreak.md) |
+| L2 | [E20 · The Failed Rescue](epic-20-level-2-the-failed-rescue.md) |
+| L3 | [E21 · The Police Collapse](epic-21-level-3-the-police-collapse.md) |
+| L4 | [E22 · The Safe City Falls](epic-22-level-4-the-safe-city-falls.md) — updated internal outbreak, first Alphas, solitary basement ending |
+| L5 | [E23 · Aftermath](epic-23-level-5-aftermath.md) — shotgun at start, sparse Alphas, populated metro/closing doors |
+| L6 | [E24 · The Subway](epic-24-level-6-the-subway.md) — night exit hands over to L7 |
+| L7 | [E29 · The Ruined City](epic-29-level-7-the-ruined-city.md) — W6 Fairhaven, unlimited rocket launcher, evacuation bus |
+| L8 | [E30 · The Zoo](epic-30-level-8-the-zoo.md) — false sanctuary, infected animals with bars/specials, armored escape |
+| L9 | [E31 · The Crossing](epic-31-level-9-the-crossing.md) — open routes, temporary vehicle durability, on-foot continuation |
+| L10 | Grand finale — storyline from the PO pending; no epic yet |
+
+Shared [E07](epic-07-infected-ai-and-hordes.md) defines Alpha resistance/health bar/four moves and all five zoo species' bars/ten moves, including derived infected elephant/zebra. New/changed acceptance criteria are explicitly marked; implementation plans list lanes ≤ 3 h and reuse existing systems/assets. New T-ids and planned move scenes are indexed in [91-test-plan.md](91-test-plan.md).
