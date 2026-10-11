@@ -1,0 +1,122 @@
+{
+  "size": 44,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "a0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        9.0,
+        0.0
+      ],
+      "yaw": 180,
+      "state": "chase"
+    },
+    {
+      "id": "a1",
+      "kind": "infected",
+      "archetype": "infected.crawler",
+      "at": [
+        6.36,
+        6.36
+      ],
+      "yaw": 225,
+      "state": "chase"
+    },
+    {
+      "id": "a2",
+      "kind": "infected",
+      "archetype": "infected.brute",
+      "at": [
+        0.0,
+        9.0
+      ],
+      "yaw": 270,
+      "state": "chase"
+    },
+    {
+      "id": "a3",
+      "kind": "infected",
+      "archetype": "infected.butcher",
+      "at": [
+        -6.36,
+        6.36
+      ],
+      "yaw": 315,
+      "state": "chase"
+    },
+    {
+      "id": "a4",
+      "kind": "infected",
+      "archetype": "infected.dog",
+      "at": [
+        -9.0,
+        0.0
+      ],
+      "yaw": 360,
+      "state": "chase"
+    },
+    {
+      "id": "a5",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "at": [
+        -6.36,
+        -6.36
+      ],
+      "yaw": 405,
+      "state": "chase"
+    },
+    {
+      "id": "a6",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        -0.0,
+        -9.0
+      ],
+      "yaw": 450,
+      "state": "chase"
+    },
+    {
+      "id": "a7",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        6.36,
+        -6.36
+      ],
+      "yaw": 495,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier"
+  },
+  "frames": 420,
+  "sheet": 20,
+  "shots": [
+    200,
+    300,
+    420
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "bodyOverlapMaxCm": 8,
+    "courierAttacksMin": 1
+  },
+  "name": "pileup-game",
+  "ground": "asphalt",
+  "note": "PKG-01 FIX-01: heads clear courier at bat f141 / butcher f110\u2013240; eight archetypes stay separate."
+}

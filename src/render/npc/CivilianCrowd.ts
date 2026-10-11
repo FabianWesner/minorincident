@@ -1,3 +1,4 @@
+import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
@@ -273,12 +274,15 @@ class CivilianBatch extends Group {
     const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !this.distant;
     const moving = !!strides[clip] && motion.speed > .06;
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
+    const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);
+    const contact = !!target?.survivor && Math.hypot(presented.x - target.transform.x, presented.z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15;
+    if (contact) layers.lunge = Math.min(layers.lunge ?? 0, .04);
     this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
     if (b.state !== 'dead' && !heavy && still) {
       // Near the camera the hunch bends at the hips over planted feet; far away the whole body leans from the feet.
-      const lean = .34 + .14 + Math.abs(Math.sin(t * 2.3)) * .1, roll = (e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04;
+      const lean = contact ? .34 : .34 + .14 + Math.abs(Math.sin(t * 2.3)) * .1, roll = (e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04;
       if (near) { layers.lean = lean; layers.roll = roll; }
-      else this.transform.multiply(this.lean).multiply(this.sway.makeRotationX(roll)).multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1));
+      else this.transform.multiply(this.lean).multiply(this.sway.makeRotationX(roll)).multiply(this.sway.makeRotationZ(contact ? 0 : -.14 - Math.abs(Math.sin(t * 2.3)) * .1));
     }
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
