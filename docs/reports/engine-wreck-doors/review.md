@@ -24,3 +24,9 @@ Reproduce captures headlessly on an isolated port:
 ```sh
 SCENE_PORT=3378 sh tools/e2e-lock.sh npx tsx tools/scenelab/engine-wreck-doors.ts
 ```
+
+## Main integration repair
+
+Merged main at `580b3d17` into this lane after committing the reviewed engine assets (`c9322d2e`). The resulting manifest contained two `inf.alpha` entries: the accepted integrated model with LOD0/1/2 and a trailing placeholder without distance-tier paths. Removing the obsolete placeholder repairs both manifest uniqueness checks (T-E06-08 and T-E17-06) and the two missing-LOD findings in T-E17-02b. The registry uses a Map, so this also stops the placeholder from overriding the accepted Alpha at runtime. No action mappings, accepted Alpha exports, test assertions or inventory criteria were changed.
+
+The earlier 807-test result and E09/E17 broad verification artifacts describe the branch before this main merge. Final merged-head checks are recorded separately in `checks.json`.
