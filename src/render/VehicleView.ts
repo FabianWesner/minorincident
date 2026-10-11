@@ -1,3 +1,4 @@
+import { VehicleOccupant } from './characters/VehicleOccupant';
 import { tyreSurface } from './TyreContact';
 import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
@@ -23,6 +24,9 @@ interface Record { decay?: string; lod: AssetQuality; parent: Group; model: Obje
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
   private readonly records = new Map<number, Record>();
+  private readonly occupants = new Map<number, VehicleOccupant>();
+  private readonly occupantLoads = new Map<number, Promise<void>>();
+  private readonly occupantSeats = new Map<number, Group>();
   private readonly props = new Map<number, Mesh>();
   private readonly debris: Mesh[] = [];
   private readonly propGeometry = new BoxGeometry(1, 1, 1);
@@ -144,6 +148,7 @@ export class VehicleView extends Group {
           wheel.contactOffset = wheel.node.position.y - baseY;
         }
       }
+      this.updateOccupants(id, record);
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
@@ -163,6 +168,51 @@ export class VehicleView extends Group {
       const d = this.world.vehicles!.obstacles.debris[i]; let mesh = this.debris[i];
       if (!mesh) { mesh = new Mesh(this.propGeometry, this.materials.get('woodWarm')); mesh.scale.setScalar(.24); this.debris.push(mesh); this.add(mesh); }
       mesh.visible = d.expires > this.world.tick; if (mesh.visible) { mesh.position.copy(d.body.translation()); mesh.quaternion.copy(d.body.rotation()); }
+    }
+  }
+  /** Only hidden actors assigned to this vehicle get copies; exits remove them in the same render tick. */
+  private updateOccupants(id: number, record: Record): void {
+    const car = this.world.vehicles!.cars.get(id)!, l2 = this.world.missions?.state.l2;
+    const wanted: { actorId: number; seat: string; driver: boolean }[] = [];
+    if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
+    if (l2?.truckId === id) {
+      if (l2.seated) wanted.push({ actorId: 1, seat: 'crewSeat0', driver: false });
+      if (['alarm', 'ride', 'arrived'].includes(l2.phase)) for (const [i, actorId] of l2.crewIds.entries()) {
+        if (this.world.entities.get(actorId)?.hidden) wanted.push({ actorId, seat: i === 0 ? 'driverSeat' : `crewSeat${i}`, driver: i === 0 });
+      }
+    }
+    const ids = new Set(wanted.map(o => o.actorId));
+    for (const occupant of this.occupants.values()) if (occupant.parent === record.model && !ids.has(occupant.actorId)) occupant.visible = false;
+    for (const w of wanted) {
+      const entity = this.world.entities.get(w.actorId); if (!entity?.hidden) continue;
+      const asset = entity.survivor ? `char.courier-${entity.survivor.variant}` : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.firefighter-alive';
+      const occupant = this.occupants.get(w.actorId);
+      if (!occupant || occupant.asset !== asset) {
+        if (!this.occupantLoads.has(w.actorId)) this.occupantLoads.set(w.actorId, VehicleOccupant.load(this.registry, w.actorId, asset, this.materials).then(copy => {
+          if (this.disposed) { copy.dispose(); return; }
+          this.occupants.get(w.actorId)?.dispose(); this.occupants.set(w.actorId, copy);
+        }).finally(() => this.occupantLoads.delete(w.actorId)));
+        if (occupant) occupant.visible = false; continue;
+      }
+      record.model.add(occupant); occupant.visible = true;
+      let seat = record.model.getObjectByName(w.seat);
+      if (!seat) {
+        // Older fire-engine exports have only driverSeat. Keep the seven cab positions distinct until authored nodes load.
+        const index = Number(w.seat.replace('crewSeat', ''));
+        let fallback = this.occupantSeats.get(w.actorId);
+        if (!fallback) { fallback = new Group(); this.occupantSeats.set(w.actorId, fallback); }
+        fallback.position.set(index === 0 ? 3.2 : index <= 2 ? 2.25 : 1.4, 1.25, index === 0 ? .65 : index <= 2 ? (index === 1 ? -.65 : .65) : (index - 4) * .65);
+        record.model.add(fallback); seat = fallback;
+      }
+      const wheel = w.driver ? record.model.getObjectByName('steeringWheel') : undefined;
+      const target = w.driver ? new Vector3() : undefined;
+      if (target) {
+        if (wheel) record.model.worldToLocal(wheel.getWorldPosition(target));
+        else { record.model.worldToLocal(seat.getWorldPosition(target)); const offsets: { [id: string]: [number, number] } = { 'vehicle.sedan': [.56,.29], 'vehicle.pickup': [.58,.39], 'vehicle.suv': [.34,.35], 'vehicle.police': [.45,.22], 'vehicle.ambulance': [.49,.33], 'vehicle.school-bus': [.5,.35], 'vehicle.fire-engine': [.5,.35] }; const [x,y] = offsets[car.physics.def.id]; target.x += x; target.y += y; }
+      }
+      const fit = car.physics.def.id === 'vehicle.police' ? .62 : car.physics.def.id === 'vehicle.fire-engine' ? .72 : car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? .95 : ['vehicle.sedan', 'vehicle.pickup', 'vehicle.suv'].includes(car.physics.def.id) ? .85 : 1;
+      // The female rig has shorter arms; lean into the pickup's high steering column.
+      occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5);
     }
   }
   /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors. */
@@ -187,14 +237,14 @@ export class VehicleView extends Group {
     record.blood = event.blood; for (const material of record.paint) material.bloodCoverage.value = enabled ? event.blood : 0;
   }
   setBloodEnabled(enabled: boolean): void { this.bloodEnabled = enabled; for (const record of this.records.values()) for (const material of record.paint) material.bloodCoverage.value = enabled ? record.blood : 0; }
-  async ready(): Promise<void> { await Promise.all(this.pending.values()); }
+  async ready(): Promise<void> { await Promise.all([...this.pending.values(), ...this.occupantLoads.values()]); this.update(1); await Promise.all(this.occupantLoads.values()); this.update(1); }
   /** Drawn ground height (GameView: the district's baked roads and paving); null where it draws none. */
   ground: ((x: number, z: number) => number | null) | null = null;
   private readonly spot = new Vector3();
   private wheelSpot(node: Object3D): [number, number] { node.getWorldPosition(this.spot); return [this.spot.x, this.spot.z]; }
   /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
-  snapshot() { return [...this.records].map(([id, r]) => ({ id, decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
+  snapshot() { return [...this.records].map(([id, r]) => ({ id, decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     for (const material of record.paint) material.dispose();
     record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();
@@ -204,6 +254,6 @@ export class VehicleView extends Group {
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<MeshBasicNodeMaterial>();
     for (const r of this.records.values()) { for (const material of r.paint) material.dispose(); geometries.add(r.door.geometry); materials.add(r.brake); for (const s of r.sirens) materials.add(s); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
     for (const g of geometries) g.dispose(); for (const m of materials) m.dispose();
-    this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.props.clear(); this.debris.length = 0; this.clear();
+    for (const occupant of this.occupants.values()) occupant.dispose(); this.occupants.clear(); this.occupantSeats.clear(); this.registry.dispose(); this.propGeometry.dispose(); this.puffGeometry.dispose(); this.smokeMaterial.dispose(); this.fireMaterial.dispose(); this.records.clear(); this.props.clear(); this.debris.length = 0; this.clear();
   }
 }
