@@ -44,26 +44,28 @@ export class Materials {
     const offset = index.lessThan(0).select(paletteTokens.length, this.lighting.worldPaletteEnabled.mul(paletteTokens.length));
     return texture(this.texture, vec2(index.add(offset).add(.5).div(paletteTokens.length * 2), .5)).rgb;
   }
-  world(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide, surfaceClass = 0): PaletteMaterial {
-    const key = `world:${token}:${emissive}:${vertexColors}:${side}:${surfaceClass}`;
+  world(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide, surfaceClass = 0, transparent = false, opacity = 1, depthWrite = true): PaletteMaterial {
+    const key = `world:${token}:${emissive}:${vertexColors}:${side}:${surfaceClass}:${transparent}:${opacity}:${depthWrite}`;
     let material = this.cache.get(key);
     if (!material) {
       const swatch = this.sample(uniform(paletteTokens.indexOf(token)));
       const base = vertexColors ? swatch.mul(attribute('color', 'vec3')) : surfaceDetail(token, swatch, this.look.nodes);
       material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, surface: surfaceClass ? uniform(surfaceClass) : undefined, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
       material.color.set(palette[token]); material.vertexColors = vertexColors; material.side = side;
+      material.transparent = transparent; material.opacity = opacity; material.fade.value = opacity; material.depthWrite = depthWrite; material.forceSinglePass = transparent;
       material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; material.userData.surfaceClass = surfaceClass; this.cache.set(key, material);
     }
     return material;
   }
   /** Imported palette identity remains available to batching and figure bake consumers. */
-  asset(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide, surfaceClass = 0): PaletteMaterial {
-    const key = `asset:${token}:${emissive}:${vertexColors}:${side}:${surfaceClass}`;
+  asset(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide, surfaceClass = 0, transparent = false, opacity = 1, depthWrite = true): PaletteMaterial {
+    const key = `asset:${token}:${emissive}:${vertexColors}:${side}:${surfaceClass}:${transparent}:${opacity}:${depthWrite}`;
     let material = this.cache.get(key);
     if (!material) {
       const base = texture(this.texture, vec2((paletteTokens.indexOf(token) + .5) / (paletteTokens.length * 2), .5)).rgb.mul(vertexColors ? attribute('color', 'vec3') : 1);
       material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, surface: surfaceClass ? uniform(surfaceClass) : undefined, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
       material.color.set(palette[token]); material.vertexColors = vertexColors; material.side = side;
+      material.transparent = transparent; material.opacity = opacity; material.fade.value = opacity; material.depthWrite = depthWrite; material.forceSinglePass = transparent;
       material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; material.userData.surfaceClass = surfaceClass; this.cache.set(key, material);
     }
     return material;

@@ -27,7 +27,7 @@ def tier_argument():
     return tier
 
 
-def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_parts=(), fit_dimensions=False, fold_palette=False):
+def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_parts=(), fit_dimensions=False, fold_palette=False, anchors=()):
     directory = Path(directory).resolve()
     bpy.context.view_layer.update()
     # Source C groups unparented primitives explicitly before its normal merge.
@@ -117,6 +117,7 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
                     (rlow[1]+rhigh[1]-low[1]-high[1])/2, rlow[2]-low[2]))
     for obj in native:
         if obj.parent is None: obj.location += shift
+    bpy.context.view_layer.update()
     roots = [o for o in native if o.type == 'EMPTY' and o.parent is None]
     root = roots[0]
     # Unfurnished distance interiors still need a closed floor under roof-off views.
@@ -144,6 +145,8 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
             target = bpy.data.objects.new(name, None); bpy.context.scene.collection.objects.link(target)
             target.parent = root; target.matrix_world = obj.matrix_world.copy(); native.add(target)
             copied_names.append((target, name))
+        # Seated figures must not jump when a tier's decorative bounds differ.
+        if name in anchors: target.matrix_world = obj.matrix_world.copy()
         for key in obj.keys(): target[key] = obj[key]
     for obj in reference: bpy.data.objects.remove(obj, do_unlink=True)
     # Reference objects occupied the names while their sockets were copied.

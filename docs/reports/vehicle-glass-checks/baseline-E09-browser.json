@@ -1,0 +1,357 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/private/tmp/fix-vehicle-glass-baseline/node_modules/.bin/playwright",
+      "test",
+      "tests/visual/vehicles.spec.ts",
+      "tests/e2e/harness.spec.ts",
+      "--grep",
+      "T-E09-10|T-E01-05",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/private/tmp/fix-vehicle-glass-baseline/playwright.config.ts",
+    "rootDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/private/tmp/fix-vehicle-glass-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3474 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3474",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/harness.spec.ts",
+      "file": "e2e/harness.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs",
+          "ok": false,
+          "tags": [
+            "E01",
+            "E01-AC05",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3989,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 0\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[33m@@ -3,23 +3,28 @@\u001b[39m\n\u001b[2m    \"barricades\",\u001b[22m\n\u001b[2m    \"bot\",\u001b[22m\n\u001b[2m    \"camera\",\u001b[22m\n\u001b[2m    \"campaign\",\u001b[22m\n\u001b[2m    \"cheats\",\u001b[22m\n\u001b[31m+   \"crowdFigures\",\u001b[39m\n\u001b[2m    \"debug\",\u001b[22m\n\u001b[2m    \"events\",\u001b[22m\n\u001b[31m+   \"explosions\",\u001b[39m\n\u001b[2m    \"getEntity\",\u001b[22m\n\u001b[2m    \"getState\",\u001b[22m\n\u001b[2m    \"input\",\u001b[22m\n\u001b[31m+   \"inspect\",\u001b[39m\n\u001b[2m    \"interact\",\u001b[22m\n\u001b[31m+   \"lights\",\u001b[39m\n\u001b[2m    \"loadLevel\",\u001b[22m\n\u001b[2m    \"loadScenario\",\u001b[22m\n\u001b[2m    \"look\",\u001b[22m\n\u001b[2m    \"missions\",\u001b[22m\n\u001b[2m    \"npcs\",\u001b[22m\n\u001b[2m    \"pause\",\u001b[22m\n\u001b[2m    \"perf\",\u001b[22m\n\u001b[31m+   \"physicsProps\",\u001b[39m\n\u001b[2m    \"query\",\u001b[22m\n\u001b[2m    \"ready\",\u001b[22m\n\u001b[2m    \"resume\",\u001b[22m\n\u001b[2m    \"screenshotReady\",\u001b[22m\n\u001b[2m    \"setLoadout\",\u001b[22m\n\u001b[33m@@ -31,6 +36,7 @@\u001b[39m\n\u001b[2m    \"teleport\",\u001b[22m\n\u001b[2m    \"tick\",\u001b[22m\n\u001b[2m    \"unloadScenario\",\u001b[22m\n\u001b[2m    \"version\",\u001b[22m\n\u001b[2m    \"vfx\",\u001b[22m\n\u001b[31m+   \"weather\",\u001b[39m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 0\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[33m@@ -3,23 +3,28 @@\u001b[39m\n\u001b[2m    \"barricades\",\u001b[22m\n\u001b[2m    \"bot\",\u001b[22m\n\u001b[2m    \"camera\",\u001b[22m\n\u001b[2m    \"campaign\",\u001b[22m\n\u001b[2m    \"cheats\",\u001b[22m\n\u001b[31m+   \"crowdFigures\",\u001b[39m\n\u001b[2m    \"debug\",\u001b[22m\n\u001b[2m    \"events\",\u001b[22m\n\u001b[31m+   \"explosions\",\u001b[39m\n\u001b[2m    \"getEntity\",\u001b[22m\n\u001b[2m    \"getState\",\u001b[22m\n\u001b[2m    \"input\",\u001b[22m\n\u001b[31m+   \"inspect\",\u001b[39m\n\u001b[2m    \"interact\",\u001b[22m\n\u001b[31m+   \"lights\",\u001b[39m\n\u001b[2m    \"loadLevel\",\u001b[22m\n\u001b[2m    \"loadScenario\",\u001b[22m\n\u001b[2m    \"look\",\u001b[22m\n\u001b[2m    \"missions\",\u001b[22m\n\u001b[2m    \"npcs\",\u001b[22m\n\u001b[2m    \"pause\",\u001b[22m\n\u001b[2m    \"perf\",\u001b[22m\n\u001b[31m+   \"physicsProps\",\u001b[39m\n\u001b[2m    \"query\",\u001b[22m\n\u001b[2m    \"ready\",\u001b[22m\n\u001b[2m    \"resume\",\u001b[22m\n\u001b[2m    \"screenshotReady\",\u001b[22m\n\u001b[2m    \"setLoadout\",\u001b[22m\n\u001b[33m@@ -31,6 +36,7 @@\u001b[39m\n\u001b[2m    \"teleport\",\u001b[22m\n\u001b[2m    \"tick\",\u001b[22m\n\u001b[2m    \"unloadScenario\",\u001b[22m\n\u001b[2m    \"version\",\u001b[22m\n\u001b[2m    \"vfx\",\u001b[22m\n\u001b[31m+   \"weather\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n    at /private/tmp/fix-vehicle-glass-baseline/tests/e2e/harness.spec.ts:61:24",
+                    "location": {
+                      "file": "/private/tmp/fix-vehicle-glass-baseline/tests/e2e/harness.spec.ts",
+                      "column": 24,
+                      "line": 61
+                    },
+                    "snippet": "  59 |   });\n  60 |   expect(surface.version).toMatch(/^\\d+\\.\\d+\\.\\d+$/);\n> 61 |   expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'debug', 'barricades', 'look', 'perf', 'screenshotReady'].sort());\n     |                        ^\n  62 |   expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality', 'l1Outbreak', 'l1Stats'].sort());\n  63 |   expect(surface.campaignKeys).toEqual(['state', 'menu', 'save', 'restore'].sort());\n  64 |   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/fix-vehicle-glass-baseline/tests/e2e/harness.spec.ts",
+                        "column": 24,
+                        "line": 61
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 0\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[33m@@ -3,23 +3,28 @@\u001b[39m\n\u001b[2m    \"barricades\",\u001b[22m\n\u001b[2m    \"bot\",\u001b[22m\n\u001b[2m    \"camera\",\u001b[22m\n\u001b[2m    \"campaign\",\u001b[22m\n\u001b[2m    \"cheats\",\u001b[22m\n\u001b[31m+   \"crowdFigures\",\u001b[39m\n\u001b[2m    \"debug\",\u001b[22m\n\u001b[2m    \"events\",\u001b[22m\n\u001b[31m+   \"explosions\",\u001b[39m\n\u001b[2m    \"getEntity\",\u001b[22m\n\u001b[2m    \"getState\",\u001b[22m\n\u001b[2m    \"input\",\u001b[22m\n\u001b[31m+   \"inspect\",\u001b[39m\n\u001b[2m    \"interact\",\u001b[22m\n\u001b[31m+   \"lights\",\u001b[39m\n\u001b[2m    \"loadLevel\",\u001b[22m\n\u001b[2m    \"loadScenario\",\u001b[22m\n\u001b[2m    \"look\",\u001b[22m\n\u001b[2m    \"missions\",\u001b[22m\n\u001b[2m    \"npcs\",\u001b[22m\n\u001b[2m    \"pause\",\u001b[22m\n\u001b[2m    \"perf\",\u001b[22m\n\u001b[31m+   \"physicsProps\",\u001b[39m\n\u001b[2m    \"query\",\u001b[22m\n\u001b[2m    \"ready\",\u001b[22m\n\u001b[2m    \"resume\",\u001b[22m\n\u001b[2m    \"screenshotReady\",\u001b[22m\n\u001b[2m    \"setLoadout\",\u001b[22m\n\u001b[33m@@ -31,6 +36,7 @@\u001b[39m\n\u001b[2m    \"teleport\",\u001b[22m\n\u001b[2m    \"tick\",\u001b[22m\n\u001b[2m    \"unloadScenario\",\u001b[22m\n\u001b[2m    \"version\",\u001b[22m\n\u001b[2m    \"vfx\",\u001b[22m\n\u001b[31m+   \"weather\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  59 |   });\n  60 |   expect(surface.version).toMatch(/^\\d+\\.\\d+\\.\\d+$/);\n> 61 |   expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'debug', 'barricades', 'look', 'perf', 'screenshotReady'].sort());\n     |                        ^\n  62 |   expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality', 'l1Outbreak', 'l1Stats'].sort());\n  63 |   expect(surface.campaignKeys).toEqual(['state', 'menu', 'save', 'restore'].sort());\n  64 |   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');\n    at /private/tmp/fix-vehicle-glass-baseline/tests/e2e/harness.spec.ts:61:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T14:54:59.868Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/e2e-harness-T-E01-05-E01-E-578c3-ds-and-remaining-epic-stubs-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/e2e-harness-T-E01-05-E01-E-578c3-ds-and-remaining-epic-stubs-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/fix-vehicle-glass-baseline/tests/e2e/harness.spec.ts",
+                    "column": 24,
+                    "line": 61
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "696d2ab3be73ec9c37de-22f2694513cf06989c17",
+          "file": "e2e/harness.spec.ts",
+          "line": 35,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/vehicles.spec.ts",
+      "file": "visual/vehicles.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E09-10 @E09-AC10 wheel spin/steer, brake lamps and alternating siren pixels",
+          "ok": false,
+          "tags": [
+            "E09-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15533,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveScreenshot\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n  61073 pixels (ratio 0.05 of all image pixels) are different.\n\n  Snapshot: vehicle-brake-siren-right.png\n\nCall log:\n\u001b[2m  - Expect \"toHaveScreenshot(vehicle-brake-siren-right.png)\" with timeout 5000ms\u001b[22m\n\u001b[2m    - verifying given screenshot expectation\u001b[22m\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - 61073 pixels (ratio 0.05 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 61073 pixels (ratio 0.05 of all image pixels) are different.\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveScreenshot\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n  61073 pixels (ratio 0.05 of all image pixels) are different.\n\n  Snapshot: vehicle-brake-siren-right.png\n\nCall log:\n\u001b[2m  - Expect \"toHaveScreenshot(vehicle-brake-siren-right.png)\" with timeout 5000ms\u001b[22m\n\u001b[2m    - verifying given screenshot expectation\u001b[22m\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - 61073 pixels (ratio 0.05 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 61073 pixels (ratio 0.05 of all image pixels) are different.\u001b[22m\n\n    at capture (/private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts:9:227)\n    at /private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts:13:14",
+                    "location": {
+                      "file": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts",
+                      "column": 227,
+                      "line": 9
+                    },
+                    "snippet": "   7 |   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); a.teleport('player', { x: .2, z: 13.45 }); await a.step(36); a.camera.preset('vehicle'); await a.screenshotReady(); });\n   8 |   const first = await page.evaluate(() => window.__SS__!.getState().render.vehicles.find(v => v.id === 3)!);\n>  9 |   const capture = async (name: string) => { await page.evaluate(async () => { await window.__SS__!.screenshotReady(); }); const png = PNG.sync.read(await page.screenshot({ path: `${output}/${name}.png` })); await expect(page).toHaveScreenshot(`vehicle-${name}.png`, { threshold: .1, maxDiffPixelRatio: .015 }); return png; };\n     |                                                                                                                                                                                                                                   ^\n  10 |   // The integrated cruiser has two rear lamps, rather than the placeholder's central bar.\n  11 |   const brakePoint = async () => page.evaluate(() => { const a = window.__SS__!, p = a.getEntity(3)!.transform; return [-1, 1].map(side => a.camera.project(p.x - Math.cos(p.yaw) * 2.49 + Math.sin(p.yaw) * side * .72, p.y - .79 + .8, p.z + Math.sin(p.yaw) * 2.49 + Math.cos(p.yaw) * side * .72)); });\n  12 |   const firstBrake = await brakePoint();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts",
+                        "column": 227,
+                        "line": 9
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveScreenshot\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n  61073 pixels (ratio 0.05 of all image pixels) are different.\n\n  Snapshot: vehicle-brake-siren-right.png\n\nCall log:\n\u001b[2m  - Expect \"toHaveScreenshot(vehicle-brake-siren-right.png)\" with timeout 5000ms\u001b[22m\n\u001b[2m    - verifying given screenshot expectation\u001b[22m\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - 61073 pixels (ratio 0.05 of all image pixels) are different.\u001b[22m\n\u001b[2m  - waiting 100ms before taking screenshot\u001b[22m\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m    - disabled all CSS animations\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n\u001b[2m  - captured a stable screenshot\u001b[22m\n\u001b[2m  - 61073 pixels (ratio 0.05 of all image pixels) are different.\u001b[22m\n\n\n   7 |   await page.evaluate(async () => { const a = window.__SS__!; await a.loadScenario('drive-course'); a.pause(); a.teleport('player', { x: .2, z: 13.45 }); await a.step(36); a.camera.preset('vehicle'); await a.screenshotReady(); });\n   8 |   const first = await page.evaluate(() => window.__SS__!.getState().render.vehicles.find(v => v.id === 3)!);\n>  9 |   const capture = async (name: string) => { await page.evaluate(async () => { await window.__SS__!.screenshotReady(); }); const png = PNG.sync.read(await page.screenshot({ path: `${output}/${name}.png` })); await expect(page).toHaveScreenshot(`vehicle-${name}.png`, { threshold: .1, maxDiffPixelRatio: .015 }); return png; };\n     |                                                                                                                                                                                                                                   ^\n  10 |   // The integrated cruiser has two rear lamps, rather than the placeholder's central bar.\n  11 |   const brakePoint = async () => page.evaluate(() => { const a = window.__SS__!, p = a.getEntity(3)!.transform; return [-1, 1].map(side => a.camera.project(p.x - Math.cos(p.yaw) * 2.49 + Math.sin(p.yaw) * side * .72, p.y - .79 + .8, p.z + Math.sin(p.yaw) * 2.49 + Math.cos(p.yaw) * side * .72)); });\n  12 |   const firstBrake = await brakePoint();\n    at capture (/private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts:9:227)\n    at /private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts:13:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T14:55:06.464Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "vehicle-brake-siren-right-expected.png",
+                      "contentType": "image/png",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/__goldens__/vehicle-brake-siren-right.png"
+                    },
+                    {
+                      "name": "vehicle-brake-siren-right-actual.png",
+                      "contentType": "image/png",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-brake-siren-right-actual.png"
+                    },
+                    {
+                      "name": "vehicle-brake-siren-right-diff.png",
+                      "contentType": "image/png",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/vehicle-brake-siren-right-diff.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/fix-vehicle-glass-baseline/test-results/playwright/run-3474/visual-vehicles-T-E09-10-E-9659c-nd-alternating-siren-pixels-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/fix-vehicle-glass-baseline/tests/visual/vehicles.spec.ts",
+                    "column": 227,
+                    "line": 9
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1a4605bacf3dc1575163-5fa30d7f56a1f3336aee",
+          "file": "visual/vehicles.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T14:54:40.096Z",
+    "duration": 43259.37899999999,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
