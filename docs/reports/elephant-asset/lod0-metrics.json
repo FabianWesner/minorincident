@@ -1,0 +1,6994 @@
+{
+  "spec": "tests/scenes/elephant-asset/lod0.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 60,
+  "timing": {
+    "openMs": 1205,
+    "loadMs": 2566,
+    "runMs": 732,
+    "sceneMs": 3298
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 38,
+        "limit": 600
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 33116,
+        "limit": 1500000
+      },
+      {
+        "name": "actorHitsMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-elephant-asset-lod0",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "healthy",
+        "asset": "amb.elephant",
+        "at": [
+          -7,
+          0
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "elephant",
+        "kind": "infected",
+        "entity": 3
+      },
+      {
+        "id": "lion",
+        "kind": "infected",
+        "entity": 4
+      },
+      {
+        "id": "gorilla",
+        "kind": "infected",
+        "entity": 5
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-elephant-asset-lod0",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 180,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "vehicleTrack": {},
+    "wheelTrack": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 38,
+        "p95": 38,
+        "max": 38
+      },
+      "triangles": {
+        "p50": 33116,
+        "p95": 33116,
+        "max": 33116
+      },
+      "shadowDrawCalls": {
+        "p50": 13,
+        "p95": 13,
+        "max": 13
+      },
+      "shadowTriangles": {
+        "p50": 13,
+        "p95": 13,
+        "max": 13
+      },
+      "stepMs": {
+        "p50": 1.7,
+        "p95": 2.7,
+        "max": 6.3
+      },
+      "lastFrame": {
+        "drawCalls": 38,
+        "triangles": 33116,
+        "shadowDrawCalls": 13,
+        "shadowTriangles": 13,
+        "stepMs": 1.1999998092651367,
+        "categories": {
+          "other": 34,
+          "shadows": 13,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "elephant": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          -1.5,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1.5,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 83.3,
+          "torsoPitchMaxDeg": 83.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        },
+        "track": [
+          {
+            "frame": 1,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 2,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 3,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 4,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 5,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 6,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 7,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 8,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 9,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 10,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 11,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 12,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 13,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 14,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 15,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 16,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 17,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 18,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 19,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 20,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 21,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 22,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 23,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 24,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 25,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 26,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 27,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 28,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 29,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 30,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 31,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 32,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 33,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 34,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 35,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 36,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 37,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 38,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 39,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 40,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 41,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 42,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 43,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 44,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 45,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 46,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 47,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 48,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 49,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 50,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 51,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 52,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 53,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 54,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 55,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 56,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 57,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 58,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 59,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          },
+          {
+            "frame": 60,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  -0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  -0.58
+                ]
+              },
+              {
+                "heel": [
+                  -2.57,
+                  0,
+                  0.58
+                ],
+                "toe": [
+                  -2.435,
+                  0,
+                  0.58
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -1.5,
+              0
+            ],
+            "torsoPitchDeg": 83.3087340008905
+          }
+        ]
+      },
+      "lion": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          3.2,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3.2,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 84.3,
+          "torsoPitchMaxDeg": 84.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        },
+        "track": [
+          {
+            "frame": 1,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 2,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 3,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 4,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 5,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 6,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 7,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 8,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 9,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 10,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 11,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 12,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 13,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 14,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 15,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 16,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 17,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 18,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 19,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 20,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 21,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 22,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 23,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 24,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 25,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 26,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 27,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 28,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 29,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 30,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 31,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 32,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 33,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 34,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 35,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 36,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 37,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 38,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 39,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 40,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 41,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 42,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 43,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 44,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 45,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 46,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 47,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 48,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 49,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 50,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 51,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 52,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 53,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 54,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 55,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 56,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 57,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 58,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 59,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          },
+          {
+            "frame": 60,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  -0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  -0.258
+                ]
+              },
+              {
+                "heel": [
+                  2.568,
+                  0,
+                  0.258
+                ],
+                "toe": [
+                  2.673,
+                  0,
+                  0.258
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              3.2,
+              0
+            ],
+            "torsoPitchDeg": 84.34557756386315
+          }
+        ]
+      },
+      "gorilla": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          6,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            6,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 50.9,
+          "torsoPitchMaxDeg": 52.9,
+          "contacts": 3,
+          "slideMaxCm": 3.8,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 4.5,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        },
+        "track": [
+          {
+            "frame": 1,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.509,
+                  0.049,
+                  -0.406
+                ],
+                "toe": [
+                  5.621,
+                  0.036,
+                  -0.409
+                ]
+              },
+              {
+                "heel": [
+                  5.391,
+                  0.025,
+                  0.307
+                ],
+                "toe": [
+                  5.501,
+                  0,
+                  0.308
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.94646542051953
+          },
+          {
+            "frame": 2,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.51,
+                  0.046,
+                  -0.401
+                ],
+                "toe": [
+                  5.622,
+                  0.036,
+                  -0.404
+                ]
+              },
+              {
+                "heel": [
+                  5.395,
+                  0.02,
+                  0.308
+                ],
+                "toe": [
+                  5.506,
+                  0,
+                  0.311
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 3,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.514,
+                  0.047,
+                  -0.387
+                ],
+                "toe": [
+                  5.626,
+                  0.039,
+                  -0.392
+                ]
+              },
+              {
+                "heel": [
+                  5.4,
+                  0.016,
+                  0.31
+                ],
+                "toe": [
+                  5.511,
+                  0,
+                  0.315
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 4,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.522,
+                  0.05,
+                  -0.364
+                ],
+                "toe": [
+                  5.634,
+                  0.044,
+                  -0.371
+                ]
+              },
+              {
+                "heel": [
+                  5.406,
+                  0.012,
+                  0.311
+                ],
+                "toe": [
+                  5.517,
+                  0,
+                  0.318
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.94645695008067
+          },
+          {
+            "frame": 5,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.534,
+                  0.055,
+                  -0.333
+                ],
+                "toe": [
+                  5.646,
+                  0.051,
+                  -0.342
+                ]
+              },
+              {
+                "heel": [
+                  5.412,
+                  0.007,
+                  0.312
+                ],
+                "toe": [
+                  5.524,
+                  0,
+                  0.32
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 6,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.55,
+                  0.057,
+                  -0.297
+                ],
+                "toe": [
+                  5.662,
+                  0.056,
+                  -0.307
+                ]
+              },
+              {
+                "heel": [
+                  5.419,
+                  0.003,
+                  0.311
+                ],
+                "toe": [
+                  5.531,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 7,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.568,
+                  0.039,
+                  -0.264
+                ],
+                "toe": [
+                  5.679,
+                  0.044,
+                  -0.274
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 8,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.577,
+                  0.022,
+                  -0.246
+                ],
+                "toe": [
+                  5.688,
+                  0.031,
+                  -0.256
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.94646542051953
+          },
+          {
+            "frame": 9,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0.022,
+                  -0.239
+                ],
+                "toe": [
+                  5.691,
+                  0.031,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.94646542051953
+          },
+          {
+            "frame": 10,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0.004,
+                  -0.239
+                ],
+                "toe": [
+                  5.691,
+                  0.013,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 11,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 12,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 13,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 14,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 15,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 16,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 17,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.424,
+                  0.022,
+                  0.311
+                ],
+                "toe": [
+                  5.536,
+                  0.022,
+                  0.321
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 18,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.428,
+                  0.022,
+                  0.309
+                ],
+                "toe": [
+                  5.54,
+                  0.022,
+                  0.319
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 19,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.443,
+                  0.036,
+                  0.301
+                ],
+                "toe": [
+                  5.555,
+                  0.036,
+                  0.311
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 20,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.466,
+                  0.035,
+                  0.289
+                ],
+                "toe": [
+                  5.578,
+                  0.035,
+                  0.299
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 21,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.493,
+                  0.03,
+                  0.276
+                ],
+                "toe": [
+                  5.605,
+                  0.03,
+                  0.286
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 22,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.522,
+                  0.024,
+                  0.262
+                ],
+                "toe": [
+                  5.634,
+                  0.025,
+                  0.272
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 23,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.551,
+                  0.022,
+                  0.25
+                ],
+                "toe": [
+                  5.663,
+                  0.027,
+                  0.26
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 24,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.572,
+                  0.022,
+                  0.242
+                ],
+                "toe": [
+                  5.684,
+                  0.031,
+                  0.252
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 25,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0.022,
+                  0.239
+                ],
+                "toe": [
+                  5.691,
+                  0.031,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 26,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0.004,
+                  0.239
+                ],
+                "toe": [
+                  5.691,
+                  0.013,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 27,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 28,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 29,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 30,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 31,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 32,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 33,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 34,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.946461185299846
+          },
+          {
+            "frame": 35,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 50.96999607322039
+          },
+          {
+            "frame": 36,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.010707944297494
+          },
+          {
+            "frame": 37,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.05142657792518
+          },
+          {
+            "frame": 38,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.09215260510618
+          },
+          {
+            "frame": 39,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.13289429633946
+          },
+          {
+            "frame": 40,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.173643367203574
+          },
+          {
+            "frame": 41,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.214402349754266
+          },
+          {
+            "frame": 42,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.25517763658676
+          },
+          {
+            "frame": 43,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.310660592797944
+          },
+          {
+            "frame": 44,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.43012860999564
+          },
+          {
+            "frame": 45,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.54973125420129
+          },
+          {
+            "frame": 46,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.66945583018343
+          },
+          {
+            "frame": 47,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.78930742154056
+          },
+          {
+            "frame": 48,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 51.90928647643254
+          },
+          {
+            "frame": 49,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.02938119191767
+          },
+          {
+            "frame": 50,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.149596588572756
+          },
+          {
+            "frame": 51,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.26992911773083
+          },
+          {
+            "frame": 52,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.34897884119354
+          },
+          {
+            "frame": 53,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.41750544425511
+          },
+          {
+            "frame": 54,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.48610601930859
+          },
+          {
+            "frame": 55,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.55480494656653
+          },
+          {
+            "frame": 56,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.62358886665209
+          },
+          {
+            "frame": 57,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.69246626808242
+          },
+          {
+            "frame": 58,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.76142613458946
+          },
+          {
+            "frame": 59,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.83046874858366
+          },
+          {
+            "frame": 60,
+            "floor": 0,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  -0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  -0.249
+                ]
+              },
+              {
+                "heel": [
+                  5.58,
+                  0,
+                  0.239
+                ],
+                "toe": [
+                  5.692,
+                  0,
+                  0.249
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              6,
+              0
+            ],
+            "torsoPitchDeg": 52.880681892174486
+          }
+        ]
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "infected": 3,
+        "actors": 3
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 3
+      }
+    },
+    "lods": {
+      "healthy": "n/a"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
