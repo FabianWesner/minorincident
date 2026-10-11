@@ -1,0 +1,64 @@
+{
+  "target": "E29",
+  "epics": [
+    "E29"
+  ],
+  "pattern": "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E29/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--workers=1"
+      ],
+      "exitCode": 1
+    }
+  ]
+}
