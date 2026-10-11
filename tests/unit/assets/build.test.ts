@@ -40,7 +40,7 @@ test('T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors ar
 test('T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate', async () => {
   const original = manifest.find((a) => a.id === 'veh.fire-engine')! as AssetDef;
   const results = await validateAssets([{ ...original, status: 'modeled' }]);
-  expect(results).toHaveLength(3);
+  expect(results).toHaveLength(9); // Pristine, wrecked and burned, each with three authored tiers.
   for (const result of results) {
     expect(result.errors, result.id).toEqual([]);
     for (const [axis, target] of [7.4,3.55,2.1].entries()) expect(Math.abs(result.dimensions[axis] - target)).toBeLessThanOrEqual(target * .05);
