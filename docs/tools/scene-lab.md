@@ -155,6 +155,8 @@ See `specs/scenes/qa-l1-house-emergence*.json`.
 `"script": [{ "frame": 20, "effect": { "wreck": "sedan" } }]`
 
 - **Effects:**
+  - `{ "weaponPickup": "weapon.shotgun", "at": [x, z], "surfaceY": 0.385, "yaw": 90 }`: the real action pickup view and interaction; optional `surfaceY` is the authored shelf top in world metres, yaw is degrees.
+  - `{ "metroShutter": 0.5 }`: pose the shipped metro leaf with the L5 render path (0 open, 1 closed). `tools/l5/scenes/` isolates the shotgun shelf and all three door poses.
   - `{ "blast": "explosion.car", "at": [x, z] }`: see `src/data/explosions.ts` for the ids.
   - `{ "wreck": "<vehicle id>" }`: the car explodes about 3 s later.
   - `{ "fire": [x, z] }` and `{ "smoke": [x, z] }`.

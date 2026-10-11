@@ -1,0 +1,78 @@
+{
+ "name": "l5-metro-doors",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "layout": {
+  "district": "D-FAIR",
+  "level": "L5",
+  "bbox": [
+   [
+    32,
+    -55
+   ],
+   [
+    44,
+    -42
+   ]
+  ],
+  "assets": [
+   "bld.metro-entrance"
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    37.8,
+    -44
+   ],
+   "yaw": 90,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "metroShutter": 0
+   }
+  },
+  {
+   "frame": 30,
+   "effect": {
+    "metroShutter": 0.5
+   }
+  },
+  {
+   "frame": 60,
+   "effect": {
+    "metroShutter": 1
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   37.8,
+   1,
+   -47
+  ],
+  "zoom": 1
+ },
+ "frames": 90,
+ "shots": [
+  1,
+  31,
+  89
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "clippingMax": 0,
+  "footSinkMaxCm": 1,
+  "footJitterRunMax": 0,
+  "yawDriftMaxDeg": 0
+ }
+}

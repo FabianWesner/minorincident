@@ -1,0 +1,42 @@
+{
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "remoteFocused": {
+    "passed": 11
+  },
+  "remoteUnit": {
+    "passed": 810,
+    "failed": 5,
+    "knownMainFailures": [
+      "T-E09-01-wreck",
+      "T-E17-04",
+      "T-E17-06",
+      "T-E17-02b",
+      "T-E06-08"
+    ]
+  },
+  "remotePickupBrowser": "pass",
+  "macCaptureTests": {
+    "passed": 2
+  },
+  "sceneLab": {
+    "passed": 4
+  },
+  "macPerformance": {
+    "passed": 2
+  },
+  "verifyInitial": {
+    "passed": 40,
+    "failed": 2,
+    "cause": "Old pickup fixtures interacted from the start, outside shelf interaction range; fixed to use clear aisle."
+  },
+  "verificationSplit": "E23/smoke simulation on Hetzner; captures, visual assertions and timing on Mac. Full verify combines these on one host.",
+  "remoteE23SmokeFinal": {
+    "success": true,
+    "numPassedTests": 42,
+    "numFailedTests": 0,
+    "numPendingTests": 1579
+  },
+  "fullVerifyFinal": "Not rerun through combined browser/perf stages; relevant lane stages separately pass on the required hosts."
+}
