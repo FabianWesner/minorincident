@@ -1,11 +1,12 @@
 // GPU precipitation wraps around the camera focus, following Bruno RainLines/Snow (MIT).
-import { Color, BufferAttribute, BufferGeometry, LineSegments, LineBasicNodeMaterial, DataTexture, FloatType, Group, InstancedBufferAttribute, InstancedBufferGeometry, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RedFormat, SphereGeometry, Vector3 } from 'three/webgpu';
-import { attribute, cameraPosition, cameraWorldMatrix, uv, Discard, dot, Fn, fract, mix, positionWorld, renderGroup, screenCoordinate, texture, uniform, vec2, vec3, vec4 } from 'three/tsl';
+import { Color, BufferAttribute, BufferGeometry, LineSegments, LineBasicNodeMaterial, DataTexture, LinearFilter, UnsignedByteType, Group, InstancedBufferAttribute, InstancedBufferGeometry, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RGBAFormat, SphereGeometry, Vector2, Vector3 } from 'three/webgpu';
+import { attribute, cameraPosition, cameraWorldMatrix, uv, Discard, dot, Fn, fract, mix, normalWorld, positionWorld, renderGroup, screenCoordinate, texture, uniform, vec2, vec3, vec4 } from 'three/tsl';
 import { timeOfDay } from '../data/timeOfDay';
 import { weatherPresets } from '../data/weather';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Lighting } from './Lighting';
 import type { View } from './View';
+import { rasterFootprints, TRACK_HEIGHT, TRACK_SIZE, TRACK_SPAN } from './FootprintMask';
 
 /** Surface graph flags; state changes reuse Three node materials and cached output graphs. */
 export const weatherMaterialFlags = { clouds: 1, wet: 2, accumulation: 4, fog: 8, flash: 16, field: 32, hero: 64, probeShift: 7 } as const;
@@ -13,10 +14,19 @@ export const weatherSurface = {
   // Global weather values are shared across world materials: update once per render,
   // rather than checking the same values again for every building/prop draw.
   clouds: uniform(0).setGroup(renderGroup), windStrength: uniform(1).setGroup(renderGroup), probe: uniform(0).setGroup(renderGroup), wetness: uniform(0).setGroup(renderGroup), accumulation: uniform(0).setGroup(renderGroup), ash: uniform(0).setGroup(renderGroup), fog: uniform(0).setGroup(renderGroup), flash: uniform(0).setGroup(renderGroup),
-  tracks: new DataTexture(new Float32Array(1024 * 1024), 1024, 1024, RedFormat, FloatType),
+  trackCenter: uniform(new Vector2()).setGroup(renderGroup),
+  tracks: new DataTexture(new Uint8Array(TRACK_SIZE * TRACK_SIZE * 4), TRACK_SIZE, TRACK_SIZE, RGBAFormat, UnsignedByteType),
 };
 weatherSurface.tracks.needsUpdate = true;
-export const trackMask = () => texture(weatherSurface.tracks, fract(positionWorld.xz.div(64).add(.5))).r;
+weatherSurface.tracks.minFilter = weatherSurface.tracks.magFilter = LinearFilter;
+export const trackMask = () => {
+  const local = positionWorld.xz.sub(weatherSurface.trackCenter).div(TRACK_SPAN).add(.5);
+  const sample = texture(weatherSurface.tracks, local);
+  const ground = positionWorld.y.sub(sample.g.mul(TRACK_HEIGHT)).abs().lessThan(.085).select(sample.r, 0);
+  const raised = positionWorld.y.sub(sample.a.mul(TRACK_HEIGHT)).abs().lessThan(.085).select(sample.b, 0);
+  const inside = local.x.greaterThan(0).and(local.x.lessThan(1)).and(local.y.greaterThan(0)).and(local.y.lessThan(1));
+  return inside.and(normalWorld.y.greaterThan(.9)).select(ground.max(raised), 0);
+};
 /** Actual 6m world-space ray distance; all precipitation shares this ordered dither. */
 export const weatherRayDither = uniform(1).setGroup(renderGroup);
 export const weatherHero = uniform(new Vector3()).setGroup(renderGroup);
@@ -146,19 +156,16 @@ export class WeatherView extends Group {
       scriptedFeatures |= (p.clouds ? flags.clouds : 0) | (p.rain ? flags.wet : 0) | (p.flakes ? flags.accumulation : 0) | (p.fog ? flags.fog : 0) | (key.kind === 'thunderstorm' ? flags.flash : 0);
     }
     this.lighting.setWeatherMode(scriptedFeatures | (w.clouds > 0 ? flags.clouds : 0) | (w.rain > 0 || w.wetness > .3 ? flags.wet : 0) | (w.flakes > 0 || w.accumulation > 0 ? flags.accumulation : 0) | (w.fog > 0 ? flags.fog : 0) | (w.kind === 'thunderstorm' || this.flash > 0 ? flags.flash : 0) | (weatherSurface.probe.value << flags.probeShift));
-    const trackTick = w.tracks.at(-1)?.tick ?? -1;
-    if (trackTick !== this.lastTrackTick) {
-      const data = weatherSurface.tracks.image.data as Float32Array; data.fill(0); this.trackPixels = 0;
-      for (const t of w.tracks) {
-        const x = Math.floor(((t.x / 64 + .5) % 1 + 1) % 1 * 1024), z = Math.floor(((t.z / 64 + .5) % 1 + 1) % 1 * 1024);
-        for (let dz = -2; dz <= 2; dz++) for (let dx = -1; dx <= 1; dx++) {
-          const ellipse = dx * dx + dz * dz / 4;
-          if (ellipse <= 1) { const index = ((z + dz + 1024) % 1024) * 1024 + ((x + dx + 1024) % 1024); if (!data[index]) this.trackPixels++; data[index] = 1 - ellipse * .3; }
-        }
-      }
-      weatherSurface.tracks.needsUpdate = true; this.lastTrackTick = w.tracks.at(-1)?.tick ?? -1;
+    // A snapped camera window retains 1.6 cm texels without increasing upload memory.
+    const cx = Math.round(view.focus.x / 4) * 4, cz = Math.round(view.focus.z / 4) * 4;
+    const center = weatherSurface.trackCenter.value;
+    const trackTick = Math.floor(this.world.tick / 6);
+    if ((w.tracks.length > 0 || this.trackPixels > 0) && (trackTick !== this.lastTrackTick || center.x !== cx || center.y !== cz)) {
+      center.set(cx, cz);
+      this.trackPixels = rasterFootprints(weatherSurface.tracks.image.data as Uint8Array, w.tracks, this.world.tick, cx, cz);
+      weatherSurface.tracks.needsUpdate = true; this.lastTrackTick = trackTick;
     }
   }
   snapshot() { return { particles: this.particles, flash: this.flash, rayDitherRadius: 6, wetness: weatherSurface.wetness.value, accumulation: weatherSurface.accumulation.value, tracks: this.world.weather?.tracks.length ?? 0, trackPixels: this.trackPixels }; }
-  dispose(): void { weatherSurface.clouds.value = 0; weatherRayDither.value = weatherSurface.windStrength.value = 1; this.stop(); this.boltGeometry.dispose(); this.boltMaterial.dispose(); this.rippleGeometry.dispose(); this.rippleMaterial.dispose(); this.breathGeometry.dispose(); this.breathMaterial.dispose(); this.shaftGeometry.dispose(); this.shaftMaterial.dispose(); this.geometry.dispose(); this.material.dispose(); this.clear(); weatherSurface.probe.value = weatherSurface.wetness.value = weatherSurface.accumulation.value = weatherSurface.fog.value = weatherSurface.flash.value = 0; (weatherSurface.tracks.image.data as Float32Array).fill(0); weatherSurface.tracks.needsUpdate = true; }
+  dispose(): void { weatherSurface.clouds.value = 0; weatherRayDither.value = weatherSurface.windStrength.value = 1; this.stop(); this.boltGeometry.dispose(); this.boltMaterial.dispose(); this.rippleGeometry.dispose(); this.rippleMaterial.dispose(); this.breathGeometry.dispose(); this.breathMaterial.dispose(); this.shaftGeometry.dispose(); this.shaftMaterial.dispose(); this.geometry.dispose(); this.material.dispose(); this.clear(); weatherSurface.probe.value = weatherSurface.wetness.value = weatherSurface.accumulation.value = weatherSurface.fog.value = weatherSurface.flash.value = 0; (weatherSurface.tracks.image.data as Uint8Array).fill(0); weatherSurface.tracks.needsUpdate = true; }
 }

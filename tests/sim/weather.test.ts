@@ -93,7 +93,8 @@ test('T-E28-07 @E28 @E28-AC07 moving player/infected record tracks and snow/ash 
   const w = await load(); const id = w.spawnDummy('infected.runner', { x: 5, z: 0 });
   for (const kind of ['snow', 'ash'] as const) {
     w.weather!.setOverride(kind);
-    for (let i = 0; i < 50; i++) { w.entities.get(1)!.transform.x += .5; w.entities.get(id)!.transform.z += .5; weatherTicks(w, 1); }
+    weatherTicks(w, 1); // Establish stationary anchors; weather onset must not stamp a step.
+    for (let i = 0; i < 50; i++) { const delta = i % 20 < 10 ? .5 : -.5; w.entities.get(1)!.transform.x += delta; w.entities.get(id)!.transform.z += delta; weatherTicks(w, 1); }
     expect(w.weather!.tracks.filter(t => t.id === 1).length).toBeGreaterThanOrEqual(50);
     expect(w.weather!.tracks.filter(t => t.id === id).length).toBeGreaterThanOrEqual(50);
     expect(w.weather!.modifiers.vehicleGrip).toBe(kind === 'snow' ? .6 : .9);
@@ -135,4 +136,33 @@ test('T-E28-06b @E28 @E28-AC06 strong gusts move light Rapier props', async () =
     const end = prop.body.translation(); return Math.hypot(end.x - start.x, end.z - start.z);
   };
   const clear = await run(false), wind = await run(true); expect(wind).toBeGreaterThan(clear + .1);
+});
+
+test('footprints @E28 @E28-AC07 alternate at stride distance and reject airborne/teleported steps', async () => {
+  const w = await load(), weather = w.weather!, player = w.entities.get(1)!;
+  weather.setOverride('snow'); player.transform.y = .705;
+  weatherTicks(w, 1);
+  for (let i = 0; i < 12; i++) { player.transform.x += .1; weatherTicks(w, 1); }
+  const tracks = weather.tracks.filter(t => t.id === 1);
+  expect(tracks).toHaveLength(2); expect(tracks.map(t => t.side)).toEqual([1, -1]);
+  expect(tracks[0].length).toBe(.28); expect(tracks[0].yaw).toBeCloseTo(0);
+  expect(tracks[0].z * tracks[1].z).toBeLessThan(0);
+  player.transform.x += 10; weatherTicks(w, 1);
+  player.transform.y = 6.7;
+  for (let i = 0; i < 10; i++) { player.transform.x += .1; weatherTicks(w, 1); }
+  expect(weather.tracks.filter(t => t.id === 1)).toHaveLength(2);
+});
+
+test('footprints @E28 @E28-AC07 stay on bridge support and do not offset through its barrier', async () => {
+  const w = await load(), player = w.entities.get(1)!, weather = w.weather!;
+  // A narrow bridge deck with its barrier starting 5 cm from the walker centre.
+  w.districts = { groundHeight: (_x: number, z: number) => z > .05 ? 7 : 6 } as NonNullable<SimWorld['districts']>;
+  weather.setOverride('snow'); player.transform.y = 6.705; weatherTicks(w, 1);
+  for (let i = 0; i < 16; i++) { player.transform.x += .1; weatherTicks(w, 1); }
+  expect(weather.tracks.filter(t => t.id === 1)).toHaveLength(0);
+  player.transform.z = -1; weatherTicks(w, 1);
+  for (let i = 0; i < 6; i++) { player.transform.x += .1; weatherTicks(w, 1); }
+  expect(weather.tracks.some(t => t.id === 1 && t.y === 6)).toBe(true);
+  // Restore the real ownership before disposal.
+  w.districts = null;
 });
