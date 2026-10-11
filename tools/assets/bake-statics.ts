@@ -19,13 +19,15 @@ export async function staticSource(url: string) {
   return parsed.scene;
 }
 const directory = 'public/assets/statics'; mkdirSync(directory, { recursive: true });
-const files: Record<string, string> = {}; let total = 0;
+const selected = new Set(process.argv.slice(2));
+const files: Record<string, string> = selected.size ? JSON.parse(readFileSync('src/assets/staticBakes.json', 'utf8')) : {}; let total = 0;
 const ids = new Set<string>();
 for (const district of ['D-GROVE', 'D-CORRIDOR']) {
   const layout = JSON.parse(readFileSync(`public/assets/layouts/${district}.layout.json`, 'utf8'));
   for (const placement of layout.placements) if (worldAssets[placement.assetId]) ids.add(placement.assetId);
 }
 for (const id of [...ids].sort()) {
+  if (selected.size && !selected.has(id)) continue;
   // Animated gun sockets and the diner's generated canvas sign stay on the source path.
   if (id === 'prop.hmg-nest' || id === 'bld.joes-diner') continue;
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), registry = new DistrictAssets(materials, undefined, staticSource);
@@ -36,7 +38,7 @@ for (const id of [...ids].sort()) {
     for (const lod of ['lod1', 'lod2'] as const) {
       const canonical = def.lods?.[lod] ? lod : 'lod0';
       for (const decay of ['', ...def.decayVariants]) {
-        const key = `${id}:${canonical}:${decay}`; if (files[key]) continue;
+        const key = `${id}:${canonical}:${decay}`; if (!selected.size && files[key]) continue;
         const root = await registry.asset(id, true, lod, decay || undefined);
         if (root.userData.placeholder || root.children.some(child => !(child instanceof Mesh) || child.children.length)) continue;
         const bytes = gzipSync(encodeStaticBake(root), { level: 9 });

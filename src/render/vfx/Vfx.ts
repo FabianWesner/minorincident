@@ -15,7 +15,7 @@ export type { EffectKind, TelegraphKind } from '../../sim/world/types';
 export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low'; slowMotion?: boolean }
 export interface VfxTargets {
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
-  muzzle?(id: number, direction: { x: number; z: number }): { x: number; y: number; z: number } | null;
+  muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
   detach(id: number, limb: number): { x: number; y: number; z: number } | void;
   blood(coverage: number): void;
@@ -77,18 +77,26 @@ export class Vfx extends Group {
   kills = 0;
   lastExplosionRadius = 0;
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
-  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }): void {
-    const muzzle = this.targets.muzzle?.(sourceId, direction) ?? { x: fallback.x, y: 1.15, z: fallback.z };
+  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number): void {
+    const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
+    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    // Descend from the actual rifle tip to the victim's torso, using the same 3D cover slabs as damage.
+    if (target) {
+      const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z;
+      range = Math.hypot(dx, dz) || 1; direction = { x: dx / range, z: dz / range };
+    }
+    const slope = target ? (target.transform.y + .45 - muzzle.y) / range : 0;
+    const ray = { ...direction, y: slope };
     if (!this.enabled) return; // The firing pose is independent of the user's particle preference.
-    const distance = this.world.combat?.query.clearDistance(muzzle, direction, range) ?? range;
+    const distance = this.world.combat?.query.clearDistance(muzzle, ray, range) ?? range;
     const start = [muzzle.x, muzzle.y, muzzle.z];
-    this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y, muzzle.z + direction.z * distance] });
+    this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y + slope * distance, muzzle.z + direction.z * distance] });
     if (this.shots.length > 64) this.shots.shift();
     this.burst(muzzle.x, muzzle.y, muzzle.z, 0xfff1b8, 8, .3, .12, 0);
     this.particles.spawn(this.time, .1, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .75, 0, 0xffffff);
     const spacing = this.quality === 'high' ? .3 : .6;
     // The first tracer particle is at the muzzle, then follows the visual hit ray.
-    for (let i = 0; i <= Math.min(80, Math.floor(distance / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, muzzle.x + direction.x * i * spacing, muzzle.y, muzzle.z + direction.z * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
+    for (let i = 0; i <= Math.min(80, Math.floor(distance / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, muzzle.x + direction.x * i * spacing, muzzle.y + slope * i * spacing, muzzle.z + direction.z * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
   }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
@@ -191,7 +199,7 @@ export class Vfx extends Group {
       if (event.type === 'combat.attack' && actions[event.actionId]?.category === 'ranged') this.gunshot(event.sourceId, event.direction, actions[event.actionId].range, event.position);
       else if (event.type === 'ally.attack' && event.from && event.to) {
         const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
-        this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from);
+        this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId);
       }
       return;
     }
@@ -233,7 +241,7 @@ export class Vfx extends Group {
       }
     } else if (event.type === 'ally.attack' && event.from && event.to) {
       const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
-      this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from);
+      this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId);
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'explosion') {

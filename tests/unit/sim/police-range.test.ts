@@ -14,7 +14,7 @@ function fixture(gun = true) {
   officer.civilian = { state: 'calm', ally } as EntitySnapshot['civilian'];
   zombie.infected = {} as EntitySnapshot['infected'];
   const entities = new Map([[1, player], [2, officer], [3, zombie]]), emit = vi.fn(), damage = vi.fn();
-  const world = { tick: 4, seed: 1, entities, infected: { active: [zombie], nav: { clear: () => false } }, npcs: { move: vi.fn() }, spatial: { query: () => [] }, events: { emit }, combat: { damage: { apply: damage } } } as unknown as SimWorld;
+  const world = { tick: 4, seed: 1, entities, infected: { active: [zombie], nav: { clear: () => false } }, npcs: { move: vi.fn() }, spatial: { query: () => [] }, events: { emit }, combat: { query: { shotVisible: () => true }, damage: { apply: damage } } } as unknown as SimWorld;
   const sees = vi.fn(() => true);
   return { world, player, officer, zombie, ally, emit, damage, sees, step: () => updateAlly(world, officer, sees) };
 }

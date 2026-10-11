@@ -35,7 +35,7 @@ export const l3 = {
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
-  soldiers: { count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 26, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
+  soldiers: { deckY: 4.26, count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 26, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
   /** Section 5.3: each gunshot is a loud event for non-chasing infected within 20 m. */
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
@@ -102,9 +102,11 @@ export const l3Anchors: Record<string, P> = {
   // Squad (start near the armory) and the six yard posts behind sandbags at the gates.
   'l3-squad-1': [-141.6, -6.4], 'l3-squad-2': [-137.2, -6.0], 'l3-squad-3': [-138.4, -3.4], 'l3-squad-4': [-136.0, -8.8],
   'l3-post-1': [-131.2, -18.8], 'l3-post-2': [-129.0, -3.2], 'l3-post-3': [-129.0, 3.2], 'l3-post-4': [-131.2, 18.8], 'l3-post-5': [-156.6, -18.6], 'l3-post-6': [-144.0, 16.0],
-  // Soldiers behind the T-walls and the nests of the army checkpoint.
-  'l3-soldier-1': [139.0, -7.6], 'l3-soldier-2': [139.0, 7.6], 'l3-soldier-3': [139.0, -13.0], 'l3-soldier-4': [139.0, 13.0],
-  'l3-soldier-5': [149.0, -7.0], 'l3-soldier-6': [149.0, 7.0], 'l3-soldier-7': [152.0, -2.4], 'l3-soldier-8': [139.0, -20.0],
+  // Two riflemen on each of four checkpoint watchtower decks.
+  'l3-soldier-1': [138.5, -8.25], 'l3-soldier-2': [138.5, -6.95],
+  'l3-soldier-3': [138.5, 6.95], 'l3-soldier-4': [138.5, 8.25],
+  'l3-soldier-5': [138.5, -18.65], 'l3-soldier-6': [138.5, -17.35],
+  'l3-soldier-7': [138.5, 17.35], 'l3-soldier-8': [138.5, 18.65],
   'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-141, -13], 'photo-l3-squad-strong': [-92, 0],
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
   'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
