@@ -48,14 +48,18 @@ export const l1v2 = {
   },
   /** Section 5.8 / AC17. */
   corgi: { stiffenM: 20, growlM: 14, barkM: 9, barkIntervalS: 2, nervousS: 6, riderSpeedCapMs: 7.5 },
-  /**
-   * Section 5.9 caps and the PO rule (2026-10-07): no director top-ups or streams. The only infected that enter the world
-   * unbitten after the lab exits are `house.count` residents of ONE house near the garage, one by one through its door, when
-   * the courier leaves the garage with the bat (beat 9). Growth from there is bites only.
-   */
+  /** Existing population caps; PO 10-10 adds authored street encounters after the accident. */
   director: { hordeMinInfectedNearGarage: 6, hordeLeaveGarageM: 5, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
   /** Beat 9 house: `doorM` the front-door distance band from the garage door; the walk out lives in HouseEmergence. */
   house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25] },
+  /** PO 10-10: small groups across Juniper, the western loop and Larch, with shared Main Row approaches.
+   * Planned as the courier leaves the Annex for the bat; only clear off-screen ground admits a resident. */
+  street: {
+    size: 3, leashM: 5,
+    groups: [[14, 24], [14, 10], [14, -16], [4, -34], [28, -34],
+      [-30, 24], [-30, 4], [-30, -16], [-18, -34],
+      [50, 24], [66, 4], [50, -12], [50, -32]],
+  },
   /** Section 5.10 / AC16. */
   bicycle: { speedMs: 7.5, accelToMs: 7, accelS: 1.5, minTurnRadiusM: 2.5, mountInteractS: 0.4, damage: 0 },
   /** Section 5.11 / AC20. */
