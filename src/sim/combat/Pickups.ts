@@ -4,10 +4,10 @@ import type { SimWorld } from '../world/SimWorld';
 /** Level-owned pickup entity. A dropped item arms only after the player leaves it, preventing swap loops. */
 export class Pickups {
   constructor(private readonly world: SimWorld) {}
-  spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number } = {}): number {
+  spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number; surfaceY?: number } = {}): number {
     action(actionId);
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Invalid pickup position');
-    const entity = this.world.entities.create({ kind: 'pickup', archetype: actionId, faction: 'neutral', health: { current: 1, max: 1 }, transform: { x: position.x, y: 0.15, z: position.z, yaw: 0 }, pickup: { actionId, armed: !dropped, ...options } });
+    const entity = this.world.entities.create({ kind: 'pickup', archetype: actionId, faction: 'neutral', health: { current: 1, max: 1 }, transform: { x: position.x, y: (options.surfaceY ?? 0) + 0.15, z: position.z, yaw: 0 }, pickup: { actionId, armed: !dropped, ...options } });
     this.world.spatial.set(entity.id, position.x, position.z); return entity.id;
   }
   update(frame?: InputFrame): void {
