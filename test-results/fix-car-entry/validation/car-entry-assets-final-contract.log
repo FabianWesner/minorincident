@@ -1,0 +1,354 @@
+
+> assets:validate
+> tsx tools/assets/validate.ts --ids veh.fire-engine,veh.sedan-red,veh.pickup-red,veh.suv-dark,veh.police-sedan,veh.ambulance,veh.school-bus
+
+[
+  {
+    "id": "veh.fire-engine:lod0",
+    "errors": [],
+    "triangles": 68481
+  },
+  {
+    "id": "veh.fire-engine:lod1",
+    "errors": [],
+    "triangles": 4798
+  },
+  {
+    "id": "veh.fire-engine:lod2",
+    "errors": [],
+    "triangles": 1988
+  },
+  {
+    "id": "veh.sedan-red:lod0",
+    "errors": [],
+    "triangles": 57344
+  },
+  {
+    "id": "veh.sedan-red:lod1",
+    "errors": [],
+    "triangles": 3376
+  },
+  {
+    "id": "veh.sedan-red:lod2",
+    "errors": [],
+    "triangles": 1412
+  },
+  {
+    "id": "veh.school-bus:lod0",
+    "errors": [],
+    "triangles": 78788
+  },
+  {
+    "id": "veh.school-bus:lod1",
+    "errors": [],
+    "triangles": 4816
+  },
+  {
+    "id": "veh.school-bus:lod2",
+    "errors": [
+      "node door_far_0:pal_uiDark: expected exactly one, found 0",
+      "node door_near_0:pal_uiDark: expected exactly one, found 0"
+    ],
+    "triangles": 1870
+  },
+  {
+    "id": "veh.suv-dark:lod0",
+    "errors": [],
+    "triangles": 69436
+  },
+  {
+    "id": "veh.suv-dark:lod1",
+    "errors": [],
+    "triangles": 4088
+  },
+  {
+    "id": "veh.suv-dark:lod2",
+    "errors": [],
+    "triangles": 1612
+  },
+  {
+    "id": "veh.pickup-red:lod0",
+    "errors": [],
+    "triangles": 72000
+  },
+  {
+    "id": "veh.pickup-red:lod1",
+    "errors": [],
+    "triangles": 3987
+  },
+  {
+    "id": "veh.pickup-red:lod2",
+    "errors": [],
+    "triangles": 1920
+  },
+  {
+    "id": "veh.police-sedan:lod0",
+    "errors": [],
+    "triangles": 72908
+  },
+  {
+    "id": "veh.police-sedan:lod1",
+    "errors": [],
+    "triangles": 3771
+  },
+  {
+    "id": "veh.police-sedan:lod2",
+    "errors": [],
+    "triangles": 1876
+  },
+  {
+    "id": "veh.ambulance:lod0",
+    "errors": [],
+    "triangles": 74804
+  },
+  {
+    "id": "veh.ambulance:lod1",
+    "errors": [],
+    "triangles": 3908
+  },
+  {
+    "id": "veh.ambulance:lod2",
+    "errors": [],
+    "triangles": 1868
+  },
+  {
+    "id": "veh.sedan-red.wrecked:lod0",
+    "errors": [],
+    "triangles": 3056
+  },
+  {
+    "id": "veh.sedan-red.wrecked:lod1",
+    "errors": [],
+    "triangles": 2996
+  },
+  {
+    "id": "veh.sedan-red.wrecked:lod2",
+    "errors": [],
+    "triangles": 1204
+  },
+  {
+    "id": "veh.sedan-red.burned:lod0",
+    "errors": [],
+    "triangles": 11017
+  },
+  {
+    "id": "veh.sedan-red.burned:lod1",
+    "errors": [],
+    "triangles": 4236
+  },
+  {
+    "id": "veh.sedan-red.burned:lod2",
+    "errors": [],
+    "triangles": 1568
+  },
+  {
+    "id": "veh.school-bus.wrecked:lod0",
+    "errors": [
+      "node steeringWheel: expected exactly one, found 0",
+      "node passengerSeat0L: expected exactly one, found 0",
+      "node passengerSeat0R: expected exactly one, found 0",
+      "node passengerSeat1L: expected exactly one, found 0",
+      "node passengerSeat1R: expected exactly one, found 0",
+      "node passengerSeat2L: expected exactly one, found 0",
+      "node passengerSeat2R: expected exactly one, found 0",
+      "node passengerSeat3L: expected exactly one, found 0",
+      "node passengerSeat3R: expected exactly one, found 0"
+    ],
+    "triangles": 10650
+  },
+  {
+    "id": "veh.school-bus.wrecked:lod1",
+    "errors": [
+      "node steeringWheel: expected exactly one, found 0",
+      "node passengerSeat0L: expected exactly one, found 0",
+      "node passengerSeat0R: expected exactly one, found 0",
+      "node passengerSeat1L: expected exactly one, found 0",
+      "node passengerSeat1R: expected exactly one, found 0",
+      "node passengerSeat2L: expected exactly one, found 0",
+      "node passengerSeat2R: expected exactly one, found 0",
+      "node passengerSeat3L: expected exactly one, found 0",
+      "node passengerSeat3R: expected exactly one, found 0"
+    ],
+    "triangles": 5170
+  },
+  {
+    "id": "veh.school-bus.wrecked:lod2",
+    "errors": [
+      "node steeringWheel: expected exactly one, found 0",
+      "node passengerSeat0L: expected exactly one, found 0",
+      "node passengerSeat0R: expected exactly one, found 0",
+      "node passengerSeat1L: expected exactly one, found 0",
+      "node passengerSeat1R: expected exactly one, found 0",
+      "node passengerSeat2L: expected exactly one, found 0",
+      "node passengerSeat2R: expected exactly one, found 0",
+      "node passengerSeat3L: expected exactly one, found 0",
+      "node passengerSeat3R: expected exactly one, found 0"
+    ],
+    "triangles": 1764
+  },
+  {
+    "id": "veh.school-bus.burned:lod0",
+    "errors": [
+      "node steeringWheel: expected exactly one, found 0",
+      "node passengerSeat0L: expected exactly one, found 0",
+      "node passengerSeat0R: expected exactly one, found 0",
+      "node passengerSeat1L: expected exactly one, found 0",
+      "node passengerSeat1R: expected exactly one, found 0",
+      "node passengerSeat2L: expected exactly one, found 0",
+      "node passengerSeat2R: expected exactly one, found 0",
+      "node passengerSeat3L: expected exactly one, found 0",
+      "node passengerSeat3R: expected exactly one, found 0"
+    ],
+    "triangles": 9392
+  },
+  {
+    "id": "veh.school-bus.burned:lod1",
+    "errors": [
+      "node steeringWheel: expected exactly one, found 0",
+      "node passengerSeat0L: expected exactly one, found 0",
+      "node passengerSeat0R: expected exactly one, found 0",
+      "node passengerSeat1L: expected exactly one, found 0",
+      "node passengerSeat1R: expected exactly one, found 0",
+      "node passengerSeat2L: expected exactly one, found 0",
+      "node passengerSeat2R: expected exactly one, found 0",
+      "node passengerSeat3L: expected exactly one, found 0",
+      "node passengerSeat3R: expected exactly one, found 0"
+    ],
+    "triangles": 5160
+  },
+  {
+    "id": "veh.school-bus.burned:lod2",
+    "errors": [
+      "node steeringWheel: expected exactly one, found 0",
+      "node passengerSeat0L: expected exactly one, found 0",
+      "node passengerSeat0R: expected exactly one, found 0",
+      "node passengerSeat1L: expected exactly one, found 0",
+      "node passengerSeat1R: expected exactly one, found 0",
+      "node passengerSeat2L: expected exactly one, found 0",
+      "node passengerSeat2R: expected exactly one, found 0",
+      "node passengerSeat3L: expected exactly one, found 0",
+      "node passengerSeat3R: expected exactly one, found 0"
+    ],
+    "triangles": 1606
+  },
+  {
+    "id": "veh.suv-dark.wrecked:lod0",
+    "errors": [],
+    "triangles": 9078
+  },
+  {
+    "id": "veh.suv-dark.wrecked:lod1",
+    "errors": [],
+    "triangles": 5105
+  },
+  {
+    "id": "veh.suv-dark.wrecked:lod2",
+    "errors": [],
+    "triangles": 1612
+  },
+  {
+    "id": "veh.suv-dark.burned:lod0",
+    "errors": [],
+    "triangles": 10950
+  },
+  {
+    "id": "veh.suv-dark.burned:lod1",
+    "errors": [],
+    "triangles": 5704
+  },
+  {
+    "id": "veh.suv-dark.burned:lod2",
+    "errors": [],
+    "triangles": 1632
+  },
+  {
+    "id": "veh.pickup-red.wrecked:lod0",
+    "errors": [],
+    "triangles": 10299
+  },
+  {
+    "id": "veh.pickup-red.wrecked:lod1",
+    "errors": [],
+    "triangles": 5440
+  },
+  {
+    "id": "veh.pickup-red.wrecked:lod2",
+    "errors": [],
+    "triangles": 1974
+  },
+  {
+    "id": "veh.pickup-red.burned:lod0",
+    "errors": [],
+    "triangles": 7022
+  },
+  {
+    "id": "veh.pickup-red.burned:lod1",
+    "errors": [],
+    "triangles": 4774
+  },
+  {
+    "id": "veh.pickup-red.burned:lod2",
+    "errors": [],
+    "triangles": 1666
+  },
+  {
+    "id": "veh.police-sedan.wrecked:lod0",
+    "errors": [],
+    "triangles": 3357
+  },
+  {
+    "id": "veh.police-sedan.wrecked:lod1",
+    "errors": [],
+    "triangles": 3297
+  },
+  {
+    "id": "veh.police-sedan.wrecked:lod2",
+    "errors": [],
+    "triangles": 1597
+  },
+  {
+    "id": "veh.police-sedan.burned:lod0",
+    "errors": [],
+    "triangles": 5880
+  },
+  {
+    "id": "veh.police-sedan.burned:lod1",
+    "errors": [],
+    "triangles": 4327
+  },
+  {
+    "id": "veh.police-sedan.burned:lod2",
+    "errors": [],
+    "triangles": 1788
+  },
+  {
+    "id": "veh.ambulance.wrecked:lod0",
+    "errors": [],
+    "triangles": 10461
+  },
+  {
+    "id": "veh.ambulance.wrecked:lod1",
+    "errors": [],
+    "triangles": 5118
+  },
+  {
+    "id": "veh.ambulance.wrecked:lod2",
+    "errors": [],
+    "triangles": 1958
+  },
+  {
+    "id": "veh.ambulance.burned:lod0",
+    "errors": [],
+    "triangles": 8076
+  },
+  {
+    "id": "veh.ambulance.burned:lod1",
+    "errors": [],
+    "triangles": 5178
+  },
+  {
+    "id": "veh.ambulance.burned:lod2",
+    "errors": [],
+    "triangles": 1854
+  }
+]
