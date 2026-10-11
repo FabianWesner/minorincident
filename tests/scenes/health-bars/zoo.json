@@ -1,0 +1,18 @@
+{
+  "name": "qa-zoo-shared-health-bars",
+  "note": "A-S4: all shipped zoo archetypes use the same bar flag on high/low, with no bar on the uninfected actor. Check anchors against each species' actual animated body bounds.",
+  "seed": 7,
+  "size": 60,
+  "ground": "asphalt",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 2], "state": "idle" },
+    { "id": "lion", "kind": "infected", "archetype": "infected.lion", "at": [-3, 0], "yaw": 180, "state": "idle" },
+    { "id": "gorilla", "kind": "infected", "archetype": "infected.gorilla", "at": [0, -3], "yaw": 180, "state": "idle" },
+    { "id": "flamingo", "kind": "infected", "archetype": "infected.flamingo", "at": [3, 0], "yaw": 180, "state": "idle" },
+    { "id": "healthy", "kind": "pedestrian", "at": [0, 4], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0] },
+  "frames": 30,
+  "shots": [0, 30],
+  "expect": { "consoleErrors": 0, "clippingMax": 0, "undrawnFramesMax": 0, "drawCallsMax": 600, "trianglesMax": 1500000 }
+}
