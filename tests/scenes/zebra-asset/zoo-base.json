@@ -1,0 +1,19 @@
+{
+  "name": "qa-zebra-asset-zoo-base",
+  "note": "Z-D2 asset isolation on the shipped D-ZOO player-start/safe-point anchors. Healthy zebra is static normal art, no bar. Infected look uses the existing lion brain only to exercise shared quadruped crowd gait; Z-S3 owns zebra gameplay/specials. No claim of zebra damage or special timing.",
+  "seed": 7,
+  "ground": "district",
+  "time": "L4",
+  "dof": false,
+  "layout": { "district": "D-ZOO", "bbox": [[-8, -3], [8, 13]], "assets": ["tile.*", "prop.zoo-map"], "anchors": ["player-start", "safe-point"] },
+  "props": [{ "id": "healthy", "asset": "amb.zebra", "at": [-3, 4] }],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [5, 8], "state": "idle" },
+    { "id": "zebra", "kind": "infected", "archetype": "infected.lion", "look": { "model": "inf.zebra" }, "at": [-3, 8], "yaw": 0, "state": { "chase": "courier" } }
+  ],
+  "camera": { "mode": "game", "target": [0, 5], "zoom": 1.4 },
+  "frames": 60,
+  "shots": [0, 15, 30, 60],
+  "trace": true,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "propPenetrationFramesMax": 2, "drawCallsMax": 600, "trianglesMax": 1500000 }
+}

@@ -127,7 +127,7 @@ test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m and Alpha stays 
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
   const exceptions=new Set(['char.corgi','char.courier-male','char.courier-female','npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.depot-clerk','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   // Animal silhouettes and the prone/seated corpse pack are not standing adults.
-  for (const id of ['inf.cat-black','inf.cat-tabby','inf.dog-dachshund','inf.dog-k9','inf.dog-retriever','inf.crow','inf.flamingo','inf.gorilla','inf.lion','inf.corpse-poses']) exceptions.add(id);
+  for (const id of ['inf.cat-black','inf.cat-tabby','inf.dog-dachshund','inf.dog-k9','inf.dog-retriever','inf.crow','inf.flamingo','inf.gorilla','inf.lion','inf.zebra','inf.corpse-poses']) exceptions.add(id);
   for(const def of manifest as AssetDef[]) {
     if(!def.sourceGlb || !['character','infected'].includes(def.category) || exceptions.has(def.id)) continue;
     for(const path of [def.glb,def.lods?.lod1,def.lods?.lod2].filter((p):p is string=>!!p)) {

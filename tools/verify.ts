@@ -7,10 +7,22 @@ const selection = selectionFor(target);
 const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
 const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
+const e07Remote = target === 'E07' && process.env.MI_VERIFY_REMOTE_SIM === '1';
+if (e07Remote) {
+  simArgs[3] = `^(?!.*T-E07-11-alpha).*?(?:${selection.pattern})`;
+  simArgs.push('--project=functional');
+}
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, '--', 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
+// E07's image/readability and render-budget probes need native GPU captures.
+// With remote simulation enabled, keep its remaining browser work on the runner too.
+const e07Native = '@perf|@vision|T-E07-06-bars|T-E07-bars-budget|T-E07-WebGL-visible|crowd draw visibility|20 infected corpses|common-worker hierarchy';
+const e07Browser = ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', e07Native, '--workers=2'];
+const e07Nonvisual = process.env.MI_VERIFY_REMOTE_SIM === '1'
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? '3397'}`, '--pull', `${output}/playwright-headless.json`, '--', 'sh', '-c', `mkdir -p ${output}; npm run build && ${e07Browser.map(arg => "'" + arg.replaceAll("'", "'\\''") + "'").join(' ')}; result=$?; cp test-results/playwright/results.json ${output}/playwright-headless.json; exit $result`]
+  : e07Browser;
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   // These lane checks share a preview build with their queued browser runs.
@@ -20,7 +32,16 @@ const commands: string[][] = [
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   simCommand,
-  ...(target === 'E10'
+  ...(target === 'E07'
+    ? [
+      ...(e07Remote ? [
+        ['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '--project=timing', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`],
+        ['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', 'tests/sim/performance/alpha.test.ts', 'tests/sim/performance/alpha-physical.test.ts', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-alpha-timing.json`],
+      ] : []),
+      e07Nonvisual,
+      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `(?=.*(?:${selection.pattern}))(?=.*(?:${e07Native}))`, '--project=chromium', '--workers=1'],
+    ]
+    : target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
       // Native GPU load timing stays headless: run once, after the other browser checks.
