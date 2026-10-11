@@ -1,14 +1,16 @@
+import { vehicleDef } from '../../src/data/vehicles';
 import { boot, expect, test } from './fixtures';
 
 for (const model of ['sedan', 'pickup', 'suv', 'police', 'ambulance', 'school-bus', 'fire-engine']) test(`PKG-13 @E09-AC02 @E09-AC10 ${model} draws the selected courier once and removes the driver on exit`, async ({ page }) => {
   await boot(page);
   {
-    const state = await page.evaluate(async model => {
+    const def = vehicleDef(`vehicle.${model}`);
+    const state = await page.evaluate(async ({ model, door }) => {
       const a = window.__SS__!; await a.loadScenario('survivor'); a.pause();
-      const id = a.spawn(`vehicle.${model}`, { x: 0, z: 0 }); a.teleport('player', { x: .2, z: 2 });
+      const id = a.spawn(`vehicle.${model}`, { x: 0, z: 0 }); a.teleport('player', door);
       a.survivor.select('male'); a.input.set({ interact: true }); await a.step(1); a.input.clear(); await a.step(60); await a.screenshotReady();
       return { id, state: a.getState() };
-    }, model);
+    }, { model, door: { x: def.doorX, z: def.width / 2 + .55 } });
     expect(state.state.player!.hidden, model).toBe(true);
     const car = state.state.render.vehicles.find(v => v.id === state.id)!;
     if ('occupants' in car) for (const gap of car.occupants[0].handGapM) expect(gap, model).toBeLessThan(.05);
@@ -23,6 +25,12 @@ for (const model of ['sedan', 'pickup', 'suv', 'police', 'ambulance', 'school-bu
     expect(exited.player!.hidden).toBe(false);
     const empty = exited.render.vehicles.find(v => v.id === state.id)!;
     expect('occupants' in empty ? empty.occupants : []).toEqual([]);
+    expect('transitionCouriers' in empty ? empty.transitionCouriers : []).toMatchObject([{ actorId: 1, asset: 'char.courier-female', phase: 'exit' }]);
+    await page.evaluate(() => window.__SS__!.step(60));
+    const landed = await page.evaluate(() => window.__SS__!.getState());
+    const clear = landed.render.vehicles.find(v => v.id === state.id)!;
+    expect('transitionCouriers' in clear ? clear.transitionCouriers : []).toEqual([]);
+    expect(landed.render.character!.visible).toBe(true);
   }
 });
 

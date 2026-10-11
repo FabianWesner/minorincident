@@ -1,3 +1,4 @@
+import { carDoorWeight, carTransitionTicks } from './characters/carTransition';
 import { VehicleOccupant } from './characters/VehicleOccupant';
 import { tyreSurface } from './TyreContact';
 import { modelLod } from './lodPolicy';
@@ -19,7 +20,7 @@ import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 const lampPosition = new Vector3(), lampDirection = new Vector3();
-interface Record { decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
+interface Record { doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
@@ -79,12 +80,12 @@ export class VehicleView extends Group {
       model.getObjectByName(name)?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
     };
     const brake = lamp('lightsBrake', '#ff2d2d'), sirens = def.emergency ? [lamp('sirenL', '#ff2d2d'), lamp('sirenR', '#2f6bff')] : [];
-    const door = new Mesh(new TorusGeometry(.7, .025, 6, 32), this.materials.get('windowGlow', 1.5)); door.rotation.x = -Math.PI / 2; door.position.set(.2, .025, def.width / 2 + .55); model.add(door);
+    const door = new Mesh(new TorusGeometry(.7, .025, 6, 32), this.materials.get('windowGlow', 1.5)); door.rotation.x = -Math.PI / 2; door.position.set(.2, .025, def.width / 2 + .55); door.position.x = def.doorX; model.add(door);
     const smoke = new Group(); parent.add(smoke);
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
     const previous = this.records.get(id); if (previous) { previous.parent.removeFromParent(); this.releaseRecord(previous); }
-    this.records.set(id, { decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
+    this.records.set(id, { doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
@@ -148,6 +149,20 @@ export class VehicleView extends Group {
           wheel.contactOffset = wheel.node.position.y - baseY;
         }
       }
+      const transition = this.world.vehicles!.transition;
+      const elapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
+      const side = transition?.side ?? 1, player = this.world.entities.get(1)!;
+      const dx = player.transform.x - p.x, dz = player.transform.z - p.z;
+      const along = dx * Math.cos(p.yaw) - dz * Math.sin(p.yaw), out = side * (dx * Math.sin(p.yaw) + dz * Math.cos(p.yaw));
+      // An exiting courier stands in the door sweep: keep it open until she steps clear.
+      if (transition?.carId === id && transition.kind === 'exit' && elapsed >= 12 && !player.hidden && player.health.current > 0 && Math.abs(along - body.def.doorX) < .8 && out > body.def.width / 2 + .2 && out < body.def.width / 2 + 1.25) record.doorHeldAt = this.world.tick + alpha - 1;
+      const sinceHeld = (this.world.tick + alpha - 1 - record.doorHeldAt) / 18;
+      const open = Math.max(carDoorWeight(elapsed), 1 - Math.max(0, Math.min(1, sinceHeld)));
+      for (const [name, sign] of [['doorL', 1], ['doorR', -1], ['door_near_0', 1], ['door_near_1', 1], ['door_far_0', -1], ['door_far_1', -1]] as const) {
+        const leaf = record.model.getObjectByName(name); if (!leaf) continue;
+        leaf.userData.closedYaw ??= leaf.rotation.y;
+        leaf.rotation.y = leaf.userData.closedYaw + (side === sign ? sign * open * 1.15 : 0);
+      }
       this.updateOccupants(id, record);
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
@@ -170,10 +185,12 @@ export class VehicleView extends Group {
       mesh.visible = d.expires > this.world.tick; if (mesh.visible) { mesh.position.copy(d.body.translation()); mesh.quaternion.copy(d.body.rotation()); }
     }
   }
-  /** Only hidden actors assigned to this vehicle get copies; exits remove them in the same render tick. */
+  /** Hidden seated actors own occupants. Exits transfer their copy to a short door-opening transition. */
   private updateOccupants(id: number, record: Record): void {
     const car = this.world.vehicles!.cars.get(id)!, l2 = this.world.missions?.state.l2;
     const wanted: { actorId: number; seat: string; driver: boolean }[] = [];
+    const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick - transition.tick : carTransitionTicks;
+    if (transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
     if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
     if (l2?.truckId === id) {
       if (l2.seated) wanted.push({ actorId: 1, seat: 'crewSeat0', driver: false });
@@ -182,9 +199,11 @@ export class VehicleView extends Group {
       }
     }
     const ids = new Set(wanted.map(o => o.actorId));
-    for (const occupant of this.occupants.values()) if (occupant.parent === record.model && !ids.has(occupant.actorId)) occupant.visible = false;
+    for (const occupant of this.occupants.values()) if ((occupant.parent === record.model || occupant.parent === record.parent) && !ids.has(occupant.actorId)) occupant.visible = false;
     for (const w of wanted) {
-      const entity = this.world.entities.get(w.actorId); if (!entity?.hidden) continue;
+      const entity = this.world.entities.get(w.actorId); const boarding = transition?.carId === id && transition.kind === 'enter' && elapsed < 42;
+      const leaving = transition?.carId === id && transition.kind === 'exit' && elapsed < 12;
+      if (!entity || !entity.hidden && !leaving) continue;
       const asset = entity.survivor ? `char.courier-${entity.survivor.variant}` : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.firefighter-alive';
       const occupant = this.occupants.get(w.actorId);
       if (!occupant || occupant.asset !== asset) {
@@ -194,7 +213,12 @@ export class VehicleView extends Group {
         }).finally(() => this.occupantLoads.delete(w.actorId)));
         if (occupant) occupant.visible = false; continue;
       }
-      record.model.add(occupant); occupant.visible = true;
+      if (leaving && w.actorId === 1) {
+        // Preserve the last seated pose while the door opens, with no seated actor left in the car.
+        if (occupant.parent === record.model) record.parent.attach(occupant);
+        occupant.visible = true; continue;
+      }
+      record.model.add(occupant); occupant.visible = !(w.actorId === 1 && boarding);
       let seat = record.model.getObjectByName(w.seat);
       if (!seat) {
         // Older fire-engine exports have only driverSeat. Keep the seven cab positions distinct until authored nodes load.
@@ -244,7 +268,7 @@ export class VehicleView extends Group {
   private wheelSpot(node: Object3D): [number, number] { node.getWorldPosition(this.spot); return [this.spot.x, this.spot.z]; }
   /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
-  snapshot() { return [...this.records].map(([id, r]) => ({ id, decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
+  snapshot() { return [...this.records].map(([id, r]) => ({ id, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     for (const material of record.paint) material.dispose();
     record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();
