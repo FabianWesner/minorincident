@@ -13,7 +13,7 @@ import { KeyframeAnimator, type RidePose } from './KeyframeAnimator';
 import { disposeCharacter, loadCharacter } from './rig';
 import { alignSkeleton } from './skin';
 import { skinClips } from './clips';
-import { GunAim } from './GunAim';
+import { GunAim, type LongGunHold } from './GunAim';
 import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
@@ -128,7 +128,7 @@ export class CharacterView extends Group {
       }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     this.makeParcel(materials);
   }
@@ -279,9 +279,9 @@ export class CharacterView extends Group {
     this.facing += delta * amount; this.quaternion.setFromAxisAngle(this.facingAxis, this.facing + spin); this.facingTime = time;
   }
   /** Applied after living/ride layers, preserving the animated legs. */
-  aimGun(direction: { x: number; z: number }, elevation = 0, reach = .995, turnTorso = true, lateral = 0): void {
+  aimGun(direction: { x: number; z: number }, elevation = 0, reach = .995, turnTorso = true, lateral = 0, hold?: LongGunHold): void {
     this.lookWeight = 0;
-    this.characters.get(this.variant)?.aim.apply(direction, undefined, elevation, reach, turnTorso, lateral);
+    this.characters.get(this.variant)?.aim.apply(direction, undefined, elevation, reach, turnTorso, lateral, hold);
     this.updateMatrixWorld(true);
   }
   private facing = 0;
@@ -292,7 +292,7 @@ export class CharacterView extends Group {
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)?.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
+    return { supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
   dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
