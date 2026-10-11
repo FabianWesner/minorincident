@@ -39,7 +39,7 @@ for (const id of [...ids].sort()) {
     for (const lod of ['lod1', 'lod2'] as const) {
       const canonical = def.lods?.[lod] ? lod : 'lod0';
       for (const decay of ['', ...def.decayVariants]) {
-        const key = `${id}:${canonical}:${decay}`; if (files[key]) continue;
+        const key = `${id}:${canonical}:${decay}`; if (!selected.size && files[key]) continue;
         const root = await registry.asset(id, true, lod, decay || undefined);
         if (root.userData.placeholder || root.children.some(child => !(child instanceof Mesh) || child.children.length)) continue;
         const bytes = gzipSync(encodeStaticBake(root), { level: 9 });

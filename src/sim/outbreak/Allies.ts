@@ -31,6 +31,9 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  */
 export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean): boolean {
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
+  const shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !a.gun);
+  const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
+    ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
   const heard = (target: EntitySnapshot) => ai.hearing.hears(e, target.transform);
   const defence = (target: EntitySnapshot) => a.role === 'officer' && dist(target.transform, e.transform) <= pt.defendM;
@@ -63,10 +66,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Breakout (the first seconds after the fallback call): the squad gets out with the player instead of holding the yard.
   // Moving beyond the follow leash ends even an existing fight: the squad catches up through shared E08 navigation.
   const breakout = follower && (a.follow!.breakoutUntil ?? 0) > tick;
-  const closeThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && sees(e.transform, o.transform, o.id));
+  const closeThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
   if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
   if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
-    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id)) : undefined;
+    forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;
   }
@@ -91,7 +94,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         else if (!defence(o) && !a.cover && gun && a.hold && a.range !== undefined && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > a.range) continue;
         const current = o.id === a.targetId;
         if (!current && d > 1.2 && (dx * fx + dz * fz) / d < half && !shooter && !heard(o)) continue;
-        if (!sees(e.transform, o.transform, o.id)) continue;
+        if (!visible(e.transform, o.transform, o.id)) continue;
         const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0);
         if (s < score) { score = s; best = o; }
       }
@@ -102,7 +105,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     // A swing in progress lands after its windup on whatever is still in reach (no tracking, it can whiff).
     if (a.strikeAt && tick >= a.strikeAt) {
       const victim = world.entities.get(a.strikeTarget ?? 0); a.strikeAt = 0;
-      const allowed = !!victim && policeCanEngage(victim) && (a.role !== 'officer' || (!victim.hidden && !victim.infected?.hidden && !victim.infectionRise && sees(e.transform, victim.transform, victim.id)));
+      const allowed = !!victim && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id);
       if (!allowed) a.baton = false;
       if (allowed && victim?.infected && victim.health.current > 0 && world.combat) {
         const dx = victim.transform.x - e.transform.x, dz = victim.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -125,7 +128,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     if (a.strikeAt) return true;
     if (c.state === 'grabbed' && target) a.targetId = target.id;
     if (target) {
-      if (!sees(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
+      if (!visible(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
       // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
       if (c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
         if (a.run) npcs.move(e, a.run, a.runSpeed, c, .25);
