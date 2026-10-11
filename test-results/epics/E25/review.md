@@ -1,47 +1,21 @@
-# E25 increment 1 (lighting-core): agent self-review
+# E25 lighting review — checklist G
 
-Agent pre-check only; the orchestrator owns the vision review. Screenshots are game-camera (follow) frames at 1600x900,
-headless WebGL2 on the Mac's GPU, L1's town (D-GROVE) at the lamp corner (62.2, -1.4) with six runners and a pistol
-pickup. References: `initial-drafts/weather-and-time-of-day-moods.png`, `initial-drafts/explosions-fire-smoke-and-lighting-fx.png`.
+Inspected headless Chrome / Metal WebGL2 on 2026-10-10. Numeric detectors accompany the images; scene sheets establish appearance rather than backend parity. Reference comparison is deferred because `assets/_keyframes/lighting/` is absent in both this worktree and main (see `closure/keyframe-availability.txt`). The L6 mission spot belongs to E24. The isolated L6 lighting preset was still captured and inspected.
 
-| Preset | File | Used by |
+| G item | Result | Evidence / observation |
 | --- | --- | --- |
-| L1 late morning | `mood-L1.png` | L1 |
-| L2 midday | `mood-L2.png` | L2 (was L1 before this lane) |
-| L3 afternoon | `mood-L3.png` | L3 |
-| L4 golden hour | `mood-L4.png` | L4 |
-| L5 dusk | `mood-L5.png` | L5 (was golden before this lane) |
-| L6 night (fires) | `mood-L6.png` | L6 |
-| night | `mood-night.png` | `night-street`, L4 night segments through the mission `timeOfDay` action |
+| Sources glow and cast visible light | PASS | `closure/light-lab.png/json`: trailer pool exceeds adjacent ambient by 31×. Trailer heads, street lamps, windows and neon have distinct warm/white/colored emission. `mall-floor.png` shows warm pizza counter spill and cool unlit tiles. |
+| Light respects geometry; hero shadows | PASS | Trailer pool stops at the fence; measured behind-fence/ambient <1.3. `hero-shadow.png/json` shows the dummy's colored shadow; powered pools use the static 64-ray visibility fan. |
+| Colored shadows, appropriate softness | PASS | Daytime production spots and nine preset sheets show soft violet sun shadows. Trailer spot shadows have a tighter silhouette. Numeric hero shadow hue/darkening tests pass; shadows retain bounce instead of becoming black. |
+| Readable player and threats at night | PASS | `night-readability.json` and masks measure ≥3:1 player contrast; infected eyes are brightest. Night/L6 fixture sheets keep the courier and approaching infected distinct against blue ground. |
+| Beams, lit haze and glints | PASS | `closure/beam-intersection.png/json`: four subtle trailer cones, smooth ground fade ≤25% per pixel. L3's warm haze and small neon spill remain atmospheric. The first washed-out cone draft was reduced to the inspected subtle opacity. |
+| Reflections suit surface | PASS / SSR deferred | Wet lamp/neon streaks exceed dry ground by >2× on both tiers. Car roof/glass highlights move between 45°/60° captures; cream chrome trim/rims are environment-dominant while rubber and the wooden bench stay matte. Polished mall tiles receive environment highlights and warm light. High-tier SSR silhouette work is release extras under specs/04 §6. |
+| Mood follows the level script | PASS | L2 neutral midday and short shadows; L3 warm hazy afternoon with lit vehicle heads/neon; L4 clean warm plaza with long violet shadows; L5 red/violet ruined plaza. Nine identical preset fixtures make time-of-day differences directly visible. |
 
-Night-specific frames: `night-street.png` plus `night-street-player-mask.png` (AC13) and `hero-shadow.png` (AC06).
+## Production scenarios
 
-## Checklist G: Lighting (L5, L6, night)
+`closure/l2-streets-w1.png`, `l3-grove-boulevard.png`, `l4-plaza-safe.png`, `pair-plaza.png`, `mall-floor.png` and the isolated trailer/reflection scenes were inspected. Mission briefing panels were closed before production captures. The L5 fixture reaches the plaza before warming the persistent render emitters; it uses the actual mission rather than replacing the plaza with an isolated scene. The reference-image comparison remains explicitly deferred, not inferred from these captures.
 
-- [must] Light sources glow and cast visible light: **PASS**. The sodium lamps bloom and leave warm pools on the pavement and road. Windows, neon and fires also draw pools (303 pools in the high window at night-street).
-- [must] Light respects geometry: **FAIL (partly)**. Hero shadows work: the survivor's shadow falls away from the lamp overhead (`hero-shadow.png`). Pools are not clipped by walls yet, because the visibility polygons (AC03) are deferred.
-- [must] Shadows are colored, not black: **PASS**. The hero shadow is purple-blue (hue 277°, 75% darker than the lit pool beside it). Moon shadows keep the preset tint.
-- [must] At night the player and threats stay readable, moody and not muddy: **PASS**. Away from every lamp the survivor scores 3.13:1 against its 2 m ring. Each runner's brightest pixel is its red eye, and the crowd keeps a faint cool rim.
-- [should] Beams, haze and glints: **FAIL**. Deferred (AC09; lit haze and flares not built).
-- [should] Reflections where the surface demands them: **FAIL**. Deferred (AC10/11). Cheap wet streaks were also left out, because they need a wet mask first.
-- [should] The mood matches the light script (06 §2): **PASS**. L5 reads as blue-hour dusk with sodium lamps, L6 and night as cool moonlight with warm practicals.
+## Windows
 
-Result: the light-pool, readability and shadow-colour musts pass; pool occlusion fails pending AC03. **Overall: not passed.**
-
-## Checklist A / E spot checks (daylight presets)
-
-- [must] The palette is warm and saturated, with no default-three look in L1–L4: **PASS**. The field pass is skipped in daylight (`lightPools: 0`), so L1 is pixel-identical in look to before.
-- [must] Shadows are soft and tinted: **PASS** (unchanged sun shadow).
-- [should] The mood per level: **PASS**. L2 is now midday white sun instead of a copy of L1, and L5 is dusk instead of golden hour.
-
-## Readability at the game camera (lane requirement)
-
-- The player stays readable in every preset: **PASS**. At night a survivor-only fill and rim keep it clear without lighting the ground ring.
-- Infected silhouettes stay readable: **PASS**. The grazing rim and red eyes carry them at night. Hair reads as a dark mass, which is acceptable at this distance.
-- Pickups stay readable: **PASS (weak)**. The pistol shows a small cool glint pool at night. The pickup model itself is tiny at every time of day (pre-existing).
-
-## Open visual issues for the orchestrator
-
-1. Pools leak through walls and fences (no visibility polygons yet).
-2. Window pools of houses are soft circles rather than rectangular spills.
-3. The night sidewalk is quite light lavender. The AC13 contrast margin is small (3.13 against 3.0).
+Actual shipped GLBs store semantic names on parents of unnamed material primitives. Matching those parents restores `_window` / `_light` indices in all three LODs. `closure/interior-window-45.png`, `interior-window-60.png` and `interior-window-off.png` show a darker back wall shifting within the fixed mullioned frame. The detector follows the bright-to-dark interior boundary (excluding physical perimeter/mullion), removes camera movement in world-space window coordinates, and measures 69.60 px of shift, against the unchanged ≥4 px requirement. Powered/unpowered maximum window luminance is 9.75×. Unpowered window emissions are all zero.

@@ -1,12 +1,13 @@
 // Light-field pass adapted from Bruno Simon folio-2025 Tracks.js (MIT): a moving top-down orthographic
 // render target around the focus that world materials sample by world XZ.
-import { AdditiveBlending, Color, HalfFloatType, InstancedMesh, InstancedBufferAttribute, LinearFilter, Matrix4, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, Quaternion, RenderTarget, RendererUtils, Scene, Vector3, type WebGPURenderer, type Node } from 'three/webgpu';
-import { attribute, dot, positionWorld, texture, uniform, uv, vec2, vec3 } from 'three/tsl';
+import { AdditiveBlending, DataTexture, FloatType, RGBAFormat, NearestFilter, Color, HalfFloatType, InstancedMesh, InstancedBufferAttribute, LinearFilter, Matrix4, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, Quaternion, RenderTarget, RendererUtils, Scene, Vector3, type WebGPURenderer, type Node } from 'three/webgpu';
+import { Fn, If, float, attribute, atan, dot, positionWorld, texture, uniform, uv, vec2, vec3 } from 'three/tsl';
 import { lightPalette, type LightAnchor, type LightToken } from '../data/lights';
 
 /** World-space light footprint. `aim` is the horizontal pool offset; `stretch` elongates it along the aim (spots). */
 export interface FieldLight {
   x: number; z: number;
+  id?: string; visibility?: [number, number][];
   /** Linear RGB already multiplied by the footprint strength. */
   r: number; g: number; b: number;
   radius: number;
@@ -59,13 +60,17 @@ export class LightField {
   readonly target: RenderTarget;
   readonly center = uniform(vec2(0, 0));
   readonly extent = uniform(80);
-  /** Time-of-day practical-light weight; 0 skips the pass and the material term. */
+  /** Time-of-day practical-light weight; fire/blast transients also work in daylight. */
   readonly strength = uniform(0);
   private readonly scene = new Scene();
   private readonly camera = new OrthographicCamera(-40, 40, 40, -40, .1, 200);
   private readonly mesh: InstancedMesh;
   private readonly facadeClip = new InstancedBufferAttribute(new Float32Array(tierSettings.high.capacity * 3), 3);
   private statics: FieldLight[] = [];
+  private readonly visibilityRows = new Map<FieldLight, number>();
+  private readonly visibilityData = new DataTexture(new Float32Array(65 * 4).fill(10000), 65, 1, RGBAFormat, FloatType);
+  private readonly visibilitySize = uniform(1);
+  private readonly visibilitySource = new InstancedBufferAttribute(new Float32Array(tierSettings.high.capacity * 3), 3);
   private readonly transients: { light: FieldLight; born: number; ttl: number; intensity: number }[] = [];
   private readonly dynamics: FieldLight[] = [];
   private readonly matrix = new Matrix4();
@@ -74,11 +79,13 @@ export class LightField {
   private readonly scale = new Vector3();
   private readonly up = new Vector3(0, 1, 0);
   private readonly order: number[] = [];
+  private readonly pool: FieldLight[] = [];
+  private readonly weights: number[] = [];
   private time = 0;
   private tier: 'high' | 'low' = 'high';
   private drawn = 0;
   private candidates = 0;
-  private rendered = false;
+  private cleared = false;
   private readonly rendererState = {} as Parameters<typeof RendererUtils.resetRendererState>[1];
   /** CPU ms of the last pass (instance fill + submission), for perf(). */
   ms = 0;
@@ -90,11 +97,17 @@ export class LightField {
     const material = new MeshBasicNodeMaterial({ transparent: true, depthTest: false, depthWrite: false, blending: AdditiveBlending });
     material.name = 'keep_lightField';
     // Soft quadratic pool; the instance colour carries hue x intensity (three multiplies it into the diffuse colour).
+    this.visibilityData.minFilter = this.visibilityData.magFilter = NearestFilter; this.visibilityData.needsUpdate = true;
+    geometry.setAttribute('visibilitySource', this.visibilitySource);
+    const source = attribute('visibilitySource', 'vec3'), relative = positionWorld.xz.sub(source.xy);
+    const ray = atan(relative.y, relative.x).div(Math.PI * 2).add(1).mod(1).mul(64).round();
+    const reach = texture(this.visibilityData, vec2(ray.add(.5).div(65), source.z.add(.5).div(this.visibilitySize))).r;
+    const visible = Fn(() => { const mask = float(1).toVar(); If(source.z.greaterThan(0), () => { mask.assign(relative.length().lessThanEqual(reach.add(.025)).select(1, 0)); }); return mask; })();
     const d = uv().sub(.5).mul(2).length();
     geometry.setAttribute('facadeClip', this.facadeClip);
     const clip = attribute('facadeClip', 'vec3');
     const outward = dot(uv().sub(.5).mul(2), clip.xy).add(clip.z).smoothstep(-.02, .02);
-    material.colorNode = vec3(d.mul(d).oneMinus().clamp(0, 1).pow(2).mul(outward));
+    material.colorNode = vec3(d.mul(d).oneMinus().clamp(0, 1).pow(2).mul(outward).mul(visible));
     this.mesh = new InstancedMesh(geometry, material, settings.capacity);
     this.mesh.frustumCulled = false; this.mesh.count = 0;
     this.mesh.setColorAt(0, color.setRGB(0, 0, 0));
@@ -109,15 +122,26 @@ export class LightField {
     const fieldUv = local.add(.5);
     const edge = local.abs().max(local.yx.abs()).x.smoothstep(.5, .42);
     const height = positionWorld.y.div(5).oneMinus().clamp(.15, 1);
-    return texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height).mul(this.strength);
+    return texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height);
   }
   setQuality(tier: 'high' | 'low'): void {
     if (tier === this.tier) return;
     this.tier = tier; const s = tierSettings[tier];
     this.target.setSize(s.resolution, s.resolution); this.extent.value = s.size;
+    this.cleared = false;
   }
   /** Layout lights; the array is retained and its `on` flags may change between frames. */
-  setStatic(lights: FieldLight[]): void { this.statics = lights; }
+  setStatic(lights: FieldLight[]): void {
+    this.statics = lights; this.visibilityRows.clear();
+    const data = new Float32Array(65 * (lights.length + 1) * 4).fill(10000);
+    lights.forEach((light, index) => {
+      if (!light.visibility) return;
+      this.visibilityRows.set(light, index + 1);
+      light.visibility.slice(1).forEach(([x, z], ray) => { data[((index + 1) * 65 + ray) * 4] = Math.hypot(x - light.x, z - light.z); });
+    });
+    this.visibilityData.image = { data, width: 65, height: lights.length + 1 }; this.visibilitySize.value = lights.length + 1; this.visibilityData.needsUpdate = true;
+  }
+  syncPower(isOn: (id: string) => boolean): void { for (const light of this.statics) if (light.id) light.on = isOn(light.id); }
   /** Per-frame lights (vehicles, the player aura); cleared by `update`. */
   push(light: FieldLight): void { this.dynamics.push(light); }
   /** E27 hook (explosions, Molotovs, muzzle flashes): a pool that fades out linearly over `ttl` seconds.
@@ -127,9 +151,10 @@ export class LightField {
     this.transients.push(entry);
     return { remove: () => { const i = this.transients.indexOf(entry); if (i >= 0) this.transients.splice(i, 1); } };
   }
-  get active(): boolean { return this.strength.value > 0; }
+  get active(): boolean { return this.strength.value > 0 || this.transients.length > 0; }
   /** The lit `shadow: hero` light whose pool covers (x, z) most strongly, for the single night shadow map. */
   heroAt(x: number, z: number): FieldLight | null {
+    if (this.strength.value <= 0) return null;
     let best: FieldLight | null = null, score = 0;
     for (const l of this.statics) {
       if (!l.on || !l.hero) continue;
@@ -151,56 +176,62 @@ export class LightField {
     this.center.value.set(cx, cz);
     this.camera.left = this.camera.bottom = -extent / 2; this.camera.right = this.camera.top = extent / 2;
     this.camera.position.set(cx, 100, cz); this.camera.updateProjectionMatrix(); this.camera.updateMatrixWorld();
-    if (!this.active) { this.dynamics.length = 0; this.drawn = this.candidates = 0; this.ms = 0; return; }
+    if (!this.active) { this.dynamics.length = 0; this.mesh.count = this.drawn = this.candidates = 0; this.ms = 0; return; }
     const capacity = tierSettings[this.tier].capacity, limit = extent / 2;
     const inside = (l: FieldLight) => l.on && Math.abs(l.x + l.aimX - cx) < limit + l.radius * l.stretch && Math.abs(l.z + l.aimZ - cz) < limit + l.radius * l.stretch;
-    const pool: FieldLight[] = [];
-    for (const l of this.statics) if (inside(l)) pool.push(l);
-    for (const l of this.dynamics) if (inside(l)) pool.push(l);
+    const pool = this.pool, weights = this.weights; pool.length = 0; weights.length = 0;
+    // Weight practical pools before drawing, leaving fire/blast radiance independent
+    // of time of day. Daylight transients must not switch on every street lamp.
+    const practical = this.strength.value;
+    if (practical > 0) {
+      for (const l of this.statics) if (inside(l)) { pool.push(l); weights.push(practical); }
+      for (const l of this.dynamics) if (inside(l)) { pool.push(l); weights.push(practical); }
+    }
     for (const t of this.transients) {
       const fade = Number.isFinite(t.ttl) ? 1 - (this.time - t.born) / t.ttl : 1, k = t.intensity * fieldGain * Math.max(0, fade);
-      if (inside(t.light)) pool.push({ ...t.light, r: t.light.r * k, g: t.light.g * k, b: t.light.b * k });
+      if (inside(t.light)) { pool.push(t.light); weights.push(k); }
     }
     this.candidates = pool.length;
-    let lights = pool;
     if (pool.length > capacity) {
       this.order.length = 0; for (let i = 0; i < pool.length; i++) this.order.push(i);
       this.order.sort((a, b) => Math.hypot(pool[a].x - cx, pool[a].z - cz) - Math.hypot(pool[b].x - cx, pool[b].z - cz));
-      lights = this.order.slice(0, capacity).map(i => pool[i]);
     }
     let count = 0;
-    for (const l of lights) {
-      let k = 1;
-      if (l.flicker === 1) k = .78 + .14 * Math.sin(this.time * 9.1 + l.seed) + .08 * Math.sin(this.time * 23.7 + l.seed * 3.1);
-      else if (l.flicker === 2) k = Math.sin(this.time * 2.3 + l.seed) > .93 ? .25 : 1;
+    for (let slot = 0; slot < Math.min(capacity, pool.length); slot++) {
+      const index = pool.length > capacity ? this.order[slot] : slot, l = pool[index];
+      let k = weights[index];
+      if (l.flicker === 1) k *= .78 + .14 * Math.sin(this.time * 9.1 + l.seed) + .08 * Math.sin(this.time * 23.7 + l.seed * 3.1);
+      else if (l.flicker === 2) k *= Math.sin(this.time * 2.3 + l.seed) > .93 ? .25 : 1;
       if (l.strobe) k *= Math.floor(this.time * 2 + l.seed) % 2 === 0 ? 1 : .12;
       const angle = l.stretch > 1 ? Math.atan2(l.aimX, l.aimZ) : 0;
       this.position.set(l.x + l.aimX, 0, l.z + l.aimZ); this.rotation.setFromAxisAngle(this.up, angle);
       this.scale.set(l.radius * 2, 1, l.radius * 2 * l.stretch);
       const nx = l.facadeX ?? 0, nz = l.facadeZ ?? 0;
+      this.visibilitySource.setXYZ(count, l.x, l.z, this.visibilityRows.get(l) ?? 0);
       this.facadeClip.setXYZ(count, nx, -nz, nx || nz ? (l.aimX * nx + l.aimZ * nz) / l.radius : 1);
       this.mesh.setMatrixAt(count, this.matrix.compose(this.position, this.rotation, this.scale));
       this.mesh.setColorAt(count, color.setRGB(l.r * k, l.g * k, l.b * k));
       count++;
     }
     this.mesh.count = count; this.drawn = count;
-    this.facadeClip.needsUpdate = true; this.mesh.instanceMatrix.needsUpdate = true; if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
+    this.visibilitySource.needsUpdate = true; this.facadeClip.needsUpdate = true; this.mesh.instanceMatrix.needsUpdate = true; if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
     this.dynamics.length = 0;
     this.ms = performance.now() - start;
   }
-  /** One additive draw into the HDR target; skipped entirely in daylight. */
+  /** One additive draw into the HDR target; empty frames skip after one clear. */
   render(renderer: WebGPURenderer): void {
-    if (!this.active && this.rendered) return;
+    // Clear once after the final daylight transient, then skip empty frames.
+    if (!this.active && this.cleared) return;
     const start = performance.now();
     const state = RendererUtils.resetRendererState(renderer, this.rendererState);
     renderer.setClearColor(0x000000, 0); renderer.setRenderTarget(this.target);
     renderer.render(this.scene, this.camera);
     renderer.setRenderTarget(null);
     RendererUtils.restoreRendererState(renderer, state);
-    this.rendered = true; this.ms += performance.now() - start;
+    this.cleared = !this.active; this.ms += performance.now() - start;
   }
   snapshot() {
     return { strength: this.strength.value, resolution: this.target.width, size: this.extent.value, statics: this.statics.length, litStatics: this.statics.filter(l => l.on).length, candidates: this.candidates, drawn: this.drawn, transients: this.transients.length, capacity: tierSettings[this.tier].capacity, ms: this.ms, center: this.center.value.toArray() };
   }
-  dispose(): void { this.target.dispose(); this.mesh.geometry.dispose(); (this.mesh.material as MeshBasicNodeMaterial).dispose(); this.mesh.dispose(); }
+  dispose(): void { this.visibilityData.dispose(); this.target.dispose(); this.mesh.geometry.dispose(); (this.mesh.material as MeshBasicNodeMaterial).dispose(); this.mesh.dispose(); }
 }

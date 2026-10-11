@@ -1,0 +1,269 @@
+{
+  "spec": "test-results/epics/E27/scene-lab/blast-small/scene.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 900,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 4369,
+    "runMs": 4490,
+    "sceneMs": 8859
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "blast-small",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "prop.street-lamp:lab0",
+        "asset": "prop.street-lamp",
+        "at": [
+          -5,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.bench:lab1",
+        "asset": "prop.bench",
+        "at": [
+          6,
+          -5
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "infected",
+        "kind": "infected",
+        "entity": 4
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "blast-small",
+    "frame": 900,
+    "tick": 900,
+    "backend": "webgl",
+    "quality": "high",
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 900,
+      "gaps": [
+        {
+          "id": "D-GROVE/prop.bench:lab1",
+          "gapCm": 0
+        }
+      ]
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 21,
+        "p95": 26,
+        "max": 28
+      },
+      "triangles": {
+        "p50": 134922,
+        "p95": 143180,
+        "max": 168142
+      },
+      "shadowDrawCalls": {
+        "p50": 16,
+        "p95": 16,
+        "max": 16
+      },
+      "shadowTriangles": {
+        "p50": 46197,
+        "p95": 46197,
+        "max": 46197
+      },
+      "stepMs": {
+        "p50": 0.6,
+        "p95": 1.1,
+        "max": 187.9
+      },
+      "lastFrame": {
+        "drawCalls": 19,
+        "triangles": 58214,
+        "shadowDrawCalls": 16,
+        "shadowTriangles": 46197,
+        "stepMs": 0.5,
+        "categories": {
+          "other": 15,
+          "shadows": 16,
+          "props": 3,
+          "crowd": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {
+        "infected": {
+          "stuckRunMax": 4,
+          "stuckFrame": 59,
+          "lostNearFrames": 0,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -4,
+          4
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 900,
+        "inViewFrames": 900,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 900
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -4,
+            4
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 900,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "infected": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          6.169,
+          12.437
+        ],
+        "yawDeg": -36.1,
+        "state": "idle",
+        "drawnFrames": 799,
+        "inViewFrames": 677,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 799
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            5,
+            3
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 900,
+          "torsoPitchMinDeg": 22.1,
+          "torsoPitchMaxDeg": 88.5,
+          "contacts": 40,
+          "slideMaxCm": 72.7,
+          "slideP95Cm": 4.2,
+          "yawDriftMaxDeg": 10,
+          "liftMaxCm": 19.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 262
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 900,
+      "sim": {
+        "infected": 1,
+        "courier": 1,
+        "actors": 2
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "prop.street-lamp:lab0": "lod1",
+      "prop.bench:lab1": "lod2"
+    },
+    "clipping": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "summary": {
+      "staticPairs": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

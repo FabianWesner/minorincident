@@ -1,0 +1,34 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (1.2m)
+  ✓  2 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (39.3s)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result 
+
+    Error: Could not travel to {"x":40.029999999999994,"z":-34.449999999999996}; infected within 4 m [] from {"x":24.776561737060547,"y":0.7200000286102295,"z":-30.488130569458008,"yaw":0.22723206899556714}; bicycle=[{"kind":"bicycle","archetype":"veh.courier-bike","faction":"environment","transform":{"x":66.43455867750436,"y":0.05,"z":-8.270882815473344,"yaw":1.4478806807565299},"health":{"current":1,"max":1},"bicycle":{"mounted":false,"heading":-1.4478806807565299,"speed":0,"pedal":218.26463954232418,"steer":0,"lean":0,"standTicks":0,"armed":true,"lockUntil":2262},"id":85}]; lastPick=[] 
+
+      115 |       }
+      116 |       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });
+    > 117 |       throw new Error(`Could not travel to ${JSON.stringify(target)}; infected within 4 m ${JSON.stringify(around)} from ${JSON.stringify((await player()).transform)}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))}; lastPick=${JSON.stringify(await page.evaluate(() => window.__SS__!.input.lastPick()))} `);
+          |             ^
+      118 |     };
+      119 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
+      120 |     /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:117:13)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:228:9
+
+    Error Context: test-results/playwright/run-3503/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3503/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3503/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result 
+  1 passed (2.0m)

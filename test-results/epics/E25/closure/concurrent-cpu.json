@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-10T09:46:10.022123+00:00",
+  "load": [
+    3.26416015625,
+    3.72998046875,
+    4.03369140625
+  ],
+  "foreignProcess": "62037  99.5 22:26 node",
+  "foreignWorktree": "continuity",
+  "foreignCommand": "vitest run selected E20/smoke; maxWorkers=1",
+  "failedL2Phone": {
+    "gateMaxMs": 67.39999999999418,
+    "revealMaxMs": 48.60000000000582,
+    "peakP50": 30.70000000001164,
+    "peakP95": 37.5
+  },
+  "interpretation": "Concurrent full-core CPU work was observed. Repeat the unchanged full gate after this job ends before inferring a rendering regression."
+}

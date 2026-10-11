@@ -1,4 +1,5 @@
 import { WeatherSystem } from '../weather/WeatherSystem';
+import { LightPower } from '../lighting/LightPower';
 import { levelFourLayouts } from '../../levels/L4/layout';
 import { levelFiveLayouts } from '../../levels/L5/layout';
 import { levelThreeLayouts } from '../../levels/L3/layout';
@@ -104,6 +105,8 @@ export class SimWorld implements Lifecycle {
   mission: GameStateSnapshot['mission'] = null;
   progression: GameStateSnapshot['progression'] = null;
   weather: WeatherSystem | null = null;
+  /** Authored practical-light circuits and breakage; independent of graphics settings. */
+  lightPower: LightPower | null = null;
   tick = 0;
   seed = 1;
   scenario: string | null = null;
@@ -150,6 +153,10 @@ export class SimWorld implements Lifecycle {
     if (this.player) this.pickups = new Pickups(this);
     if (this.player) this.barricades = new Barricades(this);
     if (definition.survivor) this.vehicles = new Vehicles(this);
+    if (this.player) {
+      this.lightPower = new LightPower(this);
+      this.events.on('sim.tick', () => this.lightPower?.update(), SimPhase.input);
+    }
     if (name === 'drive-course') {
       this.vehicles!.spawn('vehicle.sedan', { x: 0, z: 0 }); this.vehicles!.spawn('vehicle.police', { x: 0, z: 12 });
       for (let x = 25; x <= 575; x += 25) { const z = Math.sin(x / 40) * 3; this.vehicles!.obstacles.spawn('cone', { x, z: z - 2 }); this.vehicles!.obstacles.spawn('cone', { x, z: z + 2 }); }
@@ -223,6 +230,7 @@ export class SimWorld implements Lifecycle {
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null):void {
     const districts=new DistrictWorld(composition,composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
     this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
+    this.lightPower?.install(districts);
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
     this.interactables!.nav = districts.nav;
     const {min,max}=districts.nav;
@@ -265,6 +273,7 @@ export class SimWorld implements Lifecycle {
     const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
     const next = this.preparedDistricts.get(tier) ?? new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
     this.districts = next;
+    this.lightPower?.install(next);
     const {min,max}=next.nav, player=this.entities.get(1)!, props=this.props?.snapshot();
     this.physics.load({name:next.composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:player.transform});
     for(const d of next.districts)for(const aabb of d.decay.colliders.map(c=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
@@ -327,7 +336,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
-    this.inspectionGhost = false; this.weather = null;
+    this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
     this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
