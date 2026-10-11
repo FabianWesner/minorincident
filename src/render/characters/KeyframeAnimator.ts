@@ -132,6 +132,7 @@ export class KeyframeAnimator {
     this.locoSpeed += (speed - this.locoSpeed) * (1 - Math.exp(-dt / .1));
     if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || name === 'hurt' && this.actionTick !== pose.animationTick || !this.base)) {
       this.base?.fadeOut(fade); this.base = this.play(name, !!this.strides[name] || name === 'idle').fadeIn(fade);
+      if (name === 'get-up' && pose.knockdown) this.base.setEffectiveTimeScale(this.base.getClip().duration / Math.max(1 / 60, (pose.knockdown.until - pose.animationTick) / 60));
       this.mode = name; this.clip = name; this.actionTick = pose.animationTick;
     } else if (loco && this.mode !== 'loco') { this.base?.fadeOut(.2); this.base = undefined; this.mode = 'loco'; }
     this.locoWeight = Math.max(0, Math.min(1, this.locoWeight + (loco ? 1 : -1) * dt / (loco ? .2 : fade)));
@@ -184,7 +185,7 @@ export class KeyframeAnimator {
     for (const p of this.sampledPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
     this.mixer.update(dt);
     for (const p of this.sampledPose) { p.position.copy(p.node.position); p.rotation.copy(p.node.quaternion); }
-    if (this.skin && name !== 'die') this.keepTorsoForward();
+    if (this.skin && !['die', 'knockdown', 'get-up'].includes(name)) this.keepTorsoForward();
     const plantedAction = !ride && (name === 'hurt' || !!strike && !/kick|knee|spinning/.test(strike));
     if (this.skin && this.lunge > 0 && !upper) {
       const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1;
@@ -203,7 +204,7 @@ export class KeyframeAnimator {
     if (!this.skin && this.lunge > 0 && !upper) { const scale = (this.rig.hip.parent ?? this.rig.root).getWorldScale(this.scaleScratch).y || 1; const offset = .14 / scale * this.lunge * this.lunge * (3 - 2 * this.lunge); this.rig.hip.position.x += offset; }
     if (!ride && strike && /kick|knee|spinning/.test(strike)) this.ground?.groundPose();
     for (const node of Object.values(this.rig)) node.quaternion.normalize();
-    if (pose.animation === 'die') settleGroundPose(this.rig.root);
+    if (pose.animation === 'die' || pose.animation === 'knockdown') settleGroundPose(this.rig.root);
     // Skeleton v2 swings the bag with a 2-DOF pendulum after the ride contacts (CourierLiving).
     if (!this.bones) {
       const target = this.rig.torso.rotation.z * -.3;

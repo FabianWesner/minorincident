@@ -16,7 +16,7 @@ export interface BarricadeSlot {
 }
 /** Serialized on the slot entity: checkpoints preserve HP, coverage and participating prop IDs. */
 export interface BarricadeState { slot: BarricadeSlot; coverage: number; props: string[]; carId?: number; intact: boolean; hitTick: number; breaks: number }
-export type BarricadeEvent = { type: 'barricade.built' | 'barricade.broken' | 'barricade.repaired'; tick: number; id: number; slotId: string; groupId: string };
+export type BarricadeEvent = { type: 'barricade.damaged'; tick: number; id: number; sourceId: number; attackId: number; slotId: string; groupId: string; previousHp: number; hp: number; amount: number; props: string[] } | { type: 'barricade.built' | 'barricade.broken' | 'barricade.repaired'; tick: number; id: number; slotId: string; groupId: string };
 
 /** Coverage, brace/board/repair and blocker lifecycle. Uses E11 interactions and E07 damage/navigation. */
 export class Barricades {
@@ -40,6 +40,8 @@ export class Barricades {
       const entity = world.entities.get(e.targetId);
       if (!entity?.barricade?.intact) return;
       entity.barricade.hitTick = world.tick; this.sound(entity, 'hit');
+      const slot = entity.barricade.slot;
+      world.events.emit({ type: 'barricade.damaged', tick: world.tick, id: entity.id, sourceId: e.sourceId, attackId: e.attackId, slotId: slot.id, groupId: slot.groupId, previousHp: entity.health.current + e.amount, hp: entity.health.current, amount: e.amount, props: [...entity.barricade.props] });
       if (entity.health.current <= 0) this.break(entity);
     });
     world.events.on('world.blocker.changed', () => { this.decisions.clear(); this.obstacleTick = -1; });
@@ -152,7 +154,7 @@ export class Barricades {
     b.props = []; this.sound(e, 'break'); this.emit(e, 'barricade.broken');
     this.world.events.emit({ type: 'vfx.effect', tick: this.world.tick, kind: 'objective', position: e.transform, radius: 1 });
   }
-  private emit(e: EntitySnapshot, type: BarricadeEvent['type']): void { const s = e.barricade!.slot; this.world.events.emit({ type, tick: this.world.tick, id: e.id, slotId: s.id, groupId: s.groupId }); }
+  private emit(e: EntitySnapshot, type: 'barricade.built' | 'barricade.broken' | 'barricade.repaired'): void { const s = e.barricade!.slot; this.world.events.emit({ type, tick: this.world.tick, id: e.id, slotId: s.id, groupId: s.groupId }); }
   private sound(e: EntitySnapshot, phase: 'brace' | 'hit' | 'break'): void { this.world.events.emit({ type: 'barricade.sound', tick: this.world.tick, sourceId: e.id, position: e.transform, phase, hp: e.health.current, maxHp: e.health.max }); }
   /** Restore after entity/prop checkpoint load or a physics world rebuild. */
   rebuild(): void {
