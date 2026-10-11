@@ -346,3 +346,6 @@ The second command runs the shipped L1–L6 populations with the complete bot fo
 and writes one capsule report per level to `test-results/ped-props/campaign/`. Any penetration lasting
 more than two consecutive ticks fails the gate. `tests/e2e/levels/prop-penetration.spec.ts` applies the same
 gate to the production build.
+
+`{ "grab": "officer" }` on an infected starts the real outbreak grab of that pedestrian. Use it for deterministic officer shove and colleague rescue captures; it runs the same grab lifecycle as gameplay.
+`{ "frame": 210, "spawnActor": { "id": "approach", "kind": "infected", "at": [13, 0], "state": { "chase": "officer" } } }` spawns an actor through the existing Scene Lab spawn API. This keeps carry captures calm until the intended approach begins.

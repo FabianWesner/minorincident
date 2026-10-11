@@ -1,0 +1,34 @@
+{
+  "numTotalTests": 821,
+  "numPassedTests": 817,
+  "numFailedTests": 4,
+  "numTotalTestSuites": 173,
+  "success": false,
+  "failures": [
+    {
+      "name": "bld.clinic-annex:lod1:: shipped static bytes and materials equal runtime source",
+      "messages": [
+        "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/police-react-378c65-21408-1791720487/tests/unit/assets/static-bakes.test.ts:26:63\n    at file:///srv/mi/jobs/police-react-378c65-21408-1791720487/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "bld.clinic-annex:lod2:: shipped static bytes and materials equal runtime source",
+      "messages": [
+        "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/police-react-378c65-21408-1791720487/tests/unit/assets/static-bakes.test.ts:26:63\n    at file:///srv/mi/jobs/police-react-378c65-21408-1791720487/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "bld.police-station:lod1:: shipped static bytes and materials equal runtime source",
+      "messages": [
+        "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/police-react-378c65-21408-1791720487/tests/unit/assets/static-bakes.test.ts:26:63\n    at file:///srv/mi/jobs/police-react-378c65-21408-1791720487/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "bld.police-station:lod2:: shipped static bytes and materials equal runtime source",
+      "messages": [
+        "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/police-react-378c65-21408-1791720487/tests/unit/assets/static-bakes.test.ts:26:63\n    at file:///srv/mi/jobs/police-react-378c65-21408-1791720487/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ],
+  "baseline": "The same four static bake failures reproduced on clean base 5a9d2682."
+}

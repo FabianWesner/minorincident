@@ -53,7 +53,7 @@ export class InfectedSystem {
     if (!target.adult) return;
     this.director.requestTurn(target.archetype, target.position, target.variant);
   }
-  private readonly hearing: Perception;
+  readonly hearing: Perception;
   private sequence = 0;
   private budget = 0;
   private routes = 0;

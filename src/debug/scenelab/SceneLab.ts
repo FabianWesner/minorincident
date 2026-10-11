@@ -356,6 +356,7 @@ export class SceneLab {
       const b = e.infected!;
       if ('idle' in a) { b.state = 'idle'; delete e.noiseTarget; }
       else if ('chase' in a) { b.state = 'chase'; const target = this.actors.get(a.chase); if (target && target.entity !== 1) e.noiseTarget = { id: target.entity, until: world.tick + 1e6 }; }
+      else if ('grab' in a) { const target = this.world.entities.get(this.actors.get(a.grab)?.entity ?? 0); if (target?.civilian) world.npcs!.civilians.outbreak!.grab(target, e); }
       else if ('attack' in a) { b.state = 'chase'; }
       else if ('turn' in a) e.transform.yaw = rad(a.turn);
       else if ('hit' in a) this.hit(e, a.hit);
@@ -470,6 +471,7 @@ export class SceneLab {
     for (let i = 0; i < frames; i++) {
       for (const s of this.spec?.script ?? []) if (s.frame === this.frame) {
         if ('actor' in s) this.command(s.actor, s.do);
+        else if ('spawnActor' in s) this.spawnActor(s.spawnActor);
         else if ('effect' in s) this.effect(s.effect);
         else if ('camera' in s) { this.camera = s.camera; this.applyCamera(); }
         else if ('weather' in s) this.game.world.weather?.setOverride(s.weather);

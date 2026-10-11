@@ -98,6 +98,8 @@ export type Action =
   | { dismount: true }
   | { interact: true }
   | { chase: string }
+  /** Infected starts a real outbreak grab of this human (defence/rescue review). */
+  | { grab: string }
   | { flee: Point }
   /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
@@ -109,7 +111,7 @@ export type Action =
    * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
    * `pauseS` give/wave, then back in the same way. `legacy` replays the pre-2026-10-08 straight-line walk (A/B only). */
   | { handover: { building: string; meet: Point | string; pauseS?: number; /** Arm's length in front of an actor `meet` (default 1.05 m, the L1 clerk; the technician uses 1.4). */ standoff?: number; legacy?: boolean } };
-export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay } | { weather: import('../../data/weather').WeatherKind });
+export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { spawnActor: ActorSpec } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay } | { weather: import('../../data/weather').WeatherKind });
 export type EffectSpec =
   | { lightning: Point; consequence?: 'fire' | 'blackout' }
   | { blast: string; at: Point }

@@ -1,0 +1,101 @@
+{
+  "pass": true,
+  "reactions": [
+    {
+      "actor": "officer",
+      "firstAttack": 212,
+      "attacks": 4
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "entity": 1
+    },
+    {
+      "id": "officer",
+      "kind": "pedestrian",
+      "entity": 3
+    },
+    {
+      "id": "zombie",
+      "kind": "infected",
+      "entity": 4
+    }
+  ],
+  "events": [
+    {
+      "type": "ally.attack",
+      "tick": 212,
+      "sourceId": 3,
+      "targetId": 4,
+      "role": "officer",
+      "hit": true,
+      "from": {
+        "x": 5.675538817439048,
+        "z": 0
+      },
+      "to": {
+        "x": 13,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 252,
+      "sourceId": 3,
+      "targetId": 4,
+      "role": "officer",
+      "hit": true,
+      "from": {
+        "x": 6.500364588694029,
+        "z": 0
+      },
+      "to": {
+        "x": 13,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 292,
+      "sourceId": 3,
+      "targetId": 4,
+      "role": "officer",
+      "hit": false,
+      "from": {
+        "x": 6.550014212314978,
+        "z": 0
+      },
+      "to": {
+        "x": 12.546444444444443,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 332,
+      "sourceId": 3,
+      "targetId": 4,
+      "role": "officer",
+      "hit": false,
+      "from": {
+        "x": 6.550014212314978,
+        "z": 0
+      },
+      "to": {
+        "x": 9.854590786239134,
+        "z": 0
+      }
+    },
+    {
+      "type": "civilian.grabbed",
+      "tick": 359,
+      "sourceId": 4,
+      "targetId": 3,
+      "variant": "inf.jogger",
+      "rescueUntil": 419
+    }
+  ]
+}
