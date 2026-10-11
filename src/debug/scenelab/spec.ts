@@ -59,6 +59,8 @@ export interface PropSpec { decay?: string; powerGroup?: string; powered?: boole
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; gearTier?: number; role?: string }
 export interface ActorSpec {
+  /** Feet height for a stationary actor on a raised deck (metres above world ground). */
+  floorY?: number;
   id?: string;
   kind: ActorKind;
   at?: [number, number];

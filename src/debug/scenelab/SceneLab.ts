@@ -261,6 +261,10 @@ export class SceneLab {
         if (a.at) this.teleport(dog, at);
         dog.transform.yaw = yaw;
       }
+      if (a.floorY !== undefined) {
+        const e = world.entities.get(entity)!; e.transform.y = a.floorY + .7;
+        if (e.civilian) e.civilian.floorY = a.floorY;
+      }
       const actor: LabActor = { id, kind: a.kind, entity, spec: a, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 };
       this.actors.set(id, actor); ids.push(id);
       if (a.state) this.command(id, a.state);
