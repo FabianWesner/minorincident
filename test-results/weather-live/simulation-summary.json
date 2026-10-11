@@ -1,0 +1,734 @@
+{
+  "branch": {
+    "passed": 544,
+    "failed": 1,
+    "files": [
+      {
+        "file": "unit/progression/perf.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "levels/L1.test.ts",
+        "passed": 19,
+        "failed": []
+      },
+      {
+        "file": "levels/L2.test.ts",
+        "passed": 15,
+        "failed": [
+          {
+            "title": "T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed",
+            "messages": [
+              "AssertionError: expected 2 to be less than or equal to 1\n    at /srv/mi/jobs/weather-live-c2bf8a-28913-1791693357/tests/levels/L2.test.ts:61:47\n    at file:///srv/mi/jobs/weather-live-c2bf8a-28913-1791693357/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            ]
+          }
+        ]
+      },
+      {
+        "file": "sim/weather.test.ts",
+        "passed": 13,
+        "failed": []
+      },
+      {
+        "file": "unit/e2e-error-guard.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/import-graph.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/physics-metadata.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/physics-prop-contract.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/setup.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/static.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/survivor.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/traceability.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/ui-settings.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/ui-telegraphs.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/vehicles.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/army-boom.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/authored-lods.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/build.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/commerce-pack.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/courier-bike.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/crowd.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/delivery.test.ts",
+        "passed": 7,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/gun-pose.test.ts",
+        "passed": 8,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/living-adults.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/load-pipeline.test.ts",
+        "passed": 8,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/lod-fidelity.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/optimize.test.ts",
+        "passed": 12,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/png-pixels.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/production-gates.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/references.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/registry.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/runtime-integration.test.ts",
+        "passed": 6,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/static-batch-equivalence.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/static-collision.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/validate.test.ts",
+        "passed": 17,
+        "failed": []
+      },
+      {
+        "file": "unit/assets/window-glow-lod.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/acoustics.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/ambience-guard.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/assets.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/credits.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/danger.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/l1-arc.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/music-beats.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/noise.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/policies.test.ts",
+        "passed": 6,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/registry.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/audio/streaming.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/combat/events.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/combat/loadout.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/core/foundation.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/data/action-assets.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/data/actions.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/data/explosions.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/input/bindings.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/input/buttons.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/input/click-pick.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/input/rack-selection.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/input/raised-floor.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/input/walk.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/input/wheel.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/build.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/clipping.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/crossval.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/d-grove-scaffold.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/d-grove.test.ts",
+        "passed": 11,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/districts.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/layouts/visual-bounds.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/continuity.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l2-roads.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l2-static.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l3-static.test.ts",
+        "passed": 6,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l4-static.test.ts",
+        "passed": 8,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l5-footprints.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l5-shutter.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l5-static.test.ts",
+        "passed": 9,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/l6-static.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/levels/layout-overlap.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/missions/dialogue.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/missions/house-emergence.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/missions/schema.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/motionlab/motion.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/motionlab/skin.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/motionlab/stage1.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/performance/assets.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/performance/deviceEvidence.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/performance/gibs.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/performance/layouts.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/performance/nav-visibility.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/performance/quality.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/progression/aftermath.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/progression/campaign.test.ts",
+        "passed": 12,
+        "failed": []
+      },
+      {
+        "file": "unit/render/authored-animation.test.ts",
+        "passed": 17,
+        "failed": []
+      },
+      {
+        "file": "unit/render/camera-jitter.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/render/catalog-motion.test.ts",
+        "passed": 6,
+        "failed": []
+      },
+      {
+        "file": "unit/render/civilian-grip.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/render/corgi-feet.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/render/corgi-scale.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/courier-rig-v2.test.ts",
+        "passed": 11,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-feet.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-footwork.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-lod-geometry.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-register.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-sink.test.ts",
+        "passed": 7,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-topology.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/crowd-visibility.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/e25-hero.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/e25-lighting.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/render/e25-visibility.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/e25-windows.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/render/e27-blasts.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/render/figure-height.test.ts",
+        "passed": 6,
+        "failed": []
+      },
+      {
+        "file": "unit/render/foliage.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/render/infected-bake.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/render/inspection-camera.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/interaction-marker.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/l1-grade.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/render/l1-infection-overlay.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/l1-look.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/render/l3-boom.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/l6-power.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/lod-policy.test.ts",
+        "passed": 7,
+        "failed": []
+      },
+      {
+        "file": "unit/render/look-patch.test.ts",
+        "passed": 14,
+        "failed": []
+      },
+      {
+        "file": "unit/render/npc.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/render/palette.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/post-fx-streaming.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/pre-render.test.ts",
+        "passed": 10,
+        "failed": []
+      },
+      {
+        "file": "unit/render/roundhouse-pose.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/render/sit-pose.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/render/skin-pilot.test.ts",
+        "passed": 18,
+        "failed": []
+      },
+      {
+        "file": "unit/render/static-corpses.test.ts",
+        "passed": 6,
+        "failed": []
+      },
+      {
+        "file": "unit/render/texture-ranges.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/render/view.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/render/weather-materials.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/tooling/headless-only.test.ts",
+        "passed": 1,
+        "failed": []
+      },
+      {
+        "file": "unit/tooling/prop-penetration.test.ts",
+        "passed": 2,
+        "failed": []
+      },
+      {
+        "file": "unit/tooling/scenelab.test.ts",
+        "passed": 10,
+        "failed": []
+      },
+      {
+        "file": "unit/vfx/events.test.ts",
+        "passed": 4,
+        "failed": []
+      },
+      {
+        "file": "unit/vfx/integration.test.ts",
+        "passed": 5,
+        "failed": []
+      },
+      {
+        "file": "unit/vfx/lab-accident.test.ts",
+        "passed": 3,
+        "failed": []
+      },
+      {
+        "file": "unit/vfx/pools.test.ts",
+        "passed": 3,
+        "failed": []
+      }
+    ]
+  },
+  "originalWeatherL2": {
+    "passed": 0,
+    "failed": 1,
+    "files": [
+      {
+        "file": "levels/L2.test.ts",
+        "passed": 0,
+        "failed": [
+          {
+            "title": "T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed",
+            "messages": [
+              "AssertionError: expected 2 to be less than or equal to 1\n    at /srv/mi/jobs/weather-live-c2bf8a-68954-1791694420/tests/levels/L2.test.ts:61:47\n    at file:///srv/mi/jobs/weather-live-c2bf8a-68954-1791694420/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "originalWeatherRevision": "57189968f3447c2d855dcdae03b0eed24fa23278"
+}

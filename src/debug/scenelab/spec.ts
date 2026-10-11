@@ -17,6 +17,8 @@ export interface SceneSpec {
   /** Lighting preset (src/data/timeOfDay.ts): L1 (game morning), L2, L3, L4/golden, L5, L6, night. */
   time?: TimeOfDay;
   weather?: import('../../data/weather').WeatherKind;
+  /** Same authored blending path as the campaign, without a player control. */
+  weatherTimeline?: readonly import('../../data/weather').WeatherKey[];
   /** Evolve only the weather before assembly (seconds of precipitation accumulation). */
   weatherWarmup?: number;
   /** Decay tier W0-W5 (placements with minTier/maxTier outside it are dropped). */

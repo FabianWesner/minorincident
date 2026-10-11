@@ -1,0 +1,21 @@
+{
+  "blendRun": "perf/L3-high.json (CPU profiler enabled)",
+  "controlRun": "control/L3-high.json (CPU profiler enabled; weather held at original haze)",
+  "blendHitchTicks": [
+    5581,
+    5791,
+    5850,
+    5924,
+    8049
+  ],
+  "controlHitchTicks": [
+    5581,
+    5791,
+    5850,
+    5924,
+    8049
+  ],
+  "newHitchTicks": [],
+  "attribution": "CivilianBatch.init crowd model geometry/animation preparation; CPU profile retained in gzip files",
+  "validation": "L3 high absolute 50ms cap fails in both runs; do not claim all performance checks green."
+}

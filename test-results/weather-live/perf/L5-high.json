@@ -1,0 +1,183 @@
+{
+  "baselineLinks": 0,
+  "blendLinks": 0,
+  "before": {
+    "powerRevision": 0,
+    "kind": "ash",
+    "override": null,
+    "rain": 0,
+    "fog": 0.12,
+    "flakes": 0.35,
+    "clouds": 0.1,
+    "wetness": 0,
+    "accumulation": 0.641666666666698,
+    "wind": {
+      "x": 0.9848944216210581,
+      "z": 0.17315593625319742
+    },
+    "blend": 1,
+    "strength": 0.08351360497443305,
+    "gust": 0.04351360497443305,
+    "flashUntil": 0,
+    "lightning": null,
+    "modifiers": {
+      "noiseRadius": 1,
+      "fireDuration": 1,
+      "fireSpread": 1,
+      "vehicleGrip": 0.9,
+      "playerSpeed": 1,
+      "infectedSight": 1
+    },
+    "reveals": [],
+    "rng": {
+      "stream": "weather",
+      "state": 2429955077,
+      "cursor": 36
+    },
+    "trackCount": 1024
+  },
+  "after": {
+    "powerRevision": 0,
+    "kind": "fog",
+    "override": null,
+    "rain": 0,
+    "fog": 1,
+    "flakes": 0.35,
+    "clouds": 0.2,
+    "wetness": 0,
+    "accumulation": 1,
+    "wind": {
+      "x": 0.9589936045266495,
+      "z": 0.28342770943749357
+    },
+    "blend": 1,
+    "strength": 0.0950310695343263,
+    "gust": 0.0550310695343263,
+    "flashUntil": 0,
+    "lightning": null,
+    "modifiers": {
+      "noiseRadius": 1,
+      "fireDuration": 1,
+      "fireSpread": 1,
+      "vehicleGrip": 0.9,
+      "playerSpeed": 1,
+      "infectedSight": 0.6
+    },
+    "reveals": [],
+    "rng": {
+      "stream": "weather",
+      "state": 2046307895,
+      "cursor": 78
+    },
+    "trackCount": 1024
+  },
+  "countersBefore": {
+    "updateCpuMs": 1,
+    "renderCpuMs": 3.6999998092651367,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 208.33333333336492,
+    "frameMs": 4.799999999999272,
+    "simMs": 0,
+    "uiMs": 0,
+    "drawCalls": 195,
+    "triangles": 373907,
+    "geometries": 678,
+    "textures": 63,
+    "entities": 265,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 9,
+      "simMs": 127.89999961853027,
+      "viewMs": 4873.199999809265
+    },
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 13,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 1318819928,
+    "lighting": {
+      "lightFieldMs": 0.10000038146972656,
+      "lightPools": 3,
+      "lightCandidates": 3,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L5"
+    }
+  },
+  "countersAfter": {
+    "updateCpuMs": 0.40000057220458984,
+    "renderCpuMs": 3.799999237060547,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 243.90243902490965,
+    "frameMs": 4.099999999991269,
+    "simMs": 0.5999994277954102,
+    "uiMs": 0,
+    "drawCalls": 199,
+    "triangles": 446169,
+    "geometries": 678,
+    "textures": 63,
+    "entities": 265,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 9,
+      "simMs": 127.89999961853027,
+      "viewMs": 4873.199999809265
+    },
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 5.7,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 14597,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 1156935958,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 6,
+      "lightCandidates": 6,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L5"
+    }
+  },
+  "baselineP95": 6.200000000000728,
+  "p50": 4.400000000001455,
+  "p95": 6,
+  "max": 16.299999999995634,
+  "frames": 13521
+}

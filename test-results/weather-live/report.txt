@@ -1,0 +1,8 @@
+Implemented seeded E28 keyframe blends; no player weather selector.
+L1 clouds 45–85s; L3 haze→ash 90–135s; L5 ash→fog 60–120s.
+Sky, fog, light, precipitation, surface wetness and modifiers blend continuously; material/particle paths prepare at load.
+Inspected L1/L3/L5/rain start-mid-end sheets: readable courier; progressive clouds, ash, fog and rain/wet reflections; no clipping errors.
+Typecheck, lint, production build, 497 unit tests, 13 weather tests, 21 focused render/tool tests and all 19 L1 specs passed.
+L2: 15/16 passed; T-E20-03 two newbie deaths also reproduces with original weather.
+E28 browser/smoke: 50/51 passed; blackout brightness assertion also fails on original renderer (5575 bright pixels vs <957).
+High/phone blend caps: 5/6 passed; L3 high crowd-init stalls repeat at identical ticks with held haze (no new hitch ticks); unchanged budgets, zero blend shader links; no deploy/merge.

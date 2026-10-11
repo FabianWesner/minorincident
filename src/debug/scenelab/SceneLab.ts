@@ -148,6 +148,7 @@ export class SceneLab {
   private boomClosedAt = 0;
   private setup(world: SimWorld, spec: SceneSpec): void {
     if (spec.weather) world.weather?.setOverride(spec.weather);
+    if (spec.weatherTimeline) world.weather?.setTimeline(spec.weatherTimeline);
     for (let i = 0; i < Math.round((spec.weatherWarmup ?? 0) * 60); i++) { world.tick++; world.weather?.update(); }
     for (const prop of spec.props ?? []) if (prop.rotation) {
       const item = world.props?.items.find(p => p.id.endsWith(`/${prop.id}`));

@@ -1,0 +1,262 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/node_modules/.bin/playwright",
+      "test",
+      "tests/visual/weather.spec.ts",
+      "--grep",
+      "T-E28-04c",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/playwright.config.ts",
+    "rootDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3379 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3379",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "visual/weather.spec.ts",
+      "file": "visual/weather.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps",
+          "ok": false,
+          "tags": [
+            "E28",
+            "E28-AC04",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 123088,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m957\u001b[39m\nReceived:   \u001b[31m5575\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m957\u001b[39m\nReceived:   \u001b[31m5575\u001b[39m\n    at /srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests/visual/weather.spec.ts:81:66",
+                    "location": {
+                      "file": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests/visual/weather.spec.ts",
+                      "column": 66,
+                      "line": 81
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 79 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m window\u001b[33m.\u001b[39m__SCENE__\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mstep(\u001b[35m30\u001b[39m))\u001b[33m;\u001b[39m \u001b[36mconst\u001b[39m dark \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m shot(page\u001b[33m,\u001b[39m \u001b[32m'scripted-strike-blackout'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 80 |\u001b[39m   \u001b[36mconst\u001b[39m state \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m window\u001b[33m.\u001b[39m__SS__\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mgetState())\u001b[33m;\u001b[39m expect(state\u001b[33m.\u001b[39mweather\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mpowerRevision)\u001b[33m.\u001b[39mtoBe(\u001b[35m1\u001b[39m)\u001b[33m;\u001b[39m \u001b[36mconst\u001b[39m bright \u001b[33m=\u001b[39m (p\u001b[33m:\u001b[39m \u001b[33mPNG\u001b[39m) \u001b[33m=>\u001b[39m { \u001b[36mlet\u001b[39m n \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m \u001b[36mfor\u001b[39m (\u001b[36mlet\u001b[39m i \u001b[33m=\u001b[39m \u001b[35m0\u001b[39m\u001b[33m;\u001b[39m i \u001b[33m<\u001b[39m p\u001b[33m.\u001b[39mdata\u001b[33m.\u001b[39mlength\u001b[33m;\u001b[39m i \u001b[33m+=\u001b[39m \u001b[35m4\u001b[39m) \u001b[36mif\u001b[39m (p\u001b[33m.\u001b[39mdata[i] \u001b[33m>\u001b[39m \u001b[35m200\u001b[39m \u001b[33m&&\u001b[39m p\u001b[33m.\u001b[39mdata[i \u001b[33m+\u001b[39m \u001b[35m1\u001b[39m] \u001b[33m>\u001b[39m \u001b[35m200\u001b[39m \u001b[33m&&\u001b[39m p\u001b[33m.\u001b[39mdata[i \u001b[33m+\u001b[39m \u001b[35m2\u001b[39m] \u001b[33m>\u001b[39m \u001b[35m200\u001b[39m) n\u001b[33m++\u001b[39m\u001b[33m;\u001b[39m \u001b[36mreturn\u001b[39m n\u001b[33m;\u001b[39m }\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 81 |\u001b[39m   expect(bright(lit))\u001b[33m.\u001b[39mtoBeGreaterThan(\u001b[35m100\u001b[39m)\u001b[33m;\u001b[39m expect(bright(dark))\u001b[33m.\u001b[39mtoBeLessThan(bright(lit) \u001b[33m*\u001b[39m \u001b[35m.5\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 82 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 83 |\u001b[39m\n \u001b[90m 84 |\u001b[39m \u001b[90m/** Supplement the weather moods with facade/hero-shadow evidence for checklist G. */\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests/visual/weather.spec.ts",
+                        "column": 66,
+                        "line": 81
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m957\u001b[39m\nReceived:   \u001b[31m5575\u001b[39m\n\n  79 |   await page.evaluate(() => window.__SCENE__!.step(30)); const dark = await shot(page, 'scripted-strike-blackout');\n  80 |   const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.weather!.powerRevision).toBe(1); const bright = (p: PNG) => { let n = 0; for (let i = 0; i < p.data.length; i += 4) if (p.data[i] > 200 && p.data[i + 1] > 200 && p.data[i + 2] > 200) n++; return n; };\n> 81 |   expect(bright(lit)).toBeGreaterThan(100); expect(bright(dark)).toBeLessThan(bright(lit) * .5);\n     |                                                                  ^\n  82 | });\n  83 |\n  84 | /** Supplement the weather moods with facade/hero-shadow evidence for checklist G. */\n    at /srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests/visual/weather.spec.ts:81:66"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T05:23:16.461Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379/visual-weather-T-E28-04c-E-78e64-nd-powers-down-static-lamps-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/test-results/playwright/run-3379/visual-weather-T-E28-04c-E-78e64-nd-powers-down-static-lamps-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/srv/mi/jobs/weather-live-c2bf8a-16100-1791696170/tests/visual/weather.spec.ts",
+                    "column": 66,
+                    "line": 81
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-eae05482c7ab7b730dd6",
+          "file": "visual/weather.spec.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T05:23:14.888Z",
+    "duration": 126170.52,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
