@@ -3365,7 +3365,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": ["wrecked", "burned"],
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {"lod1": 6000, "lod2": 2000},
     "script": "assets/veh.fire-engine/build.py",
     "lods": {
       "lod1": "public/assets/models/veh.fire-engine.lod1.glb",

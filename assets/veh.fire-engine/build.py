@@ -5,6 +5,11 @@ import math
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/blender'))
+if '--decay' in sys.argv:
+    from sslib.fire_engine_wrecks import build_damage
+    build_damage(Path(__file__).parent, sys.argv[sys.argv.index('--glb')+1],
+                 sys.argv[sys.argv.index('--decay')+1])
+    raise SystemExit(0)
 from sslib.distance import tier_argument, export_variant, build_native_lods
 DISTANCE = tier_argument()
 import bmesh
