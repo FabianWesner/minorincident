@@ -4,7 +4,7 @@ import { motionResponse } from '../locomotion/MotionResponse';
 import { infectedContactDistance, installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
-import { INFECTED_TOUGHNESS, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
+import { INFECTED_TOUGHNESS, infectedSpecialMoves, infectedSpecialRecoveryTicks, type InfectedSpecialMove, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { isOutbreakDistrict } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
@@ -44,6 +44,7 @@ export class InfectedSystem {
   tryGrabCivilian(sourceId: number, target: { id: number; adult: boolean; variant: string; position: { x: number; z: number } }): { sourceId: number; rescueUntil: number } | null {
     if (this.l1) return null; // L1 v2 bites come from the infected brain (BiteEvent), not from civilian proximity rolls.
     const source = this.world.entities.get(sourceId);
+    if (source?.archetype === 'infected.alpha' && this.world.entities.get(target.id)?.civilian?.ally?.role === 'soldier') return null;
     if (!target.adult || !source?.infected || source.health.current <= 0 || Math.hypot(source.transform.x - target.position.x, source.transform.z - target.position.z) > 1.2 || this.rng.next() >= infectedDef(source.archetype).grabChance) return null;
     this.world.events.emit({ type: 'civilian.grabbed', tick: this.world.tick, sourceId, targetId: target.id, variant: target.variant, rescueUntil: this.world.tick + 90 });
     return { sourceId, rescueUntil: this.world.tick + 90 };
@@ -116,7 +117,7 @@ export class InfectedSystem {
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.vault;
+    delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -154,6 +155,7 @@ export class InfectedSystem {
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       if (this.world.barricades?.vault(e)) continue;
       if ((this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (this.updateSpecial(e)) continue;
       if (b.l1) { this.updateL1(e, b, b.l1); continue; }
       if (b.heardTargetId && !this.hearing.humans.get(b.heardTargetId)) { b.heardTargetId = 0; b.grabUntil = 0; b.state = 'idle'; e.combat!.attacking = false; }
       const player = this.victim(e);
@@ -213,7 +215,13 @@ export class InfectedSystem {
       if (Status.stunned(e, this.world.tick)) { b.state = 'stagger'; continue; }
       if (b.state === 'stagger') b.state = 'chase';
       if (b.state === 'attack') {
-        if (this.world.tick >= b.until && this.resolve(e)) { if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); continue; } b.state = 'chase'; b.cooldown = this.world.tick + (b.special === 'scream' ? 300 : 60); e.combat!.attacking = false; }
+        if (this.world.tick >= b.until && this.resolve(e)) {
+          if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); continue; }
+          const def = infectedDef(e.archetype);
+          b.state = 'chase';
+          b.cooldown = this.world.tick + (def.attackInterval === undefined ? b.special === 'scream' ? 300 : 60 : Math.round((def.attackInterval - def.windup) * 60));
+          e.combat!.attacking = false;
+        }
         continue;
       }
       // E27-AC08: smoke on the sight line (or around the infected) breaks the chase; it wanders until sight returns.
@@ -317,7 +325,7 @@ export class InfectedSystem {
     return this.world.entities.get(e.infected!.heardTargetId || 1) ?? this.world.entities.get(1)!;
   }
   private windup(e: EntitySnapshot): void {
-    const b = e.infected!, def = infectedDef(e.archetype); b.state = 'attack'; b.attackId = ++this.sequence;
+    const b = e.infected!, def = infectedDef(e.archetype); b.state = 'attack'; b.attackId = this.nextAttackId();
     b.until = this.world.tick + Math.ceil(def.windup * 60); e.combat!.attacking = true;
     // A runner's lunge is a short homing burst (0.33 s, ~2.3 m): it strikes a courier who stands or turns into it, a courier
     // running flat out escapes it (E19-AC14 evade battery). Charges, pounces and leaps keep their 2 s committed line.
@@ -407,6 +415,7 @@ export class InfectedSystem {
    */
   down(e: EntitySnapshot, permanent: boolean): number {
     const b = e.infected!;
+    if (b.specialAttack) this.cancelSpecial(e.id);
     if (permanent || !this.recovery || e.corpse || b.special === 'explode' || e.archetype === 'infected.crow') return b.recoverAt = -1;
     const [low, high] = infectedRecovery.downS, u = new Rng(this.world.seed, `infected-recover:${e.id}:${b.downs++}`).next();
     return b.recoverAt = this.world.tick + Math.round((low + (high - low) * u) * 60);
@@ -440,7 +449,7 @@ export class InfectedSystem {
       // or while clinging. The living-only reveal path no longer runs for it.
       if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7; }
       if (e.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
-      if (b.special === 'explode') { b.attackId = ++this.sequence; b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
+      if (b.special === 'explode') { b.attackId = this.nextAttackId(); b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
     if (b.special === 'explode' && this.world.tick === b.until) {
       for (const target of this.world.entities.iterate()) {
@@ -796,9 +805,67 @@ export class InfectedSystem {
     if (Math.abs(delta) <= step) { e.transform.yaw = brain.lookYaw; if (brain.mode !== 'chase') brain.lookYaw = e.transform.yaw - Math.sign(delta || 1) * (0.8 + this.l1Rng!.next() * 0.9); }
     else e.transform.yaw += Math.sign(delta) * step;
   }
+  /** Preserve unique ids even after restoring entity records from a checkpoint. */
+  private nextAttackId(): number {
+    return ++this.sequence;
+  }
+  /** Rebase serialized timers when a checkpoint is restored at a later world tick. */
+  restoreSpecialTimers(b: InfectedState, delta: number): void {
+    this.sequence = Math.max(this.sequence, b.attackId, b.specialAttack?.attackId ?? 0);
+    if (b.specialRecoveryUntil) b.specialRecoveryUntil += delta;
+    if (b.specialCooldowns) for (const move of Object.keys(b.specialCooldowns) as InfectedSpecialMove[]) b.specialCooldowns[move]! += delta;
+    const a = b.specialAttack;
+    if (a) { a.startTick += delta; a.activeTick += delta; a.cooldownExpiry += delta; if (a.recoveryUntil) a.recoveryUntil += delta; }
+  }
+  /** The move resolver chooses a visible/last-seen target. This copies and locks its position. */
+  startSpecial(sourceId: number, move: InfectedSpecialMove, target: { id: number; x: number; z: number }, area: { x: number; z: number; radius: number; dx: number; dz: number }): boolean {
+    const e = this.world.entities.get(sourceId), b = e?.infected, timing = infectedSpecialMoves[move], tick = this.world.tick;
+    if (!e || !b || e.archetype !== timing.archetype || e.health.current <= 0 || b.specialAttack || b.state === 'attack' || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0) || tick + timing.windup < (b.specialCooldowns?.[move] ?? 0) || Status.stunned(e, tick)) return false;
+    if (![target.x, target.z, area.x, area.z, area.radius, area.dx, area.dz].every(Number.isFinite) || area.radius < 0) return false;
+    const attackId = this.nextAttackId(), activeTick = tick + timing.windup;
+    b.attackId = attackId;
+    b.specialAttack = { move, attackId, stage: 'telegraph', startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, recoveryUntil: 0, target: { ...target }, area: { ...area }, hitIds: [] };
+    e.combat!.attacking = true;
+    this.world.events.emit({ type: 'telegraph', tick, sourceId, attackId, special: move, move, duration: timing.windup / 60, startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, target: { ...target }, area: { ...area } });
+    return true;
+  }
+  /** Active resolvers call this before each target effect, never during the windup. */
+  specialHit(sourceId: number, targetId: number): boolean {
+    const a = this.world.entities.get(sourceId)?.infected?.specialAttack;
+    if (!a || a.stage !== 'active' || a.hitIds.includes(targetId)) return false;
+    a.hitIds.push(targetId); return true;
+  }
+  finishSpecial(sourceId: number): boolean {
+    const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
+    if (!e || !b || !a || a.stage !== 'active') return false;
+    a.stage = 'recovery'; a.recoveryUntil = this.world.tick + infectedSpecialRecoveryTicks;
+    b.specialRecoveryUntil = a.recoveryUntil; e.combat!.attacking = false;
+    this.world.events.emit({ type: 'infected.special', tick: this.world.tick, sourceId, move: a.move, attackId: a.attackId, stage: 'recovery' }); return true;
+  }
+  cancelSpecial(sourceId: number): void {
+    const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
+    if (!e || !b || !a) return;
+    b.specialRecoveryUntil = Math.max(b.specialRecoveryUntil ?? 0, this.world.tick + infectedSpecialRecoveryTicks);
+    this.world.events.emit({ type: 'infected.special', tick: this.world.tick, sourceId, move: a.move, attackId: a.attackId, stage: 'cancelled' });
+    delete b.specialAttack; e.combat!.attacking = false;
+  }
+  private updateSpecial(e: EntitySnapshot): boolean {
+    const b = e.infected!, a = b.specialAttack, tick = this.world.tick;
+    if (!a) return tick < (b.specialRecoveryUntil ?? 0);
+    if (a.stage === 'telegraph' && tick >= a.activeTick) {
+      if (Status.stunned(e, tick)) { this.cancelSpecial(e.id); return true; }
+      a.stage = 'active'; (b.specialCooldowns ??= {})[a.move] = a.cooldownExpiry;
+      this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'active' });
+    }
+    if (a.stage === 'recovery' && tick >= a.recoveryUntil) {
+      this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'expiry' });
+      delete b.specialAttack; return false;
+    }
+    return true;
+  }
   /** Stable test/debug surface, including RNG and pool/director counters needed for deterministic replay. */
   snapshot() {
-    return { rng: this.rng.snapshot(), pool: { ...this.counters, available: this.pool.length }, cap: this.director.cap, count: this.director.count, queued: this.director.queue.map((q) => ({ archetype: q.archetype, position: q.position, options: q.options, turning: q.turning ?? false })), migrations: this.director.migrations.map((m) => ({ started: m.started, arrived: m.arrived, expectedSeconds: m.expectedSeconds, members: m.members })) };
+    return { sequence: this.sequence, specials: this.active.filter(e => e.infected!.specialAttack || e.infected!.specialCooldowns).map(e => ({ sourceId: e.id, attack: structuredClone(e.infected!.specialAttack), cooldowns: { ...e.infected!.specialCooldowns }, recoveryUntil: e.infected!.specialRecoveryUntil ?? 0 })), rng: this.rng.snapshot(), pool: { ...this.counters, available: this.pool.length }, cap: this.director.cap, count: this.director.count, queued: this.director.queue.map((q) => ({ archetype: q.archetype, position: q.position, options: q.options, turning: q.turning ?? false })), migrations: this.director.migrations.map((m) => ({ started: m.started, arrived: m.arrived, expectedSeconds: m.expectedSeconds, members: m.members })) };
   }
   /** E26 uses the same authored attack damage when resolving barricades. */
   barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : this.world.entities.get(sourceId)?.archetype === 'infected.butcher' ? 8 : 1); }
