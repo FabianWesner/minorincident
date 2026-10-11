@@ -1,0 +1,49 @@
+{
+  "ground": "asphalt",
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 180,
+      "god": false
+    },
+    {
+      "id": "butcher",
+      "kind": "infected",
+      "archetype": "infected.butcher",
+      "at": [
+        3,
+        0
+      ],
+      "yaw": 180,
+      "state": "chase"
+    }
+  ],
+  "frames": 240,
+  "shots": [
+    110,
+    130,
+    160,
+    180,
+    210,
+    240
+  ],
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "bodyOverlapMaxCm": 6,
+    "courierAttacksMin": 1
+  },
+  "name": "butcher-contact-game",
+  "camera": {
+    "mode": "game",
+    "target": "courier"
+  },
+  "note": "PKG-01 FIX-01: heads clear courier at bat f141 / butcher f110\u2013240; eight archetypes stay separate."
+}
