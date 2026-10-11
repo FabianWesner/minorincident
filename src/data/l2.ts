@@ -8,8 +8,8 @@ type P = readonly [number, number];
 /** Behaviour of a trapped person at the glass (see `l2.rescue.atGlass`). */
 export type GlassRole = 'bang' | 'press' | 'plead' | 'look' | 'cower' | 'hug' | 'child';
 export const l2 = {
-  /** Beat 1-2: the calm in the bay, then the alarm (seeded inside the window). */
-  calm: { alarmAtS: [20, 30] as P, crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
+  /** Beat 1-2: the calm in the bay, then the alarm when the fire axe is taken. */
+  calm: { crewToTruckMaxS: 8, crewRunMs: 4.2, civiliansOnBenches: 4 },
   /** Beat 3: the truck ride (kinematic route, Main Row west from the station since 2026-10-08: 83 m, so it cruises at 5.6 m/s
    * through the wrecks instead of 7.6 m/s over the old 150 m Elm -> Juniper -> Main Row loop; the ride stays 15-25 s). */
   ride: { cruiseMs: 5.6, cornerMs: 4, accelMs2: 2.6, brakeMs2: 4, yawRateDegS: 25, zoomOut: 1.15, exitWithinS: 4, controlWithinS: .5, boardInteractS: .6 },

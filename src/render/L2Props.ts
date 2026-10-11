@@ -37,11 +37,11 @@ export class L2Props extends Group {
   private readonly marketDoors: Mesh[] = [];
   private readonly brickMat = new MeshBasicNodeMaterial({ color: '#d9a17f' });
   private readonly shopGlass = new MeshBasicNodeMaterial({ color: '#a9d4e6', transparent: true, opacity: .22, depthWrite: false });
-  /** Soft marker for the optional axe: a bobbing gem over the rack and a ring where the courier stands. */
+  /** Marker for the required axe: a bobbing gem over the rack and a ring where the courier stands. */
   private readonly glint = new Group();
   private readonly gem = new OctahedronGeometry(.28);
-  private readonly ring = new TorusGeometry(.7, .06, 6, 28);
-  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe28a' });
+  private readonly ring = new TorusGeometry(1.5, .08, 6, 36);
+  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe02b' });
   private readonly frame = new MeshBasicNodeMaterial({ color: '#e9dfc4' });
   private readonly haft = new MeshBasicNodeMaterial({ color: '#c98a4b' });
   private readonly rescue: L2RescueProps;
@@ -76,11 +76,11 @@ export class L2Props extends Group {
     const part = (material: ReturnType<Materials['get']> | MeshBasicNodeMaterial, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); this.axe.add(m); };
     part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, 0]);
     part(materials.get('uiDark'), [.12, 1.3, 1.5], [wx + .05, 1.55, 0]);
-    part(this.haft, [.1, 1.15, .1], [wx + .16, 1.5, -.1]);
-    part(this.red, [.12, .42, .55], [wx + .17, 2.0, .1]);
+    part(this.haft, [.1, 1.15, .1], [wx + .16, 1.5, -.55]);
+    part(this.red, [.12, .42, .55], [wx + .17, 2.0, -.35]);
     this.glint.add(new Mesh(this.gem, this.gold), new Mesh(this.ring, this.gold));
     this.glint.children[0].position.set(wx + .5, 2.9, 0);
-    this.glint.children[1].rotation.x = Math.PI / 2; this.glint.children[1].position.set(0, .32, 0);
+    this.glint.children[1].rotation.x = Math.PI / 2; this.glint.children[1].position.set(0, .48, 0);
     this.add(this.glint);
     this.add(this.axe);
     // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.

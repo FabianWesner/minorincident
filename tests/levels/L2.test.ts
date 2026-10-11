@@ -35,13 +35,13 @@ describe('L2 The Failed Rescue', () => {
   test('T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer', async () => {
     const l = await loadL2(1); world = l.world; const m = l.mission;
     expect(validateMission(m.def)).toEqual([]);
-    expect(m.def.steps.map(s => s.id)).toEqual(['calm', 'board', 'axe', 'ride', 'doors', 'bridge']);
+    expect(m.def.steps.map(s => s.id)).toEqual(['axe', 'calm', 'board', 'ride', 'doors', 'bridge']);
     expect(m.def.steps.every(s => s.timer === undefined && s.fail.length === 0) && m.def.deadline === undefined).toBe(true);
-    expect(m.def.finish).toEqual(['bridge']); expect(m.def.steps.find(s => s.id === 'axe')!.optional).toBe(true);
+    expect(m.def.finish).toEqual(['bridge']); expect(m.def.steps.find(s => s.id === 'axe')!.optional).not.toBe(true);
     // E12-AC07 walk: complete exactly the active objective; the radio state is what the controller sets after the doors.
     for (let guard = 0; guard < 12 && m.state.phase === 'playing'; guard++) {
       if (!m.def.steps.some(s => m.state.steps[s.id].status === 'active')) { m.setState('radio', true); l.world.update(); continue; }
-      m.completeObjective(m.def.steps.find(s => m.state.steps[s.id].status === 'active' && s.id !== 'axe')?.id);
+      m.completeObjective(m.def.steps.find(s => m.state.steps[s.id].status === 'active')?.id);
     }
     expect(m.state.completedObjectives).toEqual(expect.arrayContaining(['calm', 'board', 'ride', 'doors', 'bridge']));
     expect(['result', 'progression']).toContain(m.state.phase);
@@ -55,20 +55,21 @@ describe('L2 The Failed Rescue', () => {
     expect(t).toBeGreaterThanOrEqual(l2.bots.completeMedianS[0]); expect(t).toBeLessThanOrEqual(l2.bots.completeMedianS[1]);
   }, HEAVY);
 
-  test('T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; no-axe single seed', async () => {
+  test('T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed', async () => {
     const newbie = await battery('newbie'), noAxe = await battery('no-axe');
     expect(newbie.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l2.bots.newbieMinSeeds);
     expect(median(newbie.map(r => r.deaths))).toBeLessThanOrEqual(l2.bots.newbieMaxMedianDeaths);
     const t = median(newbie.filter(r => r.outcome === 'complete').map(r => r.simSeconds));
     expect(t).toBeGreaterThanOrEqual(l2.bots.newbieMedianS[0]); expect(t).toBeLessThanOrEqual(l2.bots.newbieMedianS[1]);
-    expect(noAxe.every(r => !r.axe)).toBe(true);
+    expect(noAxe.every(r => r.axe)).toBe(true);
     expect(noAxe.filter(r => r.outcome === 'complete').length).toBeGreaterThanOrEqual(l2.bots.newbieMinSeeds);
   }, HEAVY);
 
-  test('T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the 20-30 s alarm; crew at the truck within 8 s; axe rack live', async () => {
+  test('T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the pickup alarm; crew at the truck within 8 s; axe rack live', async () => {
     for (const r of await complete()) {
       expect(r.calm!.infectedMax).toBe(0); expect(r.calm!.combatEvents).toBe(0);
-      expect(r.calm!.alarmS).toBeGreaterThanOrEqual(l2.calm.alarmAtS[0]); expect(r.calm!.alarmS).toBeLessThanOrEqual(l2.calm.alarmAtS[1]);
+      const pickup = r.timeline.find(e => e.type === 'objective:axe')!;
+      expect(Math.abs(r.calm!.alarmS - pickup.t)).toBeLessThanOrEqual(1 / 60);
       expect(r.calm!.crewAtTruckS).not.toBeNull(); expect(r.calm!.crewAtTruckS!).toBeLessThanOrEqual(l2.calm.crewToTruckMaxS);
       expect(r.calm!.axeActive).toBe(true);
     }

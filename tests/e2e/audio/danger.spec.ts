@@ -83,7 +83,7 @@ test('@E16 L2 escape keeps dramatic rock with zero nearby infected until the saf
         const a = window.__SS__!;
         await a.loadLevel('L2'); a.missions.begin(); a.pause(); a.cheats.god(true);
         await a.step(1);
-        for (const id of ['calm', 'board', 'ride', 'doors']) a.missions.completeObjective(id);
+        for (const id of ['axe', 'calm', 'board', 'ride', 'doors']) a.missions.completeObjective(id);
         a.teleport('player', { x: 0, z: 0 });
         a.cheats.killAll();
         await a.audio.unlock(); a.resume();

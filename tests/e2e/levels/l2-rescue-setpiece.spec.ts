@@ -29,7 +29,7 @@ test('T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (a
     await page.screenshot({ path: `${output}/${name}.jpg`, type: 'jpeg', quality: 82 });
     await page.evaluate(() => window.__SS__!.camera.follow());
   };
-  await page.evaluate(() => window.__SS__!.cheats.completeObjective('calm'));
+  await page.evaluate(() => window.__SS__!.cheats.completeObjective('axe'));
   await step(2);
   await page.evaluate(() => window.__SS__!.cheats.completeObjective('board'));
   for (let i = 0; i < 400 && !(await l2()).arrivedAt; i++) await step(15);
