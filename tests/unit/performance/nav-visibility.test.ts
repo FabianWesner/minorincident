@@ -153,3 +153,15 @@ test('live furniture broad phase follows replacement, in-place movement, removal
   expect(nav.clear(20, 10, .35)).toBe(true);
   expect(nav.visible({ x: 18, z: 10 }, { x: 22, z: 10 }, .35)).toBe(true);
 });
+
+test('@E21 elevated road blockers remain in navigation while overhead roofs stay clear', () => {
+  const wall = { x: 0, y: 6, z: 0, halfX: .3, halfY: .5, halfZ: 4 };
+  const nav = new NavGrid({width:24,depth:24}, [wall]);
+  const from={x:-4,z:0}, to={x:4,z:0};
+  expect(nav.visible(from,to,.45)).toBe(true);
+  const road = new NavGrid({width:24,depth:24}, [{...wall,navBlocker:true}]);
+  expect(road.clear(0,0,.45)).toBe(false);
+  expect(road.visible(from,to,.45)).toBe(false);
+  road.rebake();
+  expect(road.visible(from,to,.45)).toBe(false);
+});

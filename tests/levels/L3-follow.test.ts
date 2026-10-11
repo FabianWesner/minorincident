@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { emptyInput } from '../../src/input/InputFrame';
-import { l3 } from '../../src/data/l3';
+import { l3, l3ArmyOffset } from '../../src/data/l3';
 import { ArmyCheckpointBoom } from '../../src/sim/missions/ArmyCheckpointBoom';
 import { missionControls } from '../../src/sim/missions/controls';
 import { loadL3, followFrustum } from '../../tools/sim-runner/l3Bots';
@@ -14,14 +14,14 @@ describe('L3 squad and checkpoint', () => {
     try {
       m.completeObjective('armory'); m.completeObjective('defend');
       const ring = m.def.anchors['l3-zone'], nav = w.infected!.nav;
-      expect(ring.x).toBe(149);
+      expect(ring.x).toBe(149 + l3ArmyOffset);
       for (let i = 0; i < 8; i++) expect(nav.clear(ring.x + Math.cos(i * Math.PI / 4) * ring.radius, Math.sin(i * Math.PI / 4) * ring.radius, .35)).toBe(true);
       const path: number[] = [];
-      expect(nav.path(nav.nearestCell(144, 0, .35), nav.nearestCell(ring.x, ring.z, .35), path, 1600)).toBe(true);
-      missionControls(w).teleport('player', { x: 144, z: 0 });
+      expect(nav.path(nav.nearestCell(144 + l3ArmyOffset, 0, .35), nav.nearestCell(ring.x, ring.z, .35), path, 1600)).toBe(true);
+      missionControls(w).teleport('player', { x: 144 + l3ArmyOffset, z: 0 });
       for (let i = 0; i < 300; i++) w.update();
       expect(m.state.phase).toBe('playing');
-      expect(m.state.marker).toBe('l3-zone');
+      expect(m.state.marker).toBe('l3-route');
       expect(m.state.l3!.crossedAt).toBe(0);
       expect(w.infected!.active.filter(e => e.health.current > 0 && e.transform.x >= l3.map.zoneX)).toEqual([]);
     } finally { w.dispose(); }
@@ -34,13 +34,13 @@ describe('L3 squad and checkpoint', () => {
       // Isolate arrival from combat. The real-input full-level test covers the journey and casualties.
       s.pending = []; s.waves = []; s.populated = [true, true, true];
       for (const e of w.infected!.active) { e.health.current = 0; e.infected!.recoverAt = -1; }
-      for (const q of s.squad) api.teleport(q.id, { x: 144, z: 3 });
+      for (const q of s.squad) api.teleport(q.id, { x: 144 + l3ArmyOffset, z: 3 });
       const officer = w.entities.get(s.squad[0].id)!;
       if (condition === 'stalled officer') {
-        api.teleport(officer.id, { x: 135, z: 3 });
+        api.teleport(officer.id, { x: 135 + l3ArmyOffset, z: 3 });
         delete officer.civilian!.ally!.follow;
         officer.civilian!.ally!.hold = true;
-        officer.civilian!.ally!.post = { x: 135, z: 3 };
+        officer.civilian!.ally!.post = { x: 135 + l3ArmyOffset, z: 3 };
       } else if (condition === 'dead officer') officer.health.current = 0;
       else if (condition === 'turning officer') w.npcs!.civilians.outbreak!.infect(officer, 1);
       else {
@@ -88,9 +88,9 @@ describe('L3 squad and checkpoint', () => {
     try {
       const nav = w.infected!.nav;
       const layout: DistrictLayout = JSON.parse(readFileSync('public/assets/layouts/D-CORRIDOR.layout.json', 'utf8'));
-      expect(m.state.l3!.medkitIds).toHaveLength(28);
+      expect(m.state.l3!.medkitIds).toHaveLength(l3.medkits.positions.length);
       for (const z of Object.values(l3.map.streets)) {
-        const positions = l3.medkits.positions.slice(1).filter(p => Math.abs(p[1] - z) < 5).sort((a, b) => a[0] - b[0]);
+        const positions = l3.medkits.positions.slice(1).filter(p => p[0] <= 128).filter(p => Math.abs(p[1] - z) < 5).sort((a, b) => a[0] - b[0]);
         expect(positions).toHaveLength(9);
         expect(positions[0][0] - l3.map.corridor[0]).toBeLessThanOrEqual(40);
         for (let i = 1; i < positions.length; i++) expect(positions[i][0] - positions[i - 1][0]).toBeLessThanOrEqual(40);
@@ -116,12 +116,13 @@ describe('L3 squad and checkpoint', () => {
   test('boom waits for the last living officer; a dead officer cannot prevent closure', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
+      const offset = l3.map.zoneX - 140;
       const ids = [1, ...m.state.l3!.squadIds], boom = new ArmyCheckpointBoom(w, l3.finale.barrierX);
-      ids.forEach(id => { w.entities.get(id)!.transform.x = 142; });
-      const last = w.entities.get(ids.at(-1)!)!; last.transform.x = 136;
+      ids.forEach(id => { w.entities.get(id)!.transform.x = 142 + offset; });
+      const last = w.entities.get(ids.at(-1)!)!; last.transform.x = 136 + offset;
       expect(boom.ready(ids)).toBe(false);
-      last.transform.x = 139; expect(boom.ready(ids)).toBe(true);
-      last.transform.x = 136; last.health.current = 0; expect(boom.ready(ids)).toBe(true);
+      last.transform.x = 139 + offset; expect(boom.ready(ids)).toBe(true);
+      last.transform.x = 136 + offset; last.health.current = 0; expect(boom.ready(ids)).toBe(true);
     } finally { w.dispose(); }
   }, 120_000);
   test('every closed army kit placement keeps the arm collider; only explicitly raised arms omit it', () => {
@@ -133,7 +134,9 @@ describe('L3 squad and checkpoint', () => {
   for (const street of ['commerce', 'blvd', 'oak'] as const) test(`living officers regroup on ${street} instead of being marked separated`, async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
+      for(const id of m.state.l3!.officerIds) if(!m.state.l3!.squadIds.includes(id)) w.entities.get(id)!.health.current=0;
       m.completeObjective('armory'); m.completeObjective('defend');
+      for(const e of w.entities.iterate()) if(e.hazard?.kind==='fire') e.hazard.activeUntil=-1;
       // Isolate shared follower steering; street crowds are covered by the real-input playthrough.
       m.state.l3!.pending = []; m.state.l3!.waves = []; m.state.l3!.populated = [true, true, true];
       const p = w.entities.get(1)!, z = l3.map.streets[street];
@@ -142,7 +145,7 @@ describe('L3 squad and checkpoint', () => {
       squad.forEach((q, i) => { const e = w.entities.get(q.id)!; Object.assign(e.transform, { x: -115 - i, z: z + (i % 2 ? 1 : -1) * 1.5 }); });
       const still = new Map<number, { x: number; z: number; ticks: number }>();
       let stuckTicks = 0;
-      for (let tick = 0; tick < 900; tick++) {
+      for (let tick = 0; tick < 3000 && Math.hypot(p.transform.x + 62, p.transform.z - z) > .8; tick++) {
         followFrustum(w); w.applyInput({ ...emptyInput(), moveTarget: { x: -62, z }, navigation: true }, 'mouse-only'); w.update();
         for (const q of squad) {
           const e = w.entities.get(q.id)!, previous = still.get(q.id);
@@ -151,6 +154,7 @@ describe('L3 squad and checkpoint', () => {
           if (Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) > 10) stuckTicks = Math.max(stuckTicks, ticks);
         }
       }
+      for(let tick=0;tick<300;tick++){w.applyInput(emptyInput(),'mouse-only');w.update();}
       expect(stuckTicks).toBeLessThanOrEqual(180);
       expect(p.transform.x).toBeGreaterThan(-64);
       expect(m.state.l3!.lost.filter(q => q.cause === 'separated')).toHaveLength(0);

@@ -22,8 +22,9 @@ from sslib.grove_dressing import Grove, FACE_YAW, rot
 from sslib import grove_dressing as G
 
 PI = math.pi
-W, DEPTH = 344, 92
+W, DEPTH = 496, 92
 l = Layout('D-CORRIDOR', 'Sunset Grove Avenues', size=(W, DEPTH))
+l.data['bounds'] = [[-172, -46], [248, -46], [248, 46], [-172, 46], [-172, -46]]
 l.yaw_matches_collision = True
 g = Grove(l)
 dims = g.dims
@@ -254,7 +255,7 @@ for x in (-154.0, -140.0, -130.0):
     g.place('prop.street-tree-blossom', x, 40.0, 0, .9, soft=True)
 
 # ------------------------------------------------------------------------------------------------ army checkpoint (east)
-AX = 136.0                               # T-wall line; the army zone lies east of it
+AX = 212.0                               # T-wall line; the army zone lies east of it
 kit = 'kit.army-checkpoint'
 kdx, kdy, kdz = dims(kit)
 g.place(kit, AX + kdx / 2, ZC, 0.0, 1.0, check=False)
@@ -274,14 +275,27 @@ for z0, z1 in ((-44.0, -kdz / 2 - 1.2), (kdz / 2 + 1.2, 44.0)):
         D.ring(l, 'razor-wire', 'silver', .38, .03, [AX - 2.6, .4, z], vertical=True)
         z += .9
     g.collide_only('razor-wire', [.8, .9, z1 - z0], [AX - 2.6, .45, (z0 + z1) / 2])
-g.path(AX, -4.0, 172.0, 4.0, 'uiDark')
-g.fence('privacy', AX + .6, -45.6, 172.0, -45.6)
-g.fence('privacy', AX + .6, 45.6, 172.0, 45.6)
-g.place('kit.highway-onramp', 157.5, 31.0, 0.0, 1.0, check=False)
-g.fence('privacy', 171.4, -45.6, 171.4, 21.8)
-# the on-ramp leaves the map: a fence along its foot and its low end closes the corner under it
-g.fence('privacy', 143.0, 21.3, 171.1, 21.3)
-g.fence('privacy', 143.0, 21.6, 143.0, 45.3)
+g.path(AX, -4.0, 248.0, 4.0, 'uiDark')
+g.fence('privacy', AX + .6, -45.6, 248.0, -45.6)
+g.fence('privacy', AX + .6, 45.6, 248.0, 45.6)
+# PO 10-11: the final approach crosses the highway before entering the relocated base.
+g.place('kit.highway-onramp', 155.5, 0.0, PI, 1.0, check=False)
+g.place('kit.highway-onramp', 191.5, 0.0, 0.0, 1.0, check=False)
+g.solid('highway-deck', 'asphalt', [12.0, .5, 4.62], [173.5, 5.45, 0], collide=False)
+for side in (-1, 1):
+    g.solid('highway-jersey', 'sidewalk', [12.0, .95, .5], [173.5, 6.175, side * 2.58])
+    g.fence('privacy', 132.7, side * 10.5, AX, side * 10.5)
+    g.fence('privacy', 132.7, side * 10.5, 132.7, side * 4.5)
+g.fence('privacy', 247.4, -45.6, 247.4, 45.6)
+g.fence('privacy', 143.0, 12.0, 204.0, 12.0)
+g.path(128, -4.0, AX, 4.0, 'asphalt')
+# Short sloped lips meet the low ends of the existing ramp (deck top .70 m).
+for i in range(14):
+    h = (i + 1) * .05
+    for x in (139.3 + i * .3, 207.7 - i * .3):
+        g.solid('highway-lip', 'asphalt', [.31, h, 4.62], [x, h / 2, 0], collide=False)
+for x in (136, 174, 207):
+    g.place('prop.street-lamp', x, -4.0, 0, 1, soft=True)
 
 # ------------------------------------------------------------------------------------------------ north/south/east edges
 # rear fences of the outer rows already close z = +-45; close the strips between the rows and the bounds at the street ends
@@ -312,6 +326,11 @@ for cx in (XS, XA, XB, XE):
         g.place('prop.fire-hydrant', cx - 3.5, cz + (3.5 if cz > 0 else -4.0), 0, .8, soft=True)
 
 # ------------------------------------------------------------------------------------------------ anchors
+for i, d in enumerate(sorted(doors), 1):
+    anchors[f'refuge-door-{i}'] = d
+# Ramp emergence points extend the same out-of-view encounter system onto the highway.
+for x in (146, 174, 199):
+    doors.append((x, 0))
 for i, d in enumerate(sorted(doors), 1):
     anchors[f'refuge-door-{i}'] = d
 anchors['player-start'] = (-155.5, 1.6)

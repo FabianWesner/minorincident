@@ -1,0 +1,257 @@
+{
+  "name": "qa-l3-army-checkpoint",
+  "note": "E21 finale: soldiers behind T-walls and sandbag nests cover the last 20 m; buses, truck and APC; the courier runs through the lane with infected behind",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        194,
+        -30
+      ],
+      [
+        246,
+        30
+      ]
+    ]
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        197,
+        1
+      ],
+      "yaw": 0,
+      "loadout": [
+        "weapon.handgun",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "run": [
+          [
+            205,
+            0.5
+          ],
+          [
+            222,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "soldier-1",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        -8.25
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-2",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        -6.95
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-3",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        6.95
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-4",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        8.25
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-5",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        -18.65
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-6",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        -17.35
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-7",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        17.35
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "soldier-8",
+      "kind": "pedestrian",
+      "at": [
+        214.5,
+        18.65
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a",
+        "role": "soldier",
+        "handProp": "rifle"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      },
+      "floorY": 4.26
+    },
+    {
+      "id": "approach",
+      "kind": "infected",
+      "at": [
+        200,
+        0
+      ],
+      "count": 6,
+      "spread": 1.5,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      212,
+      0
+    ],
+    "zoom": 1.25
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    7,
+    30,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "trace": true
+}
