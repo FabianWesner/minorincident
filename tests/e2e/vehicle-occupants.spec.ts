@@ -17,6 +17,7 @@ for (const model of ['sedan', 'pickup', 'suv', 'police', 'ambulance', 'school-bu
     const selected = await page.evaluate(() => window.__SS__!.getState());
     const female = selected.render.vehicles.find(v => v.id === state.id)!;
     expect('occupants' in female ? female.occupants : []).toMatchObject([{ actorId: 1, asset: 'char.courier-female' }]);
+    if ('occupants' in female) for (const gap of female.occupants[0].handGapM) expect(gap, `${model} female`).toBeLessThan(.05);
     await page.evaluate(async () => { const a = window.__SS__!; a.input.set({ interact: true }); await a.step(1); a.input.clear(); await a.screenshotReady(); });
     const exited = await page.evaluate(() => window.__SS__!.getState());
     expect(exited.player!.hidden).toBe(false);
