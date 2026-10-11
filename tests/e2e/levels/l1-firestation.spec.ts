@@ -5,7 +5,7 @@ import { menuStart } from '../ui-helpers';
 /**
  * L1 final stretch with real input (PO P0 2026-10-07: "Finishing L1 is almost impossible now"): from the bat in the Henderson
  * garage to Fire Station 3. Setup uses the debug objective skip and one teleport to the bat; from there the courier only gets
- * real mouse/keyboard input (click-to-move, Shift-attack). The open bay must face the game camera, the objective ring must lie on
+ * real mouse/keyboard input (click-to-move, moving bat swings). The open bay must face the game camera, the objective ring must lie on
  * the floor at the completion trigger, nothing may block it, and the level must complete. Browser only via tools/e2e-lock.sh.
  */
 const output = 'test-results/epics/E19/l1v2';
@@ -31,14 +31,20 @@ test('T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-stati
   for (let i = 0; i < 40 && (await mission()).l1!.beat; i++) await step(30);
 
   const trigger = at('fire-bay-trigger');
-  const fight = async () => {
+  const fight = async (goal: { x: number; z: number }) => {
     const target = await page.evaluate(() => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.4).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      return near ? a.input.project(near.transform) : null;
+      return near ? a.input.project(near.transform, 'player') : null;
     });
     if (!target) return false;
-    await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(24); await page.mouse.up(); await page.keyboard.up('Shift');
+    await page.mouse.move(target.x, target.y);
+    const p = (await player()).transform, dx = goal.x - p.x, dz = goal.z - p.z;
+    const x = dx - dz, y = dx + dz, threshold = Math.max(Math.abs(x), Math.abs(y)) * .4;
+    const keys = [...(Math.abs(x) > threshold ? [x > 0 ? 'd' : 'a'] : []), ...(Math.abs(y) > threshold ? [y > 0 ? 's' : 'w'] : [])];
+    for (const key of keys) await page.keyboard.down(key);
+    await page.keyboard.down('j'); await step(24); await page.keyboard.up('j');
+    for (const key of keys) await page.keyboard.up(key);
     return true;
   };
   /** Real click on the ground at `goal`, framed so the click lands on screen (presentation only; routing is the game's). */
@@ -57,9 +63,12 @@ test('T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-stati
   // PO 2026-10-08 route: the final leg runs back north across the spread; keep two game-camera frames of it (at 70 % and 35 % of
   // the straight-line distance left) next to the invitation shot.
   const legStart = Math.hypot((await player()).transform.x - trigger.x, (await player()).transform.z - trigger.z), legShots = [.7, .35];
+  const junctions = [{ x: 14, z: 30 }, { x: 14, z: -36 }, { x: 40.03, z: -36 }, trigger];
+  let leg = 0;
   for (let i = 0; i < 500 && (await mission()).phase === 'playing'; i++) {
-    if (await fight()) continue;
     const p = (await player()).transform;
+    if (leg < junctions.length - 1 && Math.hypot(p.x - junctions[leg].x, p.z - junctions[leg].z) < 1.2) leg++;
+    const goal = junctions[leg];
     if (legShots.length && Math.hypot(p.x - trigger.x, p.z - trigger.z) < legStart * legShots[0]) {
       const n = 3 - legShots.length; legShots.shift();
       await page.evaluate(() => window.__SS__!.screenshotReady());
@@ -80,7 +89,9 @@ test('T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-stati
       await page.evaluate(() => window.__SS__!.screenshotReady());
       await page.screenshot({ path: `${output}/firestation-game-camera.png` });
     }
-    if (i % 4 === 0) await click(trigger);
+    // Capture the invitation before attacking/moving through its reach volume.
+    await fight(goal);
+    if (i % 4 === 0) await click(goal);
     await step(30);
   }
   const m = await mission();

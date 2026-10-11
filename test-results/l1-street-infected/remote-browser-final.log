@@ -1,0 +1,53 @@
+[WebServer] fatal: Needed a single revision
+
+Running 13 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (4.7s)
+  ✓   3 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.3s)
+  ✓   4 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.1s)
+  ✓   5 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (1.7s)
+  ✓   6 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.2s)
+  ✓   7 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (1.6s)
+  ✓   8 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.2s)
+  ✓   9 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+  ✓  10 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.3s)
+  ✓  11 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (1.7s)
+  ✓  12 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (4.6s)
+  ✓  13 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (5.1s)
+  ✘   2 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (7.7m)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review 
+
+    TimeoutError: page.screenshot: Timeout 60000ms exceeded.
+    Call log:
+      - taking page screenshot
+      - waiting for fonts to load...
+      - fonts loaded
+
+
+      62 |       }, { p: focus, reverse });
+      63 |       await page.evaluate(() => window.__SS__!.screenshotReady());
+    > 64 |       await page.screenshot({ path: `${output}/${name}.png` }); await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
+         |                  ^
+      65 |     };
+      66 |     const waitBeat = async () => {
+      67 |       for (let i = 0; i < 120 && (await mission()).l1!.beat; i++) await step(30);
+        at snap (/srv/mi/jobs/l1-street-infected-963378-81289-1791670113/tests/e2e/levels/L1.spec.ts:64:18)
+        at /srv/mi/jobs/l1-street-infected-963378-81289-1791670113/tests/e2e/levels/L1.spec.ts:206:7
+
+    Error Context: test-results/playwright/run-3375/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3375/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3375/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/e2e/levels/L1.spec.ts (7.7m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review 
+  12 passed (8.3m)

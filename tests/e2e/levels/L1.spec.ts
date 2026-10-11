@@ -18,7 +18,7 @@ const openGround = (p: { x: number; z: number }) => !screens.some(q => cameraSid
   && !layout.colliders.some(c => { const q = closest(p, c); return cameraSide(p, q.x, q.z) && Math.hypot(q.x - p.x, q.z - p.z) < 2.2; });
 const goals: Record<string, string> = { pickup: 'parcel-counter', deliver: 'lab-door', escape: 'garage-door', weapon: 'garage-bat', firestation: 'fire-bay-trigger' };
 const caption = 'Delivery complete. Outbreak: not contained.';
-test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test.use({ headless: true }); // Shared config selects Metal on macOS and SwiftShader on the remote runner.
 
 test.describe('L1 v2 real-input playthrough', () => {
 
@@ -111,7 +111,7 @@ test.describe('L1 v2 real-input playthrough', () => {
         // An objective trigger can stop movement and start a beat before the requested stop radius.
         if (Math.hypot(target.x - p.x, target.z - p.z) <= stop || m.phase !== 'playing' || (activeBefore && m.steps[activeBefore].status === 'completed')) return;
         // God mode prevents damage, but living bodies still block the assisted photo route.
-        if ((await player()).weapons && await fightNearby(page)) await clickDestination();
+        if ((await player()).weapons && await fightNearby(page, target)) await clickDestination();
         else if (i % 12 === 11) await clickDestination();
       }
       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });
@@ -120,7 +120,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };
     /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */
     const futile = new Map<number, { hp: number; tries: number }>();
-    const fightNearby = async (page: Page) => {
+    const fightNearby = async (page: Page, goal: { x: number; z: number }) => {
       const skip = [...futile].filter(([, f]) => f.tries >= 3).map(([id]) => id);
       const target = await page.evaluate(skip => {
         const a = window.__SS__!, p = a.getState().player!.transform;
@@ -131,8 +131,14 @@ test.describe('L1 v2 real-input playthrough', () => {
       if (!target) return false;
       const seen = futile.get(target.id);
       futile.set(target.id, { hp: target.hp, tries: seen && seen.hp <= target.hp ? seen.tries + 1 : 0 });
-      // Shift attack-in-place: stand and strike the infected under the cursor.
-      await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(24); await page.mouse.up(); await page.keyboard.up('Shift');
+      await page.mouse.move(target.x, target.y);
+      // WASD + cursor + J: keep moving toward the junction while batting the pursuer.
+      const p = (await player()).transform, dx = goal.x - p.x, dz = goal.z - p.z;
+      const x = dx - dz, y = dx + dz, threshold = Math.max(Math.abs(x), Math.abs(y)) * .4;
+      const keys = [...(Math.abs(x) > threshold ? [x > 0 ? 'd' : 'a'] : []), ...(Math.abs(y) > threshold ? [y > 0 ? 's' : 'w'] : [])];
+      for (const key of keys) await page.keyboard.down(key);
+      await page.keyboard.down('j'); await step(24); await page.keyboard.up('j');
+      for (const key of keys) await page.keyboard.up(key);
       return true;
     };
 
@@ -181,7 +187,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     if (assisted) {
       // Follow a systemic victim for the spread photo: its location depends on the AI, not a scripted photo anchor. Prefer the
       // first bite on open ground (a body behind a fence or hedge is screened from the game camera); else the first one seen.
-      await go(at('garage-door'), 1.5);
+      // Observe spread before travel fills the unchanged director cap with street residents.
       const turning = () => page.evaluate(() => window.__SS__!.getState().entities.filter(e => e.infection && e.infection.phase !== 'rise').map(e => ({ id: e.id, x: e.transform.x, z: e.transform.z })));
       let victimId: number | undefined;
       for (let i = 0; i < 900 && victimId === undefined; i++) {
@@ -199,13 +205,14 @@ test.describe('L1 v2 real-input playthrough', () => {
       expect(victim!.civilian, 'still mid-transformation (rising)').toBeDefined();
       await snap('l1-spread', victim!.transform, false, .75); shots.add('l1-spread');
       writeFileSync(`${output}/spread-victim.json`, JSON.stringify({ openGround: openGround(victim!.transform), ...victim }, null, 2) + '\n');
+      for (const junction of [{ x: 66, z: 0 }, { x: 50, z: 0 }, { x: 50, z: 30 }, { x: 26, z: 30 }]) await go(junction, 1.2);
+      await go(at('garage-door'), 1.5);
     }
     while (guard++ < 400) {
       const m = await mission();
       if (m.phase === 'cinematic' || m.phase === 'result') break;
       const active = Object.entries(m.steps).find(([, s]) => s.status === 'active')?.[0];
       if (!active) { await step(30); continue; }
-      if (!assisted && await fightNearby(page)) continue;
       if (assisted && active === 'firestation' && !shots.has('l1-horde')) {
         await waitBeat(); await go(at('photo-l1-horde'), 1.5);
         // The residents of one house near the garage come out one by one (1.5-4 s apart, ~25 s for all ten) and bite their way up: photograph it arriving on the street (>= 12 within 16 m), not after it
@@ -227,6 +234,9 @@ test.describe('L1 v2 real-input playthrough', () => {
         const door = at('fire-bay-door'), inside = at('fire-bay-trigger'), len = Math.hypot(inside.x - door.x, inside.z - door.z);
         const outside = { x: door.x - (inside.x - door.x) / len * 5, z: door.z - (inside.z - door.z) / len * 5 };
         if (!assisted && Math.hypot((await player()).transform.x - at('garage-bat').x, (await player()).transform.z - at('garage-bat').z) < 8) await go(at('garage-door'), 1.2);
+        // Follow the street junctions instead of clicking diagonally across the fenced residential lots.
+        // A fight/respawn can otherwise leave the long destination click on the wrong side of a garden wall.
+        for (const junction of [{ x: 14, z: 30 }, { x: 14, z: -36 }, { x: 40.03, z: -36 }]) await go(junction, 1.2);
         await go(outside, 1);
         await step(20);
         expect((await mission()).phase).toBe('playing');
@@ -243,6 +253,9 @@ test.describe('L1 v2 real-input playthrough', () => {
           await page.screenshot({ path: `${output}/firestation-invitation.png` });
           await page.evaluate(() => window.__SS__!.camera.follow());
         }
+      }
+      if (active === 'weapon' && Math.hypot((await player()).transform.x - at('garage-door').x, (await player()).transform.z - at('garage-door').z) > 12) {
+        for (const junction of [{ x: 66, z: 0 }, { x: 50, z: 0 }, { x: 50, z: 30 }, { x: 26, z: 30 }]) await go(junction, 1.2);
       }
       const goal = at(goals[active]);
       await go(goal, active === 'weapon' ? 1.2 : active === 'firestation' ? .25 : 1.5);
