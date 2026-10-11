@@ -74,9 +74,11 @@ describe('L3 The Police Collapse', () => {
     expect(weapons.RIGHT.rack[0].id).toBe('weapon.handgun'); expect(weapons.selectedSide).toBe('RIGHT');
     expect(weapons.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe', 'weapon.bat']);
     // Shooting range on an empty Commerce Street (before the attack): a line of two infected, one at 10 m, one behind it, one at 23 m.
-    const p = w.entities.get(1)!.transform; Object.assign(p, { x: 0, z: .5 }); w.physics.playerBody!.setTranslation({ x: 0, y: p.y, z: .5 }, true); w.spatial.set(1, 0, .5); w.update();
+    const p = w.entities.get(1)!.transform; Object.assign(p, { x: 32, z: .5 }); w.physics.playerBody!.setTranslation({ x: 32, y: p.y, z: .5 }, true); w.spatial.set(1, 32, .5); w.update();
     const spawn = (dx: number, dz = 0) => ai.spawn('infected.runner', { x: p.x + dx, z: p.z + dz }, { yaw: 0 });
     const near = spawn(10), behind = spawn(11.2), far = spawn(-23);
+    // Controlled 40 HP target for the weapon criterion; normal runners now have 60 HP.
+    Object.assign(w.entities.get(near)!.health, {current:40,max:40});
     for (const id of [near, behind, far]) { const b = w.entities.get(id)!.infected!; b.l1!.pauseUntil = Number.MAX_SAFE_INTEGER; }
     expect(w.entities.get(near)!.health.max).toBe(40);
     const hits: number[] = []; w.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.sourceId === 1) hits.push(e.targetId); });
@@ -117,14 +119,14 @@ describe('L3 The Police Collapse', () => {
     const l = await loadL3(3); world = l.world; const w = l.world, ai = w.infected!;
     l.mission.completeObjective('armory');
     // On Oak Avenue, far from the yard (the attack has not started: no other infected yet).
-    const p = w.entities.get(1)!.transform, shot = { x: 20, z: 31.4 };
+    const p = w.entities.get(1)!.transform, shot = { x: 40, z: 31.4 };
     Object.assign(p, { x: shot.x, z: shot.z }); w.physics.playerBody!.setTranslation({ x: shot.x, y: p.y, z: shot.z }, true); w.spatial.set(1, shot.x, shot.z);
     const at = (x: number, yaw: number) => { const id = ai.spawn('infected.runner', { x, z: 28 }, { yaw }); return id; };
     // Facing away from the courier, so none of them sees the shooter.
     // `beyond` stands still unless something moves it (no wander drift); it faces away from the running `inside`.
-    const inside = at(shot.x + 15, 0), beyond = at(shot.x - 25, Math.PI), chaser = at(shot.x - 12, Math.PI);
+    const inside = at(shot.x + 12, 0), beyond = at(shot.x - 32, Math.PI), chaser = at(shot.x - 12, Math.PI);
     w.update(); w.entities.get(beyond)!.infected!.l1!.pauseUntil = Number.MAX_SAFE_INTEGER;
-    const chaseBrain = w.entities.get(chaser)!.infected!.l1!; chaseBrain.mode = 'chase'; chaseBrain.targetId = 9_999_999;
+    const chaseBrain = w.entities.get(chaser)!.infected!.l1!; chaseBrain.mode = 'chase'; chaseBrain.targetId = 1;
     for (let i = 0; i < 8; i++) { w.applyInput({ ...emptyInput(), right: { down: i === 0, held: true, up: false }, aim: { x: 0, z: 1 }, attackInPlace: true }, 'keyboard'); w.update(); }
     w.applyInput(emptyInput(), 'keyboard');
     const startBeyond = { ...w.entities.get(beyond)!.transform };
