@@ -1,5 +1,5 @@
 // Adapted from folio-2025 PreRenderer.js by Bruno Simon (MIT), commit 41046b5.
-import { InstancedMesh, Light, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene } from 'three/webgpu';
+import { InstancedMesh, Light, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type DataTexture } from 'three/webgpu';
 import type { Renderer } from './Renderer';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
@@ -9,8 +9,9 @@ import type { Renderer } from './Renderer';
  * KHR_parallel_shader_compile work on several programs (L1: 7.4 s -> 2.3 s under load). */
 export const compileLanes = 6;
 export const warmUpSize = 128;
+export const textureUploadBudget = 4 * 1024 * 1024;
 export type CompilePartitions = (() => void)[];
-export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false): Promise<void> {
+export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false, budgetedWarmUp = false): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[] }[] = [];
   scene.updateMatrixWorld(true);
   const focus = camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(camera.position);
@@ -52,24 +53,38 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${leaf.instanceMatrix.count}:${!!leaf.instanceColor}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
       if (seen.has(key)) return false; seen.add(key); return true;
     });
+    // Shared pose materials change their texture in onBeforeRender. Explicitly
+    // warm every batch's atlas before compilation, rather than only the last binding.
+    // Keep upload work within 4 MiB between paints; every shipped atlas fits that budget.
+    if (renderer.selectedBackend === 'webgpu' && budgetedWarmUp && pause) {
+      const textures = new Set<DataTexture>(leaves.flatMap(leaf => leaf.userData.preRenderTextures ?? []));
+      let bytes = 0;
+      for (const texture of textures) {
+        const size = texture.image.data?.byteLength ?? 0;
+        if (bytes && bytes + size > textureUploadBudget) { await pause(); bytes = 0; }
+        renderer.initTexture(texture); bytes += size;
+      }
+      await pause();
+      performance.measure('Texture atlas upload', { start, end: performance.now() });
+    }
     progress?.(0, 1);
     const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach(leaf => { leaf.visible = false; }); candidates.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
-    // WebGL only: measured on WebGPU, three's per-object compileAsync costs more than the
-    // synchronous pipeline creation of the warm-up draw (L1: 1.6-2.8 s vs +0.2 s).
-    // Background (menu-time) warm-up on WebGPU: three's compileAsync builds node graphs asynchronously,
-    // yielding between objects, so the big material builds do not land in one long task.
-    const foregroundCompile = renderer.foregroundCompile;
+    // L3 compiles foreground WebGPU pipelines asynchronously before drawing. Synchronous
+    // pipeline creation can stall later queue writes while Dawn compiles in the GPU
+    // process. Disjoint lanes retain the real HDR context and all shadow variants.
+    // Background node builds keep Three's cooperative yielding.
+    const compilationStart = performance.now(), foregroundCompile = renderer.foregroundCompile;
     try {
       renderer.foregroundCompile = !background;
-      if (renderer.selectedBackend === 'webgl') await compile(partitions); else if (background) await compile([() => {}]);
+      if (renderer.selectedBackend === 'webgl' || !background && budgetedWarmUp) await compile(partitions); else if (background) await compile([() => {}]);
     } finally { renderer.foregroundCompile = foregroundCompile; for (const leaf of leaves) leaf.visible = true; }
-    performance.measure('L1 shader compilation', { start, end: performance.now() });
+    performance.measure('L1 shader compilation', { start: compilationStart, end: performance.now() });
     // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so
     // node builds and pipeline creation never form one long task; the full draw below is then cheap.
     const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
-    // Foreground loading owns the card: larger groups avoid paying a presented
-    // frame for every 64 already-compiled objects. Menu-time pacing stays small.
-    const chunk = background ? renderer.selectedBackend === 'webgl' ? 64 : 16 : 1024, soloChunk = 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
+    // L3 WebGPU draws at most 64 leaves per frame behind the card, so cold atlases
+    // do not accumulate in a single draw. WebGL retains its measured batching.
+    const chunk = background ? renderer.selectedBackend === 'webgl' ? 64 : 16 : renderer.selectedBackend === 'webgpu' && budgetedWarmUp ? 64 : 1024, soloChunk = 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
     let completed = 1; progress?.(completed, total);
     if (pause) {
       for (let from = 0; from < leaves.length; from += chunk) {

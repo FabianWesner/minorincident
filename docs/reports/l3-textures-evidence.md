@@ -1,0 +1,47 @@
+L3 texture/upload evidence — 2026-10-11
+
+Implementation: `f113e9c5` on `lane/l3-textures`, prerequisite merge `695926db`. Main did not contain `Merge lane/merge-l3` when measurement started, so the explicitly requested fallback merged `lane/l3-load` into this worktree. No deployment or merge into main was performed.
+
+The final WebGPU L3 result meets the requested ≤6 s cold / ≤3 s warm target in this QA-asset proxy setup: **5.282 / 2.597 s**, against **10.531 / 2.181 s** before. Prior candidate confirmations were 5.746 / 2.598 and 5.365 / 2.631 s. This is a candidate simulation with real remote assets, not a deployed production result.
+
+Measurement follows [l3-load](l3-load-evidence.md): fresh browser/profile for every cold/warm pair, headless Chromium, native Apple `metal-3` WebGPU (not a fallback adapter), explicit WebGL2 via ANGLE/Metal, 1600×900 DPR 1, high tier, 50 Mbit/s down, 10 Mbit/s up, 20 ms latency. The real menu level-select click starts the clock; Begin is clicked immediately; first playable is the first rAF after Begin and card dismissal, followed by ten seconds of idle frame timings. Bundles are built snapshots behind pinned HTTPS/HTTP2 proxies; unchanged assets stream from deployed QA, with the inherited two police-station bake overrides. Cache headers and Brotli transport match the inherited proxy. No Playwright request routing or ignoreHTTPSErrors is used. Every browser run uses `tools/e2e-lock.sh`; one measurement page at a time. OS driver caches and other Mac jobs remain shared. These are observations, not controlled medians; automation reading delay, frame timestamps, per-phase timings, CPU samples, network requests, adapter and Mac load averages are retained in raw JSON.
+
+Seconds, select → playable; each cell is cold / warm. Final WebGPU uses `final-webgpu`, WebGL uses `after-webgl` (its renderer path is identical before/after the later L3-only scope restriction).
+
+| Level | WebGPU before cold / warm | WebGPU after cold / warm | WebGL before cold / warm | WebGL after cold / warm |
+|---|---:|---:|---:|---:|
+| L1 | 17.58 / 2.55 | 6.63 / 2.36 | 6.15 / 2.76 | 6.81 / 2.88 |
+| L2 | 15.51 / 3.56 | 8.63 / 3.70 | 8.88 / 3.93 | 6.83 / 4.42 |
+| L3 | 10.53 / 2.18 | 5.28 / 2.60 | 5.01 / 2.23 | 4.80 / 2.51 |
+| L4 | 7.68 / 1.78 | 6.06 / 1.68 | 6.25 / 1.93 | 6.00 / 2.13 |
+| L5 | 8.60 / 5.38 | 8.48 / 6.96 | 8.91 / 6.53 | 8.06 / 6.31 |
+| L6 | 11.95 / 2.03 | 7.17 / 1.85 | 8.70 / 1.83 | 7.70 / 1.81 |
+
+The first rollout applied async compilation and frame pacing to all WebGPU levels; L1/L2/L5 warm loads increased. That rollout was rejected. The final code applies budgeted preparation and async compilation to **L3 only**. Other levels retain the original compile policy and 1024-leaf foreground batch size, covered by a regression test. The mapped initial float upload is shared across WebGPU levels. WebGL upload, compile and batching behavior is unchanged.
+
+The initial final-matrix L5 warm result is slower by 1.58 s, but its renderer warm-up is faster (726 → 630 ms); civilian preparation grows 2011 → 3438 ms. The untouched baseline repeat also slows to 7.215 s warm with 3888 ms civilian preparation, compared with its original 5.381 s. The follow-up candidate is 8.382 /6.213 s, versus baseline repeat 8.248 /7.215 s (cold /warm); both raw pairs are retained. This shows variability in the existing asset/preparation phase; it does not establish a new renderer regression. Minor WebGL/L2 warm differences remain in the table. No statistically controlled guarantee of equal end-to-end latency across all levels is claimed.
+
+L3 attribution:
+
+| Cold phase / call | Before | Final |
+|---|---:|---:|
+| View renderer warm-up | 6246 ms | 1101 ms |
+| All GPUQueue.writeTexture wall time through capture | 4060 ms | 3.6 ms |
+| Explicit pose-atlas upload across frames | part of first draw | 346 ms |
+| Foreground shader compilation | skipped | 409 ms async lanes |
+| Fenced first full warm-up draw | 1662 ms | 33 ms |
+| Shader modules / sync render pipelines / async render pipelines | 190 / 105 / 20 | 178 / 60 / 75 |
+
+The baseline spends 4054 ms in just 21 uploads of 76×1948 RGBA32F pose atlases (49,744,128 source bytes). Those atlases carry animation transforms, not color. Initial uploads now use mapped COPY_SRC buffers with 256-byte row padding and `copyBufferToTexture`, submitted before draws. Float bytes are preserved exactly, including subarray offsets; temporary buffers are destroyed after submission. Recreated GPU storage gets a full copy. Warm full updates (e.g. bone textures) and mutable pose-row ranges retain their existing paths. The alignment/copy contract follows the [WebGPU specification](https://gpuweb.github.io/gpuweb/#dom-gpucommandencoder-copybuffertotexture).
+
+L3 explicitly initializes every batch's pose texture before compiling shared materials, yielding between upload groups of at most 4 MiB (every shipped atlas fits). Compile lanes use Three's async pipeline creation in the existing HDR/MSAA context. Subsequent warm-up draws cover 64 leaves per frame and retain both instancing paths, shadow variants and GPU fences. The measurements identify the combined upload/pipeline bottleneck; they do not isolate a single Metal driver cause or assign all saved time exclusively to copying versus compiling. The chunk measurement includes the earlier preparation phases and must not be added to them.
+
+Compression/mipmap decision: all **991 model GLBs have zero embedded images**. Geometry uses palette materials; the four decal images are 256×256. The large image-shaped payloads are dynamic/immutable float animation matrices, plus procedural state textures. Basis/ETC color blocks and averaged mip levels cannot preserve their matrix lookup semantics. Accordingly no KTX2 color compression, downsampling, lossy precision change or offline mip chain was added to these data textures. The existing KTX2Loader/transcoder pipeline remains available for actual authored color atlases. There are no new dependencies or license changes, and transfer payloads/quality tiers/content are retained. The requested latency improvement comes from the lossless GPU upload path.
+
+Final L3 cold/warm have frame p95/max 16.8/16.8 ms and zero gaps >50 ms in the ten-second idle check, zero console errors, and **zero new sync/async render pipelines after the card**. All matrix runs have zero console errors. L4 retains an approximately 100 ms gap in both baseline and candidate captures; it is not introduced by this change. These checks do not constitute movement or input-response latency tests.
+
+Visual review: [station yard](l3-textures-data/compare-l3-station-yard.png), [Commerce Street](l3-textures-data/compare-l3-commerce-street.png), [army checkpoint](l3-textures-data/compare-l3-army-checkpoint.png), and [normal start camera](l3-textures-data/compare-start.png). Fixed captures use seed 42, tick 0, high tier, the named gameplay photo cameras, and the real Begin button with an immediate pause. The three fixed before/after captures are **byte-identical in RGB: 0 changed pixels out of 1,440,000 each**. Inspected both sides: officers/uniforms/weapons, armory marker, cruisers and light bars, storefront signage/materials, lamps, military figures, gate, razor wire, sandbags, warm haze and purple shadows match. No missing content, softened detail or color shift was observed. Start-camera courier/corgi/HUD/road detail match; small animation/shadow differences in these ten-second captures are expected because sim timing is not fixed. Pixel counts are in [pixel-comparison.json](l3-textures-data/pixel-comparison.json).
+
+Validation: typecheck, lint, build pass; final unit suite **788 tests /154 files** passes; focused upload/warm-up tests **25** pass; sim smoke **6** passes. Browser smoke **25/26**: only `T-E13-05` fails because L5's authored fire-axe/bat loadout replaces the saved generic preset rack. The same failure was documented on untouched main by l3-load. `npm run verify -- E21` stops in simulation: **57 pass, 11 fail**, across `tests/levels/L3.test.ts` (10) and `tests/sim/npc/ally-defence.test.ts` (1). Running both files on untouched pre-change baseline `695926db` reproduces **the same 11 failures /16 passes**. No simulation, progression, specs or test expectations were changed. The full requested smoke/epic release gate is therefore **not green**. [Validation logs](l3-textures-data/validation.txt) retain the failures and commands.
+
+Reproduction: build; start `tools/performance/l3-candidate-proxy.mjs <port> <cert> <key> <built-snapshot-directory>` with a temporary pinned cert; run `LOAD_SPKI=<public-key-pin> LOAD_DATA_DIR=docs/reports/l3-textures-data E2E_SLOTS=1 sh tools/e2e-lock.sh npx tsx tools/performance/l3-deployed.mjs https://127.0.0.1:<port> <label> L1,L2,L3,L4,L5,L6 50mbit select`, adding `RENDERER=webgl` for WebGL. Run `tools/performance/l3-texture-captures.mjs <proxy-url> <label>` under the same lock/pin for fixed camera captures. Temporary certs/keys are not included. Raw matrices: [before WebGPU](l3-textures-data/before-webgpu.json.gz), [final WebGPU](l3-textures-data/final-webgpu.json.gz), [before WebGL](l3-textures-data/before-webgl.json.gz), [after WebGL](l3-textures-data/after-webgl.json.gz), [L5 baseline repeat](l3-textures-data/before-l5-repeat.json.gz), [L5 candidate repeat](l3-textures-data/after-l5-repeat.json.gz). Gzipped JSON preserves every raw observation, including the rejected rollout (`after-webgpu`) and L3 intermediate confirmation (`staged-webgpu`).

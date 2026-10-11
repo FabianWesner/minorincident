@@ -5,7 +5,7 @@ import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { loadavg } from 'node:os';
 import { preset, newCampaign } from '../../src/sim/progression/Campaign.ts';
 const [base='https://minor-incident.com', label='prod', levels='L3', profiles='50mbit', modes='select'] = process.argv.slice(2);
-const dir='docs/reports/l3-load-data'; mkdirSync(dir,{recursive:true});
+const dir=process.env.LOAD_DATA_DIR??'docs/reports/l3-load-data'; mkdirSync(dir,{recursive:true});
 const output=`${dir}/${label}.json`;
 const results=process.env.RESUME==='1'&&existsSync(output)?JSON.parse(readFileSync(output,'utf8')):[];
 let activePage, activeErrors, browser;
@@ -20,7 +20,7 @@ try { for(const profile of profiles.split(',')) for(const level of levels.split(
  window.probe={tasks:[],frames:[],stages:[],gl:{compile:0,link:0,waitMs:0},gpuCalls:{}};
  const ctx=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){const r=ctx.call(this,type,...args);if(r&&(type==='webgpu'||type==='webgl2'))probe.backend=type;return r};
  if(navigator.gpu){const request=navigator.gpu.requestAdapter.bind(navigator.gpu);navigator.gpu.requestAdapter=async function(...args){const a=await request(...args);if(a)probe.adapter={vendor:a.info.vendor,architecture:a.info.architecture,device:a.info.device,description:a.info.description,isFallbackAdapter:a.info.isFallbackAdapter};return a};}
- for(const name of ['GPUDevice','GPUQueue'])if(window[name])for(const method of name==='GPUDevice'?['createRenderPipeline','createRenderPipelineAsync','createShaderModule']:['writeTexture','onSubmittedWorkDone']){const original=window[name].prototype[method];window[name].prototype[method]=function(...args){const t=performance.now(),r=original.apply(this,args),c=probe.gpuCalls[method]??={count:0,ms:0};c.count++;c.ms+=performance.now()-t;return r}}
+ for(const name of ['GPUDevice','GPUQueue'])if(window[name])for(const method of name==='GPUDevice'?['createRenderPipeline','createRenderPipelineAsync','createShaderModule']:['writeTexture','onSubmittedWorkDone']){const original=window[name].prototype[method];window[name].prototype[method]=function(...args){const t=performance.now(),r=original.apply(this,args),c=probe.gpuCalls[method]??={count:0,ms:0};c.count++;const ms=performance.now()-t;c.ms+=ms;if(method==='writeTexture'){const size=args[3];(probe.textureWrites??=[]).push({at:t,ms,bytes:args[1].byteLength,width:size.width??size[0],height:size.height??size[1],format:args[0].texture.format})}return r}}
  new PerformanceObserver(l=>probe.tasks.push(...l.getEntries().map(e=>({at:e.startTime,ms:e.duration})))).observe({type:'longtask',buffered:true});
  const gl=WebGL2RenderingContext.prototype,compile=gl.compileShader,link=gl.linkProgram,get=gl.getProgramParameter;
  gl.compileShader=function(s){probe.gl.compile++;return compile.call(this,s)};
@@ -29,7 +29,7 @@ try { for(const profile of profiles.split(',')) for(const level of levels.split(
  addEventListener('click',e=>{if(e.target.closest('[data-testid="level-${level}"]')){probe.start=performance.now();probe.glStart={...probe.gl}};if(e.target.textContent==='Begin mission')probe.begin=performance.now()},true);
  let last;
  function watch(t){const p=probe,card=document.querySelector('[data-testid="level-transition"]');
- if(p.start){if(card&&!card.hidden&&!p.card)p.card=t;if(p.card&&card.hidden&&!p.end){p.end=t;p.glEnd={...p.gl}};
+ if(p.start){if(card&&!card.hidden&&!p.card)p.card=t;if(p.card&&card.hidden&&!p.end){p.end=t;p.glEnd={...p.gl};p.gpuEnd=JSON.parse(JSON.stringify(p.gpuCalls))};
  const status=document.querySelector('[data-testid="transition-status"]')?.textContent;if(status!==p.status){p.status=status;p.stages.push({at:t,status})}
  if(p.begin&&p.end&&!p.playable)p.playable=t;
  if(p.playable&&t-p.playable<10000&&last)p.frames.push(t-last)}last=t;requestAnimationFrame(watch)}requestAnimationFrame(watch);`});

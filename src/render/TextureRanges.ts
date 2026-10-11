@@ -1,3 +1,4 @@
+import { uploadFloatTexture, type FloatUploadDevice } from './TextureUpload';
 import { FloatType, RGBAFormat, type DataTexture, type Texture } from 'three';
 
 interface Backend {
@@ -6,7 +7,7 @@ interface Backend {
   gl?: WebGL2RenderingContext;
   state?: { bindTexture(target: number, texture: WebGLTexture): void };
   textureUtils?: { setTextureParameters(target: number, texture: Texture): void };
-  device?: { queue: { writeTexture(target: { texture: object; origin: { x: number; y: number; z: number } }, data: Float32Array, layout: { bytesPerRow: number }, size: { width: number; height: number; depthOrArrayLayers: number }): void } };
+  device?: { createBuffer?: FloatUploadDevice['createBuffer']; queue: { writeTexture(target: { texture: object; origin: { x: number; y: number; z: number } }, data: Float32Array, layout: { bytesPerRow: number }, size: { width: number; height: number; depthOrArrayLayers: number }): void } };
 }
 
 /** r186's common backends ignore Texture.updateRanges for 2D data textures.
@@ -24,7 +25,11 @@ export function installTextureRanges(value: unknown): void {
       && resource && uploaded.get(texture) === resource && ranges.length
       && ranges.every(r => r.start >= 0 && r.count > 0 && r.start % row === 0 && r.count % row === 0 && r.start + r.count <= image.data!.length);
     if (!partial) {
-      original(texture, options);
+      const coldFloat = backend.device?.createBuffer && resource && uploaded.get(texture) !== resource && (texture as DataTexture).isDataTexture
+        && texture.type === FloatType && texture.format === RGBAFormat && !texture.flipY
+        && !texture.generateMipmaps && !texture.mipmaps.length && image.data instanceof Float32Array;
+      if (coldFloat) uploadFloatTexture(backend.device as unknown as FloatUploadDevice, resource, image.data as Float32Array, width, image.height);
+      else original(texture, options);
       if (resource) uploaded.set(texture, resource);
       texture.clearUpdateRanges(); return;
     }
