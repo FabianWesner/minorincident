@@ -122,7 +122,10 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.roads.nodes.push({id:'l3-highway-exit',point:points.at(-1)!});
       layout.roads.edges.push({id:'l3-highway',start:entry.id,end:'l3-highway-exit',points,laneWidth:4.62});
     }
-    for (const c of layout.colliders) if (c.id.startsWith('dressing:highway-lip') || c.id.startsWith('dressing:highway-deck')) c.walkable = true;
+    for (const c of layout.colliders) {
+      if (c.id.startsWith('dressing:highway-lip') || c.id.startsWith('dressing:highway-deck')) c.walkable = true;
+      if (c.id.startsWith('dressing:highway-jersey')) c.aabb.navBlocker = true;
+    }
     // The central elevated span and entry lips support every walker just like the ramp strips.
     layout.colliders.push({id:'l3-highway-deck',aabb:{min:[167.5,5.2,-2.31],max:[179.5,5.7,2.31]},walkable:true,minTier:0,maxTier:5});
     for (let i=0;i<14;i++) for (const x of [139.3+i*.3,207.7-i*.3]) layout.colliders.push({id:`l3-highway-lip-${x}`,aabb:{min:[x-.155,0,-2.31],max:[x+.155,(i+1)*.05,2.31]},walkable:true,minTier:0,maxTier:5});
@@ -142,6 +145,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       }
       // Mount the span's lamp on the elevated deck, so its night pool lights the walking surface.
       if(p.assetId === 'prop.street-lamp' && p.position[0]===174) {
+        p.navBlocker=true;p.allowRoad=true;
         const dy=5.7-p.position[1], dz=-2.1-p.position[2];p.position[1]+=dy;p.position[2]+=dz;
         p.visualAabb.min[1]+=dy;p.visualAabb.max[1]+=dy;p.visualAabb.min[2]+=dz;p.visualAabb.max[2]+=dz;
       }
@@ -194,7 +198,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       }
     }
     layout.placements.push({id:'l3-highway-train',assetId:'veh.train-freight',position:[175,0,17],yaw:0,scale:[1,1,1],minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[162.6,0,15],max:[187.4,4.9,19]}});
-    layout.placements.push({id:'l3-highway-car',assetId:'veh.sedan-blue',position:[173,5.7,1.1],yaw:0,scale:[1,1,1],decay:'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[170.7,5.7,0],max:[175.3,7.4,2.2]}});
+    layout.placements.push({id:'l3-highway-car',navBlocker:true,assetId:'veh.sedan-blue',position:[173,5.7,1.1],yaw:0,scale:[1,1,1],decay:'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[170.7,5.7,0],max:[175.3,7.4,2.2]}});
     layout.lightGroups.push({ id: 'l3-highway', offAt: 5 }, { id: 'l3', offAt: 5 });
     return layout;
   });
