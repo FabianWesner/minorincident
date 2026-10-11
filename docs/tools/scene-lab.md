@@ -14,6 +14,25 @@ and pedestrian looks. If a scene passes here, the same content behaves the same 
 
 ## CLI
 
+For an intermittent black viewport across reloads, replay the supplied paths in their
+original order in one browser (the lock is required):
+
+```sh
+SCENE_PORT=3414 sh tools/e2e-lock.sh npx tsx tools/scenelab/reload-diagnostic.ts first.json second.json --repeat 3 --out test-results/reloads
+# Historical specs can be read directly from a commit with --revision <SHA>.
+```
+
+This records console messages, canvas pixel brightness and
+`window.__SCENE__.renderDiagnostics()` every 12 simulation frames (change with
+`--interval`). The hook reports backend/context loss, bound target, framebuffer
+completeness, renderer memory and cache releases, plus current/retired PostFx target
+identities, sizes and disposal events. Resize also emits target disposal events;
+they do not alone indicate a dead target. It does not consume GL errors or change
+render state. Contact sheets and `diagnostics.json` preserve each repetition;
+an entirely dark sample also keeps its PNG and makes the command fail. Visual
+review must still confirm ground and courier visibility; brightness alone cannot.
+Supply the actual retained batch order: a reconstructed order cannot close the finding.
+
 ```sh
 npm run scene -- specs/scenes/bench-sitter.json
 npm run scene -- specs/scenes/*.json                      # several scenes, one browser

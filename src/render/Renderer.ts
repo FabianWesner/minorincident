@@ -46,6 +46,17 @@ export function installPaletteVariantCache(objects: RenderObjects): void {
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
+  private levelCacheReleases = 0;
+  /** Read-only reload diagnostics; does not consume GL errors or change GPU state. */
+  diagnostics() {
+    const target = this.getRenderTarget();
+    const gl = (this.backend as unknown as { gl?: WebGL2RenderingContext }).gl;
+    return { backend: this.selectedBackend, levelCacheReleases: this.levelCacheReleases,
+      contextLost: gl?.isContextLost() ?? false,
+      renderTarget: target ? { id: target.texture.uuid, width: target.width, height: target.height, samples: target.samples } : null,
+      memory: { ...this.info.memory }, render: { ...this.info.render },
+      framebufferStatus: gl ? gl.checkFramebufferStatus(gl.FRAMEBUFFER) : null };
+  }
   /** The loading card permits a complete node build; menu streaming still yields. */
   foregroundCompile = false;
   /** Diagnostic count: a rise after the card hides identifies a cold node graph. */
@@ -164,6 +175,7 @@ export class Renderer extends WebGPURenderer {
   /** Three 0.186 retains shared shader bindings by render context, and WebGL VAOs.
    * Level unload retires all render objects before dropping these renderer-owned caches. */
   releaseLevelCaches(): void {
+    this.levelCacheReleases++;
     const caches = this as unknown as { _objects: { dispose(): void } | null; _nodes: { dispose(): void } | null; _renderLists: { dispose(): void } | null; _renderContexts: { dispose(): void } | null };
     caches._objects?.dispose(); caches._nodes?.dispose(); caches._renderLists?.dispose(); caches._renderContexts?.dispose();
     if (this.selectedBackend === 'webgl') {

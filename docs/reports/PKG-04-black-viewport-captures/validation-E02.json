@@ -1,0 +1,51 @@
+{
+  "passed": 46,
+  "failed": [
+    {
+      "title": "T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  75 |   const materials = await page.evaluate(async () => { await window.__SS__!.loadScenario('lookdev'); return window.__SS__!.getState().render.materials; });\n  76 |   expect(materials.length).toBeGreaterThan(10);\n> 77 |   for (const material of materials) expect(material.palette || material.name.startsWith('keep_'), material.name).toBe(true);\n     |                                                                                                                  ^\n  78 | });\n  79 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/camera.spec.ts:77:114"
+      ]
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n  83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n> 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n     |                                                                                                                                                                                                               ^\n  85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n  86 | });\n  87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/e2e/save.spec.ts:84:207"
+      ]
+    },
+    {
+      "title": "T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m11\u001b[39m\n\n  26 |   expect(result.pausedCounts!.after).toBeGreaterThan(1);\n  27 |   for (const load of result.loads) { expect(load.drawCalls).toBeLessThan(250); expect(load.triangles).toBeLessThan(150_000); }\n> 28 |   for (const unload of result.unloads) { expect(unload.geometries).toBe(result.baseline.geometries); expect(unload.textures).toBe(result.baseline.textures); }\n     |                                                                    ^\n  29 |   expect(result.loads.map((p) => p.geometries)).toEqual([result.loads[0].geometries, result.loads[0].geometries, result.loads[0].geometries]);\n  30 |   mkdirSync('test-results/epics/E02', { recursive: true }); writeFileSync('test-results/epics/E02/perf.json', JSON.stringify(result, null, 2) + '\\n');\n  31 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/perf/lookdev.spec.ts:28:68"
+      ]
+    },
+    {
+      "title": "T-E02-06 @E02 @E02-AC06 shadow probe is purple-blue and above 15% lightness",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m290\u001b[39m\nReceived:    \u001b[31m295.5555555555556\u001b[39m\n\n  29 |   const color = rgb(image, (p[0] + 1) / 2 * image.width, (1 - p[1]) / 2 * image.height), sample = hsl(color);\n  30 |   artifact('shadow', { color, ...sample, ndc: p });\n> 31 |   expect(sample.hue).toBeGreaterThanOrEqual(230); expect(sample.hue).toBeLessThanOrEqual(290); expect(sample.lightness).toBeGreaterThan(0.15);\n     |                                                                      ^\n  32 | });\n  33 |\n  34 | test('T-E02-07 @E02 @E02-AC07 lamp 8 px ring gains at least 10% brightness from bloom', async ({ page }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/visual/lookdev.spec.ts:31:70"
+      ]
+    },
+    {
+      "title": "T-E02-09 @E02 @E02-AC09 L1, L4 and L6 change lighting and screenshot hue/luminance",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m5\u001b[39m\nReceived:   \u001b[31m4.282871817707104\u001b[39m\n\n  83 |   expect(results.L1.luminance).toBeGreaterThan(results.L4.luminance); expect(results.L4.luminance).toBeGreaterThan(results.L6.luminance);\n  84 |   for (const property of ['sunDirection', 'sunColor', 'sky', 'fog']) expect(new Set(states.map((s) => JSON.stringify((s as Record<string, unknown>)[property]))).size).toBe(3);\n> 85 |   expect(Math.abs(results.L1.hue - results.L4.hue)).toBeGreaterThan(5); expect(Math.abs(results.L4.hue - results.L6.hue)).toBeGreaterThan(5);\n     |                                                     ^\n  86 | });\n  87 |\n  88 | test('T-E02-10 @E02 @E02-AC10 golden lookdev has a reviewed North-star vision checklist', async ({ page }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/visual/lookdev.spec.ts:85:53"
+      ]
+    },
+    {
+      "title": "T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mBuffer\u001b[39m\u001b[2m).\u001b[22mtoMatchSnapshot\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\n  52769 pixels (ratio 0.04 of all image pixels) are different.\n\n  Snapshot: overview.png\n\n\n  101 |     // Reviewed lookdev goldens contain only the scene, without input/audio debug panels.\n  102 |     const png = await page.locator('canvas').screenshot({ path: `${output}/${spot}.png`, style: 'body > details, [data-input-hint] { visibility: hidden !important; }' });\n> 103 |     expect(png).toMatchSnapshot(`${spot}.png`, { threshold: 0.1, maxDiffPixelRatio: 0.015 });\n      |                 ^\n  104 |   }\n  105 | });\n  106 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/visual/lookdev.spec.ts:103:17"
+      ]
+    },
+    {
+      "title": "T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m8\u001b[39m\n\n  126 |   const image = await capture(page, 'fog-far'); const color = rgb(image, (p.ndc[0] + 1) / 2 * image.width, (1 - p.ndc[1]) / 2 * image.height);\n  127 |   artifact('fog', { ...p, color, expected: [229, 179, 158] });\n> 128 |   for (let c = 0; c < 3; c++) expect(Math.abs(color[c] - [229, 179, 158][c])).toBeLessThanOrEqual(2);\n      |                                                                               ^\n  129 | });\n  130 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-black-viewport/tests/visual/lookdev.spec.ts:128:79"
+      ]
+    }
+  ],
+  "criteria": {
+    "T-E02-01 ": "T-E02-01 @E02 @E02-AC01 forced WebGL2 and automatic backend report the initialized backend",
+    "T-E02-07 ": "T-E02-07 @E02 @E02-AC07 lamp 8 px ring gains at least 10% brightness from bloom"
+  }
+}
