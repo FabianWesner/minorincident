@@ -100,3 +100,34 @@ test('corgi paws do not skate by the Scene Lab rule through gaits, gait changes 
   const motion = summarizeMotion(frames);
   expect(motion.slideMaxCm).toBeLessThanOrEqual(3); expect(motion.sinkMaxCm).toBeLessThanOrEqual(.5);
 });
+
+test('corgi settles from spawn height, seats its visible rump/paws and resumes its bind leg scale @E08-AC10', async () => {
+  for (const lod of ['', '.lod1']) {
+    const bytes = readFileSync(`public/assets/models/char.corgi${lod}.glb`);
+    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    const animator = new QuadrupedAnimator(scene), v = new Vector3();
+    const lowest = (part: Object3D, body = false) => {
+      let y = Infinity; scene.updateWorldMatrix(true, true);
+      part.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        if (body) for (let p = node.parent; p && p !== part; p = p.parent) if (/^(head|tail|packSocket|leg)/.test(p.name)) return;
+        const positions = node.geometry.attributes.position, indices = node.geometry.index;
+        for (let i = 0; i < (indices?.count ?? positions.count); i++) y = Math.min(y, v.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld).y);
+      });
+      return y;
+    };
+    for (let frame = 0; frame <= 420; frame++) {
+      scene.position.y = Math.max(0, .405 * (1 - frame / 15));
+      animator.update(frame / 60, 0, 0);
+      if (frame < 15) continue;
+      const soles = ['legFL', 'legFR', 'legBL', 'legBR'].map(name => lowest(scene.getObjectByName(name)!));
+      expect(Math.min(...soles), `${lod} sink f${frame}`).toBeGreaterThanOrEqual(-.01);
+      // Diagonal settling steps may lift two paws during the sit transition.
+      expect(soles.filter(y => Math.abs(y) <= .01).length, `${lod} support f${frame}`).toBeGreaterThanOrEqual(frame <= 240 || frame >= 300 ? 4 : 2);
+    }
+    expect(Math.abs(lowest(scene.getObjectByName('body')!, true))).toBeLessThanOrEqual(.01);
+    expect(scene.getObjectByName('body')!.rotation.z).toBeGreaterThan(20 * Math.PI / 180);
+    for (let frame = 421; frame <= 480; frame++) animator.update(frame / 60, 1.4, (frame - 420) * 1.4 / 60);
+    for (const name of ['legFL', 'legFR']) expect(scene.getObjectByName(name)!.scale.toArray()).toEqual([1, 1, 1]);
+  }
+});
