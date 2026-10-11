@@ -145,6 +145,9 @@ def build(ctx):
 
     def lathe(name, profile, center, axis, mat, parent=None, segs=28, smooth=True):
         if DISTANCE: segs=min(segs,12 if DISTANCE==1 else 6)
+        if DISTANCE == 2 and name.startswith(('rear_beacon_', 'headlamp_lens_')):
+            # Subpixel lenses keep their profile/colour with four radial facets.
+            segs = 4; profile = [(0, profile[0][1])] + profile[1:]
         """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
         bm = bmesh.new()
         rings = []
@@ -462,15 +465,24 @@ def build(ctx):
         lathe(f'pump_fan_{sname}', [(1e-4, 0.05), (0.09, 0.05), (0.105, 0.0)], (px(962), side * (ys + 0.02), 0.98), out, 'chrome', 'shutter_housing', segs=22)
         box(f'housing_kick_{sname}', ((sh_x0 + sh_x1) / 2, side * (ys + 0.02), 0.33), (sh_x1 - sh_x0, 0.05, 0.1), 'tread', 'shutter_housing', bevel=0.012)
 
+        # Cab access uses the existing rear cab door outline. Cut the shell and preserve
+        # its panel, glass, frame, livery and handle under a real hinge at every LOD.
+        dx0, dx1 = px(1180), px(1352)
+        door_name = 'doorL' if side < 0 else 'doorR'
+        group(door_name, (dx1, side * W, .95), 'crew_cab')
+        cut(cab, raw_box('cab_door_opening', ((dx0+dx1)/2, side*W, 1.835), (dx1-dx0-.02, .30, 1.75)))
+        panel = box('cab_door_panel_'+sname, ((dx0+dx1)/2, side*W, 1.835), (dx1-dx0-.024, .105, 1.746), 'red', door_name, bevel=.018)
+        cut(panel, raw_box('door_window_opening', ((px(1215)+px(1315))/2, side*W, 2.30), (px(1315)-px(1215), .30, .64)))
+        cut(panel, raw_cyl('door_arch_cut', (FRONT_AXLE, 0, WHEEL_R), ARCH_R, 3.0), 'black')
         # ---------------- cab sides: windows, door seams, handles, lettering, emblem, mirror, step
         for i, (x0, z0, x1, z1) in enumerate([(px(1215), 1.98, px(1315), 2.62), (px(1378), 1.96, 3.76, 2.62)]):
             cut(cab, raw_box('side_window_opening', ((x0+x1)/2, side*W, (z0+z1)/2), (x1-x0, .30, z1-z0)))
-            plate(f'cab_window_{i}_{sname}', rrect(x0, z0, x1, z1, 0.06), side, 0.012, 'glass', 'crew_cab', bevel=0.004)
-            frame(f'cab_window_frame_{i}_{sname}', x0, z0, x1, z1, side, 'black', 'crew_cab', bar=0.03, r=0.06, depth=0.016)
+            plate(f'cab_window_{i}_{sname}', rrect(x0, z0, x1, z1, 0.06), side, 0.012, 'glass', door_name if i == 0 else 'crew_cab', bevel=0.004)
+            frame(f'cab_window_frame_{i}_{sname}', x0, z0, x1, z1, side, 'black', door_name if i == 0 else 'crew_cab', bar=0.03, r=0.06, depth=0.016)
         for i, (x0, x1) in enumerate([(px(1180), px(1352)), (px(1356), px(1525))]):
-            ring(f'cab_door_seam_{i}_{sname}', rrect(x0, 0.95, x1, 2.72, 0.07), rrect(x0 + 0.014, 0.964, x1 - 0.014, 2.706, 0.06), side, 0.003, 'red_dark', 'crew_cab', bevel=0.0)
-            box(f'cab_door_handle_{i}_{sname}', (x1 - 0.13, fy + side * 0.035, 1.66), (0.17, 0.04, 0.05), 'chrome', 'crew_cab', bevel=0.015)
-        text(f'cab_text_{sname}', 'FIRE DEPT.', 0.26, ((px(1195) + px(1330)) / 2, fy + side * 0.006, 1.52), '-y' if side < 0 else '+y', 'white', 'crew_cab', spacing=1.02)
+            ring(f'cab_door_seam_{i}_{sname}', rrect(x0, 0.95, x1, 2.72, 0.07), rrect(x0 + 0.014, 0.964, x1 - 0.014, 2.706, 0.06), side, 0.003, 'red_dark', door_name if i == 0 else 'crew_cab', bevel=0.0)
+            box(f'cab_door_handle_{i}_{sname}', (x1 - 0.13, fy + side * 0.035, 1.66), (0.17, 0.04, 0.05), 'chrome', door_name if i == 0 else 'crew_cab', bevel=0.015)
+        text(f'cab_text_{sname}', 'FIRE DEPT.', 0.26, ((px(1195) + px(1330)) / 2, fy + side * 0.006, 1.52), '-y' if side < 0 else '+y', 'white', door_name, spacing=1.02)
         fx, fz, fs = (px(1408) + px(1482)) / 2, 1.27, 0.22
         flame = [(fx + fs * u, fz + fs * v) for u, v in [(0, -1), (0.55, -0.88), (0.9, -0.45), (0.98, 0.1), (0.75, 0.55), (0.6, 0.32), (0.48, 0.88), (0.18, 0.58), (0.04, 1.18), (-0.22, 0.62), (-0.46, 0.9), (-0.56, 0.36), (-0.78, 0.52), (-0.97, 0.06), (-0.92, -0.46), (-0.56, -0.88)]]
         if side > 0:
@@ -625,7 +637,7 @@ def build(ctx):
     bpy.context.view_layer.update()
     if DISTANCE:
         export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('shutter_rail', 'shutter_bar', 'shutter_lip', 'shutter_post', 'pump_panel_ledge', 'roof_grab', 'gantry_base', 'side_marker', 'cab_marker', 'cab_roof_marker', 'rear_ladder_step', 'pump_bay_step', 'cab_step', 'front_bumper_step', 'rear_step', 'cab_light', 'reflector', 'roof_rail', 'rail_support', 'gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'), anchors=tuple(name for name,x,y in cab_seats)+('steeringWheel',))
-    export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake'})
+    export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake','doorL','doorR'})
     return root
 
 

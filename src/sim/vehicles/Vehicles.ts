@@ -17,9 +17,12 @@ export interface VehicleState {
   explodeAt: number | null; stuck: boolean; recoveringUntil: number;
 }
 interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number }
+export interface CarTransition { carId: number; kind: 'enter' | 'exit'; tick: number; side: number; from: { x: number; y: number; z: number; yaw: number }; }
 /** E09 fixed-phase owner; player movement/combat are suspended only while driving. */
 export class Vehicles {
   readonly cars = new Map<number, Car>();
+  /** Short presentation history; input ownership and the hidden simulation driver remain immediate. */
+  transition: CarTransition | null = null;
   active: number | null = null;
   /** Debug/Scene Lab driverless cars: sets the drive intent of an unoccupied car before its physics step. */
   readonly autopilot = new Map<number, (intent: import('./VehicleBody').DriveIntent, entity: EntitySnapshot) => void>();
@@ -45,7 +48,7 @@ export class Vehicles {
     if (!player || player.health.current <= 0) return false;
     for (const car of this.cars.values()) {
       if (car.entity.health.current <= 0 || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
-      this.localPoint(car, .2, car.physics.def.width / 2 + .55);
+      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
       if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7) return true;
     }
     return false;
@@ -81,7 +84,7 @@ export class Vehicles {
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
       } else if (this.active === null && player.health.current > 0 && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
-        this.localPoint(car, .2, car.physics.def.width / 2 + .55);
+        this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7;
         const still = Math.hypot(frame.move.x, frame.move.z) < .05;
         car.doorTicks = near && still ? car.doorTicks + 1 : 0;
@@ -99,6 +102,7 @@ export class Vehicles {
   }
   private enter(car: Car): void {
     const player = this.world.entities.get(1)!;
+    this.transition = { carId: car.entity.id, kind: 'enter', tick: this.world.tick, side: 1, from: { ...player.transform } };
     this.active = car.entity.id; car.entity.vehicle!.driver = 1; player.hidden = true;
     this.world.physics.playerCollider!.setEnabled(false);
     this.world.player!.locomotion.reset();
@@ -107,10 +111,13 @@ export class Vehicles {
   /** Checks a full survivor capsule against current Rapier geometry, trying both sides. */
   exit(car = this.cars.get(this.active!)!): boolean {
     if (!car || this.active !== car.entity.id) return false;
-    for (const side of [1, -1]) for (const x of [.2, -.6, .9]) {
-      this.localPoint(car, x, side * (car.physics.def.width / 2 + .55));
+    const out = car.physics.def.width / 2 + .55, along = Math.sqrt(2.5 ** 2 - out ** 2) - .01;
+    for (const side of [1, -1]) for (const offset of [0, -.8, .7]) {
+      // The long cab anchor still needs an exit inside E09's 2.5 m placement radius.
+      this.localPoint(car, Math.max(-along, Math.min(along, car.physics.def.doorX + offset)), side * out);
       const hit = this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!);
       if (hit) continue;
+      this.transition = { carId: car.entity.id, kind: 'exit', tick: this.world.tick, side, from: { ...car.entity.transform } };
       this.leave(car); return true;
     }
     return false;
@@ -126,6 +133,7 @@ export class Vehicles {
   private eject(car: Car): void {
     if (this.active !== car.entity.id || this.exit(car)) return;
     // If both doors are boxed in, escape onto the roof before the explosion impulse.
+    this.transition = null;
     this.position.x = car.entity.transform.x; this.position.z = car.entity.transform.z;
     this.position.y = car.entity.transform.y + .45 + survivor.height / 2;
     this.leave(car);
@@ -273,7 +281,7 @@ export class Vehicles {
   rebuild(worldReset = false): void {
     this.obstacles.rebuild(worldReset);
     if (!worldReset) for (const car of this.cars.values()) car.physics.dispose();
-    this.cars.clear(); this.active = null;
+    this.cars.clear(); this.active = null; this.transition = null;
     for (const entity of this.world.entities.iterate()) {
       if (!entity.vehicle) continue;
       const state = entity.vehicle, physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
@@ -287,5 +295,5 @@ export class Vehicles {
     this.world.entities.get(1)!.hidden = this.active !== null;
     this.world.physics.playerCollider!.setEnabled(this.active === null);
   }
-  dispose(): void { this.obstacles.dispose(); for (const car of this.cars.values()) car.physics.dispose(); this.cars.clear(); this.active = null; }
+  dispose(): void { this.obstacles.dispose(); for (const car of this.cars.values()) car.physics.dispose(); this.cars.clear(); this.active = null; this.transition = null; }
 }
