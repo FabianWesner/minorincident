@@ -42,7 +42,7 @@ const singleSeed = [1]; // PO 10-09: single seed for AC12 and AC26.
 const median = (v: number[]) => { const s = [...v].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]; };
 
 describe('L1 v2 infected perception', () => {
-  test('T-E19-08 @E19 @E19-AC08 vision cone 90 deg, 16 m, LOS incl. gates and car-wash curtain, no player hearing', async () => {
+  test('T-E19-08 @E19 @E19-AC08 vision cone 90 deg, 16 m, LOS incl. gates and car-wash curtain, no long-range player noise', async () => {
     const { w, perception } = await l1World(1);
     const e = zombie(w, 20, 20, 0); e.transform.yaw = 0;
     // Table over angles and ranges: seen only inside +/-45 deg and <= 16 m.
@@ -67,7 +67,7 @@ describe('L1 v2 infected perception', () => {
     perception.los.unregister('fence'); expect(perception.sees(e, ahead)).toBe(true);
   });
 
-  test('T-E19-08b @E19 @E19-AC08 detection follows sight; footsteps, attacks and the bicycle create no perception events', async () => {
+  test('T-E19-08b @E19 @E19-AC08 detection beyond 2 m follows sight; footsteps, attacks and the bicycle create no perception events', async () => {
     // Detection timing with scripted humans: in front -> chase within 0.25 s; behind a wall -> never.
     for (const seed of seeds) {
       const { w, humans } = await l1World(seed);
@@ -81,7 +81,7 @@ describe('L1 v2 infected perception', () => {
       expect(brain(hidden).mode).not.toBe('chase');
       w.dispose(); worlds.length = 0;
     }
-    // No hearing: the real survivor makes footsteps/attack/bicycle noise right behind an infected facing away.
+    // No long-range hearing: the real survivor makes footsteps/attack/bicycle noise right behind an infected facing away.
     const { w, ai } = await l1World(3, true);
     const e = zombie(w, 0, 18, 0); e.transform.yaw = Math.PI / 2; // faces -Z, the survivor stands at the origin behind it
     const alerted = () => w.events.events().filter((ev) => ev.type === 'ai.alerted' && ev.targetId === e.id);
@@ -323,7 +323,7 @@ describe('L1 v2 infected perception', () => {
       expect(brain(chaser).distractionId).toBe(0);
       // A visible human overrides the attraction.
       let spot: Vec2 | undefined, lure: EntitySnapshot | undefined;
-      for (const candidate of near) if (!spot && brain(candidate).mode === 'search') for (const off of [0, 0.3, -0.3, 0.6, -0.6]) for (const r of [2.5, 6, 4, 9, 12]) { // 2.5 m: noticed from any side (PO 10-09), so a mid-turn searcher cannot look away first
+      for (const candidate of near) if (!spot && brain(candidate).mode === 'search') for (const off of [0, 0.3, -0.3, 0.6, -0.6]) for (const r of [1.8, 6, 4, 9, 12]) { // 1.8 m: heard from any side (PO 10-11), so a mid-turn searcher cannot look away first
         const p = { x: candidate.transform.x + Math.cos(-candidate.transform.yaw + off) * r, z: candidate.transform.z + Math.sin(-candidate.transform.yaw + off) * r };
         if (!spot && Math.abs(p.x) < 58 && Math.abs(p.z) < 58 && perception.sees(candidate, p)) { spot = p; lure = candidate; }
       }

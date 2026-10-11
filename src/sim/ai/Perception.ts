@@ -69,7 +69,7 @@ export class WorldHumans implements HumanTargetQuery {
   private readonly area = { x: 0, z: 0, r: 0 };
   constructor(private readonly world: SimWorld) {}
   private human(e: EntitySnapshot | undefined): HumanTarget | undefined {
-    if (!e || e.health.current <= 0 || e.hidden) return undefined;
+    if (!e || e.health.current <= 0 || e.hidden || e.id === 1 && this.world.inspectionGhost) return undefined;
     if (e.id !== 1 && !(e.civilian?.adult && !e.civilian.pet && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
     let target = this.cache.get(e.id);
     if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : 'civilian', position: { x: 0, z: 0 }, facing: 0 }; this.cache.set(e.id, target); }
@@ -91,15 +91,15 @@ export class WorldHumans implements HumanTargetQuery {
 
 /**
  * L1 infected vision (specs/epic-19 section 5.2): a forward 90 degree cone, 16 m, blocked by the scene's full-height
- * cover walls and by registered dynamic blockers. There is no hearing of the player. A human within `peripheralM` with
- * clear line of sight is noticed from any side (PO 10-09: a pedestrian right next to an infected was ignored). A chased
+ * cover walls and by registered dynamic blockers. A human within 2 m is heard from any side with
+ * clear line of sight (PO 10-11). A chased
  * target stays tracked within `chaseKeepM` in any direction, else in a wide 150 degree cone, while line of sight is clear.
  */
 export class Perception {
   humans: HumanTargetQuery;
   readonly los = new LosRegistry();
   readonly rangeM = l1v2.infected.visionRangeM;
-  readonly peripheralM = 3;
+  readonly hearingM = 2;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
@@ -125,9 +125,22 @@ export class Perception {
     const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;
     return near && this.lineOfSight(e.transform, target);
   }
-  /** Detection of a NEW target: the vision cone, or a body within `peripheralM` (an infected feels someone at arm's length). */
+  /** Close hearing ignores facing, but buildings and active LOS blockers still block it. */
+  hears(e: EntitySnapshot, target: Vec2): boolean {
+    return Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.hearingM && this.lineOfSight(e.transform, target);
+  }
+  /** Detection of a new target by unchanged vision or close hearing. */
   notices(e: EntitySnapshot, target: Vec2): boolean {
-    return (this.inCone(e, target) || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.peripheralM) && this.lineOfSight(e.transform, target);
+    return this.sees(e, target) || this.hears(e, target);
+  }
+  /** Closest nearby human, using the same huntable target query as vision. */
+  closestHeard(e: EntitySnapshot): HumanTarget | undefined {
+    let best: HumanTarget | undefined, distance = Infinity;
+    for (const h of this.humans.within(e.transform, this.hearingM)) {
+      const d = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
+      if (d < distance && this.hears(e, h.position)) { best = h; distance = d; }
+    }
+    return best;
   }
   /**
    * Closest visible human; the current target is kept unless another visible human is at least the switch hysteresis
