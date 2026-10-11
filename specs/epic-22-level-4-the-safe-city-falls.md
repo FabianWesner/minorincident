@@ -1,10 +1,18 @@
 # E22 · Level 4: The Safe City Falls
 
-> **Rewritten 2026-10-07 per product owner** (`po-levels-2-6-2026-10-07.md`, which wins on any disagreement). This replaces the previous L4 "Open the Escape Route" (fire-station hub, substation breakers, zoo route, bridge blockade, Butcher). That content is superseded; the D-ZOO / D-EDGE assets and the zoo elites stay in the repo for later use. The old L4 mission case in `src/levels/missions.ts` and the one `@E22-AC04` test (breaker interruption) describe the old design: re-tag or retire them. Systems are reused (devices, defend steps, explosions, fire).
+> **Updated 2026-10-11 per product owner** (`po-levels-4-9-2026-10-11.md`, which wins on any disagreement). The 2026-10-07 redesign and built content below remain the baseline where they match. Changed acceptance criteria are marked **CHANGED 2026-10-11**; prior implementation notes describe historical evidence, not acceptance of the new scope. This replaces the previous L4 "Open the Escape Route" (fire-station hub, substation breakers, zoo route, bridge blockade, Butcher). That content is superseded; the D-ZOO / D-EDGE assets and the zoo elites stay in the repo for later use. The retired breaker design belongs to the historical 2026-10-07 redesign; retain the currently built convoy/war tests and extend their existing tags. Systems are reused (devices, defend steps, explosions, fire).
 
 ## 1. Goal
 
 A ~5-minute level that begins as a **deliberate false reset**. The player arrives in an army evacuation convoy at **Fairhaven** (orchestrator default name for the second city — PO may change), a city the outbreak has not reached: clean streets, intact buildings, pedestrians, open shops, an organized army. The army issues the player a **machine gun**, the strongest weapon so far, with unlimited ammunition. Then, while evacuees unload and gather, **one or more evacuees turn**, and the evacuation has brought the outbreak into the safe city. It becomes the first **large-scale war scene**: ~20 soldiers, ~50 civilians (many armed with pistols, hunting rifles and improvised weapons), heavy machine guns, military vehicles, a tank and a helicopter, against rapidly increasing infected. The player feels powerful, and it is still not enough. The city collapses; the player reaches a **basement**, goes inside alone, shuts the door, and the war continues above.
+
+> PO, verbatim: "The outbreak starts inside the perimeter, among the evacuees. People turn behind the military lines, civilians panic and block fields of fire, and new infected appear faster than soldiers can contain them."
+>
+> "Level 4 also introduces the first Alpha infected. They are rare, very large, extremely strong human infected inspired by the Alpha idea from 28 Years Later. They are not fantasy monsters or bosses, but unusually resilient infected that can absorb concentrated gunfire and physically break defensive lines. Their real tactical value is that soldiers have to focus on them while regular infected overwhelm the gaps."
+>
+> "The battle escalates into full-scale urban warfare with soldiers, armed civilians, military vehicles and huge numbers of infected. Everyone is fighting, but it still is not enough."
+>
+> "The player eventually escapes alone into the basement of a hardware store and hides there while the city collapses above."
 
 Emotional outcome: **"Everyone is fighting, and it is still not enough."** Escalation position: **the army enters the fight, and a supposedly safe second city falls into full-scale warfare.** Relationship: the player fights alongside an army.
 
@@ -14,9 +22,9 @@ E21 (allied fighters v2, the army checkpoint and buses, handgun), E06 (machine g
 
 ## 3. Scope
 
-**In:** the convoy ride into Fairhaven; district `D-FAIR` (W0, clean and alive; its devastated twin is built in E23); the safe-city beat; the machine gun; the first-turn set piece among the crowd; **allied fighters v3** (soldiers with rifles, heavy-machine-gun crews, armed civilians, §5.4); the military spectacle (HMG nests, trucks, an armored vehicle, a tank, a helicopter); the plaza line and its break; live damage progression; the basement ending; the `L4` preset; performance and quality-tier scaling for the war scene; photo spots, bots, tests.
+**In:** the convoy ride into Fairhaven; district `D-FAIR` (W0, clean and alive; its devastated twin is built in E23); the safe-city beat; the machine gun; the first-turn set piece among the crowd; 2–3 `inf.alpha` human infected (E07 §Alpha); **allied fighters v3** (soldiers with rifles, heavy-machine-gun crews, armed civilians, §5.4); the military spectacle (HMG nests, trucks, an armored vehicle, a tank, a helicopter); the plaza line and its break; live damage progression; the basement ending; the `L4` preset; performance and quality-tier scaling for the war scene; photo spots, bots, tests.
 
-**Out:** player-driven vehicles; player-controlled tank/HMG (the player only uses the machine gun — orchestrator default; PO may change); special infected archetypes (orchestrator default: turned humans incl. turned soldiers); an ammunition system.
+**Out:** player-driven vehicles; player-controlled tank/HMG (the player only uses the machine gun — orchestrator default; PO may change); zoo animals and boss encounters; an ammunition system.
 
 ## 4. Level structure and story beats (~5 min)
 
@@ -25,7 +33,7 @@ E21 (allied fighters v2, the army checkpoint and buses, handgun), E06 (machine g
 | 1 | Convoy | Fairhaven approach road → army gate → Lakeshore Avenue | The player sits in an evacuation bus (passenger) in a convoy of 2 buses, 2 military trucks and a light armored vehicle. The camera follows the bus; through the windows: clean streets, people on sidewalks, open cafés, traffic stopped by soldiers. | 0:00–0:30 |
 | 2 | "We made it" | **Reception Plaza** (army evacuation reception: registration tables, tents, triage, water pallets; town hall, shops, apartment blocks around it) | Unloading. Evacuees and Fairhaven residents mingle; soldiers on posts and in sandbag nests; children are kept out of the scene (R1: none in the plaza). Objective: **Report to the quartermaster** → the **machine gun** is issued (stand-to-interact 0.6 s / `E`, auto-equipped). Free walk; nothing happens. | 0:30–1:30 |
 | 3 | The turn | registration area in the plaza crowd | Two evacuees from the L3 buses (bandaged forearms) collapse and turn inside the crowd (E19 §5.7 continuity), bite the people around them, and the infection spreads through the gathering. Screams; soldiers shout; the first shots. | 1:30–1:50 |
-| 4 | War | plaza and the streets around it | Objective: **Hold the plaza with the army**. Soldiers form lines; HMG nests open fire; armed civilians fight; unarmed civilians panic; newly bitten people turn mid-battle. From +30 s infected also charge in from the streets on ≥ 3 sides (the outbreak followed the convoy). The tank rolls in and fires; the helicopter orbits with door-gun tracers. The machine gun shreds groups. | 1:50–3:20 |
+| 4 | War | plaza and the streets around it | Objective: **Hold the plaza with the army**. Soldiers form lines; HMG nests open fire; armed civilians fight; unarmed civilians panic; newly bitten people turn mid-battle. From +30 s infected also charge in from the streets on ≥ 3 sides (the outbreak followed the convoy). The tank rolls in and fires; the helicopter orbits with door-gun tracers. The first 2–3 Alphas enter during this battle; soldiers concentrate fire while regular infected reach the gaps (E07). The machine gun shreds groups. | 1:50–3:20 |
 | 5 | The line breaks | plaza | `l4.lineBreaks` (§5.6): the tank shell hits a fuel truck at the plaza edge (E27 mega chain), the line folds, the helicopter pulls out (*"Air support is withdrawing!"*). Radio: *"Line's gone! Everyone find cover!"* Objective: **Find somewhere to hide** (soft marker after 15 s). | 3:20–3:35 |
 | 6 | Collapse | Harbor Street, Kessler Lane | Running through total chaos: burning vehicles, fleeing crowds, soldiers fighting in pockets, turned soldiers among the infected. | 3:35–4:30 |
 | 7 | The basement | **Kessler's Hardware** cellar door (Kessler Lane) | Stand-to-interact at the cellar door; the player goes down **alone** (corgi included, orchestrator default) and bars the door (1.0 s interact). Inside: one bulb, shelves, dust falling with each explosion; muffled gunfire and explosions continue above for ≥ 6 s. The level ends there; L5 loads. | 4:30–5:00 |
@@ -47,7 +55,7 @@ W0 layer: no corpses, wrecks, damage decals or broken windows; ≥ 40 civilians 
 ### 5.3 Machine gun (E06 rule, introduced here)
 - 14 damage per round, 10 rounds/s, 4° spread, range 26 m, **pierce 1** (a round can pass through one infected and hit the next), knockback small, aim indicator line.
 - **No ammunition system:** unlimited, no reload, no overheat (orchestrator default — PO may change), no ammo HUD.
-- The main weapon for L4–L6. Bat, axe and handgun remain carried and selectable.
+- The main group-clearing weapon from L4 onward; the L5 shotgun adds the close-range single-target role. Bat, axe and handgun remain carried and selectable.
 
 ### 5.4 Allied fighters v3: soldiers and armed civilians
 - **Soldiers (~20; 10 on low):** HP 120, rifles (18 damage, 4 rounds/s bursts, 65 % hit chance ≤ 20 m), hold sandbag lines and fall back in pairs; 2 of them crew the HMG nests (HMG: 30 damage, 8 rounds/s, 40 m, operated only by soldiers). They are bitten and turn like anyone (fatigues and helmet kept, rifle dropped).
@@ -63,6 +71,12 @@ W0 layer: no corpses, wrecks, damage decals or broken windows; ≥ 40 civilians 
 - From turn + 30 s the director lets infected emerge from ≥ 3 street edges ≥ 60° apart (E19 emergence rule), escalating with time.
 - **Caps:** concurrent infected ≤ 120 (high) / 60 (low); all simulated characters (infected + soldiers + civilians) ≤ 190 (high) / 95 (low). At the cap bites kill.
 - `l4.lineBreaks` fires at the first of: 75 s of plaza defense, living soldiers ≤ 50 %, or ≥ 15 infected inside the sandbag line; it triggers the fuel-truck mega chain (`veh.fuel-truck`, E27 mega) and the helicopter withdrawal.
+
+### 5.6b First Alphas and broken defensive lines
+- Spawn **2–3 Alphas over the level, on both tiers**, after `l4.firstTurn` (orchestrator decision); they count inside the existing infected caps. No Alpha before L4 in campaign data.
+- Use the E07 Alpha resistance table, world-space health bar and four telegraphed special moves: a hit knocks a soldier down; repeated hits destroy E26 barricades/sandbag slots. World-space bars appear when damaged or within 15 m; Charge/Ground slam/Grab and throw/Roar use E07 telegraphs ≥ 0.6 s and cooldowns.
+- Orchestrator default: soldiers prioritize a visible Alpha within their existing firing range; in the controlled line fixture ≥ 2 soldiers concentrate on one Alpha for ≥ 3 s while regular infected cross a gap opened by its barricade damage. No omniscient targeting or scripted soldier removal.
+- Civilians physically obstruct allied fields of fire: a human in the shot segment suppresses that allied shot; no friendly-fire damage. Reuse ally LOS queries and panic routines.
 
 ### 5.7 Live damage progression (W0 → W3, systemic)
 No pre-authored damage in L4: everything comes from E27 blasts, fires and E15 decals during the battle (tank shells, the fuel truck, burning vehicles, shattered windows from shockwaves, blood, corpses that persist, E07-AC14). L5 then uses the authored devastated twin, not the live end state (orchestrator default).
@@ -100,13 +114,13 @@ Bots: `complete`, `newbie`, `idle` (stays at the quartermaster), `evade-only`. T
 | E22-AC06 | **Machine gun:** acquired only from the quartermaster and auto-equipped; 2,000 continuous rounds never produce a reload, empty, overheat or ammo HUD element; pierce 1 (≥ 1 round hits two infected in line in the table test); clearing a group of 5 infected at 10 m takes ≤ 3 s with the machine gun and ≥ 6 s with the handgun; the `complete` bot's kill rate while firing during the plaza defense is ≥ 1.0 kills/s (median) | sim |
 | E22-AC07 | **The turn:** `l4.firstTurn` fires 40–50 s after the machine gun is issued (or at arrival + 100 s); 1–3 evacuees tagged `origin:'L3-bus'` turn with ≥ 10 humans within 10 m (identity continuity); ≥ 5 further humans turn within 30 s (one seed) PO 10-09: single seed. | sim |
 | E22-AC08 | **Scale:** 18–22 soldiers and 45–55 civilians at the turn (high tier), ≥ 40 % of civilians armed with each of pistol, hunting rifle and improvised melee present ≥ 3 times; the low tier spawns 50 % of each count; infected ≤ 120 / 60 and total characters ≤ 190 / 95 are never exceeded | sim |
-| E22-AC09 | **Everyone fights and everyone can turn:** armed civilians make ≥ 15 % of non-player kills; unarmed civilians flee; soldiers and armed civilians are bitten and turn (same entity id, uniform/clothes kept, weapon dropped) on one seed; no soldier or civilian has a damage-immunity or scripted-survival flag at any tick PO 10-09: single seed. | sim |
+| E22-AC09 | **CHANGED 2026-10-11 — Everyone fights and everyone can turn:** retain ≥ 15 % armed-civilian share of non-player kills, civilian panic, same-id/clothes turning with dropped weapons, and no immunity/scripted survival. A panicking civilian crossing a soldier’s firing segment suppresses that shot until clear, without friendly-fire damage; first turns remain evacuees behind the military line (AC07). One seed. | sim |
 | E22-AC10 | **From all sides, without omniscience:** from turn + 30 s, director infected emerge from ≥ 3 street edges ≥ 60° apart, each first visible within 3 m of an emergence point outside the frustum; the E20-AC11 omniscience audit passes (one seed) PO 10-09: single seed. | sim |
 | E22-AC11 | **Military spectacle:** per run, ≥ 2 HMG positions fire (`hmg.burst`), 2 military trucks and 1 armored vehicle are present, the tank enters and fires every 8–12 s through E27 large `ExplosionDef`s (never within 15 m of the player or an ally), the helicopter orbits with door-gun bursts and withdraws at `l4.lineBreaks` without landing | sim |
-| E22-AC12 | **Still not enough:** in one seed, by `l4.lineBreaks` the combined kills (player + allies) are ≥ 60; living soldiers do not exceed their count at the turn; every soldier loss is a bite/kill event (no scripted removal). PO 2026-10-09 (§10): the population median rule and 20-seed gate are retired PO 10-09: single seed. | sim |
-| E22-AC13 | **Line break:** `l4.lineBreaks` fires by its first-of rule (75 s / ≤ 50 % soldiers / ≥ 15 inside) and also with the `idle` bot; it plays the fuel-truck mega chain (E27-AC06 detectors) and the objective changes to "Find somewhere to hide" | sim |
+| E22-AC12 | **CHANGED 2026-10-11 — First Alphas, still not enough:** exactly 2–3 `inf.alpha` spawn after the first turn on both tiers, within AC08 caps; none in L1–L3. They use E07 resistance/knockdown/barricade rules. In the line fixture ≥ 2 soldiers fire at one visible Alpha for ≥ 3 s and ≥ 3 regular infected cross its opened defensive gap. By `l4.lineBreaks`, combined kills/downings ≥ 60; soldiers never increase, every loss is a bite/kill event. Shared world-space health bars and all four special moves meet E07, including phone readability. One seed. | sim + visual |
+| E22-AC13 | **CHANGED 2026-10-11 — Line break:** retain first-of rule (75 s / ≤ 50 % soldiers / ≥ 15 inside), including `idle`, the E27 fuel-truck mega chain and objective "Find somewhere to hide". Separately, an Alpha physically destroys an E26 sandbag/barricade slot by logged HP damage in the controlled line fixture; the gap becomes traversable with no scripted deletion. | sim |
 | E22-AC14 | **Live damage:** at basement entry the district shows ≥ 4 fires, ≥ 2 burning vehicles, ≥ 10 shattered windows and ≥ 6 scorch decals, each traceable to an explosion/fire event of this run; corpses persist (E07-AC14) | sim |
-| E22-AC15 | **Basement ending:** the cellar door accepts only the player (and corgi); no NPC or infected is inside after `l4.doorBarred`; battle events (gunfire/explosions) continue for ≥ 6 s afterwards with the low-pass applied; then `level.completed` and L5 loads with no reward screen | sim + e2e |
+| E22-AC15 | **CHANGED 2026-10-11 — Hardware basement, alone:** only the player enters Kessler’s Hardware basement (the existing immortal corgi may accompany them: orchestrator default; zero human followers). After `l4.doorBarred`, no human NPC or infected is inside; gunfire/explosions continue above for ≥ 6 s with the low-pass applied; then `level.completed` loads L5 inside the same basement with the carried arsenal and no reward screen. | sim + e2e |
 | E22-AC16 | **Light:** `timeOfDay.L4.polar` in 1.15–1.30 rad and fog far ≥ L3 fog far + 20 m; 0 smoke columns before `l4.firstTurn` and ≥ 3 at `l4.lineBreaks` (`l4-collapse` frame) | unit + visual |
 | E22-AC17 | **Checkpoints:** dying right after `arrival`, `turn`, `line-break` restores the snapshot (allies, armed state, outbreak layer, spectacle actors' state) within tolerance | sim |
 | E22-AC18 | **Real-input playthrough:** headless Playwright, mouse/keyboard only, from the bus to the barred basement door, 1 seed, 0 console errors, screenshots at all §6 photo spots and the four pair cameras | real-input e2e |
@@ -130,3 +144,16 @@ Bots: `complete`, `newbie`, `idle` (stays at the quartermaster), `evade-only`. T
 - **Perf (E22-AC20):** high p95 9.4 ms (war) / 11.7 ms (collapse), 255 / 282 draws, 464k / 1.11M triangles; phone (4x CPU throttle) p50 20.8 / 26.9 ms, 205 / 176 draws, 239k / 498k triangles. The phone hitch bound is 80 ms under the 4x throttle (50 ms on desktop). The perimeter posts and 30k+ triangle buildings no longer cast shadows on the phone tier.
 - **Missing assets (none built, closest used):** a dedicated broken-glass decal, a fuel-truck crater, a cellar prop kit and a tank-shell scorch use existing assets / plain geometry.
 - **Pre-existing on main (not caused by L4):** `T-E10-02` (L1 fire-station reachable at W0) and `T-E12-07-L1`.
+
+## 11. Implementation plan (2026-10-11)
+
+All lanes ≤ 3 h; execute in order. Keep the built convoy, quartermaster, armed-civilian mix, military spectacle, live damage and pair cameras.
+
+| Lane | Budget | Concrete change and reuse |
+| --- | --- | --- |
+| L4-S1 systems | 3 h | Consume E07 Alpha data/brain, shared world-space bars and four specials/cooldowns, and E26 `src/sim/interact/Barricades.ts`; extend `src/sim/outbreak/Allies.ts` visible-target priority and civilian shot blocking. |
+| L4-D1 district | 2 h | Reuse `src/levels/L4/layout.ts`, `D-FAIR`, `prop.sandbag-pallet`, `veh.military-apc`, `veh.tank`, `int.basement-cellar`; attach Alpha emergence and breakable-line anchors. |
+| L4-E1 encounters | 3 h | Extend `src/data/l4.ts`, `src/sim/missions/LevelFourWar.ts` and `L4Spectacle.ts`: 2–3 Alphas, concentration/gap fixture, player-only basement handover. |
+| L4-Q1 Scene Lab + browser e2e | 3 h | Extend existing `specs/scenes/qa-l4-*.json` with Alpha/line-break captures and `tests/levels/L4.test.ts`; headless `tests/e2e/levels/L4.spec.ts`, pair cameras and E18 peak counters. |
+
+Epic report rationale: AC09/12/13/15 changed because the PO adds Alphas and explicitly requires an internal outbreak and solitary hardware-basement escape. Matching built content remains; §10 measurements must be revalidated with Alphas. Tests keep `T-E22-01`…`T-E22-20` and their AC tags; a matching old tag is not proof of the revised behavior.
