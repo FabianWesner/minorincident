@@ -15,11 +15,11 @@ export const weatherPresets: Record<WeatherKind, WeatherPreset> = {
   ash: { rain: 0, flakes: .35, fog: .12, wind: .04, clouds: .1 },
   none: { rain: 0, flakes: 0, fog: .08, wind: 0, clouds: 0 },
 };
-export interface WeatherKey { tick: number; kind: WeatherKind }
+export interface WeatherKey { tick: number; kind: WeatherKind; /** Seconds, smoothstep from the preceding key. */ blend?: number; preset?: Partial<WeatherPreset> }
 export const weatherTimelines: Record<string, readonly WeatherKey[]> = {
-  L1: [{ tick: 0, kind: 'clear' }], L2: [{ tick: 0, kind: 'clear' }],
-  L3: [{ tick: 0, kind: 'haze' }], L4: [{ tick: 0, kind: 'clear' }],
-  L5: [{ tick: 0, kind: 'ash' }], L6: [{ tick: 0, kind: 'none' }],
+  L1: [{ tick: 0, kind: 'clear' }, { tick: 45 * 60, kind: 'clouds', blend: 40 }], L2: [{ tick: 0, kind: 'clear' }],
+  L3: [{ tick: 0, kind: 'haze' }, { tick: 90 * 60, kind: 'ash', blend: 45, preset: { fog: .4, wind: .4, clouds: .3 } }], L4: [{ tick: 0, kind: 'clear' }],
+  L5: [{ tick: 0, kind: 'ash' }, { tick: 60 * 60, kind: 'fog', blend: 60, preset: { flakes: .35, wind: .04, clouds: .2 } }], L6: [{ tick: 0, kind: 'none' }],
   'weather-lab': weatherKinds.filter(k => k !== 'none').map((kind, i) => ({ tick: i * 600, kind })),
   'storm-street': [{ tick: 0, kind: 'thunderstorm' }],
 };

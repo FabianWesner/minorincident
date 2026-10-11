@@ -1,0 +1,684 @@
+{
+  "stats": {
+    "startTime": "2026-10-11T05:15:24.880Z",
+    "duration": 528304.809,
+    "expected": 50,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5961,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6006,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5878,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5955,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5904,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8292,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/controls-playtest.spec.ts",
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 35022,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 35159,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 51668,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-feel.spec.ts",
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5315,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/driving.spec.ts",
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3680,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16980,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L6.spec.ts",
+      "title": "T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 12132,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menus-mouse.spec.ts",
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 14512,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/save.spec.ts",
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8698,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 397,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 477,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 382,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 429,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 375,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 427,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 374,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 445,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 375,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 428,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1386,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2491,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-01b @E28 @E28-AC01 browser and Node weather stream agree",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6664,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-04b @E28 @E28-AC04 lightning flash reduction caps the visible flash",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3099,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-08b @E28 @E28-AC08 menus do not expose weather selection and debug override remains available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 14103,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-08c @E28 @E28-AC08 campaign level select keeps story weather",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 14020,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-09 @E28 @E28-AC09 offline snow/fog reverb decay shorter than clear",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1472,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-11 @E28 @E28-AC11 HUD labels current weather and precipitation dithers within 6m",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 14146,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/weather.spec.ts",
+      "title": "T-E28-09b @E28 @E28-AC09 rain bed gain follows intensity and gust/thunder events reach cue log",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6748,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/l5-budgets.spec.ts",
+      "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 51270,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/l5-budgets.spec.ts",
+      "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 64438,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/weather.spec.ts",
+      "title": "T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation high",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3047,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/weather.spec.ts",
+      "title": "T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation low",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3689,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-03b @E28 @E28-AC03 @visual wet mask follows accumulated rain and has a dry state",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13656,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-05b @E28 @E28-AC05 @visual fog player contrast is at least 3:1 against the 2m ring",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6302,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8314,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=60% and track texels grow",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9329,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7232,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7803,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7768,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10287,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7349,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7006,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pixels",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6252,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11853,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/weather-live/tests/visual/weather.spec.ts",
+                "column": 66,
+                "line": 81
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m957\u001b[39m\nReceived:   \u001b[31m5553\u001b[39m\n\n  79 |   await page.evaluate(() => window.__SCENE__!.step(30)); const dark = await shot(page, 'scripted-strike-blackout');\n  80 |   const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.weather!.powerRevision).toBe(1); const bright = (p: PNG) => { let n = 0; for (let i = 0; i < p.data.length; i += 4) if (p.data[i] > 200 && p.data[i + 1] > 200 && p.data[i + 2] > 200) n++; return n; };\n> 81 |   expect(bright(lit)).toBeGreaterThan(100); expect(bright(dark)).toBeLessThan(bright(lit) * .5);\n     |                                                                  ^\n  82 | });\n  83 |\n  84 | /** Supplement the weather moods with facade/hero-shadow evidence for checklist G. */\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/weather-live/tests/visual/weather.spec.ts:81:66"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "visual/weather.spec.ts",
+      "title": "T-E28-12-wall @E28 @E28-AC12 @vision window spill stays outside the house facade at the game camera",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6417,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

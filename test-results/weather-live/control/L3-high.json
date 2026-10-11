@@ -1,0 +1,231 @@
+{
+  "hitches": [
+    {
+      "tick": 5581,
+      "ms": 432
+    },
+    {
+      "tick": 5791,
+      "ms": 412.40000000000146
+    },
+    {
+      "tick": 5850,
+      "ms": 437.70000000000437
+    },
+    {
+      "tick": 5924,
+      "ms": 401.70000000000437
+    },
+    {
+      "tick": 8049,
+      "ms": 422.6999999999971
+    }
+  ],
+  "tasks": [
+    {
+      "start": 43225,
+      "duration": 330
+    },
+    {
+      "start": 50909.89999961853,
+      "duration": 431
+    },
+    {
+      "start": 54509.300000190735,
+      "duration": 408
+    },
+    {
+      "start": 55568.199999809265,
+      "duration": 414
+    },
+    {
+      "start": 56902.89999961853,
+      "duration": 392
+    },
+    {
+      "start": 92384.69999980927,
+      "duration": 409
+    }
+  ],
+  "baselineLinks": 17,
+  "blendLinks": 0,
+  "before": {
+    "powerRevision": 0,
+    "kind": "haze",
+    "override": "haze",
+    "rain": 0,
+    "fog": 0.25,
+    "flakes": 0,
+    "clouds": 0.15,
+    "wetness": 0,
+    "accumulation": 0,
+    "wind": {
+      "x": 0.9823396894906061,
+      "z": 0.18710621168603572
+    },
+    "blend": 1,
+    "strength": 0.4748649648361917,
+    "gust": 0.0748649648361917,
+    "flashUntil": 0,
+    "lightning": null,
+    "modifiers": {
+      "noiseRadius": 1,
+      "fireDuration": 1,
+      "fireSpread": 1.4,
+      "vehicleGrip": 1,
+      "playerSpeed": 1,
+      "infectedSight": 1
+    },
+    "reveals": [],
+    "rng": {
+      "stream": "weather",
+      "state": 1038401343,
+      "cursor": 54
+    },
+    "trackCount": 0
+  },
+  "after": {
+    "powerRevision": 0,
+    "kind": "haze",
+    "override": "haze",
+    "rain": 0,
+    "fog": 0.25,
+    "flakes": 0,
+    "clouds": 0.15,
+    "wetness": 0,
+    "accumulation": 0,
+    "wind": {
+      "x": 0.9890225506724432,
+      "z": 0.14776465836381372
+    },
+    "blend": 1,
+    "strength": 0.5463349183923615,
+    "gust": 0.14633491839236146,
+    "flashUntil": 0,
+    "lightning": null,
+    "modifiers": {
+      "noiseRadius": 1,
+      "fireDuration": 1,
+      "fireSpread": 1.4,
+      "vehicleGrip": 1,
+      "playerSpeed": 1,
+      "infectedSight": 1
+    },
+    "reveals": [],
+    "rng": {
+      "stream": "weather",
+      "state": 1350531028,
+      "cursor": 87
+    },
+    "trackCount": 0
+  },
+  "countersBefore": {
+    "updateCpuMs": 2.6000003814697266,
+    "renderCpuMs": 3.59999942779541,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 6.8119891008173035,
+    "frameMs": 146.8000000000029,
+    "simMs": 0,
+    "uiMs": 0,
+    "drawCalls": 179,
+    "triangles": 742325,
+    "geometries": 956,
+    "textures": 72,
+    "entities": 943,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 19.199999809265137,
+      "simMs": 5753.900000572205,
+      "viewMs": 9311.699999809265
+    },
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 14,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 1379555979,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L3"
+    }
+  },
+  "countersAfter": {
+    "updateCpuMs": 1.3999996185302734,
+    "renderCpuMs": 3.40000057220459,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 222.22222222222223,
+    "frameMs": 4.5,
+    "simMs": 1.8000001907348633,
+    "uiMs": 0,
+    "drawCalls": 184,
+    "triangles": 805813,
+    "geometries": 960,
+    "textures": 76,
+    "entities": 943,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 19.199999809265137,
+      "simMs": 5753.900000572205,
+      "viewMs": 9311.699999809265
+    },
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 8.3,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 7662,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 1799221507,
+    "lighting": {
+      "lightFieldMs": 0.10000038146972656,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L3"
+    }
+  },
+  "baselineP95": 8.80000000000291,
+  "p50": 5.69999999999709,
+  "p95": 8.60000000000582,
+  "max": 437.70000000000437,
+  "frames": 6910
+}

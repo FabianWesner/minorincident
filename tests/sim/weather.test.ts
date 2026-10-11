@@ -1,13 +1,39 @@
 import { afterEach, expect, test } from 'vitest';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { WeatherSystem } from '../../src/sim/weather/WeatherSystem';
-import { weatherKinds, weatherTimelines } from '../../src/data/weather';
+import { weatherKinds, weatherPresets, weatherTimelines } from '../../src/data/weather';
 import { Perception } from '../../src/sim/ai/Perception';
 import { arena, equip, fire, step } from './combat/helpers';
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 async function load() { const w = await arena(); worlds.push(w); return w; }
 function weatherTicks(w: SimWorld, n: number) { for (let i = 0; i < n; i++) { w.tick++; w.weather!.update(); } }
+test.each(['L1', 'L3', 'L5'])('live weather %s @E28 seeded continuous authored blend', async level => {
+  const a = await load(), b = await load();
+  for (const w of [a, b]) { w.scenario = level; w.weather = new WeatherSystem(w, 28); }
+  const [start, end] = weatherTimelines[level];
+  expect(end.blend).toBeGreaterThanOrEqual(20); expect(end.blend).toBeLessThanOrEqual(60);
+  const from = { ...weatherPresets[start.kind], ...start.preset }, to = { ...weatherPresets[end.kind], ...end.preset };
+  for (let tick = 1; tick <= end.tick + end.blend! * 60; tick++) {
+    const previous = a.weather!.snapshot(); weatherTicks(a, 1); weatherTicks(b, 1);
+    for (const field of ['rain', 'fog', 'flakes', 'clouds'] as const) expect(Math.abs(a.weather![field] - previous[field])).toBeLessThan(.002);
+    if (tick % 60 === 0) expect(a.weather!.snapshot()).toEqual(b.weather!.snapshot());
+    if (tick === end.tick || tick === end.tick + end.blend! * 30 || tick === end.tick + end.blend! * 60) {
+      const ratio = (tick - end.tick) / (end.blend! * 60);
+      for (const field of ['rain', 'fog', 'flakes', 'clouds'] as const) expect(a.weather![field]).toBeCloseTo(from[field] + (to[field] - from[field]) * ratio, 8);
+    }
+  }
+  expect(a.weather!.kind).toBe(end.kind);
+});
+test('live rain @E28 blend onset, wetness and clearing stay continuous', async () => {
+  const w = await load(); w.weather!.setTimeline([{ tick: 0, kind: 'clear' }, { tick: 60, kind: 'rain', blend: 20 }, { tick: 3660, kind: 'clear', blend: 20 }]);
+  weatherTicks(w, 60); expect(w.weather!.rain).toBe(0);
+  weatherTicks(w, 600); expect(w.weather!.rain).toBeCloseTo(.5); expect(w.weather!.modifiers.vehicleGrip).toBeCloseTo(.925);
+  weatherTicks(w, 600); expect(w.weather!.rain).toBe(1); expect(w.weather!.wetness).toBeGreaterThan(0);
+  weatherTicks(w, 2400); const wet = w.weather!.wetness;
+  weatherTicks(w, 1200); expect(w.weather!.rain).toBe(0); expect(w.weather!.wetness).toBeGreaterThanOrEqual(wet);
+  const peak = w.weather!.wetness; weatherTicks(w, 5400); expect(w.weather!.wetness).toBeCloseTo(peak / 2, 8);
+});
 test('T-E28-01 @E28 @E28-AC01 seeded gust/lightning/wetness timeline and campaign keys', async () => {
   const a = await load(), b = await load();
   for (const w of [a, b]) w.weather!.setOverride('thunderstorm');
