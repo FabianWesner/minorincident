@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 import { worldAssets } from '../../../src/assets/worldDefinitions';
 import { l3, l3Anchors, l3PhotoSpots, l3Street } from '../../../src/data/l3';
+import { l1Pedestrians, l3CivilianModels } from '../../../src/data/npcs';
 import { timeOfDay } from '../../../src/data/timeOfDay';
 import { commerceFrontages, l3Dressing, levelThreeLayouts, type L3DressingKind, type L3Street } from '../../../src/levels/L3/layout';
 import { compositions } from '../../../src/levels/compositions';
@@ -160,4 +161,9 @@ describe('L3 static', () => {
     expect(l3.soldiers.count).toBeGreaterThanOrEqual(8);
     expect(layout.placements.some(p => p.assetId === 'kit.highway-onramp')).toBe(true);
   });
+});
+
+test('@load L3 initial crowd covers every authored corpse and all emerging pedestrian models', () => {
+  const authored = l3Dressing.filter(entry => entry.assetId.startsWith('npc.')).map(entry => entry.assetId);
+  for (const model of [...authored, ...l1Pedestrians.models]) expect(l3CivilianModels).toContain(model);
 });

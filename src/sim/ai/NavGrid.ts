@@ -91,7 +91,7 @@ export class NavGrid {
   }
   private indexWalls(): void {
     this.buckets.clear();
-    for (const wall of this.walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
+    for (const wall of this.walls.filter(w => w.y - w.halfY < 1.8 && w.y + w.halfY > .05)) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
       let column = this.buckets.get(x);
       if (!column) this.buckets.set(x, column = new Map());
       let bucket = column.get(z);

@@ -127,6 +127,12 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     };
     for (const [i, entry] of l3Dressing.entries()) if (!entry.entity) add(`l3-${entry.kind}-${i}`, entry.assetId, entry.x, entry.z, entry.yaw ?? 0, entry.scale ?? 1, entry.decay);
     for (const [i, f] of commerceFrontages(layout).entries()) add(`l3-broken-window-${i}`, 'decay.broken-glass', f.x, f.z, f.facing > 0 ? 0 : Math.PI);
+    // Authored decks stay at exact posts; automatic dressing clearance must not move the support away from its guards.
+    for (const [i, z] of [-18, -7.6, 7.6, 18].entries()) {
+      layout.placements.push({ id: `l3-watchtower-${i}`, assetId: 'kit.guard-tower', position: [138.5, 0, z], yaw: 0,
+        scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'l3',
+        visualAabb: { min: [137.1, 0, z - 1.4], max: [140.18, 4.9, z + 1.4] } });
+    }
     layout.lightGroups.push({ id: 'l3', offAt: 5 });
     return layout;
   });

@@ -4,6 +4,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { SpatialHash } from '../spatial/SpatialHash';
 import type { Vec2 } from '../../input/InputFrame';
 import type { ScenarioDefinition } from '../../levels/loader';
+type RayPoint = Vec2 & { y?: number };
 export type CoverWall = NonNullable<ScenarioDefinition['walls']>[number] & { entityId?: number };
 /** Reused neighbor/result buffers; stable IDs break ties. Walls are the scenario's full-cover colliders. */
 export class HitQuery {
@@ -35,8 +36,8 @@ export class HitQuery {
     if (this.stamps.length < w.length) this.stamps = new Uint32Array(w.length);
     return this.grid = { cells, length: w.length, first: w[0], last: w[w.length - 1] };
   }
-  /** Segment vs XZ slabs; returns first solid cover distance, or the whole segment. */
-  clearDistance(origin: Vec2, direction: Vec2, range: number, ignoreId?: number): number {
+  /** Segment vs XYZ slabs (range measured along XZ); returns first solid cover distance, or the whole segment. */
+  clearDistance(origin: RayPoint, direction: RayPoint, range: number, ignoreId?: number): number {
     let closest = range;
     // Static walls: only those in the 8 m cells overlapping the segment's bounds (a wall crossing the segment shares a cell with it).
     if (this.walls.length > 64) {
@@ -53,22 +54,26 @@ export class HitQuery {
     for (const walls of this.wallGroups) for (const wall of walls) closest = this.cover(wall, origin, direction, range, closest, ignoreId);
     return closest;
   }
-  private cover(wall: CoverWall, origin: Vec2, direction: Vec2, range: number, closest: number, ignoreId?: number): number {
+  private cover(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, closest: number, ignoreId?: number): number {
     {
       if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
-      if (wall.y - wall.halfY > 0.7 || wall.y + wall.halfY < 0.7) return closest;
       let near = 0, far = range;
-      for (const axis of ['x', 'z'] as const) {
-        const half = axis === 'x' ? wall.halfX : wall.halfZ, d = direction[axis];
-        if (Math.abs(d) < 1e-12) { if (origin[axis] < wall[axis] - half || origin[axis] > wall[axis] + half) { far = -1; break; } }
-        else { const a = (wall[axis] - half - origin[axis]) / d, b = (wall[axis] + half - origin[axis]) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      for (const axis of ['x', 'y', 'z'] as const) {
+        const half = axis === 'x' ? wall.halfX : axis === 'y' ? wall.halfY : wall.halfZ, d = direction[axis] ?? 0;
+        const start = origin[axis] ?? .7;
+        if (Math.abs(d) < 1e-12) { if (start < wall[axis] - half || start > wall[axis] + half) { far = -1; break; } }
+        else { const a = (wall[axis] - half - start) / d, b = (wall[axis] + half - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
       }
       return far >= near && near < closest ? near : closest;
     }
   }
-  visible(origin: Vec2, target: Vec2, ignoreId?: number): boolean {
+  visible(origin: RayPoint, target: RayPoint, ignoreId?: number): boolean {
     const dx = target.x - origin.x, dz = target.z - origin.z, distance = Math.hypot(dx, dz);
-    return !distance || this.clearDistance(origin, { x: dx / distance, z: dz / distance }, distance, ignoreId) >= distance - 1e-8;
+    return !distance || this.clearDistance(origin, { x: dx / distance, y: ((target.y ?? .7) - (origin.y ?? .7)) / distance, z: dz / distance }, distance, ignoreId) >= distance - 1e-8;
+  }
+  /** Transforms store the body centre, .7 m above the feet; rifles fire at 1.15 m. */
+  shotVisible(origin: RayPoint, target: RayPoint, ignoreId?: number): boolean {
+    return this.visible({ ...origin, y: (origin.y ?? .7) + .45 }, { ...target, y: (target.y ?? .7) + .45 }, ignoreId);
   }
   private readonly eye = { x: 0, z: 0 };
   /** `ground`: a downed infected the swing was aimed at (a click on it); other downed bodies are never struck. */
@@ -88,7 +93,7 @@ export class HitQuery {
     }
     return this.hits;
   }
-  ray(sourceId: number, origin: Vec2, direction: Vec2, range: number, excluded?: ReadonlySet<number>): EntitySnapshot | null {
+  ray(sourceId: number, origin: RayPoint, direction: RayPoint, range: number, excluded?: ReadonlySet<number>): EntitySnapshot | null {
     const wallDistance = this.clearDistance(origin, direction, range);
     let nearest = wallDistance, hit: EntitySnapshot | null = null;
     for (const id of this.nearby(origin, range + 0.5)) {

@@ -1,0 +1,136 @@
+Local lint
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+
+Local typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Remote full unit/build/sim smoke
+ Test Files  151 passed (151)
+      Tests  770 passed (770)
+✓ built in 10.18s
+ Test Files  5 passed | 237 skipped (242)
+      Tests  6 passed | 1507 skipped (1513)
+[WebServer] Error: Port 3301 is already in use
+
+Remote focused cast/pipeline
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l3-load -> 94.130.181.173:/srv/mi/ws/l3-load-730b3c
+[remote] sync 37s, 5715 files; job /srv/mi/jobs/l3-load-730b3c-95954-1791719988; queueing for a slot
+[runner] slot 0 acquired; load 2.04 2.74 2.00
+
+ RUN  v5.0.3 /srv/mi/jobs/l3-load-730b3c-95954-1791719988
+
+ ✓  functional  tests/unit/assets/load-pipeline.test.ts (8 tests) 821ms
+   ✓ @transition outro prefetch warms authored decay assets without assembling a layout or parsing models 473ms
+ ✓  functional  tests/unit/levels/l3-static.test.ts (7 tests) 2474ms
+   ✓ L3 static (6)
+     ✓ T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart 1482ms
+     ✓ T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry 949ms
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  12:00:26
+   Duration  4.62s (tests 50%, import 27%, transform 24%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 37s, remote total 7s)
+
+Native Metal browser smoke
+  ✓  12 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.4s)
+  ✓  16 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (680ms)
+  ✓  17 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (568ms)
+  ✓  15 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.2s)
+  ✓  19 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (785ms)
+  ✓  20 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (612ms)
+  ✓  18 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.2s)
+  ✓  22 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (680ms)
+  ✓  23 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (791ms)
+  ✓  21 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.3s)
+  ✓  25 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (3.5s)
+  ✓  26 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (3.7s)
+  ✓  24 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (11.7s)
+
+
+  1) [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 1
+
+      Array [
+    +   "weapon.fire-axe",
+        "weapon.bat",
+    -   "weapon.kick",
+    -   "weapon.fists",
+      ]
+
+      82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
+      83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
+    > 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
+         |                                                                                                                                                                                                               ^
+      85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');
+      86 | });
+      87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l3-load/tests/e2e/save.spec.ts:84:207
+
+    Error Context: test-results/playwright/run-3348/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3348/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3348/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
+  25 passed (1.9m)
+
+Baseline main save/continue
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (27.7s)
+
+
+  1) [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 1
+
+      Array [
+    +   "weapon.fire-axe",
+        "weapon.bat",
+    -   "weapon.kick",
+    -   "weapon.fists",
+      ]
+
+      82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
+      83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
+    > 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
+         |                                                                                                                                                                                                               ^
+      85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');
+      86 | });
+      87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{
+        at /private/tmp/l3-load-baseline/tests/e2e/save.spec.ts:84:207
+
+    Error Context: test-results/playwright/run-3349/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3349/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3349/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
