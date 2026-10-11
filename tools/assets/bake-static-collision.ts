@@ -101,7 +101,7 @@ export async function bakeStaticCollision(path: string): Promise<Aabb[]> {
 
 export async function writeStaticCollision(ids: readonly string[] = []): Promise<void> {
   const assets: Record<string, { source: string; hash: string; boxes: Aabb[] }> = ids.length ? { ...staticCollision } : {};
-  const aliases: Record<string, string> = { 'bld.pharmacy': 'int.pharmacy-clinic', 'prop.tree': 'prop.street-tree' };
+  const aliases: Record<string, string> = { 'prop.tree': 'prop.street-tree' };
   // Include delivered solid dressing even before a district starts using it.
   // Pickups/equipment/decals are not static district obstacles.
   for (const def of manifest.filter(a => (('world' in a && a.world) || a.id.startsWith('prop.') || a.id.startsWith('veh.') || a.id === 'decay.rubble-pile') && a.id !== 'prop.flower')) {
