@@ -148,6 +148,13 @@ export class DistrictView extends Group {
       const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
       for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined, heroAtSpawn)) lods.add(lod);
       initialLods.set(p.assetId, lods);
+      // These tiers are required by prepare() before revealing phone/L6 play.
+      // Start their decode beside the layout GLB, rather than after it finishes.
+      if (this.low && worldAssets[p.assetId]?.category !== 'prop') this.registry.prefetch(p.assetId, 'lod1', p.decay);
+      if (this.world.composition.id === 'L6' && !this.low) {
+        this.registry.prefetch(p.assetId, 'lod0', p.decay);
+        this.registry.prefetch(p.assetId, 'lod1', p.decay);
+      }
       if (heroAtSpawn && focus && distance <= lodPolicy.lod1From) this.registry.prefetch(p.assetId, 'lod0', p.decay);
     }
     if (heroAtSpawn && focus) for (const d of this.world.districts) for (const p of d.decay.placements) {

@@ -52,6 +52,7 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
         await page.waitForTimeout(2000);
       }
       if (process.env.TRANSITION_PROFILE === '1') await cdp.send('Profiler.start');
+      if (process.env.TRANSITION_TRACE === '1') await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8,blink,gpu,cc,disabled-by-default-v8.gc,disabled-by-default-v8.wasm', transferMode: 'ReturnAsStream' });
       await page.evaluate(({ level, restart, finalObjective }) => {
         const a = window.__SS__!; performance.clearMeasures();
         const probe: NonNullable<Window['transitionProbe']> = window.transitionProbe = { done: false, start: performance.now(), ready: 0, recordingStart: 0, begin: 0, frames: [] as number[], previous: 0, recording: false, stopped: false };
@@ -117,6 +118,8 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
           expect(await page.getByTestId('transition-progress').evaluate(element => (element as HTMLProgressElement).value)).toBe(1);
         }
         await page.evaluate(() => { window.transitionProbe!.begin = performance.now(); });
+        await expect(page.getByTestId('hud')).toBeHidden();
+        if (level === 'L1') expect(await page.evaluate(() => localStorage.getItem('minor-incident.onboarding.v1'))).toBeNull();
         await page.getByRole('button', { name: 'Begin mission' }).click();
       }
       await page.evaluate(() => { window.__SS__!.cheats.god(true); const p = window.transitionProbe!; if (!p.ready) p.ready = performance.now(); p.done = true; });
@@ -125,6 +128,15 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       if (process.env.TRANSITION_PROFILE === '1') {
         const { profile } = await cdp.send('Profiler.stop');
         writeFileSync(`${out}/${phase}-${tier}-${restart ? 'restart' : level}.cpuprofile`, JSON.stringify(profile));
+      }
+      if (process.env.TRANSITION_TRACE === '1') {
+        const completed = new Promise<{ stream?: string }>(resolve => cdp.once('Tracing.tracingComplete', resolve));
+        await cdp.send('Tracing.end'); const { stream } = await completed;
+        if (!stream) throw Error('Chrome timeline stream missing');
+        let timeline = '';
+        for (;;) { const chunk = await cdp.send('IO.read', { handle: stream }); timeline += chunk.data; if (chunk.eof) break; }
+        await cdp.send('IO.close', { handle: stream });
+        writeFileSync(`${out}/${phase}-${tier}-${restart ? 'restart' : level}.timeline.json`, timeline);
       }
       const nodeBuildsAfterReveal = await page.evaluate(() => window.__SS__!.perf().nodeBuilds);
       if (process.env.TRANSITION_VISUAL_QA === '1' && tier === 'high' && (level === 'L2' || level === 'L5')) await page.screenshot({ path: `${out}/${phase}-${level}-play.png` });

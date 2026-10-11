@@ -10,7 +10,7 @@ import { l2Dressing } from '../levels/L2/layout';
 import { l3Dressing } from '../levels/L3/layout';
 import { l4Dressing } from '../levels/L4/layout';
 import { l5Dressing, l5ShellAssets } from '../levels/L5/layout';
-import { atLeast, variantPath, type AssetDef } from './types';
+import { atLeast, type AssetDef } from './types';
 import { l1AftermathDressing } from '../levels/continuity';
 import { infectedDef } from '../data/infected';
 import { catalog } from '../data/actions/catalog';
@@ -34,7 +34,7 @@ export async function prefetchLevel(level: string, concurrency = 4, quality: 'hi
     const urls = new Set<string>(composition.districts.map(({ id }) => `/assets/layouts/${id}.base.glb`));
     const add = (id: string, decay?: string) => {
       try {
-        for (const url of districtAssetUrls(id, definition, ['lod2'])) urls.add(variantPath(url, decay));
+        for (const url of districtAssetUrls(id, definition, quality === 'low' ? ['lod1', 'lod2'] : ['lod2'], decay)) urls.add(url);
         const decal = definitions.get(id)?.decalTexture; if (decal) urls.add('/' + decal.replace(/^public\//, ''));
       } catch { /* unknown ids surface in the real load */ }
     };

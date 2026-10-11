@@ -240,7 +240,9 @@ export class GameView implements Lifecycle {
         if (this.world.scenario === 'L6' || this.quality === 'low') {
           // Phone node builds exceed the frame budget even when compiled asynchronously.
           // Keep its smaller LODs resident and warm them while loading, like the L6 route.
+          const route = performance.now();
           await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget)));
+          loadMeasure('view:route-lods', route);
         } else {
           if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
           this.pendingPreparation = { shared, instanceCapacity };
@@ -278,22 +280,7 @@ export class GameView implements Lifecycle {
       this.meshes.push(this.destination); this.scene.add(this.destination);
     }
     let t = performance.now();
-    // District shaders are independent of the worker's cold civilian bake. Build
-    // them while that bake is in flight; the complete warm-up still executes every
-    // object and driver path before revealing the playable scene.
-    let districtCompile: Promise<void> | undefined;
-    if (actors && this.world.scenario === 'L1' && !this.background && this.renderer.selectedBackend === 'webgl' && this.postFx && this.lighting) {
-      this.lighting.setQuality(this.quality); this.lighting.update(this.view);
-      if (this.world.weather) {
-        this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
-        this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
-      }
-      const compiling = this.renderer.foregroundCompile;
-      this.renderer.foregroundCompile = true;
-      districtCompile = this.postFx.compile().finally(() => { this.renderer.foregroundCompile = compiling; });
-      void districtCompile.catch(() => {});
-    }
-    await Promise.all([actors ?? this.startActors(Promise.resolve()), districtCompile]);
+    await (actors ?? this.startActors(Promise.resolve()));
     if (this.npcs) this.scene.add(this.npcs);
     if (this.entityAssets) this.scene.add(this.entityAssets);
     if (this.actions) { this.actions.update(); this.scene.add(this.actions); }
@@ -372,14 +359,10 @@ export class GameView implements Lifecycle {
         // Execute the shared shader's fire branch and its HDR field pass while
         // loading. The final full-size draw also executes the daylight branch.
         if (this.lighting && this.lighting.field.strength.value === 0) {
-          const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 1, 1, Infinity);
+          const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 0, 1, Infinity);
           try {
             this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
             await prepare();
-            // Execute a lit full-size frame too: native driver specialization
-            // must finish before the first accident/fire frame in gameplay.
-            if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
-            await this.renderer.finishWarmUp();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
       }
@@ -388,6 +371,7 @@ export class GameView implements Lifecycle {
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
       this.idPass = this.params.get('idpass') === '1'; this.update(1);
+      this.missionUI?.prepare();
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.

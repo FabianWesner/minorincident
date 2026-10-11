@@ -9,7 +9,7 @@ import { PaletteMaterial } from "../render/PaletteMaterial";
 import { placeholder } from "./districtPlaceholders";
 import { worldAssets } from "./worldDefinitions";
 import { AssetRegistry } from "./registry";
-import { atLeast } from "./types";
+import { atLeast, variantPath } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
@@ -18,12 +18,20 @@ import { staticBatch, staticBatchAsync } from './staticBatch';
 import { buildingDoors } from '../data/buildingDoors';
 import { loadGate, loadGltf } from './loadGate';
 import { productionIds } from './productionIds';
+import staticBakes from './staticBakes.json';
+import { decodeStaticBake } from './staticBakeData';
+import { decompressCivilianBake } from './civilianBakeData';
 import { openFireStationBays } from './fireStationBays';
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
-export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2']): string[] {
+export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'], decay?: string): string[] {
   const def = definition(productionIds[id] ?? id);
   if (!atLeast(def.status, 'integrated') || def.decalTexture) return [];
-  return [...new Set(lods.map(lod => def.lods?.[lod] ?? def.glb).filter((path): path is string => Boolean(path)).map(path => '/' + path.replace(/^public\//, '')))];
+  return [...new Set(lods.map(lod => {
+    const canonical = def.lods?.[lod] ? lod : 'lod0';
+    const baked = (staticBakes as Record<string, string>)[`${id}:${canonical}:${decay ?? ''}`];
+    const path = def.lods?.[lod] ?? def.glb;
+    return baked ?? (path ? '/' + variantPath(path, decay).replace(/^public\//, '') : undefined);
+  }).filter((path): path is string => Boolean(path)))];
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
@@ -36,8 +44,8 @@ export class DistrictAssets {
   private readonly signTextures: import("three/webgpu").Texture[] = [];
   private readonly assets: AssetRegistry;
   private readonly ktx?: KTX2Loader;
-  constructor(private readonly materials: Materials, renderer?: WebGPURenderer) {
-    this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer, materials });
+  constructor(private readonly materials: Materials, renderer?: WebGPURenderer, private readonly sourceLoader?: (url: string) => Promise<Object3D>) {
+    this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer, materials, load: sourceLoader });
     if (renderer) {
       this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer);
       this.loader.setKTX2Loader(this.ktx);
@@ -119,7 +127,16 @@ export class DistrictAssets {
   private base(id: string, lod: AssetQuality, decay?: string): Promise<Group> {
     const def = worldAssets[id], productionId = productionIds[id] ?? id, canonical = this.canonical(id, lod);
     const baseKey = `${id}:batch:${canonical}:${decay ?? ''}`;
-    if (!this.cache.has(baseKey)) this.cache.set(baseKey, this.assets.loadAsset(productionId, canonical, decay).then(async (asset) => {
+    if (!this.cache.has(baseKey)) this.cache.set(baseKey, (async () => {
+      const url = !this.sourceLoader && (staticBakes as Record<string, string>)[`${id}:${canonical}:${decay ?? ''}`];
+      if (url) {
+        try {
+          const response = await fetch(url); if (!response.ok) throw Error(`Static bake ${response.status}`);
+          const root = decodeStaticBake(await decompressCivilianBake(await response.arrayBuffer()), this.materials, anchorsFor(id).length > 0);
+          return this.finishBatch(id, this.remember(root));
+        } catch { /* Source loading remains the quality-preserving fallback. */ }
+      }
+      const asset = await this.assets.loadAsset(productionId, canonical, decay);
       await loadGate.wait();
       if (productionId !== id) {
         const source = this.assets.definition(productionId).dimensions, target = def.dimensions;
@@ -149,14 +166,17 @@ export class DistrictAssets {
         if (gun) { gun.name = 'gun'; const socket = new Object3D(); socket.name = 'muzzle'; socket.position.copy(muzzleLocal); gun.add(socket); }
       }
       root.userData.placeholder = asset.userData.placeholder === true;
-      this.share(root);
-      if (id === 'bld.joes-diner') {
-        const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
-      }
-      root.traverse(node => { if (node instanceof Mesh) { this.batchMaterials.add(node.material as Material); if (node.material instanceof PaletteMaterial) node.material.seeThrough(); } });
-      return root;
-    }));
+      return this.finishBatch(id, root);
+    })());
     return this.cache.get(baseKey)!;
+  }
+  private finishBatch(id: string, root: Group): Group {
+    this.share(root);
+    if (id === 'bld.joes-diner') {
+      const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
+    }
+    root.traverse(node => { if (node instanceof Mesh) { this.batchMaterials.add(node.material as Material); if (node.material instanceof PaletteMaterial) node.material.seeThrough(); } });
+    return root;
   }
   /** `decay`: a reviewed decay variant of the asset (`w2`/`w3` buildings, `wrecked` vehicles; E21 per-placement damage). */
   async asset(id: string, lit = true, lod: AssetQuality = 'lod1', decay?: string): Promise<Group> {
