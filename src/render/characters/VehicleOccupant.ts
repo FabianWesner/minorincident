@@ -57,9 +57,9 @@ export class VehicleOccupant extends Group {
     seat.updateWorldMatrix(true, false);
     this.parent!.worldToLocal(this.position.copy(seat.getWorldPosition(this.point)));
     this.quaternion.copy(this.parent!.getWorldQuaternion(this.orientation).invert()).multiply(seat.getWorldQuaternion(new Quaternion()));
-    if (wheel) this.position.x += Math.max(0, Math.min(.2, wheel.x - this.position.x - .35)); // stay within the cushion
+    if (wheel) this.position.x += Math.max(0, Math.min(.2, wheel.x - this.position.x - .35 * fit)); // stay within the cushion
     this.torso.quaternion.copy(this.torsoRest);
-    if (wheel) this.torso.rotateZ(-.5);
+    this.torso.rotateZ(wheel ? -.5 : -.25);
     this.updateWorldMatrix(true, true);
     for (let i = 0; i < 2; i++) {
       if (wheel) { this.point.copy(wheel).add(new Vector3(-.04, .025, i === 0 ? -.12 : .12)); this.parent!.localToWorld(this.point); }
