@@ -22,8 +22,8 @@ test('T-E09-05 @E09-AC05 every light obstacle breaks with <=25% slowdown; every 
     const s = await fixture();
     try {
       const id = s.world.vehicles!.obstacles.spawn(kind, { x: 2.5, z: 0 }); s.speed(6); s.tick();
-      if ((lightObstacles as readonly string[]).includes(kind)) { expect(s.world.getEntity(id)!.health.current).toBe(0); expect(s.car.physics.speed).toBeGreaterThanOrEqual(4.5); expect(s.world.vehicles!.obstacles.debris).toHaveLength(3); }
-      else { expect(s.car.physics.speed).toBeLessThan(.5); expect(s.car.entity.health.current).toBeLessThan(s.car.entity.health.max); expect(s.world.getEntity(id)!.health.current).toBe(1); }
+      if ((lightObstacles as readonly string[]).includes(kind)) { expect(s.world.getEntity(id)!.health.current).toBe(0); expect(s.car.entity.vehicle!.decay).toBe('wrecked'); expect(s.car.physics.speed).toBeGreaterThanOrEqual(4.5); expect(s.world.vehicles!.obstacles.debris).toHaveLength(3); }
+      else { expect(s.car.physics.speed).toBeLessThan(.5); expect(s.car.entity.health.current).toBeLessThan(s.car.entity.health.max); expect(s.car.entity.vehicle!.decay).toBe('wrecked'); expect(s.world.getEntity(id)!.health.current).toBe(1); }
     } finally { s.world.dispose(); }
   }
 });
@@ -124,4 +124,30 @@ test('T-E09-06b @E09-AC06 a boxed-in driver is forcibly ejected and attached inf
 test('T-E09-06c @E09-AC06 ACTION can exit a zero-HP car during its fuse', async () => {
   const s = await fixture();
   try { s.world.vehicles!.damage(2, 300); const input = emptyInput(); input.interact = true; s.world.applyInput(input, 'keyboard'); s.tick(); expect(s.world.vehicles!.active).toBeNull(); expect(s.car.entity.vehicle!.damage).toBe('burning'); } finally { s.world.dispose(); }
+});
+
+
+test('@E09 hard Rapier lamp contacts select wrecked for driverless and player cars; gentle contacts do not', async () => {
+  const R = await import('@dimforge/rapier3d-compat');
+  for (const scripted of [false, true]) for (const speed of [1, 8]) {
+    const s = await fixture();
+    try {
+      if (scripted) { s.world.vehicles!.exit(); s.world.vehicles!.autopilot.set(2, intent => { intent.throttle = 1; intent.brake = false; }); }
+      // Lamp post in the front bumper's path; use native Rapier rather than the obstacle shortcut.
+      s.world.physics.world!.createCollider(R.ColliderDesc.cuboid(.12, 2, .12).setTranslation(2.3, 2, 0));
+      s.speed(speed); s.tick(8);
+      expect(s.car.entity.vehicle!.decay).toBe(speed >= 3 ? 'wrecked' : undefined);
+    } finally { s.world.dispose(); }
+  }
+});
+
+
+test('@E09 car-on-car impact dents both the driver and the stationary car', async () => {
+  const s = await fixture();
+  try {
+    const id = s.world.vehicles!.spawn('vehicle.sedan', { x: 4.4, z: 0 });
+    s.speed(8); s.tick(10);
+    expect(s.car.entity.vehicle!.decay).toBe('wrecked');
+    expect(s.world.entities.get(id)!.vehicle!.decay).toBe('wrecked');
+  } finally { s.world.dispose(); }
 });

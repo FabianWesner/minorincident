@@ -1,0 +1,123 @@
+{
+  "truck": {
+    "backend": "webgl",
+    "frames": 180,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "vehicleBodyOverlapsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "vehicles": {
+      "engine": {
+        "entity": 5,
+        "position": [
+          5.2,
+          -32
+        ],
+        "yawDeg": -180,
+        "yawRateMaxDegS": 0,
+        "bodyOverlaps": 0,
+        "rideRemainingM": 48.19999999999993,
+        "health": 1600,
+        "decay": null,
+        "speed": 5.6
+      }
+    },
+    "actors": {
+      "infected": {
+        "state": "dead",
+        "position": [
+          14,
+          -33.9
+        ],
+        "missedInViewFrames": 0
+      },
+      "brute": {
+        "state": "dead",
+        "position": [
+          9,
+          -34.15
+        ],
+        "missedInViewFrames": 0
+      }
+    }
+  },
+  "car": {
+    "backend": "webgl",
+    "frames": 240,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "vehicles": {
+      "car": {
+        "entity": 3,
+        "position": [
+          -2.383,
+          -0.004
+        ],
+        "yawDeg": 0,
+        "yawRateMaxDegS": 23.5579274547418,
+        "bodyOverlaps": 0,
+        "rideRemainingM": null,
+        "health": 269,
+        "decay": "wrecked",
+        "speed": 0.02
+      }
+    },
+    "actors": {}
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "unit": {
+      "passed": 498,
+      "workers": 2,
+      "testTimeoutMs": 120000
+    },
+    "contacts": {
+      "passed": 49
+    },
+    "L2_browser": {
+      "passed": 2
+    },
+    "smoke": {
+      "simPassed": 6,
+      "browserPassed": 30
+    },
+    "verify_E09": {
+      "simPassed": 41,
+      "browserPassed": 34,
+      "browserFailed": 3,
+      "baselineCommit": "57189968",
+      "baselineFailures": [
+        "T-E01-05 stale API keys",
+        "T-E09-10 cruiser golden lighting drift",
+        "T-E09-curb-video sampled chassis height below 0.85m"
+      ],
+      "curbIsolatedRetry": "pass"
+    }
+  }
+}

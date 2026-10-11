@@ -53,7 +53,7 @@ export interface SceneSpec {
   armyBoom?: { x: number; z?: number; closed?: boolean };
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
-export interface PropSpec { powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
+export interface PropSpec { decay?: string; powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; role?: string }
 export interface ActorSpec {
@@ -73,7 +73,7 @@ export interface ActorSpec {
   loadout?: [string | string[], string | string[]];
   god?: boolean;
 }
-export interface VehicleSpec { id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
+export interface VehicleSpec { decay?: import('../../sim/vehicles/Vehicles').VehicleState['decay']; id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
 /** Actor commands. Strings are shorthands: 'idle' | 'chase' | 'follow' | 'flee' | 'infect'. */
 export type Action =
   | 'idle' | 'chase' | 'follow' | 'flee' | 'infect'
@@ -201,7 +201,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   if (spec.size !== undefined && !(spec.size >= 8 && spec.size <= 400)) errors.push('size: 8..400 m');
   if (spec.ground && !['grass', 'asphalt', 'sidewalk', 'district'].includes(spec.ground)) errors.push(`ground: unknown ${spec.ground}`);
   if (spec.ground === 'district' && !spec.layout) errors.push('ground "district" needs layout.district');
-  spec.props?.forEach((p, i) => { if (!assets.has(p.asset)) errors.push(`props[${i}].asset: unknown manifest id ${p.asset}`); point(p.at, `props[${i}].at`); if (p.id) { if (ids.has(p.id)) errors.push(`duplicate id ${p.id}`); ids.add(p.id); } });
+  spec.props?.forEach((p, i) => { if (!assets.has(p.asset)) errors.push(`props[${i}].asset: unknown manifest id ${p.asset}`); if (p.decay && !assets.get(p.asset)?.decayVariants.includes(p.decay)) errors.push(`props[${i}].decay: unknown variant ${p.decay}`); point(p.at, `props[${i}].at`); if (p.id) { if (ids.has(p.id)) errors.push(`duplicate id ${p.id}`); ids.add(p.id); } });
   let couriers = 0;
   spec.actors?.forEach((a, i) => {
     if (!['courier', 'pedestrian', 'infected', 'corgi'].includes(a.kind)) errors.push(`actors[${i}].kind: ${a.kind}`);
@@ -274,5 +274,5 @@ export function placementFor(prop: PropSpec, index: number, assets: Map<string, 
   const dims = [def.dimensions.x * scale[0], def.dimensions.y * scale[1], def.dimensions.z * scale[2]];
   const sx = Math.abs(Math.cos(yaw)) * dims[0] + Math.abs(Math.sin(yaw)) * dims[2], sz = Math.abs(Math.sin(yaw)) * dims[0] + Math.abs(Math.cos(yaw)) * dims[2];
   return { id: prop.id ?? `${prop.asset}:lab${index}`, assetId: prop.asset, position: pos, yaw, scale, minTier: 0, maxTier: 5, allowRoad: true, lightGroup: prop.powerGroup ?? labLightGroup,
-    visualAabb: { min: [pos[0] - sx / 2, pos[1], pos[2] - sz / 2], max: [pos[0] + sx / 2, pos[1] + dims[1], pos[2] + sz / 2] }, ...(prop.tint ? { tint: prop.tint } : {}) };
+    visualAabb: { min: [pos[0] - sx / 2, pos[1], pos[2] - sz / 2], max: [pos[0] + sx / 2, pos[1] + dims[1], pos[2] + sz / 2] }, ...(prop.tint ? { tint: prop.tint } : {}), ...(prop.decay ? { decay: prop.decay } : {}) };
 }

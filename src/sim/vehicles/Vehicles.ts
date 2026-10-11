@@ -11,6 +11,8 @@ import { VehicleBody } from './VehicleBody';
 /** Serialized vehicle component. Native handles live only in Vehicles.cars. */
 export interface VehicleState {
   speed: number; forwardSpeed: number; steer: number; braking: boolean; boosting: boolean;
+  /** Authored body variant, persisted with the vehicle snapshot. */
+  decay?: 'wrecked' | 'burned';
   braced?: boolean; driver: number | null; attached: number[]; damage: 'normal' | 'smoking' | 'burning' | 'exploded';
   explodeAt: number | null; stuck: boolean; recoveringUntil: number;
 }
@@ -30,10 +32,10 @@ export class Vehicles {
   private readonly identity = { x: 0, y: 0, z: 0, w: 1 };
   private readonly position = { x: 0, y: survivor.height / 2 + .02, z: 0 };
   constructor(private readonly world: SimWorld) { this.obstacles = new Obstacles(world); this.bicycle = new Bicycle(world); }
-  spawn(id: string, pos: { x: number; z: number }, yaw = 0): number {
+  spawn(id: string, pos: { x: number; z: number }, yaw = 0, decay?: VehicleState['decay']): number {
     if (![pos.x, pos.z, yaw].every(Number.isFinite)) throw new RangeError('Vehicle position must be finite');
     const def = vehicleDef(id), physics = new VehicleBody(def, this.world.physics.world!, pos, yaw);
-    const entity = this.world.entities.create({ kind: 'vehicle', archetype: id, transform: physics.transform, faction: 'survivor', health: { current: def.hp, max: def.hp }, vehicle: { speed: 0, forwardSpeed: 0, steer: 0, braking: true, boosting: false, driver: null, attached: [], damage: 'normal', explodeAt: null, stuck: false, recoveringUntil: 0 } });
+    const entity = this.world.entities.create({ kind: 'vehicle', archetype: id, transform: physics.transform, faction: 'survivor', health: { current: def.hp, max: def.hp }, vehicle: { ...(decay ? { decay } : {}), speed: 0, forwardSpeed: 0, steer: 0, braking: true, boosting: false, driver: null, attached: [], damage: 'normal', explodeAt: null, stuck: false, recoveringUntil: 0 } });
     this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: 0, hits: new Map(), crashAt: -60 }); this.world.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
   canInteract(): boolean {
@@ -142,6 +144,7 @@ export class Vehicles {
       const dx = entity.transform.x - p.x, dz = entity.transform.z - p.z;
       if (Math.abs(dx * c - dz * s) > extent + Math.abs(c) * wall.halfX + Math.abs(s) * wall.halfZ || Math.abs(dx * s + dz * c) > car.physics.def.width / 2 + Math.abs(s) * wall.halfX + Math.abs(c) * wall.halfZ) continue;
       this.world.hazards!.hit(entity.id, entity.health.max, 'vehicle');
+      this.crash(car, speed);
       car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
       this.world.events.emit({ type: 'vehicle.obstacle-broken', tick: this.world.tick, targetId: entity.id });
     }
@@ -154,14 +157,22 @@ export class Vehicles {
       if (Math.abs(localX) > extent + halfX || Math.abs(localZ) > car.physics.def.width / 2 + halfZ) continue;
       if (obstacle.light && speed >= 5) {
         this.obstacles.break(obstacle, velocity, this.world.tick);
+        this.crash(car, speed);
         car.physics.body.setLinvel({ x: velocity.x * .9, y: velocity.y, z: velocity.z * .9 }, true);
       } else if (!obstacle.light && speed >= 2 && this.world.tick >= (car.hits.get(obstacle.entity.id) ?? 0)) {
-        this.damage(car.entity.id, speed * 3 / car.physics.def.ramStrength); car.crashAt = this.world.tick;
+        this.crash(car, speed);
         car.hits.set(obstacle.entity.id, this.world.tick + 60);
         car.physics.body.setLinvel({ x: 0, y: velocity.y, z: 0 }, true);
         car.physics.intent.brake = true;
       }
     }
+  }
+  /** Hard contacts dent the body even while HP remains above the smoke threshold. */
+  private crash(car: Car, speed: number): void {
+    if (speed < 2 || this.world.tick - car.crashAt < 60) return;
+    if (speed >= 3) car.entity.vehicle!.decay ??= 'wrecked';
+    this.damage(car.entity.id, speed * 3 / car.physics.def.ramStrength);
+    car.crashAt = this.world.tick;
   }
   /** Shared entry point for crashes, brute retaliation and later weapon/explosion systems. */
   damage(id: number, amount: number): void {
@@ -172,6 +183,8 @@ export class Vehicles {
   private damageState(car: Car): void {
     const state = car.entity.vehicle!, ratio = car.entity.health.current / car.entity.health.max;
     if (state.damage === 'exploded') return;
+    if (ratio < .15) state.decay = 'burned';
+    else if (ratio < .4) state.decay ??= 'wrecked';
     if (ratio < .4 && state.damage === 'normal') { state.damage = 'smoking'; this.world.events.emit({ type: 'vehicle.smoking', tick: this.world.tick, sourceId: car.entity.id }); }
     if (ratio < .15 && state.damage === 'smoking') { state.damage = 'burning'; this.world.events.emit({ type: 'vehicle.burning', tick: this.world.tick, sourceId: car.entity.id }); }
     if (ratio === 0 && state.explodeAt === null) state.explodeAt = this.world.tick + 180;
@@ -193,6 +206,8 @@ export class Vehicles {
     state.attached.length = 0;
   }
   private infected(car: Car): void {
+    // Passenger rides resolve their swept contacts in the scripted driver, including at low speed.
+    if (car.physics.body.isKinematic() && car.physics.def.id === 'vehicle.fire-engine') return;
     const state = car.entity.vehicle!, p = car.entity.transform, speed = car.physics.speed;
     if (car.entity.health.current <= 0) { this.release(car); return; }
     if (speed > 8 || Math.abs(car.physics.intent.steer) > .8) this.release(car);
@@ -216,10 +231,19 @@ export class Vehicles {
     for (const car of this.cars.values()) {
       const beforeSpeed = car.physics.speed;
       car.physics.postPhysics();
-      if (beforeSpeed >= 3 && car.physics.speed < beforeSpeed * .5 && this.world.tick - car.crashAt >= 60) {
-        let contact = false;
-        this.world.physics.world!.contactPairsWith(car.physics.collider, () => { contact = true; });
-        if (contact) { this.damage(car.entity.id, beforeSpeed * 3 / car.physics.def.ramStrength); car.crashAt = this.world.tick; }
+      if (beforeSpeed >= 3 && this.world.tick - car.crashAt >= 60) {
+        this.world.physics.world!.contactPairsWith(car.physics.collider, collider => {
+          let impulse = 0;
+          this.world.physics.world!.contactPair(car.physics.collider, collider, manifold => {
+            // Ground support and resting contacts must not dent the body.
+            if (Math.abs(manifold.normal().y) > .7) return;
+            for (let i = 0; i < manifold.numContacts(); i++) impulse += manifold.contactImpulse(i);
+          });
+          if (impulse / car.physics.def.mass < 2) return;
+          this.crash(car, beforeSpeed);
+          // The struck parked car also takes the impact, despite having no incoming speed.
+          for (const other of this.cars.values()) if (other.physics.collider.handle === collider.handle) this.crash(other, beforeSpeed);
+        });
       }
       const state = car.entity.vehicle!;
       state.speed = car.physics.speed; state.forwardSpeed = car.physics.forwardSpeed; state.stuck = car.physics.stuck;
