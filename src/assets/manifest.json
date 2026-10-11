@@ -11508,7 +11508,7 @@
     "category": "building",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/int.gym-cafeteria.glb",
+    "glb": "public/assets/models/bld.gym.glb",
     "dimensions": {
       "x": 16,
       "y": 4.98,
@@ -11520,7 +11520,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -11531,13 +11532,12 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/int.gym-cafeteria/model.glb",
+    "sourceGlb": "assets/bld.gym/model.glb",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/int.gym-cafeteria.lod1.glb",
-      "lod2": "public/assets/models/int.gym-cafeteria.lod2.glb"
+      "lod1": "public/assets/models/bld.gym.lod1.glb",
+      "lod2": "public/assets/models/bld.gym.lod2.glb"
     },
-    "aliasOf": "int.gym-cafeteria",
     "world": {
       "token": "backpackTeal",
       "solid": true
@@ -11545,14 +11545,15 @@
     "authoredLodTriangles": {
       "lod1": 41000,
       "lod2": 33000
-    }
+    },
+    "script": "assets/bld.gym/build.py"
   },
   {
     "id": "bld.supermarket",
     "category": "building",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/int.supermarket.glb",
+    "glb": "public/assets/models/bld.supermarket.glb",
     "dimensions": {
       "x": 8.4,
       "y": 3.435,
@@ -11564,7 +11565,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -11575,14 +11577,13 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/int.supermarket/model.glb",
+    "sourceGlb": "assets/bld.supermarket/model.glb",
     "lods": {
-      "lod1": "public/assets/models/int.supermarket.lod1.glb",
-      "lod2": "public/assets/models/int.supermarket.lod2.glb"
+      "lod1": "public/assets/models/bld.supermarket.lod1.glb",
+      "lod2": "public/assets/models/bld.supermarket.lod2.glb"
     },
     "sourceForward": "+X",
-    "script": "assets/int.supermarket/build.py",
-    "aliasOf": "int.supermarket",
+    "script": "assets/bld.supermarket/build.py",
     "world": {
       "token": "schoolBusYellow",
       "solid": true
@@ -11597,7 +11598,7 @@
     "category": "building",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/int.pharmacy-clinic.glb",
+    "glb": "public/assets/models/bld.pharmacy.glb",
     "dimensions": {
       "x": 6.3,
       "y": 3.615,
@@ -11609,7 +11610,8 @@
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "roof"
     ],
     "animatedNodes": [],
     "sockets": [],
@@ -11620,14 +11622,13 @@
       "drawCalls": 40
     },
     "decayVariants": [],
-    "sourceGlb": "assets/int.pharmacy-clinic/model.glb",
-    "script": "assets/int.pharmacy-clinic/build.py",
+    "sourceGlb": "assets/bld.pharmacy/model.glb",
+    "script": "assets/bld.pharmacy/build.py",
     "sourceForward": "+X",
     "lods": {
-      "lod1": "public/assets/models/int.pharmacy-clinic.lod1.glb",
-      "lod2": "public/assets/models/int.pharmacy-clinic.lod2.glb"
+      "lod1": "public/assets/models/bld.pharmacy.lod1.glb",
+      "lod2": "public/assets/models/bld.pharmacy.lod2.glb"
     },
-    "aliasOf": "int.pharmacy-clinic",
     "world": {
       "token": "picketWhite",
       "solid": true

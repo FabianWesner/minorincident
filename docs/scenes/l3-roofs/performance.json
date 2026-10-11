@@ -1,0 +1,59 @@
+{
+  "geometry": "60-triangle preliminary roof (final roof is 36 triangles)",
+  "sharedMacLoad": "18.19 / 18.84 / 18.88; concurrent lanes; timings are not isolated",
+  "tests": "both fail infected-count setup requirement; draw/triangle metrics within limits; several frame-time targets missed",
+  "measurements": [
+    {
+      "tier": "high",
+      "seed": 2,
+      "counts": {
+        "infected": 19,
+        "officers": 8
+      },
+      "streetCounts": {
+        "infected": 79,
+        "spawned": 266
+      },
+      "streetDrawCalls": 184,
+      "streetTriangles": 975786,
+      "streetP50": 11.099999999998545,
+      "streetP95": 24.900000000001455,
+      "attackDrawCalls": 138,
+      "attackTriangles": 452637,
+      "blvdDrawCalls": 196,
+      "blvdTriangles": 1013254,
+      "attackP50": 7.599999999998545,
+      "attackP95": 11.399999999997817,
+      "fallbackMaxMs": 16.099999999998545,
+      "blvdP50": 8.400000000001455,
+      "blvdP95": 15.700000000004366,
+      "fallbackFired": true
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "counts": {
+        "infected": 14,
+        "officers": 7
+      },
+      "streetCounts": {
+        "infected": 40,
+        "spawned": 141
+      },
+      "streetDrawCalls": 182,
+      "streetTriangles": 402629,
+      "streetP50": 55.30000000000291,
+      "streetP95": 92.89999999999418,
+      "attackDrawCalls": 116,
+      "attackTriangles": 303401,
+      "blvdDrawCalls": 143,
+      "blvdTriangles": 386814,
+      "attackP50": 37.60000000000218,
+      "attackP95": 62.39999999999782,
+      "fallbackMaxMs": 51.60000000000218,
+      "blvdP50": 30.400000000001455,
+      "blvdP95": 70.5,
+      "fallbackFired": true
+    }
+  ]
+}

@@ -35,7 +35,7 @@ export function districtAssetUrls(id: string, definition: (id: string) => import
 }
 /** Shared presentation cache owns source geometry; per-level instance batches borrow it. */
 /** Enterable unique buildings: the roof is batched separately and lifted while the player is inside (DistrictView.updateRoofs). */
-export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station']);
+export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.clinic-annex', 'bld.cafe-corner', 'bld.fire-station', 'bld.pharmacy', 'bld.supermarket', 'bld.gym', 'int.basement-cellar']);
 export class DistrictAssets {
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   private readonly cache = new Map<string, Promise<Group>>();

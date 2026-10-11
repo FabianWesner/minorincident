@@ -79,6 +79,16 @@ export class InstancedGroup extends Group {
   private readonly axisX = new Vector3(1, 0, 0);
   private readonly axisY = new Vector3(0, 1, 0);
   private readonly axisZ = new Vector3(0, 0, 1);
+  private readonly hiddenRoofScale = new Vector3(0, 0, 0);
+  /** Hide only this placement's roof; reference state survives streaming and LOD repartition. */
+  roofVisible(visible: boolean, reference: Object3D): void {
+    reference.userData.roofHidden = !visible;
+    const index = this.references.indexOf(reference);
+    if (index < 0) return;
+    for (const batch of this.batches) if (/^roof(?:$|-|_)/.test(batch.mesh.name)) {
+      this.write(batch, index); batch.mesh.instanceMatrix.needsUpdate = true; batch.mesh.computeBoundingSphere();
+    }
+  }
   private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }, i: number): void {
     const lightBase = batch.mesh.geometry.getAttribute('_lightBase');
     if (batch.mesh.userData.ownedPowerGeometry) { lightBase.setX(i, this.references[i].userData.lightBase ?? 0); lightBase.needsUpdate = true; }
@@ -87,7 +97,9 @@ export class InstancedGroup extends Group {
     const height = batch.door ? (this.references[i].userData.doorHeight as Record<string, number> | undefined)?.[batch.door] ?? 0 : 0;
     const local = batch.base && (yaw || height) ? this.leaf.copy(batch.base).multiply(this.scratch.makeRotationAxis(batch.door && this.references[i].userData.doorAxis?.[batch.door] === 'x' ? this.axisX : batch.door && this.references[i].userData.doorAxis?.[batch.door] === 'z' ? this.axisZ : this.axisY, yaw)) : batch.local;
     if (height) local.elements[13] += height;
-    this.scratch.multiplyMatrices(this.references[i].matrixWorld, local); batch.mesh.setMatrixAt(i, this.scratch);
+    this.scratch.multiplyMatrices(this.references[i].matrixWorld, local);
+    if (this.references[i].userData.roofHidden && /^roof(?:$|-|_)/.test(batch.mesh.name)) this.scratch.scale(this.hiddenRoofScale);
+    batch.mesh.setMatrixAt(i, this.scratch);
     const tint = this.references[i].userData.tint; batch.mesh.setColorAt(i, this.color.set(typeof tint === 'string' ? tint : '#ffffff'));
   }
   dispose(): void { for (const batch of this.batches) { if (batch.mesh.userData.ownedPowerGeometry || batch.mesh.userData.staticInstanceAttributes) batch.mesh.geometry.dispose(); batch.mesh.dispose(); } this.clear(); this.batches.length = 0; }
