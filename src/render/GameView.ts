@@ -393,7 +393,7 @@ export class GameView implements Lifecycle {
   private startActors(character: Promise<unknown>): Promise<unknown> {
     if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
-    if (this.world.combat && this.character) this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer);
+    if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; }
     if (this.character && this.world.combat) this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!);
     if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
