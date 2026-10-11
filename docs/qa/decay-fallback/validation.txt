@@ -1,0 +1,219 @@
+Typecheck: pass (remote runner, npm run typecheck).
+Lint: pass (local npm run lint).
+Build: pass (local npm run build, 422 modules).
+Native Metal WebGL2 Scene Lab: all 15 catalog scenes passed consoleErrors=0.
+Focused sim and fallback regression:
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-decay-fallback
+
+
+ Test Files  3 passed (3)
+      Tests  5 passed | 21 skipped (26)
+   Start at  21:39:17
+   Duration  5.12s (transform 43%, tests 36%, import 20%)
+
+
+Car explosion browser criterion:
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/explosions.spec.ts:113:1 › T-E27-05v @E27 @E27-AC05 car explosion: wreck jumps, panels fly, burned variant, smoke column persists ≥ 20 s (6.5s)
+
+  1 passed (12.6s)
+
+Full unit suite (4 workers):
+ (1 test) 298ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/vehicles.test.ts > T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps
+AssertionError: wrecked/0/doorL: expected undefined to be defined
+ ❯ tests/unit/vehicles.test.ts:46:49
+     44|       for (const name of [...def.requiredNodes, ...def.sockets]) {
+     45|         const node = nodes.find(n => n.getName() === name);
+     46|         expect(node, `${decay}/${lod}/${name}`).toBeDefined();
+       |                                                 ^
+     47|         const sourceNode = anchors.find(n => n.getName() === name)!;
+     48|         node!.getWorldMatrix().forEach((value, index) => expect(value)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   functional  tests/unit/assets/build.test.ts > T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate
+AssertionError: veh.fire-engine.wrecked:lod0: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "node doorL: expected exactly one, found 0",
++   "node doorR: expected exactly one, found 0",
++ ]
+
+ ❯ tests/unit/assets/build.test.ts:45:38
+     43|   expect(results).toHaveLength(9); // Pristine, wrecked and burned, ea…
+     44|   for (const result of results) {
+     45|     expect(result.errors, result.id).toEqual([]);
+       |                                      ^
+     46|     for (const [axis, target] of [7.4,3.55,2.1].entries()) expect(Math…
+     47|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 155 passed (157)
+      Tests  2 failed | 805 passed (807)
+   Start at  19:36:11
+   Duration  151.63s (tests 91%, import 6%, transform 2%)
+
+[remote] done exit=1 (runner 157.90.173.117, sync 12s, remote total 155s)
+
+Full verification E09 (MI_VERIFY_REMOTE_SIM=1, 1 worker):
+st | 1 skipped)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/vehicles.test.ts > T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps
+AssertionError: wrecked/0/doorL: expected undefined to be defined
+ ❯ tests/unit/vehicles.test.ts:46:49
+     44|       for (const name of [...def.requiredNodes, ...def.sockets]) {
+     45|         const node = nodes.find(n => n.getName() === name);
+     46|         expect(node, `${decay}/${lod}/${name}`).toBeDefined();
+       |                                                 ^
+     47|         const sourceNode = anchors.find(n => n.getName() === name)!;
+     48|         node!.getWorldMatrix().forEach((value, index) => expect(value)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 13 passed | 237 skipped (251)
+      Tests  1 failed | 49 passed | 1522 skipped (1572)
+   Start at  19:40:15
+   Duration  98.18s (import 66%, transform 19%, tests 13%, worker 2%)
+
+JSON report written to /srv/mi/jobs/fix-decay-fallback-4d7f5d-56293-1791747596/test-results/epics/E09/vitest.json
+[remote] pulled test-results/epics/E09/vitest.json
+[remote] done exit=1 (runner 157.90.173.117, sync 17s, remote total 101s)
+
+Command exit codes: [
+  {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "sh",
+      "tools/remote/run.sh",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix-decay-fallback",
+      "--pull",
+      "test-results/epics/E09/vitest.json",
+      "--",
+      "npx",
+      "vitest",
+      "run",
+      "-t",
+      "@(?:E09)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--maxWorkers=1",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E09/vitest.json"
+    ],
+    "exitCode": 1
+  }
+]
+
+Full verification E27 (MI_VERIFY_REMOTE_SIM=1, 1 worker):
+st | 1 skipped)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/vehicles.test.ts > T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps
+AssertionError: wrecked/0/doorL: expected undefined to be defined
+ ❯ tests/unit/vehicles.test.ts:46:49
+     44|       for (const name of [...def.requiredNodes, ...def.sockets]) {
+     45|         const node = nodes.find(n => n.getName() === name);
+     46|         expect(node, `${decay}/${lod}/${name}`).toBeDefined();
+       |                                                 ^
+     47|         const sourceNode = anchors.find(n => n.getName() === name)!;
+     48|         node!.getWorldMatrix().forEach((value, index) => expect(value)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 12 passed | 238 skipped (251)
+      Tests  1 failed | 26 passed | 1545 skipped (1572)
+   Start at  19:42:43
+   Duration  96.59s (import 67%, transform 19%, tests 12%, worker 2%)
+
+JSON report written to /srv/mi/jobs/fix-decay-fallback-4d7f5d-60915-1791747754/test-results/epics/E27/vitest.json
+[remote] pulled test-results/epics/E27/vitest.json
+[remote] done exit=1 (runner 157.90.173.117, sync 8s, remote total 101s)
+
+Command exit codes: [
+  {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "sh",
+      "tools/remote/run.sh",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix-decay-fallback",
+      "--pull",
+      "test-results/epics/E27/vitest.json",
+      "--",
+      "npx",
+      "vitest",
+      "run",
+      "-t",
+      "@(?:E27)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--maxWorkers=1",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E27/vitest.json"
+    ],
+    "exitCode": 1
+  }
+]

@@ -46,8 +46,7 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
     const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
-    const requested = car.entity.vehicle!.decay, variants = this.registry.definition(def.asset).decayVariants;
-    const decay = requested && variants.includes(requested) ? requested : requested && variants.includes('wrecked') ? 'wrecked' : undefined;
+    const decay = car.entity.vehicle!.decay;
     const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod, decay) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
     model.userData.assetId = def.asset;
@@ -79,7 +78,7 @@ export class VehicleView extends Group {
       const material = new MeshBasicNodeMaterial({ color });
       const anchor = model.getObjectByName(name);
       // Authored broken lenses retain their dark palette material after a damage swap.
-      if (!anchor?.userData.damagedLightOff) anchor?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
+      if (!decay && !anchor?.userData.damagedLightOff) anchor?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
     };
     const brake = lamp('lightsBrake', '#ff2d2d'), sirens = def.emergency ? [lamp('sirenL', '#ff2d2d'), lamp('sirenR', '#2f6bff')] : [];
     const door = new Mesh(new TorusGeometry(.7, .025, 6, 32), this.materials.get('windowGlow', 1.5)); door.rotation.x = -Math.PI / 2; door.position.set(.2, .025, def.width / 2 + .55); door.position.x = def.doorX; model.add(door);
@@ -95,8 +94,7 @@ export class VehicleView extends Group {
       const record = this.records.get(id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
       const lod = modelLod(distance, record?.lod, this.low);
-      const variants = this.registry.definition(car.physics.def.asset).decayVariants, requested = car.entity.vehicle!.decay;
-      const decay = requested && variants.includes(requested) ? requested : requested && variants.includes('wrecked') ? 'wrecked' : undefined;
+      const decay = car.entity.vehicle!.decay;
       if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       if (body.body.isKinematic()) {
@@ -166,8 +164,8 @@ export class VehicleView extends Group {
         leaf.rotation.y = leaf.userData.closedYaw + (side === sign ? sign * open * 1.15 : 0);
       }
       this.updateOccupants(id, record, alpha);
-      record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
-      for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
+      record.brake.color.set('#ff2d2d').multiplyScalar(record.decay ? 0 : state.braking ? 4 : .15);
+      for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar(record.decay ? 0 : (Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
       record.door.visible = this.world.vehicles!.active === null && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil;
       // E27 burned variant: an exploded car chars to soot once (shared paint copies, no new materials).
@@ -245,7 +243,7 @@ export class VehicleView extends Group {
   pushLights(field: LightField): void {
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id), driven = this.world.vehicles!.active === id;
-      if (!record || car.entity.health.current <= 0 || record.model.getObjectByName('lightsFront')?.userData.damagedLightOff || !(driven || car.physics.def.emergency)) continue;
+      if (!record || record.decay || car.entity.health.current <= 0 || record.model.getObjectByName('lightsFront')?.userData.damagedLightOff || !(driven || car.physics.def.emergency)) continue;
       record.model.updateWorldMatrix(true, false);
       for (const a of anchorsFor(car.physics.def.asset)) {
         const beacon = a.type === 'beacon' || !!a.strobe;
