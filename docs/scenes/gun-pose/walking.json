@@ -1,0 +1,18 @@
+{
+  "extends": "standing.json",
+  "name": "gun-pose-walking",
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "attack": "z1",
+        "seconds": 1,
+        "move": [
+          0,
+          1
+        ]
+      }
+    }
+  ]
+}

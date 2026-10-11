@@ -1,0 +1,351 @@
+{
+  "cases": [
+    {
+      "case": {
+        "kind": "courier",
+        "model": "female",
+        "weapon": "handgun"
+      },
+      "walking": false,
+      "muzzleErrorM": 4.0125770192081414e-16,
+      "handHeightErrorM": 3.8906300403596106e-10,
+      "forearmAngleDeg": 5.968879788321983,
+      "speedMps": 0
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.police-officer",
+        "weapon": "pistol"
+      },
+      "walking": false,
+      "muzzleErrorM": 1.621246337890625e-05,
+      "handHeightErrorM": 1.0251998901367188e-05,
+      "forearmAngleDeg": 6.470582135662073,
+      "speedMps": 0
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.national-guard",
+        "weapon": "rifle"
+      },
+      "walking": false,
+      "muzzleErrorM": 1.6093516696625745e-05,
+      "handHeightErrorM": 1.4543533325195312e-05,
+      "forearmAngleDeg": 6.593704984110459,
+      "speedMps": 0
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.national-guard",
+        "weapon": "hmg"
+      },
+      "walking": false,
+      "muzzleErrorM": 1.6093516696625745e-05,
+      "handHeightErrorM": 1.4543533325195312e-05,
+      "forearmAngleDeg": 6.593704984110459,
+      "speedMps": 0
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.civilian-man-a",
+        "weapon": "pistol"
+      },
+      "walking": false,
+      "muzzleErrorM": 1.4186403873627712e-05,
+      "handHeightErrorM": 5.364418029785156e-06,
+      "forearmAngleDeg": 6.129075880793767,
+      "speedMps": 0
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.civilian-woman-a",
+        "weapon": "hunting-rifle"
+      },
+      "walking": false,
+      "muzzleErrorM": 1.5020874757654193e-05,
+      "handHeightErrorM": 5.245208740234375e-06,
+      "forearmAngleDeg": 6.668320271445755,
+      "speedMps": 0
+    },
+    {
+      "case": {
+        "kind": "courier",
+        "model": "female",
+        "weapon": "handgun"
+      },
+      "walking": true,
+      "muzzleErrorM": 8.994869167722144e-05,
+      "handHeightErrorM": 4.480376070148395e-10,
+      "forearmAngleDeg": 5.968879835323708,
+      "speedMps": 2
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.police-officer",
+        "weapon": "pistol"
+      },
+      "walking": true,
+      "muzzleErrorM": 0.0,
+      "handHeightErrorM": 1.7404556274414062e-05,
+      "forearmAngleDeg": 6.513253021113765,
+      "speedMps": 0.7871698371028405
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.national-guard",
+        "weapon": "rifle"
+      },
+      "walking": true,
+      "muzzleErrorM": 0.0,
+      "handHeightErrorM": 5.4836273193359375e-06,
+      "forearmAngleDeg": 6.524866774050258,
+      "speedMps": 0.7871698371028405
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.national-guard",
+        "weapon": "hmg"
+      },
+      "walking": true,
+      "muzzleErrorM": 0.0,
+      "handHeightErrorM": 5.4836273193359375e-06,
+      "forearmAngleDeg": 6.524866774050258,
+      "speedMps": 0.7871698371028405
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.civilian-man-a",
+        "weapon": "pistol"
+      },
+      "walking": true,
+      "muzzleErrorM": 0.0,
+      "handHeightErrorM": 4.0531158447265625e-06,
+      "forearmAngleDeg": 5.963645844339572,
+      "speedMps": 0.7871698371028405
+    },
+    {
+      "case": {
+        "kind": "pedestrian",
+        "model": "npc.civilian-woman-a",
+        "weapon": "hunting-rifle"
+      },
+      "walking": true,
+      "muzzleErrorM": 0.0,
+      "handHeightErrorM": 3.814697265625e-06,
+      "forearmAngleDeg": 6.300875536770803,
+      "speedMps": 0.7871698371028405
+    }
+  ],
+  "maxMuzzleErrorM": 8.994869167722144e-05,
+  "maxHandHeightErrorM": 1.7404556274414062e-05,
+  "maxForearmAngleDeg": 6.668320271445755,
+  "scenes": {
+    "standing": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "consoleErrors": []
+    },
+    "walking": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "consoleErrors": []
+    },
+    "turning": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "consoleErrors": []
+    },
+    "side": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "consoleErrors": []
+    },
+    "police": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "consoleErrors": []
+    },
+    "idle": {
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "clipping": {
+        "static": [],
+        "actors": [],
+        "gunBodies": [],
+        "heldProps": [],
+        "summary": {
+          "gunBodyHits": 0,
+          "staticPairs": 0,
+          "heldPropHits": 0,
+          "actorHits": 0,
+          "piercing": 0
+        }
+      },
+      "consoleErrors": []
+    }
+  }
+}

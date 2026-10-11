@@ -7,6 +7,10 @@ import type { CivilianProp } from '../../sim/npc/types';
 /** Small shared rigid accessories follow the same baked hand matrix as the GPU civilian. */
 export class RoutineProps extends Group {
   readonly contacts: { entity: number; prop: CivilianProp; hand: Float32Array; geometry: BufferGeometry; matrix: Matrix4 }[] = [];
+  /** Authored barrel endpoints in prop-local metres (+Z). */
+  readonly guns: { entity: number; geometry: BufferGeometry; matrix: Matrix4 }[] = [];
+  readonly muzzles = new Map<number, Vector3>();
+  readonly aiming = new Map<number, { until: number; direction: { x: number; z: number } }>();
   private readonly meshes = new Map<CivilianProp, InstancedMesh>();
   private readonly gripMatrix = new Matrix4();
   constructor(shading?: Materials) {
@@ -41,10 +45,12 @@ export class RoutineProps extends Group {
       this.meshes.set(name as CivilianProp, mesh); this.add(mesh);
     }
   }
-  begin(): void { this.contacts.length = 0; for (const mesh of this.meshes.values()) mesh.count = 0; }
+  begin(): void { this.contacts.length = 0; this.guns.length = 0; this.muzzles.clear(); for (const mesh of this.meshes.values()) mesh.count = 0; }
   held(prop: CivilianProp, matrix: Matrix4, entity: number, hand?: Float32Array, reach = .07): void {
     this.gripMatrix.makeTranslation(prop === 'phone' ? reach - .07 : 0, 0, 0).premultiply(matrix);
     this.place(prop, this.gripMatrix);
+    const muzzle = prop === 'pistol' ? [0, .02, .2] : prop === 'rifle' ? [0, .02, .9] : prop === 'hunting-rifle' ? [0, .01, .97] : null;
+    if (muzzle) { this.muzzles.set(entity, new Vector3(...muzzle).applyMatrix4(this.gripMatrix)); this.guns.push({entity,geometry:this.meshes.get(prop)!.geometry,matrix:this.gripMatrix.clone()}); }
     if (hand && typeof location !== 'undefined' && new URLSearchParams(location.search).has('test')) {
       const world = new Float32Array(hand.length), point = new Vector3();
       for (let i = 0; i < hand.length; i += 3) point.fromArray(hand, i).applyMatrix4(matrix).toArray(world, i);

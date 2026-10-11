@@ -56,6 +56,18 @@ export class DistrictView extends Group {
   readonly batches: InstancedGroup[] = [];
   private readonly dressingBatches: InstancedGroup[] = [];
   readonly windows: Mesh[] = [];
+  private readonly machineGuns: { root: Object3D; gun: Object3D; muzzle: Object3D }[] = [];
+  /** HMG nests retain their authored gun/muzzle hierarchy so shots rotate the
+   * actual barrel and originate at its socket, including every nested transform. */
+  machineGunState() { return this.machineGuns.map(n => ({ muzzle: n.muzzle.getWorldPosition(new Vector3()).toArray(), gun: n.gun.getWorldPosition(new Vector3()).toArray() })); }
+  aimMachineGun(at: { x: number; z: number }, direction: { x: number; z: number }): Vector3 | null {
+    const nest = this.machineGuns.map(n => ({ n, p: n.root.getWorldPosition(new Vector3()) })).sort((a,b) => Math.hypot(a.p.x-at.x,a.p.z-at.z)-Math.hypot(b.p.x-at.x,b.p.z-at.z))[0];
+    if (!nest || Math.hypot(nest.p.x-at.x,nest.p.z-at.z)>3) return null;
+    nest.n.root.updateWorldMatrix(true,true);
+    const heading = new Vector3(direction.x,0,direction.z).transformDirection(nest.n.gun.parent!.matrixWorld.clone().invert());
+    nest.n.gun.rotation.y = -Math.atan2(heading.z,heading.x);
+    nest.n.root.updateWorldMatrix(true,true);return nest.n.muzzle.getWorldPosition(new Vector3());
+  }
   private readonly lodBatches: LodBatch[] = [];
   private readonly pending = new Map<LodBatch, Promise<void>>();
   private disposed = false;
@@ -221,6 +233,15 @@ export class DistrictView extends Group {
         await Promise.all(
           [...references].map(async ([key, refs]) => {
             const [id, power, variant] = key.split(":"), decay = variant || undefined;
+            if (id === 'prop.hmg-nest') {
+              const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
+              for (const ref of refs) {
+                const nest = prototype.clone(true); nest.position.copy(ref.position); nest.quaternion.copy(ref.quaternion); nest.scale.copy(ref.scale); root.add(nest);
+                const gun = nest.getObjectByName('gun'), muzzle = nest.getObjectByName('muzzle');
+                if (gun && muzzle) this.machineGuns.push({ root: nest, gun, muzzle });
+              }
+              return;
+            }
             if (!worldAssets[id]) {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
               const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
@@ -738,6 +759,7 @@ export class DistrictView extends Group {
     for (const g of this.ownedGeometry) g.dispose();
     for (const m of this.ownedMaterials) m.dispose();
     for (const t of this.textures) t.dispose();
+    this.machineGuns.length = 0;
     this.windowMask.dispose();
     this.black.dispose();
     this.clear();

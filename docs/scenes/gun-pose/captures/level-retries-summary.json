@@ -1,0 +1,21 @@
+{
+  "completeLevels": {
+    "passed": 28,
+    "failed": 3
+  },
+  "isolatedNativeRetries": {
+    "L5": "passed",
+    "L2": "failed, exact main baseline waypoint and position",
+    "L6Shelter": "failed, red dominance 7 < 60",
+    "L6Retreat": "passed"
+  },
+  "revertedClockExperimentRemote": {
+    "startTime": "2026-10-11T00:55:40.213Z",
+    "duration": 173500.60900000003,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "fixture": "Restored exact main L6.spec.ts; no thresholds changed"
+}
