@@ -48,7 +48,7 @@ test('T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring
     const spot = { x: 51, z: -32.5 }; a.teleport('player', spot);
     // The AI turns idle threats towards the courier during the warm-up. Keep them
     // southwest on the open road, outside the contrast ring, with faces in the viewport.
-    const ids = [0, 1, 2].map(i => a.spawn('infected.runner', { x: spot.x - 6 - i * .8, z: spot.z + 3.5 }, { state: 'idle', yaw: -Math.PI / 4 }));
+    const ids = [0, 1, 2].map(i => a.spawn('infected.runner', { x: spot.x - 4 - i * .6, z: spot.z + 2.5 }, { state: 'idle', yaw: -Math.PI / 4 }));
     a.camera.follow(); await a.step(90); await a.screenshotReady();
     const p = a.query({ kind: 'player' })[0]?.transform ?? a.getEntity(1)!.transform;
     const ring = [0, 1, 2, 3, 4, 5, 6, 7].map(k => a.camera.project(p.x + 2 * Math.cos(k * Math.PI / 4), .05, p.z + 2 * Math.sin(k * Math.PI / 4)));
