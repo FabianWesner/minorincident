@@ -1,0 +1,73 @@
+{
+  "name": "l5-shotgun",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 20,
+  "time": "L5",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.bat",
+        "weapon.shotgun"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        2,
+        0
+      ],
+      "yaw": 180,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 1,
+        "side": "RIGHT"
+      }
+    },
+    {
+      "frame": 45,
+      "actor": "courier",
+      "do": {
+        "aim": "target",
+        "seconds": 1,
+        "move": [
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      1,
+      0,
+      0
+    ]
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    45,
+    120
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0
+  }
+}

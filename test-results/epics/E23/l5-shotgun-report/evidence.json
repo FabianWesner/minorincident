@@ -1,0 +1,501 @@
+{
+  "l5-shotgun-before": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 22,
+        "max": 22
+      },
+      "triangles": {
+        "p50": 74060,
+        "p95": 74060,
+        "max": 74060
+      },
+      "shadowDrawCalls": {
+        "p50": 21,
+        "p95": 21,
+        "max": 21
+      },
+      "shadowTriangles": {
+        "p50": 54097,
+        "p95": 54097,
+        "max": 54097
+      },
+      "stepMs": {
+        "p50": 1.9,
+        "p95": 2.7,
+        "max": 209.6
+      },
+      "lastFrame": {
+        "drawCalls": 20,
+        "triangles": 65836,
+        "shadowDrawCalls": 21,
+        "shadowTriangles": 54097,
+        "stepMs": 1.8000001907348633,
+        "categories": {
+          "other": 18,
+          "shadows": 21,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          0,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 90,
+        "inViewFrames": 90,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 90
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 90,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0.2,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "target": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          2,
+          0
+        ],
+        "yawDeg": 161.7,
+        "state": "dead",
+        "drawnFrames": 90,
+        "inViewFrames": 6,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 90
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 90,
+          "torsoPitchMinDeg": -94.5,
+          "torsoPitchMaxDeg": 49.7,
+          "contacts": 1,
+          "slideMaxCm": 10.5,
+          "slideP95Cm": 10.5,
+          "yawDriftMaxDeg": 4,
+          "liftMaxCm": 17,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 5
+        }
+      }
+    }
+  },
+  "l5-shotgun-isolated": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 22,
+        "max": 22
+      },
+      "triangles": {
+        "p50": 74028,
+        "p95": 74060,
+        "max": 74060
+      },
+      "shadowDrawCalls": {
+        "p50": 21,
+        "p95": 21,
+        "max": 21
+      },
+      "shadowTriangles": {
+        "p50": 54097,
+        "p95": 54097,
+        "max": 54097
+      },
+      "stepMs": {
+        "p50": 4.1,
+        "p95": 20.2,
+        "max": 3363.4
+      },
+      "lastFrame": {
+        "drawCalls": 20,
+        "triangles": 65836,
+        "shadowDrawCalls": 21,
+        "shadowTriangles": 54097,
+        "stepMs": 4,
+        "categories": {
+          "other": 18,
+          "shadows": 21,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          0,
+          1.982
+        ],
+        "yawDeg": -90,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0.3,
+          "contacts": 10,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 9.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 72
+        }
+      },
+      "target": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          2,
+          0
+        ],
+        "yawDeg": 161.7,
+        "state": "dead",
+        "drawnFrames": 120,
+        "inViewFrames": 6,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": -94.5,
+          "torsoPitchMaxDeg": 49.7,
+          "contacts": 1,
+          "slideMaxCm": 10.5,
+          "slideP95Cm": 10.5,
+          "yawDriftMaxDeg": 4,
+          "liftMaxCm": 17,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 5
+        }
+      }
+    }
+  },
+  "l5-shotgun-low": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 22,
+        "max": 22
+      },
+      "triangles": {
+        "p50": 63284,
+        "p95": 63316,
+        "max": 63316
+      },
+      "shadowDrawCalls": {
+        "p50": 15,
+        "p95": 15,
+        "max": 15
+      },
+      "shadowTriangles": {
+        "p50": 49256,
+        "p95": 49256,
+        "max": 49256
+      },
+      "stepMs": {
+        "p50": 3,
+        "p95": 6.2,
+        "max": 462.3
+      },
+      "lastFrame": {
+        "drawCalls": 20,
+        "triangles": 61236,
+        "shadowDrawCalls": 15,
+        "shadowTriangles": 49256,
+        "stepMs": 2.6000003814697266,
+        "categories": {
+          "other": 18,
+          "shadows": 15,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          0,
+          1.982
+        ],
+        "yawDeg": -90,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0.3,
+          "contacts": 10,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 9.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 72
+        }
+      },
+      "target": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          2,
+          0
+        ],
+        "yawDeg": 161.7,
+        "state": "dead",
+        "drawnFrames": 120,
+        "inViewFrames": 6,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": -94.5,
+          "torsoPitchMaxDeg": 49.7,
+          "contacts": 1,
+          "slideMaxCm": 10.5,
+          "slideP95Cm": 10.5,
+          "yawDriftMaxDeg": 4,
+          "liftMaxCm": 17,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 5
+        }
+      }
+    }
+  },
+  "l5-shotgun-scene": {
+    "checks": {
+      "pass": true
+    },
+    "consoleErrors": [],
+    "render": null
+  },
+  "shotgun-roles.json": {
+    "machineGunSeconds": 6.033333333333333,
+    "shotgunSeconds": 17.116666666666667,
+    "ratio": 2.8370165745856353
+  },
+  "perf/l5-high.json": {
+    "tier": "high",
+    "counts": {
+      "followers": 5,
+      "infected": 18,
+      "fires": 13,
+      "corpses": 37
+    },
+    "baselineDrawCalls": 408,
+    "pairDrawCalls": 317,
+    "pairTriangles": 959781,
+    "followDrawCalls": 315,
+    "followTriangles": 959253,
+    "p50": 6.600000000002183,
+    "p95": 10.5,
+    "max": 18.799999999999272,
+    "endLevel": "L5"
+  },
+  "perf/l5-low.json": {
+    "tier": "low",
+    "counts": {
+      "followers": 5,
+      "infected": 12,
+      "fires": 13,
+      "corpses": 37
+    },
+    "baselineDrawCalls": 179,
+    "pairDrawCalls": 207,
+    "pairTriangles": 359942,
+    "followDrawCalls": 207,
+    "followTriangles": 359942,
+    "p50": 22.399999999999636,
+    "p95": 39,
+    "max": 877.9000000000015,
+    "endLevel": "L6"
+  },
+  "validation": {
+    "targetedLanePassed": 8,
+    "alphaConditionalSkipped": true,
+    "L5SimPassed": 15,
+    "epicAndSmokeSimPassed": 38,
+    "unitPassed": 805,
+    "unitFailed": 2,
+    "baselineCommit": "2a5e22ef",
+    "baselineFailures": [
+      "T-E09-01-wreck",
+      "T-E17-04"
+    ],
+    "pickupBrowserPassed": true,
+    "fullBrowserPending": false,
+    "highL5PerfPassed": true,
+    "lowL5PerfInvalidReason": "sample handed over to L6",
+    "typecheck": true,
+    "lint": true,
+    "build": true,
+    "targetedPassed": 9,
+    "fullBrowserPassed": 33,
+    "fullBrowserFailed": [
+      "T-E13-05"
+    ],
+    "originalPickupCompatibilityPassed": true,
+    "standToCollectPassed": true,
+    "finalBuildPickupBrowserPassed": true
+  }
+}

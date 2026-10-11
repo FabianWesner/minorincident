@@ -53,10 +53,10 @@ export class Loadout {
       side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;
     }
   }
-  /** Adds to selected rack; full racks replace exactly the current slot. */
-  collect(side: Side, id: string): string | null {
+  /** Adds to selected rack; retained campaign pickups expand it, other full racks replace the current slot. */
+  collect(side: Side, id: string, retain = false): string | null {
     const rack = this.state[side], next = slot(id,this.definition);
-    if (rack.rack.length < this.capacity) { rack.rack.push(next); return null; }
+    if (retain || rack.rack.length < this.capacity) { rack.rack.push(next); return null; }
     const previous = rack.rack[rack.index].id; rack.rack[rack.index] = next; return previous;
   }
   current(side: Side): ActionSlot { const state = this.state[side]; return state.rack[state.index]; }

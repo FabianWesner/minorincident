@@ -32,7 +32,7 @@ export interface EntitySnapshot {
   /** L1 v2 transformation of a bitten pedestrian (0 to 1); removed when the same entity rises infected. */
   infection?: import('../outbreak/types').InfectionState;
   noiseTarget?: { id: number; until: number };
-  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean };
+  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean; retain?: boolean; interactTicks?: number; progress?: number };
   speedBuff?: { multiplier: number; until: number };
   hidden?: boolean;
   /** Scripted walk out of a house door (HouseEmergence): body separation leaves the body (position and height) alone. */
