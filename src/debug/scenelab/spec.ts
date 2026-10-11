@@ -123,7 +123,7 @@ export type EffectSpec =
   | { fire: Point; radius?: number; duration?: number }
   | { smoke: Point; radius?: number };
 export type CameraSpec =
-  | { mode: 'game'; target?: Point | string; zoom?: number }
+  | { mode: 'game'; target?: [number, number, number] | Point | string; zoom?: number }
   | { mode: 'orbit'; target?: [number, number, number] | Point | string; radius?: number; azimuth?: number; polar?: number; spin?: number }
   | { mode: 'close'; target?: [number, number, number] | Point | string; radius?: number; azimuth?: number }
   | { mode: 'pose'; position: [number, number, number]; target: [number, number, number] }

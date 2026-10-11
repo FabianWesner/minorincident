@@ -91,7 +91,10 @@ M = {
  'head': material('emi_windowGlow', '#ffc773', .22, emit='#ffc773', strength=2.5),
 }
 M['yellow'].node_tree.nodes['Principled BSDF'].inputs['Specular IOR Level'].default_value = .18
-M['glass'] = M['black']
+M['glass'] = material('pal_backpackTeal', '#6aabb4', .28)
+M['glass'].node_tree.nodes['Principled BSDF'].inputs['Alpha'].default_value = .18
+M['glass'].diffuse_color = (*M['glass'].diffuse_color[:3], .18)
+M['glass'].surface_render_method = 'BLENDED'
 M['rubber'] = M['black']
 M['reflection'] = M['rim']
 M['amber'] = M['head']
@@ -152,8 +155,18 @@ def from_bm(name, bm):
 
 def box(name, center, size, mat, parent=None, bevel=0.02, segs=3, rot=(0, 0, 0)):
     bm = bmesh.new()
-    bmesh.ops.create_cube(bm, size=1.0)
-    bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts)
+    if DISTANCE == 2 and (mat == 'glass' or 'cushion' in name or 'backrest' in name):
+        # Far glazing/upholstery retain their surface outline without hidden thickness faces.
+        axis = min(range(3), key=lambda k: size[k])
+        other = [k for k in range(3) if k != axis]
+        verts = []
+        for a,b in [(-1,-1),(1,-1),(1,1),(-1,1)]:
+            point = [0,0,0]; point[other[0]] = a*size[other[0]]/2; point[other[1]] = b*size[other[1]]/2
+            verts.append(bm.verts.new(point))
+        bm.faces.new(verts)
+    else:
+        bmesh.ops.create_cube(bm, size=1.0)
+        bmesh.ops.scale(bm, vec=Vector(size), verts=bm.verts)
     o = from_bm(name, bm)
     o.location = center
     o.rotation_euler = rot
@@ -177,6 +190,9 @@ def plate(name, pts_xz, side, depth, mat, parent=None, y_skin=W, bevel=0.006, se
     """Flat shape lying on a side skin. side=-1 near (-Y), +1 far (+Y). pts in world (x, z)."""
     y0 = side * (y_skin + lift)
     y1 = side * (y_skin + lift + depth)
+    if DISTANCE == 2 and mat == 'glass':
+        bm = bmesh.new(); bm.faces.new([bm.verts.new((x, (y0+y1)/2, z)) for x,z in pts_xz])
+        return finish(from_bm(name,bm),mat,parent,bevel=0)
     return prism(name, pts_xz, min(y0, y1), max(y0, y1), mat, parent, bevel, segs)
 
 
@@ -208,6 +224,10 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=48, smooth=True):
         # Fewer sidewall rings leave room for a round tread without exceeding the far asset's triangle budget.
         segs = 16
         profile = [profile[i] for i in (0, 4, 5, 9)]
+    if DISTANCE == 2 and (name.endswith('_red_lens') or name.startswith('rear_tail_lamp')):
+        # Far signal lenses retain a filled octagonal face, omitting hidden bulb thickness.
+        segs = 8
+        profile = [(max(r for r,a in profile), max(a for r,a in profile))]
     """Surface of revolution: profile [(radius, along_axis)], revolved about `axis` ('x','y','z' with sign)."""
     bm = bmesh.new()
     rings = []
@@ -217,6 +237,7 @@ def lathe(name, profile, center, axis, mat, parent=None, segs=48, smooth=True):
             t = 2 * PI * k / segs
             loop.append(bm.verts.new((r * math.cos(t), r * math.sin(t), a)))
         rings.append(loop)
+    if len(rings) == 1: bm.faces.new(rings[0])
     for j in range(len(rings) - 1):
         for k in range(segs):
             a0, a1 = rings[j][k], rings[j][(k + 1) % segs]
@@ -343,7 +364,8 @@ def frame(name, x0, z0, x1, z1, side, mat, parent, bar=0.04, r=0.04, depth=0.03,
 SIDES=[(-1,'near'),(1,'far')]
 group('veh.school-bus');group('chassis',parent='veh.school-bus');group('body',parent='veh.school-bus');group('bonnet',parent='veh.school-bus')
 box('underframe',(-.05,0,.65),(7.95,1.6,.24),'black','chassis',.05)
-body=box('passenger_shell',(-1.05,0,2.01),(6.3,2.6,2.94),'yellow','body',.09,5)
+body=box('passenger_shell',(-1.05,0,2.01),(6.3,2.6,2.94),'yellow','body',.09,2)
+cut(body,raw_box('cabin_void',(-1.05,0,2.06),(6.08,2.36,2.64)))
 cut(body,raw_cyl('rear_arch',(-2.65,0,.65),.79,3.1),'black')
 # Roof rounded cap and subtly raised perimeter seams
 box('rounded_roof',(-1.05,0,3.46),(6.4,2.64,.52),'yellow','body',.23,7)
@@ -365,7 +387,7 @@ for side,sn in SIDES:
  windows=[(-4.04,-3.6),(-3.45,-2.5),(-2.35,-1.4),(-1.25,-.3),(-.15,.8)]
  for i,(a,b) in enumerate(windows):
   # real shallow recesses in yellow skin
-  cut(body,raw_box('window_recess',((a+b)/2,side*1.3,2.58),(b-a+.07,.12,1.06)))
+  cut(body,raw_box('window_recess',((a+b)/2,side*1.3,2.58),(b-a,.38,1.01)))
   plate('window_%s_%d'%(sn,i),rrect(a-.035 if DISTANCE else a,2.05 if DISTANCE else 2.08,b+.035 if DISTANCE else b,3.11 if DISTANCE else 3.09,.055),side,.012,'glass','body',y_skin=1.255)
   frame('window_gasket_%s_%d'%(sn,i),a,2.08,b,3.09,side,'black','body',bar=.035,r=.055,depth=.035,y_skin=1.28)
   plate('window_reflection_%s_%d'%(sn,i),[(a+.045,2.72),(b-.04,3.04),(b-.04,2.85),(a+.045,2.53)],side,.002,'reflection','body',y_skin=1.277,bevel=0)
@@ -375,12 +397,14 @@ for side,sn in SIDES:
  for x in [-3.8,-.8]:
   box('lower_panel_seam',(x,side*1.307,.86),(.012,.008,.42),'edge','body',.002)
  # narrow full-height folding two-panel door (mirrored hidden side)
+ cut(body,raw_box('entry_opening',(1.52,side*1.3,1.83),(1.06,.36,2.53)))
  group('door_'+sn,(1.02,side*1.3,.57),parent='body')
  for i,(a,b) in enumerate([(1.02,1.51),(1.54,2.02)]):
   leaf='door_'+sn+'_'+str(i)
   group(leaf,(a,side*1.326,.57),parent='door_'+sn)
-  box('door_leaf_%s_%d'%(sn,i),((a+b)/2,side*1.326,1.83),(b-a,.055,2.53),'yellow',leaf,.026)
+  leaf_mesh = box('door_leaf_%s_%d'%(sn,i),((a+b)/2,side*1.326,1.83),(b-a,.055,2.53),'yellow',leaf,.026)
   for j,(z0,z1) in enumerate([(.7,1.82),(2.02,3.02)]):
+   cut(leaf_mesh,raw_box('door_window_opening',((a+b)/2,side*1.326,(z0+z1)/2),(b-a-.11,.20,z1-z0)))
    plate('door_glass_%s_%d_%d'%(sn,i,j),rrect(a+.055,z0,b-.055,z1,.04),side,.025,'glass',leaf,y_skin=1.36)
    frame('door_gasket_%s_%d_%d'%(sn,i,j),a+.055,z0,b-.055,z1,side,'black',leaf,bar=.025,r=.04,y_skin=1.365,depth=.02)
  box('door_center_seal_'+sn,(1.525,side*1.365,1.83),(.024,.035,2.53),'black','door_'+sn+'_1',.008)
@@ -409,7 +433,9 @@ for x,label in [(2.13,'front'),(-4.24,'rear')]:
  box(label+'_header_marker',(x+(.03 if x>0 else -.03),0,3.55),(.035,.23,.105),'lamp','body',.02)
 # windshield frames front face, shallow inset into body
 for i,y in enumerate([-.65,.65]):
- box('windshield_surround_'+str(i),(2.118,y,2.64),(.064,1.13,1.04),'black','body',.045)
+ cut(body,raw_box('windshield_opening',(2.1,y,2.64),(.35,1.03,.94)))
+ surround=box('windshield_surround_'+str(i),(2.118,y,2.64),(.064,1.13,1.04),'black','body',.045)
+ cut(surround,raw_box('windshield_frame_opening',(2.118,y,2.64),(.20,1.03,.94)))
  box('windshield_'+str(i),(2.155,y,2.64),(.025,1.03,.94),'glass','body',.027)
  box('wiper_blade_'+str(i),(2.178,y,2.24),(.026,.72,.025),'black','body',.009,rot=(.13,0,0))
  box('wiper_arm_'+str(i),(2.182,y+.13,2.27),(.025,.35,.018),'rim','body',.007,rot=(-.43,0,0))
@@ -430,7 +456,9 @@ box('rear_bumper',(-4.3,0,.62),(.26,2.76,.33),'black','chassis',.045)
 group('doorRear',(-4.24,-.62,.64),parent='body')
 box('rear_emergency_door',(-4.219,0,1.95),(.03,1.23,2.63),'edge','doorRear',.028)
 box('rear_door_panel',(-4.245,0,1.95),(.015,1.18,2.57),'yellow','doorRear',.02)
-box('rear_window_gasket',(-4.26,0,2.64),(.035,1.04,.89),'black','doorRear',.045)
+rear_gasket=box('rear_window_gasket',(-4.26,0,2.64),(.035,1.04,.89),'black','doorRear',.045)
+for target in [body,bpy.data.objects['rear_emergency_door'],bpy.data.objects['rear_door_panel'],rear_gasket]:
+ cut(target,raw_box('rear_window_opening',(-4.24,0,2.64),(.30,.96,.81)))
 box('rear_window',(-4.281,0,2.64),(.018,.96,.81),'glass','doorRear',.03)
 text('rear_town','SUNSET GROVE',.13,(-4.288,0,1.42),'-x','black','body')
 text('front_plate_text','SG 218',.11,(4.329,0,.63),'+x','black','chassis')
@@ -626,6 +654,21 @@ def batch():
             for c in ao.data:
                 c.color = (1,1,1,1)
 
+# Closed deck, bench rows and a driver perch are visible through the window belt.
+box('cabin_floor',(-1.05,0,.78),(6.08,2.36,.10),'black','body',0)
+for row,x in enumerate([-3.55,-2.45,-1.35,-.25]):
+ for side in [-1,1]:
+  y=side*.77
+  box('cabin_bench_cushion',(x,y,1.43),(.70,.78,.12),'black','body',0)
+  box('cabin_bench_backrest',(x-.32,y,1.81),(.10,.78,.64),'black','body',0)
+  group('passengerSeat%d%s'%(row,'L' if side<0 else 'R'),(x,y,1.62),parent='veh.school-bus')
+box('driver_cushion',(1.30,-.68,1.49),(.52,.58,.12),'black','body',0)
+box('driver_backrest',(1.03,-.68,1.87),(.10,.58,.64),'black','body',0)
+box('dashboard',(1.91,0,1.99),(.25,2.25,.16),'black','body',0)
+lathe('driver_wheel',[(.18,-.015),(.21,-.015),(.21,.015),(.18,.015),(.18,-.015)],(1.75,-.68,2.12),'x','black','body',segs=16)
+for name,loc in [('driverSeat',(1.30,-.68,1.68)),('steeringWheel',(1.75,-.68,2.12)),('exitL',(1.5,1.65,.4)),('exitR',(1.5,-1.65,.4))]:
+ group(name,loc,parent='veh.school-bus')
+
 if DISTANCE:
     front = group('lightsFront', parent='veh.school-bus')
     brake = group('lightsBrake', parent='veh.school-bus')
@@ -638,15 +681,13 @@ if DISTANCE:
         box('door_black_edge_'+sn, (1.045, side*1.365, 1.83), (.025,.02,2.53), 'rim', 'door_'+sn+'_0', 0)
 
 if DISTANCE:
-    export_variant(Path(__file__).parent, DISTANCE, omit=('window_gasket', 'lettering', 'rear_school_bus', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('window_recess', 'mirror_arm', 'roof_transverse_seam', 'header_marker', 'rear_side_reflector', 'front_fender', 'rub_rail', 'arch_lip', 'window_reflection', 'warning_bezel', 'lens_ring', 'window_frame', 'window_rubber', 'lens_rib', 'lamp_ring', 'side_red_marker', 'side_amber_marker', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*', '*red_lens', 'rear_tail_lamp'))
+    export_variant(Path(__file__).parent, DISTANCE, omit=('window_gasket', 'lettering', 'rear_school_bus', 'tread', 'lug', 'rivet', 'bolt', 'seat', 'steering', 'sidewall', 'rim lip'), far_omit=('window_recess', 'mirror_arm', 'roof_transverse_seam', 'header_marker', 'rear_side_reflector', 'front_fender', 'rub_rail', 'arch_lip', 'window_reflection', 'warning_bezel', 'lens_ring', 'window_frame', 'window_rubber', 'lens_rib', 'lamp_ring', 'side_red_marker', 'side_amber_marker', 'wiper', 'handle', 'seam', 'badge', 'text', 'letter', 'logo', 'stripe', 'rib', 'hub', 'rim', 'gasket', 'dashboard', 'headrest', 'axle', 'differential', 'grille bar', 'vent', 'hinge', 'clamp', 'spoke'), flat_parts=('*rim*',) if DISTANCE == 2 else ('*rim*', '*red_lens', 'rear_tail_lamp'), anchors=('driverSeat','steeringWheel')+tuple('passengerSeat%d%s'%(r,side) for r in range(4) for side in ('L','R')))
 
 batch()
 root = GROUPS['veh.school-bus']
 root['ss_physics'] = {'class':'heavy','mass':6500,'friction':.8,'restitution':.05,
                      'centerOfMass':[0,1.3,0],'pushable':False,'kickable':False,
                      'flammable':True,'burnTime':45,'sounds':'vehicle.bus'}
-for name,loc in [('driverSeat',(1.55,.65,1.65)),('exitL',(1.5,1.65,.4)),('exitR',(1.5,-1.65,.4))]:
-    group(name,loc,parent='veh.school-bus')
 for name,loc,size in [('body',(-1.05,0,2.05),(6.3,2.6,2.95)),('hood',(3.1,0,1.25),(2.1,2.4,1.3))]:
     o=group('col:'+name,loc,parent='veh.school-bus')
     o['collider']='cuboid';o['shape']='cuboid';o['size']=list(size)
@@ -702,5 +743,5 @@ if arg('--render'):
     print('RENDER OK',arg('--render'))
 
 # Every full source export refreshes the native distance tiers.
-if "--glb" in sys.argv and not DISTANCE:
+if "--glb" in sys.argv and not DISTANCE and "--base-only" not in sys.argv:
     build_native_lods(__file__)
