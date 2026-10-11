@@ -41,10 +41,20 @@ export const gaitShape: Record<string, { stance: number; lift: number }> = {
 const worldScale = new Vector3(), worldOrigin = new Vector3();
 /** Library humanoid rest leg (leg->shin->foot), metres; strides are authored for it. */
 const libraryLeg = .516;
+// Rig topology stays fixed during animation; bone transforms and parents remain live.
+const strideBones = new WeakMap<Object3D, { hip?: Object3D; shin?: Object3D; foot?: Object3D; animal?: Object3D }>();
+function strideRig(root: Object3D) {
+  let bones = strideBones.get(root);
+  if (!bones) {
+    bones = { hip: root.getObjectByName('hip'), shin: root.getObjectByName('shinL'), foot: root.getObjectByName('footL'), animal: root.getObjectByName('legFL') };
+    strideBones.set(root, bones);
+  }
+  return bones;
+}
 /** Rest-pose stride ratio in rig-local units, independent of world/model scale. */
 function strideProportion(root: Object3D): number {
-  const shin = root.getObjectByName('shinL'), foot = root.getObjectByName('footL');
-  const leg = shin && foot && !root.getObjectByName('legFL') ? -(shin.position.y + foot.position.y) : libraryLeg;
+  const { shin, foot, animal } = strideRig(root);
+  const leg = shin && foot && !animal ? -(shin.position.y + foot.position.y) : libraryLeg;
   return leg > .2 && leg < libraryLeg ? leg / libraryLeg : 1;
 }
 /** World-space stride multiplier: model scale times the shorter-legged rig's
@@ -52,7 +62,7 @@ function strideProportion(root: Object3D): number {
 export function strideScale(root: Object3D): number {
   // GLTF scene wrappers can sit above the normalized rig root. Bone offsets
   // are in the hip parent's coordinates, including that internal asset scale.
-  const frame = root.getObjectByName('hip')?.parent ?? root;
+  const frame = strideRig(root).hip?.parent ?? root;
   return frame.getWorldScale(worldScale).y * strideProportion(root);
 }
 const groundClips = /^(die|death-|knockdown|flung|get-up|crawl|infection-collapse|infection-rise)/;
