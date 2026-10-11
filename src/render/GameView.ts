@@ -148,6 +148,7 @@ export class GameView implements Lifecycle {
   private readonly foliageIdMasks = new Map<Material, MeshBasicNodeMaterial>();
   private lookdev: Lookdev | null = null;
   private postFx: PostFx | null = null;
+  private retiredPostFx: ReturnType<PostFx['diagnostics']> | null = null;
   private dofEnabled = false;
   private readonly occlusion = new Occlusion();
   private readonly playerPosition = new Vector3();
@@ -188,7 +189,7 @@ export class GameView implements Lifecycle {
   /** Apply inexpensive tier controls without rebuilding the level or interrupting its simulation. */
   setQuality(tier: QualityTier): void {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
-    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
+    if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
     this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier); this.npcs?.setQuality(tier);
   }
@@ -578,6 +579,7 @@ export class GameView implements Lifecycle {
   /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
   labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
+  renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
@@ -812,7 +814,7 @@ export class GameView implements Lifecycle {
     this.windowMask=false; this.foliageMask=false;
     for (const material of this.foliageMasks.values()) material.dispose(); this.foliageMasks.clear();
     for (const material of this.foliageIdMasks.values()) material.dispose(); this.foliageIdMasks.clear();
-    this.postFx?.dispose();this.postFx = null; this.dofEnabled = false;
+    if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }
     if (this.districts && !this.preparedDistrictViews.has(this.districts.world)) { this.scene.remove(this.districts); this.districts.dispose(); }
     this.preparedDistrictViews.clear(); this.districts = null;

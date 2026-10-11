@@ -6,8 +6,13 @@ import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
 import { LookUniforms } from './LookUniforms';
 
+let nextDiagnosticId = 0;
+
 /** HDR bloom, soft vignette and optional miniature blur; central 40% stays sharp. */
 export class PostFx {
+  private readonly diagnosticId = ++nextDiagnosticId;
+  private disposed = false;
+  private readonly targetDisposals = new Map<RenderTarget, number>();
   readonly pipeline: RenderPipeline;
   readonly bloomEnabled = uniform(1);
   private readonly sharpOutput;
@@ -30,6 +35,21 @@ export class PostFx {
     this.sharpOutput = source.add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette);
     this.blurredOutput = mix(source, this.lowBlur ?? blur, strength).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette);
     this.pipeline = new RenderPipeline(renderer, this.sharpOutput);
+    for (const target of this.diagnosticTargets()) {
+      this.targetDisposals.set(target, 0);
+      target.addEventListener('dispose', () => this.targetDisposals.set(target, (this.targetDisposals.get(target) ?? 0) + 1));
+    }
+  }
+  private diagnosticTargets(): RenderTarget[] {
+    const bloom = this.bloomPass as typeof this.bloomPass & { _renderTargetBright: RenderTarget; _renderTargetsHorizontal: RenderTarget[]; _renderTargetsVertical: RenderTarget[] };
+    return [this.scenePass.renderTarget, bloom._renderTargetBright, ...bloom._renderTargetsHorizontal, ...bloom._renderTargetsVertical];
+  }
+  /** Disposal events include target reallocations on resize, not only final teardown. */
+  diagnostics() {
+    return { id: this.diagnosticId, disposed: this.disposed, ...this.snapshot(), targets: this.diagnosticTargets().map(target => ({
+      id: target.texture.uuid, name: target.texture.name, width: target.width, height: target.height,
+      samples: target.samples, disposalEvents: this.targetDisposals.get(target) ?? 0,
+    })) };
   }
   applyLook(): void {
     this.bloomPass.strength.value = this.look.values.bloomStrength;
@@ -74,6 +94,7 @@ export class PostFx {
   }
   render(): void { this.pipeline.render(); }
   dispose(): void {
+    this.disposed = true;
     // r186's RTTNode has dispose(), currently missing from @types/three.
     if (this.lowBlur) (this.lowBlur as typeof this.lowBlur & { dispose(): void }).dispose(); this.pipeline.dispose(); this.bloomPass.dispose(); this.scenePass.dispose();
     // Bloom's fixed five-slot composite samples inactive low-tier textures. Those targets
