@@ -1,5 +1,4 @@
 import { L2TruckDrive } from '../vehicles/L2TruckDrive';
-import { Rng } from '../../core/Rng';
 import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
@@ -95,9 +94,6 @@ export class LevelTwoRescue {
     this.spawnCorpses();
     this.s.trappedIds = this.spawnTrapped(tier === 'low' ? l2.rescue.trapped.low : l2.rescue.trapped.high);
     for (const id of ['door-front', 'door-loading']) this.wall(id, true);
-    // Seeded calm length: the alarm sounds 20-30 s in (a retry replays the same timing).
-    const rng = new Rng(world.seed, 'l2-story');
-    this.s.alarmAt = world.tick + ticks(l2.calm.alarmAtS[0] + rng.next() * (l2.calm.alarmAtS[1] - l2.calm.alarmAtS[0]));
     this.mission.radio('L2.briefing');
   }
 
@@ -218,6 +214,7 @@ export class LevelTwoRescue {
     if (id === 'doors' && !this.s.doorsOpenAt) this.openDoors();
   }
   private alarm(): void {
+    if (!this.s.axe || this.s.phase !== 'calm') return;
     const { world } = this.mission, tick = world.tick;
     // A few people still out on the streets, trying to get somewhere (civilians only: the town has no infected yet).
     // Never on or beside the truck's route lane (it is a kinematic ride that must not meet anybody).
@@ -249,14 +246,14 @@ export class LevelTwoRescue {
     combat.setLoadout(['weapon.fire-axe', ...left].slice(0, Math.max(2, combat.rackCapacity)), right);
     combat.runner.loadout.state.selectedSide = 'LEFT';
     this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'LEFT', actionId: 'weapon.fire-axe', replaced: null });
+    this.alarm();
   }
   private board(): void {
     const { world } = this.mission, player = world.entities.get(1)!, tick = world.tick;
-    if (this.s.seated || this.s.phase !== 'alarm') return;
+    if (this.s.seated || !this.s.axe || this.s.phase !== 'alarm') return;
     this.s.seated = true; player.hidden = true; world.physics.playerCollider!.setEnabled(false); world.player!.locomotion.reset();
     world.storyLock = { scripted: null, skip: false };
     world.events.emit({ type: 'vehicle.entered', tick, sourceId: this.s.truckId, targetId: 1, role: 'passenger' });
-    if (this.mission.state.steps.axe.status === 'active') this.mission.state.steps.axe.status = 'cancelled';
   }
   private routeInfo() {
     if (!this.route) {
@@ -417,13 +414,10 @@ export class LevelTwoRescue {
     const { world, state } = this.mission, s = state.l2; if (!s) return;
     const tick = world.tick, player = world.entities.get(1)!;
     if (s.phase === 'calm') {
-      if (tick === s.alarmAt - ticks(14)) this.mission.radio('L2.captain');
-      if (tick >= s.alarmAt) this.mission.setState('alarm', true);
+      if (tick === this.mission.state.steps.axe.started + ticks(8)) this.mission.radio('L2.captain');
       return;
     }
     if (s.phase === 'alarm') {
-      // The firefighter points at the optional axe a few seconds after the call, while it is still on the wall.
-      if (tick === s.alarmAt + ticks(5.2) && !s.axe && this.mission.state.steps.axe.status === 'active') this.mission.radio('L2.axe');
       for (const id of s.crewIds) {
         const e = world.entities.get(id), a = e?.civilian?.ally; if (!e || !a || e.hidden) continue;
         // Seated crew have no station routine: its expiry otherwise makes them exit inside the moving truck.

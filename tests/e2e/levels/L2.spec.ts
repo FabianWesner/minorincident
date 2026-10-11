@@ -15,6 +15,16 @@ function helpers(page: Page) {
   const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
   const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
   const player = () => page.evaluate(() => window.__SS__!.getState().player!);
+  // A projected world point can overlap a HUD button; clicking it would cycle the rack.
+  const projectForClick = (target: P) => page.evaluate(q => {
+    const a = window.__SS__!;
+    let point = a.input.project(q);
+    if (!(document.elementFromPoint(point.x, point.y) instanceof HTMLCanvasElement)) {
+      a.camera.cinematic({ position: [q.x + 22, 26.4, q.z + 22], target: [q.x, 0, q.z] }, true);
+      point = a.input.project(q);
+    }
+    return point;
+  }, target);
   const shots = new Set<string>();
   const snap = async (name: string) => {
     await page.evaluate(n => window.__SS__!.camera.preset(`D-GROVE/W1/${n}`), name);
@@ -27,10 +37,12 @@ function helpers(page: Page) {
     const target = await page.evaluate(() => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 2.6).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      return near ? a.input.project(near.transform) : null;
+      return near ? { x: near.transform.x, z: near.transform.z } : null;
     });
     if (!target) return false;
-    await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
+    const point = await projectForClick(target);
+    await page.keyboard.down('Shift'); await page.mouse.move(point.x, point.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
+    await page.evaluate(() => window.__SS__!.camera.follow());
     return true;
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
@@ -41,7 +53,7 @@ function helpers(page: Page) {
         const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
-      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
+      const point = await projectForClick(target);
       await page.mouse.click(point.x, point.y);
       // Consume the ground click under the camera that projected it, as in L1/L3.
       await step(1);
@@ -72,12 +84,12 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     const h = helpers(page), { step, mission, player, snap, go, interact } = h;
     await step(150); await snap('l2-station-calm');
     expect((await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }))).length).toBe(0);
-    for (let i = 0; i < 80 && (await mission()).l2!.phase === 'calm'; i++) await step(30);
-    await step(30); await snap('l2-alarm');
-    // Optional axe: walk to the wall rack and press E.
+    // Required axe: walk to the yellow ring and press E to start the alarm.
     await go(at('l2-axe-rack'), .8); await interact();
     for (let i = 0; i < 10 && !(await mission()).l2!.axe; i++) { await interact(); await step(10); }
     expect((await mission()).l2!.axe).toBe(true);
+    expect((await mission()).l2!.phase).toBe('alarm');
+    await step(30); await snap('l2-alarm');
     expect((await player()).weapons!.LEFT.rack.map(r => r.id)).toContain('weapon.fire-axe');
     // Board at the crew door by interaction.
     await go(at('l2-board'), .6); await interact();
@@ -94,6 +106,10 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     await snap('l2-streets-w1');
     await go(at('l2-forecourt'), 1.5, async () => (await mission()).l2!.doorsOpenAt > 0);
     for (let i = 0; i < 1200 && !(await mission()).l2!.doorsOpenAt; i++) await step(1);
+    expect((await mission()).steps.bridge.status).toBe('active');
+    expect((await mission()).marker).toBe('l2-gate-inside');
+    await expect(page.getByTestId('objective-text')).toContainText('Reach the police checkpoint at the bridge');
+    await expect(page.getByTestId('minimap-objective')).toBeVisible();
     await snap('l2-doors-open'); await step(300);
     await page.evaluate(n => window.__SS__!.camera.preset(`D-GROVE/W1/${n}`), 'l2-doors-open'); await page.evaluate(() => window.__SS__!.screenshotReady());
     await page.screenshot({ path: `${output}/l2-doors-open-5s.png` }); await page.evaluate(() => window.__SS__!.camera.follow());
@@ -135,7 +151,7 @@ test.describe('L2 The Failed Rescue in the browser', () => {
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L2');
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(() => window.__SS__!.pause());
-    // Walk the L2 graph with the objective cheat, taking the optional axe on the way.
+    // Walk the L2 graph with the objective cheat, taking the required axe on the way.
     for (let i = 0; i < 16; i++) {
       const m = await page.evaluate(() => window.__SS__!.missions.state()!);
       if (m.phase !== 'playing') break;

@@ -18,9 +18,11 @@ test('T-E20-apron-alarm @E20 axe ring is available during calm and beacons run d
   await step(60);
   expect((await mission()).steps.calm.status).toBe('active');
   expect((await mission()).steps.axe.status).toBe('active');
-  // The objective is live per the PO request; the global 3D objective marker stays hidden during the calm beat by design.
-  expect((await page.evaluate(() => window.__SS__!.getState().render.missionMarker))?.visible).toBe(false);
-  for (let i = 0; i < 80 && (await mission()).l2!.phase === 'calm'; i++) await step(30);
+  // The required pickup is the first visible objective.
+  expect((await page.evaluate(() => window.__SS__!.getState().render.missionMarker))?.visible).toBe(true);
+  await page.evaluate(() => window.__SS__!.cheats.completeObjective('axe'));
+  await step(1);
+  expect((await mission()).l2!.phase).toBe('alarm');
   await step(40);
   expect((await page.evaluate(() => window.__SS__!.getState().render.missionMarker))?.visible).toBe(true);
   await page.evaluate(() => window.__SS__!.screenshotReady());

@@ -28,6 +28,7 @@ export class LevelTwoBot {
   finished = false;
   private readonly walker = new Walker();
   private readonly rng: Rng;
+  private readonly axeApproachAt: number;
   private frame: InputFrame = emptyInput();
   private waypoint = 0;
   private detour: (P & { until: number }) | null = null;
@@ -35,8 +36,12 @@ export class LevelTwoBot {
   private retreatAt = 0;
   private alarmed = false;
   private last: P | null = null;
-  constructor(private readonly world: SimWorld, readonly profile: L2Profile = 'complete', readonly opening: L2Opening = 'side') { this.rng = new Rng(world.seed, `l2-bot-${profile}`); }
-  private get takesAxe(): boolean { return this.profile !== 'no-axe' && this.profile !== 'idle'; }
+  constructor(private readonly world: SimWorld, readonly profile: L2Profile = 'complete', readonly opening: L2Opening = 'side') {
+    this.rng = new Rng(world.seed, `l2-bot-${profile}`);
+    // Survey the station before the required pickup, retaining the battery's seeded human pacing.
+    // The short approach and stand-to-interact take about 0.65 s; only the pickup starts the alarm.
+    this.axeApproachAt = world.tick + Math.round((20 + new Rng(world.seed, 'l2-story').next() * 10 - .65) * 60);
+  }
   private threats(p: P, radius: number): EntitySnapshot[] {
     const w = this.world;
     return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
@@ -60,17 +65,20 @@ export class LevelTwoBot {
       frame.aimPoint = { x: target.transform.x, z: target.transform.z }; frame.left.held = true;
     };
     const strike = (target: EntitySnapshot) => { if (this.profile === 'aggressive') { frame.attackTarget = { id: target.id, side: 'LEFT' }; frame.left.held = true; } else aimStrike(target); frame.move = { x: 0, z: 0 }; };
-    // Calm and alarm: take the optional axe during the calm beat, then board after the alarm.
+    // Calm and alarm: take the required axe during the calm beat, then board after the alarm.
     if (s.phase === 'calm') {
-      if (this.takesAxe && !s.axe && go(a['l2-axe-rack'], .5, 'axe-wait')) frame.interact = true;
+      if (w.tick < this.axeApproachAt) return frame;
+      if (!s.axe && go(a['l2-axe-rack'], .5, 'axe-wait')) frame.interact = true;
       return frame;
     }
     if (s.phase === 'alarm') {
-      if (this.takesAxe && m.state.steps.axe.status === 'active') { if (go(a['l2-axe-rack'], .5, 'axe')) frame.interact = !newbie || this.rng.next() < .5; return frame; }
+      if (m.state.steps.axe.status === 'active') { if (go(a['l2-axe-rack'], .5, 'axe')) frame.interact = !newbie || this.rng.next() < .5; return frame; }
       if (go(a['l2-board'], .5, 'board')) frame.interact = !newbie || this.rng.next() < .5;
       return frame;
     }
     if (s.phase === 'ride') return frame;
+    // The legacy no-axe policy still tests escape with the bat after the required pickup.
+    if (this.profile === 'no-axe' && w.combat!.runner.loadout.current('LEFT').id === 'weapon.fire-axe') { frame.selectedSlot = { side: 'LEFT', index: 1 }; return frame; }
     const near = this.threats(p, 2.6), skip = newbie && this.rng.next() < .15;
     if (this.profile === 'idle') return frame;
     if (this.profile === 'aggressive') {

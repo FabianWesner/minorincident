@@ -1,0 +1,57 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l2-axe-objective -> 2.31.51.253:/srv/mi/ws/l2-axe-objective-dc57d6
+[remote] WARNING: mi-runner-3 has 4 GB free after prune (under 8 GB)
+[remote] sync 11s, 5012 files; job /srv/mi/jobs/l2-axe-objective-dc57d6-51961-1791672307; queueing for a slot
+[runner] slot 0 acquired; load 1.51 2.69 3.17
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+fatal: Needed a single revision
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 396 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mpreview/index.html                        [39m[1m[2m    1.57 kB[22m[1m[22m[2m │ gzip:     0.70 kB[22m
+[2mdist/[22m[32mindex.html                                [39m[1m[2m    2.32 kB[22m[1m[22m[2m │ gzip:     0.78 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-o4Hde_L7.js        [39m[1m[2m   57.53 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-VXdx5NbI.wasm      [39m[1m[2m  527.33 kB[22m[1m[22m[2m │ gzip:   247.62 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mrapier-C6GCbKVJ.wasm                [39m[1m[2m3,082.10 kB[22m[1m[22m[2m │ gzip: 1,176.71 kB[22m
+[2mdist/[22m[2mbuild/[22m[35mindex-BWyL0Yxb.css                  [39m[1m[2m   29.59 kB[22m[1m[22m[2m │ gzip:     6.77 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookViewpoints-BX-OEann.js          [39m[1m[2m    0.23 kB[22m[1m[22m[2m │ gzip:     0.16 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmodulepreload-polyfill-B5Qt9EMX.js  [39m[1m[2m    0.71 kB[22m[1m[22m[2m │ gzip:     0.40 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mpreload-helper-BlTxHScW.js          [39m[1m[2m    1.11 kB[22m[1m[22m[2m │ gzip:     0.65 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowdProbe-BTipzkJS.js              [39m[1m[2m    1.35 kB[22m[1m[22m[2m │ gzip:     0.79 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcontrols-DGdjkqyP.js                [39m[1m[2m    1.40 kB[22m[1m[22m[2m │ gzip:     0.74 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mworldLook-DT8mxh_z.js               [39m[1m[2m    1.64 kB[22m[1m[22m[2m │ gzip:     0.77 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowd-06DrzNJQ.js                   [39m[1m[2m    2.50 kB[22m[1m[22m[2m │ gzip:     1.33 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelOneBot-CfGTn0Oy.js             [39m[1m[2m    4.82 kB[22m[1m[22m[2m │ gzip:     2.32 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookPatch-BT7ef7_D.js               [39m[1m[2m    5.26 kB[22m[1m[22m[2m │ gzip:     2.73 kB[22m
+[2mdist/[22m[2mbuild/[22m[36ml3-BFRWm1Bx.js                      [39m[1m[2m    7.27 kB[22m[1m[22m[2m │ gzip:     3.30 kB[22m
+[2mdist/[22m[2mbuild/[22m[36ml4-B6T7bV2C.js                      [39m[1m[2m    7.50 kB[22m[1m[22m[2m │ gzip:     3.29 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mInspection-D5go-Yy-.js              [39m[1m[2m   12.83 kB[22m[1m[22m[2m │ gzip:     4.39 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmeleeCombos-Dms-4pW5.js             [39m[1m[2m   14.09 kB[22m[1m[22m[2m │ gzip:     4.56 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mMotionLab-DyhesoWb.js               [39m[1m[2m   19.95 kB[22m[1m[22m[2m │ gzip:     8.42 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mtestApi-BbVuFr2i.js                 [39m[1m[2m   21.51 kB[22m[1m[22m[2m │ gzip:     8.24 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelFiveBot-BCDhbS2r.js            [39m[1m[2m   21.58 kB[22m[1m[22m[2m │ gzip:     5.88 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-B3ZSRyoQ.js                   [39m[1m[2m   26.79 kB[22m[1m[22m[2m │ gzip:     7.12 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mSceneLab-CoPMAfWR.js                [39m[1m[2m   57.10 kB[22m[1m[22m[2m │ gzip:    21.00 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPickups-CJieljr9.js                 [39m[1m[2m   60.35 kB[22m[1m[22m[2m │ gzip:    20.09 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mHouseEmergence-DkP3K5LF.js          [39m[1m[2m  120.15 kB[22m[1m[22m[2m │ gzip:    33.14 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mDebug-DoeeJH5i.js                   [39m[1m[2m  155.75 kB[22m[1m[22m[2m │ gzip:    33.03 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mrapier-B4BYJx26.js                  [39m[1m[2m  211.96 kB[22m[1m[22m[2m │ gzip:    36.09 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mthree.module-CG1gesDJ.js            [39m[1m[2m  287.60 kB[22m[1m[22m[2m │ gzip:    77.67 kB[22m
+[2mdist/[22m[2mbuild/[22m[36minstall-SzDu_UMr.js                 [39m[1m[2m  414.27 kB[22m[1m[22m[2m │ gzip:   121.98 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mregistry-CeljIq__.js                [39m[1m[2m  456.32 kB[22m[1m[22m[2m │ gzip:    85.36 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mWeatherView-1yYE5_Ys.js             [39m[1m[2m  710.60 kB[22m[1m[22m[2m │ gzip:   200.36 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-C1DObBTk.js                   [39m[1m[2m  931.53 kB[22m[1m[22m[2m │ gzip:   271.98 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPhysics-BtGRgv1g.js                 [39m[1m[2m1,999.96 kB[22m[1m[22m[2m │ gzip:   359.05 kB[22m
+[32m✓ built in 8.39s[39m
+[WebServer] fatal: Needed a single revision
+
+Running 8 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/l2-apron-alarm.spec.ts:9:1 › T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm (1.9m)
+  ✓  2 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:10:1 › T-E20-axe-findable @E20 the axe rack is visible and marked during calm (1.8m)
+  ✓  3 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:37:1 › T-E20-axe-replay @E20 menu replay still requires the axe even when it is already owned (1.8m)
+  ✘  4 [chromium] › tests/e2e/levels/l2-rescue-setpiece.spec.ts:12:1 › T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open) (4.5m)

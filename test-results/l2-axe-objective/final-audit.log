@@ -1,0 +1,72 @@
+[runner] slot 0 acquired; load 3.88 4.27 4.25
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/l2-axe-objective-final-audit-a05ca02e[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l2-axe-objective.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 129928[2mms[22m[39m
+   [33m[2m✓[22m[39m @E20 required axe: 120 s idle stays calm; pickup equips and rings the alarm in the same tick[33m 29875[2mms[22m[39m
+   [33m[2m✓[22m[39m @E20 after the alarm every playing tick has objective text and a marker, including the doors checkpoint[33m 100051[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L2.test.ts [2m([22m[2m16 tests[22m[2m | [22m[33m14 skipped[39m[2m)[22m[33m 133811[2mms[22m[39m
+   [32m✓[39m L2 The Failed Rescue [2m(16)[22m
+     [33m[2m✓[22m[39m T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band[33m 86447[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons[33m 47360[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[2m | [22m[33m14 skipped[39m[90m (18)[39m
+[2m   Start at [22m 21:32:21
+[2m   Duration [22m 136.91s[2m (tests 98%, transform 2%)[22m
+
+JSON report written to /srv/mi/jobs/l2-axe-objective-final-audit-a05ca02e/test-results/l2-axe-objective/final-policy.json
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/l2-axe-objective-final-audit-a05ca02e[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/levels/L2.test.ts [2m([22m[2m16 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m15 skipped[39m[2m)[22m[33m 104387[2mms[22m[39m
+   [31m❯[39m L2 The Failed Rescue [2m(16)[22m
+     [2m[90m↓[39m[22m T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer
+     [2m[90m↓[39m[22m T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band
+     [2m[90m↓[39m[22m T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; no-axe single seed
+     [2m[90m↓[39m[22m T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the 20-30 s alarm; crew at the truck within 8 s; axe rack live
+     [2m[90m↓[39m[22m T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time
+     [2m[90m↓[39m[22m T-E20-06 @E20 @E20-AC06 set piece: event order, empty forecourt, release and ambush timing, three directions
+     [2m[90m↓[39m[22m T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites
+     [2m[90m↓[39m[22m T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity
+     [2m[90m↓[39m[22m T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives
+     [2m[90m↓[39m[22m T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight-only alerts with clear LOS, emergence at doors out of view
+     [2m[90m↓[39m[22m T-E20-12 @E20 @E20-AC12 escape population at the radio: >= 25 spread infected, >= 3 groups of >= 4, <= 20 % on the courier
+     [2m[90m↓[39m[22m T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes
+     [2m[90m↓[39m[22m T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice
+     [2m[90m↓[39m[22m T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3
+[31m     [31m×[31m T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down[39m[33m 104385[2mms[22m[39m
+     [2m[90m↓[39m[22m T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L2.test.ts[2m > [22mL2 The Failed Rescue[2m > [22mT-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down
+[31m[1mAssertionError[22m: seed 1 {"checkpoint":23,"turned":5,"elsewhere -45,-35":1,"elsewhere -44,-34":1}: expected [ 'elsewhere -45,-35', …(1) ] to deeply equal [][39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "elsewhere -45,-35",[39m
+[31m+   "elsewhere -44,-34",[39m
+[31m+ ][39m
+
+[36m [2m❯[22m tests/levels/L2.test.ts:[2m232:114[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[33m15 skipped[39m[90m (16)[39m
+[2m   Start at [22m 21:34:38
+[2m   Duration [22m 107.45s[2m (tests 97%, transform 2%)[22m
+
+JSON report written to /srv/mi/jobs/l2-axe-objective-final-audit-a05ca02e/test-results/l2-axe-objective/main-fates.json
+final policy exit=0; baseline fates exit=1
+    [90m230|[39m         fates[fate] = (fates[fate] ?? 0) + 1;
+    [90m231|[39m       }
+    [90m232|[39m       expect(Object.keys(fates).filter(k => k.startsWith('elsewhere'))…
+    [90m   |[39m                                                                                                                  [31m^[39m
+    [90m233|[39m       expect(s.trappedIds.every(id => w.entities.get(id)?.civilian?.l1…
+    [90m234|[39m       w.dispose(); world = undefined;
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+

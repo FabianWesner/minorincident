@@ -1,0 +1,20 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/l2-axe-objective-final-suite-c3baeaa7[39m
+
+[90mstdout[2m | tests/sim/ai/director.test.ts[2m > [22m[2mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[22m[39m{"scenario":"horde-arena","infected":200,"simMsP95":3.5281859999959124,"budget":4}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 68584[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out[33m 1220[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects[33m 64930[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget[33m 1972[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/horde.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2455[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms[33m 1752[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms[33m 691[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m12 passed[39m[22m[90m (12)[39m
+[2m   Start at [22m 22:00:33
+[2m   Duration [22m 74.73s[2m (tests 95%, transform 3%, import 1%)[22m
+
+JSON report written to /srv/mi/jobs/l2-axe-objective-final-suite-c3baeaa7/test-results/l2-axe-objective/timing-retry.json

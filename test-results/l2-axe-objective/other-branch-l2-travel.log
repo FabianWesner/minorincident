@@ -1,0 +1,18 @@
+Independent gun-pose branch run; HEAD 4439d7e712293fbe722fb2a16b337dc054201c0f
+Original L2 pickup flow, without this required-axe/objective change.
+  1) [chromium] › tests/e2e/levels/L2.spec.ts:65:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review 
+
+    Error: Could not travel to {"x":-31,"z":30} from {"x":-29.109994888305664,"y":0.7200000286102295,"z":-8.228063583374023,"yaw":-1.6139707580038096}
+
+      56 |       else if (i % 10 === 9) await click();
+      57 |     }
+    > 58 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
+         |           ^
+      59 |   };
+      60 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      61 |   return { step, mission, player, snap, shots, go, fightNearby, interact };
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/gun-pose/tests/e2e/levels/L2.spec.ts:58:11)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/gun-pose/tests/e2e/levels/L2.spec.ts:107:7
+
+    Error Context: test-results/playwright/run-3366/e2e-levels-L2-L2-The-Faile-7d55c-spots-for-the-vision-review-chromium/error-context.md
+
