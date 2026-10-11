@@ -146,9 +146,9 @@ export class LevelThreeBot {
         this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false;
       } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
     }
-    // Forward: along the street, then up On-ramp Road to the checkpoint lane and through the zone line.
+    // Forward: along the street, then up On-ramp Road to the rendezvous inside the compound.
     const zone = a['l3-zone'];
-    if (p.x > 118) { if (Math.abs(p.z) > 2.2 && p.x < 131) go({ x: 129, z: 0 }, .8, 'onramp'); else go({ x: zone.x + 3, z: 0 }, .3, 'zone'); return frame; }
+    if (p.x > 118) { if (Math.abs(p.z) > 2.2 && p.x < 131) go({ x: 129, z: 0 }, .8, 'onramp'); else go({ x: zone.x, z: zone.z }, .3, 'zone'); return frame; }
     // A point 24 m ahead on the chosen street (on clear ground); the grid route takes the cross-links by itself.
     const nav = w.infected!.nav, z = l3.map.streets[this.street], ahead = Math.min(124, Math.floor(p.x / 12) * 12 + 24);
     let target = { x: ahead, z };

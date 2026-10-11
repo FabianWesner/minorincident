@@ -1,0 +1,57 @@
+{
+  "stats": {
+    "startTime": "2026-10-11T12:05:32.858Z",
+    "duration": 31361.763,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/objective-waypoints.spec.ts",
+      "file": "e2e/levels/objective-waypoints.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "L3 real click into the finale finishes while the boom is occupied @E21 @E21-AC17",
+          "ok": true,
+          "tags": [
+            "E21",
+            "E21-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28302,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T12:05:35.551Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8ee077744f1613eace1-8267753fe9d6ec2eec79",
+          "file": "e2e/levels/objective-waypoints.spec.ts",
+          "line": 62,
+          "column": 1
+        }
+      ]
+    }
+  ]
+}

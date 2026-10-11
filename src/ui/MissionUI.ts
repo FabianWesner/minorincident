@@ -83,27 +83,29 @@ export class MissionUI {
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
     this.marker.hidden=!playing||!anchor||!player;
-    if(anchor&&player&&objective&&playing){
-      const distance=Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z);
+    if(player&&objective&&playing){
+      const distance=anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null;
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-      this.text(this.tracker,`${objective.text} · ${Math.round(distance)}\u00a0m${timer}`);this.tracker.dataset.objective=objective.id;this.tracker.dataset.distance=String(distance);
+      this.text(this.tracker,`${objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);this.tracker.dataset.objective=objective.id;this.tracker.dataset.distance=distance===null?'':String(distance);
       if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${objective.text}`);}
       this.toast.hidden=this.world.tick-state.steps[objective.id].started>=180;
-      this.point.set(anchor.x,1.8,anchor.z).project(camera);
-      const margin=42,cx=width/2,cy=height/2;
-      let dx=this.point.x*cx,dy=-this.point.y*cy;
-      if(this.point.z>1){dx=-dx;dy=-dy;}
-      const offscreen=this.point.z>1||Math.abs(dx)>cx-margin||Math.abs(dy)>cy-margin;
-      const scale=offscreen?Math.min((cx-margin)/Math.max(1,Math.abs(dx)),(cy-margin)/Math.max(1,Math.abs(dy))):1;
-      this.marker.style.left=`${cx+dx*scale}px`;this.marker.style.top=`${cy+dy*scale}px`;
-      this.marker.dataset.offscreen=String(offscreen);this.marker.dataset.anchor=state.marker!;
-      this.marker.style.setProperty('--direction',`${Math.atan2(dy,dx)}rad`);this.text(this.marker,offscreen?'➜':'◆');
-      this.marker.classList.toggle('offscreen',offscreen);
+      if(anchor){
+        this.point.set(anchor.x,1.8,anchor.z).project(camera);
+        const margin=42,cx=width/2,cy=height/2;
+        let dx=this.point.x*cx,dy=-this.point.y*cy;
+        if(this.point.z>1){dx=-dx;dy=-dy;}
+        const offscreen=this.point.z>1||Math.abs(dx)>cx-margin||Math.abs(dy)>cy-margin;
+        const scale=offscreen?Math.min((cx-margin)/Math.max(1,Math.abs(dx)),(cy-margin)/Math.max(1,Math.abs(dy))):1;
+        this.marker.style.left=`${cx+dx*scale}px`;this.marker.style.top=`${cy+dy*scale}px`;
+        this.marker.dataset.offscreen=String(offscreen);this.marker.dataset.anchor=state.marker!;
+        this.marker.style.setProperty('--direction',`${Math.atan2(dy,dx)}rad`);this.text(this.marker,offscreen?'➜':'◆');
+        this.marker.classList.toggle('offscreen',offscreen);
+      }
       const extent=100;
       for(const s of mission.def.steps){
         let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.testid=`mission-pin-${s.id}`;pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
-        pin.hidden=state.steps[s.id].status!=='active';if(pin.hidden)continue;const a=mission.def.anchors[s.anchor];
+        pin.hidden=state.steps[s.id].status!=='active'||s.waypoint===false||!anchor;if(pin.hidden)continue;const a=mission.def.anchors[s.anchor];
         const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
         pin.style.left=`${50+dx*scale}%`;pin.style.top=`${50+dy*scale}%`;
       }
