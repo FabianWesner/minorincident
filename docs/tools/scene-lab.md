@@ -51,6 +51,11 @@ npm run scene -- specs/scenes/courier-turns.json --query skin=0   # extra game U
 - **Exit code.** It exits 1 when an `expect` gate fails or the scene throws. stdout gets a short JSON summary.
 - **Speed.** A scene usually takes 5–8 s once the browser is open, and about 17 s with a video.
 
+## Health-bar fixtures
+
+`barArchetypes: ["infected.runner"]` temporarily enables the shared bar for named definitions while the view initializes; the production definitions are restored immediately. Use this to exercise Alpha's bar contract before its archetype is available. Shipped infected zoo definitions already enable bars.
+`infectedCap: 200` overrides this fixture's L1 cap (low tier uses half); omit it for ordinary scenes. This supports the 200/100 pooled-bar stress fixture without changing campaign caps.
+
 ## Writing a spec
 
 ```jsonc

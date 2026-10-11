@@ -1,3 +1,4 @@
+import { action } from '../../data/actions/catalog';
 import { dialogue } from '../../data/dialogue';
 import { l5, l5Fires, l5Loadout, l5Survivors, l5Wanderers } from '../../data/l5';
 import { l5Dressing } from '../../levels/L5/layout';
@@ -54,13 +55,16 @@ export class LevelFiveAftermath {
     // Sparse by design: 12-20 wanderers, a cap of 30 on both tiers, no waves, no emergence (no director request is ever made here).
     world.infected.director.levelCap = tier === 'low' ? l5.infected.cap.low * 2 : l5.infected.cap.high; world.infected.director.strict = true;
     world.npcs.setAmbient(0);
-    // The L4 end loadout (no weapon pickups exist in L5): axe and bat left, the machine gun selected on the right.
+    // Retain the L4 arsenal; the optional basement shotgun adds a slot.
     const combat = world.combat;
     if (combat) {
-      combat.rackCapacity = Math.max(combat.rackCapacity, 3);
+      combat.rackCapacity = Math.max(combat.rackCapacity, 4);
+      combat.actionDefinitions = { ...combat.actionDefinitions, 'weapon.shotgun': { ...(combat.actionDefinitions?.['weapon.shotgun'] ?? action('weapon.shotgun')), magazine: 0, reloadTime: 0 } };
       combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]); combat.runner.loadout.state.selectedSide = 'RIGHT';
     }
     this.placeInCellar();
+    const start = this.anchor('l5-cellar-in'), shelf = this.mission.def.anchors['l5-shotgun'] ?? { x: start.x + 1, z: start.z };
+    world.combat?.pickups.spawn('weapon.shotgun', shelf, false, { retain: true, interactTicks: 36 });
     this.spawnSurvivors();
     this.spawnLookout();
     this.spawnCorpses();

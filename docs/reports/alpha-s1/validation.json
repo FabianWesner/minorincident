@@ -1,0 +1,100 @@
+{
+  "baselineCommit": "2a5e22ef",
+  "alphaTests": 26,
+  "unit": {
+    "passed": 804,
+    "failed": 2,
+    "failures": [
+      {
+        "test": "T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps",
+        "message": "AssertionError: wrecked/0/doorL: expected undefined to be defined"
+      },
+      {
+        "test": "T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate",
+        "message": "AssertionError: veh.fire-engine.wrecked:lod0: expected [ \u2026(2) ] to deeply equal []"
+      }
+    ]
+  },
+  "baselineFailures": [
+    {
+      "test": "T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps",
+      "message": "AssertionError: wrecked/0/doorL: expected undefined to be defined"
+    },
+    {
+      "test": "T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate",
+      "message": "AssertionError: veh.fire-engine.wrecked:lod0: expected [ \u2026(2) ] to deeply equal []"
+    }
+  ],
+  "performance": {
+    "100": {
+      "count": 100,
+      "alphas": 20,
+      "minInfected": 100,
+      "cap": 100,
+      "ticks": 600,
+      "simMsP95": 0.43991699999992306,
+      "budgetMs": 6
+    },
+    "200": {
+      "count": 200,
+      "alphas": 40,
+      "minInfected": 200,
+      "cap": 200,
+      "ticks": 600,
+      "simMsP95": 1.213207999999895,
+      "budgetMs": 4
+    }
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed",
+    "focusedAlphaTests": 26,
+    "performanceTests": 5
+  },
+  "referenceHordePerformance": {
+    "100": {
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 100,
+      "cap": 100,
+      "simMsP50": 0.2384580000002643,
+      "simMsP95": 0.477292000000034,
+      "simMsMax": 0.984541999999692
+    },
+    "200": {
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 200,
+      "cap": 200,
+      "simMsP50": 0.5897079999999733,
+      "simMsP95": 1.5910829999997986,
+      "simMsMax": 2.18887500000028
+    }
+  },
+  "verify": {
+    "simPassed": 190,
+    "simFailed": 0,
+    "browser": {
+      "startTime": "2026-10-11T19:47:06.915Z",
+      "duration": 168738.544,
+      "expected": 33,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "failure": "Known pre-existing T-E13-05"
+  },
+  "renderReference": {
+    "infected": 200,
+    "crowdDrawCalls": 3,
+    "nonInstancedMeshes": 0,
+    "drawCalls": 49,
+    "triangles": 1283379
+  },
+  "rocketCadenceLimit": "Resistance fixture proves two center blasts. The existing catalog has magazine 1 / reload 2.5 s; 1.25 s nominal fire-rate interval needs campaign weapon tuning outside A-S1."
+}

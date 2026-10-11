@@ -227,7 +227,7 @@ class CivilianBatch extends Group {
         const recoil = hold && age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .025 : 0;
         frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : hold ? -.18 : -.75, hold || aiming ? .995 - recoil : .8, hold)); blend[0] = frame; blend[1] = 1;
       }
-      this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
+      this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       if (holding) {
         const part = this.bakedClip.parts.indexOf('handR');
@@ -294,7 +294,7 @@ class CivilianBatch extends Group {
       this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);
       return false;
     }
-    this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
+    this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);
     this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' && b.recoverAt < 0 ? 0 : 1, 1);
     return true;

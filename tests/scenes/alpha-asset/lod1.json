@@ -1,0 +1,93 @@
+{
+  "name": "qa-alpha-asset-lod1",
+  "note": "A-D1 asset QA only: firefighter brain with inf.alpha model override; A-S lanes own Alpha behavior. Same game camera angle, natural pixel LOD selection. Worker override uses the existing infected.runner crowd key, whose asset is inf.common-worker.",
+  "seed": 7,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 100,
+  "trace": true,
+  "dof": false,
+  "actors": [
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "look": {
+        "model": "inf.alpha"
+      },
+      "at": [
+        -1.8,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle",
+      "archetype": "infected.firefighter"
+    },
+    {
+      "id": "worker",
+      "kind": "infected",
+      "look": {
+        "model": "infected.runner"
+      },
+      "at": [
+        1.8,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle",
+      "archetype": "infected.firefighter"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "zoom": 1.2
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    30,
+    120,
+    180
+  ],
+  "script": [
+    {
+      "frame": 60,
+      "actor": "alpha",
+      "do": {
+        "hit": {
+          "from": [
+            -4,
+            0
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    },
+    {
+      "frame": 60,
+      "actor": "worker",
+      "do": {
+        "hit": {
+          "from": [
+            -1,
+            0
+          ],
+          "heavy": true,
+          "amount": 1
+        }
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

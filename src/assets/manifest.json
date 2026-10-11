@@ -391,6 +391,85 @@
     }
   },
   {
+    "id": "inf.alpha",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.alpha/build.py",
+    "glb": "public/assets/models/inf.alpha.glb",
+    "sourceGlb": "assets/inf.alpha/model.glb",
+    "dimensions": {
+      "x": 1.399265856110152,
+      "y": 2.5104995795160923,
+      "z": 2.3259558475352797,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 4,
+      "fileKB": 800,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.alpha.lod1.glb",
+      "lod2": "public/assets/models/inf.alpha.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    }
+  },
+  {
     "id": "inf.jogger",
     "category": "infected",
     "status": "integrated",
@@ -19554,5 +19633,71 @@
       "token": "sidewalk",
       "solid": true
     }
+  },
+  {
+    "id": "inf.alpha",
+    "category": "infected",
+    "status": "placeholder",
+    "tier": "hero",
+    "dimensions": {
+      "x": 0.9213,
+      "y": 1.8,
+      "z": 1.3163,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 40000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "script": "assets/inf.alpha/build.py",
+    "glb": "public/assets/models/inf.alpha.glb"
   }
 ]

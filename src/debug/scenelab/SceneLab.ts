@@ -21,6 +21,7 @@ import { installL1Outbreak } from '../../sim/outbreak/install';
 import { doorExit, emergeResident, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../sim/outbreak/HouseEmergence';
 import { seatAnchor } from '../../sim/npc/seats';
 import { allyState } from '../../sim/outbreak/Allies';
+import { infectedDef, type InfectedDef } from '../../data/infected';
 import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
 import { cameraFraming } from '../../data/cameraFraming';
@@ -111,6 +112,7 @@ export class SceneLab {
   private get world(): SimWorld { return this.game.world; }
 
   /** Build and load a scene; returns the resolved placements/actors so a caller can address them by id. */
+  private readonly barOverrides = new Map<InfectedDef, boolean | undefined>();
   async load(spec: SceneSpec) {
     const errors = validateSpec(spec, assets);
     if (errors.length) throw new Error(`Invalid scene spec:\n${errors.join('\n')}`);
@@ -132,7 +134,13 @@ export class SceneLab {
     const built = this.built = buildScene(spec, assets, source);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
-    await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
+    try {
+      for (const id of spec.barArchetypes ?? []) { const def = infectedDef(id); if (!this.barOverrides.has(def)) this.barOverrides.set(def, def.bar); def.bar = true; }
+      await this.game.loadLevel('scene-lab', { seed: spec.seed ?? 1, tier: spec.tier, source: { composition: built.composition, layouts: [built.layout] }, setup: world => this.setup(world, spec) });
+    } finally {
+      for (const [def, bar] of this.barOverrides) def.bar = bar;
+      this.barOverrides.clear();
+    }
     this.game.clock.pause();
     this.emergence = spec.emerge ? this.emergenceFor(spec.emerge) : null;
     this.game.view.settings({ cameraShake: false, cheapDof: spec.dof ?? true, timeOfDay: spec.time ?? 'L1' });
@@ -158,6 +166,7 @@ export class SceneLab {
     }
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     void outbreak;
+    if (spec.infectedCap !== undefined) world.infected!.director.levelCap = spec.infectedCap;
     // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
     if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.

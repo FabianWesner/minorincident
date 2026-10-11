@@ -1,3 +1,4 @@
+import { healthFraction } from './health';
 import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
 // world-to-map projection, persistent DOM pins, and identity-preserving text updates.
@@ -178,7 +179,7 @@ export class Hud {
     if (this.root.style.visibility !== visibility) this.root.style.visibility = visibility;
     if (!player || hidden && !preparing) return;
     if (this.loadedScenario !== world.scenario) this.loaded();
-    const hp = clamp(player.health.current / player.health.max);
+    const hp = healthFraction(player.health.current, player.health.max);
     this.health.fill.style.width = `${hp * 100}%`; text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
     this.health.root.setAttribute('aria-valuenow', String(hp * 100));
     const shield = world.combat?.effects.shielded(player.transform) || player.combat?.shield ? 1 : player.combat?.armor ?? 0;
@@ -228,7 +229,7 @@ export class Hud {
       const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.l1;
       if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
       card.icon.hidden=card.ring.hidden=false;
-      const slot = state.rack[state.index], def = action(slot.id);
+      const slot = state.rack[state.index], def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id);
       card.root.classList.toggle('is-selected', player.weapons!.selectedSide === side);
       card.root.setAttribute('aria-label', `${side}${player.weapons!.selectedSide === side ? ' selected' : ''}`);
       const key = this.game.input.scheme === 'touch' ? '☝' : this.game.input.scheme === 'keyboard' ? this.game.input.bindings.keyLabel(side === 'LEFT' ? 'left' : 'right') : side === 'LEFT' ? 'LMB' : 'RMB';

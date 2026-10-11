@@ -1,24 +1,41 @@
 import { action } from '../../data/actions/catalog';
-import type { Vec2 } from '../../input/InputFrame';
+import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 /** Level-owned pickup entity. A dropped item arms only after the player leaves it, preventing swap loops. */
 export class Pickups {
   constructor(private readonly world: SimWorld) {}
-  spawn(actionId: string, position: Vec2, dropped = false): number {
+  spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number } = {}): number {
     action(actionId);
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Invalid pickup position');
-    const entity = this.world.entities.create({ kind: 'pickup', archetype: actionId, faction: 'neutral', health: { current: 1, max: 1 }, transform: { x: position.x, y: 0.15, z: position.z, yaw: 0 }, pickup: { actionId, armed: !dropped } });
+    const entity = this.world.entities.create({ kind: 'pickup', archetype: actionId, faction: 'neutral', health: { current: 1, max: 1 }, transform: { x: position.x, y: 0.15, z: position.z, yaw: 0 }, pickup: { actionId, armed: !dropped, ...options } });
     this.world.spatial.set(entity.id, position.x, position.z); return entity.id;
   }
-  update(): void {
+  update(frame?: InputFrame): void {
     const player = this.world.entities.get(1)!; if (player.health.current <= 0) return;
     for (const entity of this.world.entities.iterate()) {
       const pickup = entity.pickup; if (!pickup || !('actionId' in pickup)) continue;
       const distance = Math.hypot(player.transform.x - entity.transform.x, player.transform.z - entity.transform.z);
       if (!pickup.armed) { if (distance > 0.8) pickup.armed = true; continue; }
-      if (distance > 0.6) continue;
-      const combat = this.world.combat!, side = combat.runner.loadout.state.selectedSide;
-      const replaced = combat.runner.loadout.collect(side, pickup.actionId);
+      if (distance > (pickup.interactTicks ? 1.5 : 0.6) || (pickup.interactTicks && frame && Math.hypot(frame.move.x, frame.move.z) > 0)) { if (pickup.interactTicks) pickup.progress = 0; continue; }
+      if (pickup.interactTicks) {
+        if (!pickup.progress && !frame?.interact && distance > 0.6) continue;
+        pickup.progress = (pickup.progress ?? 0) + 1;
+        if (pickup.progress < pickup.interactTicks) continue;
+      }
+      const combat = this.world.combat!, side = pickup.retain ? 'RIGHT' : combat.runner.loadout.state.selectedSide;
+      const loadout = combat.runner.loadout;
+      let replaced: string | null = null;
+      if (pickup.retain) {
+        const rack = loadout.state[side];
+        let index = rack.rack.findIndex(s => s.id === pickup.actionId);
+        if (index < 0) {
+          combat.rackCapacity = Math.max(combat.rackCapacity, rack.rack.length + 1);
+          index = rack.rack.length;
+          loadout.collect(side, pickup.actionId, true);
+        }
+        combat.runner.loadout.state.selectedSide = side;
+        combat.runner.loadout.state[side].index = index;
+      } else replaced = loadout.collect(side, pickup.actionId);
       delete combat.runner.running[side];
       this.world.entities.remove(entity.id); this.world.spatial.delete(entity.id);
       if (replaced) this.spawn(replaced, entity.transform, true);
