@@ -1,0 +1,2684 @@
+[
+  {
+    "lod": "lod0",
+    "mode": "game",
+    "geometry": [
+      {
+        "id": 3,
+        "triangles": 68865,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "meshes": 5
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "decay": "wrecked",
+        "triangles": 5046,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "decay": "burned",
+        "triangles": 5184,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 1
+          },
+          {
+            "name": "doorR",
+            "meshes": 1
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "armyBoom": null,
+      "scene": "engine-lod0-game",
+      "frame": 60,
+      "tick": 60,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 0,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {
+        "pristine": [
+          {
+            "vehicle": "pristine",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.41,
+              -5.49
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 53,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.42,
+              -6.71
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 58,
+            "hubStepCm": 0,
+            "hubStepFrame": 59
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.43,
+              -5.49
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 53,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.44,
+              -6.71
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 58,
+            "hubStepCm": 0,
+            "hubStepFrame": 59
+          }
+        ],
+        "wrecked": [
+          {
+            "vehicle": "wrecked",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "burned": [
+          {
+            "vehicle": "burned",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ]
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 113,
+          "p95": 113,
+          "max": 113
+        },
+        "triangles": {
+          "p50": 88443,
+          "p95": 88443,
+          "max": 88443
+        },
+        "shadowDrawCalls": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "shadowTriangles": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "stepMs": {
+          "p50": 5.2,
+          "p95": 7.1,
+          "max": 11.7
+        },
+        "lastFrame": {
+          "drawCalls": 113,
+          "triangles": 88443,
+          "shadowDrawCalls": 13,
+          "shadowTriangles": 13,
+          "stepMs": 5.100000381469727,
+          "categories": {
+            "other": 113,
+            "shadows": 13
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {
+        "pristine": {
+          "entity": 3,
+          "position": [
+            0,
+            -6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": null,
+          "speed": 0
+        },
+        "wrecked": {
+          "entity": 4,
+          "position": [
+            0,
+            0
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "wrecked",
+          "speed": 0
+        },
+        "burned": {
+          "entity": 5,
+          "position": [
+            0,
+            6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "burned",
+          "speed": 0
+        }
+      },
+      "pursuit": {
+        "actors": {},
+        "courierSwings": 0,
+        "courierAttacks": 0,
+        "firstAttackFrame": -1,
+        "bites": 0,
+        "firstBiteFrame": -1
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {},
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 60,
+        "sim": {
+          "vehicle": 3,
+          "actors": 0
+        },
+        "drawn": {
+          "vehicle": 3
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "errors": []
+  },
+  {
+    "lod": "lod0",
+    "mode": "close",
+    "geometry": [
+      {
+        "id": 3,
+        "triangles": 68865,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "meshes": 5
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "decay": "wrecked",
+        "triangles": 5046,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "decay": "burned",
+        "triangles": 5184,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 1
+          },
+          {
+            "name": "doorR",
+            "meshes": 1
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "armyBoom": null,
+      "scene": "engine-lod0-close",
+      "frame": 60,
+      "tick": 60,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 0,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {
+        "pristine": [
+          {
+            "vehicle": "pristine",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.41,
+              -5.49
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 53,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.42,
+              -6.71
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 58,
+            "hubStepCm": 0,
+            "hubStepFrame": 59
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.43,
+              -5.49
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 53,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.44,
+              -6.71
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 58,
+            "hubStepCm": 0,
+            "hubStepFrame": 59
+          }
+        ],
+        "wrecked": [
+          {
+            "vehicle": "wrecked",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "burned": [
+          {
+            "vehicle": "burned",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ]
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 113,
+          "p95": 113,
+          "max": 113
+        },
+        "triangles": {
+          "p50": 88443,
+          "p95": 88443,
+          "max": 88443
+        },
+        "shadowDrawCalls": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "shadowTriangles": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "stepMs": {
+          "p50": 4.9,
+          "p95": 5.5,
+          "max": 6.9
+        },
+        "lastFrame": {
+          "drawCalls": 113,
+          "triangles": 88443,
+          "shadowDrawCalls": 13,
+          "shadowTriangles": 13,
+          "stepMs": 5.09999942779541,
+          "categories": {
+            "other": 113,
+            "shadows": 13
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {
+        "pristine": {
+          "entity": 3,
+          "position": [
+            0,
+            -6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": null,
+          "speed": 0
+        },
+        "wrecked": {
+          "entity": 4,
+          "position": [
+            0,
+            0
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "wrecked",
+          "speed": 0
+        },
+        "burned": {
+          "entity": 5,
+          "position": [
+            0,
+            6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "burned",
+          "speed": 0
+        }
+      },
+      "pursuit": {
+        "actors": {},
+        "courierSwings": 0,
+        "courierAttacks": 0,
+        "firstAttackFrame": -1,
+        "bites": 0,
+        "firstBiteFrame": -1
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {},
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 60,
+        "sim": {
+          "vehicle": 3,
+          "actors": 0
+        },
+        "drawn": {
+          "vehicle": 3
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "errors": []
+  },
+  {
+    "lod": "lod1",
+    "mode": "game",
+    "geometry": [
+      {
+        "id": 3,
+        "triangles": 5182,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "decay": "wrecked",
+        "triangles": 5046,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "decay": "burned",
+        "triangles": 5184,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 1
+          },
+          {
+            "name": "doorR",
+            "meshes": 1
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "armyBoom": null,
+      "scene": "engine-lod1-game",
+      "frame": 60,
+      "tick": 60,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 0,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {
+        "pristine": [
+          {
+            "vehicle": "pristine",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "wrecked": [
+          {
+            "vehicle": "wrecked",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "burned": [
+          {
+            "vehicle": "burned",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ]
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 109,
+          "p95": 109,
+          "max": 109
+        },
+        "triangles": {
+          "p50": 24760,
+          "p95": 24760,
+          "max": 24760
+        },
+        "shadowDrawCalls": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "shadowTriangles": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "stepMs": {
+          "p50": 3.3,
+          "p95": 4.1,
+          "max": 5.6
+        },
+        "lastFrame": {
+          "drawCalls": 109,
+          "triangles": 24760,
+          "shadowDrawCalls": 13,
+          "shadowTriangles": 13,
+          "stepMs": 3.3000001907348633,
+          "categories": {
+            "other": 109,
+            "shadows": 13
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {
+        "pristine": {
+          "entity": 3,
+          "position": [
+            0,
+            -6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": null,
+          "speed": 0
+        },
+        "wrecked": {
+          "entity": 4,
+          "position": [
+            0,
+            0
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "wrecked",
+          "speed": 0
+        },
+        "burned": {
+          "entity": 5,
+          "position": [
+            0,
+            6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "burned",
+          "speed": 0
+        }
+      },
+      "pursuit": {
+        "actors": {},
+        "courierSwings": 0,
+        "courierAttacks": 0,
+        "firstAttackFrame": -1,
+        "bites": 0,
+        "firstBiteFrame": -1
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {},
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 60,
+        "sim": {
+          "vehicle": 3,
+          "actors": 0
+        },
+        "drawn": {
+          "vehicle": 3
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "errors": []
+  },
+  {
+    "lod": "lod1",
+    "mode": "close",
+    "geometry": [
+      {
+        "id": 3,
+        "triangles": 5182,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "decay": "wrecked",
+        "triangles": 5046,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "decay": "burned",
+        "triangles": 5184,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 1
+          },
+          {
+            "name": "doorR",
+            "meshes": 1
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "armyBoom": null,
+      "scene": "engine-lod1-close",
+      "frame": 60,
+      "tick": 60,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 0,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {
+        "pristine": [
+          {
+            "vehicle": "pristine",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "wrecked": [
+          {
+            "vehicle": "wrecked",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 56,
+            "hubStepCm": 0,
+            "hubStepFrame": 57
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "burned": [
+          {
+            "vehicle": "burned",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.42,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ]
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 109,
+          "p95": 109,
+          "max": 109
+        },
+        "triangles": {
+          "p50": 24760,
+          "p95": 24760,
+          "max": 24760
+        },
+        "shadowDrawCalls": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "shadowTriangles": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "stepMs": {
+          "p50": 3.4,
+          "p95": 3.8,
+          "max": 6.2
+        },
+        "lastFrame": {
+          "drawCalls": 109,
+          "triangles": 24760,
+          "shadowDrawCalls": 13,
+          "shadowTriangles": 13,
+          "stepMs": 3.3999996185302734,
+          "categories": {
+            "other": 109,
+            "shadows": 13
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {
+        "pristine": {
+          "entity": 3,
+          "position": [
+            0,
+            -6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": null,
+          "speed": 0
+        },
+        "wrecked": {
+          "entity": 4,
+          "position": [
+            0,
+            0
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "wrecked",
+          "speed": 0
+        },
+        "burned": {
+          "entity": 5,
+          "position": [
+            0,
+            6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "burned",
+          "speed": 0
+        }
+      },
+      "pursuit": {
+        "actors": {},
+        "courierSwings": 0,
+        "courierAttacks": 0,
+        "firstAttackFrame": -1,
+        "bites": 0,
+        "firstBiteFrame": -1
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {},
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 60,
+        "sim": {
+          "vehicle": 3,
+          "actors": 0
+        },
+        "drawn": {
+          "vehicle": 3
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "errors": []
+  },
+  {
+    "lod": "lod2",
+    "mode": "game",
+    "geometry": [
+      {
+        "id": 3,
+        "triangles": 2372,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "decay": "wrecked",
+        "triangles": 2312,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "decay": "burned",
+        "triangles": 2372,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 1
+          },
+          {
+            "name": "doorR",
+            "meshes": 1
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "armyBoom": null,
+      "scene": "engine-lod2-game",
+      "frame": 60,
+      "tick": 60,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 0,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {
+        "pristine": [
+          {
+            "vehicle": "pristine",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.22,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.64,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.63,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.21,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "wrecked": [
+          {
+            "vehicle": "wrecked",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.22,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.64,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.63,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.21,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "burned": [
+          {
+            "vehicle": "burned",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.64,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.63,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.21,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ]
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 87,
+          "p95": 87,
+          "max": 87
+        },
+        "triangles": {
+          "p50": 16404,
+          "p95": 16404,
+          "max": 16404
+        },
+        "shadowDrawCalls": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "shadowTriangles": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "stepMs": {
+          "p50": 2.7,
+          "p95": 3.4,
+          "max": 3.6
+        },
+        "lastFrame": {
+          "drawCalls": 87,
+          "triangles": 16404,
+          "shadowDrawCalls": 13,
+          "shadowTriangles": 13,
+          "stepMs": 2.3999996185302734,
+          "categories": {
+            "other": 87,
+            "shadows": 13
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {
+        "pristine": {
+          "entity": 3,
+          "position": [
+            0,
+            -6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": null,
+          "speed": 0
+        },
+        "wrecked": {
+          "entity": 4,
+          "position": [
+            0,
+            0
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "wrecked",
+          "speed": 0
+        },
+        "burned": {
+          "entity": 5,
+          "position": [
+            0,
+            6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "burned",
+          "speed": 0
+        }
+      },
+      "pursuit": {
+        "actors": {},
+        "courierSwings": 0,
+        "courierAttacks": 0,
+        "firstAttackFrame": -1,
+        "bites": 0,
+        "firstBiteFrame": -1
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {},
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 60,
+        "sim": {
+          "vehicle": 3,
+          "actors": 0
+        },
+        "drawn": {
+          "vehicle": 3
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "errors": []
+  },
+  {
+    "lod": "lod2",
+    "mode": "close",
+    "geometry": [
+      {
+        "id": 3,
+        "triangles": 2372,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "decay": "wrecked",
+        "triangles": 2312,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "meshes": 3
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "decay": "burned",
+        "triangles": 2372,
+        "placeholder": false,
+        "doors": [
+          {
+            "name": "doorL",
+            "meshes": 1
+          },
+          {
+            "name": "doorR",
+            "meshes": 1
+          }
+        ]
+      }
+    ],
+    "metrics": {
+      "armyBoom": null,
+      "scene": "engine-lod2-close",
+      "frame": 60,
+      "tick": 60,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 0,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {
+        "pristine": [
+          {
+            "vehicle": "pristine",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.22,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.64,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.63,
+              -5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "pristine",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.21,
+              -6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "wrecked": [
+          {
+            "vehicle": "wrecked",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.22,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.64,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.63,
+              0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "wrecked",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.21,
+              -0.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ],
+        "burned": [
+          {
+            "vehicle": "burned",
+            "wheel": 0,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.43,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 1,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              2.64,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 2,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.63,
+              6.61
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 55,
+            "hubStepCm": 0,
+            "hubStepFrame": 56
+          },
+          {
+            "vehicle": "burned",
+            "wheel": 3,
+            "gapMinCm": 0.1,
+            "gapMaxCm": 0.1,
+            "minFrame": 3,
+            "maxFrame": 3,
+            "at": [
+              -1.21,
+              5.39
+            ],
+            "samples": 58,
+            "surface": "asphalt",
+            "rayCheckCm": 0,
+            "hubSpikeCm": 0,
+            "hubSpikeFrame": 59,
+            "hubStepCm": 0,
+            "hubStepFrame": 60
+          }
+        ]
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 87,
+          "p95": 87,
+          "max": 87
+        },
+        "triangles": {
+          "p50": 16404,
+          "p95": 16404,
+          "max": 16404
+        },
+        "shadowDrawCalls": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "shadowTriangles": {
+          "p50": 13,
+          "p95": 13,
+          "max": 13
+        },
+        "stepMs": {
+          "p50": 2.7,
+          "p95": 3.1,
+          "max": 4
+        },
+        "lastFrame": {
+          "drawCalls": 87,
+          "triangles": 16404,
+          "shadowDrawCalls": 13,
+          "shadowTriangles": 13,
+          "stepMs": 3,
+          "categories": {
+            "other": 87,
+            "shadows": 13
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {
+        "pristine": {
+          "entity": 3,
+          "position": [
+            0,
+            -6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": null,
+          "speed": 0
+        },
+        "wrecked": {
+          "entity": 4,
+          "position": [
+            0,
+            0
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "wrecked",
+          "speed": 0
+        },
+        "burned": {
+          "entity": 5,
+          "position": [
+            0,
+            6
+          ],
+          "yawDeg": 0,
+          "yawRateMaxDegS": 0,
+          "bodyOverlaps": 0,
+          "rideRemainingM": null,
+          "health": 1600,
+          "decay": "burned",
+          "speed": 0
+        }
+      },
+      "pursuit": {
+        "actors": {},
+        "courierSwings": 0,
+        "courierAttacks": 0,
+        "firstAttackFrame": -1,
+        "bites": 0,
+        "firstBiteFrame": -1
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {},
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 60,
+        "sim": {
+          "vehicle": 3,
+          "actors": 0
+        },
+        "drawn": {
+          "vehicle": 3
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "errors": []
+  }
+]

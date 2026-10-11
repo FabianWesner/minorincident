@@ -1,0 +1,22 @@
+{
+  "numPassedTests": 807,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 180,
+  "numFailedTestSuites": 0,
+  "success": true,
+  "files": 157,
+  "commands": {
+    "targeted": "npx vitest run tests/unit/vehicles.test.ts tests/unit/assets/build.test.ts -t 'T-E09-01-wreck|T-E17-04' --maxWorkers=4",
+    "unit": "npm run test:unit -- --maxWorkers=4",
+    "typecheck": "npm run typecheck",
+    "lint": "npm run lint",
+    "build": "npm run build"
+  },
+  "targeted": {
+    "passed": 2,
+    "failed": 0
+  },
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass"
+}
