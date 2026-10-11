@@ -128,7 +128,7 @@ export class KeyframeAnimator {
     // PO #2/#4 (puppet walk, flicker): locomotion is a speed blend-space (idle / walk / run weighted by a
     // smoothed ground speed, all on one stride-matched phase), never discrete clip restarts; start/stop/turn
     // pops are gone. Other actions fade over it.
-    const loco = locoStates.has(name), fade = strike ? Math.min(.05, Math.max(1, (combat?.activeAt ?? tick + 4) - (combat?.started ?? tick)) / 60 * .55) : name === 'hurt' ? .055 : .2;
+    const loco = locoStates.has(name), fade = strike ? Math.min(.05, Math.max(1, (combat?.activeAt ?? tick + 4) - (combat?.started ?? tick)) / 60 * .55) : name === 'hurt' || name === 'knockdown' || name === 'get-up' ? .055 : .2;
     this.locoSpeed += (speed - this.locoSpeed) * (1 - Math.exp(-dt / .1));
     if (!loco && (this.mode !== name || strike && !upper && this.attackTick !== pose.animationTick || name === 'hurt' && this.actionTick !== pose.animationTick || !this.base)) {
       this.base?.fadeOut(fade); this.base = this.play(name, !!this.strides[name] || name === 'idle').fadeIn(fade);
@@ -183,6 +183,11 @@ export class KeyframeAnimator {
     // Restore every mixer input before sampling: Three skips unchanged bindings,
     // while our contacts, carry and bicycle layers modify those same nodes.
     for (const p of this.sampledPose) { p.node.position.copy(p.position); p.node.quaternion.copy(p.rotation); }
+    if (this.base && (name === 'knockdown' || name === 'get-up') && pose.knockdown) {
+      const span = pose.knockdown.until - pose.knockdown.started, split = Math.max(1, span - 24);
+      const phase = name === 'knockdown' ? (tick + alpha - pose.knockdown.started) / split : (tick + alpha - pose.knockdown.started - split) / Math.max(1, span - split);
+      this.base.time = Math.max(0, Math.min(1, phase)) * this.base.getClip().duration; this.base.setEffectiveTimeScale(0);
+    }
     this.mixer.update(dt);
     for (const p of this.sampledPose) { p.position.copy(p.node.position); p.rotation.copy(p.node.quaternion); }
     if (this.skin && !['die', 'knockdown', 'get-up'].includes(name)) this.keepTorsoForward();
