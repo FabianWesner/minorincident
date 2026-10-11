@@ -1,6 +1,6 @@
 {
   "name": "qa-l2-truck-drive-top",
-  "note": "Same real L2 driver and siren-yield fixture, with a top-down debug camera.",
+  "note": "Actual L2 ride from the restored south-west station through Elm Street and Juniper to Grove Market; contact and driving checks retained.",
   "seed": 1,
   "ground": "district",
   "time": "L2",
@@ -9,12 +9,12 @@
     "level": "L2",
     "bbox": [
       [
-        -47,
-        -46
+        -84,
+        -47
       ],
       [
-        46,
-        -24
+        -20,
+        50
       ]
     ]
   },
@@ -23,8 +23,8 @@
       "id": "engine",
       "asset": "vehicle.fire-engine",
       "at": [
-        22,
-        -32.0
+        -54.35,
+        30.97
       ],
       "l2Ride": {
         "distanceM": 18,
@@ -37,8 +37,8 @@
       "id": "elder",
       "kind": "pedestrian",
       "at": [
-        10,
-        -37
+        -47,
+        35
       ],
       "look": {
         "model": "npc.civilian-elderly"
@@ -49,20 +49,22 @@
   "camera": {
     "mode": "orbit",
     "target": [
-      0,
-      -32
+      -45,
+      0
     ],
     "radius": 70,
     "polar": 1,
     "azimuth": 0
   },
-  "frames": 840,
+  "frames": 1800,
   "shots": [
     0,
-    200,
-    400,
+    300,
     600,
-    840
+    900,
+    1200,
+    1500,
+    1800
   ],
   "expect": {
     "consoleErrors": 0,

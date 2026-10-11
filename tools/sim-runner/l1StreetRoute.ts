@@ -7,9 +7,9 @@ const out = process.argv[2] ?? 'test-results/l1-street-infected/after';
 mkdirSync(out, { recursive: true });
 const rows = [];
 for (const [name, points] of Object.entries({
-  direct: [[14, 30], [14, -36], [40.03, -36], [40.03, -40.65]],
-  west: [[-30, 30], [-30, -36], [40.03, -36], [40.03, -40.65]],
-  east: [[66, 30], [66, 0], [50, 0], [50, -36], [40.03, -36], [40.03, -40.65]],
+  direct: [[14, 30], [-30, 30], [-66, 30], [-69, 41.27], [-76.6, 41.27]],
+  west: [[14, 30], [14, 0], [-30, 0], [-30, 30], [-66, 30], [-69, 41.27], [-76.6, 41.27]],
+  east: [[50, 30], [50, 0], [14, 0], [14, 30], [-30, 30], [-66, 30], [-69, 41.27], [-76.6, 41.27]],
 })) {
   if (['direct', 'west', 'east'].includes(process.argv[3]) && name !== process.argv[3]) continue;
   const { world: w, mission: m } = await loadL1(1);

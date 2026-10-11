@@ -211,8 +211,8 @@ export class DistrictView extends Group {
         // references must use those placements, rather than the unchanged baked GLB empties.
         if (this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
-          // Scene Lab: crowns follow the kept placements (layout.py `place` writes the same markers).
-          if (lab) {
+          // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
+          if (lab || this.world.composition.id === 'L2') {
             crowns.clear();
             for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
               const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();

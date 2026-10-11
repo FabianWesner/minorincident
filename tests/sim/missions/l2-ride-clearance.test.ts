@@ -18,7 +18,7 @@ function plant(w: SimWorld, t: number): void {
   if (!planted.has(w)) {
     planted.set(w, ids);
     const o = w.npcs!.civilians.outbreak!;
-    for (const [x, z] of [[25, -32], [10, -32], [-5, -32], [-30, -32]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
+    for (const [x, z] of [[ -58, 31.25], [-42, 31.25], [-28.75, 10], [-28.75, -15]] as const) ids.push(o.spawnPedestrian({ x, z }, { waypoints: [{ x, z }, { x, z: z + .5 }] }));
   }
   const first = w.entities.get(ids[0]), distance = w.missions!.state.l2!.rideS + 12;
   if (first && t % 300 === 299 && distance < l2TruckPath.at(-1)!.s) {
@@ -71,10 +71,10 @@ describe('L2 truck ride clearance', () => {
         if (pose.section === 'junction') expect(s.rideV, `seed ${seed}: turn speed`).toBeLessThanOrEqual(4 + 1e-6);
         // Street lane centres come from the district's 5 m two-way roads (not the driven pose).
         {
-          const error = Math.abs(t.z + 32.25);
+          const error = pose.section === 'apron' ? Math.abs(Math.hypot(t.x + 62.6, t.z - 36.7) - 6.2) : pose.section === 'elm' ? Math.abs(t.z - 31.25) : pose.section === 'juniper' ? Math.abs(t.x + 28.75) : pose.section === 'row' ? Math.abs(t.z + 32.25) : Math.abs(Math.hypot(t.x + 37.75, t.z - (t.z > 0 ? 22.25 : -23.0)) - 9);
           roadM += travelled; if (error <= .6) laneM += travelled;
           // The centre must be on actual road geometry, including the junction's curved connector.
-          expect(Math.abs(t.z + 31) <= 2.5, `seed ${seed}: asphalt at ${t.x},${t.z}`).toBe(true);
+          expect(pose.section === 'apron' ? t.x >= -68.8 && t.x <= -62.6 && t.z >= 30.5 && t.z <= 36.7 : Math.abs(t.z - 30) <= 2.5 || Math.abs(t.x + 30) <= 2.5 || Math.abs(t.z + 31) <= 2.5, `seed ${seed}: road/apron at ${t.x},${t.z}`).toBe(true);
         }
         for (const e of w.entities.iterate()) {
           if (e.id === s.truckId || e.hidden || e.id === 1 || !(e.civilian || e.infected || e.companion || e.vehicle || e.traffic || e.kind === 'physics-prop')) continue;
