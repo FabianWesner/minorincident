@@ -1,5 +1,3 @@
-import { simplifyCrowdLod } from '../characters/crowdLodGeometry';
-import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
@@ -9,17 +7,16 @@ import { infectedDefinitions } from '../../data/infected';
 import { l6CastModels } from '../../data/l6';
 import { GaitPhase } from '../characters/GaitPhase';
 import { CrowdFigureProbe } from '../characters/CrowdFigureProbe';
-import { Color, DoubleSide, FrontSide, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, MeshLambertNodeMaterial, BufferAttribute, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos } from 'three/tsl';
+import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, type MeshLambertNodeMaterial, Vector3, StreamDrawUsage, type DataTexture } from 'three/webgpu';
 import type { Materials } from '../Materials';
-import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
+import { civilianMaterial } from './CivilianMaterial';
 import { AssetRegistry } from '../../assets/registry';
 import { civilianRoles, l1Pedestrians, coreCivilianModels } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
-import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
+import { framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
 import { RoutineProps } from './RoutineProps';
-import { prepareGrip, uprightHand, handTriangles, removeAuthoredCane, gripReach } from './civilianGrip';
+import { uprightHand } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
 const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
@@ -32,41 +29,16 @@ import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder } from './placeholders';
 import { loadMeasure } from '../../assets/loadTiming';
+import { loadCivilianBake } from '../../assets/civilianBake';
 import { keepsLook } from '../../sim/outbreak/appearance';
 import type { EntitySnapshot } from '../../sim/world/types';
-import { fitCivilianHeight } from './figureHeight';
-/** Main garment materials per civilian model (first = reference shade) that take the per-person shirt tint. */
-const shirtMaterials: Record<string, string[]> = {
-  'npc.civilian-man-a': ['pal_polo', 'pal_poloDark', 'pal_poloLight'],
-  'npc.civilian-man-b': ['pal_schoolBusYellow', 'pal_hoodieShade'],
-  'npc.civilian-woman-a': ['pal_survivorRed'],
-  'npc.civilian-woman-b': ['pal_lavender', 'pal_lavenderLight', 'pal_lavenderShadow'],
-  'npc.civilian-elderly': ['pal_vest'],
-};
+import { prepareCivilianGeometry, prepareCivilianRig, type PreparedCivilian } from './prepareCivilianGeometry';
+export { restoreStanding } from './prepareCivilianGeometry';
 // Cache prepared CPU geometry, including LOD simplification; each scene owns a clone.
-const preparedCrowds = new Map<string, ReturnType<typeof bakeInfected>>();
+const preparedCrowds = new Map<string, PreparedCivilian>();
 const preparedCrowdLimit = 64;
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
-type StandingReset = Record<string, { translation: number[]; rotation: number[]; scale: number[] }>;
-/**
- * Sitting/lying skins ship their joints in a rest pose plus an exported `ss_standingPose` and `restOnlyNodes` (cushion).
- * The crowd bakes clips (npc-sit, death-side, ...) over the standing rig, so restore it first; ordinary models have none.
- */
-export function restoreStanding(model: Group): void {
-  model.traverse(node => {
-    const raw = node.userData.ss_standingPose as string | undefined;
-    if (!raw) return;
-    const reset = JSON.parse(raw) as StandingReset;
-    for (const [name, pose] of Object.entries(reset)) {
-      const joint = model.getObjectByName(name);
-      if (joint) { joint.position.fromArray(pose.translation); joint.quaternion.fromArray(pose.rotation); joint.scale.fromArray(pose.scale); }
-    }
-    const rest = node.userData.restOnlyNodes as string[] | string | undefined;
-    for (const name of typeof rest === 'string' ? [rest] : rest ?? []) model.getObjectByName(name)?.removeFromParent();
-  });
-  model.updateMatrixWorld(true);
-}
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
   const c = e.civilian;
@@ -107,6 +79,7 @@ class CivilianBatch extends Group {
   private gunAim!: CrowdGunAim;
   private poses!: CrowdPosePalette;
   private mesh!: InstancedMesh;
+  private releaseMaterial?: () => void;
   private bakedClip!: CrowdClip;
   private readonly hand = new Matrix4();
   private readonly gunDirection = new Vector3();
@@ -126,65 +99,30 @@ class CivilianBatch extends Group {
    * buffer made the pipeline invalid: every pedestrian vanished on WebGPU while props and shadows still drew). */
   private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
   private readonly shirt = new Color();
-  private readonly registry = new AssetRegistry(() => {});
+  private registry?: AssetRegistry;
   source = 'placeholder';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
   constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
-    const loaded = await this.registry.loadAsset(this.model, this.lod);
-    await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
-    const placeholder = loaded.userData.placeholder, model = placeholder ? createCivilianPlaceholder() : loaded as Group;
+    await loadGate.foreground(); await loadGate.wait();
+    let key: string | undefined = `${this.model}:${this.lod}`;
+    const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod);
+    let placeholder = false, model: Group;
+    if (cached?.rig) model = cached.rig.clone(true);
+    else {
+      const loaded = await (this.registry ??= new AssetRegistry(() => {})).loadAsset(this.model, this.lod);
+      placeholder = !!loaded.userData.placeholder; model = placeholder ? createCivilianPlaceholder() : loaded as Group;
+      prepareCivilianRig(model, this.model, placeholder); if (placeholder) key = undefined;
+    }
     this.source = placeholder ? 'placeholder' : 'glb';
-    if (!placeholder) restoreStanding(model);
-    fitCivilianHeight(model, this.model);
-    if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
-    model.getObjectByName('rifle')?.removeFromParent(); // The live weapon follows the hand, including aiming.
-    const key = placeholder ? undefined : `${this.model}:${this.lod}`;
-    const cached = key && preparedCrowds.get(key);
-    // bakeInfected supplies absent rigid-part joints; cached clips need the same rig shape.
     if (cached) for (const name of cached.clip.parts) if (!model.getObjectByName(name)) {
       const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
     }
-    const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : bakeInfected(model, [], false, civilianClips);
+    const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : await prepareCivilianGeometry(model, this.model, this.distant, placeholder);
     this.gunAim = new CrowdGunAim(model, baked.clip.parts);
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
-    if (!cached) {
-    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
-    const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
-    // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
-    // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
-    const garment = shirtMaterials[this.model], shirtColors: Color[] = [];
-    if (garment && !placeholder) model.traverse(node => { const m = (node as import('three').Mesh).material as import('three').MeshStandardMaterial | undefined; if (m && !Array.isArray(m) && garment.includes(m.name) && m.color) shirtColors[garment.indexOf(m.name)] = m.color.clone(); });
-    const shirtAttr = baked.geometry.getAttribute('_shirt'), main = shirtColors.find(Boolean);
-    if (main) for (let i = 0; i < color.count; i++) {
-      if (shirtAttr.getX(i) < 0) continue;
-      const r = color.getX(i), g = color.getY(i), b = color.getZ(i);
-      if (shirtColors.some(c => c && Math.abs(c.r - r) < .002 && Math.abs(c.g - g) < .002 && Math.abs(c.b - b) < .002)) shirtAttr.setX(i, Math.min(1.6, Math.max(.35, (.2126 * r + .7152 * g + .0722 * b) / Math.max(.02, .2126 * main.r + .7152 * main.g + .0722 * main.b))));
-    }
-    // Packed mark channel: 1 = vein decal vertex, 2 = blood mask (lower face; collar bite on the torso).
-    const position = baked.geometry.getAttribute('position'), partOf = baked.geometry.getAttribute('_part_index'), shirtOf = baked.geometry.getAttribute('_shirt');
-    const head = baked.clip.parts.indexOf('head'), torso = baked.clip.parts.indexOf('torso'), bounds = [head, torso].map(() => ({ min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] }));
-    for (let i = 0; i < color.count; i++) { const k = [head, torso].indexOf(partOf.getX(i)); if (k < 0) continue; for (let a = 0; a < 3; a++) { const v = position.getComponent(i, a); bounds[k].min[a] = Math.min(bounds[k].min[a], v); bounds[k].max[a] = Math.max(bounds[k].max[a], v); } }
-    const rel = (k: number, i: number, a: number) => (position.getComponent(i, a) - bounds[k].min[a]) / Math.max(1e-6, bounds[k].max[a] - bounds[k].min[a]);
-    for (let i = 0; i < veins.length; i++) {
-      veins[i] = Number(Math.abs(color.getX(i) - veinColor.r) < .0001 && Math.abs(color.getY(i) - veinColor.g) < .0001);
-      // Forward is +X: the front-lower third of the face, and the front-upper collar on one side of the torso.
-      const p = partOf.getX(i);
-      if (veins[i]) continue;
-      // Irregular splatter on the shirt front (stable per vertex), so blood reads on clothes at the game camera.
-      const splat = p === torso && rel(1, i, 0) > .5 && rel(1, i, 1) > .25 && Math.abs(Math.sin(position.getComponent(i, 0) * 91.7 + position.getComponent(i, 1) * 47.3 + position.getComponent(i, 2) * 63.1) * 43758.5) % 1 > .25;
-      if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .62 && rel(0, i, 1) < .42 || p === torso && rel(1, i, 1) > .8 && rel(1, i, 2) > .55 && rel(1, i, 0) > .35 || splat) veins[i] = 2;
-      // Sunken, bruised eye sockets around the (glowing) eyes.
-      else if (p === head && shirtOf.getX(i) < 0 && rel(0, i, 0) > .55 && rel(0, i, 1) > .45 && rel(0, i, 1) < .75) veins[i] = 3;
-    }
-    baked.geometry.setAttribute('_vein', new BufferAttribute(veins, 1));
-    deinterleaveGeometry(baked.geometry);
-    const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
-    // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
-    if (!placeholder) await simplifyCrowdLod(baked.geometry, this.distant ? .01 : .005, this.distant ? .35 : .5);
-    }
     if (key) {
       preparedCrowds.delete(key);
       preparedCrowds.set(key, cached || { ...baked, geometry: baked.geometry.clone(), shirtColor: baked.shirtColor?.clone() });
@@ -193,62 +131,22 @@ class CivilianBatch extends Group {
         preparedCrowds.get(oldest)!.geometry.dispose(); preparedCrowds.delete(oldest);
       }
     }
-    this.gripTriangles = handTriangles(baked.geometry, baked.clip.parts.indexOf('handR'));
-    this.gripReach = gripReach(this.gripTriangles);
+    this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
-    packCrowdParts(baked.geometry);
-    // Keep all static attributes in one vertex buffer (WebGPU guarantees eight).
-    const staticNames = ['position', 'normal', 'color', '_parts', '_gripPosition'];
-    const staticStride = 16, staticData = new InterleavedBuffer(new Float32Array(baked.geometry.getAttribute('position').count * staticStride), staticStride);
-    let staticOffset = 0;
-    for (const name of staticNames) {
-      const a = baked.geometry.getAttribute(name);
-      for (let i = 0; i < a.count; i++) for (let c = 0; c < a.itemSize; c++) staticData.array[i * staticStride + staticOffset + c] = a.getComponent(i, c);
-      baked.geometry.setAttribute(name, new InterleavedBufferAttribute(staticData, a.itemSize, staticOffset)); staticOffset += a.itemSize;
-    }
-    const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
-    // overlay.y >= 2 flags a pedestrian who is turning (eye glow = y - 2); y in 0..1 is the plain eye glow.
-    const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z, vein = parts.w.greaterThan(.5).select(parts.w.lessThan(1.5).select(1, 0), 0), blood = parts.w.greaterThan(1.5).select(parts.w.lessThan(2.5).select(1, 0), 0), socket = parts.w.greaterThan(2.5).select(1, 0), decay = overlay.x;
-    // parts.y > 0: tinted garment, value = the shade's brightness relative to the main garment colour.
-    const clothing = parts.y.greaterThan(0).select(variant.xyz.mul(parts.y), attribute('color', 'vec3'));
-    // Same clothes and body: only the skin blends toward ash-green, blood darkens mouth and bite, eyes ignite.
-    // Skin only: drained grey-green (desaturated, darker), at up to 70 % for the 40 % sim blend so it reads at distance.
-    // QA1-10: the infected must read at the default zoom - clearly ash-green skin (full shift at the 40 % sim blend),
-    // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
-    const sick = mix(vec3(luminance(clothing)).mul(.6), vec3(.42, .58, .30), .8), skinShift = parts.y.lessThan(0).select(decay.mul(2.5).min(1), 0);
-    const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
-    const grimy = clothing.mul(dirt.mul(-.42).add(1));
-    const skin = mix(grimy, sunken, skinShift);
-    const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(dirt).mul(.9));
-    const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), eyeGlow), eye);
-    const eyeColor = vec3(1, .005, .02);
-    // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
-    // normalisation, which pushed it to ~14x and bloomed the whole head white) at a capped strength.
-    // The sockets glow a dim red around the eyes so the read survives 10-15 m, still far below the bloom whiteout.
-    // A faint ash-green self-glow on infected skin so the colour shift survives building shadow (far below bloom).
-    // E19-AC23: while turning, a sickly ash-green pulse throbs on the skin only (hair and clothes keep the person's own
-    // colours, so it stays recognisably the same person); it reads at the game camera even when the body is down.
-    const pulse = sin(time.mul(7.5).add(variant.x.mul(9))).mul(.5).add(.5);
-    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(dirt))
-      .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(parts.y.lessThan(0).select(1, 0)));
-    const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
-    // E25 night readability: crowd silhouettes take the preset's moonlit rim.
-    if ('figureRim' in material) material.figureRim.value = 1;
-    material.side = baked.doubleSided ? DoubleSide : FrontSide;
+    const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture);
+    const material = shared.material; this.releaseMaterial = shared.release;
     this.mesh = new InstancedMesh(baked.geometry, material, 350); this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
-    this.mesh.onBeforeRender = () => { matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
-    const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset), instance = mat4(column(0), column(4), column(8), column(12)), part = parts.x;
-    const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);
-    const matrix = crowdBlendedMatrix(this.texture, part, overlay.w, outgoing, weight);
-    material.positionNode = instance.mul(matrix.mul(vec4(mix(positionGeometry, attribute('_gripPosition', 'vec3'), grip).mul(vein.greaterThan(.5).select(decay.greaterThan(.25).select(1, 0), 1)), 1))).xyz;
-    const finger = part.equal(this.bakedClip.parts.indexOf('handR')).and(parts.y.lessThan(0)).and(positionGeometry.y.lessThan(-.045)).and(positionGeometry.y.greaterThan(-.2));
-    const curl = positionGeometry.y.negate().sub(.045).div(.035).clamp(0, Math.PI).mul(finger.select(grip, 0));
-    const bentNormal = vec3(normalGeometry.x.mul(cos(curl)).sub(normalGeometry.y.mul(sin(curl))), normalGeometry.x.mul(sin(curl)).add(normalGeometry.y.mul(cos(curl))), normalGeometry.z);
-    material.normalNode = instance.mul(matrix.mul(vec4(bentNormal, 0))).xyz.transformDirection(cameraViewMatrix);
+    for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
+    this.mesh.onBeforeRender = () => { shared.bindTexture(this.texture); matrices.version = this.mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, this.mesh.count * 16); };
+    // The shared graph performs its full transform through geometry attributes.
+    // Keep Three's instancing API, but omit its redundant implicit transform.
+    Object.defineProperty(this.mesh, 'isInstancedMesh', { value: false, writable: true });
+    this.mesh.userData.staticInstanceAttributes = true;
+    this.mesh.userData.staticInstancePosition = material.positionNode;
     this.mesh.onAfterRender = () => this.probe.draw();
     // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
     if (this.world.scenario === 'L6') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
@@ -387,7 +285,7 @@ class CivilianBatch extends Group {
     return true;
   }
   snapshot() { return { instances: (this.mesh?.count ?? 0) + this.corpses.snapshot().instances, draws: (this.mesh?.count ? 1 : 0) + this.corpses.snapshot().draws, source: this.source, figures: [...this.probe.figures, ...this.corpses.snapshot().figures] }; }
-  dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); (this.mesh.material as MeshLambertNodeMaterial).dispose(); this.mesh.dispose(); this.texture.dispose(); } void this.registry.dispose(); this.clear(); }
+  dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); this.releaseMaterial?.(); this.mesh.dispose(); this.texture.dispose(); } void this.registry?.dispose(); this.clear(); }
 }
 
 /** Five civilian silhouettes share rigid-part LOD batches and the E07 clip path. */
@@ -445,8 +343,9 @@ export class CivilianCrowd extends Group {
   private readonly known = new Set<string>(coreCivilianModels);
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
-    // L1's people spawn at Begin; L6's attackers keep this rig after turning. Prepare their close tiers before play.
-    if(this.world.scenario==='L1'||this.world.scenario==='L6')for(const model of this.known)this.loadHero(model);
+    // Campaign people spawn at Begin. Their close tiers must be ready before
+    // the card closes, including L2/L3 officers who first appear at mission start.
+    if (/^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
     for (const e of this.world.entities.iterate()) {
       const model = crowdModelOf(e);
       // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
@@ -462,6 +361,7 @@ export class CivilianCrowd extends Group {
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(): Promise<void> {
     const started = performance.now();
+    if (/^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
     await Promise.all(this.batches.map(b => b.init()));
     // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
     // in discover(); no first-use LOD0 bake/index/simplification during the war.

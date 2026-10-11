@@ -31,6 +31,7 @@ export class Mission {
   private pendingMarker: string | null = null;
   private readonly pendingCheckpoints: string[] = [];
   private finishApplied = false;
+  private prepared = false;
   private readonly l1: LevelOneOutbreak | null;
   /** E20 set-piece controller (def.l2). */
   readonly l2: LevelTwoRescue | null;
@@ -75,10 +76,16 @@ export class Mission {
   private emit(event: Unticked<import('./events').MissionEvent>): void {
     this.world.events.emit({ ...event, tick: this.world.tick } as GameEvent);
   }
+  /** Install the initial cast while loading so its assets and shaders are ready at Begin. */
+  prepare(): void {
+    if (this.prepared || this.state.phase !== 'briefing') return;
+    this.l1?.prepare(); this.l2?.prepare(); this.l3?.prepare(); this.l4?.prepare(); this.l5?.prepare(); this.l6?.prepare();
+    this.prepared = true;
+  }
   /** A briefing is explicit; callers may accept it immediately for deterministic fixtures. */
   begin(): void {
     if (this.state.phase !== 'briefing') return;
-    this.l1?.prepare(); this.l2?.prepare(); this.l3?.prepare(); this.l4?.prepare(); this.l5?.prepare(); this.l6?.prepare();
+    this.prepare();
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.checkpoints.set('start', this.capture());
     this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });

@@ -14,6 +14,7 @@ export class Physics implements Lifecycle {
   playerBody: RAPIER.RigidBody | null = null;
   playerCollider: RAPIER.Collider | null = null;
   characterController: RAPIER.KinematicCharacterController | null = null;
+  private prepared = false;
   async init(): Promise<void> { await (initialized ??= RAPIER.init()); }
   load(scenario: ScenarioDefinition): void {
     this.reset();
@@ -45,6 +46,21 @@ export class Physics implements Lifecycle {
     return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1])).handle;
   }
   update(): void { if (this.world) { this.world.timestep = FIXED_DT; this.world.step(); } }
+  /** Exercise cold WASM solver/sweep paths during loading, without advancing the
+   * playable world or emitting simulation events. The temporary world owns all allocations. */
+  prepare(): void {
+    if (this.prepared || !this.world) return;
+    const warm = RAPIER.World.restoreSnapshot(this.world.takeSnapshot());
+    try {
+      const controller = warm.createCharacterController(.005);
+      const collider = this.playerCollider && warm.getCollider(this.playerCollider.handle);
+      for (let i = 0; i < 8; i++) {
+        if (collider) controller.computeColliderMovement(collider, { x: .01, y: -.01, z: .01 });
+        warm.step();
+      }
+      this.prepared = true;
+    } finally { warm.free(); }
+  }
   /** E11 removable doors/props. The caller owns the handle until removed or reset. */
   addBlocker(wall: NonNullable<ScenarioDefinition['walls']>[number]): number {
     return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z)).handle;

@@ -103,7 +103,7 @@ export class Lighting {
   setWeatherMode(features: number): void {
     this.weatherFeatures = features;
     const flags = weatherMaterialFlags;
-    const mode = features | (this.field.active ? flags.field : 0) | (this.rim.value > 0 || this.heroFill.value > 0 ? flags.hero : 0);
+    const mode = features | flags.field | (this.rim.value > 0 || this.heroFill.value > 0 ? flags.hero : 0);
     if (mode === this.weatherMode) return;
     this.weatherMode = mode;
     for (const material of this.paletteMaterials) material.setWeatherMode(mode);

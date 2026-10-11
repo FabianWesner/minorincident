@@ -138,6 +138,7 @@ export class GameView implements Lifecycle {
   private gloomShown = 1;
   private materials: Materials | null = null;
   private districtResources:{lighting:Lighting;materials:Materials;registry:DistrictAssets;phase:ReturnType<typeof windPhase>;grassMaterial:ReturnType<typeof Grass.material>}|null=null;
+  private resourceDistricts = '';
   private districts:DistrictView|null=null;
   private windowMask=false;
   private foliageMask: boolean | 'crowns'=false;
@@ -164,11 +165,13 @@ export class GameView implements Lifecycle {
     this.idBackground.name = 'keep_idBackground'; this.idPlayer.name = 'keep_idPlayer';
     this.scene.background = new Color('#293447');
   }
+  onMissionChange: () => void = () => this.update(1);
+  refreshMissionUI(): void { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); }
   async init(): Promise<void> {
     await this.renderer.init(); this.resize();
     this.renderer.domElement.style.display = 'block';
     document.querySelector('#game')!.appendChild(this.renderer.domElement);
-    this.missionUI = new MissionUI(this.world,()=>this.update(1));
+    this.missionUI = new MissionUI(this.world, () => this.onMissionChange());
     this.flashOverlay.style.cssText = 'position:fixed;inset:0;background:white;opacity:0;pointer-events:none;z-index:3';
     document.querySelector('#game')!.appendChild(this.flashOverlay);
     window.addEventListener('resize', this.resize);
@@ -197,7 +200,8 @@ export class GameView implements Lifecycle {
     this.resize(); await this.load(); this.contextLost = false; this.update(1);
   }
   async load(): Promise<void> {
-    this.reset();
+    const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
+    this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
     const player = this.world.entities.get(1);
     this.view.reset(player?.transform ?? { x: 0, z: 0 });
     let actors: Promise<unknown> | null = null;
@@ -272,7 +276,22 @@ export class GameView implements Lifecycle {
       this.meshes.push(this.destination); this.scene.add(this.destination);
     }
     let t = performance.now();
-    await (actors ?? this.startActors(Promise.resolve()));
+    // District shaders are independent of the worker's cold civilian bake. Build
+    // them while that bake is in flight; the complete warm-up still executes every
+    // object and driver path before revealing the playable scene.
+    let districtCompile: Promise<void> | undefined;
+    if (actors && this.world.scenario === 'L1' && !this.background && this.renderer.selectedBackend === 'webgl' && this.postFx && this.lighting) {
+      this.lighting.setQuality(this.quality); this.lighting.update(this.view);
+      if (this.world.weather) {
+        this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
+        this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
+      }
+      const compiling = this.renderer.foregroundCompile;
+      this.renderer.foregroundCompile = true;
+      districtCompile = this.postFx.compile().finally(() => { this.renderer.foregroundCompile = compiling; });
+      void districtCompile.catch(() => {});
+    }
+    await Promise.all([actors ?? this.startActors(Promise.resolve()), districtCompile]);
     if (this.npcs) this.scene.add(this.npcs);
     if (this.entityAssets) this.scene.add(this.entityAssets);
     if (this.actions) { this.actions.update(); this.scene.add(this.actions); }
@@ -329,7 +348,7 @@ export class GameView implements Lifecycle {
     // Warm the level's actual surface graph, including haze/ash/rain, rather
     // than clear weather. A daylight fire adds the field bit to that graph;
     // compiling field-only here left L3's haze + field shaders cold at fallback.
-    if (this.lighting && this.world.weather) {
+    if (!this.weather && this.lighting && this.world.weather) {
       this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather);
       this.weather.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
     }
@@ -348,16 +367,15 @@ export class GameView implements Lifecycle {
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
       const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background);
       try {
-        await prepare();
-        // Daylight blasts enable a different palette graph and the HDR field pass.
-        // Warm both while loading, before a fire or fallback can stall gameplay.
+        // Execute the shared shader's fire branch and its HDR field pass while
+        // loading. The final full-size draw also executes the daylight branch.
         if (this.lighting && this.lighting.field.strength.value === 0) {
           const field = this.lighting.field, pulse = field.addTransient({ x: focus.x, z: focus.z }, 'light_fire', 0, 1, Infinity);
           try {
             this.lighting.applyLook(); field.update(focus.x, focus.z, this.world.tick / 60); field.render(this.renderer);
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
-        }
+        } else await prepare();
       }
       finally { restore?.(); unwarm?.(); restoreGates?.(); }
     };
@@ -781,7 +799,9 @@ export class GameView implements Lifecycle {
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.districts?.updateLods(this.view); this.crowd?.update(this.view);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
-  reset(): void {
+  /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
+  reset(nextDistricts?: string): void {
+    const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
     this.weatherProbeAsset = null; this.weatherPowerRevision = 0;
     if (this.weather) { this.scene.remove(this.weather); this.weather.dispose(); this.weather = null; }
     this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
@@ -813,7 +833,11 @@ export class GameView implements Lifecycle {
     if (this.lookdev) { this.scene.remove(this.lookdev); this.lookdev.dispose(); this.lookdev = null; }
     if(this.materials!==this.districtResources?.materials)this.materials?.dispose();this.materials=null;
     if(this.lighting===this.districtResources?.lighting)this.scene.remove(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);else this.lighting?.dispose();this.lighting=null;
-    this.districtResources?.registry.dispose(); this.districtResources?.grassMaterial.dispose(); this.districtResources?.materials.dispose(); this.districtResources?.lighting.dispose(); this.districtResources = null;
+    if (retain && this.districtResources) {
+      this.districtResources.lighting.field.reset(); this.districtResources.lighting.setGloom(1);
+    } else {
+      this.districtResources?.registry.dispose(); this.districtResources?.grassMaterial.dispose(); this.districtResources?.materials.dispose(); this.districtResources?.lighting.dispose(); this.districtResources = null; this.resourceDistricts = '';
+    }
     this.occlusion.reset(); this.idPass = false; this.scene.fog = null; this.scene.backgroundNode = null; this.scene.background = new Color('#293447'); this.renderer.shadowMap.enabled = false;
     for (const mesh of this.meshes) {
       this.scene.remove(mesh); mesh.geometry.dispose();

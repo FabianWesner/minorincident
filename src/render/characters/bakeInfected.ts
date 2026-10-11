@@ -27,6 +27,19 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   }
   const parts: Object3D[] = characterNodes.map((name) => rig[name]);
   for (const name of animatedNodes) { const node = root.getObjectByName(name); if (node && !parts.includes(node)) parts.push(node); }
+  // Pose frames need joint matrices, not every rigid mesh's world matrix.
+  // Include each joint's ancestors in tree order; source meshes get a full
+  // update once after the rest pose is restored, before geometry extraction.
+  const required = new Set<Object3D>();
+  for (const part of parts) for (let node: Object3D | null = part; node; node = node.parent) { required.add(node); if (node === root) break; }
+  const joints: Object3D[] = []; root.traverse(node => { if (required.has(node)) joints.push(node); });
+  const updateJoints = () => {
+    for (const node of joints) {
+      if (node.matrixAutoUpdate) node.updateMatrix();
+      if (node.matrixWorldAutoUpdate) { if (node.parent) node.matrixWorld.multiplyMatrices(node.parent.matrixWorld, node.matrix); else node.matrixWorld.copy(node.matrix); }
+      node.matrixWorldNeedsUpdate = false;
+    }
+  };
   const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}` : undefined;
   const cached = key && bakedCrowds.get(key);
   if (cached) {
@@ -41,19 +54,21 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   // under the ground. Same heel/toe points as the footwork solver and CrowdFigureProbe; the pelvis rises by the deficit.
   const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
   const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
-  const floor = lowestSole(), animalRig = !!root.getObjectByName('body');
-  for (const clip of clipNames) for (let frame = 0; frame < framesPerClip; frame++) {
-    for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
-    const t = frame / (framesPerClip - 1);
-    const animal = !!root.getObjectByName('body');
-    const name = animal ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : root.getObjectByName('wingL') ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
-    sampleClip(root, name, t * authoredClips.get(name)!.duration);
-    root.updateMatrixWorld(true);
-    if (!animalRig && soleHeight > 0 && !unplantedClips.test(clip)) {
-      const deficit = floor - lowestSole();
-      if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; root.updateMatrixWorld(true); }
+  const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
+  for (const clip of clipNames) {
+    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const duration = authoredClips.get(name)!.duration, planted = !animalRig && soleHeight > 0 && !unplantedClips.test(clip);
+    for (let frame = 0; frame < framesPerClip; frame++) {
+      for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
+      const t = frame / (framesPerClip - 1);
+      sampleClip(root, name, t * duration);
+      updateJoints();
+      if (planted) {
+        const deficit = floor - lowestSole();
+        if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+      }
+      for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
     }
-    for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
   }
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
   root.updateMatrixWorld(true);
@@ -84,10 +99,11 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     const count = geometry.getAttribute('position').count, colors = new Float32Array(count * 3), emissive = new Float32Array(count), indices = new Float32Array(count), shirt = new Float32Array(count);
     const clothing = material.name === 'pal_infectedShirt'; if (clothing) shirtColor = material.color.clone();
     const sourceColor = geometry.getAttribute('color');
+    const base = material.color?.toArray() ?? [0.4, 0.3, 0.25];
     for (let i = 0; i < count; i++) {
-      const color = material.color?.toArray() ?? [0.4, 0.3, 0.25];
-      if (material.vertexColors && sourceColor) { color[0] *= sourceColor.getX(i); color[1] *= sourceColor.getY(i); color[2] *= sourceColor.getZ(i); }
-      colors.set(color, i * 3); // Civilian GLBs use dark pupils rather than emissive eye materials.
+      colors[i * 3] = base[0] * (material.vertexColors && sourceColor ? sourceColor.getX(i) : 1);
+      colors[i * 3 + 1] = base[1] * (material.vertexColors && sourceColor ? sourceColor.getY(i) : 1);
+      colors[i * 3 + 2] = base[2] * (material.vertexColors && sourceColor ? sourceColor.getZ(i) : 1);
       // uiDark also owns hair, brows and collars: height cannot identify pupils.
       const pupil = owner === rig.head && /^(pal_)?eyeBrown$/.test(material.name) && geometry.getAttribute('position').getY(i) > .08;
       emissive[i] = Number(material.name.startsWith('emi_') || pupil); indices[i] = part; shirt[i] = /^(pal_)?skin/.test(material.name) ? -1 : Number(clothing);

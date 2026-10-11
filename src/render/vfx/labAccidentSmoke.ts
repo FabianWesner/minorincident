@@ -37,10 +37,11 @@ export class SmokeColumn extends Group {
     super();
     this.name = 'lab-accident-fx';
     const plane = new PlaneGeometry(1, 1), box = new BoxGeometry(1, 1, 0.35);
+    const opacity = materialOpacity.mul(seeThroughHole());
     for (let i = 0; i < PUFFS; i++) {
-      const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, map: this.texture ?? undefined, opacity: 0 });
+      const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, ...(this.texture ? { map: this.texture } : {}), opacity: 0 });
       // PO #28: the shared courier see-through hole also opens puffs between the camera and the courier.
-      material.opacityNode = materialOpacity.mul(seeThroughHole());
+      material.opacityNode = opacity;
       const m = new Mesh(plane, material);
       m.visible = false; m.renderOrder = 3; this.puffMeshes.push(m); this.add(m);
     }

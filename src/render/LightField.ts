@@ -62,6 +62,8 @@ export class LightField {
   readonly extent = uniform(80);
   /** Time-of-day practical-light weight; fire/blast transients also work in daylight. */
   readonly strength = uniform(0);
+  /** Branch within the shared daylight/fire shader, avoiding a second scene graph. */
+  readonly enabled = uniform(0);
   private readonly scene = new Scene();
   private readonly camera = new OrthographicCamera(-40, 40, 40, -40, .1, 200);
   private readonly mesh: InstancedMesh;
@@ -122,7 +124,11 @@ export class LightField {
     const fieldUv = local.add(.5);
     const edge = local.abs().max(local.yx.abs()).x.smoothstep(.5, .42);
     const height = positionWorld.y.div(5).oneMinus().clamp(.15, 1);
-    return texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height);
+    return Fn(() => {
+      const radiance = vec3(0).toVar();
+      If(this.enabled.greaterThan(0), () => { radiance.assign(texture(this.target.texture, fieldUv).rgb.mul(edge).mul(height)); });
+      return radiance;
+    })();
   }
   setQuality(tier: 'high' | 'low'): void {
     if (tier === this.tier) return;
@@ -140,6 +146,13 @@ export class LightField {
       light.visibility.slice(1).forEach(([x, z], ray) => { data[((index + 1) * 65 + ray) * 4] = Math.hypot(x - light.x, z - light.z); });
     });
     this.visibilityData.image = { data, width: 65, height: lights.length + 1 }; this.visibilitySize.value = lights.length + 1; this.visibilityData.needsUpdate = true;
+  }
+  /** Retire per-level lights while retaining the field's shared GPU resources. */
+  reset(): void {
+    this.transients.length = 0; this.dynamics.length = 0; this.pool.length = 0;
+    this.order.length = 0; this.weights.length = 0; this.time = 0;
+    this.drawn = this.candidates = this.ms = 0; this.mesh.count = 0; this.cleared = false;
+    this.setStatic([]);
   }
   syncPower(isOn: (id: string) => boolean): void { for (const light of this.statics) if (light.id) light.on = isOn(light.id); }
   /** Per-frame lights (vehicles, the player aura); cleared by `update`. */
@@ -170,6 +183,7 @@ export class LightField {
     const start = performance.now();
     this.time = time;
     for (let i = this.transients.length - 1; i >= 0; i--) if (this.time - this.transients[i].born >= this.transients[i].ttl) this.transients.splice(i, 1);
+    this.enabled.value = Number(this.active);
     const extent = this.extent.value, texel = extent / this.target.width;
     // Snap the window to whole texels so static pools do not shimmer as the camera follows.
     const cx = Math.round(focusX / texel) * texel, cz = Math.round(focusZ / texel) * texel;
