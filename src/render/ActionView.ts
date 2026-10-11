@@ -1,6 +1,6 @@
 import { gunCarryElevation, gunHoldOffset, longGunHolds } from './characters/GunAim';
 import { meleeChains } from '../data/meleeCombos';
-import { AdditiveBlending, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
+import { AdditiveBlending, Box3, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
 import { catalog, action } from '../data/actions/catalog';
 import { AssetRegistry, type PlaceholderLog } from '../assets/registry';
@@ -26,6 +26,10 @@ export class ActionView extends Group {
   private readonly bloodMaterials: PaletteMaterial[] = [];
   private readonly held: Partial<Record<Side, { id: string; model: Object3D; holder: Group; tilt: number }>> = {};
   private readonly pickups = new Map<number, Object3D>();
+  /** Same drawn paving height field used by vehicles; sim support height is the fallback. */
+  ground: ((x: number, z: number) => number | null) | null = null;
+  private readonly pickupRingGeometry = new RingGeometry(.58, .63, 48).rotateX(-Math.PI / 2);
+  private readonly pickupRingMaterial = new MeshBasicNodeMaterial({ color: '#ffd166', transparent: true, opacity: .9, depthWrite: false, side: DoubleSide });
   private readonly geometry = new BufferGeometry();
   private readonly positions = new Float32Array(256 * 18);
   private readonly material = new MeshBasicNodeMaterial({ color: '#ffd166', depthWrite: false, side: DoubleSide });
@@ -139,6 +143,7 @@ export class ActionView extends Group {
   }
   update(): void {
     this.targetMarkerId = null;
+    this.updatePickups();
     const combat = this.world.combat, player = this.world.entities.get(1); if (!combat || !player) return;
     if (!player.weapons) {
       for (const held of Object.values(this.held)) held.holder.removeFromParent();
@@ -242,12 +247,35 @@ export class ActionView extends Group {
     for (const zone of combat.effects.zones) this.circle(zone.x, zone.z, zone.radius);
     this.geometry.setDrawRange(0, this.offset / 3); this.geometry.getAttribute('position').needsUpdate = true;
     for (let i = 0; i < this.projectiles.length; i++) { const p = combat.projectiles[i], mesh = this.projectiles[i]; mesh.visible = !!p; if (p) mesh.position.set(p.x, p.y, p.z); }
-    for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) {
-      let model = this.pickups.get(entity.id); if (!model) { const source = this.model(action(entity.pickup.actionId)); if (!source) continue; model = source.clone(true); this.pickups.set(entity.id, model); this.add(model); }
-      model.position.set(entity.transform.x, 0.25, entity.transform.z); model.rotation.z = 0.2;
-    }
-    for (const [id, model] of this.pickups) if (!this.world.entities.get(id)) { model.removeFromParent(); this.pickups.delete(id); }
     this.updateTrail();
+  }
+  /** Rest each authored model on its broad side, with its lowest drawn vertex on the paving.
+   * Pickup presentation is independent of the player's carried weapons, including an empty rack. */
+  private updatePickups(): void {
+    for (const entity of this.world.entities.iterate()) if (entity.pickup && 'actionId' in entity.pickup) {
+      let pickup = this.pickups.get(entity.id);
+      if (!pickup) {
+        const def = action(entity.pickup.actionId), source = this.model(def);
+        if (!source) continue;
+        const rest = new Group(); rest.add(source.clone(true));
+        const bounds = new Box3().setFromObject(rest, true), size = bounds.getSize(new Vector3());
+        // The thin axis is perpendicular to the broad resting face. This covers both
+        // long +X guns/blades and upright +Y tools without a shared floating pose.
+        if (size.z <= size.x && size.z <= size.y) rest.rotation.x = Math.PI / 2;
+        else if (size.x <= size.y) rest.rotation.z = Math.PI / 2;
+        bounds.setFromObject(rest, true);
+        rest.position.set(-(bounds.min.x + bounds.max.x) / 2, -bounds.min.y, -(bounds.min.z + bounds.max.z) / 2);
+        const group = new Group(), marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
+        marker.position.y = .018; group.add(rest, marker); pickup = group;
+        this.pickups.set(entity.id, pickup); this.add(pickup);
+      }
+      const { x, z } = entity.transform;
+      pickup.position.set(x, this.ground?.(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0, z);
+    }
+    for (const [id, model] of this.pickups) {
+      const pickup = this.world.entities.get(id)?.pickup;
+      if (!pickup || !('actionId' in pickup)) { model.removeFromParent(); this.pickups.delete(id); }
+    }
   }
   /** Short ribbon from actual authored weapon-tip history, including overhead planes. */
   private updateTrail(): void {
@@ -324,5 +352,5 @@ export class ActionView extends Group {
     });
     return { aimCue: this.cue, targetMarker: this.targetMarkerId === null ? null : { id: this.targetMarkerId, radius: .5 }, trailVertices: this.trailVertices, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, indicator: { selectedSide: this.selected, shape: this.shape, visibleSides: [this.selected], vertices: this.offset / 3, maxHeight: this.maxHeight, landing: { ...this.landing } }, attachments, placeholders: this.placeholders };
   }
-  dispose(): void { for (const held of Object.values(this.held)) held.holder.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickups.clear(); this.clear(); }
+  dispose(): void { for (const held of Object.values(this.held)) held.holder.removeFromParent(); void this.registry.dispose(); this.geometry.dispose(); this.material.dispose(); this.trailGeometry.dispose(); this.trailMaterial.dispose(); this.projectileGeometry.dispose(); this.projectileMaterial.dispose(); this.pickupRingGeometry.dispose(); this.pickupRingMaterial.dispose(); this.pickups.clear(); this.clear(); }
 }
