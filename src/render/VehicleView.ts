@@ -208,10 +208,11 @@ export class VehicleView extends Group {
       const target = w.driver ? new Vector3() : undefined;
       if (target) {
         if (wheel) record.model.worldToLocal(wheel.getWorldPosition(target));
-        else { record.model.worldToLocal(seat.getWorldPosition(target)); const offsets: { [id: string]: [number, number] } = { 'vehicle.sedan': [.56,.29], 'vehicle.pickup': [.63,.38], 'vehicle.suv': [.34,.35], 'vehicle.police': [.45,.22], 'vehicle.ambulance': [.49,.33], 'vehicle.school-bus': [.5,.35], 'vehicle.fire-engine': [.5,.35] }; const [x,y] = offsets[car.physics.def.id]; target.x += x; target.y += y; }
+        else { record.model.worldToLocal(seat.getWorldPosition(target)); const offsets: { [id: string]: [number, number] } = { 'vehicle.sedan': [.56,.29], 'vehicle.pickup': [.58,.39], 'vehicle.suv': [.34,.35], 'vehicle.police': [.45,.22], 'vehicle.ambulance': [.49,.33], 'vehicle.school-bus': [.5,.35], 'vehicle.fire-engine': [.5,.35] }; const [x,y] = offsets[car.physics.def.id]; target.x += x; target.y += y; }
       }
-      const fit = car.physics.def.id === 'vehicle.police' ? .62 : car.physics.def.id === 'vehicle.fire-engine' ? .72 : ['vehicle.sedan', 'vehicle.pickup', 'vehicle.suv'].includes(car.physics.def.id) ? .85 : 1;
-      occupant.pose(seat, target, fit);
+      const fit = car.physics.def.id === 'vehicle.police' ? .62 : car.physics.def.id === 'vehicle.fire-engine' ? .72 : car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? .95 : ['vehicle.sedan', 'vehicle.pickup', 'vehicle.suv'].includes(car.physics.def.id) ? .85 : 1;
+      // The female rig has shorter arms; lean into the pickup's high steering column.
+      occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5);
     }
   }
   /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors. */

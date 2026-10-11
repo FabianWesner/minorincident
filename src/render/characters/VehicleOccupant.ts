@@ -51,7 +51,7 @@ export class VehicleOccupant extends Group {
   }
   dispose(): void { if (this.ownsModel) disposeCharacter(this.model as Group); this.removeFromParent(); }
   /** Hip at the seat node, both shoes forward in the footwell; drivers grip the authored wheel. */
-  pose(seat: Object3D, wheel?: Vector3, fit = 1): void {
+  pose(seat: Object3D, wheel?: Vector3, fit = 1, driverLean = -.5): void {
     // Compact car cushions/roofs are authored for smaller seated figures than the standing hero.
     this.scale.setScalar(fit);
     seat.updateWorldMatrix(true, false);
@@ -59,7 +59,7 @@ export class VehicleOccupant extends Group {
     this.quaternion.copy(this.parent!.getWorldQuaternion(this.orientation).invert()).multiply(seat.getWorldQuaternion(new Quaternion()));
     if (wheel) this.position.x += Math.max(0, Math.min(.2, wheel.x - this.position.x - .35 * fit)); // stay within the cushion
     this.torso.quaternion.copy(this.torsoRest);
-    this.torso.rotateZ(wheel ? -.5 : -.25);
+    this.torso.rotateZ(wheel ? driverLean : -.25);
     this.updateWorldMatrix(true, true);
     for (let i = 0; i < 2; i++) {
       if (wheel) { this.point.copy(wheel).add(new Vector3(-.04, .025, i === 0 ? -.12 : .12)); this.parent!.localToWorld(this.point); }
