@@ -66,3 +66,17 @@ test('@gun-pose VFX flash and first tracer particle use the resolved muzzle, inc
     }
   } finally { vfx.dispose(); world.dispose(); }
 });
+
+test('@gun-pose courier and NPC firing poses still resolve with the user VFX preference off', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena', 1);
+  const posed: number[] = [];
+  const vfx = new Vfx(world, { flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {}, muzzle: id => { posed.push(id); return { x: 1, y: 1, z: 0 }; } });
+  try {
+    vfx.set({ vfx: false });
+    world.events.emit({ type:'combat.attack', tick:world.tick, attackId:1, actionId:'weapon.handgun', combo:0, sourceId:1, side:'LEFT', position:{x:0,y:.7,z:0,yaw:0}, direction:{x:1,z:0} });
+    world.events.emit({ type:'ally.attack',tick:world.tick,sourceId:2,targetId:99,role:'officer',from:{x:0,z:0},to:{x:10,z:0} });
+    expect(posed).toEqual([1, 2]);
+    expect(vfx.visible).toBe(false);
+    expect(vfx.shots).toHaveLength(0);
+  } finally { vfx.dispose(); world.dispose(); }
+});
