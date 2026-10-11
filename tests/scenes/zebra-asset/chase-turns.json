@@ -1,0 +1,79 @@
+{
+  "name": "qa-zebra-asset-chase-turns",
+  "note": "Z-D2 shared animal crowd gait/turns probe, existing firefighter brain with zebra model override; no zebra special/gameplay claims.",
+  "seed": 7,
+  "ground": "grass",
+  "time": "L4",
+  "dof": false,
+  "props": [],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3,
+        5
+      ],
+      "state": {
+        "run": [
+          [
+            3,
+            10
+          ],
+          [
+            -3,
+            10
+          ],
+          [
+            -3,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "zebra",
+      "kind": "infected",
+      "archetype": "infected.firefighter",
+      "look": {
+        "model": "inf.zebra"
+      },
+      "at": [
+        -5,
+        5
+      ],
+      "state": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      6
+    ],
+    "zoom": 1.2
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    60,
+    120,
+    180
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "propPenetrationFramesMax": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "size": 32
+}

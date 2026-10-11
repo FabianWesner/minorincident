@@ -1,0 +1,4467 @@
+{
+  "spec": "tests/scenes/zebra-asset/stress-low.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "frames": 120,
+  "timing": {
+    "openMs": 1321,
+    "loadMs": 1696,
+    "runMs": 1020,
+    "sceneMs": 2716
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 7,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 94346,
+        "limit": 500000
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-zebra-asset-stress-low",
+    "frame": 0,
+    "placements": [],
+    "actors": [
+      {
+        "id": "zebra-1",
+        "kind": "infected",
+        "entity": 3
+      },
+      {
+        "id": "zebra-2",
+        "kind": "infected",
+        "entity": 4
+      },
+      {
+        "id": "zebra-3",
+        "kind": "infected",
+        "entity": 5
+      },
+      {
+        "id": "zebra-4",
+        "kind": "infected",
+        "entity": 6
+      },
+      {
+        "id": "zebra-5",
+        "kind": "infected",
+        "entity": 7
+      },
+      {
+        "id": "zebra-6",
+        "kind": "infected",
+        "entity": 8
+      },
+      {
+        "id": "zebra-7",
+        "kind": "infected",
+        "entity": 9
+      },
+      {
+        "id": "zebra-8",
+        "kind": "infected",
+        "entity": 10
+      },
+      {
+        "id": "zebra-9",
+        "kind": "infected",
+        "entity": 11
+      },
+      {
+        "id": "zebra-10",
+        "kind": "infected",
+        "entity": 12
+      },
+      {
+        "id": "zebra-11",
+        "kind": "infected",
+        "entity": 13
+      },
+      {
+        "id": "zebra-12",
+        "kind": "infected",
+        "entity": 14
+      },
+      {
+        "id": "zebra-13",
+        "kind": "infected",
+        "entity": 15
+      },
+      {
+        "id": "zebra-14",
+        "kind": "infected",
+        "entity": 16
+      },
+      {
+        "id": "zebra-15",
+        "kind": "infected",
+        "entity": 17
+      },
+      {
+        "id": "zebra-16",
+        "kind": "infected",
+        "entity": 18
+      },
+      {
+        "id": "zebra-17",
+        "kind": "infected",
+        "entity": 19
+      },
+      {
+        "id": "zebra-18",
+        "kind": "infected",
+        "entity": 20
+      },
+      {
+        "id": "zebra-19",
+        "kind": "infected",
+        "entity": 21
+      },
+      {
+        "id": "zebra-20",
+        "kind": "infected",
+        "entity": 22
+      },
+      {
+        "id": "zebra-21",
+        "kind": "infected",
+        "entity": 23
+      },
+      {
+        "id": "zebra-22",
+        "kind": "infected",
+        "entity": 24
+      },
+      {
+        "id": "zebra-23",
+        "kind": "infected",
+        "entity": 25
+      },
+      {
+        "id": "zebra-24",
+        "kind": "infected",
+        "entity": 26
+      },
+      {
+        "id": "zebra-25",
+        "kind": "infected",
+        "entity": 27
+      },
+      {
+        "id": "zebra-26",
+        "kind": "infected",
+        "entity": 28
+      },
+      {
+        "id": "zebra-27",
+        "kind": "infected",
+        "entity": 29
+      },
+      {
+        "id": "zebra-28",
+        "kind": "infected",
+        "entity": 30
+      },
+      {
+        "id": "zebra-29",
+        "kind": "infected",
+        "entity": 31
+      },
+      {
+        "id": "zebra-30",
+        "kind": "infected",
+        "entity": 32
+      },
+      {
+        "id": "zebra-31",
+        "kind": "infected",
+        "entity": 33
+      },
+      {
+        "id": "zebra-32",
+        "kind": "infected",
+        "entity": 34
+      },
+      {
+        "id": "zebra-33",
+        "kind": "infected",
+        "entity": 35
+      },
+      {
+        "id": "zebra-34",
+        "kind": "infected",
+        "entity": 36
+      },
+      {
+        "id": "zebra-35",
+        "kind": "infected",
+        "entity": 37
+      },
+      {
+        "id": "zebra-36",
+        "kind": "infected",
+        "entity": 38
+      },
+      {
+        "id": "zebra-37",
+        "kind": "infected",
+        "entity": 39
+      },
+      {
+        "id": "zebra-38",
+        "kind": "infected",
+        "entity": 40
+      },
+      {
+        "id": "zebra-39",
+        "kind": "infected",
+        "entity": 41
+      },
+      {
+        "id": "zebra-40",
+        "kind": "infected",
+        "entity": 42
+      },
+      {
+        "id": "zebra-41",
+        "kind": "infected",
+        "entity": 43
+      },
+      {
+        "id": "zebra-42",
+        "kind": "infected",
+        "entity": 44
+      },
+      {
+        "id": "zebra-43",
+        "kind": "infected",
+        "entity": 45
+      },
+      {
+        "id": "zebra-44",
+        "kind": "infected",
+        "entity": 46
+      },
+      {
+        "id": "zebra-45",
+        "kind": "infected",
+        "entity": 47
+      },
+      {
+        "id": "zebra-46",
+        "kind": "infected",
+        "entity": 48
+      },
+      {
+        "id": "zebra-47",
+        "kind": "infected",
+        "entity": 49
+      },
+      {
+        "id": "zebra-48",
+        "kind": "infected",
+        "entity": 50
+      },
+      {
+        "id": "zebra-49",
+        "kind": "infected",
+        "entity": 51
+      },
+      {
+        "id": "zebra-50",
+        "kind": "infected",
+        "entity": 52
+      },
+      {
+        "id": "zebra-51",
+        "kind": "infected",
+        "entity": 53
+      },
+      {
+        "id": "zebra-52",
+        "kind": "infected",
+        "entity": 54
+      },
+      {
+        "id": "zebra-53",
+        "kind": "infected",
+        "entity": 55
+      },
+      {
+        "id": "zebra-54",
+        "kind": "infected",
+        "entity": 56
+      },
+      {
+        "id": "zebra-55",
+        "kind": "infected",
+        "entity": 57
+      },
+      {
+        "id": "zebra-56",
+        "kind": "infected",
+        "entity": 58
+      },
+      {
+        "id": "zebra-57",
+        "kind": "infected",
+        "entity": 59
+      },
+      {
+        "id": "zebra-58",
+        "kind": "infected",
+        "entity": 60
+      },
+      {
+        "id": "zebra-59",
+        "kind": "infected",
+        "entity": 61
+      },
+      {
+        "id": "zebra-60",
+        "kind": "infected",
+        "entity": 62
+      },
+      {
+        "id": "zebra-61",
+        "kind": "infected",
+        "entity": 63
+      },
+      {
+        "id": "zebra-62",
+        "kind": "infected",
+        "entity": 64
+      },
+      {
+        "id": "zebra-63",
+        "kind": "infected",
+        "entity": 65
+      },
+      {
+        "id": "zebra-64",
+        "kind": "infected",
+        "entity": 66
+      },
+      {
+        "id": "zebra-65",
+        "kind": "infected",
+        "entity": 67
+      },
+      {
+        "id": "zebra-66",
+        "kind": "infected",
+        "entity": 68
+      },
+      {
+        "id": "zebra-67",
+        "kind": "infected",
+        "entity": 69
+      },
+      {
+        "id": "zebra-68",
+        "kind": "infected",
+        "entity": 70
+      },
+      {
+        "id": "zebra-69",
+        "kind": "infected",
+        "entity": 71
+      },
+      {
+        "id": "zebra-70",
+        "kind": "infected",
+        "entity": 72
+      },
+      {
+        "id": "zebra-71",
+        "kind": "infected",
+        "entity": 73
+      },
+      {
+        "id": "zebra-72",
+        "kind": "infected",
+        "entity": 74
+      },
+      {
+        "id": "zebra-73",
+        "kind": "infected",
+        "entity": 75
+      },
+      {
+        "id": "zebra-74",
+        "kind": "infected",
+        "entity": 76
+      },
+      {
+        "id": "zebra-75",
+        "kind": "infected",
+        "entity": 77
+      },
+      {
+        "id": "zebra-76",
+        "kind": "infected",
+        "entity": 78
+      },
+      {
+        "id": "zebra-77",
+        "kind": "infected",
+        "entity": 79
+      },
+      {
+        "id": "zebra-78",
+        "kind": "infected",
+        "entity": 80
+      },
+      {
+        "id": "zebra-79",
+        "kind": "infected",
+        "entity": 81
+      },
+      {
+        "id": "zebra-80",
+        "kind": "infected",
+        "entity": 82
+      },
+      {
+        "id": "zebra-81",
+        "kind": "infected",
+        "entity": 83
+      },
+      {
+        "id": "zebra-82",
+        "kind": "infected",
+        "entity": 84
+      },
+      {
+        "id": "zebra-83",
+        "kind": "infected",
+        "entity": 85
+      },
+      {
+        "id": "zebra-84",
+        "kind": "infected",
+        "entity": 86
+      },
+      {
+        "id": "zebra-85",
+        "kind": "infected",
+        "entity": 87
+      },
+      {
+        "id": "zebra-86",
+        "kind": "infected",
+        "entity": 88
+      },
+      {
+        "id": "zebra-87",
+        "kind": "infected",
+        "entity": 89
+      },
+      {
+        "id": "zebra-88",
+        "kind": "infected",
+        "entity": 90
+      },
+      {
+        "id": "zebra-89",
+        "kind": "infected",
+        "entity": 91
+      },
+      {
+        "id": "zebra-90",
+        "kind": "infected",
+        "entity": 92
+      },
+      {
+        "id": "zebra-91",
+        "kind": "infected",
+        "entity": 93
+      },
+      {
+        "id": "zebra-92",
+        "kind": "infected",
+        "entity": 94
+      },
+      {
+        "id": "zebra-93",
+        "kind": "infected",
+        "entity": 95
+      },
+      {
+        "id": "zebra-94",
+        "kind": "infected",
+        "entity": 96
+      },
+      {
+        "id": "zebra-95",
+        "kind": "infected",
+        "entity": 97
+      },
+      {
+        "id": "zebra-96",
+        "kind": "infected",
+        "entity": 98
+      },
+      {
+        "id": "zebra-97",
+        "kind": "infected",
+        "entity": 99
+      },
+      {
+        "id": "zebra-98",
+        "kind": "infected",
+        "entity": 100
+      },
+      {
+        "id": "zebra-99",
+        "kind": "infected",
+        "entity": 101
+      },
+      {
+        "id": "zebra-100",
+        "kind": "infected",
+        "entity": 102
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-zebra-asset-stress-low",
+    "frame": 120,
+    "tick": 120,
+    "backend": "webgl",
+    "quality": "low",
+    "propPenetration": {
+      "samples": 12000,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [
+      {
+        "a": "zebra-25",
+        "b": "zebra-26",
+        "depthCm": 7.1,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-26",
+        "b": "zebra-27",
+        "depthCm": 7.1,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-75",
+        "b": "zebra-76",
+        "depthCm": 7.1,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-76",
+        "b": "zebra-77",
+        "depthCm": 7.1,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-24",
+        "b": "zebra-25",
+        "depthCm": 5.5,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-27",
+        "b": "zebra-28",
+        "depthCm": 5.5,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-74",
+        "b": "zebra-75",
+        "depthCm": 5.5,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-77",
+        "b": "zebra-78",
+        "depthCm": 5.5,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-23",
+        "b": "zebra-24",
+        "depthCm": 2.8,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-28",
+        "b": "zebra-29",
+        "depthCm": 2.8,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-73",
+        "b": "zebra-74",
+        "depthCm": 2.8,
+        "frame": 3,
+        "count": 40
+      },
+      {
+        "a": "zebra-78",
+        "b": "zebra-79",
+        "depthCm": 2.8,
+        "frame": 3,
+        "count": 40
+      }
+    ],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 7,
+        "p95": 7,
+        "max": 7
+      },
+      "triangles": {
+        "p50": 94346,
+        "p95": 94346,
+        "max": 94346
+      },
+      "shadowDrawCalls": {
+        "p50": 7,
+        "p95": 7,
+        "max": 7
+      },
+      "shadowTriangles": {
+        "p50": 7,
+        "p95": 7,
+        "max": 7
+      },
+      "stepMs": {
+        "p50": 1.9,
+        "p95": 2.9,
+        "max": 7.9
+      },
+      "lastFrame": {
+        "drawCalls": 7,
+        "triangles": 94346,
+        "shadowDrawCalls": 7,
+        "shadowTriangles": 7,
+        "stepMs": 1.6000003814697266,
+        "categories": {
+          "other": 5,
+          "shadows": 7,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "zebra-1": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          12,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            12,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-2": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          11.976,
+          0.753
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.976,
+            0.753
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-3": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          11.905,
+          1.504
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.905,
+            1.504
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-4": {
+        "kind": "infected",
+        "entity": 6,
+        "position": [
+          11.787,
+          2.249
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.787,
+            2.249
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-5": {
+        "kind": "infected",
+        "entity": 7,
+        "position": [
+          11.623,
+          2.984
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.623,
+            2.984
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-6": {
+        "kind": "infected",
+        "entity": 8,
+        "position": [
+          11.413,
+          3.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.413,
+            3.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-7": {
+        "kind": "infected",
+        "entity": 9,
+        "position": [
+          11.157,
+          4.417
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.157,
+            4.417
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-8": {
+        "kind": "infected",
+        "entity": 10,
+        "position": [
+          10.858,
+          5.109
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            10.858,
+            5.109
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-9": {
+        "kind": "infected",
+        "entity": 11,
+        "position": [
+          10.516,
+          5.781
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            10.516,
+            5.781
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-10": {
+        "kind": "infected",
+        "entity": 12,
+        "position": [
+          10.132,
+          6.43
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            10.132,
+            6.43
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-11": {
+        "kind": "infected",
+        "entity": 13,
+        "position": [
+          9.708,
+          7.053
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            9.708,
+            7.053
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-12": {
+        "kind": "infected",
+        "entity": 14,
+        "position": [
+          9.246,
+          7.649
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            9.246,
+            7.649
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-13": {
+        "kind": "infected",
+        "entity": 15,
+        "position": [
+          8.748,
+          8.215
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            8.748,
+            8.215
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-14": {
+        "kind": "infected",
+        "entity": 16,
+        "position": [
+          8.215,
+          8.748
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            8.215,
+            8.748
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-15": {
+        "kind": "infected",
+        "entity": 17,
+        "position": [
+          7.649,
+          9.246
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            7.649,
+            9.246
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-16": {
+        "kind": "infected",
+        "entity": 18,
+        "position": [
+          7.053,
+          9.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            7.053,
+            9.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-17": {
+        "kind": "infected",
+        "entity": 19,
+        "position": [
+          6.43,
+          10.132
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            6.43,
+            10.132
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-18": {
+        "kind": "infected",
+        "entity": 20,
+        "position": [
+          5.781,
+          10.516
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            5.781,
+            10.516
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-19": {
+        "kind": "infected",
+        "entity": 21,
+        "position": [
+          5.109,
+          10.858
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            5.109,
+            10.858
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-20": {
+        "kind": "infected",
+        "entity": 22,
+        "position": [
+          4.417,
+          11.157
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            4.417,
+            11.157
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-21": {
+        "kind": "infected",
+        "entity": 23,
+        "position": [
+          3.708,
+          11.413
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3.708,
+            11.413
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-22": {
+        "kind": "infected",
+        "entity": 24,
+        "position": [
+          2.984,
+          11.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2.984,
+            11.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-23": {
+        "kind": "infected",
+        "entity": 25,
+        "position": [
+          2.249,
+          11.787
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2.249,
+            11.787
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-24": {
+        "kind": "infected",
+        "entity": 26,
+        "position": [
+          1.504,
+          11.905
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            1.504,
+            11.905
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-25": {
+        "kind": "infected",
+        "entity": 27,
+        "position": [
+          0.753,
+          11.976
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0.753,
+            11.976
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-26": {
+        "kind": "infected",
+        "entity": 28,
+        "position": [
+          0,
+          12
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            12
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-27": {
+        "kind": "infected",
+        "entity": 29,
+        "position": [
+          -0.753,
+          11.976
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -0.753,
+            11.976
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-28": {
+        "kind": "infected",
+        "entity": 30,
+        "position": [
+          -1.504,
+          11.905
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1.504,
+            11.905
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-29": {
+        "kind": "infected",
+        "entity": 31,
+        "position": [
+          -2.249,
+          11.787
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2.249,
+            11.787
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-30": {
+        "kind": "infected",
+        "entity": 32,
+        "position": [
+          -2.984,
+          11.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2.984,
+            11.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-31": {
+        "kind": "infected",
+        "entity": 33,
+        "position": [
+          -3.708,
+          11.413
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -3.708,
+            11.413
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-32": {
+        "kind": "infected",
+        "entity": 34,
+        "position": [
+          -4.417,
+          11.157
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -4.417,
+            11.157
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-33": {
+        "kind": "infected",
+        "entity": 35,
+        "position": [
+          -5.109,
+          10.858
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -5.109,
+            10.858
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-34": {
+        "kind": "infected",
+        "entity": 36,
+        "position": [
+          -5.781,
+          10.516
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -5.781,
+            10.516
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-35": {
+        "kind": "infected",
+        "entity": 37,
+        "position": [
+          -6.43,
+          10.132
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -6.43,
+            10.132
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-36": {
+        "kind": "infected",
+        "entity": 38,
+        "position": [
+          -7.053,
+          9.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7.053,
+            9.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-37": {
+        "kind": "infected",
+        "entity": 39,
+        "position": [
+          -7.649,
+          9.246
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7.649,
+            9.246
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-38": {
+        "kind": "infected",
+        "entity": 40,
+        "position": [
+          -8.215,
+          8.748
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -8.215,
+            8.748
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-39": {
+        "kind": "infected",
+        "entity": 41,
+        "position": [
+          -8.748,
+          8.215
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -8.748,
+            8.215
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-40": {
+        "kind": "infected",
+        "entity": 42,
+        "position": [
+          -9.246,
+          7.649
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -9.246,
+            7.649
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-41": {
+        "kind": "infected",
+        "entity": 43,
+        "position": [
+          -9.708,
+          7.053
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -9.708,
+            7.053
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-42": {
+        "kind": "infected",
+        "entity": 44,
+        "position": [
+          -10.132,
+          6.43
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -10.132,
+            6.43
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-43": {
+        "kind": "infected",
+        "entity": 45,
+        "position": [
+          -10.516,
+          5.781
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -10.516,
+            5.781
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-44": {
+        "kind": "infected",
+        "entity": 46,
+        "position": [
+          -10.858,
+          5.109
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -10.858,
+            5.109
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-45": {
+        "kind": "infected",
+        "entity": 47,
+        "position": [
+          -11.157,
+          4.417
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.157,
+            4.417
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-46": {
+        "kind": "infected",
+        "entity": 48,
+        "position": [
+          -11.413,
+          3.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.413,
+            3.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-47": {
+        "kind": "infected",
+        "entity": 49,
+        "position": [
+          -11.623,
+          2.984
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.623,
+            2.984
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-48": {
+        "kind": "infected",
+        "entity": 50,
+        "position": [
+          -11.787,
+          2.249
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.787,
+            2.249
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-49": {
+        "kind": "infected",
+        "entity": 51,
+        "position": [
+          -11.905,
+          1.504
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.905,
+            1.504
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-50": {
+        "kind": "infected",
+        "entity": 52,
+        "position": [
+          -11.976,
+          0.753
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.976,
+            0.753
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-51": {
+        "kind": "infected",
+        "entity": 53,
+        "position": [
+          -12,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -12,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-52": {
+        "kind": "infected",
+        "entity": 54,
+        "position": [
+          -11.976,
+          -0.753
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.976,
+            -0.753
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-53": {
+        "kind": "infected",
+        "entity": 55,
+        "position": [
+          -11.905,
+          -1.504
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.905,
+            -1.504
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-54": {
+        "kind": "infected",
+        "entity": 56,
+        "position": [
+          -11.787,
+          -2.249
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.787,
+            -2.249
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-55": {
+        "kind": "infected",
+        "entity": 57,
+        "position": [
+          -11.623,
+          -2.984
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.623,
+            -2.984
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-56": {
+        "kind": "infected",
+        "entity": 58,
+        "position": [
+          -11.413,
+          -3.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.413,
+            -3.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-57": {
+        "kind": "infected",
+        "entity": 59,
+        "position": [
+          -11.157,
+          -4.417
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -11.157,
+            -4.417
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-58": {
+        "kind": "infected",
+        "entity": 60,
+        "position": [
+          -10.858,
+          -5.109
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -10.858,
+            -5.109
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-59": {
+        "kind": "infected",
+        "entity": 61,
+        "position": [
+          -10.516,
+          -5.781
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -10.516,
+            -5.781
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-60": {
+        "kind": "infected",
+        "entity": 62,
+        "position": [
+          -10.132,
+          -6.43
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -10.132,
+            -6.43
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-61": {
+        "kind": "infected",
+        "entity": 63,
+        "position": [
+          -9.708,
+          -7.053
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -9.708,
+            -7.053
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-62": {
+        "kind": "infected",
+        "entity": 64,
+        "position": [
+          -9.246,
+          -7.649
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -9.246,
+            -7.649
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-63": {
+        "kind": "infected",
+        "entity": 65,
+        "position": [
+          -8.748,
+          -8.215
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -8.748,
+            -8.215
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-64": {
+        "kind": "infected",
+        "entity": 66,
+        "position": [
+          -8.215,
+          -8.748
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -8.215,
+            -8.748
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-65": {
+        "kind": "infected",
+        "entity": 67,
+        "position": [
+          -7.649,
+          -9.246
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7.649,
+            -9.246
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-66": {
+        "kind": "infected",
+        "entity": 68,
+        "position": [
+          -7.053,
+          -9.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7.053,
+            -9.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-67": {
+        "kind": "infected",
+        "entity": 69,
+        "position": [
+          -6.43,
+          -10.132
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -6.43,
+            -10.132
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-68": {
+        "kind": "infected",
+        "entity": 70,
+        "position": [
+          -5.781,
+          -10.516
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -5.781,
+            -10.516
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-69": {
+        "kind": "infected",
+        "entity": 71,
+        "position": [
+          -5.109,
+          -10.858
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -5.109,
+            -10.858
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-70": {
+        "kind": "infected",
+        "entity": 72,
+        "position": [
+          -4.417,
+          -11.157
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -4.417,
+            -11.157
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-71": {
+        "kind": "infected",
+        "entity": 73,
+        "position": [
+          -3.708,
+          -11.413
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -3.708,
+            -11.413
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-72": {
+        "kind": "infected",
+        "entity": 74,
+        "position": [
+          -2.984,
+          -11.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2.984,
+            -11.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-73": {
+        "kind": "infected",
+        "entity": 75,
+        "position": [
+          -2.249,
+          -11.787
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2.249,
+            -11.787
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-74": {
+        "kind": "infected",
+        "entity": 76,
+        "position": [
+          -1.504,
+          -11.905
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1.504,
+            -11.905
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-75": {
+        "kind": "infected",
+        "entity": 77,
+        "position": [
+          -0.753,
+          -11.976
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -0.753,
+            -11.976
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-76": {
+        "kind": "infected",
+        "entity": 78,
+        "position": [
+          0,
+          -12
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            -12
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-77": {
+        "kind": "infected",
+        "entity": 79,
+        "position": [
+          0.753,
+          -11.976
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0.753,
+            -11.976
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-78": {
+        "kind": "infected",
+        "entity": 80,
+        "position": [
+          1.504,
+          -11.905
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            1.504,
+            -11.905
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-79": {
+        "kind": "infected",
+        "entity": 81,
+        "position": [
+          2.249,
+          -11.787
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2.249,
+            -11.787
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-80": {
+        "kind": "infected",
+        "entity": 82,
+        "position": [
+          2.984,
+          -11.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2.984,
+            -11.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-81": {
+        "kind": "infected",
+        "entity": 83,
+        "position": [
+          3.708,
+          -11.413
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3.708,
+            -11.413
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-82": {
+        "kind": "infected",
+        "entity": 84,
+        "position": [
+          4.417,
+          -11.157
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            4.417,
+            -11.157
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-83": {
+        "kind": "infected",
+        "entity": 85,
+        "position": [
+          5.109,
+          -10.858
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            5.109,
+            -10.858
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-84": {
+        "kind": "infected",
+        "entity": 86,
+        "position": [
+          5.781,
+          -10.516
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            5.781,
+            -10.516
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-85": {
+        "kind": "infected",
+        "entity": 87,
+        "position": [
+          6.43,
+          -10.132
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            6.43,
+            -10.132
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-86": {
+        "kind": "infected",
+        "entity": 88,
+        "position": [
+          7.053,
+          -9.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            7.053,
+            -9.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-87": {
+        "kind": "infected",
+        "entity": 89,
+        "position": [
+          7.649,
+          -9.246
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            7.649,
+            -9.246
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-88": {
+        "kind": "infected",
+        "entity": 90,
+        "position": [
+          8.215,
+          -8.748
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            8.215,
+            -8.748
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-89": {
+        "kind": "infected",
+        "entity": 91,
+        "position": [
+          8.748,
+          -8.215
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            8.748,
+            -8.215
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-90": {
+        "kind": "infected",
+        "entity": 92,
+        "position": [
+          9.246,
+          -7.649
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            9.246,
+            -7.649
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-91": {
+        "kind": "infected",
+        "entity": 93,
+        "position": [
+          9.708,
+          -7.053
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            9.708,
+            -7.053
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-92": {
+        "kind": "infected",
+        "entity": 94,
+        "position": [
+          10.132,
+          -6.43
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            10.132,
+            -6.43
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-93": {
+        "kind": "infected",
+        "entity": 95,
+        "position": [
+          10.516,
+          -5.781
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            10.516,
+            -5.781
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-94": {
+        "kind": "infected",
+        "entity": 96,
+        "position": [
+          10.858,
+          -5.109
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            10.858,
+            -5.109
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-95": {
+        "kind": "infected",
+        "entity": 97,
+        "position": [
+          11.157,
+          -4.417
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.157,
+            -4.417
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-96": {
+        "kind": "infected",
+        "entity": 98,
+        "position": [
+          11.413,
+          -3.708
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.413,
+            -3.708
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-97": {
+        "kind": "infected",
+        "entity": 99,
+        "position": [
+          11.623,
+          -2.984
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.623,
+            -2.984
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-98": {
+        "kind": "infected",
+        "entity": 100,
+        "position": [
+          11.787,
+          -2.249
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.787,
+            -2.249
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-99": {
+        "kind": "infected",
+        "entity": 101,
+        "position": [
+          11.905,
+          -1.504
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.905,
+            -1.504
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "zebra-100": {
+        "kind": "infected",
+        "entity": 102,
+        "position": [
+          11.976,
+          -0.753
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            11.976,
+            -0.753
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 80.3,
+          "torsoPitchMaxDeg": 80.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 120,
+      "sim": {
+        "infected": 100,
+        "actors": 100
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 100
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
