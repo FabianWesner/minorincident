@@ -1,0 +1,318 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/private/tmp/l1-pickup-baseline/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l1-transitions.spec.ts",
+      "--grep",
+      "desktop",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/private/tmp/l1-pickup-baseline/playwright.config.ts",
+    "rootDir": "/private/tmp/l1-pickup-baseline/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/private/tmp/l1-pickup-baseline/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/private/tmp/l1-pickup-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/private/tmp/l1-pickup-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/private/tmp/l1-pickup-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/private/tmp/l1-pickup-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/private/tmp/l1-pickup-baseline/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3386 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3386",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/l1-transitions.spec.ts",
+      "file": "perf/l1-transitions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop",
+          "file": "perf/l1-transitions.spec.ts",
+          "line": 16,
+          "column": 57,
+          "specs": [
+            {
+              "title": "@E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop",
+              "ok": false,
+              "tags": [
+                "E19",
+                "E19-AC24",
+                "E19-AC19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 54776,
+                      "error": {
+                        "message": "Error: desktop pickup max frame ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m119.90000057220459\u001b[39m",
+                        "stack": "Error: desktop pickup max frame ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m119.90000057220459\u001b[39m\n    at /private/tmp/l1-pickup-baseline/tests/perf/l1-transitions.spec.ts:97:136",
+                        "location": {
+                          "file": "/private/tmp/l1-pickup-baseline/tests/perf/l1-transitions.spec.ts",
+                          "column": 136,
+                          "line": 97
+                        },
+                        "snippet": "   95 |     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));\n   96 |     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i);\n>  97 |     if (phase !== 'before') for (const [label, sample] of Object.entries(samples)) expect(sample.max, `${mode} ${label} max frame ms`).toBeLessThanOrEqual(50);\n      |                                                                                                                                        ^\n   98 |   });\n   99 | });\n  100 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/private/tmp/l1-pickup-baseline/tests/perf/l1-transitions.spec.ts",
+                            "column": 136,
+                            "line": 97
+                          },
+                          "message": "Error: desktop pickup max frame ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m119.90000057220459\u001b[39m\n\n   95 |     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));\n   96 |     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i);\n>  97 |     if (phase !== 'before') for (const [label, sample] of Object.entries(samples)) expect(sample.max, `${mode} ${label} max frame ms`).toBeLessThanOrEqual(50);\n      |                                                                                                                                        ^\n   98 |   });\n   99 | });\n  100 |\n    at /private/tmp/l1-pickup-baseline/tests/perf/l1-transitions.spec.ts:97:136"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "after desktop loading {\"dataMs\":21,\"simMs\":97.70000076293945,\"viewMs\":11635.39999961853,\"warmUp\":[{\"name\":\"L1 shader compilation\",\"ms\":1435.5},{\"name\":\"L1 warm-up draw\",\"ms\":149.60000038146973},{\"name\":\"L1 driver warm-up\",\"ms\":2799.800000190735},{\"name\":\"L1 warm-up instanced draw\",\"ms\":49.90000057220459},{\"name\":\"L1 warm-up solo draws\",\"ms\":2600.199999809265}]}\n"
+                        },
+                        {
+                          "text": "after desktop measuring pickup\n"
+                        },
+                        {
+                          "text": "after desktop pickup max=119.9ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring handover\n"
+                        },
+                        {
+                          "text": "after desktop handover max=38.8ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring accident\n"
+                        },
+                        {
+                          "text": "after desktop accident max=19.5ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring infected-exit\n"
+                        },
+                        {
+                          "text": "after desktop infected-exit max=28.0ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring weapon-pickup\n"
+                        },
+                        {
+                          "text": "after desktop weapon-pickup max=21.1ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring death-respawn\n"
+                        },
+                        {
+                          "text": "after desktop death-respawn max=20.5ms\n"
+                        },
+                        {
+                          "text": "after desktop measuring fire-station-end\n"
+                        },
+                        {
+                          "text": "after desktop fire-station-end max=21.9ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T02:03:17.510Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/private/tmp/l1-pickup-baseline/test-results/playwright/run-3386/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/private/tmp/l1-pickup-baseline/tests/perf/l1-transitions.spec.ts",
+                        "column": 136,
+                        "line": 97
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "15e6047bf7bc763321d4-9ce25e671181ccf18481",
+              "file": "perf/l1-transitions.spec.ts",
+              "line": 18,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T02:03:16.889Z",
+    "duration": 57266.143,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

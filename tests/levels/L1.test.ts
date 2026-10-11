@@ -196,9 +196,10 @@ describe('L1 v2 mission', () => {
     const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>(), path = new Map<number, number[]>();
     w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doors.push({ id: e.id, tick: e.tick }); });
     const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
-    let nearMax = 0;
+    let nearMax = 0, maxCount = 0;
     // The courier takes the bat and heads for the fire station (complete bot); every tick, note new residents where they appear.
     w.events.on('sim.tick', () => {
+      maxCount = Math.max(maxCount, w.infected!.director.count);
       const h = mission.state.l1?.house;
       for (const id of h?.ids ?? []) {
         const t = w.entities.get(id)!.transform; if (!appear.has(id)) appear.set(id, { tick: w.tick, x: t.x, z: t.z });
@@ -218,6 +219,7 @@ describe('L1 v2 mission', () => {
     expect(house.house).toMatch(/^bld\.house-/); expect(house.nx + house.nz).toBeGreaterThan(0);
     expect(Math.hypot(house.x - g.x, house.z - g.z)).toBeLessThanOrEqual(l1v2.house.doorM[1]);
     expect(house.ids).toHaveLength(l1v2.house.count);
+    expect(maxCount).toBeLessThanOrEqual(w.infected!.director.cap);
     // PO P1 10-08: the door opens once with the first resident and stays open (one bang), the residents follow 1.5 to 4 s apart.
     // (The lab annex door opened for the accident staff earlier; only house doors count here.)
     expect(doors.filter(d => !d.id.includes("clinic-annex"))).toEqual([{ id: `door-${house.door}`, tick: appear.get(house.ids[0])!.tick - 1 }]);
@@ -240,7 +242,7 @@ describe('L1 v2 mission', () => {
     expect(nearMax).toBeGreaterThanOrEqual(l1v2.director.hordeMinInfectedNearGarage);
   }, HEAVY);
 
-  test('T-E19-provenance @E19 PO rule: no infected enters L1 except the 5 lab exits, the 10 house residents and bitten pedestrians', async () => {
+  test('T-E19-provenance @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians', async () => {
     const report: { seed: number; profile: string; exits: number; house: number; bitten: number; deaths: number }[] = [];
     for (const [seed, profile] of [[1, 'complete'], [2, 'complete'], [3, 'newbie']] as const) {
       const { world: w, mission } = await loadL1(seed); world = w;
@@ -250,7 +252,7 @@ describe('L1 v2 mission', () => {
         const l1 = mission.state.l1!;
         for (const e of w.infected!.active) {
           if (seen.has(e.id)) continue; seen.add(e.id);
-          if (!l1.exitIds.includes(e.id) && !l1.house?.ids.includes(e.id) && !bitten.has(e.id)) bad.push(e.id);
+          if (!l1.exitIds.includes(e.id) && !l1.house?.ids.includes(e.id) && !l1.streetGroups?.some(g => g.ids.includes(e.id)) && !bitten.has(e.id)) bad.push(e.id);
           // PO P1 10-08: every house resident's first position is inside the house, behind the door threshold.
           const h = l1.house; if (h?.ids.includes(e.id) && (e.transform.x - h.x) * h.nx + (e.transform.z - h.z) * h.nz >= 0) outside.push(e.id);
         }

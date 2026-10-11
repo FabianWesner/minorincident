@@ -1,0 +1,40 @@
+[WebServer] fatal: Needed a single revision
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (6.6m)
+  ✘  2 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (8.4m)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review 
+
+    Error: A systemic pedestrian transformation is available for visual review
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      197 |         if (victimId === undefined) await step(10);
+      198 |       }
+    > 199 |       expect(victimId, 'A systemic pedestrian transformation is available for visual review').toBeDefined();
+          |                                                                                               ^
+      200 |       // Observe the same victim (without moving it) until it is rising: glowing eyes, ash skin, its own clothes and hair.
+      201 |       const observe = () => page.evaluate(id => window.__SS__!.getState().entities.find(e => e.id === id), victimId!);
+      202 |       let victim = await observe();
+        at /srv/mi/jobs/l1-street-infected-963378-44001-1791669070/tests/e2e/levels/L1.spec.ts:199:95
+
+    Error Context: test-results/playwright/run-3373/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3373/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3373/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  Slow test file: [chromium] › tests/e2e/levels/L1.spec.ts (15.0m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review 
+  1 passed (15.6m)

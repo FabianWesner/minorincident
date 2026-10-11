@@ -1,0 +1,53 @@
+{
+  "target": "E19",
+  "epics": [
+    "E19"
+  ],
+  "pattern": "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected",
+        "--pull",
+        "test-results/epics/E19/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E19)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E19/vitest.json"
+      ],
+      "exitCode": 1
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/L1.spec.ts",
+      "tests/e2e/levels/l1-firestation.spec.ts",
+      "--grep",
+      "T-E19-finale|T-E19-22|T-E19-23",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/test-results/playwright/run-3345",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/test-results/playwright/run-3345",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/test-results/playwright/run-3345",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/test-results/playwright/run-3345",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/test-results/playwright/run-3345",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/test-results/playwright/run-3345",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3345 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3345",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/l1-firestation.spec.ts",
+      "file": "e2e/levels/l1-firestation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E19-finale @E19 @E19-AC22 real input from the bat to the open fire-station bay completes L1 (bay faces the camera, ring on the trigger)",
+          "ok": true,
+          "tags": [
+            "E19",
+            "E19-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 34788,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T02:01:12.393Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0911bc7a39a0dfb60296-adc2b620f751a1a3204c",
+          "file": "e2e/levels/l1-firestation.spec.ts",
+          "line": 17,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L1.spec.ts",
+      "file": "e2e/levels/L1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L1 v2 real-input playthrough",
+          "file": "e2e/levels/L1.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC22",
+                "E19-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 34188,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T02:01:47.527Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-7fa6530376bdfd10f8c9",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            },
+            {
+              "title": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC23"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 54403,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T02:02:21.784Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-b5e26ec2edcca053a2dc",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T02:01:11.792Z",
+    "duration": 124523.769,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
