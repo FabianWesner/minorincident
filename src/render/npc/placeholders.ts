@@ -17,7 +17,7 @@ export function createCivilianPlaceholder(): Group {
 }
 /** Asset contract fallback for char.corgi: +X, squat orange/cream body, upright ears and teal pack. */
 export function createCorgiPlaceholder(): Group {
-  const root = new Group(); root.name = 'root';
+  const root = new Group(); root.name = 'root'; root.userData.placeholder = true;
   const joint = (name: string, parent: Group, position: [number, number, number]) => { const g = new Group(); g.name = name; g.position.set(...position); parent.add(g); return g; };
   const orange = new MeshBasicMaterial({ color: '#e6a163' }), cream = new MeshBasicMaterial({ color: '#fff0d0' }), dark = new MeshBasicMaterial({ color: '#302539' }), teal = new MeshBasicMaterial({ color: '#2f6e6a' });
   const box = (parent: Group, size: [number, number, number], position: [number, number, number], material: MeshBasicMaterial) => { const mesh = new Mesh(new BoxGeometry(...size), material); mesh.position.set(...position); parent.add(mesh); };

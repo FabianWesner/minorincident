@@ -90,6 +90,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
   for (const nodeName of contract) {
     const node = root.getObjectByName(nodeName);
     if (!node || additive && !upperBody.test(nodeName)) continue;
+    if (name.startsWith('corgi-') && name !== 'corgi-sit' && /^legF[LR]$/.test(nodeName)) tracks.push(new VectorKeyframeTrack(`${nodeName}.scale`, [0, source.duration], [...node.scale.toArray(), ...node.scale.toArray()]));
     for (const path of ['rotation', 'translation'] as const) {
       const track = source.tracks.find(t => t.node === nodeName && t.path === path), times = track?.times ?? [0, source.duration];
       const values: number[] = [];
@@ -123,7 +124,55 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
   }
   if (!additive && skinned && /^(idle|walk|run|mount|dismount)$/.test(name)) fitCourierLocomotion(root, name, source.duration, tracks);
   if (!additive && !gait && gaitShape[name]) plantLocomotion(root, name, source.duration, tracks, gait);
+  if (!additive && name === 'corgi-sit') fitCorgiSit(root, tracks);
   return new AnimationClip(name, source.duration, tracks);
+}
+
+/** Seat the existing rigid dog rig on its rump. The library's 8-degree
+ * crouch barely changes its silhouette; fit the pitch and support to this mesh. */
+function fitCorgiSit(root: Object3D, tracks: (QuaternionKeyframeTrack | VectorKeyframeTrack)[]): void {
+  if (root.userData.placeholder) return;
+  const body = root.getObjectByName('body'); if (!body) return;
+  const rotation = tracks.find(t => t.name === 'body.quaternion')!, position = tracks.find(t => t.name === 'body.position')!;
+  const vertices: Vector3[] = [], point = new Vector3(), q = new Quaternion(), axis = new Vector3(0, 0, 1);
+  root.updateWorldMatrix(true, true);
+  body.traverse(node => {
+    if (!(node instanceof Mesh)) return;
+    for (let p = node.parent; p && p !== body; p = p.parent) if (/^(head|tail|packSocket|leg)/.test(p.name)) return;
+    const positions = node.geometry.attributes.position, indices = node.geometry.index;
+    for (let i = 0; i < (indices?.count ?? positions.count); i++) {
+      point.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld); body.worldToLocal(point);
+      vertices.push(point.clone());
+    }
+  });
+  if (!vertices.length) return;
+  const restFloor = Math.min(...vertices.map(v => v.y + body.position.y));
+  for (let i = 0; i < rotation.times.length; i++) {
+    q.fromArray(rotation.values, i * 4);
+    const blend = Math.min(1, Math.abs(2 * Math.atan2(q.z, q.w)) / (8 * Math.PI / 180));
+    q.setFromAxisAngle(axis, blend * 25 * Math.PI / 180).premultiply(body.quaternion).toArray(rotation.values, i * 4);
+  }
+  const sample = rotation.InterpolantFactoryMethodLinear();
+  for (let i = 0; i < position.times.length; i++) {
+    q.fromArray(sample.evaluate(position.times[i]));
+    const blend = Math.min(1, Math.abs(2 * Math.atan2(q.z, q.w)) / (25 * Math.PI / 180));
+    const bottom = Math.min(...vertices.map(v => point.copy(v).applyQuaternion(q).y));
+    position.values[i * 3 + 1] = restFloor * (1 - blend) - bottom;
+  }
+  for (const name of ['legFL', 'legFR']) {
+    const leg = root.getObjectByName(name); if (!leg) continue;
+    const track = tracks.find(t => t.name === `${name}.quaternion`)!;
+    const scales: number[] = [];
+    const bodyPosition = position.InterpolantFactoryMethodLinear();
+    const bounds = new Box3().setFromObject(leg, true), sole = leg.worldToLocal(new Vector3(0, bounds.min.y, 0)).y;
+    for (let i = 0; i < track.times.length; i++) {
+      q.fromArray(sample.evaluate(track.times[i]));
+      const height = point.copy(leg.position).applyQuaternion(q).y + bodyPosition.evaluate(track.times[i])[1];
+      q.invert().multiply(leg.quaternion).toArray(track.values, i * 4);
+      scales.push(leg.scale.x, height / Math.max(.001, -sole), leg.scale.z);
+    }
+    tracks.push(new VectorKeyframeTrack(`${name}.scale`, track.times, scales));
+  }
 }
 
 /** Fit the retained motion to the courier's short torso and hanging-arm rest pose.
