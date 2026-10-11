@@ -1,0 +1,166 @@
+{
+  "job": "zombie-hearing",
+  "date": "2026-10-11",
+  "behavior": {
+    "rangeM": 2,
+    "reactionS": 0.25,
+    "requiresLOS": true,
+    "visionUnchanged": true,
+    "scriptedHoldsPreserved": true,
+    "proximityChange": "Replaces the previous 3 m any-facing peripheral fallback with the PO-requested 2 m hearing range."
+  },
+  "unitAndAI": {
+    "remoteRunner": "157.90.173.117",
+    "command": "npx vitest run tests/unit tests/sim/ai --maxWorkers=2",
+    "passed": 653,
+    "failed": 0,
+    "files": 171
+  },
+  "levels": {
+    "remoteRunner": "94.130.181.173",
+    "results": [
+      {
+        "file": "levels/L1.test.ts",
+        "passed": 19,
+        "failed": 0
+      },
+      {
+        "file": "levels/L2.test.ts",
+        "passed": 16,
+        "failed": 0
+      }
+    ],
+    "snapshotNote": "The combined level run still contained the earlier origin-overlap pursuit fixture and exited 1 for that fixture alone. Both level files passed; the corrected pursuit fixture and hearing regression test subsequently passed in the full unit/AI run on the same implementation."
+  },
+  "targeted": {
+    "hearingChecks": 83,
+    "pursuitChecks": 7,
+    "passed": 90,
+    "coverage": [
+      "18 infected archetypes with player/civilian victims and both brain configurations",
+      "1.8 m behind notices within 0.5 s; reaction pauses movement and turns",
+      "2.5 m behind and building wall do not trigger hearing",
+      "Dynamic blocker opening and scripted hold/release",
+      "Heard civilian strikes, courier grab isolation and vanished-victim cleanup",
+      "Hunting reacquisition preserves the existing pause"
+    ]
+  },
+  "browserLevels": {
+    "startTime": "2026-10-11T07:45:50.253Z",
+    "duration": 139598.231,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "balance": {
+    "L1": {
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 120.5,
+      "deaths": 0
+    },
+    "L2": {
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 120.28333333333333,
+      "deaths": 0
+    },
+    "L1Idle": {
+      "0": 5,
+      "60": 13,
+      "120": 24,
+      "240": 25
+    },
+    "L1Evade": {
+      "outcome": "complete",
+      "simSeconds": 150.5,
+      "deaths": 1,
+      "attacks": 0
+    }
+  },
+  "sceneInspection": {
+    "player": "turn.jpg: starts facing away; pivots through frames 12-24, faces the stationary courier by frame 24, winds up at frame 30, lunges into contact near frame 52. No console or clipping errors.",
+    "civilian": "civilian.jpg: gorilla pivots toward the nearby pedestrian by frame 24, closes, shows a cyan strike telegraph by frame 84 and strikes near frame 132. Courier stays idle off-camera. No console or clipping errors."
+  },
+  "verifyE07": {
+    "checks": {
+      "target": "E07",
+      "epics": [
+        "E07"
+      ],
+      "pattern": "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/zombie-hearing",
+            "--pull",
+            "test-results/epics/E07/vitest.json",
+            "--",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E07/vitest.json"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npx",
+            "playwright",
+            "test",
+            "--grep",
+            "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    "simulation": {
+      "numPassedTests": 157,
+      "numFailedTests": 0,
+      "numPendingTests": 1078
+    },
+    "browser": {
+      "startTime": "2026-10-11T08:05:32.088Z",
+      "duration": 214408.267,
+      "expected": 34,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+}

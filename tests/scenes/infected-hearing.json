@@ -1,0 +1,15 @@
+{
+  "name": "infected-hearing",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 20,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-1.8, 0], "yaw": 0 },
+    { "id": "zombie", "kind": "infected", "archetype": "infected.runner", "at": [0, 0], "yaw": 0 }
+  ],
+  "camera": { "mode": "close", "target": [-0.9, 0.7, 0], "radius": 5, "azimuth": 155 },
+  "frames": 90,
+  "shots": [0, 12, 24, 45, 90],
+  "trace": true,
+  "expect": { "consoleErrors": 0 }
+}

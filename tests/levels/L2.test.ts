@@ -137,7 +137,7 @@ describe('L2 The Failed Rescue', () => {
     expect(median((await complete()).map(r => r.deaths))).toBeLessThanOrEqual(1);
   }, HEAVY);
 
-  test('T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight-only alerts with clear LOS, emergence at doors out of view', async () => {
+  test('T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight or close hearing alerts with clear LOS, emergence at doors out of view', async () => {
     for (const r of await complete()) {
       expect(r.audit.sightViolations).toBe(0); expect(r.audit.nonSightAlerts).toBe(0);
       expect(r.audit.emerged).toBeGreaterThan(0); expect(r.audit.emergeFar).toBe(0); expect(r.audit.emergeSeen).toBe(0);

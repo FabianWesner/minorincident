@@ -41,6 +41,8 @@ export interface L1Brain {
   looking: boolean;
   lookYaw: number;
   pauseUntil: number;
+  /** Faster turn during the short close-hearing reaction; other look-around turns keep their rate. */
+  hearingUntil?: number;
   goalX: number; goalZ: number; hasGoal: boolean;
   search: SearchPlan;
   /** Search episodes so far, for logs and tests. */

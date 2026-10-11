@@ -102,8 +102,8 @@ describe('infected pursuit (PO 2026-10-09)', () => {
 
   test('a pedestrian at arm\'s length behind an infected is noticed and bitten', async () => {
     const humans = new Humans(), w = await arena(1, humans);
-    const e = runner(w, 0, 0, 0); // faces +X
-    humans.add(300, 'civilian', -2.2, 0.4); // behind it, outside the 90 degree cone
+    const e = runner(w, 10, 10, 0); // faces +X; clear of the courier's separation radius at the arena origin
+    humans.add(300, 'civilian', 8.2, 10.4); // within 2 m behind it, outside the 90 degree cone
     let bitten = -1; w.events.on('outbreak.bite', ev => { if (ev.type === 'outbreak.bite' && ev.targetId === 300 && bitten < 0) bitten = w.tick; });
     for (let i = 0; i < 4 * 60 && bitten < 0; i++) w.update();
     expect(brain(e).targetId === 300 || bitten > 0).toBe(true);
