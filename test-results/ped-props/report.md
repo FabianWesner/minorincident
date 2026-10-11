@@ -1,34 +1,60 @@
 # ped-props — street furniture crowd collision
 
-Revision: `4dc4ce08` (includes merge of main `d27704a2`; own final code change `a9046663`). Validation is in progress.
+Code revision: `dc7f8ee5`; main merged through `d27704a2`. All requested validation is green.
 
-## Cause and change
+## Root cause and fix
 
-E26 pushable placements are removed from DistrictWorld’s static collider/nav bake. PropSystem previously registered only displaced medium/heavy props with crowd navigation, leaving authored benches and all light furniture open to NPC capsules.
+DistrictWorld excludes E26 pushable placements from its static collider/navigation bake. PropSystem formerly registered only displaced medium/heavy props with crowd navigation. Authored benches and all light furniture consequently had physical colliders but no crowd blockers.
 
-Resting enabled props now register their actual collider footprints during assembly, for every mass class. InfectedSystem seeds the shared and district crowd grids from those blockers. Moving, broken and braced props release their blockers; barricade ownership updates immediately. Props forced to sleep by the existing awake cap register their new footprint in that same tick. No placements, crowds or budgets were removed or reduced.
+Every enabled resting prop now registers its actual transformed collider footprint during assembly. InfectedSystem seeds shared and district crowd grids from those blockers, covering civilians, infected and allies across all levels. Moving, broken and braced props release their blockers; barricade ownership updates immediately. The existing awake cap also registers a prop in the same tick that it forces the body to sleep. Live blockers use NavGrid’s existing spatial broad phase, including correct replacement/removal of mutable bounds. No props, crowds or performance budgets were removed or reduced.
 
-Live blockers use NavGrid’s existing 4 m spatial broad phase. Regression coverage includes initial benches/light props, swept movement, displaced rest, movement, breakage, barricades, blocker replacement and mutable bounds.
+Regression coverage includes initial benches and light furniture, collider offsets and rotation, displaced rest, movement, breakage, barricades, forced sleep, mutable bounds and replacement. The forced-sleep regression failed before its fix and passes afterward.
 
-## Penetration gate
+## Scene Lab gate and visual evidence
 
-Scene Lab records consecutive standing actor/collider overlaps independently of navigation and rendering. The campaign gate samples L1–L6 for 1,200 ticks, allows at most two consecutive frames, and writes per-level metrics. Isolated woman, infected and ally bench scenes require zero frames. Seated, fallen, finished, hidden and dead figures have no walking capsule in this metric; buildings are not street furniture.
+Scene Lab samples standing actor capsules against static street-furniture footprints independently of navigation/rendering. It records consecutive overlaps per actor/prop, allowing at most two frames in campaign gates. Seated, fallen, finished, hidden and dead figures are excluded; buildings are excluded. Production level tests run the same gate.
 
-## Validation so far
+Fresh campaign runs sampled 1,200 ticks per level:
 
-- Focused regression suite: 35 passed. The forced-sleep regression failed before the fix and passes afterward.
-- Merged `4dc4ce08` remote unit suite: 132 files / 463 tests passed, including typecheck, lint and production build (457.37 s).
-- Remote E26 verification and smoke: 29 selected tests passed.
-- Native GPU high/phone budgets: 13/14 passed, unchanged populations and limits. L4 phone collapse triangles: 518,872 versus 500,000; quiet rerun queued.
-- Pre-merge `a9046663` full remote simulations with both runner slots reserved and one worker: 67 files / 488 tests passed (six existing skips), 967.28 s. The earlier shared run had six timing/timeout failures; L3 high/low campaign p95 is 2.95/2.74 ms in the isolated run versus the unchanged 4/6 ms budgets.
-- Scene Lab campaign gate: all six levels passed at zero consecutive penetration frames over 1,200 ticks each. Capsule samples: L1 73,416; L2 43,418; L3 33,033; L4 74,462; L5 24,020; L6 25,221.
-- Four isolated bench scenes passed at zero penetration frames and zero console errors (600 ticks / 1,200 actor samples each).
-- Original-omission reproduction: disabling resting crowd blockers produced 105 consecutive woman/bench penetration frames, 191 total overlap frames.
-- Production level/browser suite: 38/39 passed. Oak’s original detour went through a resting planter (`D-CORRIDOR/l3-garden-70`); its test driver now goes along the clear south side of the wreck, retaining the same 1.2 m arrival checks and mission assertions. The corrected route rerun passed in 57.3 s with zero deaths: all 39 production level/smoke checks are green across the initial 38 passes and this rerun.
-- Inspected `sidewalk-capture-final/shot-0240.png` and `sheet.jpg`: the authored `D-GROVE/prop.bench:1341` is on the tiled sidewalk, beside the lawn and picket fence. The shoulder-bag woman and opposing pedestrian arc around the street-facing side, continue past it and return. Scene Lab reports zero penetrations in 600 ticks / 1,200 actor samples. The earlier negative reproduction used the same bench asset at placement 355.
+| Level | Capsule samples | Maximum consecutive penetration frames |
+| --- | ---: | ---: |
+| L1 | 73,416 | 0 |
+| L2 | 43,418 | 0 |
+| L3 | 33,033 | 0 |
+| L4 | 74,462 | 0 |
+| L5 | 24,020 | 0 |
+| L6 | 25,221 | 0 |
 
-Raw evidence is in `perf/`, `e26-node.json`, and sibling `../ped-props-final-suite/` logs. Final per-level metrics and inspected capture will be added after the queued runs.
+All four focused scenes passed the stricter zero-frame gate and recorded zero console errors (600 ticks / 1,200 actor samples each). Disabling resting blockers to reproduce the omission yielded **105 consecutive woman/bench penetration frames**, 191 total. That negative control used the same bench asset at Grove placement 355.
 
-A supplementary Linux software-rendered browser run passed two continuity checks but hit fixture setup failures (infected concurrency cap and a Begin mission click timeout). It was stopped with failure logs preserved. The full native Mac level/smoke rerun is queued.
+Inspected [game-camera capture](sidewalk-capture-final/shot-0240.png) and [contact sheet](sidewalk-capture-final/sheet.jpg): authored `D-GROVE/prop.bench:1341` sits on the tiled sidewalk beside a lawn and picket fence. The shoulder-bag woman and opposing pedestrian arc around its street-facing side, continue past it and return. Neither walks through the seat. This reproduces the PO’s spot type, with the authored bench and neighboring assets retained.
+
+## Validation
+
+- Typecheck, lint and production build passed on the final code revision.
+- Remote unit suite: **132 files / 464 tests passed**, 448.33 s.
+- Remote simulation suite: **68 files / 489 tests passed**, six existing skips, 977.04 s. Renderer-only changes followed this run; simulation code was unchanged.
+- Native Mac headless high/phone performance: **all 14 checks passed**, including L1–L6 and both L6 transitions, unchanged budgets and populations.
+- Production levels and smoke: **39/39 passed in one final run**, no failures, skips or flaky results, 606.80 s.
+- Six campaign capsule gates and four focused scenes passed as described above.
+- E26 verification: typecheck, lint, build, **31 remote node checks and 31 browser checks passed** (Chromium, phone portrait/landscape, iPhone and WebKit profiles).
+
+Remote suites used one worker and reserved both runner slots. Native performance held both browser slots and used one worker; the level suite used two. Browser automation was headless through `tools/e2e-lock.sh`; native WebGL used Metal. WebGPU-labelled visibility checks retain the existing fallback behavior; no manual WebGPU validation is claimed.
+
+## Performance fixes required by unchanged budgets
+
+L4 phone initially exceeded its 500,000-triangle ceiling (518,872, then 531,941). Frozen corpse pages combined up to 128 bodies from across the map, submitting distant bodies whenever any body on that page was visible. Pages now group bodies within 16 m world cells so normal frustum culling can reject distant pages. All bodies and geometry persist; prewarmed pages are reused. A focused regression failed before this change and passes afterward.
+
+Creating additional spatial pages initially exposed L6 first-page hitches. Pages now share cached frozen geometry attributes and warmed materials while keeping instance state separate. All six static-corpse regressions pass. Targeted L6 maximum frames are 16.8 ms high / 47.4 ms phone against unchanged 50/80 ms limits, with no long tasks. The final full performance suite passes; L4 phone submits **360,367 triangles**, retaining its 48 infected and 20 civilians. See [final performance summary](perf-summary-final.json).
+
+## Integration and test-driver adjustments
+
+The required main merge increased fire-axe damage by 25%. Existing TTK lower bands rejected the resulting brute/riot hit counts. `src/data/balance.ts` now applies the existing inverse damage scaling and one 0.5 s swing of discrete hit-count rounding. Upper TTK bounds and weapon damage remain unchanged. All eight focused combat checks and the full simulation suite pass.
+
+Oak’s old test-driver detour crossed the newly respected resting planter `D-CORRIDOR/l3-garden-70`. Its route now uses the clear south side of the wreck, retaining the same 1.2 m arrival checks and mission assertions. The final full-suite Oak playthrough passed with zero deaths. No level placement or per-bench gameplay workaround was introduced.
+
+Earlier shared simulation timing failures were superseded by the isolated full pass. A supplementary Linux software-rendered browser run was stopped after fixture setup failures; the complete native Mac run above passed, including those fixtures.
+
+Compact evidence: [proof summary](proof-summary.json), [per-level capsule metrics](campaign-scene-lab/), [baseline reproduction](baseline.json), and the capture links above. Raw logs and traces remain in this worktree’s ignored test results.
 
 No deployment or merge into main was performed.

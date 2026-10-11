@@ -1,0 +1,365 @@
+{
+  "revision": "dc7f8ee5",
+  "nativeMetal": true,
+  "workers": 1,
+  "browserSlotsHeld": [
+    0,
+    1
+  ],
+  "unchangedBudgets": true,
+  "passed": 14,
+  "results": {
+    "L1-high": [
+      {
+        "phase": "before",
+        "spots": [
+          {
+            "spot": "V1",
+            "triangles": 1605401
+          },
+          {
+            "spot": "V2",
+            "triangles": 1312821
+          },
+          {
+            "spot": "V3",
+            "triangles": 1606975
+          },
+          {
+            "spot": "V4",
+            "triangles": 1219751
+          },
+          {
+            "spot": "V5",
+            "triangles": 1033471
+          },
+          {
+            "spot": "V6",
+            "triangles": 713283
+          }
+        ]
+      },
+      {
+        "phase": "after",
+        "spots": [
+          {
+            "spot": "V1",
+            "triangles": 802451
+          },
+          {
+            "spot": "V2",
+            "triangles": 536665
+          },
+          {
+            "spot": "V3",
+            "triangles": 552213
+          },
+          {
+            "spot": "V4",
+            "triangles": 679997
+          },
+          {
+            "spot": "V5",
+            "triangles": 500913
+          },
+          {
+            "spot": "V6",
+            "triangles": 425480
+          }
+        ]
+      }
+    ],
+    "L2-high": {
+      "tier": "high",
+      "seed": 2,
+      "drawCalls": 279,
+      "triangles": 1204385,
+      "revealMaxMs": 37.10000000000218,
+      "gateMaxMs": 11.200000000004366,
+      "peakP50": 6.799999999995634,
+      "peakP95": 8.799999999999272,
+      "peakMax": 11.30000000000291,
+      "frames": 1429,
+      "simP95": 2.3000001907348633,
+      "updateP95": 2,
+      "renderP95": 4.800000190734863,
+      "gateClosed": true,
+      "counts": {
+        "infected": 34,
+        "civilians": 42,
+        "firefighters": 6
+      }
+    },
+    "L3-high": {
+      "tier": "high",
+      "seed": 2,
+      "streetDrawCalls": 218,
+      "streetTriangles": 846469,
+      "streetP50": 5.400000000001455,
+      "streetP95": 8.19999999999709,
+      "attackDrawCalls": 142,
+      "attackTriangles": 482155,
+      "blvdDrawCalls": 197,
+      "blvdTriangles": 1039637,
+      "attackP50": 5.200000000000728,
+      "attackP95": 7.700000000004366,
+      "attackMax": 11.700000000000728,
+      "fallbackMaxMs": 9.19999999999709,
+      "blvdP50": 5,
+      "blvdP95": 8,
+      "simP95": 2.5,
+      "updateP95": 1.4000005722045898,
+      "renderP95": 3.8000001907348633,
+      "fallbackFired": true,
+      "counts": {
+        "infected": 33,
+        "officers": 10
+      }
+    },
+    "L4-high": {
+      "tier": "high",
+      "seed": 2,
+      "firingSoldiers": 20,
+      "warAwakeProps": 0,
+      "collapseAwakeProps": 1,
+      "warDrawCalls": 261,
+      "warTriangles": 603212,
+      "collapseDrawCalls": 287,
+      "collapseTriangles": 982153,
+      "warP50": 5.900000000001455,
+      "warP95": 8.100000000002183,
+      "warMax": 18.700000000000728,
+      "turnMaxMs": 15.400000000001455,
+      "tankMaxMs": 9.30000000000291,
+      "breakMaxMs": 10.599999999998545,
+      "collapseP50": 6.5,
+      "collapseP95": 8.5,
+      "simP95": 2.1999998092651367,
+      "simFrameP95": 2,
+      "updateP95": 2,
+      "renderP95": 4.199999809265137,
+      "lineBroke": true,
+      "counts": {
+        "infected": 80,
+        "soldiers": 20,
+        "civilians": 40
+      }
+    },
+    "L5-high": {
+      "tier": "high",
+      "baselineDrawCalls": 240,
+      "baselineTriangles": 415410,
+      "pairDrawCalls": 214,
+      "pairTriangles": 514971,
+      "followDrawCalls": 217,
+      "followTriangles": 515243,
+      "p50": 5.200000000000728,
+      "p95": 7.5,
+      "max": 24.099999999998545,
+      "endLevel": "L5",
+      "counts": {
+        "followers": 5,
+        "infected": 18,
+        "fires": 13,
+        "corpses": 37
+      }
+    },
+    "L6-high": {
+      "tier": "high",
+      "survivors": 29,
+      "infected": 40,
+      "p50": 5.599999999998545,
+      "p95": 7.30000000000291,
+      "max": 15.80000000000291,
+      "endSurvivors": 29,
+      "drawCalls": 119,
+      "triangles": 741718
+    },
+    "L6-transitions-high": [
+      {
+        "beat": "breach2",
+        "maxMs": 9.69999999999709
+      },
+      {
+        "beat": "abandon",
+        "maxMs": 9.200000000000728
+      }
+    ],
+    "L1-low": [
+      {
+        "phase": "before",
+        "spots": [
+          {
+            "spot": "V1",
+            "triangles": 246816
+          },
+          {
+            "spot": "V2",
+            "triangles": 262940
+          },
+          {
+            "spot": "V3",
+            "triangles": 334564
+          },
+          {
+            "spot": "V4",
+            "triangles": 270032
+          },
+          {
+            "spot": "V5",
+            "triangles": 306040
+          },
+          {
+            "spot": "V6",
+            "triangles": 285375
+          }
+        ]
+      },
+      {
+        "phase": "after",
+        "spots": [
+          {
+            "spot": "V1",
+            "triangles": 316942
+          },
+          {
+            "spot": "V2",
+            "triangles": 288774
+          },
+          {
+            "spot": "V3",
+            "triangles": 319403
+          },
+          {
+            "spot": "V4",
+            "triangles": 328197
+          },
+          {
+            "spot": "V5",
+            "triangles": 322858
+          },
+          {
+            "spot": "V6",
+            "triangles": 321151
+          }
+        ]
+      }
+    ],
+    "L2-low": {
+      "tier": "low",
+      "seed": 2,
+      "drawCalls": 225,
+      "triangles": 450418,
+      "revealMaxMs": 37.400000000001455,
+      "gateMaxMs": 37.59999999999127,
+      "peakP50": 21.099999999998545,
+      "peakP95": 28.200000000004366,
+      "peakMax": 36.30000000000291,
+      "frames": 465,
+      "simP95": 10,
+      "updateP95": 5,
+      "renderP95": 11.800000190734863,
+      "gateClosed": true,
+      "counts": {
+        "infected": 30,
+        "civilians": 23,
+        "firefighters": 6
+      }
+    },
+    "L3-low": {
+      "tier": "low",
+      "seed": 2,
+      "streetDrawCalls": 192,
+      "streetTriangles": 431123,
+      "streetP50": 20.5,
+      "streetP95": 30.5,
+      "attackDrawCalls": 119,
+      "attackTriangles": 310302,
+      "blvdDrawCalls": 148,
+      "blvdTriangles": 397521,
+      "attackP50": 17.099999999998545,
+      "attackP95": 33.80000000000291,
+      "attackMax": 36.599999999998545,
+      "fallbackMaxMs": 37.5,
+      "blvdP50": 16.69999999999709,
+      "blvdP95": 33.80000000000291,
+      "simP95": 8.899999618530273,
+      "updateP95": 3.8999996185302734,
+      "renderP95": 9.600000381469727,
+      "fallbackFired": true,
+      "counts": {
+        "infected": 15,
+        "officers": 9
+      }
+    },
+    "L4-low": {
+      "tier": "low",
+      "seed": 2,
+      "firingSoldiers": 10,
+      "warAwakeProps": 0,
+      "collapseAwakeProps": 1,
+      "warDrawCalls": 207,
+      "warTriangles": 266864,
+      "collapseDrawCalls": 180,
+      "collapseTriangles": 360367,
+      "warP50": 18,
+      "warP95": 33.799999999995634,
+      "warMax": 83.69999999999709,
+      "turnMaxMs": 34.200000000004366,
+      "tankMaxMs": 36.80000000000291,
+      "breakMaxMs": 36.200000000004366,
+      "collapseP50": 16.5,
+      "collapseP95": 34.09999999999127,
+      "simP95": 4.799999237060547,
+      "simFrameP95": 6.800000190734863,
+      "updateP95": 5.299999237060547,
+      "renderP95": 10.899999618530273,
+      "lineBroke": true,
+      "counts": {
+        "infected": 48,
+        "soldiers": 10,
+        "civilians": 20
+      }
+    },
+    "L5-low": {
+      "tier": "low",
+      "baselineDrawCalls": 141,
+      "baselineTriangles": 204646,
+      "pairDrawCalls": 148,
+      "pairTriangles": 298429,
+      "followDrawCalls": 148,
+      "followTriangles": 298429,
+      "p50": 14,
+      "p95": 19.700000000000728,
+      "max": 52.29999999999927,
+      "endLevel": "L5",
+      "counts": {
+        "followers": 5,
+        "infected": 12,
+        "fires": 13,
+        "corpses": 37
+      }
+    },
+    "L6-low": {
+      "tier": "low",
+      "survivors": 25,
+      "infected": 30,
+      "p50": 13.5,
+      "p95": 16.5,
+      "max": 50,
+      "endSurvivors": 25,
+      "drawCalls": 88,
+      "triangles": 189592
+    },
+    "L6-transitions-low": [
+      {
+        "beat": "breach2",
+        "maxMs": 33.900000000001455
+      },
+      {
+        "beat": "abandon",
+        "maxMs": 27.400000000001455
+      }
+    ]
+  }
+}
