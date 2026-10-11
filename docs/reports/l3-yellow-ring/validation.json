@@ -1,0 +1,97 @@
+{
+  "finale-before": {
+    "passed": 2,
+    "failed": 2,
+    "skipped": 8,
+    "failures": [
+      "@E21 @E21-AC17 arrival finishes with stalled officer",
+      "@E21 @E21-AC17 arrival finishes with occupied boom"
+    ]
+  },
+  "finale-after": {
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0,
+    "failures": []
+  },
+  "compound": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 8,
+    "failures": []
+  },
+  "baseline": {
+    "passed": 181,
+    "failed": 5,
+    "skipped": 19,
+    "failures": [
+      "T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+      "bld.clinic-annex:lod1:: shipped static bytes and materials equal runtime source",
+      "bld.clinic-annex:lod2:: shipped static bytes and materials equal runtime source",
+      "bld.police-station:lod1:: shipped static bytes and materials equal runtime source",
+      "bld.police-station:lod2:: shipped static bytes and materials equal runtime source"
+    ]
+  },
+  "unit-final": {
+    "passed": 811,
+    "failed": 4,
+    "skipped": 0,
+    "failures": [
+      "bld.clinic-annex:lod1:: shipped static bytes and materials equal runtime source",
+      "bld.clinic-annex:lod2:: shipped static bytes and materials equal runtime source",
+      "bld.police-station:lod1:: shipped static bytes and materials equal runtime source",
+      "bld.police-station:lod2:: shipped static bytes and materials equal runtime source"
+    ]
+  },
+  "army-bot": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 19,
+    "failures": []
+  },
+  "verify-E21": {
+    "passed": 44,
+    "failed": 9,
+    "failures": [
+      "T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+      "T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+      "T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 6 m, axe/bat at <= 2.5 m (median, complete runs)",
+      "T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag",
+      "T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports",
+      "T-E21-11 @E21 @E21-AC11 progress never regresses by > 15 m (complete), and each forced street completes 20/20",
+      "T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+      "T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them",
+      "T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits"
+    ]
+  },
+  "browser-smoke": {
+    "passed": 25,
+    "failed": 1,
+    "skipped": 0,
+    "failure": "T-E13-05 L5 saved LEFT rack expected bat/kick/fists, received axe/bat"
+  },
+  "real-input-browser": {
+    "passed": 3,
+    "failed": 1,
+    "completed_routes": [
+      "blvd",
+      "oak"
+    ],
+    "failed_route": "commerce: corridor deaths before checkpoint",
+    "campaign_handover": "passed"
+  },
+  "occupied-boom-browser": {
+    "passed": 1,
+    "failed": 0,
+    "real_click": true,
+    "fixture_staging_cheats": true,
+    "scenario_after": "L4"
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "simulation-smoke": {
+    "passed": 6,
+    "failed": 0
+  }
+}

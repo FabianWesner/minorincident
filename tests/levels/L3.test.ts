@@ -251,7 +251,7 @@ describe('L3 The Police Collapse', () => {
     expect(median(newbie.map(r => r.lowHpShare))).toBeLessThanOrEqual(.1);
   }, HEAVY);
 
-  test('T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the zone line ends the level straight into progression', async () => {
+  test('T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression', async () => {
     const l = await loadL3(5); world = l.world; const s = l.mission.state.l3!;
     expect(s.soldierIds.length).toBeGreaterThanOrEqual(8);
     for (const id of s.soldierIds) { const e = l.world.entities.get(id)!; expect(e.appearance!.asset).toBe('npc.national-guard'); expect(e.transform.x).toBeGreaterThan(l3.map.zoneX - 4); }

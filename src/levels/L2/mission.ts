@@ -30,10 +30,10 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   const state = (key: string): Trigger => ({ kind: 'state', key, equals: true });
   const axe = step('axe', 'interact', 'Take the fire axe', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, { kind: 'start' });
   axe.onComplete = [{ kind: 'grant', item: 'axe' }];
-  step('calm', 'custom', 'Take the fire axe', 'l2-axe-rack', state('alarm'), { kind: 'start' });
+  step('calm', 'custom', 'Take the fire axe', 'l2-axe-rack', state('alarm'), { kind: 'start' }).waypoint = false;
   step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('axe', 'calm'));
   step('ride', 'custom', 'Ride with Engine 3 to Grove Market', 'l2-truck-stop', state('arrived'), after('board'));
-  step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-watch', state('doors-open'), after('ride'));
+  step('doors', 'custom', 'Cover the firefighters while they force the doors', 'l2-watch', state('doors-open'), after('ride')).waypoint = false;
   step('bridge', 'reach', 'Reach the police checkpoint at the bridge', 'l2-gate-inside', state('crossed'), after('doors'));
   return def;
 }

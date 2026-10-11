@@ -42,6 +42,8 @@ export interface ObjectiveDef {
   start: Extract<Trigger, { kind: 'start' | 'objectives' | 'state' }>;
   complete: Trigger; fail: { trigger: Trigger; reason: FailReason }[];
   timer?: number; optional?: boolean;
+  /** False for objectives without a destination (combat, waiting, free exploration). Keeps their HUD text. */
+  waypoint?: boolean;
   /** Alternative paths share a choice ID; completing one cancels its siblings. */
   choice?: string;
   onStart?: ScriptAction[]; onComplete?: ScriptAction[]; onFail?: ScriptAction[];
