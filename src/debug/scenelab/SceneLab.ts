@@ -43,7 +43,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
-  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT' }
+  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'interact' };
@@ -78,6 +78,7 @@ export class SceneLab {
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
+  private readonly gunBodyHits = new Map<string, Hit>();
   private heldPropSamples = 0;
   private heldPropClips = new Map<string, StaticClip & { actor: string; frame: number }>();
   private companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 };
@@ -126,7 +127,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
-    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
@@ -299,7 +300,7 @@ export class SceneLab {
       if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
-      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT' };
+      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move };
       else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
@@ -309,7 +310,7 @@ export class SceneLab {
       return;
     }
     if (actor.kind === 'pedestrian') {
-      const c = e.civilian!, reset = (schedule: CivilianActivity[]) => { c.schedule = schedule; c.scheduleStep = 0; c.activityUntil = 0; c.activityStarted = 0; c.path.length = 0; c.goal = -1; c.state = 'calm'; };
+      const c = e.civilian!, reset = (schedule: CivilianActivity[]) => { c.schedule = schedule; c.scheduleStep = 0; c.activityUntil = 0; c.activityStarted = 0; c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.state = 'calm'; };
       if ('idle' in a) reset([this.stand(e.transform, e.transform.yaw)]);
       else if ('turn' in a) reset([this.stand(e.transform, rad(a.turn))]);
       else if ('walk' in a || 'run' in a) { const points = ('walk' in a ? a.walk : a.run).map(toPoint); if (c.l1) c.l1.walkSpeed = 'run' in a ? 3.2 : c.l1.walkSpeed; reset(points.map(p => ({ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }))); if (!a.loop) c.schedule!.push(this.stand(points[points.length - 1], e.transform.yaw)); }
@@ -509,7 +510,12 @@ export class SceneLab {
     } else if (plan?.type === 'attack') {
       const target = this.actors.get(plan.target);
       if (!target || this.frame >= plan.until) courier.plan = null;
-      else { frame.attackTarget = { id: target.entity, side: plan.side }; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
+      else {
+        if (plan.move) {
+          const t = world.entities.get(target.entity)!.transform, dx = t.x - p.x, dz = t.z - p.z, d = Math.hypot(dx, dz) || 1;
+          frame.move = toPoint(plan.move); frame.walk = true; frame.aim = { x: dx / d, z: dz / d }; frame.aimSource = 'pointer';
+        } else frame.attackTarget = { id: target.entity, side: plan.side };
+        frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'click') {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
@@ -710,6 +716,20 @@ export class SceneLab {
         const head = joints.head, top: Vec3 = [head[0], head[1] + .2, head[2]];
         torsos.push({ id: actor.id, bones: [{ name: 'spine', a: joints.hip as Vec3, b: shoulders as Vec3, radius: .1 }, { name: 'neck', a: shoulders as Vec3, b: head as Vec3, radius: .06 }, { name: 'head', a: head as Vec3, b: top, radius: .11 }] });
       }
+      // Firing gun vs its owner's torso/head. Hands and forearms deliberately grip the weapon.
+      if (this.frame % 3 === 0 && visible && joints?.hip && joints.head && shoulders) {
+        const body: Bone[] = [{ name:'torso',a:joints.hip as Vec3,b:shoulders as Vec3,radius:.13 },
+          { name:'neck',a:shoulders as Vec3,b:joints.head as Vec3,radius:.06 },
+          { name:'head',a:joints.head as Vec3,b:[joints.head[0],joints.head[1]+.2,joints.head[2]],radius:.16 }];
+        for (const gun of probes.gunMeshes.filter(g=>g.entity===actor.entity)) {
+          const p=gun.geometry.getAttribute('position'),index=gun.geometry.index,tris=new Float32Array((index?.count??p.count)*3);
+          for(let i=0;i<tris.length/3;i++)this.point.fromBufferAttribute(p,index?index.getX(i):i).applyMatrix4(gun.matrix).toArray(tris,i*3);
+          for(const hit of boneClipping(body,[{id:actor.id+'/gun',assetId:'gun',tris,box:boxOf(tris)}],0)) {
+            const key=actor.id+'|'+hit.bone,old=this.gunBodyHits.get(key);
+            if(old)old.count++;else this.gunBodyHits.set(key,{...hit,actor:actor.id,frame:this.frame,count:1});
+          }
+        }
+      }
       if (clip && joints && visible) for (const h of boneClipping(this.bones(joints, shoulders), this.near(joints.hip ?? Object.values(joints)[0]), (this.spec?.clipping?.slackCm ?? 2) / 100)) {
         const key = `${actor.id}|${h.prop}|${h.bone}`, old = this.hits.get(key);
         if (!old) this.hits.set(key, { ...h, actor: actor.id, frame: this.frame, count: 1 });
@@ -891,7 +911,7 @@ export class SceneLab {
     const skip = (a: TriangleSet, b: TriangleSet) => !this.spec?.clipping?.sameAsset && a.assetId === b.assetId || foliage(a) || foliage(b) || ignore.some(([x, y]) => [a.id, a.assetId].includes(x) && [b.id, b.assetId].includes(y) || [a.id, a.assetId].includes(y) && [b.id, b.assetId].includes(x));
     this.staticClips ??= staticClipping(this.staticSets!, skip);
     const actors = [...this.hits.values()].sort((a, b) => Number(b.crossing) - Number(a.crossing) || a.clearanceCm - b.clearanceCm);
-    return { static: this.staticClips, actors, heldProps: [...this.heldPropClips.values()], summary: { staticPairs: this.staticClips.length, heldPropHits: this.heldPropClips.size, actorHits: actors.length, piercing: actors.filter(h => h.crossing).length } };
+    return { static: this.staticClips, actors, gunBodies: [...this.gunBodyHits.values()], heldProps: [...this.heldPropClips.values()], summary: { gunBodyHits: this.gunBodyHits.size, staticPairs: this.staticClips.length, heldPropHits: this.heldPropClips.size, actorHits: actors.length, piercing: actors.filter(h => h.crossing).length } };
   }
   /** Placement LOD bands this frame (from DistrictView), matched back to placement ids. */
   lods() {
