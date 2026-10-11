@@ -50,7 +50,7 @@ const def = (id: string, cls: BlastClass, radius: number, damage: number, fallof
   id, class: cls, fx: `blast.${cls}`, radius, damage, falloff, impulse, upward: 2, knockback: cls === 'small' ? .8 : cls === 'medium' ? 1.2 : 1.8, stagger: .6,
   barricade: 1, vehicle: 1, chainDelay: 18, fires: { count: 0, radius: 1, seconds: 12, spread: 0 }, slowMo: null, ...patch,
 });
-/** Throwables and projectiles keep their E05/E06 damage resolver: the def mirrors the action numbers so they cannot diverge. */
+/** Action blasts mirror the catalog: the def mirrors the action numbers so they cannot diverge. */
 const fromAction = (id: string, action: string, cls: BlastClass, impulse: number, patch: Partial<ExplosionDef> = {}): ExplosionDef => {
   const a = actions[action], splash = a.splash!;
   return def(id, cls, splash.radius, a.damage, splash.falloff, impulse, patch);
@@ -60,7 +60,7 @@ export const explosionDefs: Readonly<Record<string, ExplosionDef>> = Object.from
   fromAction('explosion.grenade', 'weapon.grenade', 'small', 6),
   // Throwables leave scorch and smoke only: aftermath fires would change the E05/E06 TTK bands.
   fromAction('explosion.pipe-bomb', 'weapon.pipe-bomb', 'small', 7),
-  fromAction('explosion.rocket', 'weapon.rocket-launcher', 'medium', 8),
+  fromAction('explosion.rocket', 'weapon.rocket-launcher', 'medium', 8, { stagger: .8 }),
   fromAction('explosion.molotov', 'weapon.molotov', 'incendiary', 0, { knockback: 0, stagger: 0 }),
   def('explosion.toxic', 'toxic', 6, 0, 1, 0, { knockback: 0, stagger: 0, gas: { kind: 'toxic', seconds: 12 } }),
   // E11 propane/barrel retain their tested 100 × (r − d) / r curve and 18-tick (0.3 s) chain fuse.

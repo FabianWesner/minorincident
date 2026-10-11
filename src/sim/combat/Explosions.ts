@@ -14,6 +14,8 @@ export interface BlastOptions {
   radius?: number;
   /** False when the caller already resolved damage (E05 throwables/projectiles keep their own resolver). */
   damage?: boolean;
+  /** Player projectile attribution; environmental blasts keep their definition id. */
+  attackId?: number; actionId?: string; multiplier?: number;
 }
 /** Detached car body panels (E27-AC05): cosmetic physics bodies that tumble and settle; 30 s lifetime. */
 export interface CarPart { body: RAPIER.RigidBody; kind: 'door' | 'hood'; sourceId: number; until: number; half: [number, number, number] }
@@ -53,7 +55,7 @@ export class Explosions {
     const size = audioSize(d.class);
     this.world.events.emit({ type: 'explosion.beat', tick, sourceId, position: { x: at.x, y: .7, z: at.z }, beat: 'crack', size });
     this.scheduled.push({ at: tick + 4, kind: 'beat', beat: 'debris', size, x: at.x, z: at.z, sourceId }, { at: tick + 15, kind: 'beat', beat: 'roar', size, x: at.x, z: at.z, sourceId });
-    this.damage(d, at, r, sourceId, opts.damage !== false);
+    this.damage(d, at, r, sourceId, opts.damage !== false, opts);
     this.queueImpulses(d, at, r);
     if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
     this.ignite(d, at, r);
@@ -62,7 +64,7 @@ export class Explosions {
     if (d.slowMo && player && player.health.current > 0 && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) <= d.slowMo.within)
       this.world.events.emit({ type: 'explosion.slowmo', tick, defId: id, scale: d.slowMo.scale, seconds: d.slowMo.seconds });
   }
-  private damage(d: ExplosionDef, at: { x: number; z: number }, r: number, sourceId: number, apply: boolean): void {
+  private damage(d: ExplosionDef, at: { x: number; z: number }, r: number, sourceId: number, apply: boolean, opts: BlastOptions): void {
     const world = this.world, damage = world.combat?.damage, query = world.combat?.query;
     this.area.x = at.x; this.area.z = at.z; this.area.r = r;
     // Copy once: hit events chain into hazards that query neighbours themselves.
@@ -76,7 +78,7 @@ export class Explosions {
       // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
       if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
       if (!apply || !damage || amount <= 0) continue;
-      damage.apply({ attackId: 0, actionId: d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, multiplier: 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
+      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
     }
     // Barricade rails are not in the spatial hash: distance to the rail segment (spec 07 §5 barricade damage).
     if (!damage || d.barricade <= 0) return;
@@ -84,7 +86,7 @@ export class Explosions {
       const s = e.barricade?.slot; if (!s || !e.barricade!.intact || e.health.current <= 0) continue;
       const ax = s.b.x - s.a.x, az = s.b.z - s.a.z, t = Math.max(0, Math.min(1, ((at.x - s.a.x) * ax + (at.z - s.a.z) * az) / (ax * ax + az * az)));
       const distance = Math.hypot(s.a.x + ax * t - at.x, s.a.z + az * t - at.z), amount = blastDamage(d, distance, r) * d.barricade;
-      if (amount > 0) damage.apply({ attackId: 0, actionId: d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: e.id, origin: at, direction: { x: 0, z: 0 }, base: amount, multiplier: 1, type: 'explosive', knockback: 0, stagger: 0 });
+      if (amount > 0) damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: e.id, origin: at, direction: { x: 0, z: 0 }, base: amount, multiplier: opts.multiplier ?? 1, type: 'explosive', knockback: 0, stagger: 0 });
     }
   }
   /** Full cover (static walls, braced barricades) between blast and target shields it; loose props and other explosives

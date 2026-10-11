@@ -1,0 +1,27 @@
+{
+  "stats": {
+    "startTime": "2026-10-11T22:12:55.684Z",
+    "duration": 141857.896,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "T-E29-05-browser @E29-AC05 rocket HUD stays Ready and firing has no ammunition/reload state",
+      "project": "chromium",
+      "status": "expected"
+    },
+    {
+      "title": "T-E29-04-browser @E29-AC04 real E collects the rocket beside the wreck and retains the arsenal",
+      "project": "chromium",
+      "status": "expected"
+    },
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "unexpected"
+    }
+  ]
+}

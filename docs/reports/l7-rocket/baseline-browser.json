@@ -1,0 +1,27 @@
+{
+  "commit": "27756737",
+  "stats": {
+    "startTime": "2026-10-11T22:10:42.715Z",
+    "duration": 198532.305,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "status": "failed",
+      "errors": [
+        "Error: expect(locator).toBeVisible() failed\n\nLocator:  getByTestId('pause-button')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toBeVisible\" getByTestId('pause-button') with timeout 5000ms\n  - waiting for getByTestId('pause-button')\n    14 \u00d7 locator resolved to <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\n       - unexpected value \"hidden\"\n\n\n   at e2e/ui-helpers.ts:18\n\n  16 |   // MissionUI focuses this button; activate it with real keys without waiting for a software-rendered RAF pair.\n  17 |   await keyboardActivate(page, 'mission-button');\n> 18 |   await expect(page.getByTestId('pause-button')).toBeVisible();\n     |                                                  ^\n  19 | }\n  20 | export async function hudStart(page: Page): Promise<void> {\n  21 |   await page.goto(menuUrl); await page.waitForFunction(() => Boolean(window.__SS__));\n    at menuStart (/srv/mi/jobs/l7-rocket-baseline-2440eb-30779-1791756493/tests/e2e/ui-helpers.ts:18:50)\n    at /srv/mi/jobs/l7-rocket-baseline-2440eb-30779-1791756493/tests/e2e/controls-playtest.spec.ts:9:3"
+      ]
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "status": "failed",
+      "errors": [
+        "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 2\n+ Received  + 1\n\n  Array [\n+   \"weapon.fire-axe\",\n    \"weapon.bat\",\n-   \"weapon.kick\",\n-   \"weapon.fists\",\n  ]\n\n  82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n  83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n> 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n     |                                                                                                                                                                                                               ^\n  85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n  86 | });\n  87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n    at /srv/mi/jobs/l7-rocket-baseline-2440eb-30779-1791756493/tests/e2e/save.spec.ts:84:207"
+      ]
+    }
+  ]
+}

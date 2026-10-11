@@ -1,0 +1,193 @@
+{
+  "stats": {
+    "startTime": "2026-10-11T21:52:56.454Z",
+    "duration": 850750.966,
+    "expected": 22,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7-landscape",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14-landscape",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "webkit",
+      "status": "failed",
+      "errors": [
+        "Error: browserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/webkit-2359/pw_run.sh\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     npx playwright install                                 \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+      ]
+    },
+    {
+      "title": "T-E29-05-browser @E29-AC05 rocket HUD stays Ready and firing has no ammunition/reload state",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "T-E29-04-browser @E29-AC04 real E collects the rocket beside the wreck and retains the arsenal",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "failed",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('pause-button')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByTestId('pause-button') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('pause-button')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n   at e2e/ui-helpers.ts:18\n\n  16 |   // MissionUI focuses this button; activate it with real keys without waiting for a software-rendered RAF pair.\n  17 |   await keyboardActivate(page, 'mission-button');\n> 18 |   await expect(page.getByTestId('pause-button')).toBeVisible();\n     |                                                  ^\n  19 | }\n  20 | export async function hudStart(page: Page): Promise<void> {\n  21 |   await page.goto(menuUrl); await page.waitForFunction(() => Boolean(window.__SS__));\n    at menuStart (/srv/mi/jobs/l7-rocket-4b81d0-69633-1791755043/tests/e2e/ui-helpers.ts:18:50)\n    at /srv/mi/jobs/l7-rocket-4b81d0-69633-1791755043/tests/e2e/controls-playtest.spec.ts:9:3"
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "failed",
+      "errors": [
+        "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at XB.createAttribute (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:576:1545)\n    at nF.createAttribute (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:579:35882)\n    at xR.update (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:83238)\n    at yR.updateAttribute (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:85969)\n    at yR.updateAttributes (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:85447)\n    at yR.updateForRender (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:84654)\n    at zi.compileAsync (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:41:48387)\n    at async Xp.load (http://127.0.0.1:3389/build/index-DMWz-nrX.js:9:515093)\n    at async http://127.0.0.1:3389/build/index-DMWz-nrX.js:12:37653\n    at XB.createAttribute (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:576:1545)\n    at nF.createAttribute (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:579:35882)\n    at xR.update (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:83238)\n    at yR.updateAttribute (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:85969)\n    at yR.updateAttributes (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:85447)\n    at yR.updateForRender (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:33:84654)\n    at zi.compileAsync (http://127.0.0.1:3389/build/WeatherView-BdLZlUQM.js:41:48387)\n    at async Xp.load (http://127.0.0.1:3389/build/index-DMWz-nrX.js:9:515093)\n    at async http://127.0.0.1:3389/build/index-DMWz-nrX.js:12:37653\n    at boot (/srv/mi/jobs/l7-rocket-4b81d0-69633-1791755043/tests/e2e/fixtures.ts:47:14)\n    at /srv/mi/jobs/l7-rocket-4b81d0-69633-1791755043/tests/e2e/crowd-drawn.spec.ts:23:5",
+        "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+   \"pageerror: Cannot read properties of undefined (reading 'destroy')\",\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/srv/mi/jobs/l7-rocket-4b81d0-69633-1791755043/tests/e2e/fixtures.ts:39:81)"
+      ]
+    },
+    {
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "failed",
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n  83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n> 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n     |                                                                                                                                                                                                               ^\n  85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n  86 | });\n  87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n    at /srv/mi/jobs/l7-rocket-4b81d0-69633-1791755043/tests/e2e/save.spec.ts:84:207"
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7-landscape",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7-landscape",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14-landscape",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14-landscape",
+      "status": "passed",
+      "errors": []
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "webkit",
+      "status": "failed",
+      "errors": [
+        "Error: browserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/webkit-2359/pw_run.sh\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     npx playwright install                                 \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "webkit",
+      "status": "failed",
+      "errors": [
+        "Error: browserType.launch: Executable doesn't exist at /home/runner/.cache/ms-playwright/webkit-2359/pw_run.sh\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551 Looks like Playwright was just installed or updated.       \u2551\n\u2551 Please run the following command to download new browsers: \u2551\n\u2551                                                            \u2551\n\u2551     npx playwright install                                 \u2551\n\u2551                                                            \u2551\n\u2551 <3 Playwright Team                                         \u2551\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d"
+      ]
+    }
+  ]
+}
