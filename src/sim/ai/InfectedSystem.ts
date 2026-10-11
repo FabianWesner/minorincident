@@ -1,7 +1,7 @@
 import { storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
 import { motionResponse } from '../locomotion/MotionResponse';
-import { installCharacterSeparation } from './CharacterSeparation';
+import { infectedContactDistance, installCharacterSeparation } from './CharacterSeparation';
 import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
 import { INFECTED_TOUGHNESS, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
@@ -234,8 +234,7 @@ export class InfectedSystem {
           else if (this.world.tick >= b.cooldown) { this.windup(e); b.targetId = obstacle.id; }
           continue;
         }
-        const def = infectedDef(e.archetype);
-        let range = def.range;
+        let range = this.strikeRange(e, player);
         if (b.special === 'lunge') range = 2.5;
         if (b.special === 'aura') range = 3;
         if (b.special === 'charge') range = 8;
@@ -331,6 +330,10 @@ export class InfectedSystem {
     for (const other of this.world.entities.iterate()) if (other.archetype === 'infected.runner' && other.health.current <= 0 && !other.infected!.revived && this.world.tick - other.infected!.deadAt <= 2700 && Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z) <= 6) return other;
     return undefined;
   }
+  /** Match strike reach to the larger attacker's body without extending the ordinary runner's reach. */
+  private strikeRange(e: EntitySnapshot, target: EntitySnapshot): number {
+    return infectedDef(e.archetype).range + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
+  }
   private resolve(e: EntitySnapshot): boolean {
     const b = e.infected!, player = this.victim(e), def = infectedDef(e.archetype);
     if (b.targetId) {
@@ -374,13 +377,13 @@ export class InfectedSystem {
         const turn = Math.atan2(b.dx * tz - b.dz * tx, b.dx * tx + b.dz * tz), a = Math.atan2(b.dz, b.dx) + Math.max(-7 / 60, Math.min(7 / 60, turn));
         b.dx = Math.cos(a); b.dz = Math.sin(a);
       }
-      const step = Math.min(Math.max(0, distance - def.range), (b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
+      const step = Math.min(Math.max(0, distance - this.strikeRange(e, player)), (b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
       if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
       // Authored leap/charge timing is a combat impulse, like knockback.
       moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.nav, this.world.tick, e.combat!.radius, true); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
-      if (distance > def.range + 0.15) return this.world.tick >= b.activeUntil;
+      if (distance > this.strikeRange(e, player) + 0.15) return this.world.tick >= b.activeUntil;
     }
-    if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : def.range) + 0.15) return true;
+    if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : this.strikeRange(e, player)) + 0.15) return true;
     this.attackVictim(e, def.damage);
     if (b.special === 'aura') this.world.combat!.status.apply(player, { kind: 'toxic', duration: 2, dps: 3, maxStacks: 1, slow: 0.25 }, e.id, e.archetype, b.attackId);
     if (b.special === 'grab' || b.special === 'combo-grab' || b.special === 'cling' || b.special === 'pounce' || b.special === 'pin') {
@@ -639,7 +642,7 @@ export class InfectedSystem {
       const strikable = this.l1!.lineOfSight(e.transform, target.position) || distance <= 1.6;
       if (distance <= lunge && this.world.tick >= b.cooldown && strikable) { b.combo = 0; this.windup(e); return; }
       // QA2-04: hold at arm's reach between swings instead of walking into the courier's body.
-      if (distance < 1.3 && strikable) { brain.stuckTick = this.world.tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z; e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
+      if (distance < Math.max(1.3, infectedContactDistance(e.combat!.radius)) && strikable) { brain.stuckTick = this.world.tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z; e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
       return;
     }
