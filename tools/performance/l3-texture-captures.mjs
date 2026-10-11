@@ -14,7 +14,10 @@ try {
   await page.waitForFunction(() => !!window.__SS__, undefined, { timeout: 120000 });
   await page.evaluate(async () => {
     const api = window.__SS__; await api.ready; api.pause();
-    await api.loadLevel('L3', { seed: 42, progression: 'L3-default' }); api.pause();
+    await api.loadLevel('L3', { seed: 42, progression: 'L3-default' });
+    const begin = [...document.querySelectorAll('button')].find(button => button.textContent === 'Begin mission');
+    if (!begin) throw Error('Missing briefing Begin button');
+    begin.click(); api.pause();
   });
   for (const spot of ['l3-station-yard', 'l3-commerce-street', 'l3-army-checkpoint']) {
     await page.evaluate(async spot => {
