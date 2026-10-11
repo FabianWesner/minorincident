@@ -15,6 +15,7 @@ export function highwayColliders(p: Placement): StaticCollider[] {
       const points = [a,b].flatMap(t => offsets.map(w => highwayPoint(p,t,w)));
       const box: Aabb = {min:[Infinity,Infinity,Infinity],max:[-Infinity,-Infinity,-Infinity]};
       points.forEach(v => v.forEach((n,k) => { box.min[k]=Math.min(box.min[k],n); box.max[k]=Math.max(box.max[k],n); }));
+      if(side) box.navBlocker = true;
       box.min[1] -= .5; box.max[1] += side ? .95 : 0;
       result.push({id:`${p.id}/highway-${side}-${i}`,aabb:box,walkable:side===0,minTier:p.minTier,maxTier:p.maxTier});
     }

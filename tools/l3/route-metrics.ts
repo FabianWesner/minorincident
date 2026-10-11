@@ -9,7 +9,7 @@ const label = process.argv[2] ?? 'after';
 const [layout] = levelThreeLayouts([JSON.parse(readFileSync('public/assets/layouts/D-CORRIDOR.layout.json', 'utf8')) as DistrictLayout]);
 const solids = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable);
 const grid = bakeNav([{ layout, origin: [0, 0], colliders: solids.map(c => c.aabb) }], 1, .5);
-const nav = new AiNav({width:grid.max[0]-grid.min[0],depth:grid.max[1]-grid.min[1]}, solids.map(c=>({x:(c.aabb.min[0]+c.aabb.max[0])/2,z:(c.aabb.min[2]+c.aabb.max[2])/2,y:1,halfX:(c.aabb.max[0]-c.aabb.min[0])/2,halfZ:(c.aabb.max[2]-c.aabb.min[2])/2,halfY:1})), .45, {x:(grid.max[0]+grid.min[0])/2,z:(grid.max[1]+grid.min[1])/2},(x,z)=>grid.walkable([x,z]));
+const nav = new AiNav({width:grid.max[0]-grid.min[0],depth:grid.max[1]-grid.min[1]}, solids.map(c=>({x:(c.aabb.min[0]+c.aabb.max[0])/2,z:(c.aabb.min[2]+c.aabb.max[2])/2,navBlocker:c.aabb.navBlocker,y:(c.aabb.min[1]+c.aabb.max[1])/2,halfX:(c.aabb.max[0]-c.aabb.min[0])/2,halfZ:(c.aabb.max[2]-c.aabb.min[2])/2,halfY:(c.aabb.max[1]-c.aabb.min[1])/2})), .45, {x:(grid.max[0]+grid.min[0])/2,z:(grid.max[1]+grid.min[1])/2},(x,z)=>grid.walkable([x,z]));
 const from = l3Anchors['l3-start'], to = l3Anchors['l3-zone'], cells: number[] = [];
 if (!nav.path(nav.nearestCell(...from, .4), nav.nearestCell(...to, .4), cells, 100000)) throw new Error('L3 zone unreachable');
 const route = cells.map(i => [nav.x(i), nav.z(i)]);

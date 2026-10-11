@@ -261,6 +261,7 @@ export class SimWorld implements Lifecycle {
     if (this.infected || !this.districts) return;
     const { min, max } = this.districts.nav;
     const walls = this.districts.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers).map(a => ({
+      ...(a.navBlocker ? {navBlocker:true} : {}),
       y: (a.min[1]+a.max[1])/2, halfY: (a.max[1]-a.min[1])/2, x: (a.min[0]+a.max[0])/2+d.origin[0], z: (a.min[2]+a.max[2])/2+d.origin[1], halfX: (a.max[0]-a.min[0])/2, halfZ: (a.max[2]-a.min[2])/2,
     })));
     if (this.combat) { (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls); this.combat.query.invalidate(); }
