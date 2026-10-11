@@ -1,0 +1,28 @@
+{
+  "loadAverage": "7.46 / 12.58 / 19.87",
+  "note": "Shared Mac run while other lanes had native-GPU browser batches active. First timing attempt; high misses 4 ms, no sim changes in this asset lane. E07 verification separately reports 200-actor sim p95 2.602917 ms.",
+  "results": [
+    {
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 200,
+      "cap": 200,
+      "simMsP50": 1.4729590000001735,
+      "simMsP95": 5.326125000000047,
+      "simMsMax": 98.7574169999998
+    },
+    {
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 100,
+      "cap": 100,
+      "simMsP50": 0.619499999999789,
+      "simMsP95": 1.5019579999998314,
+      "simMsMax": 27.650833000000148
+    }
+  ]
+}
