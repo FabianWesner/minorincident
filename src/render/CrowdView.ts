@@ -119,7 +119,7 @@ export class CrowdView extends Group {
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
-      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback), capacity = role === 'crow' ? 800 : 350;
+      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
       const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole;
       // Baking expands rigid parts to triangle soup. Index identical vertices before

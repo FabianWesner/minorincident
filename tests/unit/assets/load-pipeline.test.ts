@@ -68,3 +68,44 @@ test('@load caching headers: immutable hashed bundles, long-lived versioned asse
   // Unversioned paths (index.html, UI images) keep revalidation.
   for (const path of ['/', '/index.html', '/assets/ui/portrait-corgi.png']) expect(cache(path)).toEqual([]);
 });
+
+test('@transition outro prefetch warms authored decay assets without assembling a layout or parsing models', async () => {
+  const { prefetchLevel } = await import('../../../src/assets/prefetch');
+  const layoutModule = await import('../../../src/levels/L2/layout');
+  const assemble = vi.spyOn(layoutModule, 'levelTwoLayouts');
+  const source = readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8');
+  const requested: string[] = [];
+  vi.stubGlobal('fetch', vi.fn(async (url: string, options: RequestInit & { priority?: string }) => {
+    expect(options.priority).toBe('low'); requested.push(url);
+    return new Response(url.endsWith('.layout.json') ? source : new Uint8Array([0]));
+  }));
+  await prefetchLevel('L2', 4, 'low');
+  expect(assemble).not.toHaveBeenCalled();
+  expect(requested.some(url => /clinic-annex\.burned\.lod2\.glb/.test(url))).toBe(true);
+  expect(requested.some(url => /char\.courier-female\.skin\.glb/.test(url))).toBe(true);
+  expect(new Set(requested).size).toBe(requested.length);
+  expect(requested.some(url => /prop\.(bench|bbq|picket-fence)\.lod1\.glb/.test(url))).toBe(false);
+  requested.length = 0;
+  const assembleThree = vi.spyOn(await import('../../../src/levels/L3/layout'), 'levelThreeLayouts');
+  await prefetchLevel('L3', 4, 'low');
+  expect(assembleThree).not.toHaveBeenCalled();
+  expect(requested.some(url => /decay\.broken-glass(?:\.lod2)?\.glb/.test(url))).toBe(true);
+});
+
+test('@transition preload adoption keeps progress and another level cannot advance its card', async () => {
+  const elements: { dataset: Record<string, string>; value: number }[] = [];
+  vi.stubGlobal('document', {
+    createElement: () => { const element = { dataset: {}, value: 0, append: vi.fn(), remove: vi.fn(), setAttribute: vi.fn(), addEventListener: vi.fn() }; elements.push(element); return element; },
+    querySelector: () => ({ append: vi.fn() }), body: { classList: { remove: vi.fn() } },
+  });
+  const { LevelTransition } = await import('../../../src/ui/LevelTransition');
+  const card = new LevelTransition(() => {}), progress = () => elements.find(element => element.dataset.testid === 'transition-progress')!.value;
+  try {
+    card.begin('L1'); card.shaders(1, 2, 'L1'); const before = progress();
+    card.begin('L1'); expect(progress()).toBe(before);
+    card.begin('L2'); expect(progress()).toBe(0);
+    card.shaders(2, 2, 'L1'); expect(progress()).toBe(0);
+    card.shaders(1, 2, 'L2'); expect(progress()).toBeGreaterThan(0);
+    card.fail(); card.begin('L2'); expect(progress()).toBe(0);
+  } finally { card.dispose(); }
+});

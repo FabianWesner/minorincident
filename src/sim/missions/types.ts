@@ -100,6 +100,8 @@ export interface L1State {
   house: HouseEmergence | null;
   /** The lab accident: the four staff walking out of the annex front door behind the technician (HouseEmergence). */
   labExit?: HouseEmergence | null;
+  /** PO 10-10 authored street groups: stable member ids, retained across respawns. */
+  streetGroups?: { x: number; z: number; ids: number[] }[];
   /** PO UAT story beats: the running beat (camera framing + input lock), finished beats and the beat actors. */
   beat?: { id: 'pickup' | 'handover' | 'garage'; start: number; until: number; actor: number; fx: number; fz: number; ax: number; az: number; mx: number; mz: number } | null;
   /** The story bubble on screen (speaker 0 = caption): readable until `until`, the beat holds while it reads. */

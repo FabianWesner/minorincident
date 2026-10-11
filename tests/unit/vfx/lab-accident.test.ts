@@ -1,4 +1,7 @@
 import { expect, test } from 'vitest';
+import { Frustum, Matrix4, Mesh, PerspectiveCamera, Quaternion } from 'three/webgpu';
+import { Rng } from '../../../src/core/Rng';
+import { SmokeColumn } from '../../../src/render/vfx/labAccidentSmoke';
 import { EventBus } from '../../../src/core/EventBus';
 import { LabAccidentFx, type LabAccidentHost } from '../../../src/render/vfx/labAccident';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -55,4 +58,25 @@ test('T-E19-19c @E19 @E19-AC19 reduced flashing never strobes and prewarm leaves
   const w = rig(); w.fx.prewarm();
   expect(w.spawns.length).toBeGreaterThan(40);
   expect(w.spawns.every(s => s.life <= 0.01)).toBe(true);
+});
+
+test('T-E19-19d @E19 @E19-AC19 lab smoke and debris remain alive but are camera culled off screen', () => {
+  const column = new SmokeColumn(), rng = new Rng(1, 'camera-culling');
+  column.spawnPuff(0, rng, 0, 0, -10);
+  column.spawnPiece(0, rng, 0, 0, -10, 0, 1, true);
+  column.advance(0.1, 0.1, new Quaternion());
+  column.updateMatrixWorld(true);
+  const meshes = column.children.filter((m): m is Mesh => m instanceof Mesh && m.visible);
+  expect(meshes).toHaveLength(2);
+  expect(meshes.every(m => m.frustumCulled)).toBe(true);
+  const camera = new PerspectiveCamera(60, 1, 0.1, 100);
+  camera.updateMatrixWorld(true);
+  const frustum = new Frustum().setFromProjectionMatrix(new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+  expect(meshes.every(m => frustum.intersectsObject(m))).toBe(true);
+  column.position.x = 100;
+  column.updateMatrixWorld(true);
+  expect(meshes.every(m => !frustum.intersectsObject(m))).toBe(true);
+  expect(column.puffCount).toBe(1);
+  expect(column.pieceCount).toBe(1);
+  column.dispose();
 });

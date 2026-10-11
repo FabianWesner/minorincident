@@ -67,3 +67,25 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
 
   } finally { crowd.dispose(); materials.dispose(); lighting.dispose(); load.mockRestore(); }
 });
+
+test('@transition prepared civilian geometry survives scene disposal without sharing instance attributes', async () => {
+  const { CivilianCrowd } = await import('../../../src/render/npc/CivilianCrowd');
+  const { AssetRegistry } = await import('../../../src/assets/registry');
+  const player = { id: 1, transform: { x: 0, y: 0, z: 0 } };
+  const world = { tick: 0, entities: { iterate: () => [player], get: () => player } } as unknown as import('../../../src/sim/world/SimWorld').SimWorld;
+  const load = vi.spyOn(AssetRegistry.prototype, 'loadAsset').mockImplementation(async () => {
+    const model = createCivilianPlaceholder(); delete model.userData.placeholder; return model;
+  });
+  const first = new CivilianCrowd(world), second = new CivilianCrowd(world);
+  const meshes = (crowd: InstanceType<typeof CivilianCrowd>) => { const out: InstancedMesh[] = []; crowd.traverse(n => { if (n instanceof InstancedMesh && n.geometry.hasAttribute('_clip_frame')) out.push(n); }); return out; };
+  try {
+    await first.init(); const original = meshes(first), x = original[0].geometry.getAttribute('position').getX(0);
+    original[0].geometry.getAttribute('position').setX(0, 999); first.dispose();
+    await second.init(); const restored = meshes(second);
+    expect(restored).toHaveLength(original.length);
+    expect(restored[0].geometry.getAttribute('position').getX(0)).toBe(x);
+    expect(restored[0].geometry).not.toBe(original[0].geometry);
+    expect(restored[0].geometry.getAttribute('_clip_frame')).not.toBe(original[0].geometry.getAttribute('_clip_frame'));
+    expect(restored.every(mesh => mesh.geometry.getIndex() !== null)).toBe(true);
+  } finally { first.dispose(); second.dispose(); load.mockRestore(); }
+});
