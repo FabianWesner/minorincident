@@ -1,4 +1,4 @@
-import { gunCarryElevation, gunHoldOffset } from './characters/GunAim';
+import { gunCarryElevation, gunHoldOffset, longGunHolds } from './characters/GunAim';
 import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
@@ -187,7 +187,7 @@ export class ActionView extends Group {
       // Long stocks/tubes extend behind the palm. Hold them outside the
       // shoulder line instead of letting the stock sweep through torso/head.
       const asset = action(selectedId).viewAssetId, lateral = gunHoldOffset(asset);
-      this.character.aimGun(direction, gunCarryElevation(asset) * (1 - weight), .995 - recoil, weight > .001, lateral);
+      this.character.aimGun(direction, gunCarryElevation(asset) * (1 - weight), .995 - recoil, weight > .001, lateral, longGunHolds[asset]);
     }
     const striking = Object.keys(combat.runner.running).length > 0;
     for (const side of sides) {
@@ -204,6 +204,7 @@ export class ActionView extends Group {
         if (aiming && def.category === 'ranged') held.tilt = 0;
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
+      held.holder.scale.setScalar(inHand ? longGunHolds[def.viewAssetId]?.scale ?? 1 : 1);
       held.holder.visible = inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
