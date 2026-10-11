@@ -383,7 +383,7 @@ def build(detail):
         box('Door jamb', (2.57, y, 1.40), (.20, .105, 2.30), 'silver')
     box('Door header', (2.57, .18, 2.58), (.20, 1.99, .13), 'silver')
     for name, pane, y in [('door_main', 'window_door_L', -.27), ('door_main_right', 'window_door_R', .63)]:
-        box('Door glowing glass', (2.564, y, 1.43), (.035, .76, 2.07), 'tealLight', pane, .005, True)
+        box('Door tinted glass', (2.564, y, 1.43), (.035, .76, 2.07), 'tealDark', pane, .005)
         for yy in [y - .425, y + .425]:
             box('Door stile', (2.62, yy, 1.41), (.11, .075, 2.25), 'silver', name, .015)
         for z in [.325, 2.495]:
