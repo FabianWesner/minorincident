@@ -317,7 +317,8 @@ export class SceneLab {
     const a: Exclude<Action, string> = typeof action === 'string' ? (action === 'idle' ? { idle: true } : action === 'chase' ? { chase: 'courier' } : action === 'flee' ? { flee: [e.transform.x - 1, e.transform.z] } : action === 'infect' ? { infect: {} } : { idle: true }) : action;
     actor.plan = null;
     if (actor.kind === 'courier') {
-      if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
+      if ('god' in a) world.combat!.damage.god = a.god;
+      else if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
       else if ('aim' in a) actor.plan = { type: 'attack', target: a.aim, until: this.frame + ticks(a.seconds ?? 2), side: world.combat!.runner.loadout.state.selectedSide, move: a.move ?? [0, 0], aiming: true };
@@ -367,12 +368,15 @@ export class SceneLab {
     }
     if (actor.kind === 'infected') {
       const b = e.infected!;
-      if ('idle' in a) { b.state = 'idle'; delete e.noiseTarget; }
+      if ('special' in a) {
+        const t = world.entities.get(this.actors.get(a.target)?.entity ?? 0);
+        if (!t) throw new Error(`Unknown special target ${a.target}`);
+        const dx = t.transform.x - e.transform.x, dz = t.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
+        world.infected!.startSpecial(e.id, a.special, { id: t.id, x: t.transform.x, z: t.transform.z }, { x: e.transform.x, z: e.transform.z, radius: a.special === 'alpha.roar' ? 18 : 1, dx: dx / d, dz: dz / d });
+      } else if ('corpse' in a) {
+        e.health.current = 0; b.state = 'dead'; b.deadAt = world.tick - 120; b.recoverAt = -1;
+      } else if ('idle' in a) { b.state = 'idle'; delete e.noiseTarget; }
       else if ('chase' in a) { b.state = 'chase'; const target = this.actors.get(a.chase); if (target && target.entity !== 1) e.noiseTarget = { id: target.entity, until: world.tick + 1e6 }; }
-      else if ('special' in a) {
-        const target = world.entities.get(this.actors.get(a.target)?.entity ?? 0);
-        if (!target || !world.infected!.startSpecial(e.id, a.special, { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: 1, dz: 0 })) throw new Error(`Cannot start ${a.special}`);
-      }
       else if ('grab' in a) { const target = this.world.entities.get(this.actors.get(a.grab)?.entity ?? 0); if (target?.civilian) world.npcs!.civilians.outbreak!.grab(target, e); }
       else if ('attack' in a) { b.state = 'chase'; }
       else if ('turn' in a) e.transform.yaw = rad(a.turn);

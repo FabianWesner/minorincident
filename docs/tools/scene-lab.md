@@ -376,3 +376,13 @@ gate to the production build.
 
 `{ "grab": "officer" }` on an infected starts the real outbreak grab of that pedestrian. Use it for deterministic officer shove and colleague rescue captures; it runs the same grab lifecycle as gameplay.
 `{ "frame": 210, "spawnActor": { "id": "approach", "kind": "infected", "at": [13, 0], "state": { "chase": "officer" } } }` spawns an actor through the existing Scene Lab spawn API. This keeps carry captures calm until the intended approach begins.
+
+### Alpha support move fixtures
+
+Infected commands `{ "special": "alpha.grab-throw", "target": "courier" }` and
+`{ "special": "alpha.roar", "target": "courier" }` enter the production shared scheduler,
+with a copied target and fixed direction/area. `{ "corpse": true }` creates a permanent
+retained death pose which returns its brain to the existing pool on the next tick.
+Courier `{ "god": false }` enables real impact damage/knockdown (isolation defaults to god mode).
+The named fixtures are `tests/scenes/alpha-s3/qa-alpha-grab-throw.json` and
+`tests/scenes/alpha-s3/qa-alpha-roar.json`; their long timeline retains ordinary AI between specials.

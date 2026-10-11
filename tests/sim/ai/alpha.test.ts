@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { INFECTED_TOUGHNESS, infectedDef, validateInfected, infectedSpecialMoves, type InfectedSpecialMove } from '../../../src/data/infected';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { catalog } from '../../../src/data/actions/catalog';
@@ -55,6 +55,7 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
   test(`T-E07-05-scheduler-${move} @E07-AC05 locked telegraph, independent cooldown, recovery and serialized state`, async () => {
     const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move]; w.inspectionGhost = true;
+    vi.spyOn(ai.alphaSupport, 'update').mockImplementation(() => {}); // Test scheduling independently of move effects.
     // The scheduler also serves the later zoo lanes; no animal effects are claimed here.
     e.archetype = timing.archetype;
     const locked = { ...target }; expect(ai.startSpecial(e.id, move, locked, area)).toBe(true); locked.x = 90;
@@ -93,7 +94,7 @@ for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs
   expect(w.infected!.startSpecial(e.id, 'alpha.roar', target, area)).toBe(true); step(w, 10); m.checkpoint('C');
   const before = e.infected!.specialAttack!.activeTick - w.tick; step(w, 20); m.restore('C');
   const restored = w.entities.get(e.id)!; expect(restored.infected!.specialAttack!.activeTick - w.tick).toBe(before);
-  step(w, before); expect(restored.infected!.specialAttack!.stage).toBe('active'); expect(restored.infected!.specialCooldowns!['alpha.roar']! - w.tick).toBe(900);
+  step(w, before); expect(restored.infected!.specialAttack!.stage).toBe('recovery'); expect(restored.infected!.specialCooldowns!['alpha.roar']! - w.tick).toBe(900);
 });
 
 test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and retargeting never resets the first', async () => {
@@ -123,3 +124,24 @@ for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3
   expect(span).toBeGreaterThanOrEqual((hits - 1) / catalog[`weapon.${weapon}`].fireRate!);
   expect(span).toBeLessThanOrEqual(maxSpan);
 });
+
+for (const move of ['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar'] as const) {
+  test(`T-E07-06-alpha-selection-${move} @E07-AC05 @E07-AC06 chase selects each available move through the merged scheduler`, async () => {
+    const w = await arena(), e = spawn(w, 'alpha', move === 'alpha.ground-slam' ? 3 : 6);
+    e.transform.yaw = Math.PI;
+    e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000, 'alpha.grab-throw': 10000, 'alpha.roar': 10000, [move]: 0 };
+    if (move === 'alpha.grab-throw') {
+      const body = spawn(w, 'runner', 7, 1, 'idle');
+      body.health.current = 0; body.corpse = true; body.infected!.state = 'dead'; body.infected!.deadAt = -120; body.infected!.recoverAt = -1;
+    }
+    if (move === 'alpha.roar') spawn(w, 'runner', 10, 2, 'idle');
+    step(w, 1);
+    const attack = e.infected!.specialAttack!;
+    expect(attack.move).toBe(move); expect(attack.stage).toBe('telegraph');
+    const timing = infectedSpecialMoves[move];
+    step(w, timing.windup);
+    expect(e.infected!.specialCooldowns![move]).toBe(attack.activeTick + timing.cooldown);
+    expect(w.events.events().filter(ev => ev.type === 'infected.special' && ev.attackId === attack.attackId && ev.stage === 'active')).toHaveLength(1);
+    for (const other of ['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar'] as const) if (other !== move) expect(e.infected!.specialCooldowns![other]).toBe(10000);
+  });
+}

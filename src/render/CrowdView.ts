@@ -275,8 +275,9 @@ export class CrowdView extends Group {
       else if (physical?.move === 'alpha.ground-slam' && physical.stage === 'recovery') clip = 'swing';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
+      if (e.infected?.specialAttack?.stage === 'telegraph') clip = 'windup';
       const duration = authoredClips.get(clip)!.duration;
-      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' && physical ? Math.min(1, (this.world.tick - physical.startTick) / (physical.activeTick - physical.startTick)) : clip === 'windup' ? Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = variantShirts[b.variant] ?? batch.shirt;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -347,6 +348,7 @@ export class CrowdView extends Group {
   /** Keep settled bodies on clear ground, giving each a readable footprint.
    * This is presentation only; damage and revive continue to use sim transforms. */
   private corpsePosition(e: EntitySnapshot, deadAtTick: number) {
+    if (e.corpseThrown) return e.transform;
     const deadAt = deadAtTick, previous = this.corpses.get(e.id);
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z) return previous;
     const pose = { x: e.transform.x, z: e.transform.z, sourceX: e.transform.x, sourceZ: e.transform.z, deadAt };

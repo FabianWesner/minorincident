@@ -574,7 +574,7 @@ export class AudioService implements Lifecycle {
         if (event.type === 'barricade.damaged') return; // The paired barricade.sound event owns the impact cue.
         if (event.type === 'telegraph') {
             const special = 'special' in event ? event.special : event.kind;
-            const id = telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[special] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
+            const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging — clear the marked path' : 'Alpha ground slam — leave the marked circle', position, event.duration);
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;

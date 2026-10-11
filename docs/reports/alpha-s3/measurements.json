@@ -1,0 +1,346 @@
+{
+  "sim-100": {
+    "count": 100,
+    "alphas": 6,
+    "countAfter": 100,
+    "simMsP95": 0.5123749999997926,
+    "budgetMs": 6,
+    "buffs": 564,
+    "throws": 3
+  },
+  "sim-200": {
+    "count": 200,
+    "alphas": 6,
+    "countAfter": 200,
+    "simMsP95": 2.344833000000108,
+    "budgetMs": 4,
+    "buffs": 1164,
+    "throws": 1
+  },
+  "render-low": {
+    "telegraph": {
+      "count": 100,
+      "buffed": 0,
+      "drawCalls": 33,
+      "triangles": 375169,
+      "crowdDraws": 2
+    },
+    "active": {
+      "count": 100,
+      "buffed": 93,
+      "drawCalls": 31,
+      "triangles": 374145,
+      "crowdDraws": 2
+    }
+  },
+  "render-high": {
+    "telegraph": {
+      "count": 200,
+      "buffed": 0,
+      "drawCalls": 39,
+      "triangles": 672080,
+      "crowdDraws": 2
+    },
+    "active": {
+      "count": 200,
+      "buffed": 187,
+      "drawCalls": 37,
+      "triangles": 671056,
+      "crowdDraws": 2
+    }
+  },
+  "qa-alpha-grab-throw": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 16,
+        "p95": 19,
+        "max": 19
+      },
+      "triangles": {
+        "p50": 61844,
+        "p95": 70036,
+        "max": 70036
+      },
+      "shadowDrawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 44633,
+        "p95": 44633,
+        "max": 44633
+      },
+      "stepMs": {
+        "p50": 0.9,
+        "p95": 1.9,
+        "max": 29.8
+      },
+      "lastFrame": {
+        "drawCalls": 16,
+        "triangles": 61844,
+        "shadowDrawCalls": 14,
+        "shadowTriangles": 44633,
+        "stepMs": 0.40000057220458984,
+        "categories": {
+          "other": 13,
+          "shadows": 14,
+          "crowd": 3
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "actors": {
+      "courier": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 820,
+          "torsoPitchMinDeg": 0.9,
+          "torsoPitchMaxDeg": 24.9,
+          "contacts": 3,
+          "slideMaxCm": 5.1,
+          "slideP95Cm": 4.4,
+          "yawDriftMaxDeg": 4.4,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "alpha": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 820,
+          "torsoPitchMinDeg": 3.8,
+          "torsoPitchMaxDeg": 32.7,
+          "contacts": 22,
+          "slideMaxCm": 1.8,
+          "slideP95Cm": 1.5,
+          "yawDriftMaxDeg": 3.4,
+          "liftMaxCm": 14.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 281
+        }
+      },
+      "body": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 820,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    }
+  },
+  "qa-alpha-roar": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 16,
+        "p95": 18,
+        "max": 18
+      },
+      "triangles": {
+        "p50": 60056,
+        "p95": 61080,
+        "max": 61080
+      },
+      "shadowDrawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 44633,
+        "p95": 44633,
+        "max": 44633
+      },
+      "stepMs": {
+        "p50": 0.6,
+        "p95": 1.3,
+        "max": 22.3
+      },
+      "lastFrame": {
+        "drawCalls": 15,
+        "triangles": 58590,
+        "shadowDrawCalls": 14,
+        "shadowTriangles": 44633,
+        "stepMs": 0.6999998092651367,
+        "categories": {
+          "other": 11,
+          "shadows": 14,
+          "crowd": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "actors": {
+      "courier": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 1000,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "alpha": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 1000,
+          "torsoPitchMinDeg": 4.4,
+          "torsoPitchMaxDeg": 32,
+          "contacts": 40,
+          "slideMaxCm": 108.3,
+          "slideP95Cm": 44.2,
+          "yawDriftMaxDeg": 180,
+          "liftMaxCm": 16.1,
+          "sinkMaxCm": 0.1,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "regular": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 1000,
+          "torsoPitchMinDeg": 19.5,
+          "torsoPitchMaxDeg": 54.1,
+          "contacts": 42,
+          "slideMaxCm": 68.3,
+          "slideP95Cm": 19.7,
+          "yawDriftMaxDeg": 67.4,
+          "liftMaxCm": 10,
+          "sinkMaxCm": 6.1,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      "outside": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 1000,
+          "torsoPitchMinDeg": 15.7,
+          "torsoPitchMaxDeg": 52.6,
+          "contacts": 24,
+          "slideMaxCm": 142,
+          "slideP95Cm": 48.3,
+          "yawDriftMaxDeg": 88.1,
+          "liftMaxCm": 11.6,
+          "sinkMaxCm": 3,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 336
+        }
+      },
+      "lion": {
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 1000,
+          "torsoPitchMinDeg": 84.3,
+          "torsoPitchMaxDeg": 86.7,
+          "contacts": 80,
+          "slideMaxCm": 51.7,
+          "slideP95Cm": 41.5,
+          "yawDriftMaxDeg": 25.4,
+          "liftMaxCm": 15.5,
+          "sinkMaxCm": 1.3,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 612
+        }
+      }
+    }
+  },
+  "directorMac": {
+    "scenario": "horde-arena",
+    "infected": 200,
+    "simMsP95": 0.6523749999998927,
+    "budget": 4
+  }
+}
