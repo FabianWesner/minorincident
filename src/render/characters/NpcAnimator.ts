@@ -21,6 +21,8 @@ export class NpcAnimator {
     this.reach = (rig.legL.getWorldPosition(new Vector3()).distanceTo(rig.shinL.getWorldPosition(new Vector3())) + rig.shinL.getWorldPosition(new Vector3()).distanceTo(rig.footL.getWorldPosition(new Vector3()))) / root.getWorldScale(this.scale).y;
     for (const name of ['idle', 'npc-walk', 'run', 'death-side']) this.actions.set(name, this.mixer.clipAction(retargetClip(root, name)));
   }
+  get currentClip(): string { return this.clip; }
+  dispose(): void { this.mixer.stopAllAction(); this.mixer.uncacheRoot(this.root); }
   update(time: number, speed: number, distance: number, down: boolean): void {
     const name = down ? 'death-side' : speed > (this.clip === 'run' ? 2.2 : 2.5) ? 'run' : speed > (this.clip === 'npc-walk' ? .04 : .12) ? 'npc-walk' : 'idle';
     if (name !== this.clip) {
@@ -39,6 +41,6 @@ export class NpcAnimator {
       const stride = cadenceStride(name, strideScale(this.root), speed), run = name === 'run' ? 1 : 0;
       this.ground.update(phase, stride, run, 1, Math.min(.55 - .31 * run, this.reach * this.root.getWorldScale(this.scale).y * .75 / stride));
     } else this.ground.reset();
-    if (down) settleGroundPose(this.root);
+    settleGroundPose(this.root);
   }
 }
