@@ -1,4 +1,4 @@
-import { Color, InstancedMesh, Matrix4, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
+import { Color, Frustum, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, Vector3 } from 'three/webgpu';
 import { expect, test } from 'vitest';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
@@ -22,7 +22,7 @@ test('static corpse pages grow beyond the old population cap and survive camera 
   const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
   for (let id = 1; id <= 260; id++) {
     const e = { id, corpse: true } as EntitySnapshot; records.set(id, e);
-    pool.place(e, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4().makeTranslation(id, 0, 0), new Color('white'), [0, 0, 0]);
+    pool.place(e, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4().makeTranslation(id * .01, 0, 0), new Color('white'), [0, 0, 0]);
   }
   expect(pool.snapshot()).toMatchObject({ instances: 260, draws: 3 });
   pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(260);
@@ -37,6 +37,26 @@ test('static corpse pages grow beyond the old population cap and survive camera 
   }
   // Restore removes only bodies absent from the checkpoint; the next sync repopulates its saved bodies.
   records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(0);
+  pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
+test('distant corpse pages cull independently while every body persists @E07', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  for (const [index, x] of [0, 1, 100, -100].entries()) {
+    pool.place({ id: index + 1, corpse: true } as EntitySnapshot, 'runner', baked.geometry, material, baked.clip, frame, new Matrix4().makeTranslation(x, 0, 0), new Color('white'), [0, 0, 0]);
+  }
+  const camera = new OrthographicCamera(-10, 10, 10, -10, .1, 100);
+  camera.position.set(0, 20, 10); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+  const frustum = new Frustum().setFromProjectionMatrix(new Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+  const visible = pool.children.filter(mesh => frustum.intersectsObject(mesh));
+  expect(visible.reduce((count, mesh) => count + (mesh as InstancedMesh).count, 0)).toBe(2);
+  expect(pool.snapshot().instances).toBe(4);
+  const pages = pool.children as InstancedMesh[];
+  expect(pages[1].material).toBe(pages[0].material);
+  expect(pages[1].geometry.getAttribute('position')).toBe(pages[0].geometry.getAttribute('position'));
+  expect(pages[1].geometry.getAttribute('_variant')).not.toBe(pages[0].geometry.getAttribute('_variant'));
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 

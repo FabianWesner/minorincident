@@ -65,6 +65,10 @@ export class InfectedSystem {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
     }
+    for (const [id, wall] of world.props?.navWalls ?? []) {
+      this.nav.setBlocker(id, wall, true);
+      for (const d of this.navigation.districts) d.grid.setBlocker(id, wall, true);
+    }
     for (const wall of world.interactables?.walls ?? []) if (wall.entityId !== undefined) { this.nav.setBlocker(wall.entityId, wall, true); for (const d of this.navigation.districts) d.grid.setBlocker(wall.entityId, wall, true); }
     world.events.on('world.blocker.changed', (event) => {
       if (event.type !== 'world.blocker.changed') return;

@@ -65,13 +65,59 @@ describe('E26 authored pushable props', () => {
     // Medium and heavy props now follow their authored permission; buildings/vehicles retain their systems.
     expect(props.some(p => p.assetId === 'prop.bench')).toBe(true);
     expect(props.some(p => /hydrant|lamp|veh\./.test(p.assetId))).toBe(false);
-    // Pushed props never block paths: the nav bake ignores them (a bake that included them has fewer open cells).
+    // The static bake excludes pushables; live crowd navigation adds their resting footprints.
     const open = (nav: { cells: Uint8Array }) => nav.cells.reduce((n, c) => n + (c ? 1 : 0), 0);
     const withProps = bakeNav(world.districts!.districts.map(d => ({ layout: d.layout, origin: d.origin,
       colliders: d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers, placementColliders(d.pushables, []).map(c => c.aabb)) })), 1, .5);
     expect(open(world.districts!.nav)).not.toBe(open(withProps));
     const home = props.filter(p => world.districts!.nav.walkable([p.home.p[0], p.home.p[2]])).length;
     expect(home).toBeGreaterThan(props.filter(p => withProps.walkable([p.home.p[0], p.home.p[2]])).length);
+  });
+
+  test('@E26 a moved prop frozen by the awake cap blocks its resting footprint in the same tick', async () => {
+    const world = await grove(), props = world.props!;
+    const p = props.items.find(p => p.assetId === 'prop.bench' && !p.fixed)!;
+    p.body.setTranslation({ x: p.home.p[0] + 6, y: p.home.p[1], z: p.home.p[2] }, true);
+    p.body.setLinvel({ x: 1, y: 0, z: 0 }, true); props.updateNavigation();
+    expect(props.navWalls.has(p.entityId)).toBe(false);
+    props.awakeBudget = 0; world.tick = 1; props.postPhysics();
+    expect(p.awake).toBe(false); expect(p.body.isSleeping()).toBe(true);
+    expect(props.navWalls.get(p.entityId)).toBeDefined();
+    const wall = props.navWalls.get(p.entityId)!;
+    expect(world.infected!.nav.clear(wall.x, wall.z, .35)).toBe(false);
+  });
+
+  test('@E26 resting authored benches block civilian, infected and ally navigation from the first frame', async () => {
+    const world = await grove(), nav = world.infected!.nav;
+    const benches = world.props!.items.filter(p => p.assetId === 'prop.bench');
+    const light = world.props!.items.filter(p => p.metadata.class === 'light');
+    expect(light.length).toBeGreaterThan(0);
+    for (const p of light) {
+      const wall = world.props!.navWalls.get(p.entityId)!;
+      expect(wall, p.assetId).toBeDefined();
+      expect(nav.clear(wall.x, wall.z, .35), p.assetId).toBe(false);
+    }
+    expect(benches.length).toBeGreaterThan(0);
+    for (const p of benches) {
+      const wall = world.props!.navWalls.get(p.entityId)!;
+      expect(wall).toBeDefined();
+      expect(nav.clear(wall.x, wall.z, .35)).toBe(false);
+      const start = { x: wall.x - wall.halfX - 1, z: wall.z };
+      // Direct crowd intent is swept even when a route is authored across the bench.
+      if (!nav.clear(start.x, start.z, .35)) continue;
+      for (let frame = 0; frame < 180; frame++) nav.move(start, .04, 0, .35);
+      expect(start.x).toBeLessThanOrEqual(wall.x - wall.halfX - .35);
+    }
+    const p = benches[0], old = world.props!.navWalls.get(p.entityId)!;
+    p.body.setLinvel({ x: 1, y: 0, z: 0 }, true); world.props!.updateNavigation();
+    expect(world.props!.navWalls.has(p.entityId)).toBe(false);
+    world.props!.place(p, { p: [p.home.p[0] + 3, p.home.p[1], p.home.p[2]], q: p.home.q });
+    world.props!.updateNavigation();
+    const moved = world.props!.navWalls.get(p.entityId)!;
+    expect(moved.x).toBeCloseTo(old.x + 3, 4);
+    expect(nav.clear(moved.x, moved.z, .35)).toBe(false);
+    p.body.setEnabled(false); world.props!.updateNavigation();
+    expect(world.props!.navWalls.has(p.entityId)).toBe(false);
   });
 
   test('walking into a trash bin shoves it along, it settles and sleeps; the courier keeps moving', async () => {

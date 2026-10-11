@@ -60,7 +60,7 @@ Rapier collider COMs are relative to each collider's offset, while authored COMs
 are relative to the prop origin. Fallen bodies reset to spawn asleep, or disable
 when their authored `reset` flag is `remove`.
 
-Resting medium/heavy furniture displaced more than 25 cm adds its rotated footprint
+Resting furniture of every mass class, including its initial authored pose, adds its rotated footprint
 to infected navigation every 30 ticks; moving/broken/braced props remove that footprint.
 The existing 1.5x detour rule also selects these loose props for attacks. Slot
 `sandbag: true` allows runners to vault a rail below 0.9 m in 72 ticks; crawlers and
