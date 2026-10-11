@@ -1,0 +1,39 @@
+{
+  "alphaAssetTests": 4,
+  "focusedAssetTests": 16,
+  "alphaBrowserTests": 5,
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "unit": {
+    "passed": 808,
+    "failed": 2,
+    "baselineHead": "2a5e22ef",
+    "baselineFailed": [
+      "T-E09-01-wreck",
+      "T-E17-04"
+    ],
+    "reason": "Shipped wrecked fire-engine GLB lacks doorL/doorR; both reproduce on unchanged HEAD."
+  },
+  "verifyE07": {
+    "simUnitPassed": 162,
+    "simUnitFailed": 0,
+    "browserPassed": 38,
+    "browserFailed": 1,
+    "failure": "Known T-E13-05 smoke save reload continue"
+  },
+  "baselineWorktree": "removed",
+  "deployed": false,
+  "merged": false,
+  "sceneLabScenesPassed": 6,
+  "retainedReviewedPngs": 12,
+  "nodeE18TestsPassed": 3,
+  "nodeE18SimP95Ms": [
+    3.329250000000229,
+    1.077291999999943
+  ],
+  "nativeGpuFrameP95Ms": [
+    11.7,
+    8.2
+  ]
+}

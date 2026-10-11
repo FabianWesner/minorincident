@@ -1,0 +1,1209 @@
+{
+  "spec": "tests/scenes/alpha-asset/fair-line.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 180,
+  "timing": {
+    "openMs": 10484,
+    "loadMs": 12408,
+    "runMs": 2444,
+    "sceneMs": 14852
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "propPenetrationFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 2
+      },
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 37,
+        "limit": 600
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 108077,
+        "limit": 1500000
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-alpha-asset-fair-line",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "prop.bench:15",
+        "asset": "prop.bench",
+        "at": [
+          -32.8,
+          18
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:18",
+        "asset": "prop.bench",
+        "at": [
+          -26,
+          33.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-reception-2",
+        "asset": "prop.tent",
+        "at": [
+          -30.6,
+          12.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-reception-3",
+        "asset": "prop.tent",
+        "at": [
+          -26.8,
+          12.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-reception-4",
+        "asset": "prop.tent",
+        "at": [
+          -22.8,
+          12.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-light-9",
+        "asset": "prop.light-tower",
+        "at": [
+          -31.2,
+          15.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-26",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.4,
+          12.825
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-sandbag-27",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.4,
+          14.275
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l4-sandbag-28",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -30.272727272727273,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-29",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -28.81818181818182,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-30",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -27.363636363636363,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-31",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -25.90909090909091,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-32",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -24.454545454545453,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-33",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -20.090909090909093,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-34",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -18.636363636363637,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-35",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -17.18181818181818,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-sandbag-36",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -15.727272727272727,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l4-nest-38",
+        "asset": "prop.hmg-nest",
+        "at": [
+          -14.6,
+          17.3
+        ],
+        "yawDeg": -34.4
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "alpha",
+        "kind": "infected",
+        "entity": 7
+      },
+      {
+        "id": "worker",
+        "kind": "infected",
+        "entity": 8
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-alpha-asset-fair-line",
+    "frame": 180,
+    "tick": 180,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 540,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 360,
+      "gaps": [
+        {
+          "id": "D-FAIR/prop.bench:15",
+          "gapCm": 0
+        },
+        {
+          "id": "D-FAIR/l4-light-9",
+          "gapCm": 0
+        }
+      ]
+    },
+    "bodies": [],
+    "wheels": {},
+    "vehicleTrack": {},
+    "wheelTrack": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 37,
+        "p95": 37,
+        "max": 37
+      },
+      "triangles": {
+        "p50": 108077,
+        "p95": 108077,
+        "max": 108077
+      },
+      "shadowDrawCalls": {
+        "p50": 39,
+        "p95": 39,
+        "max": 39
+      },
+      "shadowTriangles": {
+        "p50": 86095,
+        "p95": 86095,
+        "max": 86095
+      },
+      "stepMs": {
+        "p50": 3.3,
+        "p95": 8.1,
+        "max": 14.3
+      },
+      "lastFrame": {
+        "drawCalls": 37,
+        "triangles": 103277,
+        "shadowDrawCalls": 39,
+        "shadowTriangles": 86095,
+        "stepMs": 3.09999942779541,
+        "categories": {
+          "other": 28,
+          "shadows": 39,
+          "props": 6,
+          "crowd": 3
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -22,
+          20
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -22,
+            20
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        },
+        "track": [
+          {
+            "frame": 1,
+            "floor": 0.05,
+            "clip": "idle",
+            "feet": [
+              {
+                "heel": [
+                  -22.001,
+                  0.05,
+                  19.819
+                ],
+                "toe": [
+                  -21.866,
+                  0.05,
+                  19.807
+                ]
+              },
+              {
+                "heel": [
+                  -22.122,
+                  0.07,
+                  20.17
+                ],
+                "toe": [
+                  -21.987,
+                  0.07,
+                  20.182
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -22,
+              20
+            ],
+            "torsoPitchDeg": 2.9134159144094096
+          },
+          {
+            "frame": 10,
+            "floor": 0.05,
+            "clip": "idle",
+            "feet": [
+              {
+                "heel": [
+                  -22.001,
+                  0.05,
+                  19.819
+                ],
+                "toe": [
+                  -21.866,
+                  0.05,
+                  19.807
+                ]
+              },
+              {
+                "heel": [
+                  -22.038,
+                  0.053,
+                  20.097
+                ],
+                "toe": [
+                  -21.904,
+                  0.065,
+                  20.109
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -22,
+              20
+            ],
+            "torsoPitchDeg": 3.0731124655920916
+          },
+          {
+            "frame": 30,
+            "floor": 0.05,
+            "clip": "idle",
+            "feet": [
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  19.903
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  19.891
+                ]
+              },
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  20.097
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  20.109
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -22,
+              20
+            ],
+            "torsoPitchDeg": 3.363915312992517
+          },
+          {
+            "frame": 60,
+            "floor": 0.05,
+            "clip": "idle",
+            "feet": [
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  19.903
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  19.891
+                ]
+              },
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  20.097
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  20.109
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -22,
+              20
+            ],
+            "torsoPitchDeg": 3.401133844144472
+          },
+          {
+            "frame": 120,
+            "floor": 0.05,
+            "clip": "idle",
+            "feet": [
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  19.903
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  19.891
+                ]
+              },
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  20.097
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  20.109
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -22,
+              20
+            ],
+            "torsoPitchDeg": 2.496375938205407
+          },
+          {
+            "frame": 180,
+            "floor": 0.05,
+            "clip": "idle",
+            "feet": [
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  19.903
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  19.891
+                ]
+              },
+              {
+                "heel": [
+                  -22.034,
+                  0.05,
+                  20.097
+                ],
+                "toe": [
+                  -21.9,
+                  0.05,
+                  20.109
+                ]
+              }
+            ],
+            "speed": 0,
+            "at": [
+              -22,
+              20
+            ],
+            "torsoPitchDeg": 2.754873917973852
+          }
+        ]
+      },
+      "alpha": {
+        "kind": "infected",
+        "entity": 7,
+        "position": [
+          -22.476,
+          21.033
+        ],
+        "yawDeg": 68.2,
+        "state": "chase",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 109,
+          "lod1": 71
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -26,
+            30
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 19.2,
+          "torsoPitchMaxDeg": 32.1,
+          "contacts": 17,
+          "slideMaxCm": 15.8,
+          "slideP95Cm": 15.7,
+          "yawDriftMaxDeg": 0.5,
+          "liftMaxCm": 14.8,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 71
+        },
+        "track": [
+          {
+            "frame": 1,
+            "floor": 0.05,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -26.431,
+                  0.115,
+                  30.114
+                ],
+                "toe": [
+                  -26.434,
+                  0.099,
+                  29.969
+                ]
+              },
+              {
+                "heel": [
+                  -25.677,
+                  0.074,
+                  30.208
+                ],
+                "toe": [
+                  -25.677,
+                  0.041,
+                  30.066
+                ]
+              }
+            ],
+            "speed": 0.013333333333419286,
+            "at": [
+              -26,
+              30
+            ],
+            "torsoPitchDeg": 19.784854666573064
+          },
+          {
+            "frame": 30,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -26.16,
+                  0.215,
+                  29.867
+                ],
+                "toe": [
+                  -26.159,
+                  0.179,
+                  29.726
+                ]
+              },
+              {
+                "heel": [
+                  -25.543,
+                  0.016,
+                  29.477
+                ],
+                "toe": [
+                  -25.479,
+                  0.016,
+                  29.345
+                ]
+              }
+            ],
+            "speed": 2.5957076745415275,
+            "at": [
+              -25.77,
+              29.426
+            ],
+            "torsoPitchDeg": 24.5458755210453
+          },
+          {
+            "frame": 60,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -25.292,
+                  0.073,
+                  27.593
+                ],
+                "toe": [
+                  -25.25,
+                  0.088,
+                  27.454
+                ]
+              },
+              {
+                "heel": [
+                  -25.033,
+                  0.183,
+                  28.218
+                ],
+                "toe": [
+                  -24.969,
+                  0.152,
+                  28.091
+                ]
+              }
+            ],
+            "speed": 3.6579600569940696,
+            "at": [
+              -25.156,
+              27.89
+            ],
+            "torsoPitchDeg": 30.900398876885042
+          },
+          {
+            "frame": 71,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -25.224,
+                  0.184,
+                  27.425
+                ],
+                "toe": [
+                  -25.183,
+                  0.152,
+                  27.289
+                ]
+              },
+              {
+                "heel": [
+                  -24.602,
+                  0.056,
+                  27.141
+                ],
+                "toe": [
+                  -24.536,
+                  0.072,
+                  27.011
+                ]
+              }
+            ],
+            "speed": 3.7377226392361402,
+            "at": [
+              -24.904,
+              27.259
+            ],
+            "torsoPitchDeg": 30.91310602712059
+          },
+          {
+            "frame": 120,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -23.989,
+                  0.152,
+                  24.334
+                ],
+                "toe": [
+                  -23.947,
+                  0.152,
+                  24.195
+                ]
+              },
+              {
+                "heel": [
+                  -23.549,
+                  0.001,
+                  24.507
+                ],
+                "toe": [
+                  -23.483,
+                  0.001,
+                  24.377
+                ]
+              }
+            ],
+            "speed": 3.7984696914784455,
+            "at": [
+              -23.756,
+              24.39
+            ],
+            "torsoPitchDeg": 31.05584997467949
+          },
+          {
+            "frame": 180,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -22.722,
+                  0.192,
+                  21.171
+                ],
+                "toe": [
+                  -22.682,
+                  0.152,
+                  21.037
+                ]
+              },
+              {
+                "heel": [
+                  -22.199,
+                  0.16,
+                  21.017
+                ],
+                "toe": [
+                  -22.134,
+                  0.132,
+                  20.89
+                ]
+              }
+            ],
+            "speed": 2.4233430965559846,
+            "at": [
+              -22.476,
+              21.033
+            ],
+            "torsoPitchDeg": 26.821099180329277
+          }
+        ]
+      },
+      "worker": {
+        "kind": "infected",
+        "entity": 8,
+        "position": [
+          -21.556,
+          21.033
+        ],
+        "yawDeg": 111.8,
+        "state": "chase",
+        "drawnFrames": 180,
+        "inViewFrames": 180,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 180
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -18,
+            30
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 31,
+          "contacts": 20,
+          "slideMaxCm": 15,
+          "slideP95Cm": 15,
+          "yawDriftMaxDeg": 1.5,
+          "liftMaxCm": 12.6,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 135
+        },
+        "track": [
+          {
+            "frame": 1,
+            "floor": 0.05,
+            "clip": "infected-idle",
+            "feet": [
+              {
+                "heel": [
+                  -18.25,
+                  0.076,
+                  30.092
+                ],
+                "toe": [
+                  -18.253,
+                  0.06,
+                  29.947
+                ]
+              },
+              {
+                "heel": [
+                  -17.825,
+                  0.059,
+                  30.16
+                ],
+                "toe": [
+                  -17.824,
+                  0.027,
+                  30.018
+                ]
+              }
+            ],
+            "speed": 0.013333333333419286,
+            "at": [
+              -18,
+              30
+            ],
+            "torsoPitchDeg": 18.72085207234774
+          },
+          {
+            "frame": 30,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -18.366,
+                  0.21,
+                  29.399
+                ],
+                "toe": [
+                  -18.421,
+                  0.176,
+                  29.268
+                ]
+              },
+              {
+                "heel": [
+                  -18.064,
+                  0.073,
+                  29.515
+                ],
+                "toe": [
+                  -18.098,
+                  0.039,
+                  29.377
+                ]
+              }
+            ],
+            "speed": 2.5957076745415275,
+            "at": [
+              -18.23,
+              29.426
+            ],
+            "torsoPitchDeg": 23.12124813325429
+          },
+          {
+            "frame": 60,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -18.873,
+                  0.174,
+                  28.173
+                ],
+                "toe": [
+                  -18.936,
+                  0.131,
+                  28.049
+                ]
+              },
+              {
+                "heel": [
+                  -18.783,
+                  0.052,
+                  27.689
+                ],
+                "toe": [
+                  -18.824,
+                  0.067,
+                  27.549
+                ]
+              }
+            ],
+            "speed": 3.6579600569940696,
+            "at": [
+              -18.844,
+              27.89
+            ],
+            "torsoPitchDeg": 29.7075696153744
+          },
+          {
+            "frame": 120,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -20.29,
+                  0.164,
+                  24.633
+                ],
+                "toe": [
+                  -20.356,
+                  0.151,
+                  24.503
+                ]
+              },
+              {
+                "heel": [
+                  -20.157,
+                  0.001,
+                  24.254
+                ],
+                "toe": [
+                  -20.198,
+                  0.012,
+                  24.114
+                ]
+              }
+            ],
+            "speed": 3.7984696914784455,
+            "at": [
+              -20.244,
+              24.39
+            ],
+            "torsoPitchDeg": 30.80431429041195
+          },
+          {
+            "frame": 135,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -20.621,
+                  0.175,
+                  23.801
+                ],
+                "toe": [
+                  -20.685,
+                  0.132,
+                  23.677
+                ]
+              },
+              {
+                "heel": [
+                  -20.535,
+                  0.057,
+                  23.307
+                ],
+                "toe": [
+                  -20.577,
+                  0.071,
+                  23.167
+                ]
+              }
+            ],
+            "speed": 3.7995089233233714,
+            "at": [
+              -20.597,
+              23.508
+            ],
+            "torsoPitchDeg": 29.615292762234514
+          },
+          {
+            "frame": 180,
+            "floor": 0.05,
+            "clip": "infected-lurch",
+            "feet": [
+              {
+                "heel": [
+                  -21.631,
+                  0.19,
+                  21.192
+                ],
+                "toe": [
+                  -21.695,
+                  0.152,
+                  21.066
+                ]
+              },
+              {
+                "heel": [
+                  -21.454,
+                  0.001,
+                  21.012
+                ],
+                "toe": [
+                  -21.495,
+                  0.001,
+                  20.872
+                ]
+              }
+            ],
+            "speed": 2.422999367719491,
+            "at": [
+              -21.556,
+              21.033
+            ],
+            "torsoPitchDeg": 26.268299629560623
+          }
+        ]
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 180,
+      "sim": {
+        "infected": 2,
+        "courier": 1,
+        "actors": 3
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 2,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "prop.bench:15": "lod2",
+      "prop.bench:18": "culled",
+      "l4-reception-2": "lod2",
+      "l4-reception-3": "lod1",
+      "l4-reception-4": "lod1",
+      "l4-light-9": "lod1",
+      "l4-sandbag-26": "culled",
+      "l4-sandbag-27": "lod2",
+      "l4-sandbag-28": "lod2",
+      "l4-sandbag-29": "lod2",
+      "l4-sandbag-30": "lod2",
+      "l4-sandbag-31": "lod2",
+      "l4-sandbag-32": "lod2",
+      "l4-sandbag-33": "lod2",
+      "l4-sandbag-34": "lod2",
+      "l4-sandbag-35": "lod2",
+      "l4-sandbag-36": "lod2",
+      "l4-nest-38": "n/a"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 1,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l4-sandbag-36",
+        "b": "l4-nest-38",
+        "assetA": "prop.sandbag-pallet",
+        "assetB": "prop.hmg-nest",
+        "intersectingTriangles": 1148,
+        "region": {
+          "min": [
+            -15.8994779586792,
+            9.114761269302107e-06,
+            17.22999382019043
+          ],
+          "max": [
+            -15.027273178100586,
+            0.7949808835983276,
+            18.395000457763672
+          ]
+        },
+        "regionCm": [
+          87,
+          79,
+          117
+        ]
+      }
+    ],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 1,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  },
+  "traceRetention": "Aggregate metrics and gates cover the full run; actor tracks retain capture-boundary and worst-slide frames only."
+}

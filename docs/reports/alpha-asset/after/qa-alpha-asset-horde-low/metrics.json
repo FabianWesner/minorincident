@@ -1,0 +1,1442 @@
+{
+  "spec": "tests/scenes/alpha-asset/horde-low.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "frames": 60,
+  "timing": {
+    "openMs": 2739,
+    "loadMs": 2770,
+    "runMs": 760,
+    "sceneMs": 3530
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 9,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 79526,
+        "limit": 500000
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-alpha-asset-horde-low",
+    "frame": 0,
+    "placements": [],
+    "actors": [
+      {
+        "id": "alpha-1",
+        "kind": "infected",
+        "entity": 3
+      },
+      {
+        "id": "alpha-2",
+        "kind": "infected",
+        "entity": 4
+      },
+      {
+        "id": "alpha-3",
+        "kind": "infected",
+        "entity": 5
+      },
+      {
+        "id": "alpha-4",
+        "kind": "infected",
+        "entity": 6
+      },
+      {
+        "id": "alpha-5",
+        "kind": "infected",
+        "entity": 7
+      },
+      {
+        "id": "alpha-6",
+        "kind": "infected",
+        "entity": 8
+      },
+      {
+        "id": "worker-1",
+        "kind": "infected",
+        "entity": 9
+      },
+      {
+        "id": "worker-2",
+        "kind": "infected",
+        "entity": 10
+      },
+      {
+        "id": "worker-3",
+        "kind": "infected",
+        "entity": 11
+      },
+      {
+        "id": "worker-4",
+        "kind": "infected",
+        "entity": 12
+      },
+      {
+        "id": "worker-5",
+        "kind": "infected",
+        "entity": 13
+      },
+      {
+        "id": "worker-6",
+        "kind": "infected",
+        "entity": 14
+      },
+      {
+        "id": "worker-7",
+        "kind": "infected",
+        "entity": 15
+      },
+      {
+        "id": "worker-8",
+        "kind": "infected",
+        "entity": 16
+      },
+      {
+        "id": "worker-9",
+        "kind": "infected",
+        "entity": 17
+      },
+      {
+        "id": "worker-10",
+        "kind": "infected",
+        "entity": 18
+      },
+      {
+        "id": "worker-11",
+        "kind": "infected",
+        "entity": 19
+      },
+      {
+        "id": "worker-12",
+        "kind": "infected",
+        "entity": 20
+      },
+      {
+        "id": "worker-13",
+        "kind": "infected",
+        "entity": 21
+      },
+      {
+        "id": "worker-14",
+        "kind": "infected",
+        "entity": 22
+      },
+      {
+        "id": "worker-15",
+        "kind": "infected",
+        "entity": 23
+      },
+      {
+        "id": "worker-16",
+        "kind": "infected",
+        "entity": 24
+      },
+      {
+        "id": "worker-17",
+        "kind": "infected",
+        "entity": 25
+      },
+      {
+        "id": "worker-18",
+        "kind": "infected",
+        "entity": 26
+      },
+      {
+        "id": "worker-19",
+        "kind": "infected",
+        "entity": 27
+      },
+      {
+        "id": "worker-20",
+        "kind": "infected",
+        "entity": 28
+      },
+      {
+        "id": "worker-21",
+        "kind": "infected",
+        "entity": 29
+      },
+      {
+        "id": "worker-22",
+        "kind": "infected",
+        "entity": 30
+      },
+      {
+        "id": "worker-23",
+        "kind": "infected",
+        "entity": 31
+      },
+      {
+        "id": "worker-24",
+        "kind": "infected",
+        "entity": 32
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-alpha-asset-horde-low",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgl",
+    "quality": "low",
+    "propPenetration": {
+      "samples": 1800,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 9,
+        "p95": 9,
+        "max": 9
+      },
+      "triangles": {
+        "p50": 79526,
+        "p95": 79526,
+        "max": 79526
+      },
+      "shadowDrawCalls": {
+        "p50": 7,
+        "p95": 7,
+        "max": 7
+      },
+      "shadowTriangles": {
+        "p50": 7,
+        "p95": 7,
+        "max": 7
+      },
+      "stepMs": {
+        "p50": 2.1,
+        "p95": 3.9,
+        "max": 9
+      },
+      "lastFrame": {
+        "drawCalls": 9,
+        "triangles": 79526,
+        "shadowDrawCalls": 7,
+        "shadowTriangles": 7,
+        "stepMs": 2.1000003814697266,
+        "categories": {
+          "other": 6,
+          "crowd": 3,
+          "shadows": 7
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "alpha-1": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          4,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            4,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 20.2,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "alpha-2": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          2,
+          3.464
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2,
+            3.464
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 21.2,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "alpha-3": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          -2,
+          3.464
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2,
+            3.464
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 21.8,
+          "contacts": 1,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "alpha-4": {
+        "kind": "infected",
+        "entity": 6,
+        "position": [
+          -4,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -4,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 22.1,
+          "contacts": 1,
+          "slideMaxCm": 2.7,
+          "slideP95Cm": 2.7,
+          "yawDriftMaxDeg": 0.5,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "alpha-5": {
+        "kind": "infected",
+        "entity": 7,
+        "position": [
+          -2,
+          -3.464
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -2,
+            -3.464
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 22.3,
+          "contacts": 2,
+          "slideMaxCm": 6,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 1.1,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "alpha-6": {
+        "kind": "infected",
+        "entity": 8,
+        "position": [
+          2,
+          -3.464
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2,
+            -3.464
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 22.4,
+          "contacts": 2,
+          "slideMaxCm": 7.5,
+          "slideP95Cm": 3.8,
+          "yawDriftMaxDeg": 1.4,
+          "liftMaxCm": 5.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-1": {
+        "kind": "infected",
+        "entity": 9,
+        "position": [
+          14,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            14,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.6,
+          "slideP95Cm": 3.9,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-2": {
+        "kind": "infected",
+        "entity": 10,
+        "position": [
+          13.523,
+          3.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            13.523,
+            3.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.7,
+          "slideP95Cm": 3.9,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-3": {
+        "kind": "infected",
+        "entity": 11,
+        "position": [
+          12.124,
+          7
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            12.124,
+            7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.7,
+          "slideP95Cm": 3.8,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-4": {
+        "kind": "infected",
+        "entity": 12,
+        "position": [
+          9.899,
+          9.899
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            9.899,
+            9.899
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20.6,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.5,
+          "slideP95Cm": 4.1,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-5": {
+        "kind": "infected",
+        "entity": 13,
+        "position": [
+          7,
+          12.124
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            7,
+            12.124
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20.9,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 3,
+          "slideMaxCm": 6.3,
+          "slideP95Cm": 5.2,
+          "yawDriftMaxDeg": 1.4,
+          "liftMaxCm": 2.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 8
+        }
+      },
+      "worker-6": {
+        "kind": "infected",
+        "entity": 14,
+        "position": [
+          3.623,
+          13.523
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3.623,
+            13.523
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20.4,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 3,
+          "slideMaxCm": 7.5,
+          "slideP95Cm": 5.7,
+          "yawDriftMaxDeg": 1.6,
+          "liftMaxCm": 2.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-7": {
+        "kind": "infected",
+        "entity": 15,
+        "position": [
+          0,
+          14
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20.3,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 3,
+          "slideMaxCm": 6.5,
+          "slideP95Cm": 5.4,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 39
+        }
+      },
+      "worker-8": {
+        "kind": "infected",
+        "entity": 16,
+        "position": [
+          -3.623,
+          13.523
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -3.623,
+            13.523
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20.3,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.5,
+          "slideP95Cm": 4.3,
+          "yawDriftMaxDeg": 1.7,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 31
+        }
+      },
+      "worker-9": {
+        "kind": "infected",
+        "entity": 17,
+        "position": [
+          -7,
+          12.124
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7,
+            12.124
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 20.2,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.4,
+          "slideP95Cm": 3.6,
+          "yawDriftMaxDeg": 1.7,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 23
+        }
+      },
+      "worker-10": {
+        "kind": "infected",
+        "entity": 18,
+        "position": [
+          -9.899,
+          9.899
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -9.899,
+            9.899
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.6,
+          "slideP95Cm": 3.8,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 14
+        }
+      },
+      "worker-11": {
+        "kind": "infected",
+        "entity": 19,
+        "position": [
+          -12.124,
+          7
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -12.124,
+            7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.3,
+          "torsoPitchMaxDeg": 21.4,
+          "contacts": 2,
+          "slideMaxCm": 6.6,
+          "slideP95Cm": 3.9,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 6
+        }
+      },
+      "worker-12": {
+        "kind": "infected",
+        "entity": 20,
+        "position": [
+          -13.523,
+          3.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -13.523,
+            3.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.9,
+          "torsoPitchMaxDeg": 21,
+          "contacts": 2,
+          "slideMaxCm": 5.6,
+          "slideP95Cm": 2.1,
+          "yawDriftMaxDeg": 1.5,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-13": {
+        "kind": "infected",
+        "entity": 21,
+        "position": [
+          -14,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -14,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 20.5,
+          "contacts": 1,
+          "slideMaxCm": 1.7,
+          "slideP95Cm": 1.7,
+          "yawDriftMaxDeg": 0.4,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-14": {
+        "kind": "infected",
+        "entity": 22,
+        "position": [
+          -13.523,
+          -3.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -13.523,
+            -3.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 20.3,
+          "contacts": 1,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-15": {
+        "kind": "infected",
+        "entity": 23,
+        "position": [
+          -12.124,
+          -7
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -12.124,
+            -7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 20.3,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "worker-16": {
+        "kind": "infected",
+        "entity": 24,
+        "position": [
+          -9.899,
+          -9.899
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -9.899,
+            -9.899
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 20.2,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "worker-17": {
+        "kind": "infected",
+        "entity": 25,
+        "position": [
+          -7,
+          -12.124
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -7,
+            -12.124
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 19.9,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "worker-18": {
+        "kind": "infected",
+        "entity": 26,
+        "position": [
+          -3.623,
+          -13.523
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -3.623,
+            -13.523
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 19.4,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "worker-19": {
+        "kind": "infected",
+        "entity": 27,
+        "position": [
+          0,
+          -14
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            -14
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 19.7,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "worker-20": {
+        "kind": "infected",
+        "entity": 28,
+        "position": [
+          3.623,
+          -13.523
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3.623,
+            -13.523
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 20.5,
+          "contacts": 1,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-21": {
+        "kind": "infected",
+        "entity": 29,
+        "position": [
+          7,
+          -12.124
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            7,
+            -12.124
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 20.9,
+          "contacts": 1,
+          "slideMaxCm": 1.1,
+          "slideP95Cm": 1.1,
+          "yawDriftMaxDeg": 0.3,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-22": {
+        "kind": "infected",
+        "entity": 30,
+        "position": [
+          9.899,
+          -9.899
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            9.899,
+            -9.899
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 21.1,
+          "contacts": 1,
+          "slideMaxCm": 3.1,
+          "slideP95Cm": 3.1,
+          "yawDriftMaxDeg": 0.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-23": {
+        "kind": "infected",
+        "entity": 31,
+        "position": [
+          12.124,
+          -7
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            12.124,
+            -7
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 21.3,
+          "contacts": 2,
+          "slideMaxCm": 5.3,
+          "slideP95Cm": 1.9,
+          "yawDriftMaxDeg": 1.4,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "worker-24": {
+        "kind": "infected",
+        "entity": 32,
+        "position": [
+          13.523,
+          -3.623
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            13.523,
+            -3.623
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 21.3,
+          "contacts": 2,
+          "slideMaxCm": 6.6,
+          "slideP95Cm": 3.4,
+          "yawDriftMaxDeg": 1.8,
+          "liftMaxCm": 3.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "infected": 30,
+        "actors": 30
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 30
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
