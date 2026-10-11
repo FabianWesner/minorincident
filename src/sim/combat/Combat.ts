@@ -84,11 +84,16 @@ export class Combat {
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
       }
     }
-    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim }, ...(attack.style ? { style: attack.style } : {}) });
-    if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
+    if (attack.def.category !== 'ranged') this.attackEvent(attack);
     if (source.survivor) source.survivor.attack = { actionId: attack.def.id, combo: attack.combo, started: attack.started, activeAt: attack.activeAt, recoveryAt: attack.recoveryAt, endsAt: attack.endsAt, ...(attack.style ? { style: attack.style } : {}) };
     this.world.player?.act(attack.def.id === 'weapon.kick' ? 'kick' : attack.def.category === 'melee' || attack.def.category === 'ability' ? 'swing' : attack.def.category === 'throwable' ? 'throw' : 'shoot', this.world.tick, attack.endsAt - attack.started);
   };
+  /** The ranged event is the discharge: muzzle, sound, noise and damage share one tick. */
+  private attackEvent(attack: Attack): void {
+    const source = this.world.entities.get(attack.sourceId)!;
+    this.world.events.emit({ type: 'combat.attack', tick: this.world.tick, attackId: attack.id, actionId: attack.def.id, combo: attack.combo, sourceId: source.id, side: attack.side, position: { ...source.transform }, direction: { ...attack.aim }, ...(attack.style ? { style: attack.style } : {}) });
+    if (attack.def.category === 'ranged') this.effects.noise(source.transform, attack.def.noiseRadius, attack.def.id);
+  }
   private hit(attack: Attack, target: EntitySnapshot, origin: Vec2, type: 'melee' | 'bullet' | 'explosive', falloff = 1): void {
     if (attack.hit.has(target.id)) return;
     attack.hit.add(target.id);
@@ -121,6 +126,7 @@ export class Combat {
   }
   private readonly resolve = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!, def = attack.def;
+    if (def.category === 'ranged') this.attackEvent(attack);
     if (def.effect && def.category === 'ability') { this.effects.create(attack, source.transform); return; }
     if (def.category === 'throwable' || def.projectile) {
       let landing: Vec2 | null = null;
@@ -209,6 +215,6 @@ export class Combat {
   snapshot() {
     const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, combo: a.combo, inPlace: a.inPlace, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
     const buffered = this.runner.snapshotBuffer();
-    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), ...(Object.keys(buffered).length ? { buffered } : {}), sequence: this.runner.lastAttackId, chains: this.runner.snapshotChains(), rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
+    return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), ...(Object.keys(buffered).length ? { buffered } : {}), sequence: this.runner.lastAttackId, gunReady: { ...this.runner.gunReady }, chains: this.runner.snapshotChains(), rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
   }
 }

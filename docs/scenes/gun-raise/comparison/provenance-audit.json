@@ -1,0 +1,25 @@
+{
+  "baselineCommit": "96dc52d0",
+  "policeParent": "80a9d089",
+  "gunHoldMerge": "3c30b499",
+  "baselineFailureHeadersMatchGunHoldReport": {
+    "T-E21-02": true,
+    "T-E21-04": true,
+    "T-E21-08": true,
+    "T-E21-09": true,
+    "T-E21-10": true,
+    "T-E21-11": true,
+    "T-E21-12": true,
+    "T-E21-13": true,
+    "T-E21-bots": true
+  },
+  "policeAndGunHoldCompleteReportsIdentical": true,
+  "gunHoldSimulationDiffEmpty": true,
+  "pathsCompared": [
+    "src/sim",
+    "src/data",
+    "src/debug/bot",
+    "tools/sim-runner",
+    "tests/levels"
+  ]
+}

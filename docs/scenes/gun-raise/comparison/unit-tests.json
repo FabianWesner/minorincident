@@ -1,0 +1,32 @@
+{
+  "passed": 519,
+  "failed": 0,
+  "total": 519,
+  "assertions": [
+    {
+      "title": "@E05 @gun-raise first player tap raises for six ticks and resolves after release",
+      "status": "passed",
+      "failure": null
+    },
+    {
+      "title": "@E05 @gun-raise held fire keeps the handgun cadence after the initial 100 ms",
+      "status": "passed",
+      "failure": null
+    },
+    {
+      "title": "@E05 @gun-raise prepared aim fires immediately, disabled player cancels, NPC has no raise",
+      "status": "passed",
+      "failure": null
+    },
+    {
+      "title": "@E05 @gun-raise switching to the bat during preparation cancels without consuming pistol ammunition",
+      "status": "passed",
+      "failure": null
+    },
+    {
+      "title": "@E05 @gun-raise automatic target-side intent does not cancel the accepted gun tap",
+      "status": "passed",
+      "failure": null
+    }
+  ]
+}
