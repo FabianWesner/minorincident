@@ -69,7 +69,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
     // Foreground loading owns the card: larger groups avoid paying a presented
     // frame for every 64 already-compiled objects. Menu-time pacing stays small.
-    const chunk = renderer.selectedBackend === 'webgl' ? background ? 64 : 1024 : 16, soloChunk = 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
+    const chunk = background ? renderer.selectedBackend === 'webgl' ? 64 : 16 : 1024, soloChunk = 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
     let completed = 1; progress?.(completed, total);
     if (pause) {
       for (let from = 0; from < leaves.length; from += chunk) {

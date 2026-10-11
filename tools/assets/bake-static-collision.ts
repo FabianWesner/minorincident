@@ -16,9 +16,9 @@ export async function bakeStaticCollision(path: string): Promise<Aabb[]> {
   // This asset deliberately authors an enterable shell. Connected decorative masonry
   // otherwise produces a single AABB across both bay apertures. Sizes are Blender XYZ;
   // the delivered GLB uses Y-up, so swap authored width/height before transforming.
-  if (path.includes('bld.fire-station')) {
+  if (path.includes('bld.fire-station') || path.includes('kit.guard-tower')) {
     const shell = doc.getRoot().listNodes().filter(node => node.getName().startsWith('col:') && node.getExtras().collider === 'cuboid');
-    if (!shell.length) throw new Error('Fire station is missing its authored collision shell');
+    if (!shell.length) throw new Error(`${path}: missing authored collision shell`);
     authoredShell = shell.map(node => {
       const size = node.getExtras().size as number[], matrix = new Matrix4().fromArray(node.getWorldMatrix());
       const box: Aabb = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
@@ -113,7 +113,7 @@ export async function writeStaticCollision(ids: readonly string[] = []): Promise
     const collisionId = def.id === 'decay.rubble-pile' ? 'carry.annex-rubble' : def.id;
     const cached = staticCollision[collisionId];
     // Alias fitting depends on manifest dimensions as well as source bytes.
-    if (def.id !== 'bld.fire-station' && def.id !== 'kit.army-checkpoint' && def.id !== 'int.basement-cellar' && !aliases[def.id] && cached?.source === source.glb && cached.hash === hash) {
+    if (def.id !== 'bld.fire-station' && def.id !== 'kit.guard-tower' && def.id !== 'kit.army-checkpoint' && def.id !== 'int.basement-cellar' && !aliases[def.id] && cached?.source === source.glb && cached.hash === hash) {
       assets[collisionId] = cached; continue;
     }
     let boxes = await bakeStaticCollision(source.glb);

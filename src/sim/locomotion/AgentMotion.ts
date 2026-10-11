@@ -55,7 +55,7 @@ export function installAgentMotion(world: SimWorld): void {
   world.events.on('sim.tick', () => {
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id); if (!p) continue;
-      if (world.districts && !e.infected) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + (e.civilian?.story ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z));
+      if (world.districts && !e.infected) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + (e.civilian?.floorY ?? (e.civilian?.story ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
       const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
