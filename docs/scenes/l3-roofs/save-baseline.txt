@@ -1,0 +1,6 @@
+Original source commit: 5a9d26820dbf913734c06aeb23f82188b25ad425
+Headless Chromium, E2E_PORT=3364, one worker, shared e2e lock.
+Source/tests/build config extracted from HEAD; public assets shared with the worktree (no save/rack logic in assets).
+T-E13-05 fails at tests/e2e/save.spec.ts:84 in both baseline and modified builds.
+Expected LEFT rack: weapon.bat, weapon.kick, weapon.fists
+Received LEFT rack: weapon.fire-axe, weapon.bat
