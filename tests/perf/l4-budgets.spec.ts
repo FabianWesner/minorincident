@@ -48,16 +48,20 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       // not their authored anchors, to put targets on open approaches to every gun.
       const posts = a.query({}).filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').map(e => ({ at: e.transform, yaw: e.transform.yaw }));
       let infected = a.getState().ai!.count;
+      let alphas = a.query({}).filter(e => e.archetype === 'infected.alpha' && e.health.current > 0).length;
+      const targetAlphas = tier === 'high' ? 3 : 2;
       for (let i = 0; infected < targetInfected && i < 800; i++) {
         const post = posts[i % posts.length];
         const angle = -post.yaw + Math.floor(i / posts.length) * Math.PI / 8;
         const radius = 3 + Math.floor(i / (posts.length * 16)) % 4;
         try {
-          a.spawn('infected.runner', { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++;
+          const archetype = alphas < targetAlphas ? 'infected.alpha' : 'infected.runner';
+          a.spawn(archetype, { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++;
+          if (archetype === 'infected.alpha') alphas++;
         } catch { /* try the next open approach around a soldier post */ }
       }
     }, tier);
-    const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, soldiers: all.filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length, civilians: all.filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length }; });
+    const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, alphas: all.filter(e => e.archetype === 'infected.alpha' && e.health.current > 0).length, soldiers: all.filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length, civilians: all.filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length }; });
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-FAIR/W0/l4-war-line'); await a.screenshotReady(); });
     const warStatic = await page.evaluate(() => window.__SS__!.perf());
     await page.locator('canvas').screenshot({ path: `${dir}/l4-war-line-${tier}.png`, scale: 'css' });
@@ -83,6 +87,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
     expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8); expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);
+    expect(counts.alphas).toBe(tier === 'high' ? 3 : 2);
     expect(firingSoldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8);
     expect(proof.lineBroke).toBe(true);
     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.

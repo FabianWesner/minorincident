@@ -77,6 +77,23 @@ export class HitQuery {
   shotVisible(origin: RayPoint, target: RayPoint, ignoreId?: number): boolean {
     return this.visible({ ...origin, y: (origin.y ?? .7) + .45 }, { ...target, y: (target.y ?? .7) + .45 }, ignoreId);
   }
+  /** Allied guns wait for living humans to clear the segment; they never roll a friendly-fire hit. */
+  alliedShotClear(source: EntitySnapshot, target: EntitySnapshot): boolean {
+    const origin = source.transform, end = target.transform;
+    const dx = end.x - origin.x, dz = end.z - origin.z, lengthSq = dx * dx + dz * dz;
+    if (!lengthSq) return true;
+    for (const id of this.nearby({ x: (origin.x + end.x) / 2, z: (origin.z + end.z) / 2 }, Math.sqrt(lengthSq) / 2 + .6)) {
+      const human = this.entities.get(id);
+      if (!human || id === source.id || id === target.id || human.health.current <= 0 || human.hidden || human.faction === 'infected' || human.civilian?.pet || !(human.civilian || human.escort || human.survivor)) continue;
+      const t = ((human.transform.x - origin.x) * dx + (human.transform.z - origin.z) * dz) / lengthSq;
+      if (t <= 0 || t >= 1) continue;
+      const x = origin.x + dx * t - human.transform.x, z = origin.z + dz * t - human.transform.z;
+      const radius = human.combat?.radius ?? .4;
+      const y = origin.y + .45 + (end.y - origin.y) * t;
+      if (x * x + z * z <= radius * radius && y >= human.transform.y - .7 && y <= human.transform.y + 1.1) return false;
+    }
+    return true;
+  }
   private readonly eye = { x: 0, z: 0 };
   /** `ground`: a downed infected the swing was aimed at (a click on it); other downed bodies are never struck. */
   melee(sourceId: number, origin: Vec2, aim: Vec2, range: number, arc: number, maxTargets: number, civilianGag = false, ground?: number): readonly EntitySnapshot[] {
