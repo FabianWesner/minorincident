@@ -10,7 +10,7 @@ import { worldAssets } from '../../src/assets/worldDefinitions';
 import { encodeStaticBake } from '../../src/assets/staticBakeData';
 import { Lighting } from '../../src/render/Lighting';
 import { Materials } from '../../src/render/Materials';
-import { atLeast } from '../../src/assets/types';
+import { atLeast, variantPath } from '../../src/assets/types';
 
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 export async function staticSource(url: string) {
@@ -40,6 +40,10 @@ for (const id of [...ids].sort()) {
         const root = await registry.asset(id, true, lod, decay || undefined);
         if (root.userData.placeholder || root.children.some(child => !(child instanceof Mesh) || child.children.length)) continue;
         const bytes = gzipSync(encodeStaticBake(root), { level: 9 });
+        // Flattening repeated meshes can dwarf the meshopt-compressed source GLB.
+        // Keep the lossless CPU shortcut only while its transfer is at most twice the source.
+        const source = def.lods?.[lod] ?? def.glb;
+        if (source && bytes.length > readFileSync(variantPath(source, decay || undefined)).length * 2) continue;
         const name = `${id}.${canonical}.${decay || 'base'}.${createHash('sha256').update(bytes).digest('hex').slice(0, 16)}.bin.gz`;
         writeFileSync(`${directory}/${name}`, bytes); files[key] = `/assets/statics/${name}`; total += bytes.length;
       }
