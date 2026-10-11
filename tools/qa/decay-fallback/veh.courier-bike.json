@@ -1,0 +1,64 @@
+{
+  "name": "veh.courier-bike",
+  "ground": "asphalt",
+  "size": 70,
+  "props": [
+    {
+      "id": "normal",
+      "asset": "veh.courier-bike",
+      "at": [
+        0,
+        -5
+      ]
+    },
+    {
+      "id": "wrecked",
+      "asset": "veh.courier-bike",
+      "at": [
+        0,
+        0
+      ],
+      "decay": "wrecked"
+    },
+    {
+      "id": "burned",
+      "asset": "veh.courier-bike",
+      "at": [
+        0,
+        5
+      ],
+      "decay": "burned"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.4
+  },
+  "frames": 2,
+  "shots": [
+    0,
+    2
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "camera": {
+        "mode": "close",
+        "target": [
+          0,
+          0.8,
+          0
+        ],
+        "radius": 23,
+        "azimuth": 135
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

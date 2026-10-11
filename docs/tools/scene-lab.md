@@ -126,6 +126,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 `"vehicles": [{ "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0, "path": [[16, 8]] }]`
 
 - **Vehicle ids:** `vehicle.sedan`, `pickup`, `suv`, `police`, `ambulance`, `school-bus` and `fire-engine`.
+- **Static vehicle damage:** `veh.*` props accept `decay: "wrecked"` or `"burned"`. Vehicles without authored variants retain their shell with darkened surfaces and extinguished lamps; the manifest still lists only authored variants.
 - **L2 passenger ride:** `"l2Ride": { "distanceM": 80, "speedMs": 7.6 }` runs the actual mission driver from that fixture distance. Use `layout.level: "L2"` for its dressing; camera targets may name a vehicle.
 - **Driving:** with a `path`, the real vehicle physics drives the car through a small autopilot (`Vehicles.autopilot`).
 - **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
