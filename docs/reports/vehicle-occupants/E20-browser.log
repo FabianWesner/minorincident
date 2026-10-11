@@ -1,0 +1,148 @@
+
+Running 36 tests using 2 workers
+
+  ✓   2 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (8.3s)
+  ✓   3 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (5.0s)
+  ✓   1 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (28.0s)
+  ✓   5 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (8.9s)
+  ✓   4 [chromium] › tests/e2e/levels/station-back.spec.ts:7:1 › restored station @E19 @E20 game camera: L1 approach and objective, L2 start, axe and departure, Main Row (1.1m)
+  ✓   7 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.6s)
+  ✓   8 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.0s)
+  ✘   6 [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (47.2s)
+  ✓   9 [chromium] › tests/e2e/vehicle-occupants.spec.ts:28:1 › PKG-14 @E20-AC05 @E20-AC06 actual L2 crew seats follow hidden actors and all exit on arrival (55.8s)
+  ✓  10 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (41.7s)
+  ✓  11 [chromium] › tests/e2e/crowd-feel.spec.ts:87:1 › 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 (15.1s)
+  ✓  13 [chromium] › tests/e2e/levels/l2-apron-alarm.spec.ts:9:1 › T-E20-apron-alarm @E20 axe ring is available during calm and beacons run during the alarm (1.6m)
+  ✘  12 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (2.5m)
+  ✓  14 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:10:1 › T-E20-axe-findable @E20 the axe rack is visible and marked during calm (54.9s)
+  ✓  16 [chromium] › tests/e2e/levels/l2-axe-findable.spec.ts:37:1 › T-E20-axe-replay @E20 menu replay still requires the axe even when it is already owned (1.1m)
+  ✓  15 [chromium] › tests/e2e/levels/l2-rescue-setpiece.spec.ts:12:1 › T-E20-20 @E20 rescue set piece reads as an emergency at the game camera (arrival, forcing, doors open) (1.7m)
+  ✓  18 [chromium] › tests/e2e/levels/L2.spec.ts:143:3 › L2 The Failed Rescue in the browser › T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout (22.3s)
+  ✓  19 [chromium] › tests/e2e/levels/l4-boot.spec.ts:6:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (16.4s)
+  ✓  17 [chromium] › tests/e2e/levels/L2.spec.ts:77:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.9m)
+{"tier":"high","seed":2,"counts":{"infected":33,"civilians":42,"firefighters":6},"drawCalls":287,"triangles":962713,"revealMaxMs":48.10000000000218,"gateMaxMs":33,"peakP50":9.400000000001455,"peakP95":15.099999999998545,"peakMax":32.400000000001455,"frames":1017,"simP95":2.3000001907348633,"updateP95":4.300000190734863,"renderP95":7.600000381469727,"gateClosed":true}
+  ✘  20 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high (1.2m)
+  ✓  22 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.3s)
+  ✓  23 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (584ms)
+  ✓  24 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (596ms)
+  ✓  25 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.2s)
+  ✓  26 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (572ms)
+  ✓  27 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (831ms)
+  ✓  28 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.5s)
+  ✓  29 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (842ms)
+  ✓  30 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (723ms)
+  ✓  31 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.8s)
+  ✓  32 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (688ms)
+  ✓  33 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (874ms)
+  ✓  34 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (10.7s)
+  ✓  35 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (2.1s)
+  ✓  36 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.9s)
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":22,"firefighters":6},"drawCalls":227,"triangles":375452,"revealMaxMs":54.5,"gateMaxMs":88.19999999999709,"peakP50":40.80000000000291,"peakP95":57.10000000000582,"peakMax":68.5,"frames":252,"simP95":19.700000762939453,"updateP95":11.399999618530273,"renderP95":26.300000190734863,"gateClosed":true}
+  ✘  21 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.8m)
+
+
+  1) [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props 
+
+    Test timeout of 120000ms exceeded.
+
+    Error Context: test-results/playwright/run-3360/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3360/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3360/e2e-crowd-drawn-T-E07-crow-1be95-webgpu-not-only-their-props-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 1
+
+      Array [
+    +   "weapon.fire-axe",
+        "weapon.bat",
+    -   "weapon.kick",
+    -   "weapon.fists",
+      ]
+
+      82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
+      83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
+    > 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
+         |                                                                                                                                                                                                               ^
+      85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');
+      86 | });
+      87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-vehicle-occupants/tests/e2e/save.spec.ts:84:207
+
+    Error Context: test-results/playwright/run-3360/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3360/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3360/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14
+    Received:    15.099999999998545
+
+      63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
+      64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+    > 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+         |                                                ^
+      66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
+      67 |   });
+      68 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-vehicle-occupants/tests/perf/l2-budgets.spec.ts:65:48
+
+    Error Context: test-results/playwright/run-3360/perf-l2-budgets-high-T-E20-a4252--reveal-and-gate-close-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3360/perf-l2-budgets-high-T-E20-a4252--reveal-and-gate-close-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3360/perf-l2-budgets-high-T-E20-a4252--reveal-and-gate-close-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    40.80000000000291
+
+      63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
+      64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+    > 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+         |                                                                                                    ^
+      66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
+      67 |   });
+      68 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-vehicle-occupants/tests/perf/l2-budgets.spec.ts:65:100
+
+    Error Context: test-results/playwright/run-3360/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3360/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3360/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props 
+    [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly 
+    [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high 
+    [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
+  32 passed (10.5m)

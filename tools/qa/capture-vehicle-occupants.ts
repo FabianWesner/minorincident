@@ -36,7 +36,7 @@ try {
  await session.page.evaluate(()=>{const a=window.__SS__!;a.inspect.enable(false);a.camera.follow();});
  await session.screenshot(`${out}/l2-exit.png`);
  writeJson(`${out}/l2.json`,await session.page.evaluate(()=>window.__SS__!.getState()));
- await session.page.evaluate(async()=>{const a=window.__SS__!;a.input.set({move:{x:1,z:0}});await a.step(90);a.input.clear();});
+ await session.page.evaluate(async()=>{const a=window.__SS__!;a.input.set({move:{x:1,z:0}});await a.step(150);a.input.clear();});
  await session.screenshot(`${out}/l2-control.png`);
  writeJson(`${out}/l2-control.json`,await session.page.evaluate(()=>window.__SS__!.getState()));
  }
