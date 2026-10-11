@@ -144,3 +144,17 @@ test('@E07 melee ring: five infected hold 1.08 m from the courier yet keep landi
   expect(attacks).toBeGreaterThan(100);
   expect(player.health.current).toBeLessThan(start);
 });
+
+test('@E07 @E07-AC04 larger infected keep contact clearance and still damage the courier', async () => {
+  const { infectedContactDistance } = await import('../../../src/sim/ai/CharacterSeparation');
+  for (const role of ['infected.butcher', 'infected.brute', 'infected.gorilla', 'infected.lion']) {
+    const w = await arena(); w.combat!.damage.god = false;
+    const player = w.entities.get(1)!, start = player.health.current;
+    const e = w.entities.get(w.infected!.spawn(role, { x: player.transform.x + 3, z: player.transform.z }, { state: 'chase' }))!;
+    for (let tick = 0; tick < 240; tick++) {
+      w.update();
+      expect(Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)).toBeGreaterThanOrEqual(infectedContactDistance(e.combat!.radius) - .002);
+    }
+    expect(player.health.current, role).toBeLessThan(start);
+  }
+});

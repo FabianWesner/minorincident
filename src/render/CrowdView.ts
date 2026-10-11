@@ -1,3 +1,4 @@
+import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
@@ -292,6 +293,10 @@ export class CrowdView extends Group {
         const band = crowdLod(this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y), this.footBands.get(e.id)); this.footBands.set(e.id, band);
         const crawling = b.legLost || e.archetype === 'infected.crawler' || clip === 'crawl', moving = !!strides[clip] && motion.speed > .06;
         const { layers, style } = this.moves.sample(e, b.state, b.until, batch.windup, renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
+        // The baked hunch already reaches toward the victim. Keep the added pelvis/torso lunge
+        // inside the reserved contact space; distant windups retain their full coil and extension.
+        const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
+        if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
         const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch) ? layers : undefined;
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, band === 'lod1' && !crawling, layered, style);
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend);

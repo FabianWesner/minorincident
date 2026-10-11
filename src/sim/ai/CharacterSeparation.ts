@@ -3,8 +3,9 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { SimPhase } from '../../core/EventBus';
 
-/** Infected-to-human centre spacing (m); must stay below the 1.1 m infected attack range (InfectedSystem). */
+/** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
+export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
 function radius(e: EntitySnapshot): number {
   if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return .9;
@@ -23,22 +24,20 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (let pass = 0; pass < 3; pass++) for (const e of world.entities.iterate()) {
       const r = radii.get(e.id)!; if (!r || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       if (world.districts && e.infected && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') e.transform.y = .7 + world.districts.groundHeight(e.transform.x, e.transform.z);
-      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + .45; // covers the largest gap below
+      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       world.spatial.query(query, neighbors, false);
       for (const id of neighbors) {
         const other = world.entities.get(id); if (!other || other === e) continue;
         if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
         const otherRadius = radii.get(other.id)!; if (!otherRadius) continue;
-        // Combat spacing between an infected and a human fighter (larger fighters still need to enter their authored
-        // melee/grab range). L1-brain infected among themselves keep a small air gap (E19-AC23: a horde reads as separate bodies,
-        // not one blob) yet stay a dense group; animal packs, migration streams and everyone else keep body contact (T-E07-09/16).
+        // Combat crowds reserve the attack pose's upper-body extent, including catalog/elite brains.
+        // Scripted migration streams retain their authored density and spline timing.
+        // Larger attackers keep the same surface clearance around the courier as ordinary humans.
         const infected = (e.infected ? 1 : 0) + (other.infected ? 1 : 0);
-        // Melee ring: an infected stands 1.08 m from the courier (centre to centre), just inside its 1.1 m
-        // attack range. At 1.0 m the hunched (~0.5 m forward) torso plus the 0.22 m attack lunge drove heads and arms
-        // into the courier's body (QA qa-courier-attack-bat: "the five infected pile up inside the courier's body").
-        // Pedestrians keep 1.05 m (capped 0.3 m gap): L1 bites need contact at 1.0 m (InfectedSystem chaseL1).
         const courier = !!(e.survivor || other.survivor);
-        const gap = infected === 1 ? Math.max(.015, courier ? Math.min(.45, meleeRing - r - otherRadius) : Math.min(.3, 1.05 - r - otherRadius)) : infected === 2 && e.infected!.l1 && other.infected!.l1 ? .22 : .015;
+        const contact = infectedContactDistance(e.infected ? r : otherRadius);
+        const combatCrowd = infected === 2 && ((e.infected!.l1 && other.infected!.l1) || e.combat!.attacking || other.combat!.attacking || e.infected!.state === 'chase' || other.infected!.state === 'chase');
+        const gap = infected === 1 ? Math.max(.015, courier ? contact - r - otherRadius : Math.min(.3, 1.05 - r - otherRadius)) : combatCrowd ? .22 + Math.max(0, r - .35, otherRadius - .35) : .015;
         const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
         const squared = dx * dx + dz * dz;
         if (squared >= reach * reach) continue;
