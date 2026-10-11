@@ -15,6 +15,8 @@ export async function menuStart(page: Page): Promise<void> {
   await expect(page.getByTestId('mission-button')).toBeVisible({ timeout: 180_000 });
   // MissionUI focuses this button; activate it with real keys without waiting for a software-rendered RAF pair.
   await keyboardActivate(page, 'mission-button');
+  // Campaign navigation can still be preparing sound after the briefing appears.
+  await page.evaluate(() => window.__SS__!.screenshotReady());
   await expect(page.getByTestId('pause-button')).toBeVisible();
 }
 export async function hudStart(page: Page): Promise<void> {

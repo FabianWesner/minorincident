@@ -13,7 +13,7 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 const NEVER = Number.MAX_SAFE_INTEGER;
 const fresh = (): L5State => ({
   phase: 'cellar', startAt: 0, emergedAt: 0, searchAt: 0, accountedAt: 0, metroAt: 0, shutterAt: 0, doneAt: 0,
-  survivors: [], found: 0, lookoutId: 0, infectedIds: [], medkitIds: [], corpseIds: [], fireIds: [], gloom: 1, cue: null, lastShot: {}, waitedAt: 0, infectedMax: 0, deadAtMetro: 0,
+  survivors: [], found: 0, lookoutId: 0, stationIds: [], infectedIds: [], medkitIds: [], corpseIds: [], fireIds: [], gloom: 1, cue: null, lastShot: {}, waitedAt: 0, infectedMax: 0, deadAtMetro: 0,
 });
 
 /**
@@ -21,7 +21,7 @@ const fresh = (): L5State => ({
  * steps out into the silent city; ten seconds later the objective appears; each of the five survivors is hidden (inside a building or
  * a wreck: out of sight and out of reach) and gives a sign of life within 25 m; standing next to the spot for 1.0 s brings them out and
  * they follow in single file (unarmed, biteable, no fail state); when all five are found the Metro entrance is the destination, and
- * the shutter rolls shut once the courier is at its foot and the living followers are within 15 m (or after 10 s). The sunset gloom
+ * the shutter rolls shut once the courier and every living follower have crossed the open station ingress. The sunset gloom
  * ramps down with the story. All state lives in `mission.state.l5`, so checkpoints restore it.
  */
 export class LevelFiveAftermath {
@@ -42,12 +42,18 @@ export class LevelFiveAftermath {
     return { x: p.x, z: p.z };
   }
   private entity(id: number): EntitySnapshot | undefined { return this.world.entities.get(id); }
+  private shutterNavigation(blocked: boolean): void {
+    const door = this.anchor('l5-metro-shutter');
+    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_600, blocked,
+      wall: { x: door.x, y: 1.2, z: door.z, halfX: door.radius, halfY: 1.2, halfZ: .2 } });
+  }
 
   // ---------------------------------------------------------------------------------------------------------- setup
   prepare(): void {
     const { world, state } = this.mission;
     state.l5 = fresh(); this.s.startAt = world.tick;
     if (!world.infected || !world.npcs) return;
+    this.shutterNavigation(false);
     const tier = world.infected.director.tier;
     const edges = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('edge-in-')).map(id => ({ id, ...this.anchor(id) }));
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
@@ -60,7 +66,8 @@ export class LevelFiveAftermath {
     if (combat) {
       combat.rackCapacity = Math.max(combat.rackCapacity, 4);
       combat.actionDefinitions = { ...combat.actionDefinitions, 'weapon.shotgun': { ...(combat.actionDefinitions?.['weapon.shotgun'] ?? action('weapon.shotgun')), magazine: 0, reloadTime: 0 } };
-      combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]); combat.runner.loadout.state.selectedSide = 'RIGHT';
+      if (!world.progression?.campaign) combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]);
+      combat.runner.loadout.state.selectedSide = 'RIGHT';
     }
     this.placeInCellar();
     const shelf = this.anchor('l5-shotgun');
@@ -72,6 +79,7 @@ export class LevelFiveAftermath {
     this.spawnFires();
     this.spawnWanderers();
     this.spawnMedkits();
+    this.spawnStation();
     // Every machine-gun burst is a loud event (30 m, E21 section 5.3): non-chasing infected come to the shot.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.army-mg') this.gunshot(e.position, 30); });
     // A follower more than 10 m behind calls "Wait!" (subtitle; the voice comes from the survivor's position, see AudioService).
@@ -105,9 +113,21 @@ export class LevelFiveAftermath {
   }
   /** The lookout behind the half-open metro shutter: appears (waving a flashlight) when the group is called to the station. */
   private spawnLookout(): void {
-    const o = this.outbreak(), foot = this.anchor('l5-metro-foot'), at = this.snap({ x: foot.x, z: foot.z - 1.4 }, .4);
+    const o = this.outbreak(), door = this.anchor('l5-metro-shutter'), at = this.snap({ x: door.x + .4, z: door.z - 2.4 }, .4);
     const id = o.spawnPedestrian(at, { role: 'cashier', model: 'npc.marcus.aftermath', schedule: this.hiddenSchedule(at) });
     const e = this.entity(id)!; e.hidden = true; e.civilian!.pauseUntil = NEVER; this.world.spatial.delete(id); this.s.lookoutId = id;
+  }
+  /** The same residents are checkpointed here and carried into L6, on both tiers. */
+  private spawnStation(): void {
+    for (let i = 0; i < l5.metro.occupants; i++) {
+      const at = this.snap({ x: l5.metro.stationX + [-10, -7, -3, 3, 7, 10][i % 6], z: -63.4 + Math.floor(i / 6) });
+      const id = this.outbreak().spawnPedestrian(at, { model: i % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', schedule: this.hiddenSchedule(at) });
+      const e = this.entity(id)!;
+      e.civilian!.pauseUntil = NEVER;
+      e.civilian!.story = { clip: i % 3 ? 'npc-gesture' : 'idle', start: this.world.tick - i * 13 };
+      e.civilian!.floorY = .15;
+      this.s.stationIds.push(id);
+    }
   }
   private spawnCorpses(): void {
     const o = this.outbreak(), s = this.s, tick = this.world.tick;
@@ -127,8 +147,10 @@ export class LevelFiveAftermath {
     let left = this.low ? l5.infected.start.low : l5.infected.start.high;
     for (const g of l5Wanderers) for (let k = 0; k < g.n && left > 0; k++) {
       if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
-      const at = this.snap({ x: g.at[0] + k * 1.3, z: g.at[1] + k * .7 }, .45), id = o.spawnPedestrian(at), e = this.entity(id)!;
-      o.turnNow(e);
+      const alpha = g.n === 1 && (g.at[0] === 49 || g.at[0] === -52);
+      const at = this.snap({ x: g.at[0] + k * 1.3, z: g.at[1] + k * .7 }, alpha ? .8 : .45);
+      const id = alpha ? ai.spawn('infected.alpha', at) : o.spawnPedestrian(at), e = this.entity(id)!;
+      if (!alpha) o.turnNow(e);
       if (!e.infected) continue;
       const brain = e.infected.l1; if (brain) { brain.homeX = g.at[0]; brain.homeZ = g.at[1]; brain.leashM = l5.infected.leashM; }
       if (e.combat) e.combat.damageMultiplier = l5.infected.damage;
@@ -244,21 +266,33 @@ export class LevelFiveAftermath {
     }
     if (s.cue && tick >= s.cue.until) s.cue = null;
   }
-  /** The shutter: the courier at the foot of the entrance, the living followers within 15 m (or 10 s have passed). */
+  /** Entry is across the shutter plane, never merely proximity to the street marker. */
+  insideStation(p: Point): boolean {
+    const door = this.anchor('l5-metro-shutter');
+    return Math.abs(p.x - door.x) <= 1.0 && p.z < door.z - .65 && p.z > door.z - 5;
+  }
+  /** Once the player enters, guide every living follower through the narrow opening. */
+  ingress(e: EntitySnapshot): Point | null {
+    if (!this.s.metroAt || this.s.phase !== 'metro' && this.s.phase !== 'shelter') return null;
+    const door = this.anchor('l5-metro-shutter'), slot = Math.max(0, e.civilian!.survivor!.slot);
+    return { x: door.x + (slot % 2 ? .4 : -.4), z: door.z - 1.4 - Math.floor(slot / 2) * 1.05 };
+  }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
     if (s.phase !== 'metro' || s.shutterAt) return;
-    const foot = this.anchor('l5-metro-foot'), inside = player.health.current > 0 && dist(player.transform, foot) <= foot.radius;
-    if (!inside) { s.metroAt = 0; return; }
-    if (!s.metroAt) { s.metroAt = tick; if (!this.mission.state.states['at-metro']) this.mission.setState('at-metro', true); }
-    const group = this.following(), gathered = group.every(({ e }) => dist(e.transform, player.transform) <= l5.metro.gatherM);
-    if (gathered || tick >= s.metroAt + ticks(l5.metro.waitS)) this.shutter();
+    if (player.health.current <= 0 || !this.insideStation(player.transform)) { s.metroAt = 0; return; }
+    if (!s.metroAt) { s.metroAt = tick; this.mission.setState('at-metro', true); }
+    // Ten seconds is a regroup grace, never permission to abandon living people outside.
+    if (tick >= s.metroAt + ticks(l5.metro.waitS)) {
+      for (const { e } of this.following()) if (!this.insideStation(e.transform)) e.civilian!.survivor!.mode = 'follow';
+    }
+    if (tick >= s.metroAt + ticks(l5.metro.occupantViewS) && this.following().every(({ e }) => this.insideStation(e.transform))) this.shutter();
   }
   private shutter(): void {
-    const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
+    const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.shutterAt) return;
     s.shutterAt = tick; s.phase = 'shelter';
-    for (const { r, e } of this.following()) if (dist(e.transform, player.transform) <= l5.metro.gatherM) r.status = 'sheltered';
+    for (const { r } of this.following()) r.status = 'sheltered';
     s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length;
     this.mission.radio('L5.shutter');
     world.events.emit({ type: 'l5.shutter', tick });
@@ -302,7 +336,9 @@ export class LevelFiveAftermath {
     if (s.phase !== 'cellar') {
       this.losses(); this.chain(); this.cues(); this.checkAccounted(); this.metro();
       s.infectedMax = Math.max(s.infectedMax, world.infected.director.count);
-      if (s.shutterAt && tick >= s.shutterAt + 120 && this.mission.state.gates['l5-metro-shutter']) this.mission.setGate('l5-metro-shutter', false);
+      if (s.shutterAt && tick >= s.shutterAt + 120 && this.mission.state.gates['l5-metro-shutter']) {
+        this.mission.setGate('l5-metro-shutter', false); this.shutterNavigation(true);
+      }
       if (s.shutterAt && !s.doneAt && tick >= s.shutterAt + ticks(3)) this.done();
     }
     this.gloom();
@@ -314,14 +350,15 @@ export class LevelFiveAftermath {
     return false;
   }
   /** The result: survivors that reached the station alive (keys, carried into L6) and their count as `rescued`. */
-  result(): { survivors: string[] } {
+  result(): { survivors: string[]; stationOccupants: EntitySnapshot[]; rescuedSurvivors: EntitySnapshot[] } {
     const s = this.mission.state.l5, keys = s ? s.survivors.filter(r => r.status === 'sheltered').map(r => r.key) : [];
     this.mission.state.stats.rescued = keys.length;
-    return { survivors: keys };
+    return { survivors: keys, rescuedSurvivors: s ? s.survivors.filter(r => r.status === 'sheltered').map(r => structuredClone(this.entity(r.id)!)) : [], stationOccupants: s ? s.stationIds.map(id => structuredClone(this.entity(id)!)) : [] };
   }
   /** Checkpoint restore: shift the timeline. Entities (survivors, infected, corpses, pickups) come back from the snapshot. */
   restore(delta: number): void {
     const s = this.mission.state.l5; if (!s) return;
+    this.shutterNavigation(!this.mission.state.gates['l5-metro-shutter']);
     for (const key of ['startAt', 'emergedAt', 'searchAt', 'accountedAt', 'metroAt', 'shutterAt', 'doneAt', 'waitedAt'] as const) if (s[key]) s[key] += delta;
     for (const r of s.survivors) for (const key of ['foundAt', 'cueAt', 'lostAt'] as const) if (r[key]) r[key] += delta;
     if (s.cue) s.cue.until += delta;

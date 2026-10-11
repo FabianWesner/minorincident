@@ -12,6 +12,8 @@ export interface CampaignSave {
   usage:Record<string,number>;
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];
+  stationOccupants?:import('../world/types').EntitySnapshot[];
+  rescuedSurvivors?:import('../world/types').EntitySnapshot[];
   results?:Record<string, import('../missions/types').MissionResult>;
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
   /** Campaign world-state continuity: what this run's L1 left behind in the town (src/levels/continuity.ts). */
@@ -108,13 +110,14 @@ export function preset(name:ProgressionPreset):CampaignSave {
   if(!/^L[2-6]-default$/.test(name))throw new Error('Unknown progression preset');
   const target=Number(name[1]),save=newCampaign();
   for(let level=1;level<target;level++){
-    // E21 L3-default = bat + axe: the default L2 run takes the optional fire axe from the station rack (the pickup adds it to
-    // the owned actions). Later presets keep the E13 default path until their levels are rebuilt (E22-E24).
+    // The default L2 run takes the optional fire axe; later presets retain it.
     if(level===2&&(target===3||target===4)&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
     autoRewards(save,level as Level);
   }
-  if(target===6&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
-  if(target===6)save.racks={LEFT:["weapon.fire-axe","weapon.bat"],RIGHT:["weapon.army-mg","weapon.handgun","weapon.kick"]};
+  if(target>=5&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
+  // L5's authored L4 end arsenal has the machine gun, not the legacy reward launchers.
+  if(target===5)save.ownedActions=save.ownedActions.filter(id=>id!=='weapon.rocket-launcher'&&id!=='weapon.pipe-bomb');
+  if(target>=5)save.racks={LEFT:["weapon.fire-axe","weapon.bat"],RIGHT:["weapon.army-mg","weapon.handgun","weapon.kick"]};
   if(target===6)save.survivors=["dale","rosa","okafor","mia","sam"];
   return save;
 }

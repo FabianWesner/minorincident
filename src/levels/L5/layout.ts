@@ -1,5 +1,6 @@
 import { l4, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
-import { l5Anchors, l5Survivors } from '../../data/l5';
+import subwayLayout from '../../../public/assets/layouts/D-SUBWAY.layout.json' with { type: 'json' };
+import { l5, l5Anchors, l5Survivors } from '../../data/l5';
 import { findClearSpot, footprints, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 import { l4Dressing } from '../L4/layout';
@@ -115,6 +116,7 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const name of ['pair-plaza', 'pair-harbor-street', 'pair-kessler-lane']) layout.anchors[name] = { position: [l4Anchors[name][0], 0, l4Anchors[name][1]], yaw: 0 };
     const metro = layout.anchors['metro-entrance'];
     const canopy = layout.placements.find(p => p.assetId === 'bld.metro-entrance');
+    if (canopy) canopy.collisionId = 'l5.metro-ingress';
     if (canopy) layout.anchors['l5-metro-shutter'] = { position: [canopy.position[0], 1.2, canopy.position[2] + 2.43], yaw: 0 };
     if (metro) layout.anchors['pair-metro-entrance'] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
     if (door) layout.anchors['l5-cellar-door'] = { position: [...door.position], yaw: 0 };
@@ -155,6 +157,15 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     layout.lightGroups.push({ id: 'l5', offAt: 5 }, { id: 'l5-cue', offAt: 5 });
     const w5 = layout.layers.find(l => l.tier === 5);
     if (w5) w5.disableLights.push(...layout.lightGroups.map(g => g.id).filter(id => id !== 'l5-cue'));
+    // Reuse the cutaway concourse already shipped for L6, north of the street.
+    // Its platform is visible from the entrance before the campaign cut.
+    const station = structuredClone(subwayLayout.placements[0]) as Placement;
+    station.id = 'l5-station'; station.position = [l5.metro.stationX, -.45, l5.metro.stationZ]; station.lightGroup = 'l5-cue';
+    station.visualAabb = { min: [station.position[0] - 30, -.45, station.position[2] - 18], max: [station.position[0] + 30, 5.3, station.position[2] + 26] };
+    layout.placements.push(station);
+    for (const c of subwayLayout.colliders.filter(c => c.id.startsWith('l6-0/'))) {
+      layout.colliders.push({ ...c, minTier: 0, maxTier: 5, id: c.id.replace('l6-0/', 'l5-station/'), aabb: { min: [c.aabb.min[0] + station.position[0], c.aabb.min[1] - .45, c.aabb.min[2] + station.position[2]], max: [c.aabb.max[0] + station.position[0], c.aabb.max[1] - .45, c.aabb.max[2] + station.position[2]] } });
+    }
     return layout;
   });
 }
