@@ -109,3 +109,11 @@ Implementation is committed through `78e39cbf` (production source `100207ee`), f
 - Fresh Scene Lab captures and final combined L1–L5 performance checks remain pending. Earlier passing captures/performance are historical evidence, not the final gate.
 
 No budgets, level arrival tolerances, mission data or assertions were weakened. E25/E27 status remains `in-progress`.
+
+## Fresh pending-gate rerun (2026-10-11)
+
+Merged `lane/e25-e27-close` into this worktree at `7510e7b2`. Two conflict resolutions preserve the newer HMG gun/muzzle extraction together with the lane's asset ID, and preserve Scene Lab walking attacks together with end-of-attack movement cancellation. Fresh production build passes. Only the requested pending gates were run; the preceding lane's unit/sim/static evidence is retained with its original provenance. No level batteries, Oak travel investigation, or L6 straggler investigation was rerun.
+
+Fresh browser + smoke gate: **48 passed, 0 failed, 0 flaky, 3 skipped** in 17.0 minutes. Skips are the existing E25 manual WebGPU spike/parity and staged SSR tests, not acceptance passes. Raw results/log: E25 `closure/gates/browser.json` and `browser.log`. All **23 Scene Lab runs passed**, with zero console errors; every sheet was opened and described in the fresh section of each epic's `review.md`. Raw results: E27 `closure/scene-lab.json`; run log: E25 `closure/gates/scene-lab.log`. All 44 duplicate individual Scene Lab shots were deleted; 23 selected sheets and their specs/metrics remain, alongside the production criterion captures. Selection manifest: E25 `closure/gates/capture-selection.json`.
+
+Combined performance remains pending in this snapshot: the unchanged quiet-run wrapper reserves both browser slots and waits for system load below 3. Spotlight indexing drove load above 10 after the browser run. Per-criterion evidence status is in `closure/gate-ac-status.json`; overall status remains in-progress until the remaining required evidence is available. No budgets, tolerances, criteria, or assertions were changed.

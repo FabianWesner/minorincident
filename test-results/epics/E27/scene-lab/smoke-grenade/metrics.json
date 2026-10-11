@@ -6,9 +6,9 @@
   "frames": 1200,
   "timing": {
     "openMs": 0,
-    "loadMs": 4572,
-    "runMs": 4406,
-    "sceneMs": 8978
+    "loadMs": 5388,
+    "runMs": 5615,
+    "sceneMs": 11003
   },
   "checks": {
     "pass": true,
@@ -66,6 +66,11 @@
     "tick": 1200,
     "backend": "webgl",
     "quality": "high",
+    "propPenetration": {
+      "samples": 2400,
+      "framesMax": 0,
+      "pairs": []
+    },
     "props": {
       "sinkMaxCm": 0,
       "samples": 1200,
@@ -80,14 +85,14 @@
     "wheels": {},
     "perf": {
       "drawCalls": {
-        "p50": 25,
-        "p95": 26,
-        "max": 28
+        "p50": 26,
+        "p95": 27,
+        "max": 29
       },
       "triangles": {
-        "p50": 141990,
-        "p95": 150182,
-        "max": 151206
+        "p50": 142374,
+        "p95": 150566,
+        "max": 151590
       },
       "shadowDrawCalls": {
         "p50": 25,
@@ -102,16 +107,16 @@
       "stepMs": {
         "p50": 0.7,
         "p95": 1.6,
-        "max": 455.2
+        "max": 807.8
       },
       "lastFrame": {
-        "drawCalls": 25,
-        "triangles": 70918,
+        "drawCalls": 26,
+        "triangles": 71206,
         "shadowDrawCalls": 25,
         "shadowTriangles": 55665,
-        "stepMs": 0.5,
+        "stepMs": 1.2000007629394531,
         "categories": {
-          "other": 20,
+          "other": 21,
           "shadows": 25,
           "props": 3,
           "crowd": 2
@@ -134,6 +139,10 @@
       "firstAttackFrame": 188,
       "bites": 0,
       "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
     },
     "companion": {
       "overlapMaxCm": 0,
@@ -252,7 +261,9 @@
       "prop.bench:lab1": "lod2"
     },
     "clipping": {
+      "gunBodyHits": 0,
       "staticPairs": 0,
+      "heldPropHits": 0,
       "actorHits": 0,
       "piercing": 0
     },
@@ -263,8 +274,12 @@
   "clipping": {
     "static": [],
     "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
     "summary": {
+      "gunBodyHits": 0,
       "staticPairs": 0,
+      "heldPropHits": 0,
       "actorHits": 0,
       "piercing": 0
     }

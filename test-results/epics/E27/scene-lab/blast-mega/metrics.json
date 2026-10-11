@@ -6,9 +6,9 @@
   "frames": 900,
   "timing": {
     "openMs": 0,
-    "loadMs": 4456,
-    "runMs": 5289,
-    "sceneMs": 9745
+    "loadMs": 5365,
+    "runMs": 5499,
+    "sceneMs": 10864
   },
   "checks": {
     "pass": true,
@@ -66,6 +66,11 @@
     "tick": 900,
     "backend": "webgl",
     "quality": "high",
+    "propPenetration": {
+      "samples": 900,
+      "framesMax": 0,
+      "pairs": []
+    },
     "props": {
       "sinkMaxCm": 0,
       "samples": 33,
@@ -95,16 +100,16 @@
         "max": 46197
       },
       "stepMs": {
-        "p50": 0.9,
-        "p95": 1.6,
-        "max": 152.6
+        "p50": 0.7,
+        "p95": 1.4,
+        "max": 147.4
       },
       "lastFrame": {
         "drawCalls": 26,
         "triangles": 139691,
         "shadowDrawCalls": 16,
         "shadowTriangles": 46197,
-        "stepMs": 1,
+        "stepMs": 0.8000001907348633,
         "categories": {
           "other": 22,
           "shadows": 16,
@@ -122,6 +127,10 @@
       "firstAttackFrame": -1,
       "bites": 0,
       "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
     },
     "companion": {
       "overlapMaxCm": 0,
@@ -238,7 +247,9 @@
       "prop.bench:lab1": "lod2"
     },
     "clipping": {
+      "gunBodyHits": 0,
       "staticPairs": 0,
+      "heldPropHits": 0,
       "actorHits": 0,
       "piercing": 0
     },
@@ -249,8 +260,12 @@
   "clipping": {
     "static": [],
     "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
     "summary": {
+      "gunBodyHits": 0,
       "staticPairs": 0,
+      "heldPropHits": 0,
       "actorHits": 0,
       "piercing": 0
     }
