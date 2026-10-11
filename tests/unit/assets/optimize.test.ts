@@ -123,7 +123,7 @@ test('T-E17-pose-caps @E17-AC11 prefixed corpse joints retain usable hidden caps
   }
 });
 
-test('T-E17-height @E17-AC02 standing adult exports stay 1.75–1.85 m at every LOD', async () => {
+test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m and Alpha stays 1.35–1.5x worker at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
   const exceptions=new Set(['char.corgi','char.courier-male','char.courier-female','npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.depot-clerk','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   // Animal silhouettes and the prone/seated corpse pack are not standing adults.
@@ -144,7 +144,15 @@ test('T-E17-height @E17-AC02 standing adult exports stay 1.75–1.85 m at every 
       const subjects=[doc.getRoot().listScenes()[0],...doc.getRoot().listNodes().filter(n=>/^survivor\d+_root$/.test(n.getName()))];
       for (const subject of subjects) {
         const bounds=getBounds(subject),height=bounds.max[1]-bounds.min[1];
-        expect(height,`${path}:${subject.getName()}`).toBeGreaterThanOrEqual(1.75);expect(height,`${path}:${subject.getName()}`).toBeLessThanOrEqual(1.85);
+        if (def.id === 'inf.alpha') {
+          // E07's new large human derives from the 1.8 m worker: ordinary adult
+          // bounds below stay exact; Alpha has its own PO height contract.
+          const worker = manifest.find(asset => asset.id === 'inf.common-worker')!;
+          expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 1.35);
+          expect(height, path).toBeLessThanOrEqual(worker.dimensions.y * 1.5);
+        } else {
+          expect(height,`${path}:${subject.getName()}`).toBeGreaterThanOrEqual(1.75);expect(height,`${path}:${subject.getName()}`).toBeLessThanOrEqual(1.85);
+        }
       }
     }
   }

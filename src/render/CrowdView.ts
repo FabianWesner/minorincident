@@ -99,6 +99,10 @@ export class CrowdView extends Group {
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
+    // derived model now, including its sim definition when A-S1 registers it.
+    if (this.world.scenario === 'L4' || this.world.scenario === 'L5')
+      for (const def of allDefinitions) if (def.asset === 'inf.alpha') l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
