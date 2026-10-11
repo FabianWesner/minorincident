@@ -64,7 +64,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       if (mode & flags.clouds) weatherBase.mulAssign(weatherSurface.clouds.mul(-.12).add(1));
       if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
         const pattern = positionWorld.x.mul(.65).sin().mul(positionWorld.z.mul(.5).sin()).mul(.5).add(.5);
-        puddle.assign(pattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15)).mul(normalWorld.y.max(0).pow(8)));
+        puddle.assign(pattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15)).mul(normalWorld.y.max(0).pow(8)).mul(weatherSurface.wetness.smoothstep(.3, .4)));
         weatherBase.assign(mix(weatherBase, weatherBase.mul(.78), puddle));
       });
       const surface = mix(mix(weatherBase, color('#b3121f'), blood), color('#1d1a18'), this.char);
