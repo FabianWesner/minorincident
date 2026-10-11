@@ -230,9 +230,10 @@ export class GameView implements Lifecycle {
         for (const variant of variants) { variant.visible = false; this.preparedDistrictViews.set(variant.world, variant); this.scene.add(variant); }
         // WebGL warms the spawn's close-view LOD0 before play (ANGLE specializes first draws).
         // The rest of the route and its unused LOD1 tier stream after the mission begins.
-        if (this.world.scenario === 'L6') {
-          // The short confined route stays resident: building native LOD batches during the retreat hitches.
-          await this.districts.prepare(this.view.cameraTarget);
+        if (this.world.scenario === 'L6' || this.quality === 'low') {
+          // Phone node builds exceed the frame budget even when compiled asynchronously.
+          // Keep its smaller LODs resident and warm them while loading, like the L6 route.
+          await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget)));
         } else {
           if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
           this.pendingPreparation = { shared, instanceCapacity };
