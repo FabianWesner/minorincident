@@ -280,7 +280,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.sedan-red.glb",
-    "hash": "21f4b2c06251ad56452ecce781ef3714fa472e3024ca432a55a87c85622d4699"
+    "hash": "e0de63a3714004f013eb538f51301197804f66e23c0a8f35cd12bab31cbc9c6b"
   },
   "veh.sedan-blue": {
     "class": "heavy",
@@ -416,7 +416,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.suv-dark.glb",
-    "hash": "68b51c35bd1022955175a8fa9bb51918503cd86e6a470d905bfcb3c7afedbd85"
+    "hash": "1b21b21713becfc86423ffd813aaf3cfc1c63065701feac9519ea12e4b4238c3"
   },
   "veh.pickup-red": {
     "class": "heavy",
@@ -448,7 +448,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.pickup-red.glb",
-    "hash": "e7c879a0219a58aaaf8776461d734916ed45c557bbacd1f4a2b26497f03ad939"
+    "hash": "6303e6ea184eeb53e8c3e73522676de9f2dbd211d7ebd203b216022c8fddec3a"
   },
   "veh.pickup-white": {
     "class": "heavy",
@@ -568,7 +568,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.police-sedan.glb",
-    "hash": "8f767a9df475f8de89d60eb9e1d7d8230e52f42b3423a469d1cd43cf27ef784a"
+    "hash": "5a29fa4c3161c95239e9d335419fc8fc64e18a0281ad9b82221bf172a4834e63"
   },
   "veh.police-suv": {
     "class": "heavy",
@@ -641,7 +641,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.ambulance.glb",
-    "hash": "055819b8a5c2ba4c7bc2744c336422ec6b89a0bc5899ae6de15ae0c80a7570d2"
+    "hash": "f57cb71098d6f217d5ec0265cbe3bd6004b782dc977d006132811170abe15072"
   },
   "veh.jeep-red": {
     "body": "dynamic",

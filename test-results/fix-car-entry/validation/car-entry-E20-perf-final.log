@@ -1,0 +1,64 @@
+
+Running 2 tests using 1 worker
+
+{"tier":"high","seed":2,"counts":{"infected":33,"civilians":42,"firefighters":6},"drawCalls":296,"triangles":961896,"revealMaxMs":57.400000000001455,"gateMaxMs":35.099999999998545,"peakP50":11.200000000000728,"peakP95":14.80000000000291,"peakMax":34.599999999998545,"frames":872,"simP95":2.8000001907348633,"updateP95":5,"renderP95":8,"gateClosed":true}
+  ✘  1 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high (1.0m)
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":22,"firefighters":6},"drawCalls":232,"triangles":375334,"revealMaxMs":83.79999999999563,"gateMaxMs":138.3000000000029,"peakP50":40.099999999998545,"peakP95":53.5,"peakMax":68.69999999999709,"frames":260,"simP95":17.199999809265137,"updateP95":12,"renderP95":27.300000190734863,"gateClosed":true}
+  ✘  2 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.6m)
+
+
+  1) [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 14
+    Received:    14.80000000000291
+
+      63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
+      64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+    > 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+         |                                                ^
+      66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
+      67 |   });
+      68 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-car-entry/tests/perf/l2-budgets.spec.ts:65:48
+
+    Error Context: test-results/playwright/run-3359/perf-l2-budgets-high-T-E20-a4252--reveal-and-gate-close-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3359/perf-l2-budgets-high-T-E20-a4252--reveal-and-gate-close-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3359/perf-l2-budgets-high-T-E20-a4252--reveal-and-gate-close-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    40.099999999998545
+
+      63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
+      64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+    > 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+         |                                                                                                    ^
+      66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
+      67 |   });
+      68 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/fix-car-entry/tests/perf/l2-budgets.spec.ts:65:100
+
+    Error Context: test-results/playwright/run-3359/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3359/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3359/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high 
+    [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 

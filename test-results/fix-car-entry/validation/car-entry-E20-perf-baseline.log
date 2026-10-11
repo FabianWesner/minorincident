@@ -1,0 +1,38 @@
+
+Running 2 tests using 1 worker
+
+{"tier":"high","seed":2,"counts":{"infected":33,"civilians":42,"firefighters":6},"drawCalls":286,"triangles":961401,"revealMaxMs":37,"gateMaxMs":16.80000000000291,"peakP50":9.799999999999272,"peakP95":12.100000000002183,"peakMax":17.099999999998545,"frames":1019,"simP95":2.1000003814697266,"updateP95":4.100000381469727,"renderP95":6.59999942779541,"gateClosed":true}
+  ✓  1 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › high › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high (44.7s)
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":22,"firefighters":6},"drawCalls":226,"triangles":375228,"revealMaxMs":82.40000000000146,"gateMaxMs":98.30000000000291,"peakP50":47.099999999998545,"peakP95":77,"peakMax":90.90000000000146,"frames":206,"simP95":32.80000019073486,"updateP95":14.800000190734863,"renderP95":32.60000038146973,"gateClosed":true}
+  ✘  2 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.7m)
+
+
+  1) [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    47.099999999998545
+
+      63 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
+      64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+    > 65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+         |                                                                                                    ^
+      66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
+      67 |   });
+      68 | });
+        at /private/tmp/minorincident-car-entry-baseline/tests/perf/l2-budgets.spec.ts:65:100
+
+    Error Context: test-results/playwright/run-3358/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3358/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3358/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
+  1 passed (2.6m)
