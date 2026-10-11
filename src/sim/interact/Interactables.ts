@@ -68,6 +68,7 @@ export class Interactables {
     c.barricaded = on;
   }
   block(id: number, wall: CoverWall): void {
+    wall = { ...wall, entityId: id };
     this.authoredWalls.set(id, wall);
     if (this.blockers.has(id)) return;
     const handle = this.world.physics.addBlocker(wall);

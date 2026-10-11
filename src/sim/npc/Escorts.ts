@@ -38,6 +38,7 @@ export class Escorts {
         }
         continue;
       }
+      if (tick < (c.knockedUntil ?? 0)) continue;
       if (!near) { c.progress = 0; c.latched = false; }
       else if (!c.latched) {
         if (++c.progress >= npcs.reviveTicks) { c.order = c.order === 'follow' ? 'wait' : 'follow'; c.state = c.order; c.latched = true; c.progress = 0; this.world.events.emit({ type: 'escort.order', tick, id: e.id, order: c.order }); }
