@@ -1,3 +1,4 @@
+import { l3RouteDirection } from '../../levels/L3/navigation';
 import { Rng } from '../../core/Rng';
 import { l3, l3Street } from '../../data/l3';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
@@ -7,7 +8,7 @@ import { Walker } from './Walker';
 
 /** E21 section 8 bot profiles. `evade-only` never attacks; `idle` stays where it starts in the station yard. */
 export type L3Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
-/** Forced street (AC11): the bot keeps to one avenue up to On-ramp Road; `auto` switches streets by what it sees. */
+/** Street preference for combat detours and medkits; the connected army route overrides it at sealed wreck lines. */
 export type L3StreetChoice = 'auto' | 'blvd' | 'commerce' | 'oak';
 type P = { x: number; z: number };
 const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -24,6 +25,8 @@ const LINKS = [-120, -90, -55, -15, 40, 85, 128];
  */
 export class LevelThreeBot {
   finished = false;
+  private readonly route = {path: [] as number[], goal: -1, pathIndex: 0};
+  private readonly routePoint = {x: 0, z: 0};
   private readonly walker = new Walker();
   private readonly rng: Rng;
   private frame: InputFrame = emptyInput();
@@ -146,18 +149,8 @@ export class LevelThreeBot {
         this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false;
       } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
     }
-    // Forward: along the street, then up On-ramp Road to the rendezvous inside the compound.
-    const zone = a['l3-zone'];
-    if (p.x > 118) { if (Math.abs(p.z) > 2.2 && p.x < 131) go({ x: 129, z: 0 }, .8, 'onramp'); else go({ x: zone.x, z: zone.z }, .3, 'zone'); return frame; }
-    // A point 24 m ahead on the chosen street (on clear ground); the grid route takes the cross-links by itself.
-    const nav = w.infected!.nav, z = l3.map.streets[this.street], ahead = Math.min(124, Math.floor(p.x / 12) * 12 + 24);
-    let target = { x: ahead, z };
-    for (const dz of [0, 1.5, -1.5, 3, -3, 4.5, -4.5]) if (nav.clear(ahead, z + dz, .45)) { target = { x: ahead, z: z + dz }; break; }
-    if (go(target, .8, `route-${this.street}-${target.x}`) && dist(p, target) > 1.6) {
-      // No route to that point (a closed pocket): take the next street over, or step aside when the street is forced.
-      if (this.forced === 'auto') { this.street = STREETS[(STREETS.indexOf(this.street) + 1) % 3]; this.walker.reset(); }
-      else { const at = this.keep(this.walker.detour(w, { x: p.x + 10, z })); if (at) this.detour = { ...at, until: w.tick + 120 }; }
-    }
+    // Read the connected route through the wreck detours and the highway; every step still uses ordinary inputs.
+    if (l3RouteDirection(w, this.route, this.routePoint)) go(this.routePoint, .2, 'army-route');
     return frame;
   }
 }

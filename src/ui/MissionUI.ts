@@ -105,7 +105,7 @@ export class MissionUI {
       const extent=100;
       for(const s of mission.def.steps){
         let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.testid=`mission-pin-${s.id}`;pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
-        pin.hidden=state.steps[s.id].status!=='active'||s.waypoint===false||!anchor;if(pin.hidden)continue;const a=mission.def.anchors[s.anchor];
+        pin.hidden=state.steps[s.id].status!=='active'||s.waypoint===false||!anchor;if(pin.hidden)continue;const a=mission.def.anchors[mission.def.l3 && s.id === 'checkpoint' ? state.marker ?? s.anchor : s.anchor];
         const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
         pin.style.left=`${50+dx*scale}%`;pin.style.top=`${50+dy*scale}%`;
       }

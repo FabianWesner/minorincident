@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 import { worldAssets } from '../../../src/assets/worldDefinitions';
-import { l3, l3Anchors, l3PhotoSpots, l3Street } from '../../../src/data/l3';
+import { l3, l3ArmyOffset, l3Anchors, l3PhotoSpots, l3Street } from '../../../src/data/l3';
 import { timeOfDay } from '../../../src/data/timeOfDay';
 import { commerceFrontages, l3Dressing, levelThreeLayouts, type L3DressingKind, type L3Street } from '../../../src/levels/L3/layout';
 import { compositions } from '../../../src/levels/compositions';
@@ -49,7 +49,8 @@ describe('L3 static', () => {
   test('T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart', () => {
     expect(validateLayout(base, worldAssets)).toEqual([]);
     const [sx] = at('l3-start'), [zx] = at('l3-zone');
-    expect(zx - sx).toBeGreaterThanOrEqual(280); expect(zx - sx).toBeLessThanOrEqual(340);
+    // PO 10-11: the base now lies beyond the highway; the original city span stays intact.
+    expect(zx - l3ArmyOffset - sx).toBeGreaterThanOrEqual(280); expect(zx - l3ArmyOffset - sx).toBeLessThanOrEqual(340);
     // Three E-W streets ~28 m apart running the whole corridor.
     for (const z of Object.values(STREETS)) {
       const span = layout.roads.edges.filter(e => e.points.every(p => Math.abs(p[1] - z) < .01)).flatMap(e => e.points.map(p => p[0]));
