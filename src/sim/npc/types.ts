@@ -75,7 +75,7 @@ export interface Companion { following?: boolean; velocity?: Point; state: 'foll
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */
   warn?: { stage: CorgiWarnStage; threat: number; nervousUntil: number } }
 export type CorgiWarnStage = 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous';
-export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }
+export interface Escort { state: 'follow' | 'wait' | 'cover' | 'downed' | 'dead'; order: 'follow' | 'wait'; child: boolean; gore: false; failed: boolean; downedAt: number; knockedUntil?: number; progress: number; latched: boolean; path: number[]; goal: number; pathIndex: number; cover: Point | null; attackAt: number }
 export interface Traffic { yieldUntil?: number; route: Point[]; segment: number; speed: number; desired: number; braking: number; stopped: boolean; panic: boolean }
 export interface Convoy { route: Point[]; samples: Point[]; distance: number; length: number; state: 'stop' | 'go' | 'arrived' | 'destroyed'; speed: number; offset: number }
 export type NpcEvent =

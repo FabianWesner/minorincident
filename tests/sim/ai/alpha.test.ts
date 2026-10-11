@@ -42,6 +42,7 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
   expect(e.health.current).toBe(280); expect(e.combat!.reaction!.heavy).toBe(false); expect(e.infected!.recoverAt).toBe(-1);
   const soldier = w.entities.get(w.npcs!.civilians.spawn('officer', { x: 6.8, z: 0 }))!;
   soldier.civilian!.ally = allyState('soldier');
+  e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000 };
   e.combat!.staggerUntil = 0; e.infected!.heardTargetId = soldier.id; e.infected!.state = 'chase';
   step(w, 1); const active = e.infected!.until;
   step(w, active - w.tick - 1); expect(soldier.health.current).toBe(100);
@@ -53,19 +54,24 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
 });
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
   test(`T-E07-05-scheduler-${move} @E07-AC05 locked telegraph, independent cooldown, recovery and serialized state`, async () => {
-    const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move];
+    const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move]; w.inspectionGhost = true;
     // The scheduler also serves the later zoo lanes; no animal effects are claimed here.
     e.archetype = timing.archetype;
     const locked = { ...target }; expect(ai.startSpecial(e.id, move, locked, area)).toBe(true); locked.x = 90;
     expect(ai.startSpecial(e.id, move, target, area)).toBe(false); expect(ai.specialHit(e.id, 1)).toBe(false);
     const attack = e.infected!.specialAttack!, hp = w.entities.get(1)!.health.current;
     expect(attack.target.x).toBe(0); expect(attack.activeTick - attack.startTick).toBe(timing.windup);
-    expect(w.events.events().find(ev => ev.type === 'telegraph')).toMatchObject({ sourceId: e.id, move, attackId: attack.attackId, startTick: 0, activeTick: timing.windup, cooldownExpiry: timing.windup + timing.cooldown, target, area });
+    expect(w.events.events().find(ev => ev.type === 'telegraph')).toMatchObject({ sourceId: e.id, move, attackId: attack.attackId, startTick: 0, activeTick: timing.windup, cooldownExpiry: timing.windup + timing.cooldown, target, area: attack.area });
     step(w, timing.windup - 1); expect(attack.stage).toBe('telegraph'); expect(w.entities.get(1)!.health.current).toBe(hp);
     // A paused sim runs no updates: snapshots do not consume timers.
     const paused = JSON.stringify(e.infected); ai.snapshot(); expect(JSON.stringify(e.infected)).toBe(paused);
-    step(w, 1); expect(attack.stage).toBe('active'); expect(ai.specialHit(e.id, 1)).toBe(true); expect(ai.specialHit(e.id, 1)).toBe(false);
-    expect(ai.finishSpecial(e.id)).toBe(true); expect(ai.finishSpecial(e.id)).toBe(false);
+    // Resolve through the activation event to isolate the shared scheduler from each lane's effects.
+    w.events.on('infected.special', ev => {
+      if (ev.type !== 'infected.special' || ev.sourceId !== e.id || ev.stage !== 'active') return;
+      expect(ai.specialHit(e.id, 1)).toBe(true); expect(ai.specialHit(e.id, 1)).toBe(false);
+      expect(ai.finishSpecial(e.id)).toBe(true); expect(ai.finishSpecial(e.id)).toBe(false);
+    });
+    step(w, 1); expect(attack.stage).toBe('recovery');
     step(w, 35); expect(ai.startSpecial(e.id, move, target, area)).toBe(false);
     const restored = JSON.parse(JSON.stringify(e.infected)); e.infected = restored;
     const expiry = restored.specialCooldowns[move]; w.tick += 100; ai.restoreSpecialTimers(restored, 100);
@@ -91,7 +97,7 @@ for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs
 });
 
 test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and retargeting never resets the first', async () => {
-  const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle');
+  const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'); w.inspectionGhost = true;
   expect(ai.startSpecial(e.id, 'alpha.charge', target, area)).toBe(true); step(w, 48);
   const expiry = e.infected!.specialCooldowns!['alpha.charge'];
   expect(ai.finishSpecial(e.id)).toBe(true); step(w, 36);

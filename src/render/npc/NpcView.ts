@@ -107,7 +107,7 @@ export class NpcView extends Group {
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
-      const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
+      const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);

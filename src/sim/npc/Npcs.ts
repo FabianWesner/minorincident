@@ -100,7 +100,7 @@ export class Npcs {
       const c = e.civilian;
       if (c) { c.entered += delta; for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key]) c[key]! += delta; if (c.vehicleYield) c.vehicleYield.until += delta; if (c.lastTravelProgress !== undefined) c.lastTravelProgress += delta; }
       if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; }
-      if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; }
+      if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; if (e.escort.knockedUntil) e.escort.knockedUntil += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
       if (c?.survivor?.waitAt) c.survivor.waitAt += delta;
       const l1 = e.civilian?.l1; if (l1) { l1.repickAt += delta; if (l1.noticed >= 0) l1.noticed += delta; if (l1.graceUntil) l1.graceUntil += delta; if (l1.progressAt !== undefined) l1.progressAt += delta; if (l1.doorAt !== undefined) l1.doorAt += delta; }

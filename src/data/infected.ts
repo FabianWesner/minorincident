@@ -18,7 +18,7 @@ export const humanInfected: readonly InfectedDef[] = [
   role('bloated', 120, 2.5, 'explode', 0.5, 1), role('firefighter', 140, 3.8, 'fire-immune'),
   role('hazmat', 120, 3.2, 'aura'), role('armored', 400, 4.5, 'armor', 0.5),
   role('butcher', 900, 4, 'combo-grab', 0.6), role('nurse', 70, 5, 'revive'),
-  { ...role('alpha', 200, 3.8, 'alpha', 0.55, 0.5), damage: 25, range: 1.5, attackInterval: 1 },
+  { ...role('alpha', 200, 3.8, 'alpha', 0.55, 0.5), damage: 25, range: 1.5, attackInterval: 1, bar: true },
 ];
 export const animalInfected: readonly InfectedDef[] = [
   role('dog', 30, 7, 'pounce', 0.3, 0.4), role('cat', 15, 6, 'cling', 0.2, 0.4),
