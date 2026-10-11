@@ -75,6 +75,7 @@ export class Vfx extends Group {
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
   private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }): void {
     const muzzle = this.targets.muzzle?.(sourceId, direction) ?? { x: fallback.x, y: 1.15, z: fallback.z };
+    if (!this.enabled) return; // The firing pose is independent of the user's particle preference.
     const distance = this.world.combat?.query.clearDistance(muzzle, direction, range) ?? range;
     const start = [muzzle.x, muzzle.y, muzzle.z];
     this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y, muzzle.z + direction.z * distance] });
@@ -182,7 +183,14 @@ export class Vfx extends Group {
       this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
     }
     if (event.type === 'explosion.slowmo') { this.blasts.slowmo(event); return; }
-    if (!this.enabled) return;
+    if (!this.enabled) {
+      if (event.type === 'combat.attack' && actions[event.actionId]?.category === 'ranged') this.gunshot(event.sourceId, event.direction, actions[event.actionId].range, event.position);
+      else if (event.type === 'ally.attack' && event.from && event.to) {
+        const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
+        this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from);
+      }
+      return;
+    }
     if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
     if (event.type === 'combat.hit' && event.amount > 0) {
       this.blood(event, false);

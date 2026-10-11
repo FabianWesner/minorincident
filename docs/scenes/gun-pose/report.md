@@ -2,7 +2,7 @@
 
 ## Changes
 
-- A final torso/right-arm IK layer raises the courier and crowd guns to shoulder height. The firing arm is nearly extended with a small downward elbow bend; the torso faces the shot and the walking legs retain their animation and heading. The layer holds for 24 simulation ticks (0.4 seconds) after the last shot.
+- A final torso/right-arm IK layer raises the courier and crowd guns to shoulder height. The firing arm is nearly extended with a small downward elbow bend; the torso faces the shot and the walking legs retain their animation and heading. The layer holds for 24 simulation ticks (0.4 seconds) after the last shot, including when the user has switched particle VFX off.
 - Courier shots use the held GLB's authored `muzzle` socket. Police, army and armed civilians use their rendered prop barrel endpoints transformed by the actual hand/prop matrix. Army nests retain and rotate their authored gun and muzzle through district batching. Flash, first tracer particle and visual obstruction ray share the shot-time muzzle position.
 - Both gun slots have no idle range line. Firing shows a low-opacity tapered cue from the muzzle, capped at 4 metres, stopped by the combat obstruction query and fading over the firing hold.
 - Scene Lab attack scripts accept simultaneous movement and firing. Its zero-clipping gate now includes firing-gun triangles against the owner's torso, neck and head proxies. Hands and forearms are excluded because they grip the gun. This is sampled every three frames and supplemented by capture inspection; it is not an exact character-mesh intersection proof.
@@ -60,3 +60,8 @@ Final E05 simulation: 61/61 pass on the corrected merged source. [Isolated main 
 ## Static readability capture correction
 
 The original L6 readability frame includes a white guard tracer across the infected group. The test scans an entire character rectangle, so its brightest-pixel measurement can select foreground shot particles rather than a pixel of the infected model. E24-AC15 specifies the brightest pixels **of each infected**. The L6 fixture now advances ordinary simulation/render ticks into the gap between live guard bursts (at least 20 ticks after the last shot), then takes the static readability capture. All effects and guard firing stay enabled; no tracers or muzzle flashes are removed or hidden. Contrast, red-dominance, hue and shadow thresholds are unchanged. Both L6 captures and the L5/L2 branch retries are pending.
+
+
+## VFX preference regression
+
+Resolving the firing pose originally depended on VFX being enabled. The gun event now resolves the aim/muzzle even under the user’s VFX-off preference, before returning without particles. A regression test covers courier and NPC events; the focused rig/VFX suite passes 8/8. Typecheck, lint and build pass after this correction. A fresh full remote unit run with the eighth test is pending.
