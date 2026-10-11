@@ -125,6 +125,8 @@ export type Action =
   | { handover: { building: string; meet: Point | string; pauseS?: number; /** Arm's length in front of an actor `meet` (default 1.05 m, the L1 clerk; the technician uses 1.4). */ standoff?: number; legacy?: boolean } };
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { spawnActor: ActorSpec } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay } | { weather: import('../../data/weather').WeatherKind });
 export type EffectSpec =
+  | { metroShutter: number }
+  | { weaponPickup: string; at: Point; surfaceY?: number; yaw?: number }
   | { lightning: Point; consequence?: 'fire' | 'blackout' }
   | { blast: string; at: Point }
   | { barricadeHit: string; amount: number }

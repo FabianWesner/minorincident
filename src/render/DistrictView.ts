@@ -519,13 +519,14 @@ export class DistrictView extends Group {
         for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
       }
   }
-  private metroShutterClosed = -1;
-  /** L5 closes the existing Metro shutter from its authored half-open offset (1.2 m) onto the platform. */
+  /** L5 raises the authored half-open leaf to 1.9 m clearance, then lowers its bar onto the platform. */
   updateMetroShutter(closed: number): void {
-    if (closed === this.metroShutterClosed) return;
-    this.metroShutterClosed = closed;
+    closed = Math.max(0, Math.min(1, closed));
     for (const entry of this.lodBatches) if (entry.id === 'bld.metro-entrance') for (const ref of entry.refs) {
-      for (const group of [entry.hero, entry.near, entry.far]) group.slide('shutter', -1.2 * closed, ref);
+      // Cache per placement so a late-streamed canopy still receives the current pose.
+      if (ref.userData.metroShutterClosed === closed) continue;
+      ref.userData.metroShutterClosed = closed;
+      for (const group of [entry.hero, entry.near, entry.far]) group.slide('shutter', .7 - 1.9 * closed, ref);
     }
   }
   /** Openness of every doored placement (Scene Lab door gate). */

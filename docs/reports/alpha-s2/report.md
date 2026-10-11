@@ -1,0 +1,6 @@
+**Scope:** A-S2 only: E07-AC05/06 and Alpha E26 portion of AC19; reused scheduler, damage, NPC fall poses, shared bars and pooled telegraphs.<br>
+**Effects:** Charge 0.8 s, 9 m/s, ≤12 m ×2 m, 30 damage; slam 1 s, 4 m, 25 damage; both 72-tick knockdown, wall controls and once-per-human hits; rail 100 ordinary/300 charge damage with nav/debris/source logs.<br>
+**Checks:** Typecheck/lint/build pass; 73 unique focused tests, 8 browser cases, 209 E07 verify sims pass; full unit 810/815 with five unchanged asset failures; verify browser blocked by existing Alpha asset checks ([details](validation.json)).<br>
+**E18:** 200/100 infected sim p95 0.767/0.280 ms (limits 4/6); real-mesh render 41/33 draws and 378,722/222,518 triangles, all actors drawn (limits 600/300 and 1.5M/500k).<br>
+**Visual:** [Before/after review](visual-review.md): desktop, portrait/landscape phone, walls and follower inspected; no clipping/sink/in-frustum misses, locked charge facing, brief foot jitter only; real Alpha proof is conditional on upstream manifest deduplication.<br>
+**Delivery:** Committed on `lane/alpha-s2`; temporary QA worktree removed; only linked before/after screenshots retained; specs/assets manifest untouched; no merge/deploy.

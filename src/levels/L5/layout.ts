@@ -114,12 +114,16 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [name, [x, z]] of Object.entries(l5Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     for (const name of ['pair-plaza', 'pair-harbor-street', 'pair-kessler-lane']) layout.anchors[name] = { position: [l4Anchors[name][0], 0, l4Anchors[name][1]], yaw: 0 };
     const metro = layout.anchors['metro-entrance'];
+    const canopy = layout.placements.find(p => p.assetId === 'bld.metro-entrance');
+    if (canopy) layout.anchors['l5-metro-shutter'] = { position: [canopy.position[0], 1.2, canopy.position[2] + 2.43], yaw: 0 };
     if (metro) layout.anchors['pair-metro-entrance'] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
     if (door) layout.anchors['l5-cellar-door'] = { position: [...door.position], yaw: 0 };
     // The cellar yard (an island): the courier starts at the stair foot, the barred door is on the back wall (as in L4).
     if (inner) {
       const [cx, , cz] = inner.position;
-      layout.anchors['l5-cellar-in'] = { position: [cx + .3, 0, cz - 2.4], yaw: 0 };
+      layout.anchors['l5-cellar-in'] = { position: [cx + .3, 0, cz - 1.4], yaw: 0 };
+      // Lower shelf: board top .685 m minus the cellar placement's 0.3 m sink.
+      layout.anchors['l5-shotgun'] = { position: [cx - 1.93, .385, cz + .55], yaw: H };
       layout.anchors['l5-brace'] = { position: [cx - .4, 0, cz + 2.6], yaw: 0 };
     }
     // The five hiding places: the ring where the courier stands and where the survivor steps out.

@@ -1,0 +1,71 @@
+{
+ "name": "l5-shotgun-shelf",
+ "ground": "district",
+ "time": "L5",
+ "tier": 5,
+ "layout": {
+  "district": "D-FAIR",
+  "level": "L5",
+  "bbox": [
+   [
+    -84,
+    -2
+   ],
+   [
+    -74,
+    8
+   ]
+  ],
+  "assets": [
+   "int.basement-cellar"
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -78.7,
+    1.6
+   ],
+   "yaw": 90,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "weaponPickup": "weapon.shotgun",
+    "at": [
+     -80.93,
+     3.55
+    ],
+    "surfaceY": 0.385,
+    "yaw": 90
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -79.5,
+   0.8,
+   2.5
+  ],
+  "zoom": 0.7
+ },
+ "frames": 60,
+ "shots": [
+  1,
+  59
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "clippingMax": 0,
+  "footSinkMaxCm": 1,
+  "footJitterRunMax": 0,
+  "yawDriftMaxDeg": 0
+ }
+}

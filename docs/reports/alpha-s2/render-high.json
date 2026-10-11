@@ -1,0 +1,154 @@
+{
+  "count": 200,
+  "drawn": 200,
+  "perf": {
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 8,
+      "submitted": 24,
+      "completed": 24,
+      "prebuilt": 24,
+      "failed": 0
+    },
+    "nodeBuilds": 130,
+    "profile": {
+      "other": {
+        "drawCalls": 16,
+        "triangles": 55030
+      },
+      "shadows": {
+        "drawCalls": 14,
+        "triangles": 44633
+      },
+      "crowd": {
+        "drawCalls": 11,
+        "triangles": 279059
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "shadow:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 44620
+      },
+      "shadow:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 44620
+      },
+      "view:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 7,
+        "triangles": 8384
+      },
+      "view:other/sunset-grove/scene-ground": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/sunset-grove/grass-gpu-wind": {
+        "drawCalls": 1,
+        "triangles": 0
+      },
+      "view:other/sunset-grove/Mesh": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+        "drawCalls": 12,
+        "triangles": 12
+      },
+      "shadow:other/Render Pipeline/Render Pipeline": {
+        "drawCalls": 1,
+        "triangles": 1
+      },
+      "view:other/infected-health-bars/Mesh": {
+        "drawCalls": 3,
+        "triangles": 36
+      }
+    },
+    "updateCpuMs": 3.6000003814697266,
+    "renderCpuMs": 1.5999994277954102,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 30.030030030029867,
+    "frameMs": 33.30000000000018,
+    "simMs": 0,
+    "uiMs": 0,
+    "drawCalls": 41,
+    "triangles": 378722,
+    "geometries": 79,
+    "textures": 35,
+    "entities": 201,
+    "backend": "webgl",
+    "loadTiming": {
+      "dataMs": 0,
+      "simMs": 43.19999980926514,
+      "viewMs": 2700.2000007629395
+    },
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 16,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 588000000,
+    "lighting": {
+      "lightFieldMs": 0.19999980926513672,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L4"
+    }
+  },
+  "crowd": {
+    "telegraphs": [
+      3,
+      12
+    ],
+    "instances": 221,
+    "meshDrawCalls": 4,
+    "nonInstancedMeshes": 0
+  },
+  "alphaBatches": [
+    {
+      "id": "infected.alpha",
+      "lod": "lod1",
+      "instances": 6,
+      "source": "glb"
+    }
+  ]
+}

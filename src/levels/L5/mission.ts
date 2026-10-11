@@ -15,11 +15,14 @@ export function levelFiveMission(resolve: (district: DistrictId, name: string) =
     states: ['emerged', 'searching', 'accounted', 'at-metro', 'sheltered'], counters: [], checkpoints: [...l5.checkpoints],
     cinematics: {}, steps: [], finish: ['metro'], onStart: [{ kind: 'radio', id: 'L5.hours' }], onComplete: [],
   };
-  const names = ['l5-cellar-in', 'l5-brace', 'l5-cellar-door', 'l5-out', 'l5-plaza', 'l5-metro-foot', 'kessler-cellar-door', 'metro-entrance', 'town-hall-steps',
+  const names = ['l5-cellar-in', 'l5-shotgun', 'l5-metro-shutter', 'l5-brace', 'l5-cellar-door', 'l5-out', 'l5-plaza', 'l5-metro-foot', 'kessler-cellar-door', 'metro-entrance', 'town-hall-steps',
     ...l5Survivors.flatMap(s => [`l5-ring-${s.key}`, `l5-hide-${s.key}`, `l5-out-${s.key}`])];
   for (const name of names) def.anchors[name] = resolve('D-FAIR', name);
   for (let i = 1; i <= 200; i++) { try { def.anchors[`refuge-door-${i}`] = resolve('D-FAIR', `refuge-door-${i}`); } catch { break; } }
   for (let i = 1; i <= 9; i++) { try { def.anchors[`edge-in-${i}`] = resolve('D-FAIR', `edge-in-${i}`); } catch { break; } }
+  // The existing shutter spans the 2.8 m entrance; open until its two-second descent ends.
+  def.anchors['l5-metro-shutter'].radius = 1.4;
+  def.gates['l5-metro-shutter'] = { anchor: 'l5-metro-shutter', open: true };
   def.anchors['l5-brace'].radius = 1.3; def.anchors['l5-metro-foot'].radius = l5.metro.triggerM; def.anchors['l5-plaza'].radius = 6;
   for (const s of l5Survivors) def.anchors[`l5-ring-${s.key}`].radius = l5.survivors.reachM;
   const step = (id: string, text: string, anchor: string, complete: Trigger, start: ObjectiveDef['start'], type: ObjectiveDef['type'] = 'custom'): ObjectiveDef => {

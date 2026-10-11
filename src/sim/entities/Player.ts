@@ -46,8 +46,8 @@ export class Player {
     const p = this.physics.playerBody!.translation(), state = this.entity.survivor!;
     Object.assign(this.entity.transform, p); state.grounded = this.physics.characterController!.computedGrounded();
     const speed = Math.hypot(this.locomotion.displacement.x, this.locomotion.displacement.z) / FIXED_DT;
-    const knocked = tick < (state.knockedUntil ?? 0), rising = knocked && tick - state.knockedAt! >= (state.knockedUntil! - state.knockedAt!) * .6;
-    this.animate(state.diedAt !== null ? 'die' : knocked ? rising ? 'get-up' : 'knockdown' : tick - this.lastDamage < survivor.hurtTicks ? 'hurt' : this.action && tick < this.actionUntil ? this.action : speed > 2.5 ? 'run' : speed > 0.01 ? 'walk' : 'idle', tick);
+    const knockdown = state.knockdown && tick < state.knockdown.until;
+    this.animate(state.diedAt !== null ? 'die' : knockdown ? tick < state.knockdown!.until - 24 ? 'knockdown' : 'get-up' : tick - this.lastDamage < survivor.hurtTicks ? 'hurt' : this.action && tick < this.actionUntil ? this.action : speed > 2.5 ? 'run' : speed > 0.01 ? 'walk' : 'idle', tick);
   }
   /** Returns accepted damage; rejected hits do not postpone regeneration. Timers use sim ticks only. */
   damage(amount: number, tick: number): number {
@@ -71,7 +71,7 @@ export class Player {
   restoreVitals(tick: number): void {
     const state=this.entity.survivor!;
     this.entity.health.current=this.entity.health.max; state.diedAt=null; state.invulnerableUntil=tick;
-    this.lastDamage=-Infinity; this.action=null; delete state.attack; delete state.knockedAt; delete state.knockedUntil; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
+    this.lastDamage=-Infinity; this.action=null; delete state.attack; delete state.knockdown; this.locomotion.reset(); state.velocity=this.locomotion.velocity;
     this.entity.locomotion = this.locomotion.response;
     this.animate('idle',tick);
   }

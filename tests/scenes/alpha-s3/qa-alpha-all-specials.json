@@ -1,0 +1,179 @@
+{
+  "name": "qa-alpha-all-specials",
+  "seed": 37,
+  "ground": "asphalt",
+  "size": 64,
+  "time": "L4",
+  "dof": false,
+  "note": "One Alpha executes charge, ground slam, grab/throw of a retained corpse, then roar. Inspect locked arrows/rings, courier knockdown, airborne body, regular convergence and health bar. No cooldown reset; activation spacing and effects are asserted by Alpha sims.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ]
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -4,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "god": false
+      }
+    },
+    {
+      "frame": 10,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          6,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 190,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.ground-slam",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 280,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          2,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 290,
+      "spawnActor": {
+        "id": "body",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          9,
+          1
+        ],
+        "state": "idle"
+      }
+    },
+    {
+      "frame": 290,
+      "actor": "body",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 330,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.grab-throw",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 440,
+      "actor": "courier",
+      "do": {
+        "god": true
+      }
+    },
+    {
+      "frame": 490,
+      "spawnActor": {
+        "id": "regular",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          -4,
+          -6
+        ],
+        "state": "idle"
+      }
+    },
+    {
+      "frame": 500,
+      "camera": {
+        "mode": "game",
+        "target": [
+          4,
+          0
+        ],
+        "zoom": 2.6
+      }
+    },
+    {
+      "frame": 500,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.roar",
+        "target": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      4,
+      0
+    ],
+    "zoom": 1.25
+  },
+  "frames": 900,
+  "shots": [
+    10,
+    57,
+    58,
+    100,
+    150,
+    190,
+    249,
+    250,
+    275,
+    330,
+    377,
+    378,
+    395,
+    410,
+    500,
+    547,
+    548,
+    700,
+    848,
+    900
+  ],
+  "sheet": 40,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0
+  }
+}

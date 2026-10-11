@@ -1,0 +1,42 @@
+{
+  "passed": 810,
+  "failed": 5,
+  "total": 815,
+  "failures": [
+    {
+      "file": "unit/vehicles.test.ts",
+      "test": "T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps",
+      "messages": [
+        "AssertionError: wrecked/0/doorL: expected undefined to be defined\n    at /srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/tests/unit/vehicles.test.ts:46:49\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "unit/assets/build.test.ts",
+      "test": "T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate",
+      "messages": [
+        "AssertionError: veh.fire-engine.wrecked:lod0: expected [ \u2026(2) ] to deeply equal []\n    at /srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/tests/unit/assets/build.test.ts:45:38\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "unit/assets/validate.test.ts",
+      "test": "T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot stage",
+      "messages": [
+        "AssertionError: expected 393 to be 394 // Object.is equality\n    at /srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/tests/unit/assets/validate.test.ts:81:51\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    },
+    {
+      "file": "unit/assets/validate.test.ts",
+      "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "messages": [
+        "AssertionError: expected [ 'missing LOD', 'missing LOD' ] to deeply equal []\n    at /srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/tests/unit/assets/validate.test.ts:88:20\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "unit/data/action-assets.test.ts",
+      "test": "T-E06-08 @E06 @E06-AC08 every action maps to real icon and socket-compatible view manifest entries",
+      "messages": [
+        "AssertionError: expected 393 to be 394 // Object.is equality\n    at /srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/tests/unit/data/action-assets.test.ts:11:51\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/alpha-s2-ec0758-93276-1791752119/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    }
+  ]
+}

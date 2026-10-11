@@ -454,7 +454,9 @@ export class SceneLab {
   }
   effect(fx: EffectSpec): void {
     const world = this.world;
-    if ('barricadeHit' in fx) { const target = world.entities.values().find(e => e.barricade?.slot.id === fx.barricadeHit); if (!target) throw new Error(`Unknown barricade: ${fx.barricadeHit}`); world.hazards!.hit(target.id, fx.amount, 'bullet'); }
+    if ('metroShutter' in fx) this.game.view.metroShutter(fx.metroShutter);
+    else if ('weaponPickup' in fx) { const id = world.combat!.pickups.spawn(fx.weaponPickup, toPoint(fx.at), false, { surfaceY: fx.surfaceY, retain: true, interactTicks: 36 }); world.entities.get(id)!.transform.yaw = (fx.yaw ?? 0) * Math.PI / 180; }
+    else if ('barricadeHit' in fx) { const target = world.entities.values().find(e => e.barricade?.slot.id === fx.barricadeHit); if (!target) throw new Error(`Unknown barricade: ${fx.barricadeHit}`); world.hazards!.hit(target.id, fx.amount, 'bullet'); }
     else if ('lightning' in fx) world.weather?.strike({ ...toPoint(fx.lightning), y: 0 }, fx.consequence);
     else if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
     else if ('wreck' in fx) { const id = this.vehicles.get(fx.wreck); if (id === undefined) throw new Error(`wreck: unknown vehicle ${fx.wreck}`); world.vehicles!.damage(id, 1e6); }

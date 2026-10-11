@@ -1,0 +1,78 @@
+{
+  "mergedMain": "580b3d17",
+  "mergeCommit": "4b4da177",
+  "manifestSha256": "a17e128f6acf8ef29752481ef7fa0ed73caa87a33fc8896d157f257d1fd79da4",
+  "runner": "mi-runner-1 (94.130.181.173)",
+  "maxWorkers": 2,
+  "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/engine-wreck-doors-unit.json -- npm run test:unit -- --maxWorkers=2 --reporter=default --reporter=json --outputFile=test-results/engine-wreck-doors-unit.json",
+  "success": true,
+  "passedTests": 815,
+  "failedTests": 0,
+  "files": 160,
+  "reportedFailures": [
+    {
+      "id": "T-E09-01-wreck",
+      "title": "T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps",
+      "status": "passed",
+      "file": "unit/vehicles.test.ts",
+      "durationMs": 278.77996699999494
+    },
+    {
+      "id": "T-E06-08",
+      "title": "T-E06-08 @E06 @E06-AC08 every action maps to real icon and socket-compatible view manifest entries",
+      "status": "passed",
+      "file": "unit/data/action-assets.test.ts",
+      "durationMs": 77.14359299998614
+    },
+    {
+      "id": "T-E17-04",
+      "title": "T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate",
+      "status": "passed",
+      "file": "unit/assets/build.test.ts",
+      "durationMs": 1518.0579149999976
+    },
+    {
+      "id": "T-E17-06",
+      "title": "T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot stage",
+      "status": "passed",
+      "file": "unit/assets/validate.test.ts",
+      "durationMs": 5.657977999999275
+    },
+    {
+      "id": "T-E17-02b",
+      "title": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "status": "passed",
+      "file": "unit/assets/validate.test.ts",
+      "durationMs": 139946.745078
+    }
+  ],
+  "typecheck": "passed (T-E01-01b)",
+  "lint": "passed (T-E01-01b)",
+  "build": "passed (T-E01-01b)",
+  "infrastructureAttempts": [
+    "First runner sync failed with no disk space before tests started.",
+    "Runner 3 passed all five reported cases but failed the static build with ENOSPC; rerun moved to recreated runner 1 with 66 GB free."
+  ],
+  "localPreMerge": {
+    "numPassedTests": 807,
+    "numFailedTests": 0,
+    "numPassedTestSuites": 180,
+    "numFailedTestSuites": 0,
+    "success": true,
+    "files": 157,
+    "commands": {
+      "targeted": "npx vitest run tests/unit/vehicles.test.ts tests/unit/assets/build.test.ts -t 'T-E09-01-wreck|T-E17-04' --maxWorkers=4",
+      "unit": "npm run test:unit -- --maxWorkers=4",
+      "typecheck": "npm run typecheck",
+      "lint": "npm run lint",
+      "build": "npm run build"
+    },
+    "targeted": {
+      "passed": 2,
+      "failed": 0
+    },
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass"
+  }
+}

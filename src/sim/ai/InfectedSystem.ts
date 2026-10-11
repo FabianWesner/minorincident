@@ -157,7 +157,7 @@ export class InfectedSystem {
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       if (this.world.barricades?.vault(e)) continue;
-      if ((this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if (this.updateSpecial(e)) continue;
       if (b.roar) {
         const roar = b.roar;
@@ -247,7 +247,11 @@ export class InfectedSystem {
         continue;
       }
       if (b.state === 'chase') {
-        if (this.alphaSupport.tryStart(e, player)) continue;
+        if (!this.world.inspectionGhost && this.alphaSupport.tryStart(e, player)) continue;
+        if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.combat!.query.visible(e.transform, player.transform)) {
+          const move = distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
+          if (move && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) continue;
+        }
         let obstacle = this.world.barricades?.attackTarget(e, player.transform);
         for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
         // Hold at an obstructing brace during cooldown. Seeking an unreachable goal here
@@ -843,6 +847,11 @@ export class InfectedSystem {
     const attackId = this.nextAttackId(), activeTick = tick + timing.windup;
     b.attackId = attackId;
     if (move === 'alpha.grab-throw' || move === 'alpha.roar') { if (e.locomotion) resetResponse(e.locomotion); b.dx = area.dx; b.dz = area.dz; }
+    if (move === 'alpha.charge' || move === 'alpha.ground-slam') {
+      const dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz);
+      area = { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: length > .001 ? dx / length : Math.cos(e.transform.yaw), dz: length > .001 ? dz / length : -Math.sin(e.transform.yaw) };
+      e.transform.yaw = -Math.atan2(area.dz, area.dx);
+    }
     b.specialAttack = { move, attackId, stage: 'telegraph', startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, recoveryUntil: 0, target: { ...target }, area: { ...area }, hitIds: [] };
     e.combat!.attacking = true;
     this.world.events.emit({ type: 'telegraph', tick, sourceId, attackId, special: move, move, duration: timing.windup / 60, startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, target: { ...target }, area: { ...area } });
@@ -886,14 +895,74 @@ export class InfectedSystem {
       this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'expiry' });
       delete b.specialAttack; return false;
     }
+    if (a.stage === 'active' && (a.move === 'alpha.charge' || a.move === 'alpha.ground-slam')) this.resolveAlphaPhysical(e);
     return true;
+  }
+  /** Fixed, locked physical moves use combat hits, E26 blockers and the existing human hurt state. */
+  private resolveAlphaPhysical(e: EntitySnapshot): void {
+    const a = e.infected!.specialAttack!;
+    if (a.move !== 'alpha.charge' && a.move !== 'alpha.ground-slam') return;
+    const q = this.world.combat!.query, p = e.transform, direction = { x: a.area.dx, z: a.area.dz };
+    if (a.move === 'alpha.ground-slam') {
+      for (const target of this.world.entities.iterate()) {
+        if (!this.physicalHuman(target) || Math.hypot(target.transform.x - a.area.x, target.transform.z - a.area.z) > 4 + 1e-8 || !q.visible(a.area, target.transform) || !this.physicalPropVisible(a.area, target.transform)) continue;
+        this.physicalHit(e, target, 25);
+      }
+      this.finishSpecial(e.id); return;
+    }
+    const travelled = (p.x - a.area.x) * a.area.dx + (p.z - a.area.z) * a.area.dz;
+    const step = Math.min(9 / 60, Math.max(0, 12 - travelled));
+    let distance = this.physicalClearDistance(e, direction, step);
+    // Break only the nearest contacted E26 blocker. Re-query immediately after its ordinary hit event clears nav.
+    for (let tries = 0; distance < step && tries < 8; tries++) {
+      let wall = q.dynamicWalls.find(w => w.entityId !== undefined && q.wallDistance(w, p, direction, step, e.combat!.radius) <= distance + 1e-8);
+      if (!wall) for (const propWall of this.world.props?.navWalls.values() ?? []) if (q.wallDistance(propWall, p, direction, step, e.combat!.radius) <= distance + 1e-8) { wall = propWall; break; }
+      const target = wall && this.world.entities.get(wall.entityId!);
+      if (!target || (!target.barricade?.intact && target.kind !== 'physics-prop') || !this.specialHit(e.id, target.id)) break;
+      this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: a.attackId, actionId: a.move, origin: p, direction, base: 300, multiplier: 1, type: 'melee', knockback: 0, stagger: 0, hitStopMs: 0 });
+      distance = this.physicalClearDistance(e, direction, step);
+    }
+    const x = p.x, z = p.z;
+    p.x += a.area.dx * Math.max(0, distance - (distance < step ? .001 : 0));
+    p.z += a.area.dz * Math.max(0, distance - (distance < step ? .001 : 0));
+    p.y = (this.world.districts?.groundHeight(p.x, p.z) ?? 0) + .7;
+    p.yaw = -Math.atan2(a.area.dz, a.area.dx); this.world.spatial.set(e.id, p.x, p.z);
+    for (const target of this.world.entities.iterate()) {
+      if (!this.physicalHuman(target)) continue;
+      const dx = target.transform.x - x, dz = target.transform.z - z;
+      const along = Math.max(0, Math.min(distance, dx * a.area.dx + dz * a.area.dz));
+      if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= 1 + 1e-8 && q.visible({ x, z }, target.transform) && this.physicalPropVisible({ x, z }, target.transform)) this.physicalHit(e, target, 30);
+    }
+    if (distance < step || travelled + step >= 12 - 1e-8) this.finishSpecial(e.id);
+  }
+  private physicalClearDistance(e: EntitySnapshot, direction: { x: number; z: number }, step: number): number {
+    const q = this.world.combat!.query;
+    let distance = q.clearDistance(e.transform, direction, step, undefined, e.combat!.radius);
+    for (const wall of this.world.props?.navWalls.values() ?? []) distance = Math.min(distance, q.wallDistance(wall, e.transform, direction, step, e.combat!.radius));
+    return distance;
+  }
+  private physicalPropVisible(origin: { x: number; z: number }, target: { x: number; z: number }): boolean {
+    const dx = target.x - origin.x, dz = target.z - origin.z, length = Math.hypot(dx, dz);
+    if (!length) return true;
+    for (const wall of this.world.props?.navWalls.values() ?? []) if (this.world.combat!.query.wallDistance(wall, origin, { x: dx / length, z: dz / length }, length) < length - 1e-8) return false;
+    return true;
+  }
+  private physicalHuman(target: EntitySnapshot): boolean {
+    return target.health.current > 0 && !target.hidden && !target.companion && !target.escort?.child && !(target.civilian && (!target.civilian.adult || target.civilian.pet || ['finished', 'infected', 'down', 'rising'].includes(target.civilian.state))) && !storyProtected(this.world, target) && (target.kind === 'player' || target.faction === 'civilian' || target.faction === 'escort' || !!target.civilian);
+  }
+  private physicalHit(source: EntitySnapshot, target: EntitySnapshot, base: number): void {
+    if (!this.specialHit(source.id, target.id)) return;
+    const a = source.infected!.specialAttack!;
+    const dx = target.transform.x - source.transform.x, dz = target.transform.z - source.transform.z, length = Math.hypot(dx, dz);
+    const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: target.id, attackId: a.attackId, actionId: a.move, origin: source.transform, direction: length ? { x: dx / length, z: dz / length } : { x: a.area.dx, z: a.area.dz }, base, multiplier: 1, type: 'melee', knockback: 0, stagger: 0, knockdownTicks: 72, hitStopMs: 0 });
+    this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: source.id, targetId: target.id, attackId: a.attackId, special: a.move, amount });
   }
   /** Stable test/debug surface, including RNG and pool/director counters needed for deterministic replay. */
   snapshot() {
     return { sequence: this.sequence, specials: this.active.filter(e => e.infected!.specialAttack || e.infected!.specialCooldowns).map(e => ({ sourceId: e.id, attack: structuredClone(e.infected!.specialAttack), cooldowns: { ...e.infected!.specialCooldowns }, recoveryUntil: e.infected!.specialRecoveryUntil ?? 0 })), rng: this.rng.snapshot(), pool: { ...this.counters, available: this.pool.length }, cap: this.director.cap, count: this.director.count, queued: this.director.queue.map((q) => ({ archetype: q.archetype, position: q.position, options: q.options, turning: q.turning ?? false })), migrations: this.director.migrations.map((m) => ({ started: m.started, arrived: m.arrived, expectedSeconds: m.expectedSeconds, members: m.members })) };
   }
   /** E26 uses the same authored attack damage when resolving barricades. */
-  barricadeDamage(sourceId: number, base: number): number { return base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : this.world.entities.get(sourceId)?.archetype === 'infected.butcher' ? 8 : 1); }
+  barricadeDamage(sourceId: number, base: number): number { return this.world.entities.get(sourceId)?.archetype === 'infected.alpha' ? 100 : base * (this.world.entities.get(sourceId)?.archetype === 'infected.gorilla' ? 6 : this.world.entities.get(sourceId)?.archetype === 'infected.brute' ? 5 : this.world.entities.get(sourceId)?.archetype === 'infected.butcher' ? 8 : 1); }
   /**
    * L1 steering under the motion limits: straight when the goal is in clear view (re-checked every 6 ticks or when the
    * goal moved), else a budgeted A* route (at most 4 new routes per tick; moving goals re-route every 0.25 s), or the

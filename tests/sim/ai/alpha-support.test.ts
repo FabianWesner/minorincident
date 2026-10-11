@@ -18,6 +18,8 @@ function corpse(w: SimWorld, x: number, z = 0) {
 }
 function start(w: SimWorld, id: number, move: 'alpha.roar' | 'alpha.grab-throw', target = { id: 1, x: 8, z: 0 }) {
   const e = w.entities.get(id)!;
+  // Isolate support effects/repeats from the independently tested physical moves between casts.
+  e.infected!.specialCooldowns = { ...e.infected!.specialCooldowns, 'alpha.charge': 10000, 'alpha.ground-slam': 10000 };
   return w.infected!.startSpecial(id, move, target, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.roar' ? 18 : 1, dx: 1, dz: 0 });
 }
 function wall(w: SimWorld, x: number) {
@@ -37,6 +39,7 @@ test('T-E07-06-grab-throw @E07-AC05 @E07-AC06 @E07-AC14 locked 12m/s corpse flig
   while (a.stage === 'active') step(w, 1);
   const player = w.entities.get(1)!;
   expect(player.health.current).toBe(70); expect(player.combat!.staggerUntil - w.tick).toBe(48);
+  expect(player.survivor!.knockdown).toEqual({ started: w.tick, until: w.tick + 48 });
   expect(a.hitIds).toEqual([1]); expect(body.corpse).toBe(true); expect(body.transform.y).toBe(.7);
   expect(body.infected).toEqual(pose); expect(body.transform.x).toBeGreaterThan(6);
   step(w, 36); expect(w.events.events().filter(ev => ev.type === 'infected.attack' && ev.attackId === a.attackId)).toHaveLength(1);

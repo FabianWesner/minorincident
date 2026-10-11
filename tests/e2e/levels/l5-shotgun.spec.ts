@@ -9,6 +9,7 @@ test('T-E23-12-browser @E23 @E23-AC12 basement pickup and no ammunition HUD', as
   await page.waitForFunction(() => Boolean(window.__SS__));
   await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L5', { seed: 1, progression: 'L5-default' }); a.pause(); a.missions.begin(); a.camera.follow(); await a.screenshotReady(); });
   await page.locator('canvas').screenshot({ path: `${dir}/before-pickup.png` });
+  await page.evaluate(async () => { const a = window.__SS__!, p = a.query({ kind: 'pickup' }).find(e => e.archetype === 'weapon.shotgun')!; a.teleport(1, { x: p.transform.x + .95, z: p.transform.z }); await a.step(2); });
   await page.keyboard.press('e');
   await page.evaluate(async () => { const a = window.__SS__!; await a.step(36); await a.screenshotReady(); });
   const state = await page.evaluate(() => { const a = window.__SS__!, s = a.getState(), w = s.player!.weapons!; return { ids: [...w.LEFT.rack, ...w.RIGHT.rack].map(r => r.id), active: w.RIGHT.rack[w.RIGHT.index], pickups: s.entities.filter(e => e.pickup && 'actionId' in e.pickup).length }; });
