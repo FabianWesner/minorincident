@@ -92,7 +92,9 @@ export class DistrictAssets {
   private readonly sharedMaterials = new Map<string, Material>();
   private share(root: Group): void {
     for (const child of root.children) {
-      if (!(child instanceof Mesh) || (child.name !== 'window-light' && child.name !== 'static-body')) continue;
+      // Split roofs use the same feature graphs as bodies/windows. Share them
+      // across LODs too, so a streamed roof does not rebuild nodes during play.
+      if (!(child instanceof Mesh) || !['window-light', 'static-body', 'roof', 'roof-light'].includes(child.name)) continue;
       // Window/gloss graphs require different vertex inputs; sharing solely by
       // mesh name silently replaced those graphs with the first matte batch.
       const key = `${child.name}:${(child.material as Material).userData.batchFeatures ?? 'legacy'}`;
