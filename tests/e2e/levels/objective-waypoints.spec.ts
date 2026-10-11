@@ -1,0 +1,115 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { test, expect, boot, testUrl } from '../fixtures';
+import { l3Anchors } from '../../../src/data/l3';
+
+test('L3 defence waypoint @E21: game camera and explained destinations', async ({ page }) => {
+  test.setTimeout(180_000);
+  await boot(page, `${testUrl}&ui=1&debug=true&inspect=1&level=L3`);
+  const output = 'test-results/l3-yellow-ring';
+  mkdirSync(output, { recursive: true });
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    api.inspect.enable(false);
+    api.pause();
+    api.cheats.god(true);
+    api.teleport('player', { x: -141.2, z: -8.4 });
+    await api.step(60);
+    api.teleport('player', { x: -139.2, z: -8.4 });
+    await api.step(1);
+    await api.screenshotReady();
+  });
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('l3-armory');
+  await expect(page.getByTestId('objective-text')).toContainText('Hold still or press E');
+  await expect(page.getByTestId('objective-text')).toContainText('Take a handgun from the armory');
+  await page.screenshot({ path: `${output}/after-armory.png` });
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    api.teleport('player', { x: -142, z: 2 });
+    api.cheats.completeObjective('armory');
+    await api.step(310);
+    api.camera.follow();
+    await api.step(1);
+    await api.screenshotReady();
+  });
+  const state = await page.evaluate(() => window.__SS__!.missions.state()!);
+  expect(state.steps.defend.status).toBe('active');
+  expect(state.marker).toBeNull();
+  await expect(page.locator('.hud-tracker')).toContainText('Help defend the station');
+  await page.screenshot({ path: `${output}/after-defend.png` });
+  writeFileSync(`${output}/after-defend.json`, JSON.stringify(state, null, 2));
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    api.cheats.completeObjective('defend');
+    await api.step(1);
+    await api.screenshotReady();
+  });
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('l3-zone');
+  await expect(page.locator('.hud-tracker')).toContainText('Reach the rendezvous ring inside the army checkpoint');
+  await page.screenshot({ path: `${output}/after-fallback.png` });
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    api.teleport('player', { x: 149, z: 0 });
+    await api.step(20);
+    api.camera.follow();
+    await api.screenshotReady();
+  });
+  const arrived = await page.evaluate(() => window.__SS__!.missions.state()!);
+  expect(arrived.l3!.crossedAt).toBeGreaterThan(0);
+  expect(arrived.marker).toBeNull();
+  await page.screenshot({ path: `${output}/after-arrival.png` });
+});
+
+test('L3 real click into the finale finishes while the boom is occupied @E21 @E21-AC17', async ({ page }) => {
+  test.setTimeout(240_000);
+  const output = 'test-results/l3-yellow-ring';
+  mkdirSync(output, { recursive: true });
+  await boot(page, `${testUrl}&ui=1&debug=true`);
+  await page.evaluate(() => window.__SS__!.loadLevel('L3', { seed: 1, progression: 'L3-default' }));
+  await page.getByRole('button', { name: 'Begin mission' }).click();
+  await page.evaluate(() => window.__SS__!.pause());
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    api.inspect.enable(false); api.pause(); api.cheats.god(true);
+    api.cheats.completeObjective('armory');
+    await api.step(310);
+    api.cheats.completeObjective('defend');
+    api.npcs.civilian('resident', { x: 137.1, z: 0 }, { waypoints: [{ x: 137.1, z: 0 }] });
+    api.teleport('player', { x: 145, z: 0 });
+    await api.step(60);
+    api.camera.follow(); await api.screenshotReady();
+  });
+  await expect(page.locator('.hud-tracker')).toContainText('Reach the rendezvous ring inside the army checkpoint');
+  await page.screenshot({ path: `${output}/after-compound-rendezvous.png` });
+  const click = await page.evaluate(x => window.__SS__!.input.project({ x, z: 0 }), l3Anchors['l3-zone'][0]);
+  await page.mouse.click(click.x, click.y);
+  let arrived = false;
+  for (let i = 0; i < 120; i++) {
+    await page.evaluate(() => window.__SS__!.step(1));
+    const state = await page.evaluate(() => window.__SS__!.missions.state());
+    if (state?.l3?.crossedAt) { arrived = true; break; }
+  }
+  expect(arrived).toBe(true);
+  const state = await page.evaluate(() => window.__SS__!.missions.state()!);
+  expect(state.l3!.barrierClosedAt ?? 0).toBe(0);
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  await page.screenshot({ path: `${output}/after-finale-entry.png` });
+  await page.evaluate(() => window.__SS__!.step(90));
+  await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L4', undefined, { timeout: 120_000 });
+  await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  await page.screenshot({ path: `${output}/after-finale-L4.png` });
+});
+
+test('L3 inspection tracker updates when defence has no marker @E21', async ({ page }) => {
+  test.setTimeout(180_000);
+  await boot(page, `${testUrl}&debug=true&inspect=1&level=L3`);
+  await page.evaluate(async () => {
+    const api = window.__SS__!;
+    api.cheats.completeObjective('armory');
+    await api.step(310);
+  });
+  await expect(page.getByTestId('mission-tracker')).toHaveText('Help defend the station');
+  await expect(page.getByTestId('mission-marker')).toBeHidden();
+  await expect(page.getByTestId('mission-pin-armory')).toBeHidden();
+  await expect(page.getByTestId('mission-pin-defend')).toBeHidden();
+});

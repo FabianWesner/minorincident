@@ -13,6 +13,22 @@ async function load(def = missionSandbox()) {
 function step(ticks = 1) { for (let i = 0; i < ticks; i++) world.update(); }
 function teleport(id: number, x = 5, z = 0) { missionControls(world).teleport(id,{x,z}); }
 function kill(id: number) { const actor=Object.entries(world.missions!.state.actors).find(([,entity])=>entity===id)![0]; missionControls(world).damageActor(actor,10000); }
+test('@E21 non-location objectives keep their text without a waypoint; the next destination restores it', async () => {
+  const def = missionSandbox('custom'), template = def.steps[0];
+  def.steps[0].waypoint = false;
+  def.steps.push({ ...template, id: 'arrival', waypoint: true, type: 'reach', start: { kind: 'objectives', ids: ['custom'], mode: 'all' }, complete: { kind: 'volume', anchor: 'goal', edge: 'inside' } });
+  def.finish = ['arrival'];
+  const api = await load(def);
+  expect(api.state()!.steps.custom.status).toBe('active');
+  expect(world.missions!.def.steps[0].text).toBeTruthy();
+  expect(api.state()!.marker).toBeNull();
+  api.checkpoint('C'); api.completeObjective('custom');
+  expect(api.state()!.marker).toBe('goal');
+  api.restore('C');
+  expect(api.state()!.marker).toBeNull();
+  api.completeObjective('custom'); teleport(1); step();
+  expect(api.state()!.marker).toBeNull();
+});
 for (const type of objectiveTypes) test(`T-E12-02-${type} @E12 @E12-AC02 mission-sandbox completes ${type} through sim controls`, async () => {
   const api = await load(missionSandbox(type)), actors = api.state()!.actors;
   switch (type) {

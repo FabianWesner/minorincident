@@ -11,7 +11,7 @@ export const l3 = {
     streets: { blvd: -28, commerce: 0, oak: 28 } as Record<'blvd' | 'commerce' | 'oak', number>,
     /** Corridor entrance (yard gate) -> On-ramp Road; S1 / S2 / S3 boundaries. */
     corridor: [-126, 128] as P, segments: [[-126, -40], [-40, 50], [50, 128]] as readonly P[],
-    /** The army zone line: crossing it (x >= zoneX inside the checkpoint lane) ends the level. */
+    /** Entrance to the army compound; the rendezvous ring further inside ends the level. */
     zoneX: 140, zoneZ: [-4.4, 4.4] as P,
     /** Station yard fence (the "inside" of the 8-inside fallback rule). */
     yard: { x0: -160, x1: -126, z0: -22, z1: 22 },
@@ -97,7 +97,7 @@ export const l3Anchors: Record<string, P> = {
   'l3-armory': [-139.2, -8.4],
   'l3-yard': [-142, 2],
   'l3-gate': [-127.5, 0],
-  'l3-zone': [141.5, 0],
+  'l3-zone': [149, 0],
   'l3-sergeant': [-140.4, -5.6],
   // Squad (start near the armory) and the six yard posts behind sandbags at the gates.
   'l3-squad-1': [-141.6, -6.4], 'l3-squad-2': [-137.2, -6.0], 'l3-squad-3': [-138.4, -3.4], 'l3-squad-4': [-136.0, -8.8],

@@ -27,10 +27,13 @@ function helpers(page: Page) {
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
       const point = near ? a.input.project(near.transform) : null;
       // A covered/offscreen body cannot receive a physical canvas click.
-      return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? point : null;
+      return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? { point, melee: Math.hypot(near!.transform.x - p.x, near!.transform.z - p.z) < 2.6 } : null;
     }, range);
     if (!target) return false;
-    await page.keyboard.down('Shift'); await page.mouse.move(target.x, target.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
+    // Use the carried axe at contact range and the handgun at distance, through the real rack bindings.
+    if (target.melee) await page.keyboard.press('Digit1');
+    else await page.keyboard.press('Shift+Digit1');
+    await page.keyboard.down('Shift'); await page.mouse.move(target.point.x, target.point.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
     return true;
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
@@ -147,15 +150,24 @@ test.describe('L3 The Police Collapse in the browser', () => {
       else route.push({ x, z: sz });
     }
     if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end
-    route.push({ x: 129, z: 0 }, { x: l3.map.zoneX + 5, z: 0 }); // The 4 m arrival ring stays inside the zone.
-    // Crossing the zone line ends L3 and the campaign hands over to L4: keep the last L3 state, stop touching the world then.
+    route.push({ x: 129, z: 0 }, { x: 144, z: 0 }, { x: l3Anchors['l3-zone'][0], z: 0 });
+    // Entering the rendezvous ring ends L3 and hands over to L4: keep the last L3 state, stop touching the world then.
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
     for (const wp of route) {
       // Reach the wreck detour before cutting back, and finish the final click inside the army zone.
-      const stop = wp.x > l3.map.zoneX || (street === 'oak' && wp.z === 32) ? 1.2 : sz === 0 ? 2 : 4;
+      const stop = wp.x > l3.map.zoneX ? .5 : (street === 'oak' && wp.z === 32) ? 1.2 : sz === 0 ? 2 : 4;
       await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
       if (!await inL3()) break;
+      if (wp.x === 144) {
+        // The compound is a resting place before the rendezvous ring, not an automatic finish at the boom.
+        await step(300);
+        expect(await inL3()).toBe(true);
+        const threats = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x >= 140));
+        expect(threats, 'no active infected inside the army compound').toEqual([]);
+        await page.evaluate(() => window.__SS__!.screenshotReady());
+        await page.screenshot({ path: `${output}/l3-compound-rest-${street}.png` });
+      }
       const m = await mission(), p = (await player()).transform;
       if (!h.shots.has('l3-squad-strong') && p.x > -100 && p.x < -80) await snap('l3-squad-strong');
       if (!h.shots.has('l3-commerce-street') && p.x > 5) { await snap('l3-commerce-street'); await snap('l3-oak-avenue'); await snap('l3-grove-boulevard'); }
@@ -181,7 +193,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     expect([...h.shots].sort()).toEqual(['l3-alone', 'l3-army-checkpoint', 'l3-commerce-street', 'l3-grove-boulevard', 'l3-oak-avenue', 'l3-squad-strong', 'l3-station-attack', 'l3-station-yard']);
   });
 
-  test('T-E21-17b @E21 @E21-AC17 campaign: crossing the army zone line loads L4 with the carried loadout and no reward screen', async ({ page }) => {
+  test('T-E21-17b @E21 @E21-AC17 campaign: reaching the army rendezvous loads L4 with the carried loadout and no reward screen', async ({ page }) => {
     test.setTimeout(600_000); page.setDefaultTimeout(120_000);
     await begin(page);
     for (let i = 0; i < 8; i++) {

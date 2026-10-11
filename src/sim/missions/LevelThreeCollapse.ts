@@ -38,7 +38,7 @@ type Pending = L3State['pending'][number];
  * fallback rule (60 s / 3 officers turned / 8 inside the fence). From there everything is systemic: the squad follows the
  * player (allied fighters v2), the corridor population emerges out of view ahead of the player, gunfire is a loud event
  * for non-chasing infected within 20 m, bites turn officers like anyone else, and forward pressure lets infected emerge
- * behind a lingering player. The army zone line ends the level. All state lives in `mission.state.l3` (checkpoints).
+ * behind a lingering player. The rendezvous ring inside the army compound ends the level. All state lives in `mission.state.l3` (checkpoints).
  */
 export class LevelThreeCollapse {
   private readonly walls = new Map<string, number>();
@@ -77,7 +77,7 @@ export class LevelThreeCollapse {
     return { x: p.x, z: p.z };
   }
   private doors(): { name: string; x: number; z: number }[] {
-    return Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-')).map(name => ({ name, ...this.anchor(name) }));
+    return Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-')).map(name => ({ name, ...this.anchor(name) })).filter(p => p.x < l3.map.zoneX);
   }
 
   prepare(): void {
@@ -132,12 +132,12 @@ export class LevelThreeCollapse {
     }
   }
   private spawnSoldiers(): void {
-    const o = this.outbreak(), zone = this.anchor('l3-zone');
+    const o = this.outbreak();
     for (let i = 1; i <= l3.soldiers.count; i++) {
       const p = this.snap(this.anchor(`l3-soldier-${i}`), .35);
       const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: 110, z: 0 }) });
       const e = this.world.entities.get(id)!;
-      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: zone.x - 12, z: zone.z }, range: 45, engaged: true };
+      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: l3.map.zoneX - 10.5, z: 0 }, range: 45, engaged: true };
       e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
       this.s.soldierIds.push(id);
     }
@@ -468,19 +468,23 @@ export class LevelThreeCollapse {
       s.finalePacks[index] = (s.finalePacks[index] ?? 0) + n;
     }
     this.boom ??= new ArmyCheckpointBoom(w, f.barrierX);
-    if (!s.barrierClosedAt && this.boom.ready([1, ...s.squad.map(m => m.id)])) {
+    // Secure the compound once the courier passes; stragglers can keep fighting outside without delaying the level.
+    if (!s.barrierClosedAt && this.boom.ready([1])) {
       s.barrierClosedAt = w.tick; this.barrier(true);
       w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
     }
   }
-  private inZone(p: Point): boolean { return p.x >= l3.map.zoneX && p.z >= l3.map.zoneZ[0] && p.z <= l3.map.zoneZ[1]; }
+  private inZone(p: Point): boolean { const ring = this.anchor('l3-zone'); return dist(p, ring) <= ring.radius; }
   private zone(tick: number, player: EntitySnapshot): void {
     const s = this.s;
     if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) {
       s.crossedAt = tick; s.segmentSquad[2] ??= s.squad.length;
       this.world.events.emit({ type: 'l3.crossed', tick }); this.mission.radio('L3.army');
     }
-    if (s.crossedAt && s.barrierClosedAt && !s.doneAt && tick - s.barrierClosedAt >= ticks(l3.finale.closeS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
+    // The courier's arrival ends L3. A stalled follower or a body under the boom cannot hold up the transition.
+    if (s.crossedAt && !s.doneAt && tick - s.crossedAt >= ticks(l3.finale.closeS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
+    // Arrival is already achieved; closing the boom must not leave a waypoint under the courier.
+    if (s.crossedAt && this.mission.state.marker === 'l3-zone') this.mission.state.marker = null;
   }
 
   /** Cheat/test path (`completeObjective` in a gap without an active objective): start the attack, or call the fallback. */
