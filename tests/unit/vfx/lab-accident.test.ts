@@ -60,7 +60,7 @@ test('T-E19-19c @E19 @E19-AC19 reduced flashing never strobes and prewarm leaves
   expect(w.spawns.every(s => s.life <= 0.01)).toBe(true);
 });
 
-test('lab smoke and debris remain alive but are camera culled off screen', () => {
+test('T-E19-19d @E19 @E19-AC19 lab smoke and debris remain alive but are camera culled off screen', () => {
   const column = new SmokeColumn(), rng = new Rng(1, 'camera-culling');
   column.spawnPuff(0, rng, 0, 0, -10);
   column.spawnPiece(0, rng, 0, 0, -10, 0, 1, true);
