@@ -1,0 +1,12 @@
+
+ RUN  v5.0.3 /private/tmp/fix-vehicle-occupants-baseline
+
+ ❯ |functional| tests/levels/L2.test.ts (16 tests | 1 failed | 15 skipped) 30178ms
+   ❯ L2 The Failed Rescue (16)
+     × T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down 30177ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 15 skipped (16)
+   Start at  16:44:37
+   Duration  30.80s (tests 98%, transform 2%)
+
