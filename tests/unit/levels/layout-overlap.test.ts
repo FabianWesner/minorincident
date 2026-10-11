@@ -22,5 +22,14 @@ test('L2 additions on D-GROVE do not cut into any other placement (staticOverlap
 test('L3 additions on D-CORRIDOR do not cut into any other placement (staticOverlapMax 0)', () => {
   const f = 'D-CORRIDOR.layout.json';
   const [layout] = levelThreeLayouts([load(f)]);
-  expect(show(addedOverlaps(layout, 2, p => p.id.startsWith('l3-') || p.assetId.startsWith('veh.')))).toEqual([]);
+  const accidental = addedOverlaps(layout, 2, p => p.id.startsWith('l3-') || p.assetId.startsWith('veh.')).filter(o => {
+    const a=layout.placements.find(p=>p.id===o.a)!, b=layout.placements.find(p=>p.id===o.b)!;
+    // PO 10-11 intentionally asks for overlapping wreck pile-ups and continuous barrier/fence joins.
+    if ([a,b].some(p=>p.id.startsWith('l3-roadblock')) && [a,b].every(p=>p.assetId.startsWith('veh.'))) return false;
+    const edge=[a,b].find(p=>p.id.startsWith('l3-highway-edge'));
+    if(edge && [a,b].some(p=>p.assetId.startsWith('kit.') || p.assetId === 'prop.privacy-fence')) return false;
+    if([a,b].some(p=>p.id.startsWith('l3-outskirts-fence')) && [a,b].every(p=>p.assetId==='prop.privacy-fence')) return false;
+    return true;
+  });
+  expect(show(accidental)).toEqual([]);
 }, 90_000);

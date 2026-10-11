@@ -1,0 +1,17 @@
+
+Running 4 tests using 1 worker
+
+{"attackShotEarly":false,"inFrameAtFallback":3}
+L3 RESULT street=commerce deaths=0
+  ✓  1 [chromium] › tests/e2e/levels/L3.spec.ts:112:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, commerce to the army zone; photo spots for the vision review (2.8m)
+{"attackShotEarly":false,"inFrameAtFallback":2}
+L3 RESULT street=blvd deaths=0
+  ✓  2 [chromium] › tests/e2e/levels/L3.spec.ts:112:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (3.5m)
+{"attackShotEarly":false,"inFrameAtFallback":2}
+L3 RESULT street=oak deaths=0
+  ✓  3 [chromium] › tests/e2e/levels/L3.spec.ts:112:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, oak to the army zone; photo spots for the vision review (1.9m)
+  ✓  4 [chromium] › tests/e2e/levels/L3.spec.ts:199:3 › L3 The Police Collapse in the browser › T-E21-17b @E21 @E21-AC17 campaign: reaching the army rendezvous loads L4 with the carried loadout and no reward screen (6.2s)
+
+  Slow test file: [chromium] › tests/e2e/levels/L3.spec.ts (8.3m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  4 passed (8.3m)

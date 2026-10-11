@@ -117,7 +117,7 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
       minZ: Math.min(...area.map(p => p[1])), maxZ: Math.max(...area.map(p => p[1])),
     }));
     const buckets = new Map<string, Aabb[]>();
-    for (const a of d.colliders.filter(a => a.min[1] < 1.8 && a.max[1] > .05)) for (let z = Math.floor((a.min[2] - .4) / 4); z <= Math.floor((a.max[2] + .4) / 4); z++) for (let x = Math.floor((a.min[0] - .4) / 4); x <= Math.floor((a.max[0] + .4) / 4); x++) {
+    for (const a of d.colliders.filter(a => a.navBlocker || (a.min[1] < 1.8 && a.max[1] > .05))) for (let z = Math.floor((a.min[2] - .4) / 4); z <= Math.floor((a.max[2] + .4) / 4); z++) for (let x = Math.floor((a.min[0] - .4) / 4); x <= Math.floor((a.max[0] + .4) / 4); x++) {
       const key = `${x},${z}`, bucket = buckets.get(key) ?? []; bucket.push(a); buckets.set(key, bucket);
     }
     for (let z = 0; z < nav.height; z++)
