@@ -1,3 +1,4 @@
+import staticBakes from '../../../src/assets/staticBakes.json';
 import { afterEach, expect, test, vi } from 'vitest';
 import { LoadGate } from '../../../src/assets/loadGate';
 import { assetUrl } from '../../../src/assets/assetUrl';
@@ -31,7 +32,7 @@ test('@load the generic actor view leaves the animated bicycle to BicycleView', 
 });
 
 test('@load prefetch requests only the selected district tiers and deduplicates fallback models', () => {
-  const def = { id: 'bld.house-a', status: 'integrated', glb: 'public/assets/models/house.glb', lods: { lod1: 'public/assets/models/house.lod1.glb', lod2: 'public/assets/models/house.lod2.glb' } } as AssetDef;
+  const def = { id: 'bld.test-house', status: 'integrated', glb: 'public/assets/models/house.glb', lods: { lod1: 'public/assets/models/house.lod1.glb', lod2: 'public/assets/models/house.lod2.glb' } } as AssetDef;
   expect(districtAssetUrls(def.id, () => def, ['lod2'])).toEqual(['/assets/models/house.lod2.glb']);
   expect(districtAssetUrls(def.id, () => def)).toEqual(['/assets/models/house.lod1.glb', '/assets/models/house.lod2.glb']);
   expect(districtAssetUrls(def.id, () => ({ ...def, lods: undefined }))).toEqual(['/assets/models/house.glb']);
@@ -81,7 +82,7 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   }));
   await prefetchLevel('L2', 4, 'low');
   expect(assemble).not.toHaveBeenCalled();
-  expect(requested.some(url => /clinic-annex\.burned\.lod2\.glb/.test(url))).toBe(true);
+  expect(requested).toContain(staticBakes['bld.clinic-annex:lod2:burned']);
   expect(requested.some(url => /char\.courier-female\.skin\.glb/.test(url))).toBe(true);
   expect(new Set(requested).size).toBe(requested.length);
   expect(requested.some(url => /prop\.(bench|bbq|picket-fence)\.lod1\.glb/.test(url))).toBe(false);

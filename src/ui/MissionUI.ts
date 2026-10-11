@@ -48,6 +48,15 @@ export class MissionUI {
     this.onChange();
   };
   private text(element: HTMLElement, value: string): void { if(element.textContent!==value)element.textContent=value; }
+  /** Native font fallback for the objective arrow must finish before Begin. */
+  prepare(): void {
+    const rootHidden = this.root.hidden, markerHidden = this.marker.hidden, value = this.marker.textContent;
+    const visibility = this.root.style.visibility;
+    this.root.style.visibility = 'hidden'; this.root.hidden = this.marker.hidden = false;
+    for (const glyph of ['➜', '◆']) { this.text(this.marker, glyph); this.marker.getBoundingClientRect(); }
+    this.marker.textContent = value; this.marker.hidden = markerHidden;
+    this.root.hidden = rootHidden; this.root.style.visibility = visibility;
+  }
   update(camera: PerspectiveCamera, width: number, height: number): void {
     const mission=this.world.missions;if(this.displayedMission!==mission){this.reset();this.displayedMission=mission;}this.root.hidden=!mission;if(!mission)return;
     const state=mission.state,playing=state.phase==='playing';

@@ -112,6 +112,10 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
       }
   const nav = new NavGrid(min, max, cellSize, seed);
   for (const d of districts) {
+    const excluded = d.layout.walkable.excluded.map(area => ({ area,
+      minX: Math.min(...area.map(p => p[0])), maxX: Math.max(...area.map(p => p[0])),
+      minZ: Math.min(...area.map(p => p[1])), maxZ: Math.max(...area.map(p => p[1])),
+    }));
     const buckets = new Map<string, Aabb[]>();
     for (const a of d.colliders) for (let z = Math.floor((a.min[2] - .4) / 4); z <= Math.floor((a.max[2] + .4) / 4); z++) for (let x = Math.floor((a.min[0] - .4) / 4); x <= Math.floor((a.max[0] + .4) / 4); x++) {
       const key = `${x},${z}`, bucket = buckets.get(key) ?? []; bucket.push(a); buckets.set(key, bucket);
@@ -124,7 +128,7 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
         ];
         if (
           inside(p, d.layout.bounds) &&
-          !d.layout.walkable.excluded.some((area) => inside(p, area)) &&
+          !excluded.some(box => p[0] >= box.minX && p[0] <= box.maxX && p[1] >= box.minZ && p[1] <= box.maxZ && inside(p, box.area)) &&
           ! (buckets.get(`${Math.floor(p[0] / 4)},${Math.floor(p[1] / 4)}`) ?? []).some(
             (a) =>
               p[0] >= a.min[0] - 0.4 &&
