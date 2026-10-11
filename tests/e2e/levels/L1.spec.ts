@@ -236,7 +236,7 @@ test.describe('L1 v2 real-input playthrough', () => {
         if (!assisted && Math.hypot((await player()).transform.x - at('garage-bat').x, (await player()).transform.z - at('garage-bat').z) < 8) await go(at('garage-door'), 1.2);
         // Follow the street junctions instead of clicking diagonally across the fenced residential lots.
         // A fight/respawn can otherwise leave the long destination click on the wrong side of a garden wall.
-        if (!assisted) for (const junction of [{ x: 14, z: 30 }, { x: 14, z: -36 }, { x: 40.03, z: -36 }]) await go(junction, 1.2);
+        for (const junction of [{ x: 14, z: 30 }, { x: 14, z: -36 }, { x: 40.03, z: -36 }]) await go(junction, 1.2);
         await go(outside, 1);
         await step(20);
         expect((await mission()).phase).toBe('playing');
