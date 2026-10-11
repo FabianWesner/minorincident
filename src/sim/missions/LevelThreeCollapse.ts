@@ -51,14 +51,14 @@ export class LevelThreeCollapse {
   }
   /**
    * Section 5.5: the station cannot be held, but the officers who stay buy the squad its head start. Once the courier and
-   * the squad are through the east gate (or 15 s after the call), the officers left inside pull every yard gate shut.
+   * the recruited squad are through the east gate, the yard gates shut behind them.
    */
   private sealYard(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.gatesClosedAt || !s.fallbackAt) return;
     const out = (p: Point) => p.x > l3.map.yard.x1 + 1.5, player = world.entities.get(1)!;
     const squadOut = s.squad.every(m => { const e = world.entities.get(m.id); return !e || out(e.transform); });
-    if (!(out(player.transform) && (squadOut || tick - s.fallbackAt >= ticks(15)))) return;
+    if (!(out(player.transform) && squadOut)) return;
     // Never shut a gate onto somebody standing in it.
     for (const w of Object.values(L3_GATES)) for (const e of world.entities.iterate()) if (e.health.current > 0 && (e.infected || e.civilian || e.id === 1) && Math.abs(e.transform.x - w.x) < w.halfX + .5 && Math.abs(e.transform.z - w.z) < w.halfZ + .5) return;
     s.gatesClosedAt = tick;
@@ -284,13 +284,13 @@ export class LevelThreeCollapse {
       if (!a?.follow) continue;
       // The courier moving on is a regroup order. Do not strand a living officer at his last fight.
       if (player.transform.x > l3.finale.passX && e.transform.x <= l3.finale.passX) {
-        a.engaged = false; a.targetId = 0; a.strikeAt = 0;
+        a.engaged = false;
         a.run = { x: l3.finale.passX + 3, z: (a.follow.slot % 2 ? 1 : -1) * .8 };
         continue;
       }
       const far = dist(e.transform, player.transform) > a.follow.maxM;
       a.engaged = !far;
-      if (far) { a.targetId = 0; a.strikeAt = 0; e.civilian.story = null; }
+      // The ally brain owns target/shot cancellation: nearby self-defence still runs while regrouping.
       m.farSince = 0;
     }
   }

@@ -32,10 +32,13 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean): boolean {
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
   const player = world.entities.get(1);
-  const policeCanEngage = (target: EntitySnapshot) => a.role !== 'officer' || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
+  const heard = (target: EntitySnapshot) => ai.hearing.hears(e, target.transform);
+  const defence = (target: EntitySnapshot) => a.role === 'officer' && dist(target.transform, e.transform) <= pt.defendM;
+  const policeCanEngage = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
+  const audibleThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
-  if (a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0)) return false;
-  if (a.role === 'civilian' && a.engaged && (tick + e.id) % 6 === 0) {
+  if (a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0) && !audibleThreat) return false;
+  if (a.role === 'civilian' && a.engaged && !audibleThreat && (tick + e.id) % 6 === 0) {
     let close = 0;
     for (const o of ai.active) if (o.health.current > 0 && !o.hidden && !o.infectionRise && dist(o.transform, e.transform) <= civ.panicRadiusM && ++close >= civ.panicInfected) break;
     if (close >= civ.panicInfected) {
@@ -46,54 +49,56 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     }
   }
   // A rescued or startled ally does not run for a refuge: it is a fighter (state stays a live human state).
-  if (c.state !== 'calm') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }
+  if (c.state !== 'calm' && c.state !== 'grabbed') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }
   if (c.story && c.story.clip === 'swing' && tick - c.story.start > 30 && tick >= a.forceUntil) c.story = null;
   // Police aim: the two-handed stance is held while a target is in the sights, then the gun goes back down (idle, lowered ready).
   if (c.story && c.story.clip === 'shoot' && (tick - c.story.start > ticks(pt.aimHoldS) || (!a.targetId && tick - c.story.start > 20))) c.story = null;
   // Forcing the doors: a looping halligan heave (or the directing gesture), seeded per person so the crew never moves in sync.
   const forcing = a.forceClip ?? 'ff-pry';
   if (c.story && c.story.clip === forcing && tick >= a.forceUntil) c.story = null;
-  if (a.forceUntil > tick) { if (c.story?.clip !== forcing) c.story = { clip: forcing, start: tick - (e.id * 17) % 40 }; return true; }
+  if (a.forceUntil > tick && !audibleThreat) { if (c.story?.clip !== forcing) c.story = { clip: forcing, start: tick - (e.id * 17) % 40 }; return true; }
   const leader = a.follow ? world.entities.get(a.follow.targetId) : undefined, follower = !!a.follow && !!leader && leader.health.current > 0;
-  // Squad: a member that has fallen behind runs to the player first; on the run it only fights what is at arm's length,
-  // never a target down the street (a straggler grabbed behind the running group is on his own).
+  // Close threats interrupt regrouping, including a straggler's own defence.
   let forced: EntitySnapshot | undefined;
   // Breakout (the first seconds after the fallback call): the squad gets out with the player instead of holding the yard.
   // Moving beyond the follow leash ends even an existing fight: the squad catches up through shared E08 navigation.
   const breakout = follower && (a.follow!.breakoutUntil ?? 0) > tick;
-  if (follower && a.engaged && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
+  const closeThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && sees(e.transform, o.transform, o.id));
+  if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
+  if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
     forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && sees(e.transform, o.transform, o.id)) : undefined;
     if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
     a.targetId = forced.id;
   }
-  if (a.engaged) {
+  if (a.engaged || closeThreat) {
     const gun = a.gun, shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !gun), post = a.post ?? e.transform;
     // Improvised melee (bat, pipe, crowbar) is the firefighter swing with the weapon's own numbers.
     const ff = a.melee ? { ...l2.allies.firefighter, damage: a.melee.damage, reachM: a.melee.reachM, swingS: a.melee.swingS } : l2.allies.firefighter;
     const reachM = gun ? (a.follow ? Math.min(gun.rangeM, a.follow.engageM) : gun.rangeM) : shooter ? l2.allies.officer.rangeM + 4 : ff.engageM;
-    let target = a.targetId ? world.entities.get(a.targetId) : undefined;
-    // Drop a cached target immediately when it leaves the player's view (not only on the scan tick).
+    let target = c.state === 'grabbed' ? world.entities.get(c.attacker) : a.targetId ? world.entities.get(a.targetId) : undefined;
+    // Recheck the camera/self-defence rule on cached targets as well as new scans.
     if (target && !policeCanEngage(target)) { target = undefined; a.targetId = 0; }
-    if (!forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % 6 === 0)) {
+    if (c.state !== 'grabbed' && !forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % 6 === 0)) {
       // Re-acquire: biting infected first (rescue), then the nearest visible one.
       let best: EntitySnapshot | undefined, score = Infinity;
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       for (const o of ai.active) {
         if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise || !policeCanEngage(o)) continue;
         const dx = o.transform.x - e.transform.x, dz = o.transform.z - e.transform.z, d = Math.hypot(dx, dz);
-        if (d > reachM) continue;
-        if (a.cover && dist(o.transform, a.cover) > (a.range ?? reachM)) continue;
-        else if (!a.cover && shooter && !gun && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > (a.range ?? l2.allies.officer.rangeM)) continue;
-        else if (!a.cover && gun && a.hold && a.range !== undefined && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > a.range) continue;
+        if (d > reachM && !defence(o)) continue;
+        if (!defence(o) && a.cover && dist(o.transform, a.cover) > (a.range ?? reachM)) continue;
+        else if (!defence(o) && !a.cover && shooter && !gun && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > (a.range ?? l2.allies.officer.rangeM)) continue;
+        else if (!defence(o) && !a.cover && gun && a.hold && a.range !== undefined && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > a.range) continue;
         const current = o.id === a.targetId;
-        if (!current && d > 1.2 && (dx * fx + dz * fz) / d < half && !shooter) continue;
+        if (!current && d > 1.2 && (dx * fx + dz * fz) / d < half && !shooter && !heard(o)) continue;
         if (!sees(e.transform, o.transform, o.id)) continue;
         const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0);
         if (s < score) { score = s; best = o; }
       }
+      if (best && best.id !== a.targetId && (defence(best) || heard(best))) a.nextAttack = Math.min(a.nextAttack, tick + 15);
       target = best; a.targetId = best?.id ?? 0;
     }
-    // A squad member too far from the player regroups instead of fighting (it never teleports: it runs).
+    // A pending strike retains its own victim through a target rescan.
     // A swing in progress lands after its windup on whatever is still in reach (no tracking, it can whiff).
     if (a.strikeAt && tick >= a.strikeAt) {
       const victim = world.entities.get(a.strikeTarget ?? 0); a.strikeAt = 0;
@@ -118,18 +123,25 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       }
     }
     if (a.strikeAt) return true;
+    if (c.state === 'grabbed' && target) a.targetId = target.id;
     if (target) {
-      if (a.role === 'officer' && !sees(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
+      if (!sees(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
+      // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
+      if (c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
+        if (a.run) npcs.move(e, a.run, a.runSpeed, c, .25);
+        else if (follower && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) regroup(world, e, a, leader!.transform);
+      }
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
-      const reach = gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
-      if (d > reach * .9 && !a.hold && !a.follow) { npcs.move(e, target.transform, a.runSpeed, c, reach * .8); return true; }
+      const reach = defence(target) ? Math.max(reachM, pt.defendM) : gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
+      if (d > reach * .9 && !a.hold && !a.follow && !a.run) { npcs.move(e, target.transform, a.runSpeed, c, reach * .8); return true; }
       e.transform.yaw = -Math.atan2(dz, dx);
+      if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot') c.story = { clip: 'shoot', start: tick };
       if (a.role === 'officer' && !a.strikeAt && tactics(world, e, a, target, d, dx, dz)) return true;
       if (d <= reach && tick >= a.nextAttack && world.combat) {
         a.nextAttack = tick + ticks(gun ? gun.shotS : shooter ? l2.allies.officer.shotS : ff.swingS); a.hits++;
         a.strikeAt = tick + Math.max(1, ticks(shooter ? 0 : ff.windupS)); a.strikeTarget = target.id;
         // Shooters raise the gun (recoil replays on every shot), melee fighters swing the halligan (strike frame = windup).
-        c.story = shooter ? gun ? { clip: 'shoot', start: tick } : { clip: 'npc-gesture', start: tick } : { clip: 'swing', start: tick, prop: 'crowbar' };
+        c.story = shooter ? gun || a.role === 'officer' ? { clip: 'shoot', start: tick } : { clip: 'npc-gesture', start: tick } : { clip: 'swing', start: tick, prop: 'crowbar' };
         if (!gun) world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: target.id, role: a.role });
       }
       return true;
@@ -205,7 +217,7 @@ function tactics(world: SimWorld, e: EntitySnapshot, a: AllyState, target: Entit
   };
   const side = e.id % 2 ? 1 : -1;
   // Backstep (backpedal while aiming): keep distance from what closes in.
-  if (d < pt.backstepM && (go(here.x - nx * pt.stepM, here.z - nz * pt.stepM) || go(here.x - nz * side * pt.stepM, here.z + nx * side * pt.stepM))) return true;
+  if (c.state !== 'grabbed' && d < pt.backstepM && (go(here.x - nx * pt.stepM, here.z - nz * pt.stepM) || go(here.x - nz * side * pt.stepM, here.z + nx * side * pt.stepM))) return false;
   if ((tick + e.id) % 6 === 0) {
     // Line of fire: a teammate or the courier near the line to the target.
     for (const id of world.spatial.query({ x: here.x + nx * d / 2, z: here.z + nz * d / 2, r: d / 2 + .5 })) {
@@ -214,7 +226,7 @@ function tactics(world: SimWorld, e: EntitySnapshot, a: AllyState, target: Entit
       const ox = o.transform.x - here.x, oz = o.transform.z - here.z, along = ox * nx + oz * nz, across = -ox * nz + oz * nx;
       if (along > .4 && along < d - .4 && Math.abs(across) < pt.clearM) {
         const s = across >= 0 ? -1 : 1;
-        if (go(here.x - nz * s * pt.stepM, here.z + nx * s * pt.stepM) || go(here.x + nz * s * pt.stepM, here.z - nx * s * pt.stepM)) return true;
+        if (go(here.x - nz * s * pt.stepM, here.z + nx * s * pt.stepM) || go(here.x + nz * s * pt.stepM, here.z - nx * s * pt.stepM)) return false;
       }
     }
     // Spread out: a neighbour closer than `spreadM` pushes the officer sideways.
@@ -222,7 +234,7 @@ function tactics(world: SimWorld, e: EntitySnapshot, a: AllyState, target: Entit
       if (id === e.id) continue;
       const o = world.entities.get(id); if (!o?.civilian?.ally || o.health.current <= 0) continue;
       const ox = here.x - o.transform.x, oz = here.z - o.transform.z, od = Math.hypot(ox, oz) || 1;
-      if (go(here.x + ox / od * pt.stepM, here.z + oz / od * pt.stepM)) return true;
+      if (go(here.x + ox / od * pt.stepM, here.z + oz / od * pt.stepM)) return false;
     }
   }
   // Reposition after a few shots: a short lateral step, alternating sides.
