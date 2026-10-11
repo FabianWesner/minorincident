@@ -41,8 +41,8 @@ E20 (allied fighters v1, outbreak rules §5.1, bridge checkpoint), E06 (handgun,
 
 The E20 §5.1 outbreak rules apply unchanged (sight-only, no omniscience, bites turn everyone incl. police, identity continuity, emergent snowball).
 
-### 5.1 Map: `D-CORRIDOR` (linear, three parallel streets)
-- Length **280–340 m** (south bridgehead → north on-ramp), width ≈ 75 m. Three parallel streets ≈ 22 m apart, separated by building rows, all heading the same direction:
+### 5.1 Map: `D-CORRIDOR` (three streets, forced block detour and highway approach)
+- PO 2026-10-11 supersedes the former short straight route: keep the police start; seal streets with wreck pile-ups to force a block detour; move the army compound east as a unit beyond the elevated highway. Target walking distance **50–80 % above the previous 301 m**. The original city still has three parallel streets 28 m apart, separated by building rows:
   - **Oak Avenue** (residential): damaged gardens, abandoned houses with open doors, crashed cars, makeshift barricades (furniture, cars), blood and bodies.
   - **Commerce Street** (shopping): broken shop windows, looted stores, scattered merchandise, abandoned bags, damaged/hanging signs.
   - **Grove Boulevard** (main road): wrecked buses, abandoned police vehicles, a traffic jam, stronger signs of fighting (sandbag remains, casings, a burned cruiser).
@@ -105,7 +105,7 @@ Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Ti
 | ID | Criterion | Verification |
 | --- | --- | --- |
 | E21-AC01 | The L3 mission graph (armory → defend station → fallback → reach army checkpoint) is structurally completable (E12-AC07) and has no fail timer | sim |
-| E21-AC02 | The `complete` bot finishes L3 on **one seed** from the `L3-default` progression (bat + axe) without cheats; sim time **2:00–3:45** PO 10-09: single seed. | sim |
+| E21-AC02 | The `complete` bot finishes L3 on **one seed** from the `L3-default` progression (bat + axe) without cheats; sim time **2:00–6:45** (PO 2026-10-11 longer route: the former upper band × 1.8), one seed. | sim |
 | E21-AC03 | The `newbie` bot finishes on one seed, sim time **2:30–4:30**, deaths ≤ 2 PO 10-09: single seed. | sim |
 | E21-AC04 | **Handgun:** acquired only at the armory (the `complete` bot has it within 40 s of start); each shot hits at most 1 target (no pierce), a 40 HP infected needs 2 hits, range 22 m; 600 continuous shots never produce a reload, an empty state or an ammo HUD element; bat and axe remain selectable | sim + e2e |
 | E21-AC05 | **Ranged before contact:** in `complete` runs the median distance of handgun kills is ≥ 6 m, while axe/bat kills are ≤ 2.5 m (the weapons have different roles) | sim |
@@ -114,7 +114,7 @@ Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Ti
 | E21-AC08 | **Squad forms:** at the fallback 3–4 living officers join as followers on one seed; no officer has a damage-immunity or scripted-survival flag at any tick PO 10-09: single seed. | sim |
 | E21-AC09 | **Squad feels strong first:** in segment 1, officers make ≥ 60 % of infected kills and the player's damage taken is ≤ 15 HP (one `complete` seed); squad members stay within 8 m of the player ≥ 80 % of non-combat time and never teleport (no position jump > 1 m per tick) PO 10-09: single seed. | sim |
 | E21-AC10 | **Squad falls apart (systemically):** the squad size at the ends of segments 1, 2, 3 is non-increasing and is ≤ 2 at the army checkpoint; at most 3 arrive; ≥ 1 officer turns during the corridor on one seed; every squad loss is a `bite`/`combat.kill` event or a separation > 40 m (no scripted removal) PO 10-09: single seed. | sim |
-| E21-AC11 | **Linear corridor layout:** length 280–340 m, three parallel streets, ≥ 6 cross-links spaced ≤ 60 m, sight blockers every ≤ 25 m, no dead end > 30 m; the `complete` bot's progress coordinate never regresses by > 15 m, and on each of three forced-street runs (one per street) it completes on one seed PO 10-09: single seed. | sim (layout + sim) |
+| E21-AC11 | **PO 2026-10-11 route correction:** police start stays fixed; wreck pile-ups seal carriageways and sidewalks and force a detour around a block through the three streets. Walking distance is 50–80 % longer than the previous 301 m route. The army compound moves east as a unit; the final approach traverses the existing elevated highway, with the exit gantry visible. ≥ 6 city cross-links spaced ≤ 60 m; detour encounter gaps ≤ 60 m; squad and objective guidance use the connected route. One single-seed `complete` run finishes. | sim (layout + sim), headless captures |
 | E21-AC12 | **Escalation:** pre-populated infected per segment are within ±20 % of 10 / 25 / 40; the median live infected count within 30 m of the player rises from segment 1 to segment 3; caps 80 (high) / 40 (low) are never exceeded | sim |
 | E21-AC13 | **Forward pressure:** when the player idles 20 s behind the furthest progress line, emergence behind that line starts (1–3 infected per 10 s from doors 15–35 m behind, outside the frustum) and stops when the player advances | sim |
 | E21-AC14 | **Medkits:** ≥ 2 per street and ≥ 7 total; a pickup restores 40 HP (capped) and is consumed; the `newbie` bot picks up ≥ 2 per run (median); the time-weighted share of the `newbie` run spent below 20 % HP is ≤ 10 % | sim |

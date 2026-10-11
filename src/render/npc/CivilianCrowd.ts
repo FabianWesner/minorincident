@@ -23,7 +23,7 @@ const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe',
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
 import { MotionPresentation, crowdTurnRate } from '../characters/MotionPresentation';
-import { CrowdGunAim } from '../characters/GunAim';
+import { CrowdGunAim, crowdLongGunHold } from '../characters/GunAim';
 import { MotionPhase } from '../characters/MotionPhase';
 import { authoredClips, strides } from '../characters/clips';
 import { disposeCharacter } from '../characters/rig';
@@ -219,8 +219,11 @@ class CivilianBatch extends Group {
         if (target) this.gunDirection.set(target.transform.x - e.transform.x,target.transform.y - e.transform.y,target.transform.z - e.transform.z).transformDirection(this.hand.copy(this.transform).invert());
         else if (firing && firing.until >= this.world.tick) this.gunDirection.set(firing.direction.x,firing.direction.y ?? 0,firing.direction.z).transformDirection(this.hand.copy(this.transform).invert());
         else this.gunDirection.set(1,0,0);
+        const hold = handProp === 'pistol' ? undefined : crowdLongGunHold;
         const aiming = c.story?.clip === 'shoot' || !!firing && firing.until >= this.world.tick;
-        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : -.75, aiming ? .995 : .8)); blend[0] = frame; blend[1] = 1;
+        const age = firing ? this.world.tick - (firing.until - 24) : Infinity;
+        const recoil = hold && age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .025 : 0;
+        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : hold ? -.18 : -.75, hold || aiming ? .995 - recoil : .8, hold)); blend[0] = frame; blend[1] = 1;
       }
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);

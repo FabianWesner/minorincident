@@ -27,10 +27,13 @@ export interface PlacementTransform {
   yaw: number;
 }
 export interface Aabb {
+  /** Obstacle on an elevated route, retained by planar navigation despite its height. */
+  navBlocker?: boolean;
   min: [number, number, number];
   max: [number, number, number];
 }
 export interface Placement extends PlacementTransform {
+  navBlocker?: boolean;
   id: string;
   assetId: string;
   /** Optional baked collision record; visuals still use assetId (L2 annex rubble opts in without rebaking L5). */
