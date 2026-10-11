@@ -1,3 +1,4 @@
+import { alphaDamageMultiplier } from '../../data/infected';
 import { storyProtected } from '../npc/storyProtection';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
@@ -27,6 +28,7 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
     const dot = distance ? (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance : 1;
     if (dot >= 0.5 - 1e-8) return 0;
   }
+  if (target.archetype === 'infected.alpha') return Math.max(0, amount * alphaDamageMultiplier(hit.actionId, hit.type));
   if (target.infected?.special === 'armor' && hit.type !== 'explosive' && hit.type !== 'status') {
     const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.25;
@@ -62,7 +64,8 @@ export class Damage {
       return 0;
     }
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
-    if (target.civilian) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
+    const alphaSoldierHit = source.archetype === 'infected.alpha' && target.civilian?.ally?.role === 'soldier';
+    if (target.civilian && !alphaSoldierHit) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
     if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
@@ -83,11 +86,18 @@ export class Damage {
     const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...((hit.type === 'vehicle' || hit.type === 'prop') ? { cause: hit.type } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
+      if (alphaSoldierHit) {
+        const until = this.world.tick + 72, c = target.civilian!;
+        c.knockedUntil = Math.max(c.knockedUntil, until); c.entered = this.world.tick; c.story = null;
+        c.ally!.strikeAt = 0;
+        if (target.health.current === 0) c.state = 'finished';
+        if (target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, until);
+      }
       if (target.combat && stagger > 0) { target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + Math.ceil(stagger * 60)); target.combat.attacking = false; }
       const from = { x: target.transform.x, z: target.transform.z };
       if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback);
       if (target.combat && target.faction === 'infected') {
-        const heavy = target.health.current === 0 || !!special || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle'));
+        const heavy = target.health.current === 0 || (!!special && target.archetype !== 'infected.alpha') || (!normal && (hit.type === 'explosive' || hit.type === 'vehicle'));
         const downed = target.combat.reaction?.heavy && target.combat.reaction.until > this.world.tick;
         const previous = target.combat.reaction?.index ?? target.id % 3;
         if (downed && target.health.current === 0) target.combat.reaction!.groundDeath = true;
