@@ -14,7 +14,7 @@ import { attribute, instancedBufferAttribute, mat4, mix, normalGeometry, positio
 import type { Materials } from '../Materials';
 import { crowdBlendedMatrix, packCrowdParts } from '../../assets/crowd';
 import { AssetRegistry } from '../../assets/registry';
-import { civilianRoles, l1Pedestrians } from '../../data/npcs';
+import { civilianRoles, l1Pedestrians, coreCivilianModels } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { bakeInfected, framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
@@ -43,9 +43,11 @@ const shirtMaterials: Record<string, string[]> = {
   'npc.civilian-woman-b': ['pal_lavender', 'pal_lavenderLight', 'pal_lavenderShadow'],
   'npc.civilian-elderly': ['pal_vest'],
 };
+// Cache prepared CPU geometry, including LOD simplification; each scene owns a clone.
+const preparedCrowds = new Map<string, ReturnType<typeof bakeInfected>>();
+const preparedCrowdLimit = 64;
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
-const coreModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];
 type StandingReset = Record<string, { translation: number[]; rotation: number[]; scale: number[] }>;
 /**
  * Sitting/lying skins ship their joints in a rest pose plus an exported `ss_standingPose` and `restOnlyNodes` (cushion).
@@ -138,12 +140,19 @@ class CivilianBatch extends Group {
     fitCivilianHeight(model, this.model);
     if (this.model === 'npc.civilian-elderly') removeAuthoredCane(model);
     model.getObjectByName('rifle')?.removeFromParent(); // The live weapon follows the hand, including aiming.
-    const baked = bakeInfected(model, [], false, civilianClips);
+    const key = placeholder ? undefined : `${this.model}:${this.lod}`;
+    const cached = key && preparedCrowds.get(key);
+    // bakeInfected supplies absent rigid-part joints; cached clips need the same rig shape.
+    if (cached) for (const name of cached.clip.parts) if (!model.getObjectByName(name)) {
+      const joint = model.clone(false); joint.name = name; joint.position.set(0, 0, 0); model.add(joint);
+    }
+    const baked = cached ? { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() } : bakeInfected(model, [], false, civilianClips);
     this.gunAim = new CrowdGunAim(model, baked.clip.parts);
-    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
-    const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     this.strideScale = baked.strideScale;
     this.locomotion = new CrowdLocomotion(model, baked.clip, this.footwork); this.probe.sole = this.locomotion.sole;
+    if (!cached) {
+    prepareGrip(baked.geometry, baked.clip.parts.indexOf('handR'));
+    const color = baked.geometry.getAttribute('color'), veins = new Float32Array(color.count), veinColor = new Color('#422c68');
     // QA1-07: the civilian GLBs have no tintable `pal_infectedShirt`; their main garment materials take the per-person
     // tint instead, keeping each shade's brightness ratio (dark seams stay darker), so 5 silhouettes x 12 tints differ.
     const garment = shirtMaterials[this.model], shirtColors: Color[] = [];
@@ -175,6 +184,15 @@ class CivilianBatch extends Group {
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
     // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
     if (!placeholder) await simplifyCrowdLod(baked.geometry, this.distant ? .01 : .005, this.distant ? .35 : .5);
+    }
+    if (key) {
+      preparedCrowds.delete(key);
+      preparedCrowds.set(key, cached || { ...baked, geometry: baked.geometry.clone(), shirtColor: baked.shirtColor?.clone() });
+      if (preparedCrowds.size > preparedCrowdLimit) {
+        const oldest = preparedCrowds.keys().next().value!;
+        preparedCrowds.get(oldest)!.geometry.dispose(); preparedCrowds.delete(oldest);
+      }
+    }
     this.gripTriangles = handTriangles(baked.geometry, baked.clip.parts.indexOf('handR'));
     this.gripReach = gripReach(this.gripTriangles);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
@@ -388,7 +406,7 @@ export class CivilianCrowd extends Group {
   constructor(private readonly world: SimWorld, shading?: Materials) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
-    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:coreModels;
+    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:coreCivilianModels;
     this.known.clear();for(const model of models)this.known.add(model);
     this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);this.add(...this.batches);
   }
@@ -424,7 +442,7 @@ export class CivilianCrowd extends Group {
     this.heroLoads.set(model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
   }
   private disposed = false;
-  private readonly known = new Set<string>(coreModels);
+  private readonly known = new Set<string>(coreCivilianModels);
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
     // L1's people spawn at Begin; L6's attackers keep this rig after turning. Prepare their close tiers before play.

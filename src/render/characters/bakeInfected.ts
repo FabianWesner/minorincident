@@ -5,6 +5,10 @@ import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
 import type { CharacterRig } from './rig';
 import type { CrowdClip } from '../../assets/crowd';
+type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; shirtColor: import('three').Color | undefined; doubleSided: boolean; strideScale: number };
+// Only immutable CPU data lives here. Scenes own separate geometry; the cache owns no GPU resources.
+const bakedCrowds = new Map<string, BakedCrowd>();
+const bakedCrowdLimit = 64;
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
   'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed'] as const;
 export const civilianClips = [...infectedClips, 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
@@ -14,7 +18,7 @@ export const framesPerClip = 24;
 const unplantedClips = /death|die|knockdown|flung|get-up|crawl|collapse|rise|sit|stand-up|grabbed|bitten|down/;
 const sole = new Vector3();
 /** Bake once at level load: merged color geometry, part indices and the shared authored glTF rigid-part actions. */
-export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips) {
+export function bakeInfected(root: Group, animatedNodes: readonly string[] = [], crawlingRestPose = false, clipNames: readonly string[] = infectedClips, cacheKey?: string): BakedCrowd {
   const rig = {} as CharacterRig;
   for (const name of characterNodes) {
     let node = root.getObjectByName(name);
@@ -23,6 +27,12 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   }
   const parts: Object3D[] = characterNodes.map((name) => rig[name]);
   for (const name of animatedNodes) { const node = root.getObjectByName(name); if (node && !parts.includes(node)) parts.push(node); }
+  const key = cacheKey ? `${cacheKey}:${crawlingRestPose}:${animatedNodes.join(',')}:${clipNames.join(',')}` : undefined;
+  const cached = key && bakedCrowds.get(key);
+  if (cached) {
+    bakedCrowds.delete(key!); bakedCrowds.set(key!, cached); root.updateMatrixWorld(true);
+    return { ...cached, geometry: cached.geometry.clone(), shirtColor: cached.shirtColor?.clone() };
+  }
   const rest = parts.map((part) => ({ position: part.position.clone(), rotation: part.rotation.clone() }));
   const matrices = new Float32Array(clipNames.length * framesPerClip * parts.length * 16);
   let matrixOffset = 0;
@@ -100,5 +110,13 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     offset += attribute.itemSize;
   }
   const clip: CrowdClip = { parts: parts.map(part => part.name), frames: framesPerClip * clipNames.length, duration: clipNames.length, matrices };
-  return { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
+  const baked = { geometry, clip, shirtColor, doubleSided, strideScale: strideScale(root) };
+  if (key) {
+    bakedCrowds.set(key, { ...baked, geometry: geometry.clone(), shirtColor: shirtColor?.clone() });
+    if (bakedCrowds.size > bakedCrowdLimit) {
+      const oldest = bakedCrowds.keys().next().value!;
+      bakedCrowds.get(oldest)!.geometry.dispose(); bakedCrowds.delete(oldest);
+    }
+  }
+  return baked;
 }
