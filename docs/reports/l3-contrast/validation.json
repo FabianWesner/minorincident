@@ -1,0 +1,59 @@
+{
+  "base": "5a9d2682",
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "remoteUnit": {
+    "pass": 811,
+    "fail": 4,
+    "baselineReproduced": true,
+    "failures": [
+      "clinic-annex lod1",
+      "clinic-annex lod2",
+      "police-station lod1",
+      "police-station lod2"
+    ]
+  },
+  "courierUnits": {
+    "pass": 29
+  },
+  "E25SmokeUnits": {
+    "pass": 28
+  },
+  "L3Simulation": {
+    "pass": 11,
+    "fail": 9
+  },
+  "L3Follow": {
+    "pass": 8
+  },
+  "L3Browser": {
+    "pass": [
+      "Boulevard",
+      "Oak",
+      "campaign handoff"
+    ],
+    "fail": [
+      "Commerce"
+    ]
+  },
+  "E25Browser": {
+    "confirmedPass": 37,
+    "deferred": 3,
+    "baselineReproducedFailures": [
+      "save/reload restored loadout",
+      "window-depth probe zero samples"
+    ]
+  },
+  "fortyLamps": {
+    "pass": true,
+    "samples": 3600,
+    "pools": 40,
+    "maxDelta": 0.019123703441616378
+  },
+  "nightReadability": 3.159236176503391,
+  "denseFog": 3.0774500868458476,
+  "fullAcceptance": "not green",
+  "merged": false,
+  "deployed": false
+}

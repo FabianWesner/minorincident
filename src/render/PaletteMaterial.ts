@@ -19,6 +19,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly char = uniform(0);
   /** E25 night readability: 1 on crowd figures (infected/civilians) for a moonlit silhouette rim. */
   readonly figureRim = uniform(0);
+  /** Moving figures shed ash; snow still accumulates as on the rest of the world. */
+  readonly movingFigure = uniform(0);
   // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
   private readonly _outputs = new Map<number, Node>();
   private outputFor: (mode: number) => Node;
@@ -58,7 +60,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Build only the active surface sections; continuous strengths remain uniforms.
       const snow = float(0).toVar(), weatherBase = base.toVar(), puddle = float(0).toVar();
       if (mode & flags.accumulation) If(weatherSurface.accumulation.greaterThan(0), () => {
-        snow.assign(weatherSurface.accumulation.mul(normalWorld.y.smoothstep(.5, .75)).mul(trackMask().oneMinus()));
+        const coating = weatherSurface.accumulation;
+        snow.assign(mix(coating, coating.min(.03), weatherSurface.ash.mul(this.movingFigure)).mul(normalWorld.y.smoothstep(.5, .75)).mul(trackMask().oneMinus()));
         weatherBase.assign(mix(base, mix(color('#9da7b4'), color('#bcb9b5'), weatherSurface.ash), snow));
       });
       if (mode & flags.clouds) weatherBase.mulAssign(weatherSurface.clouds.mul(-.12).add(1));
@@ -90,7 +93,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).toVar();
-      if (mode & flags.fog) { shaded.addAssign(surface.mul(.7).add(vec3(.18, .16, .14)).mul(heroMask).mul(weatherSurface.fog)); }
+      // Dense fog keeps E28's visibility fill; daylight haze/ash (L3: .25–.4) must retain dark colours.
+      if (mode & flags.fog) shaded.addAssign(surface.mul(.7).add(vec3(.18, .16, .14)).mul(heroMask).mul(weatherSurface.fog).mul(weatherSurface.fog.smoothstep(.4, .8)));
       if (nodes?.surface) If(nodes.surface.greaterThan(0), () => {
         const view = cameraPosition.sub(positionWorld).normalize(), reflected = reflect(view.negate(), normalWorld);
         const metal = nodes.surface!.greaterThan(1.5).select(1, 0);

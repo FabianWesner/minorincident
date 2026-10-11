@@ -73,6 +73,7 @@ export class CharacterView extends Group {
       this.skinned ||= isSkin;
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
+      vertexMaterial.movingFigure.value = 1;
       vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
       if (bloodFeedback) this.bloodMaterials.push(vertexMaterial);
       const boundaries = [...new Set([...characterNodes, ...(def?.requiredNodes ?? []), ...(def?.animatedNodes ?? []), ...(def?.sockets ?? [])])];
@@ -89,9 +90,10 @@ export class CharacterView extends Group {
           let replacement = replacements.get(source);
           if (replacement) return replacement;
           const token = source.name.replace(/^pal_/, '') as PaletteToken;
-          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = bloodFeedback ? materials.unique(token) : materials.get(token);
+          if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
           else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
+          (replacement as PaletteMaterial).movingFigure.value = 1;
           if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
@@ -101,7 +103,8 @@ export class CharacterView extends Group {
       for (const material of oldMaterials) material.dispose();
       const gear: Group[] = [];
       const attachment = (tier: number, parent: import('three').Object3D, size: [number, number, number], position: [number, number, number], token: PaletteToken): void => {
-        const group = new Group(); group.name = `gear-tier-${tier}`; const mesh = new Mesh(new BoxGeometry(...size), materials.get(token));
+        const group = new Group(); group.name = `gear-tier-${tier}`; const mesh = new Mesh(new BoxGeometry(...size), materials.unique(token));
+        mesh.material.movingFigure.value = 1;
         mesh.material.userData.sharedPalette = true; mesh.castShadow = true; mesh.position.set(...position); group.add(mesh); parent.add(group); gear.push(group); group.userData.tier = tier;
       };
       // Cumulative gear: bag straps/pouch; pads/holster; vest/cap; heavier armor and mask.
