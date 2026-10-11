@@ -18,7 +18,7 @@ import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 const lampPosition = new Vector3(), lampDirection = new Vector3();
-interface Record { lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
+interface Record { decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
@@ -41,7 +41,9 @@ export class VehicleView extends Group {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
     const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
-    const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
+    const requested = car.entity.vehicle!.decay, variants = this.registry.definition(def.asset).decayVariants;
+    const decay = requested && variants.includes(requested) ? requested : requested && variants.includes('wrecked') ? 'wrecked' : undefined;
+    const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod, decay) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
     model.userData.assetId = def.asset;
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
@@ -78,7 +80,7 @@ export class VehicleView extends Group {
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
     const previous = this.records.get(id); if (previous) { previous.parent.removeFromParent(); this.releaseRecord(previous); }
-    this.records.set(id, { lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
+    this.records.set(id, { decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
@@ -86,7 +88,9 @@ export class VehicleView extends Group {
       const record = this.records.get(id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
       const lod = modelLod(distance, record?.lod, this.low);
-      if (!record || record.lod !== lod) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
+      const variants = this.registry.definition(car.physics.def.asset).decayVariants, requested = car.entity.vehicle!.decay;
+      const decay = requested && variants.includes(requested) ? requested : requested && variants.includes('wrecked') ? 'wrecked' : undefined;
+      if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
       if (body.body.isKinematic()) {
         const feel = record.feel, elapsed = (this.world.tick - feel.tick) / 60;
@@ -190,7 +194,7 @@ export class VehicleView extends Group {
   private wheelSpot(node: Object3D): [number, number] { node.getWorldPosition(this.spot); return [this.spot.x, this.spot.z]; }
   /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
-  snapshot() { return [...this.records].map(([id, r]) => ({ id, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
+  snapshot() { return [...this.records].map(([id, r]) => ({ id, decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder })); }
   private releaseRecord(record: Record): void {
     for (const material of record.paint) material.dispose();
     record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();

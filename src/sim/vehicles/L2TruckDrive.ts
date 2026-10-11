@@ -85,7 +85,7 @@ export class L2TruckDrive {
     const t = car.entity.transform;
     const truckRadius = Math.hypot(def.length, def.width) / 2;
     const bodies = [...world.entities.iterate()].filter(e => {
-      if (e.id === s.truckId || e.hidden || !(e.civilian || e.infected || e.companion || e.vehicle || e.traffic || e.kind === 'physics-prop')) return false;
+      if (e.id === s.truckId || e.hidden || e.infected || !(e.civilian || e.companion || e.vehicle || e.traffic || e.kind === 'physics-prop')) return false;
       const prop = e.kind === 'physics-prop' ? world.props?.items.find(p => p.entityId === e.id) : undefined;
       const other = world.vehicles!.cars.get(e.id);
       const boxes = other || e.traffic ? staticCollision[other?.physics.def.asset ?? e.archetype ?? '']?.boxes ?? [] : [];
@@ -117,6 +117,22 @@ export class L2TruckDrive {
     const distance = Math.min(remaining, (old + s.rideV) / 120);
     s.rideS += distance;
     const p = truckPoseAt(s.rideS), y = car.physics.body.translation().y;
+    // Infected never hold the siren ride. Sweep the next footprint, then shove bodies
+    // sideways out of the chassis before publishing its pose (including downed bodies).
+    if (s.rideV > 0) for (const e of world.entities.iterate()) {
+      if (!e.infected || e.hidden || !truckBodyOverlap(p, def.length, def.width, e, world, .2)) continue;
+      const c = Math.cos(p.yaw), sn = Math.sin(p.yaw);
+      const cross = (e.transform.x - p.x) * sn + (e.transform.z - p.z) * c;
+      const side = Math.sign(cross) || (e.id % 2 ? 1 : -1);
+      const direction = { x: sn * side, z: c * side };
+      const shove = def.width / 2 + (e.combat?.radius ?? .35) + .5 - Math.abs(cross);
+      if (e.health.current > 0) world.combat!.damage.apply({
+        attackId: world.tick, actionId: car.entity.archetype, sourceId: s.truckId,
+        targetId: e.id, origin: p, direction, base: Math.max(1, s.rideV) * 30 * def.ramStrength,
+        multiplier: 1, type: 'vehicle', knockback: shove, stagger: 1.4, knockdown: true,
+      });
+      else world.knockback(e, direction, shove);
+    }
     car.physics.body.setNextKinematicTranslation({ x: p.x, y, z: p.z });
     car.physics.body.setNextKinematicRotation({ x: 0, y: Math.sin(p.yaw / 2), z: 0, w: Math.cos(p.yaw / 2) });
     Object.assign(car.entity.transform, { x: p.x, z: p.z, yaw: p.yaw });

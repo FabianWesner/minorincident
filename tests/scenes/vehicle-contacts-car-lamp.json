@@ -1,0 +1,64 @@
+{
+  "name": "vehicle-contacts-car-lamp",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L2",
+  "props": [
+    {
+      "id": "lamp",
+      "asset": "prop.street-lamp",
+      "at": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "authored-wreck",
+      "asset": "veh.sedan-blue",
+      "at": [
+        -3,
+        5
+      ],
+      "decay": "wrecked"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "car",
+      "asset": "vehicle.sedan",
+      "at": [
+        -12,
+        0
+      ],
+      "path": [
+        [
+          20,
+          0
+        ]
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      -1,
+      1,
+      0
+    ],
+    "radius": 13,
+    "azimuth": 145
+  },
+  "frames": 240,
+  "shots": [
+    0,
+    90,
+    150,
+    240
+  ],
+  "sheet": 20,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0
+  }
+}
