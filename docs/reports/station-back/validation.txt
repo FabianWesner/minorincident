@@ -1,0 +1,16 @@
+station-back — 2026-10-11
+npm run typecheck: PASS
+npm run lint: PASS
+npm run build: PASS
+Remote: vitest run tests/unit tests/sim/missions/l2-ride-clearance.test.ts --maxWorkers=4: 138 files, 503 tests PASS
+Remote simulation smoke: 6 checks PASS (maxWorkers=2)
+Campaign continuity + aftermath save tests: 4 tests PASS
+Complete bot --level L1 --policy complete --seeds 1 --completion-only: completed, 153.5667 s, 3 respawns
+Complete bot --level L2 --policy complete --seeds 1 --completion-only: completed, 129.6833 s, 0 deaths
+L1 street metrics --check: direct gap 24.2 m; west 43.9 m; east 41.9 m; all complete
+Mac headless Chromium/ANGLE Metal via tools/e2e-lock.sh, workers=1, retries=1:
+Initial combined L1.spec.ts, L2.spec.ts, axe, station captures, smoke, crowd-visible-outbreak: 12 PASS
+l1-street-infected.spec.ts: 1 PASS
+Final foliage-clear L2.spec.ts, axe findability/replay, station-back captures and smoke: 7 PASS (3.9 min, no retries needed)
+Natural truck ride: 24.3167 s; planted pedestrians: 25.7833 s; both zero overlaps/static hits; 95.96% lane share
+No test tolerance loosened; no 20-seed battery; no deployment or merge.

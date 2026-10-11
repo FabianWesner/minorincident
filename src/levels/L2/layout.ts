@@ -123,7 +123,11 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
     const superseded = supersededIds(layout);
     layout.placements = layout.placements.filter(p => !superseded.has(p.id));
     layout.colliders = layout.colliders.filter(c => !superseded.has(c.id));
-    const blocking = new Set(layout.placements.filter(p => looseProp(p.assetId) && stationKeepOutGap(p.position[0], p.position[2]) < RING_CLEAR_M + 1.5).map(p => p.id));
+    // A tree's canopy can screen the required axe even when its trunk is outside the interaction ring.
+    const blocking = new Set(layout.placements.filter(p => {
+      const canopy = p.assetId.startsWith('prop.street-tree') ? (p.visualAabb.max[0] - p.visualAabb.min[0]) / 2 : 0;
+      return looseProp(p.assetId) && stationKeepOutGap(p.position[0], p.position[2]) < RING_CLEAR_M + 1.5 + canopy;
+    }).map(p => p.id));
     layout.placements = layout.placements.filter(p => !blocking.has(p.id));
     layout.colliders = layout.colliders.filter(c => !blocking.has(c.id));
     // Loose inherited furniture cannot start in a driving lane. Check the whole footprint.

@@ -14,7 +14,7 @@ test('L1 authored street encounters @E19 game camera shows infected across three
     const sample = await page.evaluate(async () => {
       const a = window.__SS__!; await a.step(60);
       const m = a.missions.state()!, p = a.getState().player!;
-      const section = p.transform.z > 18 ? 'elm' : p.transform.z > -12 ? 'juniper' : 'main-row';
+      const section = p.transform.x > -10 ? 'elm-east' : p.transform.x > -45 ? 'elm-west' : 'station';
       const visible = a.query({ kind: 'infected' }).filter(e => {
         if (e.health.current <= 0 || e.hidden || e.emerging) return false;
         const q = a.input.project(e.transform);
@@ -30,6 +30,6 @@ test('L1 authored street encounters @E19 game camera shows infected across three
     if (sample.phase === 'result') break;
   }
   writeFileSync(`${output}/evidence.json`, JSON.stringify(evidence, null, 2) + '\n');
-  expect([...shots].sort()).toEqual(['elm', 'juniper', 'main-row']);
+  expect([...shots].sort()).toEqual(['elm-east', 'elm-west', 'station']);
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('result');
 });
