@@ -44,7 +44,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
-  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point }
+  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'interact' };
@@ -242,7 +242,11 @@ export class SceneLab {
         entity = 1; const player = world.entities.get(1)!;
         if (a.at) this.teleport(player, at);
         player.transform.yaw = yaw; Object.assign(world.previousPlayer!, player.transform);
-        if (a.look?.model === 'male' || a.look?.model === 'female') world.player!.select(a.look.model, 0);
+        if (a.look?.model === 'male' || a.look?.model === 'female') {
+          const tier = a.look.gearTier ?? 0;
+          if (![0, 1, 2, 3, 4].includes(tier)) throw new Error('Courier gear tier must be 0–4');
+          world.player!.select(a.look.model, tier as import('../../data/survivor').GearTier);
+        }
         // L1 parity: the courier starts empty-handed (Game.loadLevel clears the L1 loadout); `loadout` arms her.
         if (a.loadout) world.combat!.setLoadout([a.loadout[0]].flat(), [a.loadout[1]].flat()); else world.combat!.clearLoadout();
         world.combat!.damage.god = a.god ?? true;
@@ -303,6 +307,7 @@ export class SceneLab {
       if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
+      else if ('aim' in a) actor.plan = { type: 'attack', target: a.aim, until: this.frame + ticks(a.seconds ?? 2), side: world.combat!.runner.loadout.state.selectedSide, move: a.move ?? [0, 0], aiming: true };
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move };
       else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
@@ -521,7 +526,8 @@ export class SceneLab {
           const t = world.entities.get(target.entity)!.transform, dx = t.x - p.x, dz = t.z - p.z, d = Math.hypot(dx, dz) || 1;
           frame.move = toPoint(plan.move); frame.walk = true; frame.aim = { x: dx / d, z: dz / d }; frame.aimSource = 'pointer';
         } else frame.attackTarget = { id: target.entity, side: plan.side };
-        frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
+        if (plan.aiming) frame.pointerTarget = true;
+        else frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'click') {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
@@ -722,7 +728,8 @@ export class SceneLab {
         const head = joints.head, top: Vec3 = [head[0], head[1] + .2, head[2]];
         torsos.push({ id: actor.id, bones: [{ name: 'spine', a: joints.hip as Vec3, b: shoulders as Vec3, radius: .1 }, { name: 'neck', a: shoulders as Vec3, b: head as Vec3, radius: .06 }, { name: 'head', a: head as Vec3, b: top, radius: .11 }] });
       }
-      // Firing gun vs its owner's torso/head. Hands and forearms deliberately grip the weapon.
+      // Visible gun vs its owner's torso/head and drawn ground, in every state.
+      // Hands and forearms deliberately grip the weapon.
       if (this.frame % 3 === 0 && visible && joints?.hip && joints.head && shoulders) {
         const body: Bone[] = [{ name:'torso',a:joints.hip as Vec3,b:shoulders as Vec3,radius:.13 },
           { name:'neck',a:shoulders as Vec3,b:joints.head as Vec3,radius:.06 },
@@ -730,7 +737,11 @@ export class SceneLab {
         for (const gun of probes.gunMeshes.filter(g=>g.entity===actor.entity)) {
           const p=gun.geometry.getAttribute('position'),index=gun.geometry.index,tris=new Float32Array((index?.count??p.count)*3);
           for(let i=0;i<tris.length/3;i++)this.point.fromBufferAttribute(p,index?index.getX(i):i).applyMatrix4(gun.matrix).toArray(tris,i*3);
-          for(const hit of boneClipping(body,[{id:actor.id+'/gun',assetId:'gun',tris,box:boxOf(tris)}],0)) {
+          const hits = boneClipping(body,[{id:actor.id+'/gun',assetId:'gun',tris,box:boxOf(tris)}],0);
+          let bottom = 0; for (let i = 3; i < tris.length; i += 3) if (tris[i + 1] < tris[bottom + 1]) bottom = i;
+          const floor = this.renderedGround(tris[bottom], tris[bottom + 2], tris[bottom + 1] + 1);
+          if (floor !== null && tris[bottom + 1] < floor) hits.push({ bone: 'ground', prop: actor.id + '/gun', asset: 'gun', crossing: true, clearanceCm: +(100 * (tris[bottom + 1] - floor)).toFixed(1) });
+          for(const hit of hits) {
             const key=actor.id+'|'+hit.bone,old=this.gunBodyHits.get(key);
             if(old)old.count++;else this.gunBodyHits.set(key,{...hit,actor:actor.id,frame:this.frame,count:1});
           }

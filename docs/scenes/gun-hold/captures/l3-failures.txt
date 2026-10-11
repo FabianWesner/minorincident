@@ -1,0 +1,121 @@
+ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band
+AssertionError: expected 229.61666666666667 to be less than or equal to 225
+ ❯ tests/levels/L3.test.ts:54:77
+     52|     expect(runs.filter(r => r.outcome === 'complete')).toHaveLength(se…
+     53|     const t = median(runs.map(r => r.simSeconds));
+     54|     expect(t).toBeGreaterThanOrEqual(l3.bots.completeMedianS[0]); expe…
+       |                                                                             ^
+     55|   }, HEAVY);
+     56|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition
+AssertionError: expected 60 to be 40 // Object.is equality
+
+- Expected
++ Received
+
+- 40
++ 60
+
+ ❯ tests/levels/L3.test.ts:81:46
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag
+AssertionError: expected 0 to be greater than or equal to 1
+ ❯ tests/levels/L3.test.ts:172:91
+    170|   test('T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the…
+    171|     const runs = await complete();
+    172|     expect(runs.filter(r => r.squad!.atFallback >= 3 && r.squad!.atFal…
+       |                                                                                           ^
+    173|     expect(runs.every(r => r.squad!.protected === 0)).toBe(true);
+    174|   }, HEAVY);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports
+AssertionError: expected 0.6351829988193625 to be greater than or equal to 0.8
+ ❯ tests/levels/L3.test.ts:182:56
+    180|     expect(officers / Math.max(1, officers + player)).toBeGreaterThanO…
+    181|     expect(median(runs.map(r => r.s1!.damage))).toBeLessThanOrEqual(15…
+    182|     expect(median(runs.map(r => r.squad!.near8Share))).toBeGreaterThan…
+       |                                                        ^
+    183|     expect(Math.max(...runs.map(r => r.squad!.maxJumpM))).toBeLessThan…
+    184|   }, HEAVY);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %
+AssertionError: expected 7 to be less than or equal to 2
+ ❯ tests/levels/L3.test.ts:191:58
+    189|     record('squad', { ends, atCheckpoint: runs.map(r => r.squad!.atChe…
+    190|     expect(ends[0]).toBeGreaterThanOrEqual(ends[1]); expect(ends[1]).t…
+    191|     expect(median(runs.map(r => r.squad!.atCheckpoint))).toBeLessThanO…
+       |                                                          ^
+    192|     expect(runs.filter(r => r.squad!.atCheckpoint === 4).length).toBeL…
+    193|     expect(runs.filter(r => r.squad!.turnedInCorridor >= 1).length).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-11 @E21 @E21-AC11 progress never regresses by > 15 m (complete), and each forced street completes 20/20
+AssertionError: oak seed 1 used oak,commerce: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/levels/L3.test.ts:203:128
+    201|       const forced = await battery('complete', { street });
+    202|       expect(forced.filter(r => r.outcome === 'complete').length, stre…
+    203|       for (const r of forced) expect(r.streets.filter(s => s !== stree…
+       |                                                                                                                                ^
+    204|     }
+    205|   }, HEAVY * 2); // Three existing single seed forced routes took 61 m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded
+AssertionError: expected 50 to be less than or equal to 12
+ ❯ tests/levels/L3.test.ts:209:184
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them
+AssertionError: expected 0 to be greater than or equal to 1
+ ❯ tests/levels/L3.test.ts:226:31
+    224|       for (const id of s.pressureIds.slice(n)) { const e = w.entities.…
+    225|     }
+    226|     expect(emergences.length).toBeGreaterThanOrEqual(1);
+       |                               ^
+    227|     expect(Math.min(...emergences.map(e => e.tick))).toBeGreaterThanOr…
+    228|     for (const e of emergences) { expect(furthest - e.x).toBeGreaterTh…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-bots @E21 evade-only never attacks and still reaches the army zone
+AssertionError: expected 1 to be greater than or equal to 2
+ ❯ tests/levels/L3.test.ts:294:63
+    292|     record('bots-evade-only', runs);
+    293|     for (const r of runs) { expect(r.handgunShots).toBe(0); expect(r.k…
+    294|     expect(runs.filter(r => r.outcome === 'complete').length).toBeGrea…
+       |                                                               ^
+    295|   }, HEAVY);
+    296|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  1 failed | 137 passed (138)
+      Tests  9 failed | 509 passed (518)
+   Start at  07:12:11
+   Duration  1865.28s (tests 97%, import 2%)
+
+[remote] done exit=1 (runner 2.31.51.253, sync 26s, remote total 1869s)

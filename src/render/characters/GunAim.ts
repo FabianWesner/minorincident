@@ -1,6 +1,11 @@
 import { Euler, Group, Matrix4, Object3D, Quaternion, Vector3 } from 'three';
 import { LimbIK } from './LimbIK';
 
+/** Stock/tube clearance at the courier's dominant shoulder (world metres). */
+export const gunHoldOffset = (assetId: string): number => assetId === 'wpn.rocket-launcher' ? .32 : assetId === 'wpn.machine-gun' ? .14 : assetId === 'wpn.assault-rifle' ? .1 : assetId === 'wpn.pistol' ? 0 : .06;
+/** Long barrels need a higher carry to clear the road throughout the stride. */
+export const gunCarryElevation = (assetId: string): number => assetId === 'wpn.rocket-launcher' ? -.5 : ['wpn.machine-gun', 'wpn.hunting-rifle'].includes(assetId) ? -.65 : -.75;
+
 /** Last upper-body layer: a nearly straight firing arm, independent of the gait.
  * +X is the asset barrel direction; crowd props use +Z instead. */
 export class GunAim {
@@ -17,8 +22,8 @@ export class GunAim {
   constructor(private readonly upper: Object3D, middle: Object3D, end: Object3D, private readonly torso?: Object3D) {
     this.arm = new LimbIK(upper, middle, end);
   }
-  apply(direction: { x: number; z: number }, barrelAxis = this.barrel): void {
-    if (this.torso?.parent) {
+  apply(direction: { x: number; z: number }, barrelAxis = this.barrel, elevation = 0, reach = .995, turnTorso = true, lateral = 0): void {
+    if (turnTorso && this.torso?.parent) {
       this.torso.updateWorldMatrix(true,true);
       this.torsoAngles.setFromQuaternion(this.torso.getWorldQuaternion(this.torsoRotation),'YXZ');
       this.torsoAngles.y = -Math.atan2(direction.z,direction.x);
@@ -27,11 +32,12 @@ export class GunAim {
       this.torso.quaternion.copy(this.parentRotation); this.torso.updateWorldMatrix(false,true);
     }
     this.upper.updateWorldMatrix(true, true);
-    this.direction.set(direction.x, 0, direction.z).normalize();
+    this.direction.set(direction.x * Math.cos(elevation), Math.sin(elevation), direction.z * Math.cos(elevation)).normalize();
     const length = this.arm.middle.position.length() + this.arm.end.position.length();
     const scale = this.upper.getWorldScale(this.scale).y;
     // 99.5% reach leaves a small natural elbow bend (< 10 degrees), below the shoulder.
-    this.upper.getWorldPosition(this.target).addScaledVector(this.direction, length * scale * .995);
+    this.upper.getWorldPosition(this.target).addScaledVector(this.direction, length * scale * reach);
+    this.target.x -= direction.z * lateral; this.target.z += direction.x * lateral;
     this.rotation.setFromUnitVectors(barrelAxis, this.direction);
     this.arm.solve(this.target, this.pole, this.rotation);
   }

@@ -57,7 +57,7 @@ export interface SceneSpec {
 }
 export interface PropSpec { decay?: string; powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
-export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; role?: string }
+export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; gearTier?: number; role?: string }
 export interface ActorSpec {
   id?: string;
   kind: ActorKind;
@@ -87,6 +87,8 @@ export type Action =
   | { sit: string; seconds?: number }
   | { routine: 'sit'|'treat'|'rest'|'talk'|'share' }
   | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT'; /** Simultaneous walking direction for firing-layer QA. */ move?: Point }
+  /** Courier: ordinary pointer-target aim without held fire, for pose blending QA. */
+  | { aim: string; seconds?: number; move?: Point }
   | { select: 'LEFT' | 'RIGHT'; index?: number }
   /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }

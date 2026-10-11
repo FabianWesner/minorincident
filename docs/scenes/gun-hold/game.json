@@ -1,0 +1,165 @@
+{
+  "name": "gun-hold-female-handgun-bat-game",
+  "ground": "asphalt",
+  "size": 80,
+  "time": "L3",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.handgun",
+        "weapon.bat"
+      ],
+      "look": {
+        "model": "female"
+      }
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        30,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "turn-target",
+      "kind": "infected",
+      "at": [
+        0,
+        30
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 16,
+      "actor": "courier",
+      "do": {
+        "walk": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1.5
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 40,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            0,
+            1.5
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 64,
+      "actor": "courier",
+      "do": "idle"
+    },
+    {
+      "frame": 64,
+      "actor": "courier",
+      "do": {
+        "aim": "target",
+        "seconds": 0.14
+      }
+    },
+    {
+      "frame": 72,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 0.6,
+        "move": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 96,
+      "actor": "courier",
+      "do": {
+        "aim": "turn-target",
+        "seconds": 0.27
+      }
+    },
+    {
+      "frame": 112,
+      "actor": "courier",
+      "do": {
+        "attack": "turn-target",
+        "seconds": 0.6,
+        "move": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 156,
+      "actor": "courier",
+      "do": "idle"
+    },
+    {
+      "frame": 192,
+      "actor": "courier",
+      "do": {
+        "select": "RIGHT"
+      }
+    },
+    {
+      "frame": 208,
+      "actor": "courier",
+      "do": {
+        "select": "LEFT"
+      }
+    }
+  ],
+  "frames": 224,
+  "sheet": 10,
+  "shots": [
+    0,
+    24,
+    48,
+    72,
+    74,
+    80,
+    104,
+    114,
+    140,
+    176,
+    200,
+    220
+  ],
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0
+  }
+}
