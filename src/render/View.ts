@@ -1,5 +1,6 @@
 // Adapted from folio-2025 View.js by Bruno Simon (MIT), commit 41046b5.
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
+import { cameraFraming } from '../data/cameraFraming';
 
 /** Zoom range as a fraction of the default radius (PO, E19 I1 review): in until the hero is ~1/3.5 of the
  * viewport height (courier 1.4 m at 25° FOV ≈ 0.5), out to about twice the visible ground area (√2 ≈ 1.45). */
@@ -7,15 +8,15 @@ export const zoomLimits = [.5, 1.45] as const;
 export interface CameraPose { position: [number, number, number]; target: [number, number, number] }
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
-  readonly camera = new PerspectiveCamera(25, 16 / 9, 0.1, 600);
+  readonly camera = new PerspectiveCamera(cameraFraming.fovDeg, 16 / 9, 0.1, 600);
   /** CSS pixels for projected-size LOD selection, independent of render DPR. */
   viewportHeight = 900;
   readonly focus = new Vector3();
   readonly cameraTarget = new Vector3();
   readonly azimuth = Math.PI / 4;
-  readonly polar = Math.PI * 0.30;
-  radius = 19;
-  private defaultRadius = 19;
+  readonly polar = cameraFraming.polar;
+  radius: number = cameraFraming.radiusM;
+  private defaultRadius: number = cameraFraming.radiusM;
   private zoomRatio = 1;
   private targetZoom = 1;
   /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
@@ -29,7 +30,7 @@ export class View {
   get lodCamera(): PerspectiveCamera {
     if (!this.inspectionPose || !this.inspectionGameLod) return this.camera;
     const camera = this.inspectionLodCamera;
-    camera.copy(this.camera); camera.position.copy(this.cameraTarget).add(new Vector3().setFromSphericalCoords(19, this.polar, this.azimuth));
+    camera.copy(this.camera); camera.position.copy(this.cameraTarget).add(new Vector3().setFromSphericalCoords(cameraFraming.radiusM, this.polar, this.azimuth));
     camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
   }
   driving = false;
@@ -60,7 +61,7 @@ export class View {
   resize(width: number, height: number): void {
     this.viewportHeight = height;
     this.camera.aspect = width / height;
-    this.defaultRadius = width >= height ? 19 : Math.max(19, 7 / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
+    this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
     this.radius = this.defaultRadius * this.zoomRatio;
     this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
