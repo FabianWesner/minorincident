@@ -140,6 +140,11 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       if (p.assetId === 'prop.street-lamp' && l3Roadblocks.some(b=>Math.abs(p.position[0]-b.x)<4 && Math.abs(p.position[2]-b.z)<b.halfWidth+1)) {
         p.position[0]+=7;p.visualAabb.min[0]+=7;p.visualAabb.max[0]+=7;
       }
+      // Mount the span's lamp on the elevated deck, so its night pool lights the walking surface.
+      if(p.assetId === 'prop.street-lamp' && p.position[0]===174) {
+        const dy=5.7-p.position[1], dz=-2.1-p.position[2];p.position[1]+=dy;p.position[2]+=dz;
+        p.visualAabb.min[1]+=dy;p.visualAabb.max[1]+=dy;p.visualAabb.min[2]+=dz;p.visualAabb.max[2]+=dz;
+      }
       if(p.assetId === 'prop.street-lamp' && p.position[0]===136) {p.position[2]-=4;p.visualAabb.min[2]-=4;p.visualAabb.max[2]-=4;}
     }
     const obstacles = obstaclesOf(layout, 2);
