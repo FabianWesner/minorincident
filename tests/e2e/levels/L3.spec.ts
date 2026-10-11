@@ -150,7 +150,8 @@ test.describe('L3 The Police Collapse in the browser', () => {
       else route.push({ x, z: sz });
     }
     if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end
-    route.push({ x: 129, z: 0 }, { x: 144, z: 0 }, { x: l3Anchors['l3-zone'][0], z: 0 });
+    const restX = l3.map.zoneX + 4;
+    route.push({ x: 129, z: 0 }, { x: restX, z: 0 }, { x: l3Anchors['l3-zone'][0], z: 0 });
     // Entering the rendezvous ring ends L3 and hands over to L4: keep the last L3 state, stop touching the world then.
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
@@ -159,11 +160,11 @@ test.describe('L3 The Police Collapse in the browser', () => {
       const stop = wp.x > l3.map.zoneX ? .5 : (street === 'oak' && wp.z === 32) ? 1.2 : sz === 0 ? 2 : 4;
       await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
       if (!await inL3()) break;
-      if (wp.x === 144) {
+      if (wp.x === restX) {
         // The compound is a resting place before the rendezvous ring, not an automatic finish at the boom.
         await step(300);
         expect(await inL3()).toBe(true);
-        const threats = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x >= 140));
+        const threats = await page.evaluate(x => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x >= x), l3.map.zoneX);
         expect(threats, 'no active infected inside the army compound').toEqual([]);
         await page.evaluate(() => window.__SS__!.screenshotReady());
         await page.screenshot({ path: `${output}/l3-compound-rest-${street}.png` });
