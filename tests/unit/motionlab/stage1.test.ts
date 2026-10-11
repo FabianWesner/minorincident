@@ -54,3 +54,12 @@ test('presentation applies paused same-tick teleports and interpolates subsequen
   transform.x = 2;
   expect(presentation.sample(1, transform, 11, .5).x).toBe(1.5);
 });
+
+test('@E21 an alerted ally turns through 180 degrees within 0.25 seconds', () => {
+  const presentation = new MotionPresentation(6), transform = { x: 0, y: .7, z: 0, yaw: 0 };
+  presentation.sample(1, transform, 0);
+  transform.yaw = Math.PI;
+  let yaw = 0;
+  for (let tick = 1; tick <= 15; tick++) yaw = presentation.sample(1, transform, tick, 1, 14).yaw;
+  expect(Math.abs(yaw)).toBeCloseTo(Math.PI);
+});

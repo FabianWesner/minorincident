@@ -124,6 +124,8 @@ export function l3Segment(x: number): number { const s = l3.map.segments; return
  * move like real policemen would do, not standing still". Short steps while facing the threat, a baton strike at arm's length.
  */
 export const policeTactics = {
+  /** Immediate self-defence; longer-range acquisition still uses player camera framing. */
+  defendM: 10,
   /** Backstep when an infected is closer than this; step length, step speed, step duration cap and the pause between steps. */
   backstepM: 3.2, stepM: 1.4, stepMs: 2.4, stepS: .8, stepEveryS: 1.6,
   /** Never further than this from the post (squad members follow the player instead). */

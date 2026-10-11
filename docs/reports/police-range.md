@@ -1,5 +1,7 @@
 # Police visible engagement
 
+The 2026-10-11 [police reaction update](police-react.md) adds nearby self-defence and hearing exceptions. The captures below document the earlier camera-only rule; longer-range restrictions remain in force.
+
 ## Rule
 
 All officers (L3 squad and legacy police shooters) acquire and fire only inside a conservative player-centred volume derived from the shared default follow-camera constants. It combines desktop vertical framing, the 7 m portrait width, a 12% screen margin and a 4.55 m player distance cap. Shooter reach is capped at 6 m. Cached targets, breakout acquisition and pending attacks recheck eligibility; pending shots also recheck line of sight and hidden/rising state. Soldiers and civilians retain their existing rules.

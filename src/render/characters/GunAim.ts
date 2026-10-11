@@ -71,14 +71,14 @@ export class CrowdGunAim {
     });
     this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')]);
   }
-  apply(pose: Float32Array, direction: { x: number; z: number } = this.forward): void {
+  apply(pose: Float32Array, direction: { x: number; z: number } = this.forward, elevation = 0, reach = .995): void {
     this.nodes.forEach((node, i) => {
       this.matrix.fromArray(pose, i * 16);
       if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.fromArray(pose, this.parents[i] * 16).invert());
       this.matrix.decompose(node.position, node.quaternion, node.scale);
     });
     this.root.updateMatrixWorld(true);
-    this.aim.apply(direction, this.barrel);
+    this.aim.apply(direction, this.barrel, elevation, reach);
     this.root.updateMatrixWorld(true);
     this.nodes.forEach((node, i) => {
       let ancestor: Object3D | null = node;

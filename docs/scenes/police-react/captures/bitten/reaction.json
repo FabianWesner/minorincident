@@ -1,0 +1,28 @@
+{
+  "pass": true,
+  "reactions": [
+    {
+      "actor": "officer",
+      "firstAttack": -1,
+      "attacks": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "entity": 1
+    },
+    {
+      "id": "officer",
+      "kind": "pedestrian",
+      "entity": 3
+    },
+    {
+      "id": "zombie",
+      "kind": "infected",
+      "entity": 4
+    }
+  ],
+  "events": []
+}

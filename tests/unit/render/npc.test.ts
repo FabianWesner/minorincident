@@ -46,6 +46,9 @@ test('@E19 civilian variety keeps authored gait, sim idle hysteresis and raised 
     expect(clip()).toBe('npc-walk-relaxed');
     civilian.motion.speed = .08; civilian.motion.moving = false; world.tick++; crowd.update();
     expect(clip()).toBe('idle');
+    civilian.civilian.state = 'bitten'; civilian.motion = { speed: .6, moving: true, distance: .5 }; world.tick++; crowd.update(); expect(clip()).toBe('infection-stagger');
+    civilian.civilian.state = 'grabbed'; world.tick++; crowd.update(); expect(clip()).toBe('hurt');
+    civilian.motion.moving = false;
     civilian.civilian.state = 'down'; civilian.civilian.entered = world.tick; civilian.civilian.until = world.tick + 60; world.tick++; crowd.update(); expect(clip()).toBe('infection-collapse');
     civilian.civilian.state = 'rising'; civilian.civilian.entered = world.tick - 36; civilian.civilian.until = civilian.civilian.entered + 72; crowd.update(); expect(clip()).toBe('infection-rise');
     expect(mesh.geometry.getIndex()).not.toBeNull();

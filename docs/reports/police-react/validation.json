@@ -1,0 +1,36 @@
+{
+  "base": "5a9d2682",
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "focusedRemoteTests": 52,
+  "simulationSmokePassed": 6,
+  "browserSmokePassed": 12,
+  "L3BrowserLevelSpecPassed": 4,
+  "browserPlayerDeaths": {
+    "commerce": 0,
+    "blvd": 0,
+    "oak": 0
+  },
+  "sceneLabPassed": [
+    "behind",
+    "rush",
+    "grab-alone",
+    "grab",
+    "carry-0",
+    "carry-1",
+    "bitten"
+  ],
+  "unit": {
+    "passed": 817,
+    "failed": 4,
+    "baselineFailures": true
+  },
+  "completeBot": {
+    "seed": 1,
+    "completed": true,
+    "timeSeconds": 226.35,
+    "playerDeaths": 0,
+    "scope": "Before final gate guard and stale-target cleanup; browser rerun and regression tests cover those final changes."
+  }
+}

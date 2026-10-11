@@ -1,0 +1,183 @@
+{
+  "pass": true,
+  "reactions": [
+    {
+      "actor": "officer",
+      "firstAttack": 19,
+      "attacks": 4
+    },
+    {
+      "actor": "helper",
+      "firstAttack": 2,
+      "attacks": 5
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "entity": 1
+    },
+    {
+      "id": "officer",
+      "kind": "pedestrian",
+      "entity": 3
+    },
+    {
+      "id": "helper",
+      "kind": "pedestrian",
+      "entity": 4
+    },
+    {
+      "id": "zombie",
+      "kind": "infected",
+      "entity": 5
+    }
+  ],
+  "events": [
+    {
+      "type": "ally.attack",
+      "tick": 2,
+      "sourceId": 4,
+      "targetId": 5,
+      "role": "officer",
+      "hit": true,
+      "from": {
+        "x": 4,
+        "z": 0
+      },
+      "to": {
+        "x": -1,
+        "z": 0
+      }
+    },
+    {
+      "type": "civilian.saved",
+      "tick": 3,
+      "id": 3
+    },
+    {
+      "type": "ally.attack",
+      "tick": 19,
+      "sourceId": 3,
+      "targetId": 5,
+      "role": "officer"
+    },
+    {
+      "type": "ally.attack",
+      "tick": 42,
+      "sourceId": 4,
+      "targetId": 5,
+      "role": "officer",
+      "hit": false,
+      "from": {
+        "x": 4,
+        "z": 0.8138137530414848
+      },
+      "to": {
+        "x": -1.5999999999999999,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 62,
+      "sourceId": 3,
+      "targetId": 5,
+      "role": "officer",
+      "hit": true,
+      "from": {
+        "x": 0.9210720203660767,
+        "z": 0
+      },
+      "to": {
+        "x": -1.5999999999999999,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 82,
+      "sourceId": 4,
+      "targetId": 5,
+      "role": "officer",
+      "hit": false,
+      "from": {
+        "x": 4,
+        "z": 1.635935268138956
+      },
+      "to": {
+        "x": -1.5875555555555556,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 102,
+      "sourceId": 3,
+      "targetId": 5,
+      "role": "officer",
+      "hit": false,
+      "from": {
+        "x": 1.6493852983522597,
+        "z": 0
+      },
+      "to": {
+        "x": -1.1464444444444444,
+        "z": 0
+      }
+    },
+    {
+      "type": "ally.attack",
+      "tick": 122,
+      "sourceId": 4,
+      "targetId": 5,
+      "role": "officer",
+      "hit": false,
+      "from": {
+        "x": 4,
+        "z": 1.69715632844632
+      },
+      "to": {
+        "x": -0.038666755789124985,
+        "z": -0.000046081495886676104
+      }
+    },
+    {
+      "type": "civilian.grabbed",
+      "tick": 133,
+      "sourceId": 5,
+      "targetId": 3,
+      "variant": "inf.jogger",
+      "rescueUntil": 193
+    },
+    {
+      "type": "ally.attack",
+      "tick": 151,
+      "sourceId": 3,
+      "targetId": 5,
+      "role": "officer"
+    },
+    {
+      "type": "civilian.saved",
+      "tick": 152,
+      "id": 3
+    },
+    {
+      "type": "ally.attack",
+      "tick": 162,
+      "sourceId": 4,
+      "targetId": 5,
+      "role": "officer",
+      "hit": true,
+      "from": {
+        "x": 4.315287085933971,
+        "z": 0.9468984540572997
+      },
+      "to": {
+        "x": 0.1541795286584415,
+        "z": 0.09372762909782298
+      }
+    }
+  ]
+}
