@@ -237,4 +237,10 @@ PO addition (verbatim): "Or: you could also put the places randomly each time on
 
 **Randomized places (PO addition): not in this change.** The hero locations are unique, story-bound buildings (the depot clerk, the lab accident set piece, the only detached garage, the station shell with L2 built inside it) and the district is a baked, hand-dressed layout with tight route/clearance/clipping tests. A rule-based version needs layout variants (alternative lots authored twice and filtered per run seed at load, including baked paths/flowers), a seed carried into L2 for the station, per-combination bot validation and test anchors per variant. Realistic candidates today: safe place 2 lots (Main Row east, main road south side r0c3s), bat garage 1–2; pickup and drop-off stay fixed. Estimate 2–3 lane-days; see the lane report.
 
-- **PO 2026-10-09:** "About L1; don't do the random placement of locations. It's good the way it is right now" — the fixed layout (Fire Station 3 on Main Row past the outbreak, lane/l1-route) is final; no role randomization.
+- **PO 2026-10-09:** "About L1; don't do the random placement of locations. It's good the way it is right now" — the fixed layout (Fire Station 3 at the original south-west corner, restored PO 2026-10-11) is final; no role randomization.
+
+### PO 2026-10-11: restore the original station
+
+"L1 and L2 put the firefighter house back to where it was initially."
+
+This supersedes the 2026-10-08 station-location decision above. Fire Station 3 is `bld.fire-station` at (-77, 42.5), yaw 0 (east-facing bays, the frame immediately before `fa482fa7`); the final trigger is (-76.6, 41.27). L1 ends here and L2 starts on this station's apron. Main Row regains its original two north-strip houses; the replacement houses on the station lot are removed. The invitation, live infected, raised bay floor, and later PO fixes remain. The final leg follows Elm Street west; medkits and small authored street groups cover that approach as well as the existing Juniper/Larch alternatives. Route coverage must still have no encounter gap over 60 m.

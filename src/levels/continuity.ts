@@ -39,16 +39,16 @@ export const emptyAftermath = (): L1Aftermath => ({ version: 1, props: [], dumps
 export const l1Canon = {
   /** Beat 5: the contained pressure blast in the Sunset Grove Medical Annex (windows blown, interior fire, smoke). */
   annex: {
-    placement: 'bld.clinic-annex:822', decay: 'burned',
+    placement: 'bld.clinic-annex:791', decay: 'burned',
     /** Debris blown out over the forecourt: rubble heaps under the window and beside the doors (fixed, blocked nav cells).
-     * They leave the door approach (x 65..67) and the gate open: L2 refuge door 47 and the L1 markers stay reachable. */
+     * They leave the door approach (x 65..67) and the gate open: the Annex refuge door and the L1 markers stay reachable. */
     rubble: [
       { id: 'carry-annex-rubble-1', x: 63.1, z: -12.12, yaw: 0, scale: .88, half: [1.4, .72] },
       { id: 'carry-annex-rubble-2', x: 68.5, z: -12.22, yaw: 2.6, scale: .62, half: [.85, .62] },
     ],
   },
-  /** Beat 9: the residents of one house break out through its yard gate (refuge door 30, LevelOneOutbreak.houseDoor). */
-  outbreakHouse: { door: 30, gate: { x: 5.05147, z: 26 }, house: 'bld.house-a:405', entry: { x: 5.01147, z: 22.33275 } },
+  /** Beat 9: the residents of one house break out through its yard gate (refuge door 28, LevelOneOutbreak.houseDoor). */
+  outbreakHouse: { door: 28, gate: { x: 5.05147, z: 26 }, house: 'bld.house-a:405', entry: { x: 5.01147, z: 22.33275 } },
 } as const;
 
 type Dressing = { id: string; assetId: string; x: number; z: number; yaw?: number; scale?: [number, number, number] };

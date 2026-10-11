@@ -1,0 +1,50 @@
+{
+  "completed": 1,
+  "runs": 1,
+  "time": 153.56666666666666,
+  "deaths": 3,
+  "failures": {
+    "player-died": 3
+  },
+  "reports": [
+    {
+      "level": "L1",
+      "policy": "complete",
+      "seed": 1,
+      "completed": true,
+      "time": 153.56666666666666,
+      "deaths": 3,
+      "kills": 0,
+      "damageTaken": 302.36666666666656,
+      "failures": {
+        "player-died": 3
+      },
+      "objectiveTimeline": [
+        {
+          "id": "pickup",
+          "t": 15.466666666666667
+        },
+        {
+          "id": "deliver",
+          "t": 51.81666666666667
+        },
+        {
+          "id": "escape",
+          "t": 65.83333333333333
+        },
+        {
+          "id": "weapon",
+          "t": 127.98333333333333
+        },
+        {
+          "id": "firestation",
+          "t": 153.56666666666666
+        }
+      ],
+      "furthestObjective": "firestation",
+      "activeObjectives": [],
+      "outcome": "complete",
+      "blocker": null
+    }
+  ]
+}

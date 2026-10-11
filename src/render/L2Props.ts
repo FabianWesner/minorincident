@@ -51,7 +51,7 @@ export class L2Props extends Group {
     const instanced = (material: MeshBasicNodeMaterial | ReturnType<Materials['get']>, count: number) => {
       const mesh = new InstancedMesh(this.box, material, Math.max(1, count)); mesh.count = count; mesh.frustumCulled = false; this.add(mesh); return mesh;
     };
-    // In the station frame (local +x out of the bays), so they follow Fire Station 3 to Main Row.
+    // In the station frame (local +x out of the bays), so they follow the restored Fire Station 3 frame.
     for (const [bx, bz] of l2Beacons) {
       const root = new Group(); root.position.set(bx, 3.3, bz); root.rotation.y = l2Station.yaw; root.visible = false;
       const housing = new Mesh(this.beaconGeo.housing, this.beaconMat.housing); housing.rotation.z = Math.PI / 2; housing.position.x = .08;

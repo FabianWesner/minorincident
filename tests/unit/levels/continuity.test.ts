@@ -69,7 +69,7 @@ test('T-CONT-13 @continuity campaign save stores the player-caused L1 aftermath;
 });
 
 test('T-CONT-14 @continuity player-caused statics never land on an L2 set piece (bike on the truck route is dropped)', () => {
-  expect(clearOfL2Script({ x: 40, z: -32 })).toBe(false);      // truck route out of the bay
+  expect(clearOfL2Script({ x: -68.8, z: 36.7 })).toBe(false);      // truck route out of the bay
   expect(clearOfL2Script({ x: -50, z: -40 })).toBe(false);       // market doors
   expect(clearOfL2Script({ x: 80, z: 30 })).toBe(false);         // bridge checkpoint
   expect(clearOfL2Script({ x: 20, z: 10 })).toBe(true);

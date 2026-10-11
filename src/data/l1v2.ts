@@ -52,13 +52,13 @@ export const l1v2 = {
   director: { hordeMinInfectedNearGarage: 6, hordeLeaveGarageM: 5, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
   /** Beat 9 house: `doorM` the front-door distance band from the garage door; the walk out lives in HouseEmergence. */
   house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25] },
-  /** PO 10-10: small groups across Juniper, the western loop and Larch, with shared Main Row approaches.
+  /** PO 10-10: small groups across Juniper, the western loop and Larch, with shared Elm Street approaches to the restored station.
    * Planned as the courier leaves the Annex for the bat; only clear off-screen ground admits a resident. */
   street: {
     size: 3, leashM: 5,
-    groups: [[14, 24], [14, 10], [14, -16], [4, -34], [28, -34],
-      [-30, 24], [-30, 4], [-30, -16], [-18, -34],
-      [50, 24], [66, 4], [50, -12], [50, -32]],
+    groups: [[14, 24], [14, 10], [-66, 38], [2, 30], [-14, 30],
+      [-30, 24], [-30, 4], [-30, -16], [-38, 30],
+      [50, 24], [66, 4], [50, -12], [-56, 30]],
   },
   /** Section 5.10 / AC16. */
   bicycle: { speedMs: 7.5, accelToMs: 7, accelS: 1.5, minTurnRadiusM: 2.5, mountInteractS: 0.4, damage: 0 },
