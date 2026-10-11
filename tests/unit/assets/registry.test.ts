@@ -48,3 +48,33 @@ test('T-E17-11 @E17-AC11 placeholder infected caps are hidden and can cover deta
   root.getObjectByName('armL')!.visible = false; cap.visible = true;
   expect(cap.visible).toBe(true);
 });
+
+test('T-E09-06d @E09-AC06 @E27-AC05 variant-less vehicles retain meshes, darken damage and extinguish lamps at every LOD', async () => {
+  const { def } = fixture(); def.id = 'veh.catalog'; def.category = 'vehicle'; def.status = 'integrated'; def.decayVariants = [];
+  def.lods = { lod1: 'public/test.lod1.glb', lod2: 'public/test.lod2.glb' };
+  const urls: string[] = [];
+  const registry = new AssetRegistry(() => {}, { manifest: [def], load: async url => {
+    urls.push(url); const root = new Group();
+    const body = new Mesh(new BoxGeometry(def.dimensions.x, def.dimensions.y, def.dimensions.z), new MeshBasicNodeMaterial({ color: '#789c4c' })); body.name = 'shell'; root.add(body);
+    const lens = new Mesh(new BoxGeometry(.1,.1,.1), new MeshBasicNodeMaterial({ color: '#ff2d2d' })); lens.material.name = 'emi_survivorRed'; lens.name = 'lightsFront'; root.add(lens);
+    for (const name of [...def.requiredNodes, ...def.sockets]) if (!root.getObjectByName(name)) { const node = new Group(); node.name = name; root.add(node); }
+    return root;
+  } });
+  const brightness = (root: import('three').Object3D, name: string) => (root.getObjectByName(name) as Mesh).material as MeshBasicNodeMaterial;
+  for (const lod of ['lod0','lod1','lod2'] as const) {
+    const normal = await registry.loadAsset(def.id, lod), wreck = await registry.loadAsset(def.id, lod, 'wrecked'), burned = await registry.loadAsset(def.id, lod, 'burned');
+    const channelSum = (material: MeshBasicNodeMaterial) => material.color.toArray().reduce((a,b) => a+b,0);
+    expect(channelSum(brightness(wreck, 'shell'))).toBeLessThan(channelSum(brightness(normal, 'shell')));
+    expect(channelSum(brightness(burned, 'shell'))).toBeLessThan(channelSum(brightness(wreck, 'shell')));
+    for (const root of [wreck,burned]) {
+      expect(root.userData.placeholder).not.toBe(true); expect(root.getObjectByName('shell')).toBeDefined();
+      expect(root.getObjectByName('lightsFront')!.userData.damagedLightOff).toBe(true);
+      expect(brightness(root, 'lightsFront').userData.emissiveStrength).toBe(0);
+      for (const name of [...def.requiredNodes,...def.sockets]) expect(root.getObjectByName(name)).toBeDefined();
+    }
+    expect(normal.getObjectByName('lightsFront')!.userData.damagedLightOff).toBeUndefined();
+  }
+  expect(urls.every(url => !/wrecked|burned/.test(url))).toBe(true);
+  await expect(registry.loadAsset(def.id, 'high', 'typo')).rejects.toThrow('Unknown decay variant');
+  await registry.dispose();
+});

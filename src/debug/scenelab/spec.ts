@@ -1,3 +1,4 @@
+import { vehicleDecayFallback } from '../../assets/vehicleDecay';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import type { DistrictGameplay, DistrictId, DistrictLayout, LevelComposition, Placement, Point, Tier } from '../../levels/districts/types';
 import type { AssetDef } from '../../assets/types';
@@ -209,7 +210,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   if (spec.size !== undefined && !(spec.size >= 8 && spec.size <= 400)) errors.push('size: 8..400 m');
   if (spec.ground && !['grass', 'asphalt', 'sidewalk', 'district'].includes(spec.ground)) errors.push(`ground: unknown ${spec.ground}`);
   if (spec.ground === 'district' && !spec.layout) errors.push('ground "district" needs layout.district');
-  spec.props?.forEach((p, i) => { if (!assets.has(p.asset)) errors.push(`props[${i}].asset: unknown manifest id ${p.asset}`); if (p.decay && !assets.get(p.asset)?.decayVariants.includes(p.decay)) errors.push(`props[${i}].decay: unknown variant ${p.decay}`); point(p.at, `props[${i}].at`); if (p.id) { if (ids.has(p.id)) errors.push(`duplicate id ${p.id}`); ids.add(p.id); } });
+  spec.props?.forEach((p, i) => { if (!assets.has(p.asset)) errors.push(`props[${i}].asset: unknown manifest id ${p.asset}`); if (p.decay && assets.has(p.asset) && !assets.get(p.asset)!.decayVariants.includes(p.decay) && !vehicleDecayFallback(assets.get(p.asset)!, p.decay)) errors.push(`props[${i}].decay: unknown variant ${p.decay}`); point(p.at, `props[${i}].at`); if (p.id) { if (ids.has(p.id)) errors.push(`duplicate id ${p.id}`); ids.add(p.id); } });
   let couriers = 0;
   spec.actors?.forEach((a, i) => {
     if (!['courier', 'pedestrian', 'infected', 'corgi'].includes(a.kind)) errors.push(`actors[${i}].kind: ${a.kind}`);
