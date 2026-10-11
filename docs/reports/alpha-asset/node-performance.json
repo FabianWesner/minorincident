@@ -1,0 +1,28 @@
+{
+  "testsPassed": 3,
+  "testsFailed": 0,
+  "results": [
+    {
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 200,
+      "cap": 200,
+      "simMsP50": 1.5198749999999563,
+      "simMsP95": 3.329250000000229,
+      "simMsMax": 24.84570799999983
+    },
+    {
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 100,
+      "cap": 100,
+      "simMsP50": 0.5554160000001502,
+      "simMsP95": 1.077291999999943,
+      "simMsMax": 3.345083000000159
+    }
+  ]
+}
