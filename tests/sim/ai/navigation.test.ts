@@ -46,7 +46,7 @@ test('@E19 respawn connectivity distinguishes an unfinished long route from an e
 });
 
 test('T-E07-01 @E07 @E07-AC01 all human and animal roles validate and spawn', async () => {
-  validateInfected(); expect(humanInfected).toHaveLength(12); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
+  validateInfected(); expect(humanInfected).toHaveLength(13); expect(() => validateInfected([{ ...humanInfected[0], windup: 0.1 }])).toThrow();
   const w = await arena(); for (const [i, def] of [...humanInfected, ...animalInfected].entries()) { const e = w.entities.get(w.infected!.spawn(def.id, { x: i * 2 - 12, z: 10 }, def.id === 'infected.crow' ? { perched: false } : undefined))!; // PO 10-10: infected HP x1.5
     expect(e.health.current).toBe(def.hp * INFECTED_TOUGHNESS); expect(e.health.max).toBe(def.hp * INFECTED_TOUGHNESS); expect(e.infected!.speed).toBe(def.speed); }
 });

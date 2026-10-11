@@ -1,5 +1,11 @@
+import type { InfectedSpecialMove } from '../../data/infected';
+
 /** Serializable AI and crowd animation intent; all timers are fixed sim ticks. */
 export interface InfectedState {
+  /** Entity-owned timers survive checkpoints and chunk serialization. */
+  specialCooldowns?: Partial<Record<InfectedSpecialMove, number>>;
+  specialAttack?: InfectedSpecialAttack;
+  specialRecoveryUntil?: number;
   state: 'idle' | 'wander' | 'alerted' | 'chase' | 'attack' | 'stagger' | 'dead' | 'migration' | 'scatter' | 'search' | 'attracted' | 'bite';
   vault?: { started: number; from: { x: number; z: number }; to: { x: number; z: number }; height: number };
   pathGrid: number; grabNextTick: number;
@@ -23,4 +29,13 @@ export interface InfectedState {
   grabHits: number; grabUntil: number; grabX: number; grabZ: number; perched: boolean;
   /** L1 v2 vision/search brain (specs/epic-19 sections 5.2-5.4); absent outside L1. */
   l1?: import('./Search').L1Brain;
+}
+
+export interface InfectedSpecialAttack {
+  move: InfectedSpecialMove; attackId: number;
+  stage: 'telegraph' | 'active' | 'recovery';
+  startTick: number; activeTick: number; cooldownExpiry: number; recoveryUntil: number;
+  target: { id: number; x: number; z: number };
+  area: { x: number; z: number; radius: number; dx: number; dz: number };
+  hitIds: number[];
 }
