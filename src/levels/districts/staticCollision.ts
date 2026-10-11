@@ -1,3 +1,4 @@
+import { highwayColliders } from '../L3/highway';
 import { staticCollision } from '../../assets/staticCollision';
 import type { Placement, StaticCollider, Aabb } from './types';
 
@@ -18,6 +19,7 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
   return authored.concat(placements.flatMap(p => {
     // Low flower strips reuse the hedge mesh, but never its walking obstacle
     // or a stale district footprint from an earlier export.
+    if (p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway') return highwayColliders(p);
     if (p.assetId === 'prop.flower') return [];
     const shape = sources[p.collisionId ?? p.assetId];
     if (!shape) return fallback.filter(c => c.id === p.id);

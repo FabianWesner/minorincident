@@ -1,3 +1,4 @@
+import { l3RouteDirection } from '../../levels/L3/navigation';
 import { ArmyCheckpointBoom } from './ArmyCheckpointBoom';
 import { Rng } from '../../core/Rng';
 import { l4 } from '../../data/l4';
@@ -41,6 +42,8 @@ type Pending = L3State['pending'][number];
  * behind a lingering player. The rendezvous ring inside the army compound ends the level. All state lives in `mission.state.l3` (checkpoints).
  */
 export class LevelThreeCollapse {
+  private readonly guidanceRoute = {path: [] as number[], goal: -1, pathIndex: 0};
+  private readonly guidancePoint = {x: 0, z: 0};
   private readonly walls = new Map<string, number>();
   constructor(private readonly mission: Mission) {}
   /** Static collider + navigation blocker; recreated from state on checkpoint restore. */
@@ -135,7 +138,7 @@ export class LevelThreeCollapse {
     const o = this.outbreak();
     for (let i = 1; i <= l3.soldiers.count; i++) {
       const p = this.snap(this.anchor(`l3-soldier-${i}`), .35);
-      const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: 110, z: 0 }) });
+      const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
       const e = this.world.entities.get(id)!;
       e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: l3.map.zoneX - 10.5, z: 0 }, range: 45, engaged: true };
       e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
@@ -157,7 +160,7 @@ export class LevelThreeCollapse {
   private spawnMedkits(): void {
     for (const [x, z] of l3.medkits.positions) {
       const p = this.snap({ x, z }, .3), id = this.world.pickups!.spawn('medkit', p);
-      const e = this.world.entities.get(id)!; if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l3.medkits.heal;
+      const e = this.world.entities.get(id)!; e.transform.y = .3 + (this.world.districts?.groundHeight(p.x,p.z) ?? 0); if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l3.medkits.heal;
       this.s.medkitIds.push(id);
     }
   }
@@ -329,8 +332,9 @@ export class LevelThreeCollapse {
     const doors = this.doors(), scale = this.world.infected!.director.tier === 'low' ? .5 : 1;
     for (const [x, street, size] of l3.density.groups[segment]) {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
+      const highway = x > 128;
       const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
-      for (let i = 0; i < Math.ceil(size * scale * l3.density.streetMultiplier); i++) {
+      for (let i = 0; i < Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier)); i++) {
         // Five small clusters across the neighbourhood, with breathing room along the walking line.
         const cluster = Math.floor(i / clusterSize);
         const spread = cluster === 0 ? home : this.snap({ x: home.x + offsets[cluster], z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
@@ -428,6 +432,10 @@ export class LevelThreeCollapse {
       for (const [id, x] of Object.entries(l3.checkpointAt)) if (player.transform.x >= x && !s.cpSeen?.includes(id)) { (s.cpSeen ??= []).push(id); (s.cpWait ??= []).push(id); }
       this.calmCheckpoint(player);
       this.zone(tick, player);
+      if (!s.crossedAt && this.mission.state.steps.checkpoint.status === 'active' && l3RouteDirection(world, this.guidanceRoute, this.guidancePoint)) {
+        Object.assign(this.anchor('l3-route'), this.guidancePoint, {y:world.districts?.groundHeight(this.guidancePoint.x,this.guidancePoint.z) ?? 0});
+        this.mission.state.marker = 'l3-route';
+      }
     }
     // L3 infected (turned adults in the open) hit as hard as L2's (section 5.1 tuning).
     if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l3.infectedDamage;
@@ -484,7 +492,7 @@ export class LevelThreeCollapse {
     // The courier's arrival ends L3. A stalled follower or a body under the boom cannot hold up the transition.
     if (s.crossedAt && !s.doneAt && tick - s.crossedAt >= ticks(l3.finale.closeS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
     // Arrival is already achieved; closing the boom must not leave a waypoint under the courier.
-    if (s.crossedAt && this.mission.state.marker === 'l3-zone') this.mission.state.marker = null;
+    if (s.crossedAt && (this.mission.state.marker === 'l3-zone' || this.mission.state.marker === 'l3-route')) this.mission.state.marker = null;
   }
 
   /** Cheat/test path (`completeObjective` in a gap without an active objective): start the attack, or call the fallback. */
