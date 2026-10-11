@@ -266,11 +266,12 @@ export class ActionView extends Group {
         bounds.setFromObject(rest, true);
         rest.position.set(-(bounds.min.x + bounds.max.x) / 2, -bounds.min.y, -(bounds.min.z + bounds.max.z) / 2);
         const group = new Group(), marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
-        marker.position.y = .018; group.add(rest, marker); pickup = group;
+        marker.position.y = .018; if (entity.pickup.surfaceY !== undefined) marker.scale.setScalar(.5); group.add(rest, marker); pickup = group;
         this.pickups.set(entity.id, pickup); this.add(pickup);
       }
       const { x, z } = entity.transform;
-      pickup.position.set(x, this.ground?.(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0, z);
+      pickup.position.set(x, entity.pickup.surfaceY ?? this.ground?.(x, z) ?? this.world.districts?.pavingHeight(x, z) ?? 0, z);
+      pickup.rotation.y = entity.transform.yaw;
     }
     for (const [id, model] of this.pickups) {
       const pickup = this.world.entities.get(id)?.pickup;
