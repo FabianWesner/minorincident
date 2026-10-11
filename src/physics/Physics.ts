@@ -14,10 +14,20 @@ export class Physics implements Lifecycle {
   playerBody: RAPIER.RigidBody | null = null;
   playerCollider: RAPIER.Collider | null = null;
   characterController: RAPIER.KinematicCharacterController | null = null;
+  private prepared = false;
   async init(): Promise<void> { await (initialized ??= RAPIER.init()); }
   load(scenario: ScenarioDefinition): void {
     this.reset();
     this.world = new RAPIER.World({ x: 0, y: -9.81, z: 0 });
+    const world = this.world, mapNew = world.mapNewSoftBodies.bind(world);
+    // Rapier's tear-wrapper maintenance scans every fixed collider on each tick.
+    // Rigid-body API calls already maintain their wrappers. Keep the full path
+    // for soft bodies or any raw/wrapped topology mismatch.
+    world.mapNewSoftBodies = () => {
+      if (world.softBodies.len() || world.softBodies.raw.len() ||
+          world.bodies.len() !== world.bodies.raw.len() || world.colliders.len() !== world.colliders.raw.len() ||
+          world.impulseJoints.len() !== world.impulseJoints.raw.len() || world.multibodyJoints.len()) mapNew();
+    };
     this.world.timestep = FIXED_DT;
     this.ground = scenario.ground;
     const ground = this.world.createRigidBody(RAPIER.RigidBodyDesc.fixed().setTranslation(scenario.ground.center?.x ?? 0, -0.1, scenario.ground.center?.z ?? 0));
@@ -45,12 +55,29 @@ export class Physics implements Lifecycle {
     return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1])).handle;
   }
   update(): void { if (this.world) { this.world.timestep = FIXED_DT; this.world.step(); } }
+  /** Exercise cold WASM solver/sweep paths during loading, without advancing the
+   * playable world or emitting simulation events. The temporary world owns all allocations. */
+  prepare(): void {
+    if (this.prepared || !this.world) return;
+    const warm = RAPIER.World.restoreSnapshot(this.world.takeSnapshot());
+    try {
+      // Deserialization already populated every wrapper in this fixed clone.
+      if (!warm.softBodies.len() && !warm.softBodies.raw.len()) warm.mapNewSoftBodies = () => {};
+      const controller = warm.createCharacterController(.005);
+      const collider = this.playerCollider && warm.getCollider(this.playerCollider.handle);
+      for (let i = 0; i < 8; i++) {
+        if (collider) controller.computeColliderMovement(collider, { x: .01, y: -.01, z: .01 });
+        warm.step();
+      }
+      this.prepared = true;
+    } finally { warm.free(); }
+  }
   /** E11 removable doors/props. The caller owns the handle until removed or reset. */
   addBlocker(wall: NonNullable<ScenarioDefinition['walls']>[number]): number {
     return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(wall.halfX, wall.halfY, wall.halfZ).setTranslation(wall.x, wall.y, wall.z)).handle;
   }
   removeBlocker(handle: number): void { const collider = this.world!.getCollider(handle); if (collider) this.world!.removeCollider(collider, true); }
-  reset(): void { this.ground = null; this.characterController = null; this.playerCollider = null; this.playerBody = null; this.world?.free(); this.world = null; }
+  reset(): void { this.prepared = false; this.ground = null; this.characterController = null; this.playerCollider = null; this.playerBody = null; this.world?.free(); this.world = null; }
   dispose(): void { this.reset(); }
   get bodyCount(): number { return this.world?.bodies.len() ?? 0; }
   get colliderCount(): number { return this.world?.colliders.len() ?? 0; }

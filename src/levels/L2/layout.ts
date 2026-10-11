@@ -3,7 +3,7 @@ import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
 import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
 import { l2Anchors, l2Station, l2TruckPath, stationPoint } from '../../data/l2';
-import { findClearSpot, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
+import { FootprintIndex, findClearSpot, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
 import type { DistrictLayout, Placement, Tier } from '../districts/types';
 
 /** The L2 composition tier (static test asserts it): placements outside it are not part of the town the player sees. */
@@ -152,6 +152,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
     // does is moved to the nearest clear spot (vehicles first slide along their own axis, so a "crashed" car stops with its
     // bumper against the post). Base layout geometry never moves for it.
     const obstacles: Footprint[] = obstaclesOf(layout, L2_TIER);
+    const index = new FootprintIndex(obstacles);
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
       const s = d.scale ?? 1, decal = d.assetId.startsWith('decal.');
@@ -174,7 +175,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
         const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
         // The rescue fire truck's lane stays free: a piece that stood off the lane is never slid onto it (T-E20-20: a crashed sedan moved onto the Juniper/Main Row junction).
         const keepLane = truckLaneClear(placement, d.x, d.z, .125);
-        const spot = findClearSpot(layout, placement, obstacles, {
+        const spot = findClearSpot(layout, placement, obstacles, { index,
           slide: d.assetId.startsWith('veh.'),
           margin: d.assetId.startsWith('veh.') ? .1 : .3, // props keep a hand's width off fences and posts, cars may touch
           accept: (x, z) => {
@@ -190,7 +191,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
         placement.position = [spot[0], placement.position[1], spot[1]];
         placement.visualAabb = { min: [placement.visualAabb.min[0] + dx, 0, placement.visualAabb.min[2] + dz], max: [placement.visualAabb.max[0] + dx, placement.visualAabb.max[1], placement.visualAabb.max[2] + dz] };
       }
-      if (!decal) obstacles.push(...footprints(placement, 0, true));
+      if (!decal) { const added = footprints(placement, 0, true); obstacles.push(...added); index.add(added); }
       layout.placements.push(placement);
     }
     layout.placements.push({ id: 'l2-alarm-car-5', assetId: 'veh.sedan-white', position: [48.6, 0, 12.4], yaw: H, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [47.6, 0, 10.2], max: [49.6, 1.6, 14.6] } });

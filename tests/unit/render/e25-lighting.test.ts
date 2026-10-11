@@ -71,6 +71,17 @@ test('T-E25-U2 @E25 light field budget, spot footprints and the E27 transient ho
   field.dispose();
 });
 
+test('@transition reusing a district field removes the previous level lights and restarts transient time', () => {
+  const field = new LightField(); field.strength.value = 1; field.setQuality('low');
+  field.setStatic([footprint({ type: 'point', color: 'light_sodium', intensity: 3, range: 6, flicker: 'none', position: [0, 3, 0], direction: [0, -1, 0] })]);
+  field.update(0, 0, 100); field.addTransient({ x: 0, z: 0 }, 'light_fire', 8, 4, Infinity);
+  field.update(0, 0, 101); expect(field.snapshot().drawn).toBe(2);
+  field.reset(); expect(field.snapshot()).toMatchObject({ drawn: 0, statics: 0, transients: 0, resolution: 512 });
+  field.addTransient({ x: 0, z: 0 }, 'light_fire', 8, 4, 1);
+  field.update(0, 0, .5); expect(field.snapshot().drawn).toBe(1); expect(field.enabled.value).toBe(1);
+  field.strength.value = 0; field.update(0, 0, 1.1); expect(field.snapshot().drawn).toBe(0); expect(field.enabled.value).toBe(0); field.dispose();
+});
+
 test('T-E25-U3 @E25 level moods: morning, midday and afternoon skip the field; dusk and night are lit and readable', () => {
   expect(['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].map(id => compositions[id].timeOfDay)).toEqual(['L1', 'L2', 'L3', 'L4', 'L5', 'L6-subway']);
   for (const id of ['L1', 'L2', 'L3'] as const) expect(timeOfDay[id].practical ?? 0).toBe(0);

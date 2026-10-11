@@ -21,19 +21,43 @@ export function gripPoint(point: Vector3): Vector3 {
  * the handle hole. Interpolate native attributes; the rest of the body is unchanged. */
 function subdivideHand(geometry: BufferGeometry, handPart: number): void {
   const attributes = Object.entries(geometry.attributes), parts = geometry.getAttribute('_part_index'), skin = geometry.getAttribute('_shirt');
-  const output = attributes.map(() => [] as number[]), positionIndex = attributes.findIndex(([name]) => name === 'position');
+  const positionIndex = attributes.findIndex(([name]) => name === 'position');
   const vertex = (i: number) => attributes.map(([, attribute]) => Array.from({ length: attribute.itemSize }, (_, c) => attribute.getComponent(i, c)));
   type Vertex = number[][];
   const midpoint = (a: Vertex, b: Vertex): Vertex => a.map((values, i) => values.map((v, c) => (v + b[i][c]) / 2));
-  const emit = (a: Vertex, b: Vertex, c: Vertex, divide: boolean, depth = 0): void => {
+  const hands = new Map<number, Vertex[]>();
+  let handVertices = 0;
+  const emit = (output: Vertex[], a: Vertex, b: Vertex, c: Vertex, depth = 0): void => {
     const vertices = [a, b, c], distances = vertices.map((v, i) => Math.hypot(...v[positionIndex].map((p, k) => p - vertices[(i + 1) % 3][positionIndex][k])));
-    if (divide && Math.max(...distances) > .008 && depth < 6) {
+    if (Math.max(...distances) > .008 && depth < 6) {
       const ab = midpoint(a, b), bc = midpoint(b, c), ca = midpoint(c, a);
-      emit(a, ab, ca, true, depth + 1); emit(ab, b, bc, true, depth + 1); emit(ca, bc, c, true, depth + 1); emit(ab, bc, ca, true, depth + 1);
-    } else for (const v of vertices) for (let i = 0; i < attributes.length; i++) output[i].push(...v[i]);
+      emit(output, a, ab, ca, depth + 1); emit(output, ab, b, bc, depth + 1); emit(output, ca, bc, c, depth + 1); emit(output, ab, bc, ca, depth + 1);
+    } else output.push(...vertices);
   };
-  for (let i = 0; i < parts.count; i += 3) emit(vertex(i), vertex(i + 1), vertex(i + 2), parts.getX(i) === handPart && skin.getX(i) < 0);
-  attributes.forEach(([name, attribute], i) => geometry.setAttribute(name, new BufferAttribute(new Float32Array(output[i]), attribute.itemSize)));
+  for (let i = 0; i < parts.count; i += 3) if (parts.getX(i) === handPart && skin.getX(i) < 0) {
+    const output: Vertex[] = []; emit(output, vertex(i), vertex(i + 1), vertex(i + 2));
+    hands.set(i, output); handVertices += output.length - 3;
+  }
+  // Copy the unchanged body directly. Only the hand needs interpolated vertices;
+  // expanding every body attribute into nested JS arrays dominated cold loads.
+  const count = parts.count + handVertices;
+  attributes.forEach(([name, attribute], attr) => {
+    const size = attribute.itemSize, output = new Float32Array(count * size);
+    let offset = 0, from = 0;
+    const copy = (to: number) => {
+      if (!attribute.normalized && !('isInterleavedBufferAttribute' in attribute)) {
+        output.set(attribute.array.subarray(from * size, to * size), offset);
+        offset += (to - from) * size;
+      } else for (let v = from; v < to; v++) for (let c = 0; c < size; c++) output[offset++] = attribute.getComponent(v, c);
+    };
+    for (const [triangle, vertices] of hands) {
+      copy(triangle);
+      for (const v of vertices) { output.set(v[attr], offset); offset += size; }
+      from = triangle + 3;
+    }
+    copy(parts.count);
+    geometry.setAttribute(name, new BufferAttribute(output, size));
+  });
 }
 
 export function prepareGrip(geometry: BufferGeometry, handPart: number): void {

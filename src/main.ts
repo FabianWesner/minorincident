@@ -23,7 +23,7 @@ const ready = (async () => {
   }
 })();
 try {
-  if (import.meta.env.DEV || params.get('test') === '1' || params.get('debug') === 'true') {
+  if (import.meta.env.DEV || params.get('test') === '1' || params.get('testApi') === '1' || params.get('debug') === 'true') {
     const { installTestApi } = await import('./debug/testApi');
     installTestApi(game, ready);
     if (params.has('scenelab')) { const { installSceneLab } = await import('./debug/scenelab/SceneLab'); installSceneLab(game); }

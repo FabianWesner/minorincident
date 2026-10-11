@@ -6,9 +6,12 @@ import { test, expect } from '../fixtures';
 
 const phase = process.env.TRANSITION_PHASE ?? 'after';
 const out = 'test-results/level-transition';
+// Screencast/DOM tracing competes with the phone's post-card frame budget.
+// Persist raw RAF samples and optional CPU profiles after recording instead.
+test.use({ trace: 'off' });
 declare global {
   interface Window {
-    transitionProbe?: { done: boolean; error?: string; start: number; ready: number; frames: number[]; previous: number; recording: boolean; stopped: boolean };
+    transitionProbe?: { done: boolean; error?: string; start: number; ready: number; recordingStart: number; begin: number; frames: number[]; previous: number; recording: boolean; stopped: boolean };
   }
 }
 for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
@@ -16,9 +19,10 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
   test(`@transition menu and every campaign load retain a picture ${tier}`, async ({ page, context }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(180_000); mkdirSync(out, { recursive: true });
     const cdp = await context.newCDPSession(page);
+    if (process.env.TRANSITION_PROFILE === '1') await cdp.send('Profiler.enable');
     if (tier === 'phone') await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
     // Exercise production prewarming, including its asynchronous briefing path in the baseline.
-    await page.goto(`/?debug=true&renderer=webgl&quality=${tier === 'high' ? 'high' : 'low'}&dpr=1&audio=muted&seed=1&preload=0`);
+    await page.goto(`/?testApi=1&loadProfile=1&renderer=webgl&quality=${tier === 'high' ? 'high' : 'low'}&dpr=1&audio=muted&seed=1&preload=0${tier === 'phone' ? '&workerCpu=4' : ''}`);
     await page.waitForFunction(() => !!window.__SS__);
     await page.evaluate(() => window.__SS__!.ready);
     await page.getByTestId('start-game').click(); await page.getByTestId('character-female').click();
@@ -47,9 +51,11 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
         // Standardized final-objective/outro window for the next level's HTTP prefetch.
         await page.waitForTimeout(2000);
       }
+      if (process.env.TRANSITION_PROFILE === '1') await cdp.send('Profiler.start');
+      if (process.env.TRANSITION_TRACE === '1') await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8,blink,gpu,cc,disabled-by-default-v8.gc,disabled-by-default-v8.wasm', transferMode: 'ReturnAsStream' });
       await page.evaluate(({ level, restart, finalObjective }) => {
         const a = window.__SS__!; performance.clearMeasures();
-        const probe: NonNullable<Window['transitionProbe']> = window.transitionProbe = { done: false, start: performance.now(), ready: 0, frames: [] as number[], previous: 0, recording: false, stopped: false };
+        const probe: NonNullable<Window['transitionProbe']> = window.transitionProbe = { done: false, start: performance.now(), ready: 0, recordingStart: 0, begin: 0, frames: [] as number[], previous: 0, recording: false, stopped: false };
         const frame = (now: number) => { if (probe.recording && probe.previous) probe.frames.push(now - probe.previous); probe.previous = now; if (!probe.stopped) requestAnimationFrame(frame); };
         requestAnimationFrame(frame);
         if (restart) {
@@ -66,7 +72,10 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       await page.evaluate(level => {
         void (async () => {
           await new Promise(resolve => requestAnimationFrame(resolve));
-          while (window.__SS__!.getState().scenario !== level || window.__SS__!.missions.state()?.phase !== 'briefing' || document.querySelector('[data-testid=menu-loading]:not([hidden])') || document.querySelector('[data-testid=level-transition]:not([hidden])')) await new Promise(resolve => requestAnimationFrame(resolve));
+          // Full getState() computes projected foliage coverage and clones every
+          // entity; polling that diagnostic snapshot creates its own long frames.
+          while (window.__SS__!.missions.state()?.id !== level || window.__SS__!.missions.state()?.phase !== 'briefing' || document.querySelector('[data-testid=menu-loading]:not([hidden])') || document.querySelector('[data-testid=level-transition]:not([hidden])')) await new Promise(resolve => requestAnimationFrame(resolve));
+          window.transitionProbe!.recording = true; window.transitionProbe!.previous = window.transitionProbe!.recordingStart = performance.now();
           await window.__SS__!.screenshotReady(); window.transitionProbe!.ready = performance.now(); window.transitionProbe!.done = true;
         })().catch(error => { window.transitionProbe!.done = true; window.transitionProbe!.error = String(error); });
       }, level);
@@ -97,8 +106,10 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
       }
       await ready; if (failure) throw failure;
       const { cardSamples, progress } = await observations;
+      let nodeBuildsAtReveal = 0;
       {
         const result = await page.evaluate(() => window.transitionProbe!);
+        nodeBuildsAtReveal = await page.evaluate(() => window.__SS__!.perf().nodeBuilds);
         expect(result.error).toBeUndefined();
         if (phase !== 'before') {
           await expect(page.getByTestId('level-transition')).toBeHidden();
@@ -106,15 +117,37 @@ for (const tier of ['high', 'phone'] as const) test.describe(tier, () => {
           expect(progress.every((value, i) => i === 0 || value >= progress[i - 1]), `${level}: monotonic work progress`).toBe(true);
           expect(await page.getByTestId('transition-progress').evaluate(element => (element as HTMLProgressElement).value)).toBe(1);
         }
+        await page.evaluate(() => { window.transitionProbe!.begin = performance.now(); });
+        await expect(page.getByTestId('hud')).toBeHidden();
+        if (level === 'L1') expect(await page.evaluate(() => localStorage.getItem('minor-incident.onboarding.v1'))).toBeNull();
         await page.getByRole('button', { name: 'Begin mission' }).click();
       }
-      await page.evaluate(() => { window.__SS__!.cheats.god(true); const p = window.transitionProbe!; if (!p.ready) p.ready = performance.now(); p.done = true; p.previous = 0; p.recording = true; });
+      await page.evaluate(() => { window.__SS__!.cheats.god(true); const p = window.transitionProbe!; if (!p.ready) p.ready = performance.now(); p.done = true; });
       await page.waitForTimeout(5000);
-      const result = await page.evaluate(() => { const p = window.transitionProbe!; p.recording = false; p.stopped = true; return { loadTiming: window.__SS__!.perf().loadTiming, phases: performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })), ms: p.ready - p.start, maxFrame: Math.max(...p.frames), over50: p.frames.filter(ms => ms > 50), frames: p.frames }; });
-      if (phase !== 'before' && tier === 'high') expect(result.over50, `${level}: no new hitch in the first five seconds`).toHaveLength(0);
-      rows.push({ level: restart ? 'restart L6' : level, ...result, samples, cardSamples, emptySamples, progress });
+      const result = await page.evaluate(() => { const p = window.transitionProbe!; p.recording = false; p.stopped = true; return { start: p.start, ready: p.ready, recordingStart: p.recordingStart, begin: p.begin, stoppedAt: performance.now(), nodeBuildMaterials: window.__SS__!.perf().nodeBuildMaterials, crowdPreparation: window.__SS__!.perf().crowdPreparation, loadTiming: window.__SS__!.perf().loadTiming, phases: performance.getEntriesByType('measure').map(entry => ({ name: entry.name, ms: entry.duration })), ms: p.ready - p.start, maxFrame: Math.max(...p.frames), over50: p.frames.filter(ms => ms > 50), frames: p.frames }; });
+      if (process.env.TRANSITION_PROFILE === '1') {
+        const { profile } = await cdp.send('Profiler.stop');
+        writeFileSync(`${out}/${phase}-${tier}-${restart ? 'restart' : level}.cpuprofile`, JSON.stringify(profile));
+      }
+      if (process.env.TRANSITION_TRACE === '1') {
+        const completed = new Promise<{ stream?: string }>(resolve => cdp.once('Tracing.tracingComplete', resolve));
+        await cdp.send('Tracing.end'); const { stream } = await completed;
+        if (!stream) throw Error('Chrome timeline stream missing');
+        let timeline = '';
+        for (;;) { const chunk = await cdp.send('IO.read', { handle: stream }); timeline += chunk.data; if (chunk.eof) break; }
+        await cdp.send('IO.close', { handle: stream });
+        writeFileSync(`${out}/${phase}-${tier}-${restart ? 'restart' : level}.timeline.json`, timeline);
+      }
+      const nodeBuildsAfterReveal = await page.evaluate(() => window.__SS__!.perf().nodeBuilds);
+      if (process.env.TRANSITION_VISUAL_QA === '1' && tier === 'high' && (level === 'L2' || level === 'L5')) await page.screenshot({ path: `${out}/${phase}-${level}-play.png` });
+      rows.push({ level: restart ? 'restart L6' : level, machineLoad: loadavg(), ...result, nodeBuildsAtReveal, nodeBuildsAfterReveal, samples, cardSamples, emptySamples, progress });
       writeFileSync(`${out}/${phase}-${tier}.json`, JSON.stringify({ load: loadavg(), rows }, null, 2));
       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);
+      if (phase !== 'before' && !phase.startsWith('baseline')) {
+        expect.soft(result.ms, `${level}: first playable frame`).toBeLessThanOrEqual(tier === 'high' ? 3000 : 5000);
+        expect.soft(result.over50, `${level}: no hitch after the card hides`).toHaveLength(0);
+      }
+      if (process.env.TRANSITION_ONLY === 'L1') break;
     }
   });
 });

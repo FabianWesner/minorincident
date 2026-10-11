@@ -3,6 +3,39 @@ import { NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGPURenderer, typ
 
 import { worldAssets } from '../assets/worldDefinitions';
 import { installTextureRanges } from './TextureRanges';
+import { PaletteMaterial } from './PaletteMaterial';
+
+type RenderObjects = { get(...args: unknown[]): unknown };
+const paletteVariantCaches = new WeakSet<RenderObjects>();
+/** Three r186 otherwise retires a warmed daylight graph when warming its fire graph.
+ * Keep one render object per cached palette output; normal level/context disposal owns them all. */
+export function installPaletteVariantCache(objects: RenderObjects): void {
+  if (paletteVariantCaches.has(objects)) return;
+  paletteVariantCaches.add(objects);
+  const get = objects.get;
+  objects.get = function (...args: unknown[]) {
+    const object = args[0] as { count: number; isInstancedMesh?: boolean; userData: Record<string, unknown> };
+    const material = args[1];
+    const staticAttributes = object.userData.staticInstanceAttributes && (material as { positionNode?: unknown }).positionNode === object.userData.staticInstancePosition;
+    // Mask/id passes replace the material: preserve their original instancing
+    // rather than applying a static shader key to captured buffer nodes.
+    if (object.userData.staticInstanceAttributes) object.isInstancedMesh = !staticAttributes;
+    if (material instanceof PaletteMaterial && material.outputNode) args[7] = `${args[7] ?? 'default'}:palette:${material.outputNode.id}`;
+    const result = get.apply(this, args);
+    if (staticAttributes) {
+      const render = result as { staticInstanceKey?: boolean; initialCacheKey: number; getMaterialCacheKey(): number; getCacheKey(): number };
+      if (!render.staticInstanceKey) {
+        const key = render.getMaterialCacheKey;
+        render.getMaterialCacheKey = function () {
+          const count = object.count, instanced = object.isInstancedMesh; object.count = 1; object.isInstancedMesh = false;
+          try { return key.call(this); } finally { object.count = count; object.isInstancedMesh = instanced; }
+        };
+        render.staticInstanceKey = true; render.initialCacheKey = render.getCacheKey();
+      }
+    }
+    return result;
+  };
+}
 
 // Load lane: three emits small instance-matrix arrays (and bone/range arrays) as per-object uniform
 // buffers named after the node id ('NodeBuffer_<id>'), so every InstancedMesh below the uniform limit
@@ -13,6 +46,11 @@ import { installTextureRanges } from './TextureRanges';
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
+  /** The loading card permits a complete node build; menu streaming still yields. */
+  foregroundCompile = false;
+  /** Diagnostic count: a rise after the card hides identifies a cold node graph. */
+  nodeBuilds = 0;
+  readonly nodeBuildMaterials: Record<string, number> = {};
   /** Opt-in submitted geometry breakdown, including actual shadow passes (not estimates). */
   profile: Record<string, { drawCalls: number; triangles: number }> | null = null;
   profileAssets: Record<string, { drawCalls: number; triangles: number }> | null = null;
@@ -21,6 +59,10 @@ export class Renderer extends WebGPURenderer {
   override async init(): Promise<this> {
     await super.init();
     installTextureRanges(this.backend);
+    installPaletteVariantCache((this as unknown as { _objects: RenderObjects })._objects);
+    const nodes = (this as unknown as { _nodes: { getForRender(object: unknown): unknown; getForRenderAsync(object: unknown): Promise<unknown> } })._nodes;
+    const asynchronous = nodes.getForRenderAsync;
+    nodes.getForRenderAsync = object => this.foregroundCompile ? Promise.resolve(nodes.getForRender(object)) : asynchronous.call(nodes, object);
     if (!this.profile) return this;
     const backend = this.backend as unknown as { draw(object: { object: Object3D; camera: Camera }, info: Renderer['info']): void };
     const draw = backend.draw.bind(backend);
@@ -63,6 +105,12 @@ export class Renderer extends WebGPURenderer {
     // r186 async warm-up restores _currentRenderContext before building bindings.
     // Its module cache then keys bindings by the persistent renderer and pins old levels.
     this.debug.onNodeBuilderCreated = (builder, object) => {
+      this.nodeBuilds++;
+      if (params.has('loadProfile')) {
+        const draw = object as { material: { name: string; type: string }; object: { name: string; type: string; parent?: { name: string }; userData: Record<string, unknown> } };
+        const key = `${draw.material.name || draw.material.type}:${draw.object.userData.staticInstanceAttributes ? 'static' : draw.object.name || draw.object.parent?.name || draw.object.type}`;
+        this.nodeBuildMaterials[key] = (this.nodeBuildMaterials[key] ?? 0) + 1;
+      }
       const context = (object as { context: object }).context;
       const internal = builder as unknown as { _getBindGroup(name: string, bindings: unknown[]): unknown };
       const getBindGroup = internal._getBindGroup;
@@ -83,8 +131,25 @@ export class Renderer extends WebGPURenderer {
   /** Finish the loading draw before gameplay can encounter deferred driver work. */
   async finishWarmUp(): Promise<void> {
     if (this.selectedBackend === 'webgl') {
-      const backend = this.backend as unknown as { utils: { _clientWaitAsync(): Promise<void> } };
-      await backend.utils._clientWaitAsync();
+      const backend = this.backend as unknown as { gl?: WebGL2RenderingContext; utils: { _clientWaitAsync(): Promise<void> } };
+      const gl = backend.gl;
+      if (gl) {
+        // Poll GPU completion between paints. RAF-based polling followed by the
+        // required new frame paid 2–3 frames for every tiny animated warm-up draw.
+        const fence = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+        if (!fence) throw new Error('Could not create warm-up GPU fence');
+        gl.flush();
+        await new Promise<void>((resolve, reject) => {
+          const check = () => {
+            const status = gl.clientWaitSync(fence, gl.SYNC_FLUSH_COMMANDS_BIT, 0);
+            if (status === gl.TIMEOUT_EXPIRED) { setTimeout(check, 1); return; }
+            gl.deleteSync(fence);
+            if (status === gl.WAIT_FAILED) reject(new Error('Warm-up GPU fence failed'));
+            else resolve();
+          };
+          check();
+        });
+      } else await backend.utils._clientWaitAsync();
     } else {
       // Dawn finishes pipeline compilation in the GPU process after createRenderPipeline returns.
       // Wait for the warm-up submission, or a cold shader cache freezes the first playable frame

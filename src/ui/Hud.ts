@@ -11,6 +11,8 @@ import type { Mission } from '../sim/missions/Mission';
 const sides = ['LEFT', 'RIGHT'] as const;
 const clamp = (x: number): number => Math.max(0, Math.min(1, x));
 export class Hud {
+  private prepared = false;
+  private preparedImages: HTMLImageElement[] = [];
   readonly root = node('div', 'hud');
   readonly onboarding: Onboarding;
   private readonly portrait = node('div', 'survivor-portrait');
@@ -111,7 +113,20 @@ export class Hud {
   }
   init(): void { document.querySelector('#game')!.append(this.root); }
   /** Reset subscriptions after EventBus.reset; old-level feedback cannot survive a load. */
-  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.root.hidden = true; }
+  clear(): void { for (const stop of this.stops) stop(); this.stops.length = 0; this.onboarding.clear(); this.detail.close(); this.prepared = false; this.preparedImages = []; this.root.hidden = true; }
+  /** Shape the real HUD during loading. Its layout survives the briefing;
+   * Begin changes visibility without constructing the first text layout. */
+  async prepare(): Promise<void> {
+    if (!this.game.world.entities.get(1)) return;
+    this.prepared = true; this.update(true);
+    const variant = this.game.world.entities.get(1)!.survivor?.variant === 'male' ? 'm' : 'f';
+    this.preparedImages = [`/assets/ui/portrait-survivor-${variant}.png`, '/assets/ui/portrait-corgi.png'].map(url => { const image = new Image(); image.src = url; return image; });
+    await Promise.all([...this.preparedImages, ...this.root.querySelectorAll<HTMLImageElement>('img[src]')].map(image => image.decode().catch(() => {})));
+    await document.fonts.ready;
+    this.onboarding.prepare(this.game.input.scheme);
+    this.root.getBoundingClientRect();
+    this.update();
+  }
   loaded(): void {
     this.clear();
     this.damagedUntil = this.barkUntil = this.civilianBarkUntil = -1;
@@ -150,15 +165,18 @@ export class Hud {
     pin.dataset.clamped = String(scale < 1);
   }
   private readonly weatherIcon = node('output', 'weather-icon');
-  update(): void {
+  update(preparing = false): void {
     if (!this.weatherIcon.parentNode) { this.weatherIcon.style.cssText = 'position:absolute;right:16px;top:170px;color:white;background:#182333;padding:5px;border-radius:6px'; this.root.append(this.weatherIcon); }
     const weather = this.game.world.weather;
     if (weather) { text(this.weatherIcon, weatherLabels[weather.kind]); this.weatherIcon.dataset.weather = weather.kind; }
     const world = this.game.world, player = world.entities.get(1), mission = world.missions;
     const visible = !!player && document.body.dataset.uiScreen === 'game' && (!mission || ['playing', 'cinematic'].includes(mission.state.phase));
     // Keep HUD visible beneath Pause / Settings, and update independently of the renderer.
-    this.root.hidden = !player || (document.body.dataset.uiScreen !== 'game' && !['pause', 'settings'].includes(document.body.dataset.uiScreen ?? '')) || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
-    if (!player || this.root.hidden) return;
+    const hidden = !player || (document.body.dataset.uiScreen !== 'game' && !['pause', 'settings'].includes(document.body.dataset.uiScreen ?? '')) || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    this.root.hidden = hidden && !this.prepared;
+    const visibility = hidden ? 'hidden' : '';
+    if (this.root.style.visibility !== visibility) this.root.style.visibility = visibility;
+    if (!player || hidden && !preparing) return;
     if (this.loadedScenario !== world.scenario) this.loaded();
     const hp = clamp(player.health.current / player.health.max);
     this.health.fill.style.width = `${hp * 100}%`; text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
@@ -236,8 +254,7 @@ export class Hud {
     if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); this.interaction.dataset.progress = String(device.progress); }
     this.damage.hidden = world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
     this.civilianBark.hidden = world.tick > this.civilianBarkUntil;
-    this.updateStory();
-    this.onboarding.update(this.game.input.scheme, visible);
+    if (!preparing) { this.updateStory(); this.onboarding.update(this.game.input.scheme, visible); }
   }
   /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {

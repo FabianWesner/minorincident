@@ -13,7 +13,11 @@ const slice = 1024;
 function* decode(attribute: import('three').BufferAttribute | import('three').InterleavedBufferAttribute): Generator<void, Float32Array> {
   const size = attribute.itemSize, values = new Float32Array(attribute.count * size);
   if ('isInterleavedBufferAttribute' in attribute && attribute.isInterleavedBufferAttribute) {
-    for (let i = 0; i < attribute.count; i++) { for (let c = 0; c < size; c++) values[i * size + c] = attribute.getComponent(i, c); if (i % slice === slice - 1) yield; }
+    const source = attribute.data.array as Parameters<typeof MathUtils.denormalize>[1], stride = attribute.data.stride, offset = attribute.offset;
+    for (let i = 0; i < attribute.count; i++) {
+      for (let c = 0; c < size; c++) { const value = source[i * stride + offset + c]; values[i * size + c] = attribute.normalized ? MathUtils.denormalize(value, source) : value; }
+      if (i % slice === slice - 1) yield;
+    }
     return values;
   }
   const array = attribute.array as Parameters<typeof MathUtils.denormalize>[1];
@@ -67,10 +71,19 @@ function* merge(parts: Part[]): Generator<void, BufferGeometry> {
   }
   // BufferGeometry.computeBoundingSphere (box centre, farthest vertex), sliced: InstancedMesh would
   // otherwise compute it in one go when the batch is created.
-  const position = geometry.getAttribute('position').array as Float32Array, box = new Box3(), point = new Vector3();
-  for (let i = 0; i < position.length; i += 3) { box.expandByPoint(point.set(position[i], position[i + 1], position[i + 2])); if (i % (slice * 3) === 0) yield; }
-  const center = box.getCenter(new Vector3()); let radius = 0;
-  for (let i = 0; i < position.length; i += 3) { radius = Math.max(radius, center.distanceToSquared(point.set(position[i], position[i + 1], position[i + 2]))); if (i % (slice * 3) === 0) yield; }
+  const position = geometry.getAttribute('position').array as Float32Array;
+  let minX = Infinity, minY = Infinity, minZ = Infinity, maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+  for (let i = 0; i < position.length; i += 3) {
+    minX = Math.min(minX, position[i]); minY = Math.min(minY, position[i + 1]); minZ = Math.min(minZ, position[i + 2]);
+    maxX = Math.max(maxX, position[i]); maxY = Math.max(maxY, position[i + 1]); maxZ = Math.max(maxZ, position[i + 2]);
+    if (i % (slice * 3) === 0) yield;
+  }
+  geometry.boundingBox = new Box3(new Vector3(minX, minY, minZ), new Vector3(maxX, maxY, maxZ));
+  const center = position.length ? new Vector3((minX + maxX) * .5, (minY + maxY) * .5, (minZ + maxZ) * .5) : new Vector3(); let radius = 0;
+  for (let i = 0; i < position.length; i += 3) {
+    const x = center.x - position[i], y = center.y - position[i + 1], z = center.z - position[i + 2];
+    radius = Math.max(radius, x * x + y * y + z * z); if (i % (slice * 3) === 0) yield;
+  }
   geometry.boundingSphere = new Sphere(center, Math.sqrt(radius));
   return geometry;
 }
@@ -171,28 +184,22 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     if (packedInputs.length > 1) {
       const stride = packedInputs.reduce((n, { input }) => n + input.itemSize, 0), count = geometry.getAttribute('position').count;
       const values = new Float32Array(count * stride);
-      for (let vertex = 0; vertex < count; vertex++) {
-        let offset = 0;
-        for (const { input } of packedInputs) { for (let c = 0; c < input.itemSize; c++) values[vertex * stride + offset + c] = input.getComponent(vertex, c); offset += input.itemSize; }
-        if (vertex % slice === slice - 1) yield;
+      // merge() produced contiguous Float32 attributes. Copy them directly rather
+      // than dispatching an attribute accessor for every component of every vertex.
+      let componentOffset = 0;
+      for (const { input } of packedInputs) {
+        const source = input.array, size = input.itemSize;
+        for (let vertex = 0; vertex < count; vertex++) {
+          for (let c = 0; c < size; c++) values[vertex * stride + componentOffset + c] = source[vertex * size + c];
+          if (vertex % slice === slice - 1) yield;
+        }
+        componentOffset += size;
       }
       const data = new InterleavedBuffer(values, stride); let offset = 0;
       for (const { name, input } of packedInputs) { geometry.setAttribute(name, new InterleavedBufferAttribute(data, input.itemSize, offset)); offset += input.itemSize; }
     }
-    const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchorList.length ? .08 : 1) : attribute('color', 'vec3');
-    const local = attribute('_light', 'float'), power = materials ? materials.lamps.sample(local.lessThan(0).select(0, attribute('_lightBase', 'float').greaterThan(0).select(attribute('_lightBase', 'float').add(local), 0))) : undefined;
-    const view = cameraPosition.sub(positionWorld).normalize(), tangent = vec3(0, 1, 0).cross(normalWorld).normalize();
-    const parallax = view.dot(tangent).div(view.dot(normalWorld).abs().max(.2)).mul(.3);
-    const interiorUv = attribute('_windowUV', 'vec2');
-    const rooms = interiorUv.x.add(parallax).fract().smoothstep(.35, .5).mul(interiorUv.y.smoothstep(.05, .3)).mul(.75).add(.08);
-    const interior = hasWindows ? attribute('_window', 'float').greaterThan(.5).select(rooms, 1) : undefined;
-    const glow = emissive && (lit || anchorList.length) ? base.div(luminance(base).max(.001)).mul(hasWindows ? attribute('_window', 'float').greaterThan(.5).select(.6, 2) : 2).mul(power ?? 1).mul(interior ?? 1) : undefined;
-    // InstancedGroup owns the placement-specific base; direct prototype renders use texel zero.
     if (emissive) geometry.setAttribute('_lightBase', new BufferAttribute(new Float32Array(geometry.getAttribute('position').count), 1));
-    const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
-    material.userData.emissiveStrength = emissive && lit ? 2 : 0;
-    material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
-    material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
+    const material = staticBatchMaterial(materials, emissive, lit, anchorList.length > 0, hasSurface, hasWindows, world, foliage);
     const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
     if (door >= 0) { mesh.userData.door = doorNames[door]; doorNodes[door]!.matrixWorld.decompose(mesh.position, mesh.quaternion, mesh.scale); }
     mesh.castShadow = !emissive; mesh.receiveShadow = true; result.add(mesh);
@@ -211,4 +218,22 @@ export async function staticBatchAsync(source: Object3D, lit: boolean, materials
     if (step.done) return step.value;
     if (performance.now() - start > budgetMs) { await pause(); start = performance.now(); }
   }
+}
+
+/** Rebuild exactly the same graph for runtime batches and lossless build output. */
+export function staticBatchMaterial(materials: Materials | undefined, emissive: boolean, lit: boolean, anchors: boolean, hasSurface: boolean, hasWindows: boolean, world = true, foliage = false): Material {
+  const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchors ? .08 : 1) : attribute('color', 'vec3');
+  const local = attribute('_light', 'float'), power = materials ? materials.lamps.sample(local.lessThan(0).select(0, attribute('_lightBase', 'float').greaterThan(0).select(attribute('_lightBase', 'float').add(local), 0))) : undefined;
+  const view = cameraPosition.sub(positionWorld).normalize(), tangent = vec3(0, 1, 0).cross(normalWorld).normalize();
+  const parallax = view.dot(tangent).div(view.dot(normalWorld).abs().max(.2)).mul(.3);
+  const interiorUv = attribute('_windowUV', 'vec2');
+  const rooms = interiorUv.x.add(parallax).fract().smoothstep(.35, .5).mul(interiorUv.y.smoothstep(.05, .3)).mul(.75).add(.08);
+  const interior = hasWindows ? attribute('_window', 'float').greaterThan(.5).select(rooms, 1) : undefined;
+  const glow = emissive && (lit || anchors) ? base.div(luminance(base).max(.001)).mul(hasWindows ? attribute('_window', 'float').greaterThan(.5).select(.6, 2) : 2).mul(power ?? 1).mul(interior ?? 1) : undefined;
+  // InstancedGroup owns the placement-specific base; direct prototype renders use texel zero.
+  const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
+  material.userData.emissiveStrength = emissive && lit ? 2 : 0;
+  material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
+  material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
+  return material;
 }

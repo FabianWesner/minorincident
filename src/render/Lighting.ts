@@ -103,14 +103,14 @@ export class Lighting {
   setWeatherMode(features: number): void {
     this.weatherFeatures = features;
     const flags = weatherMaterialFlags;
-    const mode = features | (this.field.active ? flags.field : 0) | (this.rim.value > 0 || this.heroFill.value > 0 ? flags.hero : 0);
+    const mode = features | flags.field | (this.rim.value > 0 || this.heroFill.value > 0 ? flags.hero : 0);
     if (mode === this.weatherMode) return;
     this.weatherMode = mode;
     for (const material of this.paletteMaterials) material.setWeatherMode(mode);
   }
-  constructor(private readonly scene: Scene, readonly look = new LookUniforms(), renderer?: WebGPURenderer) {
+  constructor(private readonly scene: Scene, readonly look = new LookUniforms(), renderer?: WebGPURenderer, private readonly sharedEnvironment?: Environment) {
     this.fallbackEnvironment.needsUpdate = true;
-    if (renderer) this.environment = new Environment(renderer);
+    if (renderer) this.environment = sharedEnvironment ?? new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
     for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
@@ -248,5 +248,5 @@ export class Lighting {
     const p = timeOfDay[this.preset];
     return { promotionBlend: Math.min(1, Math.max(0, (this.heroTime - this.promotedAt) / .3)), heroLight: this.heroLight, lamps: this.lamps.snapshot(), heroLights: Number(this.spot.visible), heroShadowMaps: Number(this.spot.visible), promotionChanges: this.promotionChanges, practicalEffects: this.practicalEffects.snapshot(), shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
   }
-  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.environment?.dispose(); this.fallbackEnvironment.dispose(); this.field.dispose(); this.lamps.dispose(); this.practicalEffects.dispose(); this.scene.remove(this.spot, this.spot.target, this.practicalEffects); this.spot.dispose(); this.scene.backgroundNode = null; }
+  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); if (!this.sharedEnvironment) this.environment?.dispose(); this.fallbackEnvironment.dispose(); this.field.dispose(); this.lamps.dispose(); this.practicalEffects.dispose(); this.scene.remove(this.spot, this.spot.target, this.practicalEffects); this.spot.dispose(); this.scene.backgroundNode = null; }
 }

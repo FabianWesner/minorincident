@@ -35,6 +35,7 @@ import { SimWorld } from './sim/world/SimWorld';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
 import { prefetchLevel } from './assets/prefetch';
+import { civilianBakeStats } from './assets/civilianBake';
 import { loadGate } from './assets/loadGate';
 
 /** Injected composition root, with staged initialization adapted from Bruno Game.js. */
@@ -81,6 +82,12 @@ export class Game {
     this.quality = new Quality(requested as QualitySetting, { userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarsePointer: matchMedia('(pointer: coarse)').matches, memoryGB: (navigator as Navigator & { deviceMemory?: number }).deviceMemory });
     this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
+    this.view.onMissionChange = () => {
+      // Begin/retry is a UI handoff. Its synchronous work is not elapsed play
+      // time, and the active ticker will render the changed scene next frame.
+      this.ticker.reset();
+      if (this.world.missions?.state.phase === 'playing') this.view.refreshMissionUI(); else this.view.update(1);
+    };
     this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => this.view.view.zoom(delta)));
     this.input.reach = () => {
       const combat = this.world.combat, weapons = this.world.entities.get(1)?.weapons;
@@ -190,8 +197,8 @@ export class Game {
         if (this.campaign) { this.applyCampaign(); if (id === 'L1') this.world.combat?.clearLoadout(); this.watchCampaign(); }
         this.quality.startLevel(); this.applyQuality();
         this.view.missionHidden = false;
-        await this.audio.load(); this.ui.loaded(); this.view.unfreeze(); this.view.update(1);
-        await transitionPaint(); this.firstLevelFrame(id);
+        await this.audio.load(); this.ui.loaded(); await this.ui.prepareHud(); this.view.unfreeze(); this.view.update(1);
+        await this.view.renderer.finishWarmUp(); await transitionPaint(); this.firstLevelFrame(id);
         return;
       }
       this.speculative = null;
@@ -199,7 +206,7 @@ export class Game {
       try{
         if(opts?.progression)this.campaign=preset(opts.progression);
         if (!speculative && !(opts?.checkpoint && this.levelStart?.id === id)) this.noteLevelStart(id, opts, !!performanceScenario);
-        if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); await transitionPaint(); this.transition.finish(); return; }
+        if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); this.transition.finish(); return; }
         if (!speculative) this.campaignUI.reset();
         // Keep the current picture (title backdrop) on screen while the level loads and warms up.
         if (speculative) this.view.freeze();
@@ -208,7 +215,7 @@ export class Game {
         const data=loadMeasure('level:layouts',start);
         if (!speculative) this.transition.update(.1, 'Building the neighborhood…');
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset();this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -224,10 +231,12 @@ export class Game {
         if(this.campaign)this.watchCampaign();
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
+        this.world.missions?.prepare();
+        this.world.physics.prepare();
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
-        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); }
+        const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
-        if (!speculative) { this.view.unfreeze(); this.view.update(1); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
+        if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
@@ -338,7 +347,7 @@ export class Game {
    * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
+    return { nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
