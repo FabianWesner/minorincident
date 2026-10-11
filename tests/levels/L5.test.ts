@@ -231,15 +231,40 @@ describe('L5 Aftermath', () => {
     }
   }, HEAVY);
 
-  test('T-E23-12 @E23 @E23-AC12 no new weapon: the loadout at the start and at the end equals the L4 end loadout, and no weapon pickup exists in L5', async () => {
+  test('T-E23-12 @E23 @E23-AC12 optional basement shotgun auto-equips and retains the L4 arsenal', async () => {
     const l = await loadL5(1); world = l.world; const w = l.world;
-    const loadout = () => { const x = w.entities.get(1)!.weapons!; return { left: x.LEFT.rack.map(r => r.id), right: x.RIGHT.rack.map(r => r.id) }; };
-    expect(loadout()).toEqual({ left: [...l5Loadout.left], right: [...l5Loadout.right] });
-    expect([...w.entities.iterate()].filter(e => e.pickup && !('kind' in e.pickup && e.pickup.kind === 'medkit'))).toEqual([]);
-    const pickups = [...w.entities.iterate()].filter(e => e.pickup).map(e => e.pickup && 'kind' in e.pickup ? e.pickup.kind : 'weapon'); expect(new Set(pickups)).toEqual(new Set(['medkit']));
-    runL5(w, l.mission, 'complete', { seed: 1, maxSeconds: 400 });
-    expect(l.mission.state.phase).toBe('progression'); expect(loadout()).toEqual({ left: [...l5Loadout.left], right: [...l5Loadout.right] });
-  }, HEAVY);
+    const pickup = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup)!;
+    expect(pickup.archetype).toBe('weapon.shotgun'); expect(dist(pickup.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(3);
+    const rack = () => w.combat!.runner.loadout.state;
+    step(w, 60); expect(w.entities.get(pickup.id)).toBeDefined();
+    w.setInput({ interact: true }); step(w, 1); w.clearInput(); step(w, 34);
+    expect(w.entities.get(pickup.id)).toBeDefined(); step(w, 1);
+    expect(w.entities.get(pickup.id)).toBeUndefined(); expect(rack().selectedSide).toBe('RIGHT');
+    expect(w.combat!.runner.loadout.current('RIGHT').id).toBe('weapon.shotgun');
+    expect(rack().LEFT.rack.map(r => r.id)).toEqual([...l5Loadout.left]);
+    expect(rack().RIGHT.rack.map(r => r.id)).toEqual([...l5Loadout.right, 'weapon.shotgun']);
+    for (const side of ['LEFT', 'RIGHT'] as const) for (let index = 0; index < rack()[side].rack.length; index++) {
+      w.setInput({ selectedSlot: { side, index } }); step(w, 16); w.clearInput();
+      expect(w.combat!.runner.loadout.current(side).id).toBe(rack()[side].rack[index].id);
+    }
+  });
+
+  test('T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication', async () => {
+    const l = await loadL5(1); world = l.world; const w = l.world, m = l.mission;
+    const weapons = () => w.combat!.runner.loadout.activeEntries().map(e => e.id);
+    m.checkpoint('outside');
+    w.setInput({ interact: true }); step(w, 36); w.clearInput();
+    expect(weapons()).toContain('weapon.shotgun'); m.restore('outside');
+    expect(weapons()).not.toContain('weapon.shotgun');
+    expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup)).toHaveLength(1);
+    w.setInput({ interact: true }); step(w, 36); w.clearInput();
+    for (const id of l5.checkpoints) {
+      m.checkpoint(id); m.restore(id); m.restore(id);
+      expect(weapons().filter(id => id === 'weapon.shotgun')).toHaveLength(1);
+      expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup)).toHaveLength(0);
+      expect(w.combat!.runner.loadout.current('RIGHT')).toMatchObject({ id: 'weapon.shotgun', magazine: 0, reloadUntil: 0 });
+    }
+  });
 
   test('T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit', async () => {
     expect(timeOfDay.L5.intensity).toBeLessThanOrEqual(timeOfDay.L4.intensity * .7);
