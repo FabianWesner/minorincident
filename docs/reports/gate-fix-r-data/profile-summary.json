@@ -1,0 +1,115 @@
+{
+  "revision": "83969f51",
+  "profilingConditions": "Same CPU 4x / workerCpu=4 phone query; profile and Chrome timeline enabled for L1 only. Diagnostic run under concurrent host load; not an acceptance measurement.",
+  "readyMs": 6254.699999809265,
+  "maxFrameMs": 83.29999999999927,
+  "over50": [
+    50.100000000000364,
+    83.29999999999927,
+    66.70000000000073
+  ],
+  "nodeBuildsAtReveal": 237,
+  "nodeBuildsAfterReveal": 237,
+  "staticBatchLoadingSamplesMs": {
+    "steps (In)": 349.62800000000016,
+    "decode (_o)": 266.73799999999994,
+    "merge ($f)": 186.33,
+    "transform (Gf)": 113.21799999999996
+  },
+  "mapping": "Functions matched directly against the minified 4e04fce5 bundle before deleting its worktree: In is the steps generator, _o attribute decode, $f geometry merge, Gf vertex transform, Oi staticBatch wrapper. Sources are src/assets/staticBatch.ts. Sample durations include scheduling/throttling gaps; these are estimates, not isolated CPU benchmarks.",
+  "phases": [
+    {
+      "name": "level:layouts",
+      "ms": 29.100000381469727
+    },
+    {
+      "name": "transition:L1:first-frame",
+      "ms": 6016.39999961853
+    },
+    {
+      "name": "level:sim",
+      "ms": 368.3999996185303
+    },
+    {
+      "name": "level:boot-audio-wait",
+      "ms": 0
+    },
+    {
+      "name": "level:world+nav",
+      "ms": 262.3999996185303
+    },
+    {
+      "name": "level:mission+cast",
+      "ms": 38.89999961853027
+    },
+    {
+      "name": "level:physics-prepare",
+      "ms": 55.60000038146973
+    },
+    {
+      "name": "level:view",
+      "ms": 5460.5
+    },
+    {
+      "name": "view:districts+character",
+      "ms": 2445.5999994277954
+    },
+    {
+      "name": "view:civilian-crowd",
+      "ms": 2477.800000190735
+    },
+    {
+      "name": "view:infected-crowd",
+      "ms": 504
+    },
+    {
+      "name": "view:route-lods",
+      "ms": 138.69999980926514
+    },
+    {
+      "name": "view:actors",
+      "ms": 31.40000057220459
+    },
+    {
+      "name": "view:lod-ready",
+      "ms": 48.39999961853027
+    },
+    {
+      "name": "view:warm-up",
+      "ms": 2405.300000190735
+    },
+    {
+      "name": "L1 warm-up chunks",
+      "ms": 2154.199999809265
+    },
+    {
+      "name": "L1 shader compilation",
+      "ms": 1793.5999994277954
+    },
+    {
+      "name": "L1 warm-up draw",
+      "ms": 80.90000057220459
+    },
+    {
+      "name": "L1 driver warm-up",
+      "ms": 214.4000005722046
+    },
+    {
+      "name": "L1 warm-up instanced draw",
+      "ms": 83.5
+    },
+    {
+      "name": "L1 warm-up solo draws",
+      "ms": 50
+    },
+    {
+      "name": "level:audio",
+      "ms": 1.5999994277954102
+    },
+    {
+      "name": "level:hud",
+      "ms": 70
+    }
+  ],
+  "finding": "First playable frame is dominated by district/source batching, crowd preparation and shader warm-up. Post-card hitches have render projection/matrix/node-update samples and native program time, with no additional node graph builds. WebGL warm-up behavior is unchanged by the suspected texture branch. No small safe performance fix identified; leave the pre-existing phone issue open as requested."
+}
