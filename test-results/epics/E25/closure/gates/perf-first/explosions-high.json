@@ -1,0 +1,78 @@
+{
+  "frameP95": 6.799999999999272,
+  "frameMax": 163.60000000000036,
+  "simP95": 0.5,
+  "frames": 1645,
+  "maxPuffs": 400,
+  "maxParticles": 2048,
+  "blasts": [
+    "explosion.car",
+    "explosion.gas-pump",
+    "explosion.gas-canopy",
+    "explosion.propane",
+    "explosion.barrel",
+    "explosion.gas-tanks"
+  ],
+  "initialInfected": 30,
+  "infectedAlive": 11,
+  "spikes": [
+    {
+      "at": 1977,
+      "ms": 164
+    }
+  ],
+  "fires": 17,
+  "perf": {
+    "profile": null,
+    "profileAssets": null,
+    "updateCpuMs": 0,
+    "renderCpuMs": 0,
+    "propUploads": 0,
+    "awakeProps": 1,
+    "fps": 243.9024390243686,
+    "frameMs": 4.100000000000364,
+    "simMs": 0,
+    "uiMs": 0,
+    "drawCalls": 104,
+    "triangles": 504612,
+    "geometries": 162,
+    "textures": 15,
+    "entities": 63,
+    "backend": "webgl",
+    "loadTiming": null,
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 4.9,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 2443,
+    "contextLost": false,
+    "paused": false,
+    "heapBytes": 593908592,
+    "lighting": {
+      "lightFieldMs": 0.09999942779541016,
+      "lightPools": 18,
+      "lightCandidates": 18,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "golden"
+    }
+  },
+  "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+  "cpuThrottle": 1,
+  "viewport": "1600x900"
+}

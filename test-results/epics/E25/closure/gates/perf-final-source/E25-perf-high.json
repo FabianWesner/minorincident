@@ -1,0 +1,72 @@
+{
+  "morning": {
+    "preset": "L1",
+    "frameMsP50": 6.699999999998909,
+    "frameMsP95": 9.399999999999636,
+    "lightFieldMsMean": 0,
+    "drawCalls": 216,
+    "triangles": 1206207,
+    "lighting": {
+      "lightFieldMs": 0,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "L1"
+    },
+    "quality": "high",
+    "infected": 60,
+    "lamps": {
+      "strength": 0,
+      "resolution": 1024,
+      "size": 80,
+      "statics": 555,
+      "litStatics": 555,
+      "candidates": 0,
+      "drawn": 0,
+      "transients": 0,
+      "capacity": 512,
+      "ms": 0,
+      "center": [
+        -12.03125,
+        3.984375
+      ]
+    }
+  },
+  "night": {
+    "preset": "night",
+    "frameMsP50": 6.900000000001455,
+    "frameMsP95": 9.700000000000728,
+    "lightFieldMsMean": 0.12016666094462077,
+    "drawCalls": 219,
+    "triangles": 1206487,
+    "lighting": {
+      "lightFieldMs": 0.19999980926513672,
+      "lightPools": 311,
+      "lightCandidates": 311,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "night"
+    },
+    "quality": "high",
+    "infected": 60,
+    "lamps": {
+      "strength": 1,
+      "resolution": 1024,
+      "size": 80,
+      "statics": 555,
+      "litStatics": 555,
+      "candidates": 311,
+      "drawn": 311,
+      "transients": 0,
+      "capacity": 512,
+      "ms": 0.19999980926513672,
+      "center": [
+        -12.03125,
+        3.984375
+      ]
+    }
+  }
+}

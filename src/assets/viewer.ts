@@ -4,6 +4,9 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Crowd } from './crowd';
 import { AssetRegistry, type PlaceholderLog } from './registry';
+import { PaletteMaterial } from '../render/PaletteMaterial';
+import { anchorsFor } from '../data/placedLights';
+import { footprint } from '../render/LightField';
 import { Lighting } from '../render/Lighting';
 import { Materials } from '../render/Materials';
 import manifest from './manifest.json';
@@ -11,6 +14,7 @@ import type { AssetDef } from './types';
 
 export interface AssetViewerApi {
   ready: Promise<void>;
+  lighting?(night: boolean, powered: boolean): Promise<void>;
   view(index: number, roll?: number): Promise<void>;
   /** Batch inspection reuses the renderer and releases the previous asset. */
   selectAsset?(id: string): Promise<void>;
@@ -39,7 +43,7 @@ export async function assetViewer(): Promise<void> {
   const camera = new PerspectiveCamera(25, innerWidth / innerHeight, .01, 500);
   const controls = new OrbitControls(camera, renderer.domElement);
   const events: PlaceholderLog[] = [];
-  const inspectionLighting = new Lighting(new Scene());
+  const inspectionLighting = new Lighting(new Scene(), undefined, renderer);
   const inspectionMaterials = new Materials(inspectionLighting);
   const createRegistry = () => new AssetRegistry((event) => { events.push(event); console.info(event.type, event.id, event.reason); }, { renderer, materials: inspectionMaterials,
     // Explicit inspection shows pending source files without stale registration metadata.
@@ -51,6 +55,7 @@ export async function assetViewer(): Promise<void> {
   for (const name of registry.definition(id).decayVariants) { const option = new Option(name,name); decay.add(option); }
   decay.disabled = !registry.definition(id).decayVariants.length;
   let object: Object3D, extent = 1;
+  let powered = true;
   const center = new Vector3(), size = new Vector3();
   function render(): void {
     // Isolated inspection follows the game's zoom-relative fog convention.
@@ -58,6 +63,7 @@ export async function assetViewer(): Promise<void> {
     const fogOffset = Math.max(0, camera.position.distanceTo(controls.target) - 19);
     inspectionLighting.fogNear.value = 55 + fogOffset;
     inspectionLighting.fogFar.value = 140 + fogOffset;
+    inspectionLighting.field.update(center.x, center.z, 0); inspectionLighting.field.render(renderer);
     renderer.info.reset(); renderer.render(scene,camera);
   }
   async function view(index: number, roll?: number): Promise<void> {
@@ -72,13 +78,17 @@ export async function assetViewer(): Promise<void> {
     if (roll !== undefined) camera.rotateZ(roll);
     await renderer.compileAsync(scene,camera); render(); render();
   }
+  function applyAssetPower(): void {
+    inspectionLighting.field.setStatic(anchorsFor(id).filter(a => a.pool).map(anchor => ({ ...footprint(anchor), on: powered })));
+    object.traverse(node => { if (!(node instanceof Mesh)) return; for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.emissivePower.value = powered ? 1 : 0; });
+  }
   async function load(): Promise<void> {
     if (object) { scene.remove(object); if (object instanceof Crowd) object.dispose(); }
     object = params.has('crowd') && params.has('test')
       ? new Crowd((await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(`/assets/models/${id}.crowd.glb`)).scene,100)
       : await registry.loadAsset(id, (document.querySelector<HTMLSelectElement>('#quality')?.value ?? 'high') as 'high' | 'lod1' | 'lod2', decay.value || undefined);
     exploded = false;
-    scene.add(object);
+    scene.add(object); applyAssetPower();
     new Box3().setFromObject(object).getCenter(center);
     new Box3().setFromObject(object).getSize(size); extent = Math.max(size.x,size.y,size.z);
     await view(4);
@@ -126,7 +136,11 @@ export async function assetViewer(): Promise<void> {
     await renderer.compileAsync(scene, camera); render(); render();
   }
   const ready = load();
-  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, frame: ([left, top, right, bottom]) => {
+  if (import.meta.env.DEV || params.has('test')) window.__ASSET__ = { ready, view, lighting: async (night, on) => {
+    powered = on; inspectionLighting.set(night ? 'night' : 'golden');
+    applyAssetPower(); inspectionLighting.applyLook();
+    await view(4);
+  }, frame: ([left, top, right, bottom]) => {
     const height = camera.position.distanceTo(controls.target) * 2 * Math.tan(camera.fov * Math.PI / 360), before = camera.position.clone();
     camera.translateX(((left + right) / 2 - .5) * height * camera.aspect);
     camera.translateY((.5 - (top + bottom) / 2) * height);

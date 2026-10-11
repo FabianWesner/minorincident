@@ -1,0 +1,1036 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l1-budgets.spec.ts",
+      "tests/perf/l2-budgets.spec.ts",
+      "tests/perf/l3-budgets.spec.ts",
+      "tests/perf/l4-budgets.spec.ts",
+      "tests/perf/l5-budgets.spec.ts",
+      "tests/perf/e25-lighting.spec.ts",
+      "tests/perf/e25-light-lab.spec.ts",
+      "tests/perf/explosions.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3527 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3527",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e25-light-lab.spec.ts",
+      "file": "perf/e25-light-lab.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/e25-light-lab.spec.ts",
+          "line": 8,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E25-14c @E25 @E25-AC14 @perf trailer light-lab high within unchanged E18 budgets",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC14",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12875,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:23:36.290Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b8e3986891dffc7850b3-97aedce6adfc22c2a5bf",
+              "file": "perf/e25-light-lab.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/e25-light-lab.spec.ts",
+          "line": 8,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E25-14c @E25 @E25-AC14 @perf trailer light-lab low within unchanged E18 budgets",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC14",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24014,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:23:49.419Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b8e3986891dffc7850b3-2b378a7abe3b122acb72",
+              "file": "perf/e25-light-lab.spec.ts",
+              "line": 10,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/e25-lighting.spec.ts",
+      "file": "perf/e25-lighting.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E25-14 @E25 @E25-AC14 @perf desktop high: L1 morning and night street (41 lamps in the field window, 60 infected) within E18 budgets",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC14",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T03:24:13.728Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "712beb7dffd3281a6fe3-8f8c08b8a0216b9ededf",
+          "file": "perf/e25-lighting.spec.ts",
+          "line": 29,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "Pixel 7 emulated low",
+          "file": "perf/e25-lighting.spec.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E25-14b @E25 @E25-AC14 @perf phone low (4x CPU throttle): L1 morning and night street within the low budget",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC14",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [
+                    {
+                      "type": "low-budget",
+                      "description": "p50 morning 25.8 ms, night 25.6 ms (budget 33.3 ms)"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 73470,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:24:42.824Z",
+                      "annotations": [
+                        {
+                          "type": "low-budget",
+                          "description": "p50 morning 25.8 ms, night 25.6 ms (budget 33.3 ms)"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "712beb7dffd3281a6fe3-7d754616893008b7887a",
+              "file": "perf/e25-lighting.spec.ts",
+              "line": 46,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/explosions.spec.ts",
+      "file": "perf/explosions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E27 @E27 @perf high mega + car chain + fire + smoke column + 30 infected frame measurement",
+          "ok": true,
+          "tags": [
+            "E27",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15980,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T03:25:56.602Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a4b53977586372434c14-5031573207e9511b1208",
+          "file": "perf/explosions.spec.ts",
+          "line": 5,
+          "column": 46
+        },
+        {
+          "title": "E27 @E27 @perf low mega + car chain + fire + smoke column + 30 infected frame measurement",
+          "ok": true,
+          "tags": [
+            "E27",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23883,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T03:26:12.872Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a4b53977586372434c14-2e71c4738314ebb06819",
+          "file": "perf/explosions.spec.ts",
+          "line": 5,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "title": "perf/l1-budgets.spec.ts",
+      "file": "perf/l1-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "L1 game camera photo spots high @E18-AC01 @perf",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 43104,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"phase\":\"after\",\"tier\":\"high\",\"spots\":[{\"spot\":\"V1\",\"triangles\":802451,\"draws\":103,\"profile\":{\"other\":{\"drawCalls\":37,\"triangles\":189116},\"shadows\":{\"drawCalls\":48,\"triangles\":360558},\"buildings\":{\"drawCalls\":6,\"triangles\":118148},\"props\":{\"drawCalls\":12,\"triangles\":134629}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":8,\"triangles\":2472},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":77116},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":6432},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":32796},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":2036},\"shadow:prop.street-tree-blossom\":{\"drawCalls\":1,\"triangles\":1516},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":66863},\"shadow:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":53310},\"shadow:prop.picket-fence\":{\"drawCalls\":3,\"triangles\":9228},\"shadow:prop.trash-bags\":{\"drawCalls\":1,\"triangles\":1104},\"shadow:prop.hedge\":{\"drawCalls\":2,\"triangles\":830},\"shadow:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":12,\"triangles\":2680},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":77684},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":2080},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":33936},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":6528},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":67911},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":53310},\"view:prop.picket-fence\":{\"drawCalls\":3,\"triangles\":9228},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:prop.trash-bags\":{\"drawCalls\":1,\"triangles\":1104},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:prop.hedge\":{\"drawCalls\":2,\"triangles\":830},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":7360},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":64394},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/interactions/mesh_2\":{\"drawCalls\":1,\"triangles\":928},\"view:other/interactions/mesh_2_1\":{\"drawCalls\":1,\"triangles\":1000},\"view:other/interactions/mesh_2_2\":{\"drawCalls\":1,\"triangles\":2964},\"view:other/interactions/mesh_0\":{\"drawCalls\":1,\"triangles\":1000},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":130},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V2\",\"triangles\":536665,\"draws\":87,\"profile\":{\"other\":{\"drawCalls\":31,\"triangles\":180824},\"shadows\":{\"drawCalls\":44,\"triangles\":236198},\"buildings\":{\"drawCalls\":4,\"triangles\":17288},\"props\":{\"drawCalls\":8,\"triangles\":102355}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":8,\"triangles\":96},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":10520},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":6432},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":3054},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":66863},\"shadow:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":25130},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":6194},\"shadow:prop.crates\":{\"drawCalls\":1,\"triangles\":288},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":10,\"triangles\":280},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":10760},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":3120},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":6528},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":67911},\"view:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":25130},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":6194},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":7360},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":64394},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":130},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V3\",\"triangles\":545985,\"draws\":110,\"profile\":{\"other\":{\"drawCalls\":36,\"triangles\":181808},\"shadows\":{\"drawCalls\":56,\"triangles\":241287},\"props\":{\"drawCalls\":12,\"triangles\":64776},\"buildings\":{\"drawCalls\":5,\"triangles\":29282},\"crowd\":{\"drawCalls\":1,\"triangles\":28832}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":9,\"triangles\":1032},\"shadow:bld.house-d\":{\"drawCalls\":1,\"triangles\":9628},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":12864},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:bld.house-a\":{\"drawCalls\":2,\"triangles\":5266},\"shadow:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":2670},\"shadow:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"shadow:prop.street-sign\":{\"drawCalls\":1,\"triangles\":1752},\"shadow:prop.privacy-fence\":{\"drawCalls\":2,\"triangles\":14468},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":35132},\"shadow:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"shadow:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":6194},\"shadow:prop.wheelbarrow\":{\"drawCalls\":1,\"triangles\":1072},\"shadow:prop.hedge\":{\"drawCalls\":1,\"triangles\":166},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/interactions/static-body\":{\"drawCalls\":1,\"triangles\":1906},\"shadow:other/interactions/Mesh\":{\"drawCalls\":2,\"triangles\":24},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":15,\"triangles\":1264},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":2080},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":11312},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":13056},\"view:bld.house-a\":{\"drawCalls\":1,\"triangles\":4914},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":1752},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":14216},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":36636},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":6194},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:prop.wheelbarrow\":{\"drawCalls\":1,\"triangles\":1072},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":166},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":7360},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":64394},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":130},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V4\",\"triangles\":663981,\"draws\":108,\"profile\":{\"other\":{\"drawCalls\":35,\"triangles\":182276},\"shadows\":{\"drawCalls\":54,\"triangles\":300003},\"buildings\":{\"drawCalls\":6,\"triangles\":23220},\"props\":{\"drawCalls\":11,\"triangles\":96604},\"crowd\":{\"drawCalls\":2,\"triangles\":61878}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":8,\"triangles\":1192},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":5260},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":6432},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":2036},\"shadow:prop.street-tree\":{\"drawCalls\":2,\"triangles\":3032},\"shadow:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":49756},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":35132},\"shadow:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1784},\"shadow:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":3186},\"shadow:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"shadow:prop.hedge\":{\"drawCalls\":1,\"triangles\":332},\"shadow:other/npcs/Mesh\":{\"drawCalls\":2,\"triangles\":332},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/interactions/Mesh\":{\"drawCalls\":2,\"triangles\":24},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":12,\"triangles\":1400},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":5380},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":2080},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":11312},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":6528},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":49756},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":36636},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1784},\"view:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":3186},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":2,\"triangles\":332},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":332},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":7360},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":64394},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":130},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V5\",\"triangles\":484659,\"draws\":108,\"profile\":{\"other\":{\"drawCalls\":34,\"triangles\":192096},\"shadows\":{\"drawCalls\":55,\"triangles\":206847},\"buildings\":{\"drawCalls\":4,\"triangles\":15248},\"props\":{\"drawCalls\":12,\"triangles\":31698},\"crowd\":{\"drawCalls\":3,\"triangles\":38770}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":7,\"triangles\":232},\"shadow:bld.house-d\":{\"drawCalls\":1,\"triangles\":9628},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":5260},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":3054},\"shadow:prop.street-sign\":{\"drawCalls\":1,\"triangles\":2880},\"shadow:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":10662},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"shadow:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"shadow:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":1814},\"shadow:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":8892},\"shadow:prop.bench\":{\"drawCalls\":1,\"triangles\":546},\"shadow:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"shadow:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":1160},\"shadow:prop.flower-bed.large\":{\"drawCalls\":1,\"triangles\":284},\"shadow:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"shadow:other/npcs/Mesh\":{\"drawCalls\":1,\"triangles\":420},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/interactions/Mesh\":{\"drawCalls\":2,\"triangles\":24},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":11,\"triangles\":440},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:bld.house-d\":{\"drawCalls\":2,\"triangles\":9868},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":5380},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":3120},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":2880},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":10662},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":2,\"triangles\":1814},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":8892},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"view:prop.bench\":{\"drawCalls\":1,\"triangles\":546},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":1160},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":1,\"triangles\":420},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":7360},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":64394},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":130},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V6\",\"triangles\":425478,\"draws\":91,\"profile\":{\"other\":{\"drawCalls\":32,\"triangles\":191516},\"shadows\":{\"drawCalls\":44,\"triangles\":175855},\"buildings\":{\"drawCalls\":7,\"triangles\":12872},\"props\":{\"drawCalls\":7,\"triangles\":40762},\"crowd\":{\"drawCalls\":1,\"triangles\":4473}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":6,\"triangles\":72},\"shadow:bld.clinic-annex\":{\"drawCalls\":4,\"triangles\":12424},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":5260},\"shadow:prop.street-lamp\":{\"drawCalls\":1,\"triangles\":2036},\"shadow:kit.edge-roadwork\":{\"drawCalls\":1,\"triangles\":11724},\"shadow:prop.lab-signs\":{\"drawCalls\":3,\"triangles\":26718},\"shadow:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":240},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":10,\"triangles\":280},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:bld.clinic-annex\":{\"drawCalls\":7,\"triangles\":12872},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":2080},\"view:kit.edge-roadwork\":{\"drawCalls\":1,\"triangles\":11724},\"view:prop.lab-signs\":{\"drawCalls\":3,\"triangles\":26718},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":240},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":7360},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":64394},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":130},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":12,\"triangles\":12},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}}]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T03:26:37.040Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0b66cb51b1aa2f276122-a02aad4bbb1a1d6848e1",
+          "file": "perf/l1-budgets.spec.ts",
+          "line": 5,
+          "column": 46
+        },
+        {
+          "title": "L1 game camera photo spots low @E18-AC01 @perf",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11450,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"phase\":\"after\",\"tier\":\"low\",\"spots\":[{\"spot\":\"V1\",\"triangles\":316942,\"draws\":83,\"profile\":{\"other\":{\"drawCalls\":37,\"triangles\":126602},\"shadows\":{\"drawCalls\":31,\"triangles\":143432},\"buildings\":{\"drawCalls\":6,\"triangles\":34532},\"props\":{\"drawCalls\":9,\"triangles\":12376}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":6,\"triangles\":72},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":5260},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":6432},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":21864},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":3120},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":12,\"triangles\":1340},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":5380},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1300},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":22624},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":6528},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":3336},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":3780},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":1860},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:prop.trash-bags\":{\"drawCalls\":1,\"triangles\":1104},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":830},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":2760},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":11630},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/interactions/mesh_2\":{\"drawCalls\":1,\"triangles\":928},\"view:other/interactions/mesh_2_1\":{\"drawCalls\":1,\"triangles\":628},\"view:other/interactions/mesh_2_2\":{\"drawCalls\":1,\"triangles\":390},\"view:other/interactions/mesh_0\":{\"drawCalls\":1,\"triangles\":156},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":110},\"shadow:other/RTT/RTT\":{\"drawCalls\":1,\"triangles\":1},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V2\",\"triangles\":288774,\"draws\":74,\"profile\":{\"other\":{\"drawCalls\":31,\"triangles\":123300},\"shadows\":{\"drawCalls\":33,\"triangles\":137784},\"buildings\":{\"drawCalls\":4,\"triangles\":17288},\"props\":{\"drawCalls\":6,\"triangles\":10402}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":8,\"triangles\":96},\"shadow:bld.house-b\":{\"drawCalls\":1,\"triangles\":10520},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":6432},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:veh.sedan-green\":{\"drawCalls\":1,\"triangles\":3120},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":10,\"triangles\":140},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":10760},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1950},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":6528},\"view:veh.sedan-green\":{\"drawCalls\":2,\"triangles\":3336},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":2016},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":3100},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":2760},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":11630},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":110},\"shadow:other/RTT/RTT\":{\"drawCalls\":1,\"triangles\":1},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V3\",\"triangles\":313826,\"draws\":88,\"profile\":{\"other\":{\"drawCalls\":36,\"triangles\":123804},\"shadows\":{\"drawCalls\":35,\"triangles\":140964},\"props\":{\"drawCalls\":11,\"triangles\":15272},\"buildings\":{\"drawCalls\":5,\"triangles\":29282},\"crowd\":{\"drawCalls\":1,\"triangles\":4504}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":6,\"triangles\":72},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":12864},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:bld.house-a\":{\"drawCalls\":2,\"triangles\":5266},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/interactions/static-body\":{\"drawCalls\":1,\"triangles\":1906},\"shadow:other/interactions/Mesh\":{\"drawCalls\":2,\"triangles\":24},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":15,\"triangles\":644},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1950},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":11312},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":13056},\"view:bld.house-a\":{\"drawCalls\":1,\"triangles\":4914},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":1516},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":1752},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":1260},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":3312},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":3100},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:prop.wheelbarrow\":{\"drawCalls\":1,\"triangles\":1072},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":166},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":2760},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":11630},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":110},\"shadow:other/RTT/RTT\":{\"drawCalls\":1,\"triangles\":1},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V4\",\"triangles\":313998,\"draws\":88,\"profile\":{\"other\":{\"drawCalls\":35,\"triangles\":124192},\"shadows\":{\"drawCalls\":35,\"triangles\":138384},\"buildings\":{\"drawCalls\":6,\"triangles\":21756},\"props\":{\"drawCalls\":10,\"triangles\":15822},\"crowd\":{\"drawCalls\":2,\"triangles\":13844}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":6,\"triangles\":72},\"shadow:bld.house-e\":{\"drawCalls\":1,\"triangles\":6432},\"shadow:bld.house-c\":{\"drawCalls\":1,\"triangles\":10932},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"shadow:other/npcs/Mesh\":{\"drawCalls\":2,\"triangles\":332},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/interactions/Mesh\":{\"drawCalls\":2,\"triangles\":24},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":12,\"triangles\":700},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":3916},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1300},\"view:bld.house-c\":{\"drawCalls\":2,\"triangles\":11312},\"view:bld.house-e\":{\"drawCalls\":2,\"triangles\":6528},\"view:prop.street-tree\":{\"drawCalls\":1,\"triangles\":3032},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":3528},\"view:veh.sedan-blue\":{\"drawCalls\":2,\"triangles\":3312},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":1860},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":2,\"triangles\":332},\"view:prop.hedge\":{\"drawCalls\":1,\"triangles\":332},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":2760},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":11630},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":110},\"shadow:other/RTT/RTT\":{\"drawCalls\":1,\"triangles\":1},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V5\",\"triangles\":309924,\"draws\":84,\"profile\":{\"other\":{\"drawCalls\":34,\"triangles\":134492},\"shadows\":{\"drawCalls\":33,\"triangles\":130736},\"buildings\":{\"drawCalls\":4,\"triangles\":13784},\"props\":{\"drawCalls\":11,\"triangles\":17690},\"crowd\":{\"drawCalls\":2,\"triangles\":13222}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":6,\"triangles\":72},\"shadow:bld.house-d\":{\"drawCalls\":1,\"triangles\":9628},\"shadow:veh.sedan-blue\":{\"drawCalls\":1,\"triangles\":3216},\"shadow:other/npcs/Mesh\":{\"drawCalls\":1,\"triangles\":420},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/interactions/Mesh\":{\"drawCalls\":2,\"triangles\":24},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":11,\"triangles\":220},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:bld.house-d\":{\"drawCalls\":2,\"triangles\":9868},\"view:bld.house-b\":{\"drawCalls\":2,\"triangles\":3916},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1950},\"view:prop.street-sign\":{\"drawCalls\":1,\"triangles\":1752},\"view:prop.privacy-fence\":{\"drawCalls\":1,\"triangles\":756},\"view:prop.mailbox-blue\":{\"drawCalls\":1,\"triangles\":1144},\"view:prop.picket-fence\":{\"drawCalls\":1,\"triangles\":930},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":8892},\"view:prop.fire-hydrant\":{\"drawCalls\":1,\"triangles\":1314},\"view:prop.bench\":{\"drawCalls\":1,\"triangles\":546},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":240},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":1,\"triangles\":420},\"view:prop.garden-bush-small\":{\"drawCalls\":1,\"triangles\":166},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":2760},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":11630},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":110},\"shadow:other/RTT/RTT\":{\"drawCalls\":1,\"triangles\":1},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}},{\"spot\":\"V6\",\"triangles\":321149,\"draws\":77,\"profile\":{\"other\":{\"drawCalls\":32,\"triangles\":133992},\"shadows\":{\"drawCalls\":32,\"triangles\":129872},\"buildings\":{\"drawCalls\":7,\"triangles\":12872},\"props\":{\"drawCalls\":5,\"triangles\":39940},\"crowd\":{\"drawCalls\":1,\"triangles\":4473}},\"assets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/sunset-grove/Mesh\":{\"drawCalls\":6,\"triangles\":72},\"shadow:bld.clinic-annex\":{\"drawCalls\":4,\"triangles\":12424},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"shadow:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"shadow:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"shadow:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"shadow:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"shadow:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"shadow:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"shadow:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"shadow:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"shadow:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"shadow:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"shadow:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:other/sunset-grove/Mesh\":{\"drawCalls\":10,\"triangles\":140},\"view:other/Group/courierSkin\":{\"drawCalls\":1,\"triangles\":44620},\"view:other/sunset-grove/pal_silver\":{\"drawCalls\":1,\"triangles\":10692},\"view:bld.clinic-annex\":{\"drawCalls\":7,\"triangles\":12872},\"view:prop.street-lamp\":{\"drawCalls\":2,\"triangles\":1300},\"view:kit.edge-roadwork\":{\"drawCalls\":1,\"triangles\":11724},\"view:prop.lab-signs\":{\"drawCalls\":1,\"triangles\":26676},\"view:prop.bike-rack\":{\"drawCalls\":1,\"triangles\":240},\"view:other/sunset-grove/pal_uiDark\":{\"drawCalls\":1,\"triangles\":8652},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/sunset-grove/pal_picketWhite\":{\"drawCalls\":1,\"triangles\":12188},\"view:other/sunset-grove/pal_denim\":{\"drawCalls\":1,\"triangles\":23124},\"view:other/sunset-grove/pal_sidewalk\":{\"drawCalls\":1,\"triangles\":5588},\"view:other/sunset-grove/pal_asphalt\":{\"drawCalls\":1,\"triangles\":308},\"view:other/Group/Mesh\":{\"drawCalls\":5,\"triangles\":2760},\"view:other/sunset-grove/pal_grass\":{\"drawCalls\":1,\"triangles\":44},\"view:other/sunset-grove/pal_woodWarm\":{\"drawCalls\":1,\"triangles\":352},\"view:other/sunset-grove/daisy_3\":{\"drawCalls\":1,\"triangles\":1060},\"view:other/sunset-grove/daisy_1\":{\"drawCalls\":1,\"triangles\":2320},\"view:other/sunset-grove/daisy_2\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/daisy\":{\"drawCalls\":1,\"triangles\":4056},\"view:other/sunset-grove/grass-gpu-wind\":{\"drawCalls\":1,\"triangles\":11630},\"view:other/sunset-grove/pal_hairChestnut\":{\"drawCalls\":1,\"triangles\":308},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":110},\"shadow:other/RTT/RTT\":{\"drawCalls\":1,\"triangles\":1},\"shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]\":{\"drawCalls\":6,\"triangles\":6},\"shadow:other/Render Pipeline/Render Pipeline\":{\"drawCalls\":1,\"triangles\":1}}}]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T03:27:20.348Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0b66cb51b1aa2f276122-4affaaea0485ecedcda4",
+          "file": "perf/l1-budgets.spec.ts",
+          "line": 5,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "title": "perf/l2-budgets.spec.ts",
+      "file": "perf/l2-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l2-budgets.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close high",
+              "ok": true,
+              "tags": [
+                "E20",
+                "E20-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 62369,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"seed\":2,\"counts\":{\"infected\":34,\"civilians\":42,\"firefighters\":6},\"drawCalls\":277,\"triangles\":968583,\"revealMaxMs\":37.400000000001455,\"gateMaxMs\":15,\"peakP50\":7.599999999998545,\"peakP95\":9.5,\"peakMax\":12.599999999998545,\"frames\":1305,\"simP95\":2.5,\"updateP95\":2.5,\"renderP95\":4.700000762939453,\"gateClosed\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:27:32.085Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f1639ee64f027cada587-bf1b10de05acf400da67",
+              "file": "perf/l2-budgets.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l2-budgets.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low",
+              "ok": false,
+              "tags": [
+                "E20",
+                "E20-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 101318,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m51.09999999999127\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m51.09999999999127\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests/perf/l2-budgets.spec.ts:66:80",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests/perf/l2-budgets.spec.ts",
+                          "column": 80,
+                          "line": 66
+                        },
+                        "snippet": "  64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).\n  65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);\n> 66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);\n     |                                                                                ^\n  67 |   });\n  68 | });\n  69 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests/perf/l2-budgets.spec.ts",
+                            "column": 80,
+                            "line": 66
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m51.09999999999127\u001b[39m\n\n  64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).\n  65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);\n> 66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);\n     |                                                                                ^\n  67 |   });\n  68 | });\n  69 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests/perf/l2-budgets.spec.ts:66:80"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":30,\"civilians\":24,\"firefighters\":6},\"drawCalls\":224,\"triangles\":399890,\"revealMaxMs\":37.5,\"gateMaxMs\":51.09999999999127,\"peakP50\":24.80000000000291,\"peakP95\":29.10000000000582,\"peakMax\":33.30000000000291,\"frames\":404,\"simP95\":10.699999809265137,\"updateP95\":6.600000381469727,\"renderP95\":11.700000762939453,\"gateClosed\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:28:34.990Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/test-results/playwright/run-3527/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests/perf/l2-budgets.spec.ts",
+                        "column": 80,
+                        "line": 66
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f1639ee64f027cada587-5259dc2234fc51b079d9",
+              "file": "perf/l2-budgets.spec.ts",
+              "line": 11,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l3-budgets.spec.ts",
+      "file": "perf/l3-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l3-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E21-21 @E21 @E21-AC21 @perf L3 station attack, fallback and Grove Boulevard high",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC21",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 74585,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"seed\":2,\"counts\":{\"infected\":33,\"officers\":10},\"streetCounts\":{\"infected\":78,\"spawned\":287},\"streetDrawCalls\":222,\"streetTriangles\":830657,\"streetP50\":6.80000000000291,\"streetP95\":9.19999999999709,\"attackDrawCalls\":145,\"attackTriangles\":467418,\"blvdDrawCalls\":199,\"blvdTriangles\":1026125,\"attackP50\":5.69999999999709,\"attackP95\":9,\"attackMax\":24.39999999999418,\"fallbackMaxMs\":10.400000000001455,\"blvdP50\":5.900000000001455,\"blvdP95\":9,\"simP95\":2.8999996185302734,\"updateP95\":2.1000003814697266,\"renderP95\":4.09999942779541,\"fallbackFired\":true,\"vfx\":{\"shots\":[{\"sourceId\":1,\"tick\":7189,\"muzzle\":[-35.70025853841511,0.778812689595922,27.260728400947134],\"tracerStart\":[-35.70025853841511,0.778812689595922,27.260728400947134],\"end\":[-13.848138017550568,0.778812689595922,29.807261091020166]},{\"sourceId\":24,\"tick\":7193,\"muzzle\":[-40.39288013552851,1.2127428529901954,28.65402451000056],\"tracerStart\":[-40.39288013552851,1.2127428529901954,28.65402451000056],\"end\":[-50.41625230168811,1.2127428529901954,23.327051282051283]},{\"sourceId\":27,\"tick\":7193,\"muzzle\":[-39.61116680595137,1.193763753216749,27.61519747433345],\"tracerStart\":[-39.61116680595137,1.193763753216749,27.61519747433345],\"end\":[-22.465539718350406,1.193763753216749,28.93307633363407]},{\"sourceId\":29,\"tick\":7193,\"muzzle\":[-38.580190465728464,1.2935360002494416,25.20498286734976],\"tracerStart\":[-38.580190465728464,1.2935360002494416,25.20498286734976],\"end\":[-22.537113296610492,1.2935360002494416,29.04192555441933]},{\"sourceId\":24,\"tick\":7214,\"muzzle\":[-40.39369377840307,1.2836267767549863,28.677969864694152],\"tracerStart\":[-40.39369377840307,1.2836267767549863,28.677969864694152],\"end\":[-50.37012308097663,1.2836267767549863,23.327051282051283]},{\"sourceId\":27,\"tick\":7229,\"muzzle\":[-38.807050539184864,1.19377158296993,27.530086980166733],\"tracerStart\":[-38.807050539184864,1.19377158296993,27.530086980166733],\"end\":[-33.177193345147934,1.19377158296993,27.55520672818326]},{\"sourceId\":29,\"tick\":7229,\"muzzle\":[-37.77245182695884,1.2935516054299658,25.94049127296537],\"tracerStart\":[-37.77245182695884,1.2935516054299658,25.94049127296537],\"end\":[-33.347867628395186,1.2935516054299658,27.808508865622734]},{\"sourceId\":31,\"tick\":7229,\"muzzle\":[-40.020830968428434,1.1893455312700825,27.630648624877974],\"tracerStart\":[-40.020830968428434,1.1893455312700825,27.630648624877974],\"end\":[-33.171632351564156,1.1893455312700825,27.463795734897484]},{\"sourceId\":33,\"tick\":7229,\"muzzle\":[-40.69769085967014,1.192262600750837,27.365303258793688],\"tracerStart\":[-40.69769085967014,1.192262600750837,27.365303258793688],\"end\":[-33.196651779506155,1.192262600750837,27.497982083156476]},{\"sourceId\":24,\"tick\":7235,\"muzzle\":[-40.588876951751466,1.306423224860555,29.063098511592006],\"tracerStart\":[-40.588876951751466,1.306423224860555,29.063098511592006],\"end\":[-54.24074953074472,1.306423224860555,21.22431410325689]},{\"sourceId\":33,\"tick\":7250,\"muzzle\":[-41.29439957548025,0.7098839859658619,27.6086996433223],\"tracerStart\":[-41.29439957548025,0.7098839859658619,27.6086996433223],\"end\":[-49.93027506868138,0.7098839859658619,23.3755]},{\"sourceId\":27,\"tick\":7259,\"muzzle\":[-38.886043295030724,1.1709322566405171,26.956776793275264],\"tracerStart\":[-38.886043295030724,1.1709322566405171,26.956776793275264],\"end\":[-54.79699608754187,1.1709322566405171,25.56311833315882]},{\"sourceId\":29,\"tick\":7259,\"muzzle\":[-38.502320794583476,1.194220632772449,25.52245406248291],\"tracerStart\":[-38.502320794583476,1.194220632772449,25.52245406248291],\"end\":[-54.828115133083955,1.194220632772449,25.598386924927546]},{\"sourceId\":31,\"tick\":7259,\"muzzle\":[-40.20472614579769,1.189992461001966,28.047938528942463],\"tracerStart\":[-40.20472614579769,1.189992461001966,28.047938528942463],\"end\":[-54.677363382747515,1.189992461001966,25.477055563032778]},{\"sourceId\":33,\"tick\":7271,\"muzzle\":[-40.83729116313736,0.6737404433189659,28.37960100230143],\"tracerStart\":[-40.83729116313736,0.6737404433189659,28.37960100230143],\"end\":[-54.527608857567515,0.6737404433189659,25.569395363513284]},{\"sourceId\":27,\"tick\":7280,\"muzzle\":[-38.80403120860281,1.2702659688852145,26.756216094023028],\"tracerStart\":[-38.80403120860281,1.2702659688852145,26.756216094023028],\"end\":[-54.77719073113583,1.2702659688852145,25.52720785233423]},{\"sourceId\":24,\"tick\":7292,\"muzzle\":[-40.90907205111587,1.1930155811479266,29.892460464944968],\"tracerStart\":[-40.90907205111587,1.1930155811479266,29.892460464944968],\"end\":[-57.0566989614358,1.1930155811479266,25.459256209754944]},{\"sourceId\":33,\"tick\":7292,\"muzzle\":[-41.1246422809475,1.1764339906006354,28.80337037848195],\"tracerStart\":[-41.1246422809475,1.1764339906006354,28.80337037848195],\"end\":[-57.11844210056469,1.1764339906006354,25.51912487589876]},{\"sourceId\":30,\"tick\":7301,\"muzzle\":[-40.06215249990943,1.2358438167136774,25.38619111376721],\"tracerStart\":[-40.06215249990943,1.2358438167136774,25.38619111376721],\"end\":[-57.168956705477186,1.2358438167136774,25.606668607136946]},{\"sourceId\":27,\"tick\":7302,\"muzzle\":[-38.89297894123864,1.2336456019023898,26.31327716887098],\"tracerStart\":[-38.89297894123864,1.2336456019023898,26.31327716887098],\"end\":[-41.08737609681573,1.2336456019023898,25.73309794762258]},{\"sourceId\":29,\"tick\":7302,\"muzzle\":[-39.093304222295444,1.2715628495928832,25.893758885915446],\"tracerStart\":[-39.093304222295444,1.2715628495928832,25.893758885915446],\"end\":[-41.182619247744945,1.2715628495928832,26.01988010759526]},{\"sourceId\":1,\"tick\":7302,\"muzzle\":[-35.769657820346886,0.6614874577339049,26.90765136468034],\"tracerStart\":[-35.769657820346886,0.6614874577339049,26.90765136468034],\"end\":[-57.35234436994729,0.6614874577339049,22.64295427090009]},{\"sourceId\":26,\"tick\":7368,\"muzzle\":[-38.29084975430976,0.9436845421699399,27.935834024757366],\"tracerStart\":[-38.29084975430976,0.9436845421699399,27.935834024757366],\"end\":[-27.407478286971372,0.9436845421699399,29.43289178248577]},{\"sourceId\":27,\"tick\":7368,\"muzzle\":[-36.68770121834981,0.8670517577678766,27.41342424266577],\"tracerStart\":[-36.68770121834981,0.8670517577678766,27.41342424266577],\"end\":[-27.399514757837128,0.8670517577678766,29.553512486358418]},{\"sourceId\":29,\"tick\":7368,\"muzzle\":[-36.82712720020491,0.9300069147281466,26.721017499743972],\"tracerStart\":[-36.82712720020491,0.9300069147281466,26.721017499743972],\"end\":[-27.450551279866975,0.9300069147281466,29.569617839710595]},{\"sourceId\":1,\"tick\":7368,\"muzzle\":[-32.80068450910435,1.0265672174674394,27.83878306133526],\"tracerStart\":[-32.80068450910435,1.0265672174674394,27.83878306133526],\"end\":[-17.321227103258636,1.0265672174674394,32.645]},{\"sourceId\":24,\"tick\":7403,\"muzzle\":[-35.9661715229701,1.1949465344475174,27.659383926304447],\"tracerStart\":[-35.9661715229701,1.1949465344475174,27.659383926304447],\"end\":[-24.5327,1.1949465344475174,25.21296835979297]},{\"sourceId\":25,\"tick\":7403,\"muzzle\":[-36.096043928057156,1.1452795969703584,26.10193523647743],\"tracerStart\":[-36.096043928057156,1.1452795969703584,26.10193523647743],\"end\":[-24.5327,1.1452795969703584,25.043195559210407]},{\"sourceId\":29,\"tick\":7403,\"muzzle\":[-34.4372572765164,1.1378200437646593,26.880172380831194],\"tracerStart\":[-34.4372572765164,1.1378200437646593,26.880172380831194],\"end\":[-24.5327,1.1378200437646593,25.14315210185958]},{\"sourceId\":1,\"tick\":7491,\"muzzle\":[-25.294402189120163,1.0250794515219468,28.719887152842176],\"tracerStart\":[-25.294402189120163,1.0250794515219468,28.719887152842176],\"end\":[-3.371146366146128,1.0250794515219468,26.883898557987862]},{\"sourceId\":27,\"tick\":7493,\"muzzle\":[-29.60152315307631,1.1466879307758062,29.418041441567524],\"tracerStart\":[-29.60152315307631,1.1466879307758062,29.418041441567524],\"end\":[-11.781021388156457,1.1466879307758062,27.61159015210446]},{\"sourceId\":33,\"tick\":7501,\"muzzle\":[-29.65833161167522,1.1526384922128636,29.158862211387394],\"tracerStart\":[-29.65833161167522,1.1526384922128636,29.158862211387394],\"end\":[-11.777372685410729,1.1526384922128636,27.66298023378827]},{\"sourceId\":1,\"tick\":7511,\"muzzle\":[-24.90476457302043,0.6596400855339994,28.79695827357965],\"tracerStart\":[-24.90476457302043,0.6596400855339994,28.79695827357965],\"end\":[-2.994845909191305,0.6596400855339994,26.808123402507597]},{\"sourceId\":27,\"tick\":7517,\"muzzle\":[-28.98880970120079,0.7264169343095273,30.324054891886046],\"tracerStart\":[-28.98880970120079,0.7264169343095273,30.324054891886046],\"end\":[-11.354715158473429,0.7264169343095273,26.78623467162006]},{\"sourceId\":1,\"tick\":7531,\"muzzle\":[-24.833151513053053,1.0315234982933605,28.739933693650794],\"tracerStart\":[-24.833151513053053,1.0315234982933605,28.739933693650794],\"end\":[-3.0792270721224497,1.0315234982933605,25.458657810967026]},{\"sourceId\":33,\"tick\":7533,\"muzzle\":[-29.035404682569077,1.164354730325722,29.876416304151782],\"tracerStart\":[-29.035404682569077,1.164354730325722,29.876416304151782],\"end\":[-11.322870565356727,1.164354730325722,26.774661734616853]},{\"sourceId\":27,\"tick\":7538,\"muzzle\":[-28.681899411017195,1.1749587212491315,30.418522142527976],\"tracerStart\":[-28.681899411017195,1.1749587212491315,30.418522142527976],\"end\":[-11.353962006068482,1.1749587212491315,26.67407534536225]},{\"sourceId\":29,\"tick\":7542,\"muzzle\":[-28.390663411112875,1.3570339322814833,24.21254114999164],\"tracerStart\":[-28.390663411112875,1.3570339322814833,24.21254114999164],\"end\":[-24.138550596243988,1.3570339322814833,24.9604]},{\"sourceId\":32,\"tick\":7543,\"muzzle\":[-30.933916118150865,1.255665116150485,25.850785559739553],\"tracerStart\":[-30.933916118150865,1.255665116150485,25.850785559739553],\"end\":[-47.96146377871805,1.255665116150485,26.637130362097114]},{\"sourceId\":1,\"tick\":7561,\"muzzle\":[-24.75308475793963,1.014826836843338,28.743535076879244],\"tracerStart\":[-24.75308475793963,1.014826836843338,28.743535076879244],\"end\":[-2.9138541939215408,1.014826836843338,26.08872653921436]},{\"sourceId\":32,\"tick\":7564,\"muzzle\":[-30.872306525991135,1.2080441483925164,25.730849246827603],\"tracerStart\":[-30.872306525991135,1.2080441483925164,25.730849246827603],\"end\":[-47.94417257915347,1.2080441483925164,26.652293238628594]},{\"sourceId\":1,\"tick\":7581,\"muzzle\":[-24.644549008006955,0.9695844247085091,28.7777781908498],\"tracerStart\":[-24.644549008006955,0.9695844247085091,28.7777781908498],\"end\":[-2.8113863339617318,0.9695844247085091,26.073520871606974]},{\"sourceId\":32,\"tick\":7585,\"muzzle\":[-30.936858403649588,1.3045024126161295,25.13499814479369],\"tracerStart\":[-30.936858403649588,1.3045024126161295,25.13499814479369],\"end\":[-47.97094485912004,1.3045024126161295,26.634650692811544]},{\"sourceId\":26,\"tick\":7677,\"muzzle\":[-31.112936925187793,1.3011190838231204,29.099346690459594],\"tracerStart\":[-31.112936925187793,1.3011190838231204,29.099346690459594],\"end\":[-41.50145906422648,1.3011190838231204,23.733904501785865]},{\"sourceId\":27,\"tick\":7677,\"muzzle\":[-29.703231236654187,1.301116343805963,29.691695092837865],\"tracerStart\":[-29.703231236654187,1.301116343805963,29.691695092837865],\"end\":[-41.50643161233131,1.301116343805963,23.738710912265425]},{\"sourceId\":29,\"tick\":7677,\"muzzle\":[-29.672700541362236,1.4311192048143306,24.1996053090723],\"tracerStart\":[-29.672700541362236,1.4311192048143306,24.1996053090723],\"end\":[-41.681097061903344,1.4311192048143306,24.008455363226087]},{\"sourceId\":1,\"tick\":7683,\"muzzle\":[-24.41942193741662,1.0244190457332134,28.82087915293641],\"tracerStart\":[-24.41942193741662,1.0244190457332134,28.82087915293641],\"end\":[-2.4372052177448076,1.0244190457332134,27.93648778629986]},{\"sourceId\":1,\"tick\":7703,\"muzzle\":[-23.787726989981344,0.6696665517822947,28.900974141379795],\"tracerStart\":[-23.787726989981344,0.6696665517822947,28.900974141379795],\"end\":[-1.7949664291095075,0.6696665517822947,28.33663123838536]},{\"sourceId\":27,\"tick\":7705,\"muzzle\":[-28.037695345921975,1.1995817476740922,30.172148873612965],\"tracerStart\":[-28.037695345921975,1.1995817476740922,30.172148873612965],\"end\":[-10.244406798913062,1.1995817476740922,28.543267117244405]},{\"sourceId\":1,\"tick\":7723,\"muzzle\":[-23.716118350653108,1.0256504322368558,28.950060314385127],\"tracerStart\":[-23.716118350653108,1.0256504322368558,28.950060314385127],\"end\":[-1.720396941518402,1.0256504322368558,28.516194330776]},{\"sourceId\":1,\"tick\":7818,\"muzzle\":[-19.27433086796804,0.6618946769229953,28.84766735574298],\"tracerStart\":[-19.27433086796804,0.6618946769229953,28.84766735574298],\"end\":[2.615454071316293,0.6618946769229953,31.047057114717234]},{\"sourceId\":27,\"tick\":7821,\"muzzle\":[-21.9958429058947,1.1412755959341303,29.61152745748362],\"tracerStart\":[-21.9958429058947,1.1412755959341303,29.61152745748362],\"end\":[-4.422903354934828,1.1412755959341303,30.40877191264418]},{\"sourceId\":30,\"tick\":7826,\"muzzle\":[-22.23304881353233,1.182537513008574,29.24162228630618],\"tracerStart\":[-22.23304881353233,1.182537513008574,29.24162228630618],\"end\":[-4.427583163068775,1.182537513008574,30.390067862359082]},{\"sourceId\":30,\"tick\":7881,\"muzzle\":[-20.81636409012046,1.1682255936643196,29.872784797586313],\"tracerStart\":[-20.81636409012046,1.1682255936643196,29.872784797586313],\"end\":[-2.938049855976292,1.1682255936643196,28.811090413387692]},{\"sourceId\":1,\"tick\":7893,\"muzzle\":[-17.881553400882705,0.9955022234264697,28.730439668335002],\"tracerStart\":[-17.881553400882705,0.9955022234264697,28.730439668335002],\"end\":[4.118399641274287,0.9955022234264697,28.775894512821544]},{\"sourceId\":1,\"tick\":7913,\"muzzle\":[-16.79573782790966,1.003379892597368,28.7086280100499],\"tracerStart\":[-16.79573782790966,1.003379892597368,28.7086280100499],\"end\":[5.2040307627822635,1.003379892597368,28.809533688805413]},{\"sourceId\":24,\"tick\":7971,\"muzzle\":[-21.681188787509758,1.308252488532671,29.783610080706794],\"tracerStart\":[-21.681188787509758,1.308252488532671,29.783610080706794],\"end\":[-22.885094508577346,1.308252488532671,23.933808730241623]},{\"sourceId\":25,\"tick\":7971,\"muzzle\":[-21.393823193274752,1.2031498776227818,28.094890024813527],\"tracerStart\":[-21.393823193274752,1.2031498776227818,28.094890024813527],\"end\":[-22.990591871600902,1.2031498776227818,23.895262075657033]},{\"sourceId\":27,\"tick\":7971,\"muzzle\":[-21.234220912152658,1.3209886228743288,31.05335749613988],\"tracerStart\":[-21.234220912152658,1.3209886228743288,31.05335749613988],\"end\":[-22.879075672798393,1.3209886228743288,23.897520211389903]},{\"sourceId\":1,\"tick\":7971,\"muzzle\":[-17.43253412781939,1.0039985353166856,27.252158551442488],\"tracerStart\":[-17.43253412781939,1.0039985353166856,27.252158551442488],\"end\":[-24.883068862365235,1.0039985353166856,23.3755]},{\"sourceId\":27,\"tick\":8184,\"muzzle\":[-13.394575448155678,1.3011752058420099,28.054700112472347],\"tracerStart\":[-13.394575448155678,1.3011752058420099,28.054700112472347],\"end\":[-23.83262692886725,1.3011752058420099,28.43703517834077]},{\"sourceId\":30,\"tick\":8184,\"muzzle\":[-19.486961264217896,1.3011752058420099,27.951296450509393],\"tracerStart\":[-19.486961264217896,1.3011752058420099,27.951296450509393],\"end\":[-23.848457122391547,1.3011752058420099,28.4982352927055]},{\"sourceId\":32,\"tick\":8184,\"muzzle\":[-19.610725724105684,1.3011752058420099,28.614337327769604],\"tracerStart\":[-19.610725724105684,1.3011752058420099,28.614337327769604],\"end\":[-23.809916012179738,1.3011752058420099,28.37366323920839]},{\"sourceId\":1,\"tick\":8184,\"muzzle\":[-17.08237725102132,1.0081536398299862,24.158574361706723],\"tracerStart\":[-17.08237725102132,1.0081536398299862,24.158574361706723],\"end\":[-29.244325593532437,1.0081536398299862,32.70437088641951]}],\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"high\",\"flashReduction\":false,\"time\":16.067199999999968,\"lastSpray\":{\"actionId\":\"weapon.pistol\",\"direction\":{\"x\":-0.9983615650664406,\"z\":-0.057220498058714105},\"droplets\":24,\"chunks\":0,\"gravity\":9.81},\"surfaceSplats\":3,\"pendingSplats\":20,\"particles\":1583,\"particleCap\":2048,\"decals\":600,\"decalCap\":600,\"gibs\":0,\"gibCap\":80,\"telegraphs\":[],\"hitStop\":{\"active\":false,\"until\":10.096699999999956,\"started\":10.046699999999955,\"suppressed\":0},\"flash\":0,\"blasts\":{\"wind\":{\"x\":0.9975952333289498,\"z\":0.06930909348244454},\"blasts\":0,\"puffs\":188,\"puffCap\":400,\"fireballs\":0,\"fireballCap\":48,\"flames\":46,\"glows\":11,\"columns\":11,\"transientColumns\":0,\"fireColumns\":11,\"columnShadows\":11,\"clouds\":0,\"scorch\":0,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":true},\"coverage\":0.125,\"detached\":0,\"dismemberedKills\":0,\"kills\":144,\"explosionRadius\":0}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:30:17.541Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011598d1b7c74d017aad-e6520c67078bcbfa6dcf",
+              "file": "perf/l3-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l3-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E21-21 @E21 @E21-AC21 @perf L3 station attack, fallback and Grove Boulevard low",
+              "ok": true,
+              "tags": [
+                "E21",
+                "E21-AC21",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 130839,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":15,\"officers\":9},\"streetCounts\":{\"infected\":40,\"spawned\":142},\"streetDrawCalls\":187,\"streetTriangles\":419410,\"streetP50\":25,\"streetP95\":29.5,\"attackDrawCalls\":122,\"attackTriangles\":306218,\"blvdDrawCalls\":150,\"blvdTriangles\":391966,\"attackP50\":21.60000000000582,\"attackP95\":28.10000000000582,\"attackMax\":233.3000000000029,\"fallbackMaxMs\":33.30000000000291,\"blvdP50\":21.5,\"blvdP95\":28.40000000000873,\"simP95\":11.5,\"updateP95\":5.40000057220459,\"renderP95\":10.199999809265137,\"fallbackFired\":true,\"vfx\":{\"shots\":[{\"sourceId\":31,\"tick\":8368,\"muzzle\":[-42.327157383327396,1.218132533502212,-24.95237340708287],\"tracerStart\":[-42.327157383327396,1.218132533502212,-24.95237340708287],\"end\":[-27.390249066151437,1.218132533502212,-24.434899459399073]},{\"sourceId\":32,\"tick\":8370,\"muzzle\":[-42.33386942138659,0.9338262349496653,-26.360759200711815],\"tracerStart\":[-42.33386942138659,0.9338262349496653,-26.360759200711815],\"end\":[-27.41057163625732,0.9338262349496653,-24.36834062195949]},{\"sourceId\":1,\"tick\":8370,\"muzzle\":[-37.87312673433229,1.275056044327222,-26.856580484565452],\"tracerStart\":[-37.87312673433229,1.275056044327222,-26.856580484565452],\"end\":[-18.459999999999997,1.275056044327222,-22.126644449896407]},{\"sourceId\":30,\"tick\":8373,\"muzzle\":[-42.35827216140248,0.9395198632273241,-27.307991951167413],\"tracerStart\":[-42.35827216140248,0.9395198632273241,-27.307991951167413],\"end\":[-26.830486958397156,0.9395198632273241,-30.64424432392728]},{\"sourceId\":25,\"tick\":8377,\"muzzle\":[-43.202186263268054,1.1383183235651813,-25.472422246202242],\"tracerStart\":[-43.202186263268054,1.1383183235651813,-25.472422246202242],\"end\":[-26.818585130723253,1.1383183235651813,-30.691713579332248]},{\"sourceId\":33,\"tick\":8384,\"muzzle\":[-42.167674598509514,0.7280136526862043,-24.920603011564328],\"tracerStart\":[-42.167674598509514,0.7280136526862043,-24.920603011564328],\"end\":[-26.830528843528985,0.7280136526862043,-30.76482505674139]},{\"sourceId\":1,\"tick\":8503,\"muzzle\":[-35.55130066399776,1.2604469201366546,-27.393806487922],\"tracerStart\":[-35.55130066399776,1.2604469201366546,-27.393806487922],\"end\":[-17.73797745427076,1.2604469201366546,-33.85965]},{\"sourceId\":26,\"tick\":8518,\"muzzle\":[-39.708096015576366,0.7829230748012196,-27.738145853881992],\"tracerStart\":[-39.708096015576366,0.7829230748012196,-27.738145853881992],\"end\":[-22.290582116670684,0.7829230748012196,-31.887886299935875]},{\"sourceId\":1,\"tick\":8523,\"muzzle\":[-35.31234832210591,1.2759347543334378,-27.411168278186896],\"tracerStart\":[-35.31234832210591,1.2759347543334378,-27.411168278186896],\"end\":[-16.552694411286566,1.2759347543334378,-33.85965]},{\"sourceId\":27,\"tick\":8524,\"muzzle\":[-39.934869851471355,0.833717770993244,-28.66676047110368],\"tracerStart\":[-39.934869851471355,0.833717770993244,-28.66676047110368],\"end\":[-22.387070950894383,0.833717770993244,-31.75417572795448]},{\"sourceId\":24,\"tick\":8529,\"muzzle\":[-40.103521551303665,0.7412673991598422,-28.23773688313948],\"tracerStart\":[-40.103521551303665,0.7412673991598422,-28.23773688313948],\"end\":[-22.5063058695344,0.7412673991598422,-31.645622696082775]},{\"sourceId\":33,\"tick\":9006,\"muzzle\":[-40.684536848877755,1.4311752058420097,-24.627269070836505],\"tracerStart\":[-40.684536848877755,1.4311752058420097,-24.627269070836505],\"end\":[-56.17697839447359,1.4311752058420097,-27.15554175279908]},{\"sourceId\":30,\"tick\":9007,\"muzzle\":[-40.9752628209308,1.3011834591306475,-28.207304747583013],\"tracerStart\":[-40.9752628209308,1.3011834591306475,-28.207304747583013],\"end\":[-56.241144542662404,1.3011834591306475,-26.994729009509545]},{\"sourceId\":31,\"tick\":9007,\"muzzle\":[-39.79479569975446,1.29491030825461,-24.878717938936262],\"tracerStart\":[-39.79479569975446,1.29491030825461,-24.878717938936262],\"end\":[-56.1698538038945,1.29491030825461,-27.152355940754024]},{\"sourceId\":32,\"tick\":9007,\"muzzle\":[-41.92707502472978,1.3011834564736093,-28.17755381009607],\"tracerStart\":[-41.92707502472978,1.3011834564736093,-28.17755381009607],\"end\":[-56.24174323858245,1.3011834564736093,-26.992405670626685]},{\"sourceId\":27,\"tick\":9013,\"muzzle\":[-39.81221214731025,1.301182743921978,-29.861922892397907],\"tracerStart\":[-39.81221214731025,1.301182743921978,-29.861922892397907],\"end\":[-30.258384912378315,1.301182743921978,-31.809354695779465]},{\"sourceId\":1,\"tick\":9013,\"muzzle\":[-34.85600345547695,1.2629665644641628,-27.87451866801681],\"tracerStart\":[-34.85600345547695,1.2629665644641628,-27.87451866801681],\"end\":[-27.427250762939458,1.2629665644641628,-34.97195183022773]},{\"sourceId\":33,\"tick\":9027,\"muzzle\":[-39.34379955772484,1.4312618475800263,-24.753703877105043],\"tracerStart\":[-39.34379955772484,1.4312618475800263,-24.753703877105043],\"end\":[-30.296842488588208,1.4312618475800263,-32.15100106192878]},{\"sourceId\":30,\"tick\":9028,\"muzzle\":[-39.59590476108911,1.1317747357180412,-27.79661686655445],\"tracerStart\":[-39.59590476108911,1.1317747357180412,-27.79661686655445],\"end\":[-30.308044616045922,1.1317747357180412,-31.945915836094088]},{\"sourceId\":33,\"tick\":9048,\"muzzle\":[-40.564761263407256,1.212575801210769,-25.4561247155172],\"tracerStart\":[-40.564761263407256,1.212575801210769,-25.4561247155172],\"end\":[-56.199792860680944,1.212575801210769,-27.110651437891438]},{\"sourceId\":33,\"tick\":9069,\"muzzle\":[-40.43466274434808,1.104932085887267,-26.131364856829173],\"tracerStart\":[-40.43466274434808,1.104932085887267,-26.131364856829173],\"end\":[-48.73397311321976,1.104932085887267,-28.226318237895903]},{\"sourceId\":31,\"tick\":9070,\"muzzle\":[-39.608833950269116,1.2230771010994794,-26.41995795823594],\"tracerStart\":[-39.608833950269116,1.2230771010994794,-26.41995795823594],\"end\":[-47.71588872469324,1.2230771010994794,-28.226318237895903]},{\"sourceId\":33,\"tick\":9090,\"muzzle\":[-40.40813968401488,1.214592527648358,-26.29503646800403],\"tracerStart\":[-40.40813968401488,1.214592527648358,-26.29503646800403],\"end\":[-48.39913986239944,1.214592527648358,-28.226318237895903]},{\"sourceId\":32,\"tick\":9128,\"muzzle\":[-41.623459251467814,1.0173645998195024,-26.766208859216267],\"tracerStart\":[-41.623459251467814,1.0173645998195024,-26.766208859216267],\"end\":[-59.43145426563033,1.0173645998195024,-24.809030326107667]},{\"sourceId\":32,\"tick\":9149,\"muzzle\":[-41.6184810421639,0.9714360182838573,-26.613475625243204],\"tracerStart\":[-41.6184810421639,0.9714360182838573,-26.613475625243204],\"end\":[-59.4418242648668,0.9714360182838573,-24.85234834560191]},{\"sourceId\":32,\"tick\":9170,\"muzzle\":[-41.51070629340324,1.0135563471674687,-25.915599042339522],\"tracerStart\":[-41.51070629340324,1.0135563471674687,-25.915599042339522],\"end\":[-59.38439683946406,1.0135563471674687,-24.809664088929544]},{\"sourceId\":27,\"tick\":9197,\"muzzle\":[-39.39139978683526,1.3011820302201569,-29.993723025127036],\"tracerStart\":[-39.39139978683526,1.3011820302201569,-29.993723025127036],\"end\":[-22.613649495211313,1.3011820302201569,-31.53638993697837]},{\"sourceId\":30,\"tick\":9197,\"muzzle\":[-39.36283182392411,1.0028018730962367,-26.65829610723313],\"tracerStart\":[-39.36283182392411,1.0028018730962367,-26.65829610723313],\"end\":[-22.600870926602944,1.0028018730962367,-31.677708666402243]},{\"sourceId\":31,\"tick\":9198,\"muzzle\":[-38.138081184289106,1.2027169531525579,-26.098096340342696],\"tracerStart\":[-38.138081184289106,1.2027169531525579,-26.098096340342696],\"end\":[-22.564713813066504,1.2027169531525579,-31.766329796134762]},{\"sourceId\":32,\"tick\":9206,\"muzzle\":[-40.13690800902974,1.208306381158436,-25.545646331810882],\"tracerStart\":[-40.13690800902974,1.208306381158436,-25.545646331810882],\"end\":[-36.9855818951566,1.208306381158436,-28.864134620275127]},{\"sourceId\":1,\"tick\":9206,\"muzzle\":[-35.88177880625046,1.263000770362345,-28.15205727208093],\"tracerStart\":[-35.88177880625046,1.263000770362345,-28.15205727208093],\"end\":[-43.1214036829507,1.263000770362345,-30.995267553221385]},{\"sourceId\":27,\"tick\":9218,\"muzzle\":[-39.72256506007963,1.134874621758936,-29.645594030828686],\"tracerStart\":[-39.72256506007963,1.134874621758936,-29.645594030828686],\"end\":[-37.17897895094064,1.134874621758936,-27.99036853155126]},{\"sourceId\":30,\"tick\":9218,\"muzzle\":[-39.47713114781098,0.9791295281135536,-26.98630604764798],\"tracerStart\":[-39.47713114781098,0.9791295281135536,-26.98630604764798],\"end\":[-36.978290784572756,0.9791295281135536,-28.75080526641426]},{\"sourceId\":30,\"tick\":9413,\"muzzle\":[-39.07568323284738,1.3011823882586593,-27.916039033036625],\"tracerStart\":[-39.07568323284738,1.3011823882586593,-27.916039033036625],\"end\":[-26.908803466301908,1.3011823882586593,-30.62273584010867]},{\"sourceId\":31,\"tick\":9413,\"muzzle\":[-37.68596220665378,1.301118728452253,-24.970005473191325],\"tracerStart\":[-37.68596220665378,1.301118728452253,-24.970005473191325],\"end\":[-26.91383831105855,1.301118728452253,-30.82226775093813]},{\"sourceId\":33,\"tick\":9413,\"muzzle\":[-38.56813715213726,1.4311752058420097,-24.609269975654776],\"tracerStart\":[-38.56813715213726,1.4311752058420097,-24.609269975654776],\"end\":[-26.913649918189538,1.4311752058420097,-30.81570184020288]},{\"sourceId\":1,\"tick\":9413,\"muzzle\":[-34.16168439786481,1.158877728554035,-27.778017470850155],\"tracerStart\":[-34.16168439786481,1.158877728554035,-27.778017470850155],\"end\":[-19.09056839891992,1.158877728554035,-33.85965]},{\"sourceId\":32,\"tick\":9446,\"muzzle\":[-41.224130644525815,1.3012071539316095,-26.744156389437578],\"tracerStart\":[-41.224130644525815,1.3012071539316095,-26.744156389437578],\"end\":[-57.7276478083783,1.3012071539316095,-19.779912568520523]},{\"sourceId\":32,\"tick\":9472,\"muzzle\":[-40.9427225354197,1.1350971827842296,-26.536858457010183],\"tracerStart\":[-40.9427225354197,1.1350971827842296,-26.536858457010183],\"end\":[-57.64198809481958,1.1350971827842296,-19.839550093894303]},{\"sourceId\":27,\"tick\":9479,\"muzzle\":[-39.70785317516643,1.3011821495772184,-29.553664911816032],\"tracerStart\":[-39.70785317516643,1.3011821495772184,-29.553664911816032],\"end\":[-27.6064575255747,1.3011821495772184,-24.226438255298685]},{\"sourceId\":30,\"tick\":9479,\"muzzle\":[-39.19957172187604,1.3011820288216813,-27.58778193746465],\"tracerStart\":[-39.19957172187604,1.3011820288216813,-27.58778193746465],\"end\":[-27.54339167824286,1.3011820288216813,-24.30480070176441]},{\"sourceId\":31,\"tick\":9479,\"muzzle\":[-37.718964782335895,1.3010318242634222,-24.608415336964832],\"tracerStart\":[-37.718964782335895,1.3010318242634222,-24.608415336964832],\"end\":[-27.457540609652963,1.3010318242634222,-24.470999571939352]},{\"sourceId\":1,\"tick\":9479,\"muzzle\":[-34.34407386266208,1.1423168518071876,-27.244766266707657],\"tracerStart\":[-34.34407386266208,1.1423168518071876,-27.244766266707657],\"end\":[-21.146639040563834,1.1423168518071876,-21.335]},{\"sourceId\":32,\"tick\":9502,\"muzzle\":[-40.7824203867209,1.103237417859127,-26.451309295352143],\"tracerStart\":[-40.7824203867209,1.103237417859127,-26.451309295352143],\"end\":[-57.516417782898785,1.103237417859127,-19.875770803153443]},{\"sourceId\":30,\"tick\":9742,\"muzzle\":[-38.83099216110267,1.301183816126829,-28.156134592570346],\"tracerStart\":[-38.83099216110267,1.301183816126829,-28.156134592570346],\"end\":[-30.25471665288276,1.301183816126829,-31.964767686831845]},{\"sourceId\":31,\"tick\":9742,\"muzzle\":[-37.75491391998,1.301120280075097,-25.18479647241986],\"tracerStart\":[-37.75491391998,1.301120280075097,-25.18479647241986],\"end\":[-30.315412963325006,1.301120280075097,-32.19868250785086]},{\"sourceId\":32,\"tick\":9742,\"muzzle\":[-39.331761913656266,1.3011822695589625,-27.454553993399816],\"tracerStart\":[-39.331761913656266,1.3011822695589625,-27.454553993399816],\"end\":[-30.258312371758773,1.3011822695589625,-31.997829774084853]},{\"sourceId\":1,\"tick\":9742,\"muzzle\":[-33.9052654793156,1.2771894325361122,-28.24267146766312],\"tracerStart\":[-33.9052654793156,1.2771894325361122,-28.24267146766312],\"end\":[-27.427250762939458,1.2771894325361122,-35.457392353723314]},{\"sourceId\":30,\"tick\":10010,\"muzzle\":[-22.810148171666253,1.2912754724935802,-32.607295470740254],\"tracerStart\":[-22.810148171666253,1.2912754724935802,-32.607295470740254],\"end\":[-24.052413019350958,1.2912754724935802,-31.458071426862315]},{\"sourceId\":30,\"tick\":10031,\"muzzle\":[-21.51989854387308,1.293382709453508,-33.19367868429185],\"tracerStart\":[-21.51989854387308,1.293382709453508,-33.19367868429185],\"end\":[-24.190370819150758,1.293382709453508,-31.92693858229508]},{\"sourceId\":1,\"tick\":10046,\"muzzle\":[-13.584714023277712,1.3900455215444074,-31.690526312538278],\"tracerStart\":[-13.584714023277712,1.3900455215444074,-31.690526312538278],\"end\":[-3.1526031795974934,1.3900455215444074,-21.1853]},{\"sourceId\":1,\"tick\":10066,\"muzzle\":[-12.575806177756874,1.3671349891069913,-31.501639806433822],\"tracerStart\":[-12.575806177756874,1.3671349891069913,-31.501639806433822],\"end\":[-4.705711406413899,1.3671349891069913,-21.1853]},{\"sourceId\":32,\"tick\":10068,\"muzzle\":[-19.545493156306858,1.2187263017062286,-32.848852628123474],\"tracerStart\":[-19.545493156306858,1.2187263017062286,-32.848852628123474],\"end\":[-24.06059266474274,1.2187263017062286,-32.50724077601311]},{\"sourceId\":31,\"tick\":10069,\"muzzle\":[-19.04255670502202,1.2548712281696497,-33.34493078814627],\"tracerStart\":[-19.04255670502202,1.2548712281696497,-33.34493078814627],\"end\":[-24.07049042151551,1.2548712281696497,-32.44933487880908]},{\"sourceId\":1,\"tick\":10086,\"muzzle\":[-12.408144143129435,1.389370459839914,-31.5658587957497],\"tracerStart\":[-12.408144143129435,1.389370459839914,-31.5658587957497],\"end\":[-5.484179680401622,1.389370459839914,-21.1853]},{\"sourceId\":32,\"tick\":10089,\"muzzle\":[-17.913411843454572,1.2251066025346518,-32.66822757486524],\"tracerStart\":[-17.913411843454572,1.2251066025346518,-32.66822757486524],\"end\":[-24.040337771195038,1.2251066025346518,-32.57281418770647]},{\"sourceId\":1,\"tick\":10176,\"muzzle\":[-5.375007228639677,1.3825839010614802,-31.47565881639579],\"tracerStart\":[-5.375007228639677,1.3825839010614802,-31.47565881639579],\"end\":[16.62425333403058,1.3825839010614802,-31.29528504961906]},{\"sourceId\":32,\"tick\":10182,\"muzzle\":[-8.894108508326594,1.2390652181056794,-31.571006790087058],\"tracerStart\":[-8.894108508326594,1.2390652181056794,-31.571006790087058],\"end\":[0.4895756295838112,1.2390652181056794,-31.29220656093262]},{\"sourceId\":27,\"tick\":10191,\"muzzle\":[-9.075861386837177,1.2511507092393002,-31.609368476433254],\"tracerStart\":[-9.075861386837177,1.2511507092393002,-31.609368476433254],\"end\":[0.4841911130814136,1.2511507092393002,-31.28902594267897]},{\"sourceId\":1,\"tick\":10196,\"muzzle\":[-4.426587191405636,1.2541436423618841,-31.19925674300549],\"tracerStart\":[-4.426587191405636,1.2541436423618841,-31.19925674300549],\"end\":[11.717700000000002,1.2541436423618841,-31.897298776164888]},{\"sourceId\":31,\"tick\":10198,\"muzzle\":[-10.204477934470988,1.1585550727623923,-30.916081034130528],\"tracerStart\":[-10.204477934470988,1.1585550727623923,-30.916081034130528],\"end\":[-10.204477934470988,1.1585550727623923,-30.916081034130528]},{\"sourceId\":1,\"tick\":10272,\"muzzle\":[-0.05127235908597304,1.253811718665888,-28.182937310373685],\"tracerStart\":[-0.05127235908597304,1.253811718665888,-28.182937310373685],\"end\":[0.2495784208907848,1.253811718665888,-27.52146879814677]},{\"sourceId\":1,\"tick\":10292,\"muzzle\":[0.6315714221308705,1.2283806652487805,-27.64581055441622],\"tracerStart\":[0.6315714221308705,1.2283806652487805,-27.64581055441622],\"end\":[1.1912533234895566,1.2283806652487805,-21.1853]},{\"sourceId\":1,\"tick\":10312,\"muzzle\":[0.7158904421886539,1.2608467404481019,-27.692019294141645],\"tracerStart\":[0.7158904421886539,1.2608467404481019,-27.692019294141645],\"end\":[0.4555700469655264,1.2608467404481019,-25.896466045237037]}],\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"low\",\"flashReduction\":false,\"time\":16.104099999999995,\"lastSpray\":{\"actionId\":\"weapon.handgun\",\"direction\":{\"x\":-0.14348051076819265,\"z\":0.989653142787764},\"droplets\":6,\"chunks\":0,\"gravity\":9.81},\"surfaceSplats\":14,\"pendingSplats\":7,\"particles\":378,\"particleCap\":512,\"decals\":600,\"decalCap\":600,\"gibs\":0,\"gibCap\":30,\"telegraphs\":[],\"hitStop\":{\"active\":false,\"until\":10.123599999999989,\"started\":10.073599999999988,\"suppressed\":0},\"flash\":0,\"blasts\":{\"wind\":{\"x\":0.9778037700495295,\"z\":0.20952276076103749},\"blasts\":0,\"puffs\":96,\"puffCap\":120,\"fireballs\":0,\"fireballCap\":48,\"flames\":46,\"glows\":11,\"columns\":11,\"transientColumns\":0,\"fireColumns\":11,\"columnShadows\":11,\"clouds\":0,\"scorch\":0,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":true},\"coverage\":0.025,\"detached\":0,\"dismemberedKills\":0,\"kills\":116,\"explosionRadius\":0}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:31:32.412Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "011598d1b7c74d017aad-307128ade465002a5cd6",
+              "file": "perf/l3-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l4-budgets.spec.ts",
+      "file": "perf/l4-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 50719,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"seed\":2,\"counts\":{\"infected\":80,\"soldiers\":20,\"civilians\":40},\"firingSoldiers\":20,\"warAwakeProps\":0,\"collapseAwakeProps\":1,\"warDrawCalls\":268,\"warTriangles\":574351,\"collapseDrawCalls\":296,\"collapseTriangles\":894511,\"warP50\":6.100000000002183,\"warP95\":8.400000000001455,\"warMax\":18.700000000000728,\"turnMaxMs\":15,\"tankMaxMs\":9.69999999999709,\"breakMaxMs\":12,\"collapseP50\":6.599999999998545,\"collapseP95\":8.799999999995634,\"simP95\":2.5,\"simFrameP95\":2.1999998092651367,\"updateP95\":2.40000057220459,\"renderP95\":4,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:33:43.590Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-42c898189b52048cc908",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 72468,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":48,\"soldiers\":10,\"civilians\":20},\"firingSoldiers\":10,\"warAwakeProps\":0,\"collapseAwakeProps\":1,\"warDrawCalls\":215,\"warTriangles\":261307,\"collapseDrawCalls\":188,\"collapseTriangles\":352356,\"warP50\":19.700000000004366,\"warP95\":34,\"warMax\":92.09999999999854,\"turnMaxMs\":37.200000000004366,\"tankMaxMs\":37.200000000004366,\"breakMaxMs\":40.69999999999709,\"collapseP50\":18.89999999999418,\"collapseP95\":34.90000000000873,\"simP95\":5.40000057220459,\"simFrameP95\":8.5,\"updateP95\":5.90000057220459,\"renderP95\":10.800000190734863,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:34:34.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-81e59d30aafd40784017",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l5-budgets.spec.ts",
+      "file": "perf/l5-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l5-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high",
+              "ok": true,
+              "tags": [
+                "E23",
+                "E23-AC19",
+                "E28-AC10",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 59536,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"counts\":{\"followers\":5,\"infected\":18,\"fires\":13,\"corpses\":37},\"weather\":{\"sim\":{\"kind\":\"ash\",\"flakes\":0.35,\"fog\":0.12},\"render\":{\"particles\":1750,\"flash\":0,\"rayDitherRadius\":6,\"wetness\":0,\"accumulation\":0.15263888888888713,\"tracks\":433,\"trackPixels\":3012}},\"baselineDrawCalls\":406,\"baselineTriangles\":979007,\"pairDrawCalls\":307,\"pairTriangles\":979587,\"followDrawCalls\":305,\"followTriangles\":979059,\"p50\":5.5,\"p95\":8.200000000000728,\"max\":23.5}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:35:47.367Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "52469fd7d74b2e7bab1b-11e0a322cbd69057cae2",
+              "file": "perf/l5-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l5-budgets.spec.ts",
+          "line": 10,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low",
+              "ok": true,
+              "tags": [
+                "E23",
+                "E23-AC19",
+                "E28-AC10",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 64553,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"counts\":{\"followers\":5,\"infected\":12,\"fires\":13,\"corpses\":37},\"weather\":{\"sim\":{\"kind\":\"ash\",\"flakes\":0.35,\"fog\":0.12},\"render\":{\"particles\":525,\"flash\":0,\"rayDitherRadius\":6,\"wetness\":0,\"accumulation\":0.15263888888888713,\"tracks\":294,\"trackPixels\":2055}},\"baselineDrawCalls\":185,\"baselineTriangles\":329404,\"pairDrawCalls\":212,\"pairTriangles\":374611,\"followDrawCalls\":212,\"followTriangles\":374611,\"p50\":15.099999999998545,\"p95\":24.700000000000728,\"max\":74}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-11T03:36:47.196Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "52469fd7d74b2e7bab1b-e319eb9e677e1c025fb2",
+              "file": "perf/l5-budgets.spec.ts",
+              "line": 12,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T03:23:35.694Z",
+    "duration": 856148.67,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

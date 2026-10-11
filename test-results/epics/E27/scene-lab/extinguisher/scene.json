@@ -1,0 +1,78 @@
+{
+  "ground": "asphalt",
+  "size": 40,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "props": [
+    {
+      "asset": "prop.street-lamp",
+      "at": [
+        -5,
+        3
+      ]
+    },
+    {
+      "asset": "prop.bench",
+      "at": [
+        6,
+        -5
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        4
+      ]
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        5,
+        3
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 120,
+  "shots": [],
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "name": "extinguisher",
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "hazard": "fire",
+        "at": [
+          0,
+          0
+        ],
+        "radius": 1.5
+      }
+    },
+    {
+      "frame": 30,
+      "effect": {
+        "hazard": "extinguisher",
+        "at": [
+          1,
+          0
+        ],
+        "trigger": "bullet"
+      }
+    }
+  ]
+}

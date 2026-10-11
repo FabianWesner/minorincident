@@ -1,0 +1,62 @@
+{
+  "name": "light-lab",
+  "ground": "asphalt",
+  "size": 50,
+  "time": "night",
+  "dof": false,
+  "props": [
+    {
+      "id": "trailer",
+      "asset": "prop.light-tower-trailer",
+      "at": [
+        -10,
+        0
+      ],
+      "powerGroup": "trailer"
+    },
+    {
+      "id": "fence",
+      "asset": "prop.privacy-fence",
+      "at": [
+        8,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        4
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -12,
+        -8
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "pose",
+    "position": [
+      20,
+      23,
+      25
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  },
+  "frames": 120,
+  "shots": [
+    120
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

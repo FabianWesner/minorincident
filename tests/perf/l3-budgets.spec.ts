@@ -14,19 +14,29 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     if (tier === 'low') { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
     await page.goto(`/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}&profile`);
     await page.waitForFunction(() => Boolean(window.__SS__));
+    if (process.env.L3_HITCH_PROFILE === '1') await page.evaluate(() => {
+      const state = window as unknown as { l3Programs: { at: number; sources: string[]; stack?: string }[]; l3RestoreProgram: () => void };
+      state.l3Programs = [];
+      const link = WebGL2RenderingContext.prototype.linkProgram;
+      WebGL2RenderingContext.prototype.linkProgram = function(program) {
+        state.l3Programs.push({ at: performance.now(), stack: new Error().stack, sources: (this.getAttachedShaders(program) ?? []).map(shader => this.getShaderSource(shader) ?? '') });
+        return link.call(this, program);
+      };
+      state.l3RestoreProgram = () => { WebGL2RenderingContext.prototype.linkProgram = link; };
+    });
     await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L3', { seed: 2, progression: 'L3-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
     const step = async (until: string, max = 400) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(30)); };
     /** rAF frame times while the real clock runs, until `until` holds (plus `tail` ms). */
-    const record = (until: string, tail: number) => page.evaluate(async ({ until, tail }) => {
-      const a = window.__SS__!, frames: number[] = [], cpu: { sim: number; update: number; render: number }[] = []; let previous = 0, end = 0; a.resume();
+    const record = (until: string, tail: number) => page.evaluate(async ({ until, tail, diagnostic }) => {
+      const a = window.__SS__!, frames: number[] = [], times: number[] = [], cpu: { sim: number; update: number; render: number }[] = []; let previous = 0, end = 0; a.resume();
       for (let i = 0; i < 4000; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
-        if (previous && i > 2) { frames.push(now - previous); const p = a.perf(); cpu.push({ sim: p.simMs, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
+        if (previous && i > 2) { frames.push(now - previous); if (diagnostic) times.push(performance.now()); const p = a.perf(); cpu.push({ sim: p.simMs, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
         if (!end && (0, eval)(until)) end = now + tail;
         if (end && now >= end) break;
       }
-      a.pause(); (window as unknown as { l3Cpu: typeof cpu }).l3Cpu = cpu; return frames;
-    }, { until, tail });
+      a.pause(); (window as unknown as { l3Cpu: typeof cpu; l3Times: number[] }).l3Cpu = cpu; (window as unknown as { l3Times: number[] }).l3Times = times; return frames;
+    }, { until, tail, diagnostic: process.env.L3_HITCH_PROFILE === '1' });
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     // The attack peak: the officers firing and >= 30 infected up (low: >= 15), at the game camera of l3-station-attack.
     await step(`window.__SS__.getState().ai.count >= ${tier === 'high' ? 30 : 15} || window.__SS__.missions.state().l3.fallbackAt > 0`, 400);
@@ -39,7 +49,15 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const attackCpu = await page.evaluate(() => (window as unknown as { l3Cpu: { sim: number; update: number; render: number }[] }).l3Cpu);
     // The fallback call: record from just before it to 2 s after.
     await step('window.__SS__.missions.state().l3.fallbackAt > 0 || window.__SS__.missions.state().l3.waveIds.length >= 30', 400);
+    const diagnostic = process.env.L3_HITCH_PROFILE === '1' ? await context.newCDPSession(page) : null;
+    const profileStart = diagnostic ? await page.evaluate(() => performance.now()) : 0;
+    if (diagnostic) { await diagnostic.send('Profiler.enable'); await diagnostic.send('Profiler.setSamplingInterval', { interval: 500 }); await diagnostic.send('Profiler.start'); }
     const fallback = await record('window.__SS__.missions.state().l3.fallbackAt > 0', 2_000);
+    if (diagnostic) writeFileSync(`${dir}/fallback-${tier}-profile.json`, JSON.stringify({ ...await diagnostic.send('Profiler.stop'), profileStart, ...await page.evaluate(() => {
+      const state = window as unknown as { l3Times: number[]; l3Programs: { at: number; sources: string[]; stack?: string }[]; l3RestoreProgram: () => void };
+      state.l3RestoreProgram(); return { times: state.l3Times, programs: state.l3Programs };
+    }) }));
+    const fallbackCpu = await page.evaluate(() => (window as unknown as { l3Cpu: { sim: number; update: number; render: number }[] }).l3Cpu);
     // Grove Boulevard: the jam, wrecked buses, fires and smoke columns at the photo spot's fixed camera.
     await step('window.__SS__.getState().player.transform.x > -20', 800);
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-CORRIDOR/W2/l3-grove-boulevard'); await a.screenshotReady(); });
@@ -58,7 +76,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const proof = { tier, seed: 2, counts, streetCounts, streetDrawCalls: streetStatic.drawCalls, streetTriangles: streetStatic.triangles, streetP50: percentile(street, .5), streetP95: percentile(street, .95), attackDrawCalls: attackStatic.drawCalls, attackTriangles: attackStatic.triangles, blvdDrawCalls: blvdStatic.drawCalls, blvdTriangles: blvdStatic.triangles,
       attackP50: percentile(attack, .5), attackP95: percentile(attack, .95), attackMax: Math.max(...attack), fallbackMaxMs: Math.max(...fallback), blvdP50: percentile(blvd, .5), blvdP95: percentile(blvd, .95),
       simP95: percentile(attackCpu.map(c => c.sim), .95), updateP95: percentile(attackCpu.map(c => c.update), .95), renderP95: percentile(attackCpu.map(c => c.render), .95), fallbackFired: await page.evaluate(() => window.__SS__!.missions.state()!.l3!.fallbackAt > 0), vfx };
-    writeFileSync(`${dir}/l3-${tier}.json`, JSON.stringify({ ...proof, attackProfile: attackStatic.profile, blvdProfile: blvdStatic.profile, blvdAssets: blvdStatic.profileAssets, attack, fallback, blvd, street }, null, 2));
+    writeFileSync(`${dir}/l3-${tier}.json`, JSON.stringify({ ...proof, attackProfile: attackStatic.profile, blvdProfile: blvdStatic.profile, blvdAssets: blvdStatic.profileAssets, attack, fallback, fallbackCpu, blvd, street }, null, 2));
     console.log(JSON.stringify(proof));
     expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 30 : 15); expect(counts.officers).toBeGreaterThanOrEqual(6);
     expect(proof.fallbackFired).toBe(true);

@@ -1,0 +1,310 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/L1.spec.ts",
+      "--grep",
+      "T-E19-22",
+      "--project=chromium",
+      "--workers=1",
+      "--repeat-each=2"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503",
+        "repeatEach": 2,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3503 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3503",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/L1.spec.ts",
+      "file": "e2e/levels/L1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L1 v2 real-input playthrough",
+          "file": "e2e/levels/L1.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+              "ok": false,
+              "tags": [
+                "E19",
+                "E19-AC22",
+                "E19-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 73433,
+                      "error": {
+                        "message": "Error: Could not travel to {\"x\":40.029999999999994,\"z\":-34.449999999999996}; infected within 4 m [] from {\"x\":24.776561737060547,\"y\":0.7200000286102295,\"z\":-30.488130569458008,\"yaw\":0.22723206899556714}; bicycle=[{\"kind\":\"bicycle\",\"archetype\":\"veh.courier-bike\",\"faction\":\"environment\",\"transform\":{\"x\":66.43455867750436,\"y\":0.05,\"z\":-8.270882815473344,\"yaw\":1.4478806807565299},\"health\":{\"current\":1,\"max\":1},\"bicycle\":{\"mounted\":false,\"heading\":-1.4478806807565299,\"speed\":0,\"pedal\":218.26463954232418,\"steer\":0,\"lean\":0,\"standTicks\":0,\"armed\":true,\"lockUntil\":2262},\"id\":85}]; lastPick=[] ",
+                        "stack": "Error: Could not travel to {\"x\":40.029999999999994,\"z\":-34.449999999999996}; infected within 4 m [] from {\"x\":24.776561737060547,\"y\":0.7200000286102295,\"z\":-30.488130569458008,\"yaw\":0.22723206899556714}; bicycle=[{\"kind\":\"bicycle\",\"archetype\":\"veh.courier-bike\",\"faction\":\"environment\",\"transform\":{\"x\":66.43455867750436,\"y\":0.05,\"z\":-8.270882815473344,\"yaw\":1.4478806807565299},\"health\":{\"current\":1,\"max\":1},\"bicycle\":{\"mounted\":false,\"heading\":-1.4478806807565299,\"speed\":0,\"pedal\":218.26463954232418,\"steer\":0,\"lean\":0,\"standTicks\":0,\"armed\":true,\"lockUntil\":2262},\"id\":85}]; lastPick=[] \n    at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:117:13)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:228:9",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts",
+                          "column": 13,
+                          "line": 117
+                        },
+                        "snippet": "  115 |       }\n  116 |       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });\n> 117 |       throw new Error(`Could not travel to ${JSON.stringify(target)}; infected within 4 m ${JSON.stringify(around)} from ${JSON.stringify((await player()).transform)}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))}; lastPick=${JSON.stringify(await page.evaluate(() => window.__SS__!.input.lastPick()))} `);\n      |             ^\n  118 |     };\n  119 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };\n  120 |     /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts",
+                            "column": 13,
+                            "line": 117
+                          },
+                          "message": "Error: Could not travel to {\"x\":40.029999999999994,\"z\":-34.449999999999996}; infected within 4 m [] from {\"x\":24.776561737060547,\"y\":0.7200000286102295,\"z\":-30.488130569458008,\"yaw\":0.22723206899556714}; bicycle=[{\"kind\":\"bicycle\",\"archetype\":\"veh.courier-bike\",\"faction\":\"environment\",\"transform\":{\"x\":66.43455867750436,\"y\":0.05,\"z\":-8.270882815473344,\"yaw\":1.4478806807565299},\"health\":{\"current\":1,\"max\":1},\"bicycle\":{\"mounted\":false,\"heading\":-1.4478806807565299,\"speed\":0,\"pedal\":218.26463954232418,\"steer\":0,\"lean\":0,\"standTicks\":0,\"armed\":true,\"lockUntil\":2262},\"id\":85}]; lastPick=[] \n\n  115 |       }\n  116 |       const around = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 4).map(e => ({ id: e.id, x: +e.transform.x.toFixed(2), z: +e.transform.z.toFixed(2), hp: e.health.current, state: e.infected?.state, mode: e.infected?.l1?.mode })); });\n> 117 |       throw new Error(`Could not travel to ${JSON.stringify(target)}; infected within 4 m ${JSON.stringify(around)} from ${JSON.stringify((await player()).transform)}; bicycle=${JSON.stringify(await page.evaluate(() => window.__SS__!.query({ kind: 'bicycle' })))}; lastPick=${JSON.stringify(await page.evaluate(() => window.__SS__!.input.lastPick()))} `);\n      |             ^\n  118 |     };\n  119 |     const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(1); };\n  120 |     /** Like a player, give up on an infected the strikes do not reach (e.g. across the lab fence): no HP lost in 3 tries. */\n    at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:117:13)\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts:228:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T18:11:11.865Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/test-results/playwright/run-3503/e2e-levels-L1-L1-v2-real-i-69a21-hrough-from-title-to-result-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-close/tests/e2e/levels/L1.spec.ts",
+                        "column": 13,
+                        "line": 117
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-7fa6530376bdfd10f8c9",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            },
+            {
+              "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC22",
+                "E19-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 39288,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-10T18:12:29.609Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-3705a1ed9cbc4a5004cf",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-10T18:11:10.673Z",
+    "duration": 118444.97,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

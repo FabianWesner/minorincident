@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../e2e/fixtures';
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
-/** E27 worst case for the E18 budgets: car explosion + aftermath fires + smoke column + 30 chasing infected. */
-for (const tier of ['high', 'low'] as const) test(`E27 @E27 @perf ${tier} car explosion + fire + smoke column + 30 infected frame measurement`, async ({ page }) => {
+/** E27 worst case for the E18 budgets: car/propane chain + mega sequencer + aftermath + 30 infected. */
+for (const tier of ['high', 'low'] as const) test(`E27 @E27 @perf ${tier} mega + car chain + fire + smoke column + 30 infected frame measurement`, async ({ page }) => {
   test.setTimeout(120_000);
   if (tier === 'low') {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -16,6 +16,7 @@ for (const tier of ['high', 'low'] as const) test(`E27 @E27 @perf ${tier} car ex
     const initialInfected = a.getState().ai!.count, car = a.query({ kind: 'vehicle' })[0].id; a.explosions.wreck(car); a.resume();
     // The wreck explodes after 3 s and chains into the propane tank and the barrel.
     while (!a.events(-1).some(e => e.type === 'explosion')) await new Promise(r => requestAnimationFrame(r));
+    a.explosions.blast('explosion.fuel-truck', { x: 4, z: -8 });
     const times: number[] = [], sim: number[] = [], puffs: number[] = [], particles: number[] = [], spikes: { at: number; ms: number }[] = []; let previous = 0;
     const start = performance.now();
     while (performance.now() - start < 7000) {
@@ -31,6 +32,8 @@ for (const tier of ['high', 'low'] as const) test(`E27 @E27 @perf ${tier} car ex
   writeFileSync(`test-results/epics/E27/perf-${tier}.json`, JSON.stringify({ ...result, cpuThrottle: tier === 'low' ? 4 : 1, viewport: tier === 'low' ? '390x844' : '1600x900' }, null, 2));
   await page.screenshot({ path: `test-results/epics/E27/perf-${tier}.png` });
   expect(result.blasts).toContain('explosion.car'); expect(result.blasts.length).toBeGreaterThanOrEqual(2);
+  expect(result.blasts).toContain('explosion.gas-tanks');
+  expect(result.maxParticles + result.maxPuffs).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000);
   expect(result.initialInfected).toBe(30); expect(result.fires).toBeGreaterThan(0);
   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.4); expect(result.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
 });

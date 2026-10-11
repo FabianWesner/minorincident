@@ -1,0 +1,1 @@
+The validation process was interrupted after a concurrent build in this worktree cleared files served by the active preview. T-E25-16 recorded HTTP 404 asset requests and timed out opening Scene Lab. This was a validation setup error, not accepted evidence. The gate is repeated sequentially, without rebuilding dist during browser tests.

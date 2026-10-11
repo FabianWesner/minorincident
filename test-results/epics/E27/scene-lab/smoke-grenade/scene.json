@@ -1,0 +1,69 @@
+{
+  "ground": "asphalt",
+  "size": 40,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.5
+  },
+  "props": [
+    {
+      "asset": "prop.street-lamp",
+      "at": [
+        -5,
+        3
+      ]
+    },
+    {
+      "asset": "prop.bench",
+      "at": [
+        6,
+        -5
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -4,
+        4
+      ],
+      "loadout": [
+        "weapon.pistol",
+        "weapon.smoke-grenade"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 1200,
+  "shots": [],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "name": "smoke-grenade",
+  "script": [
+    {
+      "frame": 5,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "side": "RIGHT",
+        "seconds": 0.1
+      }
+    }
+  ]
+}

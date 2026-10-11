@@ -1,0 +1,35 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (53.5s)
+
+
+  1) [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review
+
+    Error: A systemic pedestrian transformation is available for visual review
+
+    expect(received).toBeDefined()
+
+    Received: undefined
+
+      196 |         if (victimId === undefined) await step(10);
+      197 |       }
+    > 198 |       expect(victimId, 'A systemic pedestrian transformation is available for visual review').toBeDefined();
+          |                                                                                               ^
+      199 |       // Observe the same victim (without moving it) until it is rising: glowing eyes, ash skin, its own clothes and hair.
+      200 |       const observe = () => page.evaluate(id => window.__SS__!.getState().entities.find(e => e.id === id), victimId!);
+      201 |       let victim = await observe();
+        at /private/tmp/mi-e25-merge-baseline/tests/e2e/levels/L1.spec.ts:198:95
+
+    Error Context: test-results/playwright/run-3388/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3388/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3388/e2e-levels-L1-L1-v2-real-i-dffde-oto-spots-for-vision-review-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review
