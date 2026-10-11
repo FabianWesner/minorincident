@@ -1,8 +1,8 @@
 {
-  "frameP95": 11.299999999999272,
-  "frameMax": 44.5,
+  "frameP95": 10.19999999999709,
+  "frameMax": 41.5,
   "simP95": 1.8999996185302734,
-  "frames": 798,
+  "frames": 887,
   "maxPuffs": 120,
   "maxParticles": 512,
   "blasts": [
@@ -14,15 +14,11 @@
     "explosion.gas-tanks"
   ],
   "initialInfected": 30,
-  "infectedAlive": 14,
+  "infectedAlive": 11,
   "spikes": [
     {
-      "at": 18,
-      "ms": 34
-    },
-    {
-      "at": 1946,
-      "ms": 45
+      "at": 1951,
+      "ms": 42
     }
   ],
   "fires": 17,
@@ -31,15 +27,15 @@
     "profileAssets": null,
     "updateCpuMs": 0,
     "renderCpuMs": 0,
-    "propUploads": 0,
-    "awakeProps": 2,
-    "fps": 121.9512195121843,
-    "frameMs": 8.200000000000728,
-    "simMs": 0,
+    "propUploads": 1,
+    "awakeProps": 1,
+    "fps": 113.63636363632605,
+    "frameMs": 8.80000000000291,
+    "simMs": 1,
     "uiMs": 0,
-    "drawCalls": 96,
-    "triangles": 92909,
-    "geometries": 93,
+    "drawCalls": 99,
+    "triangles": 82332,
+    "geometries": 95,
     "textures": 17,
     "entities": 63,
     "backend": "webgl",
@@ -47,7 +43,7 @@
     "quality": {
       "setting": "low",
       "tier": "low",
-      "p90Ms": 9.8,
+      "p90Ms": 8.8,
       "slowSeconds": 0,
       "budgets": {
         "frameMs": 33.333333333333336,
@@ -62,10 +58,10 @@
         "cullDistance": 45
       }
     },
-    "renderedFrames": 1192,
+    "renderedFrames": 1320,
     "contextLost": false,
     "paused": false,
-    "heapBytes": 387193308,
+    "heapBytes": 418794527,
     "lighting": {
       "lightFieldMs": 0.10000038146972656,
       "lightPools": 18,

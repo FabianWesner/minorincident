@@ -1,0 +1,9 @@
+ 5:02  up 63 days,  3:55, 3 users, load averages: 1.81 1.82 2.70
+Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 1 test using 1 worker
+
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":24,"firefighters":6},"drawCalls":224,"triangles":399890,"revealMaxMs":38.099999999998545,"gateMaxMs":46.69999999999709,"peakP50":23.59999999999127,"peakP95":28.20000000001164,"peakMax":31.19999999999709,"frames":418,"simP95":10.899999618530273,"updateP95":6.300000190734863,"renderP95":11.399999618530273,"gateClosed":true}
+  ✓  1 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.7m)
+
+  1 passed (1.7m)

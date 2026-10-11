@@ -6,9 +6,9 @@
   "frames": 180,
   "timing": {
     "openMs": 0,
-    "loadMs": 5172,
-    "runMs": 648,
-    "sceneMs": 5820
+    "loadMs": 5000,
+    "runMs": 610,
+    "sceneMs": 5610
   },
   "checks": {
     "pass": true,
@@ -107,14 +107,14 @@
       "stepMs": {
         "p50": 0.5,
         "p95": 0.8,
-        "max": 20.7
+        "max": 21
       },
       "lastFrame": {
         "drawCalls": 17,
         "triangles": 132394,
         "shadowDrawCalls": 16,
         "shadowTriangles": 46197,
-        "stepMs": 0.39999961853027344,
+        "stepMs": 0.5,
         "categories": {
           "other": 12,
           "shadows": 16,

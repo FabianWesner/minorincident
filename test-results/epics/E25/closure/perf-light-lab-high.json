@@ -1,7 +1,7 @@
 {
-  "p50": 4.300000000001091,
-  "p95": 5.700000000000728,
-  "simP95": 0.5,
+  "p50": 3.900000000001455,
+  "p95": 5,
+  "simP95": 0.40000057220458984,
   "perf": {
     "profile": null,
     "profileAssets": null,
@@ -11,23 +11,23 @@
     "awakeProps": 0,
     "fps": 222.22222222222223,
     "frameMs": 4.5,
-    "simMs": 0,
+    "simMs": 0.3000001907348633,
     "uiMs": 0,
     "drawCalls": 45,
-    "triangles": 649469,
+    "triangles": 424033,
     "geometries": 74,
     "textures": 34,
     "entities": 45,
     "backend": "webgl",
     "loadTiming": {
       "dataMs": 0,
-      "simMs": 40.80000019073486,
-      "viewMs": 5578.300000190735
+      "simMs": 41.80000019073486,
+      "viewMs": 5320.199999809265
     },
     "quality": {
       "setting": "high",
       "tier": "high",
-      "p90Ms": 5.1,
+      "p90Ms": 4.6,
       "slowSeconds": 0,
       "budgets": {
         "frameMs": 16.7,
@@ -42,12 +42,12 @@
         "cullDistance": 60
       }
     },
-    "renderedFrames": 1507,
+    "renderedFrames": 1622,
     "contextLost": false,
     "paused": false,
-    "heapBytes": 607547672,
+    "heapBytes": 618876486,
     "lighting": {
-      "lightFieldMs": 0,
+      "lightFieldMs": 0.10000038146972656,
       "lightPools": 5,
       "lightCandidates": 5,
       "shadowMaps": 1,
@@ -154,7 +154,7 @@
       "drawn": 5,
       "transients": 0,
       "capacity": 512,
-      "ms": 0,
+      "ms": 0.10000038146972656,
       "center": [
         2.03125,
         0

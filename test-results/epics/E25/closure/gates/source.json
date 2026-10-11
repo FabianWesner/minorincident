@@ -6,5 +6,33 @@
   "scenePort": 3518,
   "performancePort": 3519,
   "backend": "headless WebGL2 / ANGLE Metal",
-  "workers": 1
+  "workers": 1,
+  "finalSource": "41b57aa2",
+  "finalPorts": {
+    "performance": 3527,
+    "browserRegression": 3528,
+    "sceneLab": 3529
+  },
+  "results": {
+    "initialBrowser": {
+      "passed": 48,
+      "failed": 0,
+      "skipped": 3
+    },
+    "finalBrowserRegression": {
+      "passed": 29,
+      "failed": 0,
+      "skipped": 0
+    },
+    "finalSceneLab": {
+      "passed": 23,
+      "failed": 0
+    },
+    "finalCombinedPerf": {
+      "passed": 15,
+      "failed": 1,
+      "skipped": 0,
+      "failure": "L2 low gate close 51.1 ms > 50 ms"
+    }
+  }
 }

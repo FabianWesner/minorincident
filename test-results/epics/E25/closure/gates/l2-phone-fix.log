@@ -1,0 +1,37 @@
+ 5:18  up 63 days,  4:11, 3 users, load averages: 2.26 2.47 2.51
+Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.
+
+Running 1 test using 1 worker
+
+{"tier":"low","seed":2,"counts":{"infected":30,"civilians":24,"firefighters":6},"drawCalls":224,"triangles":399890,"revealMaxMs":39.19999999999709,"gateMaxMs":52,"peakP50":24.30000000000291,"peakP95":30.099999999998545,"peakMax":33.89999999999418,"frames":404,"simP95":11.299999237060547,"updateP95":6.5,"renderP95":12.399999618530273,"gateClosed":true}
+  ✘  1 [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low (1.7m)
+
+
+  1) [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 50
+    Received:    52
+
+      64 |     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
+      65 |     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+    > 66 |     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
+         |                                                                                ^
+      67 |   });
+      68 | });
+      69 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/e25-e27-gates/tests/perf/l2-budgets.spec.ts:66:80
+
+    Error Context: test-results/playwright/run-3525/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3525/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3525/perf-l2-budgets-low-T-E20--7a76f-k-reveal-and-gate-close-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/l2-budgets.spec.ts:11:3 › low › T-E20-20 @E20 @E20-AC20 @perf L2 rescue peak, reveal and gate close low 
