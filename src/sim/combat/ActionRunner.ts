@@ -23,6 +23,8 @@ export function roundhouseDefinition(def: ActionDef): ActionDef {
 /** Fixed-tick phases; each active action resolves once, independent of render rate. */
 export class ActionRunner {
   readonly running: Partial<Record<Side, Attack>> = {};
+  /** Player gun preparation in fixed ticks; NPC guns keep their own firing rules. */
+  readonly gunReady = { id: '', side: 'LEFT' as Side, ticks: 0, until: -1 };
   infiniteCharges = false;
   /** One pending melee tap per side, valid for 200ms (12 sim ticks). */
   private readonly buffered: Partial<Record<Side, { actionId: string; until: number; inPlace: boolean; mouseAttack?: boolean }>> = {};
@@ -33,9 +35,19 @@ export class ActionRunner {
   get lastAttackId(): number { return this.sequence; }
   /** `crowd(radius)` counts the living infected a sweep of that radius would reach from the source right now. */
   update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void, crowd?: (radius: number) => number): void {
+    const selected = this.loadout.state.selectedSide, selectedId = this.loadout.current(selected).id;
+    if (!enabled || this.gunReady.id !== selectedId || this.gunReady.side !== selected) {
+      Object.assign(this.gunReady, { id: selectedId, side: selected, ticks: 0, until: -1 });
+    }
     for (const side of ['LEFT', 'RIGHT'] as const) {
       let attack = this.running[side];
       if (!enabled) { delete this.running[side]; delete this.buffered[side]; continue; }
+      // Explicit slot/wheel changes cancel an unfired raise before spending ammunition.
+      // selectorSide also comes from automatic target intent, which must not abort a pending shot.
+      const selecting = frame.selectedSlot || frame.selector || frame.selectedActiveSlot !== undefined;
+      if (attack?.def.category === 'ranged' && !attack.resolved && ((selecting && side !== selected) || attack.def.id !== this.loadout.current(side).id)) {
+        delete this.running[side]; attack = undefined;
+      }
       if (attack && tick >= attack.endsAt) { delete this.running[side]; attack = undefined; }
       const button = side === 'LEFT' ? frame.left : frame.right;
       if (frame.cancelMove || frame.moveTarget || frame.attackTarget || frame.selector || frame.selectedSlot || frame.selectedActiveSlot !== undefined) delete this.buffered[side];
@@ -59,12 +71,23 @@ export class ActionRunner {
         def = sweep ? roundhouseDefinition(def) : comboDefinition(def, combo);
         // A roundhouse is its own beat: the chain restarts at the first swing afterwards.
         if (sweep) delete this.chains[side]; else this.chains[side] = { actionId: def.id, combo, until: tick + ticks(def.cooldown) + 48 };
-        attack = { id: ++this.sequence, sourceId: this.sourceId, side, def, combo, inPlace: buffered?.inPlace ?? !!frame.attackInPlace, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + ticks(def.windup), recoveryAt: tick + ticks(def.windup + def.active), endsAt: tick + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set(), ...(sweep ? { style: 'roundhouse' as const } : {}) };
-        delete this.buffered[side]; this.running[side] = attack; this.loadout.spend(side, tick, def, this.infiniteCharges); started(attack);
+        const raise = this.sourceId === 1 && def.category === 'ranged' && tick > this.gunReady.until ? Math.max(0, 6 - this.gunReady.ticks) : 0;
+        attack = { id: ++this.sequence, sourceId: this.sourceId, side, def, combo, inPlace: buffered?.inPlace ?? !!frame.attackInPlace, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + raise + ticks(def.windup), recoveryAt: tick + raise + ticks(def.windup + def.active), endsAt: tick + raise + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set(), ...(sweep ? { style: 'roundhouse' as const } : {}) };
+        delete this.buffered[side]; this.running[side] = attack;
+        if (def.category === 'ranged') this.loadout.current(side).readyAt = attack.activeAt;
+        else this.loadout.spend(side, tick, def, this.infiniteCharges);
+        started(attack);
       }
-      if (attack && !attack.resolved && tick >= attack.activeAt) { attack.resolved = true; resolve(attack); }
+      if (attack && !attack.resolved && tick >= attack.activeAt) {
+        attack.resolved = true;
+        if (attack.def.category === 'ranged') { this.loadout.spend(side, tick, attack.def, this.infiniteCharges); this.gunReady.until = tick + 24; }
+        resolve(attack);
+      }
       // The sweep keeps resolving every active tick: targets are struck as the bat passes them.
       else if (attack?.style === 'roundhouse' && attack.resolved && tick < attack.recoveryAt) resolve(attack);
     }
+    const fire = selected === 'LEFT' ? frame.left : frame.right;
+    const aim = !!frame.aim && (!!frame.pointerTarget || frame.aimSource === 'keyboard' || frame.aimSource === 'touch' || fire.down || fire.held);
+    this.gunReady.ticks = enabled && aim ? Math.min(6, this.gunReady.ticks + 1) : Math.max(0, this.gunReady.ticks - 1);
   }
 }

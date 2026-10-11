@@ -40,6 +40,8 @@ test('T-E25-08s @E25 @E25-AC08 one pistol hit breaks a lamp once, emits sparks, 
   world.combat!.setLoadout(['weapon.pistol'], ['weapon.grenade']);
   world.setInput({ aim: { x: 1, z: 0 }, left: { down: true, held: true, up: false } });
   world.update(); world.clearInput();
+  expect(lights.isOn(lamp.id)).toBe(true); // The first tap is still raising the pistol.
+  for (let i = 0; i < 6; i++) world.update();
   expect(lights.isOn(lamp.id)).toBe(false);
   expect(lights.sightMultiplier({ x: 0, z: 0 }, true)).toBe(.6);
   expect(lights.sightMultiplier({ x: 0, z: 0 }, false)).toBe(1);
