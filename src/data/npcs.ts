@@ -38,3 +38,7 @@ export const l1Pedestrians = {
 
 /** Civilian crowd models prepared at every town load. Shared with transition prefetch. */
 export const coreCivilianModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', ...l1Pedestrians.models, 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];
+
+/** L3's complete cast: all corridor pedestrians, officers and checkpoint soldiers.
+ * Laboratory/depot/firefighter batches are discovered if a future authored entity needs them. */
+export const l3CivilianModels = [...l1Pedestrians.models, 'npc.police-officer', 'npc.national-guard'];

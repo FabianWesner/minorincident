@@ -142,7 +142,7 @@ export class Game {
       }
       if (!this.loading) {
         const mission = this.world.missions;
-        if (mission && this.prefetchedMission !== mission && /^L[1-5]$/.test(mission.def.id) && (['result', 'progression'].includes(mission.state.phase) || mission.def.finish.some(id => ['active', 'completed'].includes(mission.state.steps[id]?.status ?? '')))) { this.prefetchedMission = mission; void prefetchLevel(`L${Number(mission.def.id.slice(1)) + 1}`, 4, this.quality.tier); }
+        if (mission && this.prefetchedMission !== mission && /^L[1-5]$/.test(mission.def.id) && (mission.def.id === 'L2' && mission.state.phase === 'playing' && this.world.tick >= 300 || ['result', 'progression'].includes(mission.state.phase) || mission.def.finish.some(id => ['active', 'completed'].includes(mission.state.steps[id]?.status ?? '')))) { this.prefetchedMission = mission; void prefetchLevel(`L${Number(mission.def.id.slice(1)) + 1}`, 4, this.quality.tier); }
       }
       this.ui.update();
       this.overlay?.update(seconds);
@@ -215,7 +215,8 @@ export class Game {
         const data=loadMeasure('level:layouts',start);
         if (!speculative) this.transition.update(.1, 'Building the neighborhood…');
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null);
+        const missionStart = loadMeasure('level:world+nav', worldStart);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
         if(cosmetic)this.world.player!.select(cosmetic.variant,cosmetic.gearTier);
@@ -232,7 +233,8 @@ export class Game {
         this.quality.startLevel();this.applyQuality();
         if (performanceScenario) installPerformanceLevel(this.world, this.quality.tier, performanceScenario);
         this.world.missions?.prepare();
-        this.world.physics.prepare();
+        const physicsStart = loadMeasure('level:mission+cast', missionStart);
+        this.world.physics.prepare(); loadMeasure('level:physics-prepare', physicsStart);
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
