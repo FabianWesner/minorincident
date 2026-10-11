@@ -26,3 +26,12 @@ CPU Cycles AO uses 32 samples and seed 17, exports as active COLOR_0, and
 is multiplied by the runtime palette shader. Lower LODs average AO seams
 before welding/decimation. Newly created socket and siren transforms are
 updated before parenting, and tests check their actual world positions.
+
+PKG-02 damage: `--decay wrecked|burned` imports the existing authored LOD1
+for near/mid and LOD2 for far, buckles cab/equipment skins and the ladder,
+fractures glazing, and darkens the original lenses. Burned paint uses native
+AO with broad soot variation. No added geometry or replacement shell. All
+wheel/seat/steering/exit transforms remain identical to the source tier.
+Triangle budgets are 15,000 / 6,000 / 2,000; the original 40-draw contract
+applies. `damagedLightOff` on retained light anchors prevents runtime lamp
+replacement and light-field spill from illuminating broken lamps.

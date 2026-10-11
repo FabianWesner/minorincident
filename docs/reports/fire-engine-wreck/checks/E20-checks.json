@@ -1,0 +1,49 @@
+{
+  "target": "E20",
+  "epics": [
+    "E20"
+  ],
+  "pattern": "@(?:E20)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E20)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E20/vitest.json"
+      ],
+      "exitCode": 1
+    }
+  ]
+}
