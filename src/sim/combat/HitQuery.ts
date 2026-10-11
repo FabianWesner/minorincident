@@ -37,32 +37,34 @@ export class HitQuery {
     return this.grid = { cells, length: w.length, first: w[0], last: w[w.length - 1] };
   }
   /** Segment vs XYZ slabs (range measured along XZ); returns first solid cover distance, or the whole segment. */
-  clearDistance(origin: RayPoint, direction: RayPoint, range: number, ignoreId?: number): number {
+  clearDistance(origin: RayPoint, direction: RayPoint, range: number, ignoreId?: number, padding = 0): number {
     let closest = range;
     // Static walls: only those in the 8 m cells overlapping the segment's bounds (a wall crossing the segment shares a cell with it).
     if (this.walls.length > 64) {
       const grid = this.index(), ex = origin.x + direction.x * range, ez = origin.z + direction.z * range;
       if (++this.stamp === 0xffffffff) { this.stamps.fill(0); this.stamp = 1; }
       const list = this.candidates; list.length = 0;
-      for (let x = Math.floor(Math.min(origin.x, ex) / 8); x <= Math.floor(Math.max(origin.x, ex) / 8); x++) for (let z = Math.floor(Math.min(origin.z, ez) / 8); z <= Math.floor(Math.max(origin.z, ez) / 8); z++) {
+      for (let x = Math.floor((Math.min(origin.x, ex) - padding) / 8); x <= Math.floor((Math.max(origin.x, ex) + padding) / 8); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding) / 8); z <= Math.floor((Math.max(origin.z, ez) + padding) / 8); z++) {
         for (const i of grid.cells.get(HitQuery.key(x, z)) ?? []) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; list.push(i); }
       }
-      for (const i of list) closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId);
-      for (const wall of this.dynamicWalls) closest = this.cover(wall, origin, direction, range, closest, ignoreId);
+      for (const i of list) closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding);
+      for (const wall of this.dynamicWalls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);
       return closest;
     }
-    for (const walls of this.wallGroups) for (const wall of walls) closest = this.cover(wall, origin, direction, range, closest, ignoreId);
+    for (const walls of this.wallGroups) for (const wall of walls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);
     return closest;
   }
-  private cover(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, closest: number, ignoreId?: number): number {
+  wallDistance(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, padding = 0): number { return this.cover(wall, origin, direction, range, range, undefined, padding); }
+  private cover(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, closest: number, ignoreId?: number, padding = 0): number {
     {
       if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
       let near = 0, far = range;
       for (const axis of ['x', 'y', 'z'] as const) {
         const half = axis === 'x' ? wall.halfX : axis === 'y' ? wall.halfY : wall.halfZ, d = direction[axis] ?? 0;
+        const extent = half + (axis === 'y' ? 0 : padding);
         const start = origin[axis] ?? .7;
-        if (Math.abs(d) < 1e-12) { if (start < wall[axis] - half || start > wall[axis] + half) { far = -1; break; } }
-        else { const a = (wall[axis] - half - start) / d, b = (wall[axis] + half - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+        if (Math.abs(d) < 1e-12) { if (start < wall[axis] - extent || start > wall[axis] + extent) { far = -1; break; } }
+        else { const a = (wall[axis] - extent - start) / d, b = (wall[axis] + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
       }
       return far >= near && near < closest ? near : closest;
     }

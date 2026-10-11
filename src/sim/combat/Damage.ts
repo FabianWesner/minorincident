@@ -10,6 +10,8 @@ export interface DamageEvent {
   base: number; multiplier: number; type: 'melee' | 'bullet' | 'explosive' | 'status' | 'vehicle' | 'prop' | 'projectile'; knockback: number; stagger: number;
   /** Authored melee impact freeze (render-only); absent = 50 ms. */
   hitStopMs?: number; knockdown?: boolean;
+  /** Physical enemy moves use the shared hurt state without civilian infection/grab. */
+  knockdownTicks?: number;
   /** Crowd sweep (roundhouse): keeps its authored shove/stagger beyond the normal-hit caps, without a knockdown. */
   sweep?: boolean;
   /** A lethal hit kills an infected for good (a burning DoT); explosive hits always do (PO "Infected recover"). */
@@ -67,7 +69,7 @@ export class Damage {
     }
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     const alphaSoldierHit = source.archetype === 'infected.alpha' && target.civilian?.ally?.role === 'soldier';
-    if (target.civilian && !alphaSoldierHit) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
+    if (target.civilian && !alphaSoldierHit && !hit.knockdownTicks) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
     if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
@@ -88,10 +90,13 @@ export class Damage {
     const event = { tick: this.world.tick, attackId: hit.attackId, actionId: hit.actionId, sourceId: hit.sourceId, targetId: hit.targetId, position: { ...target.transform }, direction: { ...hit.direction }, knockback, amount, damageType: hit.type, ...((hit.type === 'vehicle' || hit.type === 'prop') ? { cause: hit.type } : {}) };
     this.world.events.emit({ ...event, type: 'combat.hit' });
     if (amount > 0) {
-      if (alphaSoldierHit) {
-        const until = this.world.tick + 72, c = target.civilian!;
+      if (hit.knockdownTicks && target.survivor) target.survivor.knockdown = { started: this.world.tick, until: Math.max(target.survivor.knockdown?.until ?? 0, this.world.tick + hit.knockdownTicks) };
+      if (hit.knockdownTicks && target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + hit.knockdownTicks);
+      if (hit.knockdownTicks && target.escort) target.escort.knockedUntil = Math.max(target.escort.knockedUntil ?? 0, this.world.tick + hit.knockdownTicks);
+      if ((alphaSoldierHit || hit.knockdownTicks) && target.civilian) {
+        const until = this.world.tick + (hit.knockdownTicks ?? 72), c = target.civilian!;
         c.knockedUntil = Math.max(c.knockedUntil, until); c.entered = this.world.tick; c.story = null;
-        c.ally!.strikeAt = 0;
+        if (c.ally) c.ally.strikeAt = 0;
         if (target.health.current === 0) c.state = 'finished';
         if (target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, until);
       }

@@ -107,6 +107,8 @@ export type Action =
   | { chase: string }
   /** Infected starts a real outbreak grab of this human (defence/rescue review). */
   | { grab: string }
+  /** Start the actual sim scheduler with a locked actor target. */
+  | { special: import('../../data/infected').InfectedSpecialMove; target: string }
   | { flee: Point }
   /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
