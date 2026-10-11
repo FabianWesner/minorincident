@@ -16,6 +16,12 @@ test('protected children use child proportions even with an adult appearance fro
   expect(crowdModelOf({ civilian: { adult: false, model: 'npc.civilian-woman-b' }, appearance: { asset: 'npc.civilian-woman-b' } } as unknown as EntitySnapshot)).toBe('npc.civilian-kid');
 });
 
+test('@E08 attached escorts leave the civilian batch so the hero rig is drawn only once', () => {
+  const actor = { civilian: { adult: true, model: 'npc.civilian-man-b' }, appearance: { asset: 'npc.rosa.aftermath' } };
+  expect(crowdModelOf(actor as unknown as EntitySnapshot)).toBe('npc.rosa.aftermath');
+  expect(crowdModelOf({ ...actor, escort: { child: false } } as unknown as EntitySnapshot)).toBeNull();
+});
+
 test('sitting and lying skins are restored to the exported standing pose and lose their rest-only nodes', () => {
   const root = new Group(), hip = new Object3D(), cushion = new Object3D();
   hip.name = 'hip'; cushion.name = 'restCushion'; hip.position.set(0, .2, 0); hip.add(cushion); root.add(hip);

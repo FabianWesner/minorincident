@@ -1,0 +1,121 @@
+{
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix-escort",
+        "--pull",
+        "test-results/epics/E08/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E08)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E08/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E08)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+      ],
+      "exitCode": 1
+    }
+  ],
+  "unit": {
+    "command": "sh tools/sim-lock.sh npm run test:unit -- --maxWorkers=2",
+    "filesPassed": 156,
+    "testsPassed": 803,
+    "testsFailed": 0,
+    "durationSeconds": 123.82
+  },
+  "epic": {
+    "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=3368 npm run verify -- E08",
+    "simAndUnitPassed": 53,
+    "simAndUnitFailed": 0,
+    "criteria": [
+      {
+        "title": "T-E08-06 @E08 @E08-AC06 escort navigates maze behind moving player with no wall crossing",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-07 @E08 @E08-AC07 2s stand revives 50%; unattended 20s down fails mission",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-08 @E08 @E08-AC08 stand interaction toggles escort follow/wait with visible overhead icons",
+        "project": "chromium",
+        "status": "expected"
+      }
+    ],
+    "browser": {
+      "startTime": "2026-10-11T15:41:31.181Z",
+      "duration": 119157.766,
+      "expected": 34,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "knownFailures": [
+      {
+        "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+        "project": "chromium",
+        "status": "unexpected",
+        "error": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 2\n+ Received  + 1\n\n  Array [\n+   \"weapon.fire-axe\",\n    \"weapon.bat\",\n-   \"weapon.kick\",\n-   \"weapon.fists\",\n  ]"
+      }
+    ]
+  },
+  "captures": {
+    "command": "SCENE_PORT=3367 sh tools/e2e-lock.sh npx tsx tools/scenelab/escort-review.ts docs/scenes/escort/after --check",
+    "stateChecksPassed": 20,
+    "consoleErrors": [],
+    "lowestMeshAboveFloorMm": [
+      14.99999999999993,
+      17.880189663914525
+    ],
+    "renderer": "headless WebGL2 / ANGLE Metal",
+    "viewport": [
+      960,
+      540
+    ]
+  },
+  "resolvedResourceFailures": [
+    "Unlocked four-worker unit run timed out in the existing courier-bike terrain test (30 s); locked two-worker full run passed without timeout changes.",
+    "Loaded Mac campaign timing reached 5.314 ms against the 4 ms limit; remote E08 verification passed without budget changes."
+  ]
+}

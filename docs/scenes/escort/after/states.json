@@ -1,0 +1,2375 @@
+{
+  "records": [
+    {
+      "model": "default",
+      "stage": "follow",
+      "tick": 60,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.escort",
+        "faction": "escort",
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "transform": {
+          "x": 2.65381618464504,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.005441005254059,
+          "vz": 0,
+          "ax": 2.195737366102872,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 60
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.005441005254063,
+            "z": 0
+          },
+          "speed": 5.005441005254063,
+          "moving": true,
+          "distance": 3.2018161846450406
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.civilian-man-a",
+        "position": [
+          2.65381618464504,
+          0,
+          0
+        ],
+        "head": [
+          2.777295941849492,
+          1.200536301671035,
+          -0.029002496074270443
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000138
+    },
+    {
+      "model": "default",
+      "stage": "run",
+      "tick": 105,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.escort",
+        "faction": "escort",
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "transform": {
+          "x": 6.650084805406939,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.225364181220422,
+          "vz": 0,
+          "ax": -1.7891004243082484,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 105
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.225364181220424,
+            "z": 0
+          },
+          "speed": 5.225364181220424,
+          "moving": true,
+          "distance": 7.198084805406941
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.civilian-man-a",
+        "position": [
+          6.650084805406939,
+          0,
+          0
+        ],
+        "head": [
+          6.77357068119042,
+          1.2017934148179306,
+          -0.03775307986416697
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015
+    },
+    {
+      "model": "default",
+      "stage": "wait",
+      "tick": 150,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.escort",
+        "faction": "escort",
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 2,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 1.023070847071899,
+          "vz": 0,
+          "ax": -4.173329644924882,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 150
+        },
+        "motion": {
+          "velocity": {
+            "x": 1.0230708470718497,
+            "z": 0
+          },
+          "speed": 1.0230708470718497,
+          "moving": true,
+          "distance": 9.51141899818871
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "npc-walk",
+        "model": "npc.civilian-man-a",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          8.98931595638246,
+          1.159446900777366,
+          0.028855482135497997
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000041
+    },
+    {
+      "model": "default",
+      "stage": "down",
+      "tick": 195,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.escort",
+        "faction": "escort",
+        "health": {
+          "current": 0,
+          "max": 100
+        },
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "downed",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 45,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.51141899818871
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "death-side",
+        "model": "npc.civilian-man-a",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          9.085897155346654,
+          0.3731949462828714,
+          0.5586066661108591
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000069
+    },
+    {
+      "model": "default",
+      "stage": "revive",
+      "tick": 335,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.escort",
+        "faction": "escort",
+        "health": {
+          "current": 50,
+          "max": 100
+        },
+        "transform": {
+          "x": 8.898417434694286,
+          "z": -1.5550407661011616e-7,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 0,
+          "latched": true,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 335
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.576420561683317
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "idle",
+        "model": "npc.civilian-man-a",
+        "position": [
+          8.898417434694286,
+          0,
+          -1.5550407661011616e-7
+        ],
+        "head": [
+          8.907165112256308,
+          1.345674952277435,
+          0.010030271784203229
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000069
+    },
+    {
+      "model": "npc.civilian-man-b",
+      "stage": "follow",
+      "tick": 60,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 2.65381618464504,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-man-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.005441005254059,
+          "vz": 0,
+          "ax": 2.195737366102872,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 60
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.005441005254063,
+            "z": 0
+          },
+          "speed": 5.005441005254063,
+          "moving": true,
+          "distance": 3.06481618464504
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.civilian-man-b",
+        "position": [
+          2.65381618464504,
+          0,
+          0
+        ],
+        "head": [
+          2.7489912401399477,
+          1.0160453586370601,
+          0.006654676780955822
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000013
+    },
+    {
+      "model": "npc.civilian-man-b",
+      "stage": "run",
+      "tick": 105,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 6.650084805406939,
+          "z": 0,
+          "y": 0.7,
+          "yaw": -1.006666666666668
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-man-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.225364181220422,
+          "vz": 0,
+          "ax": -1.7891004243082484,
+          "az": 0,
+          "omega": 4.5,
+          "updatedAt": 105
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.225364181220424,
+            "z": 0
+          },
+          "speed": 5.225364181220424,
+          "moving": true,
+          "distance": 7.061084805406939
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.civilian-man-b",
+        "position": [
+          6.650084805406939,
+          0,
+          0
+        ],
+        "head": [
+          6.6953494918626335,
+          0.9958677022434179,
+          0.08398621358047603
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000055
+    },
+    {
+      "model": "npc.civilian-man-b",
+      "stage": "wait",
+      "tick": 150,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": -1.2316666666666731
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-man-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 2,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 1.023070847071899,
+          "vz": 0,
+          "ax": -4.173329644924882,
+          "az": 0,
+          "omega": 4.5,
+          "updatedAt": 150
+        },
+        "motion": {
+          "velocity": {
+            "x": 1.0230708470718497,
+            "z": 0
+          },
+          "speed": 1.0230708470718497,
+          "moving": true,
+          "distance": 9.374418998188705
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "npc-walk",
+        "model": "npc.civilian-man-b",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          8.925062569150777,
+          1.0268030256567697,
+          0.0357853542586206
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000013
+    },
+    {
+      "model": "npc.civilian-man-b",
+      "stage": "down",
+      "tick": 195,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": -3.141592653589793
+        },
+        "health": {
+          "current": 0,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-man-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "downed",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 45,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.374418998188705
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "death-side",
+        "model": "npc.civilian-man-b",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          8.868321558878334,
+          0.4186646363046361,
+          -0.541821959397852
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000069
+    },
+    {
+      "model": "npc.civilian-man-b",
+      "stage": "revive",
+      "tick": 335,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 8.898417434694286,
+          "z": -1.5550407661011616e-7,
+          "y": 0.7,
+          "yaw": -3.1415926272260983
+        },
+        "health": {
+          "current": 50,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-man-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-man-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 0,
+          "latched": true,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 335
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.439420561683313
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "idle",
+        "model": "npc.civilian-man-b",
+        "position": [
+          8.898417434694286,
+          0,
+          -1.5550407661011616e-7
+        ],
+        "head": [
+          8.891625352035923,
+          1.3150695219455173,
+          -0.009662523486010995
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.014999999999999944
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "stage": "follow",
+      "tick": 60,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 2.65381618464504,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-woman-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-woman-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.005441005254059,
+          "vz": 0,
+          "ax": 2.195737366102872,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 60
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.005441005254063,
+            "z": 0
+          },
+          "speed": 5.005441005254063,
+          "moving": true,
+          "distance": 3.06481618464504
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.civilian-woman-b",
+        "position": [
+          2.65381618464504,
+          0,
+          0
+        ],
+        "head": [
+          2.7405669842426197,
+          0.948126966447592,
+          0.006065649542408251
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.014999999999999986
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "stage": "run",
+      "tick": 105,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 6.650084805406939,
+          "z": 0,
+          "y": 0.7,
+          "yaw": -1.006666666666668
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-woman-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-woman-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.225364181220422,
+          "vz": 0,
+          "ax": -1.7891004243082484,
+          "az": 0,
+          "omega": 4.5,
+          "updatedAt": 105
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.225364181220424,
+            "z": 0
+          },
+          "speed": 5.225364181220424,
+          "moving": true,
+          "distance": 7.061084805406939
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.civilian-woman-b",
+        "position": [
+          6.650084805406939,
+          0,
+          0
+        ],
+        "head": [
+          6.691342966204916,
+          0.9631248571824145,
+          0.07655231872882123
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.014999999999999958
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "stage": "wait",
+      "tick": 150,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": -1.2316666666666731
+        },
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-woman-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-woman-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 2,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 1.023070847071899,
+          "vz": 0,
+          "ax": -4.173329644924882,
+          "az": 0,
+          "omega": 4.5,
+          "updatedAt": 150
+        },
+        "motion": {
+          "velocity": {
+            "x": 1.0230708470718497,
+            "z": 0
+          },
+          "speed": 1.0230708470718497,
+          "moving": true,
+          "distance": 9.374418998188705
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "npc-walk",
+        "model": "npc.civilian-woman-b",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          8.946121621038584,
+          0.9884402046225913,
+          0.026591080154551795
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.01499999999999993
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "stage": "down",
+      "tick": 195,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": -3.141592653589793
+        },
+        "health": {
+          "current": 0,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-woman-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-woman-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "downed",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 45,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.374418998188705
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "death-side",
+        "model": "npc.civilian-woman-b",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          8.876738944712944,
+          0.37207991484797953,
+          -0.4136844286514435
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.014999999999999986
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "stage": "revive",
+      "tick": 335,
+      "entity": {
+        "kind": "civilian",
+        "archetype": "npc.delivery-driver",
+        "faction": "civilian",
+        "transform": {
+          "x": 8.898417434694286,
+          "z": -1.5550407661011616e-7,
+          "y": 0.7,
+          "yaw": -3.1415926272260983
+        },
+        "health": {
+          "current": 50,
+          "max": 100
+        },
+        "civilian": {
+          "state": "calm",
+          "ambient": false,
+          "adult": true,
+          "pet": null,
+          "owner": null,
+          "model": "npc.civilian-woman-b",
+          "variant": "inf.delivery-driver",
+          "schedule": [
+            {
+              "activity": "stand",
+              "anchor": "lab/stand",
+              "target": {
+                "x": 0,
+                "z": 0,
+                "y": 0.7,
+                "yaw": 0
+              },
+              "ticks": 1000000000,
+              "facing": {
+                "x": 3,
+                "z": 0
+              }
+            }
+          ],
+          "scheduleStep": 0,
+          "activityUntil": 1000000001,
+          "activityStarted": 1,
+          "lastTravelProgress": 0,
+          "routine": "carry-belongings",
+          "waypoints": [
+            {
+              "x": 0,
+              "z": 0
+            }
+          ],
+          "waypoint": 0,
+          "pauseUntil": 0,
+          "entered": 0,
+          "until": 0,
+          "downTicks": 0,
+          "eyesGlow": false,
+          "veins": 0,
+          "attacker": 0,
+          "threat": {
+            "x": 0,
+            "z": 0
+          },
+          "path": [],
+          "goal": -1,
+          "pathIndex": 0,
+          "gore": false,
+          "knockedUntil": 0,
+          "l1": {
+            "walkSpeed": 1.4035264714155347,
+            "fleeSpeed": 3.872283752262592,
+            "startleTicks": 20,
+            "refuge": null,
+            "target": null,
+            "repickAt": 0,
+            "noticed": -1,
+            "progressFrom": {
+              "x": 0,
+              "z": 0
+            },
+            "progressAt": 1
+          }
+        },
+        "combat": {
+          "radius": 0.35,
+          "armor": 0,
+          "shield": false,
+          "staggerUntil": 0,
+          "attacking": false,
+          "damageMultiplier": 1,
+          "statuses": []
+        },
+        "id": 3,
+        "appearance": {
+          "entityId": 3,
+          "asset": "npc.civilian-woman-b",
+          "tint": "#e5d9b9",
+          "accessories": [],
+          "handProp": null,
+          "tier": "athletic"
+        },
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": false,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 0,
+          "latched": true,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 335
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.439420561683313
+        }
+      },
+      "hero": {
+        "id": 3,
+        "source": "glb",
+        "clip": "idle",
+        "model": "npc.civilian-woman-b",
+        "position": [
+          8.898417434694286,
+          0,
+          -1.5550407661011616e-7
+        ],
+        "head": [
+          8.89222654155539,
+          1.301944392902382,
+          -0.007417019931305523
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000055
+    },
+    {
+      "model": "child",
+      "stage": "follow",
+      "tick": 60,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.brother",
+        "faction": "escort",
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "transform": {
+          "x": 2.65381618464504,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": true,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.005441005254059,
+          "vz": 0,
+          "ax": 2.195737366102872,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 60
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.005441005254063,
+            "z": 0
+          },
+          "speed": 5.005441005254063,
+          "moving": true,
+          "distance": 3.2018161846450406
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.brother",
+        "position": [
+          2.65381618464504,
+          0,
+          0
+        ],
+        "head": [
+          2.7313825960074247,
+          0.7635177675014571,
+          -0.03985054947762723
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015
+    },
+    {
+      "model": "child",
+      "stage": "run",
+      "tick": 105,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.brother",
+        "faction": "escort",
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "transform": {
+          "x": 6.650084805406939,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "follow",
+          "order": "follow",
+          "child": true,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 0,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 5.225364181220422,
+          "vz": 0,
+          "ax": -1.7891004243082484,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 105
+        },
+        "motion": {
+          "velocity": {
+            "x": 5.225364181220424,
+            "z": 0
+          },
+          "speed": 5.225364181220424,
+          "moving": true,
+          "distance": 7.198084805406941
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "run",
+        "model": "npc.brother",
+        "position": [
+          6.650084805406939,
+          0,
+          0
+        ],
+        "head": [
+          6.727505215654596,
+          0.7513000823776228,
+          -0.040509325674924865
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.017880189663914525
+    },
+    {
+      "model": "child",
+      "stage": "wait",
+      "tick": 150,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.brother",
+        "faction": "escort",
+        "health": {
+          "current": 100,
+          "max": 100
+        },
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": true,
+          "gore": false,
+          "failed": false,
+          "downedAt": 0,
+          "progress": 2,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 1.023070847071899,
+          "vz": 0,
+          "ax": -4.173329644924882,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 150
+        },
+        "motion": {
+          "velocity": {
+            "x": 1.0230708470718497,
+            "z": 0
+          },
+          "speed": 1.0230708470718497,
+          "moving": true,
+          "distance": 9.51141899818871
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "npc-walk",
+        "model": "npc.brother",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          8.980647206099453,
+          0.8732735266296221,
+          -0.020171911831179352
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.014999999999999986
+    },
+    {
+      "model": "child",
+      "stage": "down",
+      "tick": 195,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.brother",
+        "faction": "escort",
+        "health": {
+          "current": 0,
+          "max": 100
+        },
+        "transform": {
+          "x": 8.963418998188708,
+          "z": 0,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "downed",
+          "order": "wait",
+          "child": true,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 45,
+          "latched": false,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": -1
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.51141899818871
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "death-side",
+        "model": "npc.brother",
+        "position": [
+          8.963418998188708,
+          0,
+          0
+        ],
+        "head": [
+          9.040579915631907,
+          0.3164184528986017,
+          0.4275642496044139
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000041
+    },
+    {
+      "model": "child",
+      "stage": "revive",
+      "tick": 335,
+      "entity": {
+        "kind": "escort",
+        "archetype": "npc.brother",
+        "faction": "escort",
+        "health": {
+          "current": 50,
+          "max": 100
+        },
+        "transform": {
+          "x": 8.898417434694286,
+          "z": -1.5550407661011616e-7,
+          "y": 0.7,
+          "yaw": 0
+        },
+        "id": 4,
+        "escort": {
+          "state": "wait",
+          "order": "wait",
+          "child": true,
+          "gore": false,
+          "failed": false,
+          "downedAt": 150,
+          "progress": 0,
+          "latched": true,
+          "path": [],
+          "pathIndex": 0,
+          "goal": -1,
+          "cover": null,
+          "attackAt": 0
+        },
+        "locomotion": {
+          "vx": 0,
+          "vz": 0,
+          "ax": 0,
+          "az": 0,
+          "omega": 0,
+          "updatedAt": 335
+        },
+        "motion": {
+          "velocity": {
+            "x": 0,
+            "z": 0
+          },
+          "speed": 0,
+          "moving": false,
+          "distance": 9.576420561683317
+        }
+      },
+      "hero": {
+        "id": 4,
+        "source": "glb",
+        "clip": "idle",
+        "model": "npc.brother",
+        "position": [
+          8.898417434694286,
+          0,
+          -1.5550407661011616e-7
+        ],
+        "head": [
+          8.903928448591339,
+          1.0283659301377437,
+          0.0076305989650832205
+        ],
+        "nodes": [
+          "root",
+          "head"
+        ],
+        "facing": null
+      },
+      "crowdCopies": 0,
+      "soleAboveFloor": 0.015000000000000041
+    }
+  ],
+  "errors": []
+}
