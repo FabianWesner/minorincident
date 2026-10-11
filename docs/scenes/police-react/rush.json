@@ -1,0 +1,142 @@
+{
+  "name": "rush",
+  "time": "L3",
+  "ground": "asphalt",
+  "size": 50,
+  "seed": 1,
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "officer-0",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        -3
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 0
+        }
+      }
+    },
+    {
+      "id": "officer-1",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 1
+        }
+      }
+    },
+    {
+      "id": "officer-2",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        3
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer",
+          "follow": "courier",
+          "slot": 2
+        }
+      }
+    },
+    {
+      "id": "zombie-0",
+      "kind": "infected",
+      "at": [
+        -8,
+        -3
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "officer-0"
+      }
+    },
+    {
+      "id": "zombie-1",
+      "kind": "infected",
+      "at": [
+        -8,
+        0
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "officer-1"
+      }
+    },
+    {
+      "id": "zombie-2",
+      "kind": "infected",
+      "at": [
+        -8,
+        3
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "officer-2"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "close",
+    "target": [
+      -1,
+      0.7,
+      0
+    ],
+    "radius": 16,
+    "azimuth": 140
+  },
+  "frames": 180,
+  "sheet": 10,
+  "shots": [
+    0,
+    1,
+    15,
+    30,
+    60,
+    120,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

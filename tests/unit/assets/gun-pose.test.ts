@@ -94,3 +94,21 @@ for (const variant of ['female', 'male']) test(`@gun-hold ${variant}: low-ready 
     for (const [i, name] of ['footL', 'footR'].entries()) expect(model.getObjectByName(name)!.matrixWorld.elements).toEqual(feet[i].elements);
   }
 });
+
+test('@E21 officer low ready keeps the barrel forward/down and the gun in the animated hand through idle, walk and run', async () => {
+  const model = await load('npc.police-officer'), crowd = new CrowdGunAim(model, [...characterNodes]);
+  for (const clip of ['idle', 'walk', 'run']) for (const phase of [.1, .4, .8]) {
+    sampleClip(model, clip, phase); model.updateMatrixWorld(true);
+    const pose = new Float32Array(characterNodes.length * 16);
+    characterNodes.forEach((name, i) => model.getObjectByName(name)!.matrixWorld.toArray(pose, i * 16));
+    const feet = ['footL', 'footR'].map(name => point(pose, name));
+    crowd.apply(pose, { x: 1, z: 0 }, -.75, .8);
+    const hand = new Matrix4().fromArray(pose, characterNodes.indexOf('handR') * 16);
+    const barrel = new Vector3(0, 0, 1).transformDirection(hand);
+    expect(barrel.angleTo(new Vector3(Math.cos(.75), -Math.sin(.75), 0))).toBeLessThan(.001);
+    const grip = new Vector3().setFromMatrixPosition(hand);
+    expect(grip.y).toBeLessThan(point(pose, 'armR').y - .15);
+    expect(grip.y).toBeGreaterThan(.5);
+    for (const [i, name] of ['footL', 'footR'].entries()) expect(point(pose, name).distanceTo(feet[i])).toBe(0);
+  }
+});

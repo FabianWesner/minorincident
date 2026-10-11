@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer, writeJson } from './session';
 import { runSpec } from './run';
 import { policeEngagementM } from '../../src/data/cameraFraming';
+import { policeTactics } from '../../src/data/l3';
 
 /** Reproduce the police approach at desktop and phone framing, including exact shot/visibility evidence.
  * Run headless through: SCENE_PORT=3387 sh tools/e2e-lock.sh npx tsx tools/scenelab/police-range.ts */
@@ -19,7 +20,7 @@ for (const [name, width, height] of [['desktop', 960, 540], ['phone', 390, 844],
     const evidence = await session.page.evaluate(({ width, height, track }) => {
       const api = window.__SS__!, player = api.getEntity(1)!;
       let firstVisible = -1, firstAttack = -1;
-      const attacks: { frame: number; visible: boolean; shot: boolean; point: { x: number; y: number }; distanceM: number }[] = [];
+      const attacks: { frame: number; visible: boolean; shot: boolean; point: { x: number; y: number }; distanceM: number; shooterDistanceM: number }[] = [];
       for (const row of track) {
         const point = api.input.project(row);
         if (point.x > 0 && point.x < width && point.y > 0 && point.y < height) { firstVisible = row.frame; break; }
@@ -28,11 +29,11 @@ for (const [name, width, height] of [['desktop', 960, 540], ['phone', 390, 844],
         if (event.type !== 'ally.attack' || event.role !== 'officer' || !event.to) continue;
         const point = api.input.project(event.to);
         if (firstAttack < 0) firstAttack = event.tick;
-        attacks.push({ frame: event.tick, visible: point.x > 0 && point.x < width && point.y > 0 && point.y < height, shot: true, point, distanceM: Math.hypot(event.to.x - player.transform.x, event.to.z - player.transform.z) });
+        attacks.push({ frame: event.tick, visible: point.x > 0 && point.x < width && point.y > 0 && point.y < height, shot: true, point, distanceM: Math.hypot(event.to.x - player.transform.x, event.to.z - player.transform.z), shooterDistanceM: Math.hypot(event.to.x - event.from!.x, event.to.z - event.from!.z) });
       }
       return { firstVisible, firstAttack, attacks };
     }, { width, height, track });
-    const pass = capture.pass && evidence.firstVisible >= 0 && evidence.firstAttack > evidence.firstVisible && evidence.attacks.some(a => a.shot) && evidence.attacks.every(a => a.visible && a.distanceM <= policeEngagementM);
+    const pass = capture.pass && evidence.firstVisible >= 0 && evidence.firstAttack >= 0 && evidence.attacks.some(a => a.shot) && evidence.attacks.every(a => a.shooterDistanceM <= policeTactics.defendM || a.visible && a.distanceM <= policeEngagementM);
     writeJson(`${out}/engagement.json`, { pass, ...evidence, consoleErrors: session.errors });
     console.log(JSON.stringify({ name, pass, firstVisible: evidence.firstVisible, firstAttack: evidence.firstAttack, shots: evidence.attacks.filter(a => a.shot).length }));
     if (!pass || session.errors.length) process.exitCode = 1;
