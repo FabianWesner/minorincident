@@ -1,0 +1,37 @@
+{
+  "assets": {
+    "entries": 18,
+    "errors": 0,
+    "command": "npm run assets:validate -- --ids bld.park-lodge,bld.reptile-house,bld.zoo-gate,bld.police-station,bld.clinic-annex"
+  },
+  "unit": {
+    "files": 137,
+    "passed": 497,
+    "runner": "94.130.181.173",
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run --maxWorkers=2"
+  },
+  "catalog": {
+    "scenes": 11,
+    "passed": 11,
+    "backend": "webgl",
+    "command": "E2E_SLOTS=2 SCENE_PORT=3360 npm run scene -- docs/scenes/asset-defects/catalog/*.json --out test-results/asset-defects/after --shots 0 --size 960x540"
+  },
+  "crowdVisible": {
+    "passed": true,
+    "backend": "webgl",
+    "frames": 1200,
+    "samples": 11948,
+    "infectedSamples": 4769,
+    "missed": 0,
+    "command": "E2E_SLOTS=2 E2E_PORT=3362 sh tools/e2e-lock.sh npx playwright test tests/e2e/crowd-visible-outbreak.spec.ts --project=chromium --workers=1 --grep webgl"
+  },
+  "e17": {
+    "command": "E2E_SLOTS=2 E2E_PORT=3361 MI_VERIFY_REMOTE_SIM=1 npm run verify -- E17",
+    "exitCode": 1,
+    "browserPassed": 41,
+    "browserFailed": 1,
+    "failure": "unchanged decay.broken-glass: one turntable view below 10% coverage",
+    "taskAssetsPass": 5,
+    "allSmokePass": true
+  }
+}
