@@ -4,6 +4,20 @@ import manifest from '../../../src/assets/manifest.json';
 import { createCivilianPlaceholder, createCorgiPlaceholder } from '../../../src/render/npc/placeholders';
 import { disposeCharacter } from '../../../src/render/characters/rig';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
+import { NpcAnimator } from '../../../src/render/characters/NpcAnimator';
+
+test('@E08 escort animator keeps low shoe geometry above the floor through idle, down and revive', () => {
+  const root = createCivilianPlaceholder();
+  root.getObjectByName('footL')!.traverse(node => { if (node instanceof Mesh) node.geometry.translate(0, -.05, 0); });
+  const animator = new NpcAnimator(root);
+  try {
+    for (const [time, down] of [[1, false], [2, true], [3, false]] as const) {
+      animator.update(time, 0, 0, down);
+      expect(animator.currentClip).toBe(down ? 'death-side' : 'idle');
+      expect(new Box3().setFromObject(root).min.y).toBeGreaterThanOrEqual(.0149);
+    }
+  } finally { animator.dispose(); disposeCharacter(root); }
+});
 test('T-E08-10 @E08 @E08-AC10 corgi fallback has complete required joints/socket, +X and recognizable low proportions', () => {
   const model = createCorgiPlaceholder(), def = manifest.find(a => a.id === 'char.corgi')!;
   for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]) expect(model.getObjectByName(name), name).toBeDefined();
