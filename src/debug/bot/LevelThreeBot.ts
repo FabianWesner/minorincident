@@ -1,3 +1,4 @@
+import { l3RouteDirection } from '../../levels/L3/navigation';
 import { Rng } from '../../core/Rng';
 import { l3, l3Street } from '../../data/l3';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
@@ -7,7 +8,7 @@ import { Walker } from './Walker';
 
 /** E21 section 8 bot profiles. `evade-only` never attacks; `idle` stays where it starts in the station yard. */
 export type L3Profile = 'complete' | 'newbie' | 'evade-only' | 'idle';
-/** Forced street (AC11): the bot keeps to one avenue up to On-ramp Road; `auto` switches streets by what it sees. */
+/** Street preference for combat detours and medkits; the connected army route overrides it at sealed wreck lines. */
 export type L3StreetChoice = 'auto' | 'blvd' | 'commerce' | 'oak';
 type P = { x: number; z: number };
 const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -24,6 +25,8 @@ const LINKS = [-120, -90, -55, -15, 40, 85, 128];
  */
 export class LevelThreeBot {
   finished = false;
+  private readonly route = {path: [] as number[], goal: -1, pathIndex: 0};
+  private readonly routePoint = {x: 0, z: 0};
   private readonly walker = new Walker();
   private readonly rng: Rng;
   private frame: InputFrame = emptyInput();
@@ -55,7 +58,7 @@ export class LevelThreeBot {
     const w = this.world, m = w.missions!, s = m.state.l3;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
     if (this.finished || !s) return emptyInput();
-    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; }
+    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; this.route.goal = -1; }
     if (m.state.phase === 'briefing') m.begin();
     if (m.state.phase === 'cinematic') return { ...emptyInput(), interact: true };
     const newbie = this.profile === 'newbie';
@@ -90,6 +93,7 @@ export class LevelThreeBot {
     // ---------------------------------------------------------------- the avenues
     if (this.last && dist(this.last, p) > 6) { this.walker.reset(); this.detour = null; }
     this.last = { x: p.x, z: p.z };
+    const routed = l3RouteDirection(w, this.route, this.routePoint), routeAhead = routed ? this.routePoint : a['l3-zone'];
     const hp = player.health.current / player.health.max;
     // Medkits when hurt: the nearest one ahead or close by that is still there.
     // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
@@ -119,12 +123,12 @@ export class LevelThreeBot {
       this.stuck.next = w.tick + 60;
       if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget && !this.waiting) this.stuck.n++; else this.stuck.n = 0;
       this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.keep(this.walker.detour(w, { x: p.x + 10, z: p.z })); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
+      if (this.stuck.n >= 3) { const at = this.keep(this.walker.detour(w, routeAhead)); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
     }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
     const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
     // Fight a few, flee from many: a crowd closing in (or a losing fight) means breaking away forward, not standing.
-    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, { x: p.x + 12, z: l3.map.streets[this.street] }, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
+    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, routeAhead, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 6 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 12, until: w.tick + 180 };
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
@@ -146,18 +150,8 @@ export class LevelThreeBot {
         this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false;
       } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
     }
-    // Forward: along the street, then up On-ramp Road to the rendezvous inside the compound.
-    const zone = a['l3-zone'];
-    if (p.x > 118) { if (Math.abs(p.z) > 2.2 && p.x < 131) go({ x: 129, z: 0 }, .8, 'onramp'); else go({ x: zone.x, z: zone.z }, .3, 'zone'); return frame; }
-    // A point 24 m ahead on the chosen street (on clear ground); the grid route takes the cross-links by itself.
-    const nav = w.infected!.nav, z = l3.map.streets[this.street], ahead = Math.min(124, Math.floor(p.x / 12) * 12 + 24);
-    let target = { x: ahead, z };
-    for (const dz of [0, 1.5, -1.5, 3, -3, 4.5, -4.5]) if (nav.clear(ahead, z + dz, .45)) { target = { x: ahead, z: z + dz }; break; }
-    if (go(target, .8, `route-${this.street}-${target.x}`) && dist(p, target) > 1.6) {
-      // No route to that point (a closed pocket): take the next street over, or step aside when the street is forced.
-      if (this.forced === 'auto') { this.street = STREETS[(STREETS.indexOf(this.street) + 1) % 3]; this.walker.reset(); }
-      else { const at = this.keep(this.walker.detour(w, { x: p.x + 10, z })); if (at) this.detour = { ...at, until: w.tick + 120 }; }
-    }
+    // Read the connected route through the wreck detours and the highway; every step still uses ordinary inputs.
+    if (routed) go(routeAhead, .2, 'army-route');
     return frame;
   }
 }

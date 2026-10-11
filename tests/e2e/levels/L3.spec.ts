@@ -25,7 +25,7 @@ function helpers(page: Page) {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
       const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
-      const point = near ? a.input.project(near.transform) : null;
+      const point = near ? a.input.project(near.transform, 'player') : null;
       // A covered/offscreen body cannot receive a physical canvas click.
       return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? { point, melee: Math.hypot(near!.transform.x - p.x, near!.transform.z - p.z) < 2.6 } : null;
     }, range);
@@ -58,7 +58,7 @@ function helpers(page: Page) {
       }))];
       for (let j = 0; j < ground.length; j++) {
         const q = ground[(groundStart + j) % ground.length];
-        const point = await page.evaluate(q => window.__SS__!.input.project(q), q);
+        const point = await page.evaluate(q => window.__SS__!.input.project(q, 'player'), q);
         await page.mouse.click(point.x, point.y); await step(1);
         if (await page.evaluate(() => window.__SS__!.input.lastPick().length === 0)) break;
       }
@@ -81,7 +81,7 @@ function helpers(page: Page) {
       if (crowd >= 4 && i - dodgeAt >= 30) {
         dodgeAt = i;
         const p0 = (await player()).transform, flank = { x: Math.min(target.x, p0.x + 4), z: target.z + (p0.z <= target.z ? 1.5 : -1.5) };
-        const point = await page.evaluate(q => { const p = window.__SS__!.input.project(q); return document.elementFromPoint(p.x, p.y)?.tagName === 'CANVAS' ? p : null; }, flank);
+        const point = await page.evaluate(q => { const p = window.__SS__!.input.project(q, 'player'); return document.elementFromPoint(p.x, p.y)?.tagName === 'CANVAS' ? p : null; }, flank);
         if (point) { await page.mouse.click(point.x, point.y); await step(45); }
         await click(); fights = 0;
       }
@@ -139,31 +139,34 @@ test.describe('L3 The Police Collapse in the browser', () => {
     console.log(JSON.stringify({ attackShotEarly: attackShot, inFrameAtFallback: inside }));
     expect((await mission()).l3!.fallbackAt).toBeGreaterThan(0);
     await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
-    // Up Commerce Street to the army checkpoint (the squad follows), fighting the few that come close.
+    // Each starting street joins the forced Oak -> Boulevard detour around the sealed wreck lines.
+    // Raised-road clicks project onto the courier's current floor, matching RayCursor's input plane.
     const sz = l3.map.streets[street], route: P[] = [{ x: -126, z: 0 }];
     if (sz !== 0) route.push({ x: -120, z: sz });
-    for (let x = -105; x <= 105; x += 15) {
-      // Oak's crashed pickup blocks the straight centre-line approach from the west.
-      // The north strip also contains a resting planter. Use the clear south side
-      // until past the entire wreck before returning to the centre line.
-      if (street === 'oak' && x === 105) route.push({ x: 92, z: 32 }, { x: 105, z: 32 }, { x: 118, z: 32 });
-      else route.push({ x, z: sz });
-    }
-    if (sz !== 0) route.push({ x: 128, z: sz });   // On-ramp Road is the full cross street at the corridor's end
-    route.push({ x: 129, z: 0 }, { x: 144, z: 0 }, { x: l3Anchors['l3-zone'][0], z: 0 });
+    route.push({x:-105,z:sz},{x:-88.75,z:sz});
+    const detour = [
+      [-88.75,24.25],[-74.75,29.75],[-38.75,28.25],[-24.25,24.25],[-13.75,24.25],
+      [-13.75,-22.75],[29.25,-23.25],[29.75,-24.75],[80.25,-24.75],[82.25,-23.25],
+      [131.75,-22.75],[131.75,-2.75],[149.25,2.75],[156.25,1.25],[160.25,-2.75],
+      [166.75,-2.25],[168.75,-.75],[180.75,-.75],[184.25,2.75],[191.25,2.25],
+      [195.25,-2.25],[197.75,-2.75],[205.25,-.75],
+    ];
+    route.push(...detour.map(([x,z])=>({x,z})));
+    const restX = l3.map.zoneX + 4;
+    route.push({ x: restX, z: 0 }, { x: l3Anchors['l3-zone'][0], z: 0 });
     // Entering the rendezvous ring ends L3 and hands over to L4: keep the last L3 state, stop touching the world then.
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
     for (const wp of route) {
       // Reach the wreck detour before cutting back, and finish the final click inside the army zone.
-      const stop = wp.x > l3.map.zoneX ? .5 : (street === 'oak' && wp.z === 32) ? 1.2 : sz === 0 ? 2 : 4;
+      const stop = wp.x > l3.map.zoneX ? .5 : .8;
       await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
       if (!await inL3()) break;
-      if (wp.x === 144) {
+      if (wp.x === restX) {
         // The compound is a resting place before the rendezvous ring, not an automatic finish at the boom.
         await step(300);
         expect(await inL3()).toBe(true);
-        const threats = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x >= 140));
+        const threats = await page.evaluate(x => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x >= x), l3.map.zoneX);
         expect(threats, 'no active infected inside the army compound').toEqual([]);
         await page.evaluate(() => window.__SS__!.screenshotReady());
         await page.screenshot({ path: `${output}/l3-compound-rest-${street}.png` });

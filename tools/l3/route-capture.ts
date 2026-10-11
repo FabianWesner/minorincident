@@ -1,0 +1,42 @@
+import { readFileSync } from 'node:fs';
+import { SceneSession, stopServer } from '../scenelab/session';
+import { l3Roadblocks } from '../../src/levels/L3/layout';
+const session = new SceneSession({viewport:{width:1680,height:940}});
+const out = process.argv[2] ?? 'docs/reports/l3-route';
+try {
+  await session.open();
+  for (const label of ['before','after']) {
+    await session.page.setContent(readFileSync(`docs/reports/l3-route/${label}.svg`,'utf8'));
+    await session.page.locator('svg').screenshot({path:`${out}/${label}.png`});
+  }
+  await session.inspectLevel('L3');
+  await session.page.evaluate(() => window.__SS__!.inspect.timeScale(0));
+  await session.page.addStyleTag({content:'[data-testid=inspection],.tp-dfwv,.mission-subtitle,.story-bubble,#hud,.hud,.hud-tracker,.hud-map,.mission-ui,[data-testid=mission-panel]{visibility:hidden!important}'});
+  for (const [i, b] of l3Roadblocks.entries()) {
+    await session.page.evaluate(({x,z}) => window.__SS__!.inspect.setCamera({position:[x+18,23,z+18],target:[x,0,z]}), b);
+    await session.page.evaluate(() => window.__SS__!.step(0));
+    await session.screenshot(`${out}/roadblock-${i+1}.png`);
+  }
+  for (const [name,x,y,z] of [['highway-entry',151,2,0],['highway-gantry',192.5,6,-7.6],['highway-exit',198,2,0],['checkpoint',222,0,0]] as const) {
+    await session.page.evaluate(({x,y,z}) => window.__SS__!.inspect.setCamera({position:[x+19,y+24,z+19],target:[x,y,z]}),{x,y,z});
+    await session.page.evaluate(() => window.__SS__!.step(0));
+    await session.screenshot(`${out}/${name}.png`);
+  }
+  for (const [name, x, z] of [['tower-south', 214.5, -18], ['tower-gate-south', 214.5, -7.6], ['tower-gate-north', 214.5, 7.6], ['tower-north', 214.5, 18]] as const) {
+    await session.page.evaluate(({x,z}) => window.__SS__!.inspect.setCamera({position:[x+12,16,z+12],target:[x,3,z]}), {x,z});
+    await session.page.evaluate(() => window.__SS__!.step(0));
+    await session.screenshot(`${out}/${name}.png`);
+  }
+  for (const [name,x,z] of [['game-block-1',-72,0],['game-block-2',-72,-28],['game-block-3',12,0],['game-block-4',12,28],['game-highway',174,0],['game-compound',218,0]] as const) {
+    await session.page.evaluate(({x,z}) => window.__SS__!.inspect.setCamera({position:[x+10.87,15.37+(x===174?5.7:0),z+10.87],target:[x,x===174?5.7:0,z]}), {x,z});
+    await session.page.evaluate(() => window.__SS__!.step(0));
+    await session.screenshot(`${out}/${name}.png`);
+  }
+  await session.page.evaluate(() => window.__SS__!.settings.set({timeOfDay:'night'}));
+  for(const [name,x,y,z] of [['night-oak',-55,0,28],['night-boulevard',60,0,-28],['night-highway',174,5.7,0]] as const) {
+    await session.page.evaluate(({x,y,z}) => window.__SS__!.inspect.setCamera({position:[x+19,y+24,z+19],target:[x,y,z]}),{x,y,z});
+    await session.page.evaluate(() => window.__SS__!.step(0));
+    await session.screenshot(`${out}/${name}.png`);
+  }
+  if(session.errors.length) throw new Error(session.errors.join('\n'));
+} finally { await session.close();stopServer(); }
