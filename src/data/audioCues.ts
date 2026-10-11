@@ -48,6 +48,10 @@ for (const [index, def] of infectedDefinitions.filter(def => def.id !== 'infecte
     cue(id, 'telegraph', ['riot', 'armored', 'firefighter', 'gorilla'].includes(name) ? 'step' : 'vocal', name === 'screamer' ? 0.8 : name === 'bloated' ? 1 : 0.4, 100 + index * 27, { gain: 0.6, caption: captions[name] ?? `${name[0].toUpperCase() + name.slice(1)} preparing an attack`, rateSpread: 0, antiSpam: 0 });
 }
 telegraphCues['infected.alpha'] = 'telegraph.brute';
+for (const [move, caption] of [['alpha.grab-throw', 'Alpha preparing to throw a body or prop'], ['alpha.roar', 'Alpha inhaling to roar']] as const) {
+  telegraphCues[move] = `telegraph.${move}`;
+  cue(`telegraph.${move}`, 'telegraph', 'vocal', .8, 100, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
+}
 cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });
 for (const name of ['zebra', 'civilian', 'explosive']) {
     telegraphCues[name] = `telegraph.${name}`;
@@ -184,7 +188,7 @@ export const eventCues = {
     'civilian.bark': 'civilian.hey', 'story.say': 'ui.tick', 'story.thud': 'impact.thump', 'civilian.state': 'ui.tick', 'civilian.eyes': 'civilian.transform', 'civilian.saved': 'stinger.objective', 'civilian.finished': 'ui.tick', 'civilian.turned': 'civilian.transform',
     'corgi.bark': 'corgi.warning', 'corgi.warn': 'corgi.warning', 'corgi.fetched': 'ui.pickup', 'escort.order': 'ui.switch', 'escort.downed': 'ui.tick', 'escort.revived': 'stinger.objective',
     'civilian.grabbed': 'telegraph.civilian', 'infected.prop-thrown': 'prop.wood', 'telegraph': 'telegraph.runner',
-    'infected.special': 'ui.tick', 'infected.attack': 'infected.vocal', 'infected.revived': 'telegraph.nurse', 'infected.leg-lost': 'gore.bone',
+    'infected.special': 'ui.tick', 'infected.roar-buff': 'ui.tick', 'infected.attack': 'infected.vocal', 'infected.revived': 'telegraph.nurse', 'infected.leg-lost': 'gore.bone',
     // PO "Infected recover": a downed infected groans once on the ground and snarls as it gets up.
     'infected.groan': 'infected.hurt', 'infected.recovered': 'infected.alert',
     noise: 'action.weapon.pistol', 'ai.alerted': 'ui.tick', 'combat.effect': 'ui.tick', 'pickup.collected': 'ui.pickup',

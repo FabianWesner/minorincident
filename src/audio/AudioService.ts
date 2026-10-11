@@ -573,7 +573,7 @@ export class AudioService implements Lifecycle {
         }
         if (event.type === 'telegraph') {
             const special = 'special' in event ? event.special : event.kind;
-            const id = telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[special] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
+            const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }

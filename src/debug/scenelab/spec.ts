@@ -96,6 +96,8 @@ export type Action =
   | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT'; /** Simultaneous walking direction for firing-layer QA. */ move?: Point }
   /** Courier: ordinary pointer-target aim without held fire, for pose blending QA. */
   | { aim: string; seconds?: number; move?: Point }
+  /** Courier: control the existing damage cheat for impact fixtures. */
+  | { god: boolean }
   | { select: 'LEFT' | 'RIGHT'; index?: number }
   /** Courier: one real click on the drawn body part of an actor, resolved by the game's click pick (`metrics.clicks`). */
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
@@ -107,6 +109,9 @@ export type Action =
   | { chase: string }
   /** Infected starts a real outbreak grab of this human (defence/rescue review). */
   | { grab: string }
+  /** Deterministic shared scheduler command and retained corpse fixture. */
+  | { special: import('../../data/infected').InfectedSpecialMove; target: string }
+  | { corpse: true }
   | { flee: Point }
   /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */

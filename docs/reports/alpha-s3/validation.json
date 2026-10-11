@@ -1,0 +1,52 @@
+{
+  "local": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "supportSimTiming": 2,
+    "renderCounters": 2,
+    "sceneCaptureGates": 2,
+    "directorTimingMs": 0.652375
+  },
+  "remote": {
+    "focusedAlpha": {
+      "passed": 34,
+      "failed": 0
+    },
+    "E07Smoke": {
+      "passed": 205,
+      "incidentalTimingFailureMs": 5.376905,
+      "timingRerunOnMac": "pass"
+    },
+    "initialUnit": {
+      "passed": 809,
+      "failed": 6,
+      "animationListAssertion": "updated and passed on runner-3"
+    },
+    "runner3": "ENOSPC during static unit build/build; superseded by final runner-1 run",
+    "finalUnit": {
+      "runner": "94.130.181.173",
+      "passed": 810,
+      "failed": 5,
+      "knownFailures": [
+        "fire-engine Blender proof",
+        "fire-engine damage tiers",
+        "inventory snapshot status",
+        "production asset geometry contracts",
+        "duplicate manifest IDs (393/394)"
+      ]
+    },
+    "finalBuild": "pass",
+    "browser": {
+      "runner": "94.130.181.173",
+      "port": 37084,
+      "passed": 5,
+      "failed": 0,
+      "source": "/tmp/alpha-s3-browser-complete.log"
+    },
+    "browserInfrastructure": [
+      "3383 occupied by alpha-s2; isolated final port 37084",
+      "Roar expiry uses exactly 300 sim ticks instead of per-tick rendering, with unchanged assertions"
+    ]
+  }
+}
