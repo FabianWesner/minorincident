@@ -5,6 +5,8 @@ export interface InfectedState {
   pathGrid: number; grabNextTick: number;
   combo: number;
   targetId: number;
+  /** Human acquired by close hearing in the archetype brain (targetId is reserved for obstacles). */
+  heardTargetId?: number;
   activeUntil: number;
   speed: number; until: number; cooldown: number; attackId: number; special: string; hidden: boolean;
   deadAt: number;
