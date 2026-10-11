@@ -1,0 +1,185 @@
+{
+  "E04": {
+    "target": "E04",
+    "epics": [
+      "E04"
+    ],
+    "pattern": "@(?:E04)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix-long-guns",
+          "--pull",
+          "test-results/epics/E04/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E04)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E04/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E04)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": 1
+      }
+    ]
+  },
+  "E06": {
+    "target": "E06",
+    "epics": [
+      "E06"
+    ],
+    "pattern": "@(?:E06)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix-long-guns",
+          "--pull",
+          "test-results/epics/E06/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E06)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E06/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E06)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": 1
+      }
+    ]
+  },
+  "E21": {
+    "target": "E21",
+    "epics": [
+      "E21"
+    ],
+    "pattern": "@(?:E21)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/fix-long-guns",
+          "--pull",
+          "test-results/epics/E21/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E21)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E21/vitest.json"
+        ],
+        "exitCode": 1
+      }
+    ]
+  }
+}
