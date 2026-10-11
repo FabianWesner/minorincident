@@ -7,6 +7,7 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
   const m=modifiers(save),defs:Record<string,ActionDef>={};
   for(const original of Object.values(catalog)){
     const d=structuredClone(original);
+    if(d.id==='weapon.shotgun'){d.magazine=0;d.reloadTime=0;d.upgradeHooks=d.upgradeHooks.filter(h=>h!=='magazine'&&h!=='reloadTime');}
     if(d.category==='melee')d.damage*=1+m.melee;
     // A magazine upgrade never gives a weapon without ammunition (the E21 handgun: 00 §6.1) a magazine and reload.
     if(d.category==='ranged'&&d.magazine>0){d.magazine+=m.magazine;d.reloadTime*=Math.max(.5,1-m.reload);}

@@ -333,6 +333,8 @@ export class Outbreak {
     if (this.world.tick < (e.civilian!.l1!.graceUntil ?? 0)) return;
     for (const a of ai.active) {
       if (a.health.current <= 0 || a.infectionRise || a.infected?.hidden || a.attachedTo !== undefined || civilians.holds(a.id)) continue;
+      // Alpha hits a soldier's health/knockdown path rather than starting the civilian bite hold.
+      if (a.archetype === 'infected.alpha' && e.civilian!.ally?.role === 'soldier') continue;
       if (a.combat && a.combat.staggerUntil > this.world.tick) continue;
       if (Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) > l1Pedestrians.grabReachM + (a.combat?.radius ?? .35)) continue;
       this.grab(e, a); return;

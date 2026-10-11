@@ -32,7 +32,7 @@ export interface EntitySnapshot {
   /** L1 v2 transformation of a bitten pedestrian (0 to 1); removed when the same entity rises infected. */
   infection?: import('../outbreak/types').InfectionState;
   noiseTarget?: { id: number; until: number };
-  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean };
+  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean; retain?: boolean; interactTicks?: number; progress?: number };
   speedBuff?: { multiplier: number; until: number };
   hidden?: boolean;
   /** Scripted walk out of a house door (HouseEmergence): body separation leaves the body (position and height) alone. */
@@ -69,7 +69,8 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | import('../../data/audioEvents').AudioSystemEvent
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
-  | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number }
+  | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number; move?: import('../../data/infected').InfectedSpecialMove; startTick?: number; activeTick?: number; cooldownExpiry?: number; target?: import('../ai/types').InfectedSpecialAttack['target']; area?: import('../ai/types').InfectedSpecialAttack['area'] }
+  | { tick: number; type: 'infected.special'; sourceId: number; move: import('../../data/infected').InfectedSpecialMove; attackId: number; stage: 'active' | 'recovery' | 'expiry' | 'cancelled' }
   | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost' | 'infected.groan' | 'infected.recovered'; sourceId: number; targetId: number }
 

@@ -99,6 +99,10 @@ export class CrowdView extends Group {
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
+    // derived model now, including its sim definition when A-S1 registers it.
+    if (this.world.scenario === 'L4' || this.world.scenario === 'L5')
+      for (const def of allDefinitions) if (def.asset === 'inf.alpha') l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
     const definitions = grove ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
     for (const def of definitions) {
@@ -299,7 +303,7 @@ export class CrowdView extends Group {
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
         const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch) ? layers : undefined;
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, band === 'lod1' && !crawling, layered, style);
-        batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend);
+        batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
