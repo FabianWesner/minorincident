@@ -17,6 +17,6 @@ try {
   const report=runL3(world,mission,'complete',{seed:1,maxSeconds:600});
   const result={...report,walkedM,maxQuietWalkM,samples,plannedHomes:mission.state.l3!.pending.map(q=>q.home)};
   writeFileSync('docs/reports/l3-route/complete-seed-1.json',JSON.stringify(result,null,2));
-  console.log(JSON.stringify({...report,walkedM,maxQuietWalkM}));
+  console.log(JSON.stringify({outcome:report.outcome,simSeconds:report.simSeconds,deaths:report.deaths,damage:report.damage,squad:report.squad,walkedM,maxQuietWalkM,audit:report.audit}));
   if(report.outcome!=='complete') process.exitCode=1;
 } finally {world.dispose();}

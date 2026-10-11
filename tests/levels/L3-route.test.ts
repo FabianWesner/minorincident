@@ -27,6 +27,13 @@ test('@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; t
     const points=path.map(i=>({x:nav.x(i),z:nav.z(i)}));
     const length=points.slice(1).reduce((s,p,i)=>s+Math.hypot(p.x-points[i].x,p.z-points[i].z),0);
     expect(length).toBeGreaterThanOrEqual(301*1.5);expect(length).toBeLessThanOrEqual(301*1.8);
+    let walkingM=0;
+    for(let i=0;i<points.length-1;) {
+      let next=i+1;
+      for(let k=points.length-1;k>i;k--) if(nav.visible(points[i],points[k],.45)) {next=k;break;}
+      walkingM+=Math.hypot(points[next].x-points[i].x,points[next].z-points[i].z);i=next;
+    }
+    expect(walkingM).toBeGreaterThanOrEqual(296.6*1.5);expect(walkingM).toBeLessThanOrEqual(296.6*1.8);
     expect(points.some(p=>p.x<-60&&p.z>24)).toBe(true);
     expect(points.some(p=>p.x>0&&p.z<-24)).toBe(true);
     expect(points.some(p=>p.x>165&&p.x<180&&w.districts!.groundHeight(p.x,p.z)>5)).toBe(true);

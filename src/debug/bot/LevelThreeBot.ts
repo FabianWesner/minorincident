@@ -58,7 +58,7 @@ export class LevelThreeBot {
     const w = this.world, m = w.missions!, s = m.state.l3;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
     if (this.finished || !s) return emptyInput();
-    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; }
+    if (m.state.phase === 'retry') { m.restore(); this.walker.reset(); this.detour = null; this.route.goal = -1; }
     if (m.state.phase === 'briefing') m.begin();
     if (m.state.phase === 'cinematic') return { ...emptyInput(), interact: true };
     const newbie = this.profile === 'newbie';
@@ -93,6 +93,7 @@ export class LevelThreeBot {
     // ---------------------------------------------------------------- the avenues
     if (this.last && dist(this.last, p) > 6) { this.walker.reset(); this.detour = null; }
     this.last = { x: p.x, z: p.z };
+    const routed = l3RouteDirection(w, this.route, this.routePoint), routeAhead = routed ? this.routePoint : a['l3-zone'];
     const hp = player.health.current / player.health.max;
     // Medkits when hurt: the nearest one ahead or close by that is still there.
     // A newbie grabs every medkit it passes once it has lost a little health; the complete bot waits until it needs one.
@@ -122,12 +123,12 @@ export class LevelThreeBot {
       this.stuck.next = w.tick + 60;
       if (this.stuck.at && dist(this.stuck.at, p) < .6 && !near.length && !frame.attackTarget && !this.waiting) this.stuck.n++; else this.stuck.n = 0;
       this.stuck.at = { x: p.x, z: p.z };
-      if (this.stuck.n >= 3) { const at = this.keep(this.walker.detour(w, { x: p.x + 10, z: p.z })); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
+      if (this.stuck.n >= 3) { const at = this.keep(this.walker.detour(w, routeAhead)); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
     }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
     const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
     // Fight a few, flee from many: a crowd closing in (or a losing fight) means breaking away forward, not standing.
-    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, { x: p.x + 12, z: l3.map.streets[this.street] }, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
+    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.keep(this.walker.detour(w, routeAhead, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform)); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 6 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 12, until: w.tick + 180 };
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
@@ -150,7 +151,7 @@ export class LevelThreeBot {
       } else if (this.waiting) { this.waitedTotal[seg] += w.tick - this.waitedSince; this.waiting = false; }
     }
     // Read the connected route through the wreck detours and the highway; every step still uses ordinary inputs.
-    if (l3RouteDirection(w, this.route, this.routePoint)) go(this.routePoint, .2, 'army-route');
+    if (routed) go(routeAhead, .2, 'army-route');
     return frame;
   }
 }

@@ -11,7 +11,7 @@ try {
   }
   await session.inspectLevel('L3');
   await session.page.evaluate(() => window.__SS__!.inspect.timeScale(0));
-  await session.page.addStyleTag({content:'[data-testid=inspection],.tp-dfwv,.mission-subtitle,.story-bubble,#hud,.hud,.hud-tracker,.hud-map,[data-testid=mission-panel]{visibility:hidden!important}'});
+  await session.page.addStyleTag({content:'[data-testid=inspection],.tp-dfwv,.mission-subtitle,.story-bubble,#hud,.hud,.hud-tracker,.hud-map,.mission-ui,[data-testid=mission-panel]{visibility:hidden!important}'});
   for (const [i, b] of l3Roadblocks.entries()) {
     await session.page.evaluate(({x,z}) => window.__SS__!.inspect.setCamera({position:[x+18,23,z+18],target:[x,0,z]}), b);
     await session.screenshot(`${out}/roadblock-${i+1}.png`);
