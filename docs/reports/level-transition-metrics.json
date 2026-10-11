@@ -1429,6 +1429,68 @@
       "turnMaxMs": 33.80000000000291,
       "tankMaxMs": 36.19999999999709,
       "breakMaxMs": 35
+    },
+    "currentMainL4Phone": {
+      "warTriangles": 257901,
+      "collapseTriangles": 517397,
+      "warP50": 17,
+      "warP95": 34.30000000000291,
+      "warMax": 91.5,
+      "collapseP50": 19,
+      "collapseP95": 35,
+      "simP95": 4.700000762939453,
+      "turnMaxMs": 33.60000000000218,
+      "tankMaxMs": 36.700000000004366,
+      "breakMaxMs": 37.299999999995634
+    }
+  },
+  "levels": {
+    "fullPassed": 29,
+    "fullFailed": 2,
+    "isolatedRetry": {
+      "L2": "failed navigation",
+      "L3 Commerce": "passed"
+    },
+    "oldBaseline": {
+      "L2": "passed",
+      "L3 Commerce": "passed",
+      "L6 escort": "passed"
+    },
+    "currentMainControl": {
+      "L2": "failed navigation at a different waypoint",
+      "L3 Commerce": "passed"
+    }
+  },
+  "verification": {
+    "remoteFirst": {
+      "simPassed": 68,
+      "browserPassed": 26,
+      "browserFailed": 5,
+      "workers": 2
+    },
+    "remoteFinal": {
+      "simPassed": 68,
+      "browserPassed": 29,
+      "browserFailed": 2,
+      "workers": 1,
+      "failures": [
+        "WebGL crowd screenshot exceeds explicit 120-second test deadline",
+        "WebGPU createBuffer mappedAtCreation size 48 failure"
+      ]
+    },
+    "currentMainRemoteGpuControl": "same mappedAtCreation size 48 failure on d27704a2",
+    "macE12": {
+      "exit": 0,
+      "simPassedRemote": 68,
+      "browserPassedMac": 31,
+      "source": "9fb1b0a3",
+      "checks": [
+        "typecheck",
+        "lint",
+        "build",
+        "remote simulation",
+        "native browser"
+      ]
     }
   }
 }
