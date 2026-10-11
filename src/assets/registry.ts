@@ -80,6 +80,7 @@ export class AssetRegistry {
           return this.loadAsset(def.id, lod === 'lod2' ? 'lod1' : 'lod0', decay);
         }
       }
+      root.userData.assetId = def.id;
       root.userData.diner = def.id === 'bld.joes-diner';
       root.userData.paletteWorld = !/^(char|npc|inf)\./.test(def.id); root.userData.paletteHydrant = def.id === 'prop.fire-hydrant';
       this.materials.swap(root, !/^(char|npc|inf)\./.test(def.id), def.id === 'prop.fire-hydrant');

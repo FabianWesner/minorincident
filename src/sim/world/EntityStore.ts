@@ -4,8 +4,14 @@ import type { EntitySnapshot } from './types';
 export class EntityStore {
   private readonly entities = new Map<number, EntitySnapshot>();
   private nextId = 1;
+  private nextAuxiliaryId = 1_000_000_000;
   create(entity: Omit<EntitySnapshot, 'id'>): EntitySnapshot {
     const record = { ...entity, id: this.nextId++ };
+    this.entities.set(record.id, record); return record;
+  }
+  /** Authored lighting must not shift seeded actor IDs or their staggered AI ticks. */
+  createAuxiliary(entity: Omit<EntitySnapshot, 'id'>): EntitySnapshot {
+    const record = { ...entity, id: this.nextAuxiliaryId++ };
     this.entities.set(record.id, record); return record;
   }
   /** Adopt a prewarmed pooled record without creating a new entity object. */
@@ -14,8 +20,12 @@ export class EntityStore {
   replace(entity: EntitySnapshot): void { this.entities.set(entity.id, entity); }
   /** Checkpoint records keep numeric IDs stable for scripted actor references. */
   restore(records: EntitySnapshot[], player: EntitySnapshot): void {
-    this.entities.clear(); this.nextId = 1;
-    for (const entity of records) { this.entities.set(entity.id, entity.id === 1 ? player : entity); this.nextId = Math.max(this.nextId, entity.id + 1); }
+    this.entities.clear(); this.nextId = 1; this.nextAuxiliaryId = 1_000_000_000;
+    for (const entity of records) {
+      this.entities.set(entity.id, entity.id === 1 ? player : entity);
+      if (entity.id >= 1_000_000_000) this.nextAuxiliaryId = Math.max(this.nextAuxiliaryId, entity.id + 1);
+      else this.nextId = Math.max(this.nextId, entity.id + 1);
+    }
   }
   get(id: number): EntitySnapshot | undefined { return this.entities.get(id); }
   values(): EntitySnapshot[] { return [...this.entities.values()].sort((a, b) => a.id - b.id); }
@@ -24,6 +34,6 @@ export class EntityStore {
   get size(): number { return this.entities.size; }
   init(): void { this.reset(); }
   update(): void {}
-  reset(): void { this.entities.clear(); this.nextId = 1; }
+  reset(): void { this.entities.clear(); this.nextId = 1; this.nextAuxiliaryId = 1_000_000_000; }
   dispose(): void { this.reset(); }
 }

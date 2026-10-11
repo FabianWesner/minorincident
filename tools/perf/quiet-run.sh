@@ -11,12 +11,14 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
 fi
 while :; do
   # pgrep's own command is excluded by pgrep. Also catch native Chrome's --headless flag.
-  if ! pgrep -fil 'chrome.*headless' >/dev/null && node -e 'process.exit(require("node:os").loadavg()[0] < 3 ? 0 : 1)'; then
+  # A single Vitest worker can occupy a core while loadavg is still below 3.
+  # Measured during E25/E27 closure: phone transitions then exceeded 50 ms.
+  if ! pgrep -fil 'chrome.*headless' >/dev/null && ! pgrep -f '[n]ode.*/node_modules/.bin/vitest' >/dev/null && node -e 'process.exit(require("node:os").loadavg()[0] < 3 ? 0 : 1)'; then
     uptime
     if [ -n "${PERF_CONDITIONS_LOG:-}" ]; then
-      node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,browserSlots:[0,1],command:process.argv.slice(1)})+"\n")' "$@"
+      node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,localVitest:0,browserSlots:[0,1],command:process.argv.slice(1)})+"\n")' "$@"
     fi
-    printf '%s\n' 'Quiet-run preflight: load < 3; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.'
+    printf '%s\n' 'Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.'
     exec "$@"
   fi
   sleep 20

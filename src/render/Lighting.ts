@@ -1,11 +1,14 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
-import { Color, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
-import { renderGroup, uniform, mix, vec2, viewportUV, Fn, texture, reference, float } from 'three/tsl';
+import { Color, DataTexture, RGBAFormat, UnsignedByteType, type WebGPURenderer, SpotLight, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
+import { renderGroup, uniform, mix, vec2, viewportUV, Fn, texture, reference, float, pmremTexture } from 'three/tsl';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
 import { LookUniforms } from './LookUniforms';
+import { Environment } from './lighting/Environment';
+import { PracticalEffects } from './lighting/PracticalEffects';
+import { LampPowerView } from './lighting/LampPowerView';
 import { LightField } from './LightField';
 import { weatherMaterialFlags } from './WeatherView';
 import type { PaletteMaterial } from './PaletteMaterial';
@@ -28,6 +31,9 @@ const stableSunShadow = Fn(({ depthTexture, shadowCoord, shadow, depthLayer }: {
 
 /** One sun, a hemisphere and shared stylized lighting uniforms. Shadows follow the visible ground region. */
 export class Lighting {
+  private environment?: Environment;
+  private readonly fallbackEnvironment = new DataTexture(new Uint8Array([45, 45, 60, 255]), 1, 1, RGBAFormat, UnsignedByteType);
+  readonly environmentNode = pmremTexture(this.fallbackEnvironment);
   readonly sun = new DirectionalLight(0xffffff, 1);
   readonly hemisphere = new HemisphereLight(worldLook.skyAmbient, worldLook.groundAmbient, 0.5);
   readonly direction = uniform(new Vector3());
@@ -59,6 +65,15 @@ export class Lighting {
   gloom = 1;
   /** E25 layer 2: practical-light pools around the focus (LightField). */
   readonly field = new LightField();
+  readonly lamps = new LampPowerView();
+  readonly practicalEffects = new PracticalEffects();
+  readonly spot = new SpotLight('#fff1d6', .001, 35, Math.PI / 4, .5, 2);
+  private promoted: import('./LightField').FieldLight | null = null;
+  private promotedAt = -Infinity;
+  private promotionChanges = 0;
+  private readonly promotionPosition = new Vector3();
+  private readonly promotionTarget = new Vector3();
+  private quality: QualityTier = 'high';
   /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
   readonly hero = uniform(new Vector3(0, -100, 0));
   readonly rim = uniform(0);
@@ -93,7 +108,9 @@ export class Lighting {
     this.weatherMode = mode;
     for (const material of this.paletteMaterials) material.setWeatherMode(mode);
   }
-  constructor(private readonly scene: Scene, readonly look = new LookUniforms()) {
+  constructor(private readonly scene: Scene, readonly look = new LookUniforms(), renderer?: WebGPURenderer) {
+    this.fallbackEnvironment.needsUpdate = true;
+    if (renderer) this.environment = new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
     for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
@@ -105,18 +122,23 @@ export class Lighting {
     this.sun.shadow.bias = -0.0005; this.sun.shadow.normalBias = 0.08; this.sun.shadow.radius = 2;
     // LightShadow.filterNode is public at runtime but omitted from @types/three.
     (this.sun.shadow as typeof this.sun.shadow & { filterNode: typeof stableSunShadow }).filterNode = stableSunShadow;
+    this.spot.castShadow = true; this.spot.shadow.mapSize.set(512, 512); this.spot.shadow.bias = -.0005; this.spot.shadow.normalBias = .03;
+    this.spot.visible = false;
+    this.scene.add(this.spot, this.spot.target, this.practicalEffects);
     this.scene.add(this.sun, this.sun.target, this.hemisphere); this.set('golden');
   }
   setQuality(tier: QualityTier): void {
-    this.field.setQuality(tier);
+    this.quality = tier; this.field.setQuality(tier);
     const size = qualityBudgets[tier].shadowSize;
     if (this.sun.shadow.mapSize.x === size) return;
     this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
+    this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.visible = true;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
+    if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
     this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
@@ -183,7 +205,14 @@ export class Lighting {
   /** Hero shadows within the one-shadow-map budget (specs/06 §4): at night the sun/moon shadow camera turns
    * towards the strongest `shadow: hero` light covering the survivor, and the light-field pools take that
    * shadow. Direction and weight crossfade over ~0.3 s, so promotion never pops. `time` is sim seconds. */
-  setHeroLight(light: { x: number; y?: number; z: number } | null, focus: { x: number; y: number; z: number }, time: number): void {
+  setHeroLight(light: import('./LightField').FieldLight | null, focus: { x: number; y: number; z: number }, time: number): void {
+    // Retain the current lamp until it leaves the pool (or loses power), and
+    // never select a replacement within one second of the last promotion.
+    const current = this.promoted;
+    const covered = current?.on && Math.hypot(current.x + current.aimX - focus.x, current.z + current.aimZ - focus.z) < current.radius * 1.05;
+    if (covered || (time - this.promotedAt < 1 && current?.on)) light = current;
+    if (light !== current) { this.promotionPosition.copy(this.spot.position); this.promotionTarget.copy(this.spot.target.position); if (this.heroTime < 0 && light) { this.promotionPosition.set(light.x, light.y ?? 3, light.z); this.promotionTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ); } this.promoted = light; this.promotedAt = time; this.promotionChanges++; }
+    this.heroLight = light?.id ?? null;
     const seconds = this.heroTime < 0 ? 0 : Math.max(0, Math.min(.1, time - this.heroTime)); this.heroTime = time;
     const night = this.field.strength.value >= .5;
     const goal = light && night ? 1 : 0;
@@ -193,11 +222,31 @@ export class Lighting {
     if (this.shadowDirection.lengthSq() < .5 || seconds === 0) this.shadowDirection.copy(this.heroTarget);
     else this.shadowDirection.lerp(this.heroTarget, k).normalize();
     this.fieldShadow.value = seconds === 0 ? goal : this.fieldShadow.value + (goal - this.fieldShadow.value) * k;
+    this.spot.visible = night && !!light;
+    // Keep castShadow stable: Three disposes its ShadowNode when this flag
+    // flips, while cached material graphs can still reference that node.
+    // Only the active source is visible, so one shadow map is rendered.
+    this.sun.visible = !this.spot.visible;
+    if (light) {
+      const blend = Math.min(1, Math.max(0, (time - this.promotedAt) / .3));
+      this.spot.position.copy(this.promotionPosition).lerp(this.heroTarget.set(light.x, light.y ?? 3, light.z), blend);
+      this.spot.target.position.copy(this.promotionTarget).lerp(this.heroTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ), blend);
+      this.spot.distance = Math.max(10, light.radius * 4); this.spot.angle = Math.atan2(light.radius * light.stretch, Math.max(1, light.y ?? 3));
+      this.spot.intensity = .001 * this.fieldShadow.value;
+    }
+    this.practicalEffects.update(this.lamps.state, this.field.strength.value, focus, this.quality === 'low');
+  }
+  /** E27 keeps the survivor's capsule and rim readable inside an active smoke cloud. */
+  setPlayerSmoke(covered: boolean): void {
+    const p = timeOfDay[this.preset];
+    this.heroFill.value = (p.aura ?? 0) * 3.2 + (covered ? 1 : 0);
+    this.rim.value = (p.rim ?? 0) + (covered ? .2 : 0);
+    this.setWeatherMode(this.weatherFeatures);
   }
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
+    return { promotionBlend: Math.min(1, Math.max(0, (this.heroTime - this.promotedAt) / .3)), heroLight: this.heroLight, lamps: this.lamps.snapshot(), heroLights: Number(this.spot.visible), heroShadowMaps: Number(this.spot.visible), promotionChanges: this.promotionChanges, practicalEffects: this.practicalEffects.snapshot(), shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
   }
-  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.field.dispose(); this.scene.backgroundNode = null; }
+  dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); this.environment?.dispose(); this.fallbackEnvironment.dispose(); this.field.dispose(); this.lamps.dispose(); this.practicalEffects.dispose(); this.scene.remove(this.spot, this.spot.target, this.practicalEffects); this.spot.dispose(); this.scene.backgroundNode = null; }
 }

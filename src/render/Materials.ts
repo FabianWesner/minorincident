@@ -26,6 +26,7 @@ export class Materials {
     this.texture = new DataTexture(data, paletteTokens.length * 2, 1, RGBAFormat, UnsignedByteType);
     this.texture.colorSpace = SRGBColorSpace; this.texture.minFilter = this.texture.magFilter = NearestFilter; this.texture.needsUpdate = true;
   }
+  get lamps() { return this.lighting.lamps; }
   get look() { return this.lighting.look; }
   applyLook(): void {
     const data = this.texture.image.data as Uint8Array;
@@ -43,27 +44,27 @@ export class Materials {
     const offset = index.lessThan(0).select(paletteTokens.length, this.lighting.worldPaletteEnabled.mul(paletteTokens.length));
     return texture(this.texture, vec2(index.add(offset).add(.5).div(paletteTokens.length * 2), .5)).rgb;
   }
-  world(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide): PaletteMaterial {
-    const key = `world:${token}:${emissive}:${vertexColors}:${side}`;
+  world(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide, surfaceClass = 0): PaletteMaterial {
+    const key = `world:${token}:${emissive}:${vertexColors}:${side}:${surfaceClass}`;
     let material = this.cache.get(key);
     if (!material) {
       const swatch = this.sample(uniform(paletteTokens.indexOf(token)));
       const base = vertexColors ? swatch.mul(attribute('color', 'vec3')) : surfaceDetail(token, swatch, this.look.nodes);
-      material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
+      material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, surface: surfaceClass ? uniform(surfaceClass) : undefined, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
       material.color.set(palette[token]); material.vertexColors = vertexColors; material.side = side;
-      material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; this.cache.set(key, material);
+      material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; material.userData.surfaceClass = surfaceClass; this.cache.set(key, material);
     }
     return material;
   }
   /** Imported palette identity remains available to batching and figure bake consumers. */
-  asset(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide): PaletteMaterial {
-    const key = `asset:${token}:${emissive}:${vertexColors}:${side}`;
+  asset(token: PaletteToken, emissive = 0, vertexColors = false, side: Side = FrontSide, surfaceClass = 0): PaletteMaterial {
+    const key = `asset:${token}:${emissive}:${vertexColors}:${side}:${surfaceClass}`;
     let material = this.cache.get(key);
     if (!material) {
       const base = texture(this.texture, vec2((paletteTokens.indexOf(token) + .5) / (paletteTokens.length * 2), .5)).rgb.mul(vertexColors ? attribute('color', 'vec3') : 1);
-      material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
+      material = new PaletteMaterial(token, this.texture, this.lighting, 0, undefined, false, { base, surface: surfaceClass ? uniform(surfaceClass) : undefined, glow: emissive ? base.div(luminance(base).max(.001)).mul(emissive) : undefined });
       material.color.set(palette[token]); material.vertexColors = vertexColors; material.side = side;
-      material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; this.cache.set(key, material);
+      material.name = `${emissive ? 'emi' : 'pal'}_${token}`; material.userData.emissiveStrength = emissive; material.userData.surfaceClass = surfaceClass; this.cache.set(key, material);
     }
     return material;
   }
@@ -98,8 +99,8 @@ export class Materials {
     return material;
   }
   /** Owned GPU crowd/prop graph: same light as heroes, with caller-authored swatches/eyes. */
-  shaded(base: Node<'vec3'>, glow?: Node<'vec3'>, opacity?: Node<'float'>): PaletteMaterial {
-    return new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, false, { base, glow, opacity });
+  shaded(base: Node<'vec3'>, glow?: Node<'vec3'>, opacity?: Node<'float'>, surface?: Node<'float'>): PaletteMaterial {
+    return new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, false, { base, glow, opacity, surface });
   }
   /** One shared material for every tree/hedge LOD; bottom vertices remain rooted. */
   foliage(world = false): PaletteMaterial {
