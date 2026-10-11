@@ -339,6 +339,7 @@ export class Mission {
     const player = this.world.entities.get(1)!;
     delete player.weapons; delete player.inventory;
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
+    for (const entity of entities) if (entity.light && entity.light.startedAt >= 0) entity.light.startedAt += delta;
     for (const entity of entities) if (entity.vehicle) { if (entity.vehicle.explodeAt !== null) entity.vehicle.explodeAt += delta; if (entity.vehicle.recoveringUntil) entity.vehicle.recoveringUntil += delta; }
     if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
     for (const entity of entities) if (entity.interactable) entity.interactable.interruptedAt = -1;

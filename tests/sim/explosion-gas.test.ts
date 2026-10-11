@@ -1,0 +1,45 @@
+import { afterEach, expect, test } from 'vitest';
+import { SimWorld } from '../../src/sim/world/SimWorld';
+import { Status } from '../../src/sim/combat/Status';
+import { moveAgent } from '../../src/sim/locomotion/AgentMotion';
+import { NavGrid } from '../../src/sim/ai/NavGrid';
+
+let world: SimWorld;
+afterEach(() => world?.dispose());
+test('T-E27-09b @E27 @E27-AC09 a toxic blast creates the defined six metre, twelve second gas hazard', async () => {
+  world = new SimWorld(); await world.init(); world.loadScenario('combat-arena');
+  world.explosions!.blast('explosion.toxic', { x: 0, z: -18 });
+  const gas = world.entities.values().find(e => e.hazard?.kind === 'toxic')!;
+  expect(gas.hazard).toMatchObject({ radius: 6, activeUntil: world.tick + 720 });
+  const id = world.spawnDummy('infected.dummy', { x: 2, z: -18 }, { hp: 100 });
+  for (let i = 0; i < 60; i++) world.update();
+  expect(world.entities.get(id)!.health.current).toBe(90);
+  for (let i = 60; i < 720; i++) world.update();
+  expect(world.tick).toBe(gas.hazard!.activeUntil);
+});
+test('T-E27-09 @E27 @E27-AC09 toxic DoT excludes Hazmat; tear gas slows infected by 30% and the player by 15%, then clears', async () => {
+  world = new SimWorld(); await world.init(); world.loadScenario('combat-arena');
+  const player = world.entities.get(1)!;
+  Object.assign(player.transform, { x: 0, z: -18 }); world.spatial.set(1, 0, -18);
+  const ordinary = world.spawnDummy('infected.dummy', { x: 1, z: -18 }, { hp: 100 });
+  const hazmat = world.spawnDummy('infected.hazmat', { x: -1, z: -18 }, { hp: 100 });
+  const out = world.spawnDummy('infected.dummy', { x: 4, z: -18 }, { hp: 100 });
+  world.hazards!.spawn('toxic', { x: 0, z: -18 }, { radius: 3, duration: 2 });
+  const hp = player.health.current;
+  world.tick = 60; world.hazards!.update();
+  expect(player.health.current).toBe(hp - 10);
+  expect(world.entities.get(ordinary)!.health.current).toBe(90);
+  expect(world.entities.get(hazmat)!.health.current).toBe(100);
+  expect(world.entities.get(out)!.health.current).toBe(100);
+  world.hazards!.spawn('tear-gas', { x: 0, z: -18 }, { radius: 3, duration: 1 });
+  world.hazards!.update();
+  expect(Status.speed(player)).toBe(.85);
+  const infected = world.entities.get(ordinary)!;
+  expect(Status.speed(infected)).toBe(.7);
+  expect(Status.speed(world.entities.get(out)!)).toBe(1);
+  const nav = new NavGrid({ width: 80, depth: 80 }, []);
+  for (let tick = 61; tick <= 360; tick++) moveAgent(infected, 3, 0, nav, tick);
+  expect(infected.locomotion!.vx).toBeCloseTo(2.1, 5);
+  world.tick = 62; world.combat!.status.update();
+  expect(Status.speed(player)).toBe(1); expect(Status.speed(infected)).toBe(1);
+});

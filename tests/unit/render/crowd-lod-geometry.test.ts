@@ -3,8 +3,9 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { expect, test } from 'vitest';
-import { bakeInfected } from '../../../src/render/characters/bakeInfected';
+import { bakeInfected, civilianClips } from '../../../src/render/characters/bakeInfected';
 import { simplifyCrowdLod } from '../../../src/render/characters/crowdLodGeometry';
+import { handTriangles, prepareGrip } from '../../../src/render/npc/civilianGrip';
 
 test('@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership', async () => {
   const file = readFileSync('public/assets/models/inf.common-worker.lod2.glb');
@@ -26,5 +27,21 @@ test('@E18-AC01 @perf far worker reduces geometry while retaining every vertex c
     expect(parts.getX(indices.getX(i))).toBe(parts.getX(indices.getX(i + 1)));
     expect(parts.getX(indices.getX(i))).toBe(parts.getX(indices.getX(i + 2)));
   }
+  geometry.dispose();
+});
+
+test('T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels', async () => {
+  const bytes = readFileSync('public/assets/models/npc.civilian-man-a.lod2.glb');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const baked = bakeInfected(scene, [], false, civilianClips), handPart = baked.clip.parts.indexOf('handR');
+  const authoredTriangles = baked.geometry.getAttribute('position').count / 3;
+  prepareGrip(baked.geometry, handPart);
+  const geometry = mergeVertices(baked.geometry); baked.geometry.dispose();
+  const attributes = { ...geometry.attributes };
+  await simplifyCrowdLod(geometry, .01, .35);
+  expect(geometry.index!.count / 3).toBeLessThanOrEqual(authoredTriangles);
+  expect(geometry.userData.crowdLodError).toBeLessThanOrEqual(.01);
+  expect(handTriangles(geometry, handPart).length).toBeGreaterThan(0);
+  for (const [name, attribute] of Object.entries(attributes)) expect(geometry.getAttribute(name)).toBe(attribute);
   geometry.dispose();
 });
