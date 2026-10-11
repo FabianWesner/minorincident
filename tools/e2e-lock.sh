@@ -8,7 +8,7 @@ command -v lockf >/dev/null 2>&1 || exec "$@"
 [ -n "${MI_E2E_LOCK_HELD:-}" ] && exec "$@"
 export MI_E2E_LOCK_HELD=1
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
-slots="${E2E_SLOTS:-2}"  # 10-09: 2 parallel browsers (Mac load ~3.5 with 7 lanes); perf measurements should pass E2E_SLOTS=1 and check `uptime`
+slots="${E2E_SLOTS:-4}"  # 10-11: 4 parallel browsers (QA round; 10-09 was 2 (Mac load ~3.5 with 7 lanes); perf measurements should pass E2E_SLOTS=1 and check `uptime`
 # Join the kernel queue for the default shared slot; polling can starve queued lanes.
 if [ "$slots" -eq 1 ]; then
   exec lockf -k "$base.0" "$@"
