@@ -1,0 +1,78 @@
+{
+  "name": "qa-elephant-asset-motion",
+  "note": "Asset-only elephant gait and death pose via shipped lion brain; courier escapes along +X. Check yaw vs velocity, no mesh tears, grounded soles, visible eyes. Stampede/swipe telegraphs belong to Z-S2.",
+  "seed": 7,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 60,
+  "dof": false,
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        6,
+        0
+      ],
+      "state": {
+        "run": [
+          [
+            6,
+            0
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            14,
+            10
+          ]
+        ]
+      }
+    },
+    {
+      "id": "elephant",
+      "kind": "infected",
+      "archetype": "infected.firefighter",
+      "look": {
+        "model": "inf.elephant"
+      },
+      "at": [
+        -5,
+        0
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      5,
+      1,
+      3
+    ],
+    "zoom": 1.4
+  },
+  "frames": 240,
+  "shots": [
+    0,
+    60,
+    120,
+    180,
+    240
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "footSinkMaxCm": 0
+  }
+}

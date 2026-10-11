@@ -69,12 +69,14 @@ export class CrowdLocomotion {
   private readonly contacts = new Map<number, GroundContacts>();
   private readonly paws = new Map<number, PawContacts>();
   private readonly animal: boolean;
+  private readonly groundedAnimal: boolean;
   private readonly rest: { position: Vector3; quaternion: import('three').Quaternion; scale: Vector3 }[];
   readonly reach: number;
   /** Rest ankle height in foot-local units (sole contact offset for probes). */
   readonly sole: number;
   constructor(private readonly model: Object3D, private readonly clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
     this.animal = !!model.getObjectByName('legFL');
+    this.groundedAnimal = this.animal && model.getObjectByName('root')?.userData.groundedAnimal === true;
     model.updateMatrixWorld(true);
     const originals = clip.parts.map(name => model.getObjectByName(name)!);
     this.nodes = originals.map(node => { const copy = new Object3D(); copy.name = node.name; return copy; });
@@ -160,7 +162,8 @@ export class CrowdLocomotion {
       paws.update(phase, stride, 'corgi-trot');
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
-    if (layers && !this.animal) this.ground();
+    // Large authored quadrupeds retain the same sole correction after paw/contact pose layers.
+    if ((layers && !this.animal) || (this.groundedAnimal && (gaitStyles[name] || standingClips.has(name)))) this.ground();
     this.store(pose, instance);
   }
   /** Pose layers (hunch, lunge, flinch) pivot the legs with the pelvis: lift the pelvis by whatever heel or toe they

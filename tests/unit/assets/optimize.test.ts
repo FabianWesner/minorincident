@@ -123,7 +123,7 @@ test('T-E17-pose-caps @E17-AC11 prefixed corpse joints retain usable hidden caps
   }
 });
 
-test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m and Alpha stays 1.35–1.5x worker at every LOD', async () => {
+test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.35–1.5x worker and elephant stays 3 m at every LOD', async () => {
   const {default:manifest}=await import('../../../src/assets/manifest.json'), io=await assetIO();
   const exceptions=new Set(['char.corgi','char.courier-male','char.courier-female','npc.lab-tech-a','npc.lab-tech-b','npc.lab-guard','npc.depot-clerk','npc.brother','npc.civilian-kid','inf.crawler','inf.brute','inf.teen-skater']);
   // Animal silhouettes and the prone/seated corpse pack are not standing adults.
@@ -150,6 +150,10 @@ test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m and Alpha stays 
           const worker = manifest.find(asset => asset.id === 'inf.common-worker')!;
           expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 1.35);
           expect(height, path).toBeLessThanOrEqual(worker.dimensions.y * 1.5);
+        } else if (def.id === 'inf.elephant') {
+          // E07's zoo base has a 3 m animal silhouette; keep every human bound above/below exact.
+          expect(height, path).toBeGreaterThanOrEqual(2.9);
+          expect(height, path).toBeLessThanOrEqual(3.1);
         } else {
           expect(height,`${path}:${subject.getName()}`).toBeGreaterThanOrEqual(1.75);expect(height,`${path}:${subject.getName()}`).toBeLessThanOrEqual(1.85);
         }
