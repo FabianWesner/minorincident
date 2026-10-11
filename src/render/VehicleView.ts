@@ -163,7 +163,7 @@ export class VehicleView extends Group {
         leaf.userData.closedYaw ??= leaf.rotation.y;
         leaf.rotation.y = leaf.userData.closedYaw + (side === sign ? sign * open * 1.15 : 0);
       }
-      this.updateOccupants(id, record);
+      this.updateOccupants(id, record, alpha);
       record.brake.color.set('#ff2d2d').multiplyScalar(state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar((Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
@@ -186,10 +186,10 @@ export class VehicleView extends Group {
     }
   }
   /** Hidden seated actors own occupants. Exits transfer their copy to a short door-opening transition. */
-  private updateOccupants(id: number, record: Record): void {
+  private updateOccupants(id: number, record: Record, alpha: number): void {
     const car = this.world.vehicles!.cars.get(id)!, l2 = this.world.missions?.state.l2;
     const wanted: { actorId: number; seat: string; driver: boolean }[] = [];
-    const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick - transition.tick : carTransitionTicks;
+    const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
     if (transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
     if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
     if (l2?.truckId === id) {

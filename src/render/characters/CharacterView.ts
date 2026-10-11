@@ -161,7 +161,7 @@ export class CharacterView extends Group {
   carStep(bend: number): void {
     const character = this.characters.get(this.variant); if (!character) return;
     const nodes = [character.rig.torso, character.rig.legL, character.rig.legR, character.rig.shinL, character.rig.shinR];
-    if (this.carEvaluation !== character.animator.evaluations) {
+    if (this.carEvaluation !== character.animator.evaluations || !this.carRest.has(character.rig.torso)) {
       this.carEvaluation = character.animator.evaluations; this.carRest.clear();
       for (const node of nodes) this.carRest.set(node, node.quaternion.clone());
     }

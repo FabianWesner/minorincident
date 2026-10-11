@@ -1,8 +1,9 @@
 /** E09 tuning in SI units; +X forward, +Y up, +Z left. */
 export interface VehicleDef {
   /** Door centre in authored +X metres, shared by interaction and presentation. */
+  doorX: number;
   /** Sill height for the visible step-up/down, in metres above the road. */
-  doorX: number; stepHeight: number;
+  stepHeight: number;
   id: string; asset: string; mass: number; length: number; width: number; wheelbase: number;
   wheelRadius: number; suspension: number; stiffness: number; engineForce: number;
   topSpeed: number; steering: number; hp: number; ramStrength: number; emergency: boolean;
