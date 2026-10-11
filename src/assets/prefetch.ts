@@ -3,7 +3,7 @@ import { compositions } from '../levels/compositions';
 import type { DistrictLayout } from '../levels/districts/types';
 import { assetUrl } from './assetUrl';
 import { districtAssetUrls } from './DistrictAssets';
-import { coreCivilianModels, l1Pedestrians } from '../data/npcs';
+import { coreCivilianModels, l1Pedestrians, l3CivilianModels } from '../data/npcs';
 import { l5Survivors } from '../data/l5';
 import { l6CastModels } from '../data/l6';
 import { l2Dressing } from '../levels/L2/layout';
@@ -50,15 +50,19 @@ export async function prefetchLevel(level: string, concurrency = 4, quality: 'hi
     if (level === 'L2') add('bld.clinic-annex', 'burned');
     if (level === 'L5') add('decay.collapsed-facade');
     if (level === 'L3' || level === 'L5') add('decay.broken-glass');
-    const actors = new Set(level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...coreCivilianModels, ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
+    const actors = new Set(level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...(level === 'L3' ? l3CivilianModels : coreCivilianModels), ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
     actors.add('char.corgi'); actors.add(infectedDef('infected.runner').asset);
     for (const id of actors) {
-      for (const lod of quality === 'high' ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2']) {
+      const def = definitions.get(id);
+      for (const lod of quality === 'high' ? ['lod0', 'lod1', 'lod2'] as const : ['lod1', 'lod2'] as const) {
         const baked = (civilianBakes as Record<string, string>)[`${id}:${lod}`];
-        if (baked) urls.add(baked);
+        // Shipped civilian bakes include the rig. Downloading their source GLB too
+        // competes with the actual load without being used by the crowd.
+        if (baked) { urls.add(baked); continue; }
+        if (!def || !atLeast(def.status, 'integrated')) continue;
+        const path = lod === 'lod0' ? def.glb : def.lods?.[lod] ?? def.glb;
+        if (path) urls.add('/' + path.replace(/^public\//, ''));
       }
-      const def = definitions.get(id); if (!def || !atLeast(def.status, 'integrated')) continue;
-      for (const path of [def.lods?.lod1 ?? def.glb, def.lods?.lod2 ?? def.glb, ...(quality === 'high' ? [def.glb] : [])]) if (path) urls.add('/' + path.replace(/^public\//, ''));
     }
     for (const variant of ['female', 'male']) {
       const def = definitions.get(`char.courier-${variant}`); if (def?.glb) urls.add('/' + def.glb.replace(/\.glb$/, '.skin.glb').replace(/^public\//, ''));

@@ -11,7 +11,7 @@ import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterle
 import type { Materials } from '../Materials';
 import { civilianMaterial } from './CivilianMaterial';
 import { AssetRegistry } from '../../assets/registry';
-import { civilianRoles, l1Pedestrians, coreCivilianModels } from '../../data/npcs';
+import { civilianRoles, l1Pedestrians, coreCivilianModels, l3CivilianModels } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
@@ -311,7 +311,7 @@ export class CivilianCrowd extends Group {
   constructor(private readonly world: SimWorld, shading?: Materials) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
-    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:coreCivilianModels;
+    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
     this.known.clear();for(const model of models)this.known.add(model);
     this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);this.add(...this.batches);
   }
