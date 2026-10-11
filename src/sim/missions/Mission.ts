@@ -180,7 +180,7 @@ export class Mission {
       this.emit({ type: 'objective.started', id: def.id }); this.run(def.onStart ?? []);
     }
     const current = this.def.steps.find(s => this.state.steps[s.id].status === 'active');
-    if(this.markerObjective!==(current?.id??null)){this.markerObjective=current?.id??null;this.state.marker=current?.anchor??null;}
+    if(this.markerObjective!==(current?.id??null)){this.markerObjective=current?.id??null;this.state.marker=current?.waypoint===false?null:current?.anchor??null;}
     if(this.pendingMarker){this.state.marker=this.pendingMarker;this.pendingMarker=null;}
   }
   private complete(def: ObjectiveDef): void {

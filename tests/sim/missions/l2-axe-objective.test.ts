@@ -31,7 +31,7 @@ test('@E20 required axe: 120 s idle stays calm; pickup equips and rings the alar
 }, 120_000);
 
 
-test('@E20 after the alarm every playing tick has objective text and a marker, including the doors checkpoint', async () => {
+test('@E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint', async () => {
   const l = await loadL2(1); world = l.world;
   let checked = 0, doorsBeforeRadio = 0, restored = false;
   const report = runL2(world, l.mission, 'complete', { maxSeconds: 600, stopWhen: m => {
@@ -39,8 +39,8 @@ test('@E20 after the alarm every playing tick has objective text and a marker, i
     const active = m.def.steps.filter(s => m.state.steps[s.id].status === 'active');
     expect(active.length, `tick ${world!.tick}, phase ${m.state.l2!.phase}`).toBeGreaterThan(0);
     expect(active[0].text).not.toBe('');
-    expect(m.state.marker).toBe(active[0].anchor);
-    expect(m.def.anchors[m.state.marker!]).toBeDefined();
+    expect(m.state.marker).toBe(active[0].waypoint === false ? null : active[0].anchor);
+    if (m.state.marker) expect(m.def.anchors[m.state.marker]).toBeDefined();
     checked++;
     if (m.state.checkpoint === 'doors' && !m.state.l2!.radioAt) {
       doorsBeforeRadio++;

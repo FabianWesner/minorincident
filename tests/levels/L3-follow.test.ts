@@ -3,11 +3,61 @@ import { readFileSync } from 'node:fs';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l3 } from '../../src/data/l3';
 import { ArmyCheckpointBoom } from '../../src/sim/missions/ArmyCheckpointBoom';
+import { missionControls } from '../../src/sim/missions/controls';
 import { loadL3, followFrustum } from '../../tools/sim-runner/l3Bots';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
 
 describe('L3 squad and checkpoint', () => {
+  test('@E21 army compound is walkable before the rendezvous and does not finish while the courier rests', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      m.completeObjective('armory'); m.completeObjective('defend');
+      const ring = m.def.anchors['l3-zone'], nav = w.infected!.nav;
+      expect(ring.x).toBe(149);
+      for (let i = 0; i < 8; i++) expect(nav.clear(ring.x + Math.cos(i * Math.PI / 4) * ring.radius, Math.sin(i * Math.PI / 4) * ring.radius, .35)).toBe(true);
+      const path: number[] = [];
+      expect(nav.path(nav.nearestCell(144, 0, .35), nav.nearestCell(ring.x, ring.z, .35), path, 1600)).toBe(true);
+      missionControls(w).teleport('player', { x: 144, z: 0 });
+      for (let i = 0; i < 300; i++) w.update();
+      expect(m.state.phase).toBe('playing');
+      expect(m.state.marker).toBe('l3-zone');
+      expect(m.state.l3!.crossedAt).toBe(0);
+      expect(w.infected!.active.filter(e => e.health.current > 0 && e.transform.x >= l3.map.zoneX)).toEqual([]);
+    } finally { w.dispose(); }
+  }, 120_000);
+  for (const condition of ['stalled officer', 'dead officer', 'turning officer', 'occupied boom'] as const) test(`@E21 @E21-AC17 arrival finishes with ${condition}`, async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      m.completeObjective('armory'); m.completeObjective('defend');
+      const s = m.state.l3!, api = missionControls(w);
+      // Isolate arrival from combat. The real-input full-level test covers the journey and casualties.
+      s.pending = []; s.waves = []; s.populated = [true, true, true];
+      for (const e of w.infected!.active) { e.health.current = 0; e.infected!.recoverAt = -1; }
+      for (const q of s.squad) api.teleport(q.id, { x: 144, z: 3 });
+      const officer = w.entities.get(s.squad[0].id)!;
+      if (condition === 'stalled officer') {
+        api.teleport(officer.id, { x: 135, z: 3 });
+        delete officer.civilian!.ally!.follow;
+        officer.civilian!.ally!.hold = true;
+        officer.civilian!.ally!.post = { x: 135, z: 3 };
+      } else if (condition === 'dead officer') officer.health.current = 0;
+      else if (condition === 'turning officer') w.npcs!.civilians.outbreak!.infect(officer, 1);
+      else {
+        const guard = w.entities.get(s.soldierIds[0])!;
+        api.teleport(guard.id, { x: l3.finale.barrierX, z: 0 });
+        guard.civilian!.ally!.post = { x: l3.finale.barrierX, z: 0 };
+        guard.civilian!.ally!.hold = true;
+      }
+      api.teleport('player', { x: m.def.anchors['l3-zone'].x, z: 0 });
+      for (let i = 0; i < 90 && m.state.phase === 'playing'; i++) w.update();
+      expect(s.crossedAt).toBeGreaterThan(0);
+      expect(m.state.phase).toBe('progression');
+      expect(m.state.marker).toBeNull();
+      if (condition === 'occupied boom') expect(s.barrierClosedAt ?? 0).toBe(0);
+      expect(w.events.events().filter(e => e.type === 'level.completed')).toHaveLength(1);
+    } finally { w.dispose(); }
+  }, 120_000);
   test('closed checkpoint boom stops a walking courier and shared NPC navigation; opening restores the lane', async () => {
     const { world: w } = await loadL3(1);
     try {
