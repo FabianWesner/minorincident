@@ -1,0 +1,51 @@
+
+Running 1 test using 1 worker
+
+after desktop loading {"dataMs":20.899999618530273,"simMs":99.69999980926514,"viewMs":11683.900000572205,"warmUp":[{"name":"L1 shader compilation","ms":1421.1999998092651},{"name":"L1 warm-up draw","ms":149.9000005722046},{"name":"L1 driver warm-up","ms":2800.1000003814697},{"name":"L1 warm-up instanced draw","ms":50},{"name":"L1 warm-up solo draws","ms":2600.199999809265}]}
+after desktop measuring pickup
+after desktop pickup max=132.8ms
+after desktop measuring handover
+after desktop handover max=41.5ms
+after desktop measuring accident
+after desktop accident max=19.0ms
+after desktop measuring infected-exit
+after desktop infected-exit max=26.6ms
+after desktop measuring weapon-pickup
+after desktop weapon-pickup max=20.1ms
+after desktop measuring death-respawn
+after desktop death-respawn max=20.0ms
+after desktop measuring fire-station-end
+after desktop fire-station-end max=20.0ms
+  ✘  1 [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop (54.9s)
+
+
+  1) [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop
+
+    Error: desktop pickup max frame ms
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 50
+    Received:    132.79999923706055
+
+       95 |     writeFileSync(`${output}/${phase}-${mode}.json`, JSON.stringify({ samples, loading, ...proof }, null, 2));
+       96 |     expect(proof.gpu).not.toMatch(/swiftshader|llvmpipe|software/i);
+    >  97 |     if (phase !== 'before') for (const [label, sample] of Object.entries(samples)) expect(sample.max, `${mode} ${label} max frame ms`).toBeLessThanOrEqual(50);
+          |                                                                                                                                        ^
+       98 |   });
+       99 | });
+      100 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected/tests/perf/l1-transitions.spec.ts:97:136
+
+    Error Context: test-results/playwright/run-3385/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3385/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3385/perf-l1-transitions-deskto-a41e3-sition-frame-budget-desktop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/l1-transitions.spec.ts:18:3 › desktop › @E19 @E19-AC24 @E19-AC19 @perf M1-22 L1 transition frame budget desktop

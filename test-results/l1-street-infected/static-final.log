@@ -1,0 +1,13 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l1-street-infected -> 2.31.51.253:/srv/mi/ws/l1-street-infected-963378
+[remote] sync 20s, 5013 files; job /srv/mi/jobs/l1-street-infected-963378-65897-1791684014; queueing for a slot
+[runner] slot 0 acquired; load 0.08 0.04 0.07
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools *.config.ts eslint.config.js
+
+[remote] could not pull test-results/l1-street-infected/static-final (missing?)
+[remote] done exit=0 (runner 2.31.51.253, sync 20s, remote total 44s)
