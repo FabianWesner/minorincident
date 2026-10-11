@@ -44,7 +44,7 @@ Courier speed is 2 m/s and NPC walking probe speed is 0.787 m/s. [Raw standing](
 - Native Metal gun-pose render suite: 5/5 pass after the main merge. Before the merge, both native Metal and remote SwiftShader passed all five.
 - Native smoke browser suite: 11/11 pass, including both crowd-render backends. The E05 simulation selection includes all six smoke simulation tests.
 - Fresh final-source E05 browser selection: 31/31 pass. The official `npm run verify -- E05` invocation returned zero before the main merge; final merged-source remote simulation selection passes 61/61, including all six smoke simulation tests ([summary](captures/e05-simulation-summary.json)).
-- Native complete levels suite: 28/31 pass. L2 route travel stalls; Sam turns during L5 escort; L6 shelter red-eye sampling fails. The isolated exact main checkout reproduces L2 route failure (at an earlier waypoint), while L5 and L6 pass alone. L5 passes on retry; L2 again fails at the exact main baseline waypoint and position. L6 capture retry is documented below. [Level failure summary](captures/levels-summary.json).
+- Native complete levels suite: 28/31 pass. L2 route travel stalls; Sam turns during L5 escort; L6 shelter red-eye sampling fails. The isolated exact main checkout reproduces L2 route failure (at an earlier waypoint), while L5 and L6 pass alone. L5 passes on retry; L2 again fails at the exact main baseline waypoint and position. The remaining L6 sampling failure is documented below. [Level failure summary](captures/levels-summary.json).
 
 Initial broad remote browser attempts encountered loading timeouts and a SwiftShader crowd-render allocation failure. Native smoke replaces those results. Level tests explicitly selecting Metal run on the Mac. The initial logs remain in `test-results/gun-pose-final/`; final native logs are in `test-results/gun-pose-native-validation/`.
 
@@ -57,10 +57,13 @@ The merged main baseline also fails the E05 fire-axe TTK criterion: the accepted
 Final E05 simulation: 61/61 pass on the corrected merged source. [Isolated main comparison](captures/main-baseline-summary.json): L2 route test fails; L5 escort and L6 shelter readability pass alone. L5 passes on retry; L2 repeats the exact main baseline route failure.
 
 
-## Static readability capture correction
+## Remaining level gate
 
-The original L6 readability frame includes a white guard tracer across the infected group. The test scans an entire character rectangle, so its brightest-pixel measurement can select foreground shot particles rather than a pixel of the infected model. E24-AC15 specifies the brightest pixels **of each infected**. The L6 fixture now advances the particle render clock alongside paused simulation steps, then advances into the gap between live guard bursts (at least 20 ticks after the last shot), then takes the static readability capture. All effects and guard firing stay enabled; no tracers or muzzle flashes are removed or hidden. Contrast, red-dominance, hue and shadow thresholds are unchanged. The first retry still failed because paused simulation stepping does not advance the particle clock; the corrected fixture explicitly advances both clocks. L5 passes on retry; L2 reproduces the exact main baseline failure. The final two L6 capture checks are pending.
+The original L6 shelter readability frame includes a white guard tracer across the infected group. Its eye test scans an entire character rectangle, so the brightest-pixel measurement selects a foreground shot particle rather than an infected pixel (red dominance 7, required 60). The exact main baseline passes this check with its earlier shot origin. Moving the shot to the actual gun makes this interference visible; traces and muzzle flashes remain enabled.
 
+An experiment taking a frame between guard bursts did not resolve this reliably: paused simulation steps freeze the particle clock, and advancing both clocks then exposed additional sampling failures on remote SwiftShader. Those experimental fixture changes were reverted. The original L6 test and all thresholds are retained. This gate remains red and needs a separate model-specific readability measurement; the gun-pose scene and muzzle tests pass without hiding effects.
+
+L5 passes on its isolated branch retry. L2 fails again at exactly the baseline waypoint and position. The complete levels run is **28/31**, with L5 subsequently passing; it is not claimed green. [Retry evidence](captures/level-retries-summary.json).
 
 ## VFX preference regression
 
