@@ -24,3 +24,36 @@ test('T-E09-01 @E09-AC01 roster validates and every used asset has its complete 
     expect(() => validateVehicle({ ...vehicle, handling: { ...vehicle.handling, engineTaperStart: 1 } })).toThrow();
   }
 });
+
+test('T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps', async () => {
+  const io = await assetIO();
+  const def = manifest.find(a => a.id === 'veh.fire-engine') as AssetDef;
+  expect(def.decayVariants).toEqual(['wrecked', 'burned']);
+  const { variantPath } = await import('../../src/assets/types');
+  const { triangleCount } = await import('../../tools/assets/delivery');
+  const { geometryHash } = await import('../../tools/assets/validate');
+  for (const [lod, path] of [def.glb, def.lods!.lod1!, def.lods!.lod2!].entries()) {
+    // Damaged near shell derives from the authored mid shell, whose sockets match near.
+    const source = await io.read(lod === 2 ? def.lods!.lod2! : def.lods!.lod1!);
+    const anchors = source.getRoot().listNodes();
+    const hashes = [geometryHash(source)];
+    for (const decay of def.decayVariants) {
+      const damaged = await io.read(variantPath(path, decay));
+      expect(triangleCount(damaged)).toBeLessThanOrEqual([15000, 6000, 2000][lod]);
+      const nodes = damaged.getRoot().listNodes();
+      for (const name of [...def.requiredNodes, ...def.sockets]) {
+        const node = nodes.find(n => n.getName() === name);
+        expect(node, `${decay}/${lod}/${name}`).toBeDefined();
+        const sourceNode = anchors.find(n => n.getName() === name)!;
+        node!.getWorldMatrix().forEach((value, index) => expect(value).toBeCloseTo(sourceNode.getWorldMatrix()[index], 5));
+      }
+      for (const name of ['lightsFront', 'lightsBrake', 'sirenL', 'sirenR']) expect(nodes.find(n => n.getName() === name)!.getExtras().damagedLightOff).toBe(true);
+      for (const material of damaged.getRoot().listMaterials()) {
+        expect(material.getName()).not.toMatch(/^emi_/);
+        expect(material.getEmissiveFactor()).toEqual([0, 0, 0]);
+      }
+      hashes.push(geometryHash(damaged));
+    }
+    expect(new Set(hashes).size).toBe(3);
+  }
+});

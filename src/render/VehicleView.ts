@@ -76,7 +76,9 @@ export class VehicleView extends Group {
     const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
     const lamp = (name: string, color: string) => {
       const material = new MeshBasicNodeMaterial({ color });
-      model.getObjectByName(name)?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
+      const anchor = model.getObjectByName(name);
+      // Authored broken lenses retain their dark palette material after a damage swap.
+      if (!anchor?.userData.damagedLightOff) anchor?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
     };
     const brake = lamp('lightsBrake', '#ff2d2d'), sirens = def.emergency ? [lamp('sirenL', '#ff2d2d'), lamp('sirenR', '#2f6bff')] : [];
     const door = new Mesh(new TorusGeometry(.7, .025, 6, 32), this.materials.get('windowGlow', 1.5)); door.rotation.x = -Math.PI / 2; door.position.set(.2, .025, def.width / 2 + .55); model.add(door);
@@ -219,7 +221,7 @@ export class VehicleView extends Group {
   pushLights(field: LightField): void {
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id), driven = this.world.vehicles!.active === id;
-      if (!record || car.entity.health.current <= 0 || !(driven || car.physics.def.emergency)) continue;
+      if (!record || car.entity.health.current <= 0 || record.model.getObjectByName('lightsFront')?.userData.damagedLightOff || !(driven || car.physics.def.emergency)) continue;
       record.model.updateWorldMatrix(true, false);
       for (const a of anchorsFor(car.physics.def.asset)) {
         const beacon = a.type === 'beacon' || !!a.strobe;
