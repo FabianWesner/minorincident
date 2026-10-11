@@ -1,4 +1,3 @@
-import staticBakes from '../../../src/assets/staticBakes.json';
 import { afterEach, expect, test, vi } from 'vitest';
 import { LoadGate } from '../../../src/assets/loadGate';
 import { assetUrl } from '../../../src/assets/assetUrl';
@@ -66,6 +65,7 @@ test('@load caching headers: immutable hashed bundles, long-lived versioned asse
   const cache = (path: string) => rules.filter(rule => rule.pattern.test(path)).flatMap(rule => rule.headers).filter(([name]) => name === 'cache-control').map(([, value]) => value);
   expect(cache('/build/index-abc123.js')).toEqual(['public, max-age=31536000, immutable']);
   for (const dir of versionedDirs) expect(cache(`/assets/${dir}/file.glb`)[0]).toMatch(/max-age=86400/);
+  for (const dir of ['civilians', 'statics']) expect(cache(`/assets/${dir}/file.HASH.bin.gz`)).toEqual(['public, max-age=31536000, immutable']);
   // Unversioned paths (index.html, UI images) keep revalidation.
   for (const path of ['/', '/index.html', '/assets/ui/portrait-corgi.png']) expect(cache(path)).toEqual([]);
 });
@@ -82,7 +82,8 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   }));
   await prefetchLevel('L2', 4, 'low');
   expect(assemble).not.toHaveBeenCalled();
-  expect(requested).toContain(staticBakes['bld.clinic-annex:lod2:burned']);
+  expect(requested).toContain('/assets/models/bld.clinic-annex.burned.lod2.glb');
+  expect(requested.some(url => /npc\.lab-tech-a(?:\.lod[12])?\.glb/.test(url))).toBe(false);
   expect(requested.some(url => /char\.courier-female\.skin\.glb/.test(url))).toBe(true);
   expect(new Set(requested).size).toBe(requested.length);
   expect(requested.some(url => /prop\.(bench|bbq|picket-fence)\.lod1\.glb/.test(url))).toBe(false);
@@ -90,6 +91,9 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   const assembleThree = vi.spyOn(await import('../../../src/levels/L3/layout'), 'levelThreeLayouts');
   await prefetchLevel('L3', 4, 'low');
   expect(assembleThree).not.toHaveBeenCalled();
+  expect(requested.some(url => /npc\.(lab-tech|lab-guard|depot-clerk|firefighter-alive)/.test(url))).toBe(false);
+  expect(requested.some(url => /npc\.police-officer/.test(url))).toBe(true);
+  expect(requested.some(url => /npc\.national-guard/.test(url))).toBe(true);
   expect(requested.some(url => /decay\.broken-glass(?:\.lod2)?\.glb/.test(url))).toBe(true);
 });
 

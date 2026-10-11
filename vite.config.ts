@@ -12,6 +12,7 @@ export default defineConfig({
   server: { host: '127.0.0.1', port: 3300, strictPort: true },
   // Hashed bundles live under /build/ (immutable CDN caching, public/_headers); /assets/ stays public data.
   // Rapier's WASM is emitted as its own file by rapierWasmFile().
+  worker: { format: 'es' },
   build: {
     target: 'es2022',
     assetsDir: 'build',
