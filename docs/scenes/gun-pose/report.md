@@ -39,12 +39,12 @@ Courier speed is 2 m/s and NPC walking probe speed is 0.787 m/s. [Raw standing](
 ## Validation
 
 - Typecheck, lint and build: pass on the final source.
-- Full remote unit suite: 467 tests pass across 132 files, one worker, after merging main and restoring the aim import.
+- Full remote unit suite: 468 tests pass across 132 files, one worker, on the final source including the VFX preference regression.
 - Focused rig, Scene Lab tooling and figure-height units: 23 pass locally after the main merge; the final balance criterion check also passes all three tests.
 - Native Metal gun-pose render suite: 5/5 pass after the main merge. Before the merge, both native Metal and remote SwiftShader passed all five.
 - Native smoke browser suite: 11/11 pass, including both crowd-render backends. The E05 simulation selection includes all six smoke simulation tests.
-- E05 browser selection: 31/31 pass. The official `npm run verify -- E05` invocation returned zero before the main merge; final merged-source remote simulation selection passes 61/61, including all six smoke simulation tests ([summary](captures/e05-simulation-summary.json)).
-- Native complete levels suite: 28/31 pass. L2 route travel stalls; Sam turns during L5 escort; L6 shelter red-eye sampling fails. The isolated exact main checkout reproduces L2 route failure (at an earlier waypoint), while L5 and L6 pass alone. Branch retries of L5/L6 are pending. [Level failure summary](captures/levels-summary.json).
+- Fresh final-source E05 browser selection: 31/31 pass. The official `npm run verify -- E05` invocation returned zero before the main merge; final merged-source remote simulation selection passes 61/61, including all six smoke simulation tests ([summary](captures/e05-simulation-summary.json)).
+- Native complete levels suite: 28/31 pass. L2 route travel stalls; Sam turns during L5 escort; L6 shelter red-eye sampling fails. The isolated exact main checkout reproduces L2 route failure (at an earlier waypoint), while L5 and L6 pass alone. L5 passes on retry; L2 again fails at the exact main baseline waypoint and position. L6 capture retry is documented below. [Level failure summary](captures/levels-summary.json).
 
 Initial broad remote browser attempts encountered loading timeouts and a SwiftShader crowd-render allocation failure. Native smoke replaces those results. Level tests explicitly selecting Metal run on the Mac. The initial logs remain in `test-results/gun-pose-final/`; final native logs are in `test-results/gun-pose-native-validation/`.
 
@@ -54,14 +54,14 @@ Merged main `d27704a2` into this branch (`d3f15be3`). Main's NPC-height merge re
 
 The merged main baseline also fails the E05 fire-axe TTK criterion: the accepted PO 2026-10-10 damage increase from 45 to 56 reduces the swing count, but the authored lower bounds still describe the earlier damage. This reproduces on the isolated exact main commit without gun-pose changes. `83f75fcf` subtracts the saved 0.5-second swings from seven affected lower bounds: brute, riot, firefighter and lion lose one; armored and butcher lose three; gorilla loses five. Existing upper limits, pursuit allowances and gameplay damage remain unchanged. The corrected balance suite passes. No specification files were changed.
 
-Final E05 simulation: 61/61 pass on the corrected merged source. [Isolated main comparison](captures/main-baseline-summary.json): L2 route test fails; L5 escort and L6 shelter readability pass alone. L5/L6 branch retries are pending.
+Final E05 simulation: 61/61 pass on the corrected merged source. [Isolated main comparison](captures/main-baseline-summary.json): L2 route test fails; L5 escort and L6 shelter readability pass alone. L5 passes on retry; L2 repeats the exact main baseline route failure.
 
 
 ## Static readability capture correction
 
-The original L6 readability frame includes a white guard tracer across the infected group. The test scans an entire character rectangle, so its brightest-pixel measurement can select foreground shot particles rather than a pixel of the infected model. E24-AC15 specifies the brightest pixels **of each infected**. The L6 fixture now advances ordinary simulation/render ticks into the gap between live guard bursts (at least 20 ticks after the last shot), then takes the static readability capture. All effects and guard firing stay enabled; no tracers or muzzle flashes are removed or hidden. Contrast, red-dominance, hue and shadow thresholds are unchanged. Both L6 captures and the L5/L2 branch retries are pending.
+The original L6 readability frame includes a white guard tracer across the infected group. The test scans an entire character rectangle, so its brightest-pixel measurement can select foreground shot particles rather than a pixel of the infected model. E24-AC15 specifies the brightest pixels **of each infected**. The L6 fixture now advances the particle render clock alongside paused simulation steps, then advances into the gap between live guard bursts (at least 20 ticks after the last shot), then takes the static readability capture. All effects and guard firing stay enabled; no tracers or muzzle flashes are removed or hidden. Contrast, red-dominance, hue and shadow thresholds are unchanged. The first retry still failed because paused simulation stepping does not advance the particle clock; the corrected fixture explicitly advances both clocks. L5 passes on retry; L2 reproduces the exact main baseline failure. The final two L6 capture checks are pending.
 
 
 ## VFX preference regression
 
-Resolving the firing pose originally depended on VFX being enabled. The gun event now resolves the aim/muzzle even under the user’s VFX-off preference, before returning without particles. A regression test covers courier and NPC events; the focused rig/VFX suite passes 8/8. Typecheck, lint and build pass after this correction. A fresh full remote unit run with the eighth test is pending.
+Resolving the firing pose originally depended on VFX being enabled. The gun event now resolves the aim/muzzle even under the user’s VFX-off preference, before returning without particles. A regression test covers courier and NPC events; the focused rig/VFX suite passes 8/8. Typecheck, lint and build pass after this correction. The fresh full remote suite passes all 468 tests across 132 files with the eighth test included.

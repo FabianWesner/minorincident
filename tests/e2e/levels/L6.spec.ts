@@ -73,12 +73,13 @@ function patch(png: PNG, ndc: number[], radius = 6) {
 for(const [name,spot] of [['l6-shelter-fails',{x:0,z:4}],['l6-tunnel-retreat',{x:110,z:15}]] as const)test(`T-E24-15 @E24 @E24-AC15 ${name} mask contrast, red eye maxima and flashlight shadow`,async({page})=>{
   test.setTimeout(300_000);mkdirSync(out,{recursive:true});await boot(page);
   await page.addStyleTag({content:'#hud,.hud,.story-bubble,.mission-subtitle,.mission-hud,.objective-hud{visibility:hidden!important}'});
-  const setup=await page.evaluate(async spot=>{const a=window.__SS__!;await a.loadLevel('L6',{seed:1,progression:'L6-default'});a.pause();a.missions.begin();a.cheats.god(true);a.cheats.completeObjective('shelter');a.cheats.completeObjective('stop');a.teleport(1,spot);const ids=[0,1,2].map(i=>a.spawn('infected.runner',{x:spot.x-7-i*.8,z:spot.z+.6},{state:'idle',yaw:0}));a.camera.cinematic({position:[spot.x+20,25,spot.z+20],target:[spot.x-3,0,spot.z]},true);await a.step(30);
+  const setup=await page.evaluate(async spot=>{const a=window.__SS__!;await a.loadLevel('L6',{seed:1,progression:'L6-default'});a.pause();a.missions.begin();a.cheats.god(true);a.cheats.completeObjective('shelter');a.cheats.completeObjective('stop');a.teleport(1,spot);const ids=[0,1,2].map(i=>a.spawn('infected.runner',{x:spot.x-7-i*.8,z:spot.z+.6},{state:'idle',yaw:0}));a.camera.cinematic({position:[spot.x+20,25,spot.z+20],target:[spot.x-3,0,spot.z]},true);for(let i=0;i<30;i++){await a.step(1);a.vfx.stepRender(1/60);}
     // Measure model readability between live guard bursts. A foreground tracer
     // crossing this rectangle is brighter than an eye, but is not part of the infected.
-    // Advance ordinary sim/render ticks; all shot effects and guard firing remain enabled.
+    // Paused stepping freezes the render clock, so advance it alongside each sim tick.
+    // All shot effects and guard firing remain enabled and expire at their normal age.
     let quiet=false;
-    for(let i=0;i<60;i++){const shot=a.getState().render.vfx?.shots.at(-1);if(!shot||a.tick()-shot.tick>=20){quiet=true;break;}await a.step(1);}
+    for(let i=0;i<60;i++){const shot=a.getState().render.vfx?.shots.at(-1);if(!shot||a.tick()-shot.tick>=20){quiet=true;break;}await a.step(1);a.vfx.stepRender(1/60);}
     if(!quiet)throw new Error('No gap between guard bursts for the static readability capture');
     await a.screenshotReady();const p=a.getEntity(1)!.transform,lastShotTick=a.getState().render.vfx?.shots.at(-1)?.tick??null;return{readabilityTick:a.tick(),lastShotTick,ring:Array.from({length:8},(_,k)=>a.camera.project(p.x+2*Math.cos(k*Math.PI/4),p.y-.7,p.z+2*Math.sin(k*Math.PI/4))),heads:ids.map(id=>{const t=a.getEntity(id)!.transform;return{head:a.camera.project(t.x,t.y+.75,t.z),feet:a.camera.project(t.x,t.y-.7,t.z)};}),lighting:a.perf().lighting};},spot);
   const image=PNG.sync.read(await page.locator('canvas').screenshot({path:`${out}/${name}-readability.png`}));await page.evaluate(async()=>{window.__SS__!.settings.set({idPass:true});await window.__SS__!.screenshotReady();});const mask=PNG.sync.read(await page.locator('canvas').screenshot({path:`${out}/${name}-mask.png`}));await page.evaluate(()=>window.__SS__!.settings.set({idPass:false}));let sum=0,n=0;
