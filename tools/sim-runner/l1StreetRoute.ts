@@ -14,6 +14,7 @@ for (const [name, points] of Object.entries({
   if (['direct', 'west', 'east'].includes(process.argv[3]) && name !== process.argv[3]) continue;
   const { world: w, mission: m } = await loadL1(1);
   try {
+    if (process.env.MI_L1_STREET_TIER === 'low') w.infected!.director.setTier('low');
     // Supply the same tick-pose frustum as Game.update; the generic 64 m fallback is too wide for L1.
     const view = new View(), matrix = new Matrix4(); view.cameraShake = false;
     const start = w.entities.get(1)!.transform; view.focus.set(start.x, 0, start.z); view.update(start, 0);

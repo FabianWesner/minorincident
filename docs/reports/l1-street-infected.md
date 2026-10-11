@@ -8,7 +8,7 @@ The ten residents still emerge visibly from the original garage house. The new P
 
 ## Route coverage
 
-Baseline: main `98e9aa79` when measured (the initial `3ff5d036` baseline reproduces exactly). Final measurement: `a8f7a8d6`; after merging main `d27704a2`, all three route checks reproduce exactly (`merged-routes/routes.json`). Subsequent lane changes affect test tactics, not route balance. Both use the same measurement tool, seed 1, normal complete policy through bat acquisition, then input-only movement along the stated streets without attacks. The game's default on-foot pace is 4.5 m/s. At the bat the fixture restores full health and clears any pending setup death; after its first real hit it enables protection so the whole route can be measured without a respawn changing the route. No perception or attack logic is bypassed. The probe uses the game's default follow-camera geometry for off-screen spawn checks rather than the headless director's generic 64 m camera envelope.
+Baseline: main `98e9aa79` when measured (the initial `3ff5d036` baseline reproduces exactly). Final measurement: `a8f7a8d6`; after merging main `d27704a2`, all three route checks reproduce exactly (`merged-routes/routes.json`). Subsequent lane changes affect test tactics, not route balance. Both use the high tier (60-infected cap), the same measurement tool, seed 1, normal complete policy through bat acquisition, then input-only movement along the stated streets without attacks. The game's default on-foot pace is 4.5 m/s. At the bat the fixture restores full health and clears any pending setup death; after its first real hit it enables protection so the whole route can be measured without a respawn changing the route. No perception or attack logic is bypassed. The probe uses the game's default follow-camera geometry for off-screen spawn checks rather than the headless director's generic 64 m camera envelope.
 
 A detection means a living infected's real L1 brain targets the courier in chase/bite mode. Each infected is counted once. Encounter windows start at the first detection and a new window starts at least 10 m farther along the walked route. The small encounter count includes only windows of 1–4 newly noticing infected. Larger systemic contacts remain in the raw evidence, detection total and gap calculation.
 
@@ -18,7 +18,9 @@ A detection means a living infected's real L1 brain targets the courier in chase
 | West, Elm → Juniper west → Main Row (193 m) | 2 → 11 | 2 → 26 | 161.8 → 36.3 m | 10 HP |
 | East, Elm → Larch/Annex → Main Row (156 m) | 5 → 8 | 9 → 13 | 70.8 → 46.5 m | 10 HP |
 
-All three reach the station and pass ≥4 small encounters, ≥12 detections, ≤60 m maximum gap and actual damage while moving without fighting. Direct also has one six-infected contact window due to systemic spread/chasing; it is excluded from the seven small encounters. The authored groups are all three, spread across the map. Before the change, the western walker took no damage at all.
+All three high-tier routes reach the station and pass ≥4 small encounters, ≥12 detections, ≤60 m maximum gap and actual damage while moving without fighting. Direct also has one six-infected contact window due to systemic spread/chasing; it is excluded from the seven small encounters. The authored groups are all three, spread across the map. Before the change, the western walker took no damage at all.
+
+Additional low-tier diagnostic (`MI_L1_STREET_TIER=low`, unchanged 30 cap): direct/west/east finish with 5/5/4 small encounters, 8/6/7 distinct notices, and 41.3/104.1/60.2 m maximum gaps. Each takes a real 10 HP hit. The low tier does not meet the high-tier route thresholds; this is recorded explicitly in `phone-routes/routes.json`, and the parent session was notified for scope clarification. Phone rendering budgets are validated separately below.
 
 Reproduce the gated measurement remotely:
 
