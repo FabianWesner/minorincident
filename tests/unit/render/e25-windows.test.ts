@@ -72,12 +72,15 @@ test('T-E25-11p T-E25-12p @E25 shared district materials preserve window and pol
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), assets = new DistrictAssets(materials);
   const share = (assets as unknown as { share(root: import('three').Group): void }).share.bind(assets);
   const geometry = new BoxGeometry(), roots: import('three').Group[] = [];
-  for (const features of ['0:0:0', '1:0:0', '0:1:1', '0:0:0']) {
-    const root = new Group(), material = new MeshLambertNodeMaterial(); material.userData.batchFeatures = features;
-    const mesh = new Mesh(geometry, material); mesh.name = 'static-body'; root.add(mesh); roots.push(root); share(root);
+  for (const name of ['static-body', 'window-light', 'roof', 'roof-light']) {
+    roots.length = 0;
+    for (const features of ['0:0:0', '1:0:0', '0:1:1', '0:0:0']) {
+      const root = new Group(), material = new MeshLambertNodeMaterial(); material.userData.batchFeatures = features;
+      const mesh = new Mesh(geometry, material); mesh.name = name; root.add(mesh); roots.push(root); share(root);
+    }
+    const mats = roots.map(root => (root.children[0] as Mesh).material);
+    expect(mats[0], name).toBe(mats[3]); expect(mats[0], name).not.toBe(mats[1]); expect(mats[0], name).not.toBe(mats[2]);
   }
-  const mats = roots.map(root => (root.children[0] as Mesh).material);
-  expect(mats[0]).toBe(mats[3]); expect(mats[0]).not.toBe(mats[1]); expect(mats[0]).not.toBe(mats[2]);
   assets.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose();
 });
 
