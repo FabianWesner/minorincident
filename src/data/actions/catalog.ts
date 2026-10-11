@@ -44,7 +44,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
   // Its own id: 'weapon.machine-gun' stays the E06 magazine-and-reload reference (fixtures, balance rows, tests).
   { ...gun('army-mg', l4.machineGun.damage, l4.machineGun.rangeM, l4.machineGun.fireRate, 0, 0, l4.machineGun.spreadDeg, 0), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', maxTargets: l4.machineGun.pierce + 1, projectile: { speed: 95, gravity: 0, pierce: l4.machineGun.pierce }, upgradeHooks: ['damage', 'spread'] },
-  { ...gun('rocket-launcher', 180, 35, 0.8, 1, 2.5, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 4, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
+  { ...gun('rocket-launcher', 180, 35, 0.8, 0, 0, 0, 2), projectile: { speed: 18, gravity: 0, pierce: 0 }, splash: { radius: 6, falloff: 0.6 }, maxTargets: 1000, knockback: 1.2, stagger: 0.8, upgradeHooks: ['damage', 'spread'], noiseRadius: noiseForAction('weapon.rocket-launcher').radius },
   fixtures['weapon.grenade'],
   { ...thrown('molotov', 10, 4, 0), effect: { kind: 'fire', radius: 4, duration: 6 }, status: { kind: 'burning', duration: 2, maxStacks: 1, dps: 15, slow: 0 } },
   thrown('pipe-bomb', 150, 4.5, 2),

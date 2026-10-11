@@ -1,0 +1,77 @@
+{
+  "name": "qa-l7-rocket-pickup",
+  "note": "Rocket beside wrecked army truck; hold E to acquire via real retained pickup; game camera checks weapon scale, grip, clipping and ground placement.",
+  "ground": "asphalt",
+  "size": 24,
+  "time": "night",
+  "dof": false,
+  "props": [
+    {
+      "asset": "veh.military-truck",
+      "decay": "wrecked",
+      "at": [
+        3,
+        -3
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3,
+        1.2
+      ],
+      "loadout": [
+        [
+          "weapon.bat",
+          "weapon.fire-axe"
+        ],
+        [
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun"
+        ]
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      3,
+      0
+    ]
+  },
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "weaponPickup": "weapon.rocket-launcher",
+        "at": [
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 5,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ],
+  "frames": 70,
+  "shots": [
+    0,
+    70
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}
