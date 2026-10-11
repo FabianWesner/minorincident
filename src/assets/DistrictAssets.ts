@@ -106,9 +106,9 @@ export class DistrictAssets {
     }
   }
   /** Start download, parse and batching of a placement prototype before its layout GLB arrives. */
-  prefetch(id: string, lod: AssetQuality = 'lod1'): void {
+  prefetch(id: string, lod: AssetQuality = 'lod1', decay?: string): void {
     try {
-      if (worldAssets[id] && atLeast(this.assets.definition(productionIds[id] ?? id).status, "integrated")) void this.base(id, lod).catch(() => {});
+      if (worldAssets[id] && atLeast(this.assets.definition(productionIds[id] ?? id).status, "integrated")) void this.base(id, lod, decay).catch(() => {});
     } catch { /* unknown ids report through asset() */ }
   }
   private canonical(id: string, lod: AssetQuality): AssetQuality {

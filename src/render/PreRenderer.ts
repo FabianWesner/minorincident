@@ -8,6 +8,7 @@ import type { Renderer } from './Renderer';
  * serializes every link. Concurrent calls over disjoint leaf sets let ANGLE's
  * KHR_parallel_shader_compile work on several programs (L1: 7.4 s -> 2.3 s under load). */
 export const compileLanes = 6;
+export const warmUpSize = 128;
 export type CompilePartitions = (() => void)[];
 export async function preRender(renderer: Renderer, scene: Scene, camera: Camera, render: () => void, compile: (partitions: CompilePartitions) => Promise<unknown> = partitions => Promise.all(partitions.map(apply => { apply(); return renderer.compileAsync(scene, camera); })), pause?: () => Promise<void>, progress?: (completed: number, total: number) => void, background = false): Promise<void> {
   const saved: { object: Object3D; visible: boolean; culled: boolean; count?: number; matrices?: Matrix4[] }[] = [];
@@ -33,24 +34,42 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
         object.instanceMatrix.needsUpdate = true;
       }
     });
-    renderer.setSize(32, 32, false);
+    renderer.setSize(warmUpSize, warmUpSize, false);
     const start = performance.now();
     // Each partition shows only its share of leaves while three collects that call's render list
     // (synchronously), so the lanes compile disjoint objects concurrently.
     const leaves: Object3D[] = [];
     scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite)) leaves.push(object); });
+    // Static batches share node graphs. Compile one representative of each exact
+    // material/attribute/shadow/capacity variant; the draws below still upload and
+    // execute every render object, including both instancing driver paths.
+    const seen = new Set<string>(), candidates = leaves.filter(leaf => {
+      if (!(leaf instanceof InstancedMesh) || leaf.userData.preRenderSolo || Array.isArray(leaf.material) || leaf.material.userData.batchFeatures === undefined || Object.keys(leaf.geometry.morphAttributes).length) return true;
+      const attributes = Object.keys(leaf.geometry.attributes).map(name => {
+        const a = leaf.geometry.getAttribute(name) as import('three').BufferAttribute | import('three').InterleavedBufferAttribute;
+        return `${name}:${a.itemSize}:${a.normalized}:${a.array.constructor.name}:${'isInstancedBufferAttribute' in a ? a.count : ''}`;
+      }).sort().join('|');
+      const key = `${leaf.material.uuid}:${leaf.material.customProgramCacheKey()}:${leaf.instanceMatrix.count}:${!!leaf.instanceColor}:${+leaf.castShadow}:${+leaf.receiveShadow}:${attributes}`;
+      if (seen.has(key)) return false; seen.add(key); return true;
+    });
     progress?.(0, 1);
-    const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
+    const partitions = Array.from({ length: compileLanes }, (_, lane) => () => { leaves.forEach(leaf => { leaf.visible = false; }); candidates.forEach((leaf, i) => { leaf.visible = i % compileLanes === lane; }); });
     // WebGL only: measured on WebGPU, three's per-object compileAsync costs more than the
     // synchronous pipeline creation of the warm-up draw (L1: 1.6-2.8 s vs +0.2 s).
     // Background (menu-time) warm-up on WebGPU: three's compileAsync builds node graphs asynchronously,
     // yielding between objects, so the big material builds do not land in one long task.
-    try { if (renderer.selectedBackend === 'webgl') await compile(partitions); else if (background) await compile([() => {}]); } finally { for (const leaf of leaves) leaf.visible = true; }
+    const foregroundCompile = renderer.foregroundCompile;
+    try {
+      renderer.foregroundCompile = !background;
+      if (renderer.selectedBackend === 'webgl') await compile(partitions); else if (background) await compile([() => {}]);
+    } finally { renderer.foregroundCompile = foregroundCompile; for (const leaf of leaves) leaf.visible = true; }
     performance.measure('L1 shader compilation', { start, end: performance.now() });
     // Background (menu-time) warm-up: draw the leaves in small groups, one group per gate slot, so
     // node builds and pipeline creation never form one long task; the full draw below is then cheap.
     const solo = renderer.selectedBackend === 'webgl' ? saved.filter(({ object }) => object instanceof InstancedMesh && object.userData.preRenderSolo) : [];
-    const chunk = renderer.selectedBackend === 'webgl' ? 64 : 16, soloChunk = 4, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
+    // Foreground loading owns the card: larger groups avoid paying a presented
+    // frame for every 64 already-compiled objects. Menu-time pacing stays small.
+    const chunk = renderer.selectedBackend === 'webgl' ? background ? 64 : 1024 : 16, soloChunk = 64, chunks = pause ? Math.ceil(leaves.length / chunk) : 0, total = chunks + Math.ceil(solo.length / soloChunk) * 2 + 3;
     let completed = 1; progress?.(completed, total);
     if (pause) {
       for (let from = 0; from < leaves.length; from += chunk) {
@@ -77,18 +96,18 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // pipelines but seconds of frame pacing in these solo draws, so they run on WebGL only.
     if (solo.length) {
       for (const { object } of saved) if (object instanceof Mesh || object instanceof Sprite) object.visible = false;
-      // Four separated actors fit the tiny target without occluding each other.
+      // Sixty-four separated actors fit an 8x8 grid in the 128px target.
       // Each still executes the ordinary and instanced driver paths, but shares the GPU fence
       // and presented frame with its neighbors instead of paying two frames per actor.
       const right = new Vector3().setFromMatrixColumn(camera.matrixWorld, 0), up = new Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
       const halfWidth = 20 / Math.abs(camera.projectionMatrix.elements[0]), halfHeight = 20 / Math.abs(camera.projectionMatrix.elements[5]);
-      // Align actor centers with pixel centers in the 32px target so narrow meshes cover samples.
-      const scale = Math.min(1, halfWidth * .25, halfHeight * .25);
+      // Each actor retains the old 16px cell coverage, including narrow meshes.
+      const scale = .5 * Math.min(1, halfWidth * .125, halfHeight * .125);
       for (let from = 0; from < solo.length; from += soloChunk) {
         const group = solo.slice(from, from + soloChunk);
         group.forEach(({ object, matrices }, i) => {
           object.visible = true;
-          const center = focus.clone().addScaledVector(right, (i % 2 ? 1 : -1) * halfWidth * .40625).addScaledVector(up, (i < 2 ? -1 : 1) * halfHeight * .40625);
+          const center = focus.clone().addScaledVector(right, (i % 8 * .25 - .875 + 1 / warmUpSize) * halfWidth).addScaledVector(up, (Math.floor(i / 8) * .25 - .875 + 1 / warmUpSize) * halfHeight);
           const mesh = object as InstancedMesh;
           for (let instance = 0; instance < matrices!.length; instance++) {
             const local = object.worldToLocal(center.clone().addScaledVector(right, instance * scale * .4));

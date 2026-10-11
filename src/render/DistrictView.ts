@@ -38,7 +38,7 @@ import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
 import { GroundField } from './GroundField';
-import { pickLod, propLod, initialDistrictLods, type Lod } from './lodPolicy';
+import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lodPolicy';
 import { seeThrough } from './SeeThrough';
 import type { PaletteToken } from '../data/palette';
 
@@ -148,6 +148,10 @@ export class DistrictView extends Group {
       const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
       for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined, heroAtSpawn)) lods.add(lod);
       initialLods.set(p.assetId, lods);
+      if (heroAtSpawn && focus && distance <= lodPolicy.lod1From) this.registry.prefetch(p.assetId, 'lod0', p.decay);
+    }
+    if (heroAtSpawn && focus) for (const d of this.world.districts) for (const p of d.decay.placements) {
+      if (Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) <= lodPolicy.lod1From) this.registry.prefetch(p.assetId, 'lod0', p.decay);
     }
     for (const [id, lods] of initialLods) for (const lod of lods) this.registry.prefetch(id, lod);
     await Promise.all(

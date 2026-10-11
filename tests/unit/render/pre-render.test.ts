@@ -1,6 +1,6 @@
 import { expect, test, vi } from 'vitest';
 import { BoxGeometry, DirectionalLight, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
-import { compileLanes, preRender } from '../../../src/render/PreRenderer';
+import { compileLanes, preRender, warmUpSize } from '../../../src/render/PreRenderer';
 import { Renderer } from '../../../src/render/Renderer';
 
 test('T-E25-14g @E25 warm-up preserves the active gameplay light list', async () => {
@@ -18,7 +18,7 @@ for (const fails of [false, true]) test(`@E19 pre-render warms hidden zero-count
   // Compile lanes: every call sees the warm-up state; each leaf is visible in exactly one lane.
   const lanes: boolean[] = [];
   const renderer = { finishWarmUp: vi.fn(async () => calls.push('finish')), selectedBackend: 'webgl', getSize: (target: Vector2) => target.copy(size), setSize: (x: number, y: number) => size.set(x, y), compileAsync: vi.fn(async () => { expect(group.visible).toBe(true); lanes.push(mesh.visible); expect(mesh.frustumCulled).toBe(false); expect(mesh.count).toBe(1); calls.push('compile'); }) } as unknown as Renderer;
-  const warm = preRender(renderer, scene, new PerspectiveCamera(), () => { expect(size.toArray()).toEqual([32, 32]); expect(mesh.count).toBe(calls.includes('render') ? 2 : 1); calls.push('render'); if (fails) throw new Error('GPU lost'); });
+  const warm = preRender(renderer, scene, new PerspectiveCamera(), () => { expect(size.toArray()).toEqual([warmUpSize, warmUpSize]); expect(mesh.count).toBe(calls.includes('render') ? 2 : 1); calls.push('render'); if (fails) throw new Error('GPU lost'); });
   if (fails) await expect(warm).rejects.toThrow('GPU lost'); else await warm;
   const compiles = Array<string>(compileLanes).fill('compile');
   expect(lanes.filter(Boolean)).toHaveLength(1);
@@ -30,13 +30,15 @@ for (const fails of [false, true]) test(`@E19 pre-render warms hidden zero-count
 
 test('@E19 pre-render warms every render object including distinct shadow and capacity variants', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
+  material.userData.batchFeatures = 'static-test';
   const meshes = Array.from({ length: 4 }, (_, i) => new InstancedMesh(geometry, material, i === 3 ? 4 : 2));
   meshes[0].visible = false; meshes[2].receiveShadow = true; scene.add(...meshes);
   const compiled = [0, 0, 0, 0];
   const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => { meshes.forEach((m, i) => { compiled[i] += Number(m.visible); }); }) } as unknown as Renderer;
   await preRender(renderer, scene, new PerspectiveCamera(), () => { expect(meshes.map(m => m.visible)).toEqual([true, true, true, true]); });
-  // The concurrent compile lanes together cover every render object exactly once.
-  expect(compiled).toEqual([1, 1, 1, 1]);
+  // Same-capacity static duplicates share compilation; shadow and capacity
+  // variants stay separate. The actual warm-up draws above cover all four.
+  expect(compiled).toEqual([1, 0, 1, 1]);
   expect(meshes.map(m => m.visible)).toEqual([false, true, true, true]); expect(meshes.map(m => m.count)).toEqual([2, 2, 2, 4]);
   meshes.forEach(mesh => mesh.dispose()); geometry.dispose(); material.dispose();
 });
@@ -54,6 +56,21 @@ test('@E19 warm-up waits for a new render frame even when the GPU fence is alrea
   } finally { vi.unstubAllGlobals(); }
 });
 
+for (const fails of [false, true]) test(`@transition warm-up polls GPU completion between frames and cleans its fence on ${fails ? 'failure' : 'success'}`, async () => {
+  vi.useFakeTimers();
+  const sync = {}, gl = { SYNC_GPU_COMMANDS_COMPLETE: 1, SYNC_FLUSH_COMMANDS_BIT: 2, TIMEOUT_EXPIRED: 3, WAIT_FAILED: 4,
+    fenceSync: vi.fn(() => sync), flush: vi.fn(), deleteSync: vi.fn(), clientWaitSync: vi.fn().mockReturnValueOnce(3).mockReturnValue(fails ? 4 : 5) };
+  const frame = vi.fn((callback: FrameRequestCallback) => { callback(0); return 1; }); vi.stubGlobal('requestAnimationFrame', frame);
+  try {
+    const renderer = { selectedBackend: 'webgl', backend: { gl } } as unknown as Renderer;
+    const pending = Renderer.prototype.finishWarmUp.call(renderer);
+    const result = fails ? expect(pending).rejects.toThrow('Warm-up GPU fence failed') : pending;
+    expect(frame).not.toHaveBeenCalled(); await vi.runAllTimersAsync(); await result;
+    expect(gl.deleteSync).toHaveBeenCalledWith(sync); expect(gl.flush).toHaveBeenCalledOnce();
+    expect(frame).toHaveBeenCalledTimes(fails ? 0 : 1);
+  } finally { vi.useRealTimers(); vi.unstubAllGlobals(); }
+});
+
 test('@E19 animated batches execute both driver paths without opaque occluders', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
   const crowd = new InstancedMesh(geometry, material, 3), district = new InstancedMesh(geometry, material, 2);
@@ -66,14 +83,14 @@ test('@E19 animated batches execute both driver paths without opaque occluders',
   crowd.dispose(); district.dispose(); geometry.dispose(); material.dispose();
 });
 
-test('@transition prewarm yields between small draw groups, reports completed work and restores the scene on failure', async () => {
+for (const background of [false, true]) test(`@transition ${background ? 'menu' : 'foreground'} prewarm groups report completed work and restore the scene on failure`, async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
-  const meshes = Array.from({ length: 100 }, () => new Mesh(geometry, material)); scene.add(...meshes);
+  const meshes = Array.from({ length: background ? 100 : 1100 }, () => new Mesh(geometry, material)); scene.add(...meshes);
   const size = new Vector2(1600, 900), groups: number[] = [], progress: number[] = [];
   const pause = vi.fn(async () => {});
   const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.copy(size), setSize: (x: number, y: number) => size.set(x, y), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => {}) } as unknown as Renderer;
-  await preRender(renderer, scene, new PerspectiveCamera(), () => { groups.push(meshes.filter(m => m.visible).length); }, undefined, pause, (done, total) => progress.push(done / total));
-  expect(groups.slice(0, 2)).toEqual([64, 36]); expect(pause.mock.calls.length).toBeGreaterThanOrEqual(2);
+  await preRender(renderer, scene, new PerspectiveCamera(), () => { groups.push(meshes.filter(m => m.visible).length); }, undefined, pause, (done, total) => progress.push(done / total), background);
+  expect(groups.slice(0, 2)).toEqual(background ? [64, 36] : [1024, 76]); expect(pause.mock.calls.length).toBeGreaterThanOrEqual(2);
   expect(progress.at(-1)).toBe(1); expect(progress.every((p, i) => i === 0 || p >= progress[i - 1])).toBe(true);
   await expect(preRender(renderer, scene, new PerspectiveCamera(), () => { throw new Error('GPU lost'); }, undefined, pause)).rejects.toThrow('GPU lost');
   expect(size.toArray()).toEqual([1600, 900]); expect(meshes.every(m => m.visible && m.frustumCulled)).toBe(true);
@@ -82,7 +99,7 @@ test('@transition prewarm yields between small draw groups, reports completed wo
 
 test('@transition animated warm-up groups cover both driver paths without overlapping actors and restore instance matrices', async () => {
   const geometry = new BoxGeometry(), material = new MeshBasicNodeMaterial(), scene = new Scene();
-  const actors = Array.from({ length: 5 }, () => { const mesh = new InstancedMesh(geometry, material, 2); mesh.count = 0; mesh.userData.preRenderSolo = true; return mesh; });
+  const actors = Array.from({ length: 65 }, () => { const mesh = new InstancedMesh(geometry, material, 2); mesh.count = 0; mesh.userData.preRenderSolo = true; return mesh; });
   const wall = new Mesh(geometry, material); scene.add(...actors, wall);
   const paths = actors.map(() => new Set<number>()), sizes: number[] = [];
   const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => {}) } as unknown as Renderer;
@@ -94,11 +111,11 @@ test('@transition animated warm-up groups cover both driver paths without overla
       paths[index].add(mesh.count); const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix);
       positions.add(matrix.elements.slice(12, 15).join(','));
       const pixel = new Vector3().setFromMatrixPosition(matrix).project(new PerspectiveCamera());
-      expect((pixel.x + 1) * 16 % 1).toBeCloseTo(.5); expect((pixel.y + 1) * 16 % 1).toBeCloseTo(.5);
+      expect((pixel.x + 1) * warmUpSize / 2 % 1).toBeCloseTo(.5); expect((pixel.y + 1) * warmUpSize / 2 % 1).toBeCloseTo(.5);
     });
     expect(positions.size).toBe(visible.length);
   });
-  expect(sizes).toEqual([4, 4, 1, 1]); expect(paths.every(path => path.has(1) && path.has(2))).toBe(true);
+  expect(sizes).toEqual([64, 64, 1, 1]); expect(paths.every(path => path.has(1) && path.has(2))).toBe(true);
   for (const mesh of actors) { const matrix = new Matrix4(); mesh.getMatrixAt(0, matrix); expect(matrix.elements).toEqual(new Matrix4().elements); expect(mesh.count).toBe(0); mesh.dispose(); }
   geometry.dispose(); material.dispose();
 });
@@ -112,4 +129,12 @@ for (const background of [false, true]) test(`@transition WebGPU ${background ? 
   expect(compile).toHaveBeenCalledTimes(Number(background));
   expect(pause).toHaveBeenCalled(); expect(render).toHaveBeenCalled();
   geometry.dispose(); material.dispose();
+});
+
+for (const background of [false, true]) test(`@transition ${background ? 'background' : 'foreground'} compilation restores its node-build policy after failure`, async () => {
+  const scene = new Scene(), renderer = { foregroundCompile: false, selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(1600, 900), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}) } as unknown as Renderer;
+  await expect(preRender(renderer, scene, new PerspectiveCamera(), vi.fn(), async () => {
+    expect(renderer.foregroundCompile).toBe(!background); throw Error('Compile failed');
+  }, undefined, undefined, background)).rejects.toThrow('Compile failed');
+  expect(renderer.foregroundCompile).toBe(false);
 });
