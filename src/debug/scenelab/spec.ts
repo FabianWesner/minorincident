@@ -9,6 +9,10 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Fixture-only eligibility overrides, restored after view initialization. */
+  barArchetypes?: string[];
+  /** High-tier fixture cap (low uses half), for E18 stress scenes; defaults to L1 caps. */
+  infectedCap?: number;
   name?: string;
   seed?: number;
   /** Flat ground under the scene (default grass). `district` keeps the baked ground of `layout.district`. */
@@ -207,6 +211,7 @@ export interface BuiltScene { composition: LevelComposition; layout: DistrictLay
 export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): string[] {
   const errors: string[] = [], ids = new Set<string>();
   const point = (p: unknown, label: string) => { if (!Array.isArray(p) || p.length < 2 || p.length > 3 || !p.every(Number.isFinite)) errors.push(`${label}: expected [x, z] numbers`); };
+  if (spec.infectedCap !== undefined && (!Number.isInteger(spec.infectedCap) || spec.infectedCap < 1 || spec.infectedCap > 200)) errors.push('infectedCap: integer 1..200');
   if (spec.size !== undefined && !(spec.size >= 8 && spec.size <= 400)) errors.push('size: 8..400 m');
   if (spec.ground && !['grass', 'asphalt', 'sidewalk', 'district'].includes(spec.ground)) errors.push(`ground: unknown ${spec.ground}`);
   if (spec.ground === 'district' && !spec.layout) errors.push('ground "district" needs layout.district');

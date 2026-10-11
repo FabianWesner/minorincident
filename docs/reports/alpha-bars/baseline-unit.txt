@@ -1,0 +1,53 @@
+
+> test:unit
+> vitest run tests/unit --maxWorkers=4
+
+
+ RUN  v5.0.3 /private/tmp/minorincident-alpha-bars-baseline
+
+ ❯ |functional| tests/unit/vehicles.test.ts (2 tests | 1 failed) 211ms
+   × T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps 79ms
+ ❯ |functional| tests/unit/assets/build.test.ts (5 tests | 1 failed) 7180ms
+   × T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate 721ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/vehicles.test.ts > T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps
+AssertionError: wrecked/0/doorL: expected undefined to be defined
+ ❯ tests/unit/vehicles.test.ts:46:49
+     44|       for (const name of [...def.requiredNodes, ...def.sockets]) {
+     45|         const node = nodes.find(n => n.getName() === name);
+     46|         expect(node, `${decay}/${lod}/${name}`).toBeDefined();
+       |                                                 ^
+     47|         const sourceNode = anchors.find(n => n.getName() === name)!;
+     48|         node!.getWorldMatrix().forEach((value, index) => expect(value)…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  |functional| tests/unit/assets/build.test.ts > T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate
+AssertionError: veh.fire-engine.wrecked:lod0: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "node doorL: expected exactly one, found 0",
++   "node doorR: expected exactly one, found 0",
++ ]
+
+ ❯ tests/unit/assets/build.test.ts:45:38
+     43|   expect(results).toHaveLength(9); // Pristine, wrecked and burned, ea…
+     44|   for (const result of results) {
+     45|     expect(result.errors, result.id).toEqual([]);
+       |                                      ^
+     46|     for (const [axis, target] of [7.4,3.55,2.1].entries()) expect(Math…
+     47|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 155 passed (157)
+      Tests  2 failed | 804 passed (806)
+   Start at  21:42:56
+   Duration  97.68s (tests 92%, import 6%, transform 2%)

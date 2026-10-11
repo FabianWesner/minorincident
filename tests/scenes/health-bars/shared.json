@@ -1,0 +1,25 @@
+{
+  "name": "qa-shared-health-bars",
+  "note": "A-S4: runner opts into the same data flag as Alpha/zoo; bars remain above drawn poses and face the camera while actors turn, chase and recover.",
+  "seed": 7,
+  "size": 80,
+  "ground": "asphalt",
+  "barArchetypes": ["infected.runner"],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "state": "idle" },
+    { "id": "near", "kind": "infected", "at": [-3, 0], "yaw": 180, "state": "idle" },
+    { "id": "edge", "kind": "infected", "at": [15, 0], "yaw": 180, "state": "idle" },
+    { "id": "far", "kind": "infected", "at": [16, 0], "yaw": 180, "state": "idle" },
+    { "id": "normal", "kind": "pedestrian", "at": [3, 0], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0] },
+  "frames": 120,
+  "shots": [0, 120],
+  "sheet": 30,
+  "script": [
+    { "frame": 1, "actor": "far", "do": { "hit": { "amount": 30 } } },
+    { "frame": 30, "actor": "near", "do": { "turn": 90 } },
+    { "frame": 60, "actor": "near", "do": { "hit": { "heavy": true, "amount": 1 } } }
+  ],
+  "expect": { "consoleErrors": 0, "clippingMax": 0, "undrawnFramesMax": 0, "drawCallsMax": 600, "trianglesMax": 1500000 }
+}
