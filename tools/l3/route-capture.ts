@@ -20,5 +20,10 @@ try {
     await session.page.evaluate(({x,y,z}) => window.__SS__!.inspect.setCamera({position:[x+19,y+24,z+19],target:[x,y,z]}),{x,y,z});
     await session.screenshot(`${out}/${name}.png`);
   }
+  await session.page.evaluate(() => window.__SS__!.settings.set({timeOfDay:'night'}));
+  for(const [name,x,y,z] of [['night-oak',-55,0,28],['night-boulevard',60,0,-28],['night-highway',174,5.7,0]] as const) {
+    await session.page.evaluate(({x,y,z}) => window.__SS__!.inspect.setCamera({position:[x+19,y+24,z+19],target:[x,y,z]}),{x,y,z});
+    await session.screenshot(`${out}/${name}.png`);
+  }
   if(session.errors.length) throw new Error(session.errors.join('\n'));
 } finally { await session.close();stopServer(); }
