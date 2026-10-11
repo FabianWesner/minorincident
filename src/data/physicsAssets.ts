@@ -386,7 +386,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.school-bus.glb",
-    "hash": "5e6bd2c1a42bd461367f1c3ddeb9e7180af90428e2a796108cf749f843c4b62f"
+    "hash": "4a964523ace868e520073d56027df3283a42cf61b391cb7a30185c4d8f2c5731"
   },
   "veh.suv-dark": {
     "class": "heavy",

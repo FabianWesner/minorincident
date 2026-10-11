@@ -13,18 +13,21 @@ export class AssetMaterials {
     this.shading = shading ?? new Materials(this.fallbackLighting!);
   }
   swap(root: Object3D, world = false, hydrant = false): void {
+    const vehicle = /^(veh|vehicle)\./.test(root.userData.assetId ?? '');
     root.traverse(node => {
       if (!(node instanceof Mesh)) return;
       const replace = (source: Material): Material => {
+        // Legacy vehicle panes use 52–88% alpha, which still conceals seats at
+        // the game lens. Keep their tint and lower authored alpha, with clear glazing.
+        const opacity = vehicle && source.transparent ? Math.min(source.opacity, .25) : source.opacity;
         const match = source.name.match(/^(pal|emi)_(.+)$/);
         if (!match || !Object.hasOwn(palette, match[2])) {
           const imported = source as Material & { color?: import('three').Color };
           if (!imported.color) return source;
-          const material = this.shading.fromColor(`${source.name}:${source.opacity}:${source.side}`, imported.color, source.name === 'keep_neon' ? 2 : 0, world);
-          material.transparent = source.transparent; material.fade.value = source.opacity; material.side = source.side; material.userData.sharedPalette = true;
+          const material = this.shading.fromColor(`${source.name}:${source.transparent}:${opacity}:${source.side}:${source.depthWrite}`, imported.color, source.name === 'keep_neon' ? 2 : 0, world);
+          material.transparent = source.transparent; material.opacity = opacity; material.fade.value = opacity; material.depthWrite = source.transparent ? false : source.depthWrite; material.forceSinglePass = source.transparent; material.side = source.side; material.userData.sharedPalette = true;
           return material;
         }
-        const vehicle = /^(veh|vehicle)\./.test(root.userData.assetId ?? '');
         const parts: string[] = [source.name]; for (let part: Object3D | null = node; part; part = part.parent) parts.push(part.userData.name ?? part.name);
         const label = parts.join(' ');
         const surfaceClass = (/chrome|metal|grill|rim|bumper/i.test(label) || (vehicle && source.name === 'pal_sidewalk')) ? 2 : (vehicle && !/wheel|tire|rubber|seat|interior|emi_/i.test(label)) || (/mall/.test(root.userData.assetId ?? '') && /floor|tile/i.test(label)) ? 1 : 0;
@@ -34,9 +37,9 @@ export class AssetMaterials {
         const emissive = match[1] === 'emi' || open ? 2 : 0; // only emi_* (or the diner's open door) glows: pal_windowGlow is a plain tan paint (mainstreet-brick walls, plank stacks)
         const vertexColors = !emissive && node.geometry.hasAttribute('color');
         // Preserve authored thin hair/cloth faces in both palette and crowd bakes.
-        const material = world ? this.shading.world(token, emissive, vertexColors, source.side, surfaceClass) : this.shading.asset(token, emissive, vertexColors, source.side, surfaceClass);
+        const material = world ? this.shading.world(token, emissive, vertexColors, source.side, surfaceClass, source.transparent, opacity, source.transparent ? false : source.depthWrite) : this.shading.asset(token, emissive, vertexColors, source.side, surfaceClass, source.transparent, opacity, source.transparent ? false : source.depthWrite);
         // Hydrants are an explicit D2 saturated-red exception; use the figure identity swatch.
-        const result = hydrant && token === 'survivorRed' ? this.shading.asset(token, emissive, vertexColors, source.side, surfaceClass) : material;
+        const result = hydrant && token === 'survivorRed' ? this.shading.asset(token, emissive, vertexColors, source.side, surfaceClass, source.transparent, opacity, source.transparent ? false : source.depthWrite) : material;
         result.userData.sharedPalette = true;
         return result;
       };

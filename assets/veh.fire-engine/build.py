@@ -27,10 +27,13 @@ def build(ctx):
         ('red','survivorRed',False),('red_dark','blood',False),
         ('chrome','picketWhite',False),('alu','sidewalk',False),('alu_dark','asphalt',False),
         ('tread','sidewalk',False),('rim','picketWhite',False),('rubber','uiDark',False),
-        ('black','uiDark',False),('glass','asphalt',False),('white','picketWhite',False),
+        ('black','uiDark',False),('glass','backpackTeal',False),('white','picketWhite',False),
         ('flame','schoolBusYellow',False),('amber','schoolBusYellow',True),
         ('lamp','sirenRed',True),('blue','policeBlue',True),('head','windowGlow',True),
         ('glow','windowGlow',True),('gauge','picketWhite',False)]}
+    M['glass'].node_tree.nodes['Principled BSDF'].inputs['Alpha'].default_value = .18
+    M['glass'].diffuse_color = (*M['glass'].diffuse_color[:3], .18)
+    M['glass'].surface_render_method = 'BLENDED'
     # --------------------------------------------------------------------------- object helpers
     GROUPS = {}
 
@@ -327,11 +330,25 @@ def build(ctx):
     cab_pts = [(cx0, 0.42), (cx1, 0.42), (cx1, 1.86), (3.83, 2.62)] + arc(3.63, 2.66, 0.2, -0.2, PI / 2, 8)[1:] + [(cx0, 2.86)]
     cab = prism('crew_cab_shell', cab_pts, -W, W, 'red', 'crew_cab', bevel=0.09, segs=2)
     cut(cab, raw_cyl('arch_cut_front', (FRONT_AXLE, 0, WHEEL_R), ARCH_R, 3.0), 'black')
-    # window/door recesses would need booleans per door; seams are raised strips instead.
+    # Hollow cab, with a closed floor/roof and solid lower body over the axle.
+    cut(cab, raw_box('cabin_void', (2.99, 0, 2.08), (2.02, 2.28, 1.32)))
+    # Seated hip sockets face +X; Blender -Y is the driver's side (+Z in game).
+    cab_seats = [('driverSeat', 3.36, -.60), ('crewSeat0', 3.02, 0),
+                 ('crewSeat1', 3.36, .60), ('crewSeat2', 2.68, -.60),
+                 ('crewSeat3', 2.68, .60), ('crewSeat4', 2.12, -.60), ('crewSeat5', 2.12, .60)]
+    for name, x, y in cab_seats:
+        box(name+'_cushion', (x, y, 1.46), (.48, .56, .12), 'black', 'crew_cab', bevel=.04)
+        box(name+'_backrest', (x-.24, y, 1.79), (.10, .56, .56), 'black', 'crew_cab', bevel=.04)
+    box('dashboard', (3.83, 0, 1.87), (.22, 2.15, .16), 'black', 'crew_cab', bevel=.025)
+    lathe('steering_wheel', [(.18,-.015),(.21,-.015),(.21,.015),(.18,.015),(.18,-.015)],
+          (3.68,-.60,1.99), 'x', 'black', 'crew_cab', segs=16)
+    box('steering_column', (3.79,-.60,1.91), (.22,.055,.055), 'black', 'crew_cab', bevel=0)
 
     # =========================================================================== WHEELS
     TYRE = [(0.30, -0.21), (0.40, -0.215), (0.455, -0.205), (0.49, -0.17), (0.5, -0.11), (0.503, 0.0), (0.5, 0.11), (0.49, 0.17),
             (0.455, 0.205), (0.40, 0.215), (0.30, 0.21)]
+    # Spend the far-tier triangles on open glazing, preserving tyre width/radius.
+    if DISTANCE == 2: TYRE = [TYRE[i] for i in (0, 1, 3, 5, 7, 9, 10)]
     RIM = [(1e-4, 0.13), (0.075, 0.13), (0.11, 0.105), (0.19, 0.095), (0.25, 0.115), (0.29, 0.15), (0.315, 0.19), (0.33, 0.2), (0.34, 0.17), (0.335, -0.19), (1e-4, -0.19)]
     HUB = [(1e-4, 0.235), (0.045, 0.232), (0.07, 0.21), (0.08, 0.17), (0.08, 0.13), (1e-4, 0.13)]
     for ax, axle in [(REAR_AXLE, 'rear'), (FRONT_AXLE, 'front')]:
@@ -447,6 +464,7 @@ def build(ctx):
 
         # ---------------- cab sides: windows, door seams, handles, lettering, emblem, mirror, step
         for i, (x0, z0, x1, z1) in enumerate([(px(1215), 1.98, px(1315), 2.62), (px(1378), 1.96, 3.76, 2.62)]):
+            cut(cab, raw_box('side_window_opening', ((x0+x1)/2, side*W, (z0+z1)/2), (x1-x0, .30, z1-z0)))
             plate(f'cab_window_{i}_{sname}', rrect(x0, z0, x1, z1, 0.06), side, 0.012, 'glass', 'crew_cab', bevel=0.004)
             frame(f'cab_window_frame_{i}_{sname}', x0, z0, x1, z1, side, 'black', 'crew_cab', bar=0.03, r=0.06, depth=0.016)
         for i, (x0, x1) in enumerate([(px(1180), px(1352)), (px(1356), px(1525))]):
@@ -530,6 +548,9 @@ def build(ctx):
     wmid = ((cx1 + 3.83) / 2 + 0.012, (1.86 + 2.62) / 2)
     wlen = math.hypot(cx1 - 3.83, 2.62 - 1.86) - 0.1
     for i, y in enumerate([-0.56, 0.56]):
+        opening = raw_box('windscreen_opening', (wmid[0], y, wmid[1]), (.35, 1.0, wlen))
+        opening.rotation_euler.y = -rake
+        cut(cab, opening)
         box(f'windscreen_{i}', (wmid[0], y, wmid[1]), (0.02, 1.0, wlen), 'glass', 'crew_cab', bevel=0.008, rot=(0, -rake, 0))
         box(f'wiper_{i}', (cx1 - 0.015, y - 0.12, 1.98), (0.02, 0.62, 0.025), 'black', 'crew_cab', bevel=0.008, rot=(0.3, -rake, 0))
     box('windscreen_pillar', (wmid[0] + 0.004, 0, wmid[1]), (0.03, 0.1, wlen + 0.05), 'red', 'crew_cab', bevel=0.012, rot=(0, -rake, 0))
@@ -582,7 +603,7 @@ def build(ctx):
         matches = [o for o in list(root.children_recursive) if o.type=='MESH' and o.name.startswith(prefix)]
         for obj in matches:
             pivots.parent(obj, node)
-    for name, position in [('driverSeat',(3.2,.4,1.25)),('exitL',(2.9,-1.8,0)),('exitR',(2.9,1.8,0))]:
+    for name, position in [(name, (x,y,1.64)) for name,x,y in cab_seats] + [('steeringWheel',(3.68,-.60,1.99)),('exitL',(2.9,-1.8,0)),('exitR',(2.9,1.8,0))]:
         pivots.parent(sockets.empty(name, position), root)
     colliders.cuboid('body', (7.4,2.1,2.5), (0,0,1.5), root)
     bpy.context.view_layer.update()
@@ -603,7 +624,7 @@ def build(ctx):
     root.location.y=-(minimum.y+maximum.y)/2*root.scale.y
     bpy.context.view_layer.update()
     if DISTANCE:
-        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('shutter_rail', 'shutter_bar', 'shutter_lip', 'shutter_post', 'pump_panel_ledge', 'roof_grab', 'gantry_base', 'side_marker', 'cab_marker', 'cab_roof_marker', 'rear_ladder_step', 'pump_bay_step', 'cab_step', 'front_bumper_step', 'rear_step', 'cab_light', 'reflector', 'roof_rail', 'rail_support', 'gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'))
+        export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('shutter_rail', 'shutter_bar', 'shutter_lip', 'shutter_post', 'pump_panel_ledge', 'roof_grab', 'gantry_base', 'side_marker', 'cab_marker', 'cab_roof_marker', 'rear_ladder_step', 'pump_bay_step', 'cab_step', 'front_bumper_step', 'rear_step', 'cab_light', 'reflector', 'roof_rail', 'rail_support', 'gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'), anchors=tuple(name for name,x,y in cab_seats)+('steeringWheel',))
     export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake'})
     return root
 
@@ -629,5 +650,5 @@ if __name__ == '__main__':
         export.glb(root, output)
     print('OK fire engine source/LOD chain', output)
 
-if __name__ == '__main__' and not DISTANCE:
+if __name__ == '__main__' and not DISTANCE and not args.lod_only:
     build_native_lods(__file__)
