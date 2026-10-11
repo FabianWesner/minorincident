@@ -23,3 +23,9 @@ Runtime asset budgets: see [assets.json](assets.json). Every base LOD is under 8
 ## Verification limits
 
 The E09 API-surface failure is baseline: `src/debug/testApi.ts` and `tests/e2e/harness.spec.ts` have identical Git blob IDs at f44242d6 and 07bf4ddb (`90bc8b71ed91e4d2015d892e04f68c5c694f8ece` / `edb8c4d60ea117db26750908c56d7d3340ee4368`). T-E13-05 is the supplied pre-existing save/continue rack mismatch. The lamp fixture now waits for completed boarding and passes its original golden/assertions/tolerances; the prior mid-boarding failure is retained in the E09 log for transparency.
+
+T-E20-21 was rerun on untouched f44242d6: baseline and final branch produce exactly the same seed-2 fate counts (8 turned, 13 checkpoint, 9 elsewhere at identical coordinates), proving the unrelated simulation failure predates PKG-09. Full E20 reports 42 passes / 1 failure, including a pass for T-E20-05. See the retained [baseline comparison log](validation/car-entry-E20-baseline-final.log).
+
+The full E20 browser selection was run manually after verify stopped at its baseline simulation failure: 32 passed, only the supplied T-E13-05 rack mismatch failed. All mobile/WebKit audio variants passed in this batch. The first isolated E20 performance run failed (high reveal 118.6 ms; low p50 48.4 ms); initial and follow-up results are retained separately.
+
+Final E20 performance rerun remains non-green: desktop p95 14.8 ms (limit 14), reveal 57.4 ms (limit 50); baseline desktop passed at 12.1 / 37 ms. Baseline mobile also fails (p50 47.1 ms against 33.3); final mobile result is in [the final log](validation/car-entry-E20-perf-final.log). These results were collected on the shared Mac at load approximately 10–11; the desktop difference remains unresolved and is not asserted pre-existing. No performance limit was changed.
