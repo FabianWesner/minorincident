@@ -45,6 +45,6 @@ test('T-E04-animation @E04 procedural clips preserve rest transforms and move jo
   const pose = { variant: 'female' as const, gearTier: 0 as const, animation: 'run' as const, animationTick: 0, velocity: { x: 4.5, z: 0 }, grounded: true, invulnerableUntil: 0, checkpoint: { x: 0, y: 0.7, z: 0 }, diedAt: null };
   animator.update(pose, 7); const angle = rig.legL.rotation.z;
   animator.update(pose, 7); expect(rig.legL.rotation.z).toBe(angle); expect(Math.abs(angle)).toBeGreaterThan(0.1);
-  expect(Object.keys(clips).sort()).toEqual(['idle', 'walk', 'run', 'hurt', 'die', 'swing', 'shoot', 'throw', 'kick', 'interact', 'enter-car'].sort());
+  expect(Object.keys(clips).sort()).toEqual(['idle', 'walk', 'run', 'hurt', 'die', 'swing', 'shoot', 'throw', 'kick', 'interact', 'enter-car', 'knockdown', 'get-up'].sort());
   disposeCharacter(model);
 });

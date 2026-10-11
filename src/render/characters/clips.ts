@@ -369,4 +369,4 @@ export function sampleClip(root: Object3D, name: string, seconds: number): void 
 }
 export type Clip = (rig: CharacterRig, seconds: number) => void;
 /** Complete sim-state contract; every evaluation uses authored glTF keyframes. */
-export const clips: Record<AnimationState, Clip> = Object.fromEntries(['idle','walk','run','hurt','die','swing','shoot','throw','kick','interact','enter-car'].map(name => [name, (rig: CharacterRig, seconds: number) => sampleClip(rig.root, name, seconds)])) as Record<AnimationState, Clip>;
+export const clips: Record<AnimationState, Clip> = Object.fromEntries(['idle','walk','run','hurt','die','knockdown','get-up','swing','shoot','throw','kick','interact','enter-car'].map(name => [name, (rig: CharacterRig, seconds: number) => sampleClip(rig.root, name, seconds)])) as Record<AnimationState, Clip>;

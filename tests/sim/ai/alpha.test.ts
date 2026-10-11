@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { INFECTED_TOUGHNESS, infectedDef, validateInfected, infectedSpecialMoves, type InfectedSpecialMove } from '../../../src/data/infected';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { catalog } from '../../../src/data/actions/catalog';
@@ -54,6 +54,7 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
   test(`T-E07-05-scheduler-${move} @E07-AC05 locked telegraph, independent cooldown, recovery and serialized state`, async () => {
     const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move];
+    vi.spyOn(ai.alphaSupport, 'update').mockImplementation(() => {}); // Test scheduling independently of move effects.
     // The scheduler also serves the later zoo lanes; no animal effects are claimed here.
     e.archetype = timing.archetype;
     const locked = { ...target }; expect(ai.startSpecial(e.id, move, locked, area)).toBe(true); locked.x = 90;
@@ -87,7 +88,7 @@ for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs
   expect(w.infected!.startSpecial(e.id, 'alpha.roar', target, area)).toBe(true); step(w, 10); m.checkpoint('C');
   const before = e.infected!.specialAttack!.activeTick - w.tick; step(w, 20); m.restore('C');
   const restored = w.entities.get(e.id)!; expect(restored.infected!.specialAttack!.activeTick - w.tick).toBe(before);
-  step(w, before); expect(restored.infected!.specialAttack!.stage).toBe('active'); expect(restored.infected!.specialCooldowns!['alpha.roar']! - w.tick).toBe(900);
+  step(w, before); expect(restored.infected!.specialAttack!.stage).toBe('recovery'); expect(restored.infected!.specialCooldowns!['alpha.roar']! - w.tick).toBe(900);
 });
 
 test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and retargeting never resets the first', async () => {

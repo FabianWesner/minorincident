@@ -9,6 +9,8 @@ interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: 
  * texture uploads, AI, physics or population cap for settled bodies. */
 export class StaticCorpses extends Group {
   private readonly bodies = new Map<string, EntitySnapshot>();
+  private readonly slots = new Map<string, { page: Chunk; index: number }>();
+  private readonly moved = new Matrix4();
   private readonly chunks = new Map<string, Chunk[]>();
   private readonly frozen = new Map<string, { geometry: BufferGeometry; material: MeshLambertNodeMaterial }>();
   private readonly partMatrix = new Matrix4();
@@ -17,6 +19,14 @@ export class StaticCorpses extends Group {
   begin(get: (id: number) => EntitySnapshot | undefined): void {
     // Checkpoint restore may remove/revive a body or re-use its ID at a new pose.
     if ([...this.bodies.values()].some(body => get(body.id) !== body)) this.reset();
+    for (const [id, body] of this.bodies) if (body.corpseThrown) {
+      const slot = this.slots.get(id)!;
+      slot.page.mesh.getMatrixAt(slot.index, this.moved);
+      if (this.moved.elements[12] !== body.transform.x || this.moved.elements[13] !== body.transform.y - .7 || this.moved.elements[14] !== body.transform.z) {
+        this.moved.setPosition(body.transform.x, body.transform.y - .7, body.transform.z);
+        slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true; slot.page.mesh.computeBoundingSphere();
+      }
+    }
     for (const pages of this.chunks.values()) for (const page of pages) for (const figure of page.probe.figures) figure.drawn = false;
   }
   place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = []): void {
@@ -33,6 +43,7 @@ export class StaticCorpses extends Group {
       page = this.createPage(cellKey, source, material, clip, frame, hiddenParts);
     }
     const index = page.mesh.count++;
+    this.slots.set(instanceKey, { page, index });
     page.mesh.setMatrixAt(index, instance); page.tint.setXYZW(index, tint.r, tint.g, tint.b, 1);
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
@@ -98,7 +109,7 @@ export class StaticCorpses extends Group {
   reset(): void {
     for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); mesh.dispose(); }
     for (const frozen of this.frozen.values()) { frozen.geometry.dispose(); frozen.material.dispose(); }
-    this.frozen.clear(); this.chunks.clear(); this.bodies.clear(); this.clear();
+    this.frozen.clear(); this.chunks.clear(); this.bodies.clear(); this.slots.clear(); this.clear();
   }
   dispose(): void { this.reset(); }
 }

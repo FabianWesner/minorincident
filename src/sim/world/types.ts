@@ -7,6 +7,8 @@ export interface EntitySnapshot {
   id: number;
   /** Settled persistent body: no brain, collision obstacle or physics updates. */
   corpse?: boolean;
+  /** A retained death pose in flight; the crowd view follows its actual transform. */
+  corpseThrown?: boolean;
   droppedProp?: import('../npc/types').CivilianProp;
   /** Actual fixed-step motion, including collision/avoidance, for NPC locomotion clips. */
   locomotion?: import('../locomotion/MotionResponse').MotionResponse;
@@ -70,6 +72,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'civilian.grabbed'; sourceId: number; targetId: number; variant: string; rescueUntil: number }
   | { tick: number; type: 'infected.prop-thrown'; sourceId: number; propId: number; attackId: number }
   | { tick: number; type: 'telegraph'; sourceId: number; attackId: number; special: string; duration: number; move?: import('../../data/infected').InfectedSpecialMove; startTick?: number; activeTick?: number; cooldownExpiry?: number; target?: import('../ai/types').InfectedSpecialAttack['target']; area?: import('../ai/types').InfectedSpecialAttack['area'] }
+  | { tick: number; type: 'infected.roar-buff'; sourceId: number; targetId: number; attackId: number; stage: 'active' | 'expiry'; until: number }
   | { tick: number; type: 'infected.special'; sourceId: number; move: import('../../data/infected').InfectedSpecialMove; attackId: number; stage: 'active' | 'recovery' | 'expiry' | 'cancelled' }
   | { tick: number; type: 'infected.attack'; sourceId: number; attackId: number; targetId: number; special: string; amount: number }
   | { tick: number; type: 'infected.revived' | 'infected.leg-lost' | 'infected.groan' | 'infected.recovered'; sourceId: number; targetId: number }

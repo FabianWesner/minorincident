@@ -1,0 +1,107 @@
+{
+  "name": "qa-alpha-grab-throw",
+  "seed": 37,
+  "ground": "asphalt",
+  "size": 50,
+  "time": "L4",
+  "dof": false,
+  "note": "Game camera: amber arrow must persist through f57; retained corpse flies along +X after f58 and settles at courier impact, never disappearing. Check facing, clipping, foot contact and jitter. Second attempt at f730 cancels because the retained body is beyond pickup range. Courier takes the real first impact; god mode resumes at f100 for the long cooldown observation.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ]
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -4,
+        0
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "body",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -3,
+        1
+      ],
+      "yaw": 90,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "god": false
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "body",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 10,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.grab-throw",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 100,
+      "actor": "courier",
+      "do": {
+        "god": true
+      }
+    },
+    {
+      "frame": 730,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.grab-throw",
+        "target": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1.25
+  },
+  "frames": 820,
+  "shots": [
+    0,
+    10,
+    57,
+    58,
+    78,
+    98,
+    112,
+    125,
+    150,
+    778
+  ],
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0
+  }
+}
