@@ -4,6 +4,7 @@ const output = 'test-results/epics/E08';
 test('T-E08-08 @E08 @E08-AC08 stand interaction toggles escort follow/wait with visible overhead icons', async ({ page }) => {
   await boot(page); await page.evaluate(async () => { const api = window.__SS__!; await api.loadScenario('turning-probe'); api.pause(); api.npcs.escort({ x: 1, z: 0 }); await api.step(120); });
   await expect(page.locator('[data-escort-id]')).toHaveAttribute('data-order', 'wait'); await expect(page.locator('[data-escort-id]')).toHaveText('Ⅱ'); await expect(page.locator('[data-escort-id]')).toBeVisible();
+  expect(await page.evaluate(() => window.__SS__!.getState().render.npcs!.heroes.find(h => h.model === 'npc.civilian-man-a')?.source)).toBe('glb');
   mkdirSync(output, { recursive: true }); await page.screenshot({ path: `${output}/escort-wait.png` });
   await page.evaluate(async () => { const api = window.__SS__!; api.teleport('player', { x: -2, z: 0 }); await api.step(1); api.teleport('player', { x: 0, z: 0 }); await api.step(120); });
   await expect(page.locator('[data-escort-id]')).toHaveAttribute('data-order', 'follow'); await expect(page.locator('[data-escort-id]')).toHaveText('↑'); await page.screenshot({ path: `${output}/escort-follow.png` });

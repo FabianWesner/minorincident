@@ -5,20 +5,22 @@ import type { SimWorld } from '../../sim/world/SimWorld';
 import type { Materials } from '../Materials';
 import { disposeCharacter } from '../characters/rig';
 import { createCivilianPlaceholder, createCorgiPlaceholder } from './placeholders';
+import { restoreStanding } from './prepareCivilianGeometry';
 import { CivilianCrowd } from './CivilianCrowd';
 import { QuadrupedAnimator } from '../characters/QuadrupedAnimator';
 import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
 import { NpcAnimator } from '../characters/NpcAnimator';
 import { civilianHeight, fitCivilianHeight } from './figureHeight';
-interface Hero { humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
+interface Hero { model: string; humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
   private readonly civilians: CivilianCrowd;
   private readonly heroes = new Map<number, Hero>();
   private readonly registry: AssetRegistry;
   private dog!: Group;
-  private human!: Group;
+  private readonly humans = new Map<string, Group>();
+  private readonly humanLoads = new Map<string, Promise<void>>();
   private child!: Group;
   private dogSource = 'placeholder';
   private readonly placeholders: Group[] = [];
@@ -38,39 +40,69 @@ export class NpcView extends Group {
     this.off = world.events.on('corgi.bark', event => { if (event.type === 'corgi.bark') { this.barkUntil = event.tick + 180; this.threatId = event.threatId; this.bark.dataset.direction = `${event.direction.x},${event.direction.z}`; } });
   }
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
-  /** Streamed close-up (LOD0) civilian batches still loading. */
-  ready(): Promise<void> { return this.civilians.ready(); }
+  /** Wait for civilian batches and attached escort skins to finish streaming. */
+  ready(): Promise<void> { return Promise.all([this.civilians.ready(), ...this.humanLoads.values()]).then(() => {}); }
   async init(): Promise<void> {
     await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
-    this.human = createCivilianPlaceholder(); this.placeholders.push(this.human);
-    fitCivilianHeight(this.human, 'npc.escort');
+    await this.loadHuman('npc.civilian-man-a');
     this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
     fitCivilianHeight(this.child, 'npc.brother');
     this.child.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
-    for (const root of [this.dog, this.human]) root.traverse(node => {
+    this.dog.traverse(node => {
       if (!(node instanceof Mesh)) return;
-      if (root === this.human && !Array.isArray(node.material) && node.material.name === 'keep_veins') node.visible = false;
       const remap = (old: Material) => {
         const color = (old as import('three').MeshBasicMaterial).color ?? new Color('#e5d9b9');
         const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color); material.movingFigure.value = 1; material.side = old.side; material.userData.sharedPalette = true; return material;
       };
-      const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (root === this.human || this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
+      const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
+  }
+  private loadHuman(model: string): Promise<void> {
+    let pending = this.humanLoads.get(model);
+    if (!pending) {
+      pending = this.registry.loadAsset(model, 'lod1').then(loaded => {
+        const root = loaded.userData.placeholder ? createCivilianPlaceholder() : loaded as Group;
+        if (loaded.userData.placeholder) { root.userData.placeholder = true; this.placeholders.push(root); }
+        else restoreStanding(root);
+        fitCivilianHeight(root, model);
+        root.traverse(node => {
+          if (!(node instanceof Mesh)) return;
+          if (!Array.isArray(node.material) && node.material.name === 'keep_veins') node.visible = false;
+          if (loaded.userData.placeholder) {
+            const remap = (old: Material) => {
+              const color = (old as import('three').MeshBasicMaterial).color ?? new Color('#e5d9b9');
+              const material = this.materials.fromColor(`npc:${old.name}:${old.side}`, old.name === 'emi_eyes' ? new Color('#302539') : color);
+              material.movingFigure.value = 1; material.side = old.side; material.userData.sharedPalette = true; old.dispose(); return material;
+            };
+            node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);
+          }
+          node.castShadow = node.receiveShadow = true;
+        });
+        this.humans.set(model, root);
+      });
+      this.humanLoads.set(model, pending);
+    }
+    return pending;
   }
   update(camera: Camera, alpha = 1, lodCamera = camera): void {
     this.civilians.update(alpha, camera, lodCamera); let cars = 0;
-    for (const [id, hero] of this.heroes) if (!this.world.entities.get(id)) { this.remove(hero.root); hero.badge?.remove(); this.heroes.delete(id); }
+    for (const [id, hero] of this.heroes) if (!this.world.entities.get(id)) { this.remove(hero.root); hero.humanAnimator?.dispose(); hero.badge?.remove(); this.heroes.delete(id); }
     for (const e of this.world.entities.iterate()) {
       if (e.traffic || e.convoy) { this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, .6, e.transform.z); this.cars.setMatrixAt(cars++, this.transform); continue; }
       if (!e.companion && !e.escort && !e.civilian?.pet) continue;
+      const model = e.escort ? e.escort.child ? 'npc.brother' : e.appearance?.asset ?? e.civilian?.model ?? (e.archetype.startsWith('npc.') && e.archetype !== 'npc.escort' ? e.archetype : 'npc.civilian-man-a') : 'char.corgi';
+      if (e.escort && !e.escort.child && !this.humans.has(model)) void this.loadHuman(model);
+      const prototype = e.escort ? e.escort.child ? this.child : this.humans.get(model) ?? this.humans.get('npc.civilian-man-a')! : this.dog;
+      const drawnModel = prototype.userData.assetId ?? model;
       let hero = this.heroes.get(e.id);
+      if (hero && hero.model !== drawnModel) { this.remove(hero.root); hero.humanAnimator?.dispose(); hero.badge?.remove(); this.heroes.delete(e.id); hero = undefined; }
       if (!hero) {
-        const root = (e.escort ? e.escort.child ? this.child : this.human : this.dog).clone(true); if (e.civilian?.pet) { const pack = root.getObjectByName('packSocket'); if (pack) pack.visible = false; }
+        const root = prototype.clone(true); if (e.civilian?.pet) { const pack = root.getObjectByName('packSocket'); if (pack) pack.visible = false; }
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort?.child && !this.child.userData.placeholder ? 'glb' : e.escort ? 'placeholder' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { model: drawnModel, humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? prototype.userData.placeholder ? 'placeholder' : 'glb' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -83,7 +115,7 @@ export class NpcView extends Group {
       if (hero.animator) hero.animator.update(time, motion.speed, distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, motion.speed, distance, down);
       if (hero.badge && e.escort) {
-        this.point.set(e.transform.x, hero.root.position.y + civilianHeight(e.escort.child ? 'npc.brother' : 'npc.escort') + .15, e.transform.z).project(camera);
+        this.point.set(e.transform.x, hero.root.position.y + civilianHeight(hero.model) + .15, e.transform.z).project(camera);
         hero.badge.style.left = `${(this.point.x + 1) / 2 * innerWidth}px`; hero.badge.style.top = `${(1 - this.point.y) / 2 * innerHeight}px`; hero.badge.style.display = Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none';
         hero.badge.dataset.order = e.escort.order; hero.badge.dataset.state = e.escort.state; hero.badge.setAttribute('aria-label', `Escort ${e.escort.state}`); hero.badge.textContent = e.escort.state === 'downed' ? '+' : e.escort.state === 'cover' ? '◆' : e.escort.order === 'wait' ? 'Ⅱ' : '↑';
       }
@@ -101,12 +133,12 @@ export class NpcView extends Group {
   heldProps() { return this.civilians.heldProps(); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }) { return this.civilians.shotMuzzle(id,direction); }
   muzzle(id: number) { return this.civilians.muzzle(id); }
-  snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip, position: h.root.position.toArray(), head: h.head?.getWorldPosition(this.point.clone()).toArray() ?? null, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)), facing: this.facing(h) })), cars: this.cars.count }; }
+  snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip ?? h.humanAnimator?.currentClip, model: h.model, position: h.root.position.toArray(), head: h.head?.getWorldPosition(this.point.clone()).toArray() ?? null, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)), facing: this.facing(h) })), cars: this.cars.count }; }
   /** Rendered body facing on the ground (radians, sim yaw convention): tail -> head in world space, so any model or animation flip shows up. */
   private facing(h: Hero): number | null {
     if (!h.head || !h.tail) return null;
     h.root.updateWorldMatrix(true, true); const head = h.head.getWorldPosition(new Vector3()), tail = h.tail.getWorldPosition(new Vector3());
     return -Math.atan2(head.z - tail.z, head.x - tail.x);
   }
-  dispose(): void { this.off(); this.bark.remove(); for (const h of this.heroes.values()) h.badge?.remove(); this.heroes.clear(); this.civilians.dispose(); for (const root of this.placeholders) disposeCharacter(root); this.cars.geometry.dispose(); (this.cars.material as MeshLambertNodeMaterial).dispose(); this.cars.dispose(); void this.registry.dispose(); this.clear(); }
+  dispose(): void { this.off(); this.bark.remove(); for (const h of this.heroes.values()) { h.humanAnimator?.dispose(); h.badge?.remove(); } this.heroes.clear(); this.civilians.dispose(); for (const root of this.placeholders) disposeCharacter(root); this.cars.geometry.dispose(); (this.cars.material as MeshLambertNodeMaterial).dispose(); this.cars.dispose(); void this.registry.dispose(); this.clear(); }
 }
