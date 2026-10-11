@@ -1,0 +1,90 @@
+{
+  "spec": "tests/scenes/infected-hearing.json",
+  "backend": "webgl",
+  "frames": 90,
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "pursuit": {
+    "actors": {
+      "zombie": {
+        "stuckRunMax": 0,
+        "stuckFrame": -1,
+        "lostNearFrames": 11,
+        "overshootMaxM": 0
+      }
+    },
+    "courierSwings": 2,
+    "courierAttacks": 1,
+    "firstAttackFrame": 52,
+    "bites": 0,
+    "firstBiteFrame": -1
+  },
+  "clipping": {
+    "gunBodyHits": 0,
+    "staticPairs": 0,
+    "heldPropHits": 0,
+    "actorHits": 0,
+    "piercing": 0
+  },
+  "actors": {
+    "courier": {
+      "kind": "courier",
+      "entity": 1,
+      "position": [
+        -1.8,
+        0
+      ],
+      "yawDeg": 0,
+      "state": "idle",
+      "drawnFrames": 90,
+      "inViewFrames": 90,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod0": 90
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          -1.8,
+          0
+        ]
+      },
+      "farLodCloseFrames": 0
+    },
+    "zombie": {
+      "kind": "infected",
+      "entity": 3,
+      "position": [
+        -0.72,
+        0
+      ],
+      "yawDeg": 180,
+      "state": "attack",
+      "drawnFrames": 90,
+      "inViewFrames": 90,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod1": 6,
+        "lod0": 84
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          0,
+          0
+        ]
+      },
+      "farLodCloseFrames": 0
+    }
+  }
+}
