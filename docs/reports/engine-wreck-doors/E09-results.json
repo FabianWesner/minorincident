@@ -1,0 +1,47 @@
+{
+  "unitSim": {
+    "numPassedTests": 50,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "browserStats": {
+    "startTime": "2026-10-11T19:53:10.486Z",
+    "duration": 135607.251,
+    "expected": 42,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "browserFailures": [
+    {
+      "title": "T-E01-05 @E01 @E01-AC05 @E09 API query gate, semver, delivered methods and remaining epic stubs",
+      "file": "e2e/harness.spec.ts",
+      "project": "chromium",
+      "errors": [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/engine-wreck-doors/tests/e2e/harness.spec.ts",
+            "column": 24,
+            "line": 61
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 0\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[33m@@ -3,23 +3,28 @@\u001b[39m\n\u001b[2m    \"barricades\",\u001b[22m\n\u001b[2m    \"bot\",\u001b[22m\n\u001b[2m    \"camera\",\u001b[22m\n\u001b[2m    \"campaign\",\u001b[22m\n\u001b[2m    \"cheats\",\u001b[22m\n\u001b[31m+   \"crowdFigures\",\u001b[39m\n\u001b[2m    \"debug\",\u001b[22m\n\u001b[2m    \"events\",\u001b[22m\n\u001b[31m+   \"explosions\",\u001b[39m\n\u001b[2m    \"getEntity\",\u001b[22m\n\u001b[2m    \"getState\",\u001b[22m\n\u001b[2m    \"input\",\u001b[22m\n\u001b[31m+   \"inspect\",\u001b[39m\n\u001b[2m    \"interact\",\u001b[22m\n\u001b[31m+   \"lights\",\u001b[39m\n\u001b[2m    \"loadLevel\",\u001b[22m\n\u001b[2m    \"loadScenario\",\u001b[22m\n\u001b[2m    \"look\",\u001b[22m\n\u001b[2m    \"missions\",\u001b[22m\n\u001b[2m    \"npcs\",\u001b[22m\n\u001b[2m    \"pause\",\u001b[22m\n\u001b[2m    \"perf\",\u001b[22m\n\u001b[31m+   \"physicsProps\",\u001b[39m\n\u001b[2m    \"query\",\u001b[22m\n\u001b[2m    \"ready\",\u001b[22m\n\u001b[2m    \"resume\",\u001b[22m\n\u001b[2m    \"screenshotReady\",\u001b[22m\n\u001b[2m    \"setLoadout\",\u001b[22m\n\u001b[33m@@ -31,6 +36,7 @@\u001b[39m\n\u001b[2m    \"teleport\",\u001b[22m\n\u001b[2m    \"tick\",\u001b[22m\n\u001b[2m    \"unloadScenario\",\u001b[22m\n\u001b[2m    \"version\",\u001b[22m\n\u001b[2m    \"vfx\",\u001b[22m\n\u001b[31m+   \"weather\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  59 |   });\n  60 |   expect(surface.version).toMatch(/^\\d+\\.\\d+\\.\\d+$/);\n> 61 |   expect(surface.keys).toEqual(['version', 'ready', 'missions', 'npcs', 'campaign', 'pause', 'resume', 'step', 'setTimeScale', 'tick', 'loadLevel', 'loadScenario', 'unloadScenario', 'getState', 'getEntity', 'query', 'events', 'input', 'spawn', 'interact', 'teleport', 'survivor', 'setLoadout', 'cheats', 'bot', 'camera', 'settings', 'vfx', 'audio', 'debug', 'barricades', 'look', 'perf', 'screenshotReady'].sort());\n     |                        ^\n  62 |   expect(surface.npcKeys).toEqual(['civilian', 'escort', 'grab', 'courage', 'quality', 'l1Outbreak', 'l1Stats'].sort());\n  63 |   expect(surface.campaignKeys).toEqual(['state', 'menu', 'save', 'restore'].sort());\n  64 |   expect(surface.errors.spawn).toBe('Load an infected or combat scenario before spawning');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/engine-wreck-doors/tests/e2e/harness.spec.ts:61:24"
+        }
+      ]
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "file": "e2e/save.spec.ts",
+      "project": "chromium",
+      "errors": [
+        {
+          "location": {
+            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/engine-wreck-doors/tests/e2e/save.spec.ts",
+            "column": 207,
+            "line": 84
+          },
+          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n  83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n> 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n     |                                                                                                                                                                                                               ^\n  85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n  86 | });\n  87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/engine-wreck-doors/tests/e2e/save.spec.ts:84:207"
+        }
+      ]
+    }
+  ]
+}
