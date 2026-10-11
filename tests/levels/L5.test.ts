@@ -237,6 +237,7 @@ describe('L5 Aftermath', () => {
     expect(pickup.archetype).toBe('weapon.shotgun'); expect(dist(pickup.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(3);
     const rack = () => w.combat!.runner.loadout.state;
     step(w, 60); expect(w.entities.get(pickup.id)).toBeDefined();
+    place(w, 1, pickup.transform.x + .95, pickup.transform.z);
     w.setInput({ interact: true }); step(w, 1); w.clearInput(); step(w, 34);
     expect(w.entities.get(pickup.id)).toBeDefined(); step(w, 1);
     expect(w.entities.get(pickup.id)).toBeUndefined(); expect(rack().selectedSide).toBe('RIGHT');
@@ -252,6 +253,8 @@ describe('L5 Aftermath', () => {
   test('T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication', async () => {
     const l = await loadL5(1); world = l.world; const w = l.world, m = l.mission;
     const weapons = () => w.combat!.runner.loadout.activeEntries().map(e => e.id);
+    const shelf = m.def.anchors['l5-shotgun'];
+    place(w, 1, shelf.x + .95, shelf.z);
     m.checkpoint('outside');
     w.setInput({ interact: true }); step(w, 36); w.clearInput();
     expect(weapons()).toContain('weapon.shotgun'); m.restore('outside');

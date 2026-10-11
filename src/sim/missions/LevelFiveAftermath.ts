@@ -63,8 +63,9 @@ export class LevelFiveAftermath {
       combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]); combat.runner.loadout.state.selectedSide = 'RIGHT';
     }
     this.placeInCellar();
-    const start = this.anchor('l5-cellar-in'), shelf = this.mission.def.anchors['l5-shotgun'] ?? { x: start.x + 1, z: start.z };
-    world.combat?.pickups.spawn('weapon.shotgun', shelf, false, { retain: true, interactTicks: 36 });
+    const shelf = this.anchor('l5-shotgun');
+    const pickup = world.combat?.pickups.spawn('weapon.shotgun', shelf, false, { retain: true, interactTicks: 36, surfaceY: .385 });
+    if (pickup !== undefined) world.entities.get(pickup)!.transform.yaw = Math.PI / 2;
     this.spawnSurvivors();
     this.spawnLookout();
     this.spawnCorpses();
@@ -301,6 +302,7 @@ export class LevelFiveAftermath {
     if (s.phase !== 'cellar') {
       this.losses(); this.chain(); this.cues(); this.checkAccounted(); this.metro();
       s.infectedMax = Math.max(s.infectedMax, world.infected.director.count);
+      if (s.shutterAt && tick >= s.shutterAt + 120 && this.mission.state.gates['l5-metro-shutter']) this.mission.setGate('l5-metro-shutter', false);
       if (s.shutterAt && !s.doneAt && tick >= s.shutterAt + ticks(3)) this.done();
     }
     this.gloom();

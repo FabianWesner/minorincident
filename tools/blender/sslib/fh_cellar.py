@@ -145,6 +145,9 @@ def recipe(s):
     for z in zs:
         x = sx0 + .2
         while x < sx1 - .25:
+            # L5 shotgun: keep the right-hand metre of the lower board clear on every LOD.
+            if z == zs[0] and x > -1.8:
+                break
             kind = rng.choice(['crate', 'crate', 'box', 'jar', 'jar'])
             w = rng.uniform(.4, .65)
             if x + w > sx1 - .1:

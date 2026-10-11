@@ -271,12 +271,18 @@ export class Mission {
       this.gateHandles.set(id,handle);this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[id]);
     }
   }
+  /** Keep gate state, collision and checkpoint restoration on the existing mission gate path. */
+  setGate(id: string, open: boolean): void {
+    this.state.gates[id] = open;
+    this.world.physics.world!.getCollider(this.gateHandles.get(id)!).setEnabled(!open);
+    this.emit({ type: 'gate.changed', id, open });
+  }
   private run(actions: ScriptAction[]): void {
     for (const action of actions) switch (action.kind) {
       case 'spawn': this.spawn(action.group); break;
       case 'migration': this.spawn(action.group); this.emit({ type: 'migration.started', id: action.group, to: this.def.anchors[action.to] }); break;
       case 'tier': this.state.tier = action.tier; this.world.setTier(action.tier); this.emit({ type: 'world.tier-requested', tier: action.tier }); break;
-      case 'gate': this.state.gates[action.id] = action.open; this.world.physics.world!.getCollider(this.gateHandles.get(action.id)!).setEnabled(!action.open); this.emit({ type: 'gate.changed', id: action.id, open: action.open }); break;
+      case 'gate': this.setGate(action.id, action.open); break;
       case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + (this.def.id === 'L1' ? 240 : 300) }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;

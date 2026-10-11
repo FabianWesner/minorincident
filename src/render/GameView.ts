@@ -123,6 +123,8 @@ export class GameView implements Lifecycle {
   get frozen(): boolean { return this.frozenFrame !== null; }
   private generation = 0;
   private npcs: NpcView | null = null;
+  /** Scene Lab drives the same authored metro leaf as the L5 mission clock. */
+  metroShutter(closed: number): void { this.districts?.updateMetroShutter(closed); }
   get propUploads(): number { return this.fixtureProps?.uploads ?? this.districts?.propUploads ?? 0; }
   private fixtureProps: PropFixtureView | null = null;
   private interactions: InteractionView | null = null;
@@ -708,7 +710,7 @@ export class GameView implements Lifecycle {
     }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
-    if (shutterAt) this.districts?.updateMetroShutter(Math.min(1, Math.max(0, (this.world.tick - shutterAt) / 120)));
+    if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
     // We own RAF, so reset counters per render rather than relying on setAnimationLoop.
     this.renderer.info.reset(); this.renderedFrames++;
