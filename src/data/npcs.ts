@@ -35,3 +35,6 @@ export const l1Pedestrians = {
   /** Share of non-elderly, non-jogger adults that rise athletic ("young adults"). */
   athleticShare: 0.25,
 } as const;
+
+/** Civilian crowd models prepared at every town load. Shared with transition prefetch. */
+export const coreCivilianModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', ...l1Pedestrians.models, 'npc.depot-clerk', 'npc.firefighter-alive', 'npc.police-officer', 'npc.national-guard'];

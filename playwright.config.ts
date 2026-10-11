@@ -14,11 +14,12 @@ const gpuArgs = process.platform === 'darwin'
 export default defineConfig({
   testDir: './tests',
   testMatch: '**/*.spec.ts',
-  workers: 2, // several lanes share one Mac
+  // SwiftShader compilation competes for CPU across contexts on the remote runners.
+  workers: process.platform === 'darwin' ? 2 : 1, // several lanes share one Mac
   fullyParallel: true,
   retries: 0,
   snapshotPathTemplate: '{testDir}/visual/__goldens__/{arg}{ext}',
-  timeout: 60_000,
+  timeout: process.platform === 'darwin' ? 60_000 : 180_000,
   // Separate artifacts for simultaneous browser runs using isolated preview ports.
   outputDir: `test-results/playwright/run${process.env.E2E_PORT ? `-${port}` : ''}`,
   reporter: [['list'], ['json', { outputFile: 'test-results/playwright/results.json' }]],
