@@ -18,7 +18,7 @@ const presets = {
   L4: { sun: '#ffe0ae', intensity: 1.3, polar: 1.2, azimuth: -0.85, shadow: '#5f5489', sky: '#c7d6e2', fog: '#dbd1c1', fogNear: 62, fogFar: 165, practical: .12 },
   golden,
   // E23 sunset (PO: dark red, orange, increasingly gloomy): the sun sits on the horizon (polar 1.48 rad, hue ~19 deg) at 0.65x L4 (the low sun leaves roofs and ground in core shadow, so the shadow tint is bright: dusky rose beneath the ash, never black) and the level fades it further (gloom ramp); red-to-violet sky, long shadows, fires carry the image.
-  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#87465f', sky: '#7a4a8a', fog: '#b0564c', fogNear: 45, fogFar: 125, practical: .8, rim: .25, aura: .25 },
+  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#87465f', sky: '#7a4a8a', fog: '#c4443a', fogNear: 28, fogFar: 95, practical: .8, rim: .25, aura: .25 },
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#39365f", sky: "#111b29", fog: "#293141", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3 },
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. */

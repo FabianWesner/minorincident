@@ -150,8 +150,8 @@ export const l4Posts: readonly { name: string; at: P; face: P; role: 'qm' | 'lin
   { name: 's1', at: [-27, 19.4], face: [-27, 34], role: 'line' }, { name: 's2', at: [-22, 19.4], face: [-22, 34], role: 'line' }, { name: 's3', at: [-17, 19.4], face: [-17, 34], role: 'line' },
   { name: 'hmg-1', at: [-32.4, -14.1], face: [-40, -26], role: 'hmg' }, { name: 'hmg-2', at: [-14.6, 17.3], face: [-4, 30], role: 'hmg' },
   { name: 'e1', at: [-8.6, -12], face: [4, -12], role: 'truck' }, { name: 'e2', at: [-8.6, 12], face: [4, 12], role: 'truck' },
-  { name: 'g1', at: [-71, 42.6], face: [-71, 30], role: 'gate' }, { name: 'g2', at: [-71, 49.4], face: [-71, 58], role: 'gate' }, { name: 'g3', at: [-64, 44], face: [-50, 44], role: 'gate' },
-  { name: 't1', at: [-8, 24], face: [4, 30], role: 'truck' }, { name: 't2', at: [-10, -18], face: [-10, -34], role: 'truck' }, { name: 'e3', at: [-12, 4], face: [4, 4], role: 'truck' },
+  { name: 'g1', at: [-71, 42.6], face: [-71, 30], role: 'gate' }, { name: 'g2', at: [-71, 49.4], face: [-71, 58], role: 'gate' }, { name: 'g3', at: [-67.5, 44.5], face: [-50, 44], role: 'gate' },
+  { name: 't1', at: [-8, 24], face: [4, 30], role: 'truck' }, { name: 't2', at: [-6.5, -16], face: [-10, -34], role: 'truck' }, { name: 'e3', at: [-12, 2.2], face: [4, 4], role: 'truck' },
 ];
 /** Registration tables of the reception kit and the places the residents and evacuees queue, chat and sit. */
 export const l4Crowd = {
