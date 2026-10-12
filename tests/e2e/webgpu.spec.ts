@@ -86,7 +86,7 @@ test('T-E15-webgpu @E15 native WebGPU compiles particles, ground tells and blood
 });
 
 test('T-E06-webgpu @E06 headed native WebGPU renders catalog attachments and selected telegraphs', async ({ page }) => {
-  await page.goto(testUrl.replace('&renderer=webgl', '')); await page.waitForFunction(() => Boolean(window.__SS__));
+  await page.goto(`${testUrl.replace('&renderer=webgl', '')}&aimcone=1`); await page.waitForFunction(() => Boolean(window.__SS__));
   const result = await page.evaluate(async () => {
     const api = window.__SS__!; await api.ready; await api.loadScenario('combat-arena', { seed: 1 }); api.pause(); api.camera.preset('aim');
     const states = [];

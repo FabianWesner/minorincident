@@ -236,3 +236,12 @@ body[data-ui-screen=pause] .menu-pause{max-width:min(640px,calc(100vw - 760px))}
 .level-transition progress::-webkit-progress-bar{background:#35455b}
 .level-transition progress::-webkit-progress-value{background:var(--ui-warm);border-radius:9px}
 .level-transition progress::-moz-progress-bar{background:var(--ui-warm);border-radius:9px}
+
+/* Home button (PO 10-12): HUD corner control, one tap back to the initial menu. Hidden with the rest of the HUD under H. */
+[data-testid=home-button]{position:fixed;z-index:25;display:grid;place-items:center;padding:0;width:44px;height:44px;min-width:44px;min-height:44px;border-radius:50%;background:#182333cc;top:max(20px,env(safe-area-inset-top));left:max(340px,calc(env(safe-area-inset-left) + 340px))}
+[data-testid=home-button][hidden]{display:none!important}
+body.ui-hidden [data-testid=home-button]{display:none!important}
+@media(max-width:600px),(max-height:500px) and (orientation:landscape){.full-ui:not(.touch-ui) [data-testid=home-button]{top:12px;left:240px}}
+.full-ui.touch-ui [data-testid=home-button]{width:56px;height:56px;min-width:56px;min-height:56px;left:auto;right:var(--hud-right);top:calc(var(--hud-top) + var(--hud-map-size) + 8px + 56px + 40px)}
+@media(orientation:landscape) and (max-height:500px){.full-ui.touch-ui [data-testid=home-button]{top:calc(var(--hud-top) + var(--hud-map-size) + 8px);right:calc(var(--hud-right) + 56px + 8px)}}
+[data-testid=pause-title] .home-icon{vertical-align:-3px}
