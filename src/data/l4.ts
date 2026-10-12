@@ -126,7 +126,7 @@ export const l4Anchors: Record<string, P> = {
   'l4-hmg-1': [-32.4, -14.1], 'l4-hmg-2': [-14.6, 17.3],
   'l4-tank-stop': [-20, 22],
   'photo-l4-convoy-arrival': [-6, 3], 'photo-l4-plaza-safe': [-20, 4], 'photo-l4-harbor-street-safe': [-12, -38], 'photo-l4-metro-entrance-safe': [57, -42],
-  'photo-l4-first-turn': [-26, -4], 'photo-l4-war-line': [-22, 4], 'photo-l4-tank': [-18, 22], 'photo-l4-collapse': [4, -6], 'photo-l4-basement': [-79, 3],
+  'photo-l4-first-turn': [-26, -4], 'photo-l4-war-line': [-22, 4], 'photo-l4-tank': [-18, 22], 'photo-l4-collapse': [4, -6], 'photo-l4-basement': [75, -4],
   'pair-plaza': [-17, 3], 'pair-harbor-street': [-10, -39], 'pair-metro-entrance': [57, -41], 'pair-kessler-lane': [68, 28.6],
 };
 /** Sandbag runs of the line (centre, yaw degrees, count along the run): north, west and south, each with a 3 m gap in the middle. */
