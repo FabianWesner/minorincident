@@ -56,6 +56,8 @@ export const l4 = {
     infectedDamage: 1.5,
     emergeLeashM: 26,
   },
+  /** First Alphas use the district street mouths on both quality tiers, inside the ordinary caps. */
+  alphas: { count: { high: 3, low: 2 }, afterTurnS: [10, 22, 34] as readonly number[], lineHp: 300 },
   /** Section 5.6: the line breaks at the first of these. */
   lineBreak: { defenseS: 75, soldiersLeft: .5, inside: 15, mockupLatestS: 120 },
   /** Section 5.4: allied fighters v3. */
