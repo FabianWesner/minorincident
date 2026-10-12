@@ -212,6 +212,9 @@ export class GameView implements Lifecycle {
     this.resize(); await this.load(); this.contextLost = false; this.update(1);
   }
   async load(): Promise<void> {
+    // The crossing survey views span hundreds of metres, including portrait framing.
+    this.camera.far = this.world.districts?.districts.some(d => d.id === 'D-CROSSING') ? 1600 : 600;
+    this.camera.updateProjectionMatrix();
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
     const player = this.world.entities.get(1);

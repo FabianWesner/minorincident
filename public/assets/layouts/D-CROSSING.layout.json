@@ -1,0 +1,2327 @@
+{
+  "acousticZones": [
+    {
+      "id": "outdoor",
+      "polygon": [
+        [
+          -600.0,
+          -400.0
+        ],
+        [
+          600.0,
+          -400.0
+        ],
+        [
+          600.0,
+          400.0
+        ],
+        [
+          -600.0,
+          400.0
+        ],
+        [
+          -600.0,
+          -400.0
+        ]
+      ],
+      "preset": "suburb-open"
+    }
+  ],
+  "anchors": {
+    "chunk-seam": {
+      "position": [
+        0,
+        0,
+        -330
+      ],
+      "yaw": 0
+    },
+    "countryside": {
+      "position": [
+        0,
+        0,
+        240
+      ],
+      "yaw": 0
+    },
+    "crossing-start": {
+      "position": [
+        -550,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "dry-shortcut": {
+      "position": [
+        0,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "east-sightline": {
+      "position": [
+        330,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "exit": {
+      "position": [
+        550,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "outskirts": {
+      "position": [
+        550,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "player-start": {
+      "position": [
+        -550,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "risk-countryside-0": {
+      "position": [
+        -200,
+        0,
+        240
+      ],
+      "yaw": 0
+    },
+    "risk-countryside-1": {
+      "position": [
+        0,
+        0,
+        240
+      ],
+      "yaw": 0
+    },
+    "risk-countryside-2": {
+      "position": [
+        200,
+        0,
+        240
+      ],
+      "yaw": 0
+    },
+    "risk-dry-shortcut-0": {
+      "position": [
+        -240,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "risk-dry-shortcut-1": {
+      "position": [
+        -150,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "risk-dry-shortcut-2": {
+      "position": [
+        -60,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "risk-dry-shortcut-3": {
+      "position": [
+        60,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "risk-dry-shortcut-4": {
+      "position": [
+        150,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "risk-dry-shortcut-5": {
+      "position": [
+        240,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "risk-road-0": {
+      "position": [
+        -50,
+        0,
+        -330
+      ],
+      "yaw": 0
+    },
+    "risk-road-1": {
+      "position": [
+        240,
+        0,
+        -330
+      ],
+      "yaw": 0
+    },
+    "road-fork": {
+      "position": [
+        -450,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "west-sightline": {
+      "position": [
+        -380,
+        0,
+        0
+      ],
+      "yaw": 0
+    }
+  },
+  "bounds": [
+    [
+      -600.0,
+      -400.0
+    ],
+    [
+      600.0,
+      -400.0
+    ],
+    [
+      600.0,
+      400.0
+    ],
+    [
+      -600.0,
+      400.0
+    ],
+    [
+      -600.0,
+      -400.0
+    ]
+  ],
+  "buildings": [
+    {
+      "aabb": {
+        "max": [
+          -246.42875,
+          4.5542,
+          323.585
+        ],
+        "min": [
+          -253.57125,
+          0,
+          316.415
+        ]
+      },
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:0",
+      "label": "Countryside"
+    },
+    {
+      "aabb": {
+        "max": [
+          -221.42875,
+          4.5542,
+          323.585
+        ],
+        "min": [
+          -228.57125,
+          0,
+          316.415
+        ]
+      },
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:1",
+      "label": "Countryside"
+    },
+    {
+      "aabb": {
+        "max": [
+          163.57125,
+          4.5542,
+          333.585
+        ],
+        "min": [
+          156.42875,
+          0,
+          326.415
+        ]
+      },
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:2",
+      "label": "Countryside"
+    },
+    {
+      "aabb": {
+        "max": [
+          188.57125,
+          4.5542,
+          333.585
+        ],
+        "min": [
+          181.42875,
+          0,
+          326.415
+        ]
+      },
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:3",
+      "label": "Countryside"
+    },
+    {
+      "aabb": {
+        "max": [
+          570.1501,
+          12.85,
+          -58.6999
+        ],
+        "min": [
+          559.8499,
+          0,
+          -71.3001
+        ]
+      },
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:12",
+      "label": "Next city"
+    },
+    {
+      "aabb": {
+        "max": [
+          585.1501,
+          12.85,
+          -78.6999
+        ],
+        "min": [
+          574.8499,
+          0,
+          -91.3001
+        ]
+      },
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:13",
+      "label": "Next city"
+    },
+    {
+      "aabb": {
+        "max": [
+          550.1501,
+          12.85,
+          -98.6999
+        ],
+        "min": [
+          539.8499,
+          0,
+          -111.3001
+        ]
+      },
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:14",
+      "label": "Next city"
+    },
+    {
+      "aabb": {
+        "max": [
+          580.1501,
+          12.85,
+          -123.6999
+        ],
+        "min": [
+          569.8499,
+          0,
+          -136.3001
+        ]
+      },
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:15",
+      "label": "Next city"
+    }
+  ],
+  "colliders": [
+    {
+      "aabb": {
+        "max": [
+          -246.42875,
+          4.5542,
+          323.585
+        ],
+        "min": [
+          -253.57125,
+          0,
+          316.415
+        ]
+      },
+      "id": "bld.house-a:0",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -221.42875,
+          4.5542,
+          323.585
+        ],
+        "min": [
+          -228.57125,
+          0,
+          316.415
+        ]
+      },
+      "id": "bld.house-a:1",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          163.57125,
+          4.5542,
+          333.585
+        ],
+        "min": [
+          156.42875,
+          0,
+          326.415
+        ]
+      },
+      "id": "bld.house-a:2",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          188.57125,
+          4.5542,
+          333.585
+        ],
+        "min": [
+          181.42875,
+          0,
+          326.415
+        ]
+      },
+      "id": "bld.house-a:3",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          570.1501,
+          12.85,
+          -58.6999
+        ],
+        "min": [
+          559.8499,
+          0,
+          -71.3001
+        ]
+      },
+      "id": "bld.apartment-block-a:12",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          585.1501,
+          12.85,
+          -78.6999
+        ],
+        "min": [
+          574.8499,
+          0,
+          -91.3001
+        ]
+      },
+      "id": "bld.apartment-block-a:13",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          550.1501,
+          12.85,
+          -98.6999
+        ],
+        "min": [
+          539.8499,
+          0,
+          -111.3001
+        ]
+      },
+      "id": "bld.apartment-block-a:14",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          580.1501,
+          12.85,
+          -123.6999
+        ],
+        "min": [
+          569.8499,
+          0,
+          -136.3001
+        ]
+      },
+      "id": "bld.apartment-block-a:15",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -308.5395486354828,
+          1.317384421825409,
+          -108.59966254234314
+        ],
+        "min": [
+          -311.4604513645172,
+          0,
+          -111.40033745765686
+        ]
+      },
+      "id": "rocks--310",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -98.53954863548279,
+          1.317384421825409,
+          -118.59966254234314
+        ],
+        "min": [
+          -101.46045136451721,
+          0,
+          -121.40033745765686
+        ]
+      },
+      "id": "rocks--100",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          101.46045136451721,
+          1.317384421825409,
+          -118.59966254234314
+        ],
+        "min": [
+          98.53954863548279,
+          0,
+          -121.40033745765686
+        ]
+      },
+      "id": "rocks-100",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          311.4604513645172,
+          1.317384421825409,
+          -108.59966254234314
+        ],
+        "min": [
+          308.5395486354828,
+          0,
+          -111.40033745765686
+        ]
+      },
+      "id": "rocks-310",
+      "maxTier": 6,
+      "minTier": 0
+    }
+  ],
+  "district": "D-CROSSING",
+  "geometryHash": "6499d139473053be90f453387529c16fec473619cac8c7057a4efdddd1d089d5",
+  "lawns": [],
+  "layers": [
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 1
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 2
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 3
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 4
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 5
+    }
+  ],
+  "lightGroups": [],
+  "placements": [
+    {
+      "allowRoad": false,
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:0",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -250,
+        0,
+        320
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -246.42875,
+          4.5542,
+          323.585
+        ],
+        "min": [
+          -253.57125,
+          0,
+          316.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:1",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -225,
+        0,
+        320
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -221.42875,
+          4.5542,
+          323.585
+        ],
+        "min": [
+          -228.57125,
+          0,
+          316.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:2",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        160,
+        0,
+        330
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          163.57125,
+          4.5542,
+          333.585
+        ],
+        "min": [
+          156.42875,
+          0,
+          326.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.house-a",
+      "id": "bld.house-a:3",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        185,
+        0,
+        330
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          188.57125,
+          4.5542,
+          333.585
+        ],
+        "min": [
+          181.42875,
+          0,
+          326.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:4",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -420,
+        0,
+        100
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -416.9,
+          5.8,
+          103.1
+        ],
+        "min": [
+          -423.1,
+          0,
+          96.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:5",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -380,
+        0,
+        310
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -376.9,
+          5.8,
+          313.1
+        ],
+        "min": [
+          -383.1,
+          0,
+          306.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:6",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -150,
+        0,
+        310
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -146.9,
+          5.8,
+          313.1
+        ],
+        "min": [
+          -153.1,
+          0,
+          306.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:7",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        80,
+        0,
+        320
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          83.1,
+          5.8,
+          323.1
+        ],
+        "min": [
+          76.9,
+          0,
+          316.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:8",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        360,
+        0,
+        300
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          363.1,
+          5.8,
+          303.1
+        ],
+        "min": [
+          356.9,
+          0,
+          296.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:9",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        340,
+        0,
+        -220
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          343.1,
+          5.8,
+          -216.9
+        ],
+        "min": [
+          336.9,
+          0,
+          -223.1
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:10",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -200,
+        0,
+        -220
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -196.9,
+          5.8,
+          -216.9
+        ],
+        "min": [
+          -203.1,
+          0,
+          -223.1
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:11",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        100,
+        0,
+        -230
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          103.1,
+          5.8,
+          -226.9
+        ],
+        "min": [
+          96.9,
+          0,
+          -233.1
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:12",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        565,
+        0,
+        -65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          570.1501,
+          12.85,
+          -58.6999
+        ],
+        "min": [
+          559.8499,
+          0,
+          -71.3001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:13",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        580,
+        0,
+        -85
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          585.1501,
+          12.85,
+          -78.6999
+        ],
+        "min": [
+          574.8499,
+          0,
+          -91.3001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:14",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        545,
+        0,
+        -105
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          550.1501,
+          12.85,
+          -98.6999
+        ],
+        "min": [
+          539.8499,
+          0,
+          -111.3001
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.apartment-block-a",
+      "id": "bld.apartment-block-a:15",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        575,
+        0,
+        -130
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          580.1501,
+          12.85,
+          -123.6999
+        ],
+        "min": [
+          569.8499,
+          0,
+          -136.3001
+        ]
+      },
+      "yaw": 0
+    }
+  ],
+  "roads": {
+    "edges": [
+      {
+        "end": "outskirts",
+        "id": "road",
+        "laneWidth": 12,
+        "points": [
+          [
+            -550,
+            0
+          ],
+          [
+            -450,
+            0
+          ],
+          [
+            -350,
+            -330
+          ],
+          [
+            350,
+            -330
+          ],
+          [
+            450,
+            0
+          ],
+          [
+            550,
+            0
+          ]
+        ],
+        "start": "start"
+      },
+      {
+        "end": "outskirts",
+        "id": "countryside",
+        "laneWidth": 9,
+        "points": [
+          [
+            -550,
+            0
+          ],
+          [
+            -450,
+            0
+          ],
+          [
+            -300,
+            240
+          ],
+          [
+            300,
+            240
+          ],
+          [
+            450,
+            0
+          ],
+          [
+            550,
+            0
+          ]
+        ],
+        "start": "start"
+      },
+      {
+        "end": "outskirts",
+        "id": "dry-shortcut",
+        "laneWidth": 9,
+        "points": [
+          [
+            -550,
+            0
+          ],
+          [
+            -450,
+            0
+          ],
+          [
+            -250,
+            -30
+          ],
+          [
+            250,
+            -30
+          ],
+          [
+            450,
+            0
+          ],
+          [
+            550,
+            0
+          ]
+        ],
+        "start": "start"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "start",
+        "point": [
+          -550,
+          0
+        ]
+      },
+      {
+        "id": "outskirts",
+        "point": [
+          550,
+          0
+        ]
+      }
+    ]
+  },
+  "surfaces": [
+    {
+      "height": 0,
+      "polygon": [
+        [
+          -600.0,
+          -400.0
+        ],
+        [
+          600.0,
+          -400.0
+        ],
+        [
+          600.0,
+          400.0
+        ],
+        [
+          -600.0,
+          400.0
+        ],
+        [
+          -600.0,
+          -400.0
+        ]
+      ],
+      "surface": "grass"
+    },
+    {
+      "height": 0,
+      "polygon": [
+        [
+          -460,
+          -170
+        ],
+        [
+          470,
+          -170
+        ],
+        [
+          470,
+          110
+        ],
+        [
+          -460,
+          110
+        ],
+        [
+          -460,
+          -170
+        ]
+      ],
+      "surface": "gravel"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          -550.0,
+          6.0
+        ],
+        [
+          -550.0,
+          -6.0
+        ],
+        [
+          -450.0,
+          -6.0
+        ],
+        [
+          -450.0,
+          6.0
+        ],
+        [
+          -550.0,
+          6.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          -444.25785357339913,
+          1.7400443716972247
+        ],
+        [
+          -455.74214642660087,
+          -1.7400443716972247
+        ],
+        [
+          -355.74214642660087,
+          -331.74004437169725
+        ],
+        [
+          -344.25785357339913,
+          -328.25995562830275
+        ],
+        [
+          -444.25785357339913,
+          1.7400443716972247
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          -350.0,
+          -324.0
+        ],
+        [
+          -350.0,
+          -336.0
+        ],
+        [
+          350.0,
+          -336.0
+        ],
+        [
+          350.0,
+          -324.0
+        ],
+        [
+          -350.0,
+          -324.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          344.25785357339913,
+          -328.25995562830275
+        ],
+        [
+          355.74214642660087,
+          -331.74004437169725
+        ],
+        [
+          455.74214642660087,
+          -1.7400443716972247
+        ],
+        [
+          444.25785357339913,
+          1.7400443716972247
+        ],
+        [
+          344.25785357339913,
+          -328.25995562830275
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          450.0,
+          6.0
+        ],
+        [
+          450.0,
+          -6.0
+        ],
+        [
+          550.0,
+          -6.0
+        ],
+        [
+          550.0,
+          6.0
+        ],
+        [
+          450.0,
+          6.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.004,
+      "polygon": [
+        [
+          -453.8159923680229,
+          2.3849952300143102
+        ],
+        [
+          -446.1840076319771,
+          -2.3849952300143102
+        ],
+        [
+          -296.1840076319771,
+          237.6150047699857
+        ],
+        [
+          -303.8159923680229,
+          242.3849952300143
+        ],
+        [
+          -453.8159923680229,
+          2.3849952300143102
+        ]
+      ],
+      "surface": "gravel"
+    },
+    {
+      "height": 0.004,
+      "polygon": [
+        [
+          -300.0,
+          244.5
+        ],
+        [
+          -300.0,
+          235.5
+        ],
+        [
+          300.0,
+          235.5
+        ],
+        [
+          300.0,
+          244.5
+        ],
+        [
+          -300.0,
+          244.5
+        ]
+      ],
+      "surface": "gravel"
+    },
+    {
+      "height": 0.004,
+      "polygon": [
+        [
+          303.8159923680229,
+          242.3849952300143
+        ],
+        [
+          296.1840076319771,
+          237.6150047699857
+        ],
+        [
+          446.1840076319771,
+          -2.3849952300143102
+        ],
+        [
+          453.8159923680229,
+          2.3849952300143102
+        ],
+        [
+          303.8159923680229,
+          242.3849952300143
+        ]
+      ],
+      "surface": "gravel"
+    },
+    {
+      "height": 0.006,
+      "polygon": [
+        [
+          -449.3324679618139,
+          4.450213587907339
+        ],
+        [
+          -450.6675320381861,
+          -4.450213587907339
+        ],
+        [
+          -250.6675320381861,
+          -34.45021358790734
+        ],
+        [
+          -249.3324679618139,
+          -25.54978641209266
+        ],
+        [
+          -449.3324679618139,
+          4.450213587907339
+        ]
+      ],
+      "surface": "gravel"
+    },
+    {
+      "height": 0.006,
+      "polygon": [
+        [
+          -250.0,
+          -25.5
+        ],
+        [
+          -250.0,
+          -34.5
+        ],
+        [
+          250.0,
+          -34.5
+        ],
+        [
+          250.0,
+          -25.5
+        ],
+        [
+          -250.0,
+          -25.5
+        ]
+      ],
+      "surface": "gravel"
+    },
+    {
+      "height": 0.006,
+      "polygon": [
+        [
+          249.3324679618139,
+          -25.54978641209266
+        ],
+        [
+          250.6675320381861,
+          -34.45021358790734
+        ],
+        [
+          450.6675320381861,
+          -4.450213587907339
+        ],
+        [
+          449.3324679618139,
+          4.450213587907339
+        ],
+        [
+          249.3324679618139,
+          -25.54978641209266
+        ]
+      ],
+      "surface": "gravel"
+    }
+  ],
+  "terrainChunks": [
+    {
+      "id": "crossing-0-0",
+      "origin": [
+        -600,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-0",
+      "origin": [
+        -500,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-0",
+      "origin": [
+        -400,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-0",
+      "origin": [
+        -300,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-0",
+      "origin": [
+        -200,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-0",
+      "origin": [
+        -100,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-0",
+      "origin": [
+        0,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-0",
+      "origin": [
+        100,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-0",
+      "origin": [
+        200,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-0",
+      "origin": [
+        300,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-0",
+      "origin": [
+        400,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-0",
+      "origin": [
+        500,
+        -400
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-1",
+      "origin": [
+        -600,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-1",
+      "origin": [
+        -500,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-1",
+      "origin": [
+        -400,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-1",
+      "origin": [
+        -300,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-1",
+      "origin": [
+        -200,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-1",
+      "origin": [
+        -100,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-1",
+      "origin": [
+        0,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-1",
+      "origin": [
+        100,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-1",
+      "origin": [
+        200,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-1",
+      "origin": [
+        300,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-1",
+      "origin": [
+        400,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-1",
+      "origin": [
+        500,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-2",
+      "origin": [
+        -600,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-2",
+      "origin": [
+        -500,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-2",
+      "origin": [
+        -400,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-2",
+      "origin": [
+        -300,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-2",
+      "origin": [
+        -200,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-2",
+      "origin": [
+        -100,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-2",
+      "origin": [
+        0,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-2",
+      "origin": [
+        100,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-2",
+      "origin": [
+        200,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-2",
+      "origin": [
+        300,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-2",
+      "origin": [
+        400,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-2",
+      "origin": [
+        500,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-3",
+      "origin": [
+        -600,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-3",
+      "origin": [
+        -500,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-3",
+      "origin": [
+        -400,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-3",
+      "origin": [
+        -300,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-3",
+      "origin": [
+        -200,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-3",
+      "origin": [
+        -100,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-3",
+      "origin": [
+        0,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-3",
+      "origin": [
+        100,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-3",
+      "origin": [
+        200,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-3",
+      "origin": [
+        300,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-3",
+      "origin": [
+        400,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-3",
+      "origin": [
+        500,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-4",
+      "origin": [
+        -600,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-4",
+      "origin": [
+        -500,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-4",
+      "origin": [
+        -400,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-4",
+      "origin": [
+        -300,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-4",
+      "origin": [
+        -200,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-4",
+      "origin": [
+        -100,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-4",
+      "origin": [
+        0,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-4",
+      "origin": [
+        100,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-4",
+      "origin": [
+        200,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-4",
+      "origin": [
+        300,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-4",
+      "origin": [
+        400,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-4",
+      "origin": [
+        500,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-5",
+      "origin": [
+        -600,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-5",
+      "origin": [
+        -500,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-5",
+      "origin": [
+        -400,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-5",
+      "origin": [
+        -300,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-5",
+      "origin": [
+        -200,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-5",
+      "origin": [
+        -100,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-5",
+      "origin": [
+        0,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-5",
+      "origin": [
+        100,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-5",
+      "origin": [
+        200,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-5",
+      "origin": [
+        300,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-5",
+      "origin": [
+        400,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-5",
+      "origin": [
+        500,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-6",
+      "origin": [
+        -600,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-6",
+      "origin": [
+        -500,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-6",
+      "origin": [
+        -400,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-6",
+      "origin": [
+        -300,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-6",
+      "origin": [
+        -200,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-6",
+      "origin": [
+        -100,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-6",
+      "origin": [
+        0,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-6",
+      "origin": [
+        100,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-6",
+      "origin": [
+        200,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-6",
+      "origin": [
+        300,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-6",
+      "origin": [
+        400,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-6",
+      "origin": [
+        500,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-0-7",
+      "origin": [
+        -600,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-1-7",
+      "origin": [
+        -500,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-2-7",
+      "origin": [
+        -400,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-3-7",
+      "origin": [
+        -300,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-4-7",
+      "origin": [
+        -200,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-5-7",
+      "origin": [
+        -100,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-6-7",
+      "origin": [
+        0,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-7-7",
+      "origin": [
+        100,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-8-7",
+      "origin": [
+        200,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-9-7",
+      "origin": [
+        300,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-10-7",
+      "origin": [
+        400,
+        300
+      ],
+      "size": 100
+    },
+    {
+      "id": "crossing-11-7",
+      "origin": [
+        500,
+        300
+      ],
+      "size": 100
+    }
+  ],
+  "title": "The Crossing \u2014 open-country greybox",
+  "version": 1,
+  "walkable": {
+    "cellSize": 1,
+    "excluded": []
+  }
+}
