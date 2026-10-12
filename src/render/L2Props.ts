@@ -1,5 +1,5 @@
 import { AdditiveBlending, BoxGeometry, CircleGeometry, CylinderGeometry, DoubleSide, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, SphereGeometry, TorusGeometry, Vector3 } from 'three/webgpu';
-import { l2, l2Anchors, l2Beacons, l2Station } from '../data/l2';
+import { axeStandX, l2, l2Anchors, l2Beacons, l2Station } from '../data/l2';
 import { l2Dressing } from '../levels/L2/layout';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
@@ -71,7 +71,7 @@ export class L2Props extends Group {
     // The fire axe on its rack, mounted on the station front facing the street: a dark board with a pale frame, a wooden
     // haft and a big red head so it reads at game-camera size. Unlit colours (the bay is dark). Head and haft hide once taken.
     // Built in the station frame (local +x out of the bays) at the stand-to-interact anchor, so it follows the station.
-    const [rx, rz] = l2Anchors['l2-axe-rack'], wx = -1.05;
+    const [rx, rz] = l2Anchors['l2-axe-rack'], wx = -(axeStandX - 1.55);
     for (const g of [this.axe, this.glint]) { g.position.set(rx, 0, rz); g.rotation.y = l2Station.yaw; }
     const part = (material: ReturnType<Materials['get']> | MeshBasicNodeMaterial, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); this.axe.add(m); };
     part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, 0]);

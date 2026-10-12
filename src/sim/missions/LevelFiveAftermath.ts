@@ -70,6 +70,7 @@ export class LevelFiveAftermath {
         combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]); combat.runner.loadout.state.selectedSide = 'RIGHT';
       }
     }
+    combat?.withholdPickups('weapon.shotgun');
     this.placeInCellar();
     const shelf = this.anchor('l5-shotgun');
     const pickup = world.combat?.pickups.spawn('weapon.shotgun', shelf, false, { retain: true, interactTicks: 36, surfaceY: .385 });

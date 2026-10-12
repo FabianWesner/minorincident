@@ -75,6 +75,7 @@ export class LevelFourWar {
     world.npcs.setAmbient(0);
     // L4-default progression (bat, axe, handgun) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.handgun', 'weapon.kick']);
+    world.combat?.withholdPickups(l4.machineGun.id);
     this.spawnConvoy();
     this.spawnPeople();
     this.spawnSoldiers();

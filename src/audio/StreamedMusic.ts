@@ -1,6 +1,7 @@
 import { assetUrl } from '../assets/assetUrl';
 import type { MusicState } from './MusicDirector';
 
+const PEAK_GAIN = 0.78;
 interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; gain: GainNode; retire: number; file: string; }
 /** Level-specific recordings replace a state's shared score (`score-<file>`); other levels keep `score-<state>`. */
 const levelStreams: Record<string, Partial<Record<MusicState, string>>> = { L1: { calm: 'calm-L1' } };
@@ -15,6 +16,8 @@ export class StreamedMusic {
     private requested: MusicState | null = null;
     private target: { state: MusicState; requested: number; epoch: number; bar: number; immediate: boolean } | null = null;
     state: MusicState | null = null;
+    /** Dense fight: the combat recording plays louder (PEAK_GAIN) until the director releases the peak. */
+    peak = false;
     /** Mission level; set before the first transition of a world. */
     level = '';
     readonly errors: string[] = [];
@@ -68,11 +71,24 @@ export class StreamedMusic {
             gain.cancelAndHoldAtTime(now);
             gain.setValueAtTime(gain.value, at);
             // Source normalized to -18 LUFS. Master is +6 dB; this trim preserves headroom.
-            gain.linearRampToValueAtTime(key === state ? (immediate && state === 'combat' ? 0.6 : 0.5) : 0, at + fade);
+            gain.linearRampToValueAtTime(key === state ? this.deckGain(state, immediate) : 0, at + fade);
             deck.retire = key === state ? Infinity : at + fade;
         }
         this.state = state;
         this.transitions.push({ state, requested, time: at });
+    }
+    private deckGain(state: MusicState, immediate: boolean): number {
+        return state === 'combat' && this.peak ? PEAK_GAIN : immediate && state === 'combat' ? 0.6 : 0.5;
+    }
+    /** Escalate or release the dense-fight boost on the playing combat recording. */
+    setPeak(peak: boolean): void {
+        if (peak === this.peak) return;
+        this.peak = peak;
+        const deck = this.state === 'combat' ? this.decks.get('combat') : undefined;
+        if (!deck || this.suspended) return;
+        const now = this.context.currentTime;
+        deck.gain.gain.cancelAndHoldAtTime(now);
+        deck.gain.gain.linearRampToValueAtTime(this.deckGain('combat', true), now + 1.2);
     }
     update(): void {
         for (const deck of this.decks.values())
@@ -102,7 +118,7 @@ export class StreamedMusic {
         if (target && target.state !== this.state)
             await this.transition(target.state, target.requested, target.epoch, target.bar, target.immediate);
     }
-    snapshot() { return { state: this.state, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, file: d.file, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
+    snapshot() { return { state: this.state, peak: this.peak, transitions: [...this.transitions], decks: [...this.decks].map(([state, d]) => ({ state, file: d.file, paused: d.media.paused, position: d.media.currentTime, gain: d.gain.gain.value })) }; }
     reset(): void {
         ++this.generation;
         // Keep at most four cached decks across world loads. Removing src aborts an
@@ -111,7 +127,7 @@ export class StreamedMusic {
             deck.media.pause(); deck.media.currentTime = 0; deck.retire = Infinity;
             deck.gain.gain.cancelScheduledValues(0); deck.gain.gain.value = 0;
         }
-        this.state = null; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
+        this.state = null; this.peak = false; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
     }
     dispose(): void {
         this.reset();

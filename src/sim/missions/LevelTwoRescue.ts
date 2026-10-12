@@ -2,7 +2,7 @@ import { L2TruckDrive } from '../vehicles/L2TruckDrive';
 import { l2, l2Station, l2StationLooks, l2Truck, l2TruckRoute, type GlassRole } from '../../data/l2';
 import { Outbreak } from '../outbreak/Outbreak';
 import { allyState } from '../outbreak/Allies';
-import { seatAnchor, sitHipHeight } from '../npc/seats';
+import { seatAnchor } from '../npc/seats';
 import { l2Dressing } from '../../levels/L2/layout';
 import { clearOfL2Script } from '../../levels/continuity';
 import type { Mission } from './Mission';
@@ -78,6 +78,8 @@ export class LevelTwoRescue {
     world.npcs.setAmbient(0);
     // L2-default progression: the bat from L1 is in hand (a campaign load has already applied its racks).
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
+    // The axe is only owned after the rack pickup, even when a replay/Continue save already carries it.
+    world.combat?.withholdPickups('weapon.fire-axe');
     this.spawnTruck();
     this.spawnStation();
     this.spawnCheckpoint();
@@ -131,13 +133,14 @@ export class LevelTwoRescue {
     // Three to five frightened, lightly injured civilians on the benches.
     for (let i = 1; i <= l2.calm.civiliansOnBenches; i++) {
       // Seated facing out of the bays (station-local +x).
-      const bench = this.anchor(`l2-bench-${Math.min(4, i)}`), seat = { x: bench.x, z: bench.z }, p = this.snap(seat, .35);
-      const schedule = this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat);
-      const district = this.world.districts!.districts[0], [ox, oz] = district.origin;
+      const bench = this.anchor(`l2-bench-${Math.min(4, i)}`), district = this.world.districts!.districts[0], [ox, oz] = district.origin;
       const prop = district.layout.placements.filter(q => q.id.startsWith('l2-station-') && q.assetId === 'prop.bench')
-        .sort((a, b) => Math.hypot(a.position[0] + ox - seat.x, a.position[2] + oz - seat.z) - Math.hypot(b.position[0] + ox - seat.x, b.position[2] + oz - seat.z))[0];
+        .sort((a, b) => Math.hypot(a.position[0] + ox - bench.x, a.position[2] + oz - bench.z) - Math.hypot(b.position[0] + ox - bench.x, b.position[2] + oz - bench.z))[0];
+      // The hip target and the root lift come from the bench's own seat anchor (lift is relative to the ground the sitter stands on).
       const hip = prop && seatAnchor(prop.assetId, prop.position, prop.yaw, prop.scale, { x: ox, z: oz });
-      if (hip) schedule[0].seatLift = hip.y - sitHipHeight;
+      const seat = { x: bench.x, z: bench.z }, p = this.snap(seat, .35);
+      const schedule = this.schedule(p, { x: p.x + Math.cos(l2Station.yaw) * 3, z: p.z - Math.sin(l2Station.yaw) * 3 }, 'sit', seat);
+      if (hip) schedule[0].seatLift = hip.lift;
       const id = o.spawnPedestrian(p, { tier: 'frail', schedule });
       this.s.benchIds.push(id);
     }
