@@ -108,6 +108,7 @@ export class AudioService implements Lifecycle {
     private starting = false;
     private quietMusicUntil = 0;
     private attackMusicUntil = 0;
+    private lastPeakStinger = -Infinity;
     private lastDamageTick = -1000;
     private lastDamage = 0;
     private scheduledTransition: MusicTransition | null = null;
@@ -510,6 +511,11 @@ export class AudioService implements Lifecycle {
         this.score.update();
         const story = storyMusic(this.level, this.world.missions?.state);
         this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 ? { minimum: story.minimum } : {}), incident: this.incident, complete: this.complete });
+        // A dense fight escalates within the combat state (also when a story floor already holds it there).
+        if (this.music.peak !== this.score.peak) {
+            this.score.setPeak(this.music.peak);
+            if (this.music.peak && t - this.lastPeakStinger > 20) { this.lastPeakStinger = t; this.stinger('elite', this.level); }
+        }
         const transition = this.music.pending ?? this.music.transitions.at(-1) ?? { time: t, state: this.music.state, layers: this.music.layers };
         // A transient alert can cancel the first pending change before its bar.
         // Restore the committed state even when the director has no history yet.
@@ -521,7 +527,7 @@ export class AudioService implements Lifecycle {
                 v.gain.gain.cancelScheduledValues(at);
                 v.gain.gain.setValueAtTime(v.gain.gain.value, at);
                 // The recording carries the theme. Add filtered recorded rhythm/dread accents only.
-                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * 0.18 : 0, at + (transition.immediate ? 0.8 : 2));
+                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * (this.music.peak ? 0.5 : 0.18) : 0, at + (transition.immediate ? 0.8 : 2));
             }
         }
     }
@@ -1014,7 +1020,7 @@ export class AudioService implements Lifecycle {
         this.incident = false;
         this.complete = false;
         this.quietMusicUntil = 0;
-        this.attackMusicUntil = 0;
+        this.attackMusicUntil = 0; this.lastPeakStinger = -Infinity;
         this.l5Music = false;
     }
     dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }

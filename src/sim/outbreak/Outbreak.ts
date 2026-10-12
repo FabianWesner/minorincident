@@ -9,6 +9,7 @@ import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../np
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import { updateAlly } from './Allies';
+import { leaveSeat } from '../npc/MorningRoutines';
 import { updateSurvivor } from './Survivors';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
@@ -182,6 +183,7 @@ export class Outbreak {
 
   private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.world.npcs!.civilians.release(c.attacker);
+    if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
     c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
