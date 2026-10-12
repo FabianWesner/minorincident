@@ -40,6 +40,7 @@ const preparedCrowds = new Map<string, PreparedCivilian>();
 // Retain at most the twelve core models' two common tiers. Different campaign casts
 // must not accumulate pose atlases across repeated L1/L6 loads.
 const preparedCrowdLimit = coreCivilianModels.length * 2;
+const noFigures: readonly EntitySnapshot[] = [];
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
@@ -170,12 +171,12 @@ class CivilianBatch extends Group {
     if (this.world.scenario === 'L6' && this.lod === 'lod1') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
-  update(alpha = 1, low = false, shotId?: number): void {
+  update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
     this.probe.begin(); this.corpses.begin(id => this.world.entities.get(id));
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
-    for (const e of shot ? [shot] : this.world.entities.iterate()) {
+    for (const e of shot ? [shot] : figures ?? this.world.entities.iterate()) {
       if (index >= this.capacity && !e.corpse) continue;
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
@@ -326,6 +327,7 @@ export class CivilianCrowd extends Group {
   private readonly moves = new InfectedMoves();
   /** Shared across the near/far batches so a figure crossing the band keeps its displayed turn. */
   private readonly presentation = new MotionPresentation(crowdTurnRate);
+  private readonly figures = new Map<string, EntitySnapshot[]>();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
   constructor(private readonly world: SimWorld, shading?: Materials) {
@@ -397,7 +399,22 @@ export class CivilianCrowd extends Group {
     if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
     loadMeasure('view:civilian-crowd', started); this.update();
   }
-  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
+  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
+    for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
+    if (this.world.scenario === 'L7') {
+      // Each human belongs to one model. All its LOD batches share this frame's
+      // list instead of rescanning every prop, light and other crowd model.
+      for (const list of this.figures.values()) list.length = 0;
+      for (const e of this.world.entities.iterate()) {
+        const model = crowdModelOf(e); if (!model) continue;
+        let list = this.figures.get(model); if (!list) this.figures.set(model, list = []);
+        list.push(e);
+      }
+      for (const b of this.batches) b.update(alpha, this.low, undefined, this.figures.get(b.model) ?? noFigures);
+    } else for (const b of this.batches) b.update(alpha, this.low);
+    for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish();
+  }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   aimGun(id: number, direction: { x: number; y?: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {

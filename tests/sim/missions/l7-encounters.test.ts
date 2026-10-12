@@ -5,6 +5,8 @@ import { l7Encounters } from '../../../src/data/l7';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { captureSeams, restoreSeams } from '../../../src/sim/missions/l1Seams';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
+import { LevelSixSubway } from '../../../src/sim/missions/LevelSixSubway';
+import type { Mission } from '../../../src/sim/missions/Mission';
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 async function load(tier: 'high' | 'low' = 'high', roster?: EntitySnapshot[]) {
@@ -32,6 +34,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-08 @E29-AC08 ${tier}: a
       const final = ai.active.filter(e => e.infected!.pack === l7Encounters.finalGroup);
       expect(final.filter(e => e.archetype === 'infected.runner')).toHaveLength(tier === 'high' ? 120 : 60);
       expect(final.filter(e => e.archetype === 'infected.alpha')).toHaveLength(2);
+      w.npcs!.civilians.outbreak!.dressInfected();
+      expect(final.filter(e => e.archetype === 'infected.runner').every(e => e.appearance?.entityId !== e.id)).toBe(true);
       // Downed regulars still own slots. A recovery cannot burst the cap.
       const down = ai.active.find(e => e.archetype === 'infected.runner')!;
       down.health.current = 0; down.infected!.recoverAt = w.tick + 120;
@@ -74,10 +78,22 @@ test('T-E29-11-roster @E29-AC11 incoming ids, health, appearance and injury surv
     expect(c.state.roster).toHaveLength(count);
   }
 });
+test('T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without mutating the escaped resident', async () => {
+  const source = await load(), r = source.l7Encounters!.state.roster[0];
+  const e = source.entities.get(r.id)!; e.civilian!.l1!.walkSpeed = 2.2; e.health.current = 27;
+  const mission = { world: source, state: { l6: { survivors: [{ id: e.id, key: r.key, injured: true, status: 'out' }] } } } as unknown as Mission;
+  const result = new LevelSixSubway(mission).result();
+  expect(result.escapedSurvivors[0].civilian!.l1!.walkSpeed).toBe(1.4);
+  expect(e.civilian!.l1!.walkSpeed).toBe(2.2);
+  const next = await load('low', result.escapedSurvivors);
+  expect(next.l7Encounters!.state.roster[0]).toMatchObject({ id: e.id, key: r.key, injured: true });
+  expect(next.entities.get(e.id)!.health.current).toBe(27);
+  expect(next.entities.get(e.id)!.appearance).toEqual(e.appearance);
+});
 test('T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking', async () => {
   const w = await load('low'), c = w.l7Encounters!, nav = w.infected!.nav;
   const starts = c.state.roster.map(r => ({ ...w.entities.get(r.id)!.transform }));
-  const searches = vi.spyOn(nav, 'reachPath');
+  const searches = vi.spyOn(nav, 'path');
   teleport(w, -19, 0);
   for (let i = 0; i < 300; i++) {
     const before = c.state.roster.map(r => ({ ...w.entities.get(r.id)!.transform })); step(w, 1);

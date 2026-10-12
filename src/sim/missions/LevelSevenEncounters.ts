@@ -28,7 +28,7 @@ export class LevelSevenEncounters {
     const w = this.world, ai = w.infected!, director = ai.director;
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0;
     w.npcs!.setAmbient(0);
-    const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });
+    const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier, dressRunners: false });
     w.npcs!.civilians.outbreak = outbreak;
     // Outbreak initialization can configure the shared director; the level owns its cap.
     director.levelCap = 200; director.strict = true;
@@ -47,6 +47,7 @@ export class LevelSevenEncounters {
       e.hidden = false;
       const c = e.civilian!;
       delete c.floorY; c.story = null; c.path.length = 0; c.goal = -1; c.pauseUntil = 0; c.state = 'calm';
+      if (c.l1) c.l1.target = null;
       // Armed shelter residents travel with the group rather than holding their old underground post.
       const key = c.survivor?.key ?? `shelter-${slot}`;
       c.survivor = { key, mode: 'follow', slot, leader: 1, cover: false, waitAt: 0, foundAt: w.tick };
@@ -124,15 +125,23 @@ export class LevelSevenEncounters {
       w.events.emit({ type: 'story.say', tick: w.tick, id: e.id, text: 'Wait for us!', position: e.transform });
     }
     if (distance(e.transform, target) > .9) {
-      // A straggler can be several blocks behind. Reuse the grid's budgeted
-      // partial route and stagger new searches; a failed full cross-city route
-      // must not spend 1600 expansions per follower on every tick.
-      if (d > 30 && (c.goal < 0 || c.pathIndex >= c.path.length)) {
-        if ((w.tick + e.id) % 30 !== 0) return true;
-        const budget = w.infected!.director.tier === 'low' ? 200 : 400;
-        if (!w.infected!.nav.steer(e.transform, target, c, .35, this.waypoint, budget, true)) return true;
-      }
-      w.npcs!.move(e, target, r.injured ? 1.4 : 3.8, c, .5);
+      // Cross-city searches share the grid's scratch state. Use short routes
+      // that finish within one search budget, then keep walking that route.
+      let destination = target;
+      if (d > 30) {
+        const nav = w.infected!.nav;
+        if (!c.l1!.target || distance(e.transform, c.l1!.target) <= .6) {
+          if ((w.tick + e.id) % 30 !== 0) return true;
+          const length = distance(e.transform, target);
+          const local = { x: e.transform.x + (target.x - e.transform.x) * 8 / length, z: e.transform.z + (target.z - e.transform.z) * 8 / length };
+          const budget = w.infected!.director.tier === 'low' ? 200 : 400;
+          if (!nav.steer(e.transform, local, c, .35, this.waypoint, budget)) return true;
+          const cell = nav.nearestCell(local.x, local.z, .35);
+          c.l1!.target = { x: nav.x(cell), z: nav.z(cell) };
+        }
+        destination = c.l1!.target;
+      } else c.l1!.target = null;
+      w.npcs!.move(e, destination, r.injured ? 1.4 : 3.8, c, .5);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
