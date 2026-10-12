@@ -1,0 +1,20 @@
+{
+  "name": "lod-objectives-armory",
+  "ground": "grass",
+  "size": 60,
+  "props": [
+    { "id": "table-near", "asset": "prop.armory-table", "at": [0, 0], "yaw": 0 },
+    { "id": "rack-near", "asset": "prop.axe-rack", "at": [-3, 0], "yaw": 0 },
+    { "id": "fence-near", "asset": "prop.crowd-fence", "at": [3.5, 0], "yaw": 90 },
+    { "id": "table-mid", "asset": "prop.armory-table", "at": [0, -6], "yaw": 0 },
+    { "id": "rack-mid", "asset": "prop.axe-rack", "at": [-3, -6], "yaw": 0 },
+    { "id": "fence-mid", "asset": "prop.crowd-fence", "at": [3.5, -6], "yaw": 90 },
+    { "id": "table-far", "asset": "prop.armory-table", "at": [0, -16], "yaw": 0 },
+    { "id": "rack-far", "asset": "prop.axe-rack", "at": [-3, -16], "yaw": 0 },
+    { "id": "fence-far", "asset": "prop.crowd-fence", "at": [3.5, -16], "yaw": 90 }
+  ],
+  "camera": { "mode": "game", "target": [0, -4], "zoom": 3 },
+  "frames": 30,
+  "shots": [30],
+  "expect": { "consoleErrors": 0 }
+}
