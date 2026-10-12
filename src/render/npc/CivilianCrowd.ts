@@ -183,9 +183,11 @@ class CivilianBatch extends Group {
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const speed = e.motion && !e.motion.moving ? 0 : motion.speed;
       const activity = c.schedule?.[c.scheduleStep ?? 0];
-      const performing = c.state === 'calm' && !!c.activityUntil;
+      // A sitter that is not at its seat (moved off by a fight/flight) never keeps the sitting pose or the seat lift.
+      const offSeat = !!activity?.seat && Math.hypot(e.transform.x - activity.seat.x, e.transform.z - activity.seat.z) > 1.2;
+      const performing = c.state === 'calm' && !!c.activityUntil && !offSeat;
       const elapsed = (this.world.tick - (c.activityStarted ?? this.world.tick)) / 60;
-      const noticingSeated = c.state === 'alarmed' && !!activity?.seat && !!c.activityUntil;
+      const noticingSeated = c.state === 'alarmed' && !!activity?.seat && !!c.activityUntil && !offSeat;
       const noticeElapsed = (this.world.tick - c.entered) / 60;
       const routineClip: Clip = activity?.activity === 'stand' ? 'npc-stand-up' : activity?.activity === 'sit' ? elapsed < .6 ? 'npc-sit-down' : 'npc-sit' : activity?.activity === 'water' ? 'npc-water' : activity?.activity === 'chat' ? 'npc-gesture' : 'npc-look-around';
       const annoyed = c.state === 'annoyed' && this.world.tick - c.entered < 24;

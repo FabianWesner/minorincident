@@ -58,8 +58,8 @@ export const l2Dressing: readonly Dressing[] = [
   // Small signs of fighting: a dropped baton and a tear-gas canister by the police car.
   { kind: 'fighting', assetId: 'wpn.police-baton', x: -17.6, z: -30.6, yaw: .6 },
   // Fire Station 3 bay: benches for the frightened civilians.
-  // Both face out of the bays (station-local +x): one at the mouth of the left bay, one deeper inside it.
-  ...([[1.0, 2.1], [-1.6, 2.9]] as const).map(([lx, lz]) => { const [x, z] = stationPoint(lx, lz); return { kind: 'station' as const, assetId: 'prop.bench', x, z, yaw: l2Station.yaw }; }),
+  // Both stand on the apron (slab top .4 m), outside the building footprint, facing out of the bays (station-local +x).
+  ...([[3.0, -1.9], [3.0, -4.4]] as const).map(([lx, lz]) => { const [x, z] = stationPoint(lx, lz); return { kind: 'station' as const, assetId: 'prop.bench', x, z, yaw: l2Station.yaw }; }),
   // Police bridge checkpoint at the east end of Elm Street: vehicles, barriers, fences, kit, light tower.
   { kind: 'checkpoint', assetId: 'veh.police-suv', x: 78.4, z: 25.9, yaw: .05, lit: true },
   { kind: 'checkpoint', assetId: 'veh.police-sedan', x: 83.3, z: 27.6, yaw: H + .06, lit: true },
@@ -156,7 +156,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
     for (const [i, d] of l2Dressing.entries()) {
       if (d.entity) continue;
       const s = d.scale ?? 1, decal = d.assetId.startsWith('decal.');
-      const placement: Placement = { id: `l2-${d.kind}-${i}`, assetId: d.assetId, position: [d.x, decal ? .06 : d.kind === 'station' ? .531 : 0, d.z], yaw: d.yaw ?? 0, scale: decal ? [1.4, 1, 2.6] : [s, s, s], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [d.x - 1, 0, d.z - 1], max: [d.x + 1, 1.5, d.z + 1] } };
+      const placement: Placement = { id: `l2-${d.kind}-${i}`, assetId: d.assetId, position: [d.x, decal ? .06 : d.kind === 'station' ? .4 : 0, d.z], yaw: d.yaw ?? 0, scale: decal ? [1.4, 1, 2.6] : [s, s, s], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [d.x - 1, 0, d.z - 1], max: [d.x + 1, 1.5, d.z + 1] } };
       // Checkpoint barriers are intentional; belongings and bins belong beside the road.
       if (pushableProps[d.assetId] && d.kind !== 'checkpoint') {
         placement.allowRoad = false;
@@ -170,7 +170,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
           if (!found) throw new Error(`No roadside position for ${placement.id}`);
         }
       }
-      // The bridge is a fixed set piece. Bay benches retain the crew's seat anchors and sit on the interior floor (top .53 m).
+      // The bridge is a fixed set piece. Apron benches retain the civilians' seat anchors and sit on the apron slab (top .4 m).
       if (!decal && d.kind !== 'station' && d.kind !== 'river' && footprints(placement, 0, true).length) {
         const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
         // The rescue fire truck's lane stays free: a piece that stood off the lane is never slid onto it (T-E20-20: a crashed sedan moved onto the Juniper/Main Row junction).
