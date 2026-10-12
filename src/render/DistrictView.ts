@@ -441,9 +441,40 @@ export class DistrictView extends Group {
       if (this.seeThroughReference) { seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
       if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
     }
-    const goal = player && this.foliage.reveal && this.occluded(view, player) ? 1 : 0;
+    const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
+    const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
     seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-10 * this.frameSeconds));
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
+    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * (1 - Math.exp(-10 * this.frameSeconds));
+    if (Math.abs(+hugged - seeThrough.cover.value) < .002) seeThrough.cover.value = +hugged;
+  }
+  /** How far in front of the lens a solid occluder counts as filling the view. Measured at L4 Kessler's Hardware
+   * (PO 2026-10-12 blank viewport): the 35° follow camera saw its pitched roof 2.5-6 m away in every screen quarter. */
+  static readonly hugDistance = 8;
+  private readonly lensRay = new Vector3();
+  private readonly lensPoint = new Vector3();
+  /** A tall solid placement sits right in front of the lens: points 1..hugDistance m along the centre and
+   * the four quarter-screen rays (at least three of the five) fall inside its conservative upright box. */
+  private huggedOccluder(view: View): boolean {
+    const camera = view.camera, o = camera.position, near: { x: number; z: number; half: number; y0: number; y1: number }[] = [];
+    for (const entry of this.lodBatches) {
+      if (entry.height < 1.1 || worldAssets[entry.id].foliage) continue;
+      for (const ref of entry.refs) {
+        const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1], half = entry.half * Math.max(ref.scale.x, ref.scale.z);
+        if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ x, z, half, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
+      }
+    }
+    if (!near.length) return false;
+    let blocked = 0;
+    for (const [sx, sy] of [[0, 0], [-.5, -.5], [.5, -.5], [-.5, .5], [.5, .5]]) {
+      this.lensRay.set(sx, sy, .5).unproject(camera).sub(o).normalize();
+      for (let d = 1; d <= DistrictView.hugDistance; d++) {
+        const p = this.lensPoint.copy(o).addScaledVector(this.lensRay, d);
+        if (near.some(b => Math.abs(b.x - p.x) < b.half && Math.abs(b.z - p.z) < b.half && p.y > b.y0 + .3 && p.y < b.y1)) { blocked++; break; }
+      }
+    }
+    // Most of the frame, not a wall at one edge: a street corner keeps its ordinary courier-sized hole.
+    return blocked >= 3;
   }
   /** Debug/test: open the see-through hole across the whole screen (reference frame for visibility checks). */
   seeThroughReference = false;
@@ -848,7 +879,7 @@ export class DistrictView extends Group {
       ),
       windPhase: this.phase.value,
       foliage: this.foliage.getState(),
-      seeThrough: { strength: seeThrough.strength.value, radius: seeThrough.radius.value, center: seeThrough.center.value.toArray() },
+      seeThrough: { strength: seeThrough.strength.value, cover: seeThrough.cover.value, radius: seeThrough.radius.value, center: seeThrough.center.value.toArray() },
       movedProps: [...this.propLinks.values()].filter(Boolean).length,
       ambient: this.ambient != null,
       photoSpots: [...this.spots.keys()],
