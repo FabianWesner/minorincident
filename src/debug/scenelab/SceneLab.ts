@@ -36,6 +36,7 @@ import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import { buildingDoors, doorwayOf, inDoorway, type Doorway } from '../../data/buildingDoors';
 import { doorRoute, routeAt, routeLength } from '../../sim/missions/doorRoute';
+import { LevelSevenDeparture } from '../../sim/missions/LevelSevenDeparture';
 import { LevelSevenEncounters } from '../../sim/missions/LevelSevenEncounters';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
@@ -205,6 +206,10 @@ export class SceneLab {
       world.l7Encounters = new LevelSevenEncounters(world);
       world.l7Encounters.prepare([]);
       for (const e of world.entities.iterate()) if (e.civilian?.survivor) world.l7Encounters.state.roster.push({ id: e.id, key: e.civilian.survivor.key, injured: false, status: 'following', passed: false });
+      if (spec.l7Departure) {
+        world.l7Departure = new LevelSevenDeparture(world); world.l7Departure.install();
+        world.events.on('sim.tick', () => world.l7Departure?.update(), SimPhase.missions);
+      }
     }
     // Dress the authored crowd before view initialization. Otherwise its first
     // tick replaces runners with civilian skins whose batches are still loading.

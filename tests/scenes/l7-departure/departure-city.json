@@ -1,0 +1,230 @@
+{
+ "name": "l7-departure-city",
+ "note": "L7-E2: courier walks to the evac bus, six followers queue and step through the door, the courier boards last and the bus drives east along Lakeshore Drive while the departure shot looks back at the city. Review boarding (no teleport, no clipping), the bus on its lane (wheels on ground, no wreck intersection) and the shot.",
+ "seed": 29,
+ "tier": 6,
+ "time": "L6",
+ "ground": "district",
+ "dof": false,
+ "l7Group": true,
+ "l7Departure": true,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -92,
+    -15
+   ],
+   [
+    60,
+    64
+   ]
+  ],
+  "anchors": [
+   "l7-bus-boarding",
+   "l7-bus"
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -60,
+    49
+   ],
+   "yaw": 180,
+   "loadout": [
+    "weapon.rocket-launcher",
+    "weapon.kick"
+   ],
+   "state": {
+    "walk": [
+     [
+      -70.5,
+      47.5
+     ]
+    ]
+   }
+  },
+  {
+   "id": "follower-0",
+   "kind": "pedestrian",
+   "at": [
+    -54.0,
+    46.4
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-woman-b"
+   },
+   "state": {
+    "survivor": {
+     "slot": 0
+    }
+   }
+  },
+  {
+   "id": "follower-1",
+   "kind": "pedestrian",
+   "at": [
+    -54.0,
+    47.5
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-man-b"
+   },
+   "state": {
+    "survivor": {
+     "slot": 1
+    }
+   }
+  },
+  {
+   "id": "follower-2",
+   "kind": "pedestrian",
+   "at": [
+    -54.0,
+    48.6
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-woman-a"
+   },
+   "state": {
+    "survivor": {
+     "slot": 2
+    }
+   }
+  },
+  {
+   "id": "follower-3",
+   "kind": "pedestrian",
+   "at": [
+    -55.2,
+    46.4
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-man-a"
+   },
+   "state": {
+    "survivor": {
+     "slot": 3
+    }
+   }
+  },
+  {
+   "id": "follower-4",
+   "kind": "pedestrian",
+   "at": [
+    -55.2,
+    47.5
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-elderly"
+   },
+   "state": {
+    "survivor": {
+     "slot": 4
+    }
+   }
+  },
+  {
+   "id": "follower-5",
+   "kind": "pedestrian",
+   "at": [
+    -55.2,
+    48.6
+   ],
+   "yaw": 180,
+   "look": {
+    "model": "npc.civilian-woman-b"
+   },
+   "state": {
+    "survivor": {
+     "slot": 5
+    }
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -66,
+   0,
+   48
+  ],
+  "zoom": 1.2
+ },
+ "frames": 1100,
+ "shots": [
+  0,
+  360,
+  480,
+  495,
+  520,
+  570,
+  630,
+  700,
+  780,
+  860,
+  940
+ ],
+ "sheet": 100,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "drawCallsMax": 900,
+  "footSinkMaxCm": 0
+ },
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -80.5,
+     54
+    ],
+    "radius": 1.8,
+    "duration": 1500
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -63,
+     52.5
+    ],
+    "radius": 1.8,
+    "duration": 1500
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -52,
+     55
+    ],
+    "radius": 1.8,
+    "duration": 1500
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -36,
+     53
+    ],
+    "radius": 1.8,
+    "duration": 1500
+   }
+  }
+ ]
+}
