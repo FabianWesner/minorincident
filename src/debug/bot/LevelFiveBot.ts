@@ -43,7 +43,11 @@ export class LevelFiveBot {
     return (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise && dist(e.transform, p) <= radius && w.infected!.nav.visible(p, e.transform, 0))
       .sort((a, b) => dist(a.transform, p) - dist(b.transform, p));
   }
-  private chasing(e: EntitySnapshot): boolean { const b = e.infected?.l1; return !!b && (b.mode === 'chase' || b.mode === 'bite') && (b.targetId === 1 || !!this.world.entities.get(b.targetId)?.civilian?.survivor); }
+  private chasing(e: EntitySnapshot): boolean {
+    const state = e.infected!, b = state.l1;
+    if (e.archetype === 'infected.alpha') return ['alerted', 'chase', 'attack'].includes(state.state) && (state.heardTargetId === 1 || !!this.world.entities.get(state.heardTargetId ?? 0)?.civilian?.survivor);
+    return !!b && (b.mode === 'chase' || b.mode === 'bite') && (b.targetId === 1 || !!this.world.entities.get(b.targetId)?.civilian?.survivor);
+  }
   /** Followers alive right now, as entities. */
   private group(): EntitySnapshot[] {
     const s = this.world.missions!.state.l5!;
@@ -100,6 +104,9 @@ export class LevelFiveBot {
     const covered = friends.filter(f => f.civilian?.survivor?.cover);
     if (fights && covered.length) {
       const f = covered[0], hot = (w.infected?.active ?? []).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && dist(e.transform, f.transform) < 10).sort((x, y) => dist(x.transform, f.transform) - dist(y.transform, f.transform))[0];
+      // The station rails can separate a protector from an Alpha attacking the group.
+      // Walk around the obstruction before firing, using the same connected route as a grab rescue.
+      if (hot && !w.infected!.nav.visible(p, hot.transform, 0)) { go(hot.transform, 1.6, `help-visible-${hot.id}`); return frame; }
       if (hot && dist(p, hot.transform) > 8) { go(hot.transform, 7, `help-${f.id}`); return frame; }
       // A grabber hides behind its victim from the machine gun: walk up and hit it with the axe (a hit during the grab frees the survivor).
       if (hot && hot.infected?.l1?.mode === 'bite' && dist(p, hot.transform) > 2) { go(hot.transform, 1.6, `rescue-${hot.id}`); if (dist(p, hot.transform) <= 2.4) strike(hot, 'LEFT'); return frame; }

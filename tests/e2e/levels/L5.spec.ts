@@ -2,16 +2,16 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import type { Page } from '@playwright/test';
 import { test, expect, boot, testUrl } from '../fixtures';
-import { l5Survivors } from '../../../src/data/l5';
+import { l5Anchors, l5Survivors } from '../../../src/data/l5';
 
 /** E23 L5 browser runs. Browser runs only through tools/e2e-lock.sh, headless. */
 const output = 'test-results/epics/E23';
-test.use({ trace: 'off', launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test.use({ trace: 'off', ...(process.platform === 'darwin' ? { launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } } : {}) });
 type P = { x: number; z: number };
 const fair = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
 const ring = (key: string): P => { const s = l5Survivors.find(x => x.key === key)!; return { x: s.ringAt[0], z: s.ringAt[1] }; };
 const brace = (): P => { const c = fair.anchors['cellar-interior'].position; return { x: c[0] - .4, z: c[2] + 2.6 }; };
-const metroFoot = (): P => ({ x: 37.8, z: -43.4 });
+const metroFoot = (): P => ({ x: l5Anchors['l5-metro-foot'][0], z: l5Anchors['l5-metro-foot'][1] });
 
 function helpers(page: Page) {
   const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
@@ -33,8 +33,9 @@ function helpers(page: Page) {
       const a = window.__SS__!, p = a.getState().player!.transform;
       // Clear threats beside followers before they grab, including ones beyond the courier's line of sight.
       const friends = a.query({ kind: 'civilian' }).filter(e => e.civilian?.survivor?.mode === 'follow');
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7)) && (a.input.visible(e.transform) || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
-        .filter(e => e.infected?.l1?.mode === 'chase' || e.infected?.l1?.mode === 'bite' || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 9 || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7))
+      const alphaThreat = (e: ReturnType<typeof a.query>[number]) => e.archetype === 'infected.alpha' && (e.infected?.specialAttack || ['attracted', 'alerted', 'chase', 'attack'].includes(e.infected?.state ?? ''));
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && e.infected?.state !== 'dead' && (Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < (alphaThreat(e) ? Math.max(18, range) : range) || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7)) && (a.input.visible(e.transform) || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 8)))
+        .filter(e => alphaThreat(e) || e.infected?.l1?.mode === 'chase' || e.infected?.l1?.mode === 'bite' || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 9 || friends.some(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z) < 7))
         .sort((a, b) => {
           const danger = (e: typeof a) => Math.min(Infinity, ...friends.map(f => Math.hypot(e.transform.x - f.transform.x, e.transform.z - f.transform.z)));
           return Number(b.infected?.l1?.mode === 'bite') - Number(a.infected?.l1?.mode === 'bite') ||
@@ -64,7 +65,8 @@ function helpers(page: Page) {
     const key = target.close ? 'j' : 'k';
     await page.keyboard.down(key);
     for (let i = 0; i < 10; i++) {
-      const point = await page.evaluate(id => { const a = window.__SS__!, e = a.getEntity(id); return e && e.health.current > 0 ? a.input.project(e.transform) : null; }, target.id);
+      // Cursor aim is resolved on the player's floor, which differs from street height on the metro steps.
+      const point = await page.evaluate(id => { const a = window.__SS__!, e = a.getEntity(id); return e && e.health.current > 0 ? a.input.project(e.transform, 'player') : null; }, target.id);
       if (!point) break;
       await page.mouse.move(point.x, point.y); await step(2);
     }
@@ -97,8 +99,7 @@ function helpers(page: Page) {
     let lagWait = 0;
     for (let i = 0; i < 2400; i++) {
       await step(4);
-      // The entrance triggers at 3.4 m: stop immediately so combat cannot consume
-      // the three-second shutter-to-L6 window before its required photograph.
+      // Stop when the group has crossed and closure begins, preserving the photograph window.
       if (enterMetro && (await mission()).l5!.shutterAt) return;
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
@@ -194,25 +195,26 @@ test.describe('L5 Aftermath in the browser', () => {
     await go({ x: 10, z: -37.6 }, 1.6, 11);
     await go({ x: 10, z: -42.4 }, 1.6, 11); await regroup(); await step(30); await snap('l5-group-of-five');
     expect((await mission()).l5!.survivors.filter(r => r.status === 'following')).toHaveLength(5);
-    await go(metroFoot(), 2.4, 11);
+    await go(metroFoot(), .4, 11);
     let last = await mission();
     for (let i = 0; i < 80 && last.phase === 'playing'; i++) {
       if (last.l5!.shutterAt) {
         const remaining = last.l5!.shutterAt + 120 - await page.evaluate(() => window.__SS__!.getState().tick);
         if (remaining > 0) await step(remaining);
-        last = await mission(); await snap('l5-metro-shelter'); break;
+        last = await mission(); await snap('l5-metro-shelter'); await snap('l5-metro-doors'); break;
       }
       if (!await fightNearby(11)) await step(15);
       last = await mission();
     }
     if (!h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter');
+    if (!h.shots.has('l5-metro-doors')) await snap('l5-metro-doors');
     if (!last.l5!.shutterAt) last = await mission();
     for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);
     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L6');
     const handover = await page.evaluate(() => ({ level: window.__SS__!.getState().scenario, survivors: window.__SS__!.campaign.state()!.survivors }));
     expect(handover.level).toBe('L6'); expect(handover.survivors!.slice().sort()).toEqual(l5Survivors.map(s => s.key).sort());
     writeFileSync(`${output}/browser-real-input.json`, JSON.stringify({ statsAtShutter: last.stats, handover, l5: { survivors: last.l5!.survivors.map(r => `${r.key}:${r.status}`), gloom: last.l5!.gloom, shutterAt: last.l5!.shutterAt }, shots: [...h.shots].sort(), errors }, null, 1));
-    expect([...h.shots].sort()).toEqual(['l5-basement-exit', 'l5-group-of-five', 'l5-metro-shelter', 'l5-sign-of-life', 'pair-harbor-street', 'pair-kessler-lane', 'pair-metro-entrance', 'pair-plaza']);
+    expect([...h.shots].sort()).toEqual(['l5-basement-exit', 'l5-group-of-five', 'l5-metro-doors', 'l5-metro-shelter', 'l5-sign-of-life', 'pair-harbor-street', 'pair-kessler-lane', 'pair-metro-entrance', 'pair-plaza']);
     expect(last.l5!.survivors.filter(r => r.status === 'sheltered').length).toBeGreaterThanOrEqual(3);
     expect(errors).toEqual([]);
   });
@@ -255,12 +257,16 @@ test.describe('L5 Aftermath in the browser', () => {
   test('T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign', async ({ page }) => {
     test.setTimeout(900_000); page.setDefaultTimeout(120_000);
     await begin(page, 'L4', 'L4-default');
+    let carried: { LEFT: string[]; RIGHT: string[] } = { LEFT: [], RIGHT: [] };
     for (let i = 0; i < 12; i++) {
       const m = await page.evaluate(() => window.__SS__!.missions.state());
       if (!m || m.phase !== 'playing' || (await page.evaluate(() => window.__SS__!.getState().scenario)) !== 'L4') break;
+      carried = await page.evaluate(() => { const w = window.__SS__!.getState().player!.weapons!; return { LEFT: w.LEFT.rack.map(r => r.id), RIGHT: w.RIGHT.rack.map(r => r.id) }; });
       await page.evaluate(() => window.__SS__!.cheats.completeObjective());
       if (await page.evaluate(() => window.__SS__!.missions.state()?.phase === 'playing' && window.__SS__!.getState().scenario === 'L4')) await page.evaluate(() => window.__SS__!.step(2));
     }
+    // Automatic campaign navigation streams the next district after the completion event.
+    await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L5');
     await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete/);
@@ -269,7 +275,8 @@ test.describe('L5 Aftermath in the browser', () => {
     expect(save!.ownedActions).toEqual(expect.arrayContaining(['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg'])); expect(save!.unlockedLevel).toBe(5);
     await page.getByRole('button', { name: 'Begin mission' }).click(); await page.evaluate(() => window.__SS__!.pause());
     const weapons = await page.evaluate(() => window.__SS__!.getState().player!.weapons!);
-    expect(weapons.LEFT.rack.map(r => r.id)).toEqual(['weapon.fire-axe', 'weapon.bat']); expect(weapons.RIGHT.rack.map(r => r.id)).toEqual(['weapon.army-mg', 'weapon.handgun', 'weapon.kick']); expect(weapons.selectedSide).toBe('RIGHT');
+    expect(carried.RIGHT).toContain('weapon.army-mg');
+    expect(weapons.LEFT.rack.map(r => r.id)).toEqual(carried.LEFT); expect(weapons.RIGHT.rack.map(r => r.id)).toEqual(carried.RIGHT); expect(weapons.selectedSide).toBe('RIGHT');
     // L5 -> L6: every cheat completes exactly one step; the Metro shutter ends the level straight into the campaign (no result or reward screen).
     for (let i = 0; i < 12; i++) {
       const m = await page.evaluate(() => window.__SS__!.missions.state());
@@ -278,6 +285,7 @@ test.describe('L5 Aftermath in the browser', () => {
       // The last cheat ends the level and the campaign loads L6 behind the call: stepping is only legal while paused.
       await page.evaluate(async () => { const a = window.__SS__!; try { a.pause(); await a.step(2); } catch { /* the next level is loading */ } });
     }
+    await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L6');
     await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete|Campaign complete/);

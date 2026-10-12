@@ -80,6 +80,7 @@ test('T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, pr
   await page.locator('[data-audio-controls] summary').click();await page.getByRole('checkbox',{name:'Mono audio',exact:true}).check();save.settings.mono=true;
   await page.reload();await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
+  await page.evaluate(()=>window.__SS__!.screenshotReady());
   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');

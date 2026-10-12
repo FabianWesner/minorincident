@@ -15,6 +15,8 @@ export interface InfectedState {
   targetId: number;
   /** Human acquired by close hearing in the archetype brain (targetId is reserved for obstacles). */
   heardTargetId?: number;
+  /** L5 Alpha investigates a heard burst position until `until`, without acquiring a human through cover. */
+  investigate?: { x: number; z: number };
   activeUntil: number;
   speed: number; until: number; cooldown: number; attackId: number; special: string; hidden: boolean;
   deadAt: number;

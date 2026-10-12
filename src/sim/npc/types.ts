@@ -14,6 +14,8 @@ export interface CivilianActivity {
 export interface Civilian {
   /** Fixed support for a stationary guard on an authored raised platform, in world metres. */
   floorY?: number;
+  /** Stair entry: support the body on the higher tread under either walking foot. */
+  supportFeet?: boolean;
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
   model?: string; variant: string; routine: string; waypoints: Point[]; waypoint: number; pauseUntil: number;
   /** Story beat presentation (render-only): a scripted clip from `start` and an optional hand prop. */

@@ -72,6 +72,7 @@ export class GameView implements Lifecycle {
   private marker: ObjectiveMarker | null = null;
   private cinematicId: string | null = null;
   private storyFraming = false;
+  private l5StationView = false;
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -507,6 +508,18 @@ export class GameView implements Lifecycle {
         this.view.cinematic({ position: this.storyFocus.clone().add(this.storyOffset).toArray() as [number, number, number], target: this.storyFocus.toArray() as [number, number, number] });
         this.storyFraming = true;
       } else if (this.storyFraming) { this.storyFraming = false; this.view.follow(); }
+      // Show the gathered residents while the last followers cross, then return to the closing shutter.
+      const metro = this.world.scenario === 'L5' ? this.world.missions?.state.l5 : null;
+      const showStation = !!metro?.metroAt && !metro.shutterAt;
+      if (showStation && !this.l5StationView) {
+        const pose = this.districts?.spots.get('D-FAIR/W5/l5-metro-shelter');
+        if (pose) this.view.preset('l5-station-arrival', pose);
+      } else if (!showStation && this.l5StationView) {
+        const pose = metro?.shutterAt && this.districts?.spots.get('D-FAIR/W5/l5-metro-doors');
+        if (pose) this.view.preset('l5-metro-closing', pose);
+        else this.view.follow();
+      }
+      this.l5StationView = showStation;
       this.updateEnding();
       this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);

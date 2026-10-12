@@ -176,7 +176,14 @@ export class DistrictAssets {
     if (id === 'bld.joes-diner') {
       const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
     }
-    root.traverse(node => { if (node instanceof Mesh) { this.batchMaterials.add(node.material as Material); if (node.material instanceof PaletteMaterial) node.material.seeThrough(); } });
+    root.traverse(node => { if (node instanceof Mesh) {
+      // A shut metro leaf must read as a solid barrier even with the courier behind it.
+      if (node.material instanceof PaletteMaterial) {
+        if (id === 'bld.metro-entrance' && node.userData.door === 'shutter') node.material = node.material.frozenCopy().seeThrough(false);
+        else node.material.seeThrough();
+      }
+      this.batchMaterials.add(node.material as Material);
+    } });
     return root;
   }
   /** `decay`: a reviewed decay variant of the asset (`w2`/`w3` buildings, `wrecked` vehicles; E21 per-placement damage). */
