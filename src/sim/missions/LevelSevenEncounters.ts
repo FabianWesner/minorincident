@@ -28,8 +28,7 @@ export class LevelSevenEncounters {
     const w = this.world, ai = w.infected!, director = ai.director;
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0;
     w.npcs!.setAmbient(0);
-    const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier, dressRunners: false });
-    outbreak.options.dressRunners = false;
+    const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });
     w.npcs!.civilians.outbreak = outbreak;
     // Outbreak initialization can configure the shared director; the level owns its cap.
     director.levelCap = 200; director.strict = true;
@@ -142,7 +141,7 @@ export class LevelSevenEncounters {
         }
         destination = c.l1!.target;
       } else c.l1!.target = null;
-      w.npcs!.move(e, destination, r.injured ? 1.4 : 3.8, c, .5);
+      w.npcs!.move(e, destination, r.injured ? 1.4 : 3.8, c, .5, d > 30 ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;

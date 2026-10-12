@@ -28,8 +28,6 @@ export interface OutbreakOptions {
   /** Named positions for anchor-only accident events (`l1.blast` at `lab-door`, ...). */
   anchors?: Record<string, Vec2>;
   tier?: 'high' | 'low';
-  /** Dense city hordes retain the catalog crowd model; transformed pedestrians still keep their look. */
-  dressRunners?: boolean;
 }
 export interface PedestrianOptions {
   child?: boolean;
@@ -141,7 +139,6 @@ export class Outbreak {
    * Runs in the AI phase and again at cleanup, so spawns from later phases are dressed before the frame renders.
    */
   dressInfected(): void {
-    if (this.options.dressRunners === false) return;
     for (const e of this.world.infected!.active) {
       if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
       const asset = l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
