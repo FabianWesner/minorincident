@@ -1,0 +1,167 @@
+{
+  "name": "l2-fight",
+  "seed": 2,
+  "ground": "asphalt",
+  "size": 30,
+  "time": "L2",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        -5
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "at": [
+        -4,
+        -2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "at": [
+        -2,
+        -2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "at": [
+        0,
+        -2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-3",
+      "kind": "infected",
+      "at": [
+        2,
+        -2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-4",
+      "kind": "infected",
+      "at": [
+        4,
+        -2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-5",
+      "kind": "infected",
+      "at": [
+        -4,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-6",
+      "kind": "infected",
+      "at": [
+        -2,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-7",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-8",
+      "kind": "infected",
+      "at": [
+        2,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-9",
+      "kind": "infected",
+      "at": [
+        4,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-10",
+      "kind": "infected",
+      "at": [
+        -4,
+        2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-11",
+      "kind": "infected",
+      "at": [
+        -2,
+        2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-12",
+      "kind": "infected",
+      "at": [
+        0,
+        2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-13",
+      "kind": "infected",
+      "at": [
+        2,
+        2
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1
+    ],
+    "zoom": 1.1
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "sameLookShareMax": 0.25,
+    "infectedVarietyMin": 12,
+    "infectedModelShareMax": 0.25
+  }
+}
