@@ -621,9 +621,9 @@ export class LevelThreeCollapse {
     this.mercyDue = false;
     const { world } = this.mission, s = this.s, m = l3.mercy, ai = world.infected;
     const frac = this.mercyFraction(); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
-    // The window reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
+    // The window starts behindM behind the respawn (a crowd standing on the checkpoint, real-input run 10-12) and reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
     // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).
-    const p = world.entities.get(1)!.transform, [a, b] = m.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x + a && x < p.x + reach;
+    const p = world.entities.get(1)!.transform, [, b] = m.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x - l3.mercy.behindM && x < p.x + reach;
     const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
     thin([...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
     const waiting = (s.pending as Pending[]).filter(q => q.id === 0 && ahead(q.home.x));

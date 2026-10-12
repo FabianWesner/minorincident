@@ -98,7 +98,7 @@ export const l3 = {
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by
    * `stepFrac` per death (max `maxFrac`). Hordes and density stay for anyone who plays it through; only a death loop eases.
    */
-  mercy: { fromDeaths: 1, stepFrac: .3, maxFrac: .75, aheadM: [12, 90] as P },
+  mercy: { fromDeaths: 1, stepFrac: .3, maxFrac: .75, aheadM: [12, 90] as P, behindM: 20 },
   checkpoints: ['armory', 'fallback', 'segment-2', 'segment-2b', 'segment-3', 'segment-3b'] as const,
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,
