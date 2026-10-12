@@ -1,0 +1,52 @@
+{
+  "stats": {
+    "startTime": "2026-10-12T14:43:39.347Z",
+    "duration": 59253.113000000005,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 27198
+        }
+      ]
+    },
+    {
+      "title": "T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 17309
+        }
+      ]
+    },
+    {
+      "title": "T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 14182
+        }
+      ]
+    }
+  ],
+  "headless": true,
+  "gpu": "ANGLE Metal Apple M4",
+  "workers": 1,
+  "scenePort": 3483
+}
