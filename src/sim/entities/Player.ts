@@ -49,11 +49,11 @@ export class Player {
     const knockdown = state.knockdown && tick < state.knockdown.until;
     this.animate(state.diedAt !== null ? 'die' : knockdown ? tick < state.knockdown!.until - 24 ? 'knockdown' : 'get-up' : tick - this.lastDamage < survivor.hurtTicks ? 'hurt' : this.action && tick < this.actionUntil ? this.action : speed > 2.5 ? 'run' : speed > 0.01 ? 'walk' : 'idle', tick);
   }
-  /** Returns accepted damage; rejected hits do not postpone regeneration. Timers use sim ticks only. */
-  damage(amount: number, tick: number): number {
+  /** Returns accepted damage; independent herd contacts have already been deduplicated per zebra/attack. */
+  damage(amount: number, tick: number, independentHit = false): number {
     if (!Number.isFinite(amount) || amount < 0) throw new RangeError('Damage must be finite and nonnegative');
     const state = this.entity.survivor!;
-    if (amount === 0 || state.diedAt !== null || tick < state.invulnerableUntil) return 0;
+    if (amount === 0 || state.diedAt !== null || !independentHit && tick < state.invulnerableUntil) return 0;
     const taken = Math.min(amount, this.entity.health.current);
     this.entity.health.current -= taken; this.lastDamage = tick; state.invulnerableUntil = tick + survivor.invulnerableTicks;
     this.events.emit({ type: 'player.damaged', tick, id: this.entity.id, amount: taken });

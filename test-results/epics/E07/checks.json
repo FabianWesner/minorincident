@@ -36,12 +36,54 @@
         "npx",
         "vitest",
         "run",
+        "tests/sim/ai/director.test.ts",
+        "tests/sim/performance/alpha.test.ts",
+        "tests/sim/performance/alpha-physical.test.ts",
         "-t",
-        "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "T-E07-11",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/vitest-timing.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra-flamingo",
+        "--pull",
+        "test-results/epics/E07/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$))",
         "--maxWorkers=1",
         "--reporter=default",
         "--reporter=json",
         "--outputFile=test-results/epics/E07/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra-flamingo",
+        "--pull",
+        "test-results/playwright/results.json",
+        "--env",
+        "E2E_PORT=3492",
+        "--",
+        "sh",
+        "-c",
+        "npm run build && npx playwright test --grep \"$1\" --grep-invert \"$2\" --workers=1",
+        "sh",
+        "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13"
       ],
       "exitCode": 0
     },
@@ -53,7 +95,8 @@
         "playwright",
         "test",
         "--grep",
-        "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        "^(?=.*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)|T-E07-physical-budget))(?=.*(?:alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13))",
+        "--workers=1"
       ],
       "exitCode": 0
     }

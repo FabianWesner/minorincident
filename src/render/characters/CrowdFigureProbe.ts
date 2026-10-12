@@ -1,4 +1,4 @@
-import { Matrix4, Vector3, type BufferGeometry } from 'three';
+import { Mesh, type Object3D, Matrix4, Vector3, type BufferGeometry } from 'three';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 import { pickBodies } from './PickBodies';
 
@@ -16,6 +16,25 @@ export class CrowdFigureProbe {
   draw(): void { for (const figure of this.figures) figure.drawn = true; }
   /** Sole (heel/toe) points need the rest ankle height in foot-local units (CrowdLocomotion.sole). */
   sole = 0;
+  private animalSoles: { part: string; heel: Vector3; toe: Vector3 }[] = [];
+  /** Probe actual paw/hoof geometry, never the animal rig's dummy humanoid feet. */
+  animal(model: Object3D): void {
+    model.updateMatrixWorld(true);
+    this.animalSoles = ['FL', 'FR', 'BL', 'BR'].flatMap(side => {
+      const part = model.getObjectByName(`paw${side}`) ?? model.getObjectByName(`leg${side}`);
+      if (!part) return [];
+      const vertices: Vector3[] = [];
+      part.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        const positions = node.geometry.getAttribute('position');
+        for (let i = 0; i < positions.count; i++) vertices.push(new Vector3().fromBufferAttribute(positions, i).applyMatrix4(node.matrixWorld));
+      });
+      if (!vertices.length) return [];
+      const bottom = Math.min(...vertices.map(point => point.y));
+      const sole = vertices.filter(point => point.y <= bottom + .002).sort((a, b) => a.x - b.x);
+      return [{ part: part.name, heel: part.worldToLocal(sole[0].clone()), toe: part.worldToLocal(sole[sole.length - 1].clone()) }];
+    });
+  }
   add(id: number, clip: string, phase: number, instance: Matrix4, palette: CrowdPosePalette, frame: number, outgoing: number, weight: number, geometry?: BufferGeometry): void {
     pickBodies.add(id, instance, palette, frame, outgoing, weight, geometry);
     if (!this.enabled) return;
@@ -27,7 +46,12 @@ export class CrowdFigureProbe {
       return this.point.setFromMatrixPosition(this.matrix).applyMatrix4(instance).toArray();
     });
     // Heel and toe contact points per foot (same offsets as the footwork solver), for model-free slide probes.
-    const soles = this.sole ? ['footL', 'footR'].flatMap(name => {
+    const soles = this.animalSoles.length ? this.animalSoles.flatMap(({ part, heel, toe }) => {
+      const index = palette.clip.parts.indexOf(part);
+      if (index < 0) return [];
+      this.matrix.fromArray(pose, index * 16).premultiply(instance);
+      return [heel, toe].map(point => this.point.copy(point).applyMatrix4(this.matrix).toArray());
+    }) : this.sole ? ['footL', 'footR'].flatMap(name => {
       const part = palette.clip.parts.indexOf(name);
       if (part < 0) return [];
       this.matrix.fromArray(pose, part * 16).premultiply(instance);
