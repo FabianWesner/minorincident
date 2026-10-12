@@ -443,9 +443,10 @@ export class DistrictView extends Group {
     }
     const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
     const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
-    seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-10 * this.frameSeconds));
+    seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds));
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
-    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * (1 - Math.exp(-10 * this.frameSeconds));
+    // Opens fast (a roof filling the frame must not linger while the cut eases open, esp. on slow frames), closes at the ordinary rate.
+    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * (1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds));
     if (Math.abs(+hugged - seeThrough.cover.value) < .002) seeThrough.cover.value = +hugged;
   }
   /** How far in front of the lens a solid occluder counts as filling the view. Measured at L4 Kessler's Hardware
