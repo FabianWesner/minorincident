@@ -30,7 +30,7 @@ for (const [name, size] of [['desktop', { width: 1600, height: 900 }], ['phone',
     // Clear the street, put the group at the foot of the first ramp and let the camera settle.
     await page.evaluate(() => { const a = window.__SS__!; for (const e of a.query({ kind: 'infected' })) e.health.current = 0; a.teleport('player', { x: 139, z: 0 }); });
     await page.evaluate(() => window.__SS__!.step(90));
-    const path = [...Array.from({ length: 41 }, (_, i) => highwayPoint(ramps[0], 1 - i / 40)), ...Array.from({ length: 41 }, (_, i) => highwayPoint(ramps[1], i / 40))].map(p => ({ x: p[0], z: p[2] }));
+    const path = [...Array.from({ length: 41 }, (_, i) => highwayPoint(ramps[0] as never, 1 - i / 40)), ...Array.from({ length: 41 }, (_, i) => highwayPoint(ramps[1] as never, i / 40))].map(p => ({ x: p[0], z: p[2] }));
     const held = new Set<string>(); let next = 0, maxHeight = 0, worst = 0, captured = 0;
     const out: string[] = [];
     for (let frame = 0; frame < 2600 && next < path.length; frame++) {
@@ -44,7 +44,7 @@ for (const [name, size] of [['desktop', { width: 1600, height: 900 }], ['phone',
       maxHeight = Math.max(maxHeight, state.feet);
       for (const [x, y] of state.box) worst = Math.max(worst, Math.abs(x), Math.abs(y));
       if (frame % 25 === 0) out.push(`${state.x.toFixed(1)},${state.z.toFixed(1)} h${state.feet.toFixed(2)} ndc<=${Math.max(...state.box.flatMap(b => [Math.abs(b[0]), Math.abs(b[1])])).toFixed(2)}`);
-      for (const [x, y] of state.box) expect(Math.abs(x), `x out of frame at ${state.x.toFixed(1)},${state.z.toFixed(1)} h${state.feet.toFixed(2)}`).toBeLessThan(MARGIN) && expect(Math.abs(y), `y out of frame at ${state.x.toFixed(1)},${state.z.toFixed(1)} h${state.feet.toFixed(2)}`).toBeLessThan(MARGIN);
+      for (const [x, y] of state.box) { const where = `at ${state.x.toFixed(1)},${state.z.toFixed(1)} h${state.feet.toFixed(2)}`; expect(Math.abs(x), `x out of frame ${where}`).toBeLessThan(MARGIN); expect(Math.abs(y), `y out of frame ${where}`).toBeLessThan(MARGIN); }
       while (next < path.length && Math.hypot(path[next].x - state.x, path[next].z - state.z) < 1.4) next++;
       if (next >= path.length) break;
       await steer(page, path[next], state, held);
