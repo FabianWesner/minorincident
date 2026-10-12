@@ -127,6 +127,10 @@ export class CrowdGunAim {
   private readonly matrix = new Matrix4();
   private readonly parent = new Matrix4();
   private readonly aim: GunAim;
+  private readonly armIK: LimbIK;
+  private readonly shoulder = new Vector3();
+  private readonly goal = new Vector3();
+  private readonly frameQ = new Quaternion();
   private readonly forward = new Vector3(1, 0, 0);
   private readonly barrel = new Vector3(0, 0, 1);
   constructor(model: Object3D, private readonly parts: string[]) {
@@ -144,7 +148,42 @@ export class CrowdGunAim {
       if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.copy(model.getObjectByName(parts[this.parents[i]])!.matrixWorld).invert());
       this.matrix.decompose(node.position, node.quaternion, node.scale);
     });
+    this.armIK = new LimbIK(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')]);
     this.aim = new GunAim(this.nodes[parts.indexOf('armR')], this.nodes[parts.indexOf('foreArmR')], this.nodes[parts.indexOf('handR')],this.nodes[parts.indexOf('torso')], ['armL', 'foreArmL', 'handL'].map(name => this.nodes[parts.indexOf(name)]) as [Object3D, Object3D, Object3D], [this.nodes[parts.indexOf('handR')], this.nodes[parts.indexOf('weaponSocketL')]], this.nodes[parts.indexOf('head')]);
+  }
+  /** Small hand props (cup, phone): the right elbow is bent, the hand rests at chest height in front of the body (`sip` 0) and a
+   * cup-sized offset raises it to the mouth (`sip` 1). Offsets are in torso axes (+X forward, +Y up, +Z the figure's right) and
+   * measured in arm lengths, so every body size gets the same pose. `socket` is the prop's offset from the hand (cup centre). */
+  hold(pose: Float32Array, sip = 0, socket: [number, number, number] = [0, 0, 0]): void {
+    this.load(pose);
+    this.root.updateMatrixWorld(true);
+    const torso = this.nodes[this.parts.indexOf('torso')], head = this.nodes[this.parts.indexOf('head')], upper = this.armIK.upper;
+    const length = (this.armIK.middle.position.length() + this.armIK.end.position.length()) * upper.getWorldScale(this.goal).y;
+    torso.getWorldQuaternion(this.frameQ);
+    upper.getWorldPosition(this.shoulder);
+    const chest = new Vector3(.62 * length, -.42 * length, -.14 * length - socket[2] * .6);
+    const mouth = head.getWorldPosition(new Vector3()).add(new Vector3(.12, -.05, 0).applyQuaternion(this.frameQ)).sub(new Vector3(socket[0] + .04, socket[1] + .02, socket[2]).applyQuaternion(this.frameQ));
+    this.goal.copy(chest).applyQuaternion(this.frameQ).add(this.shoulder).lerp(mouth, sip);
+    // Short arms (the elderly) cannot reach the mouth straight: stop at a bent elbow.
+    const reach = this.goal.distanceTo(this.shoulder); if (reach > .85 * length) this.goal.sub(this.shoulder).multiplyScalar(.85 * length / reach).add(this.shoulder);
+    // Elbow low and slightly back, the way a held mug sits.
+    this.armIK.solve(this.goal, new Vector3(-.3, -1, .2).applyQuaternion(this.frameQ), this.frameQ.clone());
+    this.root.updateMatrixWorld(true);
+    this.store(pose);
+  }
+  private load(pose: Float32Array): void {
+    this.nodes.forEach((node, i) => {
+      this.matrix.fromArray(pose, i * 16);
+      if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.fromArray(pose, this.parents[i] * 16).invert());
+      this.matrix.decompose(node.position, node.quaternion, node.scale);
+    });
+  }
+  private store(pose: Float32Array): void {
+    this.nodes.forEach((node, i) => {
+      let ancestor: Object3D | null = node;
+      while (ancestor && ancestor.name !== 'torso') ancestor = ancestor.parent;
+      if (ancestor) node.matrixWorld.toArray(pose, i * 16);
+    });
   }
   apply(pose: Float32Array, direction: { x: number; y?: number; z: number } = this.forward, elevation = Math.atan2(direction.y ?? 0, Math.hypot(direction.x, direction.z)), reach = .995, hold?: LongGunHold): void {
     this.nodes.forEach((node, i) => {
