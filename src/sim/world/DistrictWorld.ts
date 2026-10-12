@@ -1,3 +1,4 @@
+import { isWorldTier } from '../../levels/districts/types';
 import type {
   DistrictLayout,
   LevelComposition,
@@ -38,11 +39,13 @@ export class DistrictWorld {
     layouts: DistrictLayout[],
     seed: number,
   ) {
+    if (!isWorldTier(composition.tier)) throw new RangeError("Tier must be W0…W6");
     this.districts = composition.districts.map((d) => {
       const layout = layouts.find((l) => l.district === d.id);
       if (!layout) throw new Error(`Missing layout: ${d.id}`);
-      const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides },
-        decay = resolveDecay(layout, composition.tier),
+      const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides };
+      if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) throw new RangeError(`Invalid gameplay decay tier: ${d.id}`);
+      const decay = resolveDecay(layout, composition.tier),
         gameplayLayers = gameplay.decay.filter(
           (l) => l.tier <= composition.tier,
         );

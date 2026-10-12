@@ -1,0 +1,152 @@
+{
+  "tier": "low",
+  "blasts": 7,
+  "peakInfected": 100,
+  "frameP95": 29.200000000000728,
+  "simP95": 6.09999942779541,
+  "draws": 69,
+  "triangles": 412983,
+  "heapMB": 223.94962215423584,
+  "peakHeapMB": 232.8534460067749,
+  "particles": 512,
+  "puffs": 80,
+  "debris": 0,
+  "gibs": 30,
+  "perf": {
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 8,
+      "submitted": 24,
+      "completed": 24,
+      "prebuilt": 24,
+      "failed": 0
+    },
+    "nodeBuilds": 100,
+    "profile": {
+      "other": {
+        "drawCalls": 40,
+        "triangles": 61590
+      },
+      "shadows": {
+        "drawCalls": 20,
+        "triangles": 4275
+      },
+      "crowd": {
+        "drawCalls": 9,
+        "triangles": 269195
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "shadow:other/Group/rigid-part": {
+        "drawCalls": 14,
+        "triangles": 2510
+      },
+      "shadow:other/Group/mesh_1": {
+        "drawCalls": 2,
+        "triangles": 910
+      },
+      "shadow:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 280
+      },
+      "shadow:other/Group/mesh_0": {
+        "drawCalls": 2,
+        "triangles": 574
+      },
+      "shadow:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/mesh_0": {
+        "drawCalls": 2,
+        "triangles": 574
+      },
+      "view:other/Group/mesh_1": {
+        "drawCalls": 2,
+        "triangles": 910
+      },
+      "view:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 280
+      },
+      "view:other/Group/rigid-part": {
+        "drawCalls": 14,
+        "triangles": 2510
+      },
+      "view:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 18,
+        "triangles": 55328
+      },
+      "view:other/Mesh/Mesh": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 2
+      },
+      "shadow:other/Output Color Transform/Output Color Transform": {
+        "drawCalls": 1,
+        "triangles": 1
+      }
+    },
+    "updateCpuMs": 6.600000381469727,
+    "renderCpuMs": 2,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 62.89308176100053,
+    "frameMs": 15.900000000001455,
+    "simMs": 3.3999996185302734,
+    "uiMs": 0,
+    "drawCalls": 69,
+    "triangles": 335060,
+    "geometries": 109,
+    "textures": 14,
+    "entities": 445,
+    "backend": "webgl",
+    "loadTiming": null,
+    "quality": {
+      "setting": "low",
+      "tier": "low",
+      "p90Ms": 29.1,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 33.333333333333336,
+        "infected": 100,
+        "drawCalls": 300,
+        "triangles": 500000,
+        "simMs": 6,
+        "heapMB": 250,
+        "pixelRatio": 1.5,
+        "shadowSize": 1024,
+        "bloomMips": 2,
+        "cullDistance": 45
+      }
+    },
+    "renderedFrames": 912,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 234828199,
+    "lighting": {
+      "lightFieldMs": 0.7000007629394531,
+      "lightPools": 1,
+      "lightCandidates": 1,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "golden"
+    }
+  }
+}

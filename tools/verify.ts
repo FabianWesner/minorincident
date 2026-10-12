@@ -20,6 +20,8 @@ const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l5VisualPattern = 'T-E23-17|T-E23-18|T-E23-19b|T-E23-E1|T-E23-15v|T-E23-12-browser|T-E23-12e|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const l7VisualPattern = 'S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot';
+const l7GpuSelectionPattern = `^(?=.*(?:${selection.pattern}))(?=.*(?:${l7VisualPattern}))`;
 const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   // These lane checks share a preview build with their queued browser runs.
@@ -96,7 +98,12 @@ const commands: string[][] = [
         ]
         : target === 'E29'
           ? [
-            ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
+            ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
+              ? [
+                ['sh', 'tools/remote/run.sh', process.cwd(), '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--pull', 'test-results/playwright/results.json', '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '@perf|${l7VisualPattern}' --workers=1`],
+                ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', l7GpuSelectionPattern, '--workers=1'],
+              ]
+              : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
             // Native Metal timing belongs on the Mac; Hetzner verifies the functional gates.
             ...(process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-rocket.spec.ts', '--project=chromium', '--workers=1']] : []),
           ]

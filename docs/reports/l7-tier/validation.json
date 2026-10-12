@@ -1,0 +1,132 @@
+{
+  "unit": {
+    "numTotalTests": 831,
+    "numPassedTests": 831,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "selectedSim": {
+    "numPassedTests": 17,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "remoteBrowser": {
+    "startTime": "2026-10-12T02:00:18.107Z",
+    "duration": 248222.054,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "nativeBrowser": {
+    "startTime": "2026-10-12T01:46:13.261Z",
+    "duration": 85973.231,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "verification": {
+    "target": "E29",
+    "epics": [
+      "E29"
+    ],
+    "pattern": "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/l7-tier",
+          "--pull",
+          "test-results/epics/E29/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E29/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/l7-tier",
+          "--env",
+          "E2E_PORT=3492",
+          "--pull",
+          "test-results/playwright/results.json",
+          "--",
+          "sh",
+          "-c",
+          "npm run build && npx playwright test --grep '@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot' --workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*(?:S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot))",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/l7-rocket.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      }
+    ]
+  },
+  "perfBrowser": {
+    "startTime": "2026-10-12T02:06:18.895Z",
+    "duration": 29949.942,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
