@@ -160,6 +160,7 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (world.missions?.l6 && c.survivor && updateSurvivor(world,e)) continue;

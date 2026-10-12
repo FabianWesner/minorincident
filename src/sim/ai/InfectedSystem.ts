@@ -140,6 +140,13 @@ export class InfectedSystem {
     const index = this.active.indexOf(entity); if (index < 0) return;
     this.active.splice(index, 1); this.world.entities.delete(entity.id); this.world.spatial.delete(entity.id); this.pool.push(entity); this.counters.released++;
   }
+  /** Keep the existing frozen death figure while returning its simulated slot to the replenishment pool. */
+  settle(entity: EntitySnapshot): void {
+    const body = structuredClone({ ...entity, locomotion: undefined, motion: undefined, combat: { ...entity.combat!, reaction: undefined }, infected: { ...entity.infected!, l1: undefined, path: [], recoverAt: -1 } }); body.corpse = true;
+    delete body.locomotion; delete body.motion; delete body.combat!.reaction;
+    delete body.infected!.l1; body.infected!.path.length = 0;
+    this.release(entity); this.world.entities.replace(body);
+  }
   /** Hearing ignores facing; sight uses a 110° cone and collider line of sight. */
   noise(position: { x: number; z: number }, radius: number, loud = false, sourceId?: number): void {
     if (this.l1 && !l1v2.infected.hearsPlayer) return; // Long-range player noise stays unchanged; close hearing is queried separately.
@@ -152,9 +159,9 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   update(): void {
-    const player = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
+    const courier = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
     this.barricades.length = 0; for (const e of this.world.entities.iterate()) if (e.kind === 'barricade' && e.health.current > 0) this.barricades.push(e);
-    if (this.active.length > 20) this.navigation.flow(player.transform, 1500);
+    if (this.active.length > 20) this.navigation.flow(courier.transform, 1500);
     this.crowd.length = 0;
     for (const e of this.active) {
       if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
@@ -162,6 +169,16 @@ export class InfectedSystem {
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       if (this.world.barricades?.vault(e)) continue;
+      // E18: far L3 crowds keep swept motion every tick, with decision work spread over six stable slots.
+      // Nearby humans, reactions and the rescue fight retain the full-rate brain.
+      if (this.world.scenario === 'L3' && !this.world.missions?.state.l3?.finaleAt && b.l1 && e.locomotion && !b.specialAttack && !e.emerging &&
+          this.world.tick % 6 !== e.id % 6 && Math.hypot(e.transform.x-courier.transform.x,e.transform.z-courier.transform.z)>35 &&
+          (!e.combat?.reaction || this.world.tick >= e.combat.reaction.until) && this.director.offscreen(e.transform,e.transform.y-.7) &&
+          this.hearing.humans.within(e.transform,18).length===0) {
+        if (!b.l1.looking) moveAgent(e,e.locomotion.vx,e.locomotion.vz,this.nav,this.world.tick,e.combat!.radius,true);
+        e.transform.y=(this.world.districts?.groundHeight(e.transform.x,e.transform.z)??0)+.7;
+        this.world.spatial.set(e.id,e.transform.x,e.transform.z); continue;
+      }
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
       if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack) {
         const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
@@ -312,10 +329,7 @@ export class InfectedSystem {
     for (let i = this.active.length - 1; i >= 0; i--) {
       const e = this.active[i];
       if (e.health.current > 0 || e.infected!.recoverAt >= 0 || this.world.tick - e.infected!.deadAt < 120) continue;
-      const body = structuredClone(e); body.corpse = true;
-      delete body.locomotion; delete body.motion; delete body.combat!.reaction;
-      delete body.infected!.l1; body.infected!.path.length = 0;
-      this.release(e); this.world.entities.replace(body);
+      this.settle(e);
     }
     // The player consumes borrowed transform references, never renderer state.
     for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));

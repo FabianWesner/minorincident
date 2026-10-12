@@ -168,3 +168,18 @@ test('@load L3 initial crowd covers every authored corpse and all emerging pedes
   const authored = l3Dressing.filter(entry => entry.assetId.startsWith('npc.')).map(entry => entry.assetId);
   for (const model of [...authored, ...l1Pedestrians.models]) expect(l3CivilianModels).toContain(model);
 });
+
+// PO 2026-10-12: counts change; allied firepower stays authored.
+test('T-E21-12b @E21 @E21-AC12 five times every L3 encounter with E18 concurrent caps', () => {
+  expect(l3.attack.waves.map(w => w.count)).toEqual([30, 60, 100]);
+  expect(l3.attack.waves.map(w => w.atS)).toEqual([0, 20, 40]);
+  expect(l3.density.streetMultiplier).toBe(25);
+  expect(l3.density.horde.packSize).toBe(125);
+  expect(l3.density.spill.size).toEqual([50, 75]);
+  expect(l3.density.pressure.count).toEqual([25, 75]);
+  expect(l3.finale.packs.map(p => p[1])).toEqual([40, 60, 75]);
+  expect(l3.density.caps).toEqual({ high: 200, low: 100 });
+  expect(l3.officers.hp).toBe(100);
+  expect(l3.officers.gun).toEqual({ damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 });
+  expect(l3.soldiers.count).toBe(8); expect(l3.soldiers.hp).toBe(150);
+});

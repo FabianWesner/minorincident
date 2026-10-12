@@ -22,10 +22,10 @@ export const l3 = {
   armory: { interactS: .6, attackAfterS: 5, attackLatestS: 40, briefingAtS: 2 },
   /** Section 5.5: waves from three directions (river path, Boulevard, Oak Avenue); first-of fallback rule. */
   attack: {
-    waves: [{ atS: 0, count: 6 }, { atS: 20, count: 12 }, { atS: 40, count: 20 }] as readonly { atS: number; count: number }[],
+    waves: [{ atS: 0, count: 30 }, { atS: 20, count: 60 }, { atS: 40, count: 100 }] as readonly { atS: number; count: number }[],
     fallback: { defenseS: 60, turned: 3, inside: 8 },
     /** Seconds between two emergences of one wave at one direction (they string out instead of a single blob). */
-    staggerS: .5,
+    staggerS: .1,
     lowScale: .5,
   },
   /** Section 5.4: allied fighters v2 (police with handguns, a following squad). */
@@ -42,9 +42,9 @@ export const l3 = {
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    /** PO 10-09: five times the street population; yard attack values above stay unchanged. */
-    streetMultiplier: 5,
-    targets: [50, 125, 200] as readonly number[],
+    /** PO 2026-10-12: five times every existing L3 encounter, including the previously increased street population. */
+    streetMultiplier: 25,
+    targets: [250, 625, 1000] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
@@ -56,18 +56,18 @@ export const l3 = {
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** Segment 3 also holds the horde: two packs of 25 at the on-ramp end of two avenues (seeded), streaming west. */
-    horde: { packSize: 25, fromX: 72, toX: 132 },
+    /** Segment 3 also holds the horde: two packs of 125 at the on-ramp end of two avenues (seeded), streaming west. */
+    horde: { packSize: 125, fromX: 72, toX: 132 },
     leashM: 9,
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
-    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [10, 15] as P, maxPerLink: 2, cooldownS: 18 },
-    pressure: { idleS: 20, everyS: 10, count: [5, 15] as P, behindM: [15, 35] as P },
+    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [50, 75] as P, maxPerLink: 2, cooldownS: 18 },
+    pressure: { idleS: 20, everyS: 10, count: [25, 75] as P, behindM: [15, 35] as P },
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
     retireBehindM: 35,
-    caps: { high: 80, low: 40 },
+    caps: { high: 200, low: 100 },
   },
   /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
-  finale: { startX: 65, packs: [[72, 8], [94, 12], [116, 15]] as readonly P[], chaseS: 40, barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
+  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */
   medkits: {
     heal: 40,

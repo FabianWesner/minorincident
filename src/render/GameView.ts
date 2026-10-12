@@ -524,6 +524,9 @@ export class GameView implements Lifecycle {
         else this.view.follow();
       }
       this.l5StationView = showStation;
+      const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
+      this.view.encounterScale = rescue ? 3.3 : 1;
+      if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? .8 : 0, rescue ? 1.6 : undefined);
       this.updateEnding();
       this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);

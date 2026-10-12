@@ -17,6 +17,7 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   }
   // The driver is part of the crew; the ride itself is kinematic, with no separate driver entity.
   if (s.l2 && !s.l2.doorsOpenAt && (s.l2.crewIds.includes(id) || s.l2.trappedIds.includes(id))) return true;
+  if (s.l3?.waitingIds?.includes(id)) return true;
   if (s.l3 && !s.l3.fallbackAt && id === s.l3.squadIds[0]) return true;
   if (s.l4 && !s.l4.gunAt && id === s.l4.qmId) return true;
   if (s.l5) {

@@ -67,3 +67,13 @@ test('T-fix-camera-ramp camera target follows the player height on decks and ram
     expect(climb.focus.y).toBeGreaterThan(4.5);
   }
 });
+
+test('T-E21-spawn-camera @E21 spawn framing retains ramp height and zoom while ignoring pull, shake and roll', () => {
+  for (const [width,height] of [[1600,900],[390,844]]) {
+    const a=new View(),b=new View();
+    for(const v of [a,b]){v.resize(width,height);v.reset({x:195,z:0,y:6.42});v.encounterScale=2;v.zoom(.1);}
+    a.pull(201,0,.8);a.shake(1);a.roll(1);
+    for(let i=0;i<60;i++){const p={x:195+i*.1,z:0,y:6.42-i*.05};a.update(p,1/60);b.update(p,1/60);expect(a.simCamera.matrixWorld.elements).toEqual(b.simCamera.matrixWorld.elements);expect(a.simCamera.projectionMatrix.elements).toEqual(b.simCamera.projectionMatrix.elements);}
+    expect(a.camera.position.distanceTo(b.camera.position)).toBeGreaterThan(.1);
+  }
+});
