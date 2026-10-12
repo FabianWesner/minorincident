@@ -375,7 +375,7 @@ export class Outbreak {
   private animalRoutine(e: EntitySnapshot): void {
     const c = e.civilian!, target = c.waypoints[c.waypoint];
     if (this.world.tick >= c.pauseUntil && target) {
-      if (!this.world.npcs!.move(e, target, c.l1!.walkSpeed, c, .15)) {
+      if (Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= .2 || !this.world.npcs!.move(e, target, c.l1!.walkSpeed, c, .08)) {
         c.waypoint = (c.waypoint + 1) % c.waypoints.length;
         c.pauseUntil = this.world.tick + 90;
         this.face(e, c.waypoints[c.waypoint], .2);
@@ -482,7 +482,7 @@ export class Outbreak {
   }
   /** Live pedestrians (not escaped, not turning, not dead). */
   liveCivilians(): number {
-    let count = 0; for (const e of this.world.entities.iterate()) if (e.civilian?.l1 && !e.hidden && !e.infection && mobile.has(e.civilian.state)) count++; return count;
+    let count = 0; for (const e of this.world.entities.iterate()) if (e.civilian?.l1 && !e.civilian.zooAnimal && !e.hidden && !e.infection && mobile.has(e.civilian.state)) count++; return count;
   }
   /** Checkpoint restore (after `Npcs.restore` shifted entity timers by `delta`): layer-level clocks only. */
   restore(delta: number): void {

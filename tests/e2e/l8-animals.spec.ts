@@ -12,7 +12,8 @@ for (const tier of ['high', 'low'] as const) for (const species of ['lion', 'gor
     await page.evaluate(async s => { await window.__SS__!.ready; await window.__SCENE__!.load(s); await window.__SCENE__!.ready(); }, spec);
     const id = await page.evaluate(() => window.__SCENE__!.actors.get('animal')!.entity);
     const before = await page.evaluate(() => window.__SS__!.getState());
-    expect(before.entities.find(e => e.id === id)!.civilian?.zooAnimal).toBe(species);
+    expect(before.entities.find(e => e.id === id)!.civilian).toMatchObject({ zooAnimal: species, model: `amb.${species}` });
+    expect(before.render.crowd!.batches.some(b => b.id === `healthy.${species}` && b.instances > 0 && b.source === 'glb')).toBe(true);
     expect(before.entities.find(e => e.id === id)!.infected).toBeUndefined();
     expect(before.render.healthBars!.bars.some(b => b.id === id)).toBe(false);
     await page.evaluate(async () => { await window.__SS__!.step(600); await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });

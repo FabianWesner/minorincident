@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, stopServer } from './session';
+import { zooStaffLook } from '../../src/data/zooStaff';
 import type { ActorSpec, SceneSpec } from '../../src/debug/scenelab/spec';
 const output = 'docs/reports/l8-systems'; mkdirSync(output, { recursive: true });
 const results = [];
@@ -12,7 +13,7 @@ try {
       const animals = ['lion', 'gorilla', 'elephant', 'zebra', 'zebra', 'flamingo', 'flamingo', 'flamingo'] as const;
       const actors: ActorSpec[] = [{ id: 'courier', kind: 'courier', at: [0, 12] }];
       animals.forEach((species, i) => actors.push({ id: `animal-${i}`, kind: 'animal', species, at: [-14 + i * 4, 3] }));
-      for (let i = 0; i < 30; i++) actors.push({ id: `human-${i}`, kind: 'pedestrian', at: [-15 + i % 10 * 3, 16 + Math.floor(i / 10) * 3], look: { model: i < 6 ? 'npc.national-guard' : 'npc.civilian-man-a', role: i < 6 ? 'soldier' : i < 10 ? 'staff' : 'civilian' } });
+      for (let i = 0; i < 30; i++) actors.push({ id: `human-${i}`, kind: 'pedestrian', at: [-15 + i % 10 * 3, 16 + Math.floor(i / 10) * 3], look: i >= 6 && i < 10 ? zooStaffLook(i - 6) : { model: i < 6 ? 'npc.national-guard' : 'npc.civilian-man-a', role: i < 6 ? 'soldier' : i < 10 ? 'staff' : 'civilian' } });
       for (let i = 0; i < count - animals.length; i++) actors.push({ id: `infected-${i}`, kind: 'infected', archetype: i < 3 ? 'infected.alpha' : 'infected.runner', at: [-16 + i % 20 * 1.6, -16 + Math.floor(i / 20) * 1.6] });
       const spec: SceneSpec = { name: `l8-systems-budget-${tier}`, seed: 30, size: 70, ground: 'sidewalk', time: 'night', infectedCap: 200, actors, camera: { mode: 'game', target: [0, 0], zoom: 2 } };
       await s.load(spec); await s.step(120); await s.ready();

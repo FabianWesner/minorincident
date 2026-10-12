@@ -101,8 +101,9 @@ export class CrowdView extends Group {
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
     const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && e.civilian.model ? [e.civilian.model] : []));
     const animals = [...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.zooAnimal ? [e.civilian.zooAnimal] : []))];
-    const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}` }));
-    const allDefinitions = [...healthyDefinitions,...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}`, asset: `amb.${species}` }));
+    // Healthy amb.* assets are catalog props, so register their real rigs explicitly as animated crowds.
+    const allDefinitions = [...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario?.startsWith('perf-horde-');
@@ -143,38 +144,8 @@ export class CrowdView extends Group {
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
       const healthy = def.id.startsWith('healthy.');
-      const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : healthy ? loaded.clone(true) : loaded;
-      if (healthy) model.traverse(node => {
-        if (!(node instanceof Mesh)) return;
-        const naturalColor = def.id === 'healthy.flamingo' ? '#ea708d' : def.id === 'healthy.gorilla' ? '#48484a' : def.id === 'healthy.elephant' ? '#92918b' : def.id === 'healthy.zebra' ? '#f2e6dc' : '#b99c69';
-        const clean = (material: import('three').Material) => {
-          const copy = new MeshBasicNodeMaterial();
-          copy.name = material.name.replace(/^emi_/, 'pal_');
-          copy.side = material.side;
-          copy.vertexColors = material.vertexColors;
-          copy.color.copy((material as import('three').MeshBasicMaterial).color ?? new Color('#b99c69'));
-          copy.userData = { ...material.userData };
-          const token = material.name.toLowerCase();
-          if (/blood|infectedskin/.test(token)) copy.color.set(naturalColor);
-          if (/infectedeye/.test(token)) copy.color.set('#25222c');
-          return copy;
-        };
-        node.material = Array.isArray(node.material) ? node.material.map(clean) : clean(node.material);
-      });
-      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${healthy ? def.id : asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
-      if (healthy) {
-        // Packed LODs carry palette colors per vertex rather than named materials.
-        const colors = baked.geometry.getAttribute('color'), emission = baked.geometry.getAttribute('_emissive');
-        const blood = new Color('#b3121f'), skin = new Color('#c9a39a');
-        const natural = new Color(def.id === 'healthy.flamingo' ? '#ea708d' : def.id === 'healthy.gorilla' ? '#48484a' : def.id === 'healthy.elephant' ? '#92918b' : def.id === 'healthy.zebra' ? '#f2e6dc' : '#b99c69');
-        const pupil = new Color('#25222c');
-        for (let i = 0; i < colors.count; i++) {
-          const r = colors.getX(i), g = colors.getY(i), b = colors.getZ(i);
-          if (emission.getX(i)) colors.setXYZ(i, pupil.r, pupil.g, pupil.b);
-          else if (Math.abs(r - blood.r) + Math.abs(g - blood.g) + Math.abs(b - blood.b) < .035 || Math.abs(r - skin.r) + Math.abs(g - skin.g) + Math.abs(b - skin.b) < .035) colors.setXYZ(i, natural.r, natural.g, natural.b);
-          emission.setX(i, 0);
-        }
-      }
+      const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
+      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
       const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
       // Baking expands rigid parts to triangle soup. Index identical vertices before
@@ -239,7 +210,6 @@ export class CrowdView extends Group {
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
-      if (healthy) model.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); });
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   private modelKey(id: string): string | undefined {
