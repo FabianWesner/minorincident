@@ -8,7 +8,7 @@ import { lookViewpoints } from '../data/lookViewpoints';
 import { LookUniforms } from './LookUniforms';
 import type { LookPatch } from '../data/lookPatch';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
-import { NoToneMapping, ColorManagement } from 'three/webgpu';
+import { NoToneMapping, ColorManagement, Raycaster, Vector2 } from 'three/webgpu';
 import { HealthBars } from './HealthBars';
 import { CrowdView } from './CrowdView';
 import { MissionUI } from '../ui/MissionUI';
@@ -605,6 +605,24 @@ export class GameView implements Lifecycle {
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
   labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
   renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
+  renderProbe() {
+    const c = this.camera, finite = (m: { elements: number[] }) => m.elements.every(Number.isFinite);
+    return { camera: { position: c.position.toArray(), quaternion: c.quaternion.toArray(), near: c.near, far: c.far, zoom: c.zoom,
+      matrixWorldFinite: finite(c.matrixWorld), projectionFinite: finite(c.projectionMatrix), inverseFinite: finite(c.matrixWorldInverse) },
+      children: this.scene.children.map(o => ({ name: o.name || o.type, visible: o.visible })), hits: this.screenHits(), ...this.renderDiagnostics() };
+  }
+  /** First visible mesh under five screen points (centre and the four quarter points). */
+  private screenHits() {
+    const raycaster = new Raycaster();
+    return [[0, 0], [-.5, -.5], [.5, -.5], [-.5, .5], [.5, .5]].map(([x, y]) => {
+      raycaster.setFromCamera(new Vector2(x, y), this.camera);
+      const hit = raycaster.intersectObject(this.scene, true).find(h => h.object.visible && (h.object as Mesh).isMesh);
+      if (!hit) return null;
+      const m = (hit.object as Mesh).material, material = Array.isArray(m) ? m[0] : m;
+      let path = hit.object.name; for (let p = hit.object.parent; p && path.length < 160; p = p.parent) path = `${p.name || p.type}/${path}`;
+      return { at: [x, y], distance: +hit.distance.toFixed(2), path, instance: hit.instanceId, material: material.name, point: hit.point.toArray().map(v => +v.toFixed(2)), normal: hit.face?.normal.toArray().map(v => +v.toFixed(2)) };
+    });
+  }
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
