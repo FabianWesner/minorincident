@@ -75,7 +75,8 @@ describe('armed ally close hearing and self-defence @E21', () => {
       m.state.l3!.pending = []; m.state.l3!.waves = []; m.state.l3!.populated = [true, true, true];
       // The courier has moved on after the old 15-second gate timeout, while a rescued officer is still inside.
       w.tick += 16 * 60;
-      teleport(w, 139, 0);
+      // Just past the army boom (finale.passX), wherever the L3 route puts the relocated base (14e2b661 moved it by l3ArmyOffset).
+      teleport(w, l3.finale.passX + .8, 0);
       const e = w.entities.get(m.state.l3!.squad[9].id)!;
       Object.assign(e.transform, { x: -143.5404, z: -21.415 }); w.spatial.set(e.id, e.transform.x, e.transform.z);
       for (let i = 0; i < 300; i++) w.update();

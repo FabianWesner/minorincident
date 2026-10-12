@@ -10,8 +10,9 @@ test('T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm mag
   const save=newCampaign();save.ownedActions.push('weapon.bat','weapon.pistol');save.racks={LEFT:['weapon.bat'],RIGHT:['weapon.pistol']};save.upgrades=['upgrade.melee.1','upgrade.handling.1'];applyCampaign(world,save);
   const target=world.spawnDummy('infected.test',{x:1,z:0},{hp:1000});world.setInput({aim:{x:1,z:0},left:{down:true,held:false,up:false}});world.update();world.clearInput();for(let i=0;i<6;i++)world.update();
   const hit=world.events.events().find(e=>e.type==='combat.hit'&&e.targetId===target);expect(hit).toMatchObject({amount:catalog['weapon.bat'].damage*1.2});
-  // Firearms with a magazine (the E21 campaign handgun has none: 00 section 6.1, no ammunition).
-  for(const d of Object.values(catalog).filter(d=>d.category==='ranged'&&d.magazine>0)){
+  // Firearms with a magazine in the campaign (the E21 handgun has none: 00 section 6.1, no ammunition; nor has the E23
+  // L5 shotgun, E23-AC12: "600 shots show no reload/empty/ammo HUD").
+  for(const d of Object.values(catalog).filter(d=>d.category==='ranged'&&d.magazine>0&&modifiedActions(newCampaign())[d.id].magazine>0)){
     world.combat!.setLoadout(['weapon.bat'],[d.id]);const l=world.combat!.runner.loadout;
     expect(l.current('RIGHT').magazine).toBe(d.magazine+2);
     const def=l.definition(d.id);for(let i=0;i<def.magazine;i++)l.spend('RIGHT',world.tick,def,false);
@@ -21,7 +22,8 @@ test('T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm mag
 });
 test('T-E13-07-sim @E13 @E13-AC07 L5 default equips its expected upgraded loadout in sim',()=>{
   const save=preset('L5-default');save.settings.aimAssist='High';applyCampaign(world,save);expect(world.combat!.assist.setting).toBe('High');
-  expect(save.racks).toEqual({LEFT:['weapon.bat','weapon.kick','weapon.fists'],RIGHT:['weapon.pipe-bomb','weapon.rocket-launcher','weapon.army-mg']});
+  // epic-23 "Loadout (AC12)" (L5 starts with the L4 end loadout; PO 10-11: "The player still has access to previous weapons, including the machine gun.")
+  expect(save.racks).toEqual({LEFT:['weapon.fire-axe','weapon.bat'],RIGHT:['weapon.army-mg','weapon.handgun','weapon.kick']});
   expect(world.getState().progression!.campaign).toEqual(save);expect(world.player!.entity.survivor!.gearTier).toBe(3);
   for(const side of ['LEFT','RIGHT']as const)expect(world.player!.entity.weapons![side].rack.map(s=>s.id)).toEqual(save.racks[side]);
 });
