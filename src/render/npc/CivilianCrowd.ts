@@ -349,7 +349,8 @@ export class CivilianCrowd extends Group {
     if (!this.low) { demoted.clear(); return; }
     this.ranked.length = 0;
     for (const e of this.world.entities.iterate()) {
-      if (e.corpse || e.health.current <= 0 || !crowdModelOf(e) || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      // Infected only, and not the police zombies: their officer-model LOD2 batch was first drawn at the fallback (a 70 ms hitch).
+      if (e.corpse || !e.infected || e.health.current <= 0 || !crowdModelOf(e) || crowdModelOf(e) === 'npc.police-officer' || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = v.pixels(e.transform.x, e.transform.y, e.transform.z, 1.8);
       this.ranked.push({ id: e.id, score: pixels * (demoted.has(e.id) ? .9 : 1) });
     }
