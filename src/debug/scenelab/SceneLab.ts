@@ -34,6 +34,7 @@ import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import { buildingDoors, doorwayOf, inDoorway, type Doorway } from '../../data/buildingDoors';
 import { doorRoute, routeAt, routeLength } from '../../sim/missions/doorRoute';
+import { LevelSevenEncounters } from '../../sim/missions/LevelSevenEncounters';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
@@ -196,6 +197,12 @@ export class SceneLab {
       if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
     }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
+    if (spec.l7Group) {
+      world.scenario = 'L7';
+      world.l7Encounters = new LevelSevenEncounters(world);
+      world.l7Encounters.prepare([]);
+      for (const e of world.entities.iterate()) if (e.civilian?.survivor) world.l7Encounters.state.roster.push({ id: e.id, key: e.civilian.survivor.key, injured: false, status: 'following', passed: false });
+    }
     // Dress the authored crowd before view initialization. Otherwise its first
     // tick replaces runners with civilian skins whose batches are still loading.
     outbreak.dressInfected();

@@ -54,7 +54,13 @@ export class DistrictAssets {
   }
   private remember(root: Group): Group {
     root.traverse((o) => {
-      if (o instanceof Mesh) this.geometries.add(o.geometry);
+      if (o instanceof Mesh) {
+        // World batches sample _palette; their decoded RGB copy is unused.
+        // Drop it before instance wrappers borrow the arrays (large L7 bodies
+        // otherwise retain another 32 MB apiece). Figure/color graphs keep it.
+        if (!Array.isArray(o.material) && o.material.userData.worldPaletteOnly) o.geometry.deleteAttribute('color');
+        this.geometries.add(o.geometry);
+      }
     });
     return root;
   }

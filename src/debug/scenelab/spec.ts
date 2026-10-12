@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
+  l7Group?: boolean;
   /** Fixture-only eligibility overrides, restored after view initialization. */
   barArchetypes?: string[];
   /** High-tier fixture cap (low uses half), for E18 stress scenes; defaults to L1 caps. */
