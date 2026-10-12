@@ -221,7 +221,7 @@ export class LevelThreeCollapse {
     const a = l3.attack, every = Math.round(1 / a.stationShare);
     for (const [w, wave] of a.waves.entries()) {
       const n = Math.ceil(wave.count * scale);
-      for (let i = 0; i < n; i++) s.waves.push({ id: 0, dir: i % every === every - 1 ? 'station' : DIRS[i % DIRS.length], at: tick + ticks(wave.atS + i / n * a.streamS + (i % 3) * .15), wave: w });
+      for (let i = 0; i < n; i++) s.waves.push({ id: 0, dir: i % every === every - 1 ? 'station' : DIRS[i % DIRS.length], at: tick + ticks(wave.atS + (i / n) ** a.streamFront * a.streamS + (i % 3) * .15), wave: w });
     }
     // The S1 wanderers are already out there (out of view, east of the yard).
     this.populate(0);
@@ -561,11 +561,14 @@ export class LevelThreeCollapse {
       s.finalePacks[index] = (s.finalePacks[index] ?? 0) + n;
       if (n) { s.finaleNextAt = w.tick + ticks(f.streamS[index] * n); break; }
     }
-    this.surge();
     this.boom ??= new ArmyCheckpointBoom(w, f.barrierX);
     // Close behind the entire rescued group; an outside survivor always reopens the boom.
-    const group = [1, ...s.officerIds.filter(id => { const e = w.entities.get(id); return !!e?.civilian?.ally && !e.infection && e.health.current > 0; }), ...[...w.entities.iterate()].filter(e => !!e.companion).map(e => e.id)];
+    // The group is the squad still following the courier (a separated officer holding a street far behind is no longer waited for).
+    const following = new Set(s.squad.map(m => m.id));
+    const group = [1, ...s.officerIds.filter(id => { const e = w.entities.get(id); return following.has(id) && !!e?.civilian?.ally && !e.infection && e.health.current > 0; }), ...[...w.entities.iterate()].filter(e => !!e.companion).map(e => e.id)];
     const inside = group.every(id => { const e = w.entities.get(id); return !e || e.health.current <= 0 || e.transform.x >= l3.map.zoneX; });
+    // After minFightS with the group inside, the staged column holds outside reach so the line clears and the boom can close.
+    if (!(inside && w.tick - s.finaleAt! >= ticks(f.minFightS))) this.surge();
     if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
     // The rescue fight lasts until every pack arrived or minFightS passed (60-90 s); the weaker army (PO 10-12) cannot hold an open boom longer.
     const arrived = w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));

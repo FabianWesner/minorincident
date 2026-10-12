@@ -29,6 +29,8 @@ export const l3 = {
     /** PO 2026-10-12 ("don't cluster Zombies, let they come from all directions"): each wave streams in over this many seconds
      * from five directions, a share of it as police zombies out of the station door behind the line. */
     streamS: 18, stationShare: .2,
+    /** Stream front-loading (time ~ (i/n)^streamFront): about a quarter of a wave is out within 2 s, so the alarm shows a fight at once. */
+    streamFront: 1.6,
     lowScale: .5,
   },
   /** Section 5.4: allied fighters v2 (police with handguns, a following squad). */
