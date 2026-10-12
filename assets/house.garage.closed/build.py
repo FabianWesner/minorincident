@@ -10,6 +10,8 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/blender'))
 from sslib import palette, ao
 M={}; parts=[]; groups=[]; rng=random.Random(612)
+# Authored distance tiers: --lod 1|2 rebuilds this same model with fewer details (never decimation).
+LOD=int(sys.argv[sys.argv.index('--lod')+1]) if '--lod' in sys.argv else 0
 def init(asset):
  global ID, root
  ID=asset
@@ -39,7 +41,7 @@ def finish(o,name,token,parent=None,smooth=False):
 def box(name,loc,size,t='woodWarm',b=.015,parent=None,segments=2):
  bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.dimensions=size
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
- if b:
+ if b and LOD==0:
   m=o.modifiers.new('soft bevel','BEVEL');m.width=min(b,min(size)*.35);m.segments=segments;bpy.ops.object.modifier_apply(modifier=m.name)
   m=o.modifiers.new('weighted corners','WEIGHTED_NORMAL');bpy.ops.object.modifier_apply(modifier=m.name)
  return finish(o,name,t,parent)
@@ -48,6 +50,8 @@ def mesh(name,verts,faces,t,parent=None):
  d=bpy.data.meshes.new(name);d.from_pydata(verts,[],faces);d.update();o=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(o);return finish(o,name,t,parent)
 
 def sphere(name,loc,size,t,parent=None,n=24):
+ if LOD==2:return box(name,loc,tuple(v*2 for v in size),t,0,parent)
+ if LOD==1:n=8
  bpy.ops.mesh.primitive_uv_sphere_add(segments=n,ring_count=max(8,n//2),radius=1,location=loc);o=bpy.context.object;o.scale=size
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
  return finish(o,name,t,parent,True)
@@ -123,10 +127,10 @@ def flower(x,y,z,r=.065,t='schoolBusYellow',parent=None):
  ico('gold flower heart',(x,y,z+.012),(r*.27,r*.27,r*.20),'schoolBusYellow',parent,sub=1)
 
 def plant(x,y,z,r=.35,flowers=True):
- for i in range(18):
+ for i in range((18,6,3)[LOD]):
   a=i*2.4;rr=r*rng.uniform(.25,.8);h=rng.uniform(.04,r*.7)
-  o=ico('leaf',(x+rr*math.cos(a),y+rr*math.sin(a),z+h),(r*.4,r*.16,r*.12),'foliage' if i%3 else 'foliageDark');o.rotation_euler=(0,-.6,a)
-  if flowers and i%3==0:flower(x+rr*math.cos(a),y+rr*math.sin(a),z+h+r*.25,r*.17,['schoolBusYellow','picketWhite','flamingoPink'][i%9//3])
+  o=ico('leaf',(x+rr*math.cos(a),y+rr*math.sin(a),z+h),(r*.4,r*.16,r*.12),'foliage' if i%3 else 'foliageDark',sub=(1,1,0)[LOD]);o.rotation_euler=(0,-.6,a)
+  if flowers and LOD==0 and i%3==0:flower(x+rr*math.cos(a),y+rr*math.sin(a),z+h+r*.25,r*.17,['schoolBusYellow','picketWhite','flamingoPink'][i%9//3])
 
 def star(name,x,y,z,r,t,parent=None):
  # Solid extruded star plaque in the YZ plane, front at +X.
@@ -137,7 +141,7 @@ def star(name,x,y,z,r,t,parent=None):
 def run(out):
  p=argparse.ArgumentParser()
  p.add_argument('--quality',choices=['high','low'],default='high')
- for key,default,typ in [('render',None,str),('glb',None,str),('view','game',str),('samples',24,int),('width',960,int),('height',720,int)]:p.add_argument('--'+key,default=default,type=typ)
+ for key,default,typ in [('render',None,str),('glb',None,str),('view','game',str),('lod',0,int),('samples',24,int),('width',960,int),('height',720,int)]:p.add_argument('--'+key,default=default,type=typ)
  a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
  # Merge only siblings of matching material. Joint empties stay separate.
  for parent in groups:
@@ -178,7 +182,8 @@ def run(out):
   bpy.ops.object.select_all(action='DESELECT')
   for o in meshes+groups:o.select_set(True)
   bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_texcoords=False)
- (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+ if LOD==0:(out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+ else:print('LOD%d TRIS %d'%(LOD,tris))
  if a.render:
   scene=bpy.context.scene
   # Eevee game camera review; authored materials are one-sided.
@@ -238,7 +243,8 @@ for j in range(panel_count):
 if state=='closed':
  for y in [-.77,-.26,.26,.77]:
   box('dark top window',(.095,y,1.84),(.022,.36,.16),'uiDark',.005,door)
-  for yy in [y-.195,y+.195]:box('window side trim',(.108,yy,1.84),(.026,.029,.20),'picketWhite',.003,door)
+  if LOD==0:
+   for yy in [y-.195,y+.195]:box('window side trim',(.108,yy,1.84),(.026,.029,.20),'picketWhite',.003,door)
  for y in [-.065,.065]:sphere('door pull',(.125,y,1.00),(.030,.021,.070),'uiDark',door,n=16)
 else:box('door handle',(.105,0,bottom+.18),(.038,.24,.046),'uiDark',.006,door)
 for y in [-1.19,1.19]:plant(.11,y,.12,.17,False)
