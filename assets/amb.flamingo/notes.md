@@ -1,0 +1,4 @@
+Healthy zoo flamingo, derived from the shipped `inf.flamingo` build (`--healthy`): identical rig, node names and silhouette (S-neck, hooked bill, folded leg, wings, tail); intact plumage, no scabs/blood/rags/scowl, dark eyes. Four palette materials (flamingoPink, flamingoBlush, flamingoCoral, uiDark). No stump caps.
+The 2,000 / 800 / 300 triangle budget is met with direct low-resolution smooth spheres/tubes and a few broad feather blades per rigid owner (no decimation of subdivided meshes); distant tiers keep at least one blade per wing segment/tail so no joint loses geometry.
+Build: `python3 tools/blender/run.py assets/amb.flamingo/build.py --glb "$PWD/assets/amb.flamingo/model.glb" --lod 0` (repeat `model.lod1.glb --lod 1`, `model.lod2.glb --lod 2`), then `npm run assets:pack -- amb.flamingo`.
+Packed 1,932 / 768 / 286 triangles, 26 KB LOD0.
