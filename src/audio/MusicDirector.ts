@@ -19,6 +19,7 @@ export interface MusicTransition {
     state: MusicState;
     immediate?: boolean;
 }
+const PEAK_HOLD_S = 5;
 /** Decisions are made on sim/audio time; the renderer schedules changes on the exact beat grid. */
 export class MusicDirector {
     readonly bar: number;
@@ -28,6 +29,9 @@ export class MusicDirector {
     score = 0;
     state: MusicState = 'calm';
     private lastThreat = -Infinity;
+    private lastPeak = -Infinity;
+    /** True while a dense fight (7 or more engaged infected) escalates the score beyond plain combat; held PEAK_HOLD_S. */
+    peak = false;
     private engaged = false;
     private quietSince: number | null = null;
     constructor(readonly level: string, readonly epoch = 0) { this.bar = 240 / (musicLevels[level as keyof typeof musicLevels] ?? 120); }
@@ -35,7 +39,12 @@ export class MusicDirector {
         if (input.danger !== undefined || input.minimum !== undefined) {
             if (input.danger) this.lastThreat = time;
             const active = !input.complete && time - this.lastThreat < 7;
-            this.score = input.complete ? 0 : Math.min(1, Math.max(active ? 0.5 : 0, input.minimum ?? 0, input.alerted / 20));
+            // Escalation: every engaged infected beyond the second adds 0.05, so a dense fight (7+) reaches the peak layers
+            // regardless of the story floor, and the peak releases only PEAK_HOLD_S after the crowd thinned out.
+            const engaged = input.danger ? 0.5 + Math.max(0, input.alerted - 2) * 0.05 : 0;
+            if (!input.complete && engaged >= 0.75) this.lastPeak = time;
+            this.peak = !input.complete && time - this.lastPeak < PEAK_HOLD_S;
+            this.score = input.complete ? 0 : Math.min(1, Math.max(active ? 0.5 : 0, input.minimum ?? 0, input.alerted / 20, engaged, this.peak ? 0.75 : 0));
             const state: MusicState = input.complete ? 'aftermath' : this.score >= 0.5 ? 'combat' : this.score > 0 ? 'tension' : 'calm';
             const layers: Layer[] = this.score >= 0.75 ? ['base', 'pulse', 'drive', 'peak'] : this.score >= 0.5 ? ['base', 'pulse', 'drive'] : this.score > 0 ? ['base', 'pulse'] : ['base'];
             this.pending = null;
