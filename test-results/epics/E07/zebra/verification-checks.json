@@ -1,0 +1,104 @@
+{
+  "target": "E07",
+  "epics": [
+    "E07"
+  ],
+  "pattern": "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra",
+        "--pull",
+        "test-results/epics/E07/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/vitest.json",
+        "--project=functional",
+        "--exclude=tests/sim/performance/alpha*.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npx",
+        "vitest",
+        "run",
+        "--project=timing",
+        "-t",
+        "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/vitest-timing.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npx",
+        "vitest",
+        "run",
+        "tests/sim/performance/alpha.test.ts",
+        "tests/sim/performance/alpha-physical.test.ts",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E07/vitest-alpha-timing.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra",
+        "--env",
+        "E2E_PORT=3477",
+        "--pull",
+        "test-results/epics/E07/playwright-headless.json",
+        "--",
+        "sh",
+        "-c",
+        "mkdir -p test-results/epics/E07; npm run build && 'sh' 'tools/e2e-lock.sh' 'npx' 'playwright' 'test' '--grep' '@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' '--grep-invert' '@perf|@vision|T-E07-06-bars|T-E07-bars-budget|T-E07-WebGL-visible|crowd draw visibility|20 infected corpses|common-worker hierarchy' '--workers=2'; result=$?; cp test-results/playwright/results.json test-results/epics/E07/playwright-headless.json; exit $result"
+      ],
+      "exitCode": 1
+    }
+  ]
+}

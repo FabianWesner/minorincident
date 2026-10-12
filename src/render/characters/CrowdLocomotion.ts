@@ -70,6 +70,7 @@ export class CrowdLocomotion {
   private readonly paws = new Map<number, PawContacts>();
   private readonly animal: boolean;
   private readonly groundedAnimal: boolean;
+  private readonly preserveAnimalJoints: boolean;
   private readonly rest: { position: Vector3; quaternion: import('three').Quaternion; scale: Vector3 }[];
   readonly reach: number;
   /** Rest ankle height in foot-local units (sole contact offset for probes). */
@@ -77,6 +78,7 @@ export class CrowdLocomotion {
   constructor(private readonly model: Object3D, private readonly clip: CrowdClip, readonly footwork = new CrowdFootwork()) {
     this.animal = !!model.getObjectByName('legFL');
     this.groundedAnimal = this.animal && model.getObjectByName('root')?.userData.groundedAnimal === true;
+    this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
     model.updateMatrixWorld(true);
     const originals = clip.parts.map(name => model.getObjectByName(name)!);
     this.nodes = originals.map(node => { const copy = new Object3D(); copy.name = node.name; return copy; });
@@ -145,6 +147,9 @@ export class CrowdLocomotion {
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */
   correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number): void {
+    // Authored long articulated legs (zebra) stay attached at their shoulder/hip.
+    // Their atlas grounds the complete pose; single-joint paw translation cannot preserve those pivots.
+    if (this.animal && this.preserveAnimalJoints) return;
     if (!layers && !this.animal && (!this.reach || !gaitShape[name])) return;
     let contacts = this.contacts.get(id);
     if (!contacts && !this.animal && gaitShape[name]) { this.toRest(); contacts = new GroundContacts(this.rig); this.contacts.set(id, contacts); }

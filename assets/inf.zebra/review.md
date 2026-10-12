@@ -1,0 +1,15 @@
+Verdict: PASS
+Comparison: test-results/epics/E07/zebra/after-lod-comparison.png
+Reference and all three delivered LODs inspected side by side with normal zebra, shipped infected lion/gorilla and the unchanged S23 concept. Additional retained evidence: after-poses.png, after-zoo-0000.png, after-zoo-0015.png, after-zoo-0060.png, after-chase.png, after-stress.png; baseline before-zoo.png shows the original placeholder.
+
+- [must] Recognition: PASS — readable zebra stripes and equine head/ear/hoof silhouette survive all authored tiers, including 660-triangle LOD2.
+- [must] Derived continuity: PASS — matching surfaces, joint translations/parents, proportions, hidden caps and both pose clips are verified against the normal source by tests at each LOD.
+- [must] Infection separation: PASS — skin tint, ragged blood face regions, bloody muzzle and emissive red eyes distinguish infection, consistent with existing zoo infected; essential stripes remain visible.
+- [must] Solid geometry: PASS — closed anatomical sweeps, rounded hooves and continuous mane/tail; no flat panels, boxes or perforated decimation; source edge incidence is tested as watertight.
+- [should] Hidden sides: PASS — closed wraps and consistent stripes cover both flanks, rump, head and legs.
+- [should] Budget/readability: PASS — 4,784 / 1,764 / 660 triangles and ≤ 4 materials; 66.3 / 43.2 / 34.5 KB approximate packed tiers (exact measurements in report.json), clear at game camera.
+
+Motion review: the original shared paw pinning detached a foreleg from the shoulder. The authored `ss_preserveAnimalJoints` opt-in preserves joint offsets; atlas baking grounds the actual four hoof meshes vertically. Zoo/base and chase captures show connected limbs, facing following velocity around turns (yaw drift max 4°), no body floating, no clipping/penetration, no missed in-view frames and no repeated vertical jitter (jitter run max 1). Measured sole sink is 0.1 cm. The reused gait is not world-foot-locked: slide p95 34.7 cm / max 51 cm in this fast turning fixture remains a presentation limitation. No slide tolerance was relaxed.
+Telegraph review: the existing lion-brain model probe's directional yellow cue is visible and unobscured. The asset rear-kick clip clearly lifts both rear hooves backward; stampede clip alternates diagonal pairs. Zebra special damage/cooldown/corridor view remains Z-S3/Z-Q1 scope; these fixtures do not claim those moves implemented.
+Health-bar review: the inherited eligible-brain probe shows a readable bar above the model; static healthy base has none. This lane does not claim phone health-bar contracts or healthy-to-infected sim identity, owned by the other named lanes.
+E18 asset stress: 200 high-tier zebras = 552,946 view triangles / 7 draws (13 shadow draws); 100 low = 94,346 / 7 (7 shadow draws). All 200/100 actors are observed drawn. The dense stress ring has actor overlap by design. Both fit 1.5M/600 and 500k/300 even including shadow passes. Step CPU p95 = 5.3 / 2.9 ms (sim+render submission, not GPU timing). Native full-horde timing = 10.6 / 32.1 ms p95, with sim p95 1.2 / 4.7 ms; see retained horde JSON.

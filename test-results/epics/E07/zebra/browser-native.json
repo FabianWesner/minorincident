@@ -1,0 +1,731 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "(?=.*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*(?:@perf|@vision|T-E07-06-bars|T-E07-bars-budget|T-E07-WebGL-visible|crowd draw visibility|20 infected corpses|common-worker hierarchy))",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/test-results/playwright/run-3477",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/test-results/playwright/run-3477",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/test-results/playwright/run-3477",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/test-results/playwright/run-3477",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/test-results/playwright/run-3477",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/test-results/playwright/run-3477",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3477 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3477",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/crowd-feel.spec.ts",
+      "file": "e2e/crowd-feel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "crowd draw visibility stays continuous for 60 seconds after the L1 outbreak @E07",
+          "ok": true,
+          "tags": [
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 80478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T21:59:43.475Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc9b9d343168502a2e67-a07a773af8d140bf1377",
+          "file": "e2e/crowd-feel.spec.ts",
+          "line": 9,
+          "column": 1
+        },
+        {
+          "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3559,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:01:04.036Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc9b9d343168502a2e67-353d355a22e51454dc56",
+          "file": "e2e/crowd-feel.spec.ts",
+          "line": 87,
+          "column": 1
+        },
+        {
+          "title": "common-worker hierarchy and crowd remain readable at all delivered tiers @E07",
+          "ok": true,
+          "tags": [
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4666,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:01:07.603Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc9b9d343168502a2e67-2f9d88d7d8a6fcbd77d0",
+          "file": "e2e/crowd-feel.spec.ts",
+          "line": 116,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/health-bars.spec.ts",
+      "file": "e2e/health-bars.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high",
+          "ok": true,
+          "tags": [
+            "E07-AC06",
+            "E07-AC19",
+            "E30-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20463,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite dev on http://127.0.0.1:3478\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:01:12.625Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-4944cce867f12f682308",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+          "ok": true,
+          "tags": [
+            "E07-AC06",
+            "E07-AC19",
+            "E30-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9970,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite dev on http://127.0.0.1:3478\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:01:33.102Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-df2d0d7c9856d9480138",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+          "ok": true,
+          "tags": [
+            "E07-AC06",
+            "E07-AC19",
+            "E30-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite dev on http://127.0.0.1:3478\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:01:43.076Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-f1e653c361b8ba655796",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E07-bars-budget-high @E07-AC12 @E18-AC01 pooled bar budget at 200 infected",
+          "ok": true,
+          "tags": [
+            "E07-AC12",
+            "E18-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7707,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite dev on http://127.0.0.1:3478\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:01:57.408Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-f966137679f1131b90cc",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 91,
+          "column": 3
+        },
+        {
+          "title": "T-E07-bars-budget-low @E07-AC12 @E18-AC01 pooled bar budget at 100 infected",
+          "ok": true,
+          "tags": [
+            "E07-AC12",
+            "E18-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite dev on http://127.0.0.1:3478\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:02:05.120Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-1f9d529c59f24d327511",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 91,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/infected-visibility.spec.ts",
+      "file": "e2e/infected-visibility.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-WebGL-visible @E07 infected runner body renders pixels on WebGL2",
+          "ok": true,
+          "tags": [
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3256,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:02:10.247Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f038613bbc1f064446e4-87d7f344fd4a675d7a29",
+          "file": "e2e/infected-visibility.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/horde.spec.ts",
+      "file": "perf/horde.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws",
+          "ok": true,
+          "tags": [
+            "E07",
+            "E07-AC12",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6427,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:02:13.576Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb0c4165d88949064c96-4a15667029ea71ebee29",
+          "file": "perf/horde.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player",
+          "ok": true,
+          "tags": [
+            "E07",
+            "E07-AC13",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4238,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T22:02:20.009Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb0c4165d88949064c96-db33a3ee5231cd354d7c",
+          "file": "perf/horde.spec.ts",
+          "line": 52,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T21:59:42.033Z",
+    "duration": 162284.053,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

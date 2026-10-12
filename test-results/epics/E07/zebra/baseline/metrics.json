@@ -1,0 +1,192 @@
+{
+  "spec": "tests/scenes/zebra-asset/before.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 0,
+  "timing": {
+    "openMs": 1487,
+    "loadMs": 3012,
+    "runMs": 159,
+    "sceneMs": 3171
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-zebra-before",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "healthy",
+        "asset": "amb.zebra",
+        "at": [
+          -3,
+          4
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-zebra-before",
+    "frame": 0,
+    "tick": 0,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 0,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "vehicleTrack": {},
+    "wheelTrack": {},
+    "perf": {
+      "drawCalls": {
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "triangles": {
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "shadowDrawCalls": {
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "shadowTriangles": {
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "stepMs": {
+        "p50": null,
+        "p95": null,
+        "max": null
+      },
+      "lastFrame": null,
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          5,
+          8
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 0,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        },
+        "track": []
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": null,
+    "lods": {
+      "healthy": "n/a"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

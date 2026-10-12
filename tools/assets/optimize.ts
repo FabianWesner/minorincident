@@ -67,11 +67,12 @@ export function normalizeScale(document: Document, def: AssetDef): void {
 export function generateStumpCaps(document: Document, def: AssetDef, segments = 8): void {
   if (def.category !== 'infected') return;
   const root = document.getRoot(), buffer = root.listBuffers()[0] ?? document.createBuffer();
-  const materials = ['flesh','bone'].map(token => root.listMaterials().find(m=>m.getName()===`pal_${token}`)
-    ?? document.createMaterial(`pal_${token}`).setBaseColorFactor(new Color(palette[token]).toArray().concat(1) as [number,number,number,number]).setRoughnessFactor(.85).setDoubleSided(true));
   for (const cap of root.listNodes().filter(n=>n.getName().includes('stump_'))) {
     let hasMesh = false; cap.traverse(n=>{if(n.getMesh()) hasMesh=true;});
     if (hasMesh) continue;
+    // Authored caps already carry their palette; only generated caps need these materials.
+    const materials = ['flesh','bone'].map(token => root.listMaterials().find(m=>m.getName()===`pal_${token}`)
+      ?? document.createMaterial(`pal_${token}`).setBaseColorFactor(new Color(palette[token]).toArray().concat(1) as [number,number,number,number]).setRoughnessFactor(.85).setDoubleSided(true));
     const limbName = cap.getName().replace('stump_', '');
     const limb = root.listNodes().find(n=>n.getName()===limbName);
     const parent = limb?.getParentNode();
