@@ -238,7 +238,7 @@ export class Hud {
       const loadout = world.combat?.runner.loadout, entries = loadout?.activeEntries() ?? [];
       const active = entries.findIndex(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index);
       const next = entries[(active + 1) % entries.length];
-      const label = (id: string) => ['weapon.fists', 'weapon.kick'].includes(id) ? 'unarmed' : id.split('.')[1].replaceAll('-', ' ');
+      const label = (id: string) => ['weapon.fists', 'weapon.kick'].includes(id) ? 'unarmed' : id === 'weapon.handgun' ? 'Handgun' : id === 'weapon.army-mg' ? 'Machine gun' : id.split('.')[1].replaceAll('-', ' ');
       text(card.title, mouse ? side === player.weapons!.selectedSide ? 'ACTIVE · LMB' : 'RMB · NEXT' : `${side} · ${key}`);
       const preview = mouse && side !== player.weapons!.selectedSide;
       const displayId = preview && next ? next.id : slot.id;

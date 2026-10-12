@@ -132,6 +132,33 @@ describe('L4 static', () => {
     expect(l4Convoy.endX).toBe(-11);
   });
 
+  test('T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked', () => {
+    const route = l4Route(), stations = l4ConvoyStations(route.length), veh = l4.convoy.vehicles, bad: string[] = [];
+    type Obb = { x: number; z: number; yaw: number; hl: number; hw: number };
+    const obb = (s: number, v: { len: number; wid: number }): Obb => { const p = l4RoutePose(route, s); return { x: p.x, z: p.z, yaw: p.yaw, hl: v.len / 2, hw: v.wid / 2 }; };
+    const axes = (o: Obb) => [[Math.cos(o.yaw), -Math.sin(o.yaw)], [Math.sin(o.yaw), Math.cos(o.yaw)]];
+    const corners = (o: Obb) => { const [u, w] = axes(o); return [[1, 1], [1, -1], [-1, 1], [-1, -1]].map(([a, b]) => [o.x + u[0] * o.hl * a + w[0] * o.hw * b, o.z + u[1] * o.hl * a + w[1] * o.hw * b]); };
+    const overlap = (a: Obb, b: Obb): boolean => {
+      const ca = corners(a), cb = corners(b);
+      for (const ax of [...axes(a), ...axes(b)]) {
+        const pa = ca.map(c => c[0] * ax[0] + c[1] * ax[1]), pb = cb.map(c => c[0] * ax[0] + c[1] * ax[1]);
+        if (Math.max(...pa) <= Math.min(...pb) || Math.max(...pb) <= Math.min(...pa)) return false;
+      }
+      return true;
+    };
+    const aabbObb = (a: Aabb): Obb => ({ x: (a.min[0] + a.max[0]) / 2, z: (a.min[2] + a.max[2]) / 2, yaw: 0, hl: (a.max[0] - a.min[0]) / 2, hw: (a.max[2] - a.min[2]) / 2 });
+    const statics = solid.filter(c => c.aabb.max[1] > .3 && c.aabb.min[1] < 3).map(c => aabbObb(c.aabb));
+    for (let d = 0; d <= stations.travel + .01; d += .25) {
+      const set = veh.map((v, i) => obb(stations.start[i] + Math.min(d, stations.travel), v));
+      for (let i = 0; i < set.length; i++) {
+        for (let j = i + 1; j < set.length; j++) if (overlap(set[i], set[j])) bad.push(`${veh[i].id} x ${veh[j].id} at travel ${d.toFixed(1)}`);
+        for (const a of statics) if (overlap({ ...set[i], hl: set[i].hl - .05, hw: set[i].hw - .05 }, a)) { bad.push(`${veh[i].id} hits static ${a.x.toFixed(1)},${a.z.toFixed(1)} at ${set[i].x.toFixed(1)},${set[i].z.toFixed(1)}`); break; }
+      }
+    }
+    if (process.env.DBG) for (const c of solid) { const a = c.aabb; if ((a.min[0] < -9 && a.max[0] > -12 && a.min[2] < -17 && a.max[2] > -22) || (Math.abs((a.min[0]+a.max[0])/2+69.5)<.2 && Math.abs((a.min[2]+a.max[2])/2-49.9)<.2)) console.log('DBG', JSON.stringify(c)); }
+    expect([...new Set(bad)].slice(0, 20)).toEqual([]);
+  });
+
   test('T-E22-16a @E22 @E22-AC16 light: polar 1.15-1.30, fog far >= L3 + 20, less haze and a cleaner sky than L3', () => {
     expect(timeOfDay.L4.polar).toBeGreaterThanOrEqual(1.15); expect(timeOfDay.L4.polar).toBeLessThanOrEqual(1.3);
     expect(timeOfDay.L4.fogFar).toBeGreaterThanOrEqual(timeOfDay.L3.fogFar + 20);

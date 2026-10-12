@@ -20,9 +20,9 @@ export const l4Dressing: readonly L4Dressing[] = [
   d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-1'][0], l4Anchors['l4-hmg-1'][1], { yaw: PI + .8 }),
   d('nest', 'prop.hmg-nest', l4Anchors['l4-hmg-2'][0], l4Anchors['l4-hmg-2'][1], { yaw: -.6 }),
   // ---------------------------------------------------------------- the army gate (Lakeshore, west end): shoulder barriers, nests and light towers around an open 6 m lane
-  ...([-78.5, -75.5, -72.5, -69.5] as const).flatMap(x => [d('barrier', 'prop.jersey-barrier', x, 42.1, { yaw: 0 }), d('barrier', 'prop.jersey-barrier', x, 49.9, { yaw: 0 })]),
-  d('sandbag', 'prop.sandbag-pallet', -67.2, 40.8, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -65.8, 40.8, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -67.2, 51.3, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -65.8, 51.3, { yaw: 0 }),
-  d('light', 'prop.light-tower', -73.2, 40.6, { yaw: 0 }), d('light', 'prop.light-tower', -73.2, 51.4, { yaw: PI }),
+  ...([-78.5, -75.5, -72.5, -69.5] as const).flatMap(x => [d('barrier', 'prop.jersey-barrier', x, 42.1, { yaw: 0 }), d('barrier', 'prop.jersey-barrier', x, 50.9, { yaw: 0 })]),
+  d('sandbag', 'prop.sandbag-pallet', -67.2, 40.8, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -65.8, 40.8, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -67.2, 52.3, { yaw: 0 }), d('sandbag', 'prop.sandbag-pallet', -65.8, 52.3, { yaw: 0 }),
+  d('light', 'prop.light-tower', -73.2, 40.6, { yaw: 0 }), d('light', 'prop.light-tower', -73.2, 52.4, { yaw: PI }),
   // ---------------------------------------------------------------- army barriers at the street ends (a gap stays open): traffic is held by soldiers
   ...([[-81.2, -43.4, H], [-81.2, -42.1, H], [-81.2, -36.6, H], [-81.2, -35.2, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
   ...([[81.2, -43.4, H], [81.2, -42.1, H], [81.2, -36.6, H], [81.2, -35.2, H], [81.2, 42.2, H], [81.2, 43.5, H], [81.2, 49.0, H], [81.2, 50.3, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
@@ -94,6 +94,9 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       layout.placements.push(p);
     };
     for (const [i, e] of l4Dressing.entries()) add(`l4-${e.kind}-${i}`, e.assetId, e.x, e.z, e.yaw ?? 0, e.scale ?? 1);
+    // The convoy parks along x = -11: the planter (and its flowers) that D-FAIR puts at (-10, -19) sat in the APC's lane.
+    layout.colliders = layout.colliders.filter(c => c.id !== 'dressing:planter:22');
+    layout.decorations = layout.decorations?.filter(f => Math.hypot(f.position[0] + 10, f.position[2] + 19) > 1);
     layout.lightGroups.push({ id: 'l4', offAt: 5 });
     return layout;
   });
