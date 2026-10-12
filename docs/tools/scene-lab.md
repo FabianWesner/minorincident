@@ -412,3 +412,13 @@ attack lists its members/leader, and the flock's impact and obstruction expiry t
 shared animal locomotion control. Scene Lab now samples actual animal paw geometry
 instead of dummy humanoid feet. Cooldown and checkpoint controls use the real
 mission checkpoint API in `tests/sim/ai/zoo-s3.test.ts`.
+
+### L7 encounter follower fixture
+
+`l7Group: true` routes authored `survivor` actors through the production L7
+three-column formation, without creating a mission population.
+`tests/scenes/l7-encounters/qa-l7-horde-passage.json` isolates 120 regular infected,
+two Alphas, rocket clearance and six followers at one fixed game camera. The
+production population controller lives on `world.l7Encounters`; its copied state
+is exposed as `__SS__.getState().l7`. The existing checkpoint seams retain its
+roster, pending director requests, emergence audit and passage state.

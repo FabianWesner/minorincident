@@ -1,0 +1,808 @@
+{
+  "name": "qa-l7-horde-passage-low",
+  "note": "Production L7 three-column follower after rocket clearance at the game camera. Review body/ground clipping, facing versus velocity, feet, invisible active infected, jitter and Alpha telegraph/bar. Fixed before/after camera.",
+  "ground": "asphalt",
+  "size": 60,
+  "time": "night",
+  "dof": false,
+  "infectedCap": 200,
+  "l7Group": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -12,
+        0
+      ],
+      "loadout": [
+        "weapon.rocket-launcher",
+        "weapon.kick"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "follower-0",
+      "kind": "pedestrian",
+      "at": [
+        -15.0,
+        -1.3
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b"
+      },
+      "state": {
+        "survivor": {
+          "slot": 0
+        }
+      }
+    },
+    {
+      "id": "follower-1",
+      "kind": "pedestrian",
+      "at": [
+        -15.0,
+        0.0
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": {
+        "survivor": {
+          "slot": 1
+        }
+      }
+    },
+    {
+      "id": "follower-2",
+      "kind": "pedestrian",
+      "at": [
+        -15.0,
+        1.3
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b"
+      },
+      "state": {
+        "survivor": {
+          "slot": 2
+        }
+      }
+    },
+    {
+      "id": "follower-3",
+      "kind": "pedestrian",
+      "at": [
+        -16.3,
+        -1.3
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": {
+        "survivor": {
+          "slot": 3
+        }
+      }
+    },
+    {
+      "id": "follower-4",
+      "kind": "pedestrian",
+      "at": [
+        -16.3,
+        0.0
+      ],
+      "look": {
+        "model": "npc.civilian-woman-b"
+      },
+      "state": {
+        "survivor": {
+          "slot": 4
+        }
+      }
+    },
+    {
+      "id": "follower-5",
+      "kind": "pedestrian",
+      "at": [
+        -16.3,
+        1.3
+      ],
+      "look": {
+        "model": "npc.civilian-man-b"
+      },
+      "state": {
+        "survivor": {
+          "slot": 5
+        }
+      }
+    },
+    {
+      "id": "crowd-0",
+      "kind": "infected",
+      "at": [
+        -5.85,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-1",
+      "kind": "infected",
+      "at": [
+        -4.55,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-2",
+      "kind": "infected",
+      "at": [
+        -3.2499999999999996,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-3",
+      "kind": "infected",
+      "at": [
+        -1.9499999999999993,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-4",
+      "kind": "infected",
+      "at": [
+        -0.6499999999999995,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-5",
+      "kind": "infected",
+      "at": [
+        0.6500000000000004,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-6",
+      "kind": "infected",
+      "at": [
+        1.950000000000001,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-7",
+      "kind": "infected",
+      "at": [
+        3.25,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-8",
+      "kind": "infected",
+      "at": [
+        4.550000000000001,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-9",
+      "kind": "infected",
+      "at": [
+        5.850000000000001,
+        -3.2500000000000004
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-10",
+      "kind": "infected",
+      "at": [
+        -5.85,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-11",
+      "kind": "infected",
+      "at": [
+        -4.55,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-12",
+      "kind": "infected",
+      "at": [
+        -3.2499999999999996,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-13",
+      "kind": "infected",
+      "at": [
+        -1.9499999999999993,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-14",
+      "kind": "infected",
+      "at": [
+        -0.6499999999999995,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-15",
+      "kind": "infected",
+      "at": [
+        0.6500000000000004,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-16",
+      "kind": "infected",
+      "at": [
+        1.950000000000001,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-17",
+      "kind": "infected",
+      "at": [
+        3.25,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-18",
+      "kind": "infected",
+      "at": [
+        4.550000000000001,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-19",
+      "kind": "infected",
+      "at": [
+        5.850000000000001,
+        -1.9500000000000006
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-20",
+      "kind": "infected",
+      "at": [
+        -5.85,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-21",
+      "kind": "infected",
+      "at": [
+        -4.55,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-22",
+      "kind": "infected",
+      "at": [
+        -3.2499999999999996,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-23",
+      "kind": "infected",
+      "at": [
+        -1.9499999999999993,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-24",
+      "kind": "infected",
+      "at": [
+        -0.6499999999999995,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-25",
+      "kind": "infected",
+      "at": [
+        0.6500000000000004,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-26",
+      "kind": "infected",
+      "at": [
+        1.950000000000001,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-27",
+      "kind": "infected",
+      "at": [
+        3.25,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-28",
+      "kind": "infected",
+      "at": [
+        4.550000000000001,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-29",
+      "kind": "infected",
+      "at": [
+        5.850000000000001,
+        -0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-30",
+      "kind": "infected",
+      "at": [
+        -5.85,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-31",
+      "kind": "infected",
+      "at": [
+        -4.55,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-32",
+      "kind": "infected",
+      "at": [
+        -3.2499999999999996,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-33",
+      "kind": "infected",
+      "at": [
+        -1.9499999999999993,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-34",
+      "kind": "infected",
+      "at": [
+        -0.6499999999999995,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-35",
+      "kind": "infected",
+      "at": [
+        0.6500000000000004,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-36",
+      "kind": "infected",
+      "at": [
+        1.950000000000001,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-37",
+      "kind": "infected",
+      "at": [
+        3.25,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-38",
+      "kind": "infected",
+      "at": [
+        4.550000000000001,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-39",
+      "kind": "infected",
+      "at": [
+        5.850000000000001,
+        0.6499999999999999
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-40",
+      "kind": "infected",
+      "at": [
+        -5.85,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-41",
+      "kind": "infected",
+      "at": [
+        -4.55,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-42",
+      "kind": "infected",
+      "at": [
+        -3.2499999999999996,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-43",
+      "kind": "infected",
+      "at": [
+        -1.9499999999999993,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-44",
+      "kind": "infected",
+      "at": [
+        -0.6499999999999995,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-45",
+      "kind": "infected",
+      "at": [
+        0.6500000000000004,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-46",
+      "kind": "infected",
+      "at": [
+        1.950000000000001,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-47",
+      "kind": "infected",
+      "at": [
+        3.25,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-48",
+      "kind": "infected",
+      "at": [
+        4.550000000000001,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-49",
+      "kind": "infected",
+      "at": [
+        5.850000000000001,
+        1.9499999999999997
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-50",
+      "kind": "infected",
+      "at": [
+        -5.85,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-51",
+      "kind": "infected",
+      "at": [
+        -4.55,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-52",
+      "kind": "infected",
+      "at": [
+        -3.2499999999999996,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-53",
+      "kind": "infected",
+      "at": [
+        -1.9499999999999993,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-54",
+      "kind": "infected",
+      "at": [
+        -0.6499999999999995,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-55",
+      "kind": "infected",
+      "at": [
+        0.6500000000000004,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-56",
+      "kind": "infected",
+      "at": [
+        1.950000000000001,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-57",
+      "kind": "infected",
+      "at": [
+        3.25,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-58",
+      "kind": "infected",
+      "at": [
+        4.550000000000001,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "crowd-59",
+      "kind": "infected",
+      "at": [
+        5.850000000000001,
+        3.25
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "alpha-a",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        -9
+      ],
+      "yaw": 180,
+      "state": "idle"
+    },
+    {
+      "id": "alpha-b",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        9
+      ],
+      "yaw": 180,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -2,
+      0,
+      0
+    ],
+    "zoom": 2.2
+  },
+  "frames": 360,
+  "shots": [
+    0,
+    360
+  ],
+  "sheet": 60,
+  "script": [
+    {
+      "frame": 1,
+      "effect": {
+        "blast": "explosion.rocket",
+        "at": [
+          -4,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "blast": "explosion.rocket",
+        "at": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "blast": "explosion.rocket",
+        "at": [
+          4,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 90,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            12,
+            0
+          ]
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

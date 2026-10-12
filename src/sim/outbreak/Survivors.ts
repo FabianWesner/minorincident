@@ -15,7 +15,7 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  */
 export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
   const c = e.civilian!, s = c.survivor!, tick = world.tick, f = l5.follow;
-  if (world.missions?.l6?.follower(e)) return true;
+  if (world.l7Encounters?.follower(e) || world.missions?.l6?.follower(e)) return true;
   if (s.mode !== 'follow') return false;
   // A found survivor stays a calm, upright human: no startle, no flight (the infected decide what happens to them).
   if (c.state !== 'calm') { c.state = 'calm'; c.entered = tick; c.until = tick; world.events.emit({ type: 'civilian.state', tick, id: e.id, state: 'calm', until: tick }); }

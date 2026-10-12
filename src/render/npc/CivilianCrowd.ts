@@ -96,18 +96,30 @@ class CivilianBatch extends Group {
   private readonly motion = new MotionPhase();
   private strideScale = 1;
   private readonly colors = civilianRoles.map(d => new Color(d.color));
-  private readonly frame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
-  private readonly tint = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
+  private readonly capacity: number;
+  private readonly corpseLod: 'lod1' | 'lod2';
+  private readonly frame: InstancedBufferAttribute;
+  private readonly tint: InstancedBufferAttribute;
   /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (negative for a routine grip); w is the
    * displayed pose-atlas row. Packed so the draw stays within WebGPU's 8 vertex buffers (a separate `_pose_frame`
    * buffer made the pipeline invalid: every pedestrian vanished on WebGPU while props and shadows still drew). */
-  private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
+  private readonly overlay: InstancedBufferAttribute;
   private readonly shirt = new Color();
   private registry?: AssetRegistry;
   source = 'placeholder';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super();
+    // L7 has a strict infected pool plus at most 35 incoming survivors. Size
+    // every model's mutable pose rows for that population instead of 350.
+    this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
+    // The phone's final-horde carpet keeps every body using the shipped far
+    // silhouette. Freeze this choice so later quality changes cannot duplicate it.
+    this.corpseLod = world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
+    this.frame = new InstancedBufferAttribute(new Float32Array(this.capacity), 1).setUsage(StreamDrawUsage);
+    this.tint = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
+    this.overlay = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
+    this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
     let key: string | undefined = `${this.model}:${this.lod}`;
@@ -138,10 +150,10 @@ class CivilianBatch extends Group {
     this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
-    this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
+    this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
     const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture);
     const material = shared.material; this.releaseMaterial = shared.release;
-    this.mesh = new InstancedMesh(baked.geometry, material, 350); this.mesh.userData.preRenderTextures = [this.texture]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
+    this.mesh = new InstancedMesh(baked.geometry, material, this.capacity); this.mesh.userData.preRenderTextures = [this.texture]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
     for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
@@ -153,8 +165,8 @@ class CivilianBatch extends Group {
     this.mesh.userData.staticInstancePosition = material.positionNode;
     this.mesh.onAfterRender = () => this.probe.draw();
     // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
-    // Settled bodies are always placed through LOD1 below. LOD0/LOD2 never
-    // populate these pages, so preparing them repeats the bake and node build.
+    // L6 settled bodies use LOD1. Preparing its other bands repeats the bake
+    // and node build without populating those pages.
     if (this.world.scenario === 'L6' && this.lod === 'lod1') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
@@ -164,14 +176,14 @@ class CivilianBatch extends Group {
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
     for (const e of shot ? [shot] : this.world.entities.iterate()) {
-      if (index >= 350 && !e.corpse) continue;
+      if (index >= this.capacity && !e.corpse) continue;
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
       const c = e.civilian;
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
-      if (e.corpse) { if (this.lod === 'lod1' && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
+      if (e.corpse) { if (this.lod === this.corpseLod && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (shotId === undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
@@ -365,7 +377,9 @@ export class CivilianCrowd extends Group {
       const model = crowdModelOf(e);
       // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
       // Bake their close models before shader warm-up: meeting one during play must not parse/bake a rig.
-      if (model && (e.civilian?.survivor || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
+      // L7's large escort uses the existing four visible hero slots. Warming
+      // every follower's LOD0 also retained rigs that never reached the close band.
+      if (model && (e.civilian?.survivor && this.world.scenario !== 'L7' || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
       if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
       this.known.add(model);
       const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];

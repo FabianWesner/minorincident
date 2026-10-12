@@ -215,7 +215,7 @@ export class Game {
         const data=loadMeasure('level:layouts',start);
         if (!speculative) this.transition.update(.1, 'Building the neighborhood…');
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null,id==='L7'?this.campaign?.results?.L6?.escapedSurvivors:undefined);
         const missionStart = loadMeasure('level:world+nav', worldStart);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
@@ -227,6 +227,10 @@ export class Game {
           const campaign = resolveCampaignMission(id as MissionId, this.world.districts!);
           const mission=this.world.loadMission(campaign);
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
+        }
+        if (id === 'L7') {
+          if (this.campaign) this.applyCampaign();
+          this.world.l7Encounters!.prepare();
         }
         opts?.setup?.(this.world);
         if(this.campaign)this.watchCampaign();

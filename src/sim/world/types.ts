@@ -118,6 +118,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'scenario.loaded'; name: string; seed: number }
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
+  l7?: import('../missions/LevelSevenEncounters').L7EncounterState;
   weather: ReturnType<import('../weather/WeatherSystem').WeatherSystem['snapshot']> | null;
   tick: number;
   ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;

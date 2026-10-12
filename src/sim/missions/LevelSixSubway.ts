@@ -137,6 +137,6 @@ export class LevelSixSubway {
   }
   completed(id:string):void {if(id==='shelter'&&this.s.phase==='shelter')this.breach(false);if(id==='stop'&&!this.s.abandonAt){if(this.s.phase==='first')this.breach(true);this.abandon();}if(id==='retreat'){this.s.platform=true;this.mission.setState('platform',true);if(this.s.phase!=='done')this.s.phase='exit';}if(id==='exit'){this.s.phase='done';this.s.gateAt=this.w.tick;this.mission.state.timeOfDay='L6';}}
   advance():boolean{return false;}
-  result(){const s=this.s;return {rescued:s.survivors.filter(r=>r.status==='out').length,survivors:s.survivors.filter(r=>r.status==='out').map(r=>r.key),survivorsIn:s.survivors.length};}
+  result(){const s=this.s;return {rescued:s.survivors.filter(r=>r.status==='out').length,survivors:s.survivors.filter(r=>r.status==='out').map(r=>r.key),survivorsIn:s.survivors.length,escapedSurvivors:s.survivors.filter(r=>r.status==='out').map(r=>structuredClone(this.w.entities.get(r.id)!))};}
   restore(delta:number):void {const s=this.s;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
 }
