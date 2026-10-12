@@ -25,6 +25,8 @@ export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.handgun'],
   4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
 };
+/** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after the last level. */
+export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<6?(finished+1) as Level:null;}
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
 /** E20/E21 redesign: the first firearm is the L3 armory handgun (no choice after L2 any more). */
 export const weaponChoices:Partial<Record<Level,readonly string[]>>={3:['weapon.smg','weapon.hunting-rifle']};
