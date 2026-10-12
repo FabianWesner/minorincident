@@ -39,6 +39,11 @@ export class TrapRescue {
     const d = world.districts;
     this.can = d && goals.length ? goalReach(d.nav, (x, z) => d.groundHeight(x, z), goals) : new Uint8Array(0);
   }
+  /** True when (x, z) is an open nav cell from which an objective can be reached on foot (never rescued from there). */
+  reachable(x: number, z: number): boolean {
+    const d = this.world.districts; if (!d || !this.can.length) return true;
+    const i = d.nav.index(x, z); return i >= 0 && !!d.nav.cells[i] && !!this.can[i];
+  }
   update(): void {
     const world = this.world, d = world.districts, player = world.entities.get(1);
     if (!d || !player || !this.can.length || world.vehicles?.active != null || player.health.current <= 0) { this.stuck = 0; return; }
