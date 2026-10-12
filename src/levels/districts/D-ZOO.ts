@@ -22,7 +22,14 @@ export const gameplay: DistrictGameplay = {
   photoSpots: [
     { name: "overview", target: { x: 0, z: 0 }, offset: [150, 160, 150] },
     { name: "landmark", target: anchor("zoo-entrance"), offset: [20, 24, 22] },
-    ...["pair-zoo-gate", "pair-zoo-lion", "pair-zoo-gorilla", "pair-zoo-service-yard", "l8-safe-paths"].map(name => ({ name, target: anchor(name), offset: [24, 28, 24] as [number, number, number] })),
+    ...["pair-zoo-gate", "pair-zoo-lion", "pair-zoo-gorilla", "pair-zoo-service-yard", "l8-safe-paths", "l8-tunnel-breach"].map(name => ({ name, target: anchor(name), offset: [24, 28, 24] as [number, number, number] })),
   ],
   decay: [],
 };
+
+/**
+ * L8 service-tunnel outlets (layouts/D-ZOO/layout.py): locked masonry bunkers (`kit.zoo-tunnel-mouth`, steel double door
+ * in src/data/buildingDoors.ts with `emerge` data, so HouseEmergence opens them and walks the infected out of the
+ * occluded L-shaped vestibule). `anchor` is the paved apron in front of the door, on the path network.
+ */
+export const tunnelOutlets = [1, 2, 3, 4].map(n => ({ id: `tunnel-outlet-${n}`, anchor: `tunnel-outlet-${n}` }));
