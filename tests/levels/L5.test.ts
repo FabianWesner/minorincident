@@ -143,7 +143,11 @@ describe('L5 Aftermath', () => {
     for (const s of l5Survivors) {
       const hide = at(w, `l5-hide-${s.key}`);
       // 32 m away: silent. 22 m away: the cue arrives (position + text) and the HUD ping is armed for 4 s.
-      cues.length = 0; place(w, 1, hide.x + 32, hide.z); step(w, 8 * 60); expect(cues.filter(c => c.key === s.key), `${s.key} beyond 30 m`).toEqual([]);
+      // The 32 m probe must stand where a goal is reachable: from an enclosed pocket (east of Dale's hide) the TrapRescue
+      // safety net would rightly move the courier back onto the route, inside the cue radius.
+      const far = Array.from({ length: 16 }, (_, k) => ({ x: hide.x + 32 * Math.cos(k * Math.PI / 8), z: hide.z + 32 * Math.sin(k * Math.PI / 8) })).find(p => w.trapRescue!.reachable(p.x, p.z))!;
+      cues.length = 0; place(w, 1, far.x, far.z); step(w, 8 * 60); expect(cues.filter(c => c.key === s.key), `${s.key} beyond 30 m`).toEqual([]);
+      expect(dist(w.entities.get(1)!.transform, hide)).toBeGreaterThan(30);
       place(w, 1, hide.x, hide.z + 22); step(w, 2); const heard = cues.filter(c => c.key === s.key);
       expect(heard.length, `${s.key} within 25 m`).toBeGreaterThanOrEqual(1); expect(heard[0].d).toBeLessThanOrEqual(25); expect(heard[0].text.length).toBeGreaterThan(8);
       expect(m.state.l5!.cue).toMatchObject({ key: s.key }); expect(m.state.l5!.cue!.until - w.tick).toBeLessThanOrEqual(4 * 60);
