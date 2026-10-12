@@ -1,0 +1,30 @@
+{
+  "scheduler": {
+    "count": 200,
+    "alphas": 40,
+    "minInfected": 200,
+    "cap": 200,
+    "ticks": 600,
+    "simMsP95": 0.9057500000008076,
+    "budgetMs": 4
+  },
+  "physical": {
+    "count": 200,
+    "alphas": 40,
+    "minInfected": 200,
+    "activations": 160,
+    "cap": 200,
+    "ticks": 600,
+    "simMsP95": 1.208875000000262,
+    "budgetMs": 4
+  },
+  "support": {
+    "count": 200,
+    "alphas": 6,
+    "countAfter": 200,
+    "simMsP95": 2.4441249999999854,
+    "budgetMs": 4,
+    "buffs": 1164,
+    "throws": 5
+  }
+}

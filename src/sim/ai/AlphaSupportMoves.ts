@@ -4,8 +4,13 @@ import type { InfectedSystem } from './InfectedSystem';
 
 /** Alpha's support moves use the shared scheduler and entity-owned checkpoint state. */
 export class AlphaSupportMoves {
+  private readonly regularTypes = new Set(humanInfected.filter(d => d.id !== 'infected.alpha').map(d => d.id));
+  private readonly neighbors: number[] = [];
+  private readonly query = { x: 0, z: 0, r: 18 };
+  private readonly locked = { id: 0, x: 0, z: 0 };
+  private readonly area = { x: 0, z: 0, radius: 1, dx: 0, dz: 0 };
   constructor(private readonly ai: InfectedSystem) {}
-  private regular(e: EntitySnapshot): boolean { return e.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === e.archetype); }
+  private regular(e: EntitySnapshot): boolean { return !!e.infected && this.regularTypes.has(e.archetype); }
   tryStart(e: EntitySnapshot, target: EntitySnapshot): boolean {
     if (e.archetype !== 'infected.alpha') return false;
     const b = e.infected!, tick = this.ai.world.tick;
@@ -15,9 +20,17 @@ export class AlphaSupportMoves {
     if (!grabReady && !roarReady) return false;
     const p = e.transform, t = target.transform, dx = t.x - p.x, dz = t.z - p.z, distance = Math.hypot(dx, dz);
     if (distance > 15 || !this.ai.hearing.sees(e, t)) return false;
-    const locked = { id: target.id, x: t.x, z: t.z }, area = { x: p.x, z: p.z, radius: 1, dx: dx / (distance || 1), dz: dz / (distance || 1) };
+    const locked = this.locked, area = this.area;
+    locked.id = target.id; locked.x = t.x; locked.z = t.z;
+    area.x = p.x; area.z = p.z; area.radius = 1; area.dx = dx / (distance || 1); area.dz = dz / (distance || 1);
     if (grabReady && this.ai.props.nearestObject(e, 2) && this.ai.startSpecial(e.id, 'alpha.grab-throw', locked, area)) return true;
-    if (roarReady && this.ai.active.some(other => other.health.current > 0 && this.regular(other) && Math.hypot(other.transform.x - p.x, other.transform.z - p.z) <= 18)) return this.ai.startSpecial(e.id, 'alpha.roar', locked, { ...area, radius: 18 });
+    if (roarReady) {
+      this.query.x = p.x; this.query.z = p.z; this.ai.world.spatial.query(this.query, this.neighbors);
+      for (const id of this.neighbors) {
+        const other = this.ai.world.entities.get(id);
+        if (other && other.health.current > 0 && this.regular(other)) { area.radius = 18; return this.ai.startSpecial(e.id, 'alpha.roar', locked, area); }
+      }
+    }
     return false;
   }
   update(e: EntitySnapshot): void {
@@ -25,7 +38,7 @@ export class AlphaSupportMoves {
     if (a.stage !== 'active') return;
     if (a.move === 'alpha.roar') {
       for (const other of this.ai.active) {
-        if (!this.regular(other) || other.health.current <= 0 || Math.hypot(other.transform.x - a.area.x, other.transform.z - a.area.z) > 18 || !this.ai.specialHit(e.id, other.id)) continue;
+        if (!this.regular(other) || other.health.current <= 0 || (other.transform.x - a.area.x) ** 2 + (other.transform.z - a.area.z) ** 2 > 18 * 18 || !this.ai.specialHit(e.id, other.id)) continue;
         // Refresh duration without multiplying the existing speed. Never disclose a human target.
         other.infected!.roar = { sourceId: e.id, attackId: a.attackId, x: a.area.x, z: a.area.z, until: this.ai.world.tick + 300 };
         other.infected!.state = 'idle'; other.infected!.heardTargetId = 0; other.infected!.targetId = 0; other.infected!.grabUntil = 0;

@@ -1,0 +1,222 @@
+{
+  "unit": {
+    "runner": "Hetzner",
+    "files": 162,
+    "passed": 818,
+    "failed": 0
+  },
+  "focusedAlpha": {
+    "passed": 48,
+    "failed": 0
+  },
+  "saveContinue": {
+    "test": "T-E13-05",
+    "runner": "Hetzner",
+    "expected": 1,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "alphaAsset": {
+    "runner": "Mac",
+    "passed": 5,
+    "failed": 0,
+    "flaky": 0
+  },
+  "timing": {
+    "scheduler": {
+      "count": 200,
+      "alphas": 40,
+      "minInfected": 200,
+      "cap": 200,
+      "ticks": 600,
+      "simMsP95": 0.9057500000008076,
+      "budgetMs": 4
+    },
+    "physical": {
+      "count": 200,
+      "alphas": 40,
+      "minInfected": 200,
+      "activations": 160,
+      "cap": 200,
+      "ticks": 600,
+      "simMsP95": 1.208875000000262,
+      "budgetMs": 4
+    },
+    "support": {
+      "count": 200,
+      "alphas": 6,
+      "countAfter": 200,
+      "simMsP95": 2.4441249999999854,
+      "budgetMs": 4,
+      "buffs": 1164,
+      "throws": 5
+    }
+  },
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "E07": {
+    "functionalSim": {
+      "runner": "Hetzner",
+      "passed": 217,
+      "failed": 0
+    },
+    "timing": {
+      "runner": "Mac",
+      "passed": 5,
+      "failed": 0
+    },
+    "commands": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "tests/sim/ai/director.test.ts",
+          "tests/sim/performance/alpha.test.ts",
+          "tests/sim/performance/alpha-physical.test.ts",
+          "-t",
+          "T-E07-11",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest-timing.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/alpha-render-perf",
+          "--pull",
+          "test-results/epics/E07/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$))",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/alpha-render-perf",
+          "--pull",
+          "test-results/playwright/results.json",
+          "--env",
+          "E2E_PORT=3398",
+          "--",
+          "sh",
+          "-c",
+          "npm run build && npx playwright test --grep \"$1\" --grep-invert \"$2\" --workers=1",
+          "sh",
+          "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)|T-E07-physical-budget))(?=.*(?:alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13))",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "headlessBrowser": {
+      "expected": 15,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    "gpuBrowser": {
+      "expected": 40,
+      "unexpected": 0,
+      "skipped": 0,
+      "flaky": 0
+    },
+    "result": "pass",
+    "selectedBrowserTests": 53,
+    "additionalPhysicalBudgetTests": 2
+  },
+  "assetHordeCounters": [
+    {
+      "quality": "high",
+      "count": 200,
+      "drawCalls": 52,
+      "triangles": 649187,
+      "crowdDrawCalls": 4
+    },
+    {
+      "quality": "low",
+      "count": 100,
+      "drawCalls": 52,
+      "triangles": 214215,
+      "crowdDrawCalls": 4
+    }
+  ],
+  "captureRoutingFocus": {
+    "runner": "Mac",
+    "passed": 2,
+    "failed": 0,
+    "tests": [
+      "T-E07-06-all-specials-browser",
+      "S-02"
+    ],
+    "allSpecialsSeconds": 5.9,
+    "controlsSeconds": 20.6
+  },
+  "gpuFocus": {
+    "runner": "Mac",
+    "passed": 4,
+    "failed": 0,
+    "backends": [
+      "WebGL2",
+      "WebGPU"
+    ],
+    "checks": [
+      "crowd-drawn",
+      "crowd-visible-outbreak"
+    ]
+  }
+}

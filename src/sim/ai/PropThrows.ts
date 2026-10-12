@@ -10,6 +10,8 @@ interface Flight { prop: ThrowableProp; sourceId: number; attackId: number; expi
 export class PropThrows {
   readonly props: ThrowableProp[] = [];
   readonly flights: Flight[] = [];
+  private readonly object = { id: 0, corpse: false };
+  private objectDistanceSquared = 0;
   constructor(private readonly world: SimWorld) {}
   nearestMedium(source: EntitySnapshot): ThrowableProp | undefined {
     let nearest: ThrowableProp | undefined, distance = 6;
@@ -31,17 +33,19 @@ export class PropThrows {
   }
   /** Nearest available retained corpse or movable E26 medium prop, with stable id ties. */
   nearestObject(source: EntitySnapshot, radius: number): { id: number; corpse: boolean } | undefined {
-    let nearest: { id: number; corpse: boolean } | undefined, distance = radius + 1e-9;
-    const reserved = (id: number) => this.world.infected!.active.some(e => e.infected!.specialAttack?.projectile?.objectId === id && e.infected!.specialAttack.stage === 'active') || this.flights.some(f => f.prop.id === id);
-    const consider = (id: number, corpse: boolean, p: { x: number; z: number }) => {
-      const d = Math.hypot(p.x - source.transform.x, p.z - source.transform.z);
-      if (reserved(id) || !this.world.infected!.hearing.lineOfSight(source.transform, p)) return;
-      if (d < distance || d === distance && id < (nearest?.id ?? Infinity)) { nearest = { id, corpse }; distance = d; }
-    };
-    for (const e of this.world.entities.iterate()) if (e.corpse && e.infected && e.health.current <= 0) consider(e.id, true, e.transform);
-    for (const p of this.world.props?.items ?? []) if (p.metadata.class === 'medium' && !p.fixed && !p.braced && p.body.isEnabled()) consider(p.entityId, false, p.body.translation());
-    for (const p of this.props) if (p.class === 'medium' && p.body.isEnabled()) consider(p.id, false, p.body.translation());
-    return nearest;
+    this.object.id = 0; this.objectDistanceSquared = (radius + 1e-9) ** 2;
+    for (const e of this.world.entities.iterate()) if (e.corpse && e.infected && e.health.current <= 0) this.considerObject(source, e.id, true, e.transform);
+    for (const p of this.world.props?.items ?? []) if (p.metadata.class === 'medium' && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation());
+    for (const p of this.props) if (p.class === 'medium' && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation());
+    return this.object.id ? this.object : undefined;
+  }
+  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; z: number }): void {
+    const dx = p.x - source.transform.x, dz = p.z - source.transform.z, squared = dx * dx + dz * dz;
+    if (squared > this.objectDistanceSquared || squared === this.objectDistanceSquared && id >= (this.object.id || Infinity)) return;
+    for (const e of this.world.infected!.active) if (e.infected!.specialAttack?.projectile?.objectId === id && e.infected!.specialAttack.stage === 'active') return;
+    for (const flight of this.flights) if (flight.prop.id === id) return;
+    if (!this.world.infected!.hearing.lineOfSight(source.transform, p)) return;
+    this.object.id = id; this.object.corpse = corpse; this.objectDistanceSquared = squared;
   }
   launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number): boolean {
     const object = this.nearestObject(source, radius); if (!object) return false;

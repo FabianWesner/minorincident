@@ -60,7 +60,9 @@ export class LevelFiveAftermath {
     if (combat) {
       combat.rackCapacity = Math.max(combat.rackCapacity, 4);
       combat.actionDefinitions = { ...combat.actionDefinitions, 'weapon.shotgun': { ...(combat.actionDefinitions?.['weapon.shotgun'] ?? action('weapon.shotgun')), magazine: 0, reloadTime: 0 } };
-      combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]); combat.runner.loadout.state.selectedSide = 'RIGHT';
+      if (!world.progression || !world.entities.get(1)!.weapons) {
+        combat.setLoadout([...l5Loadout.left], [...l5Loadout.right]); combat.runner.loadout.state.selectedSide = 'RIGHT';
+      }
     }
     this.placeInCellar();
     const shelf = this.anchor('l5-shotgun');
