@@ -2,8 +2,8 @@
   "id": "prop.sprinkler",
   "triangles": {
     "lod0": 2708,
-    "lod1": 320,
-    "lod2": 72
+    "lod1": 478,
+    "lod2": 196
   },
   "dimensions_blender": [
     1.2049999237060547,
@@ -39,19 +39,19 @@
       "quantized": true
     },
     "model.lod1.glb": {
-      "bytes": 15496,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 22684,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 10536,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 14900,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.11816838995568685,
-    "lod2": 0.026587887740029542
+    "lod1": 0.17651403249630723,
+    "lod2": 0.0723781388478582
   },
   "within_budget": true,
   "nodes_ok": true,
@@ -63,5 +63,6 @@
     "raw_byte_identical": true
   },
   "matches_reference": true,
-  "done": true
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }
