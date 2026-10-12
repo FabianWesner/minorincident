@@ -12,6 +12,8 @@ import type { AssetDef } from '../../assets/types';
 export interface SceneSpec {
   /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
   l7Group?: boolean;
+  /** With `l7Group`: the production L7 bus (set piece, blocker), boarding of the authored survivors and the departure shot. */
+  l7Departure?: boolean;
   /** Fixture-only eligibility overrides, restored after view initialization. */
   barArchetypes?: string[];
   /** High-tier fixture cap (low uses half), for E18 stress scenes; defaults to L1 caps. */

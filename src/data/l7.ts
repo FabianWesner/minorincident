@@ -29,5 +29,5 @@ export const l7Departure = {
   /** Bus lane: straight east along Lakeshore Drive. */
   lane: { z: 47, fromX: -78.5, toX: 40 }, seconds: 9, fadeAtSeconds: 8,
   /** Camera relative to the bus: ahead of it, high, looking back past the bus at the city behind. */
-  camera: { position: [14, 8.5, 10], target: [-9, 2.2, -1] },
+  camera: { position: [22, 12, 14], target: [-14, 4, -3] },
 } as const;
