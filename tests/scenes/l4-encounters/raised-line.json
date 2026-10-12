@@ -1,0 +1,93 @@
+{
+  "name": "l4-encounters-raised-line",
+  "note": "L4-E1 regression: Alpha spawns without a floorY workaround on the 5 cm Fairhaven tiles. Review grounded feet through slam telegraph and chase, heading versus velocity, health bar, no invisible active frames or clipping.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 0,
+  "layout": {
+    "district": "D-FAIR",
+    "level": "L4",
+    "bbox": [
+      [
+        -34,
+        10
+      ],
+      [
+        -14,
+        29
+      ]
+    ],
+    "assets": [
+      "prop.sandbag-pallet"
+    ],
+    "anchors": [
+      "l4-line-south-center",
+      "l4-line-south-a",
+      "l4-line-south-b",
+      "l4-line-south-inside",
+      "l4-line-south-outside"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -25.90909090909091,
+        15.4
+      ],
+      "yaw": -90
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -25.90909090909091,
+        20.2
+      ],
+      "yaw": 90,
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.ground-slam",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 110,
+      "actor": "alpha",
+      "do": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -25.9,
+      17.8
+    ],
+    "zoom": 1.1
+  },
+  "frames": 180,
+  "shots": [
+    0,
+    40,
+    90,
+    179
+  ],
+  "sheet": 20,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "clippingMax": 0,
+    "footSinkMaxCm": 0
+  }
+}

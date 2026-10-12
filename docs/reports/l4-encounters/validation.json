@@ -1,0 +1,17 @@
+{
+  "typecheck": true,
+  "lint": true,
+  "build": true,
+  "unitPassed": 833,
+  "unitFailed": 0,
+  "verifyE22": true,
+  "simPassed": 56,
+  "nativeVisualPassed": 10,
+  "perfPassed": 2,
+  "consoleErrors": 0,
+  "commands": {
+    "verify": "MI_RUNNER_IP=157.90.173.117 MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_E2E=1 E2E_PORT=3496 npm run verify -- E22",
+    "unit": "sh tools/remote/run.sh \"$PWD\" -- npm run test:unit -- --maxWorkers=4"
+  },
+  "remoteFunctionalBrowserPassed": 7
+}
