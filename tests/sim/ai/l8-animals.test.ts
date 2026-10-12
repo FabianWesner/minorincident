@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import { Outbreak } from '../../../src/sim/outbreak/Outbreak';
 import { WorldHumans } from '../../../src/sim/ai/Perception';
+import { zooStaffLook } from '../../../src/data/zooStaff';
 import { infectedDef } from '../../../src/data/infected';
 import type { ZooSpecies } from '../../../src/sim/npc/types';
 import { arena, step, spawn, hit } from './helpers';
@@ -14,11 +15,21 @@ async function fixture() {
   return w;
 }
 const species: ZooSpecies[] = ['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'];
+test('T-E30-09-routine @E30-AC09 healthy animals walk their authored enclosure loop without a hostile brain', async () => {
+  const w = await fixture();
+  const id = w.npcs!.civilians.spawn('elephant', { x: 0, z: 0 }, { zooAnimal: 'elephant', waypoints: [{ x: 0, z: 0 }, { x: 2, z: 0 }] });
+  const e = w.entities.get(id)!;
+  for (let i = 0; i < 300 && e.civilian!.waypoint !== 0; i++) step(w, 1);
+  expect(e.civilian!.waypoint).toBe(0); expect(e.transform.x).toBeGreaterThan(1.8);
+  for (let i = 0; i < 300 && e.civilian!.waypoint !== 1; i++) step(w, 1);
+  expect(e.civilian!.waypoint).toBe(1); expect(e.transform.x).toBeLessThan(.3); expect(e.infected).toBeUndefined();
+});
 for (const animal of species) {
   test(`T-E30-09-${animal} @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5–3.5s conversion and shared bar eligibility`, async () => {
     const w = await fixture(), outbreak = w.npcs!.civilians.outbreak!;
     const id = w.npcs!.civilians.spawn(animal, { x: 0, z: 0 }, { zooAnimal: animal, waypoints: [{ x: 0, z: 0 }] });
     const e = w.entities.get(id)!;
+    expect(e.civilian?.model).toBe(`amb.${animal}`);
     expect(e.infected).toBeUndefined(); expect(e.faction).toBe('civilian');
     expect(new WorldHumans(w).get(id)?.kind).toBe('animal');
     const attacker = spawn(w, 'runner', -infectedDef(`infected.${animal}`).radius - .6, 0, 'idle');
@@ -51,7 +62,7 @@ for (const animal of species) {
 test('T-E30-08-targets @E30-AC08 civilian/soldier/staff/animal bites use local perception, pets/children/corgi excluded', async () => {
   for (const category of ['civilian', 'soldier', 'staff', 'animal']) {
     const w = await fixture(), o = w.npcs!.civilians.outbreak!;
-    const id = category === 'animal' ? w.npcs!.civilians.spawn('zebra', { x: 0, z: 0 }, { zooAnimal: 'zebra', waypoints: [{ x: 0, z: 0 }] }) : o.spawnPedestrian({ x: 0, z: 0 }, { role: category, model: category === 'soldier' ? 'npc.national-guard' : undefined });
+    const id = category === 'animal' ? w.npcs!.civilians.spawn('zebra', { x: 0, z: 0 }, { zooAnimal: 'zebra', waypoints: [{ x: 0, z: 0 }] }) : o.spawnPedestrian({ x: 0, z: 0 }, category === 'staff' ? zooStaffLook(0) : { role: category, model: category === 'soldier' ? 'npc.national-guard' : undefined });
     const pet = w.npcs!.civilians.spawn('dog', { x: 0, z: 5 }, { pet: 'dog' });
     const child = o.spawnPedestrian({ x: 1, z: 5 }, { child: true });
     expect(o.humans.get(pet)).toBeUndefined(); expect(o.humans.get(child)).toBeUndefined();
@@ -102,4 +113,15 @@ test('T-E30-09-cap @E30-AC09 @E30-AC11 bitten zoo victims cannot create duplicat
   expect(w.entities.get(id)!.infected).toBeUndefined(); expect(o.humans.get(id)).toBeUndefined();
   expect(w.infected!.director.count).toBe(1); expect(o.stats.turned).toBe(0);
   expect(w.events.events().find(ev => ev.type === 'outbreak.bite' && ev.targetId === id)).toMatchObject({ turns: false });
+});
+
+test('T-E30-09-healthy-hit @E30-AC09 @E30-AC06 healthy animals stay huntable after a harmless player hit, without human protest or magical infection', async () => {
+  const w = await fixture(), o = w.npcs!.civilians.outbreak!;
+  const id = w.npcs!.civilians.spawn('lion', { x: 0, z: 0 }, { zooAnimal: 'lion', waypoints: [{ x: 0, z: 0 }] });
+  const animal = w.entities.get(id)!;
+  expect(o.liveCivilians()).toBe(0);
+  hit(w, id); w.npcs!.civilians.annoy(animal, { x: 1, z: 0 }); step(w, 180);
+  expect(animal.civilian!.state).toBe('calm'); expect(animal.infection).toBeUndefined(); expect(animal.infected).toBeUndefined();
+  expect(o.humans.get(id)?.kind).toBe('animal');
+  expect(w.events.events().some(ev => ev.type === 'civilian.bark' && ev.id === id)).toBe(false);
 });
