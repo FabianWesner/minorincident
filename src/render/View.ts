@@ -9,6 +9,11 @@ export interface CameraPose { position: [number, number, number]; target: [numbe
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
   readonly camera = new PerspectiveCamera(cameraFraming.fovDeg, 16 / 9, 0.1, 600);
+  /** What the simulation may see of the camera (spawn director): the follow rig from tick-driven state only (focus, zoom,
+   * driving, cinematic blend). Pull, shake and roll are presentation effects driven by render time (the L1 lab accident
+   * pulls the camera on wall-clock seconds); letting them steer spawns made replays of the same inputs diverge. */
+  readonly simCamera = new PerspectiveCamera(cameraFraming.fovDeg, 16 / 9, 0.1, 600);
+  private readonly simTarget = new Vector3();
   /** CSS pixels for projected-size LOD selection, independent of render DPR. */
   viewportHeight = 900;
   readonly focus = new Vector3();
@@ -63,7 +68,7 @@ export class View {
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
     this.radius = this.defaultRadius * this.zoomRatio;
-    this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
+    this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
   }
   reset(player: { x: number; z: number }): void {
     this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
@@ -108,6 +113,11 @@ export class View {
       this.cameraTarget.lerp(this.target, t);
       this.camera.position.lerp(this.cinematicCamera.position, t); this.camera.quaternion.slerp(this.cinematicCamera.quaternion, t);
     }
+    // Sim pose: the same rig without pull (and, below, without shake and roll).
+    const sim = this.simCamera;
+    sim.position.copy(this.focus).add(this.offset); sim.lookAt(this.focus); this.simTarget.copy(this.focus);
+    if (this.blend > 0) { const t = this.blend * this.blend * (3 - 2 * this.blend); this.simTarget.lerp(this.target, t); sim.position.lerp(this.cinematicCamera.position, t); sim.quaternion.slerp(this.cinematicCamera.quaternion, t); }
+    sim.updateMatrixWorld();
     if (!this.cameraShake) this.shakeStrength = 0;
     this.shakeTime += seconds;
     this.shakeStrength *= Math.exp(-8 * seconds);
