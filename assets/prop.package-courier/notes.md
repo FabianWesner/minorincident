@@ -8,3 +8,5 @@ Reference-specific surface wear and tiny shipping text are simplified to solid d
 Reproduce: python3 experiment/tools/blender_run.py ../assets/prop.package-courier assets/prop.package-courier/build.py -- --glb assets/prop.package-courier/model.glb
 Then: node assets/prop.package-courier/optimize.mjs
 Render: same wrapper with --render assets/prop.package-courier/renders/hero.png --width 1600 --height 900 --samples 96. Use --view game/front/side/rear for review views. All preview materials have backface culling enabled; delivery materials are single-sided.
+
+Distance tiers (QA 10-11, FIX-15): `model.lod1.glb` / `model.lod2.glb` are authored from this same script, never decimated (mesh decimation opened the box at LOD2). `python3 tools/blender/run.py assets/prop.package-courier/build.py --lod 1 --glb assets/prop.package-courier/model.lod1.glb` (and `--lod 2`). LOD1 689 / LOD2 567 triangles: closed hard-edged cuboids, labels, shipping card with wide barcode bars, displays and the scanner stay; printed glyphs, rivets, glints and fine barcode bars drop. Then `npx tsx tools/assets/pack.ts prop.package-courier`.

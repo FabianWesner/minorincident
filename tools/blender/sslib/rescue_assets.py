@@ -57,7 +57,8 @@ class Scene:
     def axe(self,x,y,z,parent=None):
         self.box('axeHandle',(x,y,z),(.045,.045,.95),'woodWarm',parent)
         self.box('axeHead',(x+.08,y,z+.36),(.30,.075,.16),'survivorRed',parent)
-        if self.lod==0:self.box('axeEdge',(x+.21,y,z+.36),(.05,.08,.18),'picketWhite',parent)
+        # Blade edge stays at every tier: it is what makes the head read as an axe at distance.
+        self.box('axeEdge',(x+.21,y,z+.36),(.05,.08,.18),'picketWhite',parent)
 
 
 def recipe(s):
@@ -154,7 +155,7 @@ def recipe(s):
     elif a=='prop.axe-rack':
         s.box('rack',(0,0,.75),(.75,.18,1.5),'uiDark')
         for x in (-.22,.22):s.axe(x,-.16,.7)
-        if L==0:
+        if True:
             for z in (.3,1.1):s.box('rackBracket',(0,-.13,z),(.7,.12,.06),'sidewalk')
         s.physics()
     elif a=='wpn.halligan':
@@ -186,14 +187,14 @@ def recipe(s):
         for x in (-1.1,1.1):
             s.box('post',(x,0,.56),(.05,.05,1.12));s.box('foot',(x,0,.035),(.18,.65,.07))
         for z in (.2,1.1):s.box('rail',(0,0,z),(2.3,.05,.05))
-        for x in ([-.85,-.57,-.28,0,.28,.57,.85] if L<2 else [-.7,0,.7]):s.box('vertical',(x,0,.65),(.025,.035,.9))
+        for x in [-.85,-.57,-.28,0,.28,.57,.85]:s.box('vertical',(x,0,.65),(.025 if L<2 else .045,.035,.9))
         s.physics('medium',22);colliders.cuboid('body',(2.3,.65,1.12),(0,0,.56),s.root)
     elif a=='prop.armory-table':
         s.table(0,0,length=2)
         s.box('mat',(0,0,.925),(1.7,.65,.025),'policeBlue')
         s.box('pistolSlide',(.32,0,.995),(.27,.08,.095),'uiDark')
         s.box('pistolGrip',(.22,0,.965),(.085,.10,.12),'uiDark',angle=.3)
-        if L<2:
+        if True:
             s.box('case',(-.5,0,1.01),(.5,.4,.14),'khaki');s.box('magazine',(.65,.1,.98),(.12,.08,.1),'sidewalk')
         sockets.empty('pickupSocket',(.32,0,1.1),s.root)
         s.physics('heavy',85,True);colliders.cuboid('body',(2,.8,.98),(0,0,.49),s.root)
