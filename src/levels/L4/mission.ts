@@ -1,3 +1,4 @@
+import { l4AlphaEmergence, l4BreakableLine } from './layout';
 import { dialogue } from '../../data/dialogue';
 import { l4, l4Anchors } from '../../data/l4';
 import type { Anchor, MissionDef, ObjectiveDef, Trigger } from '../../sim/missions/types';
@@ -15,6 +16,7 @@ export function levelFourMission(resolve: (district: DistrictId, name: string) =
     states: ['arrived', 'gun', 'turned', 'line-broken', 'descended', 'barred', 'done'], counters: [], checkpoints: [...l4.checkpoints],
     cinematics: {}, steps: [], finish: ['wait'], onStart: [{ kind: 'radio', id: 'L4.briefing' }], onComplete: [],
   };
+  for (const name of [...l4AlphaEmergence.map(e => e.anchor), ...l4BreakableLine.flatMap(line => Object.values(line.anchors))]) def.anchors[name] = resolve('D-FAIR', name);
   for (const name of Object.keys(l4Anchors)) def.anchors[name] = resolve('D-FAIR', name);
   for (const name of ['kessler-cellar-door', 'metro-entrance', 'town-hall-steps']) def.anchors[name] = resolve('D-FAIR', name);
   for (let i = 1; i <= 200; i++) { try { def.anchors[`refuge-door-${i}`] = resolve('D-FAIR', `refuge-door-${i}`); } catch { break; } }

@@ -127,7 +127,7 @@ export class InfectedSystem {
     delete entity.infected!.roar; delete entity.corpseThrown;
     delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
-    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? 0.7; entity.transform.yaw = opts.yaw ?? 0;
+    Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
     Object.assign(entity.infected!, { state: opts.state ?? 'idle', heardTargetId: 0, pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: def.speed, until: 0, cooldown: 0, attackId: 0, special: def.special, hidden: id === 'infected.cat', deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: opts.pack ?? 0, packIndex: opts.packIndex ?? 0, birds: id === 'infected.crow' ? opts.birds ?? 20 : 0, scatterUntil: 0, variant: opts.variant ?? id, pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: opts.perched ?? id === 'infected.cat' }); entity.infected!.path.length = 0; if (entity.infected!.l1) entity.infected!.l1.directTick = -1; delete entity.infected!.birdMotion; delete entity.infected!.birdVertical;
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
@@ -163,7 +163,7 @@ export class InfectedSystem {
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
       if (this.world.barricades?.vault(e)) continue;
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
-      if (this.world.scenario === 'L5' && e.archetype === 'infected.alpha' && !b.specialAttack) {
+      if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack) {
         const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
         if (seen) {
           delete b.investigate; b.heardTargetId = seen.id;
@@ -503,7 +503,7 @@ export class InfectedSystem {
       b.state = 'dead'; b.deadAt = this.world.tick; b.grabUntil = 0;
       // A killed ambusher is a visible ground body, even if it died on a perch
       // or while clinging. The living-only reveal path no longer runs for it.
-      if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7; }
+      if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7; }
       if (e.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
       if (b.special === 'explode') { b.attackId = this.nextAttackId(); b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
@@ -590,7 +590,7 @@ export class InfectedSystem {
     return true;
   }
   private distraction(event: DistractionEvent): void {
-    if (this.world.scenario === 'L5' && event.kind === 'gunfire') for (const e of this.active) {
+    if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && event.kind === 'gunfire') for (const e of this.active) {
       const b = e.infected!;
       if (e.archetype === 'infected.alpha' && e.health.current > 0 && !b.specialAttack && ['idle', 'wander', 'attracted'].includes(b.state) && Math.hypot(e.transform.x - event.position.x, e.transform.z - event.position.z) <= event.radius) {
         b.investigate = { ...event.position }; b.until = event.until; b.state = 'attracted';
@@ -925,7 +925,7 @@ export class InfectedSystem {
   finishSpecial(sourceId: number): boolean {
     const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
     if (!e || !b || !a || a.stage !== 'active') return false;
-    if (a.move === 'lion.pounce') e.transform.y = (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7;
+    if (a.move === 'lion.pounce') e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7;
     if (e.locomotion) resetResponse(e.locomotion);
     a.stage = 'recovery'; a.recoveryUntil = this.world.tick + infectedSpecialRecoveryTicks;
     b.specialRecoveryUntil = a.recoveryUntil; e.combat!.attacking = false;
@@ -935,7 +935,7 @@ export class InfectedSystem {
     const e = this.world.entities.get(sourceId), b = e?.infected, a = b?.specialAttack;
     if (!e || !b || !a) return;
     this.props.settleSpecial(a);
-    if (a.move === 'lion.pounce') e.transform.y = (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .7;
+    if (a.move === 'lion.pounce') e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7;
     b.specialRecoveryUntil = Math.max(b.specialRecoveryUntil ?? 0, this.world.tick + infectedSpecialRecoveryTicks);
     this.world.events.emit({ type: 'infected.special', tick: this.world.tick, sourceId, move: a.move, attackId: a.attackId, stage: 'cancelled' });
     delete b.specialAttack; e.combat!.attacking = false;
@@ -1006,7 +1006,7 @@ export class InfectedSystem {
     const x = p.x, z = p.z;
     p.x += a.area.dx * Math.max(0, distance - (distance < step ? .001 : 0));
     p.z += a.area.dz * Math.max(0, distance - (distance < step ? .001 : 0));
-    p.y = (this.world.districts?.groundHeight(p.x, p.z) ?? 0) + .7 + (pounce && range > 0 ? Math.sin(Math.PI * Math.min(1, (travelled + distance) / range)) * .65 : 0);
+    p.y = (this.world.districts?.pavingHeight(p.x, p.z) ?? 0) + .7 + (pounce && range > 0 ? Math.sin(Math.PI * Math.min(1, (travelled + distance) / range)) * .65 : 0);
     p.yaw = -Math.atan2(a.area.dz, a.area.dx); this.world.spatial.set(e.id, p.x, p.z);
     this.physicalQuery.x = x; this.physicalQuery.z = z; this.physicalQuery.r = distance + hitRadius + 1e-8;
     this.world.spatial.query(this.physicalQuery, this.physicalNeighbors);

@@ -1,3 +1,4 @@
+import { l4BreakableLine } from '../../levels/L4/layout';
 import { isWorldTier } from '../../levels/districts/types';
 import type {
   DistrictLayout,
@@ -49,6 +50,11 @@ export class DistrictWorld {
         gameplayLayers = gameplay.decay.filter(
           (l) => l.tier <= composition.tier,
         );
+      if (composition.id === 'L4' && d.id === 'D-FAIR') {
+        const replaced = new Set(l4BreakableLine.map(line => line.placementId));
+        decay.placements = decay.placements.filter(p => !replaced.has(p.id));
+        decay.colliders = decay.colliders.filter(c => !replaced.has(c.id.split('/')[0]));
+      }
       // Pushable props are dynamic bodies (PropSystem): no static collider, no nav-grid footprint.
       const pushables = decay.placements.filter((p) => pushableProps[p.assetId]);
       const pushed = new Set(pushables.map((p) => p.id));

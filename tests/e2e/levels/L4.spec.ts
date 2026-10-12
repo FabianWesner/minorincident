@@ -46,8 +46,10 @@ function helpers(page: Page) {
         const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
       }, { start, target });
+      // Resolve the queued screen click with the same camera used to project it (as in the L5 harness).
+      await step(1);
       const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
-      await page.mouse.click(point.x, point.y);
+      await page.mouse.click(point.x, point.y); await step(1);
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
     await click();
@@ -173,6 +175,8 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     await page.evaluate(() => { const a = window.__SS__!; a.pause(); a.debug.figureJoints(true); a.cheats.god(true); a.cheats.completeObjective('ride'); });
     await page.evaluate(() => window.__SS__!.step(120));
     const dir = 'test-results/epics/E22/crowd-drawn'; mkdirSync(dir, { recursive: true });
+    // A DOM interaction caption covered a sampled head; clean-shot mode isolates actual submitted body pixels.
+    await page.evaluate(() => document.body.classList.add('ui-hidden'));
     /** Heads/torsos of `kind` entities moved around the courier must change the pixels when they are moved off screen. */
     const check = async (kind: 'civilian' | 'infected', name: string) => {
       const before = await page.evaluate(async ({ kind }) => {
