@@ -39,7 +39,7 @@ test('accessory GLBs stay within 150/80 triangles, one neutral material, mesh be
       const document = await io.read(path);
       expect(triangleCount(document), `${path} triangles`).toBeLessThanOrEqual(cap);
       const materials = document.getRoot().listMaterials();
-      expect(materials.map(material => material.getName()), path).toEqual([def.accessory!.slot === 'hat' ? 'pal_picketWhite' : 'pal_hairWhite']);
+      expect(materials.map(material => material.getName()), path).toEqual([def.accessory!.slot === 'hat' ? 'pal_pants' : 'pal_hairWhite']);
       const head = document.getRoot().listNodes().find(node => node.getName() === 'head');
       const hasMesh = (node: NonNullable<typeof head>): boolean => !!node.getMesh() || node.listChildren().some(hasMesh);
       expect(!!head && hasMesh(head), `${path} mesh below the head node`).toBe(true);

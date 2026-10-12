@@ -15,8 +15,8 @@ from . import sockets, export
 from .palette import mat
 
 HEAD_JOINT_Z = 1.055          # man A head joint height; geometry is exported relative to it
-C = Vector((-0.02, 0.0, 1.27))     # reference cranium centre (man A hair hull: upper dome centre)
-R = (0.187, 0.222, 0.165)        # semi axes of the reference hair hull (boxy superellipsoid)
+C = Vector((-0.01, 0.0, 1.27))     # reference cranium centre (upper dome of the skin skull + hair thickness)
+R = (0.15, 0.222, 0.165)         # semi axes of the reference shell (boxy superellipsoid); fits scale it to each skull
 N_PLAN, N_SIDE = 2.6, 2.9
 TRI_CAP = {0: 150, 1: 80}
 
@@ -63,7 +63,7 @@ def env_point(u, v, infl=(0, 0, 0), plan=N_PLAN, side=N_SIDE, centre=C, radii=R)
 
 
 def shell(piece, cols, rows, u0, u1, edge_z, infl=0.0, closed=False, low_taper=1.0, bump=0.0,
-          centre=C, radii=R, plan=N_PLAN, side=N_SIDE, cut_low=-0.6):
+          centre=C, radii=R, plan=N_PLAN, side=N_SIDE, cut_low=-0.6, seam=None):
     """Shell over the cranium. `edge_z(u)` is the lower edge height at azimuth u.
 
     Elevation v runs from the edge up to the pole (one shared top vertex). Edges below
@@ -95,6 +95,8 @@ def shell(piece, cols, rows, u0, u1, edge_z, infl=0.0, closed=False, low_taper=1
             if bump and 0 < i:
                 w = 1 + bump * math.sin(j * 2.3 + i * 1.7) * math.cos(j * 1.1 - i * 2.9)
                 p = Vector((centre.x + (p.x - centre.x) * w, centre.y + (p.y - centre.y) * w, centre.z + (p.z - centre.z) * (1 + (w - 1) * .5)))
+            if seam and i > 0 and j % seam[0] == 0:        # panel seam: groove pushed into the dome
+                p = Vector((centre.x + (p.x - centre.x) * (1 - seam[1]), centre.y + (p.y - centre.y) * (1 - seam[1]), p.z - seam[1] * .6 * (i / rows)))
             column.append(piece.vert(p))
         grid.append(column)
     if top is None:
