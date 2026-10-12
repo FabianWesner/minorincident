@@ -385,6 +385,7 @@ export class LevelThreeCollapse {
     if (b.mode === 'attracted' && Math.hypot(b.goalX - goal.x, b.goalZ - goal.z) < 6) { b.search.until = w.tick + ticks(l3.finale.chaseS); return; }
     w.infected!.rush(id, goal, w.tick + ticks(l3.finale.chaseS));
   }
+  private readonly closedDoors = new Set<string>();
   private emergePending(all = false): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
     // Stream street residents one at a time instead of creating three rigs/brains in one frame.
@@ -396,12 +397,15 @@ export class LevelThreeCollapse {
     if (yard && s.segmentIds[0].length >= (ai.director.tier === 'low' ? 5 : 10)) return;
     const allowance = yard ? Math.min(3, (ai.director.tier === 'low' ? 5 : 10) - s.segmentIds[0].length) : all ? Infinity : 1;
     let spawned = 0;
+    // E18: the 5x queues hold hundreds of entries on a few dozen doors; a door that is in view, too close or blocked stays
+    // so for the rest of this call (one frustum test per door, not per queued infected).
+    const closed = this.closedDoors; closed.clear();
     for (const q of s.pending as Pending[]) {
-      if (q.id !== 0 || (yard && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10)) continue;
+      if (q.id !== 0 || (yard && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10) || closed.has(q.door)) continue;
       const a = this.anchor(q.door);
-      if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < 25) continue;
+      if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < 25) { closed.add(q.door); continue; }
       const id = this.emerge(a, q.home, !!q.horde);
-      if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
+      if (!id) { if (ai.director.count >= ai.director.cap) break; closed.add(q.door); continue; }
       const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
       if (q.horde) this.rushPursuer(id, q.home);
       else if (q.kind) ai.rush(id, q.home, world.tick + ticks(90));

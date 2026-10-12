@@ -421,14 +421,29 @@ export class NavGrid {
    * at least `minRange` away.
    */
   escapeCell(position: { x: number; z: number }, radius: number, range = 6, outsideSearch = true, minRange = 0): number {
-    const n = Math.ceil(range / this.cellSize); let best = -1, distance = range * range;
-    for (let dz = -n; dz <= n; dz++) for (let dx = -n; dx <= n; dx++) {
-      const cell = this.cell(position.x + dx * this.cellSize, position.z + dz * this.cellSize);
+    // E18: offsets nearest-first, stopping once no remaining cell can beat the best one; the line-of-sight test is the cost
+    // (an L3 follower off the crowd grid ran ~1000 of them per tick). Same answer as the full square scan.
+    const n = Math.ceil(range / this.cellSize), offsets = this.escapeOffsets(n), slack = this.cellSize * Math.SQRT1_2; let best = -1, distance = range * range;
+    for (let i = 0; i < offsets.length; i += 3) {
+      const reach = Math.max(0, offsets[i + 2] - slack); if (reach * reach > distance) break;
+      const cell = this.cell(position.x + offsets[i] * this.cellSize, position.z + offsets[i + 1] * this.cellSize);
       if (cell < 0 || this.blocked[cell] || (outsideSearch && this.pathSeen[cell] === this.pathStamp)) continue;
       const d = (this.x(cell) - position.x) ** 2 + (this.z(cell) - position.z) ** 2;
-      if (d < distance && d >= minRange * minRange && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
+      if ((d < distance || d === distance && cell < best) && d >= minRange * minRange && this.visible(position, { x: this.x(cell), z: this.z(cell) }, radius)) { best = cell; distance = d; }
     }
     return best;
+  }
+  private readonly escapeOffsetCache = new Map<number, Float64Array>();
+  /** (dx, dz, metres) triples of the (2n+1)^2 square, nearest first. */
+  private escapeOffsets(n: number): Float64Array {
+    let offsets = this.escapeOffsetCache.get(n);
+    if (!offsets) {
+      const list: [number, number, number][] = [];
+      for (let dz = -n; dz <= n; dz++) for (let dx = -n; dx <= n; dx++) list.push([dx, dz, Math.hypot(dx, dz) * this.cellSize]);
+      list.sort((a, b) => a[2] - b[2] || a[1] - b[1] || a[0] - b[0]);
+      this.escapeOffsetCache.set(n, offsets = Float64Array.from(list.flat()));
+    }
+    return offsets;
   }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
   path(from: number, to: number, result: number[], budget: number): boolean {
