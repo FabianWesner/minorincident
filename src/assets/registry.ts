@@ -54,7 +54,11 @@ export class AssetRegistry {
     return (await pending).clone(true);
   }
   private async prototype(def: AssetDef, lod: 'lod0' | 'lod1' | 'lod2', decay?: string, lowGlb?: string): Promise<Object3D> {
-    const fallback = (reason: string): Group => { this.log({ type: 'asset.placeholder', id: def.id, reason }); return placeholder(def); };
+    const fallback = (reason: string): Group => {
+      this.log({ type: 'asset.placeholder', id: def.id, reason });
+      console.warn(`[assets] ${def.id}${decay ? ':' + decay : ''} fell back to a PLACEHOLDER BOX (${reason}). Never ship this.`);
+      return placeholder(def);
+    };
     if (!atLeast(def.status, 'integrated')) return fallback(`status ${def.status}`);
     if (def.decalTexture) {
       try {
@@ -72,7 +76,8 @@ export class AssetRegistry {
     try {
       root = await this.load('/' + variantPath(path, vehicleDecayFallback(def, decay) ? undefined : decay).replace(/^public\//, ''));
       const contract = { ...def, ...(decay ? def.decayNodes?.[decay] : undefined) };
-      for (const name of [...contract.requiredNodes, ...contract.animatedNodes, ...contract.sockets]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
+      // Decorative decay variants are never driven or boarded: seat/exit sockets are only required of the intact model.
+      for (const name of [...contract.requiredNodes, ...contract.animatedNodes, ...(decay ? [] : contract.sockets)]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
       root.traverse((node) => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
       if (lod !== 'lod0' && def.lods?.[lod]) {
         const bounds = new Box3().setFromObject(root), size = bounds.getSize(new Vector3());
@@ -95,6 +100,11 @@ export class AssetRegistry {
       if (lod !== 'lod0') {
         console.info(JSON.stringify({ type: 'asset.lod-fallback', id: def.id, lod, reason: String(error) }));
         return this.loadAsset(def.id, lod === 'lod2' ? 'lod1' : 'lod0', decay);
+      }
+      // A broken decay variant of a vehicle must never become a box: reuse the intact shell with the damage tint instead.
+      if (decay && def.category === 'vehicle' && !vehicleDecayFallback(def, decay)) {
+        console.warn(`[assets] ${def.id}:${decay} failed to load (${String(error)}); using the intact shell with the ${decay} tint. Fix the variant GLB.`);
+        return this.prototype({ ...def, decayVariants: def.decayVariants.filter(v => v !== decay) }, lod, decay, lowGlb);
       }
       return fallback(String(error));
     }
