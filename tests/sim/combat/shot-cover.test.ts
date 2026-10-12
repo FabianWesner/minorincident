@@ -18,7 +18,9 @@ async function setup() {
 test.each(['officer', 'soldier', 'civilian'] as const)('@E21 shot cover: ground %s cannot hit through a 3 m wall; tower shooter can', async role => {
   const { w, target } = await setup();
   target.transform.x = 5; w.spatial.set(target.id, 5, 0);
-  w.entities.get(1)!.transform.x = 4.5;
+  // The courier stands beside the line of fire, not in it: E22 §5 "a human in the shot segment suppresses that allied
+  // shot" (752dcf24), and from the 4.26 m deck the bullet still passes her head height half a metre before the target.
+  Object.assign(w.entities.get(1)!.transform, { x: 4.5, z: 2 }); w.spatial.set(1, 4.5, 2);
   (w.combat!.query.walls as CoverWall[])[0].x = 1;
   const e = w.entities.get(w.npcs!.civilians.spawn(role, { x: 0, z: 0 }, { waypoints: [{ x: 0, z: 0 }] }))!;
   e.civilian!.ally = { ...allyState(role, e.transform, true), engaged: true,
