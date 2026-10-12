@@ -48,11 +48,25 @@ const camera = new PerspectiveCamera(25, 16 / 9, .1, 600), offset = new Vector3(
  * headless director spawns out of view exactly as it would in the browser (Game.simTick sets the same frustum). */
 export function followFrustum(world: SimWorld): void {
   const p = world.entities.get(1)!.transform;
-  offset.setFromSphericalCoords(19, Math.PI * .3, Math.PI / 4);
-  camera.position.set(p.x + offset.x, offset.y, p.z + offset.z); camera.lookAt(p.x, 0, p.z); camera.updateMatrixWorld(true);
+  const rescue = world.scenario === 'L3' && !!world.missions?.state.l3?.finaleAt && !world.missions.state.l3.barrierClosedAt && p.x >= 195;
+  const x = p.x, z = p.z, y = Math.max(0, p.y - .72);
+  offset.setFromSphericalCoords(19 * (rescue ? 3.3 : 1), Math.PI * .3, Math.PI / 4);
+  camera.position.set(x + offset.x, y + offset.y, z + offset.z); camera.lookAt(x, y, z); camera.updateMatrixWorld(true);
   frustum.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
   world.infected?.director.setFrustum(frustum.elements, camera.position);
 }
+const gameCamera = new PerspectiveCamera(25,16/9,.1,600), gamePoint = new Vector3();
+/** Actual game-camera visibility for balance reports, distinct from the stable spawn frustum. */
+export function inL3GameView(world: SimWorld, point: {x:number;y:number;z:number}): boolean {
+  const p=world.entities.get(1)!.transform;
+  const rescue=!!world.missions?.state.l3?.finaleAt&&!world.missions.state.l3.barrierClosedAt&&p.x>=195;
+  const x=rescue?p.x+(202-p.x)*.8:p.x,z=rescue?p.z*.2:p.z,y=Math.max(0,p.y-.72)*(rescue?.2:1)+(rescue?1.28:0);
+  offset.setFromSphericalCoords(19*(rescue?3.3:1),Math.PI*.3,Math.PI/4);
+  gameCamera.position.set(x+offset.x,y+offset.y,z+offset.z);gameCamera.lookAt(x,y,z);gameCamera.updateMatrixWorld(true);
+  gamePoint.set(point.x,point.y+.6,point.z).project(gameCamera);
+  return Math.abs(gamePoint.x)<1&&Math.abs(gamePoint.y)<1&&Math.abs(gamePoint.z)<1;
+}
+
 const median = (v: number[]) => { if (!v.length) return 0; const s = [...v].sort((a, b) => a - b); return s[Math.floor(s.length / 2)]; };
 
 export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opts: { seed?: number; street?: L3StreetChoice; maxSeconds?: number; stopWhen?: (m: Mission) => boolean; god?: boolean } = {}): L3Report {
@@ -137,7 +151,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
     s1: s.fallbackAt ? s1 : null,
     killDistances: { gun, melee },
     regressionM: regression, streets: [...streets],
-    density: { prepopulated: [0, 1, 2].map(k => s.pending.filter(q => q.segment === k).length), near30: near30.map(median), maxConcurrent, cap: world.infected!.director.cap },
+    density: { prepopulated: [0, 1, 2].map(k => s.pending.filter(q => q.segment === k && !q.kind).length), near30: near30.map(median), maxConcurrent, cap: world.infected!.director.cap },
     medkits, lowHpShare: samples ? low / samples : 0, audit, deathsAt,
   };
 }

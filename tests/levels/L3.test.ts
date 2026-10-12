@@ -203,9 +203,9 @@ describe('L3 The Police Collapse', () => {
     }
   }, HEAVY);
 
-  test('T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded', async () => {
+  test('T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded', async () => {
     const runs = await complete();
-    for (const r of runs) for (const [k, target] of [10, 25, 40].entries()) { expect(r.density.prepopulated[k]).toBeGreaterThanOrEqual(target * .8); expect(r.density.prepopulated[k]).toBeLessThanOrEqual(target * 1.2); }
+    for (const r of runs) for (const [k, target] of [250, 625, 1000].entries()) { expect(r.density.prepopulated[k]).toBeGreaterThanOrEqual(target * .8); expect(r.density.prepopulated[k]).toBeLessThanOrEqual(target * 1.2); }
     expect(median(runs.map(r => r.density.near30[2]))).toBeGreaterThan(median(runs.map(r => r.density.near30[0])));
     for (const r of runs) expect(r.density.maxConcurrent).toBeLessThanOrEqual(r.density.cap);
   }, HEAVY);
@@ -225,9 +225,9 @@ describe('L3 The Police Collapse', () => {
     expect(emergences.length).toBeGreaterThanOrEqual(1);
     expect(Math.min(...emergences.map(e => e.tick))).toBeGreaterThanOrEqual(19 * 60);
     for (const e of emergences) { expect(furthest - e.x).toBeGreaterThanOrEqual(14); expect(furthest - e.x).toBeLessThanOrEqual(36); expect(e.seen).toBe(false); }
-    // Per 10 s window: 1-3.
+    // PO 2026-10-12: queued pressure packs contain 25-75 infected.
     const windows = new Map<number, number>(); for (const e of emergences) windows.set(Math.floor(e.tick / 600), (windows.get(Math.floor(e.tick / 600)) ?? 0) + 1);
-    for (const n of windows.values()) expect(n).toBeLessThanOrEqual(3);
+    for (const n of windows.values()) expect(n).toBeLessThanOrEqual(75);
     record('pressure', { before, emergences });
     // Advancing: while the furthest line keeps moving, nothing emerges behind it (every new emergence needs 20 s idle).
     let early = 0, seen = s.pressureIds.length;

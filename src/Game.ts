@@ -66,6 +66,8 @@ export class Game {
   driver: LevelSixBot | BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
+  simTicks = 0;
+  simWorldMs = 0;
   private readonly spawnFrustum = new Matrix4();
   private loading = false;
   private prefetchedMission: object | null = null;
@@ -139,9 +141,10 @@ export class Game {
         // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
         const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
         if (!this.clock.paused) this.view.frame(seconds * slow);
-        const start = performance.now();
+        const start = performance.now(), tickBefore = this.world.tick; this.simWorldMs = 0;
         this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
+        this.simTicks = this.world.tick - tickBefore;
         this.inspect?.update(seconds);
         this.rescueFade.set(this.world.trapRescue?.fading ?? false);
         if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
@@ -350,7 +353,7 @@ export class Game {
       this.spawnFrustum.multiplyMatrices(sim.projectionMatrix, sim.matrixWorldInverse);
       this.world.infected.director.setFrustum(this.spawnFrustum.elements, sim.position);
     }
-    this.world.update();
+    const simStart = performance.now(); this.world.update(); this.simWorldMs += performance.now() - simStart;
     if (this.ui.enabled) this.ui.hud.onboarding.observe(this.world.inputFrame);
     this.view.advance(1 / 60);
   }
@@ -366,7 +369,7 @@ export class Game {
    * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
+    return { infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }

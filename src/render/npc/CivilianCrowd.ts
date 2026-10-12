@@ -117,7 +117,7 @@ class CivilianBatch extends Group {
     this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
     // The phone's final-horde carpet keeps every body using the shipped far
     // silhouette. Freeze this choice so later quality changes cannot duplicate it.
-    this.corpseLod = world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
+    this.corpseLod = world.scenario === 'L3' || world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
     this.frame = new InstancedBufferAttribute(new Float32Array(this.capacity), 1).setUsage(StreamDrawUsage);
     this.tint = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
     this.overlay = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
@@ -191,7 +191,8 @@ class CivilianBatch extends Group {
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (shotId === undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, pixels, this.model)) !== this.lod) continue;
+      // Low-tier downed bodies use the existing far geometry; close bodies and living figures retain their detail.
+      if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, (e.health?.current ?? 1) <= 0 ? pixels * .55 : pixels, this.model)) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
