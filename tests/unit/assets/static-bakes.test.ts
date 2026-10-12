@@ -22,6 +22,12 @@ for (const [key, url] of Object.entries(files)) test(`${key}: shipped static byt
   try {
     const root = await registry.asset(id, true, lod as 'lod0' | 'lod1' | 'lod2', decay || undefined);
     expect(root.userData.placeholder).not.toBe(true);
+    if (id === 'prop.street-lamp') {
+      const glow = root.children.find(child => child.name === 'window-light') as Mesh;
+      const light = glow.geometry.getAttribute('_light');
+      expect(light.count).toBeGreaterThan(0);
+      for (let i = 0; i < light.count; i++) expect(light.getX(i), 'lantern must obey its power anchor').toBe(0);
+    }
     const bytes = gunzipSync(readFileSync(`public${url}`));
     expect(Buffer.from(encodeStaticBake(root)).equals(bytes)).toBe(true);
     vi.stubGlobal('fetch', async () => new Response(bytes));

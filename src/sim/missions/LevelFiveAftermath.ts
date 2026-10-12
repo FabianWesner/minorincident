@@ -90,7 +90,7 @@ export class LevelFiveAftermath {
   private placeInCellar(): void {
     const { world } = this.mission, player = world.entities.get(1)!, inn = this.anchor('l5-cellar-in');
     this.teleport(player, inn);
-    for (const e of world.entities.iterate()) if (e.companion) { const p = { x: inn.x + 1.2, z: inn.z - .6 }; Object.assign(e.transform, p); e.hidden = false; world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: inn.x + 1.2, z: inn.z - .6 }, e.combat?.radius ?? .4); Object.assign(e.transform, p); e.hidden = false; world.spatial.set(e.id, p.x, p.z); }
   }
   private teleport(player: EntitySnapshot, to: Point): void {
     const { world } = this.mission;

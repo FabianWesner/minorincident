@@ -84,6 +84,7 @@ test('T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, pr
   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');
+  expect(state.player!.weapons!.selectedSide).toBe('LEFT');
 });
 test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{
   await page.goto(testUrl);
