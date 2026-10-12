@@ -47,6 +47,8 @@ export interface EntitySnapshot {
   /** L1 v2: the courier bicycle (entity) and the id of the bicycle the player is riding (player entity). */
   bicycle?: import('../vehicles/Bicycle').BicycleState;
   riding?: number;
+  /** Survivor inside or crossing a transport doorway; independent of infected clingers. */
+  passengerOf?: number;
   /** L1 v2 interactive toys (dumpster, car alarm, car wash); gates use `interactable`. */
   toy?: import('../interact/Toys').ToyState;
   survivor?: SurvivorState;

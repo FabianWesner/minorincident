@@ -9,7 +9,17 @@ import { Bicycle } from './Bicycle';
 import { Obstacles } from './Obstacles';
 import { VehicleBody } from './VehicleBody';
 /** Serialized vehicle component. Native handles live only in Vehicles.cars. */
+export interface VehiclePassenger {
+  id: number;
+  /** Persist transition and civilian routine ownership with the ordinary entity checkpoint. */
+  started: number; phase: 'enter' | 'seated' | 'exit'; from: EntitySnapshot['transform'];
+  to?: EntitySnapshot['transform']; pauseUntil: number; floorY?: number;
+  story?: NonNullable<EntitySnapshot['civilian']>['story'];
+}
+/** Plain transfer payload: weapons and every living occupant retain their own components/IDs. */
+export interface VehicleTransfer { vehicle: EntitySnapshot; occupants: EntitySnapshot[]; infiniteCharges: boolean; tick: number }
 export interface VehicleState {
+  passengers?: VehiclePassenger[];
   speed: number; forwardSpeed: number; steer: number; braking: boolean; boosting: boolean;
   /** Authored body variant, persisted with the vehicle snapshot. */
   decay?: 'wrecked' | 'burned';
@@ -260,7 +270,7 @@ export class Vehicles {
         const player = this.world.entities.get(1)!; Object.assign(this.world.previousPlayer!, player.transform); Object.assign(player.transform, car.entity.transform);
         this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform); this.world.spatial.set(1, player.transform.x, player.transform.z);
       }
-      this.infected(car); this.damageState(car);
+      this.updatePassengers(car); this.infected(car); this.damageState(car);
       if (this.active === car.entity.id && car.entity.health.current > 0 && car.physics.recoverFlip()) {
         state.recoveringUntil = 0;
         this.world.events.emit({ type: 'vehicle.recovering', tick: this.world.tick, sourceId: car.entity.id });
@@ -271,6 +281,128 @@ export class Vehicles {
     }
     this.obstacles.update(this.world.tick);
   }
+  /** Boarding uses the same doorway as the driver, with no visual seat-count limit. */
+  boardPassenger(carId: number, actorId: number): boolean {
+    const car = this.cars.get(carId), actor = this.world.entities.get(actorId);
+    if (!car?.physics.def.transport || !actor?.civilian || actor.health.current <= 0 || actor.infected || actorId === 1 || car.entity.health.current <= 0 || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
+    this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
+    if (Math.hypot(actor.transform.x - this.position.x, actor.transform.z - this.position.z) > .7) return false;
+    const c = actor.civilian;
+    const passenger: VehiclePassenger = { id: actorId, phase: 'enter', started: this.world.tick, from: { ...actor.transform }, pauseUntil: c.pauseUntil, floorY: c.floorY, story: c.story ? { ...c.story } : c.story };
+    (car.entity.vehicle!.passengers ??= []).push(passenger);
+    actor.passengerOf = carId; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.path.length = 0;
+    return true;
+  }
+  /** Escape lanes provide their complete group, including losses; no kill-count condition. */
+  groupBoarded(carId: number, roster: readonly number[]): boolean {
+    const car = this.cars.get(carId);
+    if (!car || car.entity.vehicle!.driver !== 1) return false;
+    return roster.every(id => {
+      const actor = this.world.entities.get(id);
+      return !!actor && (actor.health.current <= 0 || !!actor.infected || car.entity.vehicle!.passengers?.some(p => p.id === id && p.phase === 'seated') === true);
+    });
+  }
+  disembarkPassenger(carId: number, actorId: number): boolean {
+    const car = this.cars.get(carId), passenger = car?.entity.vehicle!.passengers?.find(p => p.id === actorId), actor = this.world.entities.get(actorId);
+    if (!car || !passenger || !actor || passenger.phase !== 'seated') return false;
+    for (const side of [1, -1]) for (let offset = 0; offset <= 4; offset++) {
+      this.localPoint(car, car.physics.def.doorX - offset * .8, side * (car.physics.def.width / 2 + .65));
+      const nav = this.world.infected?.nav;
+      if (nav && !nav.clear(this.position.x, this.position.z, survivor.radius)) continue;
+      if ([...this.world.entities.iterate()].some(e => e.id !== actorId && !e.hidden && e.health.current > 0 && (e.civilian || e.survivor) && Math.hypot(e.transform.x - this.position.x, e.transform.z - this.position.z) < .8)) continue;
+      if (this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!)) continue;
+      passenger.phase = 'exit'; passenger.started = this.world.tick;
+      passenger.from = { ...actor.transform }; passenger.to = { ...this.position, yaw: car.entity.transform.yaw };
+      return true;
+    }
+    return false;
+  }
+  private updatePassengers(car: Car): void {
+    const passengers = car.entity.vehicle!.passengers;
+    if (!passengers) return;
+    for (let i = passengers.length - 1; i >= 0; i--) {
+      const p = passengers[i], actor = this.world.entities.get(p.id);
+      if (!actor) continue;
+      const elapsed = this.world.tick - p.started, c = actor.civilian!;
+      if (p.phase === 'seated') {
+        Object.assign(actor.transform, car.entity.transform); actor.hidden = true; this.world.spatial.delete(actor.id); continue;
+      }
+      const entering = p.phase === 'enter';
+      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .05);
+      const target = entering ? { ...this.position, y: car.physics.def.stepHeight + .7 } : p.to!;
+      const start = entering ? p.from : { ...this.position, y: car.physics.def.stepHeight + .7, yaw: car.entity.transform.yaw };
+      const t = Math.max(0, Math.min(1, (elapsed - 12) / 30)), weight = t * t * (3 - 2 * t);
+      actor.transform.x = start.x + (target.x - start.x) * weight;
+      actor.transform.z = start.z + (target.z - start.z) * weight;
+      actor.transform.y = start.y + (target.y - start.y) * weight;
+      actor.transform.yaw = car.entity.transform.yaw + (entering ? Math.PI / 2 : -Math.PI / 2);
+      actor.hidden = entering ? elapsed >= 42 : elapsed < 12;
+      c.floorY = actor.transform.y - .7;
+      c.story = { clip: entering ? 'npc-sit-down' : 'npc-stand-up', start: p.started };
+      if (actor.hidden) this.world.spatial.delete(actor.id); else this.world.spatial.set(actor.id, actor.transform.x, actor.transform.z);
+      if (elapsed < 60) continue;
+      if (entering) {
+        p.phase = 'seated'; actor.hidden = true;
+        this.world.events.emit({ type: 'vehicle.entered', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
+      } else {
+        actor.hidden = false; delete actor.passengerOf; c.pauseUntil = p.pauseUntil; c.floorY = p.floorY; c.story = p.story ?? null;
+        passengers.splice(i, 1);
+        this.world.events.emit({ type: 'vehicle.exited', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
+      }
+    }
+  }
+  /** Call only after the complete living group is seated; copy before replacing the level. */
+  transfer(carId: number): VehicleTransfer {
+    const car = this.cars.get(carId);
+    if (!car?.physics.def.transport || car.entity.vehicle!.driver !== 1 || car.entity.vehicle!.passengers?.some(p => p.phase !== 'seated')) throw new Error('Transport is not ready to depart');
+    const ids = [1, ...(car.entity.vehicle!.passengers ?? []).map(p => p.id)];
+    return structuredClone({ tick: this.world.tick, infiniteCharges: this.world.combat?.runner.infiniteCharges ?? false, vehicle: car.entity, occupants: ids.map(id => this.world.entities.get(id)!).filter(e => e.health.current > 0 && !e.infected) });
+  }
+  /** Destination level calls after its normal setup, before any entities can claim these IDs. */
+  restoreTransfer(transfer: VehicleTransfer, position: { x: number; z: number }, yaw = 0): number {
+    const payload = structuredClone(transfer), vehicle = payload.vehicle;
+    if (!vehicle.vehicle || vehicle.vehicle.driver !== 1 || !vehicleDef(vehicle.archetype).transport || !payload.occupants.some(e => e.id === 1)) throw new Error('Invalid transport transfer');
+    for (const entity of [vehicle, ...payload.occupants]) if (entity.id !== 1 && this.world.entities.get(entity.id)) throw new Error(`Transport identity collision: ${entity.id}`);
+    const delta = this.world.tick - payload.tick;
+    for (const actor of payload.occupants) {
+      const c = actor.civilian;
+      if (c) {
+        c.entered += delta;
+        for (const key of ['until', 'pauseUntil', 'knockedUntil', 'activityUntil', 'activityStarted'] as const) if (c[key] && c[key] !== Number.MAX_SAFE_INTEGER) c[key]! += delta;
+        if (c.story) c.story.start += delta;
+        if (c.survivor) { c.survivor.foundAt += delta; if (c.survivor.waitAt) c.survivor.waitAt += delta; }
+      }
+      if (actor.infection) { actor.infection.startedTick += delta; actor.infection.endsTick += delta; }
+      if (actor.weapons) for (const side of [actor.weapons.LEFT, actor.weapons.RIGHT]) {
+        if (side.swapUntil) side.swapUntil += delta;
+        for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] += delta;
+      }
+    }
+    for (const passenger of vehicle.vehicle.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
+    if (vehicle.vehicle.explodeAt !== null) vehicle.vehicle.explodeAt += delta;
+    if (vehicle.vehicle.recoveringUntil) vehicle.vehicle.recoveringUntil += delta;
+    vehicle.vehicle.attached = [];
+    vehicle.transform.x = position.x; vehicle.transform.z = position.z; vehicle.transform.yaw = yaw;
+    for (const actor of payload.occupants) {
+      if (actor.id === 1) Object.assign(this.world.entities.get(1)!, actor);
+      else this.world.entities.replace(actor);
+    }
+    this.world.entities.replace(vehicle); this.rebuild();
+    for (const actor of payload.occupants) {
+      const live = this.world.entities.get(actor.id)!; Object.assign(live.transform, vehicle.transform); live.hidden = true; this.world.spatial.delete(live.id);
+    }
+    const player = this.world.entities.get(1)!;
+    if (player.weapons && this.world.combat) {
+      const saved = player.weapons;
+      this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
+      Object.assign(this.world.combat.runner.loadout.state, saved);
+      this.world.combat.runner.infiniteCharges = payload.infiniteCharges;
+    }
+    this.world.player!.locomotion.reset(); player.survivor!.velocity = this.world.player!.locomotion.velocity; player.locomotion = this.world.player!.locomotion.response;
+    Object.assign(this.world.previousPlayer!, player.transform);
+    this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    return vehicle.id;
+  }
   private noise(car: Car): void {
     const p = car.entity.transform;
     const radius = car.physics.def.emergency ? 60 : 30, kind = car.physics.def.emergency ? 'siren' : 'horn';
@@ -278,13 +410,15 @@ export class Vehicles {
     this.world.events.emit({ type: 'noise', tick: this.world.tick, sourceId: car.entity.id, actionId: car.entity.archetype, position: { x: p.x, y: p.y, z: p.z }, radius, loudness: 1, kind });
   }
   /** Native vehicle resources are rebuilt after E12 entity restore or world replacement. */
-  rebuild(worldReset = false): void {
+  rebuild(worldReset = false, delta = 0): void {
     this.obstacles.rebuild(worldReset);
     if (!worldReset) for (const car of this.cars.values()) car.physics.dispose();
     this.cars.clear(); this.active = null; this.transition = null;
     for (const entity of this.world.entities.iterate()) {
       if (!entity.vehicle) continue;
-      const state = entity.vehicle, physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
+      const state = entity.vehicle;
+      for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
+      const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
       Object.assign(physics.transform, entity.transform); Object.assign(physics.previous, entity.transform); entity.transform = physics.transform;
       physics.body.setTranslation(entity.transform, true);
       physics.speed = state.speed; physics.forwardSpeed = state.forwardSpeed;
