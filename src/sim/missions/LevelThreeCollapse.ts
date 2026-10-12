@@ -93,7 +93,6 @@ export class LevelThreeCollapse {
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
     world.infected.director.levelCap = l3.density.caps.high; world.infected.director.strict = true;
-    world.infected.hearing.playerBiasM = l3.density.playerBiasM;
     world.npcs.setAmbient(0);
     // L3-default progression (bat + axe from L1/L2) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.kick']);
@@ -346,7 +345,9 @@ export class LevelThreeCollapse {
     const player = world.entities.get(1)!.transform;
     const doors = this.doors().filter(d => Math.abs(d.x - link) <= sp.doorM && ai.director.offscreen(d) && dist(d, player) >= 18)
       .sort((a, b) => dist(a, at) - dist(b, at));
-    for (let i = 0; i < sp.size[seg - 1] && doors.length; i++) {
+    // Death-loop relief (l3.mercy) also eases spills planned after the respawn, not only what was pending at it.
+    const size = Math.round(sp.size[seg - 1] * (1 - this.mercyFraction()));
+    for (let i = 0; i < size && doors.length; i++) {
       s.pending.push({ id: 0, door: doors[i % doors.length].name, home: { ...at }, segment: seg, at: world.tick, kind: 'spill' });
     }
   }
@@ -390,11 +391,11 @@ export class LevelThreeCollapse {
     const w = this.world, e = w.entities.get(id), b = e?.infected?.l1;
     if (!e || !b || e.health.current <= 0) return;
     const x = e.transform.x;
-    // A leg counts as reached 8 m short of it: rush goals are jittered (3 m) and arrive within 4 m, and an infected parked at the near
-    // edge of a leg used to be sent back to that same leg forever (the finale horde stalled at x 195 outside the HMG line).
-    // The column gathers just outside police and HMG reach and hits the line as one surge (a trickle dies one by one).
-    const surge = l3.finale.surge, staged = x >= 166 && x < surge.stageX + 6 && !this.s.surgedIds?.includes(id);
-    const goal = x < 128 && home ? home : x < 138 ? { x: 146, z: 0 } : x < 166 ? { x: 174, z: 0 }
+    // The finale column gathers just outside police and HMG reach and hits the line as one surge (a trickle dies one by one).
+    // The last leg counts as reached 8 m short of 199: rush goals are jittered (3 m) and arrive within 4 m, and a pursuer parked at
+    // its near edge used to be sent back to it forever (the finale horde stalled at x 195 outside the HMG line).
+    const surge = l3.finale.surge, s = this.s, staged = !!s.finaleAt && x >= 166 && x < surge.stageX + 6 && !s.surgedIds?.includes(id);
+    const goal = x < 128 && home ? home : x < 146 ? { x: 146, z: 0 } : x < 174 && !staged ? { x: 174, z: 0 }
       : staged ? { x: surge.stageX, z: 0 } : x < 191 ? { x: 199, z: 0 } : { x: l3.finale.barrierX + 2, z: 0 };
     if (b.mode === 'attracted' && Math.hypot(b.goalX - goal.x, b.goalZ - goal.z) < 6) { b.search.until = w.tick + ticks(l3.finale.chaseS); return; }
     w.infected!.rush(id, goal, w.tick + ticks(l3.finale.chaseS));
@@ -438,7 +439,7 @@ export class LevelThreeCollapse {
     s.pressureAt = tick;
     const [b0, b1] = l3.density.pressure.behindM, rng = new Rng(world.seed, `l3-pressure:${tick}`);
     const doors = this.doors().filter(d => d.x <= s.furthest - b0 && d.x >= s.furthest - b1 && ai.director.offscreen(d));
-    const [n0, n1] = l3.density.pressure.count, n = n0 + 5 * Math.floor(rng.next() * ((n1 - n0) / 5 + 1));
+    const [n0, n1] = l3.density.pressure.count, n = Math.round((n0 + 5 * Math.floor(rng.next() * ((n1 - n0) / 5 + 1))) * (1 - this.mercyFraction()));
     for (let i = 0; i < n && doors.length; i++) {
       const door = doors[Math.floor(rng.next() * doors.length)];
       s.pending.push({ id: 0, door: door.name, home: { x: s.furthest, z: l3.map.streets[l3Street(door.z)] }, segment: Math.min(2, Math.max(0, l3Segment(s.furthest))), at: tick, kind: 'pressure' });
@@ -468,6 +469,8 @@ export class LevelThreeCollapse {
       if (tick === ticks(l3.armory.briefingAtS)) this.mission.radio('L3.sergeant');
       if ((s.handgunAt && tick - s.handgunAt >= ticks(l3.armory.attackAfterS)) || tick >= ticks(l3.armory.attackLatestS)) this.startAttack();
     }
+    // Pressure routing during the station attack only: the waves press the police line (the corridor keeps E21-AC05 ranges).
+    world.infected!.hearing.playerBiasM = s.phase === 'attack' ? l3.density.playerBiasM : 0;
     if (s.phase === 'attack') { this.emergeWaves(); this.checkFallback(); }
     if (s.phase !== 'yard') this.emergePending();
     if (tick % 120 === 0) {
@@ -492,7 +495,8 @@ export class LevelThreeCollapse {
       for (const [id, x] of Object.entries(l3.checkpointAt)) if (player.transform.x >= x && !s.cpSeen?.includes(id)) { (s.cpSeen ??= []).push(id); (s.cpWait ??= []).push(id); }
       this.calmCheckpoint(player);
       this.zone(tick, player);
-      if (!s.crossedAt && this.mission.state.steps.checkpoint.status === 'active' && l3RouteDirection(world, this.guidanceRoute, this.guidancePoint)) {
+      // The HUD route marker (E18: a full-corridor steer, refreshed six times a second rather than every tick).
+      if (!s.crossedAt && tick % 10 === 0 && this.mission.state.steps.checkpoint.status === 'active' && l3RouteDirection(world, this.guidanceRoute, this.guidancePoint)) {
         Object.assign(this.anchor('l3-route'), this.guidancePoint, {y:world.districts?.groundHeight(this.guidancePoint.x,this.guidancePoint.z) ?? 0});
         this.mission.state.marker = 'l3-route';
       }

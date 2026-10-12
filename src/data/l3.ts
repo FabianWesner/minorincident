@@ -63,8 +63,8 @@ export const l3 = {
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
     spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [50, 75] as P, maxPerLink: 2, cooldownS: 18 },
     pressure: { idleS: 20, everyS: 10, count: [25, 75] as P, behindM: [15, 35] as P },
-    /** Brief l3-finish (PO 10-12 "so they have a chance against the policeman group"): infected choosing a target count the
-     * courier this many metres farther away, so the 5x crowd presses the police line before the courier. */
+    /** Brief l3-finish (PO 10-12 "so they have a chance against the policeman group"): during the station attack, infected
+     * choosing a target count the courier this many metres farther away, so the 5x waves press the police line first. */
     playerBiasM: 4,
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
     retireBehindM: 35,
