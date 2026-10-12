@@ -1,3 +1,4 @@
+import type { CrowdLook } from './CrowdAppearance';
 import { Mesh, type Object3D, Matrix4, Vector3, type BufferGeometry } from 'three';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 import { pickBodies } from './PickBodies';
@@ -7,7 +8,7 @@ export class CrowdFigureProbe {
   private readonly enabled = typeof location !== 'undefined' && new URLSearchParams(location.search).has('test');
   /** Detail tier of the batch that drew the figure (guards against close figures in the far silhouette tier). */
   lod?: 'lod0' | 'lod1' | 'lod2';
-  readonly figures: { id: number; instanceKey?: string; lod?: 'lod0' | 'lod1' | 'lod2'; clip: string; phase: number; drawn: boolean; feet: number[][]; scale?: number[]; soles?: number[][]; joints?: Record<string, number[]>; forward?: number[] }[] = [];
+  readonly figures: { appearance?: CrowdLook; id: number; instanceKey?: string; lod?: 'lod0' | 'lod1' | 'lod2'; clip: string; phase: number; drawn: boolean; feet: number[][]; scale?: number[]; soles?: number[][]; joints?: Record<string, number[]>; forward?: number[] }[] = [];
   /** Scene Lab: also record every rig part pivot (world metres) and the figure's forward axis. */
   static joints = false;
   private readonly matrix = new Matrix4();

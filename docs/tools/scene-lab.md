@@ -414,6 +414,23 @@ shared animal locomotion control. Scene Lab now samples actual animal paw geomet
 instead of dummy humanoid feet. Cooldown and checkpoint controls use the real
 mission checkpoint API in `tests/sim/ai/zoo-s3.test.ts`.
 
+### Crowd appearance variety
+
+`metrics.variety.infected` and `.pedestrian` report the number of visible living figures, distinct rendered looks,
+`per20` samples, `largestSameLookShare` and `largestModelShare`. Samples use stable entity order; the final sample
+uses the last twenty figures when the crowd size is not a multiple of twenty. A smaller crowd reports its actual size.
+Only channels present in the selected geometry count: hair, skin, shirt, lower garments and a drawn head accessory.
+LOD2 omits accessories. Regular infected include runner/sprinter brains; scripted special archetypes are excluded.
+
+Fixtures in `tests/scenes/crowd-variety/` cover fourteen L2 infected, twenty infected and twenty L1 pedestrians.
+Their gates are `infectedVarietyMin`, `pedestrianVarietyMin`, `sameLookShareMax` and `infectedModelShareMax`.
+Run `SCENE_PORT=33791 sh tools/e2e-lock.sh npx tsx tools/scenelab/crowd-variety.ts after` for desktop/phone images
+and a native headless Metal frame p95 comparison at the E18 200/100 caps. For isolated performance measurements,
+wrap that command in `tools/perf/quiet-run.sh` (which reserves the browser locks).
+
+`MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_BROWSER=1 npm run verify -- E18` sends functional simulation and browser
+checks to Hetzner; CPU timing, renderer counters, pixels and native frame measurements stay on the Mac.
+
 ### L7 encounter follower fixture
 
 `l7Group: true` routes authored `survivor` actors through the production L7

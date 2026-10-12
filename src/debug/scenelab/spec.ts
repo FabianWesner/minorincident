@@ -152,6 +152,11 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Count only visible living figures and channels actually drawn by their selected LOD. */
+  infectedVarietyMin?: number;
+  pedestrianVarietyMin?: number;
+  sameLookShareMax?: number;
+  infectedModelShareMax?: number;
   /** Longest consecutive capsule/static-prop footprint penetration (2 mm contact tolerance), sampled every frame. */
   propPenetrationFramesMax?: number;
   consoleErrors?: number;

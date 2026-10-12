@@ -162,6 +162,12 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
   add('clickMissMax', metrics.clicks.misses, e.clickMissMax);
+  for (const [kind, minimum] of [['infected', e.infectedVarietyMin], ['pedestrian', e.pedestrianVarietyMin]] as const) if (minimum !== undefined) {
+    const m = metrics.variety[kind], value = m.figures ? Math.min(...m.per20.map(g => g.distinct)) : 0;
+    checks.push({ name: `${kind}VarietyMin`, pass: value >= minimum, value, limit: minimum });
+  }
+  if (e.sameLookShareMax !== undefined) add('sameLookShareMax', Math.max(...Object.values(metrics.variety).map(m => m.largestSameLookShare)), e.sameLookShareMax);
+  if (e.infectedModelShareMax !== undefined) add('infectedModelShareMax', metrics.variety.infected.largestModelShare, e.infectedModelShareMax);
   add('drawCallsMax', metrics.perf.drawCalls.max ?? 0, e.drawCallsMax);
   add('trianglesMax', metrics.perf.triangles.max ?? 0, e.trianglesMax);
   const actors = Object.values(metrics.actors);

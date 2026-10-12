@@ -1,0 +1,263 @@
+{
+  "baseline": "ef34a25d",
+  "incomingMain": "529d09b6",
+  "art": "d1db5f5b",
+  "variety": {
+    "l2-fight": {
+      "high": {
+        "infected": {
+          "figures": 14,
+          "distinct": 14,
+          "per20": [
+            {
+              "figures": 14,
+              "distinct": 14
+            }
+          ],
+          "largestSameLookShare": 0.07142857142857142,
+          "largestModelShare": 0.21428571428571427
+        },
+        "pedestrian": {
+          "figures": 0,
+          "distinct": 0,
+          "per20": [],
+          "largestSameLookShare": 0,
+          "largestModelShare": 0
+        },
+        "errors": []
+      },
+      "low": {
+        "infected": {
+          "figures": 14,
+          "distinct": 14,
+          "per20": [
+            {
+              "figures": 14,
+              "distinct": 14
+            }
+          ],
+          "largestSameLookShare": 0.07142857142857142,
+          "largestModelShare": 0.21428571428571427
+        },
+        "pedestrian": {
+          "figures": 0,
+          "distinct": 0,
+          "per20": [],
+          "largestSameLookShare": 0,
+          "largestModelShare": 0
+        },
+        "errors": []
+      }
+    },
+    "infected-20": {
+      "high": {
+        "infected": {
+          "figures": 20,
+          "distinct": 20,
+          "per20": [
+            {
+              "figures": 20,
+              "distinct": 20
+            }
+          ],
+          "largestSameLookShare": 0.05,
+          "largestModelShare": 0.2
+        },
+        "pedestrian": {
+          "figures": 0,
+          "distinct": 0,
+          "per20": [],
+          "largestSameLookShare": 0,
+          "largestModelShare": 0
+        },
+        "errors": []
+      },
+      "low": {
+        "infected": {
+          "figures": 20,
+          "distinct": 20,
+          "per20": [
+            {
+              "figures": 20,
+              "distinct": 20
+            }
+          ],
+          "largestSameLookShare": 0.05,
+          "largestModelShare": 0.2
+        },
+        "pedestrian": {
+          "figures": 0,
+          "distinct": 0,
+          "per20": [],
+          "largestSameLookShare": 0,
+          "largestModelShare": 0
+        },
+        "errors": []
+      }
+    },
+    "l1-street": {
+      "high": {
+        "infected": {
+          "figures": 0,
+          "distinct": 0,
+          "per20": [],
+          "largestSameLookShare": 0,
+          "largestModelShare": 0
+        },
+        "pedestrian": {
+          "figures": 20,
+          "distinct": 20,
+          "per20": [
+            {
+              "figures": 20,
+              "distinct": 20
+            }
+          ],
+          "largestSameLookShare": 0.05,
+          "largestModelShare": 0.2
+        },
+        "errors": []
+      },
+      "low": {
+        "infected": {
+          "figures": 0,
+          "distinct": 0,
+          "per20": [],
+          "largestSameLookShare": 0,
+          "largestModelShare": 0
+        },
+        "pedestrian": {
+          "figures": 20,
+          "distinct": 20,
+          "per20": [
+            {
+              "figures": 20,
+              "distinct": 20
+            }
+          ],
+          "largestSameLookShare": 0.05,
+          "largestModelShare": 0.2
+        },
+        "errors": []
+      }
+    }
+  },
+  "nativeHorde": {
+    "before": {
+      "high": {
+        "count": 200,
+        "draws": 48,
+        "triangles": 661441,
+        "frameMsP95": 8,
+        "errors": []
+      },
+      "low": {
+        "count": 100,
+        "draws": 48,
+        "triangles": 169797,
+        "frameMsP95": 5.800000000001091,
+        "errors": []
+      }
+    },
+    "after": {
+      "high": {
+        "count": 200,
+        "draws": 54,
+        "triangles": 496623,
+        "frameMsP95": 7.900000000001455,
+        "errors": []
+      },
+      "low": {
+        "count": 100,
+        "draws": 54,
+        "triangles": 103415,
+        "frameMsP95": 4.300000000000182,
+        "errors": []
+      }
+    }
+  },
+  "throttledHorde": {
+    "before": {
+      "high": {
+        "infected": 200,
+        "pedestrians": 40,
+        "draws": 53,
+        "triangles": 713249,
+        "frameMsP95": 10.600000000000364,
+        "simMsP95": 1.3000001907348633
+      },
+      "low": {
+        "infected": 100,
+        "pedestrians": 40,
+        "draws": 52,
+        "triangles": 182933,
+        "frameMsP95": 24,
+        "simMsP95": 4.300000190734863
+      }
+    },
+    "after": {
+      "high": {
+        "infected": 200,
+        "pedestrians": 40,
+        "draws": 59,
+        "triangles": 548431,
+        "frameMsP95": 8.399999999999636,
+        "simMsP95": 1.1000003814697266
+      },
+      "low": {
+        "infected": 100,
+        "pedestrians": 40,
+        "draws": 58,
+        "triangles": 116551,
+        "frameMsP95": 30.799999999999272,
+        "simMsP95": 4.100000381469727
+      }
+    }
+  },
+  "sim": {
+    "high": {
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 200,
+      "cap": 200,
+      "simMsP50": 0.7824580000005881,
+      "simMsP95": 1.894083000000137,
+      "simMsMax": 5.765957999999955
+    },
+    "low": {
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 600,
+      "minInfected": 100,
+      "cap": 100,
+      "simMsP50": 0.26120799999989686,
+      "simMsP95": 0.6995420000002923,
+      "simMsMax": 2.5455000000001746
+    }
+  },
+  "unit": {
+    "numPassedTests": 934,
+    "numFailedTests": 0,
+    "numPassedTestSuites": 221,
+    "numFailedTestSuites": 0
+  },
+  "nonvisualE2e": {
+    "startTime": "2026-10-12T17:32:57.775Z",
+    "duration": 1380028.8769999999,
+    "expected": 24,
+    "skipped": 149,
+    "unexpected": 9,
+    "flaky": 0
+  },
+  "nonvisualE2eErrors": [
+    {
+      "message": "Timed out waiting 1380s for the test suite to run"
+    },
+    {
+      "message": "Timed out waiting 1380s for the teardown for test suite to run"
+    }
+  ]
+}
