@@ -56,9 +56,8 @@ export class LosRegistry implements LosBlockerRegistry {
 
 const huntable = new Set(['calm', 'alarmed', 'flee', 'hide']);
 /**
- * Default human query over the sim world: the living survivor (id 1) and adult, mobile civilians. Lane D may replace it
- * through `Perception.humans` with its own outbreak-aware query. The corgi, pets, children and turning civilians are
- * never humans. Returned arrays and objects are reused.
+ * Default target query: the living survivor (id 1), adult mobile civilians and healthy zoo animals. Lane D may replace it
+ * through `Perception.humans` with its own outbreak-aware query. The corgi, domestic pets, children and turning victims stay excluded. Returned arrays and objects are reused.
  */
 export class WorldHumans implements HumanTargetQuery {
   /** Civilians already bitten (lane D turns them); they leave the target set immediately. */
@@ -78,9 +77,9 @@ export class WorldHumans implements HumanTargetQuery {
   }
   private human(e: EntitySnapshot | undefined): HumanTarget | undefined {
     if (!e || e.health.current <= 0 || e.hidden || e.id === 1 && this.world.inspectionGhost) return undefined;
-    if (e.id !== 1 && !(e.civilian?.adult && !e.civilian.pet && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
+    if (e.id !== 1 && !(e.civilian?.adult && (!e.civilian.pet || !!e.civilian.zooAnimal) && !e.infection && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
     let target = this.cache.get(e.id);
-    if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : 'civilian', position: { x: 0, z: 0 }, facing: 0 }; this.cache.set(e.id, target); }
+    if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0 }, facing: 0 }; this.cache.set(e.id, target); }
     target.position.x = e.transform.x; target.position.z = e.transform.z; target.facing = e.transform.yaw;
     return target;
   }
