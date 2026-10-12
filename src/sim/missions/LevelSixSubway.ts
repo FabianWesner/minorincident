@@ -54,7 +54,9 @@ export class LevelSixSubway {
     });
     for(const x of l6.gates){const id=w.barricades!.spawn({id:`l6-gate-${x}`,groupId:'l6-service',a:{x,z:13.9},b:{x,z:16.1},height:2.3,depth:.22});const e=w.entities.get(id)!;e.archetype='l6.service-gate';e.transform.y=.6;e.interactable!.enabled=false;this.s.gates.push({id,x,closedAt:0,hold:0});}
     for(const at of [{x:281,z:24},{x:286,z:5}]){const id=w.hazards!.spawn('fire',at,{radius:1.3,duration:7200});w.entities.get(id)!.transform.y=3.95;}
-    this.power();this.mission.requestCheckpoint('shelter');
+    // Initial shelter power (emergency off until the second breach) is level setup, not a failure: apply it silently
+    // (as a tier change does) so the first LightPower sync emits no power.off / lamp.power-off cue at tick 1.
+    this.power();this.w.lightPower?.install(this.w.districts!);this.mission.requestCheckpoint('shelter');
     this.say(this.s.survivors.find(r=>r.key==='rosa'||r.routine==='treat')!.id,l6InjuryLines.treatment);
     w.events.on('combat.attack',e=>{if(e.type==='combat.attack'&&e.sourceId===1&&e.actionId==='weapon.army-mg'&&w.tick-this.s.lastShot>=30){this.s.lastShot=w.tick;w.events.emit({type:'outbreak.distraction',tick:w.tick,id:500000+w.tick*64,kind:'gunfire',position:e.position,radius:30,until:w.tick+360});}});
   }
