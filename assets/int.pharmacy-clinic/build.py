@@ -8,10 +8,15 @@ from mathutils import Vector, Matrix
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 for f in ['render', 'glb']: p.add_argument('--'+f)
-p.add_argument('--view', default='ref'); p.add_argument('--samples', type=int, default=24)
+p.add_argument('--lod', type=int, default=0); p.add_argument('--view', default='ref'); p.add_argument('--samples', type=int, default=24)
 p.add_argument('--width', type=int, default=960); p.add_argument('--height', type=int, default=540)
 a = p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
+# Authored distance tiers (QA 10-11 FIX-18): --lod 1|2 rebuilds this same layout as hard-edged closed solids
+# (no bevels, flat-shaded floor tiles and cornice blocks, fewer round segments, no micro lettering/graphics)
+# instead of decimating the hero mesh, which skewed tile normals and sawtoothed the wall caps.
+LOD = a.lod
+def fine(n, floor=8): return n if LOD == 0 else max(floor, n // (2 if LOD == 1 else 4))
 M = {}
 def material(token, h, rough=.6, metal=0, emission=0, alpha=1):
     name = ('emi_' if emission else 'pal_')+token
@@ -41,7 +46,7 @@ interior=empty('interior',parent=root)
 parts=[]
 def finish(o,name,mat,parent=interior,bevel=0):
     o.name=name; o.data.materials.clear(); o.data.materials.append(M[mat])
-    if bevel:
+    if bevel and LOD==0:
         b=o.modifiers.new('soft bevel','BEVEL'); b.width=bevel; b.segments=1 if bevel<=.012 else 2
         bpy.context.view_layer.objects.active=o; bpy.ops.object.modifier_apply(modifier=b.name)
         n=o.modifiers.new('weighted normals','WEIGHTED_NORMAL'); bpy.ops.object.modifier_apply(modifier=n.name)
@@ -55,17 +60,20 @@ def box(name,loc,size,mat='picketWhite',parent=interior,bevel=.024,rot=None):
     if rot: o.rotation_euler=rot
     return finish(o,name,mat,parent,min(bevel,min(size)*.25))
 def cyl(name,loc,r,depth,mat='sidewalk',parent=interior,axis='z',n=16):
+    n=fine(n,6)
     bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=loc)
     o=bpy.context.object
     if axis=='x': o.rotation_euler.y=math.pi/2
     if axis=='y': o.rotation_euler.x=math.pi/2
     return finish(o,name,mat,parent,min(.008,depth*.2))
 def beam(name,start,end,r=.025,mat='sidewalk',parent=interior):
+    if LOD: r=max(r,(0,.018,.03)[LOD])
     v=Vector(end)-Vector(start); o=cyl(name,(Vector(start)+Vector(end))/2,r,v.length,mat,parent,n=12)
     o.rotation_euler=v.to_track_quat('Z','Y').to_euler(); return o
 
 def torus(name,loc,r,tube,mat='uiDark',parent=interior,axis='y'):
-    bpy.ops.mesh.primitive_torus_add(major_segments=36,minor_segments=8,location=loc,major_radius=r,minor_radius=tube)
+    if LOD: tube=max(tube,(0,.03,.045)[LOD])
+    bpy.ops.mesh.primitive_torus_add(major_segments=fine(36,16),minor_segments=(8,5,4)[LOD],location=loc,major_radius=r,minor_radius=tube)
     o=bpy.context.object
     if axis=='y': o.rotation_euler.x=math.pi/2
     if axis=='x': o.rotation_euler.y=math.pi/2
@@ -74,7 +82,7 @@ font=bpy.data.fonts.load('/System/Library/Fonts/Supplemental/Arial Narrow Bold.t
 def text(name,word,loc,width,height,mat='policeBlue',parent=interior):
     bpy.ops.object.text_add(location=loc,rotation=(math.pi/2,0,math.pi/2)); o=bpy.context.object
     o.data.body=word; o.data.font=font; o.data.align_x='CENTER'; o.data.align_y='CENTER'; o.data.size=1
-    o.data.extrude=.002; o.data.resolution_u=2
+    o.data.extrude=.002; o.data.resolution_u=2 if LOD==0 else 1
     bpy.ops.object.convert(target='MESH'); o=bpy.context.object
     xs=[v.co.x for v in o.data.vertices]; ys=[v.co.y for v in o.data.vertices]
     for v in o.data.vertices: v.co.x*=width/(max(xs)-min(xs)); v.co.y*=height/(max(ys)-min(ys))
@@ -158,14 +166,16 @@ for word,z in [('CARE',2.49),('TODAY',2.12),('STRONGER',1.74),('TOMORROW',1.40)]
 def carton(x,y,z,w=.22,h=.32,ink='backpackTeal',parent=interior):
     box('medicine_carton',(x,y,z+h/2),(.23,w,h),'picketWhite',parent,.012)
     box('carton_colour_band',(x+.121,y,z+h*.38),(.014,w*.88,h*.38),ink,parent,.006)
+    if LOD==2: return
     box('carton_label',(x+.132,y,z+h*.76),(.009,w*.73,h*.20),'picketWhite',parent,.002)
-    box('carton_label_mark',(x+.141,y,z+h*.76),(.008,w*.32,.016),ink,parent,.002)
-    cross((x+.143,y,z+h*.37),min(w*.32,h*.24),'picketWhite',parent)
+    if LOD==0:
+        box('carton_label_mark',(x+.141,y,z+h*.76),(.008,w*.32,.016),ink,parent,.002)
+        cross((x+.143,y,z+h*.37),min(w*.32,h*.24),'picketWhite',parent)
 def bottle(x,y,z,ink='schoolBusYellow',parent=interior):
     cyl('bottle_body',(x,y,z+.13),.066,.25,ink,parent,n=16)
     cyl('bottle_neck',(x,y,z+.274),.039,.065,ink,parent,n=16)
     cyl('bottle_cap',(x,y,z+.313),.045,.032,'policeBlue',parent,n=16)
-    box('bottle_label',(x+.066,y,z+.145),(.014,.085,.105),'picketWhite',parent,.004)
+    if LOD<2: box('bottle_label',(x+.066,y,z+.145),(.014,.085,.105),'picketWhite',parent,.004)
 shelf_start=len(parts)
 for sy,w in [(2.15,1.32),(-.91,1.10),(.54,1.34)]:
     box('shelf_back',(-2.58,sy,1.63),(.11,w,2.56),'backpackTeal',bevel=.012)
@@ -233,12 +243,12 @@ wheel_joints=[]
 for side,yy in [('L',wy+.40),('R',wy-.40)]:
     joint=empty('wheel'+side,(wx-.14,yy,.75),root); joint['joint']='axle_y'; wheel_joints.append(joint)
     torus('rubber_tire',(wx-.14,yy,.75),.40,.047,'uiDark',joint)
-    torus('metal_rim',(wx-.14,yy,.75),.377,.015,'sidewalk',joint)
+    if LOD<2: torus('metal_rim',(wx-.14,yy,.75),.377,.015,'sidewalk',joint)
     out=yy+(.071 if side=='L' else -.071)
     torus('push_rim',(wx-.14,out,.75),.345,.017,'infectedSkin',joint)
     cyl('wheel_hub',(wx-.14,yy,.75),.055,.17,'sidewalk',joint,'y')
-    for j in range(12):
-        th=j*math.tau/12
+    for j in range((12,6,4)[LOD]):
+        th=j*math.tau/(12,6,4)[LOD]
         beam('wheel_spoke',(wx-.14,yy,.75),(wx-.14+math.sin(th)*.37,yy,.75+math.cos(th)*.37),.008,'sidewalk',joint)
     caster=empty('caster'+side,(wx+.35,yy,.45),root); caster['joint']='axle_y'; wheel_joints.append(caster)
     torus('caster_tire',(wx+.35,yy,.45),.096,.03,'uiDark',caster)
@@ -260,7 +270,7 @@ box('soil',(-.03,2.51,1.018),(.49,.49,.025),'uiDark')
 for j in range(12):
     t=j*2.4; end=Vector((-.03+math.sin(t)*(.23+.05*(j%3)),2.51+math.cos(t)*.29,1.33+.105*(j%5)))
     beam('plant_stem',(-.03,2.51,1.02),end,.013,'grass')
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=10,ring_count=6,location=end)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=(10,8,6)[LOD],ring_count=(6,5,4)[LOD],location=end)
     o=bpy.context.object; o.scale=(.11,.31,.045); o.rotation_euler=(.55,.65,t)
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True); finish(o,'broad_leaf','foliage' if j%2 else 'grass')
 # A-frame flu shot board in foreground; lettering sits 7 mm proud.
@@ -283,7 +293,7 @@ def pool(name,cx,cy,rx,ry,z,mat='blood',n=64):
     me=bpy.data.meshes.new(name); me.from_pydata(verts,[],[(0,1+i,1+(i+1)%n) for i in range(n)]); me.update()
     o=bpy.data.objects.new(name,me); bpy.context.collection.objects.link(o); finish(o,name,mat)
 pool('blood_pool',1.04,.18,.54,.55,.355)
-for j in range(29):
+for j in range(29 if LOD<2 else 0):
     th=j*2.39; rad=.75+(j%5)*.105
     pool('blood_droplet',1.04+math.cos(th)*rad,.18+math.sin(th)*rad,.024+(j%3)*.012,.021,.355,n=12)
 for j in range(6): pool('blood_trail',1.66+j*.12,-.50-j*.12,.063,.04,.355,n=16)
@@ -345,23 +355,12 @@ bpy.context.view_layer.objects.active=meshes[0]; bpy.ops.object.bake(type='AO')
 tri=0
 for o in meshes: o.data.calc_loop_triangles(); tri+=len(o.data.loop_triangles)
 report={'id':'int.pharmacy-clinic','tier':'Hero','triangles':tri,'draw_calls':len(meshes),'materials':sorted({m.name for o in meshes for m in o.data.materials}),'nodes_ok':all(bpy.data.objects.get(n) is not None for n in ['root','interior','door_L','door_R','wheelL','wheelR','casterL','casterR','light:pharmacy']),'within_budget':tri<=100000 and len(meshes)<=40,'rounds':5,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
-(HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+if LOD==0: (HERE/'report.json').write_text(json.dumps(report,indent=2)+'\n')
 if a.glb:
     bpy.ops.object.select_all(action='DESELECT')
     for o in asset: o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
-    # LODs retain named joints, palette identity and baked AO. Restore hero data for renders.
-    hero_data={o:o.data for o in meshes}
-    for level,ratio in [(1,.15),(2,.03)]:
-        for o,data in hero_data.items():
-            o.data=data.copy()
-            bpy.context.view_layer.objects.active=o
-            dec=o.modifiers.new('distance LOD','DECIMATE'); dec.ratio=ratio; dec.use_collapse_triangulate=True
-            bpy.ops.object.modifier_apply(modifier=dec.name)
-        lodpath=Path(a.glb).with_name(Path(a.glb).stem+'.lod'+str(level)+'.glb')
-        bpy.ops.export_scene.gltf(filepath=str(lodpath.resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
-        for o,data in hero_data.items():
-            reduced=o.data; o.data=data; bpy.data.meshes.remove(reduced)
+    # Distance tiers are authored, never decimated: run this script with --lod 1|2 --glb model.lodN.glb (see notes.md).
 print('BUILD OK',tri,'triangles',len(meshes),'draw calls')
 if a.render:
     world=bpy.data.worlds.new('studio'); scene.world=world; world.use_nodes=True

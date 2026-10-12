@@ -3,3 +3,6 @@ Open framed recess exposes cartons, a workbench/toolbox, stored tools and a warm
 Measured Blender dimensions (metres): [1.287731647491455, 2.724468946456909, 2.3400001525878906].
 
 Part list, recipe and dimensions are explicit in build.py; modeling/export helpers are embedded in this self-contained script, using the project sslib for palette/AO. See that collection’s notes.md for exact rebuild/pack/audit commands.
+
+
+Distance tiers (QA 10-11, FIX-16): `--lod 1|2` rebuilds this script as hard-edged closed solids (no bevels, thicker thin parts, fewer round segments, no micro graphics), never decimation. `python3 tools/blender/run.py assets/house.garage.open/build.py --lod N --glb assets/house.garage.open/model.lodN.glb`, then `npx tsx tools/assets/pack.ts house.garage.open`.
