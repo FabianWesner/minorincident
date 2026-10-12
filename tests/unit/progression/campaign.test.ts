@@ -87,3 +87,9 @@ test('@E13 PO 2026-10-12: old saves holding the retired L3 SMG or hunting rifle 
   const pending=newCampaign();pending.ownedActions.push('weapon.bat');beginRewards(pending,1);(pending.pending as unknown as Record<string,unknown>).weaponChosen=true;
   expect(decodeSave(JSON.stringify(pending)).status).toBe('ok');
 });
+
+test('@E30 @E30-AC03 L8 standalone keeps all six acquired weapons selectable and saves them',()=>{
+  const save=preset('L8-default');expect(validateSave(save)).toBe(true);expect(rackSize(8)).toBe(4);
+  expect([...save.racks.LEFT,...save.racks.RIGHT]).toEqual(['weapon.bat','weapon.fire-axe','weapon.rocket-launcher','weapon.army-mg','weapon.shotgun','weapon.handgun']);
+  expect(decodeSave(JSON.stringify(save))).toEqual({status:'ok',save});
+});

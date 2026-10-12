@@ -117,13 +117,14 @@ export function floorAt(door: Pick<HouseDoor, 'floor'>, s: number): number {
  * One resident steps out: spawned inside behind the threshold, turned (same pipeline as the technician), facing out,
  * AI held until the doorstep. The door opens with the first resident and stays open. Returns the entity id.
  */
-export function emergeResident(world: SimWorld, house: HouseEmergence, tick: number, opts: { look?: PedestrianOptions; inside?: number; lateral?: number; tier?: 'frail' | 'average' | 'athletic' } = {}): number {
+export function emergeResident(world: SimWorld, house: HouseEmergence, tick: number, opts: { archetype?: string; look?: PedestrianOptions; inside?: number; lateral?: number; tier?: 'frail' | 'average' | 'athletic' } = {}): number {
   const outbreak = world.npcs?.civilians.outbreak; if (!outbreak) return 0;
   // Spawned on a clear nav cell (the spawn rule), then placed inside behind the door before anything is drawn.
   const nav = world.infected?.nav, cell = nav ? nav.nearestCell(house.ox, house.oz, .35) : -1;
-  const id = outbreak.spawnPedestrian(nav && cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: house.ox, z: house.oz }, opts.look);
+  const at = nav && cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: house.ox, z: house.oz };
+  const id = opts.archetype ? world.infected!.spawn(opts.archetype, at) : outbreak.spawnPedestrian(at, opts.look);
   const e = world.entities.get(id)!;
-  outbreak.turnNow(e, opts.tier);
+  if (!opts.archetype) outbreak.turnNow(e, opts.tier);
   place(world, house, e, -(opts.inside ?? emergeInsideM), opts.lateral ?? 0);
   e.transform.yaw = -Math.atan2(house.nz, house.nx);
   let walk = (opts.inside ?? emergeInsideM) + Math.hypot(house.sx - house.x, house.sz - house.z), from: [number, number] = [house.sx, house.sz];

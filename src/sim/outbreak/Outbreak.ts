@@ -172,7 +172,7 @@ export class Outbreak {
       if (c.state === 'finished' || c.state === 'infected') continue;
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
-      if (world.missions?.l6 && c.survivor && updateSurvivor(world,e)) continue;
+      if ((world.missions?.l6 || world.missions?.l8) && c.survivor && updateSurvivor(world,e)) continue;
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       // E23: a found survivor follows the courier (unarmed, biteable, no flight).
       if (c.survivor && updateSurvivor(world, e)) continue;

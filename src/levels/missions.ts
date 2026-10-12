@@ -1,3 +1,4 @@
+import { levelEightMission } from './L8/mission';
 import { levelSixMission } from './L6/mission';
 import { levelFiveMission } from './L5/mission';
 import { levelFourMission } from './L4/mission';
@@ -8,11 +9,12 @@ import type { DistrictId } from './districts/types';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
 import type { Anchor, MissionDef, ObjectiveDef, ObjectiveType, Trigger } from '../sim/missions/types';
 
-export const missionIds = ['L1','L2','L3','L4','L5','L6'] as const;
+export const missionIds = ['L1','L2','L3','L4','L5','L6','L8'] as const;
 export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
+  if (id === 'L8') return levelEightMission(resolve);
   if (id === 'L6') return levelSixMission(resolve);
   if (id === 'L5') return levelFiveMission(resolve);
   if (id === 'L4') return levelFourMission(resolve);

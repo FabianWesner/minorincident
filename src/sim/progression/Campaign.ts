@@ -5,7 +5,7 @@ import type { GearTier, SurvivorVariant } from '../../data/survivor';
 import type { L1Aftermath } from '../../levels/continuity';
 /** L7 the ruined city, L8 the zoo and L9 the crossing continue the campaign after L6 (specs/po-levels-4-9-2026-10-11.md). */
 export type Level = 1|2|3|4|5|6|7|8|9;
-export type ProgressionPreset = `L${2|3|4|5|6}-default`;
+export type ProgressionPreset = `L${2|3|4|5|6|8}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
   version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
@@ -37,7 +37,7 @@ export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignS
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
 }
-export function rackSize(level:number):number {return level<2?1:level<4?2:3;}
+export function rackSize(level:number):number {return level<2?1:level<4?2:level<7?3:4;}
 export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel):boolean {
   return [racks.LEFT,racks.RIGHT].every(r=>Array.isArray(r)&&r.length>=1&&r.length<=rackSize(level)&&new Set(r).size===r.length&&r.every(id=>save.ownedActions.includes(id)));
 }
@@ -108,9 +108,9 @@ export function completePending(save:CampaignSave):void {
 }
 export function autoRewards(save:CampaignSave,level:Level):void {beginRewards(save,level);completePending(save);}
 export function preset(name:ProgressionPreset):CampaignSave {
-  if(!/^L[2-6]-default$/.test(name))throw new Error('Unknown progression preset');
+  if(!/^L[2-68]-default$/.test(name))throw new Error('Unknown progression preset');
   const target=Number(name[1]),save=newCampaign();
-  for(let level=1;level<target;level++){
+  for(let level=1;level<Math.min(target,6);level++){
     // The default L2 run takes the optional fire axe; later presets retain it.
     if(level===2&&(target===3||target===4)&&!save.ownedActions.includes('weapon.fire-axe'))save.ownedActions.push('weapon.fire-axe');
     autoRewards(save,level as Level);
@@ -119,6 +119,11 @@ export function preset(name:ProgressionPreset):CampaignSave {
   // L5's authored L4 end arsenal has the machine gun, not the legacy reward launchers.
   if(target===5)save.ownedActions=save.ownedActions.filter(id=>id!=='weapon.rocket-launcher'&&id!=='weapon.pipe-bomb');
   if(target>=5)save.racks={LEFT:["weapon.fire-axe","weapon.bat"],RIGHT:["weapon.army-mg","weapon.handgun","weapon.kick"]};
+  if(target===8) {
+    save.completedLevels=7;save.unlockedLevel=8;
+    for(const id of ['weapon.shotgun','weapon.rocket-launcher'])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
+    save.racks={LEFT:['weapon.bat','weapon.fire-axe'],RIGHT:['weapon.rocket-launcher','weapon.army-mg','weapon.shotgun','weapon.handgun']};
+  }
   if(target===6)save.survivors=["dale","rosa","okafor","mia","sam"];
   return save;
 }

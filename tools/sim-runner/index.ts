@@ -17,7 +17,7 @@ const { values } = parseArgs({ options: {
 const ticks = Number(values.ticks ?? '600'), seed = Number(values.seed);
 if (!Number.isSafeInteger(ticks) || ticks < 0 || !Number.isSafeInteger(seed)) throw new RangeError('Ticks must be nonnegative and seed an integer');
 if (values.level) {
-  if (values.level !== 'all' && !missionIds.includes(values.level as MissionId)) throw new RangeError('Level must be L1–L6 or all');
+  if (values.level !== 'all' && !missionIds.includes(values.level as MissionId)) throw new RangeError('Level must be a registered campaign mission or all');
   if (!['complete', 'newbie'].includes(values.policy!)) throw new RangeError('Policy must be complete or newbie');
   const seeds = Number(values.seeds);
   if (!Number.isSafeInteger(seeds) || seeds <= 0 || !Number.isSafeInteger(seed + seeds - 1)) throw new RangeError('Seeds must be a positive integer');

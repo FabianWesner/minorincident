@@ -453,7 +453,7 @@ export class Vehicles {
     if (!car?.physics.def.transport || car.entity.health.current <= 0 || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1 || car.entity.vehicle!.passengers?.some(p => p.phase !== 'seated')) throw new Error('Transport is not ready to depart');
     if (this.transition?.carId === carId && this.transition.kind === 'enter' && this.world.tick - this.transition.tick < vehicleBoardingTicks) throw new Error('Driver is still boarding');
     const ids = [1, ...(car.entity.vehicle!.passengers ?? []).map(p => p.id)];
-    const payload = structuredClone({ tick: this.world.tick, infiniteCharges: this.world.combat?.runner.infiniteCharges ?? false, vehicle: car.entity, occupants: ids.map(id => this.world.entities.get(id)!).filter(e => e.health.current > 0 && !e.infected) });
+    const payload = structuredClone({ tick: this.world.tick, infiniteCharges: this.world.combat?.runner.infiniteCharges ?? false, vehicle: car.entity, occupants: ids.map(id => this.world.entities.get(id)!).filter(e => e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished') });
     payload.vehicle.vehicle!.passengers = (payload.vehicle.vehicle!.passengers ?? []).filter(p => payload.occupants.some(e => e.id === p.id));
     payload.vehicle.vehicle!.attached = [];
     return payload;
@@ -499,6 +499,7 @@ export class Vehicles {
     const player = this.world.entities.get(1)!;
     if (player.weapons && this.world.combat) {
       const saved = player.weapons;
+      this.world.combat.rackCapacity = Math.max(this.world.combat.rackCapacity, saved.LEFT.rack.length, saved.RIGHT.rack.length);
       this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
       Object.assign(this.world.combat.runner.loadout.state, saved);
       this.world.combat.runner.infiniteCharges = payload.infiniteCharges;

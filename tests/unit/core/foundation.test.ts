@@ -77,5 +77,24 @@ test('spatial buckets retain insertion order and reuse positions without stale I
   expect(hash.query(query, [], false)).toEqual([3, 2, 8]);
   hash.set(3, -5, 0); hash.set(3, 0, 0);
   expect(hash.query(query, [], false)).toEqual([2, 8, 3]);
+  const visited: number[] = []; expect(hash.query(query, [], false, id => visited.push(id))).toEqual([]);
+  expect(visited).toEqual([2, 8, 3]);
   for (const bad of [NaN, Infinity, -1]) expect(() => hash.query({ ...query, r: bad })).toThrow(RangeError);
+});
+
+test('contact bounds stay conservative during moves and refresh radii each phase', () => {
+  const hash = new SpatialHash(), query = { x: 0, z: 0, r: 12 }, radii = new Map([[1, .35], [2, 2]]);
+  const contacts = { epoch: 0, radius: (id: number) => radii.get(id) ?? 0, intersects: (maximum: number) => maximum >= 1 };
+  hash.set(1, 0, 0); hash.set(2, 8, 0);
+  expect(hash.query(query, [], false, undefined, contacts)).toEqual([2]);
+  hash.set(2, 1, 0);
+  expect(hash.query(query, [], false, undefined, contacts)).toEqual([1, 2]);
+  hash.delete(2); contacts.epoch++;
+  expect(hash.query(query, [], false, undefined, contacts)).toEqual([]);
+  radii.set(1, 2); contacts.epoch++;
+  expect(hash.query(query, [], false, undefined, contacts)).toEqual([1]);
+  contacts.radius = () => .35;
+  expect(hash.query(query, [], false, undefined, contacts)).toEqual([]);
+  hash.reset();
+  expect(hash.query(query, [], false, undefined, contacts)).toEqual([]);
 });

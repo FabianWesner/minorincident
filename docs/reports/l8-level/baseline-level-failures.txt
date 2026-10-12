@@ -1,0 +1,112 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level -> 94.130.181.173:/srv/mi/ws/l8-level-d20722
+[remote] sync 24s, 8364 files; job /srv/mi/jobs/l8-level-d20722-85826-1791838794; queueing for a slot
+[runner] slot 1 acquired; load 2.69 3.39 2.75
+
+ RUN  v5.0.3 /srv/mi/jobs/l8-level-d20722-85826-1791838794
+
+ ❯  functional  tests/levels/L6.test.ts (11 tests | 1 failed | 10 skipped) 19808ms
+   ↓ T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail
+   ↓ T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat
+   ↓ T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps
+   ↓ T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power
+   × T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community 19805ms
+   ↓ T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent
+   ↓ T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion
+   ↓ T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection
+   ↓ T-E24-zero @E24 @E24-AC01 all survivors lost still permits the physical exit
+   ↓ T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds
+   ↓ T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band
+ ❯  functional  tests/levels/L3.test.ts (20 tests | 5 failed | 15 skipped) 80868ms
+   ❯ L3 The Police Collapse (20)
+     ↓ T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer
+     ↓ T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band
+     ↓ T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2
+     ↓ T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition
+     ↓ T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start
+     ↓ T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 6 m, axe/bat at <= 2.5 m (median, complete runs)
+     ↓ T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit
+     ↓ T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view
+     × T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back 48446ms
+     × T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag 1ms
+     ↓ T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports
+     × T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 % 1ms
+     ↓ T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines
+     × T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded 1ms
+     × T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them 32417ms
+     ↓ T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP
+     ↓ T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression
+     ↓ T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits
+     ↓ T-E21-bots @E21 evade-only never attacks and still reaches the army zone
+     ↓ T-E21-segments @E21 segment helper matches the corridor bounds
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back
+AssertionError: expected 0 to be greater than or equal to 1
+ ❯ tests/levels/L3.test.ts:163:66
+    161|     const runs = await complete();
+    162|     for (const r of runs) { expect(r.attack!.directions.sort()).toEqua…
+    163|     expect(runs.filter(r => r.attack!.turnedDuring >= 1).length).toBeG…
+       |                                                                  ^
+    164|     for (const r of runs) {
+    165|       expect(['time', 'turned', 'inside']).toContain(r.attack!.fallbac…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag
+AssertionError: expected 0 to be greater than or equal to 1
+ ❯ tests/levels/L3.test.ts:174:91
+    172|   test('T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the…
+    173|     const runs = await complete();
+    174|     expect(runs.filter(r => r.squad!.atFallback >= 3 && r.squad!.atFal…
+       |                                                                                           ^
+    175|     expect(runs.every(r => r.squad!.protected === 0)).toBe(true);
+    176|   }, HEAVY);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %
+AssertionError: expected 10 to be less than or equal to 2
+ ❯ tests/levels/L3.test.ts:193:58
+    191|     record('squad', { ends, atCheckpoint: runs.map(r => r.squad!.atChe…
+    192|     expect(ends[0]).toBeGreaterThanOrEqual(ends[1]); expect(ends[1]).t…
+    193|     expect(median(runs.map(r => r.squad!.atCheckpoint))).toBeLessThanO…
+       |                                                          ^
+    194|     expect(runs.filter(r => r.squad!.atCheckpoint === 4).length).toBeL…
+    195|     expect(runs.filter(r => r.squad!.turnedInCorridor >= 1).length).to…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded
+AssertionError: expected 50 to be less than or equal to 12
+ ❯ tests/levels/L3.test.ts:208:184
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them
+AssertionError: expected 0 to be greater than or equal to 1
+ ❯ tests/levels/L3.test.ts:225:31
+    223|       for (const id of s.pressureIds.slice(n)) { const e = w.entities.…
+    224|     }
+    225|     expect(emergences.length).toBeGreaterThanOrEqual(1);
+       |                               ^
+    226|     expect(Math.min(...emergences.map(e => e.tick))).toBeGreaterThanOr…
+    227|     for (const e of emergences) { expect(furthest - e.x).toBeGreaterTh…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL   functional  tests/levels/L6.test.ts > T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community
+AssertionError: expected 270.6666666666667 to be less than or equal to 270
+ ❯ tests/levels/L6.test.ts:40:218
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  6 failed | 25 skipped (31)
+   Start at  21:03:29
+   Duration  83.80s (tests 95%, transform 4%, import 1%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 24s, remote total 276s)
