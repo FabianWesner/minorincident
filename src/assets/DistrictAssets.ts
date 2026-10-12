@@ -45,7 +45,7 @@ export class DistrictAssets {
   private readonly signTextures: import("three/webgpu").Texture[] = [];
   private readonly assets: AssetRegistry;
   private readonly ktx?: KTX2Loader;
-  constructor(private readonly materials: Materials, renderer?: WebGPURenderer, private readonly sourceLoader?: (url: string) => Promise<Object3D>) {
+  constructor(private readonly materials: Materials, private readonly renderer?: WebGPURenderer, private readonly sourceLoader?: (url: string) => Promise<Object3D>) {
     this.assets = new AssetRegistry((event) => console.info(JSON.stringify(event)), { renderer, materials, load: sourceLoader });
     if (renderer) {
       this.ktx = new KTX2Loader().setTranscoderPath('/assets/basis/').detectSupport(renderer);
@@ -58,7 +58,8 @@ export class DistrictAssets {
         // World batches sample _palette; their decoded RGB copy is unused.
         // Drop it before instance wrappers borrow the arrays (large L7 bodies
         // otherwise retain another 32 MB apiece). Figure/color graphs keep it.
-        if (!Array.isArray(o.material) && o.material.userData.worldPaletteOnly) o.geometry.deleteAttribute('color');
+        // Offline registries preserve the lossless bake format, including RGB.
+        if (this.renderer && !Array.isArray(o.material) && o.material.userData.worldPaletteOnly) o.geometry.deleteAttribute('color');
         this.geometries.add(o.geometry);
       }
     });
