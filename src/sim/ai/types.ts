@@ -42,6 +42,8 @@ export interface InfectedSpecialAttack {
   target: { id: number; x: number; z: number };
   area: { x: number; z: number; radius: number; dx: number; dz: number };
   hitIds: number[];
+  /** Existing herd/flock participants; followers keep their own cooldown and attack id. */
+  members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   destination?: { x: number; z: number };
   projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
 }

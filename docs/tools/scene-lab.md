@@ -401,3 +401,14 @@ districts continue loading their existing base/W1–W5 GLBs when inspected at W6
 `tests/scenes/l7-tier/{before,after}.json` compare the same game camera and assets at
 W5/W6 with the existing L6 night preset. District dressing and an L7 lighting preset
 belong to the subsequent district lanes.
+
+### Zebra and flamingo specials (Z-S3)
+
+`tests/scenes/zoo-s3/qa-zoo-{zebra-kick,zebra-stampede,flamingo-dive}.json`
+use the production `special` command. Herd/flock recruitment uses existing living,
+visible, ready animals within 12 m; it never spawns participants. The serialized
+attack lists its members/leader, and the flock's impact and obstruction expiry ticks.
+`tools/scenelab/zoo-s3-capture.ts` captures the fixed game camera, including the
+shared animal locomotion control. Scene Lab now samples actual animal paw geometry
+instead of dummy humanoid feet. Cooldown and checkpoint controls use the real
+mission checkpoint API in `tests/sim/ai/zoo-s3.test.ts`.

@@ -86,8 +86,9 @@ export class FxPool {
         const cross = p.x.abs().lessThan(0.18).or(p.y.abs().lessThan(0.18)).select(1, 0);
         // Shape is a discrete instance value; round after interpolation to avoid equality speckle.
         const shape = style.y.add(0.5).floor();
+        const rearArc = thinRing.mul(p.x.greaterThanEqual(r.mul(Math.SQRT1_2)).select(1, 0));
         const arc = thinRing.mul(p.x.greaterThanEqual(r.mul(.5)).select(1, 0));
-        mask = shape.equal(9).select(arc, shape.equal(8).select(thinRing, shape.equal(1).select(ring, shape.equal(2).select(lane, shape.equal(3).select(chevron, shape.equal(4).select(cross, splat))))));
+        mask = shape.equal(10).select(rearArc, shape.equal(9).select(arc, shape.equal(8).select(thinRing, shape.equal(1).select(ring, shape.equal(2).select(lane, shape.equal(3).select(chevron, shape.equal(4).select(cross, splat)))))));
         if (this.bloodTextures.length) {
           const [splats, pool, trail] = this.bloodTextures.map(map => texture(map));
           const blood = shape.equal(6).select(pool, shape.equal(7).select(trail, splats));

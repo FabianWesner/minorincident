@@ -38,7 +38,7 @@ export function installCharacterSeparation(world: SimWorld): void {
         const otherRadius = radii.get(id); if (!otherRadius) continue;
         const other = world.entities.get(id); if (!other || other === e) continue;
         // The swept charge owns contact; passive spacing must not push a human out before it hits.
-        if (other.infected?.specialAttack && (other.infected.specialAttack.move === 'alpha.charge' || other.infected.specialAttack.move === 'elephant.charge') && other.infected.specialAttack.stage === 'active') continue;
+        if (other.infected?.specialAttack && (other.infected.specialAttack.move === 'alpha.charge' || other.infected.specialAttack.move === 'elephant.charge' || other.infected.specialAttack.move === 'zebra.stampede') && other.infected.specialAttack.stage === 'active') continue;
         if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
         // Combat crowds reserve the attack pose's upper-body extent, including catalog/elite brains.
         // Scripted migration streams retain their authored density and spline timing.

@@ -25,6 +25,7 @@ export const animalInfected: readonly InfectedDef[] = [
   { ...role('crow', 20, 9, 'dive', 1, 0.6), weight: 5 },
   { ...role('lion', 400, 7.5, 'pin', 0.6, 0.6), bar: true }, { ...role('gorilla', 1200, 4.5, 'prop-throw', 0.7, 0.8), bar: true },
   { ...role('elephant', 800, 3.5, 'elephant', 1.2, .7), bar: true },
+  { ...role('zebra', 120, 6, 'zebra', .45, .6), bar: true },
   { ...role('flamingo', 10, 5, 'peck', 0.25), bar: true },
 ];
 export const infectedDefinitions = [...humanInfected, ...animalInfected];
