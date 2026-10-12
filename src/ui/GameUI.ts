@@ -239,6 +239,7 @@ export class GameUI {
     if (!this.enabled) return;
     this.game.input.clear(); this.game.world.clearInput();
     this.screen = screen;
+    if (screen === 'title') this.game.telemetry?.home();
     if (screen === 'title') {
       this.game.campaignUI.hide();
       const saved = this.game.saves.load();
