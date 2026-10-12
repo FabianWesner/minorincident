@@ -10,7 +10,7 @@ import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../np
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import { updateAlly } from './Allies';
-import { leaveSeat } from '../npc/MorningRoutines';
+import { followSeat, leaveSeat } from '../npc/MorningRoutines';
 import { updateSurvivor } from './Survivors';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
@@ -176,6 +176,7 @@ export class Outbreak {
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       // E23: a found survivor follows the courier (unarmed, biteable, no flight).
       if (c.survivor && updateSurvivor(world, e)) continue;
+      if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
         this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
