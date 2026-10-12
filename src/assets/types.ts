@@ -65,6 +65,8 @@ export interface AssetDef {
   /** Limits for a particular damage recipe; other shipped variants keep their budgets. */
   decayBudgets?: Record<string, Partial<AssetDef["budget"]>>;
   decayAuthoredLodTriangles?: { lod1: number; lod2: number };
+  /** A variant that removes parts (the unarmed APC has no turret/gun/muzzle) declares its own node contract. */
+  decayNodes?: Record<string, Partial<Pick<AssetDef, "requiredNodes" | "animatedNodes" | "sockets">>>;
   decayVariants: string[];
 }
 export function atLeast(status: AssetStatus, minimum: AssetStatus): boolean {

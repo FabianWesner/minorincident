@@ -38,6 +38,12 @@ export const buildingDoors: Record<string, BuildingDoor> = {
   // The leaf swings outward over the porch (-100 degrees). Plank deck top 0.54 m to x 3.0, treads 0.36 m to 3.26 and 0.20 m
   // to 3.52, then the garden path.
   'bld.house-a': { x: 1.404, z: -1.56, width: 1.0, lane: -1.56, inside: .5, apron: 4.1, leaves: [{ node: 'door_front', open: -1.745 }], emerge: { floor: [[1.59, .54], [1.85, .36], [2.11, .2]] } },
+  // L8 zoo service-tunnel mouth (assets/kit.zoo-tunnel-mouth, tools/blender/sslib/zoo_tunnel.py): closed steel double door
+  // on a street-level masonry bunker, footprint centred on the origin, hinge joints at x 3.05, 1.8 m opening, outward
+  // leaves like the clinic annex. The infected wait 1.15 m behind the door in an L-shaped vestibule (partition wall
+  // behind them), so the first sight of them is the door opening, never a pop-in on the apron. The layout paves the
+  // 2.95 m apron out to the path edge (door plane 3.05 + 2.95 = 6.0).
+  'kit.zoo-tunnel-mouth': { x: 3.05, z: 0, width: 1.8, lane: 0, inside: 1.9, apron: 6, leaves: [{ node: 'door_main', open: -1.31 }, { node: 'door_main_right', open: 1.31 }], emerge: { floor: [] } },
 };
 
 /** Asset-local (x, z) to world for a placement (same transform as the instanced static view). */

@@ -71,7 +71,8 @@ export class AssetRegistry {
     let root: Object3D | undefined;
     try {
       root = await this.load('/' + variantPath(path, vehicleDecayFallback(def, decay) ? undefined : decay).replace(/^public\//, ''));
-      for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
+      const contract = { ...def, ...(decay ? def.decayNodes?.[decay] : undefined) };
+      for (const name of [...contract.requiredNodes, ...contract.animatedNodes, ...contract.sockets]) if (!root.getObjectByName(name)) throw new Error(`missing node ${name}`);
       root.traverse((node) => { if (node.name.startsWith('stump_') || node.userData.hidden) node.visible = false; });
       if (lod !== 'lod0' && def.lods?.[lod]) {
         const bounds = new Box3().setFromObject(root), size = bounds.getSize(new Vector3());

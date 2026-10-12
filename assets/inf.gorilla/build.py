@@ -8,6 +8,7 @@ from mathutils import Vector
 P=Path(__file__).resolve().parent
 ap=argparse.ArgumentParser()
 for k in ['render','glb']:ap.add_argument('--'+k)
+ap.add_argument('--healthy',action='store_true',help='uninfected amb.gorilla: same rig/silhouette, no wounds, closed mouth, dark eyes')
 ap.add_argument('--view',default='hero');ap.add_argument('--pose',action='store_true')
 for k,v in [('samples',24),('width',960),('height',540)]:ap.add_argument('--'+k,type=int,default=v)
 a=ap.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
@@ -32,12 +33,15 @@ def mat(token,h,rough=.75,emit=0):
     m.diffuse_color=c;return m
 M={k:mat(k,h,r) for k,h,r in [('uiDark','25222c',.87),('asphalt','5b4f5c',.88),('sidewalk','b9a4a0',.83),('infectedSkin','c9a39a',.69),('blood','b3121f',.36),('survivorRed','d9363e',.44),('picketWhite','f2e6dc',.42)]}
 M['eye']=mat('infectedEye','ff3b2f',.25,4)
+# Healthy look keeps four palette materials: uiDark, asphalt, sidewalk, picketWhite.
+HEALTHY={'infectedSkin':'asphalt','blood':'uiDark','survivorRed':'uiDark','eye':'uiDark'}
 def node(n,p,par=None):
     o=bpy.data.objects.new(n,None);S.collection.objects.link(o);o.location=p
     if par:
         bpy.context.view_layer.update();o.parent=parts[par];o.matrix_parent_inverse=o.parent.matrix_world.inverted()
     parts[n]=o;return o
 def finish(o,n,m,par,sub=0):
+    if a.healthy:m=HEALTHY.get(m,m)
     o.name=n;o.data.materials.append(M[m]);bpy.context.view_layer.objects.active=o
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     if sub:
@@ -154,7 +158,7 @@ for s in [-1,1]:
     ell('red_eye'+str(s),(.715,s*.118,1.782),(.025,.048,.038),'eye','head')
     ell('hot_pupil'+str(s),(.737,s*.118,1.785),(.008,.012,.014),'picketWhite','head',seg=8,rings=6)
     tube('heavy_brow'+str(s),[(.687,s*.026,1.806),(.691,s*.116,1.856),(.623,s*.211,1.857)],[.04,.058,.038],'asphalt','head',N=10)
-    tube('brow_scar'+str(s),[(.731,s*.051,1.831),(.724,s*.084,1.855)],[.006,.005],'blood','head',N=6)
+    if not a.healthy:tube('brow_scar'+str(s),[(.731,s*.051,1.831),(.724,s*.084,1.855)],[.006,.005],'blood','head',N=6)
     for j in range(5):
         lock('cheek_ruff%d_%d'%(s,j),(.46,s*(.235+j*.009),1.86-j*.082),(.08,s*.20,-.9),.080,.23,'asphalt' if j%3==0 else 'uiDark','head')
 ell('nose_bridge',(.685,0,1.72),(.078,.073,.108),'sidewalk','head')
@@ -163,25 +167,28 @@ ell('nose',(.752,0,1.686),(.081,.095,.059),'asphalt','head')
 for s in [-1,1]:
     ell('nostril'+str(s),(.819,s*.043,1.69),(.019,.027,.018),'uiDark','head',seg=8,rings=6,rot=(s*.3,0,0))
     ell('nose_ala'+str(s),(.778,s*.079,1.677),(.038,.028,.025),'sidewalk','head')
-# Boolean-cut true open mouth, with a recessed black bowl and raised fleshy lip contour.
-bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=16,location=(.75,0,1.478));cut=bpy.context.object;cut.scale=(.18,.139,.184)
-bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
-for n in ['face_mask','jaw','muzzle_upper']:
-    o=bpy.data.objects[n];mod=o.modifiers.new('open roaring mouth','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cut;bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
-bpy.data.objects.remove(cut,do_unlink=True)
-ell('mouth_depth',(.652,0,1.477),(.061,.144,.18),'uiDark','head',seg=16,rings=10)
-pts=[(.775,.148*math.cos(t*2*math.pi/24),1.474+.192*math.sin(t*2*math.pi/24)) for t in range(25)]
-tube('torn_lip',pts,[.02]*25,'blood','head',N=8)
-for j in range(8):
-    y=(j-3.5)*.029
-    for row in [0,1]:
-        z=(1.628 if row==0 else 1.315)+(abs(j-3.5)*(-.006 if row==0 else .006))
-        tube('tooth%d_%d'%(row,j),[(.779,y,z),(.796,y,z+(-.036 if row==0 else .028))],[.014,.009],'picketWhite','head',N=8)
-for s in [-1,1]:
-    tube('upper_fang'+str(s),[(.784,s*.112,1.627),(.804,s*.119,1.564),(.81,s*.102,1.532)],[.023,.017,.002],'picketWhite','head',N=8)
-    tube('lower_fang'+str(s),[(.786,s*.109,1.321),(.804,s*.115,1.36),(.807,s*.105,1.377)],[.019,.014,.002],'picketWhite','head',N=8)
-ell('tongue',(.73,0,1.361),(.04,.075,.059),'survivorRed','head')
-tube('tongue_cleft',[(.77,0,1.35),(.775,0,1.388)],[.004,.002],'blood','head',N=6)
+if not a.healthy:
+    # Boolean-cut true open mouth, with a recessed black bowl and raised fleshy lip contour.
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=24,ring_count=16,location=(.75,0,1.478));cut=bpy.context.object;cut.scale=(.18,.139,.184)
+    bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+    for n in ['face_mask','jaw','muzzle_upper']:
+        o=bpy.data.objects[n];mod=o.modifiers.new('open roaring mouth','BOOLEAN');mod.operation='DIFFERENCE';mod.object=cut;bpy.context.view_layer.objects.active=o;bpy.ops.object.modifier_apply(modifier=mod.name)
+    bpy.data.objects.remove(cut,do_unlink=True)
+    ell('mouth_depth',(.652,0,1.477),(.061,.144,.18),'uiDark','head',seg=16,rings=10)
+    pts=[(.775,.148*math.cos(t*2*math.pi/24),1.474+.192*math.sin(t*2*math.pi/24)) for t in range(25)]
+    tube('torn_lip',pts,[.02]*25,'blood','head',N=8)
+    for j in range(8):
+        y=(j-3.5)*.029
+        for row in [0,1]:
+            z=(1.628 if row==0 else 1.315)+(abs(j-3.5)*(-.006 if row==0 else .006))
+            tube('tooth%d_%d'%(row,j),[(.779,y,z),(.796,y,z+(-.036 if row==0 else .028))],[.014,.009],'picketWhite','head',N=8)
+    for s in [-1,1]:
+        tube('upper_fang'+str(s),[(.784,s*.112,1.627),(.804,s*.119,1.564),(.81,s*.102,1.532)],[.023,.017,.002],'picketWhite','head',N=8)
+        tube('lower_fang'+str(s),[(.786,s*.109,1.321),(.804,s*.115,1.36),(.807,s*.105,1.377)],[.019,.014,.002],'picketWhite','head',N=8)
+    ell('tongue',(.73,0,1.361),(.04,.075,.059),'survivorRed','head')
+    tube('tongue_cleft',[(.77,0,1.35),(.775,0,1.388)],[.004,.002],'blood','head',N=6)
+else:
+    ell('mouth_line',(.79,0,1.50),(.012,.13,.008),'uiDark','head',seg=10,rings=4)
 for j in range(9):
     y=(j-4)*.052
     lock('crown_crest'+str(j),(.35-(j%3)*.035,y,1.942+(j%3)*.014),(-.55,y*.6,.65),.088,.17,'asphalt' if j%3==0 else 'uiDark','head')
@@ -200,17 +207,18 @@ def wound(n,p,ry,rz,par):
         tube(n+'_rag'+str(j),[(x+.01,py-.025,pz+rz*.5),(x+.03,py,pz+.006),(x+.025,py+.022,pz-rz*.4)],[.012,.024,.004],'infectedSkin',par,N=6)
     for j in range(2):
         tube(n+'_drip'+str(j),[(x+.026,y+(j-.5)*ry*.6,z-rz*.3),(x+.03,y+(j-.5)*ry*.6,z-rz-.066)],[.014,.007],'blood',par,N=6)
-wound('shoulder_tear',(.31,-.64,1.30),.13,.16,'armR')
-wound('forearm_tear',(.611,.78,.62),.15,.115,'foreArmL')
-wound('forearm_scars',(.60,-.82,.52),.09,.085,'foreArmR')
-wound('chest_tear',(.439,-.22,1.15),.065,.085,'torso')
-wound('temple_tear',(.588,-.19,1.92),.052,.045,'head')
-# Back wounds face -X.
-for n,p,ry,rz,par in [('saddle_wound',(-.825,.17,1.53),.105,.055,'torso'),('haunch_wound',(-.828,-.37,.81),.09,.074,'legR')]:
-    x,y,z=p;ell(n,p,(.025,ry,rz),'blood',par)
-    for j in range(3):lock(n+'_rim'+str(j),(x-.016,y+(j-1)*ry*.7,z+.035),(-.2,.4,-.5),.03,.08,'infectedSkin',par)
+if not a.healthy:
+    wound('shoulder_tear',(.31,-.64,1.30),.13,.16,'armR')
+    wound('forearm_tear',(.611,.78,.62),.15,.115,'foreArmL')
+    wound('forearm_scars',(.60,-.82,.52),.09,.085,'foreArmR')
+    wound('chest_tear',(.439,-.22,1.15),.065,.085,'torso')
+    wound('temple_tear',(.588,-.19,1.92),.052,.045,'head')
+    # Back wounds face -X.
+    for n,p,ry,rz,par in [('saddle_wound',(-.825,.17,1.53),.105,.055,'torso'),('haunch_wound',(-.828,-.37,.81),.09,.074,'legR')]:
+        x,y,z=p;ell(n,p,(.025,ry,rz),'blood',par)
+        for j in range(3):lock(n+'_rim'+str(j),(x-.016,y+(j-1)*ry*.7,z+.035),(-.2,.4,-.5),.03,.08,'infectedSkin',par)
 # Hidden dismemberment caps remain on the proximal part. Geometry is retained at zero scale.
-for key,par,p,sz in [('head','torso',(.38,0,1.48),(.16,.19,.022)),('armL','torso',(0,.49,1.47),(.19,.025,.19)),('armR','torso',(0,-.49,1.47),(.19,.025,.19)),('foreArmL','armL',(.22,.74,.84),(.18,.18,.022)),('foreArmR','armR',(.22,-.74,.84),(.18,.18,.022)),('legL','hip',(-.47,.29,.92),(.21,.20,.022)),('legR','hip',(-.47,-.29,.92),(.21,.20,.022))]:
+for key,par,p,sz in [] if a.healthy else [('head','torso',(.38,0,1.48),(.16,.19,.022)),('armL','torso',(0,.49,1.47),(.19,.025,.19)),('armR','torso',(0,-.49,1.47),(.19,.025,.19)),('foreArmL','armL',(.22,.74,.84),(.18,.18,.022)),('foreArmR','armR',(.22,-.74,.84),(.18,.18,.022)),('legL','hip',(-.47,.29,.92),(.21,.20,.022)),('legR','hip',(-.47,-.29,.92),(.21,.20,.022))]:
     o=ell('stump_'+key,p,sz,'blood',par,seg=10,rings=6);o['hidden']=True;o['stumpFor']=key;o.scale=(0,0,0)
 # Widen the mask and cranial silhouette to the reference's heavy gorilla proportions.
 bpy.context.view_layer.update()
@@ -223,7 +231,7 @@ for o in objects:
 for o in objects:
     bpy.context.view_layer.objects.active=o
     if len(o.data.polygons)>100:
-        mod=o.modifiers.new('game density','DECIMATE');mod.ratio=.085 if o.get('fur') else .15;bpy.ops.object.modifier_apply(modifier=mod.name)
+        mod=o.modifiers.new('game density','DECIMATE');mod.ratio=(.052 if o.get('fur') else .10) if a.healthy else (.085 if o.get('fur') else .15);bpy.ops.object.modifier_apply(modifier=mod.name)
     bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.triangulate(bm,faces=list(bm.faces));tiny=[f for f in bm.faces if f.calc_area()<1e-9]
     if tiny:bmesh.ops.delete(bm,geom=tiny,context='FACES')
     bm.to_mesh(o.data);bm.free()
@@ -250,7 +258,7 @@ for par in ['footL','footR','handL','handR']:
     floor=min((o.matrix_world@v.co).z for o in group for v in o.data.vertices)
     ground_shifts[par]=floor
     for o in group:o.location.z-=floor
-required=list(parts)+['stump_'+n for n in ['head','armL','armR','foreArmL','foreArmR','legL','legR']]
+required=list(parts)+([] if a.healthy else ['stump_'+n for n in ['head','armL','armR','foreArmL','foreArmR','legL','legR']])
 triangles=sum(len(o.data.polygons) for o in objects)
 stats={'id':'inf.gorilla','triangles':triangles,'meshes':len(objects),'nodes_ok':all(n in bpy.data.objects for n in required),'missing_nodes':[n for n in required if n not in bpy.data.objects]}
 (P/'build-stats.json').write_text(json.dumps(stats,indent=2))
@@ -261,7 +269,7 @@ if a.glb:
     for o in objects+list(parts.values()):o.select_set(True)
     bpy.ops.export_scene.gltf(filepath=a.glb,export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_cameras=False,export_lights=False)
     lod_counts={'LOD0':triangles}
-    for level,step,ratio in [(1,3,.24),(2,6,.10)]:
+    for level,step,ratio in ([(1,3,.22),(2,10,.05)] if a.healthy else [(1,3,.24),(2,6,.10)]):
         reduced=[];fur_index={}
         for name,data,world,par,is_fur in lod_sources:
             if is_fur:
@@ -272,6 +280,7 @@ if a.glb:
             bpy.context.view_layer.objects.active=o
             # Minimum faces preserve eyes, teeth, fingers and closed, chunky tuft volumes.
             minimum=(12 if level==1 else 10) if is_fur else (24 if level==1 else 18)
+            if a.healthy:minimum=(8 if level==1 else 6) if is_fur else (16 if level==1 else 10)
             r=max(ratio,min(1,minimum/max(len(o.data.polygons),1)))
             if r<1:
                 mod=o.modifiers.new('per-piece LOD','DECIMATE');mod.ratio=r;bpy.ops.object.modifier_apply(modifier=mod.name)
