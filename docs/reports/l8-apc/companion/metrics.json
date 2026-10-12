@@ -1,0 +1,326 @@
+{
+  "armyBoom": null,
+  "scene": "l8-apc-companion",
+  "frame": 258,
+  "tick": 258,
+  "backend": "webgl",
+  "quality": "high",
+  "propPenetration": {
+    "samples": 267,
+    "framesMax": 0,
+    "pairs": []
+  },
+  "props": {
+    "sinkMaxCm": 0,
+    "samples": 0,
+    "gaps": []
+  },
+  "bodies": [],
+  "wheels": {
+    "apc": [
+      {
+        "vehicle": "apc",
+        "wheel": 0,
+        "gapMinCm": 0.1,
+        "gapMaxCm": 0.1,
+        "minFrame": 3,
+        "maxFrame": 3,
+        "at": [
+          1.78,
+          1.03
+        ],
+        "samples": 256,
+        "surface": "asphalt",
+        "rayCheckCm": 0,
+        "hubSpikeCm": 0,
+        "hubSpikeFrame": 81,
+        "hubStepCm": 0,
+        "hubStepFrame": 130
+      },
+      {
+        "vehicle": "apc",
+        "wheel": 1,
+        "gapMinCm": 0.1,
+        "gapMaxCm": 0.1,
+        "minFrame": 3,
+        "maxFrame": 3,
+        "at": [
+          1.85,
+          -1.45
+        ],
+        "samples": 256,
+        "surface": "asphalt",
+        "rayCheckCm": 0,
+        "hubSpikeCm": 0,
+        "hubSpikeFrame": 81,
+        "hubStepCm": 0,
+        "hubStepFrame": 130
+      },
+      {
+        "vehicle": "apc",
+        "wheel": 2,
+        "gapMinCm": 0.1,
+        "gapMaxCm": 0.1,
+        "minFrame": 3,
+        "maxFrame": 3,
+        "at": [
+          -1.84,
+          1.03
+        ],
+        "samples": 256,
+        "surface": "asphalt",
+        "rayCheckCm": 0,
+        "hubSpikeCm": 0,
+        "hubSpikeFrame": 81,
+        "hubStepCm": 0,
+        "hubStepFrame": 130
+      },
+      {
+        "vehicle": "apc",
+        "wheel": 3,
+        "gapMinCm": 0.1,
+        "gapMaxCm": 0.1,
+        "minFrame": 3,
+        "maxFrame": 3,
+        "at": [
+          -1.84,
+          -1.45
+        ],
+        "samples": 256,
+        "surface": "asphalt",
+        "rayCheckCm": 0,
+        "hubSpikeCm": 0,
+        "hubSpikeFrame": 81,
+        "hubStepCm": 0,
+        "hubStepFrame": 130
+      },
+      {
+        "vehicle": "apc",
+        "wheel": 4,
+        "gapMinCm": 0.1,
+        "gapMaxCm": 0.1,
+        "minFrame": 3,
+        "maxFrame": 3,
+        "at": [
+          -0.25,
+          1.03
+        ],
+        "samples": 256,
+        "surface": "asphalt",
+        "rayCheckCm": 0,
+        "hubSpikeCm": 0,
+        "hubSpikeFrame": 81,
+        "hubStepCm": 0,
+        "hubStepFrame": 130
+      },
+      {
+        "vehicle": "apc",
+        "wheel": 5,
+        "gapMinCm": 0.1,
+        "gapMaxCm": 0.1,
+        "minFrame": 3,
+        "maxFrame": 3,
+        "at": [
+          -0.25,
+          -1.45
+        ],
+        "samples": 256,
+        "surface": "asphalt",
+        "rayCheckCm": 0,
+        "hubSpikeCm": 0,
+        "hubSpikeFrame": 81,
+        "hubStepCm": 0,
+        "hubStepFrame": 130
+      }
+    ]
+  },
+  "perf": {
+    "drawCalls": {
+      "p50": 55,
+      "p95": 58,
+      "max": 59
+    },
+    "triangles": {
+      "p50": 70368,
+      "p95": 70370,
+      "max": 70754
+    },
+    "shadowDrawCalls": {
+      "p50": 51,
+      "p95": 51,
+      "max": 51
+    },
+    "shadowTriangles": {
+      "p50": 51561,
+      "p95": 51561,
+      "max": 51561
+    },
+    "stepMs": {
+      "p50": 2.2,
+      "p95": 4.4,
+      "max": 10.9
+    },
+    "lastFrame": {
+      "drawCalls": 58,
+      "triangles": 70370,
+      "shadowDrawCalls": 51,
+      "shadowTriangles": 51561,
+      "stepMs": 1.9000005722045898,
+      "categories": {
+        "other": 58,
+        "shadows": 51
+      }
+    },
+    "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+  },
+  "vehicles": {
+    "apc": {
+      "entity": 3,
+      "position": [
+        0,
+        0
+      ],
+      "yawDeg": 0,
+      "yawRateMaxDegS": 0,
+      "bodyOverlaps": 25,
+      "rideRemainingM": null,
+      "health": 1000,
+      "decay": null,
+      "speed": 0
+    }
+  },
+  "pursuit": {
+    "actors": {},
+    "courierSwings": 0,
+    "courierAttacks": 0,
+    "firstAttackFrame": -1,
+    "bites": 0,
+    "firstBiteFrame": -1
+  },
+  "heldProps": {
+    "samples": 0,
+    "intersections": 0
+  },
+  "companion": {
+    "overlapMaxCm": 33.759793933952324,
+    "overlapFrame": 7,
+    "runLagMaxM": 0,
+    "runLagFrame": 0,
+    "samples": 107,
+    "runningSamples": 0
+  },
+  "bike": {
+    "inViewFrames": 0,
+    "missedFrames": 0,
+    "offFrames": 0,
+    "maxOffsetCm": 0,
+    "firstMissedFrame": -1
+  },
+  "actors": {
+    "courier": {
+      "kind": "courier",
+      "entity": 1,
+      "position": [
+        0.71,
+        2.025
+      ],
+      "yawDeg": 0,
+      "state": "idle",
+      "drawnFrames": 109,
+      "inViewFrames": 79,
+      "missedInViewFrames": 12,
+      "lod": {
+        "lod0": 109
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          0.71,
+          2.025
+        ]
+      },
+      "farLodCloseFrames": 0,
+      "motion": {
+        "frames": 258,
+        "torsoPitchMinDeg": 1.5,
+        "torsoPitchMaxDeg": 27.5,
+        "contacts": 7,
+        "slideMaxCm": 52.1,
+        "slideP95Cm": 16.1,
+        "yawDriftMaxDeg": 14.5,
+        "liftMaxCm": 83.9,
+        "sinkMaxCm": 4.1,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 5
+      }
+    },
+    "corgi": {
+      "kind": "corgi",
+      "entity": 2,
+      "position": [
+        0.71,
+        3.24
+      ],
+      "yawDeg": -84.3,
+      "state": "follow",
+      "drawnFrames": 188,
+      "inViewFrames": 188,
+      "missedInViewFrames": 0,
+      "lod": {
+        "lod0": 188
+      },
+      "firstDrawn": {
+        "frame": 1,
+        "at": [
+          0.71,
+          3.24
+        ]
+      },
+      "farLodCloseFrames": 0,
+      "motion": {
+        "frames": 258,
+        "torsoPitchMinDeg": null,
+        "torsoPitchMaxDeg": null,
+        "contacts": 33,
+        "slideMaxCm": 9.5,
+        "slideP95Cm": 2.4,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 12.6,
+        "sinkMaxCm": 1.6,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 115
+      }
+    }
+  },
+  "clicks": {
+    "total": 0,
+    "misses": 0,
+    "rows": [],
+    "swings": []
+  },
+  "visibility": {
+    "frame": 258,
+    "sim": {
+      "corgi": 1,
+      "vehicle": 1,
+      "courier": 1,
+      "actors": 2
+    },
+    "drawn": {
+      "vehicle": 1,
+      "courier": 1,
+      "corgi": 1
+    }
+  },
+  "lods": {},
+  "clipping": {
+    "gunBodyHits": 0,
+    "staticPairs": 0,
+    "heldPropHits": 0,
+    "actorHits": 0,
+    "piercing": 0
+  },
+  "emergence": null,
+  "doors": {},
+  "log": []
+}
