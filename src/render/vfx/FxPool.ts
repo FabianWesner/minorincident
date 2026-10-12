@@ -108,13 +108,15 @@ export class FxPool {
   }
   /** Accessibility palette changes preserve live telegraph geometry and lifetime. */
   recolor(slot: number, color: number): void { this.tint.setHex(color); this.colors.setXYZ(slot, this.tint.r, this.tint.g, this.tint.b); this.colors.needsUpdate = true; }
-  /** Returns a stable slot index; callers retain it only for attack-lifetime telegraphs. */
+  /** Returns a stable slot index (-1: `preserveLive` and the pool is full); callers retain it only for attack-lifetime telegraphs. */
   spawn(now: number, life: number, x: number, y: number, z: number, vx: number, vy: number, vz: number, size: number, shape: number, color: number, gravity = 0, aspect = 1, preserveLive = false): number {
     let slot = this.cursor++ % this.budget;
     if (preserveLive) {
       let searched = 0;
       while (this.expires[slot] > now && searched++ < this.budget) slot = (slot + 1) % this.budget;
-      if (this.expires[slot] > now) throw new Error('Telegraph pool exceeds the supported concurrent attack budget');
+      // Brief l3-polish (L3 real-input run crashed here with the 5x hordes on the police line): more live telegraphs than the pool
+      // holds (many sim ticks between two render frames) skip the extra tell instead of stopping the game.
+      if (this.expires[slot] > now) return -1;
     }
     this.origin.setXYZW(slot, x, y, z, now); this.motion.setXYZW(slot, vx, vy, vz, life);
     this.style.setXYZW(slot, size, shape, gravity, aspect);

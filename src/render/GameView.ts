@@ -1,3 +1,4 @@
+import { l3, l3AttackView } from '../data/l3';
 import { CrowdAccessories } from './characters/CrowdAccessories';
 import { carTransitionPose } from './characters/carTransition';
 import { WeatherView } from './WeatherView';
@@ -75,6 +76,7 @@ export class GameView implements Lifecycle {
   private departureShot = false;
   private storyFraming = false;
   private l5StationView = false;
+  private l3AttackScale = 1;
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -532,8 +534,12 @@ export class GameView implements Lifecycle {
       }
       this.l5StationView = showStation;
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
-      this.view.encounterScale = rescue ? 3.3 : 1;
-      if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? .8 : 0, rescue ? 1.6 : undefined);
+      // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
+      this.l3AttackScale += ((l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
+      this.view.encounterScale = rescue ? 3.3 : this.world.scenario === 'L3' ? this.l3AttackScale : 1;
+      // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
+      // the courier and her group stay in frame next to the surge.
+      if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
       this.updateEnding();
       this.view.update(player.transform, seconds);
       this.playerPosition.set(player.transform.x, player.transform.y - 0.5, player.transform.z);
