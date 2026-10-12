@@ -97,8 +97,9 @@ export class SimWorld implements Lifecycle {
   loadMission(def: MissionDef): Mission {
     const next=new Mission(this,def);this.missions?.dispose();this.missions=next;
     this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
-    const goal = def.steps.at(-1) && def.anchors[def.steps.at(-1)!.anchor];
-    if (this.districts && goal) { const rescue = this.trapRescue = new TrapRescue(this, [goal]); this.stopTrapRescue = this.events.on('sim.tick', () => rescue.update(), SimPhase.missions); }
+    // Any objective anchor counts as a goal: a level whose last objective is unreachable on foot early (L4: the cellar) must not strand-rescue the player.
+    const goals = [...new Set(def.steps.map(s => s.anchor))].map(a => def.anchors[a]).filter(Boolean);
+    if (this.districts && goals.length) { const rescue = this.trapRescue = new TrapRescue(this, goals); this.stopTrapRescue = this.events.on('sim.tick', () => rescue.update(), SimPhase.missions); }
     return next;
   }
   /** Mission actors use the same component/physics owners as authored gameplay placements. */
