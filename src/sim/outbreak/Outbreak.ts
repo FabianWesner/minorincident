@@ -1,3 +1,4 @@
+import { balancedCrowdModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
 import { storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
@@ -99,11 +100,20 @@ export class Outbreak {
   /** A scream or blast; pedestrians within 12 m notice it (infected never hear in L1). */
   hear(position: Vec2): void { this.heard.push({ x: position.x, z: position.z, tick: this.world.tick }); }
 
+  private shirtOf(id: number): string {
+    this.rng.next(); // Preserve the former random-shirt sample's place in the gameplay stream.
+    return shirtTones[crowdAppearance(id).shirt];
+  }
+  private crowdModel(at: Point): string {
+    return balancedCrowdModel(l1Pedestrians.models,
+      [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && keepsLook(e)).map(e => ({ model: e.appearance!.asset, x: e.transform.x, z: e.transform.z })), at, Math.floor(this.rng.next() * 0x100000000));
+  }
+
   /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id. */
   spawnPedestrian(position: Point, options: PedestrianOptions = {}): number {
     const civilians = this.world.npcs!.civilians;
     const role = options.role ?? civilianRoles[Math.floor(this.rng.next() * civilianRoles.length)].role;
-    const model = options.child ? 'npc.civilian-kid' : options.model ?? l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
+    const model = options.child ? 'npc.civilian-kid' : options.model ?? this.crowdModel(position);
     const waypoints = options.waypoints ?? [position];
     // Plain loops become civlife walks; a point with something to face becomes a short look (window, flowers, partner).
     const schedule: CivilianActivity[] = options.schedule ?? waypoints.map((target, i) => options.faces?.[i]
@@ -113,7 +123,7 @@ export class Outbreak {
     const e = this.world.entities.get(id)!, c = e.civilian!;
     e.transform.yaw = options.yaw ?? this.rng.next() * Math.PI * 2;
     const tier: SpeedTier = options.tier ?? (model === 'npc.civilian-elderly' || role === 'bathrobe-neighbor' ? 'frail' : role === 'jogger' || this.rng.next() < l1Pedestrians.athleticShare ? 'athletic' : 'average');
-    e.appearance = { entityId: id, asset: model, tint: this.freeTint(position, model, options.tint ?? l1Pedestrians.shirts[Math.floor(this.rng.next() * l1Pedestrians.shirts.length)], id),
+    e.appearance = { entityId: id, asset: model, tint: this.freeTint(position, model, options.tint ?? this.shirtOf(id), id),
       accessories: [...(options.accessories ?? [])], handProp: options.handProp ?? schedule.find(s => s.prop)?.prop ?? null, tier } satisfies Appearance;
     c.l1 = { walkSpeed: options.walkSpeed ?? this.range(civ.walkSpeed) * (model === 'npc.civilian-elderly' ? .7 : 1), fleeSpeed: this.range(civ.fleeSpeed) * (tier === 'frail' ? .9 : 1),
       startleTicks: ticks(this.range(civ.startleS)), refuge: null, target: null, repickAt: 0, noticed: -1 };
@@ -141,9 +151,9 @@ export class Outbreak {
   dressInfected(): void {
     for (const e of this.world.infected!.active) {
       if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
-      const asset = l1Pedestrians.models[Math.floor(this.rng.next() * l1Pedestrians.models.length)];
+      const asset = this.crowdModel(e.transform);
       const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
-      e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, l1Pedestrians.shirts[Math.floor(this.rng.next() * l1Pedestrians.shirts.length)], e.id), accessories: [], handProp: null, tier };
+      e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier };
     }
   }
   update(): void {

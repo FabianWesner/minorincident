@@ -1,3 +1,5 @@
+import { markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
+import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
@@ -12,7 +14,7 @@ import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterle
 import type { Materials } from '../Materials';
 import { civilianMaterial } from './CivilianMaterial';
 import { AssetRegistry } from '../../assets/registry';
-import { civilianRoles, l1Pedestrians, coreCivilianModels, l3CivilianModels } from '../../data/npcs';
+import { l1Pedestrians, coreCivilianModels, l3CivilianModels } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
@@ -95,7 +97,6 @@ class CivilianBatch extends Group {
   private readonly sway = new Matrix4();
   private readonly motion = new MotionPhase();
   private strideScale = 1;
-  private readonly colors = civilianRoles.map(d => new Color(d.color));
   private readonly frame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
   private readonly tint = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
   /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (negative for a routine grip); w is the
@@ -107,7 +108,7 @@ class CivilianBatch extends Group {
   source = 'placeholder';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate)) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
     let key: string | undefined = `${this.model}:${this.lod}`;
@@ -136,6 +137,8 @@ class CivilianBatch extends Group {
       }
     }
     this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
+    markCrowdAppearance(baked.geometry);
+    if (this.lod !== 'lod2') this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
@@ -227,6 +230,7 @@ class CivilianBatch extends Group {
         const recoil = hold && age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .025 : 0;
         frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : hold ? -.18 : -.75, hold || aiming ? .995 - recoil : .8, hold)); blend[0] = frame; blend[1] = 1;
       }
+      this.accessories?.place(e, this.lod, this.poses, frame, blend, this.transform);
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);
       this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
       if (holding) {
@@ -251,8 +255,10 @@ class CivilianBatch extends Group {
   }
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {
     if (e.appearance) this.shirt.set(e.appearance.tint);
-    else this.shirt.copy(this.colors[Math.max(0, civilianRoles.findIndex(d => d.variant === e.civilian?.variant))]);
-    this.tint.setXYZW(index, this.shirt.r, this.shirt.g, this.shirt.b, blend);
+    else this.shirt.copy(crowdShirt(e.id));
+    writeCrowdAppearance(this.tint, index, e.id, this.shirt, blend, this.lod === 'lod2' ? 0 : this.accessories?.slot(e), this.accessories?.hidesHair(e, this.lod));
+    const figure = this.probe.figures.at(-1);
+    if (figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
   }
   /** A pedestrian who rose infected: same model and tint, full overlay, infected locomotion and fight clips. */
   private place(e: EntitySnapshot, index: number, alpha: number): boolean {
@@ -294,12 +300,13 @@ class CivilianBatch extends Group {
       this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);
       return false;
     }
+    this.accessories?.place(e, this.lod, this.poses, frame, blend, this.transform);
     this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);
     this.mesh.setMatrixAt(index, this.transform); this.frame.setX(index, sourceFrame); this.overlay.setW(index, frame);
     this.tintOf(e, index, blend[0] * 2 + blend[1]); this.overlay.setXYZ(index, .4, b.state === 'dead' && b.recoverAt < 0 ? 0 : 1, 1);
     return true;
   }
-  snapshot() { return { instances: (this.mesh?.count ?? 0) + this.corpses.snapshot().instances, draws: (this.mesh?.count ? 1 : 0) + this.corpses.snapshot().draws, source: this.source, figures: [...this.probe.figures, ...this.corpses.snapshot().figures] }; }
+  snapshot() { return { instances: (this.mesh?.count ?? 0) + this.corpses.snapshot().instances, draws: (this.mesh?.count ? 1 : 0) + this.corpses.snapshot().draws, source: this.source, layout: this.mesh ? crowdVertexLayout(this.mesh.geometry) : null, figures: [...this.probe.figures, ...this.corpses.snapshot().figures] }; }
   dispose(): void { this.corpses.dispose(); if (this.mesh) { this.mesh.geometry.dispose(); this.releaseMaterial?.(); this.mesh.dispose(); this.texture.dispose(); } void this.registry?.dispose(); this.clear(); }
 }
 
@@ -316,7 +323,7 @@ export class CivilianCrowd extends Group {
   private readonly presentation = new MotionPresentation(crowdTurnRate);
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
-  constructor(private readonly world: SimWorld, shading?: Materials) {
+  constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
     const models=world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
@@ -324,7 +331,7 @@ export class CivilianCrowd extends Group {
     this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
   }
   private readonly shading?: Materials;
-  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation); }
+  private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories); }
   /** PO P1 10-08 ("her mesh looks shredded/faceted up close"): the near band is the ~7k-triangle LOD1, so the few
    * figures that fill the screen (the CrowdView infected hero rule: > 196 px tall, 164 px to leave, at most 4, nearest
    * to the camera) draw the full LOD0 model. Its batch per model is loaded on first use (desktop tier only). */
@@ -384,7 +391,7 @@ export class CivilianCrowd extends Group {
     loadMeasure('view:civilian-crowd', started); this.update();
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
-  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts: states.map(s=>s.layout).filter(Boolean),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   aimGun(id: number, direction: { x: number; y?: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {
     this.aimGun(id,direction);

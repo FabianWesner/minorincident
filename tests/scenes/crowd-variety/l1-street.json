@@ -1,0 +1,280 @@
+{
+  "name": "l1-street",
+  "seed": 2,
+  "ground": "asphalt",
+  "size": 30,
+  "time": "L1",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        -5
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "pedestrian-0",
+      "kind": "pedestrian",
+      "at": [
+        -4,
+        -2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-a"
+      }
+    },
+    {
+      "id": "pedestrian-1",
+      "kind": "pedestrian",
+      "at": [
+        -2,
+        -2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-b"
+      }
+    },
+    {
+      "id": "pedestrian-2",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        -2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-a"
+      }
+    },
+    {
+      "id": "pedestrian-3",
+      "kind": "pedestrian",
+      "at": [
+        2,
+        -2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-b"
+      }
+    },
+    {
+      "id": "pedestrian-4",
+      "kind": "pedestrian",
+      "at": [
+        4,
+        -2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-elderly"
+      }
+    },
+    {
+      "id": "pedestrian-5",
+      "kind": "pedestrian",
+      "at": [
+        -4,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-a"
+      }
+    },
+    {
+      "id": "pedestrian-6",
+      "kind": "pedestrian",
+      "at": [
+        -2,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-b"
+      }
+    },
+    {
+      "id": "pedestrian-7",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-a"
+      }
+    },
+    {
+      "id": "pedestrian-8",
+      "kind": "pedestrian",
+      "at": [
+        2,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-b"
+      }
+    },
+    {
+      "id": "pedestrian-9",
+      "kind": "pedestrian",
+      "at": [
+        4,
+        0
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-elderly"
+      }
+    },
+    {
+      "id": "pedestrian-10",
+      "kind": "pedestrian",
+      "at": [
+        -4,
+        2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-a"
+      }
+    },
+    {
+      "id": "pedestrian-11",
+      "kind": "pedestrian",
+      "at": [
+        -2,
+        2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-b"
+      }
+    },
+    {
+      "id": "pedestrian-12",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-a"
+      }
+    },
+    {
+      "id": "pedestrian-13",
+      "kind": "pedestrian",
+      "at": [
+        2,
+        2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-b"
+      }
+    },
+    {
+      "id": "pedestrian-14",
+      "kind": "pedestrian",
+      "at": [
+        4,
+        2
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-elderly"
+      }
+    },
+    {
+      "id": "pedestrian-15",
+      "kind": "pedestrian",
+      "at": [
+        -4,
+        4
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-a"
+      }
+    },
+    {
+      "id": "pedestrian-16",
+      "kind": "pedestrian",
+      "at": [
+        -2,
+        4
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-man-b"
+      }
+    },
+    {
+      "id": "pedestrian-17",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        4
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-a"
+      }
+    },
+    {
+      "id": "pedestrian-18",
+      "kind": "pedestrian",
+      "at": [
+        2,
+        4
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-woman-b"
+      }
+    },
+    {
+      "id": "pedestrian-19",
+      "kind": "pedestrian",
+      "at": [
+        4,
+        4
+      ],
+      "state": "idle",
+      "look": {
+        "model": "npc.civilian-elderly"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1
+    ],
+    "zoom": 1.1
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "sameLookShareMax": 0.25,
+    "pedestrianVarietyMin": 15
+  }
+}

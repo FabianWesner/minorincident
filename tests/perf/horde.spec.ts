@@ -1,3 +1,4 @@
+import { regularInfectedModels } from '../../src/data/crowdAppearance';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test, boot } from '../e2e/fixtures';
 import { PNG } from 'pngjs';
@@ -11,12 +12,12 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
     await api.step(0); await api.screenshotReady();
   });
   const proof = await page.evaluate(() => ({ ai: window.__SS__!.getState().ai!, crowd: window.__SS__!.getState().render.crowd!, perf: window.__SS__!.perf() }));
-  const runners = proof.crowd.batches.filter((b) => b.id === 'infected.runner');
-  if (manifest.find((asset) => asset.id === 'inf.common-worker')!.status === 'integrated') expect(runners.every(batch => batch.source === 'glb')).toBe(true);
+  const runners = proof.crowd.batches.filter((b) => b.id === 'infected.runner' || regularInfectedModels.some(model=>model===b.id));
+  if (manifest.find((asset) => asset.id === 'inf.common-worker')!.status === 'integrated') expect(runners.every(batch => batch.source === 'glb' || batch.source === 'pending' && batch.instances === 0)).toBe(true);
   expect(proof.ai.count).toBe(200);
   const rendered = runners.reduce((sum, batch) => sum + batch.instances, 0);
   expect(rendered).toBeGreaterThan(0); expect(rendered).toBeLessThan(200);
-  expect(runners.find(batch => batch.lod === 'lod0')!.instances).toBe(8);
+  expect(runners.filter(batch => batch.lod === 'lod0').reduce((n,b)=>n+b.instances,0)).toBe(8);
   expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0);
   expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 5); // Four fixed effects and the empty static-corpse group.
   const offscreen = await page.evaluate(() => {
@@ -61,7 +62,7 @@ test('T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runner
   let eyePixels = 0, redPixels = 0;
   for (let i = 0; i < pixels.data.length; i += 4) { const r = pixels.data[i], g = pixels.data[i + 1], b = pixels.data[i + 2]; if (r > 200 && r > g * 1.8 && r > b * 1.8) eyePixels++; if (r > 110 && r > g * 1.4 && r > b * 1.2) redPixels++; }
   expect(eyePixels).toBeGreaterThan(40); expect(redPixels).toBeGreaterThan(200);
-  const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.ai!.count).toBe(60); const visibleRunners = state.render.crowd!.batches.filter((b) => b.id === 'infected.runner').reduce((sum, batch) => sum + batch.instances, 0); expect(visibleRunners).toBeGreaterThan(0); expect(visibleRunners).toBeLessThanOrEqual(60); expect(state.render.lighting!.preset).toBe('golden');
+  const state = await page.evaluate(() => window.__SS__!.getState()); expect(state.ai!.count).toBe(60); const visibleRunners = state.render.crowd!.batches.filter((b) => b.id === 'infected.runner' || regularInfectedModels.some(model=>model===b.id)).reduce((sum, batch) => sum + batch.instances, 0); expect(visibleRunners).toBeGreaterThan(0); expect(visibleRunners).toBeLessThanOrEqual(60); expect(state.render.lighting!.preset).toBe('golden');
   await page.evaluate(async () => { window.__SS__!.settings.set({ idPass: true }); await window.__SS__!.screenshotReady(); });
   const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/player-mask.png' }));
   let heroPixels = 0; for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) heroPixels++;
@@ -69,9 +70,18 @@ test('T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runner
   await page.evaluate(async () => { const api = window.__SS__!; api.settings.set({ idPass: false }); api.spawn('infected.brute', { x: -2, z: -2 }, { state: 'chase' }); api.spawn('infected.runner', { x: -1.5, z: 1 }, { state: 'chase' }); await api.step(1); await api.screenshotReady(); });
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/telegraphs.png' });
   const burst = await page.evaluate(async () => {
-    const api = window.__SS__!; api.spawn('infected.bloated', { x: 3, z: 0 }, { state: 'idle' }); api.cheats.killAll(); await api.step(1); await api.screenshotReady(); return api.getState();
+    const api = window.__SS__!;
+    // The varied 60-person scene above checks readability. Keep this separate three-archetype corpse fixture
+    // at its original 63 bodies and seven draws; an explicit worker reference is intentional here.
+    await api.loadScenario('horde-readability'); api.pause(); api.camera.preset('horde-readability');
+    for (let i=0;i<60;i++) api.spawn('infected.runner', {x:i%6*.9-2.3,z:Math.floor(i/6)*1.2-14}, {state:'idle',variant:'inf.common-worker'});
+    api.spawn('infected.brute',{x:-2,z:-2},{state:'chase'});
+    api.spawn('infected.runner',{x:-1.5,z:1},{state:'chase',variant:'inf.common-worker'});
+    api.spawn('infected.bloated', { x: 3, z: 0 }, { state: 'idle' }); api.cheats.killAll(); await api.step(1); await api.screenshotReady();
+    return {state:api.getState(),bodies:api.query({kind:'infected'}).length};
   });
-  expect(burst.render.crowd!.meshDrawCalls).toBeLessThanOrEqual(7); // Three corpse archetypes can each occupy two LODs, plus one explosion telegraph.
+  expect(burst.bodies).toBe(63);
+  expect(burst.state.render.crowd!.meshDrawCalls).toBeLessThanOrEqual(7); // Three corpse archetypes can each occupy two LODs, plus one explosion telegraph.
   await page.locator('canvas').screenshot({ path: 'test-results/epics/E07/bloated-windup.png' });
   writeFileSync('test-results/epics/E07/readability.json', JSON.stringify({ eyePixels, redPixels, heroPixels, crowd: state.render.crowd, lighting: state.render.lighting }, null, 2) + '\n');
 });
