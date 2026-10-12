@@ -87,7 +87,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   d('army', 'army', 'veh.evac-bus', 149, -9.4), d('army', 'army', 'veh.evac-bus', 149, 6.2),
   d('army', 'army', 'veh.military-truck', 151, -24.0, { yaw: H }), d('army', 'army', 'veh.military-apc', 150.4, 17.6, { yaw: PI + .2 }),
   // The mounted gun (brief l3-finish): the L4 HMG nest at the zone line, manned by the l3-hmg gunner (aims via DistrictView).
-  d('army', 'army', 'prop.hmg-nest', l3Anchors['l3-hmg'][0] - l3ArmyOffset, l3Anchors['l3-hmg'][1], { yaw: -PI / 2 }),
+  d('army', 'army', 'prop.hmg-nest', 142.6, -9.6, { yaw: -PI / 2 }),
   d('army', 'army', 'prop.light-tower', 145.6, -18.6), d('army', 'army', 'prop.light-tower', 145.6, 16.4, { yaw: PI }),
   ...([[141.2, -9.6], [141.2, 9.6], [141.2, -15.0], [141.2, 15.0], [146.0, -6.4], [146.0, 6.4]] as const).map(([x, z]) => d('army', 'army', 'prop.sandbag-pallet', x, z, { yaw: H })),
   ...([[154.0, -4.6], [154.0, 4.6], [162.0, -1.0]] as const).map(([x, z]) => d('army', 'army', 'prop.jersey-barrier', x, z, { yaw: 0 })),
