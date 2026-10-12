@@ -14,7 +14,7 @@ if (port === 3300) throw new Error('Scene Lab must not use the shared dev-server
 export const origin = `http://127.0.0.1:${port}`;
 export type Backend = 'webgl2' | 'webgpu';
 /** `query`: extra game URL parameters, e.g. { skin: '0' } for the rigid courier (A/B checks). */
-export interface SessionOptions { backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; log?: (line: string) => void }
+export interface SessionOptions { backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; /** E18 native timing: Chrome without the refresh-rate ceiling (still headless). */ nativeFrameTiming?: boolean; log?: (line: string) => void }
 
 let server: ChildProcess | null = null;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
@@ -44,7 +44,7 @@ export class SceneSession {
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
   constructor(options: SessionOptions = {}) {
-    this.options = { backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
+    this.options = { backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, nativeFrameTiming: options.nativeFrameTiming ?? false, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
   }
   get errors(): string[] { return this.guard?.errors ?? []; }
   async open(): Promise<void> {
@@ -52,7 +52,8 @@ export class SceneSession {
     const webgpu = this.options.backend === 'webgpu';
     // macOS: ANGLE/Metal gives real-GPU WebGL2 headless. WebGPU needs the unsafe flag and may still fall back.
     const args = webgpu ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
-    this.browser = await chromium.launch({ headless: true, args });
+    if (this.options.nativeFrameTiming) args.push('--disable-frame-rate-limit', '--disable-gpu-vsync');
+    this.browser = await chromium.launch({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
     const context = await this.browser.newContext({ viewport: this.options.viewport, deviceScaleFactor: 1 });
     this.page = await context.newPage();
     this.guard = attachErrorGuard(this.page);
