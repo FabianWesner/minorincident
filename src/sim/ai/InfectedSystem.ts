@@ -1,3 +1,4 @@
+import { balancedCrowdModel, regularInfectedModels } from '../../data/crowdAppearance';
 import { storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
 import { motionResponse, resetResponse } from '../locomotion/MotionResponse';
@@ -123,7 +124,7 @@ export class InfectedSystem {
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     entity.locomotion = motionResponse(); delete entity.motion;
-    delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
+    delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown;
     delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
@@ -133,7 +134,12 @@ export class InfectedSystem {
     for (let bird = 0; bird < 20; bird++) { entity.infected!.birdAlive[bird] = Number(bird < entity.infected!.birds); entity.infected!.birdPositions[bird * 3] = position.x + Math.cos(bird * 2.399963) * 2; entity.infected!.birdPositions[bird * 3 + 1] = 3; entity.infected!.birdPositions[bird * 3 + 2] = position.z + Math.sin(bird * 2.399963) * 2; }
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
-    this.world.entities.adopt(entity); this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
+    this.world.entities.adopt(entity);
+    if (!opts.variant && (id === 'infected.runner' || id === 'infected.sprinter')) {
+      entity.infected!.variant = balancedCrowdModel(regularInfectedModels,
+        this.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), position, entity.id);
+    }
+    this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
     return entity.id;
   }
   release(entity: EntitySnapshot): void {

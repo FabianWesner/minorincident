@@ -6,8 +6,9 @@ export const l6 = {
   infected: { high: 60, low: 30 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
   gates: [90, 150, 210], checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
 } as const;
+export const l6BreachModels = [l6.breach.model, 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.civilian-woman-a', 'npc.civilian-elderly'] as const;
 /** Fixed shelter and maintenance cast, including every possible carried L5 survivor. */
-export const l6CastModels = [...new Set([l6.breach.model, 'npc.marcus.aftermath', 'npc.shelter-survivor.bandaged', 'npc.shelter-survivor.lying', 'npc.shelter-survivor.sitting', 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', ...l5Survivors.map(s=>s.model)])];
+export const l6CastModels = [...new Set([...l6BreachModels, 'npc.marcus.aftermath', 'npc.shelter-survivor.bandaged', 'npc.shelter-survivor.lying', 'npc.shelter-survivor.sitting', 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', ...l5Survivors.map(s=>s.model)])];
 export const l6Doors = [{ x: -10, z: -10 }, { x: 10, z: -10 }, ...[54, 126, 198].map(x => ({ x, z: 11.2 }))];
 export const l6PhotoSpots = [
   ['l6-shelter-calm', [0, 6]], ['l6-first-breach', [-10, -6]], ['l6-shelter-fails', [0, 4]],

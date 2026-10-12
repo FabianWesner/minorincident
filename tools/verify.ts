@@ -8,12 +8,14 @@ const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
 // E07's Alpha wall-clock fixtures stay on the Mac when functional sims run remotely.
 const alphaTiming = ['tests/sim/ai/director.test.ts', 'tests/sim/performance/alpha.test.ts', 'tests/sim/performance/alpha-physical.test.ts'];
+const e18GpuPattern = '@perf|@E18-AC01|crowd-drawn|crowd variety|crowd-close-lod|T-E18-04-browser|T-E13-05|S-01|S-02';
 const infectedGpuPattern = 'alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13';
 const gpuSelectionPattern = `^(?=.*(?:${selection.pattern}|T-E07-physical-budget))(?=.*(?:${infectedGpuPattern}))`;
 const splitAlphaTiming = target === 'E07' && process.env.MI_VERIFY_REMOTE_SIM === '1';
-const simPattern = splitAlphaTiming ? `^(?!.*T-E07-11).*(?:${selection.pattern})` : selection.pattern;
+const splitE18Timing = target === 'E18' && process.env.MI_VERIFY_REMOTE_SIM === '1';
+const simPattern = splitAlphaTiming ? `^(?!.*T-E07-11).*(?:${selection.pattern})` : splitE18Timing ? `^(?!.*(?:@E18-AC02|@perf)).*(?:${selection.pattern})` : selection.pattern;
 const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
-if (splitAlphaTiming) simArgs[3] = simPattern;
+if (splitAlphaTiming || splitE18Timing) simArgs[3] = simPattern;
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, '--', 'npx', ...simArgs]
@@ -27,11 +29,12 @@ const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
+  target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   ...(splitAlphaTiming ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
+  ...(splitE18Timing ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', `^(?=.*(?:${selection.pattern}))(?=.*(?:@E18-AC02|@perf))`, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   simCommand,
   // Keep E07 visual/counter probes on the Mac; offload its remaining browser checks.
   ...(target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1'
@@ -53,7 +56,10 @@ const commands: string[][] = [
       ]
     : target === 'E18'
       ? [
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity', '--workers=2'],
+        ...(process.env.MI_VERIFY_REMOTE_BROWSER === '1' ? [
+          ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 33793}`, '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '${e18GpuPattern}|@E18-AC08|@E18-AC09|WebGPU low tier parity' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${e18GpuPattern}))`, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity', '--workers=2'],
+        ] : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity', '--workers=2']]),
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', 'tests/perf/horde-budget.spec.ts', '--project=chromium', '--workers=1'],
       ]

@@ -1,3 +1,4 @@
+import { CrowdAccessories } from './characters/CrowdAccessories';
 import { carTransitionPose } from './characters/carTransition';
 import { WeatherView } from './WeatherView';
 import { PropFixtureView } from './PropFixtureView';
@@ -405,17 +406,19 @@ export class GameView implements Lifecycle {
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
+  private accessories: CrowdAccessories | null = null;
   private startActors(character: Promise<unknown>): Promise<unknown> {
-    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials); this.npcs.setQuality(this.quality); }
+    this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; this.actions.showCone = this.params.has('debug') || this.params.get('aimcone') === '1'; }
-    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
+    if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
     if (this.world.props && !this.world.districts && this.materials) { this.fixtureProps = new PropFixtureView(this.world, this.materials); this.scene.add(this.fixtureProps); }
     if (this.world.interactables && this.materials) { this.interactions = new InteractionView(this.world, this.materials, this.view, this.quality === 'low'); this.scene.add(this.interactions); }
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
     if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
-    return Promise.all([this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
+    return Promise.all([this.accessories.init(), this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
   /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
    * nearest first, after the first playable frames. The load gate slices GLB parsing
@@ -629,7 +632,7 @@ export class GameView implements Lifecycle {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
     return { machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
-      npcs: this.npcs?.snapshot() ?? null,
+      npcs: this.npcs?.snapshot() ?? null, accessories: this.accessories?.snapshot() ?? [],
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
       materials: [...materialInventory.values()], occlusion: this.occlusion.getState(),
@@ -726,9 +729,9 @@ export class GameView implements Lifecycle {
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
-    pickBodies.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
+    pickBodies.begin(); this.accessories?.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update(alpha);
-    this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera);
+    this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera); this.accessories?.finish();
     this.flashOverlay.style.opacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();
     if (this.world.props) this.districts?.syncProps(this.world.props.items);
@@ -860,7 +863,7 @@ export class GameView implements Lifecycle {
     // Once a test has begun the mission, snapshots/heap checks settle the same streamed
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
-    this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera);
+    this.accessories?.begin(); this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera); this.accessories?.finish();
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
@@ -892,6 +895,7 @@ export class GameView implements Lifecycle {
     this.frozenStarted = -1; this.frozenPose = null;
     pickBodies.reset();
     if (this.healthBars) { this.healthBars.removeFromParent(); this.healthBars.dispose(); this.healthBars = null; }
+    if (this.accessories) { this.scene.remove(this.accessories); this.accessories.dispose(); this.accessories = null; }
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }
     if (this.character) { this.scene.remove(this.character); this.character.dispose(); this.character = null; }

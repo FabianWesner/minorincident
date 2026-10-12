@@ -1,3 +1,4 @@
+import type { CrowdAccessories } from '../characters/CrowdAccessories';
 // World-anchored badges and transient bark messages adapt Bruno InteractivePoints.js/Bubble.js (MIT).
 import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Vector3, type Camera, type Object3D, type Material } from 'three/webgpu';
 import { batchRigidParts } from '../characters/batchRigidParts';
@@ -34,8 +35,8 @@ export class NpcView extends Group {
   private barkUntil = -1;
   private threatId = -1;
   private readonly off: () => void;
-  constructor(readonly world: SimWorld, readonly materials: Materials) {
-    super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'npcs'; this.civilians = new CivilianCrowd(world, materials); this.add(this.civilians);
+  constructor(readonly world: SimWorld, readonly materials: Materials, accessories?: CrowdAccessories) {
+    super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'npcs'; this.civilians = new CivilianCrowd(world, materials, accessories); this.add(this.civilians);
     this.cars = new InstancedMesh(new BoxGeometry(4, 1.2, 1.6), materials.unique('survivorRed'), 32); this.cars.count = 0; this.cars.castShadow = this.cars.receiveShadow = true; this.cars.frustumCulled = false; this.add(this.cars);
     this.bark.setAttribute('role', 'status'); this.bark.setAttribute('data-corgi-warning', ''); this.bark.style.cssText = 'position:fixed;display:none;pointer-events:none;color:#ffcd63;background:#292537;border:2px solid #ffcd63;border-radius:14px;padding:8px;font:700 16px system-ui;z-index:7'; document.querySelector('#game')!.appendChild(this.bark);
     this.off = world.events.on('corgi.bark', event => { if (event.type === 'corgi.bark') { this.barkUntil = event.tick + 180; this.threatId = event.threatId; this.bark.dataset.direction = `${event.direction.x},${event.direction.z}`; } });

@@ -1,7 +1,8 @@
+import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
-import { l6, l6Doors, l6InjuryLines } from '../../data/l6';
+import { l6, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
 import { l5, l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -69,7 +70,8 @@ export class LevelSixSubway {
       const door=doors[i%doors.length],base=l6Doors[door],at={x:base.x+(i%2)*.8,z:base.z-1.4};
       // Doorway arrivals are the maintenance source. Later side-passages only emerge outside the camera.
       if(wave>2&&!ai.director.offscreen(at))continue;
-      const id=o.spawnPedestrian(this.snap(at),{model:l6.breach.model}),e=w.entities.get(id)!;o.turnNow(e);
+      const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
+      const id=o.spawnPedestrian(this.snap(at),{model}),e=w.entities.get(id)!;o.turnNow(e);
       this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at)});
     }
   }

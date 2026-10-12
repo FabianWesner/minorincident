@@ -1,3 +1,4 @@
+import { writeCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -44,7 +45,7 @@ export class StaticCorpses extends Group {
     }
     const index = page.mesh.count++;
     this.slots.set(instanceKey, { page, index });
-    page.mesh.setMatrixAt(index, instance); page.tint.setXYZW(index, tint.r, tint.g, tint.b, 1);
+    page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1);
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Recompute when a body joins,
