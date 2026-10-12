@@ -3,10 +3,10 @@ import type { MusicState } from './MusicDirector';
 
 const PEAK_GAIN = 0.78;
 interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; gain: GainNode; retire: number; file: string; }
-/** Level-specific recordings replace a state's shared score (`score-<file>`); tension and aftermath stay shared.
- * Every level L1-L9 has its own combat recording; L1 keeps the coffee-shop calm. L5 never reaches combat in play (silent city), its file is ready for later. */
+/** Level-specific recordings replace a state's shared score (`score-<file>`). PO 10-12: combat (zombies close) keeps the shared rock `score-combat`
+ * in every level, as do aftermath; each level L1-L9 has its own calm and tension recording. L1 calm is the coffee-shop jazz. */
 export const levelStreams: Record<string, Partial<Record<MusicState, string>>> = Object.fromEntries(
-    Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, combat: `combat-${level}` }]));
+    Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, tension: `tension-${level}` }]));
 /** Score file stem (without `score-` and extension) a level plays in a state. */
 export const scoreFile = (level: string, state: MusicState): string => levelStreams[level]?.[state] ?? state;
 /** Long recordings stay in the browser's streaming media cache, never decodeAudioData at boot.
