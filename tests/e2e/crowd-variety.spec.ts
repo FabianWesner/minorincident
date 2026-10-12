@@ -21,7 +21,7 @@ for (const backend of ['webgl','webgpu'] as const) test(`crowd variety and verte
     expect(proof.metrics.backend).toBe(backend);
     const variety = proof.metrics.variety[kind]; expect(variety.figures).toBe(20); expect(variety.per20[0].distinct).toBeGreaterThanOrEqual(minimum); expect(variety.largestSameLookShare).toBeLessThanOrEqual(.25);
     if(kind==='infected') expect(variety.largestModelShare).toBeLessThanOrEqual(.25);
-    const layouts = [...(proof.state.render.crowd?.batches.map(b=>b.layout) ?? []),...(proof.state.render.npcs?.civilians.layouts ?? [])];
+    const layouts = [...(proof.state.render.crowd?.batches.map(b=>b.layout) ?? []),...(proof.state.render.npcs?.civilians.layouts ?? []),...proof.state.render.accessories.map(b=>b.layout)];
     expect(layouts.length).toBeGreaterThan(0);
     for(const layout of layouts) { expect(layout!.buffers).toBeLessThanOrEqual(8); expect(layout!.locations).toBeLessThanOrEqual(16); }
   }

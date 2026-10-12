@@ -16,7 +16,7 @@ import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
 import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, DoubleSide, FrontSide, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
+import { mix, attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -146,7 +146,7 @@ export class CrowdView extends Group {
       const loaded = await this.registry.loadAsset(asset, lod) as Group;
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
-      const healthy = def.id.startsWith('healthy.');
+      const healthy = def.id.startsWith('healthy.'), human = !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
@@ -161,11 +161,11 @@ export class CrowdView extends Group {
         // Settled bodies retain identity and color but need no living figure detail.
         const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1);
         if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
-        packCrowdParts(corpse); markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
+        packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
         this.corpseGeometry.set(key, corpse);
       }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
-      packCrowdParts(baked.geometry); markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
+      packCrowdParts(baked.geometry); if (human) markCrowdAppearance(baked.geometry, regularInfectedModels.some(id => id === asset));
       if (lod !== 'lod2') this.accessories?.registerSkull(asset, baked.geometry);
       const tint = new InstancedBufferAttribute(new Float32Array(capacity * 4), 4).setUsage(StreamDrawUsage);
       // Pack frame, detached leg, gore mask and flash into one slot: WebGL2 guarantees 16 attributes.
@@ -173,7 +173,7 @@ export class CrowdView extends Group {
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
-      const sourceColor = crowdAppearanceColor(true);
+      const sourceColor = human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
       const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : sourceColor, glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(parts.z).mul(1.2).add(feedbackState.w.mod(2));
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
@@ -354,7 +354,7 @@ export class CrowdView extends Group {
         if (!batch.animal) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         const figure = batch.probe.figures.at(-1);
-        if (figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
+        if (figure?.id === e.id && !batch.animal && !e.civilian?.zooAnimal) figure.appearance = renderedCrowdLook(e.id, this.definitions.get(key)!.asset, batch.mesh.geometry, tint, this.accessories?.drawnSlot(e, batch.lod as 'lod0' | 'lod1' | 'lod2') ?? null);
         batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], batch.lod === 'lod2' ? 0 : this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }

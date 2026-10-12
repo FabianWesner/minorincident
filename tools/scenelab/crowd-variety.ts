@@ -9,9 +9,9 @@ try {
     const session = new SceneSession({ tier, viewport: tier === 'high' ? { width: 1280, height: 720 } : { width: 390, height: 844 }, nativeFrameTiming: true });
     try {
       await session.open();
-      for (const name of ['l2-fight', 'infected-20', 'l1-street']) {
+      for (const name of process.argv.includes('--perf-only') ? [] : ['l2-fight', 'infected-20', 'l1-street']) {
         const spec = readSpec(`tests/scenes/crowd-variety/${name}.json`);
-        if (tier === 'low') spec.camera = { mode: 'game', target: [0, 1], zoom: 1.45 };
+        if (tier === 'low') spec.camera = { mode: 'game', target: spec.camera && 'target' in spec.camera ? spec.camera.target : [0, 1], zoom: 1.45 };
         await session.load(spec);
         await session.step(1); await session.screenshot(`${output}/${name}-${tier}.png`);
         const metrics = await session.metrics();

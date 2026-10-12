@@ -29,7 +29,7 @@ const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
+  target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.

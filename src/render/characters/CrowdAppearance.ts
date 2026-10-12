@@ -83,9 +83,18 @@ export function renderedCrowdLook(id: number, model: string, geometry: BufferGeo
     for (let i = 0; i < parts.count; i++) if (!tags.includes(parts.getY(i))) tags.push(parts.getY(i));
     geometry.userData.appearanceTags = tags;
   }
+  // Scene Lab observes this every frame, but these channels change only with identity, outfit or LOD.
+  // Avoid repeated colour conversion and JSON allocation in crowded phone scenes.
+  let cache = geometry.userData.crowdLooks as Map<number, { r: number; g: number; b: number; look: CrowdLook }> | undefined;
+  if (!(cache instanceof Map)) { cache = new Map(); geometry.userData.crowdLooks = cache; }
+  const previous = cache.get(id);
+  if (previous && previous.r === shirt.r && previous.g === shirt.g && previous.b === shirt.b && previous.look.model === model && previous.look.accessory === accessory) return previous.look;
   const a = crowdAppearance(id), look = { model, hair: accessoryKinds.get(accessory ?? '') === 'hair' || tags.includes(-2) && accessoryKinds.get(accessory ?? '') !== 'hat' ? a.hair : null, skin: tags.includes(-1) ? a.skin : null,
     trousers: tags.includes(-3) ? a.trousers : null, shirt: tags.some(t => t > 0) ? shirt.getHexString() : null, accessory };
-  return { ...look, key: JSON.stringify(look) };
+  const result = { ...look, key: JSON.stringify(look) };
+  if (cache.size >= 512) cache.delete(cache.keys().next().value!);
+  cache.set(id, { r: shirt.r, g: shirt.g, b: shirt.b, look: result });
+  return result;
 }
 /** Per twenty submitted, living figures (or the whole crowd if it has fewer); largest share uses the whole crowd. */
 export function crowdVariety(looks: readonly CrowdLook[]) {
