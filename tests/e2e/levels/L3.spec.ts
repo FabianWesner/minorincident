@@ -253,6 +253,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     expect(closedGroup).not.toBeNull();
     for (const e of closedGroup as {id:number;x:number}[]) expect(e.x).toBeGreaterThanOrEqual(l3.map.zoneX);
     expect([...h.shots].sort()).toEqual(['l3-alone', 'l3-army-checkpoint', 'l3-commerce-street', 'l3-grove-boulevard', 'l3-oak-avenue', 'l3-squad-strong', 'l3-station-attack', 'l3-station-yard']);
+    if (street === 'blvd') expect(final.stats.deaths, 'a fleeing courier can escape Boulevard').toBeLessThanOrEqual(5);
   });
 
   test('T-E21-17b @E21 @E21-AC17 campaign: reaching the army rendezvous loads L4 with the carried loadout and no reward screen', async ({ page }) => {

@@ -7,6 +7,7 @@ import { noise } from '../../data/noise';
 // Zone enter/alert pattern adapted from Bruno Simon folio-2025 Zones.js (MIT, 41046b5).
 import { INFECTED_TOUGHNESS, infectedSpecialMoves, infectedSpecialRecoveryTicks, type InfectedSpecialMove, infectedDef, infectedRecovery, l1ReactionS, l1SpeedTier, l1TierSpeed, validateInfected, type InfectedSpeedTier } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
+import { l3 } from '../../data/l3';
 import { isOutbreakDistrict } from '../../levels/districts/types';
 import type { DistractionEvent, HumanTarget, HumanTargetQuery } from '../outbreak/types';
 import { Perception, WorldHumans } from './Perception';
@@ -63,6 +64,7 @@ export class InfectedSystem {
   }
   readonly hearing: Perception;
   private sequence = 0;
+  private l3HumanSpawns = 0;
   private budget = 0;
   private routes = 0;
   private readonly lureTarget = { x: 0, z: 0 };
@@ -114,6 +116,9 @@ export class InfectedSystem {
     return closest;
   }
   spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}): number {
+    const l3Human = this.world.scenario === 'L3' && (id === 'infected.runner' || id === 'infected.sprinter');
+    // Count successful emergences, including turned officers and civilians. Clothes do not determine chase speed.
+    if (l3Human) id = (this.l3HumanSpawns + 1) % l3.infected.sprinterEvery === 0 ? 'infected.sprinter' : 'infected.runner';
     const def = infectedDef(id);
     const perch = this.perchFor(id, position, opts.perched);
     if (perch) position = perch;
@@ -123,6 +128,7 @@ export class InfectedSystem {
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
+    if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown;
@@ -457,7 +463,7 @@ export class InfectedSystem {
         const turn = Math.atan2(b.dx * tz - b.dz * tx, b.dx * tx + b.dz * tz), a = Math.atan2(b.dz, b.dx) + Math.max(-7 / 60, Math.min(7 / 60, turn));
         b.dx = Math.cos(a); b.dz = Math.sin(a);
       }
-      const step = Math.min(Math.max(0, distance - this.strikeRange(e, player)), (b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
+      const step = Math.min(Math.max(0, distance - this.strikeRange(e, player)), this.l3Speed(e, b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
       if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
       // Authored leap/charge timing is a combat impulse, like knockback.
       moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.nav, this.world.tick, e.combat!.radius, true); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -576,10 +582,15 @@ export class InfectedSystem {
     const [low, high] = l1v2.infected.wanderSpeed;
     Object.assign(brain, { mode: 'wander', hearingUntil: 0, leashM: 0, tier, runSpeed: l1TierSpeed(tier, u), reaction: Math.round(l1ReactionS(u) * 60), wanderSpeed: low + rng.next() * (high - low), targetId: 0, headingX: 0, headingZ: 0, looking: true, lookYaw: e.transform.yaw, pauseUntil: this.world.tick + 20 + Math.floor(rng.next() * 40), hasGoal: false, episodes: 0, distractionId: 0, biteTargetId: 0, directTick: -1, homeX: e.transform.x, homeZ: e.transform.z, cueUntil: 0, stuckTick: this.world.tick, stuckCount: 0, ignoreId: 0, ignoreUntil: 0, routeAt: 0, escapeUntil: 0 });
     brain.search.until = 0;
+    brain.runSpeed = this.l3Speed(e, brain.runSpeed);
     e.infected!.l1 = brain; e.infected!.speed = brain.runSpeed; e.infected!.state = 'wander';
   }
   /** Live L1 speed of an infected (for tests, bots and animation): its tier run speed. */
   l1Speed(id: number): number { return this.world.entities.get(id)?.infected?.l1?.runSpeed ?? 0; }
+  /** L3 regulars stay below courier speed, including bite approach bursts; other levels retain their tuning. */
+  private l3Speed(e: EntitySnapshot, speed: number): number {
+    return this.world.scenario === 'L3' && e.archetype === 'infected.runner' ? Math.min(speed, l3.infected.maxRegularMs) : speed;
+  }
   /** Infected currently holding `civilianId` in a bite grab, or 0. Lane D freezes the victim while this is set. */
   holding(civilianId: number): number {
     for (const e of this.active) if (e.infected!.l1?.mode === 'bite' && e.infected!.l1.biteTargetId === civilianId && e.health.current > 0) return e.id;
@@ -1154,6 +1165,7 @@ export class InfectedSystem {
    * shared flow field when chasing the survivor in a crowd. `pursue` keeps full speed onto a moving human.
    */
   private steerL1(e: EntitySnapshot, brain: L1Brain, goal: { x: number; z: number }, speed: number, survivor = false, pursue = false): void {
+    speed = this.l3Speed(e, speed);
     const b = e.infected!, tick = this.world.tick, radius = e.combat!.radius, grid = this.navigation.district(e.transform);
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform);
