@@ -153,6 +153,8 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       const name = part.userData.name ?? part.name;
       anchorIndex = emissiveAnchors.get(name) ?? emissiveAnchors.get(`${name}_${material.name}`) ?? -1;
     }
+    // The packed street lamp omits its lantern mesh name; its only light owns all emissive geometry.
+    if (emissive && anchorIndex < 0 && source.userData.assetId === 'prop.street-lamp' && anchorList.length === 1) anchorIndex = 0;
     const light = new Float32Array(count).fill(anchorIndex);
     const window = new Float32Array(count).fill(anchorList[anchorIndex]?.type === 'window' ? 1 : 0), windowUv = new Float32Array(count * 2);
     if (window[0] > 0) {

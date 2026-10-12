@@ -1,0 +1,203 @@
+{
+  "recognitionBefore": {
+    "pair-harbor-street": 0.29751875
+  },
+  "recognitionAfter": {
+    "pair-plaza": 0.76493125,
+    "pair-harbor-street": 0.3120361111111111,
+    "pair-metro-entrance": 0.66986875,
+    "pair-kessler-lane": 0.38608194444444444
+  },
+  "penetrationAfter": {
+    "level": "L5",
+    "frames": 1200,
+    "metrics": {
+      "samples": 52999,
+      "framesMax": 0,
+      "pairs": []
+    }
+  },
+  "focusedGate": {
+    "passed": 4,
+    "tests": [
+      "T-E23-18",
+      "T-E23-15b",
+      "L5 crowd clears resting street furniture",
+      "T-E13-05"
+    ]
+  },
+  "cause": {
+    "visual": "Street lamp static bakes used light index -1 (always on); packed GLBs omit the lantern mesh name. Binding the single lantern anchor restores W5 blackout.",
+    "spawn": "The moved cellar start puts the companion offset against the cellar stair; nearest clear spawn uses the existing navigation clearance search.",
+    "selection": "Campaign application resets selection to LEFT; only an actual L4 progression handover selects RIGHT."
+  },
+  "validation": {
+    "typecheck": {
+      "exit": 0
+    },
+    "lint": {
+      "exit": 0
+    },
+    "fullUnit": {
+      "runner": "Hetzner",
+      "maxWorkers": 4,
+      "filesPassed": 164,
+      "testsPassed": 828
+    },
+    "smokeSimulation": {
+      "maxWorkers": 2,
+      "filesPassed": 5,
+      "testsPassed": 6
+    },
+    "smokeBrowser": {
+      "maxWorkers": 1,
+      "testsPassed": 26,
+      "stats": {
+        "startTime": "2026-10-12T01:33:48.572Z",
+        "duration": 161335.911,
+        "expected": 26,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "continuityRerun": {
+      "testsPassed": 1,
+      "reason": "Initial full-level run overlapped a build and reported asset 404s; rerun on stable dist passed."
+    },
+    "l5Simulation": {
+      "testsPassed": 19,
+      "testsFailed": 2,
+      "bothFailuresReproducedOnUnmodifiedHead": true
+    },
+    "fullLevelsFirstRun": {
+      "stats": {
+        "startTime": "2026-10-12T01:32:10.429Z",
+        "duration": 1300337.2,
+        "expected": 48,
+        "skipped": 0,
+        "unexpected": 3,
+        "flaky": 0
+      },
+      "failures": [
+        {
+          "title": "T-CONT-01 @continuity L2 shows the L1 aftermath at every carried-over spot (game camera, near and far)",
+          "errors": [
+            "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 17\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3491/assets/models/bld.house-c.lod1.glb?v=10fb3c982b\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3491/assets/models/bld.house-c.lod1.glb?v=10fb3c982b net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3491/assets/models/bld.house-c.glb?v=a18227d1a3\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3491/assets/models/bld.house-c.glb?v=a18227d1a3 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3491/assets/statics/veh.suv-green.lod1.base.4d96322ce18380d3.bin.gz\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3491/assets/statics/veh.suv-green.lod1.base.4d96322ce18380d3.bin.gz net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3491/assets/models/veh.suv-green.lod1.glb?v=40ad7701f0\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3491/assets/models/veh.suv-green.lod1.glb?v=40ad7701f0 net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+   \"HTTP 404: http://127.0.0.1:3491/assets/models/veh.suv-green.glb?v=7aa8df85ee\",\u001b[39m\n\u001b[31m+   \"console.error: Failed to load resource: the server responded with a status of 404 (Not Found)\",\u001b[39m\n\u001b[31m+   \"requestfailed: http://127.0.0.1:3491/assets/models/veh.suv-green.glb?v=7aa8df85ee net::ERR_ABORTED\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-gate-fix/tests/e2e/fixtures.ts:39:81)"
+          ]
+        },
+        {
+          "title": "@transition menu and every campaign load retain a picture high",
+          "errors": [
+            "Error: L5: first playable frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3000\u001b[39m\nReceived:    \u001b[31m3110.9000005722046\u001b[39m\n\n  145 |       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);\n  146 |       if (phase !== 'before' && !phase.startsWith('baseline')) {\n> 147 |         expect.soft(result.ms, `${level}: first playable frame`).toBeLessThanOrEqual(tier === 'high' ? 3000 : 5000);\n      |                                                                  ^\n  148 |         expect.soft(result.over50, `${level}: no hitch after the card hides`).toHaveLength(0);\n  149 |       }\n  150 |       if (process.env.TRANSITION_ONLY === 'L1') break;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l5-gate-fix/tests/e2e/levels/transition.spec.ts:147:66"
+          ]
+        },
+        {
+          "title": "@transition menu and every campaign load retain a picture phone",
+          "errors": [
+            "Error: L1: first playable frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m5000\u001b[39m\nReceived:    \u001b[31m5469.10000038147\u001b[39m\n\n  145 |       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);\n  146 |       if (phase !== 'before' && !phase.startsWith('baseline')) {\n> 147 |         expect.soft(result.ms, `${level}: first playable frame`).toBeLessThanOrEqual(tier === 'high' ? 3000 : 5000);\n      |                                                                  ^\n  148 |         expect.soft(result.over50, `${level}: no hitch after the card hides`).toHaveLength(0);\n  149 |       }\n  150 |       if (process.env.TRANSITION_ONLY === 'L1') break;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l5-gate-fix/tests/e2e/levels/transition.spec.ts:147:66",
+            "Error: L3: first playable frame\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m5000\u001b[39m\nReceived:    \u001b[31m5878.800000190735\u001b[39m\n\n  145 |       console.log(`${phase} ${tier} ${restart ? 'restart' : level}: ${result.ms.toFixed(0)}ms, play max ${result.maxFrame.toFixed(1)}ms, over50 ${result.over50.length}`);\n  146 |       if (phase !== 'before' && !phase.startsWith('baseline')) {\n> 147 |         expect.soft(result.ms, `${level}: first playable frame`).toBeLessThanOrEqual(tier === 'high' ? 3000 : 5000);\n      |                                                                  ^\n  148 |         expect.soft(result.over50, `${level}: no hitch after the card hides`).toHaveLength(0);\n  149 |       }\n  150 |       if (process.env.TRANSITION_ONLY === 'L1') break;\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l5-gate-fix/tests/e2e/levels/transition.spec.ts:147:66"
+          ]
+        }
+      ]
+    },
+    "quietTransitions": {
+      "stats": {
+        "startTime": "2026-10-12T01:54:24.953Z",
+        "duration": 143177.489,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "highL5ms": 2927,
+      "phoneL1ms": 5323,
+      "phoneL3ms": 5869
+    },
+    "baselinePhoneTransition": {
+      "baseline": "233c082c",
+      "stats": {
+        "startTime": "2026-10-12T01:57:52.057Z",
+        "duration": 81859.718,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "phoneL1ms": 5465,
+      "phoneL3ms": 5888,
+      "failureReproduced": true
+    },
+    "verifyE23": {
+      "exit": 1,
+      "testsPassed": 46,
+      "testsFailed": 2,
+      "baselineFailuresOnly": true,
+      "checks": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "npm",
+            "run",
+            "lint"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/e2e-lock.sh",
+            "npm",
+            "run",
+            "build"
+          ],
+          "exitCode": 0
+        },
+        {
+          "command": [
+            "sh",
+            "tools/remote/run.sh",
+            "/Users/wesner/Workspace/minorincident/.claude/worktrees/l5-gate-fix",
+            "--pull",
+            "test-results/epics/E23/vitest.json",
+            "--",
+            "npx",
+            "vitest",
+            "run",
+            "-t",
+            "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+            "--maxWorkers=1",
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile=test-results/epics/E23/vitest.json"
+          ],
+          "exitCode": 1
+        }
+      ]
+    }
+  },
+  "preExistingSimFailures": {
+    "baseline": "233c082c",
+    "failures": [
+      {
+        "name": "L5 Aftermath T-E23-02 @E23 @E23-AC02 the complete bot finishes a single seed from L5-default without cheats, in the time band, rescuing at least 4",
+        "messages": [
+          "AssertionError: expected 'LEFT' to be 'RIGHT' // Object.is equality\n    at /srv/mi/jobs/mi-l5-gate-baseline-1c5432-12409-1791769207/tests/levels/L5.test.ts:67:178\n    at file:///srv/mi/jobs/mi-l5-gate-baseline-1c5432-12409-1791769207/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "name": "L5 Aftermath T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3",
+        "messages": [
+          "AssertionError: expected 305.81666666666666 to be less than or equal to 300\n    at /srv/mi/jobs/mi-l5-gate-baseline-1c5432-12409-1791769207/tests/levels/L5.test.ts:82:97\n    at file:///srv/mi/jobs/mi-l5-gate-baseline-1c5432-12409-1791769207/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  }
+}

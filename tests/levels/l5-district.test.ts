@@ -8,6 +8,8 @@ afterEach(() => { world?.dispose(); });
 test('T-E23-12d @E23 @E23-AC12 basement shotgun rests on the shelf within 3 m, can be reached from the aisle and disappears on collection', async () => {
   const loaded = await loadL5(1); world = loaded.world;
   const start = loaded.mission.def.anchors['l5-cellar-in'];
+  const companion = world.entities.values().find(e => e.companion)!;
+  expect(world.infected!.nav.clear(companion.transform.x, companion.transform.z, companion.combat?.radius ?? .4)).toBe(true);
   const shelf = loaded.mission.def.anchors['l5-shotgun'];
   expect(shelf).toBeDefined();
   expect(Math.hypot(shelf.x - start.x, shelf.z - start.z)).toBeLessThanOrEqual(3);
