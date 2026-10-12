@@ -7,6 +7,7 @@ export class InstancedGroup extends Group {
   private readonly batches: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }[] = [];
   private readonly scratch = new Matrix4();
   private readonly color = new Color();
+  private frozenWorld = false;
   constructor(prototype: Object3D, readonly references: Object3D[], readonly capacity = references.length) {
     super(); prototype.updateWorldMatrix(true, true);
     this.userData.placeholder = prototype.userData.placeholder === true;
@@ -34,6 +35,16 @@ export class InstancedGroup extends Group {
     this.update();
   }
   private points?: Vector3[];
+  /** District origins and batch-local transforms stay fixed; animated placements
+   * live in the instance buffers. Cache the entire matrix walk after attachment. */
+  freezeWorld(): void {
+    this.updateWorldMatrix(true, true);
+    this.traverse(node => { node.matrixAutoUpdate = false; node.matrixWorldAutoUpdate = false; });
+    this.frozenWorld = true;
+  }
+  override updateMatrixWorld(force?: boolean): void {
+    if (!this.frozenWorld) super.updateMatrixWorld(force);
+  }
   /** Prototype vertices in placement space, cached for drawn-ground contact probes. */
   contactPoints(): readonly Vector3[] {
     if (!this.points) {

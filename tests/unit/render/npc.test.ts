@@ -6,6 +6,19 @@ import { disposeCharacter } from '../../../src/render/characters/rig';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
 import { NpcAnimator } from '../../../src/render/characters/NpcAnimator';
 
+test('@E18 phone civilians retain four full footwork slots and restore all desktop slots', async () => {
+  const { CivilianCrowd } = await import('../../../src/render/npc/CivilianCrowd');
+  const { CrowdFootwork } = await import('../../../src/render/characters/CrowdLocomotion');
+  const context = { low: false, footwork: new CrowdFootwork(48) };
+  CivilianCrowd.prototype.setQuality.call(context as unknown as InstanceType<typeof CivilianCrowd>, 'low');
+  expect(context.low).toBe(true); expect(context.footwork.cap).toBe(4);
+  context.footwork.begin(0);
+  for (let i = 0; i < 4; i++) expect(context.footwork.admit(i)).toBe(true);
+  expect(context.footwork.admit(4)).toBe(false);
+  CivilianCrowd.prototype.setQuality.call(context as unknown as InstanceType<typeof CivilianCrowd>, 'high');
+  expect(context.low).toBe(false); expect(context.footwork.cap).toBe(48);
+});
+
 test('@E08 escort animator keeps low shoe geometry above the floor through idle, down and revive', () => {
   const root = createCivilianPlaceholder();
   root.getObjectByName('footL')!.traverse(node => { if (node instanceof Mesh) node.geometry.translate(0, -.05, 0); });

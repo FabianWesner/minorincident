@@ -197,16 +197,20 @@ export class DistrictView extends Group {
           clone.traverse((o) => {
             if (d.decay.removed.includes(o.name)) o.visible = false;
           });
+          this.stripLayoutMarkers(clone);
           root.add(clone);
         }
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
-        for (const groundLayer of root.children.slice(-scenes.length)) groundLayer.traverse(o => {
-          if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') { this.ground.add(o); this.mergedLayout.push(o); }
-          // W6's layered ground and hundreds of placement markers are static.
-          // Their world transforms were composed above; camera frames need no recomposition.
-          if (this.world.composition.tier === 6) o.matrixWorldAutoUpdate = false;
-        });
+        for (const groundLayer of root.children.slice(-scenes.length)) {
+          groundLayer.traverse(o => {
+            if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') { this.ground.add(o); this.mergedLayout.push(o); }
+            // Baked ground and placement markers are static in every tier.
+            // Their world transforms were composed above; camera frames need no recomposition.
+            o.matrixWorldAutoUpdate = false;
+          });
+          this.freezeLayout(groundLayer);
+        }
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -283,7 +287,7 @@ export class DistrictView extends Group {
               if (this.low && ['L3', 'L7'].includes(this.world.composition.id)) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
               const bounds = new Box3().setFromObject(prototype).getBoundingSphere(new Sphere());
               this.dressingEntries.push({ batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius });
-              this.dressingBatches.push(batch); root.add(batch); return;
+              this.dressingBatches.push(batch); root.add(batch); this.freezeBatch(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
             const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
@@ -300,7 +304,7 @@ export class DistrictView extends Group {
               if (triangles > 30000) for (const batch of [hero, near]) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
             }
             for (const batch of [hero, near, far]) {
-              batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch);
+              batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch); this.freezeBatch(batch);
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
@@ -543,16 +547,21 @@ export class DistrictView extends Group {
       if (!ROOFED.has(entry.id)) continue;
       const { x, y, z } = worldAssets[entry.id].dimensions;
       for (const ref of entry.refs) {
-        ref.updateWorldMatrix(true, false);
-        ref.worldToLocal(this.roofPoint.set(player.x - entry.origin[0], player.y ?? 0, player.z - entry.origin[1]));
-        const inside = Math.abs(this.roofPoint.x) < x / 2 - .2 && Math.abs(this.roofPoint.z) < z / 2 - .2 && this.roofPoint.y >= -.1 && this.roofPoint.y < y;
+        // Reject distant roofs before updating/inverting their placement matrices.
+        // This sphere conservatively encloses the occupied prism at any yaw/scale.
+        const radius = Math.hypot(x / 2, y, z / 2) * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
+        let inside = false;
+        if (Math.hypot(player.x - entry.origin[0] - ref.position.x, player.z - entry.origin[1] - ref.position.z) <= radius) {
+          ref.worldToLocal(this.roofPoint.set(player.x - entry.origin[0], player.y ?? 0, player.z - entry.origin[1]));
+          inside = Math.abs(this.roofPoint.x) < x / 2 - .2 && Math.abs(this.roofPoint.z) < z / 2 - .2 && this.roofPoint.y >= -.1 && this.roofPoint.y < y;
+        }
         if (Boolean(ref.userData.roofHidden) === inside) continue;
         for (const group of [entry.hero, entry.near, entry.far]) group.roofVisible(!inside, ref);
       }
     }
   }
   /** Door openness (0 closed .. 1 open) per doored placement, eased toward its target. */
-  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number }>();
+  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number; way: ReturnType<typeof doorwayOf> }>();
   /**
    * Buildings with animated street doors (src/data/buildingDoors.ts) swing their leaves open while someone stands in or
    * walks up to the doorway (PO 2026-10-08: "door stays closed while the person goes out and in") and close behind them.
@@ -567,8 +576,13 @@ export class DistrictView extends Group {
     for (const entry of doored) {
       const def = buildingDoors[entry.id];
       for (const ref of entry.refs) {
-        let state = this.doorOpen.get(ref); if (!state) this.doorOpen.set(ref, state = { entry, k: 0, applied: -1 });
-        const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
+        // Authored building placements do not move; only their leaf instance buffers do.
+        let state = this.doorOpen.get(ref);
+        if (!state) {
+          const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
+          this.doorOpen.set(ref, state = { entry, k: 0, applied: -1, way });
+        }
+        const way = state.way;
         const open = !!way && (holds.some(h => Math.hypot(h.x - way.centre.x, h.z - way.centre.z) < 1) || list.some(b => doorZone(way, b)));
         state.k = Math.max(0, Math.min(1, state.k + (open ? 1 : -1) * seconds / doorSwingS));
         const eased = state.k * state.k * (3 - 2 * state.k);
@@ -763,6 +777,28 @@ export class DistrictView extends Group {
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
   /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
   swapSlot: (() => Promise<void>) | null = null;
+  /** Baked layout transforms are immutable after attachment. Visibility and
+   * material cutaways remain live, but rendering need not revisit every child matrix. */
+  private freezeLayout(root: Object3D): void {
+    root.updateWorldMatrix(true, true);
+    root.traverse(node => { node.matrixAutoUpdate = false; node.matrixWorldAutoUpdate = false; });
+    root.updateMatrixWorld = () => {};
+  }
+  /** Batch placement matrices (doors, roofs, physics props) live in instance buffers.
+   * The batch's own transform stays fixed under the district's immutable origin. */
+  private freezeBatch(batch: InstancedGroup): void {
+    batch.visible = batch.references.length > 0;
+    batch.freezeWorld();
+  }
+  /** Placement/crown data is read from the source GLB below. Its cloned empty
+   * markers draw nothing, but otherwise enter every frame's matrix/shadow walk. */
+  private stripLayoutMarkers(root: Object3D): void {
+    const markers: Object3D[] = [];
+    root.traverse(node => {
+      if (!(node instanceof Mesh) && !node.children.length && (typeof node.userData.assetId === 'string' || node.userData.foliageColors)) markers.push(node);
+    });
+    for (const marker of markers) marker.removeFromParent();
+  }
   private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, lod, entry.decay);
     if (this.disposed) return;
@@ -779,6 +815,7 @@ export class DistrictView extends Group {
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;
     if (replacement.references.length) replacement.update();
     old.parent!.add(replacement);
+    this.freezeBatch(replacement);
     old.traverse(node => { const index = this.windows.indexOf(node as Mesh); if (index !== -1) this.windows.splice(index, 1); });
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
     this.batches[this.batches.indexOf(old)] = replacement;

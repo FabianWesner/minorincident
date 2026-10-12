@@ -4,7 +4,7 @@ import type { Bindings } from '../input/Bindings';
 import type { InputFrame, Scheme } from '../input/InputFrame';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
-import { node, text } from './dom';
+import { node, text, setHidden, attribute } from './dom';
 export const onboardingKey = 'minor-incident.onboarding.v1';
 const lessons = ['move', 'evade', 'interact', 'pickup', 'attack', 'selector', 'second-side', 'vehicle'] as const;
 type Lesson = typeof lessons[number];
@@ -59,11 +59,11 @@ export class Onboarding {
   }
   update(scheme: Scheme, playing: boolean): void {
     const level = this.world.missions?.def.id ?? this.world.scenario;
-    if (!playing || !level || !/^L[1-6]$/.test(level)) { this.element.hidden = true; return; }
+    if (!playing || !level || !/^L[1-6]$/.test(level)) { setHidden(this.element, true); return; }
     const l1 = this.world.missions?.def.l1 ? this.world.missions : null;
     if (l1) {
       const player = this.world.entities.get(1)!;
-      if (player.health.current <= 0) { this.element.hidden = false; this.element.dataset.action = 'respawn'; text(this.element, `You died · Returning to ${l1.state.checkpoint === 'bat' ? 'the garage' : l1.state.checkpoint === 'accident' ? 'the facility' : 'the morning'}…`); return; }
+      if (player.health.current <= 0) { setHidden(this.element, false); attribute(this.element, 'data-action', 'respawn'); text(this.element, `You died · Returning to ${l1.state.checkpoint === 'bat' ? 'the garage' : l1.state.checkpoint === 'accident' ? 'the facility' : 'the morning'}…`); return; }
       if (l1.state.steps.weapon?.status === 'completed') { this.completed.add('pickup'); this.completed.add('interact'); }
       if (this.current === 'evade' && l1.state.steps.escape?.status === 'completed') this.completed.add('evade');
     }
@@ -90,9 +90,9 @@ export class Onboarding {
         break;
       }
     }
-    this.element.hidden = !this.current || (!!l1 && this.world.tick - this.startTick >= 180);
+    setHidden(this.element, !this.current || (!!l1 && this.world.tick - this.startTick >= 180));
     if (!this.current) return;
-    this.element.dataset.action = this.current; this.element.dataset.scheme = scheme;
+    attribute(this.element, 'data-action', this.current); attribute(this.element, 'data-scheme', scheme);
     text(this.element, `${this.glyph(this.current, scheme)} · ${descriptions[this.current]}`);
   }
   dispose(): void { this.clear(); this.element.remove(); }

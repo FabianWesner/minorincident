@@ -3,7 +3,7 @@
 import { Nipple } from './Nipple';
 import type { Vec2 } from '../InputFrame';
 import { actionIconUrl } from '../../assets/icons';
-import { node, text } from '../../ui/dom';
+import { node, text, setHidden, attribute, style } from '../../ui/dom';
 
 type TouchAction = 'left' | 'right' | 'selector' | 'pause' | 'interact';
 interface Contact { action: TouchAction; x: number; y: number; dx: number; dy: number; started: number }
@@ -16,7 +16,8 @@ export class Touch {
   aiming = false;
   get holdingLeft(): boolean { for (const c of this.contacts.values()) if (c.action === 'left') return true; return false; }
   get holdingRight(): boolean { for (const c of this.contacts.values()) if (c.action === 'right') return true; return false; }
-  setInteractable(on: boolean): void { this.element.querySelector<HTMLButtonElement>('[data-touch-action=interact]')!.disabled = !on; }
+  private readonly interactButton = document.createElement('button');
+  setInteractable(on: boolean): void { if (this.interactButton.disabled === on) this.interactButton.disabled = !on; }
   private readonly slots = new Map<'left' | 'right', { button: HTMLButtonElement; icon: HTMLImageElement; hint: HTMLSpanElement }>();
   private driving = false;
   private readonly groundContacts = new Map<number, { x: number; y: number }>();
@@ -28,7 +29,7 @@ export class Touch {
     this.element.dataset.touchControls = ''; this.element.dataset.testid = 'touch-controls';
     this.element.style.cssText = 'position:fixed;bottom:16px;right:16px;display:grid;grid-template-columns:64px 64px;gap:8px;touch-action:none';
     for (const action of ['left', 'right', 'interact', 'pause'] as const) {
-      const button = action === 'pause' ? this.pauseElement : document.createElement('button'); button.dataset.touchAction = action; button.dataset.testid = `touch-${action}`;
+      const button = action === 'pause' ? this.pauseElement : action === 'interact' ? this.interactButton : document.createElement('button'); button.dataset.touchAction = action; button.dataset.testid = `touch-${action}`;
       button.textContent = action === 'interact' ? 'ACTION' : action.toUpperCase(); button.setAttribute('aria-label', action === 'interact' ? 'ACTION' : `Touch ${action}`);
       button.style.cssText = 'height:64px;color:white;background:#182333;border:2px solid white;border-radius:12px;touch-action:none;user-select:none';
       if (action === 'interact') button.disabled = true;
@@ -53,19 +54,19 @@ export class Touch {
   }
   /** L1 starts with empty racks; hide empty image elements and stale prior-level icons. */
   setEmpty(side: 'left' | 'right'): void {
-    const slot=this.slots.get(side)!;slot.icon.hidden=false;slot.icon.src=actionIconUrl(side==='left'?'icon.fists':'icon.kick');
-    slot.button.setAttribute('aria-label', `${side} · ${side==='left'?'unarmed':'locked'}`);
-    slot.button.classList.remove('is-selected');slot.button.style.setProperty('--progress','0');
+    const slot=this.slots.get(side)!;setHidden(slot.icon, false);attribute(slot.icon, 'src', actionIconUrl(side==='left'?'icon.fists':'icon.kick'));
+    attribute(slot.button, 'aria-label', `${side} · ${side==='left'?'unarmed':'locked'}`);
+    slot.button.classList.remove('is-selected');style(slot.button, '--progress','0');
   }
   /** E14 presents the actions themselves as weapon slots, without changing release-to-fire. */
   setWeapon(side: 'left' | 'right', iconUrl: string, label: string, progress: number, selected: boolean, ammo: number, charges: number): void {
     const slot = this.slots.get(side)!;
-    slot.icon.hidden=this.driving;
+    setHidden(slot.icon, this.driving);
     if (slot.icon.getAttribute('src') !== iconUrl) slot.icon.src = iconUrl;
-    slot.button.style.setProperty('--progress', String(progress));
+    style(slot.button, '--progress', String(progress));
     slot.button.classList.toggle('is-selected', selected);
-    slot.button.dataset.ammo = String(ammo); slot.button.dataset.charges = String(charges);
-    if (!this.driving) slot.button.setAttribute('aria-label', `${side} · ${label}${selected ? ' selected' : ''}`);
+    attribute(slot.button, 'data-ammo', String(ammo)); attribute(slot.button, 'data-charges', String(charges));
+    if (!this.driving) attribute(slot.button, 'aria-label', `${side} · ${label}${selected ? ' selected' : ''}`);
   }
   init(): void {
     this.canvas.style.touchAction = 'none';

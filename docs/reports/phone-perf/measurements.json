@@ -1,0 +1,2268 @@
+{
+  "base": "fe38f893",
+  "method": "Native Mac Apple M4 Metal WebGL2, low Pixel 7, CPU 4x; 569 RAF intervals. Complete sim p95 over tick-bearing frames. Cost timers overlap.",
+  "acceptedPhases": [],
+  "source": {
+    "src/debug/testApi.ts": "d83ad237e983b2f876a59b932d9002804f3de2e302594cea04908bae03e8c333",
+    "src/input/devices/Touch.ts": "b7e5817fe55f473a642b13e54f97c442998b0a6c07e9efec1442989a94be27e1",
+    "src/render/BicycleView.ts": "aa78edaa748906e7d25963cdb3e84b26f2306f0fdb9d77a7116d4e200bb4fe2a",
+    "src/render/DistrictView.ts": "361777a27c49f5bef606aa6fd418eb21138e09e8b48ba14f9117996a6f499a2c",
+    "src/render/GameView.ts": "b2407405968fe614606e59c21ec40e7d6648501cfd11bd8d85d3e046b6af5640",
+    "src/render/InstancedGroup.ts": "cfdb68a93ec134ee291a64be8848e7ca0bf899936098e67bf12e62b025bafc7e",
+    "src/render/npc/CivilianCrowd.ts": "d08365944415c6be08da5e14000503c07e8dde90f92dbd67aa17728bb05adf8b",
+    "src/render/npc/NpcView.ts": "91926da4584538f667165fa430b1e5d776178001a91c34c456ed5a572e86510d",
+    "src/sim/ai/NavGrid.ts": "26c7afe1180dcaf207c28015d50bd62268bbb351bd7e5671e9fad3f39442a07d",
+    "src/ui/GameUI.ts": "1a23d1e5323e9100d3aa410ebaaf3884baa6d0715b0a5c4a96a3258d6e0ce77b",
+    "src/ui/Hud.ts": "218d45aaa34c7dd45a795b98a7b23c5042c987c43d438572867be45a0b5195ce",
+    "src/ui/MissionUI.ts": "9c311563ba6b5bd5fed37c9bbd0f9a452f378c7111aa55b49567e633aee1a5d1",
+    "src/ui/Onboarding.ts": "e903ae9d62aa6e719225346cbe7ad472e8590c49d9a7e7601726cfb33a2545c9",
+    "src/ui/dom.ts": "990e48d2b7c3549e8ed9ce2d5088f589a9eec3a37f1a18b89229c1ec0b44562a"
+  },
+  "diagnosticSha256": "fcd220c0f1f4198a67595945e939348d1819310fa739747252923ab52158a3cc",
+  "benchmarkSha256": "358ba8d4170c97fb3b9622419bd8266f6c9dbe0bfd00fc7155e5d1f9a15aabe0",
+  "levels": {
+    "L1": {
+      "before": {
+        "level": "L1",
+        "phase": "before",
+        "throttle": 4,
+        "frameP95": 35,
+        "simP95": 4.59999942779541,
+        "updateP95": 5.09999942779541,
+        "renderP95": 10.300000190734863,
+        "peakActors": 0,
+        "costs": {
+          "simTick": 6.899999618530273,
+          "simTickMax": 4.59999942779541,
+          "sim": 6.699999809265137,
+          "physics": 0.8999996185302734,
+          "simNpcs": 3.8000001907348633,
+          "ai": 0.10000038146972656,
+          "trapRescue": 0,
+          "audio": 0.7999992370605469,
+          "telemetry": 0,
+          "input": 0.10000038146972656,
+          "camera": 0.19999980926513672,
+          "crowd": 0.6999998092651367,
+          "npcs": 2.3000001907348633,
+          "accessories": 0,
+          "occlusion": 0.9000005722045898,
+          "doors": 0.6000003814697266,
+          "lod": 0.09999942779541016,
+          "lightField": 0,
+          "lighting": 0.6999998092651367,
+          "ui": 1.1999998092651367
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:21:02.323Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 154,
+          "triangles": 303352
+        },
+        "hostLoadStart": [
+          2.712890625,
+          3.2626953125,
+          3.61669921875
+        ],
+        "hostLoadEnd": [
+          2.57763671875,
+          3.19580078125,
+          3.58349609375
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L1",
+        "sampleCount": 569,
+        "tickFrameCount": 520,
+        "rawSha256": "f3c5f140de81bac2cffcce8c271e5fc2dc25e66b1e6b786c2ccd7eff08b39e24",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L1",
+            "story": {
+              "beat": "morning",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": "calm",
+              "peak": false,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.42000000000000004,
+                  "time": 2.42
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L1",
+                  "paused": false,
+                  "position": 20.23467,
+                  "gain": 0.5
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 20.284,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 2.5,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            10.300000190734863
+          ],
+          [
+            "sim/frame",
+            6.899999618530273
+          ],
+          [
+            "animation",
+            2.5
+          ],
+          [
+            "HUD",
+            1.1999998092651367
+          ],
+          [
+            "occlusion/cutaway",
+            0.9000005722045898
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 482,
+            "totalMs": 84.85900000000012,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.7071583333333343
+          },
+          "Layout": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "Paint": {
+            "count": 369,
+            "totalMs": 39.67999999999998,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.3306666666666665
+          },
+          "PrePaint": {
+            "count": 333,
+            "totalMs": 10.938999999999993,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.09115833333333327
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 197.04500000000002
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 171.88500000000002
+          },
+          {
+            "function": "visible",
+            "chunk": "install-CzK2BuZL.js",
+            "line": 0,
+            "column": 192588,
+            "totalMs": 129.646
+          },
+          {
+            "function": "height",
+            "chunk": "index-DuPxYNH-.js",
+            "line": 8,
+            "column": 492493,
+            "totalMs": 76.24900000000005
+          },
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 74.68000000000004
+          }
+        ]
+      },
+      "after": {
+        "level": "L1",
+        "phase": "after-final-door-2",
+        "throttle": 4,
+        "frameP95": 18.100000000000364,
+        "simP95": 4.09999942779541,
+        "updateP95": 4.300000190734863,
+        "renderP95": 8.799999237060547,
+        "peakActors": 0,
+        "costs": {
+          "simTick": 4.199999809265137,
+          "simTickMax": 4,
+          "sim": 4.100000381469727,
+          "physics": 0.8000001907348633,
+          "simNpcs": 2.1999998092651367,
+          "ai": 0.10000038146972656,
+          "trapRescue": 0,
+          "audio": 0.8000001907348633,
+          "telemetry": 0,
+          "input": 0.10000038146972656,
+          "camera": 0.10000038146972656,
+          "crowd": 0.7999992370605469,
+          "npcs": 2.3000001907348633,
+          "accessories": 0,
+          "occlusion": 0.8999996185302734,
+          "doors": 0.7000007629394531,
+          "lod": 0.10000038146972656,
+          "lightField": 0,
+          "lighting": 0.7000007629394531,
+          "ui": 0.8999996185302734
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:49:50.378Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 151,
+          "triangles": 298589
+        },
+        "hostLoadStart": [
+          2.45947265625,
+          2.72900390625,
+          2.7822265625
+        ],
+        "hostLoadEnd": [
+          2.81884765625,
+          2.7939453125,
+          2.8037109375
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L1",
+        "sampleCount": 569,
+        "tickFrameCount": 480,
+        "rawSha256": "b1cf977ee1c83782ad7b209657bf73d1fa8706528b231606d069f229fc75a000",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L1",
+            "story": {
+              "beat": "morning",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": "calm",
+              "peak": false,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.4306666666666667,
+                  "time": 2.4306666666666668
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L1",
+                  "paused": false,
+                  "position": 15.353575,
+                  "gain": 0.5
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 15.350666666666665,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 2.5000009536743164,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            8.799999237060547
+          ],
+          [
+            "sim/frame",
+            4.199999809265137
+          ],
+          [
+            "animation",
+            2.5000009536743164
+          ],
+          [
+            "HUD",
+            0.8999996185302734
+          ],
+          [
+            "occlusion/cutaway",
+            0.8999996185302734
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 152,
+            "totalMs": 12.573,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.10477500000000001
+          },
+          "Layout": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "Paint": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "PrePaint": {
+            "count": 122,
+            "totalMs": 7.336999999999997,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.06114166666666664
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 87.14099999999999
+          },
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 75.89699999999999
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 72.11399999999999
+          },
+          {
+            "function": "updateForRender",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 40,
+            "column": 16118,
+            "totalMs": 58.912
+          },
+          {
+            "function": "toArray",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 22669,
+            "totalMs": 56.54400000000001
+          }
+        ]
+      },
+      "repeat": {
+        "level": "L1",
+        "phase": "after-repeat-door-2",
+        "throttle": 4,
+        "frameP95": 34.5,
+        "simP95": 4.699999809265137,
+        "updateP95": 4.899999618530273,
+        "renderP95": 10.5,
+        "peakActors": 0,
+        "costs": {
+          "simTick": 7,
+          "simTickMax": 4.59999942779541,
+          "sim": 6.699999809265137,
+          "physics": 0.9000005722045898,
+          "simNpcs": 3.09999942779541,
+          "ai": 0.10000038146972656,
+          "trapRescue": 0.09999942779541016,
+          "audio": 0.8000001907348633,
+          "telemetry": 0.10000038146972656,
+          "input": 0.3000001907348633,
+          "camera": 0.19999980926513672,
+          "crowd": 0.7000007629394531,
+          "npcs": 2.6000003814697266,
+          "accessories": 0,
+          "occlusion": 0.8999996185302734,
+          "doors": 0.6999998092651367,
+          "lod": 0.10000038146972656,
+          "lightField": 0,
+          "lighting": 0.8000001907348633,
+          "ui": 1
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:51:30.432Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 151,
+          "triangles": 298589
+        },
+        "hostLoadStart": [
+          2.59326171875,
+          2.6630859375,
+          2.74755859375
+        ],
+        "hostLoadEnd": [
+          3.33544921875,
+          2.8330078125,
+          2.8056640625
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [
+          "81997"
+        ],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L1",
+        "sampleCount": 569,
+        "tickFrameCount": 501,
+        "rawSha256": "2366452c48d43e5ffb2902be07c5707fed7c9834122f7092ca24a55eb1b004a2",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L1",
+            "story": {
+              "beat": "morning",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": "calm",
+              "peak": false,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.4306666666666667,
+                  "time": 0.4306666666666667
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L1",
+                  "paused": false,
+                  "position": 13.877333,
+                  "gain": 0.5
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 13.868,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 2.8999996185302734,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            10.5
+          ],
+          [
+            "sim/frame",
+            7
+          ],
+          [
+            "animation",
+            2.8999996185302734
+          ],
+          [
+            "HUD",
+            1
+          ],
+          [
+            "occlusion/cutaway",
+            0.8999996185302734
+          ]
+        ]
+      }
+    },
+    "L3": {
+      "before": {
+        "level": "L3",
+        "phase": "before",
+        "throttle": 4,
+        "frameP95": 35,
+        "simP95": 4.199999809265137,
+        "updateP95": 5.59999942779541,
+        "renderP95": 10.600000381469727,
+        "peakActors": 12,
+        "costs": {
+          "simTick": 5.699999809265137,
+          "simTickMax": 4.09999942779541,
+          "sim": 5.5,
+          "physics": 0.8999996185302734,
+          "simNpcs": 1.3000001907348633,
+          "ai": 1.3000001907348633,
+          "trapRescue": 0,
+          "audio": 0.8000001907348633,
+          "telemetry": 0,
+          "input": 0.19999980926513672,
+          "camera": 0.10000038146972656,
+          "crowd": 0.8000001907348633,
+          "npcs": 2.3999996185302734,
+          "accessories": 0,
+          "occlusion": 0.8999996185302734,
+          "doors": 0.8000001907348633,
+          "lod": 0.10000038146972656,
+          "lightField": 0.9000005722045898,
+          "lighting": 1.1999998092651367,
+          "ui": 1.1999998092651367
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:21:32.154Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 99,
+          "triangles": 344845
+        },
+        "hostLoadStart": [
+          2.53125,
+          3.17578125,
+          3.57373046875
+        ],
+        "hostLoadEnd": [
+          2.67431640625,
+          3.15966796875,
+          3.556640625
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L3",
+        "sampleCount": 569,
+        "tickFrameCount": 511,
+        "rawSha256": "592a1211454b869036011f09f54e6484aa5677958918524f49b42b0234e072b3",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L3",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "combat",
+            "streamed": {
+              "state": "combat",
+              "peak": true,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.4306666666666667,
+                  "time": 2.3056666666666668
+                },
+                {
+                  "state": "combat",
+                  "requested": 0.9893333333333333,
+                  "time": 1.0133333333333334
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": false,
+                  "position": 19.924227,
+                  "gain": 0.7799999713897705
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L3",
+                  "paused": true,
+                  "position": 1.541333,
+                  "gain": 0
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 20.486666666666665,
+            "layers": [
+              "base",
+              "pulse",
+              "drive",
+              "peak"
+            ],
+            "score": 0.9,
+            "transitions": [
+              {
+                "time": 0.9893333333333333,
+                "state": "combat",
+                "layers": [
+                  "base",
+                  "pulse",
+                  "drive",
+                  "peak"
+                ],
+                "immediate": true
+              }
+            ]
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 2.8000001907348633,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            10.600000381469727
+          ],
+          [
+            "sim/frame",
+            5.699999809265137
+          ],
+          [
+            "animation",
+            2.8000001907348633
+          ],
+          [
+            "lighting (incl. field)",
+            1.1999998092651367
+          ],
+          [
+            "HUD",
+            1.1999998092651367
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 378,
+            "totalMs": 86.596,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.7216333333333333
+          },
+          "Layout": {
+            "count": 106,
+            "totalMs": 15.661000000000001,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.13050833333333334
+          },
+          "Paint": {
+            "count": 1023,
+            "totalMs": 22.483000000000064,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.18735833333333388
+          },
+          "PrePaint": {
+            "count": 123,
+            "totalMs": 17.615999999999996,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.14679999999999996
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 195.699
+          },
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 190.41899999999998
+          },
+          {
+            "function": "updateForRender",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 40,
+            "column": 16118,
+            "totalMs": 80.07400000000001
+          },
+          {
+            "function": "emit",
+            "chunk": "install-CzK2BuZL.js",
+            "line": 0,
+            "column": 168273,
+            "totalMs": 67.337
+          },
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 67.08799999999998
+          }
+        ]
+      },
+      "after": {
+        "level": "L3",
+        "phase": "after-final-door-2",
+        "throttle": 4,
+        "frameP95": 31.900000000001455,
+        "simP95": 4,
+        "updateP95": 5.199999809265137,
+        "renderP95": 8,
+        "peakActors": 12,
+        "costs": {
+          "simTick": 4.800000190734863,
+          "simTickMax": 3.90000057220459,
+          "sim": 4.600000381469727,
+          "physics": 0.8000001907348633,
+          "simNpcs": 1,
+          "ai": 1.1999998092651367,
+          "trapRescue": 0,
+          "audio": 0.8999996185302734,
+          "telemetry": 0.09999942779541016,
+          "input": 0.39999961853027344,
+          "camera": 0.10000038146972656,
+          "crowd": 0.7000007629394531,
+          "npcs": 2.1999998092651367,
+          "accessories": 0,
+          "occlusion": 0.9000005722045898,
+          "doors": 0.8000001907348633,
+          "lod": 0.09999942779541016,
+          "lightField": 0.8999996185302734,
+          "lighting": 1.1999998092651367,
+          "ui": 1.1000003814697266
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:50:16.764Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 99,
+          "triangles": 345349
+        },
+        "hostLoadStart": [
+          2.6728515625,
+          2.76416015625,
+          2.79296875
+        ],
+        "hostLoadEnd": [
+          2.3447265625,
+          2.68212890625,
+          2.76171875
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L3",
+        "sampleCount": 569,
+        "tickFrameCount": 506,
+        "rawSha256": "c06e8e65908dfb1467855f22feaeb1227eb1c9af8fe89ab69abbec60f19e0674",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L3",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "combat",
+            "streamed": {
+              "state": "combat",
+              "peak": true,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.42533333333333334,
+                  "time": 2.3003333333333336
+                },
+                {
+                  "state": "combat",
+                  "requested": 0.9653333333333334,
+                  "time": 0.9813333333333333
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": false,
+                  "position": 16.56,
+                  "gain": 0.7799999713897705
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L3",
+                  "paused": true,
+                  "position": 1.508455,
+                  "gain": 0
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 17.099999999999998,
+            "layers": [
+              "base",
+              "pulse",
+              "drive",
+              "peak"
+            ],
+            "score": 0.95,
+            "transitions": [
+              {
+                "time": 0.9653333333333334,
+                "state": "combat",
+                "layers": [
+                  "base",
+                  "pulse",
+                  "drive",
+                  "peak"
+                ],
+                "immediate": true
+              }
+            ]
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 2.5,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            8
+          ],
+          [
+            "sim/frame",
+            4.800000190734863
+          ],
+          [
+            "animation",
+            2.5
+          ],
+          [
+            "lighting (incl. field)",
+            1.1999998092651367
+          ],
+          [
+            "HUD",
+            1.1000003814697266
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 266,
+            "totalMs": 26.777999999999974,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.2231499999999998
+          },
+          "Layout": {
+            "count": 106,
+            "totalMs": 16.375999999999994,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.13646666666666663
+          },
+          "Paint": {
+            "count": 796,
+            "totalMs": 21.153000000000027,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.17627500000000024
+          },
+          "PrePaint": {
+            "count": 121,
+            "totalMs": 15.823000000000002,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.13185833333333336
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 87.08299999999996
+          },
+          {
+            "function": "updateForRender",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 40,
+            "column": 16118,
+            "totalMs": 75.852
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 67.637
+          },
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 60.02700000000002
+          },
+          {
+            "function": "_update",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 32,
+            "column": 96694,
+            "totalMs": 55.803000000000004
+          }
+        ]
+      },
+      "repeat": {
+        "level": "L3",
+        "phase": "after-repeat-door-2",
+        "throttle": 4,
+        "frameP95": 33.5,
+        "simP95": 4.200000762939453,
+        "updateP95": 5.300000190734863,
+        "renderP95": 8.399999618530273,
+        "peakActors": 12,
+        "costs": {
+          "simTick": 4.90000057220459,
+          "simTickMax": 4.199999809265137,
+          "sim": 4.800000190734863,
+          "physics": 0.8000001907348633,
+          "simNpcs": 1,
+          "ai": 1.3999996185302734,
+          "trapRescue": 0,
+          "audio": 0.8000001907348633,
+          "telemetry": 0,
+          "input": 0.39999961853027344,
+          "camera": 0.19999980926513672,
+          "crowd": 0.8000001907348633,
+          "npcs": 2.200000762939453,
+          "accessories": 0,
+          "occlusion": 0.9000005722045898,
+          "doors": 0.7999992370605469,
+          "lod": 0.09999942779541016,
+          "lightField": 0.9000005722045898,
+          "lighting": 1.1999998092651367,
+          "ui": 1.1000003814697266
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:51:56.786Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 98,
+          "triangles": 340403
+        },
+        "hostLoadStart": [
+          3.33544921875,
+          2.8330078125,
+          2.8056640625
+        ],
+        "hostLoadEnd": [
+          3.36865234375,
+          2.890625,
+          2.82763671875
+        ],
+        "localVitestStart": [
+          "81997"
+        ],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L3",
+        "sampleCount": 569,
+        "tickFrameCount": 509,
+        "rawSha256": "5ad5887bc6f330194352477d4bab886ae3dc11b00c2eea304b8ac8054ffd7e95",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L3",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "combat",
+            "streamed": {
+              "state": "combat",
+              "peak": true,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.4146666666666667,
+                  "time": 0.4146666666666667
+                },
+                {
+                  "state": "combat",
+                  "requested": 0.9386666666666666,
+                  "time": 0.9546666666666667
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": false,
+                  "position": 12.298193,
+                  "gain": 0.7799999713897705
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L3",
+                  "paused": true,
+                  "position": 1.353816,
+                  "gain": 0
+                }
+              ]
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 12.822666666666667,
+            "layers": [
+              "base",
+              "pulse",
+              "drive",
+              "peak"
+            ],
+            "score": 0.9,
+            "transitions": [
+              {
+                "time": 0.9386666666666666,
+                "state": "combat",
+                "layers": [
+                  "base",
+                  "pulse",
+                  "drive",
+                  "peak"
+                ],
+                "immediate": true
+              }
+            ]
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 2.59999942779541,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            8.399999618530273
+          ],
+          [
+            "sim/frame",
+            4.90000057220459
+          ],
+          [
+            "animation",
+            2.59999942779541
+          ],
+          [
+            "lighting (incl. field)",
+            1.1999998092651367
+          ],
+          [
+            "HUD",
+            1.1000003814697266
+          ]
+        ]
+      }
+    },
+    "L4": {
+      "before": {
+        "level": "L4",
+        "phase": "before",
+        "throttle": 4,
+        "frameP95": 32.89999999999782,
+        "simP95": 2.6000003814697266,
+        "updateP95": 4.300000190734863,
+        "renderP95": 10.100000381469727,
+        "peakActors": 0,
+        "costs": {
+          "simTick": 3,
+          "simTickMax": 2.6000003814697266,
+          "sim": 2.8000001907348633,
+          "physics": 0.8999996185302734,
+          "simNpcs": 1,
+          "ai": 0.09999942779541016,
+          "trapRescue": 0,
+          "audio": 0.5999994277954102,
+          "telemetry": 0,
+          "input": 0.10000038146972656,
+          "camera": 0.10000038146972656,
+          "crowd": 0.6999998092651367,
+          "npcs": 1,
+          "accessories": 0,
+          "occlusion": 0.6999998092651367,
+          "doors": 0,
+          "lod": 0.10000038146972656,
+          "lightField": 0.8999996185302734,
+          "lighting": 1.1000003814697266,
+          "ui": 1.1000003814697266
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:21:56.860Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 193,
+          "triangles": 265707
+        },
+        "hostLoadStart": [
+          2.6201171875,
+          3.14013671875,
+          3.54736328125
+        ],
+        "hostLoadEnd": [
+          2.61865234375,
+          3.1123046875,
+          3.52783203125
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L4",
+        "sampleCount": 569,
+        "tickFrameCount": 506,
+        "rawSha256": "d68b7d51c45613728334ba79d551a6c4dc5ea3d81bb8e16fd3b8b4c88952c59d",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L4",
+            "story": {
+              "beat": "plaza",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": "calm",
+              "peak": false,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.4306666666666667,
+                  "time": 2.9306666666666668
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L4",
+                  "paused": false,
+                  "position": 16.947186,
+                  "gain": 0.5
+                }
+              ]
+            },
+            "radio": {
+              "level": 0.12906889316568565,
+              "playing": true
+            },
+            "paused": false,
+            "position": 16.966666666666665,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 1.2999992370605469,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            10.100000381469727
+          ],
+          [
+            "sim/frame",
+            3
+          ],
+          [
+            "animation",
+            1.2999992370605469
+          ],
+          [
+            "lighting (incl. field)",
+            1.1000003814697266
+          ],
+          [
+            "HUD",
+            1.1000003814697266
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 361,
+            "totalMs": 81.30400000000003,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.6775333333333335
+          },
+          "Layout": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "Paint": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "PrePaint": {
+            "count": 121,
+            "totalMs": 15.559999999999992,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.1296666666666666
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 179.75499999999997
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 117.99899999999991
+          },
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 111.34999999999994
+          },
+          {
+            "function": "multiplyMatrices",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 48799,
+            "totalMs": 71.105
+          },
+          {
+            "function": "updateForRender",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 40,
+            "column": 16118,
+            "totalMs": 67.281
+          }
+        ]
+      },
+      "after": {
+        "level": "L4",
+        "phase": "after-final-door-2",
+        "throttle": 4,
+        "frameP95": 17.100000000000364,
+        "simP95": 2.6999998092651367,
+        "updateP95": 4.5,
+        "renderP95": 9.800000190734863,
+        "peakActors": 0,
+        "costs": {
+          "simTick": 2.6999998092651367,
+          "simTickMax": 2.6000003814697266,
+          "sim": 2.6000003814697266,
+          "physics": 0.8999996185302734,
+          "simNpcs": 1,
+          "ai": 0.09999942779541016,
+          "trapRescue": 0,
+          "audio": 0.5,
+          "telemetry": 0,
+          "input": 0.10000038146972656,
+          "camera": 0.10000038146972656,
+          "crowd": 0.6000003814697266,
+          "npcs": 1.1000003814697266,
+          "accessories": 0,
+          "occlusion": 0.7999992370605469,
+          "doors": 0,
+          "lod": 0.09999942779541016,
+          "lightField": 0.8000001907348633,
+          "lighting": 1.1000003814697266,
+          "ui": 0.9000005722045898
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:50:40.441Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 193,
+          "triangles": 265707
+        },
+        "hostLoadStart": [
+          2.23681640625,
+          2.65380859375,
+          2.7509765625
+        ],
+        "hostLoadEnd": [
+          2.25439453125,
+          2.626953125,
+          2.73876953125
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L4",
+        "sampleCount": 569,
+        "tickFrameCount": 496,
+        "rawSha256": "a4fffea0ecf867887a2ab4a0ec362fffa2e0902e1ba64ac2d0999cff828dd6b7",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L4",
+            "story": {
+              "beat": "plaza",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": "calm",
+              "peak": false,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.42533333333333334,
+                  "time": 2.9253333333333336
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L4",
+                  "paused": false,
+                  "position": 15.797333,
+                  "gain": 0.5
+                }
+              ]
+            },
+            "radio": {
+              "level": 0.12906889316568565,
+              "playing": true
+            },
+            "paused": false,
+            "position": 15.820000000000002,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 1.3000001907348633,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            9.800000190734863
+          ],
+          [
+            "sim/frame",
+            2.6999998092651367
+          ],
+          [
+            "animation",
+            1.3000001907348633
+          ],
+          [
+            "lighting (incl. field)",
+            1.1000003814697266
+          ],
+          [
+            "HUD",
+            0.9000005722045898
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 138,
+            "totalMs": 12.582999999999993,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.10485833333333328
+          },
+          "Layout": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "Paint": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          },
+          "PrePaint": {
+            "count": 122,
+            "totalMs": 11.937000000000001,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.09947500000000001
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 147.74399999999997
+          },
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 120.86400000000002
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 89.62099999999997
+          },
+          {
+            "function": "updateForRender",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 40,
+            "column": 16118,
+            "totalMs": 88.95999999999997
+          },
+          {
+            "function": "multiplyMatrices",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 48799,
+            "totalMs": 59.91000000000002
+          }
+        ]
+      },
+      "repeat": {
+        "level": "L4",
+        "phase": "after-repeat-door-2",
+        "throttle": 4,
+        "frameP95": 17.69999999999891,
+        "simP95": 2.8000001907348633,
+        "updateP95": 4.59999942779541,
+        "renderP95": 9.799999237060547,
+        "peakActors": 0,
+        "costs": {
+          "simTick": 2.8999996185302734,
+          "simTickMax": 2.700000762939453,
+          "sim": 2.6999998092651367,
+          "physics": 0.8999996185302734,
+          "simNpcs": 1,
+          "ai": 0.09999942779541016,
+          "trapRescue": 0,
+          "audio": 0.5,
+          "telemetry": 0,
+          "input": 0.19999980926513672,
+          "camera": 0.19999980926513672,
+          "crowd": 0.6999998092651367,
+          "npcs": 1.1000003814697266,
+          "accessories": 0,
+          "occlusion": 0.6999998092651367,
+          "doors": 0,
+          "lod": 0.10000038146972656,
+          "lightField": 0.8000001907348633,
+          "lighting": 1.1999998092651367,
+          "ui": 0.8999996185302734
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:52:19.599Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 193,
+          "triangles": 265707
+        },
+        "hostLoadStart": [
+          3.36865234375,
+          2.890625,
+          2.82763671875
+        ],
+        "hostLoadEnd": [
+          3.388671875,
+          2.92822265625,
+          2.841796875
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L4",
+        "sampleCount": 569,
+        "tickFrameCount": 494,
+        "rawSha256": "05965e6b290f36315553ab83d2a7a0b535c174a982682556a19dfe04b56ef891",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L4",
+            "story": {
+              "beat": "plaza",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": "calm",
+              "peak": false,
+              "transitions": [
+                {
+                  "state": "calm",
+                  "requested": 0.4146666666666667,
+                  "time": 2.9146666666666667
+                }
+              ],
+              "decks": [
+                {
+                  "state": "combat",
+                  "file": "combat",
+                  "paused": true,
+                  "position": 0,
+                  "gain": 0
+                },
+                {
+                  "state": "calm",
+                  "file": "calm-L4",
+                  "paused": false,
+                  "position": 11.792,
+                  "gain": 0.5
+                }
+              ]
+            },
+            "radio": {
+              "level": 0.12906889316568554,
+              "playing": true
+            },
+            "paused": false,
+            "position": 11.814666666666666,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 1.3000001907348633,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            9.799999237060547
+          ],
+          [
+            "sim/frame",
+            2.8999996185302734
+          ],
+          [
+            "animation",
+            1.3000001907348633
+          ],
+          [
+            "lighting (incl. field)",
+            1.1999998092651367
+          ],
+          [
+            "HUD",
+            0.8999996185302734
+          ]
+        ]
+      }
+    },
+    "L5": {
+      "before": {
+        "level": "L5",
+        "phase": "before",
+        "throttle": 4,
+        "frameP95": 32.399999999999636,
+        "simP95": 3.3000001907348633,
+        "updateP95": 3.8000001907348633,
+        "renderP95": 9.5,
+        "peakActors": 12,
+        "costs": {
+          "simTick": 3.8000001907348633,
+          "simTickMax": 3.299999237060547,
+          "sim": 3.6999998092651367,
+          "physics": 0.8000001907348633,
+          "simNpcs": 0.8000001907348633,
+          "ai": 1,
+          "trapRescue": 0,
+          "audio": 0.5999994277954102,
+          "telemetry": 0,
+          "input": 0.10000038146972656,
+          "camera": 0.10000038146972656,
+          "crowd": 0.8000001907348633,
+          "npcs": 1.3000001907348633,
+          "accessories": 0,
+          "occlusion": 0.8000001907348633,
+          "doors": 0,
+          "lod": 0.10000038146972656,
+          "lightField": 0.8999996185302734,
+          "lighting": 1,
+          "ui": 1.1000003814697266
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:22:24.586Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 157,
+          "triangles": 216432
+        },
+        "hostLoadStart": [
+          2.48876953125,
+          3.0771484375,
+          3.5126953125
+        ],
+        "hostLoadEnd": [
+          2.60693359375,
+          3.0673828125,
+          3.49560546875
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L5",
+        "sampleCount": 569,
+        "tickFrameCount": 478,
+        "rawSha256": "e22a561ea82f66109fed5ac89b2e396bf604d52aef2831d3fa200a569266c1de",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L5",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": null,
+              "peak": false,
+              "transitions": [],
+              "decks": []
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 17.964,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 1.6999998092651367,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            9.5
+          ],
+          [
+            "sim/frame",
+            3.8000001907348633
+          ],
+          [
+            "animation",
+            1.6999998092651367
+          ],
+          [
+            "HUD",
+            1.1000003814697266
+          ],
+          [
+            "lighting (incl. field)",
+            1
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 483,
+            "totalMs": 185.17299999999992,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 1.5431083333333326
+          },
+          "Layout": {
+            "count": 117,
+            "totalMs": 19.081999999999997,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.15901666666666664
+          },
+          "Paint": {
+            "count": 234,
+            "totalMs": 12.425999999999988,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.10354999999999989
+          },
+          "PrePaint": {
+            "count": 123,
+            "totalMs": 14.084999999999994,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.11737499999999995
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 143.27300000000005
+          },
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 131.68599999999992
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 123.49799999999996
+          },
+          {
+            "function": "bufferSubData",
+            "chunk": "",
+            "line": -1,
+            "column": -1,
+            "totalMs": 82.19700000000002
+          },
+          {
+            "function": "update",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 27399,
+            "totalMs": 79.632
+          }
+        ]
+      },
+      "after": {
+        "level": "L5",
+        "phase": "after-final-door-2",
+        "throttle": 4,
+        "frameP95": 31.5,
+        "simP95": 3.40000057220459,
+        "updateP95": 4.200000762939453,
+        "renderP95": 9.59999942779541,
+        "peakActors": 12,
+        "costs": {
+          "simTick": 3.90000057220459,
+          "simTickMax": 3.3999996185302734,
+          "sim": 3.700000762939453,
+          "physics": 0.8000001907348633,
+          "simNpcs": 0.8000001907348633,
+          "ai": 1.1000003814697266,
+          "trapRescue": 0,
+          "audio": 0.6999998092651367,
+          "telemetry": 0,
+          "input": 0.3000001907348633,
+          "camera": 0.19999980926513672,
+          "crowd": 0.6999998092651367,
+          "npcs": 1.4000005722045898,
+          "accessories": 0,
+          "occlusion": 0.6999998092651367,
+          "doors": 0,
+          "lod": 0.10000038146972656,
+          "lightField": 0.9000005722045898,
+          "lighting": 1,
+          "ui": 0.9000005722045898
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:51:06.439Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 157,
+          "triangles": 216372
+        },
+        "hostLoadStart": [
+          2.31396484375,
+          2.6328125,
+          2.740234375
+        ],
+        "hostLoadEnd": [
+          2.38427734375,
+          2.6240234375,
+          2.734375
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L5",
+        "sampleCount": 569,
+        "tickFrameCount": 475,
+        "rawSha256": "37e10d9a1dd755dc47533e1838dc7f9598f8ca2ea6381988099a18bee72d5bc6",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L5",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": null,
+              "peak": false,
+              "transitions": [],
+              "decks": []
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 16.172,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 1.6999998092651367,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            9.59999942779541
+          ],
+          [
+            "sim/frame",
+            3.90000057220459
+          ],
+          [
+            "animation",
+            1.6999998092651367
+          ],
+          [
+            "lighting (incl. field)",
+            1
+          ],
+          [
+            "HUD",
+            0.9000005722045898
+          ]
+        ],
+        "domTrace": {
+          "UpdateLayoutTree": {
+            "count": 268,
+            "totalMs": 32.62400000000001,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.27186666666666676
+          },
+          "Layout": {
+            "count": 98,
+            "totalMs": 16.863999999999994,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.1405333333333333
+          },
+          "Paint": {
+            "count": 190,
+            "totalMs": 9.106999999999992,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.07589166666666661
+          },
+          "PrePaint": {
+            "count": 122,
+            "totalMs": 14.089999999999993,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.1174166666666666
+          },
+          "CompositeLayers": {
+            "count": 0,
+            "totalMs": 0,
+            "sampledFrames": 120,
+            "meanMsPerFrame": 0.0
+          }
+        },
+        "topFiveSampledSelfCosts": [
+          {
+            "function": "_renderObjectDirect",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 23638,
+            "totalMs": 141.4590000000001
+          },
+          {
+            "function": "updateForRender",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 40,
+            "column": 16118,
+            "totalMs": 82.36900000000001
+          },
+          {
+            "function": "updateMatrixWorld",
+            "chunk": "three.module-DZLhVvI5.js",
+            "line": 4,
+            "column": 63037,
+            "totalMs": 81.91499999999999
+          },
+          {
+            "function": "_projectObject",
+            "chunk": "WeatherView-B14uDNzh.js",
+            "line": 43,
+            "column": 17947,
+            "totalMs": 80.42399999999999
+          },
+          {
+            "function": "bufferSubData",
+            "chunk": "",
+            "line": -1,
+            "column": -1,
+            "totalMs": 75.37900000000002
+          }
+        ]
+      },
+      "repeat": {
+        "level": "L5",
+        "phase": "after-repeat-door-2",
+        "throttle": 4,
+        "frameP95": 29.299999999999272,
+        "simP95": 3.5,
+        "updateP95": 4.100000381469727,
+        "renderP95": 8.699999809265137,
+        "peakActors": 12,
+        "costs": {
+          "simTick": 3.8000001907348633,
+          "simTickMax": 3.40000057220459,
+          "sim": 3.6999998092651367,
+          "physics": 0.8000001907348633,
+          "simNpcs": 0.8999996185302734,
+          "ai": 1.0999994277954102,
+          "trapRescue": 0,
+          "audio": 0.6999998092651367,
+          "telemetry": 0,
+          "input": 0.10000038146972656,
+          "camera": 0.10000038146972656,
+          "crowd": 0.5999994277954102,
+          "npcs": 1.4000005722045898,
+          "accessories": 0,
+          "occlusion": 0.7000007629394531,
+          "doors": 0,
+          "lod": 0.10000038146972656,
+          "lightField": 0.8999996185302734,
+          "lighting": 1,
+          "ui": 1
+        },
+        "environment": {
+          "recordedAt": "2026-10-12T23:52:40.964Z",
+          "quality": "low",
+          "backend": "webgl",
+          "viewport": {
+            "width": 390,
+            "height": 844,
+            "dpr": 2.625
+          },
+          "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+          "drawCalls": 120,
+          "triangles": 208448
+        },
+        "hostLoadStart": [
+          3.388671875,
+          2.92822265625,
+          2.841796875
+        ],
+        "hostLoadEnd": [
+          4.14892578125,
+          3.14208984375,
+          2.92041015625
+        ],
+        "localVitestStart": [],
+        "localVitestEnd": [],
+        "otherHeadlessChromeStart": [],
+        "otherHeadlessChromeEnd": [],
+        "endLevel": "L5",
+        "sampleCount": 569,
+        "tickFrameCount": 474,
+        "rawSha256": "8c90ba49a138cfff951f940a58070b9a488129147334c002ed349a6f43bf11c4",
+        "audio": {
+          "state": "running",
+          "unlocked": true,
+          "muted": false,
+          "voiceLimit": 16,
+          "music": {
+            "level": "L5",
+            "story": {
+              "beat": "safe",
+              "minimum": 0
+            },
+            "state": "calm",
+            "streamed": {
+              "state": null,
+              "peak": false,
+              "transitions": [],
+              "decks": []
+            },
+            "radio": {
+              "level": 0,
+              "playing": false
+            },
+            "paused": false,
+            "position": 11.345333333333333,
+            "layers": [
+              "base"
+            ],
+            "score": 0,
+            "transitions": []
+          },
+          "background": false,
+          "errors": []
+        },
+        "animationP95": 1.6000003814697266,
+        "topFiveBucketsP95": [
+          [
+            "render",
+            8.699999809265137
+          ],
+          [
+            "sim/frame",
+            3.8000001907348633
+          ],
+          [
+            "animation",
+            1.6000003814697266
+          ],
+          [
+            "lighting (incl. field)",
+            1
+          ],
+          [
+            "HUD",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "primaryBudgetPasses": 4,
+  "repeatStatus": "rejected: local Vitest started during L1; clean repetition incomplete"
+}
