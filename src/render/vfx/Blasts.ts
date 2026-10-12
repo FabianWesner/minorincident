@@ -1,6 +1,6 @@
 // Fireball: TSL noise-dissolved spheres with a fire gradient, adapted from Bruno Simon folio-2025 World/Fireballs.js (MIT, 41046b5).
 // Roll kick by distance and bullet time ramp: adapted from folio-2025 Explosions.js and Time.js bulletTime (MIT, 41046b5).
-import { AdditiveBlending, BoxGeometry, DoubleSide, DynamicDrawUsage, Group, IcosahedronGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, MeshLambertNodeMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type BufferGeometry, type Node } from 'three/webgpu';
+import { AdditiveBlending, BoxGeometry, DoubleSide, DynamicDrawUsage, Frustum, Group, IcosahedronGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, MeshLambertNodeMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type BufferGeometry, type Camera, type Node } from 'three/webgpu';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { attribute, cameraPosition, cameraWorldMatrix, dot, float, Fn, fract, mix, mx_noise_float, normalView, normalWorld, positionGeometry, positionWorld, screenCoordinate, smoothstep, uniform, uv, vec2, vec3, vec4 } from 'three/tsl';
@@ -13,11 +13,11 @@ import { FxPool } from './FxPool';
 import type { LightField } from '../LightField';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
+interface Column { ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
 interface Glow { x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
-export interface BlastHost { particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
+export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
 
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
 const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 48, FLAMES = 128, GLOWS = 40, PARTS = 12;
@@ -52,6 +52,9 @@ export class Blasts extends Group {
   private readonly rng: Rng;
   private fbCursor = 0; private puffCursor = 0;
   private puffExpiry = new Float64Array(PUFFS); private fbExpiry = new Float64Array(FIREBALLS);
+  private readonly frustum = new Frustum();
+  private readonly projection = new Matrix4();
+  private readonly sourcePoint = new Vector3();
   private readonly columns: Column[] = [];
   private readonly fireColumns = new Map<number, Column>();
   private readonly cloudColumns = new Map<number, Column>();
@@ -264,6 +267,8 @@ export class Blasts extends Group {
   }
   /** Explicit render clock (Vfx time). Columns emit puffs; fires refresh at 4 Hz from the sim. */
   advance(now: number, seconds: number): void {
+    const camera = this.host.camera?.();
+    if (camera) this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
     const weather = this.world.weather;
     if (weather && (weather.kind === 'wind' || weather.kind === 'haze' || weather.kind === 'thunderstorm')) this.windNode.value.set(weather.wind.x, 0, weather.wind.z);
     this.time = now; this.clock.value = now; this.scorch.advance(now);
@@ -284,12 +289,15 @@ export class Blasts extends Group {
     this.fireballs.visible = fb; this.puffs.visible = pf;
   }
   private emit(c: Column, seconds: number): void {
+    // Keep the emitter alive in the sim; distant columns must not consume the
+    // shared puff pool. Include their full rise and wind drift at screen edges.
+    if (!this.sourceVisible(c.x, c.z, c.size + 32)) { c.acc = 0; return; }
     c.acc += c.rate * seconds;
     for (; c.acc >= 1; c.acc--) {
       // Keep a cohort spread over the elapsed render interval when QA advances
       // many fixed ticks at once; newborns must not all overlap at the final tick.
       const born = Math.max(c.born, this.time - (c.acc - 1) / Math.max(c.rate, 1e-9));
-      const j = () => this.rng.next() - .5, ground = this.world.districts?.groundHeight(c.x, c.z) ?? 0;
+      const j = () => this.rng.next() - .5, ground = c.ground ?? this.world.districts?.groundHeight(c.x, c.z) ?? 0;
       if (c.cloud) {
         // Smoke grenade cloud: low, thick, slow, filling the authored radius.
         const a = this.rng.next() * Math.PI * 2, d = Math.sqrt(this.rng.next()) * c.cloud * .8;
@@ -314,10 +322,11 @@ export class Blasts extends Group {
       seen.add(e.id);
       let c = this.fireColumns.get(e.id);
       if (!c) { const landmark = (e.hazard?.radius ?? 0) >= 1.6; c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: (car || landmark ? 3 : 1.6) * (low ? .5 : 1), size: landmark ? 2.4 : car ? 1.8 : 1.1, heat: 1, acc: this.rng.next(), shade: car ? .14 : .2, cloud: 0 }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', car ? 5 : 3, (e.hazard?.radius ?? 1.4) * 4, Infinity, true) ?? null; this.fireColumns.set(e.id, c); }
+      if (c.ground === undefined || c.x !== e.transform.x || c.z !== e.transform.z) c.ground = this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0;
       c.x = e.transform.x; c.z = e.transform.z;
       // Persistent fire needs embers even without a preceding blast. Reuse the
       // existing particle pool at 4 Hz (2 Hz on low), under its unchanged cap.
-      if (!low || Math.floor(now * 4) % 2 === 0) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .06, 0, 0xffb04a, .3);
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .06, 0, 0xffb04a, .3);
     }
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
     for (const zone of this.world.combat?.effects.zones ?? []) {
@@ -328,13 +337,20 @@ export class Blasts extends Group {
     for (const id of this.cloudColumns.keys()) if (!clouds.has(id)) this.cloudColumns.delete(id);
     void now;
   }
+  /** Conservative render culling; source lifetime, damage and fire light stay authoritative. */
+  sourceVisible(x: number, z: number, radius: number): boolean {
+    if (!this.host.camera) return true;
+    this.sourcePoint.set(x, (this.world.districts?.groundHeight(x, z) ?? 0) + 9, z);
+    // Plane distances avoid allocating bounds for each of the 22 persistent fires.
+    return this.frustum.planes.every(plane => plane.distanceToPoint(this.sourcePoint) >= -radius);
+  }
   /** Flame cards and light pools are rewritten every frame from the live sources (≤ 128 + 40 instances). */
   private writeFlamesAndGlows(now: number): void {
     let flames = 0, glows = 0;
     const sun = this.host.sunDirection?.() ?? { x: .45, y: .78, z: .43 }, horizontal = Math.hypot(sun.x, sun.z);
     let shadows = 0;
     for (const c of [...this.columns, ...this.fireColumns.values()]) {
-      if (shadows >= 64 || c.cloud || horizontal < .01) continue;
+      if (shadows >= 64 || c.cloud || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) continue;
       const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
       this.pos.set(c.x - sun.x / horizontal * length / 2, .025, c.z - sun.z / horizontal * length / 2);
       this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z));
@@ -353,11 +369,12 @@ export class Blasts extends Group {
     };
     for (const [id, c] of this.fireColumns) {
       const e = this.world.entities.get(id); if (!e) continue;
+      if (!this.sourceVisible(c.x, c.z, (e.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
       const big = !!e.vehicle, radius = e.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
       const life = e.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1;
       for (let i = 0; i < n; i++) {
         const a = id * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        flame(c.x + Math.cos(a) * d, (this.world.districts?.groundHeight(c.x,c.z)??0)+(big ? .55 : .02), c.z + Math.sin(a) * d, id * .13 + i * .37, (big ? 1.1 : .75) * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, id * .13 + i * .37, (big ? 1.1 : .75) * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
       }
       pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + id)) * (.3 + .7 * life));
     }
