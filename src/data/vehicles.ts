@@ -2,6 +2,10 @@
 export interface VehicleDef {
   /** Door centre in authored +X metres, shared by interaction and presentation. */
   doorX: number;
+  /** Authored transport shell, independent of subsequent damage state. */
+  bodyVariant?: string;
+  /** Transport seats are visual capacity only; the campaign roster is never capped. */
+  transport?: { seats: readonly { x: number; y: number; z: number }[] };
   /** Sill height for the visible step-up/down, in metres above the road. */
   stepHeight: number;
   id: string; asset: string; mass: number; length: number; width: number; wheelbase: number;
@@ -22,6 +26,11 @@ const sedan: VehicleDef = { doorX: .35, stepHeight: .12, id: 'vehicle.sedan', as
 export const bicycleHandling = { slowTurnRadius: 1.6, fastTurnRadius: 6, steeringResponse: 8, maxSteering: .5, leanResponse: 8, maxLean: .32 } as const;
 export const vehicles: readonly VehicleDef[] = [
   sedan,
+  { ...sedan, id: 'vehicle.military-apc', asset: 'veh.military-apc', bodyVariant: 'unarmed', doorX: .71, stepHeight: .62,
+    mass: 6000, length: 5.69, width: 2.95, wheelbase: 3.69, wheelRadius: .6, suspension: .3,
+    engineForce: 13500, topSpeed: 18, steering: .5, hp: 1000, ramStrength: 3,
+    transport: { seats: [{ x: -.55, y: 1.2, z: .55 }, { x: -.55, y: 1.2, z: -.55 }, { x: -1.35, y: 1.2, z: .55 }, { x: -1.35, y: 1.2, z: -.55 }, { x: -2.15, y: 1.2, z: .55 }, { x: -2.15, y: 1.2, z: -.55 }] },
+  },
   { ...sedan, id: 'vehicle.pickup', doorX: 0.005, stepHeight: 0.32, asset: 'veh.pickup-red', mass: 1800, length: 5.2, wheelbase: 3.2, engineForce: 4300, hp: 450, ramStrength: 1.5 },
   { ...sedan, id: 'vehicle.suv', doorX: 0.03, stepHeight: 0.28, asset: 'veh.suv-dark', mass: 2000, engineForce: 4700, hp: 500, ramStrength: 1.6 },
   { ...sedan, id: 'vehicle.police', doorX: 0.38, stepHeight: 0.12, asset: 'veh.police-sedan', emergency: true, hp: 400 },
@@ -30,11 +39,12 @@ export const vehicles: readonly VehicleDef[] = [
   { ...sedan, id: 'vehicle.fire-engine', doorX: 1.95, stepHeight: 0.65, asset: 'veh.fire-engine', emergency: true, mass: 8000, length: 7.4, width: 2.1, wheelbase: 4.5, engineForce: 15000, topSpeed: 13, steering: .55, handling: { ...sedan.handling, highSpeedSteering: .3 }, hp: 1600, ramStrength: 5 },
 ];
 export const vehicleNodes = ['body', 'wheelFL', 'wheelFR', 'wheelRL', 'wheelRR', 'lightsFront', 'lightsBrake', 'driverSeat', 'exitL', 'exitR'] as const;
-export function requiredVehicleNodes(def: VehicleDef): string[] { return [...vehicleNodes, ...(def.emergency ? ['sirenL', 'sirenR'] : []), ...(def.id === 'vehicle.fire-engine' ? ['ladder'] : [])]; }
+export function requiredVehicleNodes(def: VehicleDef): string[] { return [...vehicleNodes, ...(def.emergency ? ['sirenL', 'sirenR'] : []), ...(def.id === 'vehicle.fire-engine' ? ['ladder'] : []), ...(def.transport ? def.transport.seats.map((_, i) => `passenger${i}`) : [])]; }
 export function validateVehicle(def: VehicleDef): void {
   if (!def.id.startsWith('vehicle.') || !def.asset.startsWith('veh.') || typeof def.emergency !== 'boolean') throw new Error('Invalid vehicle identity');
   for (const key of ['mass', 'length', 'width', 'wheelbase', 'wheelRadius', 'suspension', 'stiffness', 'engineForce', 'topSpeed', 'steering', 'hp', 'ramStrength'] as const) if (!Number.isFinite(def[key]) || def[key] <= 0) throw new Error(`Invalid vehicle ${key}`);
   if (!Number.isFinite(def.doorX) || Math.abs(def.doorX) >= def.length / 2 || !Number.isFinite(def.stepHeight) || def.stepHeight < 0) throw new Error('Invalid vehicle doorway');
+  if (def.transport && (!def.transport.seats.length || def.transport.seats.some(p => ![p.x, p.y, p.z].every(Number.isFinite) || Math.abs(p.x) >= def.length / 2 || Math.abs(p.z) >= def.width / 2 || p.y <= 0))) throw new Error('Invalid transport seats');
   if (def.wheelbase >= def.length || def.steering >= Math.PI / 2) throw new Error('Invalid vehicle geometry');
   for (const [key, value] of Object.entries(def.handling)) if (!Number.isFinite(value) || (key === 'centerOfMass' ? value >= 0 : value <= 0)) throw new Error(`Invalid vehicle handling ${key}`);
   if (def.handling.highSpeedSteering > def.steering || def.handling.engineTaperStart >= 1 || def.handling.driftGrip >= def.handling.grip) throw new Error('Invalid vehicle handling range');

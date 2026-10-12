@@ -357,6 +357,7 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    const restoreOccupants = await this.vehicles?.prewarmOccupants();
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
@@ -379,7 +380,7 @@ export class GameView implements Lifecycle {
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -400,7 +401,7 @@ export class GameView implements Lifecycle {
     }
     if (groveTown) await warm();
     else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
-    finish();
+    restoreOccupants?.(); finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */

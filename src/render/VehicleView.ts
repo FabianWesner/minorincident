@@ -8,6 +8,7 @@ import { BoxGeometry, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNo
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
+import { prepareTransportModel } from './transportModel';
 import { vehiclePlaceholder } from '../assets/vehiclePlaceholder';
 import { color, mix, positionGeometry, sin, uniform } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
@@ -41,15 +42,29 @@ export class VehicleView extends Group {
   private readonly chassisRotation = new Quaternion();
   private readonly pending = new Map<number, Promise<void>>();
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
+  /** Compile transport passenger rigs during level loading, before boarding can hitch. */
+  async prewarmOccupants(): Promise<(() => void) | undefined> {
+    const car = [...this.world.vehicles!.cars.values()].find(c => c.physics.def.transport);
+    const record = car && this.records.get(car.entity.id);
+    if (!record) return;
+    const assets = new Set<string>([`char.courier-${this.world.entities.get(1)!.survivor!.variant}`]);
+    for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
+    const copies = await Promise.all([...assets].map((asset, i) => VehicleOccupant.load(this.registry, -i - 1, asset, this.materials)));
+    const seat = record.model.getObjectByName('driverSeat')!;
+    for (const copy of copies) { record.model.add(copy); copy.pose(seat); }
+    let cleaned = false;
+    return () => { if (cleaned) return; cleaned = true; for (const copy of copies) copy.dispose(); };
+  }
   async load(): Promise<void> { for (const car of this.world.vehicles!.cars.values()) await this.addCar(car.entity.id); this.update(1); }
   private async addCar(id: number): Promise<void> {
     const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
     const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
     const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
     const decay = car.entity.vehicle!.decay;
-    const model = atLeast(this.registry.definition(def.asset).status, 'integrated') ? await this.registry.loadAsset(def.asset, lod, decay) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
+    const asset = def.asset, shell = def.bodyVariant && this.registry.definition(asset).decayVariants.includes(def.bodyVariant) ? def.bodyVariant : decay;
+    const model = atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
     if (this.disposed) return;
-    model.userData.assetId = def.asset;
+    model.userData.assetId = def.asset; prepareTransportModel(model, def);
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
       if (material.name.startsWith('emi_') || material.userData.emissiveStrength > 0) return material;
@@ -73,7 +88,7 @@ export class VehicleView extends Group {
       return copy;
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
     const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
-    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
+    const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR', ...(def.transport ? ['wheelML', 'wheelMR'] : [])].filter(name => model.getObjectByName(name)).map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
     const lamp = (name: string, color: string) => {
       const material = new MeshBasicNodeMaterial({ color });
       const anchor = model.getObjectByName(name);
@@ -109,8 +124,9 @@ export class VehicleView extends Group {
       }
       record.parent.position.set(lerp(prev.x, p.x, alpha), lerp(prev.y, p.y, alpha), lerp(prev.z, p.z, alpha));
       record.parent.quaternion.copy(body.previousRotation).slerp(this.chassisRotation.copy(body.rotation), alpha);
-      for (let i = 0; i < 4; i++) {
-        const wheel = record.wheels[i], physics = body.wheels[i], previous = body.previousWheels[i];
+      for (let i = 0; i < record.wheels.length; i++) {
+        const index = i < 4 ? i : i - 2;
+        const wheel = record.wheels[i], physics = body.wheels[index], previous = body.previousWheels[index];
         wheel.node.rotation.y = wheel.steer + lerp(previous.steer, physics.steer, alpha);
         wheel.node.rotation.z = wheel.spin + lerp(previous.rotation, physics.rotation, alpha);
         wheel.node.position.y = wheel.y + body.def.suspension - lerp(previous.suspension, physics.suspension, alpha);
@@ -121,7 +137,7 @@ export class VehicleView extends Group {
         record.parent.updateMatrixWorld(true);
         const heights = record.wheels.map(w => this.ground!(...this.wheelSpot(w.node)) ?? 0), mean = heights.reduce((a, b) => a + b, 0) / heights.length;
         record.parent.position.y += mean;
-        for (let i = 0; i < 4; i++) record.wheels[i].node.position.y += heights[i] - mean;
+        for (let i = 0; i < record.wheels.length; i++) record.wheels[i].node.position.y += heights[i] - mean;
         // Tyre faces can meet a paving edge between mesh vertices, especially with steering and body lean.
         record.parent.updateMatrixWorld(true);
         for (const wheel of record.wheels) {
@@ -192,6 +208,9 @@ export class VehicleView extends Group {
     const transition = this.world.vehicles!.transition, elapsed = transition?.carId === id ? this.world.tick + alpha - 1 - transition.tick : carTransitionTicks;
     if (transition?.carId === id && transition.kind === 'exit' && elapsed < 12) wanted.push({ actorId: 1, seat: 'driverSeat', driver: true });
     if (car.entity.vehicle!.driver !== null) wanted.push({ actorId: car.entity.vehicle!.driver!, seat: 'driverSeat', driver: true });
+    for (const [i, passenger] of (car.entity.vehicle!.passengers ?? []).slice(0, car.physics.def.transport?.seats.length ?? 0).entries()) {
+      if (passenger.phase !== 'exit' || this.world.tick - passenger.started < 12) wanted.push({ actorId: passenger.id, seat: `passenger${i}`, driver: false });
+    }
     if (l2?.truckId === id) {
       if (l2.seated) wanted.push({ actorId: 1, seat: 'crewSeat0', driver: false });
       if (['alarm', 'ride', 'arrived'].includes(l2.phase)) for (const [i, actorId] of l2.crewIds.entries()) {
@@ -203,7 +222,9 @@ export class VehicleView extends Group {
     for (const w of wanted) {
       const entity = this.world.entities.get(w.actorId); const boarding = transition?.carId === id && transition.kind === 'enter' && elapsed < 42;
       const leaving = transition?.carId === id && transition.kind === 'exit' && elapsed < 12;
-      if (!entity || !entity.hidden && !leaving) continue;
+      if (!entity) continue;
+      const passenger = car.entity.vehicle!.passengers?.find(p => p.id === w.actorId);
+      const passengerLeaving = passenger?.phase === 'exit' && this.world.tick - passenger.started < 12;
       const asset = entity.survivor ? `char.courier-${entity.survivor.variant}` : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.firefighter-alive';
       const occupant = this.occupants.get(w.actorId);
       if (!occupant || occupant.asset !== asset) {
@@ -213,6 +234,7 @@ export class VehicleView extends Group {
         }).finally(() => this.occupantLoads.delete(w.actorId)));
         if (occupant) occupant.visible = false; continue;
       }
+      if (!entity.hidden && !leaving && !passengerLeaving) { occupant.visible = false; continue; }
       if (leaving && w.actorId === 1) {
         // Preserve the last seated pose while the door opens, with no seated actor left in the car.
         if (occupant.parent === record.model) record.parent.attach(occupant);
@@ -232,7 +254,7 @@ export class VehicleView extends Group {
       const target = w.driver ? new Vector3() : undefined;
       if (target) {
         if (wheel) record.model.worldToLocal(wheel.getWorldPosition(target));
-        else { record.model.worldToLocal(seat.getWorldPosition(target)); const offsets: { [id: string]: [number, number] } = { 'vehicle.sedan': [.56,.29], 'vehicle.pickup': [.58,.39], 'vehicle.suv': [.34,.35], 'vehicle.police': [.45,.22], 'vehicle.ambulance': [.49,.33], 'vehicle.school-bus': [.5,.35], 'vehicle.fire-engine': [.5,.35] }; const [x,y] = offsets[car.physics.def.id]; target.x += x; target.y += y; }
+        else { record.model.worldToLocal(seat.getWorldPosition(target)); const offsets: { [id: string]: [number, number] } = { 'vehicle.sedan': [.56,.29], 'vehicle.pickup': [.58,.39], 'vehicle.suv': [.34,.35], 'vehicle.police': [.45,.22], 'vehicle.ambulance': [.49,.33], 'vehicle.school-bus': [.5,.35], 'vehicle.fire-engine': [.5,.35] }; const [x,y] = offsets[car.physics.def.id] ?? [.5, .35]; target.x += x; target.y += y; }
       }
       const fit = car.physics.def.id === 'vehicle.police' ? .62 : car.physics.def.id === 'vehicle.fire-engine' ? .72 : car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? .95 : ['vehicle.sedan', 'vehicle.pickup', 'vehicle.suv'].includes(car.physics.def.id) ? .85 : 1;
       // The female rig has shorter arms; lean into the pickup's high steering column.

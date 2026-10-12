@@ -14,6 +14,7 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  * survivor that is lost is simply gone. Returns true (the follower owns the tick).
  */
 export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
+  if (e.passengerOf !== undefined) return true;
   const c = e.civilian!, s = c.survivor!, tick = world.tick, f = l5.follow;
   if (world.missions?.l6?.follower(e)) return true;
   if (s.mode !== 'follow') return false;

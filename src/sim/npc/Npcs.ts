@@ -33,6 +33,7 @@ export class Npcs {
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }
   moveStep(e: EntitySnapshot, dx: number, dz: number): void {
+    if (e.passengerOf !== undefined) return;
     const x = e.transform.x, z = e.transform.z;
     moveAgent(e, dx * 60, dz * 60, this.world.infected!.nav, this.world.tick, .35);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }

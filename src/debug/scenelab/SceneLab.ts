@@ -49,6 +49,7 @@ type Plan =
   | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
+  | { type: 'drive'; throttle: number; steer: number; until: number }
   | { type: 'interact' };
 interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
   /** First drawn frame and sim position; for `emerge` residents also how far past the door threshold (m, + = outside). */
@@ -333,13 +334,17 @@ export class SceneLab {
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
+      else if ('drive' in a) { this.game.input.scheme = 'keyboard'; actor.plan = { type: 'drive', throttle: a.drive.throttle, steer: a.drive.steer ?? 0, until: this.frame + ticks(a.drive.seconds ?? 1) }; }
       else if ('interact' in a) actor.plan = { type: 'interact' };
       else if ('hit' in a) world.player!.damage(a.hit.amount ?? 5, world.tick);
       return;
     }
     if (actor.kind === 'pedestrian') {
       const c = e.civilian!, reset = (schedule: CivilianActivity[]) => { c.schedule = schedule; c.scheduleStep = 0; c.activityUntil = 0; c.activityStarted = 0; c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.state = 'calm'; };
-      if ('idle' in a) reset([this.stand(e.transform, e.transform.yaw)]);
+      if ('boardCar' in a || 'exitCar' in a) {
+        const id = this.vehicles.get('boardCar' in a ? a.boardCar : a.exitCar);
+        if (id === undefined || !('boardCar' in a ? world.vehicles!.boardPassenger(id, e.id) : world.vehicles!.disembarkPassenger(id, e.id))) throw new Error('Transport doorway is unavailable');
+      } else if ('idle' in a) reset([this.stand(e.transform, e.transform.yaw)]);
       else if ('turn' in a) reset([this.stand(e.transform, rad(a.turn))]);
       else if ('walk' in a || 'run' in a) { const points = ('walk' in a ? a.walk : a.run).map(toPoint); if (c.l1) c.l1.walkSpeed = 'run' in a ? 3.2 : c.l1.walkSpeed; reset(points.map(p => ({ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }))); if (!a.loop) c.schedule!.push(this.stand(points[points.length - 1], e.transform.yaw)); }
       else if ('moveTo' in a) { const p = toPoint(a.moveTo); reset([{ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }, this.stand(p, e.transform.yaw)]); }
@@ -544,7 +549,7 @@ export class SceneLab {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'); if (!courier) return;
     const world = this.world, p = world.entities.get(1)!.transform, plan = courier.plan;
     // InputSystem.inject merges into the last frame: name every one-tick field so a click's edges do not persist.
-    const frame: InputFrame & Record<string, unknown> = { ...emptyInput(), walk: undefined, moveTarget: undefined, attackTarget: undefined, navigation: undefined, cancelMove: undefined, mouseAttack: undefined, pointerTarget: undefined };
+    const frame: InputFrame & Record<string, unknown> = { ...emptyInput(), drive: undefined, brake: undefined, walk: undefined, moveTarget: undefined, attackTarget: undefined, navigation: undefined, cancelMove: undefined, mouseAttack: undefined, pointerTarget: undefined };
     if (plan?.type === 'path') {
       let target = toPoint(plan.points[plan.index]);
       if (Math.hypot(target.x - p.x, target.z - p.z) < .35) {
@@ -572,6 +577,9 @@ export class SceneLab {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
       else { frame.pointerTarget = true; frame.aimSource = 'pointer'; if (this.frame > plan.at + 40) courier.plan = null; }
+    } else if (plan?.type === 'drive') {
+      if (this.frame >= plan.until) { courier.plan = null; frame.brake = true; }
+      else frame.drive = { throttle: plan.throttle, steer: plan.steer };
     } else if (plan?.type === 'interact') {
       frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
