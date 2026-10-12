@@ -1,0 +1,85 @@
+{
+  "name": "qa-elephant-asset-lod1",
+  "note": "Z-D1 asset isolation: existing lion brain with elephant model override; no elephant specials claimed. Healthy and infected elephant beside shipped lion/gorilla, fixed game camera; motion/pose scene separately.",
+  "seed": 7,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 120,
+  "dof": false,
+  "trace": true,
+  "actors": [
+    {
+      "id": "elephant",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "look": {
+        "model": "inf.elephant"
+      },
+      "at": [
+        -1.5,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "lion",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "look": {
+        "model": "infected.lion"
+      },
+      "at": [
+        3.2,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "gorilla",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "look": {
+        "model": "infected.gorilla"
+      },
+      "at": [
+        6,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "zoom": 2.6
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "props": [
+    {
+      "id": "healthy",
+      "asset": "amb.elephant",
+      "at": [
+        -7,
+        0
+      ]
+    }
+  ]
+}

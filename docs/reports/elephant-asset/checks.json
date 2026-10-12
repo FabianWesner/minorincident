@@ -1,0 +1,76 @@
+{
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "sceneLab": {
+    "scenes": 4,
+    "failed": 0
+  },
+  "rawAndRuntimeExports": {
+    "lods": 12,
+    "failed": 0
+  },
+  "remoteVerify": {
+    "passed": 212,
+    "failed": 2,
+    "failures": [
+      {
+        "name": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+        "messages": [
+          "AssertionError: expected 4.909226999996463 to be less than or equal to 4\n    at /srv/mi/jobs/zoo-elephant-4032a4-37832-1791754453/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/zoo-elephant-4032a4-37832-1791754453/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+        "messages": [
+          "AssertionError: expected 4.850185000002966 to be less than or equal to 4\n    at /srv/mi/jobs/zoo-elephant-4032a4-37832-1791754453/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/zoo-elephant-4032a4-37832-1791754453/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "localTiming": [
+    {
+      "suite": "elephant-node-perf",
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "suite": "elephant-physical-perf",
+      "passed": 2,
+      "failed": 0
+    }
+  ],
+  "fullUnit": {
+    "runner": "Hetzner",
+    "passed": 819,
+    "failed": 0
+  },
+  "localBrowserTiming": {
+    "suite": "tests/perf/horde.spec.ts",
+    "passed": 2,
+    "failed": 0
+  },
+  "elephantBrowser": {
+    "runner": "Hetzner",
+    "passed": 5,
+    "failed": 0
+  },
+  "broaderBrowserAttempt": {
+    "runner": "Hetzner",
+    "status": "interrupted; not a complete suite result",
+    "reason": "Broad E07/smoke selector included screenshot-producing specs without @vision tags; interrupted to keep captures on Mac.",
+    "completedPassed": 13,
+    "completedFailed": 8,
+    "failedTests": [
+      "  \u2718   2 [chromium] \u203a tests/e2e/alpha-asset.spec.ts:8:30 \u203a T-E07-01-alpha-camera-lod1 @E07-AC01 derived Alpha and worker draw through the shared crowd at lod1 (21.8s)",
+      "  \u2718   1 [chromium] \u203a tests/e2e/alpha-asset.spec.ts:8:30 \u203a T-E07-01-alpha-camera-lod0 @E07-AC01 derived Alpha and worker draw through the shared crowd at lod0 (23.5s)",
+      "  \u2718   3 [chromium] \u203a tests/e2e/alpha-asset.spec.ts:8:30 \u203a T-E07-01-alpha-camera-lod2 @E07-AC01 derived Alpha and worker draw through the shared crowd at lod2 (19.5s)",
+      "  \u2718   4 [chromium] \u203a tests/e2e/alpha-asset.spec.ts:27:49 \u203a T-E07-12-alpha-assets @E07-AC12 @E18-AC01 high mixed Alpha crowd stays within E18 counters (16.3s)",
+      "  \u2718   5 [chromium] \u203a tests/e2e/alpha-asset.spec.ts:27:49 \u203a T-E07-12-alpha-assets @E07-AC12 @E18-AC01 low mixed Alpha crowd stays within E18 counters (11.7s)",
+      "  \u2718   8 [chromium] \u203a tests/e2e/alpha-physical.spec.ts:6:58 \u203a T-E07-06-charge-390 @E07-AC05 @E07-AC06 real Scene Lab telegraph, impact and hurt (2.2m)",
+      "  \u2718   9 [chromium] \u203a tests/e2e/alpha-physical.spec.ts:6:58 \u203a T-E07-06-ground-slam-390 @E07-AC05 @E07-AC06 real Scene Lab telegraph, impact and hurt (2.0m)",
+      "  \u2718  13 [chromium] \u203a tests/e2e/controls-playtest.spec.ts:8:1 \u203a S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (2.2m)"
+    ],
+    "diagnosis": "Five Alpha asset assertions refer to inf.alpha while main registers the model under infected.alpha; two 390px Alpha physical checks and one L1 mouse controls check also failed. No elephant browser test failed; all five passed in this attempt as well as in the completed dedicated run."
+  }
+}
