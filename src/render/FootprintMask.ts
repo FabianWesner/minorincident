@@ -44,7 +44,7 @@ function sampleFootprint(x: number, z: number, length: number, paw: boolean, sid
  * The camera window is bounded, so prints cannot tile into other streets. */
 export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks'], tick: number, centerX: number, centerZ: number): number {
   data.fill(0);
-  const texel = TRACK_SPAN / TRACK_SIZE;
+  const size = Math.sqrt(data.length / 4), texel = TRACK_SPAN / size;
   let pixels = 0;
   for (const t of tracks) {
     const edge = TRACK_SPAN / 2 - Math.max(Math.abs(t.x - centerX), Math.abs(t.z - centerZ));
@@ -53,15 +53,16 @@ export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks
     const cx = (t.x - centerX + TRACK_SPAN / 2) / texel, cz = (t.z - centerZ + TRACK_SPAN / 2) / texel;
     const radius = Math.ceil(t.length * .6 / texel) + 1, c = Math.cos(t.yaw), s = Math.sin(t.yaw);
     const height = Math.round(t.y / TRACK_HEIGHT * 255);
-    for (let z = Math.max(0, Math.floor(cz) - radius); z <= Math.min(TRACK_SIZE - 1, Math.ceil(cz) + radius); z++) {
-      for (let x = Math.max(0, Math.floor(cx) - radius); x <= Math.min(TRACK_SIZE - 1, Math.ceil(cx) + radius); x++) {
-        let coverage = 0;
-        for (const dz of [.25, .75]) for (const dx of [.25, .75]) {
-          const wx = (x + dx - cx) * texel, wz = (z + dz - cz) * texel;
-          coverage += sampleFootprint(c * wx - s * wz, s * wx + c * wz, t.length, t.paw, t.side) / 4;
-        }
+    for (let z = Math.max(0, Math.floor(cz) - radius); z <= Math.min(size - 1, Math.ceil(cz) + radius); z++) {
+      for (let x = Math.max(0, Math.floor(cx) - radius); x <= Math.min(size - 1, Math.ceil(cx) + radius); x++) {
+        const wx = (x + .25 - cx) * texel, wz = (z + .25 - cz) * texel;
+        const u = c * wx - s * wz, v = s * wx + c * wz, half = texel * .5;
+        const coverage = (sampleFootprint(u, v, t.length, t.paw, t.side)
+          + sampleFootprint(u + c * half, v + s * half, t.length, t.paw, t.side)
+          + sampleFootprint(u - s * half, v + c * half, t.length, t.paw, t.side)
+          + sampleFootprint(u + (c - s) * half, v + (s + c) * half, t.length, t.paw, t.side)) / 4;
         const value = Math.round(coverage * fade * .65 * 255);
-        const base = (z * TRACK_SIZE + x) * 4;
+        const base = (z * size + x) * 4;
         // Ground and elevated support can both carry tracks at the same X/Z.
         const offset = base + (t.y > .4 ? 2 : 0);
         if (!data[offset]) data[offset + 1] = height;

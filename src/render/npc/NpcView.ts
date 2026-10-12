@@ -1,5 +1,6 @@
 // World-anchored badges and transient bark messages adapt Bruno InteractivePoints.js/Bubble.js (MIT).
 import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Vector3, type Camera, type Object3D, type Material } from 'three/webgpu';
+import { batchRigidParts } from '../characters/batchRigidParts';
 import { AssetRegistry } from '../../assets/registry';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { Materials } from '../Materials';
@@ -57,6 +58,11 @@ export class NpcView extends Group {
       };
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
+    if (this.world.scenario === 'L7') {
+      const material = this.materials.fromVertexColors('npc:l7-corgi'); material.movingFigure.value = 1; material.userData.sharedPalette = true;
+      const def = this.registry.definition('char.corgi');
+      batchRigidParts(this.dog, [...def.requiredNodes, ...def.animatedNodes, ...def.sockets], material, source => (source as import('three').MeshBasicMaterial).color);
+    }
   }
   private loadHuman(model: string): Promise<void> {
     let pending = this.humanLoads.get(model);

@@ -1,0 +1,28 @@
+{
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "unit": {
+    "numTotalTests": 839,
+    "numPassedTests": 839,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "remoteBrowser": {
+    "passed": 16,
+    "failed": 1,
+    "failure": "WebKit S-11 T-E16-21 audio smoke, repeated on targeted retry"
+  },
+  "nativeBrowser": {
+    "passed": 12,
+    "failed": 0
+  },
+  "nativePerf": {
+    "passed": 3,
+    "failed": 1,
+    "failure": "added full-district low timing"
+  },
+  "runner": "94.130.181.173",
+  "nativeGpu": "headless Chrome Metal, quiet-run, one worker",
+  "source": "/tmp/l7-district-release-unit.log; /tmp/l7-district-complete-verify.log; /tmp/l7-district-native-gates.log; /tmp/l7-district-final-perf-all.log"
+}

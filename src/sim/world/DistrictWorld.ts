@@ -144,10 +144,11 @@ export class DistrictWorld {
   /** Exact low compound supports and raised sidewalk slabs; roofs and solid props never lift NPCs. */
   groundHeight(x: number, z: number): number {
     let height = 0;
-    for (const a of this.supports.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) {
+    const key = `${Math.floor(x / 4)},${Math.floor(z / 4)}`;
+    for (const a of this.supports.get(key) ?? []) {
       if (x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = Math.max(height, a.max[1]);
     }
-    for (const s of this.slabs.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) {
+    for (const s of this.slabs.get(key) ?? []) {
       if (s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
     }
     return height;

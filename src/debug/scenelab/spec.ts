@@ -32,7 +32,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2' | 'L3' | 'L4' | 'L5' | 'L6'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
+  layout?: { level?: 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -272,6 +272,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     decorations: [], lightGroups: [{ id: labLightGroup, offAt: 6 }, ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 6 as Tier }))], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [{ tier: 0, remove: [], disableLights: spec.props?.filter(p => p.powerGroup && p.powered === false).map(p => p.powerGroup!) ?? [] }],
   };
+  if (spec.ground === 'district' && source?.layers.some(l => l.tier === 6)) layout.layers.push({ tier: 6, remove: [], disableLights: [] });
   // Metro assemblies contain traversable rooms: their authored supports and walls
   // must survive a crop rather than becoming one solid manifest footprint.
   if(source && (source.district==='D-SUBWAY' || kept.some(p=>p.assetId==='int.metro-station')))layout.colliders=source.colliders.filter(c=>kept.some(p=>c.id===p.id||c.id.startsWith(p.id+'/'))).filter(c=>c.aabb.max[0]>=x0-shift[0]&&c.aabb.min[0]<=x1-shift[0]&&c.aabb.max[2]>=z0-shift[1]&&c.aabb.min[2]<=z1-shift[1]).map(c=>{const out=structuredClone(c);for(const k of ['min','max'] as const){out.aabb[k][0]+=shift[0];out.aabb[k][2]+=shift[1];}return out;});

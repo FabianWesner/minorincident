@@ -1,0 +1,101 @@
+{
+  "name": "l7-district-northgate",
+  "note": "Shared elevated Northgate exit; army wreck has clear rocket interaction approach. Courier follows road west across damage; inspect foot support, vehicle sinking, facing and visibility.",
+  "seed": 29,
+  "tier": 6,
+  "time": "L6",
+  "ground": "district",
+  "dof": false,
+  "layout": {
+    "level": "L7",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        228,
+        0
+      ],
+      [
+        289,
+        30
+      ]
+    ],
+    "anchors": [
+      "l7-night-exit",
+      "l7-rocket"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        273,
+        15
+      ],
+      "state": {
+        "walk": [
+          [
+            260,
+            15
+          ],
+          [
+            243,
+            15
+          ],
+          [
+            235,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      266,
+      3.9,
+      15
+    ],
+    "zoom": 2.5
+  },
+  "frames": 240,
+  "shots": [
+    0,
+    240
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHitsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "footSinkMaxCm": 0,
+    "yawDriftMaxDeg": 5
+  },
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "fire": [
+          271,
+          23
+        ],
+        "radius": 1.8,
+        "duration": 120
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "weaponPickup": "weapon.rocket-launcher",
+        "at": [
+          276,
+          15
+        ],
+        "surfaceY": 3.9
+      }
+    }
+  ]
+}

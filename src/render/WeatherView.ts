@@ -156,8 +156,15 @@ export class WeatherView extends Group {
       scriptedFeatures |= (p.clouds ? flags.clouds : 0) | (p.rain ? flags.wet : 0) | (p.flakes ? flags.accumulation : 0) | (p.fog ? flags.fog : 0) | (key.kind === 'thunderstorm' ? flags.flash : 0);
     }
     this.lighting.setWeatherMode(scriptedFeatures | (w.clouds > 0 ? flags.clouds : 0) | (w.rain > 0 || w.wetness > .3 ? flags.wet : 0) | (w.flakes > 0 || w.accumulation > 0 ? flags.accumulation : 0) | (w.fog > 0 ? flags.fog : 0) | (w.kind === 'thunderstorm' || this.flash > 0 ? flags.flash : 0) | (weatherSurface.probe.value << flags.probeShift));
-    // A snapped camera window retains 1.6 cm texels without increasing upload memory.
+    // A snapped camera window retains stable texels without increasing upload memory.
     const cx = Math.round(view.focus.x / 4) * 4, cz = Math.round(view.focus.z / 4) * 4;
+    // Low W6 uses a 256² ash/snow track mask; the world span, lifetime and
+    // bilinear filtering stay identical while horde raster work falls by 16x.
+    const trackSize = tier === 'low' && this.world.scenario === 'L7' ? TRACK_SIZE / 4 : TRACK_SIZE;
+    if (weatherSurface.tracks.image.width !== trackSize) {
+      weatherSurface.tracks.image = { data: new Uint8Array(trackSize * trackSize * 4), width: trackSize, height: trackSize };
+      weatherSurface.tracks.needsUpdate = true; this.lastTrackTick = -1;
+    }
     const center = weatherSurface.trackCenter.value;
     const trackTick = Math.floor(this.world.tick / 6);
     if ((w.tracks.length > 0 || this.trackPixels > 0) && (trackTick !== this.lastTrackTick || center.x !== cx || center.y !== cz)) {
