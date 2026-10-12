@@ -18,9 +18,12 @@ const frameContent = (buf: Buffer) => {
   return { dominant: +(Math.max(...buckets.values()) / n).toFixed(3), sd: +Math.sqrt(sq / n - mean * mean).toFixed(1) };
 };
 
-for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 the walk to Kessler's cellar door never leaves the viewport one flat colour (${renderer})`, async ({ page }) => {
+/** The cellar door is on the Lakeshore side of the store (PO 10-12: the camera must see it); the lane north of the store is still walked as the roof-hugging regression. */
+const walks = [{ name: 'door', start: { x: 54, z: 41.8 } }, { name: 'lane', start: { x: 54, z: 27.5 } }] as const;
+for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 the walk east along ${walk.name === 'door' ? "Lakeshore Avenue to Kessler's cellar door" : 'Kessler Lane north of the store'} never leaves the viewport one flat colour (${renderer})`, async ({ page }) => {
+  const tag = `${walk.name}-${renderer}`;
   test.setTimeout(300_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
-  for (const file of readdirSync(output)) if (file.startsWith(`${renderer}-`)) rmSync(`${output}/${file}`);
+  for (const file of readdirSync(output)) if (file.startsWith(`${tag}-`)) rmSync(`${output}/${file}`);
   if (renderer === 'webgpu') {
     await page.goto('/');
     const adapter = await page.evaluate(async () => Boolean(await (navigator as Navigator & { gpu?: { requestAdapter(): Promise<unknown> } }).gpu?.requestAdapter()));
@@ -30,14 +33,14 @@ for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 t
   await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 1, progression: 'L4-default' }));
   await page.evaluate(() => window.__SS__!.pause());
   await page.getByRole('button', { name: 'Begin mission' }).click();
-  const start = { x: 54, z: 27.5 }; // the layout's kessler-cellar-door is at (69.6, 29.66)
+  const start = walk.start; // the layout's kessler-cellar-door is at (66.4, 40.7)
   await page.evaluate(async start => {
     const a = window.__SS__!; a.pause(); a.cheats.god(true);
     for (const id of ['ride', 'quartermaster']) { a.cheats.completeObjective(id); await a.step(30); }
     // The war runs its course (the line breaks on its own); skipping 'hold' by cheat leaves the courier unable to move.
     a.teleport(1, { x: -21.5, z: 3 });
     for (let i = 0; i < 400 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
-    // North-west of the store: the strip in front of the cellar door, where the PO stood.
+    // West of the store, on the strip the courier takes to the cellar door (the lane variant: north of the store, where the PO stood).
     a.teleport(1, start); a.camera.follow(); await a.step(5);
   }, start);
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
@@ -54,12 +57,12 @@ for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 t
       return { x: s.player!.transform.x, z: s.player!.transform.z, cover: (s.render.districts as { seeThrough: { cover: number } }).seeThrough.cover, hits: probe.hits.map(h => h?.path.split('/').at(-2) ?? 'none') };
     });
     const content = frameContent(buf); frames.push({ ...state, ...content });
-    if (i % 4 === 0 || content.dominant > .3 || content.sd < 25) writeFileSync(`${output}/${renderer}-${String(i).padStart(2, '0')}-x${state.x.toFixed(1)}.png`, buf);
+    if (i % 4 === 0 || content.dominant > .3 || content.sd < 25) writeFileSync(`${output}/${tag}-${String(i).padStart(2, '0')}-x${state.x.toFixed(1)}.png`, buf);
     if (state.x > 66) break;
   }
   await page.keyboard.up('d'); await page.keyboard.up('s');
   await page.evaluate(() => window.__SS__!.pause());
-  writeFileSync(`${output}/${renderer}.json`, JSON.stringify(frames, null, 1) + '\n');
+  writeFileSync(`${output}/${tag}.json`, JSON.stringify(frames, null, 1) + '\n');
   // The walk crossed the band where the roof hugged the lens (z 26-28.5 with the default zoom).
   // Before the fix the roof filled the frame for courier x 58-63 (camera 2.5-5 m above the pitched roof). The camera now follows the
   // player's y and the cutaway scales to the group, so the hugging span is wider and a real-time sample lands every ~1.7 m: count x 56-65 (>= 3 samples).
