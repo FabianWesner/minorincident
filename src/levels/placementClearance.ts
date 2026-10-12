@@ -94,6 +94,27 @@ export function solidOverlaps(layout: DistrictLayout, tier: Tier, pick: (p: Plac
   return out;
 }
 
+/**
+ * Moves every placement chosen by `pick` that cuts into a solid (see `solidOverlaps`, every tier) or another placement to the
+ * nearest clear spot (vehicles slide along their own axis first). Returns the ids it moved.
+ */
+export function moveOffSolids(layout: DistrictLayout, pick: (p: Placement) => boolean): string[] {
+  const moved: string[] = [], tiers = [0, 2, 5] as const;
+  const bad = new Set(tiers.flatMap(t => solidOverlaps(layout, t, pick).map(o => o.placement)));
+  for (const p of layout.placements) {
+    if (!bad.has(p.id)) continue;
+    const solids: Footprint[] = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable && c.id.split('/')[0] !== p.id)
+      .map(c => ({ id: c.id, poly: [[c.aabb.min[0], c.aabb.min[2]], [c.aabb.max[0], c.aabb.min[2]], [c.aabb.max[0], c.aabb.max[2]], [c.aabb.min[0], c.aabb.max[2]]] as Pt[], y0: c.aabb.min[1], y1: c.aabb.max[1] }));
+    const spot = findClearSpot(layout, p, solids, { slide: p.assetId.startsWith('veh.'), margin: .15, maxRadius: 12, lawnOk: true });
+    if (!spot) continue;
+    const [dx, dz] = [spot[0] - p.position[0], spot[1] - p.position[2]];
+    p.position = [spot[0], p.position[1], spot[1]];
+    p.visualAabb = { min: [p.visualAabb.min[0] + dx, p.visualAabb.min[1], p.visualAabb.min[2] + dz], max: [p.visualAabb.max[0] + dx, p.visualAabb.max[1], p.visualAabb.max[2] + dz] };
+    moved.push(p.id);
+  }
+  return moved;
+}
+
 /** Everything in the layout that is solid enough to cut into: placement footprints plus authored colliders (merged planters). */
 export function obstaclesOf(layout: DistrictLayout, tier: Tier, skip: ReadonlySet<string> = new Set()): Footprint[] {
   const placed = new Set(layout.placements.map(p => p.id)), live = (o: { minTier: Tier; maxTier: Tier }) => o.minTier <= tier && o.maxTier >= tier;

@@ -1,3 +1,4 @@
+import { moveOffSolids } from '../placementClearance';
 import { l4, l4Anchors, l4Edges, l4Line } from '../../data/l4';
 import type { DistrictLayout, Placement } from '../districts/types';
 
@@ -95,6 +96,7 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     };
     for (const [i, e] of l4Dressing.entries()) add(`l4-${e.kind}-${i}`, e.assetId, e.x, e.z, e.yaw ?? 0, e.scale ?? 1);
     layout.lightGroups.push({ id: 'l4', offAt: 5 });
+    moveOffSolids(layout, p => p.assetId.startsWith('veh.'));
     return layout;
   });
 }
