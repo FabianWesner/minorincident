@@ -19,6 +19,8 @@ export interface CrowdLayers {
   lurch?: number;
   /** Seconds into the gorilla chest-beat telegraph. */
   chestBeat?: number;
+  trunkSwipe?: number;
+  throwPose?: number;
 }
 /** Clips that stand on their feet: footwork locks the feet and turns become steps. */
 const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot', 'civ-startle', 'windup', 'swing', 'hurt']);
@@ -137,6 +139,13 @@ export class CrowdLocomotion {
       const swing = Math.sin(phase * Math.PI * 2), push = Math.abs(Math.cos(phase * Math.PI * 2));
       torso.quaternion.premultiply(this.rotation.setFromAxisAngle(X, swing * .16 * lurch)).premultiply(this.rotation.setFromAxisAngle(Z, -(.1 + .1 * push) * lurch));
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, -swing * .1 * lurch));
+    }
+    if (layers.trunkSwipe !== undefined && layers.trunkSwipe !== 0) {
+      const trunk = this.model.getObjectByName('trunk');
+      trunk?.rotateY(layers.trunkSwipe);
+    }
+    if (layers.throwPose) {
+      for (const arm of [this.rig.armL, this.rig.armR]) arm?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -layers.throwPose));
     }
     if (layers.chestBeat) {
       const t = layers.chestBeat, weight = Math.min(1, t * 6);
