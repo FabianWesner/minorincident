@@ -11,6 +11,7 @@ import { gameplay as grove } from "./D-GROVE";
 import { gameplay as corridor } from "./D-CORRIDOR";
 import { gameplay as fair } from "./D-FAIR";
 import { gameplay as subway } from "./D-SUBWAY";
+import { gameplay as crossing } from "./D-CROSSING";
 export const districtGameplay: Record<DistrictId, DistrictGameplay> = {
   "D-RES": res,
   "D-MAIN": main,
@@ -24,4 +25,5 @@ export const districtGameplay: Record<DistrictId, DistrictGameplay> = {
   "D-CORRIDOR": corridor,
   "D-FAIR": fair,
   "D-SUBWAY": subway,
+  "D-CROSSING": crossing,
 };

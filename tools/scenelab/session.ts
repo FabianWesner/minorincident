@@ -52,6 +52,8 @@ export class SceneSession {
     const webgpu = this.options.backend === 'webgpu';
     // macOS: ANGLE/Metal gives real-GPU WebGL2 headless. WebGPU needs the unsafe flag and may still fall back.
     const args = webgpu ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
+    // Native frame-budget probes measure uncapped cadence, as the E18 browser specs do.
+    if (process.env.SCENE_UNCAPPED === '1') args.push('--disable-frame-rate-limit', '--disable-gpu-vsync');
     this.browser = await chromium.launch({ headless: true, args });
     const context = await this.browser.newContext({ viewport: this.options.viewport, deviceScaleFactor: 1 });
     this.page = await context.newPage();

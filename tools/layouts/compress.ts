@@ -6,8 +6,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { NodeIO } from '@gltf-transform/core';
-import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
-import { getBounds, meshopt } from '@gltf-transform/functions';
+import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
+import { getBounds, meshopt, quantize, reorder } from '@gltf-transform/functions';
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 import { Box3, Mesh, type Object3D } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
@@ -38,7 +38,12 @@ export async function compressLayoutGlb(path: string): Promise<{ before: number;
   if (document.getRoot().listExtensionsUsed().some(e => e.extensionName === 'EXT_meshopt_compression')) return { before: input.length, after: input.length, skipped: true };
   // Long districts (the 344 m L3 corridor) need 16-bit positions to stay within the tolerance below.
   const bounds = document.getRoot().listScenes().map(scene => getBounds(scene)), extent = Math.max(0, ...bounds.flatMap(b => [0, 2].map(a => b.max[a] - b.min[a])));
-  await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', ...(extent > 200 ? { quantizePosition: 16 } : {}) }));
+  if (document.getRoot().listNodes().some(n => n.getExtras().terrainChunk)) {
+    // Adjacent terrain/paint primitives must retain identical boundary positions.
+    // Independent position quantization opened sub-millimetre cracks at clipped road marks.
+    await document.transform(reorder({ encoder: MeshoptEncoder, target: 'size' }), quantize({ pattern: /^(?!POSITION$)/ }));
+    document.createExtension(EXTMeshoptCompression).setRequired(true).setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.QUANTIZE });
+  } else await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium', ...(extent > 200 ? { quantizePosition: 16 } : {}) }));
   const output = await io.writeBinary(document);
   const [a, b] = [signature(await parse(input)), signature(await parse(output))];
   // Quantization inserts no nodes; it rescales mesh nodes. Compare by traversal order and name.

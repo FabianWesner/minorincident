@@ -16,7 +16,8 @@ export const corridorDistrictId = "D-CORRIDOR" as const;
 /** E22 L4 Fairhaven downtown (the safe city that falls). Like D-GROVE it is not in `districtIds`. */
 export const fairDistrictId = "D-FAIR" as const;
 export const subwayDistrictId = "D-SUBWAY" as const;
-export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId | typeof fairDistrictId | typeof subwayDistrictId;
+export const crossingDistrictId = "D-CROSSING" as const;
+export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId | typeof fairDistrictId | typeof subwayDistrictId | typeof crossingDistrictId;
 /** Districts that run the L1 v2 outbreak rules (sight-only infected brain, pedestrian outbreak layer, corgi). */
 export const outbreakDistrictIds: readonly DistrictId[] = [groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId];
 export const isOutbreakDistrict = (id: string): boolean => (outbreakDistrictIds as readonly string[]).includes(id);
