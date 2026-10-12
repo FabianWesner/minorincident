@@ -2,8 +2,8 @@
   "id": "prop.flower-box",
   "triangles": {
     "lod0": 6100,
-    "lod1": 724,
-    "lod2": 174
+    "lod1": 422,
+    "lod2": 152
   },
   "dimensions_blender": [
     0.5617841482162476,
@@ -41,19 +41,19 @@
       "quantized": true
     },
     "model.lod1.glb": {
-      "bytes": 32364,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 33808,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 18844,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 18604,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.11868852459016394,
-    "lod2": 0.028524590163934428
+    "lod1": 0.06918032786885246,
+    "lod2": 0.024918032786885248
   },
   "within_budget": true,
   "nodes_ok": true,
@@ -65,5 +65,6 @@
     "raw_byte_identical": true
   },
   "matches_reference": true,
-  "done": true
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }
