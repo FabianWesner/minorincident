@@ -1,6 +1,7 @@
-import { Group, Mesh, Quaternion, Vector3, type Object3D } from 'three/webgpu';
+import { BufferAttribute, Group, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type Object3D } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { batchRigidParts } from './batchRigidParts';
 import { courierBones, driveHelpers, type CourierBones } from './CourierRig';
 import { alignSkeleton } from './skin';
 import { disposeCharacter, type CharacterRig } from './rig';
@@ -47,7 +48,21 @@ export class VehicleOccupant extends Group {
       for (const m of old) m.dispose();
       return new VehicleOccupant(actorId, asset, model, true);
     }
-    return new VehicleOccupant(actorId, asset, await registry.loadAsset(asset, 'lod0'));
+    const model = await registry.loadAsset(asset, 'lod1');
+    // Registry clones share their source resources; batching owns copies only.
+    model.traverse(node => { if (node instanceof Mesh) { node.geometry = node.geometry.clone(); const copy = (m: import('three').Material) => new MeshLambertNodeMaterial({ color: (m as import('three').MeshStandardMaterial).color }); node.material = Array.isArray(node.material) ? node.material.map(copy) : copy(node.material); } });
+    const material = materials.fromVertexColors(`vehicle:${asset}`); material.movingFigure.value = 1; material.userData.sharedPalette = true;
+    batchRigidParts(model, characterNodes, material, source => (source as import('three').MeshStandardMaterial).color);
+    model.traverse(node => {
+      if (!(node instanceof Mesh) || node.material === material) return;
+      const source = Array.isArray(node.material) ? node.material[0] : node.material;
+      const color = (source as MeshLambertNodeMaterial).color.toArray(), count = node.geometry.getAttribute('position').count, colors = new Float32Array(count * 3);
+      for (let i = 0; i < count; i++) colors.set(color, i * 3);
+      node.geometry.setAttribute('color', new BufferAttribute(colors, 3));
+      for (const m of Array.isArray(node.material) ? node.material : [node.material]) m.dispose();
+      node.material = material;
+    });
+    return new VehicleOccupant(actorId, asset, model, true);
   }
   dispose(): void { if (this.ownsModel) disposeCharacter(this.model as Group); this.removeFromParent(); }
   /** Hip at the seat node, both shoes forward in the footwell; drivers grip the authored wheel. */
