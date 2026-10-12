@@ -19,22 +19,25 @@ export class CrowdFigureProbe {
   add(id: number, clip: string, phase: number, instance: Matrix4, palette: CrowdPosePalette, frame: number, outgoing: number, weight: number, geometry?: BufferGeometry): void {
     pickBodies.add(id, instance, palette, frame, outgoing, weight, geometry);
     if (!this.enabled) return;
-    const pose = palette.pose(frame, outgoing, weight);
+    // Ordinary test/perf snapshots need two feet, not a newly allocated full
+    // skeleton per figure per frame. Scene Lab still records every requested joint.
+    const pose = CrowdFigureProbe.joints ? palette.pose(frame, outgoing, weight) : undefined;
+    const partMatrix = (part: number) => pose ? this.matrix.fromArray(pose, part * 16) : palette.part(frame, outgoing, weight, part, this.matrix);
     const feet = ['footL', 'footR'].map(name => {
       const part = palette.clip.parts.indexOf(name);
       if (part < 0) return [];
-      this.matrix.fromArray(pose, part * 16);
+      partMatrix(part);
       return this.point.setFromMatrixPosition(this.matrix).applyMatrix4(instance).toArray();
     });
     // Heel and toe contact points per foot (same offsets as the footwork solver), for model-free slide probes.
     const soles = this.sole ? ['footL', 'footR'].flatMap(name => {
       const part = palette.clip.parts.indexOf(name);
       if (part < 0) return [];
-      this.matrix.fromArray(pose, part * 16).premultiply(instance);
+      partMatrix(part).premultiply(instance);
       return [-.05, .085].map(x => this.point.set(x, -this.sole, 0).applyMatrix4(this.matrix).toArray());
     }) : undefined;
     let joints: Record<string, number[]> | undefined, forward: number[] | undefined;
-    if (CrowdFigureProbe.joints) {
+    if (pose) {
       joints = {};
       for (const [part, name] of palette.clip.parts.entries()) joints[name] = this.point.setFromMatrixPosition(this.matrix.fromArray(pose, part * 16)).applyMatrix4(instance).toArray();
       forward = this.point.set(1, 0, 0).transformDirection(instance).toArray();

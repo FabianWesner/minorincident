@@ -168,7 +168,6 @@ export class SceneLab {
     }
     if (spec.layout?.level === 'L7') world.scenario = 'L7';
     const outbreak = installL1Outbreak(world, { civilians: 0 });
-    void outbreak;
     if (spec.infectedCap !== undefined) world.infected!.director.levelCap = spec.infectedCap;
     // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
     if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
@@ -197,6 +196,9 @@ export class SceneLab {
       if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
     }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
+    // Dress the authored crowd before view initialization. Otherwise its first
+    // tick replaces runners with civilian skins whose batches are still loading.
+    outbreak.dressInfected();
     this.boom = spec.armyBoom ? new ArmyCheckpointBoom(world, spec.armyBoom.x, spec.armyBoom.z) : null;
     this.boomClosedAt = spec.armyBoom?.closed ? world.tick : 0;
     if (this.boom) {

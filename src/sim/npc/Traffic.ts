@@ -4,7 +4,16 @@ import type { Point } from './types';
 /** Kinematic ambient lanes and L5 convoy. Collision prediction uses braking distance, without Rapier cars. */
 export class Traffic {
   private readonly target = { x: 0, z: 0 };
+  private readonly cars: EntitySnapshot[] = [];
+  private carRevision = -1;
   constructor(readonly world: SimWorld) {}
+  private trafficCars(): readonly EntitySnapshot[] {
+    if (this.carRevision !== this.world.entities.revision) {
+      this.carRevision = this.world.entities.revision; this.cars.length = 0;
+      for (const e of this.world.entities.iterate()) if (e.traffic || e.kind === 'traffic') this.cars.push(e);
+    }
+    return this.cars;
+  }
   spawn(route: Point[], panic = false): number {
     if (route.length < 2 || !route.every(p => Number.isFinite(p.x) && Number.isFinite(p.z))) throw new RangeError('Invalid traffic lane');
     const e = this.world.entities.create({ kind: 'traffic', archetype: 'veh.sedan-red', faction: 'environment', transform: { ...route[0], y: .5, yaw: 0 }, health: { current: 100, max: 100 }, traffic: { route: structuredClone(route), segment: 1, speed: 0, desired: panic ? 9 : 6, braking: 6, stopped: false, panic } });
@@ -38,7 +47,7 @@ export class Traffic {
   }
   /** Pedestrian sweeps cannot enter an ambient car even when it has already stopped. */
   overlaps(position: Point): boolean {
-    for (const e of this.world.entities.iterate()) if (e.traffic) {
+    for (const e of this.trafficCars()) if (e.traffic) {
       const dx = position.x - e.transform.x, dz = position.z - e.transform.z, cosine = Math.cos(e.transform.yaw), sine = Math.sin(e.transform.yaw);
       if (Math.abs(dx * cosine - dz * sine) < 2.35 && Math.abs(dx * sine + dz * cosine) < 1.15) return true;
     }

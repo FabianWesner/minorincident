@@ -65,9 +65,17 @@ export class WorldHumans implements HumanTargetQuery {
   readonly bitten = new Set<number>();
   private readonly cache = new Map<number, HumanTarget>();
   private readonly list: HumanTarget[] = [];
-  private readonly ids: number[] = [];
-  private readonly area = { x: 0, z: 0, r: 0 };
+  private readonly candidates: number[] = [];
+  private candidateRevision = -1;
   constructor(private readonly world: SimWorld) {}
+  private refreshCandidates(): void {
+    if (this.candidateRevision === this.world.entities.revision) return;
+    this.candidateRevision = this.world.entities.revision;
+    this.candidates.length = 0;
+    // Include NPC/escort records before their civilian component is attached.
+    // Liveness, adult state and positions are always read live by human().
+    for (const e of this.world.entities.iterate()) if (e.id === 1 || e.civilian || e.kind === 'npc' || e.kind === 'escort') this.candidates.push(e.id);
+  }
   private human(e: EntitySnapshot | undefined): HumanTarget | undefined {
     if (!e || e.health.current <= 0 || e.hidden || e.id === 1 && this.world.inspectionGhost) return undefined;
     if (e.id !== 1 && !(e.civilian?.adult && !e.civilian.pet && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
@@ -77,14 +85,23 @@ export class WorldHumans implements HumanTargetQuery {
     return target;
   }
   all(): readonly HumanTarget[] {
-    this.list.length = 0;
-    for (const e of this.world.entities.iterate()) { const h = this.human(e); if (h) this.list.push(h); }
+    this.refreshCandidates(); this.list.length = 0;
+    for (const id of this.candidates) { const h = this.human(this.world.entities.get(id)); if (h) this.list.push(h); }
     return this.list;
   }
   get(id: number): HumanTarget | undefined { return this.human(this.world.entities.get(id)); }
   within(center: Vec2, radius: number): readonly HumanTarget[] {
-    this.list.length = 0; this.area.x = center.x; this.area.z = center.z; this.area.r = radius;
-    for (const id of this.world.spatial.query(this.area, this.ids)) { const h = this.human(this.world.entities.get(id)); if (h) this.list.push(h); }
+    if (!Number.isFinite(center.x) || !Number.isFinite(center.z) || !Number.isFinite(radius) || radius < 0) throw new RangeError('Query position and radius must be finite, radius nonnegative');
+    this.refreshCandidates(); this.list.length = 0;
+    // Query the handful of humans instead of sorting the entire nearby horde.
+    // Recheck live state/position on every query: bites, deaths and movement
+    // during this same tick must take effect immediately.
+    const squared = radius * radius;
+    for (const id of this.candidates) {
+      const h = this.human(this.world.entities.get(id));
+      if (h && (h.position.x - center.x) ** 2 + (h.position.z - center.z) ** 2 <= squared) this.list.push(h);
+    }
+    this.list.sort((a, b) => a.id - b.id);
     return this.list;
   }
 }
@@ -108,8 +125,9 @@ export class Perception {
   }
   inCone(e: EntitySnapshot, target: Vec2): boolean {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
-    if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1)) return false;
-    return distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.cosHalf - 1e-9;
+    // Facing rejects most peripheral herd cues before the night lamp scan.
+    if (!(distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.cosHalf - 1e-9)) return false;
+    return distance <= this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1);
   }
   /** Detection: inside the cone and range with clear line of sight. */
   sees(e: EntitySnapshot, target: Vec2): boolean { return this.inCone(e, target) && this.lineOfSight(e.transform, target); }

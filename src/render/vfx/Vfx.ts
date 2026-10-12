@@ -14,6 +14,7 @@ export type Gore = 'Full' | 'Reduced' | 'Off';
 export type { EffectKind, TelegraphKind } from '../../sim/world/types';
 export interface VfxSettings { vfx?: boolean; gore?: Gore; flashReduction?: boolean; colorblind?: boolean; quality?: 'high' | 'low'; slowMotion?: boolean }
 export interface VfxTargets {
+  camera?(): import('three').Camera;
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
   muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
@@ -101,7 +102,7 @@ export class Vfx extends Group {
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
-    this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null, field: targets.field, ambient: targets.ambient, sunDirection: targets.sunDirection });
+    this.blasts = new Blasts(world, { camera: targets.camera, particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null, field: targets.field, ambient: targets.ambient, sunDirection: targets.sunDirection });
     this.add(this.blasts, this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
     for (const type of eventTypes) this.stops.push(world.events.on(type, this.receive));
   }
@@ -344,7 +345,7 @@ export class Vfx extends Group {
         if (vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
         if (vehicle.healthFraction < 0.15) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
       }
-      for (const e of this.world.entities.iterate()) { const h = e.hazard; if (h && this.world.tick < h.activeUntil && ['fire', 'toxic', 'live-wire'].includes(h.kind)) this.effect(h.kind === 'live-wire' ? 'electric' : h.kind as 'fire' | 'toxic', e.transform.x, e.transform.z, h.radius); }
+      for (const e of this.world.entities.iterate()) { const h = e.hazard; if (h && this.world.tick < h.activeUntil && ['fire', 'toxic', 'live-wire'].includes(h.kind) && this.blasts.sourceVisible(e.transform.x, e.transform.z, h.radius + 5)) this.effect(h.kind === 'live-wire' ? 'electric' : h.kind as 'fire' | 'toxic', e.transform.x, e.transform.z, h.radius); }
       // Smoke-grenade clouds are E27 puff volumes (Blasts); fire zones keep the E15 ember bursts.
       for (const zone of this.world.combat?.effects.zones ?? []) if (zone.kind === 'fire') this.effect(zone.kind, zone.x, zone.z, zone.radius);
     }

@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-12",
+  "branch": "lane/l7-perf",
+  "verifyE29": {
+    "target": "E29",
+    "epics": [
+      "E29"
+    ],
+    "pattern": "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/l7-perf",
+          "--pull",
+          "test-results/epics/E29/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E29/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/l7-perf",
+          "--env",
+          "E2E_PORT=3393",
+          "--pull",
+          "test-results/playwright/results.json",
+          "--",
+          "sh",
+          "-c",
+          "npm run build && npx playwright test --grep '@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot' --workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*(?:S-01|S-02|T-E13-05|T-E07-crowd-drawn|20 infected corpses remain drawn|T-E22-boot))",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/l7-rocket.spec.ts",
+          "tests/perf/l7-district.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      }
+    ]
+  },
+  "unit": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm run test:unit -- --maxWorkers=4",
+    "files": 170,
+    "passed": 855,
+    "failed": 0,
+    "runner": "94.130.181.173"
+  },
+  "perceptionRegression": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/sim/ai/l1-perception.test.ts --testNamePattern '^(?!.*@perf)' --maxWorkers=4",
+    "passed": 14,
+    "skippedTiming": 1,
+    "failed": 0
+  },
+  "browser": {
+    "remote": 17,
+    "nativeVisual": 12,
+    "nativePerformance": 4,
+    "failed": 0,
+    "workers": 1
+  },
+  "performancePreflight": {
+    "load": [
+      2.6,
+      2.58,
+      2.46
+    ],
+    "otherHeadlessChrome": 0,
+    "localVitest": 0,
+    "allBrowserSlotsReserved": true
+  },
+  "webkitAudio": "Original S-11 test passed headlessly in E29 on 157.90.173.117; no audio or test changes."
+}

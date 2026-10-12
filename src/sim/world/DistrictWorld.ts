@@ -25,10 +25,10 @@ export class DistrictWorld {
   /** Visible perimeter fence footprints; shared district seams stay open. */
   readonly boundaries: Aabb[] = [];
   readonly warnings: string[] = [];
-  private readonly supports = new Map<string, Aabb[]>();
+  private readonly supports = new Map<number, Aabb[]>();
   /** Raised sidewalk slabs (layout surfaces, tile >= 10 cm) bucketed like `supports`: the paving is baked into the layout GLB without a collider, so walkers need its height from here. */
-  private readonly slabs = new Map<string, { min: Point; max: Point; polygon: Point[]; height: number }[]>();
-  private readonly paving = new Map<string, { polygon: Point[]; origin: Point; height: number }[]>();
+  private readonly slabs = new Map<number, { min: Point; max: Point; polygon: Point[]; height: number }[]>();
+  private readonly paving = new Map<number, { polygon: Point[]; origin: Point; height: number }[]>();
   readonly fires: {
     x: number;
     z: number;
@@ -73,14 +73,14 @@ export class DistrictWorld {
     for (const d of this.districts) for (const c of d.decay.colliders) if (c.walkable) {
       const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
       for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
-        const key = `${x},${z}`, bucket = this.supports.get(key) ?? []; bucket.push(a); this.supports.set(key, bucket);
+        const key = DistrictWorld.groundKey(x, z), bucket = this.supports.get(key) ?? []; bucket.push(a); this.supports.set(key, bucket);
       }
     }
     for (const d of this.districts) for (const surf of d.layout.surfaces) if (surf.surface === "tile" && (surf.height ?? 0) >= .1) {
       const polygon = surf.polygon.map((q): Point => [q[0] + d.origin[0], q[1] + d.origin[1]]);
       const xs = polygon.map(q => q[0]), zs = polygon.map(q => q[1]), min: Point = [Math.min(...xs), Math.min(...zs)], max: Point = [Math.max(...xs), Math.max(...zs)];
       for (let z = Math.floor(min[1] / 4); z <= Math.floor(max[1] / 4); z++) for (let x = Math.floor(min[0] / 4); x <= Math.floor(max[0] / 4); x++) {
-        const key = `${x},${z}`, bucket = this.slabs.get(key) ?? []; bucket.push({ min, max, polygon, height: surf.height! }); this.slabs.set(key, bucket);
+        const key = DistrictWorld.groundKey(x, z), bucket = this.slabs.get(key) ?? []; bucket.push({ min, max, polygon, height: surf.height! }); this.slabs.set(key, bucket);
       }
     }
     // Vehicle contact probes sample thousands of vertices. Keep the original
@@ -90,7 +90,7 @@ export class DistrictWorld {
       const minX = Math.min(...xs) - 1e-9, maxX = Math.max(...xs) + 1e-9, minZ = Math.min(...zs) - 1e-9, maxZ = Math.max(...zs) + 1e-9;
       const entry = { polygon: surface.polygon, origin: d.origin, height: surface.height! };
       for (let z = Math.floor(minZ / 4); z <= Math.floor(maxZ / 4); z++) for (let x = Math.floor(minX / 4); x <= Math.floor(maxX / 4); x++) {
-        const key = `${x},${z}`, bucket = this.paving.get(key) ?? []; bucket.push(entry); this.paving.set(key, bucket);
+        const key = DistrictWorld.groundKey(x, z), bucket = this.paving.get(key) ?? []; bucket.push(entry); this.paving.set(key, bucket);
       }
     }
     const edges = new Map<string, { a: Point; b: Point; count: number }>();
@@ -141,10 +141,11 @@ export class DistrictWorld {
           throw new Error(`Unreachable level objective: ${d.id}/${obj.id}`);
       }
   }
+  private static groundKey(x: number, z: number): number { return (x + 32768) * 65536 + z + 32768; }
   /** Exact low compound supports and raised sidewalk slabs; roofs and solid props never lift NPCs. */
   groundHeight(x: number, z: number): number {
     let height = 0;
-    const key = `${Math.floor(x / 4)},${Math.floor(z / 4)}`;
+    const key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
     for (const a of this.supports.get(key) ?? []) {
       if (x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = Math.max(height, a.max[1]);
     }
@@ -156,7 +157,7 @@ export class DistrictWorld {
   /** Visible paving is baked into the layout GLB rather than the solid-prop collider set. */
   pavingHeight(x: number, z: number): number {
     let height = this.groundHeight(x, z);
-    for (const s of this.paving.get(`${Math.floor(x / 4)},${Math.floor(z / 4)}`) ?? []) if (s.height > height && inside([x - s.origin[0], z - s.origin[1]], s.polygon)) height = s.height;
+    for (const s of this.paving.get(DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4))) ?? []) if (s.height > height && inside([x - s.origin[0], z - s.origin[1]], s.polygon)) height = s.height;
     return height;
   }
   getState() {
