@@ -1,0 +1,258 @@
+{
+  "phase": "after",
+  "tier": "high",
+  "samples": [
+    {
+      "frame": 27,
+      "perf": {
+        "drawCalls": 26,
+        "triangles": 29775,
+        "awakeProps": 0,
+        "backend": "webgl"
+      },
+      "actors": [
+        {
+          "name": "soldier",
+          "entity": {
+            "id": 3,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -7,
+              "z": 0,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "state": "calm",
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -7,
+                "z": 0
+              },
+              "hold": true,
+              "targetId": 4,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26
+            },
+            "knockedUntil": 0
+          }
+        },
+        {
+          "name": "alpha",
+          "entity": {
+            "id": 4,
+            "archetype": "infected.alpha",
+            "health": {
+              "current": 300,
+              "max": 300
+            },
+            "transform": {
+              "x": 6,
+              "y": 0.7,
+              "z": 0,
+              "yaw": 0
+            },
+            "state": "idle"
+          }
+        },
+        {
+          "name": "civilian",
+          "entity": {
+            "id": 5,
+            "archetype": "npc.delivery-driver",
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "transform": {
+              "x": 0,
+              "z": 0,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "state": "alarmed",
+            "knockedUntil": 0
+          }
+        }
+      ],
+      "barricades": [],
+      "events": [
+        {
+          "type": "civilian.state",
+          "tick": 1,
+          "id": 5,
+          "state": "alarmed",
+          "until": 31
+        }
+      ]
+    },
+    {
+      "frame": 147,
+      "perf": {
+        "drawCalls": 33,
+        "triangles": 40373,
+        "awakeProps": 0,
+        "backend": "webgl"
+      },
+      "actors": [
+        {
+          "name": "soldier",
+          "entity": {
+            "id": 3,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -7,
+              "z": 0,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "state": "calm",
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -7,
+                "z": 0
+              },
+              "hold": true,
+              "targetId": 4,
+              "nextAttack": 148,
+              "hits": 1,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26,
+              "strikeAt": 0,
+              "strikeTarget": 4
+            },
+            "knockedUntil": 0
+          }
+        },
+        {
+          "name": "alpha",
+          "entity": {
+            "id": 4,
+            "archetype": "infected.alpha",
+            "health": {
+              "current": 291,
+              "max": 300
+            },
+            "transform": {
+              "x": 6,
+              "y": 0.7,
+              "z": 0,
+              "yaw": 0
+            },
+            "state": "idle"
+          }
+        },
+        {
+          "name": "civilian",
+          "entity": {
+            "id": 5,
+            "archetype": "npc.delivery-driver",
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "transform": {
+              "x": -3.4022194607956346,
+              "z": -1.094911547430579,
+              "y": 0.7,
+              "yaw": -5.033201415192399
+            },
+            "state": "calm",
+            "knockedUntil": 0
+          }
+        }
+      ],
+      "barricades": [],
+      "events": [
+        {
+          "type": "civilian.state",
+          "tick": 1,
+          "id": 5,
+          "state": "alarmed",
+          "until": 31
+        },
+        {
+          "type": "civilian.state",
+          "tick": 31,
+          "id": 5,
+          "state": "flee",
+          "until": 31
+        },
+        {
+          "type": "ally.attack",
+          "tick": 125,
+          "sourceId": 3,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -7,
+            "z": 0
+          },
+          "to": {
+            "x": 6,
+            "z": 0
+          }
+        },
+        {
+          "tick": 125,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 3,
+          "targetId": 4,
+          "position": {
+            "x": 6,
+            "y": 0.7,
+            "z": 0,
+            "yaw": 0
+          },
+          "direction": {
+            "x": 1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

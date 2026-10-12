@@ -1,0 +1,339 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/controls-playtest.spec.ts",
+      "tests/e2e/save.spec.ts",
+      "--grep",
+      "S-02|T-E13-05",
+      "--project=chromium",
+      "--workers=1",
+      "--reporter=json"
+    ],
+    "configFile": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/playwright.config.ts",
+    "rootDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3462 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3462",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/controls-playtest.spec.ts",
+      "file": "e2e/controls-playtest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+          "ok": false,
+          "tags": [
+            "smoke",
+            "E03",
+            "E03-AC14",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 64765,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('pause-button')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByTestId('pause-button') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('pause-button')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('pause-button')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByTestId('pause-button') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('pause-button')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n    at menuStart (/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/ui-helpers.ts:18:50)\n    at /srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/controls-playtest.spec.ts:9:3",
+                    "location": {
+                      "file": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/ui-helpers.ts",
+                      "column": 50,
+                      "line": 18
+                    },
+                    "snippet": "   at e2e/ui-helpers.ts:18\n\n\u001b[0m \u001b[90m 16 |\u001b[39m   \u001b[90m// MissionUI focuses this button; activate it with real keys without waiting for a software-rendered RAF pair.\u001b[39m\n \u001b[90m 17 |\u001b[39m   \u001b[36mawait\u001b[39m keyboardActivate(page\u001b[33m,\u001b[39m \u001b[32m'mission-button'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'pause-button'\u001b[39m))\u001b[33m.\u001b[39mtoBeVisible()\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 19 |\u001b[39m }\n \u001b[90m 20 |\u001b[39m \u001b[36mexport\u001b[39m \u001b[36masync\u001b[39m \u001b[36mfunction\u001b[39m hudStart(page\u001b[33m:\u001b[39m \u001b[33mPage\u001b[39m)\u001b[33m:\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m<\u001b[39m\u001b[36mvoid\u001b[39m\u001b[33m>\u001b[39m {\n \u001b[90m 21 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgoto(menuUrl)\u001b[33m;\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForFunction(() \u001b[33m=>\u001b[39m \u001b[33mBoolean\u001b[39m(window\u001b[33m.\u001b[39m__SS__))\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/ui-helpers.ts",
+                        "column": 50,
+                        "line": 18
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('pause-button')\nExpected: visible\nReceived: hidden\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByTestId('pause-button') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('pause-button')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n\u001b[2m       - unexpected value \"hidden\"\u001b[22m\n\n\n   at e2e/ui-helpers.ts:18\n\n  16 |   // MissionUI focuses this button; activate it with real keys without waiting for a software-rendered RAF pair.\n  17 |   await keyboardActivate(page, 'mission-button');\n> 18 |   await expect(page.getByTestId('pause-button')).toBeVisible();\n     |                                                  ^\n  19 | }\n  20 | export async function hudStart(page: Page): Promise<void> {\n  21 |   await page.goto(menuUrl); await page.waitForFunction(() => Boolean(window.__SS__));\n    at menuStart (/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/ui-helpers.ts:18:50)\n    at /srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/controls-playtest.spec.ts:9:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T23:35:12.968Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462/e2e-controls-playtest-S-02-b2430-le-and-stationary-Shift-LMB-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462/e2e-controls-playtest-S-02-b2430-le-and-stationary-Shift-LMB-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/ui-helpers.ts",
+                    "column": 50,
+                    "line": 18
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2750c3bdceeb5e094725-03dcd144480ffdfe041b",
+          "file": "e2e/controls-playtest.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/save.spec.ts",
+      "file": "e2e/save.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "ok": false,
+          "tags": [
+            "E13",
+            "E13-AC05",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 74421,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n    at /srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/save.spec.ts:84:207",
+                    "location": {
+                      "file": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/save.spec.ts",
+                      "column": 207,
+                      "line": 84
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 82 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'button'\u001b[39m\u001b[33m,\u001b[39m{name\u001b[33m:\u001b[39m\u001b[32m'Continue'\u001b[39m\u001b[33m,\u001b[39mexact\u001b[33m:\u001b[39m\u001b[36mtrue\u001b[39m})\u001b[33m.\u001b[39mclick()\u001b[33m;\u001b[39m\u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mgetByRole(\u001b[32m'heading'\u001b[39m\u001b[33m,\u001b[39m{name\u001b[33m:\u001b[39m\u001b[32m'Mission briefing'\u001b[39m}))\u001b[33m.\u001b[39mtoBeVisible({timeout\u001b[33m:\u001b[39m\u001b[35m60\u001b[39m_000})\u001b[33m;\u001b[39m\n \u001b[90m 83 |\u001b[39m   expect(\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(()\u001b[33m=>\u001b[39mwindow\u001b[33m.\u001b[39m__SS__\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mcampaign\u001b[33m.\u001b[39mstate()))\u001b[33m.\u001b[39mtoEqual(save)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 84 |\u001b[39m   \u001b[36mconst\u001b[39m state\u001b[33m=\u001b[39m\u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(()\u001b[33m=>\u001b[39mwindow\u001b[33m.\u001b[39m__SS__\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mgetState())\u001b[33m;\u001b[39mexpect(state\u001b[33m.\u001b[39mscenario)\u001b[33m.\u001b[39mtoBe(\u001b[32m'L5'\u001b[39m)\u001b[33m;\u001b[39mexpect(state\u001b[33m.\u001b[39mplayer\u001b[33m!\u001b[39m\u001b[33m.\u001b[39msurvivor\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mvariant)\u001b[33m.\u001b[39mtoBe(\u001b[32m'male'\u001b[39m)\u001b[33m;\u001b[39mexpect(state\u001b[33m.\u001b[39mplayer\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mweapons\u001b[33m!\u001b[39m\u001b[33m.\u001b[39m\u001b[33mLEFT\u001b[39m\u001b[33m.\u001b[39mrack\u001b[33m.\u001b[39mmap(s\u001b[33m=>\u001b[39ms\u001b[33m.\u001b[39mid))\u001b[33m.\u001b[39mtoEqual(save\u001b[33m.\u001b[39mracks\u001b[33m.\u001b[39m\u001b[33mLEFT\u001b[39m)\u001b[33m;\u001b[39mexpect(state\u001b[33m.\u001b[39mplayer\u001b[33m!\u001b[39m\u001b[33m.\u001b[39mweapons\u001b[33m!\u001b[39m\u001b[33m.\u001b[39m\u001b[33mRIGHT\u001b[39m\u001b[33m.\u001b[39mrack\u001b[33m.\u001b[39mmap(s\u001b[33m=>\u001b[39ms\u001b[33m.\u001b[39mid))\u001b[33m.\u001b[39mtoEqual(save\u001b[33m.\u001b[39mracks\u001b[33m.\u001b[39m\u001b[33mRIGHT\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                                                                                                                                                                                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 85 |\u001b[39m   expect(state\u001b[33m.\u001b[39mcombat\u001b[33m!\u001b[39m\u001b[33m.\u001b[39maimAssist)\u001b[33m.\u001b[39mtoBe(\u001b[32m'High'\u001b[39m)\u001b[33m;\u001b[39m\u001b[36mawait\u001b[39m photo(page\u001b[33m,\u001b[39m\u001b[32m'continue-L5'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 86 |\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 87 |\u001b[39m test(\u001b[32m'T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing'\u001b[39m\u001b[33m,\u001b[39m\u001b[36masync\u001b[39m({page})\u001b[33m=>\u001b[39m{\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/save.spec.ts",
+                        "column": 207,
+                        "line": 84
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[31m+   \"weapon.fire-axe\",\u001b[39m\n\u001b[2m    \"weapon.bat\",\u001b[22m\n\u001b[32m-   \"weapon.kick\",\u001b[39m\n\u001b[32m-   \"weapon.fists\",\u001b[39m\n\u001b[2m  ]\u001b[22m\n\n  82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n  83 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n> 84 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n     |                                                                                                                                                                                                               ^\n  85 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n  86 | });\n  87 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n    at /srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/save.spec.ts:84:207"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T23:36:25.350Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/test-results/playwright/run-3462/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/srv/mi/jobs/l4-systems-baseline-98b833-69432-1791761674/tests/e2e/save.spec.ts",
+                    "column": 207,
+                    "line": 84
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
+          "file": "e2e/save.spec.ts",
+          "line": 76,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T23:35:10.540Z",
+    "duration": 186157.16700000002,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
