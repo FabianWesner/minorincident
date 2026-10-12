@@ -138,6 +138,23 @@ for x,z in [(-108,-72),(108,-72),(-108,72),(108,72)]: l.place('kit.guard-tower',
 for x,z in [(-104,-32),(104,-32),(0,48)]:
     l.place('kit.maintenance-corridor',[x,0,z])
     l.anchor(f'maintenance-{x}',[x+7,0,z])
+# Four occluded service-tunnel outlets (L8-D2): locked masonry bunkers whose steel doors open at the breach (the
+# HouseEmergence door contract in src/data/buildingDoors.ts). Door plane 3.05 m from the footprint centre; the
+# paved apron runs out to the path edge (2.5 m half width + 2.95 m). Interiors are an L-shaped dark vestibule, so
+# nothing inside is visible from outside even with the doors open. >= 20 m apart, all inside the perimeter.
+def outlet(n, door_x, door_z, nx, nz, yaw):
+    l.place('kit.zoo-tunnel-mouth',[door_x-3.05*nx,0,door_z-3.05*nz],yaw=yaw)
+    cx,cz = door_x+nx*1.475, door_z+nz*1.475
+    size = [2.95,.12,3.6] if nx else [3.6,.12,2.95]
+    l.box('tunnel-apron','sidewalk',size,[cx,.06,cz])
+    hx,hz = size[0]/2,size[2]/2
+    l.data['surfaces'].append(dict(surface='tile',height=.12,polygon=[[cx-hx,cz-hz],[cx+hx,cz-hz],[cx+hx,cz+hz],[cx-hx,cz+hz],[cx-hx,cz-hz]]))
+    l.anchor(f'tunnel-outlet-{n}',[door_x+nx*1.5,0,door_z+nz*1.5])
+    l.place('prop.street-lamp',[door_x+nx*2.2-nz*2.4,0,door_z+nz*2.2+nx*2.4])
+outlet(1,-101.45,32,1,0,0)                 # west loop, facing the x=-96 path
+outlet(2,101.45,-48,-1,0,math.pi)          # east loop, facing the x=96 path
+outlet(3,-30,-69.45,0,1,-math.pi/2)        # north loop, facing the z=-64 path
+outlet(4,-45,69.45,0,-1,math.pi/2)         # south loop, facing the z=64 path near the arrival plaza
 l.place('prop.light-tower',[104,0,74])
 l.place('prop.vending-machine',[10,0,75])
 l.place('prop.hose-reel',[90,0,37])
@@ -148,7 +165,7 @@ for x,z in [(104,32),(104,42)]: l.place('veh.sedan-red',[x,0,z])
 for x,z in [(106,54),(110,54)]: l.place('prop.picket-fence',[x,0,z])
 for x,z in [(110,46),(110,50)]: l.place('prop.hedge',[x,0,z])
 for x,z in [(6,70),(6,72)]: l.place('prop.traffic-cone',[x,0,z])
-for name,p in {'player-start':[0,0,70],'arrival':[0,0,70],'exit':[96,0,74],'safe-point':[24,0,64],'cat-perch':[-14,4,-14],'crow-roost':[86,4,32],'objective':[96,0,74],'pair-zoo-gate':[0,0,70],'pair-zoo-lion':[-60,0,-10],'pair-zoo-gorilla':[60,0,-10],'pair-zoo-service-yard':[96,0,32],'l8-safe-paths':[24,0,0]}.items(): l.anchor(name,p)
+for name,p in {'player-start':[0,0,70],'arrival':[0,0,70],'exit':[96,0,74],'safe-point':[24,0,64],'cat-perch':[-14,4,-14],'crow-roost':[86,4,32],'objective':[96,0,74],'pair-zoo-gate':[0,0,70],'pair-zoo-lion':[-60,0,-10],'pair-zoo-gorilla':[60,0,-10],'pair-zoo-service-yard':[96,0,32],'l8-safe-paths':[24,0,0],'l8-tunnel-breach':[-45,0,68]}.items(): l.anchor(name,p)
 # Preserve the old generic E10 decay probes away from public paths; L8 uses W0
 # throughout and live outbreak damage, so sanctuary is never pre-dressed with wrecks.
 for tier in range(1,6): l.place('veh.wreck',[-106,0,-60+tier*12],tier=tier,allowed=True)

@@ -16291,7 +16291,10 @@
       "drawCalls": 30
     },
     "decayVariants": [],
-    "world": { "token": "uiDark", "solid": true },
+    "world": {
+      "token": "uiDark",
+      "solid": true
+    },
     "authoredLodTriangles": {
       "lod1": 600,
       "lod2": 200
@@ -16743,7 +16746,8 @@
       "drawCalls": 12
     },
     "decayVariants": [
-      "wrecked"
+      "wrecked",
+      "unarmed"
     ],
     "budgetNote": "APC-only draw cap 12 per LOD: six wheel pivots, turret, gun and lit lamps are separate moving/emissive assemblies (rare set piece). Wreck-only cap 9: body, six wheel pivots (including bare axle), skewed turret and broken gun retain base ownership.",
     "decayTriangleBudget": 15000,
@@ -16759,6 +16763,37 @@
     "world": {
       "token": "foliageDark",
       "solid": true
+    },
+    "decayNodes": {
+      "unarmed": {
+        "requiredNodes": [
+          "body",
+          "lightsFront",
+          "lightsBrake",
+          "front"
+        ],
+        "animatedNodes": [
+          "wheelFL",
+          "wheelFR",
+          "wheelML",
+          "wheelMR",
+          "wheelRL",
+          "wheelRR"
+        ],
+        "sockets": [
+          "driverSeat",
+          "commanderSeat",
+          "exitL",
+          "exitR",
+          "rearExit",
+          "passenger0",
+          "passenger1",
+          "passenger2",
+          "passenger3",
+          "passenger4",
+          "passenger5"
+        ]
+      }
     }
   },
   {
@@ -20028,6 +20063,281 @@
     "authoredLodTriangles": {
       "lod1": 4000,
       "lod2": 1500
+    }
+  },
+  {
+    "id": "amb.lion",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/amb.lion.glb",
+    "dimensions": {
+      "x": 2.3575,
+      "y": 1.3,
+      "z": 0.8784,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "jaw",
+      "tail"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/amb.lion/model.glb",
+    "sourceForward": "+X",
+    "sourceScale": 0.7807986,
+    "lods": {
+      "lod1": "public/assets/models/amb.lion.lod1.glb",
+      "lod2": "public/assets/models/amb.lion.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 4000,
+      "lod2": 1500
+    },
+    "script": "assets/amb.lion/build.py"
+  },
+  {
+    "id": "amb.gorilla",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/amb.gorilla.glb",
+    "dimensions": {
+      "x": 1.6149,
+      "y": 1.8,
+      "z": 1.9386,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/amb.gorilla/model.glb",
+    "sourceForward": "+X",
+    "sourceScale": 0.83209854,
+    "lods": {
+      "lod1": "public/assets/models/amb.gorilla.lod1.glb",
+      "lod2": "public/assets/models/amb.gorilla.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 4000,
+      "lod2": 1500
+    },
+    "script": "assets/amb.gorilla/build.py"
+  },
+  {
+    "id": "amb.flamingo",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/amb.flamingo.glb",
+    "dimensions": {
+      "x": 1.5822,
+      "y": 1.6,
+      "z": 0.7776,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "wingL",
+      "wingR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "tail"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 2000,
+      "materials": 4,
+      "fileKB": 400,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/amb.flamingo/model.glb",
+    "sourceForward": "+X",
+    "sourceScale": 1.00085172,
+    "lods": {
+      "lod1": "public/assets/models/amb.flamingo.lod1.glb",
+      "lod2": "public/assets/models/amb.flamingo.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 800,
+      "lod2": 300
+    },
+    "script": "assets/amb.flamingo/build.py"
+  },
+  {
+    "id": "kit.zoo-tunnel-mouth",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.zoo-tunnel-mouth/build.py",
+    "sourceGlb": "assets/kit.zoo-tunnel-mouth/model.glb",
+    "glb": "public/assets/models/kit.zoo-tunnel-mouth.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 6.6,
+      "y": 4.76,
+      "z": 5.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "door_main",
+      "door_main_right"
+    ],
+    "animatedNodes": [
+      "door_main",
+      "door_main_right"
+    ],
+    "sockets": [
+      "outletInside",
+      "outletTunnel",
+      "outletThreshold"
+    ],
+    "budget": {
+      "triangles": 3000,
+      "materials": 4,
+      "drawCalls": 8,
+      "fileKB": 800
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.zoo-tunnel-mouth.lod1.glb",
+      "lod2": "public/assets/models/kit.zoo-tunnel-mouth.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1200,
+      "lod2": 400
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "brick",
+      "solid": true
     }
   }
 ]

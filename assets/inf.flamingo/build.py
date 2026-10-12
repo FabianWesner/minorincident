@@ -11,6 +11,7 @@ P=Path(__file__).resolve().parent
 ap=argparse.ArgumentParser()
 for key in ['render','glb','sheet']:ap.add_argument('--'+key)
 ap.add_argument('--lod',type=int,choices=[0,1,2],default=0);ap.add_argument('--view',default='hero');ap.add_argument('--pose',action='store_true')
+ap.add_argument('--healthy',action='store_true',help='uninfected amb.flamingo: same rig/silhouette, intact plumage, no wounds, dark eyes')
 ap.add_argument('--samples',type=int,default=24);ap.add_argument('--width',type=int,default=960);ap.add_argument('--height',type=int,default=540)
 a=ap.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 def turnaround(path):
@@ -33,6 +34,11 @@ def mat(token,color,rough=.65,emit=0):
     m.diffuse_color=c;return m
 M={k:mat(k,c) for k,c in [('flamingoPink','ea708d'),('flamingoBlush','f7a1b0'),('flamingoCoral','d94c6b'),('flamingoShadow','9c405d'),('picketWhite','f2e6dc'),('uiDark','25222c'),('blood','b3121f')]}
 M['eye']=mat('infectedEye','ff3b2f',.25,1.5)
+# Healthy look keeps four palette materials: flamingoPink, flamingoBlush, flamingoCoral, uiDark.
+LOD2_DROP=('toeL0','toeL2','toeR0','toeR2','toe_knuckle','black_hook','nostril','eye_','infected_eye','bill_mouth_seam','cheek_mass','breast','ankle_pad','hock','toe_knuckle','claw','lower_bill','crown_tuft','scowling','rear_toe')
+LOD0_DROP=('cheek_mass','nostril','eye_hot_core','toe_knuckle','claw','rear_toe','bill_mouth_seam','ankle_pad')
+LOD1_DROP=LOD0_DROP+('breast','eye_socket','lower_bill','toeL0','toeL2','toeR0','toeR2','crown_tuft')
+HEALTHY={'flamingoShadow':'flamingoCoral','picketWhite':'flamingoBlush','blood':'uiDark','eye':'uiDark'}
 def parent(o,key):
     bpy.context.view_layer.update();world=o.matrix_world.copy();o.parent=parts[key];o.matrix_world=world
     return o
@@ -41,6 +47,9 @@ def node(n,p,par=None):
     if par:parent(o,par)
     parts[n]=o;return o
 def finish(o,n,m,par,sub=0):
+    if a.healthy:m=HEALTHY.get(m,m)
+    if a.healthy and ((a.lod==2 and n.startswith(LOD2_DROP)) or (a.lod==1 and n.startswith(LOD1_DROP)) or (a.lod==0 and n.startswith(LOD0_DROP))):
+        d=o.data;bpy.data.objects.remove(o,do_unlink=True);bpy.data.meshes.remove(d);return None
     o.name=n;o.data.materials.append(M[m]);bpy.context.view_layer.objects.active=o
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     if sub:
@@ -48,12 +57,24 @@ def finish(o,n,m,par,sub=0):
     for f in o.data.polygons:f.use_smooth=True
     parent(o,par);objects.append(o);return o
 def ell(n,p,sz,m,par,seg=12,rings=8,sub=1):
+    if a.healthy and not n.startswith('stump_'):
+        # Direct low-resolution spheres (smooth-shaded, no subdivision/decimation) for the 2000/800/300-tri budgets.
+        big=max(sz);sub=0
+        table=[((12,8),(10,6),(8,5),(6,4)),((8,5),(7,4),(6,4),(5,3)),((6,3),(5,3),(5,3),(4,2))][a.lod]
+        seg,rings=table[0] if big>=.3 else table[1] if big>=.14 else table[2] if big>=.06 else table[3]
     bpy.ops.mesh.primitive_uv_sphere_add(segments=seg,ring_count=rings,location=p);o=bpy.context.object;o.scale=sz
     return finish(o,n,m,par,sub)
 def mesh(n,v,f,m,par,sub=1):
     me=bpy.data.meshes.new(n);me.from_pydata(v,[],f);me.update();o=bpy.data.objects.new(n,me);S.collection.objects.link(o)
     return finish(o,n,m,par,sub)
 def tube(n,pts,rr,m,par,N=8,sub=1):
+    if a.healthy:
+        sub=0
+        N=[(8 if len(pts)>=8 else 4 if n.startswith('toe') else 6),(5 if len(pts)>=8 else 4),(3 if len(pts)>=8 else 3)][a.lod]
+        if a.lod and len(pts)>=8:
+            idx=list(range(0,len(pts),2))
+            if idx[-1]!=len(pts)-1:idx.append(len(pts)-1)
+            pts=[pts[i] for i in idx];rr=[rr[i] for i in idx]
     v=[];f=[]
     for j,p in enumerate(pts):
         t=Vector(pts[min(j+1,len(pts)-1)])-Vector(pts[max(j-1,0)]);t.normalize();u=t.cross(Vector((0,1,0)))
@@ -64,20 +85,39 @@ def tube(n,pts,rr,m,par,N=8,sub=1):
         for i in range(N):k=j*N+i;kk=j*N+(i+1)%N;f.append((k,kk,kk+N,k+N))
     f.extend([tuple(range(N-1,-1,-1)),tuple((len(pts)-1)*N+i for i in range(N))])
     return mesh(n,v,f,m,par,sub)
+HEALTHY_KEEP={1:dict(tail={4},flight={0,7},w0={3},w2={1,6},back={3},crown=set()),2:dict(tail={4},flight={7},w0=set(),w2=set(),back=set(),crown=set())}
+def healthy_keep(n):
+    K=HEALTHY_KEEP[a.lod]
+    if n.startswith('tail_plume'):return int(n[10:]) in K['tail']
+    if n.startswith('flight_feather'):return int(n[15:]) in K['flight']
+    if n.startswith('wing_feather'):
+        row,j=n[13:].split('_');return (row=='0' and int(j) in K['w0']) or (row=='2' and int(j) in K['w2'])
+    if n.startswith('back_plume'):
+        row,j=n[10:].split('_');return row in ('0','2') and int(j) in K['back']
+    if n.startswith('crown_tuft'):return int(n[10:]) in K['crown']
+    return False
 def feather(n,start,tip,width,m,par,normal=(0,-1,.2)):
     global feather_index
     feather_index+=1
-    if a.lod and feather_index%(2 if a.lod==1 else 4):return
+    if a.healthy:
+        # Healthy plumage is a few broad, clean blades (2000-tri LOD0 budget): no ragged rags or covert rows.
+        if n.startswith(('cheek_rag','neck_rag','breast_rag','front_bib_rag','chest_covert','skull_plume')):return
+        if a.lod==0 and feather_index%3:return
+        # Distant tiers keep a few blades per rigid owner (tail, both wing segments, back) so no joint loses geometry or span.
+        if a.lod and not healthy_keep(n):return
+        width*=1.45
+    elif a.lod and feather_index%(2 if a.lod==1 else 4):return
     p=Vector(start);q=Vector(tip);d=q-p;t=d.normalized();normal=Vector(normal).normalized();u=t.cross(normal).normalized();w=t.cross(u).normalized()
-    v=[];f=[];N=6
-    for frac,rad in [(0,.12),(.17,.85),(.46,1),(.76,.64),(.94,.22),(1,.015)]:
+    v=[];f=[];N=4 if a.healthy else 6
+    rings=[(0,.2),(.5,1),(1,.02)] if a.healthy else [(0,.12),(.17,.85),(.46,1),(.76,.64),(.94,.22),(1,.015)]
+    for frac,rad in rings:
         center=p+d*frac+normal*math.sin(frac*math.pi)*.027
         for i in range(N):
             angle=i*2*math.pi/N;v.append(center+u*width*rad*math.cos(angle)+w*.018*rad*math.sin(angle))
-    for j in range(5):
+    for j in range(len(rings)-1):
         for i in range(N):k=j*N+i;kk=j*N+(i+1)%N;f.append((k,kk,kk+N,k+N))
-    f.extend([tuple(range(N-1,-1,-1)),tuple(5*N+i for i in range(N))])
-    o=mesh(n,v,f,m,par);feathers.append(o);return o
+    f.extend([tuple(range(N-1,-1,-1)),tuple((len(rings)-1)*N+i for i in range(N))])
+    o=mesh(n,v,f,m,par,0 if a.healthy else 1);feathers.append(o);return o
 node('root',(0,0,0));node('hip',(-.06,0,.85),'root');node('torso',(0,0,.95),'hip');node('body',(0,0,.95),'torso')
 node('neck',(.31,0,.97),'torso');node('head',(.49,0,1.38),'neck');node('tail',(-.38,0,.98),'body');node('backpackSocket',(-.12,0,1.14),'torso')
 ell('body_core',(-.08,0,.98),(.39,.235,.235),'flamingoShadow','body',20,12)
@@ -95,10 +135,10 @@ for s in [-1,1]:
     tube('bill_mouth_seam'+str(s),[(.637,s*.056,1.379),(.706,s*.055,1.32),(.726,s*.042,1.245),(.692,s*.015,1.15)],[.005,.006,.004,.002],'uiDark','head',6)
     ell('nostril'+str(s),(.696,s*.056,1.373),(.022,.006,.01),'uiDark','head',10,6)
     ell('eye_socket'+str(s),(.615,s*.089,1.472),(.032,.046,.054),'flamingoShadow','head')
-    ell('orbital_rim'+str(s),(.63,s*.095,1.477),(.021,.043,.046),'blood','head')
-    ell('infected_eye'+str(s),(.642,s*.102,1.478),(.018,.036,.037),'eye','head',16,10)
+    if not a.healthy:ell('orbital_rim'+str(s),(.63,s*.095,1.477),(.021,.043,.046),'blood','head')
+    ell('infected_eye'+str(s),(.642,s*.102,1.478),(.018,.036,.037),'eye','head',*((10,6,0) if a.healthy else (16,10)))
     ell('eye_hot_core'+str(s),(.656,s*.107,1.482),(.005,.01,.012),'picketWhite','head',10,6)
-    tube('scowling_brow'+str(s),[(.59,s*.111,1.522),(.633,s*.102,1.526),(.654,s*.053,1.506)],[.019,.022,.008],'flamingoCoral','head')
+    if not a.healthy:tube('scowling_brow'+str(s),[(.59,s*.111,1.522),(.633,s*.102,1.526),(.654,s*.053,1.506)],[.019,.022,.008],'flamingoCoral','head')
     # Hanging cheek rags and crown tufts are sculpted feather volumes.
     for j in range(4):
         feather('cheek_rag'+str(s)+str(j),(.49+j*.035,s*.092,1.441),(.48+j*.024,s*.118,1.325-j*.011),.029,'flamingoCoral','head',(0,s,0))
@@ -114,7 +154,7 @@ for s,side in [(1,'L'),(-1,'R')]:
     node('arm'+side,shoulder,'torso');node('wing'+side,shoulder,'arm'+side);node('foreArm'+side,elbow,'wing'+side);node('hand'+side,wrist,'foreArm'+side)
     ell('wing_shell'+side,(-.12,s*.204,1.013),(.29,.074,.172),'flamingoShadow','wing'+side,16,10)
     verts=[(-.18+dx,s*.284,1.045+dz) for dx,dz in [(-.065,.01),(-.049,.041),(-.015,.035),(.009,.052),(.056,.026),(.069,-.009),(.024,-.027),(.005,-.055),(-.035,-.034)]]
-    mesh('ragged_missing_feather_patch'+side,verts,[tuple(range(len(verts)))],'flamingoShadow','wing'+side,0)
+    if not a.healthy:mesh('ragged_missing_feather_patch'+side,verts,[tuple(range(len(verts)))],'flamingoShadow','wing'+side,0)
     for row in range(4):
         for j in range(8):
             x=.13-j*.063-row*.018;z=1.156-row*.075+.024*math.sin(j*.8)
@@ -124,7 +164,8 @@ for s,side in [(1,'L'),(-1,'R')]:
             par='wing'+side if row<2 else ('foreArm'+side if j<5 else 'hand'+side)
             material=['flamingoPink','flamingoBlush','flamingoCoral'][ (j+row+(side=='R'))%3 ]
             # Leave one ragged missing-feather window around the wound.
-            if row==1 and j in [4,5]:continue
+            if row==1 and j in [4,5] and not a.healthy:continue
+            if a.healthy and row%2:continue
             feather('wing_feather'+side+str(row)+'_'+str(j),(x,yy,z),tip,.047+row*.005,material,par,(0,s,.2))
     for j in range(8):
         feather('flight_feather'+side+str(j),(-.28-j*.022,s*(.22+j*.004),1.071-j*.025),(-.61-j*.02,s*(.29+j*.014),.88-j*.038),.045,'flamingoCoral' if j%3==0 else 'flamingoPink','hand'+side,(0,s,.2))
@@ -139,7 +180,7 @@ for j in range(9):
 for s in [-1,1]:
     for j in range(5):
         feather('breast_rag'+str(s)+str(j),(.27-j*.05,s*.11,.971),(.25-j*.047,s*.15,.812+(j%2)*.025),.041,'flamingoPink','body',(0,s,.1))
-    for j in range(8):
+    for j in range(0 if a.healthy else 8):
         z=1.06+j*.055;x=[.455,.445,.413,.375,.354,.342,.348,.38][j]
         ell('neck_scab'+str(s)+str(j),(x,s*.071,z),(.008,.005,.013 if j%3 else .023),'blood','neck',8,6)
 # Broken feather edges across breast and neck prevent a smooth bare-chest silhouette.
@@ -174,19 +215,27 @@ for s,side in [(1,'L'),(-1,'R')]:
         tube('claw'+side+str(j),[pts[-2],end,tip],[.012,.011,.001],'uiDark','foot'+side,8)
         ell('toe_knuckle'+side+str(j),pts[1],(.023,.024,.025),'flamingoPink','foot'+side,8,6)
     tube('rear_toe'+side,[ankle,(ankle[0]-.064,ankle[1],ankle[2]-.045),(ankle[0]-.091,ankle[1],ankle[2]-.05)],[.014,.014,.002],'flamingoCoral','foot'+side,8)
-    for j in range(7):
+    for j in range(0 if a.healthy else 7):
         p=Vector(knee).lerp(Vector(ankle),.15+j*.105);p.y-=.023;p.z+=rng.uniform(-.015,.015)
         ell('leg_blood'+side+str(j),p,(.008+rng.random()*.009,.005,.009+rng.random()*.022),'blood','shin'+side,8,6)
 # Hidden caps on proximal nodes; zero scale is retained in GLB and toggled by runtime.
 caps=[]
-for key,par,p,sz in [('head','neck',(.49,0,1.38),(.062,.065,.014)),('armL','torso',(.03,.18,1.055),(.069,.012,.06)),('armR','torso',(.03,-.18,1.055),(.069,.012,.06)),('foreArmL','wingL',(-.22,.245,1.01),(.06,.012,.049)),('foreArmR','wingR',(-.22,-.245,1.01),(.06,.012,.049)),('legL','hip',(-.055,.087,.861),(.029,.03,.012)),('legR','hip',(-.055,-.087,.861),(.029,.03,.012))]:
-    o=ell('stump_'+key,p,sz,'blood',par,seg=8 if a.lod==0 else 6,rings=6 if a.lod==0 else 4,sub=0);o['stumpFor']=key;o['hidden']=True;o.scale=(0,0,0);caps.append(o)
+for key,par,p,sz in [] if a.healthy else [('head','neck',(.49,0,1.38),(.062,.065,.014)),('armL','torso',(.03,.18,1.055),(.069,.012,.06)),('armR','torso',(.03,-.18,1.055),(.069,.012,.06)),('foreArmL','wingL',(-.22,.245,1.01),(.06,.012,.049)),('foreArmR','wingR',(-.22,-.245,1.01),(.06,.012,.049)),('legL','hip',(-.055,.087,.861),(.029,.03,.012)),('legR','hip',(-.055,-.087,.861),(.029,.03,.012))]:
+    o=ell('stump_'+key,p,sz,'blood',par,seg=(5 if a.healthy else 8) if a.lod==0 else ((3 if a.lod==2 else 4) if a.healthy else 6),rings=(3 if a.healthy else 6) if a.lod==0 else ((2 if a.lod==2 else 3) if a.healthy else 4),sub=0);o['stumpFor']=key;o['hidden']=True;o.scale=(0,0,0);caps.append(o)
 # Reduce only applied subdivision; keep silhouettes and separate joints.
 for o in objects:
     if o not in caps:
         bpy.context.view_layer.objects.active=o
-        mod=o.modifiers.new('Game-ready sculpt reduction','DECIMATE');mod.ratio=({0:.085,1:.06,2:.06} if o in feathers else {0:.085,1:.03,2:.02})[a.lod]
+        mod=o.modifiers.new('Game-ready sculpt reduction','DECIMATE');ratio=1 if (a.healthy and o in feathers) else ({0:.085,1:.06,2:.06} if o in feathers else ({0:.04,1:.008,2:.003} if a.healthy else {0:.085,1:.03,2:.02}))[a.lod]
+        if a.healthy:ratio=1
+        if a.healthy and a.lod and o not in feathers:ratio=max(ratio,min(1,(3 if a.lod==1 else 4)/max(1,sum(len(f.vertices)-2 for f in o.data.polygons))))
+        mod.ratio=ratio
         bpy.ops.object.modifier_apply(modifier=mod.name)
+if a.healthy:
+    import re, collections
+    tally=collections.Counter()
+    for o in objects: tally[re.sub(r'[-_]?\d+$|[LR]\d*$','',o.name)]+=sum(len(f.vertices)-2 for f in o.data.polygons)
+    print('TALLY',tally.most_common(20))
 # Join static pieces without flattening animation hierarchy.
 buckets={}
 for o in objects:
@@ -204,6 +253,8 @@ for o in objects:
     tiny=[f for f in bm.faces if f.calc_area()<1e-12]
     if tiny:bmesh.ops.delete(bm,geom=tiny,context='FACES')
     bm.to_mesh(o.data);bm.free()
+    if a.healthy:
+        for f in o.data.polygons:f.use_smooth=True
 # Exact ground contact of the planted foot.
 bpy.context.view_layer.update()
 planted=[o for o in objects if o.parent==parts['footL']]

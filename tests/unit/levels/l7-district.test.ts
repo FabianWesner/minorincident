@@ -2,6 +2,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { l5Fires } from '../../../src/data/l5';
 import { l7Rocket } from '../../../src/data/l7';
+import { l7CorridorFires, l7Bus } from '../../../src/levels/L7/corridor';
 import { levelFiveLayouts, l5ShellAssets } from '../../../src/levels/L5/layout';
 import { levelSevenLayouts, l7Exit, l7Fires, l7StreetDamage, l7Contains } from '../../../src/levels/L7/layout';
 import { resolveDecay, validateLayout, inside } from '../../../src/levels/districts/validate';
@@ -65,7 +66,7 @@ test('T-E29-10-fires @E29-AC10 production district installs persistent fires and
   try {
     world.loadComposition(compositions.L7, [base], 29);
     const fires = world.entities.values().filter(e => e.hazard?.kind === 'fire');
-    expect(fires).toHaveLength(l7Fires.length);
+    expect(fires).toHaveLength(l7Fires.length + l7CorridorFires.length);
     expect(fires.every(e => e.hazard!.activeUntil >= 7200 * 60)).toBe(true);
     expect(world.entities.values().filter(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action)).toHaveLength(1);
     const wreck = world.districts!.districts[0].decay.placements.find(p => p.id === 'l7-rocket-wreck')!;
@@ -85,3 +86,27 @@ test('T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and 
   expect(variants).toHaveLength(21);
   expect(variants.flatMap(r => r.errors.map(error => `${r.id}: ${error}`))).toEqual([]);
 }, 120_000);
+
+test('T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it', () => {
+  const retained = resolveDecay(w6, 6);
+  const bus = retained.placements.find(p => p.id === l7Bus.id)!;
+  expect(bus.assetId).toBe('veh.evac-bus'); expect(bus.decay).toBeUndefined();
+  expect(retained.placements.filter(p => p.id.startsWith('l7-corridor-')).length).toBeGreaterThanOrEqual(25);
+  expect(retained.placements.filter(p => p.id.startsWith('l7-corridor-') && /veh\.military/.test(p.assetId)).length).toBeGreaterThanOrEqual(6);
+  expect(retained.placements.some(p => p.assetId === 'int.basement-cellar' || p.assetId === 'prop.privacy-fence' && p.position[0] > -84 && p.position[0] < -64 && p.position[2] > -36 && p.position[2] < 42)).toBe(false);
+  expect(w6.anchors['l7-bus'].position).toEqual([l7Bus.x, 0, l7Bus.z]);
+  const world = new DistrictWorld(compositions.L7, [w6], 29);
+  const spot = (name: string) => [w6.anchors[name].position[0], w6.anchors[name].position[2]] as [number, number];
+  const reach = (from: [number, number]) => world.nav.flood(from);
+  const ok = (flood: Uint8Array, p: [number, number]) => flood[world.nav.index(...p)] === 1;
+  const names = ['l7-alley-south', 'l7-alley', 'l7-alley-north', 'l7-corridor-east', 'l7-corridor', 'l7-corridor-west', 'l7-bus-boarding', 'l7-bus-depart'];
+  const fromExit = reach(world.playerStart);
+  for (const name of names) expect(ok(fromExit, spot(name)), name).toBe(true);
+  // Route A (Harbor Street, then the west alley) and route B (Lakeshore Drive) each reach the bus on their own.
+  const harbor = reach([78, -40]), lake = reach([76, 46]);
+  expect(ok(harbor, spot('l7-alley-south')) && ok(harbor, spot('l7-bus-boarding'))).toBe(true);
+  expect(ok(lake, spot('l7-corridor-east')) && ok(lake, spot('l7-bus-boarding'))).toBe(true);
+  // At least 3 m of reachable lane across every cross-section of both corridors, wrecks notwithstanding.
+  for (let z = -34; z <= 40; z += 2) expect([...Array(12).keys()].filter(i => ok(fromExit, [-84 + i, z])).length, `alley z ${z}`).toBeGreaterThanOrEqual(3);
+  for (let x = -82; x <= -30; x += 2) expect([...Array(14).keys()].filter(i => ok(fromExit, [x, 43 + i])).length, `corridor x ${x}`).toBeGreaterThanOrEqual(3);
+});

@@ -12,6 +12,7 @@ Native LODs retain motion pivots and rebuild with fewer segments/details.
 import argparse
 import json
 import math
+import os
 from pathlib import Path
 import sys
 import bpy
@@ -23,6 +24,9 @@ from sslib import palette, primitives as P, sockets, colliders, export, ao
 from sslib.distance import tier_argument, build_native_lods
 
 TIER = tier_argument()
+# APC_UNARMED=1: transport variant for L8-L9 (no turret, gun, shield or muzzle; closed roof hatch; passenger/rear-exit anchors).
+# Outputs model.unarmed.glb / model.unarmed.lod1.glb / model.unarmed.lod2.glb, the base files stay untouched.
+UNARMED = os.environ.get('APC_UNARMED') == '1'
 p = argparse.ArgumentParser()
 p.add_argument('--glb', required=True)
 p.add_argument('--quality', default='high', choices=['high', 'low'])
@@ -130,6 +134,7 @@ if TIER < 2:
     cyl('driver hatch',(.69,0,2.28),.36,.10,'oliveSeam')
     rod('hatch handle',(.56,-.13,2.35),(.82,-.13,2.35))
     rod('antenna',(-1.89,.73,2.30),(-1.99,.73,3.26),.014,'uiDark')
+if UNARMED and TIER == 2: rod('antenna',(-1.89,.73,2.30),(-1.99,.73,3.26),.014,'uiDark')  # keeps the 3.27 m envelope at every tier
 # Painted geometric identification, no font/texture dependency.
 for s in [-1,1]:
     starverts=[(-.43,s*1.254,1.56)]
@@ -140,27 +145,39 @@ for s in [-1,1]:
     data.materials.append(palette.mat('picketWhite'))
     obj=bpy.data.objects.new('unit star',data); bpy.context.scene.collection.objects.link(obj); attach(obj)
 
-# Roof weapon: independently yawing turret with gun elevation pivot.
-owners['turret']=sockets.empty('turret',(-.38,0,2.29),root)
-cyl('turret ring',(-.38,0,2.31),.53,.14,'oliveSeam','turret')
-cyl('turret cupola',(-.38,0,2.46),.42,.25,'oliveLight','turret')
-box('gun shield',(-.13,0,2.91),(.17,1.0,.69),'olive',.025,'turret',rot=(0,-.16,0))
-owners['gun']=sockets.empty('gun',(.02,0,2.83),owners['turret'])
-# sockets.empty locations are local; preserve a world-space elevation pivot.
-owners['gun'].location=(.40,0,.54)
-box('receiver',(.18,0,2.83),(.60,.18,.20),'uiDark',.016,'gun')
-cyl('barrel',(.99,0,2.83),.048,1.12,'uiDark','gun','X',12)
-cyl('barrel jacket',(.65,0,2.83),.071,.39,'oliveSeam','gun','X',12)
-cyl('muzzle brake',(1.58,0,2.83),.065,.12,'uiDark','gun','X',12)
-box('ammo box',(.06,-.25,2.81),(.33,.27,.24),'khaki',.02,'gun')
-if TIER < 2:
-    box('sight',(.42,0,2.97),(.06,.055,.13),'uiDark',.005,'gun')
-    for s in [-1,1]: rod('gun grip',(-.22,s*.14,2.82),(-.22,s*.14,2.68),.026,'uiDark','gun')
-sockets.empty('muzzle',(1.62-.02,0,0),owners['gun'])
+if UNARMED:
+    # Closed roof hatch where the turret ring was: flush low ring and lid, nothing that reads as a weapon mount.
+    cyl('roof hatch ring',(-.38,0,2.27),.46,.06,'oliveSeam')
+    cyl('roof hatch lid',(-.38,0,2.32),.38,.06,'oliveLight')
+    rod('roof hatch handle',(-.52,0,2.37),(-.24,0,2.37),.022,'uiDark')
+else:
+    # Roof weapon: independently yawing turret with gun elevation pivot.
+    owners['turret']=sockets.empty('turret',(-.38,0,2.29),root)
+    cyl('turret ring',(-.38,0,2.31),.53,.14,'oliveSeam','turret')
+    cyl('turret cupola',(-.38,0,2.46),.42,.25,'oliveLight','turret')
+    box('gun shield',(-.13,0,2.91),(.17,1.0,.69),'olive',.025,'turret',rot=(0,-.16,0))
+    owners['gun']=sockets.empty('gun',(.02,0,2.83),owners['turret'])
+    # sockets.empty locations are local; preserve a world-space elevation pivot.
+    owners['gun'].location=(.40,0,.54)
+    box('receiver',(.18,0,2.83),(.60,.18,.20),'uiDark',.016,'gun')
+    cyl('barrel',(.99,0,2.83),.048,1.12,'uiDark','gun','X',12)
+    cyl('barrel jacket',(.65,0,2.83),.071,.39,'oliveSeam','gun','X',12)
+    cyl('muzzle brake',(1.58,0,2.83),.065,.12,'uiDark','gun','X',12)
+    box('ammo box',(.06,-.25,2.81),(.33,.27,.24),'khaki',.02,'gun')
+    if TIER < 2:
+        box('sight',(.42,0,2.97),(.06,.055,.13),'uiDark',.005,'gun')
+        for s in [-1,1]: rod('gun grip',(-.22,s*.14,2.82),(-.22,s*.14,2.68),.026,'uiDark','gun')
+    sockets.empty('muzzle',(1.62-.02,0,0),owners['gun'])
 colliders.cuboid('hull',(5.69,2.95,3.27),(0,0,1.635),root)
 sockets.empty('front',(2.82,0,1.1),root)
 for name, loc in {'driverSeat':(.71,-.46,1.46),'exitL':(-1.3,-1.8,0),'exitR':(-1.3,1.8,0)}.items():
     sockets.empty(name,loc,root)
+if UNARMED:
+    # Troop bay seats (grouped silhouettes may share them; the roster is never capped by these anchors) and the rear door.
+    for i, loc in enumerate([(-.55,-.55,1.20),(-.55,.55,1.20),(-1.35,-.55,1.20),(-1.35,.55,1.20),(-2.15,-.55,1.20),(-2.15,.55,1.20)]):
+        sockets.empty('passenger%d'%i,loc,root)
+    sockets.empty('rearExit',(-3.35,0,0),root)
+    sockets.empty('commanderSeat',(.71,.46,1.46),root)
 for s,label in [(-1,'L'),(1,'R')]:
     anchor=sockets.empty('light:head'+label,(2.77,s*.72,1.22),root)
     anchor.rotation_euler=(0,-math.pi/2,0)
@@ -215,10 +232,10 @@ for (owner, material), objects in batches.items():
     meshes.append(obj)
 bpy.context.view_layer.update()
 export.glb(root,Path(args.glb).resolve())
-if not TIER and Path(args.glb).resolve() != Path(__file__).parent / 'model.glb':
+if not TIER and not UNARMED and Path(args.glb).resolve() != Path(__file__).parent / 'model.glb':
     export.glb(root,Path(__file__).parent / 'model.glb')
 count=sum(len(o.data.polygons) for o in meshes)
 stats={'triangles':count,'meshes':len(meshes),'bytes':Path(args.glb).stat().st_size}
 print('APC LOD',TIER,json.dumps(stats))
-(Path(__file__).parent / ('build-stats.json' if not TIER else 'build-stats.lod%d.json'%TIER)).write_text(json.dumps(stats,indent=2)+'\n')
-if not TIER: build_native_lods(__file__)
+(Path(__file__).parent / (('build-stats%s.json' % ('.unarmed' if UNARMED else '')) if not TIER else 'build-stats%s.lod%d.json'%('.unarmed' if UNARMED else '',TIER))).write_text(json.dumps(stats,indent=2)+'\n')
+if not TIER: build_native_lods(__file__, '.unarmed' if UNARMED else '')
