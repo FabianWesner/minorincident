@@ -340,6 +340,24 @@ export class CivilianCrowd extends Group {
   private readonly figures = new Map<string, EntitySnapshot[]>();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
+  /** E18 low tier: at most this many crowd figures draw near detail (LOD1, ~7k triangles) per frame; the rest the far LOD2.
+   * The L3 5x hordes otherwise put 70+ LOD1 figures in a phone frame (546k > 500k triangles). */
+  static readonly lowNearBudget = 36;
+  private readonly ranked: { id: number; score: number }[] = [];
+  private budgetNear(): void {
+    const v = this.visibility, demoted = v.demoted;
+    if (!this.low) { demoted.clear(); return; }
+    this.ranked.length = 0;
+    for (const e of this.world.entities.iterate()) {
+      if (e.corpse || e.health.current <= 0 || !crowdModelOf(e) || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      const pixels = v.pixels(e.transform.x, e.transform.y, e.transform.z, 1.8);
+      this.ranked.push({ id: e.id, score: pixels * (demoted.has(e.id) ? .9 : 1) });
+    }
+    demoted.clear();
+    if (this.ranked.length <= CivilianCrowd.lowNearBudget) return;
+    this.ranked.sort((a, b) => b.score - a.score || a.id - b.id);
+    for (let i = CivilianCrowd.lowNearBudget; i < this.ranked.length; i++) demoted.add(this.ranked[i].id);
+  }
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
@@ -410,7 +428,7 @@ export class CivilianCrowd extends Group {
     loadMeasure('view:civilian-crowd', started); this.update();
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
-    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
     for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
     {
       // Each human belongs to one model (every scenario: the L3/L4 5x hordes made the per-batch full scan the view cost). All its LOD batches share this frame's
