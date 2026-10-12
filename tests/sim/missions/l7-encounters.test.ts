@@ -7,6 +7,8 @@ import { captureSeams, restoreSeams } from '../../../src/sim/missions/l1Seams';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { LevelSixSubway } from '../../../src/sim/missions/LevelSixSubway';
 import type { Mission } from '../../../src/sim/missions/Mission';
+import { l7Fires } from '../../../src/levels/L7/layout';
+import { l7CorridorFires } from '../../../src/levels/L7/corridor';
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 async function load(tier: 'high' | 'low' = 'high', roster?: EntitySnapshot[]) {
@@ -68,7 +70,7 @@ test('T-E29-11-roster @E29-AC11 incoming ids, health, appearance and injury surv
     const w = await load('high', incoming), c = w.l7Encounters!;
     expect(c.state.roster.map(r => r.id)).toEqual(incoming.map(e => e.id));
     for (const e of incoming) { expect(w.entities.get(e.id)!.health).toEqual(e.health); expect(w.entities.get(e.id)!.appearance).toEqual(e.appearance); }
-    expect(w.entities.values().filter(e => e.hazard?.kind === 'fire')).toHaveLength(22);
+    expect(w.entities.values().filter(e => e.hazard?.kind === 'fire')).toHaveLength(l7Fires.length + l7CorridorFires.length);
     expect(c.state.roster.filter(r => r.injured)).toHaveLength(Math.ceil(count / 5));
     teleport(w, 258, 15);
     for (let i = 0; i < 60; i++) {
@@ -146,7 +148,7 @@ test('T-E29-16-encounters @E29-AC16 checkpoint seam retains queues, Alpha reques
   mission.restore('corridor');
   expect(c.state.roster).toEqual(before.state.roster); expect(w.infected!.director.queue).toEqual(before.queue);
   expect(w.infected!.active.map(e => e.id).sort((a, b) => a - b)).toEqual(before.state.arrivals.map(a => a.id).sort((a, b) => a - b));
-  expect(w.entities.values().filter(e => e.hazard?.kind === 'fire')).toHaveLength(22);
+  expect(w.entities.values().filter(e => e.hazard?.kind === 'fire')).toHaveLength(l7Fires.length + l7CorridorFires.length);
 });
 
 test('T-E29-11-zero @E29-AC11 zero living survivors can reach passage without a kill-all requirement', async () => {
