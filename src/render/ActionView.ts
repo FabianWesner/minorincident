@@ -77,6 +77,8 @@ export class ActionView extends Group {
   }
   private selected: Side = 'LEFT';
   private shape = 'cone';
+  /** PO 10-12: the yellow/cyan melee sector on the ground is not wanted in normal play; debug (?debug) or ?aimcone=1 brings it back. */
+  showCone = false;
   private landing = { x: 0, z: 0 };
   constructor(private readonly world: SimWorld, private readonly character: CharacterView, private readonly materials: Materials, renderer: WebGPURenderer) {
     super(); this.prototypes.visible = false; this.add(this.prototypes); this.registry = new AssetRegistry((event) => this.placeholders.push(event), { renderer, materials });
@@ -229,8 +231,8 @@ export class ActionView extends Group {
       }
     }
     else if (def.aimIndicator === 'cone') {
-      this.circle(origin.x, origin.z, def.range, angle - halfArc, halfArc * 2);
-      for (let sign = -1; sign <= 1; sign += 2) { const edge = halfArc * sign; this.segment(origin.x, 0.04, origin.z, origin.x + Math.cos(angle + edge) * def.range, 0.04, origin.z + Math.sin(angle + edge) * def.range); }
+      if (this.showCone) this.circle(origin.x, origin.z, def.range, angle - halfArc, halfArc * 2);
+      if (this.showCone) for (let sign = -1; sign <= 1; sign += 2) { const edge = halfArc * sign; this.segment(origin.x, 0.04, origin.z, origin.x + Math.cos(angle + edge) * def.range, 0.04, origin.z + Math.sin(angle + edge) * def.range); }
     } else if (def.aimIndicator === 'arc') {
       const dx = state.aimPoint ? state.aimPoint.x - origin.x : aim.x * def.range, dz = state.aimPoint ? state.aimPoint.z - origin.z : aim.z * def.range;
       const distance = Math.hypot(dx, dz), scale = distance > def.range ? def.range / distance : 1;
