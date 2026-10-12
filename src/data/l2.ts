@@ -111,7 +111,7 @@ export const l2 = {
    */
   mercy: { calmM: 10, calmHealth: .7, fromDeaths: 2, stepFrac: .25, maxFrac: .75, nearM: 45 },
   /** Section 4: checkpoints. */
-  checkpoints: ['doors', 'escape', 'cluster'] as const,
+  checkpoints: ['axe', 'doors', 'escape', 'cluster'] as const,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
   bots: { seeds: 1, completeMedianS: [105, 210] as P, newbieMedianS: [120, 240] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 1 },
 } as const;
