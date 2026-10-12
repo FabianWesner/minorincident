@@ -1,5 +1,6 @@
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import { standNear } from './gardening';
 import { seatAnchor } from './seats';
 import type { CivilianActivity, Point } from './types';
 
@@ -9,9 +10,13 @@ function prepareReachability(world: SimWorld): void {
   const cell = nav.nearestCell(start.x, start.z);
   nav.flow(nav.x(cell), nav.z(cell), nav.blocked.length);
 }
-function routinePoint(world: SimWorld, p: Point): Point {
+function routineOk(world: SimWorld, p: Point): boolean {
   const nav = world.infected!.nav, cell = nav.cell(p.x, p.z);
-  if (cell >= 0 && nav.distance[cell] >= 0 && nav.clear(p.x, p.z, .35) && nav.visible(p, { x: nav.x(cell), z: nav.z(cell) }, .35)) return p;
+  return cell >= 0 && nav.distance[cell] >= 0 && nav.clear(p.x, p.z, .35) && nav.visible(p, { x: nav.x(cell), z: nav.z(cell) }, .35);
+}
+function routinePoint(world: SimWorld, p: Point): Point {
+  const nav = world.infected!.nav;
+  if (routineOk(world, p)) return p;
   let best = -1, distance = Infinity;
   for (let dz = -12; dz <= 12; dz++) for (let dx = -12; dx <= 12; dx++) {
     const c = nav.cell(p.x + dx * .5, p.z + dz * .5);
@@ -95,14 +100,22 @@ export function populateMorning(world: SimWorld): void {
         walk(point(bench.position[0] + 3, -3.6), 'sidewalk/bench-loop', 'coffee'), walk(target, bench.id, 'coffee'),
       ]);
     }
-    const flower = layout.decorations?.filter(d => d.kind === 'flower')[6];
-    if (flower) {
-      const facing = point(flower.position[0], flower.position[2]), target = safe({ x: facing.x, z: facing.z + 1 });
+    // Gardening stands within 0.5 m of a real flower (derived from the live decoration positions), facing it; the second stop is
+    // another real flower 2.5-7 m away. Flowers with no reachable standing spot are skipped.
+    const flowers = (layout.decorations ?? []).filter(d => d.kind === 'flower').map(d => point(d.position[0], d.position[2]));
+    const tend = (f: Point, prefer: Point) => standNear({ x0: f.x, z0: f.z, x1: f.x, z1: f.z }, p => routineOk(world, p), prefer);
+    let first: ReturnType<typeof tend> = null, second: ReturnType<typeof tend> = null, flowerA: Point | undefined;
+    for (const f of flowers.slice(6)) {
+      const a = tend(f, { x: f.x, z: f.z + 2 }); if (!a) continue;
+      const g = flowers.find(h => { const d = Math.hypot(h.x - f.x, h.z - f.z); return d >= 2.5 && d <= 7 && !!tend(h, { x: h.x, z: h.z + 2 }); });
+      if (g) { first = a; second = tend(g, { x: g.x, z: g.z + 2 }); flowerA = f; break; }
+    }
+    if (first && second && flowerA) {
       const gardening: CivilianActivity[] = [
-        { activity: 'water', anchor: 'flower-box/0', target, facing, ticks: 360, prop: 'watering-can' },
-        walk({ x: target.x + 2.6, z: target.z }, 'flower-box/1', 'watering-can'),
-        { activity: 'water', anchor: 'flower-box/1', target: { x: target.x + 2.6, z: target.z }, facing: { x: facing.x + 2.6, z: facing.z }, ticks: 300, prop: 'watering-can' },
-        walk(target, 'flower-box/0', 'watering-can'),
+        { activity: 'water', anchor: 'flower-box/0', target: first.target, facing: first.facing, ticks: 360, prop: 'watering-can' },
+        walk(second.target, 'flower-box/1', 'watering-can'),
+        { activity: 'water', anchor: 'flower-box/1', target: second.target, facing: second.facing, ticks: 300, prop: 'watering-can' },
+        walk(first.target, 'flower-box/0', 'watering-can'),
       ];
       if (district.id === 'D-MAIN') {
         const door = at('diner-door');
@@ -110,11 +123,14 @@ export function populateMorning(world: SimWorld): void {
           { activity: 'inside', anchor: 'diner-door', target: door, ticks: 300 });
       }
       spawn('bathrobe-neighbor', 'npc.civilian-woman-b', gardening);
-      if (district.id === 'D-RES') spawn('suburban-mom', 'npc.civilian-elderly', [
-        walk(point(-7, -3.6), 'crescent/sidewalk', 'cane'),
-        { activity: 'look', anchor: 'flower-box/0', target: safe({ x: target.x + 1.6, z: target.z + .6 }), facing, ticks: 120, prop: 'cane' },
-        walk(point(-3, -3.6), 'crescent/sidewalk', 'cane'),
-      ], 2);
+      if (district.id === 'D-RES') {
+        const admire = tend(flowerA, { x: flowerA.x + 1.6, z: flowerA.z + 1 }) ?? first;
+        spawn('suburban-mom', 'npc.civilian-elderly', [
+          walk(point(-7, -3.6), 'crescent/sidewalk', 'cane'),
+          { activity: 'look', anchor: 'flower-box/0', target: admire.target, facing: admire.facing, ticks: 120, prop: 'cane' },
+          walk(point(-3, -3.6), 'crescent/sidewalk', 'cane'),
+        ], 2);
+      }
     }
     if (district.id === 'D-RES') {
       const owner = spawn('bbq-dad', 'npc.civilian-man-a', [walk(point(6, 3.6), 'crescent/east'), walk(point(17, 3.6), 'crescent/east')]);
@@ -131,9 +147,10 @@ export function populateMorning(world: SimWorld): void {
       }
     } else {
       const hardware = at('hardware-display');
+      const browse = standNear({ x0: hardware.x, z0: hardware.z, x1: hardware.x, z1: hardware.z }, p => routineOk(world, p), { x: hardware.x, z: hardware.z + 1 }, [.5, .8, 1.1, 1.4]);
       spawn('delivery-driver', 'npc.civilian-woman-a', [
         walk(point(9, -3.6), 'hardware/sidewalk', 'bag'), walk(point(17, -3.6), 'hardware/sidewalk', 'bag'),
-        { activity: 'look', anchor: 'hardware-display', target: safe({ x: hardware.x, z: hardware.z + 1 }), facing: hardware, ticks: 90, prop: 'bag' },
+        { activity: 'look', anchor: 'hardware-display', target: browse?.target ?? safe({ x: hardware.x, z: hardware.z + 1 }), facing: browse?.facing ?? hardware, ticks: 90, prop: 'bag' },
       ], 1);
       spawn('jogger', 'npc.civilian-man-a', [walk(point(21, 3.6), 'main/east', 'phone'), walk(point(8, 3.6), 'main/east', 'phone')]);
     }
