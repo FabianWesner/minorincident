@@ -98,6 +98,8 @@ export type Action =
   | { moveTo: Point; pace?: 'walk' | 'run' }
   | { turn: number }
   | { sit: string; seconds?: number }
+  /** Water a flower placement (id, or nearest asset id): stand within 0.5 m of its footprint, face it, pour (MorningRoutines/Population rule). */
+  | { water: string; seconds?: number }
   | { routine: 'sit'|'treat'|'rest'|'talk'|'share' }
   | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT'; /** Simultaneous walking direction for firing-layer QA. */ move?: Point }
   /** Courier: ordinary pointer-target aim without held fire, for pose blending QA. */

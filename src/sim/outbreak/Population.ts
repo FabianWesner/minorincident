@@ -1,4 +1,5 @@
 import { l1Pedestrians } from '../../data/npcs';
+import { flowerClusterBoxes, standNear } from '../npc/gardening';
 import { seatAnchor } from '../npc/seats';
 import type { CivilianActivity, CivilianProp, Point } from '../npc/types';
 import type { Outbreak, PedestrianOptions } from './Outbreak';
@@ -40,6 +41,9 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
       if (run.length >= 3) runs.push(run);
     }
   }
+  const bedBoxes = layout.placements.filter(q => q.assetId.startsWith('prop.flower-bed')).map(q => ({ x0: q.visualAabb.min[0] + ox, z0: q.visualAabb.min[2] + oz, x1: q.visualAabb.max[0] + ox, z1: q.visualAabb.max[2] + oz }));
+  bedBoxes.push(...flowerClusterBoxes(layout.decorations, [ox, oz]));
+  const usedBeds = new Set<(typeof bedBoxes)[number]>();
   const doors = Object.keys(layout.anchors).filter(n => n.startsWith('refuge-door-')).map(anchor).filter((p): p is Point => !!p);
   const nearestDoor = (p: Point) => doors.reduce<Point | null>((best, d) => !best || Math.hypot(d.x - p.x, d.z - p.z) < Math.hypot(best.x - p.x, best.z - p.z) ? d : best, null);
   const plans: Plan[] = [];
@@ -97,20 +101,35 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
     circle(free(snap({ x: garage.x + 10, z: garage.z - 10.5 }, 3)), 2, [null, 'bag']);
     sitter(garage);
   }
+  // Gardener: water the nearest real flower bed or planter (live footprint), standing within 0.5 m of it and facing it.
+  const gardeners: Plan[] = [];
+  const gardenerAt = (ref: Point, reach = 30): Plan | null => {
+    const mid = (b: { x0: number; x1: number; z0: number; z1: number }) => Math.hypot((b.x0 + b.x1) / 2 - ref.x, (b.z0 + b.z1) / 2 - ref.z);
+    for (const bed of bedBoxes.filter(b => !usedBeds.has(b) && mid(b) < reach).sort((m, n) => mid(m) - mid(n))) {
+      const cx = (bed.x0 + bed.x1) / 2, cz = (bed.z0 + bed.z1) / 2, alongX = bed.x1 - bed.x0 >= bed.z1 - bed.z0, half = Math.max(bed.x1 - bed.x0, bed.z1 - bed.z0) * .35;
+      const toward = (sx: number) => alongX ? { x: cx + sx * half, z: cz + (ref.z < cz ? -1 : 1) } : { x: cx + (ref.x < cx ? -1 : 1), z: cz + sx * half };
+      const a = standNear(bed, q => clear(q, .35), toward(-1)), b = standNear(bed, q => clear(q, .35), toward(1));
+      if (!a || !b) continue;
+      usedBeds.add(bed);
+      return { at: a.target, handProp: 'watering-can', role: 'bathrobe-neighbor', yaw: 0, schedule: [
+        { activity: 'water', anchor: 'l1/flowers', target: a.target, facing: a.facing, ticks: t(5, 8), prop: 'watering-can' }, walk(b.target, 'watering-can'),
+        { activity: 'water', anchor: 'l1/flowers', target: b.target, facing: b.facing, ticks: t(4, 7), prop: 'watering-can' }, walk(a.target, 'watering-can')] };
+    }
+    return null;
+  };
   // At most ~8 doorstep hubs spread over the map (the full layout has 50+ refuge doors).
   const hubDoors = doors.filter((_, i) => i % Math.max(1, Math.ceil(doors.length / 8)) === 0);
   for (const [i, door] of hubDoors.entries()) {
     if (i % 3 === 0) circle(free(snap({ x: door.x + 2, z: door.z + (door.z < 0 ? 3.2 : -3.2) }, 3)), 2, [null, 'phone']);
     else if (i % 3 === 1) {
-      // Gardener: water two flower spots beside the door, facing them.
-      const a = free(snap({ x: door.x - 2.4, z: door.z + (door.z < 0 ? 1.4 : -1.4) }, 2)), b = a && free(snap({ x: a.x - 3.2, z: a.z }, 1.5));
-      if (a && b) plans.push({ at: a, handProp: 'watering-can', role: 'bathrobe-neighbor', yaw: 0, schedule: [
-        { activity: 'water', anchor: 'l1/flowers', target: a, facing: { x: a.x, z: door.z }, ticks: t(5, 8), prop: 'watering-can' }, walk(b, 'watering-can'),
-        { activity: 'water', anchor: 'l1/flowers', target: b, facing: { x: b.x, z: door.z }, ticks: t(4, 7), prop: 'watering-can' }, walk(a, 'watering-can')] });
+      const g = gardenerAt(door); if (g) gardeners.push(g);
     }
   }
+  // Fairhaven's planters sit in plazas, not beside refuge doors: if no door hub got a gardener, one tends the flower box nearest the start.
+  if (!gardeners.length) { const ref = anchor('player-start') ?? patio ?? doors[0]; const g = ref && gardenerAt(ref, 60); if (g) gardeners.push(g); }
   // Stationary groups take at most 40 %: the rest walk routes, so the streets stay alive and the outbreak meets people.
   plans.splice(Math.round(count * .4));
+  plans.push(...gardeners);
   // Fill with grocery walkers, phone walkers, joggers, dog walkers and elderly cane strollers on every sidewalk run.
   let r = Math.floor(rng.next() * Math.max(1, runs.length)), dogs = 0;
   // Larch Street stays busy: the first walkers use the sidewalks near the facility (section 3, beats 3-7), so the

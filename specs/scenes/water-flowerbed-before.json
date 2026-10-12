@@ -1,0 +1,16 @@
+{
+  "name": "water-flowerbed-before",
+  "note": "Staged repro of the PO screenshot (old behaviour): the gardener holds the can ~3 m from the bed, facing away from it.",
+  "ground": "sidewalk",
+  "size": 20,
+  "props": [{ "id": "bed", "asset": "prop.flower-bed.large", "at": [0, 0], "yaw": 90 }],
+  "actors": [
+    { "id": "gardener", "kind": "pedestrian", "at": [3, 2.5], "yaw": 0,
+      "look": { "model": "npc.civilian-woman-b", "tint": "#4f7fb8", "handProp": "watering-can" },
+      "state": { "turn": 0 } }
+  ],
+  "camera": { "mode": "close", "target": "gardener", "radius": 7, "azimuth": 150 },
+  "frames": 60,
+  "shots": [0, 60],
+  "expect": { "consoleErrors": 0 }
+}
