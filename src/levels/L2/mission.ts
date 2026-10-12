@@ -29,7 +29,7 @@ export function levelTwoMission(resolve: (district: DistrictId, name: string) =>
   const after = (...ids: string[]): ObjectiveDef['start'] => ({ kind: 'objectives', ids, mode: 'all' });
   const state = (key: string): Trigger => ({ kind: 'state', key, equals: true });
   const axe = step('axe', 'interact', 'Take the fire axe', 'l2-axe-rack', { kind: 'interact', anchor: 'l2-axe-rack', seconds: .6 }, { kind: 'start' });
-  axe.onComplete = [{ kind: 'grant', item: 'axe' }];
+  axe.onComplete = [{ kind: 'grant', item: 'axe' }, { kind: 'checkpoint', id: 'axe' }];
   step('calm', 'custom', 'Take the fire axe', 'l2-axe-rack', state('alarm'), { kind: 'start' }).waypoint = false;
   step('board', 'interact', 'Get on the fire truck', 'l2-board', { kind: 'interact', anchor: 'l2-board', seconds: l2.ride.boardInteractS }, after('axe', 'calm'));
   step('ride', 'custom', 'Ride with Engine 3 to Grove Market', 'l2-truck-stop', state('arrived'), after('board'));
