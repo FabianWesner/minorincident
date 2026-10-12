@@ -85,6 +85,24 @@ export class VehicleBody {
       this.stuck = this.travelCount === 180 && this.travelSum < .5;
     } else this.clearStuck();
   }
+  /** Exact planar distance from a point to the rectangular chassis, independent of yaw. */
+  hullDistance(x: number, z: number): number {
+    const p = this.transform, dx = x - p.x, dz = z - p.z, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+    return Math.hypot(Math.max(0, Math.abs(dx * c - dz * s) - this.def.length / 2), Math.max(0, Math.abs(dx * s + dz * c) - this.def.width / 2));
+  }
+  /** Unrigid infected stay on the chassis surface instead of walking into seated occupants. */
+  separateHull(position: { x: number; z: number }, radius: number): void {
+    const p = this.transform, dx = position.x - p.x, dz = position.z - p.z, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+    let x = dx * c - dz * s, z = dx * s + dz * c;
+    const halfX = this.def.length / 2, halfZ = this.def.width / 2;
+    const nearestX = Math.max(-halfX, Math.min(halfX, x)), nearestZ = Math.max(-halfZ, Math.min(halfZ, z));
+    const outX = x - nearestX, outZ = z - nearestZ, distance = Math.hypot(outX, outZ);
+    if (distance >= radius) return;
+    if (distance > 0) { x = nearestX + outX / distance * radius; z = nearestZ + outZ / distance * radius; }
+    else if (halfX - Math.abs(x) < halfZ - Math.abs(z)) x = (x < 0 ? -1 : 1) * (halfX + radius);
+    else z = (z < 0 ? -1 : 1) * (halfZ + radius);
+    position.x = p.x + c * x + s * z; position.z = p.z - s * x + c * z;
+  }
   clearStuck(): void { this.travel.fill(0); this.travelCount = this.travelIndex = this.travelSum = 0; this.stuck = false; }
   /** Bruno's mass-scaled jump/roll recovery, retried in sim time while a driver is overturned. */
   recoverFlip(): boolean {
