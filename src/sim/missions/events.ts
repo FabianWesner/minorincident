@@ -21,6 +21,7 @@ export type MissionEvent =
   /** E20 §5.2 allied fighter strike (firefighter melee, officer shot); the hit itself is an ordinary `combat.hit`. */
   /** E21 beats: the attack starts, a wave emerges, the fallback (first-of rule), a squad member is lost, a segment is entered, the zone line crossed. */
   | { tick: number; type: 'l3.handgun' | 'l3.attack' | 'l3.crossed' }
+  | { tick: number; type: 'l3.surge'; count: number }
   | { tick: number; type: 'l3.wave'; wave: number; count: number }
   | { tick: number; type: 'l3.fallback'; cause: 'time' | 'turned' | 'inside'; squad: number[] }
   | { tick: number; type: 'l3.squad-lost'; id: number; cause: 'bite' | 'kill' | 'separated' }

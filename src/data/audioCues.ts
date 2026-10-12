@@ -256,7 +256,7 @@ export const eventCues = {
     // E20 set piece: station bell, departure siren, doors forced open, checkpoint gate; allied strikes.
     'l2.alarm': 'l1.bell', 'l2.truckDeparted': 'vehicle.siren', 'l2.truckArrived': 'ui.tick', 'l2.crewExit': 'ui.tick', 'l2.firefightersAtDoors': 'ui.tick',
     'l2.doorsOpen': 'door.gate', 'l2.radio': 'ui.tick', 'l2.gateClosed': 'door.gate', 'l2.cue': 'ui.tick', 'ally.attack': 'action.weapon.fists',
-    'l3.handgun': 'ui.pickup', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'door.gate',
+    'l3.handgun': 'ui.pickup', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'door.gate', 'l3.surge': 'ui.tick',
     'l4.convoyStarted': 'ui.tick', 'l4.convoyArrived': 'door.gate', 'l4.gun': 'ui.pickup', 'l4.war': 'vehicle.siren', 'l4.heliWithdrawn': 'ui.tick', 'l4.descended': 'door.gate', 'l4.doorBarred': 'door.gate', 'l4.battle': 'ui.tick',
     'l4.firstTurn': 'ui.tick', 'l4.lineBreaks': 'ui.tick', 'l4.wave': 'ui.tick', 'l4.tankFire': 'ui.tick', 'l4.heliPass': 'ui.tick', 'hmg.burst': 'ui.tick',
     // E23: the silent city. The sign-of-life cue is positional (AudioService picks the cue by survivor); beats are silent but the shutter.

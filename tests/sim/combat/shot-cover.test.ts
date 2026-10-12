@@ -18,7 +18,9 @@ async function setup() {
 test.each(['officer', 'soldier', 'civilian'] as const)('@E21 shot cover: ground %s cannot hit through a 3 m wall; tower shooter can', async role => {
   const { w, target } = await setup();
   target.transform.x = 5; w.spatial.set(target.id, 5, 0);
-  w.entities.get(1)!.transform.x = 4.5;
+  // The courier stands beside the line of fire, not in it: E22 §5 "a human in the shot segment suppresses that allied
+  // shot" (752dcf24), and from the 4.26 m deck the bullet still passes her head height half a metre before the target.
+  Object.assign(w.entities.get(1)!.transform, { x: 4.5, z: 2 }); w.spatial.set(1, 4.5, 2);
   (w.combat!.query.walls as CoverWall[])[0].x = 1;
   const e = w.entities.get(w.npcs!.civilians.spawn(role, { x: 0, z: 0 }, { waypoints: [{ x: 0, z: 0 }] }))!;
   e.civilian!.ally = { ...allyState(role, e.transform, true), engaged: true,
@@ -52,8 +54,11 @@ test('@E21 player bullets and explicit muzzle rays stop at world and dynamic cov
 
 test('@E21 checkpoint guard feet stay on all four tower decks', async () => {
   const loaded = await loadL3(1); world = loaded.world;
-  const guards = loaded.mission.state.l3!.soldierIds.map(id => world!.entities.get(id)!);
+  // Eight tower riflemen; the ninth soldier is the mounted-gun (HMG nest) gunner on the ground at the line (lane l3-finish).
+  const soldiers = loaded.mission.state.l3!.soldierIds.map(id => world!.entities.get(id)!);
+  const guards = soldiers.filter(e => e.civilian!.ally?.weapon !== 'hmg');
   expect(guards).toHaveLength(8);
+  expect(soldiers.filter(e => e.civilian!.ally?.weapon === 'hmg')).toHaveLength(1);
   for (const e of guards) {
     expect(e.transform.y - .7).toBeCloseTo(l3.soldiers.deckY);
     expect(e.transform.x).toBe(138.5 + l3ArmyOffset);

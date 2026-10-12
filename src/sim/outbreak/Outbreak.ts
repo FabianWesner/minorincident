@@ -10,7 +10,7 @@ import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../np
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import { updateAlly } from './Allies';
-import { leaveSeat } from '../npc/MorningRoutines';
+import { followSeat, leaveSeat } from '../npc/MorningRoutines';
 import { updateSurvivor } from './Survivors';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
@@ -170,12 +170,14 @@ export class Outbreak {
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (world.missions?.l6 && c.survivor && updateSurvivor(world,e)) continue;
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       // E23: a found survivor follows the courier (unarmed, biteable, no flight).
       if (c.survivor && updateSurvivor(world, e)) continue;
+      if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
         this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
@@ -367,7 +369,9 @@ export class Outbreak {
   }
   private held(e: EntitySnapshot): void {
     const c = e.civilian!, tick = this.world.tick, attacker = this.world.entities.get(c.attacker);
-    if (c.ally?.role === 'officer' && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
+    // PO 2026-10-12 (L3: "Ideally the Zombies will win against police"): a grabbed L3 officer no longer frees himself; only a
+    // teammate's or the courier's hit on the grabber rescues him. Elsewhere officers keep fighting from the hold.
+    if (c.ally?.role === 'officer' && !this.world.missions?.def.l3 && attacker?.infected && attacker.health.current > 0) updateAlly(this.world, e, (a, b, id) => this.sees(a, b, id));
     if (this.aiBites() && !this.world.npcs!.civilians.holds(c.attacker)) {
       // The bite arrives as `outbreak.bite` (externalBite); a released hold without it is a rescue.
       if (this.world.infected!.holding(e.id) === 0) this.rescued(e);

@@ -34,7 +34,9 @@ function rideInto(w: SimWorld, from: { x: number; z: number }, gap: number) {
 
 test('an infected bump at speed knocks the courier off; the bike tips over beside her, stays, and can be remounted @E19 @E19-AC16', async () => {
   // A street stretch with no clear pavement within 8 m (the old fallback teleported the bike back to the start rack).
-  const start = { x: -74, z: 54 };
+  // It must be reachable on foot: the old (-74, 54) strip lies outside the walkable nav, so the trap-pocket safety net
+  // (TrapRescue, fix-camera-ramp) rightly moved the dismounted courier back onto the route before she could remount.
+  const start = { x: -73, z: -49 };
   const { w, mission, b, p, rack } = await riding(start, 0, 7);
   try {
     const id = b.entity!.id;
