@@ -63,7 +63,7 @@ test('T-E22-09-segment @E22-AC09 humans beyond or beside the shot, hidden/dead h
   const w = await arena(), e = soldier(w, -10, 0), alpha = spawn(w, 'alpha', 8, 0, 'idle');
   move(w, w.entities.get(1)!, 0, -10);
   const human = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: -1, z: 0 }))!;
-  const clear = () => w.combat!.query.alliedShotClear(e, alpha);
+  const clear = () => w.combat!.query.alliedShotClear(e, alpha, w.tick);
   expect(clear()).toBe(false);
   for (const [x, z] of [[-12, 0], [10, 0], [-1, .36]]) { move(w, human, x, z); expect(clear()).toBe(true); }
   move(w, human, -1, 0); human.hidden = true; expect(clear()).toBe(true);
@@ -108,4 +108,20 @@ test('T-E22-12-line-focus @E22-AC12 @E22-AC13 soldiers focus on the Alpha while 
     expect(shots.length).toBeGreaterThanOrEqual(8);
     expect(shots.at(-1)!.tick - shots[0].tick).toBeGreaterThanOrEqual(180);
   }
+});
+
+test('T-E22-09-prone @E22-AC09 a human knocked down by the shared Alpha slam blocks low shots, while rifles clear the body until it stands', async () => {
+  const w = await arena(), shooter = soldier(w, -10, 0), target = spawn(w, 'runner', 8, 0, 'idle');
+  move(w, w.entities.get(1)!, 20, 10); w.physics.playerBody!.setTranslation(w.entities.get(1)!.transform, true);
+  const human = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: 0, z: 0 }))!;
+  human.civilian!.state = 'annoyed'; human.civilian!.until = 10000;
+  const clear = () => w.combat!.query.alliedShotClear(shooter, target, w.tick);
+  expect(clear()).toBe(false);
+  const alpha = spawn(w, 'alpha', 0, 1, 'idle');
+  expect(w.infected!.startSpecial(alpha.id, 'alpha.ground-slam', { id: 1, x: 20, z: 10 }, { x: 0, z: 1, radius: 4, dx: 1, dz: 0 })).toBe(true);
+  step(w, 60); expect(human.health.current).toBe(75); expect(human.civilian!.knockedUntil).toBe(w.tick + 72);
+  move(w, human, 0, 0); expect(clear()).toBe(true);
+  shooter.transform.y = target.transform.y = 0; expect(clear()).toBe(false);
+  shooter.transform.y = target.transform.y = .7;
+  w.tick = human.civilian!.knockedUntil; expect(clear()).toBe(false);
 });
