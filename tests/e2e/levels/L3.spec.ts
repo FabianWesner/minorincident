@@ -21,14 +21,16 @@ function helpers(page: Page) {
     await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
   };
   /** Shift + click the nearest infected within `range` (the active handgun shoots it, the axe swings at arm's length). */
-  const fightNearby = async (range = 2.6): Promise<boolean> => {
-    const target = await page.evaluate(range => {
+  const fightNearby = async (range = 2.6, toward?: P): Promise<boolean> => {
+    const target = await page.evaluate(({ range, toward }) => {
       const a = window.__SS__!, p = a.getState().player!.transform;
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+      // Fleeing (toward = the next waypoint): only what blocks the way ahead, or what already has hold of the courier.
+      const blocking = (e: { transform: P }) => !toward || Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 1.4 || (e.transform.x - p.x) * (toward.x - p.x) + (e.transform.z - p.z) * (toward.z - p.z) > 0;
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range && blocking(e)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
       const point = near ? a.input.project(near.transform, 'player') : null;
       // A covered/offscreen body cannot receive a physical canvas click.
       return point && document.elementFromPoint(point.x, point.y)?.tagName === 'CANVAS' ? { point, melee: Math.hypot(near!.transform.x - p.x, near!.transform.z - p.z) < 2.6 } : null;
-    }, range);
+    }, { range, toward });
     if (!target) return false;
     // Use the carried axe at contact range and the handgun at distance, through the real rack bindings.
     // Mouse number keys address the carried list: fists, axe, bat, handgun.
@@ -39,7 +41,8 @@ function helpers(page: Page) {
   };
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
   let seenDeaths = 0;
-  const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
+  /** `flee`: run like a player escaping (brief l3-polish): no stops for pursuers behind, fight only what blocks the way ahead. */
+  const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6, flee = false) => {
     let groundStart = 0, lastRetry = (await player()).transform;
     const click = async () => {
       const start = (await player()).transform;
@@ -67,11 +70,16 @@ function helpers(page: Page) {
     };
     await click();
     let fights = 0, dodgeAt = -Infinity;
+    const maxFights = flee ? 1 : 3;
     for (let i = 0; i < 600; i++) {
       await step(20);
       if (process.env.L3_TRACE && i % 2 === 0) console.log(await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!, inf = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 12); return `T x=${p.transform.x.toFixed(0)} z=${p.transform.z.toFixed(0)} hp=${p.health.current.toFixed(0)} n12=${inf.length} n4=${inf.filter(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 4).length}`; }));
       const deaths = (await mission()).stats.deaths;
-      if (deaths !== seenDeaths) { seenDeaths = deaths; const q = (await player()).transform; console.log(`L3 death #${deaths} near x=${q.x.toFixed(0)} z=${q.z.toFixed(0)}`); }
+      if (deaths !== seenDeaths) {
+        seenDeaths = deaths; const q = (await player()).transform; console.log(`L3 death #${deaths} near x=${q.x.toFixed(0)} z=${q.z.toFixed(0)}`);
+        // A fleeing player who respawns walks the route again from the checkpoint (the caller resumes at the next waypoint).
+        if (flee) { for (let k = 0; k < 40 && (await player()).health.current <= 0; k++) await step(10); await step(10); return 'died' as const; }
+      }
       if (done && await done()) return;
       const p = (await player()).transform;
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
@@ -86,8 +94,8 @@ function helpers(page: Page) {
         if (point) { await page.mouse.click(point.x, point.y); await step(45); }
         await click(); fights = 0;
       }
-      else if (fights < 3 && (await player()).health.current > 0 && await fightNearby(range)) { fights++; await click(); }
-      else if (fights >= 3) { if (++fights >= 8) fights = 0; if (fights === 4) await click(); }
+      else if (fights < maxFights && (await player()).health.current > 0 && await fightNearby(range, flee ? target : undefined)) { fights++; await click(); }
+      else if (fights >= maxFights) { if (++fights >= maxFights + 5) fights = 0; if (fights === maxFights + 1) await click(); }
       else if (i % 10 === 9) {
         // A clear ground click can still approach the wrong side of a wreck. Try another
         // physical ground point within the unchanged waypoint tolerance after a stall.
@@ -188,15 +196,18 @@ test.describe('L3 The Police Collapse in the browser', () => {
     let last = await mission();
     let lastPursuitAt = 0;
     let closedGroup: unknown = null;
-    for (const wp of route) {
+    for (let k = 0; k < route.length; k++) {
+      const wp = route[k];
       // Reach the wreck detour before cutting back, and finish the final click inside the army zone.
       const stop = wp.x > l3.map.zoneX ? .5 : .8;
-      await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission();
+      const went = await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission();
         const rescue = await page.evaluate(() => { const a = window.__SS__!, s = a.missions.state()!.l3!, all = a.query({}), p = a.getState().player!.transform; return { tick: a.getState().tick, pursuing: p.x > 174 && all.some(e => { if (e.kind !== 'infected' || e.health.current <= 0 || e.hidden || e.transform.x >= p.x) return false; const q = a.camera.project(e.transform.x,e.transform.y+.6,e.transform.z); return Math.abs(q[0])<1 && Math.abs(q[1])<1 && Math.abs(q[2])<1; }), group: s.barrierClosedAt ? all.filter(e => e.id === 1 || e.companion || s.officerIds.includes(e.id) && e.civilian?.ally && !e.infection && e.health.current > 0).map(e => ({id:e.id,x:e.transform.x})) : null }; });
         if (rescue.pursuing) lastPursuitAt = rescue.tick;
         if (rescue.group) closedGroup = rescue.group;
-        return false; }, 9);
+        return false; }, 4, true);
       if (!await inL3()) break;
+      // Respawned at the checkpoint: resume at the first waypoint not behind it (the route runs west -> east).
+      if (went === 'died') { const p = (await player()).transform; k = Math.max(0, route.findIndex(w => w.x >= p.x - 1)) - 1; continue; }
       if (wp.x === restX) {
         // The compound is a resting place before the rendezvous ring, not an automatic finish at the boom.
         for (let i = 0; i < 600 && !(await mission()).l3!.barrierClosedAt; i++) {

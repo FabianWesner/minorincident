@@ -110,7 +110,14 @@ export class LevelThreeCollapse {
     // Gunfire is a loud event (section 5.3): the player's handgun and every ally shot.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') this.gunshot(1, e.position); });
     world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.role !== 'firefighter' && e.from) this.gunshot(e.sourceId, e.from); });
-    world.events.on('player.died', () => { this.lastDeathX = world.entities.get(1)!.transform.x; });
+    // E21-AC05 "ranged before contact" (brief l3-polish): a handgun hit checks the target like a police pistol hit (0.25 s stagger),
+    // so the courier can drop a runner before it closes in now that the weaker police (PO 10-12) let more of them through.
+    world.events.on('combat.hit', e => {
+      if (e.type !== 'combat.hit' || e.sourceId !== 1 || e.actionId !== 'weapon.handgun') return;
+      const c = world.entities.get(e.targetId)?.combat; if (!c || !world.entities.get(e.targetId)?.infected) return;
+      c.staggerUntil = Math.max(c.staggerUntil, world.tick + ticks(l3.gunfire.handgunStaggerS)); c.attacking = false;
+    });
+    world.events.on('player.died', () => { this.lastDeathX = world.entities.get(1)!.transform.x; this.spentSpills = structuredClone(this.mission.state.l3?.spills ?? {}); });
     world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite') this.bitten(e.targetId); });
     world.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') this.turned(e.id); });
     world.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected') this.turned(e.entityId); });
@@ -360,9 +367,24 @@ export class LevelThreeCollapse {
       .sort((a, b) => dist(a, at) - dist(b, at));
     // Death-loop relief (l3.mercy) also eases spills planned after the respawn, not only what was pending at it.
     const size = Math.round(sp.size[seg - 1] * (1 - this.mercyFraction()));
+    // Brief l3-polish (newbie deaths at the cross-street turn into the Boulevard): the spill runs at the police line, the nearest
+    // living squad officer near the shot, not at the courier; she only draws it herself once the squad is gone.
+    const officer = s.squad.map(q => world.entities.get(q.id)).filter(e => !!e && e.health.current > 0 && !e.infection && dist(e.transform, at) < sp.policeM)
+      .sort((a, b) => dist(a!.transform, at) - dist(b!.transform, at))[0];
+    const home = officer ? { x: officer.transform.x, z: officer.transform.z } : { ...at };
     for (let i = 0; i < size && doors.length; i++) {
-      s.pending.push({ id: 0, door: doors[i % doors.length].name, home: { ...at }, segment: seg, at: world.tick, kind: 'spill' });
+      s.pending.push({ id: 0, door: doors[i % doors.length].name, home: { ...home }, segment: seg, at: world.tick, kind: 'spill' });
     }
+  }
+  /**
+   * Brief l3-polish (newbie and real-input deaths at the forced turn from the cross street into the Boulevard: two 15-strong
+   * clusters of different groups overlapped on the blind corner). A cluster never sits on a detour mouth: it moves `shiftM` along
+   * its avenue, away from the corner, so a fleeing courier rounds it with room to see the next group. Counts are unchanged.
+   */
+  private clearMouth(x: number, street: 'blvd' | 'commerce' | 'oak'): number {
+    const { mouths, clearM, shiftM } = l3.density.mouth;
+    for (const [mx, st] of mouths) if (st === street && Math.abs(x - mx) < clearM) return mx + (x >= mx ? shiftM : -shiftM);
+    return x;
   }
   /** Pre-populated wanderers of one segment, planned in groups and emerging at doors near their home once out of view. */
   private populate(segment: number): void {
@@ -377,7 +399,7 @@ export class LevelThreeCollapse {
         // Five small clusters across the neighbourhood, with breathing room along the walking line (PO 10-09 lulls; the PO 10-12
         // "don't cluster" applies to the station attack, which streams in spread from five directions).
         const cluster = Math.floor(i / clusterSize) % offsets.length;
-        const spread = cluster === 0 ? home : this.snap({ x: home.x + offsets[cluster], z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
+        const spread = cluster === 0 ? home : this.snap({ x: this.clearMouth(home.x + offsets[cluster], street), z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
         const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, spread) - dist(b, spread)).slice(0, 2);
         s.pending.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
       }
@@ -615,23 +637,53 @@ export class LevelThreeCollapse {
   /** Death-loop relief (data: `l3.mercy`), applied on the first tick after a respawn. */
   private mercyDue = false;
   private lastDeathX = -Infinity;
+  /** Side-street spills used before the last death (kept through the checkpoint restore). */
+  private spentSpills: L3State['spills'] = {};
   /** Respawns per checkpoint (a death loop is several deaths at the same checkpoint, not the level's death total). */
   private readonly respawns: Record<string, number> = {};
-  private mercyFraction(): number {
+  private mercyFraction(later = 0): number {
     const m = l3.mercy;
-    return Math.max(0, Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths + 1)));
+    return Math.max(0, Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths - later + 1)));
+  }
+  /**
+   * Brief l3-polish (T-E21-18: 11 infected on the fallback checkpoint): every respawn is safe without rewriting the restored
+   * outbreak layer. The respawn radius is cleared (infected inside it step back out to its edge, the cut hides the move), the
+   * pursuers around it lose the courier for a few seconds, and the courier gets a short grace.
+   */
+  private safeRespawn(): void {
+    const { world } = this.mission, ai = world.infected, r = l3.respawn, tick = world.tick, player = world.entities.get(1)!, p = player.transform;
+    if (!ai) return;
+    if (player.survivor) player.survivor.invulnerableUntil = tick + ticks(r.graceS);
+    for (const e of ai.active) {
+      const brain = e.infected?.l1, d = dist(e.transform, p);
+      if (e.health.current <= 0 || !brain || d > r.pursueM) continue;
+      if (d < r.clearM) {
+        const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - p.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - p.z) * k : Math.sin(e.id);
+        for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
+          const at = { x: p.x + dx * m, z: p.z + dz * m };
+          if (!ai.nav.clear(at.x, at.z, .45)) continue;
+          Object.assign(e.transform, at); world.spatial.set(e.id, at.x, at.z);
+          if (e.locomotion) { e.locomotion.vx = e.locomotion.vz = 0; }
+          break;
+        }
+      }
+      if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; e.infected!.state = 'wander'; if (e.combat) e.combat.attacking = false; }
+      brain.ignoreId = 1; brain.ignoreUntil = tick + ticks(r.delayS);
+    }
   }
   private mercy(): void {
     this.mercyDue = false;
-    const { world } = this.mission, s = this.s, m = l3.mercy, ai = world.infected;
-    const frac = this.mercyFraction(); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
+    const { world } = this.mission, s = this.s, ai = world.infected;
+    if (ai && (s.phase === 'corridor' || s.phase === 'fallback' || s.phase === 'attack')) this.safeRespawn();
+    // Relief scales with deaths at one checkpoint: the first respawn thins what is still to come, the living crowd from the next.
+    const frac = this.mercyFraction(), live = this.mercyFraction(1); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
     // The window starts behindM behind the respawn (a crowd standing on the checkpoint, real-input run 10-12) and reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
     // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).
-    const p = world.entities.get(1)!.transform, [, b] = m.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x - l3.mercy.behindM && x < p.x + reach;
-    const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
-    thin([...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
+    const p = world.entities.get(1)!.transform, [, b] = l3.mercy.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x - l3.mercy.behindM && x < p.x + reach;
+    const thinBy = <T>(f: number, items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * f) > Math.floor(i * f)) remove(item); });
+    if (live > 0) thinBy(live, [...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
     const waiting = (s.pending as Pending[]).filter(q => q.id === 0 && ahead(q.home.x));
-    thin(waiting, q => { s.pending.splice(s.pending.indexOf(q), 1); });
+    thinBy(frac, waiting, q => { s.pending.splice(s.pending.indexOf(q), 1); });
   }
   restore(delta: number): void {
     const s = this.mission.state.l3; if (!s) return;
@@ -642,6 +694,10 @@ export class LevelThreeCollapse {
     for (const m of s.squad) if (m.farSince) m.farSince += delta;
     for (const k of Object.keys(s.lastShot)) s.lastShot[Number(k)] += delta;
     for (const v of Object.values(s.spills)) v.at += delta;
+    // Brief l3-polish (real-input death loop on the Boulevard): a side street that already spilled stays spent after a respawn
+    // instead of refilling the street for every retry.
+    for (const [k, v] of Object.entries(this.spentSpills)) if (v.n > (s.spills[k]?.n ?? 0)) s.spills[k] = { n: v.n, at: this.world.tick };
+    this.spentSpills = {};
     if (s.gatesClosedAt) s.gatesClosedAt += delta;
     if (s.barrierClosedAt) s.barrierClosedAt += delta;
     this.barrier(!!s.barrierClosedAt);

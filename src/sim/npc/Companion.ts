@@ -108,7 +108,10 @@ export class Companion {
         // While the player rides, the corgi's speed cap rises to 7.5 m/s (a short 15 % catch-up when it falls > 4 m behind) and it runs alongside (spec 5.10).
         else if (c.following) {
           // Lead by the response time: waiting for the courier to be far away before accelerating loses her at a run.
-          this.target.x = player.transform.x + (velocity?.x ?? 0) * .25; this.target.z = player.transform.z + (velocity?.z ?? 0) * .25;
+          // Brief l3-polish (the corgi ran inside the horde pack on the L3 ramp): with infected at its heels it runs at the courier's
+          // side, a little ahead, instead of trailing into the pursuers behind her.
+          const lead = this.world.scenario === 'L3' && playerSpeed > 2 && ai.active.some(en => en.health.current > 0 && !en.hidden && Math.hypot(en.transform.x - e.transform.x, en.transform.z - e.transform.z) < 4) ? .6 : .25;
+          this.target.x = player.transform.x + (velocity?.x ?? 0) * lead; this.target.z = player.transform.z + (velocity?.z ?? 0) * lead;
           this.world.npcs!.move(e, riding ? this.riderSide(player.transform) : this.target, riding ? Math.min(l1v2.corgi.riderSpeedCapMs * (distance > 4 ? 1.15 : 1), l1v2.corgi.riderSpeedCapMs * .9 + Math.max(0, distance - 3) * 2) : Math.min(8, Math.max(4.5, playerSpeed + Math.max(0, distance - 2) * 3)), c, riding ? 1.5 : 2);
         }
         else if (c.velocity) c.velocity.x = c.velocity.z = 0;
