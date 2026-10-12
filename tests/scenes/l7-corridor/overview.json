@@ -1,0 +1,116 @@
+{
+ "name": "l7-corridor-overview",
+ "note": "Overview pose of the corridor and bus from the south-east at W6 night.",
+ "seed": 29,
+ "tier": 6,
+ "time": "L6",
+ "ground": "district",
+ "dof": false,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -90,
+    38
+   ],
+   [
+    -26,
+    62
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -30,
+    47
+   ],
+   "state": {
+    "walk": [
+     [
+      -71,
+      48
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "pose",
+  "position": [
+   -30,
+   40,
+   80
+  ],
+  "target": [
+   -58,
+   0,
+   49
+  ]
+ },
+ "frames": 120,
+ "shots": [
+  0,
+  60,
+  120
+ ],
+ "sheet": 60,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "actorHitsMax": 0,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "footSinkMaxCm": 0,
+  "yawDriftMaxDeg": 6
+ },
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -36,
+     53
+    ],
+    "radius": 1.8,
+    "duration": 120
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -52,
+     55
+    ],
+    "radius": 1.8,
+    "duration": 120
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -63,
+     47.5
+    ],
+    "radius": 1.8,
+    "duration": 120
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -80.5,
+     54
+    ],
+    "radius": 1.8,
+    "duration": 120
+   }
+  }
+ ]
+}
