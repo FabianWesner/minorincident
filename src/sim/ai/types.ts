@@ -6,8 +6,8 @@ export interface InfectedState {
   specialCooldowns?: Partial<Record<InfectedSpecialMove, number>>;
   specialAttack?: InfectedSpecialAttack;
   specialRecoveryUntil?: number;
-  /** Fixed roar origin and non-stacking 1.25 speed scale; expires after 300 ticks. */
-  roar?: { sourceId: number; attackId: number; x: number; z: number; until: number };
+  /** Fixed roar origin; convergence lasts 300 ticks, with an independent non-stacking speed boost. */
+  roar?: { sourceId: number; attackId: number; x: number; z: number; until: number; speedScale?: number; speedUntil?: number };
   state: 'idle' | 'wander' | 'alerted' | 'chase' | 'attack' | 'stagger' | 'dead' | 'migration' | 'scatter' | 'search' | 'attracted' | 'bite';
   vault?: { started: number; from: { x: number; z: number }; to: { x: number; z: number }; height: number };
   pathGrid: number; grabNextTick: number;
@@ -42,5 +42,6 @@ export interface InfectedSpecialAttack {
   target: { id: number; x: number; z: number };
   area: { x: number; z: number; radius: number; dx: number; dz: number };
   hitIds: number[];
+  destination?: { x: number; z: number };
   projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
 }

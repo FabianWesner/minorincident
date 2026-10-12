@@ -52,6 +52,10 @@ for (const [move, caption] of [['alpha.grab-throw', 'Alpha preparing to throw a 
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', 'vocal', .8, 100, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
+for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce — clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla beating its chest — infected converge here', 1], ['gorilla.pound', 'Gorilla ground pound — leave the marked circle', 1]] as const) {
+  telegraphCues[move] = `telegraph.${move}`;
+  cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
+}
 cue('screamer.scream', 'telegraph', 'vocal', 1.2, 700, { gain: 0.65, caption: 'Screamer shrieking', antiSpam: 0.3, rateSpread: 0 });
 for (const name of ['zebra', 'civilian', 'explosive']) {
     telegraphCues[name] = `telegraph.${name}`;

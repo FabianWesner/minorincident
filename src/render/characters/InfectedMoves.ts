@@ -39,7 +39,7 @@ export class InfectedMoves {
    */
   sample(e: EntitySnapshot, state: string, until: number, windup: number, renderTick: number, yaw: number, speed: number, gait: string | undefined): { layers: CrowdLayers; style: GaitStyle } {
     const layers = this.layers, style = this.style;
-    layers.lean = layers.roll = layers.lunge = layers.lurch = layers.flinch = 0; style.drag = 0; style.dragFoot = e.id % 2;
+    layers.lean = layers.roll = layers.lunge = layers.lurch = layers.flinch = layers.chestBeat = 0; style.drag = 0; style.dragFoot = e.id % 2;
     // Lunge-grab: coil back through the windup, throw the body at the target as it ends, recover after the hit.
     if (state === 'attack') {
       const p = 1 - Math.max(0, until - renderTick) / Math.max(1, windup * 60);
@@ -50,6 +50,8 @@ export class InfectedMoves {
       if (since >= 0 && since < .45 && state !== 'dead') layers.lunge = .22 * (since < .1 ? 1 : 1 - ease((since - .1) / .35));
       else this.strikes.delete(e.id);
     }
+    const special = e.infected?.specialAttack;
+    if (special?.move === 'gorilla.roar' && special.stage === 'telegraph') layers.chestBeat = Math.max(.001, (renderTick - special.startTick) / 60);
     const flinch = InfectedMoves.flinch(e, renderTick);
     if (flinch) {
       const d = e.combat!.reaction!.direction, c = Math.cos(yaw), s = Math.sin(yaw);
