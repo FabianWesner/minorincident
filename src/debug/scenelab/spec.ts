@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
+  l7Group?: boolean;
   /** Fixture-only eligibility overrides, restored after view initialization. */
   barArchetypes?: string[];
   /** High-tier fixture cap (low uses half), for E18 stress scenes; defaults to L1 caps. */
@@ -62,7 +64,7 @@ export interface SceneSpec {
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
 export interface PropSpec { decay?: string; powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
-export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi';
+export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi' | 'animal';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; gearTier?: number; role?: string }
 export interface ActorSpec {
   /** Feet height for a stationary actor on a raised deck (metres above world ground). */
@@ -71,6 +73,7 @@ export interface ActorSpec {
   supportFeet?: boolean;
   id?: string;
   kind: ActorKind;
+  species?: import('../../sim/npc/types').ZooSpecies;
   at?: [number, number];
   yaw?: number;
   /** Pedestrian look (model npc.civilian-*, tint #rrggbb, accessories, handProp); courier: survivor variant via `model: 'female'|'male'`. */
@@ -106,6 +109,8 @@ export type Action =
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
   | { infect: { by?: string; instant?: boolean } }
+  | { drive: { throttle: number; steer?: number; seconds?: number } }
+  | { boardCar: string } | { exitCar: string }
   | { mountBike: string }
   | { dismount: true }
   | { interact: true }
@@ -234,7 +239,8 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   spec.props?.forEach((p, i) => { if (!assets.has(p.asset)) errors.push(`props[${i}].asset: unknown manifest id ${p.asset}`); if (p.decay && assets.has(p.asset) && !assets.get(p.asset)!.decayVariants.includes(p.decay) && !vehicleDecayFallback(assets.get(p.asset)!, p.decay)) errors.push(`props[${i}].decay: unknown variant ${p.decay}`); point(p.at, `props[${i}].at`); if (p.id) { if (ids.has(p.id)) errors.push(`duplicate id ${p.id}`); ids.add(p.id); } });
   let couriers = 0;
   spec.actors?.forEach((a, i) => {
-    if (!['courier', 'pedestrian', 'infected', 'corgi'].includes(a.kind)) errors.push(`actors[${i}].kind: ${a.kind}`);
+    if (!['courier', 'pedestrian', 'infected', 'corgi', 'animal'].includes(a.kind)) errors.push(`actors[${i}].kind: ${a.kind}`);
+    if (a.kind === 'animal' && !['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].includes(a.species ?? '')) errors.push(`actors[${i}].species: ${a.species}`);
     if (a.kind === 'courier') couriers++;
     if (a.at) point(a.at, `actors[${i}].at`);
     if (a.id) { if (ids.has(a.id)) errors.push(`duplicate id ${a.id}`); ids.add(a.id); }

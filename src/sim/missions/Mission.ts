@@ -378,7 +378,7 @@ export class Mission {
     restoreSeams(this.world, checkpoint.seams);
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier);
-    this.world.vehicles?.rebuild();
+    this.world.vehicles?.rebuild(false, delta);
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild();
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });

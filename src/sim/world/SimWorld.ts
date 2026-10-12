@@ -1,3 +1,5 @@
+import { TrapRescue } from './TrapRescue';
+import { LevelSevenEncounters } from '../missions/LevelSevenEncounters';
 import { isWorldTier, type Tier } from '../../levels/districts/types';
 import { WeatherSystem } from '../weather/WeatherSystem';
 import { LightPower } from '../lighting/LightPower';
@@ -84,11 +86,21 @@ export class SimWorld implements Lifecycle {
   barricades: Barricades | null = null;
   pickups: Pickups | null = null;
   missions: Mission | null = null;
+  l7Encounters: LevelSevenEncounters | null = null;
   /** Borrowed input before controls resolve it; shared browser/headless bot policies use this. */
   get deviceInput(): InputFrame { return this.input; }
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
-  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;return next; }
+  /** Trap-pocket safety net of the loaded mission (null without districts). */
+  trapRescue: TrapRescue | null = null;
+  private stopTrapRescue: (() => void) | null = null;
+  loadMission(def: MissionDef): Mission {
+    const next=new Mission(this,def);this.missions?.dispose();this.missions=next;
+    this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
+    const goal = def.steps.at(-1) && def.anchors[def.steps.at(-1)!.anchor];
+    if (this.districts && goal) { const rescue = this.trapRescue = new TrapRescue(this, [goal]); this.stopTrapRescue = this.events.on('sim.tick', () => rescue.update(), SimPhase.missions); }
+    return next;
+  }
   /** Mission actors use the same component/physics owners as authored gameplay placements. */
   spawnMissionActor(def: ActorDef, at: { x: number; z: number }): EntitySnapshot {
     let id: number;
@@ -231,9 +243,11 @@ export class SimWorld implements Lifecycle {
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
-  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null):void {
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[]):void {
     const districts=new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
-    this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
+    this.loadScenario('survivor',seed);
+    if (composition.id === 'L7' && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
+    this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
     this.lightPower?.install(districts);
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
     this.interactables!.nav = districts.nav;
@@ -252,7 +266,12 @@ export class SimWorld implements Lifecycle {
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
-    if (composition.id === 'L7') installL7Dressing(this);
+    if (composition.id === 'L7') {
+      installL7Dressing(this);
+      this.l7Encounters = new LevelSevenEncounters(this, carriedSurvivors);
+      this.events.on('sim.tick', () => this.l7Encounters?.reserveSlots(), SimPhase.ai - .1);
+      this.events.on('sim.tick', () => this.l7Encounters?.update(), SimPhase.missions);
+    }
     if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     if (this.aftermath && this.toys) this.toys.carryOver(this.aftermath);
     this.events.on('sim.tick',()=>{
@@ -319,7 +338,7 @@ export class SimWorld implements Lifecycle {
   getState(): GameStateSnapshot {
     const entities = this.query({});
     const controls = this.controls.snapshot();
-    return { weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    return { ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
@@ -345,7 +364,7 @@ export class SimWorld implements Lifecycle {
   reset(): void {
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
-    this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.l7Encounters = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.aftermath = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }

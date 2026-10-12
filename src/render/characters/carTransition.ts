@@ -1,8 +1,9 @@
+import { vehicleBoardingTicks } from '../../data/vehicles';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import type { SurvivorState } from '../../data/survivor';
 import { lerp } from '../../core/maths';
 
-export const carTransitionTicks = 60;
+export const carTransitionTicks = vehicleBoardingTicks;
 const ease = (t: number) => { const x = Math.max(0, Math.min(1, t)); return x * x * (3 - 2 * x); };
 /** The door opens before the courier crosses the sill, then shuts after boarding/landing. */
 export function carDoorWeight(elapsed: number): number {

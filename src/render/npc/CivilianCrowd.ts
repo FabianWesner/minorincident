@@ -42,11 +42,12 @@ const preparedCrowds = new Map<string, PreparedCivilian>();
 // Retain at most the twelve core models' two common tiers. Different campaign casts
 // must not accumulate pose atlases across repeated L1/L6 loads.
 const preparedCrowdLimit = coreCivilianModels.length * 2;
+const noFigures: readonly EntitySnapshot[] = [];
 type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
-  if (e.escort) return null;
+  if (e.escort || e.civilian?.zooAnimal) return null;
   const c = e.civilian;
   // Old checkpoints may still contain an adult skin on a protected child.
   if (c?.adult === false && !c.pet) return 'npc.civilian-kid';
@@ -97,18 +98,30 @@ class CivilianBatch extends Group {
   private readonly sway = new Matrix4();
   private readonly motion = new MotionPhase();
   private strideScale = 1;
-  private readonly frame = new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage);
-  private readonly tint = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
+  private readonly capacity: number;
+  private readonly corpseLod: 'lod1' | 'lod2';
+  private readonly frame: InstancedBufferAttribute;
+  private readonly tint: InstancedBufferAttribute;
   /** Infection overlay per instance: x skin blend toward ash-green, y eye glow, z blood (negative for a routine grip); w is the
    * displayed pose-atlas row. Packed so the draw stays within WebGPU's 8 vertex buffers (a separate `_pose_frame`
    * buffer made the pipeline invalid: every pedestrian vanished on WebGPU while props and shadows still drew). */
-  private readonly overlay = new InstancedBufferAttribute(new Float32Array(350 * 4), 4).setUsage(StreamDrawUsage);
+  private readonly overlay: InstancedBufferAttribute;
   private readonly shirt = new Color();
   private registry?: AssetRegistry;
   source = 'placeholder';
   /** lod2 = the far band; lod1 = the near band; lod0 = the few closest figures (CrowdVisibility heroes). */
   get distant(): boolean { return this.lod === 'lod2'; }
-  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories) { super(); this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
+  constructor(readonly world: SimWorld, readonly model: string, readonly lod: 'lod0' | 'lod1' | 'lod2', private readonly visibility: CrowdVisibility, private readonly shading?: Materials, private readonly props?: RoutineProps, private readonly gait = new GaitPhase(), private readonly footwork = new CrowdFootwork(), private readonly moves = new InfectedMoves(), private readonly presentation = new MotionPresentation(crowdTurnRate), private readonly accessories?: CrowdAccessories) { super();
+    // L7 has a strict infected pool plus at most 35 incoming survivors. Size
+    // every model's mutable pose rows for that population instead of 350.
+    this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
+    // The phone's final-horde carpet keeps every body using the shipped far
+    // silhouette. Freeze this choice so later quality changes cannot duplicate it.
+    this.corpseLod = world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
+    this.frame = new InstancedBufferAttribute(new Float32Array(this.capacity), 1).setUsage(StreamDrawUsage);
+    this.tint = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
+    this.overlay = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
+    this.name = 'civilian-crowd'; this.add(this.corpses); this.probe.lod = lod; }
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
     let key: string | undefined = `${this.model}:${this.lod}`;
@@ -141,10 +154,10 @@ class CivilianBatch extends Group {
     if (this.lod !== 'lod2') this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
-    this.poses = new CrowdPosePalette(baked.clip, 350); this.texture = this.poses.texture;
+    this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
     const shared = civilianMaterial(this.shading, baked.doubleSided, this.bakedClip.parts.indexOf('handR'), this.texture);
     const material = shared.material; this.releaseMaterial = shared.release;
-    this.mesh = new InstancedMesh(baked.geometry, material, 350); this.mesh.userData.preRenderTextures = [this.texture]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
+    this.mesh = new InstancedMesh(baked.geometry, material, this.capacity); this.mesh.userData.preRenderTextures = [this.texture]; this.mesh.userData.preRenderSolo = true; this.mesh.frustumCulled = false; this.mesh.count = 0; this.mesh.castShadow = !this.distant; this.mesh.receiveShadow = true;
     this.mesh.instanceMatrix.setUsage(StreamDrawUsage);
     const matrices = new InstancedInterleavedBuffer(this.mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
     for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
@@ -156,25 +169,25 @@ class CivilianBatch extends Group {
     this.mesh.userData.staticInstancePosition = material.positionNode;
     this.mesh.onAfterRender = () => this.probe.draw();
     // First settled bodies must not bake geometry or compile frozen-material shaders during the retreat.
-    // Settled bodies are always placed through LOD1 below. LOD0/LOD2 never
-    // populate these pages, so preparing them repeats the bake and node build.
+    // L6 settled bodies use LOD1. Preparing its other bands repeats the bake
+    // and node build without populating those pages.
     if (this.world.scenario === 'L6' && this.lod === 'lod1') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
-  update(alpha = 1, low = false, shotId?: number): void {
+  update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
     this.probe.begin(); this.corpses.begin(id => this.world.entities.get(id));
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
-    for (const e of shot ? [shot] : this.world.entities.iterate()) {
-      if (index >= 350 && !e.corpse) continue;
+    for (const e of shot ? [shot] : figures ?? this.world.entities.iterate()) {
+      if (index >= this.capacity && !e.corpse) continue;
       // Match once before projection: the other nineteen model/LOD batches
       // need no culling work for this person (or for ordinary infected).
       const c = e.civilian;
       const model = crowdModelOf(e);
       if (model !== this.model) continue;
       // Settled corpses become static instances once, wherever the camera is; they are never culled or LOD-switched.
-      if (e.corpse) { if (this.lod === 'lod1' && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
+      if (e.corpse) { if (this.lod === this.corpseLod && !e.civilian && e.infected && keepsLook(e)) this.place(e, index, alpha); continue; }
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (shotId === undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
@@ -186,9 +199,11 @@ class CivilianBatch extends Group {
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const speed = e.motion && !e.motion.moving ? 0 : motion.speed;
       const activity = c.schedule?.[c.scheduleStep ?? 0];
-      const performing = c.state === 'calm' && !!c.activityUntil;
+      // A sitter that is not at its seat (moved off by a fight/flight) never keeps the sitting pose or the seat lift.
+      const offSeat = !!activity?.seat && Math.hypot(e.transform.x - activity.seat.x, e.transform.z - activity.seat.z) > 1.2;
+      const performing = c.state === 'calm' && !!c.activityUntil && !offSeat;
       const elapsed = (this.world.tick - (c.activityStarted ?? this.world.tick)) / 60;
-      const noticingSeated = c.state === 'alarmed' && !!activity?.seat && !!c.activityUntil;
+      const noticingSeated = c.state === 'alarmed' && !!activity?.seat && !!c.activityUntil && !offSeat;
       const noticeElapsed = (this.world.tick - c.entered) / 60;
       const routineClip: Clip = activity?.activity === 'stand' ? 'npc-stand-up' : activity?.activity === 'sit' ? elapsed < .6 ? 'npc-sit-down' : 'npc-sit' : activity?.activity === 'water' ? 'npc-water' : activity?.activity === 'chat' ? 'npc-gesture' : 'npc-look-around';
       const annoyed = c.state === 'annoyed' && this.world.tick - c.entered < 24;
@@ -196,7 +211,7 @@ class CivilianBatch extends Group {
       // E19 story beats override the routine (render-only, set by the mission script).
       const storyClip = !down && !rising && c.story && (civilianClips as readonly string[]).includes(c.story.clip) ? c.story.clip as Clip : null;
       let clip: Clip = storyClip && (c.state === 'calm' || c.state === 'grabbed' && storyClip === 'swing') ? storyClip : annoyed ? 'stagger-left' : c.state === 'down' ? 'infection-collapse' : down ? 'death-side' : rising ? 'infection-rise' : c.state === 'bitten' ? 'infection-stagger' : c.state === 'grabbed' ? c.l1 ? civGrabbed : 'hurt' : startle ? civStartle : c.state === 'alarmed' ? noticingSeated && noticeElapsed < .6 ? 'npc-stand-up' : 'npc-look-around' : performing && activity?.activity !== 'walk' ? routineClip : speed > 2.5 ? c.l1 && c.state === 'flee' ? civFlee : 'run' : speed > .06 ? walkClip : c.schedule ? 'npc-look-around' : 'idle';
-      if (speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
+      if (e.passengerOf === undefined && speed > .06 && !strides[clip] && !down && !rising && c.state !== 'grabbed' && c.state !== 'bitten') clip = speed > 2.5 ? civFlee : walkClip;
       const duration = authoredClips.get(clip)!.duration, gaitDistance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const phase = strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, speed) : annoyed ? Math.min(1, (this.world.tick - c.entered) / 24) : clip === 'npc-sit-down' || clip === 'npc-stand-up' ? Math.min(1, (noticingSeated ? noticeElapsed : elapsed) / .6) : c.state === 'down' || c.state === 'bitten' || rising ? Math.min(1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : startle ? Math.min(civStartle === 'hurt' ? .5 : 1, (this.world.tick - c.entered) / Math.max(1, c.until - c.entered)) : down ? 1 : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       const storyElapsed = storyClip && clip === storyClip && !strides[clip] ? (this.world.tick - c.story!.start) / 60 / authoredClips.get(clip)!.duration : null;
@@ -321,6 +336,7 @@ export class CivilianCrowd extends Group {
   private readonly moves = new InfectedMoves();
   /** Shared across the near/far batches so a figure crossing the band keeps its displayed turn. */
   private readonly presentation = new MotionPresentation(crowdTurnRate);
+  private readonly figures = new Map<string, EntitySnapshot[]>();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories) {
@@ -372,7 +388,9 @@ export class CivilianCrowd extends Group {
       const model = crowdModelOf(e);
       // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
       // Bake their close models before shader warm-up: meeting one during play must not parse/bake a rig.
-      if (model && (e.civilian?.survivor || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
+      // L7's large escort uses the existing four visible hero slots. Warming
+      // every follower's LOD0 also retained rigs that never reached the close band.
+      if (model && (e.civilian?.survivor && this.world.scenario !== 'L7' || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
       if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
       this.known.add(model);
       const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
@@ -390,8 +408,23 @@ export class CivilianCrowd extends Group {
     if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
     loadMeasure('view:civilian-crowd', started); this.update();
   }
-  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void { this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin(); for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id); this.batches.forEach(b=>b.update(alpha, this.low)); for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish(); }
-  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts: states.map(s=>s.layout).filter(Boolean),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
+  update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
+    for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
+    if (this.world.scenario === 'L7') {
+      // Each human belongs to one model. All its LOD batches share this frame's
+      // list instead of rescanning every prop, light and other crowd model.
+      for (const list of this.figures.values()) list.length = 0;
+      for (const e of this.world.entities.iterate()) {
+        const model = crowdModelOf(e); if (!model) continue;
+        let list = this.figures.get(model); if (!list) this.figures.set(model, list = []);
+        list.push(e);
+      }
+      for (const b of this.batches) b.update(alpha, this.low, undefined, this.figures.get(b.model) ?? noFigures);
+    } else for (const b of this.batches) b.update(alpha, this.low);
+    for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish();
+  }
+  snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts:states.map(s=>s.layout).filter(Boolean),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }
   aimGun(id: number, direction: { x: number; y?: number; z: number }): void { this.props.aiming.set(id, { until: this.world.tick + 24, direction: { ...direction } }); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }): Vector3 | null {
     this.aimGun(id,direction);

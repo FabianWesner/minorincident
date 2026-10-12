@@ -47,6 +47,8 @@ export interface EntitySnapshot {
   /** L1 v2: the courier bicycle (entity) and the id of the bicycle the player is riding (player entity). */
   bicycle?: import('../vehicles/Bicycle').BicycleState;
   riding?: number;
+  /** Survivor inside or crossing a transport doorway; independent of infected clingers. */
+  passengerOf?: number;
   /** L1 v2 interactive toys (dumpster, car alarm, car wash); gates use `interactable`. */
   toy?: import('../interact/Toys').ToyState;
   survivor?: SurvivorState;
@@ -118,6 +120,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'scenario.loaded'; name: string; seed: number }
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
+  l7?: import('../missions/LevelSevenEncounters').L7EncounterState;
   weather: ReturnType<import('../weather/WeatherSystem').WeatherSystem['snapshot']> | null;
   tick: number;
   ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;

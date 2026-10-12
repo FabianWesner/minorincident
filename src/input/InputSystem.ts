@@ -20,6 +20,10 @@ export const walkHintKey = 'minor-incident.walk-hint.v1';
 export class InputSystem implements Lifecycle {
   readonly bindings: Bindings;
   readonly recorder = new Recorder();
+  /** Telemetry: sees every frame the sim consumes (call sites: sample()). Must not allocate. */
+  tap: ((frame: InputFrame, scheme: Scheme) => void) | null = null;
+  /** Telemetry replay: a decoded log supplies each sample's frame and device scheme. */
+  feed: { next(): InputFrame | null; scheme: Scheme } | null = null;
   readonly keyboard: Keyboard;
   readonly pointer: Pointer;
   readonly wheel: Wheel;
@@ -174,8 +178,9 @@ export class InputSystem implements Lifecycle {
   private readonly cursorPoint = { x: 0, z: 0 };
   private readonly driving = { throttle: 0, steer: 0 };
   sample(player: Vec2, dt = 1 / 60, targets: Iterable<EntitySnapshot> = []): InputFrame {
+    if (this.feed) return this.feed.next() ?? this.frameNeutral();
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
-    if (this.injected) { this.recorder.capture(this.injected); return this.injected; }
+    if (this.injected) { this.recorder.capture(this.injected); this.tap?.(this.injected, this.scheme); return this.injected; }
     const frame = this.frame;
     frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
@@ -254,7 +259,7 @@ export class InputSystem implements Lifecycle {
     frame.selector = selection?.direction ?? 0;
     if (selection?.side) frame.selectorSide = selection.side;
     if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; frame.pause = this.pause;
-    this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); return frame;
+    this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); this.tap?.(frame, this.scheme); return frame;
   }
   /** Current melee reach of the active weapon (metres), supplied by the game; null outside combat. */
   reach: (() => number | null) | null = null;

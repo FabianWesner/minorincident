@@ -7,7 +7,7 @@
  "layout": { "district": "D-FAIR", "bbox": [[-6, -40], [50, 24]] },
  "clipping": { "ignoreFoliage": true },
  "props": [
-  { "id": "fuel", "asset": "veh.fuel-truck", "at": [13.2, -9.5], "yaw": 90 },
+  { "id": "fuel", "asset": "veh.fuel-truck", "at": [8, -9.5], "yaw": 90 },
   { "id": "bus", "asset": "veh.evac-bus", "at": [6.6, 5.7], "yaw": 180 },
   { "id": "truck", "asset": "veh.military-truck", "at": [-4.6, 5.7], "yaw": 180 }
  ],
@@ -16,7 +16,7 @@
   { "id": "zed", "kind": "infected", "at": [14, -24], "count": 8, "spread": 1.5, "yaw": 180, "state": { "chase": "courier" } }
  ],
  "script": [
-  { "frame": 60, "effect": { "blast": "explosion.fuel-truck", "at": [13.2, -9.5] } }
+  { "frame": 60, "effect": { "blast": "explosion.fuel-truck", "at": [8, -9.5] } }
  ],
  "camera": { "mode": "game", "target": [8, -6], "zoom": 1.9 },
  "frames": 360,

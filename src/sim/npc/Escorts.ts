@@ -25,7 +25,7 @@ export class Escorts {
     const player = this.world.entities.get(1)!, tick = this.world.tick, ai = this.world.infected!;
     const stopped = Math.hypot(player.survivor?.velocity.x ?? 0, player.survivor?.velocity.z ?? 0) < .1;
     for (const e of this.world.entities.iterate()) {
-      const c = e.escort; if (!c || c.state === 'dead') continue;
+      const c = e.escort; if (e.passengerOf !== undefined) continue; if (!c || c.state === 'dead') continue;
       if (e.health.current <= 0) this.down(e);
       const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
       const near = distance <= 1.5 && stopped && player.health.current > 0 && ai.nav.visible(e.transform, player.transform, .1);

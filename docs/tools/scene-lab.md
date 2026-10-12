@@ -99,6 +99,7 @@ a yaw-0 actor faces +X.
 | `courier` | The player entity; at most one. God mode is on by default (`"god": false` turns it off). She is empty-handed as at the L1 start; `"loadout": ["weapon.bat", "weapon.fists"]` arms her. `look.model`: `female` or `male`. With no courier, the player is hidden in a corner. |
 | `pedestrian` | An L1 pedestrian (outbreak layer). `look`: `model` (`npc.civilian-man-a`/`-b`, `npc.civilian-woman-a`/`-b`, `npc.civilian-elderly`), `tint`, `accessories` (`cap`, `glasses`, `backpack`, `scarf`), `handProp` (`coffee`, `bag`, `phone`, `cane`, `watering-can`), `tier`, `role`. |
 | `infected` | `archetype` (default `infected.runner`; see `src/data/infected.ts`). `count` and `spread` spawn a ring; the ids become `<id>-1` … `<id>-N`. Under L1 rules, runners get a pedestrian look. Infected see in a cone, so give them a `yaw` that faces their target. |
+| `animal` | A healthy zoo animal: `species` is `lion`, `gorilla`, `elephant`, `zebra` or `flamingo`. Uses `Civilians.spawn(..., { zooAnimal })` and the same-id outbreak lifecycle. Natural runner bites convert it; `{ infect: { by: "biter" } }` isolates the visible transition. Healthy animals have no infected brain or health bar. |
 | `corgi` | The companion. It always follows the courier. |
 
 **Spawn positions** must be on free navigation, not inside a collider. Otherwise the scene throws `... outside navigation`.
@@ -429,3 +430,13 @@ wrap that command in `tools/perf/quiet-run.sh` (which reserves the browser locks
 
 `MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_BROWSER=1 npm run verify -- E18` sends functional simulation and browser
 checks to Hetzner; CPU timing, renderer counters, pixels and native frame measurements stay on the Mac.
+
+### L7 encounter follower fixture
+
+`l7Group: true` routes authored `survivor` actors through the production L7
+three-column formation, without creating a mission population.
+`tests/scenes/l7-encounters/qa-l7-horde-passage.json` isolates 120 regular infected,
+two Alphas, rocket clearance and six followers at one fixed game camera. The
+production population controller lives on `world.l7Encounters`; its copied state
+is exposed as `__SS__.getState().l7`. The existing checkpoint seams retain its
+roster, pending director requests, emergence audit and passage state.

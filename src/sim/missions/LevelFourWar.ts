@@ -75,6 +75,7 @@ export class LevelFourWar {
     world.npcs.setAmbient(0);
     // L4-default progression (bat, axe, handgun) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.handgun', 'weapon.kick']);
+    world.combat?.withholdPickups(l4.machineGun.id);
     this.spawnConvoy();
     this.spawnPeople();
     this.spawnSoldiers();
@@ -269,9 +270,27 @@ export class LevelFourWar {
     this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: 0, side: 'RIGHT', actionId: l4.machineGun.id, replaced: null });
     this.world.events.emit({ type: 'l4.gun', tick: this.world.tick });
     this.mission.radio('L4.gun');
+    this.armCivilians();
     // The first turn fires 40-50 s after the issue (seeded), at the latest 100 s after the arrival.
     const [a, b] = l4.turn.afterGunS, rng = new Rng(this.world.seed, 'l4-turn');
     s.turnDueAt = Math.min(s.turnDueAt || Infinity, s.gunAt + ticks(a + rng.next() * (b - a)));
+  }
+  /**
+   * PO 2026-10-12 ("the army arms the peds"): when the quartermaster issues the courier's gun, the civilians at the table are armed in view:
+   * the four nearest get a handgun if they carry nothing, and every civilian holding a firearm shows it in hand (before, all weapons stayed stowed until the turn).
+   */
+  private armCivilians(): void {
+    const { world } = this.mission, s = this.s, qm = { x: l4Anchors['l4-quartermaster'][0], z: l4Anchors['l4-quartermaster'][1] };
+    const near = [...s.residentIds, ...s.evacueeIds].map(id => world.entities.get(id)).filter(e => this.human(e) && !e!.civilian!.ally)
+      .sort((a, b) => dist(a!.transform, qm) - dist(b!.transform, qm)).slice(0, 4);
+    for (const e of near) {
+      const entry = s.armed.find(a => a.id === e!.id);
+      if (!entry) s.armed.push({ id: e!.id, weapon: 'pistol', armedAt: 0 }); else if (entry.weapon !== 'pistol' && entry.weapon !== 'hunting-rifle') entry.weapon = 'pistol';
+    }
+    for (const entry of s.armed) {
+      const e = world.entities.get(entry.id);
+      if (this.human(e) && !e!.civilian!.ally && (entry.weapon === 'pistol' || entry.weapon === 'hunting-rifle')) e!.appearance!.handProp = entry.weapon;
+    }
   }
   private turn(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, o = this.outbreak();

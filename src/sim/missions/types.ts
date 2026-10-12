@@ -84,6 +84,7 @@ export interface MissionResult {
   /** L5: the survivors that reached the station alive (keys of `l5Survivors`), carried into L6. */
   survivors?: string[];
   survivorsIn?: number;
+  escapedSurvivors?: EntitySnapshot[];
   stationOccupants?: EntitySnapshot[];
   rescuedSurvivors?: EntitySnapshot[];
 }

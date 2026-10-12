@@ -1,0 +1,60 @@
+[
+  {
+    "tier": "high",
+    "cpuThrottleRate": 1,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "infected": 200,
+    "healthy": 8,
+    "locals": 30,
+    "turns": [
+      "infected.lion",
+      "infected.gorilla",
+      "infected.elephant",
+      "infected.zebra",
+      "infected.zebra",
+      "infected.flamingo",
+      "infected.flamingo",
+      "infected.flamingo"
+    ],
+    "frameP95": 7.100000000000364,
+    "simP95": 1.6999998092651367,
+    "conversionHitchMax": 18.599999999998545,
+    "drawCalls": 50,
+    "triangles": 286474,
+    "heapBytes": 1098626260,
+    "bars": 3,
+    "samples": 2690,
+    "elapsedMs": 14008.5,
+    "heapUsedBytes": 149053620,
+    "errors": []
+  },
+  {
+    "tier": "low",
+    "cpuThrottleRate": 4,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "infected": 100,
+    "healthy": 8,
+    "locals": 30,
+    "turns": [
+      "infected.lion",
+      "infected.gorilla",
+      "infected.elephant",
+      "infected.zebra",
+      "infected.zebra",
+      "infected.flamingo",
+      "infected.flamingo",
+      "infected.flamingo"
+    ],
+    "frameP95": 15.099999999998545,
+    "simP95": 3.3000001907348633,
+    "conversionHitchMax": 72,
+    "drawCalls": 40,
+    "triangles": 164127,
+    "heapBytes": 555463856,
+    "bars": 3,
+    "samples": 1122,
+    "elapsedMs": 14010.199999809265,
+    "heapUsedBytes": 97719840,
+    "errors": []
+  }
+]
