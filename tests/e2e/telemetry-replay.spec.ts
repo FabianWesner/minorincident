@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import type { Page } from '@playwright/test';
 import { test, expect } from './fixtures';
 import { menuStart, menuUrl } from './ui-helpers';
@@ -103,6 +104,8 @@ test.describe('telemetry replay determinism', () => {
     console.log(`bot ${profile}: phase=${phase} ticks=${live.tick} maxInfected=${infected} deaths=${live.deaths.length} objectives=${JSON.stringify(live.objectives.map(o => o.id))}`);
     const recorded = (await page.evaluate(() => window.__SS__!.replay.recorded()))!;
     expect(live.tick).toBeGreaterThan(3000); expect(infected, 'the run must include infected').toBeGreaterThan(0);
+    // Keep a bundle of the first bot run for tools/replay (npm run replay -- test-results/telemetry/bot-complete.bundle.json).
+    if (profile === 'complete') { mkdirSync('test-results/telemetry', { recursive: true }); writeFileSync('test-results/telemetry/bot-complete.bundle.json', JSON.stringify({ version: 1, id: '00000000-0000-4000-8000-000000000001', base: 'local', chunks: recorded.chunks.map(c => gzipSync(Buffer.from(c, 'base64')).toString('base64')) })); }
     await replayAndCompare(page, live, recorded);
   });
 

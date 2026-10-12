@@ -119,6 +119,7 @@ describe('input log codec', () => {
     const start = performance.now(); let n = 0;
     for (let round = 0; round < 20; round++) for (const frame of frames) { encoder.add(frame, 'mouse-keyboard'); n++; }
     const perTickMs = (performance.now() - start) / n;
+    console.log(`input log encode cost: ${(perTickMs * 1000).toFixed(2)} us per tick`);
     expect(perTickMs).toBeLessThan(0.02);
   });
 });

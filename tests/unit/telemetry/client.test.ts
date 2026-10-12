@@ -122,3 +122,18 @@ describe('replay recorder', () => {
     expect(calls).toBe(1); expect(recorder.stopped).toBe(true);
   });
 });
+
+describe('telemetry mode', () => {
+  const mode = async (query: string, host: string, webdriver = false) => (await import('../../../src/telemetry/index')).telemetryMode(new URLSearchParams(query), host, webdriver);
+  it('is on for real players of the live site and off for tests, automation and local dev', async () => {
+    expect(await mode('', 'minor-incident.com')).toBe('live');
+    expect(await mode('quality=high', 'minor-incident-abc.pages.dev')).toBe('live');
+    expect(await mode('', 'minor-incident.com', true)).toBeNull();
+    expect(await mode('test=1', 'minor-incident.com')).toBeNull();
+    expect(await mode('scenelab=1', 'minor-incident.com')).toBeNull();
+    expect(await mode('debug=true', 'minor-incident.com')).toBeNull();
+    expect(await mode('', 'localhost')).toBeNull(); expect(await mode('', '127.0.0.1')).toBeNull();
+    expect(await mode('test=1&telemetry=record', '127.0.0.1', true)).toBe('record');
+    expect(await mode('telemetry=live', '127.0.0.1', true)).toBe('live');
+  });
+});
