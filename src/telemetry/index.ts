@@ -5,10 +5,12 @@ import { browserTransport } from './transport';
 /**
  * Anonymous play analytics + input-log replays (docs/tools/telemetry.md): always on for real players of the live site.
  * Off for automation (webdriver), local dev, test/debug/scene-lab URLs. `?telemetry=record` keeps the log in memory
- * without any network (used by the replay determinism test).
+ * without any network (used by the replay determinism test); `?telemetry=live` forces sending (local wrangler checks).
  */
 export function telemetryMode(params: URLSearchParams, host: string, webdriver: boolean): TelemetryMode | null {
-  if (params.get('telemetry') === 'record') return 'record';
+  // Explicit overrides for verification: `record` keeps the log in memory only, `live` sends even from localhost/automation.
+  const forced = params.get('telemetry');
+  if (forced === 'record' || forced === 'live') return forced;
   if (['test', 'testApi', 'scenelab', 'inspect', 'motionlab', 'perf', 'lookdev'].some(key => params.has(key)) || params.get('debug') === 'true') return null;
   if (webdriver) return null;
   if (host === 'localhost' || host === '[::1]' || host.startsWith('127.') || host === '0.0.0.0' || host.endsWith('.local')) return null;

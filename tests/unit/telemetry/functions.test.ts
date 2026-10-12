@@ -9,6 +9,7 @@ const context = { d: 'desktop', q: 'high', b: 'webgl', v: 'abc1234', vp: '1600x9
 const post = (body: unknown, extra: Record<string, unknown> = {}) => new Request('https://x/api/t', { method: 'POST', body: JSON.stringify({ v: 1, p: player, s: session, c: context, dur: 120, act: 100, e: [], ...(body as object), ...extra }) });
 const event = (t: string, rest: Record<string, unknown> = {}) => ({ t, ts: NOW - 1000, ...rest });
 const get = (path: string, token = 'test-token-0123456789abcdef') => new Request(`https://x/api/${path}${path.includes('?') ? '&' : '?'}token=${token}`);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the stats payload is asserted field by field
 const stats = async (env: ReturnType<typeof localEnv>, query = '') => (await (await getStats(get(`stats${query ? '?' + query : ''}`), env, NOW)).json()) as Record<string, any>;
 
 describe('POST /api/t', () => {
