@@ -1,8 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
+import { compositions } from '../../../src/levels/compositions';
+import { levelFourLayouts } from '../../../src/levels/L4/layout';
+import { levelFiveLayouts } from '../../../src/levels/L5/layout';
 import { levelTwoLayouts } from '../../../src/levels/L2/layout';
-import { levelThreeLayouts } from '../../../src/levels/L3/layout';
-import { addedOverlaps } from '../../../src/levels/placementClearance';
+import { l3RoadblockHulls, levelThreeLayouts } from '../../../src/levels/L3/layout';
+import { addedOverlaps, solidOverlaps } from '../../../src/levels/placementClearance';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 
 /**
@@ -33,3 +36,23 @@ test('L3 additions on D-CORRIDOR do not cut into any other placement (staticOver
   });
   expect(show(accidental)).toEqual([]);
 }, 90_000);
+
+test('L3 vehicles never sit inside a wall, barrier rail, fence, building or other solid (PO 10-12: wreck inside the bridge barrier)', () => {
+  const [layout] = levelThreeLayouts([load('D-CORRIDOR.layout.json')]);
+  // The four crash lines are deliberate pile-ups: their wrecks overlap each other and the compacting collider by design.
+  for (const tier of [0, 2, 5] as const) {
+    expect(solidOverlaps(layout, tier, p => p.assetId.startsWith('veh.') && !p.id.startsWith('l3-roadblock')).map(o => `${o.placement} (${o.assetId}) x ${o.collider}`), `tier ${tier}`).toEqual([]);
+  }
+  // Each crash line shows real vehicles (never a box) and keeps its hull between the two end cars.
+  for (const [i, hull] of l3RoadblockHulls.entries()) expect(layout.placements.find(p => p.id === `l3-roadblock-${i}-1`)?.assetId).toBe(hull);
+}, 90_000);
+
+test.each(['L1', 'L2', 'L3', 'L4', 'L5'])('%s vehicles never sit inside a solid (all tiers)', level => {
+  const base = compositions[level].districts.map(d => load(`${d.id}.layout.json`));
+  const layouts = level === 'L2' ? levelTwoLayouts(base) : level === 'L3' ? levelThreeLayouts(base) : level === 'L4' ? levelFourLayouts(base) : level === 'L5' ? levelFiveLayouts(base) : base;
+  const found = layouts.flatMap(layout => ([0, 2, 5] as const).flatMap(tier => solidOverlaps(layout, tier, p =>
+    p.assetId.startsWith('veh.') && !p.id.startsWith('l3-roadblock')
+    // Known open item: the L1 start van is authored (layouts/D-GROVE/layout.py, soft) against a shop ledge box of bld.mainstreet-brick:781.
+    && p.id !== 'veh.courier-van:784').map(o => `${level} ${layout.district} t${tier}: ${o.placement} (${o.assetId}) x ${o.collider}`)));
+  expect([...new Set(found)]).toEqual([]);
+}, 120_000);
