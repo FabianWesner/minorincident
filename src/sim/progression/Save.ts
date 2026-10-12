@@ -27,6 +27,20 @@ function dropLegacyL3Weapons(raw:unknown):unknown {
   if(record(raw.pending)){const pending={...raw.pending};delete pending.weaponChosen;out.pending=pending;}
   return out;
 }
+/** The transport handover is an exact live roster, not a set of visual seat placeholders. */
+function validTransport(raw: unknown): boolean {
+  if (!record(raw) || !Number.isSafeInteger(raw.tick) || Number(raw.tick) < 0 || typeof raw.infiniteCharges !== 'boolean' || !record(raw.vehicle) || !Array.isArray(raw.occupants)) return false;
+  const actor = (e: unknown): e is EntitySnapshot => {
+    if (!record(e) || !record(e.transform) || !record(e.health)) return false;
+    const transform = e.transform, health = e.health;
+    return Number.isSafeInteger(e.id) && Number(e.id) > 0 && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(transform[k])) && Number.isFinite(health.current) && Number.isFinite(health.max) && Number(health.current) > 0 && Number(health.current) <= Number(health.max);
+  };
+  const vehicle = raw.vehicle;
+  if (!actor(vehicle) || vehicle.archetype !== 'vehicle.military-apc' || !record(vehicle.vehicle) || vehicle.vehicle.driver !== 1 || !Array.isArray(vehicle.vehicle.passengers) || !raw.occupants.every(actor)) return false;
+  const ids = new Set(raw.occupants.map(e => e.id));
+  return ids.size === raw.occupants.length && ids.has(1) && !ids.has(vehicle.id) && vehicle.vehicle.passengers.length === ids.size - 1
+    && vehicle.vehicle.passengers.every(p => record(p) && p.phase === 'seated' && p.id !== 1 && ids.has(p.id)) && new Set(vehicle.vehicle.passengers.map(p => p.id)).size === vehicle.vehicle.passengers.length;
+}
 /** v0 renamed level; v2 persists completion before navigation. Existing v1 aftermath is retained; absent records keep level defaults. */
 export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
@@ -46,6 +60,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind','slowMotion'].includes(key)||typeof value!=='boolean')return false;
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
+  if(save.transport!==undefined&&!validTransport(save.transport))return false;
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
   if(save.stationOccupants!==undefined&&(!Array.isArray(save.stationOccupants)||save.stationOccupants.length<20||save.stationOccupants.length>30||!save.stationOccupants.every(validCivilian)||new Set(save.stationOccupants.map(e=>e.id)).size!==save.stationOccupants.length))return false;
   if(save.survivors!==undefined&&(!strings(save.survivors)||save.survivors.some(k=>!['dale','rosa','okafor','mia','sam'].includes(k))))return false;

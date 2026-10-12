@@ -41,7 +41,7 @@ export class Companion {
   respawnNear(): void {
     const player = this.world.entities.get(1)!.transform, nav = this.world.infected!.nav;
     for (const e of this.world.entities.iterate()) {
-      const c = e.companion; if (!c) continue;
+      const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
       let spot: { x: number; z: number } | null = null;
       for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
       spot ??= { x: player.x, z: player.z };
@@ -62,7 +62,7 @@ export class Companion {
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
-      const c = e.companion; if (!c) continue;
+      const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
       if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.

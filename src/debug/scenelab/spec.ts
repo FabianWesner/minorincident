@@ -109,6 +109,8 @@ export type Action =
   | { click: string; part?: 'head' | 'chest' | 'hip' | 'feet' }
   | { hit: { from?: string | Point; heavy?: boolean; amount?: number } }
   | { infect: { by?: string; instant?: boolean } }
+  | { drive: { throttle: number; steer?: number; seconds?: number } }
+  | { boardCar: string } | { exitCar: string }
   | { mountBike: string }
   | { dismount: true }
   | { interact: true }
