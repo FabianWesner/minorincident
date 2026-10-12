@@ -16,3 +16,6 @@ The final layout mirrors the authored Y positions to show the glazed side to
 Three.js' fixed +X/-Y study/game camera. Lettering is transformed independently
 so it remains readable. The counter sits behind the display shelving, and the
 consultation couch occupies the alcove behind the care-message wall.
+
+
+Distance tiers (QA 10-11, FIX-18): `--lod 1|2` rebuilds this script as hard-edged closed solids (no bevels, thicker thin parts, fewer round segments, no micro graphics), never decimation. `python3 tools/blender/run.py assets/int.pharmacy-clinic/build.py --lod N --glb assets/int.pharmacy-clinic/model.lodN.glb`, then `npx tsx tools/assets/pack.ts int.pharmacy-clinic`. bld.pharmacy takes its tiers from these: rerun `python3 tools/blender/run.py assets/bld.pharmacy/build.py --glb assets/bld.pharmacy/model.glb` and pack it.
