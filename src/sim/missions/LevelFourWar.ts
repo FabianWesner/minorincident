@@ -210,9 +210,28 @@ export class LevelFourWar {
       // The heading eases onto the route tangent (about 5 ticks) so a corner starts as a steering ramp, not a snap of the yaw rate.
       if (e) { const d = Math.atan2(Math.sin(p.yaw - e.transform.yaw), Math.cos(p.yaw - e.transform.yaw)); Object.assign(e.transform, { x: p.x, z: p.z, yaw: e.transform.yaw + d * .2 }); }
     }
+    this.clearLane();
     const bus = world.entities.get(s.convoyIds[this.playerBus()])!;
     this.carry(bus.transform.x, bus.transform.z);
     if (remaining - step < .02 && s.convoyV < .15) this.arrive();
+  }
+  /**
+   * PO 2026-10-12 ("move this soldier away, all busses drive through him"): no actor stays inside a convoy hull. A resident, evacuee or soldier
+   * in a vehicle's path (hull plus 0.6 m at the sides and 1.5 m ahead) steps out sideways to the nearer edge.
+   */
+  private clearLane(): void {
+    const { world } = this.mission, s = this.s, ids = [...s.residentIds, ...s.evacueeIds, ...s.soldierIds];
+    for (const [i, vid] of s.convoyIds.entries()) {
+      const v = world.entities.get(vid), spec = l4.convoy.vehicles[i]; if (!v) continue;
+      const c = Math.cos(v.transform.yaw), si = Math.sin(v.transform.yaw);
+      for (const id of ids) {
+        const e = world.entities.get(id); if (!e || e.hidden || e.health.current <= 0) continue;
+        const dx = e.transform.x - v.transform.x, dz = e.transform.z - v.transform.z, along = dx * c + dz * si, side = -dx * si + dz * c;
+        if (along < -spec.len / 2 - .6 || along > spec.len / 2 + 1.5 || Math.abs(side) > spec.wid / 2 + .6) continue;
+        const out = (spec.wid / 2 + .9) * (side >= 0 ? 1 : -1);
+        e.transform.x += -si * (out - side); e.transform.z += c * (out - side); world.spatial.set(id, e.transform.x, e.transform.z);
+      }
+    }
   }
   /** Engines of the convoy: all five drive, the courier's bus is muffled; they idle for a few seconds after the stop, then are switched off. */
   private convoySound(tick: number): void {

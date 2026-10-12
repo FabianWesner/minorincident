@@ -127,9 +127,9 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     if (!line) await snap('l4-war-line'); if (!tank) await snap('l4-tank');
     await step(150); await snap('l4-collapse');
     await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
-    // The collapse: to Kessler's Hardware along Harbor Street (north) or Lakeshore (south), through whatever comes, to the cellar door.
+    // The collapse: to Kessler's Hardware along Harbor Street (north; the south mouth of the plaza holds the stalled crowd that killed the courier 24 times), through whatever comes, to the cellar door.
     const inCellar = async () => (await mission()).l4!.phase === 'cellar';
-    const route: P[] = [{ x: -19, z: 43.4 }, { x: 24, z: 43.4 }, { x: 48.6, z: 40 }, at('l4-cellar-door')];
+    const route: P[] = [{ x: -19, z: -38 }, { x: 24, z: -38 }, { x: 46.6, z: -30 }, { x: 46.6, z: 30 }, at('l4-cellar-door')];
     for (const wp of route) { await go(wp, 2.2, inCellar, 9); if (await inCellar()) break; }
     for (let i = 0; i < 40 && !await inCellar(); i++) { await go(at('l4-cellar-door'), .5, inCellar, 9); await interact(); await step(20); }
     expect(await inCellar()).toBe(true);

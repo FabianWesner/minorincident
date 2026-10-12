@@ -28,6 +28,26 @@ describe('L4 convoy ride collisions', () => {
     expect([...new Set(bad)].slice(0, 400)).toEqual([]);
   }, 600_000);
 
+  test('T-E22-04f @E22 PO 10-12 "move this soldier away, all busses drive through him": during the live ride no actor stands inside a convoy vehicle hull', async () => {
+    const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!, bad: string[] = [];
+    const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : [4.5, 1.9];
+    const inside = (v: { transform: { x: number; z: number; yaw: number }; archetype?: string }, a: { x: number; z: number }) => {
+      const [len, wid] = dims(v), dx = a.x - v.transform.x, dz = a.z - v.transform.z, c = Math.cos(v.transform.yaw), si = Math.sin(v.transform.yaw);
+      return Math.abs(dx * c + dz * si) < len / 2 && Math.abs(-dx * si + dz * c) < wid / 2;
+    };
+    const check = () => {
+      for (const id of s.convoyIds) {
+        const v = w.entities.get(id)!;
+        for (const e of w.entities.iterate()) {
+          if (e.id === id || e.hidden || String(e.archetype).startsWith('veh.') || e.corpse || String(e.archetype).startsWith('pickup.') || e.id === 1 && s.seated) continue;
+          if (e.health.current > 0 && inside(v, e.transform)) bad.push(`${e.archetype}#${e.id} in ${v.archetype}#${id} near ${Math.round(e.transform.x)},${Math.round(e.transform.z)}`);
+        }
+      }
+    };
+    let t = 0; while (s.phase === 'convoy' && t < 60 * 60) { w.update(); if (t++ % 6 === 0) check(); }
+    expect([...new Set(bad)].slice(0, 40)).toEqual([]);
+  }, 600_000);
+
   test('T-E22-04e @E22 PO 10-12 "sound when the bus is driving": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle', async () => {
     const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!;
     const seen: { id: number; phase: string; rpm: number; speed: number; inCar?: boolean }[] = [];
