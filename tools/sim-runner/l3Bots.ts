@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { Matrix4, PerspectiveCamera, Vector3 } from 'three';
-import { l3, l3Segment, l3Street } from '../../src/data/l3';
+import { l3, l3AttackView, l3Segment, l3Street } from '../../src/data/l3';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -50,7 +50,7 @@ export function followFrustum(world: SimWorld): void {
   const p = world.entities.get(1)!.transform;
   const rescue = world.scenario === 'L3' && !!world.missions?.state.l3?.finaleAt && !world.missions.state.l3.barrierClosedAt && p.x >= 195;
   const x = p.x, z = p.z, y = Math.max(0, p.y - .72);
-  offset.setFromSphericalCoords(19 * (rescue ? 3.3 : 1), Math.PI * .3, Math.PI / 4);
+  offset.setFromSphericalCoords(19 * (rescue ? 3.3 : l3AttackView(world) ? l3.attack.viewScale : 1), Math.PI * .3, Math.PI / 4);
   camera.position.set(x + offset.x, y + offset.y, z + offset.z); camera.lookAt(x, y, z); camera.updateMatrixWorld(true);
   frustum.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
   world.infected?.director.setFrustum(frustum.elements, camera.position);
@@ -61,7 +61,7 @@ export function inL3GameView(world: SimWorld, point: {x:number;y:number;z:number
   const p=world.entities.get(1)!.transform;
   const rescue=!!world.missions?.state.l3?.finaleAt&&!world.missions.state.l3.barrierClosedAt&&p.x>=195;
   const x=rescue?p.x+(202-p.x)*.8:p.x,z=rescue?p.z*.2:p.z,y=Math.max(0,p.y-.72)*(rescue?.2:1)+(rescue?1.28:0);
-  offset.setFromSphericalCoords(19*(rescue?3.3:1),Math.PI*.3,Math.PI/4);
+  offset.setFromSphericalCoords(19*(rescue?3.3:l3AttackView(world)?l3.attack.viewScale:1),Math.PI*.3,Math.PI/4);
   gameCamera.position.set(x+offset.x,y+offset.y,z+offset.z);gameCamera.lookAt(x,y,z);gameCamera.updateMatrixWorld(true);
   gamePoint.set(point.x,point.y+.6,point.z).project(gameCamera);
   return Math.abs(gamePoint.x)<1&&Math.abs(gamePoint.y)<1&&Math.abs(gamePoint.z)<1;

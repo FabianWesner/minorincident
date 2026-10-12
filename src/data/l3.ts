@@ -32,6 +32,9 @@ export const l3 = {
     /** Stream front-loading (time ~ (i/n)^streamFront): about a quarter of a wave is out within 2 s, so the alarm shows a fight at once. */
     streamFront: 1.6,
     lowScale: .5,
+    /** Brief l3-polish (alarm: first infected on screen at 5.8 s; the street fights at the east gate sat just outside the close
+     * frame): while the station attack runs and the courier is in the yard, the camera pulls back by this factor (eased). */
+    viewScale: 1.5,
   },
   /** Section 5.4: allied fighters v2 (police with handguns, a following squad). */
   /** PO 2026-10-12: "reduce the power of the gun by 50% for the police (not for the player)". Applied to every police gun in L3
@@ -48,7 +51,8 @@ export const l3 = {
   /** The riflemen use `gun` (spec rifles); the mounted gun is one HMG gunner (l4.soldiers.hmg, anchor l3-hmg) in the sandbag nest at the line. */
   soldiers: { deckY: 4.26, count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 26, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
   /** Section 5.3: each gunshot is a loud event for non-chasing infected within 20 m. */
-  gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
+  /** `handgunStaggerS`: a courier handgun hit staggers the infected like an L3 police pistol hit (brief l3-polish, E21-AC05). */
+  gunfire: { radiusM: 20, holdS: 6, minGapS: .5, handgunStaggerS: .25 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
     /** PO 2026-10-12: five times every existing L3 encounter, including the previously increased street population. */
@@ -63,13 +67,16 @@ export const l3 = {
       // PO 10-09: the clusters of 8 are two waves of 4 about 14 m apart (a lull to back off, take the medkit and set up), not one blob.
       [[146, 'commerce', 2], [174, 'commerce', 2], [199, 'commerce', 2], [62, 'commerce', 4], [76, 'commerce', 4], [86, 'commerce', 3], [92, 'blvd', 3], [80, 'blvd', 3], [58, 'blvd', 2], [70, 'oak', 4], [82, 'oak', 4], [92, 'oak', 3]],
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
+    /** Detour mouths (the cross street at x -13.75 from Oak across Commerce into the Boulevard around the wreck lines) kept clear of clusters. */
+    mouth: { mouths: [[-13.75, 'blvd'], [-13.75, 'commerce'], [-13.75, 'oak']] as readonly (readonly [number, 'blvd' | 'commerce' | 'oak'])[], clearM: 8, shiftM: 16 },
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
     /** Segment 3 also holds the horde: two packs of 125 at the on-ramp end of two avenues (seeded), streaming west. */
     horde: { packSize: 125, fromX: 72, toX: 132 },
     leashM: 9,
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
-    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [50, 75] as P, maxPerLink: 2, cooldownS: 18 },
+    /** `policeM`: the spill runs at the nearest squad officer within this distance of the shot (else at the shot). */
+    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [50, 75] as P, maxPerLink: 2, cooldownS: 18, policeM: 25 },
     pressure: { idleS: 20, everyS: 10, count: [25, 75] as P, behindM: [15, 35] as P },
     /** Brief l3-finish (PO 10-12 "so they have a chance against the policeman group"): during the station attack, infected
      * choosing a target count the courier this many metres farther away, so the 5x waves press the police line first. */
@@ -101,6 +108,9 @@ export const l3 = {
    * `stepFrac` per death (max `maxFrac`). Hordes and density stay for anyone who plays it through; only a death loop eases.
    */
   mercy: { fromDeaths: 1, stepFrac: .3, maxFrac: .75, aheadM: [12, 90] as P, behindM: 20 },
+  /** Brief l3-polish: every respawn clears `clearM` around the courier (infected step back to its edge), pursuers within `pursueM`
+   * lose her for `delayS`, and she has `graceS` of invulnerability. The restored outbreak layer keeps its members. */
+  respawn: { clearM: 9, pursueM: 30, delayS: 4, graceS: 2 },
   checkpoints: ['armory', 'fallback', 'segment-2', 'segment-2b', 'segment-3', 'segment-3b'] as const,
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,
@@ -136,6 +146,10 @@ export const l3PhotoSpots: readonly (readonly [string, readonly [number, number,
   ['l3-station-yard', [16, 20, 16]], ['l3-station-attack', [18, 22, 18]], ['l3-squad-strong', [16, 20, 16]], ['l3-oak-avenue', [18, 22, 18]],
   ['l3-commerce-street', [18, 22, 18]], ['l3-grove-boulevard', [14, 17, 14]], ['l3-alone', [16, 20, 16]], ['l3-army-checkpoint', [18, 22, 18]],
 ];
+/** The station-attack framing (camera radius x `l3.attack.viewScale`): the attack runs and the courier is inside the yard. */
+export function l3AttackView(world: { scenario?: string | null; missions?: { state: { l3?: { phase: string } | null } } | null; entities: { get(id: number): { transform: { x: number } } | undefined } }): boolean {
+  return world.scenario === 'L3' && world.missions?.state.l3?.phase === 'attack' && (world.entities.get(1)?.transform.x ?? 0) < l3.map.yard.x1;
+}
 /** Street of a world point (nearest street line), for population, forced-street bots and dressing tests. */
 export function l3Street(z: number): 'blvd' | 'commerce' | 'oak' { return z < -14 ? 'blvd' : z > 14 ? 'oak' : 'commerce'; }
 /** Segment index (0..2) of an X coordinate inside the corridor, -1 before it, 3 past it. */

@@ -279,6 +279,7 @@ export class Vfx extends Group {
       const angle = 'move' in event && (event.move === 'elephant.swipe' || event.move === 'elephant.charge' || event.move === 'gorilla.grab-throw' || event.move === 'zebra.kick' || event.move === 'zebra.stampede') ? Math.atan2(event.area?.dz ?? 0, event.area?.dx ?? 1) : 'angle' in event ? event.angle : -Math.atan2(event.area?.dz ?? source?.infected?.dz ?? 0, event.area?.dx ?? source?.infected?.dx ?? 1);
       const shape = 'move' in event && event.move === 'zebra.kick' ? 10 : 'move' in event && event.move === 'elephant.swipe' ? 9 : 'move' in event && (event.move === 'alpha.roar' || event.move === 'gorilla.roar') ? 8 : telegraphShapes[kind];
       const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, throwing ? 1 / radius : kind === 'charge' ? 0.3 : 1, true);
+      if (slot < 0) return;
       this.visible = true;
       this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
     } else if (event.type === 'attack.resolved') {
