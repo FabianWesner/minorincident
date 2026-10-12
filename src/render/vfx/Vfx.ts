@@ -346,9 +346,9 @@ export class Vfx extends Group {
     for (const e of this.world.entities.iterate()) {
       const c = e.civilian; if (!c?.activityUntil || c.state !== 'calm' || e.hidden) continue;
       const a = c.schedule?.[c.scheduleStep ?? 0]; if (a?.activity !== 'water' || !a.facing || this.world.tick - (c.activityStarted ?? 0) < 40) continue;
-      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), t = .4, ox = dx / d * .3, oz = dz / d * .3;
-      for (let i = 0; i < (this.quality === 'low' ? 1 : 2); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, .8, e.transform.z + oz,
-        (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .07, 0, 0xbfe6ff, 9.81);
+      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), t = .4, ox = dx / d * .4 - dz / d * .12, oz = dz / d * .4 + dx / d * .12;
+      for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, .6,e.transform.z + oz,
+        (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .16, 0, 0xe6f6ff, 9.81);
     }
   }
   advance(seconds: number): void {
