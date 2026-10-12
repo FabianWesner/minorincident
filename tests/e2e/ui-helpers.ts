@@ -8,8 +8,8 @@ export async function keyboardActivate(page: Page, testId: string): Promise<void
   }
   throw new Error(`Keyboard focus did not reach ${testId}`);
 }
-export async function menuStart(page: Page): Promise<void> {
-  await page.goto(menuUrl);
+export async function menuStart(page: Page, url = menuUrl): Promise<void> {
+  await page.goto(url);
   await expect(page.getByTestId('menu-title')).toBeVisible();
   await page.getByTestId('start-game').click(); await page.getByTestId('character-female').click(); await page.getByTestId('level-L1').click();
   await expect(page.getByTestId('mission-button')).toBeVisible({ timeout: 180_000 });

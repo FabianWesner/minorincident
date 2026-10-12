@@ -25,6 +25,7 @@ import type { EntityFilter, EntitySnapshot, GameEvent, GameStateSnapshot, InputF
 import { deviceKinds, type DeviceKind, type DeviceOptions } from '../sim/interact/Interactables';
 import { hazardKinds, destructibleKinds, type HazardKind, type DestructibleKind, type HazardOptions } from '../sim/interact/Hazards';
 import { pickupKinds, type PickupKind } from '../sim/interact/Pickups';
+import { replayApi } from '../telemetry/replayDriver';
 
 import { validateSave } from '../sim/progression/Save';
 import type { CampaignSave, CampaignSettings, ProgressionPreset } from '../sim/progression/Campaign';
@@ -121,6 +122,8 @@ export interface SSTestApi {
     /** Record every crowd rig part pivot (world metres) in crowdFigures(), as Scene Lab does (click-pick probes). */
     figureJoints(on: boolean): void };
   perf(): ReturnType<Game['perf']>;
+  /** Telemetry replays (`?telemetry=record` keeps the input log in memory; tools/replay/play.ts feeds it back). */
+  replay: ReturnType<typeof replayApi>;
   screenshotReady(): Promise<void>;
   /** E25 light field: the E27 transient hook and its counters (null outside lit scenes). */
   lights: { addTransient(position: { x: number; z: number }, color: string, intensity: number, radius: number, ttl: number): void; state(): ReturnType<import('../render/LightField').LightField['snapshot']> | null };
@@ -251,7 +254,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     },
     weather: { probe: (mode, assetId) => { game.view.weatherMask(mode === 'precipitation' || mode === 'dense-precipitation' ? 'weather' : mode ? assetId ?? null : null); weatherRayDither.value = mode === 'dense-precipitation' ? 0 : 1; weatherSurface.probe.value = mode === 'up' ? 1 : mode === 'snow' ? 2 : mode === 'wet' ? 3 : mode === 'tracks' ? 4 : 0; game.view.update(1); }, override: (kind, intensity) => { game.world.weather?.setOverride(kind, intensity); game.view.update(1); }, strike: at => game.world.weather?.strike(at) },
     debug: { renderQuality: tier => game.view.setQuality(tier), simulateFrameCost: ms => game.simulateFrameCost(ms), figureJoints: on => { CrowdFigureProbe.joints = on; } },
-    perf: () => game.perf(), screenshotReady: () => game.screenshotReady(),
+    perf: () => game.perf(), screenshotReady: () => game.screenshotReady(), replay: replayApi(game),
   };
   window.__SS__ = api; return api;
 }
