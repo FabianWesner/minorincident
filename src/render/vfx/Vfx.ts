@@ -338,6 +338,19 @@ export class Vfx extends Group {
     if (this.featherVeil) this.featherVeil.style.opacity = String(this.obstruction.opacity);
   }
   /** Explicit render clock. Paused test stepping uses this without advancing the sim. */
+  private waterClock = 0;
+  /** A calm civilian performing a 'water' routine pours a small arc of droplets from the can onto the flower it faces (~15 Hz). */
+  private waterStreams(seconds: number): void {
+    this.waterClock += seconds; if (this.waterClock < 1 / 15) return;
+    this.waterClock = 0;
+    for (const e of this.world.entities.iterate()) {
+      const c = e.civilian; if (!c?.activityUntil || c.state !== 'calm' || e.hidden) continue;
+      const a = c.schedule?.[c.scheduleStep ?? 0]; if (a?.activity !== 'water' || !a.facing || this.world.tick - (c.activityStarted ?? 0) < 40) continue;
+      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), t = .4, ox = dx / d * .3, oz = dz / d * .3;
+      for (let i = 0; i < (this.quality === 'low' ? 1 : 2); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, .8, e.transform.z + oz,
+        (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .07, 0, 0xbfe6ff, 9.81);
+    }
+  }
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
     this.time += seconds;
@@ -355,6 +368,7 @@ export class Vfx extends Group {
     }
     this.visible = this.enabled || this.tells.size > 0;
     for (const id of this.world.vehicles?.cars.keys() ?? []) this.updateVehicle(id);
+    if (this.enabled) this.waterStreams(seconds);
     for (const pool of this.pools) pool.advance(this.time);
     if (this.enabled) this.blasts.advance(this.time, seconds);
     this.gibs.advance(this.time, seconds);

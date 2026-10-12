@@ -1,4 +1,5 @@
 import { l1Pedestrians } from '../../data/npcs';
+import { standNear } from '../npc/gardening';
 import { seatAnchor } from '../npc/seats';
 import type { CivilianActivity, CivilianProp, Point } from '../npc/types';
 import type { Outbreak, PedestrianOptions } from './Outbreak';
@@ -40,6 +41,8 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
       if (run.length >= 3) runs.push(run);
     }
   }
+  const bedBoxes = layout.placements.filter(q => q.assetId.startsWith('prop.flower-bed')).map(q => ({ x0: q.visualAabb.min[0] + ox, z0: q.visualAabb.min[2] + oz, x1: q.visualAabb.max[0] + ox, z1: q.visualAabb.max[2] + oz }));
+  const usedBeds = new Set<(typeof bedBoxes)[number]>();
   const doors = Object.keys(layout.anchors).filter(n => n.startsWith('refuge-door-')).map(anchor).filter((p): p is Point => !!p);
   const nearestDoor = (p: Point) => doors.reduce<Point | null>((best, d) => !best || Math.hypot(d.x - p.x, d.z - p.z) < Math.hypot(best.x - p.x, best.z - p.z) ? d : best, null);
   const plans: Plan[] = [];
@@ -102,11 +105,20 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
   for (const [i, door] of hubDoors.entries()) {
     if (i % 3 === 0) circle(free(snap({ x: door.x + 2, z: door.z + (door.z < 0 ? 3.2 : -3.2) }, 3)), 2, [null, 'phone']);
     else if (i % 3 === 1) {
-      // Gardener: water two flower spots beside the door, facing them.
-      const a = free(snap({ x: door.x - 2.4, z: door.z + (door.z < 0 ? 1.4 : -1.4) }, 2)), b = a && free(snap({ x: a.x - 3.2, z: a.z }, 1.5));
-      if (a && b) plans.push({ at: a, handProp: 'watering-can', role: 'bathrobe-neighbor', yaw: 0, schedule: [
-        { activity: 'water', anchor: 'l1/flowers', target: a, facing: { x: a.x, z: door.z }, ticks: t(5, 8), prop: 'watering-can' }, walk(b, 'watering-can'),
-        { activity: 'water', anchor: 'l1/flowers', target: b, facing: { x: b.x, z: door.z }, ticks: t(4, 7), prop: 'watering-can' }, walk(a, 'watering-can')] });
+      // Gardener: water the nearest real flower bed (live placement footprint), standing within 0.5 m of it and facing it.
+      const beds = bedBoxes.filter(bed => !usedBeds.has(bed) && Math.hypot((bed.x0 + bed.x1) / 2 - door.x, (bed.z0 + bed.z1) / 2 - door.z) < 30)
+        .sort((m, n) => Math.hypot((m.x0 + m.x1) / 2 - door.x, (m.z0 + m.z1) / 2 - door.z) - Math.hypot((n.x0 + n.x1) / 2 - door.x, (n.z0 + n.z1) / 2 - door.z));
+      for (const bed of beds) {
+        const cx = (bed.x0 + bed.x1) / 2, cz = (bed.z0 + bed.z1) / 2, alongX = bed.x1 - bed.x0 >= bed.z1 - bed.z0, half = Math.max(bed.x1 - bed.x0, bed.z1 - bed.z0) * .35;
+        const toward = (sx: number) => alongX ? { x: cx + sx * half, z: cz + (door.z < cz ? -1 : 1) } : { x: cx + (door.x < cx ? -1 : 1), z: cz + sx * half };
+        const a = standNear(bed, q => clear(q), toward(-1)), b = standNear(bed, q => clear(q), toward(1));
+        if (!a || !b) continue;
+        usedBeds.add(bed);
+        plans.push({ at: a.target, handProp: 'watering-can', role: 'bathrobe-neighbor', yaw: 0, schedule: [
+          { activity: 'water', anchor: 'l1/flowers', target: a.target, facing: a.facing, ticks: t(5, 8), prop: 'watering-can' }, walk(b.target, 'watering-can'),
+          { activity: 'water', anchor: 'l1/flowers', target: b.target, facing: b.facing, ticks: t(4, 7), prop: 'watering-can' }, walk(a.target, 'watering-can')] });
+        break;
+      }
     }
   }
   // Stationary groups take at most 40 %: the rest walk routes, so the streets stay alive and the outbreak meets people.

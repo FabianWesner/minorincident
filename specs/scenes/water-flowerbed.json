@@ -1,0 +1,16 @@
+{
+  "name": "water-flowerbed",
+  "note": "PO 10-12 'this person is not watering the plants'. The gardener walks to a flower bed, stands within 0.5 m of it, faces it and waters it with a droplet arc. Look for: can over the bed, body turned to the bed, water landing on the flowers, no clipping with the bed.",
+  "ground": "sidewalk",
+  "size": 20,
+  "props": [{ "id": "bed", "asset": "prop.flower-bed.large", "at": [0, 0], "yaw": 90 }],
+  "actors": [
+    { "id": "gardener", "kind": "pedestrian", "at": [3, 4], "yaw": 0,
+      "look": { "model": "npc.civilian-woman-b", "tint": "#4f7fb8", "handProp": "watering-can" },
+      "state": { "water": "bed", "seconds": 30 } }
+  ],
+  "camera": { "mode": "close", "target": [0, 0.7, 0.5], "radius": 6, "azimuth": 150 },
+  "frames": 420,
+  "shots": [0, 150, 300, 420],
+  "expect": { "consoleErrors": 0, "clippingMax": 0 }
+}
