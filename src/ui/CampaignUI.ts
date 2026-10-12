@@ -1,5 +1,5 @@
 import type { Game } from '../Game';
-import { chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,nextLevelAfter,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -49,7 +49,8 @@ export class CampaignUI {
     const level=Number(match[1]) as Level;
     // Game persists completion and aftermath on level.completed, before this navigation can unload the world.
     if(level===6){this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();return;}
-    void this.game.continueCampaign(save);
+    // Finishing level N continues with N+1, not with the furthest unlocked level (replays and L2-completed saves).
+    void this.game.continueCampaign(save,nextLevelAfter(level)??undefined);
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
