@@ -5,6 +5,7 @@ import { ReplayRecorder, type ChunkTransport, type ReplayOutcome } from './repla
 import { gzip } from './gzip';
 import { phaseCommands, tierNames } from './codec';
 import type { LevelStartInfo, TelemetrySink } from './sink';
+import { RunProbe } from './probe';
 
 declare const __BUILD_COMMIT__: string;
 export type TelemetryMode = 'live' | 'record';
@@ -32,6 +33,8 @@ export interface TelemetryOptions { mode: TelemetryMode; transport: Transport & 
 export class Telemetry implements TelemetrySink {
   readonly client: EventClient;
   readonly recorder: ReplayRecorder;
+  /** Record mode only: path and mission events of the current attempt, from tick 0, for determinism checks. */
+  probe: RunProbe | null = null;
   private readonly perf = new PerfWindow();
   private attempt: { id: string; level: string; startTick: number; deaths: number; seed: number } | null = null;
   private stopWorld: (() => void) | null = null;
@@ -111,6 +114,7 @@ export class Telemetry implements TelemetrySink {
     this.attempt = { id, level: start.id, startTick: world.tick, deaths: 0, seed: world.seed };
     this.client.push('level_start', { l: start.id, k: 0, d: { seed: world.seed, tier, attempt: id } });
     this.prevPhase = mission.state.phase; this.lastCause = 'unknown';
+    if (this.options.mode === 'record') { this.probe?.detach(); this.probe = new RunProbe(); this.probe.attach(world); }
     try {
       this.recorder.begin(start.id, {
         seed: world.seed, tier: start.tier ?? null, campaign: start.campaign, quality: tier, qualityParam: this.game.params.get('quality'),

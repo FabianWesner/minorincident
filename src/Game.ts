@@ -328,7 +328,7 @@ export class Game {
     const dead = this.world.entities.get(1)?.survivor?.diedAt != null;
     if (this.wasDead && !dead) { this.input.release(); this.world.controls.reset(); }
     this.wasDead = dead;
-    if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
+    if (this.driver) { const frame = this.driver.sample(); this.input.tap?.(frame, 'keyboard'); this.world.applyInput(frame, 'keyboard'); }
     else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
       this.input.cursor.setGroundHeight(this.world.districts?.groundHeight(player.x, player.z) ?? 0);
@@ -337,10 +337,11 @@ export class Game {
       this.world.applyInput(frame, this.input.feed?.scheme ?? this.input.scheme);
     }
     if (this.world.infected) {
-      // The director sees the tick pose, never a render-rate interpolated one (determinism across displays).
-      this.view.view.present(1, true);
-      this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
-      this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
+      // The director sees the tick pose of the follow rig, never a render-rate interpolated one and never presentation kicks
+      // (pull/shake/roll): spawns must be a function of the recorded inputs alone (telemetry replays).
+      const sim = this.view.view.simCamera;
+      this.spawnFrustum.multiplyMatrices(sim.projectionMatrix, sim.matrixWorldInverse);
+      this.world.infected.director.setFrustum(this.spawnFrustum.elements, sim.position);
     }
     this.world.update();
     if (this.ui.enabled) this.ui.hud.onboarding.observe(this.world.inputFrame);
