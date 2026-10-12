@@ -4,7 +4,7 @@ import { l7Rocket } from '../../data/l7';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { DistrictLayout, Placement, PlacementTransform, Point } from '../districts/types';
 import { levelFiveLayouts, l5ShellAssets } from '../L5/layout';
-import { l7Bus, l7CorridorAnchors, l7CorridorItems } from './corridor';
+import { l7CorridorAnchors, l7CorridorItems } from './corridor';
 
 /** The authored city and Northgate strip; fast mask matches the stepped bounds exactly. */
 export const l7Areas = [{ min: [-85, -65], max: [94, 65] }, { min: [94, -15], max: [290, 45] }] as const;
@@ -87,7 +87,7 @@ export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // D2: west evacuation corridor, working bus and two-sided approach.
     for (const [id, anchor] of Object.entries(l7CorridorAnchors)) layout.anchors[id] = structuredClone(anchor);
     for (const [id, assetId, x, z, yaw, scale, decay] of l7CorridorItems) add(`l7-corridor-${id}`, assetId, x, z, yaw, scale, decay);
-    add(l7Bus.id, l7Bus.asset, l7Bus.x, l7Bus.z, l7Bus.yaw);
+    // The working bus is a set piece spawned by LevelSevenDeparture (it has to drive away), not a static placement.
     return layout;
   });
 }

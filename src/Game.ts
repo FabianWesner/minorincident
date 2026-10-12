@@ -9,7 +9,7 @@ import { LevelTransition, transitionPaint } from './ui/LevelTransition';
 import { RescueFade } from './ui/RescueFade';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
-import { completePending,newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
+import { completePending,newCampaign, nextLevelAfter, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
 import { applyCampaign } from './sim/progression/apply';
 import { SaveStore } from './sim/progression/Save';
 import { completeCampaignLevel } from './sim/progression/carryover';
@@ -37,6 +37,7 @@ import { SimWorld } from './sim/world/SimWorld';
 import { loadMeasure } from './assets/loadTiming';
 import { assetUrl } from './assets/assetUrl';
 import { prefetchLevel } from './assets/prefetch';
+import { compositions } from './levels/compositions';
 import { civilianBakeStats } from './assets/civilianBake';
 import { loadGate } from './assets/loadGate';
 
@@ -143,10 +144,12 @@ export class Game {
         this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
         this.inspect?.update(seconds);
-        this.rescueFade.set(this.world.trapRescue?.fading ?? false);
+        this.rescueFade.set(this.world.trapRescue?.fading ?? this.world.l7Departure?.fading ?? false);
         if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       if (!this.loading) {
+        const departure = this.world.l7Departure;
+        if (departure?.state.phase === 'done' && !departure.handedOver) { departure.handedOver = true; void this.handOver(7); }
         const mission = this.world.missions;
         if (mission && this.prefetchedMission !== mission && /^L[1-5]$/.test(mission.def.id) && (mission.def.id === 'L2' && mission.state.phase === 'playing' && this.world.tick >= 300 || ['result', 'progression'].includes(mission.state.phase) || mission.def.finish.some(id => ['active', 'completed'].includes(mission.state.steps[id]?.status ?? '')))) { this.prefetchedMission = mission; void prefetchLevel(`L${Number(mission.def.id.slice(1)) + 1}`, 4, this.quality.tier); }
       }
@@ -272,6 +275,13 @@ export class Game {
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
   }
+  /** Levels without a mission screen (L7 onwards) hand over directly: the next level when it exists, else the credits (L9 until an L10 exists). */
+  private async handOver(finished: number): Promise<void> {
+    const save = this.campaign, next = nextLevelAfter(finished);
+    if (!save) return;
+    if (next && compositions[`L${next}`]) await this.continueCampaign(save, next);
+    else this.campaignUI.credits(save);
+  }
   async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
     const fromL4 = this.world.missions?.def.id === 'L4' && this.world.missions.state.phase === 'progression';
     this.campaign=structuredClone(save);
@@ -295,12 +305,12 @@ export class Game {
   private watchCampaign():void {
     const save=this.campaign!;
     this.world.events.on('level.completed',event=>{
-      if(event.type!=='level.completed'||!/^L[1-6]$/.test(event.id))return;
+      if(event.type!=='level.completed'||!/^L[1-9]$/.test(event.id))return;
       completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
       this.saveCampaign();
       const next = Number(event.id.slice(1)) + 1;
-      this.completedAt = next <= 6 ? { target: `L${next}`, at: performance.now() } : null;
-      if (next <= 6) void prefetchLevel(`L${next}`, 4, this.quality.tier);
+      this.completedAt = compositions[`L${next}`] ? { target: `L${next}`, at: performance.now() } : null;
+      if (compositions[`L${next}`]) void prefetchLevel(`L${next}`, 4, this.quality.tier);
     });
     this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
     this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});

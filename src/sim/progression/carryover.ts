@@ -1,7 +1,7 @@
 import { clearOfL2Script, MAX_BODIES, type L1Aftermath } from '../../levels/continuity';
 import type { SimWorld } from '../world/SimWorld';
 import type { MissionResult } from '../missions/types';
-import { autoRewards, type CampaignSave, type Level } from './Campaign';
+import { autoRewards, lastLevel, type CampaignSave, type Level } from './Campaign';
 
 /** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
 export function completeCampaignLevel(save: CampaignSave, level: Level, result: MissionResult, world: SimWorld): void {
@@ -10,7 +10,18 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   save.results[`L${level}`] = structuredClone(result);
   if (level === 5) { save.survivors = [...result.survivors ?? []]; save.stationOccupants = structuredClone(result.stationOccupants); save.rescuedSurvivors = structuredClone(result.rescuedSurvivors); }
   if (level !== save.completedLevels + 1) return;
-  if (level === 6) { save.completedLevels = 6; return; }
+  // L6 onwards has no reward screen: finishing a level unlocks and hands over to the next one directly.
+  if (level >= 6) {
+    save.completedLevels = level; save.unlockedLevel = Math.max(save.unlockedLevel, Math.min(lastLevel, level + 1)) as Level;
+    const carriedWeapons = level === 7 ? world.entities.get(1)?.weapons : null;
+    if (carriedWeapons) {
+      // L8 receives the exact acquired arsenal (E29-AC13 / E30-AC03); the rocket launcher stays in the racks.
+      const racks = { LEFT: carriedWeapons.LEFT.rack.map(s => s.id), RIGHT: carriedWeapons.RIGHT.rack.map(s => s.id) };
+      save.racks = racks;
+      for (const id of [...racks.LEFT, ...racks.RIGHT]) if (!save.ownedActions.includes(id)) save.ownedActions.push(id);
+    }
+    return;
+  }
   const weapons = level === 4 || level === 5 ? world.entities.get(1)?.weapons : null;
   const carried = weapons ? { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) } : null;
   autoRewards(save, level);

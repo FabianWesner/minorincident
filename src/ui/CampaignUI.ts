@@ -1,5 +1,6 @@
 import type { Game } from '../Game';
-import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { compositions } from '../levels/compositions';
+import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -37,7 +38,7 @@ export class CampaignUI {
   private levelSelect():void {
     this.screen('Level select');const save=this.menuSave??this.game.campaign;if(!save)return;
     const hint=document.createElement('p');hint.className='lock-hint';hint.setAttribute('role','status');hint.hidden=true;
-    for(let level=1;level<=6;level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level); this.game.view.update(1);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
+    for(let level=1;compositions[`L${level}`];level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level); this.game.view.update(1);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
     this.content.append(hint);this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
   }
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */
@@ -45,12 +46,16 @@ export class CampaignUI {
     const mission=this.game.world.missions,save=this.game.campaign;
     if(!save||!mission||mission.state.phase!=='progression'||this.offeredMission===mission)return;
     this.offeredMission=mission;
-    const match=/^L([1-6])$/.exec(mission.def.id);if(!match)return;
+    const match=/^L([1-9])$/.exec(mission.def.id);if(!match)return;
     const level=Number(match[1]) as Level;
     // Game persists completion and aftermath on level.completed, before this navigation can unload the world.
-    if(level===6){this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();return;}
+    if(level===lastLevel){this.credits(save);return;}
     // Finishing level N continues with N+1, not with the furthest unlocked level (replays and L2-completed saves).
     void this.game.continueCampaign(save,nextLevelAfter(level)??undefined);
+  }
+  /** The end of the campaign: shown after the last level (L9) and whenever the next level is not built yet. */
+  credits(save:CampaignSave):void {
+    this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
