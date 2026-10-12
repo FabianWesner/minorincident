@@ -84,6 +84,10 @@ test('prebuilt pedestrian bakes receive hair/trousers tags without an extra attr
     expect(Object.keys(baked.geometry.attributes)).toEqual(names);
     const look = renderedCrowdLook(1,id,baked.geometry,new Color('#3178ac'),null);
     expect(look.hair, id).not.toBeNull(); expect(look.trousers, id).not.toBeNull();
+    if (id === 'npc.civilian-man-b' || id === 'npc.civilian-elderly') {
+      const parts = baked.geometry.getAttribute('_parts');
+      expect(Array.from({length:parts.count}, (_, i) => parts.getW(i)).some(w => w >= 4), `${id} headwear mask`).toBe(true);
+    }
     baked.geometry.dispose();
   }
 });
@@ -91,10 +95,13 @@ test('prebuilt pedestrian bakes receive hair/trousers tags without an extra attr
 test('head accessories share a rigid instance draw across models and disappear at LOD2 @E18-AC01', async () => {
   const { CrowdAccessories } = await import('../../../src/render/characters/CrowdAccessories');
   const { CrowdPosePalette } = await import('../../../src/render/characters/CrowdPosePalette');
-  const { Matrix4 } = await import('three');
+  const { Matrix4, Group, Mesh, BoxGeometry, MeshBasicMaterial } = await import('three');
   const { vi } = await import('vitest');
   const { AssetRegistry } = await import('../../../src/assets/registry');
-  const load = vi.spyOn(AssetRegistry.prototype,'loadAsset').mockImplementation((id, lod) => model(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0'));
+  const load = vi.spyOn(AssetRegistry.prototype,'loadAsset').mockImplementation((id, lod) => {
+    if (!id.startsWith('acc.placeholder-')) return model(id, lod === 'lod1' || lod === 'lod2' ? lod : 'lod0');
+    const root = new Group(); root.add(new Mesh(new BoxGeometry(.27,.06,.28), new MeshBasicMaterial())); return Promise.resolve(root);
+  });
   const accessories = new CrowdAccessories(); await accessories.init(); accessories.begin();
   const matrices = new Matrix4().makeTranslation(0,1.6,0).toArray();
   const poses = new CrowdPosePalette({ parts:['head'],frames:1,duration:1,matrices },10);
