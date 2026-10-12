@@ -85,7 +85,8 @@ export class LevelSevenEncounters {
   /** Run before AI so external explosion fixtures and combat ticks share the same active-pool cap. */
   reserveSlots(): void {
     const ai = this.world.infected!;
-    ai.director.reserved = Math.max(0, ai.active.length - ai.director.count);
+    const turning = this.state.roster.reduce((n, r) => n + (this.world.entities.get(r.id)?.infection ? 1 : 0), 0);
+    ai.director.reserved = Math.max(0, ai.active.length - ai.director.count) + turning;
   }
   update(): void {
     this.prepare();
@@ -157,6 +158,6 @@ export class LevelSevenEncounters {
     const director = this.world.infected!.director;
     director.queue.splice(0, director.queue.length, ...structuredClone(record.queue));
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0;
-    director.reserved = Math.max(0, this.world.infected!.active.length - director.count);
+    this.reserveSlots();
   }
 }
