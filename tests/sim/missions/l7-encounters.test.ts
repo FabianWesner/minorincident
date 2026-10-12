@@ -169,15 +169,21 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-dying @E29-AC19 ${ti
 
 test('T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot before queued arrivals', async () => {
   const w = await load('low'), c = w.l7Encounters!, ai = w.infected!;
-  const target = w.entities.get(c.state.roster[0].id)!, appearance = structuredClone(target.appearance);
+  const targets = c.state.roster.slice(0, 3).map(r => w.entities.get(r.id)!);
+  const appearances = targets.map(e => structuredClone(e.appearance));
   c.start();
-  for (const request of ai.director.queue.filter(r => r.archetype === 'infected.runner').slice(0, 99)) ai.spawn('infected.runner', request.position, { state: 'idle' });
-  w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: ai.active[0].id, targetId: target.id, position: target.transform, turns: true });
-  expect(target.infection).toBeDefined();
-  c.start(); c.update(); expect(ai.director.reserved).toBe(1);
-  ai.director.update(); expect(ai.active).toHaveLength(99);
+  for (const request of ai.director.queue.filter(r => r.archetype === 'infected.runner').slice(0, 97)) ai.spawn('infected.runner', request.position, { state: 'idle' });
+  for (const target of targets) {
+    w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: ai.active[0].id, targetId: target.id, position: target.transform, turns: true });
+    expect(target.infection).toBeDefined();
+    c.update(); // The next bite must count previous pending transformations only once.
+  }
+  expect(ai.director.reserved).toBe(0); expect(ai.director.pendingTurns).toBe(3);
+  ai.director.update(); expect(ai.active).toHaveLength(97);
   for (let i = 0; i < 240; i++) { step(w, 1); expect(ai.active.length).toBeLessThanOrEqual(100); }
-  expect(w.entities.get(target.id)!.infected).toBeDefined();
-  expect(w.entities.get(target.id)!.appearance).toEqual(appearance);
-  expect(c.state.roster[0].status).toBe('turned');
+  targets.forEach((target, i) => {
+    expect(w.entities.get(target.id)!.infected).toBeDefined();
+    expect(w.entities.get(target.id)!.appearance).toEqual(appearances[i]);
+    expect(c.state.roster[i].status).toBe('turned');
+  });
 });
