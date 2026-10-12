@@ -1,0 +1,6 @@
+L4-D1: three Alpha emergence anchors and three existing-pallet line anchor groups in `src/levels/L4/layout.ts`; no systems/encounter logic changed.
+Coverage: AC10/12/13 district geometry; full unit 830 passed, zero failures (including 10 L4 static tests); remote E22/smoke sim 40/40 (19 L4); typecheck, lint and build passed.
+Browser: headless L4 boot, WebGL visibility and real-input playthrough passed (205.3 s, zero deaths, all 13 photo/pair shots); three close emergence scenes and flat line control passed; [before/after review](review.md) contains the images and measurements.
+E18/E22 peak suite: high 254/298 war/collapse draws, 565k/908k triangles, sim p95 3.0 ms; low 202/188 draws, 242k/351k triangles, sim p95 5.9 ms; both gates passed.
+Integration: systems must replace static collision for `l4-sandbag-17`, `-24`, `-31`; anchors alone do not spawn Alphas or remove barricades; final Alpha-inclusive peak remains an integration check.
+Known findings: district line retains a failing 5 cm Alpha foot-sink check (1.2 cm gate); old safe-plaza scene fails spawn navigation; full verify browser stage blocked by occupied runner port 3301; isolated browser rerun 8 passed / 2 failed / 1 skipped (L1 WebGPU buffer error, L4 WebGL tab crash); L4 WebGL capture rerun passed on Mac; no criteria/tolerances weakened.

@@ -7,7 +7,7 @@ import { compositions } from '../../../src/levels/compositions';
 import { placementColliders } from '../../../src/levels/districts/staticCollision';
 import type { Aabb, DistrictLayout, Point } from '../../../src/levels/districts/types';
 import { validateLayout } from '../../../src/levels/districts/validate';
-import { l4Dressing, levelFourLayouts } from '../../../src/levels/L4/layout';
+import { l4AlphaEmergence, l4BreakableLine, l4Dressing, levelFourLayouts } from '../../../src/levels/L4/layout';
 import { bakeNav } from '../../../src/sim/world/NavGrid';
 
 /** E22 static criteria: the D-FAIR layout, the clean W0 dressing, the convoy route, both routes to the cellar, the light and the pair cameras. */
@@ -20,6 +20,45 @@ const box = (x0: number, z0: number, x1: number, z1: number): Aabb => ({ min: [x
 const reach = (nav: ReturnType<typeof navWith>, from: Point, to: Point) => { const f = nav.flood(from); const i = nav.index(to[0], to[1]); return i >= 0 && f[i] === 1; };
 
 describe('L4 static', () => {
+  test('T-E22-12-district @E22 @E22-AC10 @E22-AC12 Alpha approach anchors are on three separated, reachable streets outside the defensive ring', () => {
+    const nav = navWith(), angles: number[] = [];
+    expect(l4AlphaEmergence).toHaveLength(3);
+    for (const entry of l4AlphaEmergence) {
+      const p = at(entry.anchor);
+      expect(nav.walkable(p), entry.anchor).toBe(true);
+      expect(reach(nav, p, at('l4-plaza')), entry.anchor).toBe(true);
+      angles.push(Math.atan2(p[1] - l4.map.centre.z, p[0] - l4.map.centre.x));
+      expect(p[0] < l4.map.ring.x0 || p[0] > l4.map.ring.x1 || p[1] < l4.map.ring.z0 || p[1] > l4.map.ring.z1).toBe(true);
+      const a = layout.anchors[entry.anchor];
+      expect(Math.cos(a.yaw) * (l4.map.centre.x - p[0]) - Math.sin(a.yaw) * (l4.map.centre.z - p[1])).toBeGreaterThan(0);
+    }
+    for (let i = 0; i < angles.length; i++) for (let j = i + 1; j < angles.length; j++)
+      expect(Math.abs(Math.atan2(Math.sin(angles[i] - angles[j]), Math.cos(angles[i] - angles[j])))).toBeGreaterThanOrEqual(Math.PI / 3);
+  });
+
+  test('T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing', () => {
+    expect(l4BreakableLine).toHaveLength(3);
+    for (const line of l4BreakableLine) {
+      const placement = layout.placements.find(p => p.id === line.placementId)!;
+      expect(placement.assetId).toBe('prop.sandbag-pallet');
+      expect(at(line.anchors.center)).toEqual([placement.position[0], placement.position[2]]);
+      const a = at(line.anchors.a), b = at(line.anchors.b), center = at(line.anchors.center);
+      expect(Math.hypot(b[0] - a[0], b[1] - a[1])).toBeCloseTo(1.4);
+      expect((a[0] + b[0]) / 2).toBeCloseTo(center[0]); expect((a[1] + b[1]) / 2).toBeCloseTo(center[1]);
+      const inside = at(line.anchors.inside), outside = at(line.anchors.outside), intact = navWith();
+      expect(intact.walkable(inside), line.id).toBe(true); expect(intact.walkable(outside), line.id).toBe(true);
+      expect(intact.walkable(center), line.id).toBe(false);
+      // Geometry contract only: the systems lane owns HP damage and runtime blocker removal.
+      const opened = bakeNav([{ layout, origin: [0, 0], colliders: solid.filter(c => !c.id.startsWith(`${placement.id}/geometry-`)).map(c => c.aabb) }], 1, .5);
+      for (let i = 0; i <= 24; i++) {
+        const t = i / 24;
+        expect(opened.walkable([outside[0] + (inside[0] - outside[0]) * t, outside[1] + (inside[1] - outside[1]) * t]), `${line.id} crossing ${i}`).toBe(true);
+      }
+      expect(l4AlphaEmergence.some(e => e.anchor === line.emergenceAnchor)).toBe(true);
+    }
+    expect(base.anchors['l4-line-north-center']).toBeUndefined();
+  });
+
   test('T-E22-05a @E22 @E22-AC05 D-FAIR layout: valid, about 170 x 130 m, the five streets and Kessler Lane, clean W0 (no wrecks, decals or damage variants)', () => {
     expect(validateLayout(base, worldAssets)).toEqual([]);
     const xs = base.bounds.map(p => p[0]), zs = base.bounds.map(p => p[1]);
