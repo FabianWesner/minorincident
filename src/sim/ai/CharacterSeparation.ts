@@ -22,7 +22,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     radii.clear(); let maximumRadius = 0;
     for (const e of world.entities.iterate()) { const r = radius(e); radii.set(e.id, r); maximumRadius = Math.max(maximumRadius, r); }
     for (let pass = 0; pass < 3; pass++) for (const e of world.entities.iterate()) {
-      const r = radii.get(e.id)!; if (!r || (e.infected?.specialAttack && e.infected.specialAttack.stage !== 'recovery') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
+      const r = radii.get(e.id)!; if (!r || (e.infected?.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       if (world.districts && e.infected && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') e.transform.y = .7 + world.districts.groundHeight(e.transform.x, e.transform.z);
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       world.spatial.query(query, neighbors, false);

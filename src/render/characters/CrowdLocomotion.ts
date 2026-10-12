@@ -17,6 +17,8 @@ export interface CrowdLayers {
   lunge?: number;
   /** Lurching torso: weight 0..1, rolls and pitches with the gait phase. */
   lurch?: number;
+  /** Seconds into the gorilla chest-beat telegraph. */
+  chestBeat?: number;
 }
 /** Clips that stand on their feet: footwork locks the feet and turns become steps. */
 const standingClips = new Set(['idle', 'infected-idle', 'infected-search', 'npc-look-around', 'npc-gesture', 'npc-water', 'npc-wave', 'npc-glance', 'npc-give', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot', 'civ-startle', 'windup', 'swing', 'hurt']);
@@ -135,6 +137,14 @@ export class CrowdLocomotion {
       const swing = Math.sin(phase * Math.PI * 2), push = Math.abs(Math.cos(phase * Math.PI * 2));
       torso.quaternion.premultiply(this.rotation.setFromAxisAngle(X, swing * .16 * lurch)).premultiply(this.rotation.setFromAxisAngle(Z, -(.1 + .1 * push) * lurch));
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(X, -swing * .1 * lurch));
+    }
+    if (layers.chestBeat) {
+      const t = layers.chestBeat, weight = Math.min(1, t * 6);
+      for (const [arm, forearm, side] of [[this.rig.armL, this.rig.foreArmL, 1], [this.rig.armR, this.rig.foreArmR, -1]] as const) {
+        const beat = Math.sin(t * Math.PI * 8 + (side > 0 ? 0 : Math.PI));
+        arm?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -.6 * weight)).premultiply(this.rotation.setFromAxisAngle(X, side * .7 * weight));
+        forearm?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, (-1.2 + beat * .25) * weight));
+      }
     }
     if (flinch) {
       // Recoil away from the hit: chest and head snap back along the hit, hips give a little.
