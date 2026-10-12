@@ -10,6 +10,11 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'tools/blender'))
 from sslib import palette, ao
 M={}; parts=[]; groups=[]; rng=random.Random(612)
+# Authored distance tiers: --lod 1|2 rebuilds this same model as hard-edged closed solids with thicker thin parts (never decimation).
+LOD=int(sys.argv[sys.argv.index('--lod')+1]) if '--lod' in sys.argv else 0
+def fine(n,floor=6):return n if LOD==0 else max(floor,n//(2 if LOD==1 else 4))
+def pick(path,step=2):
+ return list(path) if LOD==0 or len(path)<9 else list(path[:-1:step])+[path[-1]]
 def init(asset):
  global ID, root
  ID=asset
@@ -33,13 +38,13 @@ def mat(token):
 
 def finish(o,name,token,parent=None,smooth=False):
  o.name=name;o.data.materials.append(mat(token))
- for p in o.data.polygons:p.use_smooth=smooth
+ for p in o.data.polygons:p.use_smooth=smooth and LOD<2
  bpy.context.view_layer.update();world=o.matrix_world.copy();o.parent=parent or root;o.matrix_world=world;bpy.context.view_layer.update();parts.append(o);return o
 
 def box(name,loc,size,t='woodWarm',b=.015,parent=None,segments=2):
  bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.dimensions=size
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
- if b:
+ if b and LOD==0:
   m=o.modifiers.new('soft bevel','BEVEL');m.width=min(b,min(size)*.35);m.segments=segments;bpy.ops.object.modifier_apply(modifier=m.name)
   m=o.modifiers.new('weighted corners','WEIGHTED_NORMAL');bpy.ops.object.modifier_apply(modifier=m.name)
  return finish(o,name,t,parent)
@@ -48,16 +53,19 @@ def mesh(name,verts,faces,t,parent=None):
  d=bpy.data.meshes.new(name);d.from_pydata(verts,[],faces);d.update();o=bpy.data.objects.new(name,d);bpy.context.collection.objects.link(o);return finish(o,name,t,parent)
 
 def sphere(name,loc,size,t,parent=None,n=24):
- bpy.ops.mesh.primitive_uv_sphere_add(segments=n,ring_count=max(8,n//2),radius=1,location=loc);o=bpy.context.object;o.scale=size
+ n=fine(n,8)
+ bpy.ops.mesh.primitive_uv_sphere_add(segments=n,ring_count=max(5 if LOD else 8,n//2),radius=1,location=loc);o=bpy.context.object;o.scale=size
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
  return finish(o,name,t,parent,True)
 
 def ico(name,loc,size,t,parent=None,sub=1):
+ sub=min(sub,(1,1,0)[LOD])
  bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=sub,radius=1,location=loc);o=bpy.context.object;o.scale=size
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
  return finish(o,name,t,parent,smooth=ID in ['prop.flower-bed.large','prop.flower-bed.small','prop.flower-box','house.porch-a'] and t in ['foliage','foliageDark','grass','schoolBusYellow','flamingoPink','picketWhite'])
 
 def cyl(name,loc,r,depth,t,parent=None,axis='Z',n=32):
+ n=fine(n)
  bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=loc);o=bpy.context.object
  if axis=='Y':o.rotation_euler.x=math.pi/2
  if axis=='X':o.rotation_euler.y=math.pi/2
@@ -65,12 +73,13 @@ def cyl(name,loc,r,depth,t,parent=None,axis='Z',n=32):
 
 def beam(name,start,end,w,t='silver',parent=None):
  d=Vector(end)-Vector(start)
+ w=max(w,(0,.014,.026)[LOD]) if w<.03 else w
  if w<.012:o=cyl(name,(Vector(start)+Vector(end))/2,w*.5,d.length,t,parent,n=6)
  else:o=box(name,(Vector(start)+Vector(end))/2,(w,w,d.length),t,min(w*.25,.012),parent,segments=1)
  o.rotation_euler=d.to_track_quat('Z','Y').to_euler();return o
 
 def tube(name,path,r,t,parent=None,n=12):
- vs=[];fs=[]
+ n=fine(n,4);path=pick(path);r=max(r,(0,.012,.022)[LOD]);vs=[];fs=[]
  for i,pt in enumerate(path):
   tangent=Vector(path[min(i+1,len(path)-1)])-Vector(path[max(0,i-1)]);tangent.normalize()
   u=tangent.cross(Vector((0,0,1)))
@@ -93,12 +102,14 @@ def smooth_path(points,steps=6):
  out.append(Vector(points[-1]));return out
 
 def torus(name,loc,major,minor,t,parent=None,axis='Z',n=48):
- bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=6,location=loc,major_radius=major,minor_radius=minor);o=bpy.context.object
+ n=fine(n,12);minor=max(minor,(0,.016,.026)[LOD]) if minor<.026 else minor
+ bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=(6,5,4)[LOD],location=loc,major_radius=major,minor_radius=minor);o=bpy.context.object
  if axis=='Y':o.rotation_euler.x=math.pi/2
  if axis=='X':o.rotation_euler.y=math.pi/2
  return finish(o,name,t,parent,True)
 
 def lathe(name,loc,profile,t,parent=None,n=48):
+ n=fine(n,8)
  vs=[(loc[0]+r*math.cos(i*math.tau/n),loc[1]+r*math.sin(i*math.tau/n),loc[2]+z) for r,z in profile for i in range(n)]
  fs=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i) for j in range(len(profile)-1) for i in range(n)]
  o=mesh(name,vs,fs,t,parent)
@@ -108,7 +119,8 @@ def lathe(name,loc,profile,t,parent=None,n=48):
 def wheel(loc,r=.15,w=.09,parent=None):
  cyl('rubber tire',loc,r,w,'uiDark',parent,'Y',40)
  for s in [-1,1]:
-  p=(loc[0],loc[1]+s*w*.52,loc[2]);cyl('wheel hub',p,r*.68,.018,'brass',parent,'Y');cyl('hub cap',(p[0],p[1]+s*.014,p[2]),r*.24,.027,'silver',parent,'Y',16)
+  p=(loc[0],loc[1]+s*w*.52,loc[2]);cyl('wheel hub',p,r*.68,.018,'brass',parent,'Y')
+  if LOD<2:cyl('hub cap',(p[0],p[1]+s*.014,p[2]),r*.24,.027,'silver',parent,'Y',16)
 
 def pot(x,y,z=.0,scale=1,flowers=True):
  s=scale
@@ -118,15 +130,15 @@ def pot(x,y,z=.0,scale=1,flowers=True):
 
 def flower(x,y,z,r=.065,t='schoolBusYellow',parent=None):
  cyl('green stem',(x,y,z-.10),.009,.22,'grass',parent,n=8)
- for j in range(6):
-  a=j*math.tau/6; o=ico('petal',(x+r*.58*math.cos(a),y+r*.58*math.sin(a),z),(r*.64,r*.29,r*.20),t,parent,1);o.rotation_euler.z=a
+ for j in range(6 if LOD==0 else 4):
+  a=j*math.tau/(6 if LOD==0 else 4); o=ico('petal',(x+r*.58*math.cos(a),y+r*.58*math.sin(a),z),(r*.64,r*.29,r*.20),t,parent,1);o.rotation_euler.z=a
  ico('gold flower heart',(x,y,z+.012),(r*.27,r*.27,r*.20),'schoolBusYellow',parent,sub=1)
 
 def plant(x,y,z,r=.35,flowers=True):
- for i in range(18):
+ for i in range((18,9,4)[LOD]):
   a=i*2.4;rr=r*rng.uniform(.25,.8);h=rng.uniform(.04,r*.7)
   o=ico('leaf',(x+rr*math.cos(a),y+rr*math.sin(a),z+h),(r*.4,r*.16,r*.12),'foliage' if i%3 else 'foliageDark');o.rotation_euler=(0,-.6,a)
-  if flowers and i%3==0:flower(x+rr*math.cos(a),y+rr*math.sin(a),z+h+r*.25,r*.17,['schoolBusYellow','picketWhite','flamingoPink'][i%9//3])
+  if flowers and LOD<2 and i%3==0:flower(x+rr*math.cos(a),y+rr*math.sin(a),z+h+r*.25,r*.17,['schoolBusYellow','picketWhite','flamingoPink'][i%9//3])
 
 def star(name,x,y,z,r,t,parent=None):
  # Solid extruded star plaque in the YZ plane, front at +X.
@@ -137,7 +149,7 @@ def star(name,x,y,z,r,t,parent=None):
 def run(out):
  p=argparse.ArgumentParser()
  p.add_argument('--quality',choices=['high','low'],default='high')
- for key,default,typ in [('render',None,str),('glb',None,str),('view','game',str),('samples',24,int),('width',960,int),('height',720,int)]:p.add_argument('--'+key,default=default,type=typ)
+ for key,default,typ in [('render',None,str),('glb',None,str),('lod',0,int),('view','game',str),('samples',24,int),('width',960,int),('height',720,int)]:p.add_argument('--'+key,default=default,type=typ)
  a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
  # Merge only siblings of matching material. Joint empties stay separate.
  for parent in groups:
@@ -178,7 +190,8 @@ def run(out):
   bpy.ops.object.select_all(action='DESELECT')
   for o in meshes+groups:o.select_set(True)
   bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_texcoords=False)
- (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+ if LOD==0:(out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+ else:print('LOD%d TRIS %d'%(LOD,tris))
  if a.render:
   scene=bpy.context.scene
   # Eevee game camera review; authored materials are one-sided.

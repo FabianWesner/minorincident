@@ -10,6 +10,10 @@ ARGS = sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
 def arg(key, default=None):
     return ARGS[ARGS.index(key)+1] if key in ARGS else default
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
+# Authored distance tiers (QA 10-11 FIX-18): --lod 1|2 rebuilds this same layout as hard-edged closed solids
+# (no bevels or weighted normals, fewer round segments, no micro graphics) instead of decimating the hero mesh,
+# which skewed tile normals and sawtoothed the wall caps.
+LOD = int(arg('--lod', 0))
 scene = bpy.context.scene
 scene.unit_settings.system = 'METRIC'
 rng = random.Random(74)
@@ -23,7 +27,7 @@ root = empty('root'); root['assetId'] = ASSET['id']; root['forward'] = '+X'
 interior = empty('interior', parent=root)
 def finish(o, name, token, bevel=0, parent=None):
     o.name = name; o.data.materials.append(palette.mat({'light_window_warm':'windowGlow','light_fluorescent':'picketWhite'}.get(token,token), token.startswith('light_')))
-    if bevel:
+    if bevel and LOD==0:
         m = o.modifiers.new('Soft edges', 'BEVEL'); m.width = bevel; m.segments = 1 if bevel <= .012 else 2
         bpy.context.view_layer.objects.active = o; bpy.ops.object.modifier_apply(modifier=m.name)
         m = o.modifiers.new('Weighted normals','WEIGHTED_NORMAL'); m.keep_sharp = True
@@ -46,6 +50,7 @@ def box(name, loc, size, token, bevel=.018, parent=None):
     finish(o,name,token,min(bevel,min(size)*.2),parent); mesh_cache[key]=o.data
     return o
 def cyl(name, loc, radius, depth, token, rot=(0,0,0), vertices=12, parent=None):
+    if LOD: vertices=max(6,vertices//(2 if LOD==1 else 3)); radius=max(radius,(0,.016,.026)[LOD]) if radius<.03 and depth>.05 else radius
     key=('cylinder',radius,round(depth,6),token,vertices)
     o=cached(name,key,loc,rot,parent)
     if o: return o
@@ -58,7 +63,7 @@ def rod(name,a,b,r,token,parent=None):
 def text(name, words, loc, size, token, face='x', parent=None):
     bpy.ops.object.text_add(location=loc); o=bpy.context.object; o.name=name
     o.data.body=words; o.data.size=size; o.data.align_x='CENTER'; o.data.align_y='CENTER'
-    o.data.extrude=.002; o.data.bevel_depth=.0005; o.data.resolution_u=3
+    o.data.extrude=.002; o.data.bevel_depth=.0005 if LOD==0 else 0; o.data.resolution_u=3 if LOD==0 else 1
     o.rotation_euler=(math.pi/2,0,math.pi/2) if face=='x' else (math.pi/2,0,0)
     bpy.ops.object.convert(target='MESH'); return finish(bpy.context.object,name,token,0,parent)
 def pivot(name, loc):
@@ -91,7 +96,7 @@ anchor('staff',(-3.6,2.49,2.2),['static_emi_windowGlow'],'light_window_warm')
 products=['survivorRed','schoolBusYellow','policeBlue','backpackTeal','foliage','woodWarm']
 def package(x,y,z,color,face='x',size=(.26,.26,.32),detail=True):
     box('carton',(x,y,z),size,color,.024)
-    if detail:
+    if detail and LOD<2:
         if face=='x':
             box('carton_label',(x+size[0]/2+.010,y,z-.015),(.012,size[1]*.62,size[2]*.4),'picketWhite',0)
             box('carton_brand',(x+size[0]/2+.019,y,z),(.008,size[1]*.30,size[2]*.12),'schoolBusYellow',0)
@@ -111,9 +116,9 @@ def shelf(name,x,y,length,height=2.05,depth=.65,rows=4):
         for k in range(n):
             py=y-(n-1)*.3/2+k*.3
             package(x+.04,py,z+.2,products[(k+row*2)%6],size=(depth*.59,.25,.30))
-            if k%2==0:
+            if k%2==0 and LOD<2:
                 box('price_label',(x+depth/2+.03,py,z+.03),(.009,.15,.052),'schoolBusYellow',.002)
-                for d in range(3):
+                for d in range(3 if LOD==0 else 0):
                     box('barcode',(x+depth/2+.038,py-.045+d*.03,z+.03),(.006,.009,.029),'uiDark',0)
     for k in range(n):
         package(x,y-(n-1)*.3/2+k*.3,.38+height+.12,products[(k+1)%6],size=(.30,.25,.24))
@@ -176,14 +181,14 @@ for k in range(4):
     for j in range(6):
         px=x+((j%2)-.5)*.16; py=-3.55+(j//2)*.20
         if k==1:
-            bpy.ops.mesh.primitive_uv_sphere_add(segments=10,ring_count=6,radius=.115,location=(px,py,1.52))
+            bpy.ops.mesh.primitive_uv_sphere_add(segments=(10,8,6)[LOD],ring_count=(6,5,4)[LOD],radius=.115,location=(px,py,1.52))
             finish(bpy.context.object,'apple','survivorRed'); rod('stem',(px,py,1.62),(px,py,1.67),.012,'woodWarm')
         else: package(px,py,1.51, ['foliage','survivorRed','schoolBusYellow','backpackTeal'][k],size=(.13,.15,.23),detail=False)
 # Compact checkout in the rear aisle, with conveyor, register, scanner and bagging tray.
 box('checkout_pedestal',(.03,2.28,.90),(.88,1.55,1.05),'backpackTeal',.04)
 box('checkout_counter',(.03,2.28,1.47),(1.0,1.75,.12),'sidewalk',.04)
 box('conveyor',(.03,2.6,1.546),(.70,.86,.025),'uiDark',.015)
-for i in range(6): box('belt_seam',(.03,2.26+i*.13,1.563),(.65,.009,.008),'asphalt',0)
+for i in range(6 if LOD==0 else 0): box('belt_seam',(.03,2.26+i*.13,1.563),(.65,.009,.008),'asphalt',0)
 box('scanner',(.03,1.95,1.58),(.42,.24,.06),'uiDark')
 box('scanner_window',(.03,1.95,1.615),(.24,.15,.012),'survivorRed',.005)
 rod('register_post',(.34,1.7,1.51),(.34,1.7,1.86),.035,'asphalt')
@@ -238,7 +243,7 @@ for cx,cy,scale in [(1,-3.88,1.25),(-2,-2.35,.48),(-.3,-1.1,.28)]:
     faces += [(j,(j+1)%32,(j+1)%32+32,j+32) for j in range(32)]
     data=bpy.data.meshes.new('wet_pool'); data.from_pydata(vertices,[],faces); data.update()
     o=bpy.data.objects.new('blood_pool',data); scene.collection.objects.link(o); finish(o,'blood_pool','blood')
-    for j in range(18):
+    for j in range(18 if LOD<2 else 0):
         angle=j*math.tau/18; radius=scale*rng.uniform(1.12,1.34)
         x=cx+math.cos(angle)*radius; y=max(-4.39,cy+math.sin(angle)*radius*.32)
         o=cyl('blood_droplet',(x,y,.371),rng.uniform(.02,.045)*scale,.010,'blood',vertices=8)
@@ -284,7 +289,7 @@ def stats(objects=None):
     return {'triangles':tris,'draw_calls':draws}
 # Reserve a small safety margin while retaining all purposeful components.
 count=stats()['triangles']
-if count>96000:
+if count>96000 and LOD==0:
     for o in meshes:
         bpy.context.view_layer.objects.active=o
         m=o.modifiers.new('Hero budget','DECIMATE'); m.ratio=95000/count
@@ -298,20 +303,14 @@ if arg('--glb'):
         bpy.ops.object.select_all(action='DESELECT')
         for o in (asset_objects if objects is None else objects): o.select_set(True)
         bpy.ops.export_scene.gltf(filepath=str(Path(path).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_extras=True,export_cameras=False,export_lights=False)
-    export(arg('--glb'))
-    originals={o:o.data.copy() for o in meshes}
+    if LOD==0: export(arg('--glb'))
     lod_stats={}
-    for level,ratio in [(1,.12),(2,.04)]:
-        for o in meshes:
-            o.data=originals[o].copy()
-            bpy.context.view_layer.objects.active=o
-            m=o.modifiers.new('LOD reduction','DECIMATE'); m.ratio=ratio
-            bpy.ops.object.modifier_apply(modifier=m.name)
+    for level in ([LOD] if LOD else []):
         selected=asset_objects
         temporary=[]
         if level==2:
             # Distant static draw-call cap: collapse five similar palette pairs.
-            remap={'pal_grass':'foliage','pal_skinWarm':'skinBlush','pal_picketWhite':'sidewalk','pal_uiDark':'asphalt','pal_woodWarm':'schoolBusYellow'}
+            remap={'pal_grass':'foliage','pal_skinWarm':'skinBlush','pal_picketWhite':'sidewalk','pal_uiDark':'asphalt','pal_woodWarm':'leatherShadow'}  # stays brown (the old yellow remap turned shelf ends and crates yellow)
             originals_static=[o for o in meshes if o.name.startswith('static_') and not o.name.startswith('static_emi_')]
             groups={}
             for o in originals_static:
@@ -321,12 +320,11 @@ if arg('--glb'):
                 groups.setdefault(clone.data.materials[0].name,[]).append(clone)
             for mat,objects in groups.items(): temporary.append(join(objects,'lod2_static_'+mat,interior))
             selected=[o for o in asset_objects if o not in originals_static]+temporary
-        export(ROOT/f'model.lod{level}.glb',selected)
+        export(arg('--glb'),selected)
         lod_stats[str(level)]=stats([o for o in selected if o.type=='MESH'])
         for o in temporary: bpy.data.objects.remove(o,do_unlink=True)
-    (ROOT/'lod-stats.json').write_text(json.dumps(lod_stats,indent=2))
-    for o in meshes: o.data=originals[o]
-    (ROOT/'report.json').write_text(json.dumps(report,indent=2))
+    if LOD: print('LOD%d STATS %s'%(LOD,json.dumps(lod_stats)))
+    else: (ROOT/'report.json').write_text(json.dumps(report,indent=2))
 print('BUILD OK',json.dumps(report))
 if arg('--render'):
     world=bpy.data.worlds.new('Studio'); scene.world=world; world.use_nodes=True

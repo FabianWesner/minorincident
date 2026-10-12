@@ -30,7 +30,8 @@ def run(asset, interior, script):
         dark = bpy.data.materials.get('pal_uiDark') or bpy.data.materials.get('pal_asphalt')
         if dark is None:
             dark = bpy.data.materials.new('pal_uiDark'); dark.diffuse_color = (.019, .016, .025, 1)
-        trim = dark if asset == 'int.basement-cellar' else bpy.data.materials.get('pal_picketWhite') or dark
+        # Distance tiers that fold picketWhite into sidewalk (int.supermarket LOD2) keep a light coping instead of falling back to the dark membrane.
+        trim = dark if asset == 'int.basement-cellar' else bpy.data.materials.get('pal_picketWhite') or bpy.data.materials.get('pal_sidewalk') or dark
         cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
         sx, sy = hi[0] - lo[0], hi[1] - lo[1]
         # Warm coping and a charcoal membrane, like the adjacent flat-roof shops.
