@@ -78,7 +78,7 @@ export class HitQuery {
     return this.visible({ ...origin, y: (origin.y ?? .7) + .45 }, { ...target, y: (target.y ?? .7) + .45 }, ignoreId);
   }
   /** Allied guns wait for living humans to clear the segment; they never roll a friendly-fire hit. */
-  alliedShotClear(source: EntitySnapshot, target: EntitySnapshot): boolean {
+  alliedShotClear(source: EntitySnapshot, target: EntitySnapshot, tick: number): boolean {
     const origin = source.transform, end = target.transform;
     const dx = end.x - origin.x, dz = end.z - origin.z, lengthSq = dx * dx + dz * dz;
     if (!lengthSq) return true;
@@ -90,7 +90,11 @@ export class HitQuery {
       const x = origin.x + dx * t - human.transform.x, z = origin.z + dz * t - human.transform.z;
       const radius = human.combat?.radius ?? .4;
       const y = origin.y + .45 + (end.y - origin.y) * t;
-      if (x * x + z * z <= radius * radius && y >= human.transform.y - .7 && y <= human.transform.y + 1.1) return false;
+      const prone = human.civilian?.state === 'down' || human.escort?.state === 'downed'
+        || Math.max(human.civilian?.knockedUntil ?? 0, human.escort?.knockedUntil ?? 0) > tick
+        || !!human.survivor && !!human.combat?.reaction?.heavy && human.combat.reaction.until > tick;
+      const top = human.transform.y + (prone ? -.2 : 1.1);
+      if (x * x + z * z <= radius * radius && y >= human.transform.y - .7 && y <= top) return false;
     }
     return true;
   }

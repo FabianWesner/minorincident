@@ -5,7 +5,7 @@ const tier = process.argv[3] === 'low' ? 'low' : 'high';
 const session = new SceneSession({ tier, viewport: tier === 'low' ? { width: 390, height: 844 } : { width: 1280, height: 720 } });
 try {
   await session.open();
-  for (const name of ['focus', 'block', 'gap']) {
+  for (const name of process.argv[4] ? [process.argv[4]] : ['focus', 'block', 'gap', 'prone']) {
     const spec = readSpec(`tests/scenes/l4-systems/${name}.json`);
     if (tier === 'low') spec.camera = { mode: 'game', target: name === 'focus' ? [2, 3] : [0, 0], zoom: (name === 'focus' ? 1.7 : name === 'gap' ? 1.5 : 1.15) * 2.2 };
     await session.load(spec);

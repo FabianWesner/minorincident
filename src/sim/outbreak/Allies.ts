@@ -109,7 +109,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     if (a.strikeAt && tick >= a.strikeAt) {
       const victim = world.entities.get(a.strikeTarget ?? 0); a.strikeAt = 0;
       const allowed = !!victim && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id)
-        && (!shooter || a.baton || world.combat!.query.alliedShotClear(e, victim));
+        && (!shooter || a.baton || world.combat!.query.alliedShotClear(e, victim, tick));
       if (!allowed) a.baton = false;
       if (allowed && victim?.infected && victim.health.current > 0 && world.combat) {
         const dx = victim.transform.x - e.transform.x, dz = victim.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -146,7 +146,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot') c.story = { clip: 'shoot', start: tick };
       if (a.role === 'officer' && !a.strikeAt && tactics(world, e, a, target, d, dx, dz)) return true;
       if (d <= reach && tick >= a.nextAttack && world.combat) {
-        if (shooter && !world.combat.query.alliedShotClear(e, target)) return true;
+        if (shooter && !world.combat.query.alliedShotClear(e, target, tick)) return true;
         a.nextAttack = tick + ticks(gun ? gun.shotS : shooter ? l2.allies.officer.shotS : ff.swingS); a.hits++;
         a.strikeAt = tick + Math.max(1, ticks(shooter ? 0 : ff.windupS)); a.strikeTarget = target.id;
         // Shooters raise the gun (recoil replays on every shot), melee fighters swing the halligan (strike frame = windup).
