@@ -1,0 +1,230 @@
+{
+  "spec": "tests/scenes/l4-district/emergence-west.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 60,
+  "timing": {
+    "openMs": 1483,
+    "loadMs": 2712,
+    "runMs": 614,
+    "sceneMs": 3326
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "clipping",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "footSinkMaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 1.2
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "actorHitsMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "l4-district-emergence-west",
+    "frame": 0,
+    "placements": [],
+    "actors": [
+      {
+        "id": "west",
+        "kind": "infected",
+        "entity": 3
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "l4-district-emergence-west",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 60,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 18,
+        "p95": 18,
+        "max": 18
+      },
+      "triangles": {
+        "p50": 26219,
+        "p95": 26219,
+        "max": 26219
+      },
+      "shadowDrawCalls": {
+        "p50": 26,
+        "p95": 26,
+        "max": 26
+      },
+      "shadowTriangles": {
+        "p50": 14221,
+        "p95": 14221,
+        "max": 14221
+      },
+      "stepMs": {
+        "p50": 2.1,
+        "p95": 2.7,
+        "max": 3.2
+      },
+      "lastFrame": {
+        "drawCalls": 18,
+        "triangles": 26219,
+        "shadowDrawCalls": 26,
+        "shadowTriangles": 14221,
+        "stepMs": 2,
+        "categories": {
+          "other": 16,
+          "shadows": 26,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "west": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          -56.6,
+          6
+        ],
+        "yawDeg": 4.3,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -56.6,
+            6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.8,
+          "torsoPitchMaxDeg": 20.2,
+          "contacts": 3,
+          "slideMaxCm": 0.9,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0.7,
+          "liftMaxCm": 16.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 6
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "infected": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 1
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

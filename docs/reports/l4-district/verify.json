@@ -1,0 +1,125 @@
+{
+  "checks": {
+    "target": "E22",
+    "epics": [
+      "E22"
+    ],
+    "pattern": "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E22/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": 1
+      }
+    ]
+  },
+  "selectedSim": {
+    "numPassedTests": 40,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "l4Sim": [
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed",
+    "passed"
+  ],
+  "remoteBrowser": {
+    "stats": {
+      "startTime": "2026-10-12T01:16:42.095Z",
+      "duration": 1033717.2019999999,
+      "expected": 8,
+      "skipped": 1,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+        "file": "e2e/crowd-drawn.spec.ts",
+        "status": "failed",
+        "errors": [
+          "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at XB.createAttribute (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:576:1545)\n    at nF.createAttribute (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:579:35882)\n    at xR.update (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:83238)\n    at yR.updateAttribute (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:85969)\n    at yR.updateAttributes (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:85447)\n    at yR.updateForRender (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:84654)\n    at zi.compileAsync (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:41:48387)\n    at async _p.load (http://127.0.0.1:3487/build/index-BlrvAQhd.js:9:517283)\n    at async http://127.0.0.1:3487/build/index-BlrvAQhd.js:12:37763\n    at XB.createAttribute (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:576:1545)\n    at nF.createAttribute (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:579:35882)\n    at xR.update (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:83238)\n    at yR.updateAttribute (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:85969)\n    at yR.updateAttributes (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:85447)\n    at yR.updateForRender (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:33:84654)\n    at zi.compileAsync (http://127.0.0.1:3487/build/WeatherView-BdLZlUQM.js:41:48387)\n    at async _p.load (http://127.0.0.1:3487/build/index-BlrvAQhd.js:9:517283)\n    at async http://127.0.0.1:3487/build/index-BlrvAQhd.js:12:37763\n    at boot (/srv/mi/jobs/l4-district-e61c32-75346-1791767766/tests/e2e/fixtures.ts:47:14)\n    at /srv/mi/jobs/l4-district-e61c32-75346-1791767766/tests/e2e/crowd-drawn.spec.ts:23:5",
+          "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+   \"pageerror: Cannot read properties of undefined (reading 'destroy')\",\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/srv/mi/jobs/l4-district-e61c32-75346-1791767766/tests/e2e/fixtures.ts:39:81)"
+        ]
+      },
+      {
+        "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props",
+        "file": "e2e/levels/L4.spec.ts",
+        "status": "failed",
+        "errors": [
+          "Error: page.evaluate: Target crashed \n\n  219 |     await page.evaluate(() => { window.__SS__!.cheats.completeObjective('quartermaster'); });\n  220 |     for (let i = 0; i < 400 && !(await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).length)); i++) await page.evaluate(() => window.__SS__!.step(30));\n> 221 |     for (let i = 0; i < 60 && (await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden).length)) < 4; i++) await page.evaluate(() => window.__SS__!.step(30));\n      |                                                                                                                                                                                  ^\n  222 |     // Population can precede the crowd renderer's first submitted pose; wait for a stable render frame.\n  223 |     await page.evaluate(async () => { await window.__SS__!.step(30); await window.__SS__!.screenshotReady(); });\n  224 |     await check('infected', 'l4-war-infected');\n    at /srv/mi/jobs/l4-district-e61c32-75346-1791767766/tests/e2e/levels/L4.spec.ts:221:178"
+        ]
+      }
+    ]
+  },
+  "macBrowser": {
+    "boot": "passed",
+    "realInput": "passed",
+    "l4WebglVisibility": "passed",
+    "perfHigh": "passed",
+    "perfLow": "passed"
+  }
+}
