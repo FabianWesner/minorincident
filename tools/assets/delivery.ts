@@ -7,6 +7,8 @@ export function triangleCount(document: Document): number {
 /** Small hand-held objects have no distance tier; all other hero/side assets do. */
 export function requiredLods(def: AssetDef, triangles: number): ('lod1' | 'lod2')[] {
   if (def.tier === 'distant') return [];
+  // Crowd accessories (hats, hair pieces) are dropped at LOD2: no third tier exists.
+  if (def.id.startsWith('acc.')) return ['lod1'];
   if (def.authoredLodTriangles && def.lods?.lod1 && def.lods?.lod2) return ['lod1', 'lod2'];
   if (/^(wpn|thr|pick)\./.test(def.id)) return triangles > 2000 ? ['lod1'] : [];
   return ['lod1', 'lod2'];
