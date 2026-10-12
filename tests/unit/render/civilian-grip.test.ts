@@ -5,8 +5,9 @@ import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { simplifyCrowdLod } from '../../../src/render/characters/crowdLodGeometry';
 import { MeshoptDecoder } from 'meshoptimizer';
 import { expect, test } from 'vitest';
-import { bakeInfected, civilianClips } from '../../../src/render/characters/bakeInfected';
-import { handTriangles, prepareGrip, removeAuthoredCane, gripReach } from '../../../src/render/npc/civilianGrip';
+import { bakeInfected, civilianClips, framesPerClip } from '../../../src/render/characters/bakeInfected';
+import { CrowdGunAim } from '../../../src/render/characters/GunAim';
+import { handTriangles, prepareGrip, removeAuthoredCane, gripReach, uprightHand } from '../../../src/render/npc/civilianGrip';
 import { RoutineProps } from '../../../src/render/npc/RoutineProps';
 import { boxOf, staticClipping, type TriangleSet } from '../../../src/debug/scenelab/geometry';
 import type { CivilianProp } from '../../../src/sim/npc/types';
@@ -39,4 +40,44 @@ for (const model of models) test(`@E08 native ${model} fingers clear all routine
   expect(staticClipping([{ id: 'native', assetId: model, tris: native, box: boxOf(native) }, { id: 'old-cup', assetId: 'coffee', tris: cup, box: boxOf(cup) }]).length).toBeGreaterThan(0);
   oldCup.dispose();
   props.dispose(); baked.geometry.dispose();
+});
+
+/**
+ * PO 2026-10-12 "The way the guy holds the cup is strange": a held mug is gripped by its handle, upright, with the elbow bent and the
+ * hand at chest or waist height in front of the body (a sipping idle raises it to the mouth), instead of hanging at the hip on a straight arm.
+ */
+for (const model of ['man-a', 'woman-b', 'elderly']) test(`@E08 ${model} holds the mug by the handle, upright, elbow bent, at chest/waist height`, async () => {
+  const bytes = readFileSync(`public/assets/models/npc.civilian-${model}.glb`);
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  if (model === 'elderly') removeAuthoredCane(scene);
+  const baked = bakeInfected(scene, [], false, civilianClips);
+  const parts = baked.clip.parts, part = (name: string) => parts.indexOf(name), count = parts.length;
+  const aim = new CrowdGunAim(scene, parts), cupSocket: [number, number, number] = [.035, -.11, .125];
+  const frame = civilianClips.indexOf('npc-carry') * framesPerClip + 3;
+  const position = (pose: Float32Array, name: string) => new Vector3().setFromMatrixPosition(new Matrix4().fromArray(pose, part(name) * 16));
+  for (const sip of [0, 1]) {
+    const pose = Float32Array.from((baked.clip.matrices as Float32Array).subarray(frame * count * 16, (frame + 1) * count * 16));
+    const straight = position(pose, 'handR').y;
+    aim.hold(pose, sip, cupSocket);
+    const hand = new Matrix4();
+    uprightHand(pose, part('handR'), hand);
+    const shoulder = position(pose, 'armR'), elbow = position(pose, 'foreArmR'), wrist = position(pose, 'handR'), hip = position(pose, 'hip'), head = position(pose, 'head');
+    // Elbow bent: the wrist is clearly closer to the shoulder than the arm is long, and above where the straight arm hung.
+    const upper = shoulder.distanceTo(elbow), lower = elbow.distanceTo(wrist);
+    expect(shoulder.distanceTo(wrist), `${model} sip ${sip} arm straight`).toBeLessThan((upper + lower) * .92);
+    expect(wrist.y, `${model} hand not raised`).toBeGreaterThan(straight + .02);
+    if (sip === 0) { expect(wrist.y).toBeGreaterThan(hip.y); expect(wrist.y).toBeLessThan(shoulder.y); }
+    else expect(wrist.y, `${model} sip hand near the mouth`).toBeGreaterThan(head.y - .22);
+    // The cup sits in front of the body (+X is forward in the rig) and on the hand matrix, whose rotation is stripped: the mug axis is the figure's up.
+    expect(wrist.x, `${model} cup in front of the body`).toBeGreaterThan(hip.x);
+    const props = new RoutineProps(); props.begin(); props.held('coffee', hand, 1);
+    const mesh = props.children.find(m => (m as InstancedMesh).count > 0) as InstancedMesh, m = new Matrix4(); mesh.getMatrixAt(0, m);
+    const up = new Vector3(0, 1, 0).transformDirection(m), tilt = Math.acos(Math.min(1, up.y)) * 180 / Math.PI;
+    expect(tilt, `${model} mug tilt`).toBeLessThanOrEqual(15);
+    // The handle (top bar, prop-local) lies in the palm: within 10 cm of the wrist joint.
+    const handle = new Vector3(.035, -.045, 0).applyMatrix4(m);
+    expect(handle.distanceTo(wrist), `${model} handle away from the hand`).toBeLessThanOrEqual(.1);
+    props.dispose();
+  }
+  baked.geometry.dispose();
 });

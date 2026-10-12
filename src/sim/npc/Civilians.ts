@@ -4,7 +4,7 @@ import { infectedDef } from '../../data/infected';
 import { civilianRoles, npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import { leaveSeat, updateRoutine } from './MorningRoutines';
+import { followSeat, leaveSeat, updateRoutine } from './MorningRoutines';
 import type { Civilian, CivilianActivity, CivilianState, Point, ZooSpecies } from './types';
 const mobileStates = new Set<CivilianState>(['calm', 'alarmed', 'flee', 'hide']);
 const grabStates = new Set<CivilianState>(['calm', 'alarmed', 'flee']);
@@ -167,6 +167,7 @@ export class Civilians {
         // Ambient people cornered against a fence (flee cell beyond it, no route) hide instead of re-planning every tick.
         if (c.state === 'flee' && (distance > 25 || !moved && !c.outbreak)) this.state(e, 'hide');
       } else if (c.state === 'calm' && c.schedule) {
+        followSeat(this.world, e);
         updateRoutine(this.world, e);
       } else if (c.state === 'calm' && tick >= c.pauseUntil) {
         const owner = c.owner ? this.world.entities.get(c.owner) : undefined;
