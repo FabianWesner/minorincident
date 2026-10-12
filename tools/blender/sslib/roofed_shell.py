@@ -9,8 +9,8 @@ from mathutils import Vector
 # Exterior wall palette of the bld.* kits built on an open cutaway interior. Faces of the kit that are open (found by ray
 # casting the accepted interior) get a closed wall with dark panes, so no street-facing side is ever missing (PO 10-12:
 # "building without walls"). The wall lives under the cutaway `roof` node and lifts with it when the courier is inside.
-SHELL_WALL = {'bld.pharmacy': 'picketWhite', 'bld.supermarket': 'brick', 'bld.gym': 'canvasTan'}
-WALL = .10
+SHELL_WALL = {'bld.pharmacy': 'canvasTan', 'bld.supermarket': 'brick', 'bld.gym': 'canvasTan'}
+WALL = .04   # thin and OUTSIDE the interior footprint: inside it the frame would z-fight the kit's own coplanar faces
 
 
 def open_faces(lo, hi):
@@ -105,38 +105,63 @@ def run(asset, interior, script):
             from . import palette
             wall = bpy.data.materials.get('pal_' + SHELL_WALL[asset]) or palette.mat(SHELL_WALL[asset])
             z0, z1 = lo[2], hi[2] - .06
+            far = lod == '.lod2'   # LOD2 is capped tightly: one opaque quad per wall, the glazing only matters up close
+
+            def quad(name, axis, side, other_range, z_range, material, depth):
+                """One outward-facing quad on the face plane `depth` metres inside the footprint edge."""
+                other = 1 - axis
+                plane = (hi[axis] - depth) if side > 0 else (lo[axis] + depth)
+                pts = []
+                for o, z in ((other_range[0], z_range[0]), (other_range[1], z_range[0]), (other_range[1], z_range[1]), (other_range[0], z_range[1])):
+                    v = [0, 0, z]; v[axis] = plane; v[other] = o; pts.append(tuple(v))
+                outward = Vector((side if axis == 0 else 0, side if axis == 1 else 0, 0))
+                normal = (Vector(pts[1]) - Vector(pts[0])).cross(Vector(pts[3]) - Vector(pts[0]))
+                if normal.dot(outward) < 0:
+                    pts.reverse()
+                data = bpy.data.meshes.new(name); data.from_pydata(pts, [], [(0, 1, 2, 3)]); data.update()
+                obj = bpy.data.objects.new(name, data); bpy.context.collection.objects.link(obj)
+                data.materials.append(material); obj.parent = roof
+
             for axis, side in shell:
                 other = 1 - axis
-                # The slab spans the whole face inside the kit's own footprint (neighbouring lots stay untouched).
                 span = [lo[other], hi[other]]
                 length = span[1] - span[0]
-                centre = [0, 0, (z0 + z1) / 2]
-                centre[axis] = (hi[axis] - WALL / 2) if side > 0 else (lo[axis] + WALL / 2)
-                centre[other] = (span[0] + span[1]) / 2
-                size = [0, 0, z1 - z0]
-                size[axis] = WALL
-                size[other] = length
-                box('wall %s%s' % ('xy'[axis], '+' if side > 0 else '-'), tuple(centre), tuple(size), wall)
-                # Dark panes (odd count: the middle one is the door) stand 1.5 cm proud of the outer face, still inside the neighbour gap.
-                count = max(3, round(length / 2.2)) | 1
+                tag = '%s%s' % ('xy'[axis], '+' if side > 0 else '-')
+                if far:
+                    quad('wall ' + tag, axis, side, span, (z0, z1), wall, -WALL)
+                    continue
+                # Frame: header, piers and sills inside the kit's own footprint (neighbouring lots stay untouched).
+                # Odd opening count: the middle one is the door, open down to the floor. The openings are real holes, not
+                # glass: the static batcher flattens transparency (keep_glass renders as an opaque swatch), and the
+                # interior (L2 market's trapped civilians, the L3 clinic) must stay visible through them.
+                count = min(5, max(3, round(length / 2.2)) | 1)
                 margin, gap = .55, .45
                 pane = (length - 2 * margin - (count - 1) * gap) / count
-                top = min(z1 - .7, z0 + 3.2)
+                zt = z0 + min(2.6, z1 - z0 - .7)
+                sill = z0 + .9
+                def frame(name, a, b, za, zb):
+                    centre = [0, 0, (za + zb) / 2]
+                    centre[axis] = (hi[axis] + WALL / 2) if side > 0 else (lo[axis] - WALL / 2)
+                    centre[other] = (a + b) / 2
+                    size = [0, 0, zb - za]
+                    size[axis] = WALL
+                    size[other] = b - a
+                    box('%s %s' % (name, tag), tuple(centre), tuple(size), wall)
+                frame('header', span[0], span[1], zt, z1)
+                for k in range(count + 1):
+                    a = span[0] if k == 0 else span[0] + margin + (k - 1) * (pane + gap) + pane
+                    b = span[0] + margin if k == 0 else (span[1] if k == count else a + gap)
+                    frame('pier%d' % k, a, b, z0, zt)
                 for k in range(count):
-                    door = k == count // 2
                     a = span[0] + margin + k * (pane + gap)
-                    zb = z0 + (.2 if door else .9)
-                    zt = z0 + (2.5 if door else min(2.6, top - z0))
-                    pc = [0, 0, (zb + zt) / 2]
-                    pc[axis] = (hi[axis] + .005) if side > 0 else (lo[axis] - .005)
-                    pc[other] = a + pane / 2
-                    ps = [0, 0, zt - zb]
-                    ps[axis] = .02
-                    ps[other] = pane
-                    box('pane %s%s%d' % ('xy'[axis], '+' if side > 0 else '-', k), tuple(pc), tuple(ps), dark)
+                    door = k == count // 2
+                    if not door:
+                        frame('sill%d' % k, a, a + pane, z0, sill)
         # Two rigid material owners, 36 triangles in every tier; never decimate the lid.
         for material in set((dark, trim) + ((wall,) if wall else ())):
             parts = [o for o in roof.children if o.type == 'MESH' and o.data.materials[0] == material]
+            if not parts:
+                continue
             bpy.ops.object.select_all(action='DESELECT')
             for obj in parts: obj.select_set(True)
             bpy.context.view_layer.objects.active = parts[0]; bpy.ops.object.join()
