@@ -15,7 +15,7 @@ export interface CampaignSave {
   stationOccupants?:import('../world/types').EntitySnapshot[];
   rescuedSurvivors?:import('../world/types').EntitySnapshot[];
   results?:Record<string, import('../missions/types').MissionResult>;
-  pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'; weaponChosen:boolean};
+  pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'};
   /** Campaign world-state continuity: what this run's L1 left behind in the town (src/levels/continuity.ts). */
   world?:{L1?:L1Aftermath};
 }
@@ -28,8 +28,7 @@ export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
 /** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after the last level. */
 export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<6?(finished+1) as Level:null;}
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
-/** E20/E21 redesign: the first firearm is the L3 armory handgun (no choice after L2 any more). */
-export const weaponChoices:Partial<Record<Level,readonly string[]>>={3:['weapon.smg','weapon.hunting-rifle']};
+/** PO 2026-10-12: the only L3 firearm is the armory handgun; no weapon choice after any level (the L4 machine gun is the army's pickup). */
 export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
@@ -67,20 +66,16 @@ export function powerScore(save:CampaignSave):number {
     save.ownedActions.reduce((n,id)=>n+(catalog[id].category==='ability'?60:(catalog[id].tier+1)*20),0)+save.upgrades.filter(id=>upgrades[id].family==='perk').length*20);
 }
 export function gearTier(save:CampaignSave):GearTier {
-  const score=powerScore(save);return (score<240?0:score<400?1:score<550?2:score<640?3:4);
+  const score=powerScore(save);return (score<240?0:score<400?1:score<500?2:score<640?3:4);
 }
 export function beginRewards(save:CampaignSave,level:Level):void {
   if(save.pending||level!==save.completedLevels+1||level>5)throw new Error('Rewards unavailable');
   for(const id of fixedUnlocks[level])if(!save.ownedActions.includes(id))save.ownedActions.push(id);
   save.unlockedLevel=Math.max(save.unlockedLevel,level+1) as Level;
-  save.pending={level,cards:[],phase:'unlock',weaponChosen:!weaponChoices[level]};
-}
-export function chooseWeapon(save:CampaignSave,id:string):void {
-  if(!save.pending||save.pending.phase!=='unlock'||save.pending.weaponChosen||!weaponChoices[save.pending.level]?.includes(id))throw new Error('Invalid permanent weapon');
-  if(!save.ownedActions.includes(id))save.ownedActions.push(id);save.racks[save.pending.level===1?'LEFT':'RIGHT']=[id];save.pending.weaponChosen=true;
+  save.pending={level,cards:[],phase:'unlock'};
 }
 export function revealCards(save:CampaignSave):void {
-  if(!save.pending||save.pending.phase!=='unlock'||!save.pending.weaponChosen)throw new Error('Choose a weapon first');
+  if(!save.pending||save.pending.phase!=='unlock'){throw new Error('Rewards unavailable');}
   save.pending.cards=offer(save,save.pending.level);save.pending.phase='cards';
 }
 export function pickUpgrades(save:CampaignSave,picks:string[]):void {
@@ -100,7 +95,7 @@ export function finishRewards(save:CampaignSave,racks:CampaignSave['racks']):voi
  */
 export function completePending(save:CampaignSave):void {
   const p=save.pending;if(!p)return;
-  if(p.phase==='unlock'){const choices=weaponChoices[p.level];if(!p.weaponChosen&&choices)chooseWeapon(save,choices[0]);revealCards(save);}
+  if(p.phase==='unlock')revealCards(save);
   if(save.pending!.phase==='cards')pickUpgrades(save,save.pending!.cards.slice(0,2));
   if(save.pending?.phase==='racks'){
     const size=rackSize(save.unlockedLevel),melee=save.ownedActions.filter(id=>catalog[id].category==='melee').reverse(),ranged=save.ownedActions.filter(id=>catalog[id].category!=='melee').reverse();
