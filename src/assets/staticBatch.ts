@@ -236,6 +236,7 @@ export function staticBatchMaterial(materials: Materials | undefined, emissive: 
   const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
   material.userData.emissiveStrength = emissive && lit ? 2 : 0;
   material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
+  material.userData.worldPaletteOnly = !!materials && world;
   material.name = emissive ? 'emi_static-windows' : 'pal_static-colors';
   return material;
 }

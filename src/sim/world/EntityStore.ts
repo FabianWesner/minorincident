@@ -11,6 +11,10 @@ export class EntityStore {
     const record = { ...entity, id: this.nextId++ };
     this.entities.set(record.id, record); this.revision++; return record;
   }
+  /** Keep incoming campaign identities free before the new level allocates its cast. */
+  reserveIds(ids: readonly number[]): void {
+    for (const id of ids) this.nextId = Math.max(this.nextId, id + 1);
+  }
   /** Authored lighting must not shift seeded actor IDs or their staggered AI ticks. */
   createAuxiliary(entity: Omit<EntitySnapshot, 'id'>): EntitySnapshot {
     const record = { ...entity, id: this.nextAuxiliaryId++ };
