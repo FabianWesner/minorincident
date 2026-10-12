@@ -30,6 +30,8 @@ export class GameUI {
   private debugText: HTMLPreElement | null = null;
   private readonly screens = new Map<Exclude<Screen, null>, HTMLElement>();
   private readonly pauseButton = button('pause-button', 'Ⅱ Pause', () => this.pause());
+  /** HUD Home button (PO 10-12): one tap back to the initial menu; progress stays at the last checkpoint. */
+  private readonly homeButton = homeButton('home-button', () => this.show('title'));
   constructor(private readonly game: Game) {
     this.debugEnabled = ['true', '1'].includes(game.params.get('debug') ?? '');
     this.enabled = game.params.get('test') !== '1' || game.params.get('ui') === '1';
@@ -45,7 +47,8 @@ export class GameUI {
     this.pauseButton.setAttribute('aria-label', 'Pause');
     const pauseLabel = node('span', 'pause-label', 'Pause');
     this.pauseButton.replaceChildren(node('span', 'pause-icon', 'Ⅱ '), pauseLabel);
-    this.build(); document.querySelector('#game')!.append(this.root, this.pauseButton);
+    this.homeButton.hidden = true;
+    this.build(); document.querySelector('#game')!.append(this.root, this.pauseButton, this.homeButton);
     window.addEventListener('keydown', this.key, true);
     window.addEventListener('pointerdown', this.unhide, true);
     document.addEventListener('click', this.missionAccept);
@@ -100,7 +103,7 @@ export class GameUI {
       button('pause-settings', 'Settings', () => { this.back = 'pause'; this.show('settings'); }),
       button('pause-restart', 'Restart level', () => this.askRestart()),
       button('pause-hide-ui', 'Hide UI (H)', () => this.hideUi(true)),
-      button('pause-title', 'Title screen', () => this.show('title')));
+      homeButton('pause-title', () => this.show('title'), true));
     if (this.debugEnabled) {
       const debug = node('section', 'pause-debug'); debug.className = 'pause-debug'; debug.dataset.testid = 'pause-debug';
       const heading = node('h2', 'pause-debug-heading', 'Debug info');
@@ -263,7 +266,7 @@ export class GameUI {
       this.game.clock.pause();
       this.screens.get(screen)?.querySelector<HTMLElement>('button, select, input')?.focus({ preventScroll: true });
     }
-    this.pauseButton.hidden = screen !== null;
+    this.pauseButton.hidden = screen !== null; this.homeButton.hidden = true;
   }
   private restartPending(): boolean { return !this.screens.get('pause')!.querySelector<HTMLElement>('[data-testid=restart-confirm]')!.hidden; }
   private setRestartConfirm(on: boolean): void {
@@ -331,6 +334,8 @@ export class GameUI {
     }
     this.hud.update();
     this.pauseButton.hidden = !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    // Home is hidden during cutscenes, briefings, results and loading (only live play), and via CSS while the UI is hidden (H).
+    this.homeButton.hidden = !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && mission.state.phase !== 'playing');
     if (this.debugEnabled && this.screen === 'pause') this.updateDebugInfo();
     this.updateMs = performance.now() - start;
   }
@@ -414,7 +419,20 @@ export class GameUI {
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
-  dispose(): void { window.removeEventListener('keydown', this.key, true); window.removeEventListener('pointerdown', this.unhide, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
+  dispose(): void { window.removeEventListener('keydown', this.key, true); window.removeEventListener('pointerdown', this.unhide, true); document.removeEventListener('click', this.missionAccept); this.root.remove(); this.pauseButton.remove(); this.homeButton.remove(); this.hud.dispose(); document.body.classList.remove('full-ui', 'touch-ui'); delete document.body.dataset.uiScreen; }
+}
+
+/** House icon + "Home" label; the HUD variant shows the icon only (label stays accessible). */
+function homeButton(id: string, click: () => void, withLabel = false): HTMLButtonElement {
+  const element = button(id, '', click);
+  const ns = 'http://www.w3.org/2000/svg', icon = document.createElementNS(ns, 'svg');
+  icon.setAttribute('viewBox', '0 0 24 24'); icon.setAttribute('width', '20'); icon.setAttribute('height', '20'); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('class', 'home-icon');
+  const path = document.createElementNS(ns, 'path');
+  path.setAttribute('d', 'M3 11.5 12 4l9 7.5M5.5 10v9.5h4.5v-5.5h4v5.5h4.5V10'); path.setAttribute('fill', 'none'); path.setAttribute('stroke', 'currentColor'); path.setAttribute('stroke-width', '2.2'); path.setAttribute('stroke-linecap', 'round'); path.setAttribute('stroke-linejoin', 'round');
+  icon.append(path); element.append(icon);
+  if (withLabel) element.append(' Home'); else element.dataset.hudHome = '1';
+  element.setAttribute('aria-label', 'Home'); element.title = 'Home';
+  return element;
 }
 
 /**

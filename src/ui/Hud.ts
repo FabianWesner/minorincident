@@ -9,6 +9,7 @@ import { button, node, text } from './dom';
 import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
 import type { Mission } from '../sim/missions/Mission';
+import { markerAnchor } from '../sim/missions/markerAnchor';
 const sides = ['LEFT', 'RIGHT'] as const;
 const clamp = (x: number): number => Math.max(0, Math.min(1, x));
 export class Hud {
@@ -201,7 +202,7 @@ export class Hud {
     text(this.companion, corgiStatus); this.corgiBadge.title = corgiStatus; this.corgiBadge.setAttribute('aria-label', corgiStatus);
     this.corgiBadge.dataset.state = corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue';
     this.place(this.playerPin, px, pz, px, pz); this.playerPin.style.rotate = `${-player.transform.yaw + Math.PI / 2}rad`;
-    const anchor = mission?.state.marker ? mission.def.anchors[mission.state.marker] : null;
+    const anchor = markerAnchor(mission);
     this.objectivePin.hidden = !anchor;
     if (anchor) this.place(this.objectivePin, anchor.x, anchor.z, px, pz, true);
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;

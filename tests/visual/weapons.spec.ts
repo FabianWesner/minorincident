@@ -1,9 +1,9 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
-import { boot, expect, test } from '../e2e/fixtures';
+import { boot, expect, test, testUrl } from '../e2e/fixtures';
 const output = 'test-results/epics/E06';
 for (const [category, id, shape] of [['ranged', 'weapon.pistol', 'line'], ['melee', 'weapon.bat', 'cone'], ['throwable', 'weapon.grenade', 'arc']] as const) test(`T-E06-09-${category} @E06 @E06-AC09 @visual selected-side ${category} indicator`, async ({ page }) => {
-  mkdirSync(output, { recursive: true }); await boot(page);
+  mkdirSync(output, { recursive: true }); await boot(page, `${testUrl}&aimcone=1`);
   await page.evaluate(async (id) => {
     const api = window.__SS__!; await api.loadScenario('combat-arena', { seed: 1 }); api.pause(); api.setLoadout([id], [id]);
     api.camera.preset('aim'); api.spawn('infected.runner', { x: 5, z: 2 }); api.spawn('weapon.machete', { x: -2, z: -2 });
