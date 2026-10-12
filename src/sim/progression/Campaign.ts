@@ -12,6 +12,8 @@ export interface CampaignSave {
   usage:Record<string,number>;
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];
+  /** L8/E31: the same unarmed APC and its complete living roster, retained across handover/save. */
+  transport?:import('../vehicles/Vehicles').VehicleTransfer;
   stationOccupants?:import('../world/types').EntitySnapshot[];
   rescuedSurvivors?:import('../world/types').EntitySnapshot[];
   results?:Record<string, import('../missions/types').MissionResult>;

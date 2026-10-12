@@ -1,5 +1,5 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { vehicleDef } from '../../data/vehicles';
+import { vehicleBoardingTicks, vehicleDef } from '../../data/vehicles';
 import { vehicleExplosion } from '../../data/explosions';
 import { survivor } from '../../data/survivor';
 import type { InputFrame, Scheme } from '../../input/InputFrame';
@@ -10,10 +10,10 @@ import { Obstacles } from './Obstacles';
 import { VehicleBody } from './VehicleBody';
 /** Serialized vehicle component. Native handles live only in Vehicles.cars. */
 export interface VehiclePassenger {
-  id: number;
+  id: number; seat?: number;
   /** Persist transition and civilian routine ownership with the ordinary entity checkpoint. */
   started: number; phase: 'enter' | 'seated' | 'exit'; from: EntitySnapshot['transform'];
-  to?: EntitySnapshot['transform']; pauseUntil: number; floorY?: number;
+  to?: EntitySnapshot['transform']; side?: number; pauseUntil: number; floorY?: number;
   story?: NonNullable<EntitySnapshot['civilian']>['story'];
 }
 /** Plain transfer payload: weapons and every living occupant retain their own components/IDs. */
@@ -284,19 +284,20 @@ export class Vehicles {
   /** Boarding uses the same doorway as the driver, with no visual seat-count limit. */
   boardPassenger(carId: number, actorId: number): boolean {
     const car = this.cars.get(carId), actor = this.world.entities.get(actorId);
-    if (!car?.physics.def.transport || !actor?.civilian || actor.health.current <= 0 || actor.infected || actorId === 1 || car.entity.health.current <= 0 || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
+    if (!car?.physics.def.transport || (!actor?.civilian && !actor?.companion && !actor?.escort) || actor.health.current <= 0 || actor.civilian?.pet || actor.infected || actorId === 1 || car.entity.health.current <= 0 || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
     this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
     if (Math.hypot(actor.transform.x - this.position.x, actor.transform.z - this.position.z) > .7) return false;
     const c = actor.civilian;
-    const passenger: VehiclePassenger = { id: actorId, phase: 'enter', started: this.world.tick, from: { ...actor.transform }, pauseUntil: c.pauseUntil, floorY: c.floorY, story: c.story ? { ...c.story } : c.story };
+    const passenger: VehiclePassenger = { id: actorId, seat: (car.entity.vehicle!.passengers?.length ?? 0) % car.physics.def.transport.seats.length, phase: 'enter', started: this.world.tick, from: { ...actor.transform }, pauseUntil: c?.pauseUntil ?? 0, floorY: c?.floorY, story: c?.story ? { ...c.story } : c?.story };
     (car.entity.vehicle!.passengers ??= []).push(passenger);
-    actor.passengerOf = carId; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.path.length = 0;
+    actor.passengerOf = carId; if (c) { c.pauseUntil = Number.MAX_SAFE_INTEGER; c.path.length = 0; }
     return true;
   }
   /** Escape lanes provide their complete group, including losses; no kill-count condition. */
   groupBoarded(carId: number, roster: readonly number[]): boolean {
     const car = this.cars.get(carId);
-    if (!car || car.entity.vehicle!.driver !== 1) return false;
+    if (!car?.physics.def.transport || car.entity.health.current <= 0 || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1) return false;
+    if (this.transition?.carId === carId && this.transition.kind === 'enter' && this.world.tick - this.transition.tick < vehicleBoardingTicks) return false;
     return roster.every(id => {
       const actor = this.world.entities.get(id);
       return !!actor && (actor.health.current <= 0 || !!actor.infected || car.entity.vehicle!.passengers?.some(p => p.id === id && p.phase === 'seated') === true);
@@ -311,8 +312,8 @@ export class Vehicles {
       if (nav && !nav.clear(this.position.x, this.position.z, survivor.radius)) continue;
       if ([...this.world.entities.iterate()].some(e => e.id !== actorId && !e.hidden && e.health.current > 0 && (e.civilian || e.survivor) && Math.hypot(e.transform.x - this.position.x, e.transform.z - this.position.z) < .8)) continue;
       if (this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!)) continue;
-      passenger.phase = 'exit'; passenger.started = this.world.tick;
-      passenger.from = { ...actor.transform }; passenger.to = { ...this.position, yaw: car.entity.transform.yaw };
+      passenger.side = side; passenger.phase = 'exit'; passenger.started = this.world.tick;
+      passenger.from = { ...actor.transform }; passenger.to = { ...this.position, y: actor.companion ? .3 : this.position.y, yaw: car.entity.transform.yaw };
       return true;
     }
     return false;
@@ -324,28 +325,33 @@ export class Vehicles {
       const p = passengers[i], actor = this.world.entities.get(p.id);
       if (!actor) continue;
       const elapsed = this.world.tick - p.started, c = actor.civilian!;
+      const seat = car.physics.def.transport!.seats[p.seat ?? i % car.physics.def.transport!.seats.length];
+      this.localPoint(car, seat.x, seat.z);
+      const seated = { ...this.position, y: car.entity.transform.y - (car.physics.def.suspension + car.physics.def.wheelRadius + .15) + seat.y, yaw: car.entity.transform.yaw };
       if (p.phase === 'seated') {
-        Object.assign(actor.transform, car.entity.transform); actor.hidden = true; this.world.spatial.delete(actor.id); continue;
+        Object.assign(actor.transform, seated); actor.hidden = true; this.world.spatial.delete(actor.id); continue;
       }
       const entering = p.phase === 'enter';
-      this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .05);
-      const target = entering ? { ...this.position, y: car.physics.def.stepHeight + .7 } : p.to!;
-      const start = entering ? p.from : { ...this.position, y: car.physics.def.stepHeight + .7, yaw: car.entity.transform.yaw };
-      const t = Math.max(0, Math.min(1, (elapsed - 12) / 30)), weight = t * t * (3 - 2 * t);
+      this.localPoint(car, car.physics.def.doorX, (p.side ?? 1) * (car.physics.def.width / 2 + .05));
+      const door = { ...this.position, y: car.physics.def.stepHeight + (actor.companion ? .3 : .7), yaw: car.entity.transform.yaw };
+      // The hidden walk between doorway and seat is still continuous in the authoritative snapshot.
+      const toSeat = entering && elapsed > 42, toDoor = !entering && elapsed < 12;
+      const start = toSeat ? door : entering || toDoor ? p.from : door;
+      const target = toSeat ? seated : entering || toDoor ? door : p.to!;
+      const t = Math.max(0, Math.min(1, toSeat ? (elapsed - 42) / 18 : toDoor ? elapsed / 12 : (elapsed - 12) / 30)), weight = t * t * (3 - 2 * t);
       actor.transform.x = start.x + (target.x - start.x) * weight;
       actor.transform.z = start.z + (target.z - start.z) * weight;
       actor.transform.y = start.y + (target.y - start.y) * weight;
       actor.transform.yaw = car.entity.transform.yaw + (entering ? Math.PI / 2 : -Math.PI / 2);
       actor.hidden = entering ? elapsed >= 42 : elapsed < 12;
-      c.floorY = actor.transform.y - .7;
-      c.story = { clip: entering ? 'npc-sit-down' : 'npc-stand-up', start: p.started };
+      if (c) { c.floorY = actor.transform.y - .7; c.story = { clip: entering ? 'npc-sit-down' : 'npc-stand-up', start: p.started }; }
       if (actor.hidden) this.world.spatial.delete(actor.id); else this.world.spatial.set(actor.id, actor.transform.x, actor.transform.z);
-      if (elapsed < 60) continue;
+      if (elapsed < vehicleBoardingTicks) continue;
       if (entering) {
         p.phase = 'seated'; actor.hidden = true;
         this.world.events.emit({ type: 'vehicle.entered', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
       } else {
-        actor.hidden = false; delete actor.passengerOf; c.pauseUntil = p.pauseUntil; c.floorY = p.floorY; c.story = p.story ?? null;
+        Object.assign(actor.transform, p.to); actor.hidden = false; delete actor.passengerOf; if (c) { c.pauseUntil = p.pauseUntil; c.floorY = p.floorY; c.story = p.story ?? null; }
         passengers.splice(i, 1);
         this.world.events.emit({ type: 'vehicle.exited', tick: this.world.tick, sourceId: car.entity.id, targetId: actor.id, role: 'passenger' });
       }
@@ -354,9 +360,13 @@ export class Vehicles {
   /** Call only after the complete living group is seated; copy before replacing the level. */
   transfer(carId: number): VehicleTransfer {
     const car = this.cars.get(carId);
-    if (!car?.physics.def.transport || car.entity.vehicle!.driver !== 1 || car.entity.vehicle!.passengers?.some(p => p.phase !== 'seated')) throw new Error('Transport is not ready to depart');
+    if (!car?.physics.def.transport || car.entity.health.current <= 0 || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1 || car.entity.vehicle!.passengers?.some(p => p.phase !== 'seated')) throw new Error('Transport is not ready to depart');
+    if (this.transition?.carId === carId && this.transition.kind === 'enter' && this.world.tick - this.transition.tick < vehicleBoardingTicks) throw new Error('Driver is still boarding');
     const ids = [1, ...(car.entity.vehicle!.passengers ?? []).map(p => p.id)];
-    return structuredClone({ tick: this.world.tick, infiniteCharges: this.world.combat?.runner.infiniteCharges ?? false, vehicle: car.entity, occupants: ids.map(id => this.world.entities.get(id)!).filter(e => e.health.current > 0 && !e.infected) });
+    const payload = structuredClone({ tick: this.world.tick, infiniteCharges: this.world.combat?.runner.infiniteCharges ?? false, vehicle: car.entity, occupants: ids.map(id => this.world.entities.get(id)!).filter(e => e.health.current > 0 && !e.infected) });
+    payload.vehicle.vehicle!.passengers = (payload.vehicle.vehicle!.passengers ?? []).filter(p => payload.occupants.some(e => e.id === p.id));
+    payload.vehicle.vehicle!.attached = [];
+    return payload;
   }
   /** Destination level calls after its normal setup, before any entities can claim these IDs. */
   restoreTransfer(transfer: VehicleTransfer, position: { x: number; z: number }, yaw = 0): number {
@@ -372,6 +382,8 @@ export class Vehicles {
         if (c.story) c.story.start += delta;
         if (c.survivor) { c.survivor.foundAt += delta; if (c.survivor.waitAt) c.survivor.waitAt += delta; }
       }
+      if (actor.companion) for (const key of ['until', 'barkAt', 'hurtAt'] as const) if (actor.companion[key]) actor.companion[key] += delta;
+      if (actor.escort) { actor.escort.downedAt += delta; for (const key of ['attackAt', 'knockedUntil'] as const) if (actor.escort[key]) actor.escort[key]! += delta; }
       if (actor.infection) { actor.infection.startedTick += delta; actor.infection.endsTick += delta; }
       if (actor.weapons) for (const side of [actor.weapons.LEFT, actor.weapons.RIGHT]) {
         if (side.swapUntil) side.swapUntil += delta;
@@ -391,6 +403,7 @@ export class Vehicles {
     for (const actor of payload.occupants) {
       const live = this.world.entities.get(actor.id)!; Object.assign(live.transform, vehicle.transform); live.hidden = true; this.world.spatial.delete(live.id);
     }
+    this.updatePassengers(this.cars.get(vehicle.id)!);
     const player = this.world.entities.get(1)!;
     if (player.weapons && this.world.combat) {
       const saved = player.weapons;
