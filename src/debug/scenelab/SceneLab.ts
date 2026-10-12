@@ -754,7 +754,7 @@ export class SceneLab {
         const f = figures.get(actor.entity);
         if (f) {
           visible = f.drawn; lod = f.lod ?? 'lod1'; clipName = f.clip; joints = f.joints ?? null; forward = f.forward ?? forward;
-          if (f.soles?.length === 4) feet = [[f.soles[0], f.soles[1]], [f.soles[2], f.soles[3]]].map(([heel, toe]) => ({ heel, toe, yaw: footYaw(heel, toe) }));
+          if (f.soles && f.soles.length >= 4) feet = Array.from({ length: f.soles.length / 2 }, (_, i) => [f.soles![i * 2], f.soles![i * 2 + 1]]).map(([heel, toe]) => ({ heel, toe, yaw: footYaw(heel, toe) }));
         }
       }
       if (e && !e.hidden && e.health.current > 0 && !e.corpse && !(e.civilian?.state === 'infected')) {

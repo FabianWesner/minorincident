@@ -37,6 +37,7 @@ export class AssetRegistry {
         const index = parsed.parser.associations.get(node)?.nodes;
         if (index !== undefined) node.name = parsed.parser.json.nodes[index].name ?? node.name;
       });
+      parsed.scene.animations = parsed.animations;
       return parsed.scene;
     });
   }

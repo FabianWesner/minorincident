@@ -38,7 +38,7 @@ export class Escorts {
         }
         continue;
       }
-      if (tick < (c.knockedUntil ?? 0)) continue;
+      if (tick < (c.knockedUntil ?? 0) || tick < (e.combat?.staggerUntil ?? 0)) continue;
       if (!near) { c.progress = 0; c.latched = false; }
       else if (!c.latched) {
         if (++c.progress >= npcs.reviveTicks) { c.order = c.order === 'follow' ? 'wait' : 'follow'; c.state = c.order; c.latched = true; c.progress = 0; this.world.events.emit({ type: 'escort.order', tick, id: e.id, order: c.order }); }
@@ -60,7 +60,7 @@ export class Escorts {
         if (c.cover) this.world.npcs!.move(e, c.cover, 5, c, .2);
         else { const dx = e.transform.x - threat.transform.x, dz = e.transform.z - threat.transform.z, d = Math.hypot(dx, dz) || 1; this.world.npcs!.moveStep(e, dx / d * .06, dz / d * .06); }
         // Children are knocked down, never infected/bitten or recorded as infected attack targets.
-        if (Math.hypot(threat.transform.x - e.transform.x, threat.transform.z - e.transform.z) < 1.3 && tick >= c.attackAt && ai.nav.visible(threat.transform, e.transform, .1)) {
+        if (!threat.infected?.specialAttack && tick >= (threat.infected?.specialRecoveryUntil ?? 0) && Math.hypot(threat.transform.x - e.transform.x, threat.transform.z - e.transform.z) < 1.3 && tick >= c.attackAt && ai.nav.visible(threat.transform, e.transform, .1)) {
           c.attackAt = tick + 60; e.health.current = Math.max(0, e.health.current - infectedDef(threat.archetype).damage);
           if (!c.child) this.world.events.emit({ type: 'infected.attack', tick, sourceId: threat.id, targetId: e.id, attackId: 0, special: 'escort-hit', amount: infectedDef(threat.archetype).damage });
           if (e.health.current <= 0) this.down(e);

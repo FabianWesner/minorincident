@@ -179,11 +179,12 @@ export class CrowdLocomotion {
     }
     this.load(pose, instance);
     if (layers) this.layer(layers, phase);
-    const stride = cadenceStride(name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
+    const stride = cadenceStride(this.animal ? 'corgi-trot' : name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
     if (this.animal) {
       let paws = this.paws.get(id);
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
-      paws.update(phase, stride, 'corgi-trot');
+      if (speed > .06 && strides[name]) paws.update(phase, stride, 'corgi-trot');
+      else paws.hold(1 / 60, this.groundedAnimal);
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
@@ -252,7 +253,7 @@ export class CrowdLocomotion {
       }
       this.footwork.states.delete(id);
     }
-    if ((strides[clip] && speed > .06) || layers) {
+    if ((strides[clip] && speed > .06) || layers || this.animal && !this.preserveAnimalJoints && standingClips.has(clip)) {
       const row = poses.correct(id, frame, blend[0], blend[1], pose => this.correct(id, pose, instance, phase, clip, scale, speed, layers, time));
       blend[1] = 1; return row;
     }
