@@ -36,11 +36,12 @@ export class AlphaSupportMoves {
   update(e: EntitySnapshot): void {
     const a = e.infected!.specialAttack!;
     if (a.stage !== 'active') return;
-    if (a.move === 'alpha.roar') {
+    if (a.move === 'alpha.roar' || a.move === 'gorilla.roar') {
+      const radius = a.move === 'gorilla.roar' ? 20 : 18;
       for (const other of this.ai.active) {
-        if (!this.regular(other) || other.health.current <= 0 || (other.transform.x - a.area.x) ** 2 + (other.transform.z - a.area.z) ** 2 > 18 * 18 || !this.ai.specialHit(e.id, other.id)) continue;
+        if (!this.regular(other) || other.health.current <= 0 || (other.transform.x - a.area.x) ** 2 + (other.transform.z - a.area.z) ** 2 > radius * radius || !this.ai.specialHit(e.id, other.id)) continue;
         // Refresh duration without multiplying the existing speed. Never disclose a human target.
-        other.infected!.roar = { sourceId: e.id, attackId: a.attackId, x: a.area.x, z: a.area.z, until: this.ai.world.tick + 300 };
+        other.infected!.roar = { sourceId: e.id, attackId: a.attackId, x: a.area.x, z: a.area.z, until: this.ai.world.tick + 300, speedScale: Math.max(other.infected!.roar?.speedScale ?? 1, a.move === 'alpha.roar' ? 1.25 : 1), speedUntil: a.move === 'alpha.roar' ? this.ai.world.tick + 300 : other.infected!.roar?.speedUntil ?? other.infected!.roar?.until ?? this.ai.world.tick };
         other.infected!.state = 'idle'; other.infected!.heardTargetId = 0; other.infected!.targetId = 0; other.infected!.grabUntil = 0;
         if (other.infected!.l1) { other.infected!.l1.targetId = 0; other.infected!.l1.mode = 'wander'; other.infected!.l1.hasGoal = false; other.infected!.l1.escapeUntil = 0; other.infected!.l1.directTick = -1; other.infected!.l1.biteTargetId = 0; }
         other.infected!.path.length = 0; other.infected!.goal = -1;
