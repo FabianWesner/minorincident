@@ -1,0 +1,86 @@
+{
+  "name": "qa-l4-systems-prone",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 32,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      -2,
+      0
+    ],
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "rear",
+      "kind": "pedestrian",
+      "at": [
+        -7,
+        0
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "front",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-a",
+        "tint": "#c38344"
+      },
+      "state": {
+        "ally": {
+          "role": "civilian",
+          "weapon": "bat"
+        }
+      }
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        3,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.ground-slam",
+        "target": "front"
+      }
+    }
+  ],
+  "frames": 87,
+  "shots": [
+    27,
+    87
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}

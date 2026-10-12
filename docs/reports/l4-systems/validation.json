@@ -1,0 +1,113 @@
+{
+  "scope": "L4-S1 systems only; campaign Alpha spawns/anchors/endings are the E1/D1 lanes",
+  "head": "bdc38ffb",
+  "runtime": [
+    "src/sim/outbreak/Allies.ts",
+    "src/sim/combat/HitQuery.ts",
+    "src/render/npc/CivilianCrowd.ts"
+  ],
+  "tests": [
+    "tests/sim/npc/l4-systems.test.ts",
+    "tests/e2e/l4-systems.spec.ts",
+    "tests/perf/l4-budgets.spec.ts"
+  ],
+  "baseline": {
+    "revision": "bdc38ffb",
+    "worktree": "removed",
+    "knownFailure": "tests/sim/npc/ally-defence.test.ts: rescued station straggler remains at x=-143.5404 (expected > -138), reproduced on untouched HEAD on Hetzner",
+    "smoke": {
+      "revision": "bdc38ffb",
+      "file": "baseline-smoke.json",
+      "failures": {
+        "S-02": "Pause button remains hidden",
+        "T-E13-05": "Restored left weapon rack is [weapon.fire-axe, weapon.bat], expected [weapon.bat, weapon.kick, weapon.fists]"
+      }
+    },
+    "route": {
+      "file": "baseline-route.json",
+      "result": "pass",
+      "backend": "shared platform config, SwiftShader on Hetzner"
+    },
+    "proneBefore": "752dcf24"
+  },
+  "visual": {
+    "review": "review.md",
+    "sharedRenderIssue": "Alpha GLB appearance is assigned to alpha-render-perf; CrowdView and all move resolvers untouched"
+  },
+  "performance": {
+    "file": "performance.json",
+    "high": "pass",
+    "low": "pass"
+  },
+  "unit": {
+    "numTotalTests": 816,
+    "numPassedTests": 816,
+    "numFailedTests": 0
+  },
+  "focusedSim": {
+    "passed": 60,
+    "failed": 0
+  },
+  "browser": {
+    "startTime": "2026-10-12T00:35:56.920Z",
+    "duration": 70167.642,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "epicSim": {
+    "passed": 49,
+    "failed": 0
+  },
+  "checks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass"
+  },
+  "realInput": {
+    "startTime": "2026-10-12T00:49:05.230Z",
+    "duration": 671222.74,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "verify": {
+    "sim": {
+      "passed": 49,
+      "failed": 0
+    },
+    "browser": {
+      "passed": 11,
+      "failed": 5,
+      "skipped": 1
+    },
+    "resolvedFailure": "T-E22-18 passed after prone-body/pose correction in a targeted fresh run",
+    "remainingFailures": [
+      "S-02 baseline pause button hidden",
+      "T-E13-05 baseline weapon rack mismatch",
+      "T-E07-crowd-drawn-webgl setup timeout",
+      "T-E07-crowd-drawn-webgpu popErrorScope error"
+    ]
+  },
+  "implementationCommits": [
+    "752dcf24",
+    "c04643f3"
+  ],
+  "bodyCorrection": {
+    "node": "actual Alpha slam lowers live body; low rays remain blocked and standing restores obstruction",
+    "render": "existing fall pose takes precedence over firing/swing story clips",
+    "capture": "after/qa-l4-systems-prone-high/proof.json"
+  },
+  "epicSimFinal": {
+    "numTotalTests": 1666,
+    "numPassedTests": 44,
+    "numFailedTests": 0,
+    "numPendingTests": 1622
+  },
+  "finalUnit": {
+    "passed": 816,
+    "failed": 0
+  }
+}

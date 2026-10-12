@@ -2,7 +2,6 @@ import { mkdirSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
 
 /** E22 smoke: L4 loads (D-FAIR layout, army dressing, convoy set pieces, crowd) and the first seconds of the ride render without errors. */
-test.use({ launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 test('T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors', async ({ page }) => {
   test.setTimeout(300_000); mkdirSync('test-results/epics/E22', { recursive: true });
   await boot(page, `${testUrl}&ui=1`);
