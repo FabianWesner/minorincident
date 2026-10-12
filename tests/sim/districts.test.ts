@@ -63,7 +63,8 @@ test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objec
       }
     }
 // Six decay tiers and three seeds at the production 0.5 m resolution, including replay hashes.
-}, 120_000);
+// With D-CROSSING (L9) the bakes take ~115 s alone on a runner, so the budget is 240 s.
+}, 240_000);
 
 test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage only in range, and unload releases resources", async () => {
   const { SimWorld } = await import("../../src/sim/world/SimWorld");

@@ -75,7 +75,7 @@ describe('police visible engagement @E21', () => {
   test('an explicit retreat continues while the officer fires in self-defence', () => {
     const f = fixture(); f.ally.engaged = false; f.ally.run = { x: 40, z: 0 };
     f.step(); f.world.tick++; f.step();
-    expect(f.world.npcs!.move).toHaveBeenCalledWith(f.officer, f.ally.run, f.ally.runSpeed, f.officer.civilian, .25);
+    expect(f.world.npcs!.move).toHaveBeenCalledWith(f.officer, f.ally.run, f.ally.runSpeed, f.officer.civilian, .25, expect.any(Number));
     expect(f.emit).toHaveBeenCalledWith(expect.objectContaining({ type: 'ally.attack', targetId: 3 }));
   });
 
