@@ -26,9 +26,15 @@ export const l3 = {
     fallback: { defenseS: 60, turned: 3, inside: 8 },
     /** Seconds between two emergences of one wave at one direction (they string out instead of a single blob). */
     staggerS: .1,
+    /** PO 2026-10-12 ("don't cluster Zombies, let they come from all directions"): each wave streams in over this many seconds
+     * from five directions, a share of it as police zombies out of the station door behind the line. */
+    streamS: 18, stationShare: .2,
     lowScale: .5,
   },
   /** Section 5.4: allied fighters v2 (police with handguns, a following squad). */
+  /** PO 2026-10-12: "reduce the power of the gun by 50% for the police (not for the player)". Applied to every police and
+   * army gun in L3 (station posts, the squad, the checkpoint riflemen and the mounted gun); the courier's weapons are untouched. */
+  allyDamageScale: .5,
   officers: {
     hp: 100,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
@@ -57,6 +63,8 @@ export const l3 = {
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
+    /** PO 2026-10-12 "don't cluster Zombies": street residents scatter over this box (x along the street, z across) around their group home. */
+    spreadM: [56, 7] as P,
     /** Segment 3 also holds the horde: two packs of 125 at the on-ramp end of two avenues (seeded), streaming west. */
     horde: { packSize: 125, fromX: 72, toX: 132 },
     leashM: 9,
