@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { NavGrid } from '../../../src/sim/ai/NavGrid';
 import type { ScenarioDefinition } from '../../../src/levels/loader';
 type Wall = NonNullable<ScenarioDefinition['walls']>[number];
@@ -82,6 +82,39 @@ test('@E20 blocker changes keep only unaffected nearest-cell answers', () => {
     mutable.x += .5; mutable.z += .5;
     nav.setBlocker(101, mutable, i % 2 === 0);
     for (const offset of [-1, 0, 1]) expect(nav.nearestCell(mutable.x + offset, mutable.z, .35)).toBe(uncached(mutable.x + offset, mutable.z, .35));
+  }
+});
+
+test('@E18 morning route targets reuse exact nearest-cell answers across ticks', () => {
+  const nav = new NavGrid({ width: 48, depth: 48 }, []);
+  const internal = nav as unknown as { nearestCellUncached(x: number, z: number, radius?: number): number };
+  const uncached = internal.nearestCellUncached.bind(nav), miss = vi.spyOn(internal, 'nearestCellUncached');
+  const targets = Array.from({ length: 32 }, (_, i) => ({ x: -8 + i * .5, z: 0 }));
+  const answers = targets.map(p => nav.nearestCell(p.x, p.z, .35));
+  for (let tick = 0; tick < 5; tick++) expect(targets.map(p => nav.nearestCell(p.x, p.z, .35))).toEqual(answers);
+  expect(miss).toHaveBeenCalledTimes(targets.length);
+  nav.setBlocker(9, { x: 0, z: 0, y: 1, halfX: 1, halfZ: 1, halfY: 1 }, true);
+  for (const p of targets) expect(nav.nearestCell(p.x, p.z, .35)).toBe(uncached(p.x, p.z, .35));
+});
+
+test('@E18 nearest-cell pruning preserves the full scan and its tie order', () => {
+  const nav = new NavGrid({ width: 32, depth: 32 }, [{ x: 0, z: 0, y: 1, halfX: 2, halfZ: 2, halfY: 1 }]);
+  const legacy = (x: number, z: number, radius?: number) => {
+    const reachable = (cell: number) => radius === undefined || nav.visible({ x, z }, { x: nav.x(cell), z: nav.z(cell) }, radius);
+    const cell = nav.cell(x, z); if (cell < 0 || !nav.blocked[cell] && reachable(cell)) return cell;
+    let nearest = -1, distance = Infinity;
+    for (let dz = -6; dz <= 6; dz++) for (let dx = -6; dx <= 6; dx++) {
+      const candidate = nav.cell(x + dx * nav.cellSize, z + dz * nav.cellSize);
+      if (candidate < 0 || nav.blocked[candidate] || !reachable(candidate)) continue;
+      const d = (nav.x(candidate) - x) ** 2 + (nav.z(candidate) - z) ** 2;
+      if (d < distance) { nearest = candidate; distance = d; }
+    }
+    return nearest;
+  };
+  for (let i = 0; i < 1200; i++) {
+    if (i % 100 === 0) nav.setBlocker(9, { x: i % 7 - 3, z: i % 9 - 4, y: 1, halfX: .8, halfZ: .2, halfY: 1 }, i % 200 === 0);
+    const x = (i * 137 % 340) / 10 - 17, z = (i * 79 % 340) / 10 - 17, radius = [undefined, 0, .35, 1.2][i % 4];
+    expect(nav.nearestCell(x, z, radius)).toBe(legacy(x, z, radius));
   }
 });
 

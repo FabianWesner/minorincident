@@ -6,6 +6,7 @@ import type { SimWorld } from '../sim/world/SimWorld';
 import type { Mission } from '../sim/missions/Mission';
 import type { MissionResult } from '../sim/missions/types';
 import './mission.css';
+import { attribute, setHidden, style } from './dom';
 
 /** Mission-only UI; progression choices and the full combat HUD remain E13/E14 consumers. */
 export class MissionUI {
@@ -58,17 +59,17 @@ export class MissionUI {
     this.root.hidden = rootHidden; this.root.style.visibility = visibility;
   }
   update(camera: PerspectiveCamera, width: number, height: number): void {
-    const mission=this.world.missions;if(this.displayedMission!==mission){this.reset();this.displayedMission=mission;}this.root.hidden=!mission;if(!mission)return;
+    const mission=this.world.missions;if(this.displayedMission!==mission){this.reset();this.displayedMission=mission;}setHidden(this.root,!mission);if(!mission)return;
     const state=mission.state,playing=state.phase==='playing';
     const cinematic=state.cinematic ? mission.def.cinematics[state.cinematic.id] : null;
     this.root.classList.toggle('is-cinematic',!!cinematic);
-    this.subtitle.hidden=!cinematic&&(!state.subtitle||!playing);
+    setHidden(this.subtitle,!cinematic&&(!state.subtitle||!playing));
     this.text(this.subtitle,cinematic?.caption??state.subtitle?.text??'');
-    this.subtitle.dataset.lineId=state.subtitle?.id??'';
-    this.panel.hidden=playing||!!cinematic;
+    attribute(this.subtitle,'data-line-id',state.subtitle?.id??'');
+    setHidden(this.panel,playing||!!cinematic);
     if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
-    this.tracker.hidden=this.map.hidden=!playing;
-    this.result.hidden=state.phase!=='result';
+    setHidden(this.tracker,!playing);setHidden(this.map,!playing);
+    setHidden(this.result,state.phase!=='result');
     if(this.phase!==state.phase){
       this.phase=state.phase;
       const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
@@ -82,14 +83,14 @@ export class MissionUI {
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
-    this.marker.hidden=!playing||!anchor||!player;
+    setHidden(this.marker,!playing||!anchor||!player);
     if(player&&objective&&playing){
       const distance=anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null;
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-      this.text(this.tracker,`${objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);this.tracker.dataset.objective=objective.id;this.tracker.dataset.distance=distance===null?'':String(distance);
+      this.text(this.tracker,`${objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
       if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${objective.text}`);}
-      this.toast.hidden=this.world.tick-state.steps[objective.id].started>=180;
+      setHidden(this.toast,this.world.tick-state.steps[objective.id].started>=180);
       if(anchor){
         this.point.set(anchor.x,1.8,anchor.z).project(camera);
         const margin=42,cx=width/2,cy=height/2;
@@ -97,20 +98,20 @@ export class MissionUI {
         if(this.point.z>1){dx=-dx;dy=-dy;}
         const offscreen=this.point.z>1||Math.abs(dx)>cx-margin||Math.abs(dy)>cy-margin;
         const scale=offscreen?Math.min((cx-margin)/Math.max(1,Math.abs(dx)),(cy-margin)/Math.max(1,Math.abs(dy))):1;
-        this.marker.style.left=`${cx+dx*scale}px`;this.marker.style.top=`${cy+dy*scale}px`;
-        this.marker.dataset.offscreen=String(offscreen);this.marker.dataset.anchor=state.marker!;
-        this.marker.style.setProperty('--direction',`${Math.atan2(dy,dx)}rad`);this.text(this.marker,offscreen?'➜':'◆');
+        style(this.marker,'left',`${cx+dx*scale}px`);style(this.marker,'top',`${cy+dy*scale}px`);
+        attribute(this.marker,'data-offscreen',String(offscreen));attribute(this.marker,'data-anchor',state.marker!);
+        style(this.marker,'--direction',`${Math.atan2(dy,dx)}rad`);this.text(this.marker,offscreen?'➜':'◆');
         this.marker.classList.toggle('offscreen',offscreen);
       }
       const extent=100;
       for(const s of mission.def.steps){
         let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.testid=`mission-pin-${s.id}`;pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
-        pin.hidden=state.steps[s.id].status!=='active'||s.waypoint===false||!anchor;if(pin.hidden)continue;const a=mission.def.anchors[mission.def.l3 && s.id === 'checkpoint' ? state.marker ?? s.anchor : s.anchor];
+        setHidden(pin,state.steps[s.id].status!=='active'||s.waypoint===false||!anchor);if(pin.hidden)continue;const a=mission.def.anchors[mission.def.l3 && s.id === 'checkpoint' ? state.marker ?? s.anchor : s.anchor];
         const dx=(a.x-player.transform.x)/extent*40,dy=(a.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
-        pin.style.left=`${50+dx*scale}%`;pin.style.top=`${50+dy*scale}%`;
+        style(pin,'left',`${50+dx*scale}%`);style(pin,'top',`${50+dy*scale}%`);
       }
     }else{
-      this.toast.hidden=true;
+      setHidden(this.toast,true);
       const done=!objective&&playing&&mission.def.l1?[...mission.def.steps].reverse().find(s=>state.steps[s.id].status==='completed'):undefined;
       if(done)this.text(this.tracker,`✓ ${done.text}`);
     }

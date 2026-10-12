@@ -5,7 +5,7 @@ import type { Game } from '../Game';
 import { newCampaign, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
-import { button, node } from './dom';
+import { button, node, setHidden } from './dom';
 import { Settings, type UISettings } from './Settings';
 import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/credits';
 import './ui.css';
@@ -334,9 +334,9 @@ export class GameUI {
       if (mission?.state.phase === 'progression' && !this.game.campaign) { this.nextLevel = `L${Math.min(6, Number(mission.def.id.slice(1)) + 1)}`; this.show('upgrades'); }
     }
     this.hud.update();
-    this.pauseButton.hidden = !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    setHidden(this.pauseButton, !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase)));
     // Home is hidden during cutscenes, briefings, results and loading (only live play), and via CSS while the UI is hidden (H).
-    this.homeButton.hidden = !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && mission.state.phase !== 'playing');
+    setHidden(this.homeButton, !this.game.campaignUI.root.hidden || this.screen !== null || (!!mission && mission.state.phase !== 'playing'));
     if (this.debugEnabled && this.screen === 'pause') this.updateDebugInfo();
     this.updateMs = performance.now() - start;
   }

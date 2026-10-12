@@ -5,7 +5,7 @@ import { weatherLabels } from '../data/weather';
 import type { Game } from '../Game';
 import { action } from '../data/actions/catalog';
 import { actionIconUrl } from '../assets/icons';
-import { button, node, text } from './dom';
+import { button, node, text, setHidden, attribute, style } from './dom';
 import { Onboarding } from './Onboarding';
 import type { GameEvent } from '../sim/world/types';
 import type { Mission } from '../sim/missions/Mission';
@@ -49,6 +49,7 @@ export class Hud {
   private readonly stops: (() => void)[] = [];
   private damagedUntil = -1;
   private barkUntil = -1;
+  private threatCount = 0;
   private loadedScenario: string | null = null;
   constructor(private readonly game: Game) {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
@@ -162,55 +163,57 @@ export class Hud {
     let dx = (x - px) / 30 * 44, dz = (z - pz) / 30 * 44;
     const scale = clampEdge ? Math.min(1, 44 / (Math.hypot(dx, dz) || 1)) : 1;
     dx *= scale; dz *= scale;
-    pin.style.left = `${50 + dx}%`; pin.style.top = `${50 + dz}%`;
-    pin.dataset.worldX = String(x); pin.dataset.worldZ = String(z);
-    pin.dataset.clamped = String(scale < 1);
+    style(pin, 'left', `${50 + dx}%`); style(pin, 'top', `${50 + dz}%`);
+    attribute(pin, 'data-world-x', String(x)); attribute(pin, 'data-world-z', String(z));
+    attribute(pin, 'data-clamped', String(scale < 1));
   }
   private readonly weatherIcon = node('output', 'weather-icon');
   update(preparing = false): void {
     if (!this.weatherIcon.parentNode) { this.weatherIcon.style.cssText = 'position:absolute;right:16px;top:170px;color:white;background:#182333;padding:5px;border-radius:6px'; this.root.append(this.weatherIcon); }
     const weather = this.game.world.weather;
-    if (weather) { text(this.weatherIcon, weatherLabels[weather.kind]); this.weatherIcon.dataset.weather = weather.kind; }
+    if (weather) { text(this.weatherIcon, weatherLabels[weather.kind]); attribute(this.weatherIcon, 'data-weather', weather.kind); }
     const world = this.game.world, player = world.entities.get(1), mission = world.missions;
     const visible = !!player && document.body.dataset.uiScreen === 'game' && (!mission || ['playing', 'cinematic'].includes(mission.state.phase));
     // Keep HUD visible beneath Pause / Settings, and update independently of the renderer.
     const hidden = !player || !!world.l7Departure?.cinematic || (document.body.dataset.uiScreen !== 'game' && !['pause', 'settings'].includes(document.body.dataset.uiScreen ?? '')) || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
-    this.root.hidden = hidden && !this.prepared;
+    setHidden(this.root, hidden && !this.prepared);
     const visibility = hidden ? 'hidden' : '';
     if (this.root.style.visibility !== visibility) this.root.style.visibility = visibility;
     if (!player || hidden && !preparing) return;
     if (this.loadedScenario !== world.scenario) this.loaded();
     const hp = healthFraction(player.health.current, player.health.max);
-    this.health.fill.style.width = `${hp * 100}%`; text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
-    this.health.root.setAttribute('aria-valuenow', String(hp * 100));
+    style(this.health.fill, 'width', `${hp * 100}%`); text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
+    attribute(this.health.root, 'aria-valuenow', String(hp * 100));
     const shield = world.combat?.effects.shielded(player.transform) || player.combat?.shield ? 1 : player.combat?.armor ?? 0;
-    this.armor.fill.style.width = `${clamp(shield) * 100}%`; text(this.armor.label, shield ? `Armor ${Math.round(shield * 100)}%` : 'Armor 0%');
-    this.armor.root.setAttribute('aria-valuenow', String(clamp(shield) * 100));
-    this.portrait.dataset.variant = player.survivor?.variant ?? 'female';
-    this.portrait.style.backgroundImage = `url(/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png)`;
-    this.vignette.style.opacity = String(clamp((.3 - hp) / .3));
+    style(this.armor.fill, 'width', `${clamp(shield) * 100}%`); text(this.armor.label, shield ? `Armor ${Math.round(shield * 100)}%` : 'Armor 0%');
+    attribute(this.armor.root, 'aria-valuenow', String(clamp(shield) * 100));
+    attribute(this.portrait, 'data-variant', player.survivor?.variant ?? 'female');
+    const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
+    style(this.portrait, 'background-image', portrait);
+    style(this.vignette, 'opacity', String(clamp((.3 - hp) / .3)));
     let corgi = null, pinCount = 0;
     const px = player.transform.x, pz = player.transform.z;
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
       if (entity.faction !== 'infected' || entity.health.current <= 0 || ((entity.hidden || entity.infected?.hidden) && !world.weather?.reveals.has(entity.id)) || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > (world.weather?.reveals.has(entity.id) ? 40 : 30)) continue;
-      const pin = this.threats[pinCount++]; if (!pin) break;
-      pin.hidden = false; pin.dataset.entityId = String(entity.id); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
+      const pin = this.threats[pinCount]; if (!pin) break; pinCount++;
+      setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
     }
-    for (let i = pinCount; i < this.threats.length; i++) this.threats[i].hidden = true;
+    for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
+    this.threatCount = pinCount;
     const corgiStatus = corgi ? corgi.hidden ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
-    text(this.companion, corgiStatus); this.corgiBadge.title = corgiStatus; this.corgiBadge.setAttribute('aria-label', corgiStatus);
-    this.corgiBadge.dataset.state = corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue';
-    this.place(this.playerPin, px, pz, px, pz); this.playerPin.style.rotate = `${-player.transform.yaw + Math.PI / 2}rad`;
+    text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
+    attribute(this.corgiBadge, 'data-state', corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue');
+    this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
-    this.objectivePin.hidden = !anchor;
+    setHidden(this.objectivePin, !anchor);
     if (anchor) this.place(this.objectivePin, anchor.x, anchor.z, px, pz, true);
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
-    this.homePin.hidden = !home; if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
+    setHidden(this.homePin, !home); if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
     // L1 v2 beat 5: after the hand-over the panel shows the completed tick and no new objective.
     const done = !objective && mission?.def.l1 ? [...mission.def.steps].reverse().find(step => mission.state.steps[step.id].status === 'completed') : undefined;
-    this.tracker.hidden = !objective && !done; if (done) text(this.trackerText, `✓ ${done.text}`);
+    setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
     if (objective) text(this.trackerText, `${deadline}${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
@@ -227,12 +230,12 @@ export class Hud {
     }
     this.updateSurvivors(mission, px, pz);
     for (let i = 0; i < sides.length; i++) {
-      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; card.root.hidden = !state && !mission?.def.l1;
-      if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); card.icon.hidden=false;card.icon.src=actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick');card.actionId=''; card.ring.hidden=true; for(const strip of card.strips)strip.hidden=true;this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
-      card.icon.hidden=card.ring.hidden=false;
+      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; setHidden(card.root, !state && !mission?.def.l1);
+      if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); setHidden(card.icon, false);attribute(card.icon, 'src', actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick'));card.actionId=''; setHidden(card.ring, true); for(const strip of card.strips)setHidden(strip, true);this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
+      setHidden(card.icon, false); setHidden(card.ring, false);
       const slot = state.rack[state.index], def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id);
       card.root.classList.toggle('is-selected', player.weapons!.selectedSide === side);
-      card.root.setAttribute('aria-label', `${side}${player.weapons!.selectedSide === side ? ' selected' : ''}`);
+      attribute(card.root, 'aria-label', `${side}${player.weapons!.selectedSide === side ? ' selected' : ''}`);
       const key = this.game.input.scheme === 'touch' ? '☝' : this.game.input.scheme === 'keyboard' ? this.game.input.bindings.keyLabel(side === 'LEFT' ? 'left' : 'right') : side === 'LEFT' ? 'LMB' : 'RMB';
       const mouse = this.game.input.scheme.startsWith('mouse');
       const loadout = world.combat?.runner.loadout, entries = loadout?.activeEntries() ?? [];
@@ -243,53 +246,53 @@ export class Hud {
       const preview = mouse && side !== player.weapons!.selectedSide;
       const displayId = preview && next ? next.id : slot.id;
       if (card.actionId !== displayId) { card.actionId = displayId; card.icon.src = actionIconUrl(action(displayId).iconId); text(card.name, label(displayId)); }
-      card.ring.hidden = preview;
+      setHidden(card.ring, preview);
       text(card.stats, def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready');
       if (preview) text(card.stats, 'RMB to equip');
-      card.stats.dataset.ammo = String(slot.magazine); card.stats.dataset.charges = String(slot.charges);
+      attribute(card.stats, 'data-ammo', String(slot.magazine)); attribute(card.stats, 'data-charges', String(slot.charges));
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;
       const duration = (slot.reloadUntil ? def.reloadTime : slot.nextCharge ? def.recharge : Math.max(def.cooldown, def.windup + def.active + def.recovery)) * 60;
       const progress = until > world.tick ? 1 - clamp((until - world.tick) / (duration || 1)) : 1;
-      card.ring.style.setProperty('--progress', String(progress));
+      style(card.ring, '--progress', String(progress));
       this.game.input.touch.setWeapon(side === 'LEFT' ? 'left' : 'right', actionIconUrl(def.iconId), `${card.name.textContent}, ${card.stats.textContent}`, progress, player.weapons!.selectedSide === side, slot.magazine, slot.charges);
-      card.ring.dataset.until = String(until); text(card.ring, slot.reloadUntil ? '↻' : until > world.tick ? Math.max(0, (until - world.tick) / 60).toFixed(1) : '✓');
-      for (let j = 0; j < card.strips.length; j++) { card.strips[j].hidden = j >= state.rack.length; card.strips[j].classList.toggle('is-current', j === state.index); }
+      attribute(card.ring, 'data-until', String(until)); text(card.ring, slot.reloadUntil ? '↻' : until > world.tick ? Math.max(0, (until - world.tick) / 60).toFixed(1) : '✓');
+      for (let j = 0; j < card.strips.length; j++) { setHidden(card.strips[j], j >= state.rack.length); card.strips[j].classList.toggle('is-current', j === state.index); }
     }
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
-    this.interaction.hidden = !device;
-    if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); this.interaction.dataset.progress = String(device.progress); }
-    this.damage.hidden = world.tick > this.damagedUntil; this.bark.hidden = world.tick > this.barkUntil;
-    this.civilianBark.hidden = world.tick > this.civilianBarkUntil;
+    setHidden(this.interaction, !device);
+    if (device) { this.interaction.style.background = `conic-gradient(#64dccc ${device.progress * 360}deg,#182333 0)`; text(this.interaction, device.hint || `${device.label} · ${Math.round(device.progress * 100)}%`); attribute(this.interaction, 'data-progress', String(device.progress)); }
+    setHidden(this.damage, world.tick > this.damagedUntil); setHidden(this.bark, world.tick > this.barkUntil);
+    setHidden(this.civilianBark, world.tick > this.civilianBarkUntil);
     if (!preparing) { this.updateStory(); this.onboarding.update(this.game.input.scheme, visible); }
   }
   /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
-    this.survivorText.hidden = !show; this.cueText.hidden = true; this.cuePin.hidden = true;
-    if (!show || !l5 || !mission) return;
+    setHidden(this.survivorText, !show);
+    if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }
     text(this.survivorText, ` · Survivors found ${l5.found}/5`);
     const tick = this.game.world.tick, cue = l5.cue && l5.cue.until > tick ? l5.cue : null;
-    if (cue) {
-      this.cuePin.hidden = false; this.place(this.cuePin, cue.x, cue.z, px, pz, true);
-      this.cueText.hidden = false; text(this.cueText, ` · ${cue.text}`);
-    }
+    setHidden(this.cuePin, !cue);
+    let cueLabel = cue ? ` · ${cue.text}` : '';
+    if (cue) this.place(this.cuePin, cue.x, cue.z, px, pz, true);
     for (const r of l5.survivors) {
       const ring = mission.def.anchors[`l5-ring-${r.key}`];
-      if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) { this.cueText.hidden = false; text(this.cueText, ' · Hold still or press E: someone is here'); }
+      if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) cueLabel = ' · Hold still or press E: someone is here';
     }
+    setHidden(this.cueText, !cueLabel); if (cueLabel) text(this.cueText, cueLabel);
   }
   /** Story bubble from the mission state (L1/L2/L6): fades in over 10 ticks, out over 15 after its reading time. */
   private updateStory(): void {
     const world = this.game.world, say = world.missions?.state.l1?.say ?? world.missions?.state.l2?.say ?? world.missions?.state.l6?.say, tick = world.tick;
     const opacity = say ? Math.min(1, (tick - say.at) / 10, 1 - (tick - say.until) / 15) : 0;
-    this.storyBubble.hidden = !say || opacity <= 0;
+    setHidden(this.storyBubble, !say || opacity <= 0);
     if (!say || this.storyBubble.hidden) return;
     if (this.storyBubble.textContent !== say.text) this.storyBubble.textContent = say.text;
-    this.storyBubble.style.opacity = String(Math.max(0, opacity));
-    if (say.id === 0) { this.storyBubble.style.left = '50%'; this.storyBubble.style.top = '78%'; return; }
+    style(this.storyBubble, 'opacity', String(Math.max(0, opacity)));
+    if (say.id === 0) { style(this.storyBubble, 'left', '50%'); style(this.storyBubble, 'top', '78%'); return; }
     const speaker = world.entities.get(say.id); if (speaker && !speaker.hidden) { this.storyX = speaker.transform.x; this.storyZ = speaker.transform.z; }
     const p = this.game.view.project(this.storyX, (speaker?.transform.y ?? .7) + 1.6, this.storyZ);
-    this.storyBubble.style.left = `${Math.max(14, Math.min(86, (p[0] + 1) * 50))}%`; this.storyBubble.style.top = `${Math.max(16, Math.min(88, (1 - p[1]) * 50))}%`;
+    style(this.storyBubble, 'left', `${Math.max(14, Math.min(86, (p[0] + 1) * 50))}%`); style(this.storyBubble, 'top', `${Math.max(16, Math.min(88, (1 - p[1]) * 50))}%`);
   }
   dispose(): void { this.clear(); this.onboarding.dispose(); this.root.remove(); }
 }
