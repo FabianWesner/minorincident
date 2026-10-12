@@ -6,11 +6,48 @@ import bpy
 from mathutils import Vector
 
 
+# Exterior wall palette of the bld.* kits built on an open cutaway interior. Faces of the kit that are open (found by ray
+# casting the accepted interior) get a closed wall with dark panes, so no street-facing side is ever missing (PO 10-12:
+# "building without walls"). The wall lives under the cutaway `roof` node and lifts with it when the courier is inside.
+SHELL_WALL = {'bld.pharmacy': 'picketWhite', 'bld.supermarket': 'brick', 'bld.gym': 'canvasTan'}
+WALL = .10
+
+
+def open_faces(lo, hi):
+    """Faces (axis, side) of the imported interior whose wall is missing: fewer than 80% of the probe rays hit solid geometry."""
+    bpy.context.view_layer.update()
+    graph = bpy.context.evaluated_depsgraph_get()
+    scene = bpy.context.scene
+    found = []
+    for axis in (0, 1):
+        other = 1 - axis
+        for side in (-1, 1):
+            hits = total = 0
+            for i in range(9):
+                for z in (lo[2] + .6, (lo[2] + hi[2]) / 2, hi[2] - .8):
+                    along = lo[other] + .4 + (hi[other] - lo[other] - .8) * i / 8
+                    origin = [0, 0, z]
+                    origin[other] = along
+                    origin[axis] = (hi[axis] + .6) if side > 0 else (lo[axis] - .6)
+                    direction = [0, 0, 0]
+                    direction[axis] = -side
+                    ok, _, _, index, obj, _ = scene.ray_cast(graph, Vector(origin), Vector(direction), distance=.6 + .35)
+                    total += 1
+                    if ok and obj.type == 'MESH':
+                        material = obj.data.materials[obj.data.polygons[index].material_index] if obj.data.materials else None
+                        if not (material and material.name.startswith('keep_glass')):
+                            hits += 1
+            if hits / total < .8:
+                found.append((axis, side))
+    return found
+
+
 def run(asset, interior, script):
     directory = Path(script).resolve().parent
     source = directory.parent / interior
     output = Path(sys.argv[sys.argv.index('--glb') + 1]).resolve()
     stats = {}
+    open_sides = None   # decided once on the full-detail interior; every LOD gets the same walls
     for lod in ('', '.lod1', '.lod2'):
         bpy.ops.wm.read_factory_settings(use_empty=True)
         bpy.ops.import_scene.gltf(filepath=str(source / ('model' + lod + '.glb')))
@@ -21,6 +58,16 @@ def run(asset, interior, script):
         points = [o.matrix_world @ Vector(p) for o in meshes for p in o.bound_box]
         lo = [min(p[i] for p in points) for i in range(3)]
         hi = [max(p[i] for p in points) for i in range(3)]
+        if asset in SHELL_WALL and open_sides is None:
+            open_sides = open_faces(lo, hi)
+            print('SHELL open faces', asset, open_sides)
+        shell = open_sides if asset in SHELL_WALL else []
+        inner_lo, inner_hi = list(lo), list(hi)
+        for axis, side in shell:
+            if side > 0:
+                hi[axis] += WALL
+            else:
+                lo[axis] -= WALL
         root = bpy.data.objects.get('root')
         roof = bpy.data.objects.new('roof', None)
         bpy.context.collection.objects.link(roof)
@@ -59,8 +106,42 @@ def run(asset, interior, script):
         data = bpy.data.meshes.new('roof coping'); data.from_pydata(vertices, [], faces); data.update()
         coping = bpy.data.objects.new('roof coping',data); bpy.context.collection.objects.link(coping)
         data.materials.append(trim); world = coping.matrix_world.copy(); coping.parent = roof; coping.matrix_world = world
+        wall = None
+        if shell:
+            from . import palette
+            wall = bpy.data.materials.get('pal_' + SHELL_WALL[asset]) or palette.mat(SHELL_WALL[asset])
+            z0, z1 = inner_lo[2], inner_hi[2] - .06
+            for axis, side in shell:
+                other = 1 - axis
+                # The slab spans the whole face; a wall on the neighbouring open side closes the corner.
+                span = [lo[other], hi[other]]
+                length = span[1] - span[0]
+                centre = [0, 0, (z0 + z1) / 2]
+                centre[axis] = (inner_hi[axis] + WALL / 2) if side > 0 else (inner_lo[axis] - WALL / 2)
+                centre[other] = (span[0] + span[1]) / 2
+                size = [0, 0, z1 - z0]
+                size[axis] = WALL
+                size[other] = length
+                box('wall %s%s' % ('xy'[axis], '+' if side > 0 else '-'), tuple(centre), tuple(size), wall)
+                # Dark panes (odd count: the middle one is the door) stand 2.5 cm proud of the outer face.
+                count = max(3, round(length / 2.2)) | 1
+                margin, gap = .55, .45
+                pane = (length - 2 * margin - (count - 1) * gap) / count
+                top = min(z1 - .7, z0 + 3.2)
+                for k in range(count):
+                    door = k == count // 2
+                    a = span[0] + margin + k * (pane + gap)
+                    zb = z0 + (.2 if door else .9)
+                    zt = z0 + (2.5 if door else min(2.6, top - z0))
+                    pc = [0, 0, (zb + zt) / 2]
+                    pc[axis] = (inner_hi[axis] + WALL + .0125) if side > 0 else (inner_lo[axis] - WALL - .0125)
+                    pc[other] = a + pane / 2
+                    ps = [0, 0, zt - zb]
+                    ps[axis] = .025
+                    ps[other] = pane
+                    box('pane %s%s%d' % ('xy'[axis], '+' if side > 0 else '-', k), tuple(pc), tuple(ps), dark)
         # Two rigid material owners, 36 triangles in every tier; never decimate the lid.
-        for material in set((dark, trim)):
+        for material in set((dark, trim) + ((wall,) if wall else ())):
             parts = [o for o in roof.children if o.type == 'MESH' and o.data.materials[0] == material]
             bpy.ops.object.select_all(action='DESELECT')
             for obj in parts: obj.select_set(True)

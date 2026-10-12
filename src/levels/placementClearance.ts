@@ -1,5 +1,6 @@
 import { staticCollision } from '../assets/staticCollision';
 import { inside } from './districts/validate';
+import { placementColliders } from './districts/staticCollision';
 import type { DistrictLayout, Placement, Tier } from './districts/types';
 
 /**
@@ -71,6 +72,26 @@ export function firstOverlap(candidate: Placement, obstacles: readonly Footprint
   const mine = footprints(candidate, margin, true);
   for (const o of obstacles) for (const m of mine) if (footprintsOverlap(m, o)) return o.id.split('#')[0];
   return undefined;
+}
+
+/**
+ * Placements chosen by `pick` that cut into a solid collider of ANOTHER placement or of the level (jersey rails of a ramp, bridge
+ * walls, authored blockers) in the horizontal plane and in height. Colliders carrying the placement's own id are skipped.
+ * Complements `addedOverlaps`, which only sees placement footprints (PO 10-12: a wreck stuck in the bridge barrier).
+ */
+export function solidOverlaps(layout: DistrictLayout, tier: Tier, pick: (p: Placement) => boolean): { placement: string; assetId: string; collider: string }[] {
+  const out: { placement: string; assetId: string; collider: string }[] = [];
+  const solids = placementColliders(layout.placements, layout.colliders).filter(c => !c.walkable && c.minTier <= tier && c.maxTier >= tier);
+  for (const p of layout.placements) {
+    if (!pick(p) || p.minTier > tier || p.maxTier < tier) continue;
+    const mine = footprints(p, 0, true);
+    for (const c of solids) {
+      if (c.id.split('/')[0] === p.id) continue;
+      const { min, max } = c.aabb, other: Footprint = { id: c.id, poly: [[min[0], min[2]], [max[0], min[2]], [max[0], max[2]], [min[0], max[2]]], y0: min[1], y1: max[1] };
+      if (mine.some(m => footprintsOverlap(m, other))) out.push({ placement: p.id, assetId: p.assetId, collider: c.id });
+    }
+  }
+  return out;
 }
 
 /** Everything in the layout that is solid enough to cut into: placement footprints plus authored colliders (merged planters). */
