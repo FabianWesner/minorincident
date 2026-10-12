@@ -105,7 +105,7 @@ export class InteractionView extends Group {
   }
   private assetId(e: EntitySnapshot): string | undefined {
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
-    return e.archetype === 'l6.service-gate' ? 'prop.service-gate' : pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
+    return e.barricade?.slot.sandbag ? 'prop.sandbag-pallet' : e.archetype === 'l6.service-gate' ? 'prop.service-gate' : pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
   }
   /** L1 v2 toys: gameplay-shaped code art (hinged gate leaf, dumpster, car-alarm LED + beacons, car-wash foam curtain and brushes). */
   private toyObject(e: EntitySnapshot): Group {
@@ -165,7 +165,17 @@ export class InteractionView extends Group {
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
     if (e.archetype === 'l6.service-gate') return this.registry.loadAsset('prop.service-gate', lod);
-    if (e.barricade) return this.barricadeObject(e);
+    if (e.barricade) {
+      const object = this.barricadeObject(e);
+      if (e.barricade.slot.sandbag) {
+        const brace = object.getObjectByName('slot-brace')!;
+        const crack = brace.getObjectByName('slot-crack')!; brace.clear(); brace.add(crack);
+        const model = await this.registry.loadAsset('prop.sandbag-pallet', lod), slot = e.barricade.slot;
+        const width = Math.hypot(slot.b.x - slot.a.x, slot.b.z - slot.a.z), count = Math.ceil(width / 1.4);
+        for (let i = 0; i < count; i++) { const pallet = model.clone(true); pallet.scale.x *= width / count / 1.4; pallet.position.x = -width / 2 + (i + .5) * width / count; brace.add(pallet); }
+      }
+      return object;
+    }
     if (e.toy || this.world.toys?.gateIds.includes(e.id)) { const object = this.toyObject(e); await this.attachModels(e, object); return object; }
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined, id = this.assetId(e);
     if (id) {

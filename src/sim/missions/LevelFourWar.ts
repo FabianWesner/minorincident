@@ -1,5 +1,7 @@
 import { Rng } from '../../core/Rng';
 import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, type L4Weapon } from '../../data/l4';
+import { l4AlphaEmergence, l4BreakableLine } from '../../levels/L4/layout';
+import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
 import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
@@ -18,7 +20,7 @@ const fresh = (): L4State => ({
   phase: 'convoy', rideAt: 0, arrivedAt: 0, gunAt: 0, turnDueAt: 0, turnAt: 0, warAt: 0, lineBreakAt: 0, lineCause: '', descendAt: 0, barredAt: 0, doneAt: 0, markerAt: 0,
   convoyIds: [], convoyS: [], convoyV: 0, seated: false, evacueeIds: [], turnerIds: [], soldierIds: [], qmId: 0, hmgIds: [], residentIds: [], medkitIds: [], armed: [],
   soldiersAtTurn: 0, civiliansAtTurn: 0, infectedAtT30: -1, killsAtBreak: 0, infectedAtBreak: 0, soldiersAtBreak: 0, soldiersAtCellar: 0,
-  wave: 0, waveAt: 0, pend: [0, 0, 0, 0, 0, 0, 0], carIds: [], emergedIds: [], collapseWaveAt: 0, collapseIds: [], collapseWaves: 0, pendingDoor: [], pockets: [],
+  alphaIds: [], alphaAnchors: [], wave: 0, waveAt: 0, pend: [0, 0, 0, 0, 0, 0, 0], carIds: [], emergedIds: [], collapseWaveAt: 0, collapseIds: [], collapseWaves: 0, pendingDoor: [], pockets: [],
   tankId: 0, tankS: 0, tankFireAt: 0, tankShots: 0, tankPhase: 'off', heliId: 0, heliAngle: 0, heliPhase: 'off', heliAt: 0, heliBurstAt: 0, heliBurst: 0, heliShots: 0, heliTarget: null,
   hmgBursts: 0, hmgLastAt: {}, fuelId: 0, craterId: 0, burning: [], fires: 0, glass: [], scorch: 0, lastShot: {},
   kills: { player: 0, soldiers: 0, armedCivilians: 0, unarmedCivilians: 0, heli: 0, tank: 0, other: 0 },
@@ -69,7 +71,7 @@ export class LevelFourWar {
     const edges = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('edge-in-')).map(id => ({ id, ...this.anchor(id) }));
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
-    world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true;
+    world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true; world.infected.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'];
     world.npcs.setAmbient(0);
     // L4-default progression (bat, axe, handgun) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.handgun', 'weapon.kick']);
@@ -302,14 +304,34 @@ export class LevelFourWar {
       e!.health = { current: Math.max(e!.health.current, c.hp), max: c.hp }; e!.appearance!.handProp = entry.weapon; entry.armedAt = tick;
     }
   }
+  private spawnRoom(): boolean {
+    const cap = l4.war.caps.characters[this.low ? 'low' : 'high'];
+    return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap;
+  }
   private emerge(at: Point): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    if (ai.director.count >= ai.director.cap || !ai.pool.length) return 0;
+    if (!this.spawnRoom() || ai.director.count >= ai.director.cap - ai.director.reserved || !ai.pool.length) return 0;
     const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
     return id;
+  }
+  /** Reserve cap space for the first Alphas before releasing ordinary street waves. */
+  private alphas(): void {
+    const { world } = this.mission, s = this.s, ai = world.infected!;
+    for (const [i, entry] of l4AlphaEmergence.entries()) {
+      if (s.alphaAnchors.includes(entry.anchor)) continue;
+      if (s.alphaIds.length >= l4.alphas.count[this.low ? 'low' : 'high']) return;
+      if (world.tick < s.turnAt + ticks(l4.alphas.afterTurnS[i]) || ai.director.count >= ai.director.cap || !ai.pool.length || !this.spawnRoom()) return;
+      const anchor = this.anchor(entry.anchor);
+      if (!ai.director.offscreen(anchor)) continue;
+      const at = this.snap(anchor, infectedDef('infected.alpha').radius);
+      if (!ai.nav.clear(at.x, at.z, infectedDef('infected.alpha').radius)) return;
+      const target = this.anchor(l4BreakableLine[i].anchors.inside);
+      const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(target.z - at.z, target.x - at.x) });
+      s.alphaIds.push(id); s.alphaAnchors.push(entry.anchor); ai.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
+    }
   }
   /** Waves from the street edges: pending counts per edge, released out of view (never in the camera, never close to the courier). */
   private waves(): void {
@@ -390,12 +412,10 @@ export class LevelFourWar {
       const pocket = l4Pockets[i], c = { x: pocket.at[0][0], z: pocket.at[0][1] };
       if (!ai.director.offscreen(c) || dist(c, p) < 24) continue;
       s.pockets = s.pockets.filter(k => k !== i);
-      const o = this.outbreak();
-      for (const [x, z] of pocket.at) {
-        const at = this.snap({ x, z }, .35), id = o.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: [{ activity: 'look', anchor: 'l4/pocket', target: at, facing: { x: pocket.foes[0], z: pocket.foes[1] }, ticks: 60 * 60 * 6 }] });
-        const e = world.entities.get(id)!;
-        e.civilian!.ally = { ...allyState('soldier', at, true), gun: { ...l4.soldiers.rifle }, weapon: 'rifle', engaged: true, range: l4.soldiers.postRangeM, runSpeed: l4.soldiers.moveMs };
-        e.health = { current: l4.soldiers.hp, max: l4.soldiers.hp }; e.appearance!.handProp = 'rifle'; s.soldierIds.push(id);
+      const survivors = this.liveSoldiers().filter(e => !s.hmgIds.includes(e.id)).sort((a, b) => dist(a.transform, c) - dist(b.transform, c)).slice(0, pocket.at.length);
+      for (const [k, e] of survivors.entries()) {
+        const [x, z] = pocket.at[k], ally = e.civilian!.ally;
+        if (ally) { ally.post = { x, z }; ally.hold = true; ally.engaged = true; }
       }
       for (let k = 0; k < (this.low ? 3 : 6); k++) { const id = this.emerge({ x: pocket.foes[0] - k * .9, z: pocket.foes[1] }); if (id) ai.rush(id, c, world.tick + ticks(20)); }
     }
@@ -466,7 +486,7 @@ export class LevelFourWar {
       if (tick >= s.turnDueAt) this.turn();
     }
     if (s.phase === 'war' || s.phase === 'collapse' || s.phase === 'cellar' || s.phase === 'done') {
-      this.waves();
+      this.alphas(); this.waves();
       if (s.phase === 'war') {
         if (s.infectedAtT30 < 0 && tick >= s.warAt + ticks(30)) s.infectedAtT30 = world.infected!.active.filter(e => e.health.current > 0).length;
         if (s.tankPhase === 'off' && tick >= s.warAt + ticks(l4.tank.enterAfterS)) this.spectacle.startTank();
@@ -502,6 +522,7 @@ export class LevelFourWar {
     if (this.breakRadioAt) this.breakRadioAt += delta;
     // The parked convoy is a nav blocker; the live ones come from the entities restored with the snapshot.
     if (s.phase !== 'convoy') this.parkNav(true);
+    this.world.infected!.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
     const fuel = this.world.entities.get(s.fuelId);
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_450, blocked: !!fuel && !fuel.hidden, wall: { x: l4.fuelTruck.x, y: 1, z: l4.fuelTruck.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
   }

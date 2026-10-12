@@ -1,6 +1,9 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
 import { l4, l4Anchors, l4Edges, l4Route, l4ConvoyStations } from '../../src/data/l4';
+import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
+import { completeCampaignLevel } from '../../src/sim/progression/carryover';
+import { preset } from '../../src/sim/progression/Campaign';
 import { action } from '../../src/data/actions/catalog';
 import { timeOfDay } from '../../src/data/timeOfDay';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -299,13 +302,15 @@ describe('L4 The Safe City Falls', () => {
     for (const id of l4.checkpoints) {
       runL4(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === id });
       expect(m.state.checkpoint).toBe(id);
-      const snap = { phase: s.phase, soldiers: s.soldierIds.filter(i => w.entities.get(i)!.civilian?.state !== 'finished' && w.entities.get(i)!.health.current > 0).length, armed: s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length, tankPhase: s.tankPhase, heliPhase: s.heliPhase, gun: w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id) };
+      const snap = { alphaIds: [...s.alphaIds], line: [...w.entities.iterate()].filter(e => e.barricade?.slot.groupId === 'l4-line').map(e => ({ id: e.id, hp: e.health.current, intact: e.barricade!.intact })), phase: s.phase, soldiers: s.soldierIds.filter(i => w.entities.get(i)!.civilian?.state !== 'finished' && w.entities.get(i)!.health.current > 0).length, armed: s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length, tankPhase: s.tankPhase, heliPhase: s.heliPhase, gun: w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id) };
       snaps[id] = snap;
       for (let i = 0; i < 120; i++) w.update();
       const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick);
       for (let i = 0; i < 400 && w.entities.get(1)!.health.current <= 0; i++) w.update();
       expect(m.state.checkpoint).toBe(id);
       expect(s.phase, `${id} phase`).toBe(snap.phase);
+      expect(s.alphaIds).toEqual(snap.alphaIds);
+      for (const rail of snap.line) expect(w.entities.get(rail.id)).toMatchObject({ health: { current: rail.hp }, barricade: { intact: rail.intact } });
       expect(s.tankPhase).toBe(snap.tankPhase); expect(s.heliPhase).toBe(snap.heliPhase);
       expect(w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id)).toEqual(snap.gun);
       expect(s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length).toBe(snap.armed);
@@ -337,8 +342,63 @@ describe('L4 The Safe City Falls', () => {
     expect(r.killsAtBreak).toBeGreaterThanOrEqual(60);
   }, HEAVY);
 
+  for (const tier of ['high', 'low'] as const) test(`T-E22-12-alphas-${tier} @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps`, async () => {
+    const l = await loadL4(2, tier); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
+    w.combat!.damage.god = true;
+    expect(s.alphaIds).toEqual([]);
+    expect(w.infected!.active.some(e => e.archetype === 'infected.alpha')).toBe(false);
+    while (s.phase === 'convoy') w.update();
+    m.completeObjective('quartermaster');
+    while (s.phase !== 'war') w.update();
+    const known = new Set<number>();
+    for (let i = 0; i < 100 * 60; i++) {
+      w.update();
+      expect(w.infected!.director.count).toBeLessThanOrEqual(l4.war.caps.infected[tier]);
+      expect([...w.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.civilian || e.infected)).length).toBeLessThanOrEqual(l4.war.caps.characters[tier]);
+      for (const [index, id] of s.alphaIds.entries()) if (!known.has(id)) {
+        known.add(id); const e = w.entities.get(id)!;
+        expect(e.archetype).toBe('infected.alpha');
+        expect(w.tick).toBeGreaterThan(s.turnAt);
+        expect(dist(e.transform, m.def.anchors[s.alphaAnchors[index]])).toBeLessThanOrEqual(3);
+      }
+      expect(s.soldierIds).toHaveLength(l4.calm.soldiers[tier]);
+    }
+    expect(s.alphaIds).toHaveLength(l4.alphas.count[tier]); expect(known.size).toBe(l4.alphas.count[tier]);
+    expect(w.infected!.director.reserved).toBe(0);
+  }, HEAVY);
+
+  test('T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage', async () => {
+    const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission;
+    const line = l4BreakableLine[2], center = m.def.anchors[line.anchors.center], outside = m.def.anchors[line.anchors.outside], inside = m.def.anchors[line.anchors.inside];
+    const fair = w.districts!.districts.find(d => d.id === 'D-FAIR')!;
+    for (const rail of l4BreakableLine) {
+      expect(fair.decay.placements.some(p => p.id === rail.placementId)).toBe(false);
+      expect(fair.decay.colliders.some(c => c.id.startsWith(rail.placementId + '/'))).toBe(false);
+      expect(w.barricades!.barricadeIntact(rail.id)).toBe(true);
+    }
+    const alpha = w.infected!.spawn('infected.alpha', outside, { state: 'idle' });
+    const dx = inside.x - outside.x, dz = inside.z - outside.z, distance = Math.hypot(dx, dz);
+    expect(w.infected!.startSpecial(alpha, 'alpha.charge', { id: 1, ...inside }, { ...outside, radius: 1, dx: dx / distance, dz: dz / distance })).toBe(true);
+    step(w, 90);
+    expect(w.barricades!.barricadeIntact(line.id)).toBe(false);
+    expect(w.events.events().find(e => e.type === 'barricade.damaged' && e.slotId === line.id)).toMatchObject({ sourceId: alpha, previousHp: l4.alphas.lineHp, hp: 0 });
+    expect(w.infected!.nav.clear(center.x, center.z, .35)).toBe(true);
+  }, HEAVY);
+
+  test('T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards', async () => {
+    const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission;
+    for (let i = 0; i < 12 && m.state.phase === 'playing'; i++) { m.completeObjective(); if (m.state.l4!.phase === 'cellar') step(w, 8 * 60); }
+    const inside = m.def.anchors['l4-cellar-in'];
+    expect([...w.entities.iterate()].filter(e => e.health.current > 0 && !e.hidden && (e.civilian || e.infected) && dist(e.transform, inside) < 6)).toHaveLength(0);
+    const save = preset('L4-default'), weapons = w.entities.get(1)!.weapons!;
+    const carried = { LEFT: weapons.LEFT.rack.map(r => r.id), RIGHT: weapons.RIGHT.rack.map(r => r.id) };
+    completeCampaignLevel(save, 4, m.state.result!, w);
+    expect(save.unlockedLevel).toBe(5); expect(save.pending).toBeUndefined(); expect(save.racks).toEqual(carried);
+    expect(save.survivors ?? []).toEqual([]); expect(save.rescuedSurvivors ?? []).toEqual([]);
+  }, HEAVY);
+
   test('T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy', async () => {
     const l = await loadL4(1); world = l.world;
-    for (const name of Object.keys(l4Anchors)) expect(l.mission.def.anchors[name], name).toBeDefined();
+    for (const name of [...Object.keys(l4Anchors), ...l4AlphaEmergence.map(e => e.anchor), ...l4BreakableLine.flatMap(line => Object.values(line.anchors))]) expect(l.mission.def.anchors[name], name).toBeDefined();
   });
 });

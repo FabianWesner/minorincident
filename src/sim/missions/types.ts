@@ -183,6 +183,7 @@ export interface L4State {
   /** Counts at the beats the acceptance checks compare. */
   soldiersAtTurn: number; civiliansAtTurn: number; infectedAtT30: number; killsAtBreak: number; infectedAtBreak: number; soldiersAtBreak: number; soldiersAtCellar: number;
   /** The war: waves emerged, the next wave tick, infected brought from the street edges, and the collapse waves. */
+  alphaIds: number[]; alphaAnchors: string[];
   wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number;
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
   pendingDoor: { id: number; door: string; home: { x: number; z: number } }[]; pockets: number[];

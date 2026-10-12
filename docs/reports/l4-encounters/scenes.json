@@ -1,0 +1,627 @@
+{
+  "before": {
+    "checks": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": false,
+          "value": 5,
+          "limit": 1.2
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 28,
+        "p95": 31,
+        "max": 31
+      },
+      "triangles": {
+        "p50": 92273,
+        "p95": 93345,
+        "max": 93345
+      },
+      "shadowDrawCalls": {
+        "p50": 29,
+        "p95": 29,
+        "max": 29
+      },
+      "shadowTriangles": {
+        "p50": 75467,
+        "p95": 75467,
+        "max": 75467
+      },
+      "stepMs": {
+        "p50": 1.2,
+        "p95": 2.2,
+        "max": 13.8
+      },
+      "lastFrame": {
+        "drawCalls": 28,
+        "triangles": 92273,
+        "shadowDrawCalls": 29,
+        "shadowTriangles": 75467,
+        "stepMs": 1.6000003814697266,
+        "categories": {
+          "other": 24,
+          "shadows": 29,
+          "props": 2,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "actors": {
+      "courier": {
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        },
+        "drawnFrames": 180,
+        "position": [
+          -25.909,
+          15.4
+        ]
+      },
+      "alpha": {
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 4.9,
+          "torsoPitchMaxDeg": 32.1,
+          "contacts": 8,
+          "slideMaxCm": 24,
+          "slideP95Cm": 13.7,
+          "yawDriftMaxDeg": 5.4,
+          "liftMaxCm": 17.6,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 25
+        },
+        "drawnFrames": 180,
+        "position": [
+          -23.668,
+          19.399
+        ]
+      }
+    },
+    "clipping": {
+      "static": 0,
+      "actors": 0,
+      "gunBodies": 0,
+      "heldProps": 0,
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  "after": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 28,
+        "p95": 31,
+        "max": 31
+      },
+      "triangles": {
+        "p50": 92273,
+        "p95": 93345,
+        "max": 93345
+      },
+      "shadowDrawCalls": {
+        "p50": 29,
+        "p95": 29,
+        "max": 29
+      },
+      "shadowTriangles": {
+        "p50": 75467,
+        "p95": 75467,
+        "max": 75467
+      },
+      "stepMs": {
+        "p50": 2.6,
+        "p95": 5.2,
+        "max": 24.8
+      },
+      "lastFrame": {
+        "drawCalls": 28,
+        "triangles": 92273,
+        "shadowDrawCalls": 29,
+        "shadowTriangles": 75467,
+        "stepMs": 3.1000003814697266,
+        "categories": {
+          "other": 24,
+          "shadows": 29,
+          "props": 2,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "actors": {
+      "courier": {
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        },
+        "drawnFrames": 180,
+        "position": [
+          -25.909,
+          15.4
+        ]
+      },
+      "alpha": {
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 4.9,
+          "torsoPitchMaxDeg": 32.1,
+          "contacts": 11,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0.4,
+          "liftMaxCm": 22.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 90
+        },
+        "drawnFrames": 180,
+        "position": [
+          -23.668,
+          19.399
+        ]
+      }
+    },
+    "clipping": {
+      "static": 0,
+      "actors": 0,
+      "gunBodies": 0,
+      "heldProps": 0,
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  "after-gap": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 65,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 103638,
+          "limit": 1500000
+        }
+      ]
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 28,
+        "p95": 65,
+        "max": 65
+      },
+      "triangles": {
+        "p50": 94686,
+        "p95": 103638,
+        "max": 103638
+      },
+      "shadowDrawCalls": {
+        "p50": 15,
+        "p95": 15,
+        "max": 15
+      },
+      "shadowTriangles": {
+        "p50": 44705,
+        "p95": 44705,
+        "max": 44705
+      },
+      "stepMs": {
+        "p50": 2.7,
+        "p95": 4.1,
+        "max": 38
+      },
+      "lastFrame": {
+        "drawCalls": 26,
+        "triangles": 93662,
+        "shadowDrawCalls": 15,
+        "shadowTriangles": 44705,
+        "stepMs": 2.3999996185302734,
+        "categories": {
+          "other": 19,
+          "shadows": 15,
+          "crowd": 7
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "actors": {
+      "courier": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        },
+        "drawnFrames": 450,
+        "position": [
+          -10,
+          0
+        ]
+      },
+      "alpha": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 3.9,
+          "torsoPitchMaxDeg": 33.3,
+          "contacts": 24,
+          "slideMaxCm": 2.7,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 2.7,
+          "liftMaxCm": 18.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 6
+        },
+        "drawnFrames": 450,
+        "position": [
+          -8.743,
+          0.032
+        ]
+      },
+      "regular-0": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 15.9,
+          "torsoPitchMaxDeg": 68.1,
+          "contacts": 33,
+          "slideMaxCm": 20.7,
+          "slideP95Cm": 2.3,
+          "yawDriftMaxDeg": 6.7,
+          "liftMaxCm": 18.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 5
+        },
+        "drawnFrames": 450,
+        "position": [
+          -6.685,
+          0.128
+        ]
+      },
+      "regular-1": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 23.5,
+          "torsoPitchMaxDeg": 84.6,
+          "contacts": 31,
+          "slideMaxCm": 4.3,
+          "slideP95Cm": 2.7,
+          "yawDriftMaxDeg": 10.5,
+          "liftMaxCm": 18,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 5
+        },
+        "drawnFrames": 450,
+        "position": [
+          -7.545,
+          0.576
+        ]
+      },
+      "regular-2": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 19.5,
+          "torsoPitchMaxDeg": 78.2,
+          "contacts": 32,
+          "slideMaxCm": 23,
+          "slideP95Cm": 2.4,
+          "yawDriftMaxDeg": 9.2,
+          "liftMaxCm": 19.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 5
+        },
+        "drawnFrames": 450,
+        "position": [
+          -7.483,
+          -0.344
+        ]
+      },
+      "soldier-a": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 2,
+          "slideMaxCm": 25.3,
+          "slideP95Cm": 25.3,
+          "yawDriftMaxDeg": 72.5,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        },
+        "drawnFrames": 450,
+        "position": [
+          -10,
+          -4
+        ]
+      },
+      "soldier-b": {
+        "motion": {
+          "frames": 450,
+          "torsoPitchMinDeg": 0,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 6,
+          "slideMaxCm": 0.8,
+          "slideP95Cm": 0.8,
+          "yawDriftMaxDeg": 4,
+          "liftMaxCm": 5.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        },
+        "drawnFrames": 450,
+        "position": [
+          -10,
+          4
+        ]
+      }
+    },
+    "clipping": {
+      "static": 0,
+      "actors": 0,
+      "gunBodies": 0,
+      "heldProps": 0,
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  "phone": {
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "clipping",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 27,
+        "p95": 30,
+        "max": 30
+      },
+      "triangles": {
+        "p50": 77145,
+        "p95": 78217,
+        "max": 78217
+      },
+      "shadowDrawCalls": {
+        "p50": 22,
+        "p95": 22,
+        "max": 22
+      },
+      "shadowTriangles": {
+        "p50": 58836,
+        "p95": 58836,
+        "max": 58836
+      },
+      "stepMs": {
+        "p50": 1.9,
+        "p95": 2.7,
+        "max": 19.1
+      },
+      "lastFrame": {
+        "drawCalls": 27,
+        "triangles": 77145,
+        "shadowDrawCalls": 22,
+        "shadowTriangles": 58836,
+        "stepMs": 2,
+        "categories": {
+          "other": 24,
+          "shadows": 22,
+          "props": 1,
+          "crowd": 2
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "actors": {
+      "courier": {
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 2.4,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 3,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        },
+        "drawnFrames": 180,
+        "position": [
+          -25.909,
+          15.4
+        ]
+      },
+      "alpha": {
+        "motion": {
+          "frames": 180,
+          "torsoPitchMinDeg": 4.9,
+          "torsoPitchMaxDeg": 32.1,
+          "contacts": 11,
+          "slideMaxCm": 0.5,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0.4,
+          "liftMaxCm": 22.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 90
+        },
+        "drawnFrames": 180,
+        "position": [
+          -23.668,
+          19.399
+        ]
+      }
+    },
+    "clipping": {
+      "static": 0,
+      "actors": 0,
+      "gunBodies": 0,
+      "heldProps": 0,
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  }
+}
