@@ -1,0 +1,421 @@
+{
+  "horde-low-before": {
+    "spec": "tests/scenes/l7-district/horde-low.json",
+    "tier": "low",
+    "frames": 66,
+    "checks": {
+      "pass": false,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": false,
+          "value": 22,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 88,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 290985,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 63,
+      "heldPropHits": 0,
+      "actorHits": 12,
+      "piercing": 9
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 132,
+      "gaps": [
+        {
+          "id": "D-FAIR/prop.bench:14",
+          "gapCm": 0
+        },
+        {
+          "id": "D-FAIR/prop.bench:16",
+          "gapCm": 0
+        }
+      ]
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "actorCount": 101,
+    "maxMissedInViewFrames": 22,
+    "actorMotionMax": {
+      "yawDriftMaxDeg": 56.7,
+      "sinkMaxCm": 0.6,
+      "slideP95Cm": 23.8,
+      "jitterRunMax": 3
+    }
+  },
+  "horde-low-after": {
+    "spec": "tests/scenes/l7-district/horde-low.json",
+    "tier": "low",
+    "frames": 66,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 89,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 292152,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 63,
+      "heldPropHits": 0,
+      "actorHits": 9,
+      "piercing": 6
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 132,
+      "gaps": [
+        {
+          "id": "D-FAIR/prop.bench:14",
+          "gapCm": 0
+        },
+        {
+          "id": "D-FAIR/prop.bench:16",
+          "gapCm": 0
+        }
+      ]
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "actorCount": 101,
+    "maxMissedInViewFrames": 0,
+    "actorMotionMax": {
+      "yawDriftMaxDeg": 57.8,
+      "sinkMaxCm": 0.5,
+      "slideP95Cm": 22.8,
+      "jitterRunMax": 3
+    }
+  },
+  "horde-high-after": {
+    "spec": "tests/scenes/l7-district/horde-high.json",
+    "tier": "high",
+    "frames": 66,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 91,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 479562,
+          "limit": 1500000
+        }
+      ]
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 63,
+      "heldPropHits": 0,
+      "actorHits": 32,
+      "piercing": 28
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 132,
+      "gaps": [
+        {
+          "id": "D-FAIR/prop.bench:14",
+          "gapCm": 0
+        },
+        {
+          "id": "D-FAIR/prop.bench:16",
+          "gapCm": 0
+        }
+      ]
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "actorCount": 201,
+    "maxMissedInViewFrames": 0,
+    "actorMotionMax": {
+      "yawDriftMaxDeg": 61,
+      "sinkMaxCm": 0.6,
+      "slideP95Cm": 24.6,
+      "jitterRunMax": 2
+    }
+  },
+  "northgate": {
+    "spec": "tests/scenes/l7-district/northgate.json",
+    "tier": "low",
+    "frames": 240,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "yawDriftMaxDeg",
+          "pass": true,
+          "value": 0,
+          "limit": 5
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 49,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 97833,
+          "limit": 1500000
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "actors": {
+      "courier": {
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 4.9,
+          "contacts": 1,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 15.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "actorCount": 1,
+    "maxMissedInViewFrames": 0,
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    }
+  },
+  "corgi": {
+    "spec": "tests/scenes/l7-district/corgi.json",
+    "tier": "low",
+    "frames": 240,
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "footSinkMaxCm",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "yawDriftMaxDeg",
+          "pass": true,
+          "value": 0,
+          "limit": 5
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 48,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 103541,
+          "limit": 1500000
+        },
+        {
+          "name": "actorHitsMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        }
+      ]
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "actors": {
+      "courier": {
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 4.9,
+          "contacts": 1,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 15.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 1
+        }
+      },
+      "corgi": {
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 44,
+          "slideMaxCm": 1.4,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 22.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 13
+        }
+      }
+    },
+    "actorCount": 2,
+    "maxMissedInViewFrames": 0,
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 240,
+      "runningSamples": 0
+    }
+  }
+}
