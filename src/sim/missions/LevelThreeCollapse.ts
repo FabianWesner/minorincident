@@ -291,7 +291,9 @@ export class LevelThreeCollapse {
       // The courier moving on is a regroup order. Do not strand a living officer at his last fight.
       if (player.transform.x > l3.finale.passX && e.transform.x <= l3.finale.passX) {
         a.engaged = false;
-        a.run = { x: l3.finale.passX + 3, z: (a.follow.slot % 2 ? 1 : -1) * .8 };
+        // Once the boom has closed behind the courier, the compound is unreachable: regroup in front of the boom instead
+        // (an unreachable run target left the straggler standing where he was).
+        a.run = { x: s.barrierClosedAt ? l3.finale.barrierX - 3 : l3.finale.passX + 3, z: (a.follow.slot % 2 ? 1 : -1) * .8 };
         continue;
       }
       const far = dist(e.transform, player.transform) > a.follow.maxM;
