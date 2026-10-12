@@ -236,6 +236,8 @@ export const eventCues = {
     'progression.requested': 'ui.tick',
     'prop.broken': 'prop.break',
     'prop.ignited': 'explosion.crackle',
+    'vehicle.durability-hit': 'vehicle.crash',
+    'vehicle.attack-windup': 'vehicle.grab',
     'vehicle.burning': 'explosion.crackle',
     'vehicle.entered': 'ui.click',
     'vehicle.exited': 'ui.click',

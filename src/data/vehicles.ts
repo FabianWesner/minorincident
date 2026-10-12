@@ -1,4 +1,10 @@
 export const vehicleBoardingTicks = 60;
+/** E31 shared APC durability, fixed ticks (60 Hz), distances measured from the hull. */
+export const apcDurability = {
+  contactDamage: 10, separation: .5, separationTicks: 15,
+  attackDamage: 10, reach: 1.5, windupTicks: 36, cooldownTicks: 60,
+  stoppedSpeed: .5, surroundReach: 3, surroundCount: 4, surroundQuadrants: 3,
+} as const;
 /** E09 tuning in SI units; +X forward, +Y up, +Z left. */
 export interface VehicleDef {
   /** Door centre in authored +X metres, shared by interaction and presentation. */

@@ -1,10 +1,11 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { vehicleBoardingTicks, vehicleDef } from '../../data/vehicles';
+import { apcDurability, vehicleBoardingTicks, vehicleDef } from '../../data/vehicles';
 import { vehicleExplosion } from '../../data/explosions';
 import { survivor } from '../../data/survivor';
 import type { InputFrame, Scheme } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import { Status } from '../combat/Status';
 import { Bicycle } from './Bicycle';
 import { Obstacles } from './Obstacles';
 import { VehicleBody } from './VehicleBody';
@@ -18,7 +19,13 @@ export interface VehiclePassenger {
 }
 /** Plain transfer payload: weapons and every living occupant retain their own components/IDs. */
 export interface VehicleTransfer { vehicle: EntitySnapshot; occupants: EntitySnapshot[]; infiniteCharges: boolean; tick: number }
+/** Entity-owned overlap and attack timers survive ordinary checkpoint rebuilds. */
+export interface APCContact {
+  contactId: number | null; separatedAt: number | null;
+  windupAt: number | null; attackId: number | null; cooldownUntil: number;
+}
 export interface VehicleState {
+  apcContacts?: { sequence: number; infected: Record<number, APCContact> };
   passengers?: VehiclePassenger[];
   speed: number; forwardSpeed: number; steer: number; braking: boolean; boosting: boolean;
   /** Authored body variant, persisted with the vehicle snapshot. */
@@ -41,6 +48,8 @@ export class Vehicles {
   readonly obstacles: Obstacles;
   /** L1 v2 courier bicycle (lane F); inert until `bicycle.spawn`. */
   readonly bicycle: Bicycle;
+  private readonly infectedNeighbors: number[] = [];
+  private readonly hullAttackers: EntitySnapshot[] = [];
   private readonly exitShape = new RAPIER.Capsule(survivor.height / 2 - survivor.radius, survivor.radius);
   private readonly identity = { x: 0, y: 0, z: 0, w: 1 };
   private readonly position = { x: 0, y: survivor.height / 2 + .02, z: 0 };
@@ -89,7 +98,7 @@ export class Vehicles {
           drive.throttle = scheme === 'mouse-only' ? (frame.left.held ? Math.min(1, Math.max(0, (distance - 1.2) / 2.8)) : 0) : Math.min(1, distance);
           drive.brake = (scheme === 'mouse-only' && !frame.left.held) || distance < (scheme === 'mouse-only' ? 1.2 : .05) || !!frame.brake;
         }
-        drive.boost = scheme !== 'mouse-only' && frame.left.held;
+        drive.boost = car.physics.def.id !== 'vehicle.military-apc' && scheme !== 'mouse-only' && frame.left.held;
         drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
@@ -196,7 +205,7 @@ export class Vehicles {
   damage(id: number, amount: number): void {
     if (!Number.isFinite(amount) || amount < 0) throw new RangeError('Invalid vehicle damage');
     const car = this.cars.get(id); if (!car) throw new Error(`Unknown vehicle ${id}`);
-    car.entity.health.current = Math.max(0, car.entity.health.current - amount * (1 - this.progressionArmor)); this.damageState(car);
+    car.entity.health.current = Math.max(0, car.entity.health.current - amount * (car.physics.def.id === 'vehicle.military-apc' ? 1 : 1 - this.progressionArmor)); this.damageState(car);
   }
   private damageState(car: Car): void {
     const state = car.entity.vehicle!, ratio = car.entity.health.current / car.entity.health.max;
@@ -226,6 +235,7 @@ export class Vehicles {
   private infected(car: Car): void {
     // Passenger rides resolve their swept contacts in the scripted driver, including at low speed.
     if (car.physics.body.isKinematic() && car.physics.def.id === 'vehicle.fire-engine') return;
+    if (car.physics.def.id === 'vehicle.military-apc') { this.apcInfected(car); return; }
     const state = car.entity.vehicle!, p = car.entity.transform, speed = car.physics.speed;
     if (car.entity.health.current <= 0) { this.release(car); return; }
     if (speed > 8 || Math.abs(car.physics.intent.steer) > .8) this.release(car);
@@ -243,6 +253,86 @@ export class Vehicles {
       if (target.archetype === 'infected.brute') this.damage(car.entity.id, target.ramDamage ?? 40);
     }
     for (const id of state.attached) { const target = this.world.entities.get(id); if (target) { Object.assign(target.transform, p); const side = id % 2 ? 1 : -1; target.transform.x += Math.sin(p.yaw) * side * car.physics.def.width / 2; target.transform.z += Math.cos(p.yaw) * side * car.physics.def.width / 2; this.world.spatial.set(id, target.transform.x, target.transform.z); } }
+  }
+  /** E31: every active infected contact costs durability, with independent aware hull attacks. */
+  private apcInfected(car: Car): void {
+    if (car.entity.health.current <= 0) return;
+    const tuning = apcDurability, tick = this.world.tick, p = car.entity.transform, speed = car.physics.speed;
+    const ledger = car.entity.vehicle!.apcContacts ??= { sequence: 0, infected: {} };
+    const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+    // Spatial broad phase stays local even when the crossing owns many distant entities.
+    this.world.spatial.query({ x: p.x, z: p.z, r: Math.hypot(car.physics.def.length / 2, car.physics.def.width / 2) + tuning.surroundReach + speed / 60 }, this.infectedNeighbors);
+    this.hullAttackers.length = 0;
+    let quadrants = 0;
+    for (const id of this.infectedNeighbors) {
+      if (car.entity.health.current <= 0) break;
+      const target = this.world.entities.get(id)!;
+      if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
+      const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
+      let contact = ledger.infected[id];
+      if (distance <= radius) {
+        contact ??= ledger.infected[id] = { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
+        contact.separatedAt = null;
+        if (contact.contactId === null) {
+          contact.contactId = ++ledger.sequence;
+          this.apcHit(car, target, 'contact', contact.contactId, null);
+        }
+        if (speed < 4 && target.health.current > 0) {
+          const x = target.transform.x, z = target.transform.z;
+          car.physics.separateHull(target.transform, radius);
+          // Static/nav ownership remains with the existing agent controller.
+          if (this.world.infected && !this.world.infected.nav.clear(target.transform.x, target.transform.z, radius)) { target.transform.x = x; target.transform.z = z; }
+          this.world.spatial.set(id, target.transform.x, target.transform.z);
+        }
+        // E09 mass damage is independent of contact billing, so accelerating through an overlap still rams.
+        if (speed >= 4 && car.entity.health.current > 0 && tick >= (car.hits.get(id) ?? 0)) {
+          car.hits.set(id, tick + 60);
+          this.world.combat?.damage.apply({ attackId: contact.contactId!, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: c, z: -s }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 3 : 1, stagger: .5 });
+        }
+      }
+      const brain = target.infected;
+      const aware = brain && ['alerted', 'chase', 'attack', 'attracted', 'bite'].includes(brain.state);
+      if (target.health.current <= 0 || !aware || Status.stunned(target, tick) || distance > tuning.surroundReach || !this.world.combat?.query.visible(target.transform, p)) continue;
+      this.hullAttackers.push(target);
+      const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
+      quadrants |= 1 << ((dx * c - dz * s >= 0 ? 1 : 0) + (dx * s + dz * c >= 0 ? 2 : 0));
+    }
+    let quadrantCount = 0;
+    for (let bits = quadrants; bits; bits >>= 1) quadrantCount += bits & 1;
+    const attackable = speed < tuning.stoppedSpeed || (this.hullAttackers.length >= tuning.surroundCount && quadrantCount >= tuning.surroundQuadrants);
+    // Re-arm only after a full separation window, including targets outside the broad phase.
+    for (const key of Object.keys(ledger.infected)) {
+      const id = Number(key), contact = ledger.infected[id], target = this.world.entities.get(id);
+      if (!target || target.kind !== 'infected' || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) { delete ledger.infected[id]; continue; }
+      const gap = car.physics.hullDistance(target.transform.x, target.transform.z) - (target.combat?.radius ?? .4);
+      if (gap >= tuning.separation) {
+        contact.separatedAt ??= tick;
+        if (tick - contact.separatedAt >= tuning.separationTicks) contact.contactId = null;
+      } else contact.separatedAt = null;
+      if (!attackable || !this.hullAttackers.includes(target) || gap + (target.combat?.radius ?? .4) > tuning.reach) {
+        contact.windupAt = contact.attackId = null;
+        if (contact.contactId === null && tick >= contact.cooldownUntil) delete ledger.infected[id];
+      }
+    }
+    if (!attackable) return;
+    for (const target of this.hullAttackers) {
+      if (car.entity.health.current <= 0) break;
+      if (car.physics.hullDistance(target.transform.x, target.transform.z) > tuning.reach) continue;
+      const contact = ledger.infected[target.id] ??= { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
+      if (contact.windupAt === null && tick >= contact.cooldownUntil) {
+        contact.windupAt = tick; contact.attackId = ++ledger.sequence;
+        this.world.events.emit({ type: 'vehicle.attack-windup', tick, sourceId: car.entity.id, targetId: target.id, attackId: contact.attackId, hitAt: tick + tuning.windupTicks });
+      }
+      if (contact.windupAt !== null && tick - contact.windupAt >= tuning.windupTicks) {
+        this.apcHit(car, target, 'attack', null, contact.attackId);
+        contact.windupAt = contact.attackId = null; contact.cooldownUntil = tick + tuning.cooldownTicks;
+      }
+    }
+  }
+  private apcHit(car: Car, target: EntitySnapshot, source: 'contact' | 'attack', contactId: number | null, attackId: number | null): void {
+    const before = car.entity.health.current;
+    this.damage(car.entity.id, source === 'contact' ? apcDurability.contactDamage : apcDurability.attackDamage);
+    this.world.events.emit({ type: 'vehicle.durability-hit', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id, source, contactId, attackId, before, after: car.entity.health.current });
   }
   postPhysics(): void {
     this.bicycle.postPhysics();
@@ -394,6 +484,8 @@ export class Vehicles {
     if (vehicle.vehicle.explodeAt !== null) vehicle.vehicle.explodeAt += delta;
     if (vehicle.vehicle.recoveringUntil) vehicle.vehicle.recoveringUntil += delta;
     vehicle.vehicle.attached = [];
+    // A campaign handover leaves the old district's infected behind, retaining the ID sequence.
+    if (vehicle.vehicle.apcContacts) vehicle.vehicle.apcContacts.infected = {};
     vehicle.transform.x = position.x; vehicle.transform.z = position.z; vehicle.transform.yaw = yaw;
     for (const actor of payload.occupants) {
       if (actor.id === 1) Object.assign(this.world.entities.get(1)!, actor);
@@ -430,6 +522,11 @@ export class Vehicles {
     for (const entity of this.world.entities.iterate()) {
       if (!entity.vehicle) continue;
       const state = entity.vehicle;
+      for (const contact of Object.values(state.apcContacts?.infected ?? {})) {
+        if (contact.separatedAt !== null) contact.separatedAt += delta;
+        if (contact.windupAt !== null) contact.windupAt += delta;
+        if (contact.cooldownUntil) contact.cooldownUntil += delta;
+      }
       for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
       const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
       Object.assign(physics.transform, entity.transform); Object.assign(physics.previous, entity.transform); entity.transform = physics.transform;
