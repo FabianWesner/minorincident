@@ -25,13 +25,14 @@ export const l2 = {
     /**
      * Trapped people visible behind the glass before the release (x, z, yaw, behaviour): east glass (front doors at z -42.2) and
      * south glass (loading door at x -55.6). PO 10-08 "the humans are just standing there": every one panics on its own loop —
-     * banging, pressing on the glass, waving both arms, looking back into the shop, crouched crying, holding a child.
+     * banging, pressing on the glass (stand-off from the glass >= the pose's hand reach + margin, so no hand passes the pane;
+     * `tests/unit/data/l2-glass.test.ts`),  waving both arms, looking back into the shop, crouched crying, holding a child.
      */
     atGlass: [
-      [-51.95, -42.95, 0, 'bang'], [-51.95, -41.45, 0, 'bang'], [-51.95, -44.6, 0, 'press'], [-51.95, -39.9, 0, 'plead'], [-52.0, -46.0, 0, 'plead'],
+      [-52.4, -42.95, 0, 'bang'], [-52.4, -41.45, 0, 'bang'], [-52.4, -44.6, 0, 'press'], [-52.3, -39.9, 0, 'plead'], [-52.3, -46.0, 0, 'plead'],
       [-52.85, -42.2, 0, 'look'], [-53.05, -43.85, 0, 'hug'], [-52.5, -43.8, 0, 'child'], [-52.95, -40.6, 0, 'cower'],
-      [-55.05, -38.2, -Math.PI / 2, 'bang'], [-56.35, -38.2, -Math.PI / 2, 'press'], [-57.75, -38.25, -Math.PI / 2, 'plead'], [-53.65, -38.25, -Math.PI / 2, 'look'],
-      [-56.0, -39.15, -Math.PI / 2, 'cower'], [-58.7, -39.4, -Math.PI / 2, 'hug'], [-58.7, -38.75, -Math.PI / 2, 'child'],
+      [-55.05, -39.1, -Math.PI / 2, 'bang'], [-56.35, -39.1, -Math.PI / 2, 'press'], [-57.75, -38.95, -Math.PI / 2, 'plead'], [-53.65, -39.0, -Math.PI / 2, 'look'],
+      [-56.0, -40.0, -Math.PI / 2, 'cower'], [-58.7, -39.7, -Math.PI / 2, 'hug'], [-58.7, -39.05, -Math.PI / 2, 'child'],
     ] as readonly (readonly [number, number, number, GlassRole])[],
     /** The crew's places at the doors: three at the chained front doors, three at the loading door; one directs the people. */
     crewDoors: [[-50.55, -43.05, 'pry'], [-48.6, -42.2, 'direct'], [-50.55, -41.35, 'pry'], [-57.0, -36.85, 'pry'], [-55.6, -36.6, 'pry'], [-54.2, -36.85, 'pry']] as readonly (readonly [number, number, 'pry' | 'direct'])[],
