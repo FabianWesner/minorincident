@@ -50,7 +50,7 @@ def mesh(name,verts,faces,t,parent=None):
 def sphere(name,loc,size,t,parent=None,n=24):
  bpy.ops.mesh.primitive_uv_sphere_add(segments=n,ring_count=max(8,n//2),radius=1,location=loc);o=bpy.context.object;o.scale=size
  bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
- return finish(o,name,t,parent,True)
+ return finish(o,name,t,parent,not(LOD and n<=12))
 
 def ico(name,loc,size,t,parent=None,sub=1):
  bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=sub,radius=1,location=loc);o=bpy.context.object;o.scale=size
@@ -61,12 +61,12 @@ def cyl(name,loc,r,depth,t,parent=None,axis='Z',n=32):
  bpy.ops.mesh.primitive_cylinder_add(vertices=n,radius=r,depth=depth,location=loc);o=bpy.context.object
  if axis=='Y':o.rotation_euler.x=math.pi/2
  if axis=='X':o.rotation_euler.y=math.pi/2
- return finish(o,name,t,parent,True)
+ return finish(o,name,t,parent,not(LOD and n<=12))
 
-def beam(name,start,end,w,t='silver',parent=None):
+def beam(name,start,end,w,t='silver',parent=None,b=None):
  d=Vector(end)-Vector(start)
  if w<.012:o=cyl(name,(Vector(start)+Vector(end))/2,w*.5,d.length,t,parent,n=6)
- else:o=box(name,(Vector(start)+Vector(end))/2,(w,w,d.length),t,min(w*.25,.012),parent,segments=1)
+ else:o=box(name,(Vector(start)+Vector(end))/2,(w,w,d.length),t,min(w*.25,.012) if b is None else b,parent,segments=1)
  o.rotation_euler=d.to_track_quat('Z','Y').to_euler();return o
 
 def tube(name,path,r,t,parent=None,n=12):
@@ -92,17 +92,17 @@ def smooth_path(points,steps=6):
    t=j/steps;out.append(.5*((2*b)+(-a+c)*t+(2*a-5*b+4*c-d)*t*t+(-a+3*b-3*c+d)*t*t*t))
  out.append(Vector(points[-1]));return out
 
-def torus(name,loc,major,minor,t,parent=None,axis='Z',n=48):
- bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=6,location=loc,major_radius=major,minor_radius=minor);o=bpy.context.object
+def torus(name,loc,major,minor,t,parent=None,axis='Z',n=48,ms=6):
+ bpy.ops.mesh.primitive_torus_add(major_segments=n,minor_segments=ms,location=loc,major_radius=major,minor_radius=minor);o=bpy.context.object
  if axis=='Y':o.rotation_euler.x=math.pi/2
  if axis=='X':o.rotation_euler.y=math.pi/2
- return finish(o,name,t,parent,True)
+ return finish(o,name,t,parent,not(LOD and n<=12))
 
 def lathe(name,loc,profile,t,parent=None,n=48):
  vs=[(loc[0]+r*math.cos(i*math.tau/n),loc[1]+r*math.sin(i*math.tau/n),loc[2]+z) for r,z in profile for i in range(n)]
  fs=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i) for j in range(len(profile)-1) for i in range(n)]
  o=mesh(name,vs,fs,t,parent)
- for p in o.data.polygons:p.use_smooth=True
+ for p in o.data.polygons:p.use_smooth=not(LOD and n<14)
  return o
 
 def wheel(loc,r=.15,w=.09,parent=None):
@@ -134,11 +134,43 @@ def star(name,x,y,z,r,t,parent=None):
  vs=[(xx,yy,zz) for xx in [x,x+.008] for yy,zz in pts];fs=[tuple(reversed(range(10))),tuple(range(10,20))]+[(i,(i+1)%10,(i+1)%10+10,i+10) for i in range(10)]
  return mesh(name,vs,fs,t,parent)
 
+LOD=int(sys.argv[sys.argv.index('--lod')+1]) if '--lod' in sys.argv else 0
+BBOX_ONLY='--bbox-only' in sys.argv
+
+def keep(o):
+ # Mark faces whose authored winding must survive the outward-normal pass (flat parts have no inside).
+ o.data.attributes.new('keepdir','INT','FACE').data.foreach_set('value',[1]*len(o.data.polygons));return o
+
+def poly(name,pts,z,t,parent=None):
+ # Flat polygon facing +Z (counter-clockwise points), triangulated by the exporter.
+ return keep(mesh(name,[(px,py,z) for px,py in pts],[tuple(range(len(pts)))],t,parent))
+
+def ngon(name,loc,rx,ry,t,n=6,parent=None,rot=0):
+ return poly(name,[(loc[0]+rx*math.cos(rot+i*math.tau/n),loc[1]+ry*math.sin(rot+i*math.tau/n)) for i in range(n)],loc[2],t,parent)
+
+def star_flat(name,loc,r,t,n=5,parent=None,rot=0):
+ pts=[]
+ for i in range(n*2):
+  rr=r if i%2==0 else r*.52;a=rot+i*math.pi/n;pts.append((loc[0]+rr*math.cos(a),loc[1]+rr*math.sin(a)))
+ return poly(name,pts,loc[2],t,parent)
+
+def bbox(name,c,size,t,parent=None):
+ # Open-bottom box (top and four sides, 10 triangles) with outward normals: for parts standing on the ground.
+ x0,y0,z0=c[0]-size[0]/2,c[1]-size[1]/2,c[2]-size[2]/2;x1,y1,z1=x0+size[0],y0+size[1],z0+size[2]
+ v=[(x0,y0,z0),(x1,y0,z0),(x1,y1,z0),(x0,y1,z0),(x0,y0,z1),(x1,y0,z1),(x1,y1,z1),(x0,y1,z1)]
+ return keep(mesh(name,v,[(4,5,6,7),(0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)],t,parent))
+
+def leaf(name,x,y,z,length,width,ang,rise,t,parent=None):
+ # Two-triangle kite leaf lying outward from (x,y,z); the tip rises by `rise`, the side corners lift slightly.
+ c,s=math.cos(ang),math.sin(ang);lift=width*.3
+ def P(u,w,h):return (x+u*c-w*s,y+u*s+w*c,z+h)
+ return keep(mesh(name,[P(0,0,0),P(length*.42,-width/2,rise*.5+lift),P(length,0,rise),P(length*.42,width/2,rise*.5+lift)],[(0,1,2,3)],t,parent))
+
 def run(out):
  p=argparse.ArgumentParser()
  p.add_argument('--quality',choices=['high','low'],default='high')
  for key,default,typ in [('render',None,str),('glb',None,str),('view','game',str),('samples',24,int),('width',960,int),('height',720,int)]:p.add_argument('--'+key,default=default,type=typ)
- a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+ a=p.parse_known_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])[0]
  # Merge only siblings of matching material. Joint empties stay separate.
  for parent in groups:
   for m in M.values():
@@ -149,10 +181,15 @@ def run(out):
    bpy.context.view_layer.objects.active=obs[0];bpy.ops.object.join();o=bpy.context.object;o.name=parent.name+'_'+m.name
  meshes=[o for o in bpy.data.objects if o.type=='MESH']
  for o in meshes:
-  bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.000001);bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=.000001);bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(o.data);bm.free()
+  bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.000001);bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=.000001);lay=bm.faces.layers.int.get('keepdir');bmesh.ops.recalc_face_normals(bm,faces=[fc for fc in bm.faces if not(lay and fc[lay])]);bm.to_mesh(o.data);bm.free()
  bpy.context.view_layer.update()
  points=[o.matrix_world@v.co for o in meshes for v in o.data.vertices]
  lo=Vector(tuple(min(v[i] for v in points) for i in range(3)));hi=Vector(tuple(max(v[i] for v in points) for i in range(3)))
+ ref=OUT/'lod0-bbox.json'
+ if BBOX_ONLY:
+  ref.write_text(json.dumps({'lo':[round(c,6) for c in lo],'hi':[round(c,6) for c in hi]})+'\n');print('BBOX',list(lo),list(hi));return
+ if LOD and ref.exists():
+  d=json.loads(ref.read_text());lo=Vector(d['lo']);hi=Vector(d['hi'])  # same origin as LOD0, so tiers never shift on swap
  shift=Vector((-(lo.x+hi.x)/2,-(lo.y+hi.y)/2,-lo.z))
  for o in root.children:o.location+=shift
  dims=hi-lo
@@ -178,7 +215,7 @@ def run(out):
   bpy.ops.object.select_all(action='DESELECT')
   for o in meshes+groups:o.select_set(True)
   bpy.ops.export_scene.gltf(filepath=str(Path(a.glb).resolve()),export_format='GLB',use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_vertex_color='ACTIVE',export_all_vertex_colors=False,export_texcoords=False)
- (out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+ if not LOD:(out/'report.json').write_text(json.dumps(report,indent=2)+'\n')
  if a.render:
   scene=bpy.context.scene
   # Eevee game camera review; authored materials are one-sided.
@@ -199,24 +236,51 @@ root=init(OUT.name)
 
 L,W,H,count=1.4,0.62,0.32,23
 # +X is the long planter's front; width runs across Y.
-for x in [-W/2,W/2]:
- for row in range(2):box('horizontal front board',(x,0,H*(.25+.5*row)),(.065,L,H*.48),'woodWarm',.014)
-for y in [-L/2,L/2]:
- for row in range(2):box('end board',(0,y,H*(.25+.5*row)),(W,.06,H*.48),'woodWarm',.012)
-for x in [-W/2-.013,W/2+.013]:
- for y in [-L/2+.04,L/2-.04]:
-  box('corner post',(x,y,H/2),(.08,.09,H+.04),'woodWarm',.012)
-  for z in [H*.25,H*.8]:cyl('round fastener',(x+(.046 if x>0 else -.046),y,z),.013,.014,'uiDark',axis='X',n=12)
-box('dark soil',(0,0,H-.035),(W-.06,L-.06,.075),'hairChestnut',.008)
-for x in [-W/2,W/2]:box('top lip',(x,0,H),(.095,L+.08,.055),'woodWarm',.012)
-for y in [-L/2,L/2]:box('end lip',(0,y,H),(W+.09,.095,.055),'woodWarm',.012)
-for i in range(count):
- y=-L*.43+L*.86*(i%10)/9;x=(-.23 if i//10%2==0 else .23)*W+rng.uniform(-.09,.09)
- h=rng.uniform(.10,.27)
- for j in range(3):
-  a=j*2.4+i; o=ico('leaf',(x+.045*math.cos(a),y+.045*math.sin(a),H+h*.5),(.115,.042,.035),'foliage' if j%2 else 'foliageDark');o.rotation_euler=(0,-.5,a)
- t='schoolBusYellow' if y<-L*.12 else ('flamingoPink' if y<L*.18 else 'picketWhite')
- flower(x,y,H+h,.065 if H>.2 else .045,t)
-for x,y in [(W/2+.025,0),(-W/2,-L/2)]:plant(x,y,0,.12,False)
+# +X is the long planter's front; width runs across Y.
+if LOD==0:
+ for x in [-W/2,W/2]:
+  for row in range(2):box('horizontal front board',(x,0,H*(.25+.5*row)),(.065,L,H*.48),'woodWarm',.014)
+ for y in [-L/2,L/2]:
+  for row in range(2):box('end board',(0,y,H*(.25+.5*row)),(W,.06,H*.48),'woodWarm',.012)
+ for x in [-W/2-.013,W/2+.013]:
+  for y in [-L/2+.04,L/2-.04]:
+   box('corner post',(x,y,H/2),(.08,.09,H+.04),'woodWarm',.012)
+   for z in [H*.25,H*.8]:cyl('round fastener',(x+(.046 if x>0 else -.046),y,z),.013,.014,'uiDark',axis='X',n=12)
+ box('dark soil',(0,0,H-.035),(W-.06,L-.06,.075),'hairChestnut',.008)
+ for x in [-W/2,W/2]:box('top lip',(x,0,H),(.095,L+.08,.055),'woodWarm',.012)
+ for y in [-L/2,L/2]:box('end lip',(0,y,H),(W+.09,.095,.055),'woodWarm',.012)
+ for i in range(count):
+  y=-L*.43+L*.86*(i%10)/9;x=(-.23 if i//10%2==0 else .23)*W+rng.uniform(-.09,.09)
+  h=rng.uniform(.10,.27)
+  for j in range(3):
+   a=j*2.4+i; o=ico('leaf',(x+.045*math.cos(a),y+.045*math.sin(a),H+h*.5),(.115,.042,.035),'foliage' if j%2 else 'foliageDark');o.rotation_euler=(0,-.5,a)
+  t='schoolBusYellow' if y<-L*.12 else ('flamingoPink' if y<L*.18 else 'picketWhite')
+  flower(x,y,H+h,.065 if H>.2 else .045,t)
+ for x,y in [(W/2+.025,0),(-W/2,-L/2)]:plant(x,y,0,.12,False)
+else:
+ solid=(lambda n,c,sz,t:box(n,c,sz,t,0)) if LOD==1 else bbox
+ for x in [-W/2,W/2]:solid('front wall',(x,0,H/2),(.065,L,H*.97),'woodWarm')
+ for y in [-L/2,L/2]:solid('end wall',(0,y,H/2),(W,.06,H*.97),'woodWarm')
+ if LOD==1:
+  for x in [-W/2-.013,W/2+.013]:
+   for y in [-L/2+.04,L/2-.04]:box('corner post',(x,y,H/2),(.08,.09,H+.04),'woodWarm',0)
+ for x in [-W/2,W/2]:solid('top lip',(x,0,H),(.095,L+.08,.055),'woodWarm')
+ for y in [-L/2,L/2]:solid('end lip',(0,y,H),(W+.09,.095,.055),'woodWarm')
+ solid('dark soil',(0,0,H-.035),(W-.06,L-.06,.075),'hairChestnut')
+ if LOD==2:
+  bbox('foliage mass',(0,0,H+.03),(W-.12,L-.12,.06),'foliageDark');bbox('foliage mound',(0,0,H+.06),(W-.24,L-.22,.05),'foliage')
+ fr=.065 if H>.2 else .045
+ for i in range(count):
+  y=-L*.43+L*.86*(i%10)/9;x=(-.23 if i//10%2==0 else .23)*W+rng.uniform(-.09,.09)
+  h=rng.uniform(.10,.27)
+  t='schoolBusYellow' if y<-L*.12 else ('flamingoPink' if y<L*.18 else 'picketWhite')
+  if LOD==1:
+   for j in range(3):
+    a=j*2.4+i;leaf('leaf',x-.05*math.cos(a),y-.05*math.sin(a),H+h*.5-.03,.2,.085,a,.08,'foliage' if j%2 else 'foliageDark')
+   star_flat('flower',(x,y,H+h),fr*1.2,t,6,rot=i)
+   ngon('flower heart',(x,y,H+h+.012),fr*.3,fr*.3,'schoolBusYellow',5)
+  elif i%2==0:
+   ngon('flower',(x,y,H+.09+h*.5),fr*1.1,fr*1.1,t,6,rot=i)
+   leaf('leaf',x-.04,y,H+.05,.2,.08,i*2.4,.09,'foliage')
 
 run(OUT)

@@ -2,8 +2,8 @@
   "id": "prop.kiddie-pool",
   "triangles": {
     "lod0": 4648,
-    "lod1": 412,
-    "lod2": 92
+    "lod1": 514,
+    "lod2": 214
   },
   "dimensions_blender": [
     2.013000011444092,
@@ -41,19 +41,19 @@
       "quantized": true
     },
     "model.lod1.glb": {
-      "bytes": 17888,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 22428,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 11920,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 12740,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.08864027538726334,
-    "lod2": 0.019793459552495698
+    "lod1": 0.11058519793459552,
+    "lod2": 0.04604130808950086
   },
   "within_budget": true,
   "nodes_ok": true,
@@ -65,5 +65,6 @@
     "raw_byte_identical": false
   },
   "matches_reference": true,
-  "done": true
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }
