@@ -62,8 +62,8 @@ export class SpawnDirector {
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
   }
   /** Test the whole human silhouette against the expanded viewport. */
-  offscreen(position: { x: number; z: number }): boolean {
-    return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => !this.visible({ x: position.x + dx, z: position.z + dz, y }))));
+  offscreen(position: { x: number; z: number }, floorY = 0): boolean {
+    return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => !this.visible({ x: position.x + dx, z: position.z + dz, y: y + floorY }))));
   }
   /** A solid building must hide the entire rising silhouette, not just its feet. */
   occluded(position: { x: number; z: number }): boolean {

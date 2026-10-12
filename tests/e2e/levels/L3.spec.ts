@@ -31,7 +31,8 @@ function helpers(page: Page) {
     }, range);
     if (!target) return false;
     // Use the carried axe at contact range and the handgun at distance, through the real rack bindings.
-    if (target.melee) await page.keyboard.press('Digit1');
+    // Mouse number keys address the carried list: fists, axe, bat, handgun.
+    if (target.melee) await page.keyboard.press('Digit2');
     else await page.keyboard.press('Shift+Digit1');
     await page.keyboard.down('Shift'); await page.mouse.move(target.point.x, target.point.y); await page.mouse.down(); await step(20); await page.mouse.up(); await page.keyboard.up('Shift');
     return true;
@@ -109,6 +110,34 @@ const begin = async (page: Page) => {
 };
 
 test.describe('L3 The Police Collapse in the browser', () => {
+  test('T-E21-07c @E21 @E21-AC07 real-input alarm brings visible infected into police combat within 10 seconds', async ({ page }) => {
+    test.setTimeout(180_000); mkdirSync(output, { recursive: true });
+    await begin(page);
+    const h = helpers(page);
+    await h.go(at('l3-armory'), .7); await h.interact();
+    for (let i = 0; i < 10 && !(await h.mission()).l3!.handgunAt; i++) { await h.interact(); await h.step(10); }
+    await h.go({ x: -134.5, z: 1.5 }, 1.2);
+    for (let i = 0; i < 100 && !(await h.mission()).l3!.attackAt; i++) await h.step(3);
+    const attackAt = (await h.mission()).l3!.attackAt;
+    expect(attackAt).toBeGreaterThan(0);
+    let visible = 0, engaging = 0, elapsed = 0;
+    for (let i = 0; i < 100; i++) {
+      await h.step(6);
+      const result = await page.evaluate(() => {
+        const a = window.__SS__!, all = a.query({});
+        const visible = all.filter(e => e.kind === 'infected' && e.health.current > 0 && !e.hidden && (() => { const p = a.camera.project(e.transform.x,e.transform.y,e.transform.z); return Math.abs(p[0]) < 1 && Math.abs(p[1]) < 1 && Math.abs(p[2]) < 1; })());
+        const ids = new Set(visible.map(e => e.id));
+        return { visible: visible.length, engaging: all.filter(e => e.civilian?.ally && ids.has(e.civilian.ally.targetId)).length, tick: a.getState().tick };
+      });
+      visible = result.visible; engaging = result.engaging; elapsed = (result.tick - attackAt) / 60;
+      if (visible && engaging) break;
+    }
+    await page.evaluate(() => window.__SS__!.screenshotReady());
+    await page.screenshot({ path: `${output}/alarm-visible.png` });
+    writeFileSync(`${output}/alarm-visible.json`, JSON.stringify({ visible, engaging, elapsed }));
+    expect(visible).toBeGreaterThan(0); expect(engaging).toBeGreaterThan(0); expect(elapsed).toBeLessThanOrEqual(10);
+  });
+
   for (const street of ['commerce', 'blvd', 'oak'] as const) test(`T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, ${street} to the army zone; photo spots for the vision review`, async ({ page }) => {
     test.setTimeout(1_800_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await begin(page);
@@ -157,19 +186,33 @@ test.describe('L3 The Police Collapse in the browser', () => {
     // Entering the rendezvous ring ends L3 and hands over to L4: keep the last L3 state, stop touching the world then.
     const inL3 = () => page.evaluate(() => window.__SS__!.getState().scenario === 'L3' && window.__SS__!.missions.state()?.phase === 'playing');
     let last = await mission();
+    let lastPursuitAt = 0;
+    let closedGroup: unknown = null;
     for (const wp of route) {
       // Reach the wreck detour before cutting back, and finish the final click inside the army zone.
       const stop = wp.x > l3.map.zoneX ? .5 : .8;
-      await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission(); return false; }, 9);
+      await go(wp, stop, async () => { if (!await inL3()) return true; last = await mission();
+        const rescue = await page.evaluate(() => { const a = window.__SS__!, s = a.missions.state()!.l3!, all = a.query({}), p = a.getState().player!.transform; return { tick: a.getState().tick, pursuing: p.x > 174 && all.some(e => { if (e.kind !== 'infected' || e.health.current <= 0 || e.hidden || e.transform.x >= p.x) return false; const q = a.camera.project(e.transform.x,e.transform.y+.6,e.transform.z); return Math.abs(q[0])<1 && Math.abs(q[1])<1 && Math.abs(q[2])<1; }), group: s.barrierClosedAt ? all.filter(e => e.id === 1 || e.companion || s.officerIds.includes(e.id) && e.civilian?.ally && !e.infection && e.health.current > 0).map(e => ({id:e.id,x:e.transform.x})) : null }; });
+        if (rescue.pursuing) lastPursuitAt = rescue.tick;
+        if (rescue.group) closedGroup = rescue.group;
+        return false; }, 9);
       if (!await inL3()) break;
       if (wp.x === restX) {
         // The compound is a resting place before the rendezvous ring, not an automatic finish at the boom.
+        for (let i = 0; i < 600 && !(await mission()).l3!.barrierClosedAt; i++) {
+          await step(15);
+          const crowd = await page.evaluate(() => { const a = window.__SS__!; return a.query({kind:'infected'}).some(e => { const q=a.camera.project(e.transform.x,e.transform.y+.6,e.transform.z); return e.health.current>0 && !e.hidden && Math.abs(q[0])<1 && Math.abs(q[1])<1 && Math.abs(q[2])<1; }); });
+          if (crowd) lastPursuitAt = await page.evaluate(() => window.__SS__!.getState().tick);
+          if (i % 4 === 0) await fightNearby(14);
+        }
         await step(300);
         expect(await inL3()).toBe(true);
         const threats = await page.evaluate(x => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && e.transform.x >= x), l3.map.zoneX);
         expect(threats, 'no active infected inside the army compound').toEqual([]);
         await page.evaluate(() => window.__SS__!.screenshotReady());
         await page.screenshot({ path: `${output}/l3-compound-rest-${street}.png` });
+        await page.mouse.wheel(0,350); await step(60); await page.evaluate(() => window.__SS__!.screenshotReady());
+        await page.screenshot({path:`${output}/l3-bus-rendezvous-${street}.png`});
       }
       const m = await mission(), p = (await player()).transform;
       if (!h.shots.has('l3-squad-strong') && p.x > -100 && p.x < -80) await snap('l3-squad-strong');
@@ -178,7 +221,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
       if (!h.shots.has('l3-army-checkpoint') && p.x > 126) await snap('l3-army-checkpoint');
     }
     for (const name of ['l3-squad-strong', 'l3-alone', 'l3-army-checkpoint']) if (!h.shots.has(name) && await inL3()) await snap(name);
-    for (let i = 0; i < 60 && await inL3(); i++) { last = await mission(); await step(15); }
+    for (let i = 0; i < 600 && await inL3(); i++) { last = await mission(); await step(15); }
     // A hand-over in flight: wait for L4 to finish loading.
     await page.waitForFunction(() => { const a = window.__SS__!; return a.getState().scenario === 'L4' || !!a.missions.state()?.l3; }, undefined, { timeout: 120_000 });
     const scenario = await page.evaluate(() => window.__SS__!.getState().scenario), now = await mission();
@@ -189,10 +232,15 @@ test.describe('L3 The Police Collapse in the browser', () => {
       const actors = await page.evaluate(x => window.__SS__!.getState().entities.filter(e => e.health.current > 0 && (e.civilian?.ally?.follow || Math.abs(e.transform.x - x) < .6 && Math.abs(e.transform.z) < 2.2)), l3.finale.barrierX);
       writeFileSync(`${output}/checkpoint-blockers-${street}.json`, JSON.stringify(actors, null, 2));
     }
-    writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
+    writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ lastPursuitAt, closedGroup, phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
     console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);
     expect(['result', 'progression']).toContain(final.phase);
     expect(final.l3!.crossedAt).toBeGreaterThan(0);
+    expect(final.l3!.barrierClosedAt).toBeGreaterThan(0);
+    expect(lastPursuitAt).toBeGreaterThan(0);
+    expect((final.l3!.barrierClosedAt! - lastPursuitAt) / 60).toBeLessThanOrEqual(30);
+    expect(closedGroup).not.toBeNull();
+    for (const e of closedGroup as {id:number;x:number}[]) expect(e.x).toBeGreaterThanOrEqual(l3.map.zoneX);
     expect([...h.shots].sort()).toEqual(['l3-alone', 'l3-army-checkpoint', 'l3-commerce-street', 'l3-grove-boulevard', 'l3-oak-avenue', 'l3-squad-strong', 'l3-station-attack', 'l3-station-yard']);
   });
 

@@ -157,3 +157,10 @@ All lanes ≤ 3 h; execute in order. Keep the built convoy, quartermaster, armed
 | L4-Q1 Scene Lab + browser e2e | 3 h | Extend existing `specs/scenes/qa-l4-*.json` with Alpha/line-break captures and `tests/levels/L4.test.ts`; headless `tests/e2e/levels/L4.spec.ts`, pair cameras and E18 peak counters. |
 
 Epic report rationale: AC09/12/13/15 changed because the PO adds Alphas and explicitly requires an internal outbreak and solitary hardware-basement escape. Matching built content remains; §10 measurements must be revalidated with Alphas. Tests keep `T-E22-01`…`T-E22-20` and their AC tags; a matching old tag is not proof of the revised behavior.
+
+
+### PO correction — 2026-10-12 alarm visibility
+
+> "L4 alarm is there, but no Zombies anywhere"
+
+The first war stream starts with the alarm (superseding the old 28 s empty prelude). Nearby authored building doors feed the first wave; later streams retain the perimeter ring. A real-input browser check must show living infected on screen within 10 s of the alarm. Counts and military weapon strength remain unchanged.

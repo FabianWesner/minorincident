@@ -76,7 +76,7 @@ export class WorldHumans implements HumanTargetQuery {
     for (const e of this.world.entities.iterate()) if (e.id === 1 || e.civilian || e.kind === 'npc' || e.kind === 'escort') this.candidates.push(e.id);
   }
   private human(e: EntitySnapshot | undefined): HumanTarget | undefined {
-    if (!e || e.health.current <= 0 || e.hidden || e.id === 1 && this.world.inspectionGhost) return undefined;
+    if (!e || e.health.current <= 0 || e.hidden || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) return undefined;
     if (e.id !== 1 && !(e.civilian?.adult && (!e.civilian.pet || !!e.civilian.zooAnimal) && !e.infection && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
     let target = this.cache.get(e.id);
     if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0 }, facing: 0 }; this.cache.set(e.id, target); }

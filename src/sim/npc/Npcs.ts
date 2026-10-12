@@ -25,7 +25,18 @@ export class Npcs {
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
     const distance = Math.hypot(dx, dz);
     if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
-    if (!nav.steer(e.transform, target, path, e.civilian?.zooAnimal ? e.combat!.radius : .35, this.waypoint, budget)) return false;
+    const l3Follower = !!e.civilian?.ally?.follow && !!this.world.missions?.def.l3;
+    const cell = l3Follower ? nav.nearestCell(e.transform.x, e.transform.z, .35) : -1;
+    if (l3Follower && cell < 0) {
+      // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
+      const escape = nav.escapeCell(e.transform, .35, 8, false);
+      if (escape < 0) return false;
+      this.waypoint.x = nav.x(escape); this.waypoint.z = nav.z(escape);
+    } else if (l3Follower && distance > 30) {
+      // Reuse the shared reverse field rather than starving a long per-officer A* search.
+      const next = nav.flowNext(cell); if (next === cell || next < 0) return false;
+      this.waypoint.x = nav.x(next); this.waypoint.z = nav.z(next);
+    } else if (!nav.steer(e.transform, target, path, e.civilian?.zooAnimal ? e.combat!.radius : .35, this.waypoint, budget)) return false;
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
     const routed = Math.hypot(dx, dz); if (routed < .01) return true;
     const vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);

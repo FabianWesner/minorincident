@@ -7,11 +7,12 @@ import { test, expect } from '../e2e/fixtures';
  * Setup steps the paused sim (the L3 bot, ordinary inputs); measurements run the real clock. */
 const dir = 'test-results/epics/E21/perf';
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
-for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
-  if (tier === 'low') test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: devices['Pixel 7'].deviceScaleFactor, userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true });
-  test(`T-E21-21 @E21 @E21-AC21 @perf L3 station attack, fallback and Grove Boulevard ${tier}`, async ({ page, context }) => {
+for (const profile of ['high', 'low', 'phone'] as const) test.describe(profile, () => {
+  const tier = profile === 'high' ? 'high' : 'low';
+  if (profile === 'phone') test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: devices['Pixel 7'].deviceScaleFactor, userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true });
+  test(`T-E21-21 @E21 @E21-AC21 @perf L3 station attack, fallback and Grove Boulevard ${profile}`, async ({ page, context }) => {
     test.setTimeout(900_000); mkdirSync(dir, { recursive: true });
-    if (tier === 'low') { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
+    if (profile === 'phone') { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
     await page.goto(`/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}&profile`);
     await page.waitForFunction(() => Boolean(window.__SS__));
     if (process.env.L3_HITCH_PROFILE === '1') await page.evaluate(() => {
@@ -28,10 +29,10 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const step = async (until: string, max = 400) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(30)); };
     /** rAF frame times while the real clock runs, until `until` holds (plus `tail` ms). */
     const record = (until: string, tail: number) => page.evaluate(async ({ until, tail, diagnostic }) => {
-      const a = window.__SS__!, frames: number[] = [], times: number[] = [], cpu: { sim: number; update: number; render: number }[] = []; let previous = 0, end = 0; a.resume();
+      const a = window.__SS__!, frames: number[] = [], times: number[] = [], cpu: { frameSim: number; ticks: number; sim: number; update: number; render: number; alive: number; draws: number; triangles: number }[] = []; let previous = 0, end = 0; a.resume();
       for (let i = 0; i < 4000; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
-        if (previous && i > 2) { frames.push(now - previous); if (diagnostic) times.push(performance.now()); const p = a.perf(); cpu.push({ sim: p.simMs, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
+        if (previous && i > 60) { frames.push(now - previous); if (diagnostic) times.push(performance.now()); const p = a.perf(); cpu.push({ frameSim: p.simMs, ticks: p.simTicks, sim: p.simTicks > 0 ? p.simWorldMs / p.simTicks : 0, update: p.updateCpuMs, render: p.renderCpuMs, alive: p.infected!.count, draws: p.drawCalls, triangles: p.triangles }); } previous = now;
         if (!end && (0, eval)(until)) end = now + tail;
         if (end && now >= end) break;
       }
@@ -43,10 +44,14 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, officers: all.filter(e => e.civilian?.ally?.role === 'officer' && e.health.current > 0 && e.kind !== 'infected').length }; });
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-CORRIDOR/W2/l3-station-attack'); await a.screenshotReady(); });
     const attackStatic = await page.evaluate(() => window.__SS__!.perf());
-    await page.locator('canvas').screenshot({ path: `${dir}/l3-station-attack-${tier}.png`, scale: 'css' });
+    await page.locator('canvas').screenshot({ path: `${dir}/l3-station-attack-${profile}.png`, scale: 'css' });
     await page.evaluate(() => window.__SS__!.camera.follow());
+    await page.evaluate(() => { const a=window.__SS__!;a.bot.stop();a.input.clear();const s=a.missions.state()!.l3!;a.step(Math.max(0,s.attackAt+40*60-a.getState().tick)); });
     const attack = await record('true', 8_000);
-    const attackCpu = await page.evaluate(() => (window as unknown as { l3Cpu: { sim: number; update: number; render: number }[] }).l3Cpu);
+    await page.evaluate(async () => window.__SS__!.screenshotReady());
+    await page.locator('canvas').screenshot({path:`${dir}/l3-defence-dense-${profile}.png`,scale:'css'});
+    await page.evaluate(() => window.__SS__!.bot.start('complete'));
+    const attackCpu = await page.evaluate(() => (window as unknown as { l3Cpu: { sim: number; update: number; render: number; alive: number; draws: number; triangles: number }[] }).l3Cpu);
     // The fallback call: record from just before it to 2 s after.
     await step('window.__SS__.missions.state().l3.fallbackAt > 0 || window.__SS__.missions.state().l3.waveIds.length >= 30', 400);
     const diagnostic = process.env.L3_HITCH_PROFILE === '1' ? await context.newCDPSession(page) : null;
@@ -57,12 +62,12 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       const state = window as unknown as { l3Times: number[]; l3Programs: { at: number; sources: string[]; stack?: string }[]; l3RestoreProgram: () => void };
       state.l3RestoreProgram(); return { times: state.l3Times, programs: state.l3Programs };
     }) }));
-    const fallbackCpu = await page.evaluate(() => (window as unknown as { l3Cpu: { sim: number; update: number; render: number }[] }).l3Cpu);
+    const fallbackCpu = await page.evaluate(() => (window as unknown as { l3Cpu: { sim: number; update: number; render: number; alive: number; draws: number; triangles: number }[] }).l3Cpu);
     // Grove Boulevard: the jam, wrecked buses, fires and smoke columns at the photo spot's fixed camera.
     await step('window.__SS__.getState().player.transform.x > -20', 800);
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-CORRIDOR/W2/l3-grove-boulevard'); await a.screenshotReady(); });
     const blvdStatic = await page.evaluate(() => window.__SS__!.perf());
-    await page.locator('canvas').screenshot({ path: `${dir}/l3-grove-boulevard-${tier}.png`, scale: 'css' });
+    await page.locator('canvas').screenshot({ path: `${dir}/l3-grove-boulevard-${profile}.png`, scale: 'css' });
     const blvd = await record('true', 6_000);
     const vfx = await page.evaluate(() => (window.__SS__!.getState() as unknown as { render?: { vfx?: { particles?: number; columns?: number } } }).render?.vfx ?? null);
     // Measure the occupied final street at the game camera, including pursuing packs and army HMG effects.
@@ -71,12 +76,25 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.evaluate(async () => { const a = window.__SS__!; a.bot.stop(); a.input.clear(); await a.screenshotReady(); });
     const streetStatic = await page.evaluate(() => window.__SS__!.perf());
     const streetCounts = await page.evaluate(() => { const a = window.__SS__!, s = a.missions.state()!.l3!; return { infected: a.getState().ai!.count, spawned: s.segmentIds.flat().length + s.spillIds.length + s.pressureIds.length + (s.finaleIds?.length ?? 0) }; });
-    await page.locator('canvas').screenshot({ path: `${dir}/l3-finale-${tier}.png`, scale: 'css' });
-    const street = await record('true', 6_000);
-    const proof = { tier, seed: 2, counts, streetCounts, streetDrawCalls: streetStatic.drawCalls, streetTriangles: streetStatic.triangles, streetP50: percentile(street, .5), streetP95: percentile(street, .95), attackDrawCalls: attackStatic.drawCalls, attackTriangles: attackStatic.triangles, blvdDrawCalls: blvdStatic.drawCalls, blvdTriangles: blvdStatic.triangles,
+    await page.locator('canvas').screenshot({ path: `${dir}/l3-finale-${profile}.png`, scale: 'css' });
+    const street = await record('true', 8_000);
+    const hordeCpu = await page.evaluate(() => (window as unknown as { l3Cpu: {sim:number;alive:number;draws:number;triangles:number}[] }).l3Cpu);
+    await page.evaluate(() => window.__SS__!.bot.start('complete'));
+    await step('window.__SS__.getState().player.transform.x >= 219', 1600);
+    await page.evaluate(async () => { const a=window.__SS__!;a.bot.stop();a.input.clear();a.camera.follow();await a.screenshotReady(); });
+    await page.locator('canvas').screenshot({path:`${dir}/l3-rescue-${profile}.png`,scale:'css'});
+    const finale = await record('true', 10_000);
+    const finaleCpu = await page.evaluate(() => (window as unknown as {l3Cpu:{sim:number;alive:number;draws:number;triangles:number}[]}).l3Cpu);
+    const phases = [ ['defence',attack,attackCpu], ['horde',street,hordeCpu], ['rescue',finale,finaleCpu] ] as const;
+    const measurements = phases.map(([name,frames,cpu]) => ({ name, peakAlive:Math.max(...cpu.map(c=>c.alive)), frameP95:percentile(frames,.95), simP95:percentile(cpu.map(c=>c.sim),.95),drawCalls:Math.max(...cpu.map(c=>c.draws)),triangles:Math.max(...cpu.map(c=>c.triangles)) }));
+    writeFileSync(`${dir}/horde-${profile}.json`,JSON.stringify({profile,tier,seed:2,measurements,attackStatic,streetStatic,attackCpu,hordeCpu,finaleCpu},null,2));
+    console.log(JSON.stringify({profile,measurements}));
+    for(const p of measurements) { expect(p.peakAlive).toBeLessThanOrEqual(tier==='high'?200:100);expect(p.simP95).toBeLessThanOrEqual(tier==='high'?4:6);expect(p.drawCalls).toBeLessThanOrEqual(tier==='high'?600:300);expect(p.triangles).toBeLessThanOrEqual(tier==='high'?1_500_000:500_000);expect(p.frameP95).toBeLessThanOrEqual(tier==='high'?14:1000/30); }
+
+    const proof = { profile, tier, measurements, seed: 2, counts, streetCounts, streetDrawCalls: streetStatic.drawCalls, streetTriangles: streetStatic.triangles, streetP50: percentile(street, .5), streetP95: percentile(street, .95), attackDrawCalls: attackStatic.drawCalls, attackTriangles: attackStatic.triangles, blvdDrawCalls: blvdStatic.drawCalls, blvdTriangles: blvdStatic.triangles,
       attackP50: percentile(attack, .5), attackP95: percentile(attack, .95), attackMax: Math.max(...attack), fallbackMaxMs: Math.max(...fallback), blvdP50: percentile(blvd, .5), blvdP95: percentile(blvd, .95),
       simP95: percentile(attackCpu.map(c => c.sim), .95), updateP95: percentile(attackCpu.map(c => c.update), .95), renderP95: percentile(attackCpu.map(c => c.render), .95), fallbackFired: await page.evaluate(() => window.__SS__!.missions.state()!.l3!.fallbackAt > 0), vfx };
-    writeFileSync(`${dir}/l3-${tier}.json`, JSON.stringify({ ...proof, attackProfile: attackStatic.profile, blvdProfile: blvdStatic.profile, blvdAssets: blvdStatic.profileAssets, attack, fallback, fallbackCpu, blvd, street }, null, 2));
+    writeFileSync(`${dir}/l3-${profile}.json`, JSON.stringify({ ...proof, attackProfile: attackStatic.profile, blvdProfile: blvdStatic.profile, blvdAssets: blvdStatic.profileAssets, attack, fallback, fallbackCpu, blvd, street }, null, 2));
     console.log(JSON.stringify(proof));
     expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 30 : 15); expect(counts.officers).toBeGreaterThanOrEqual(6);
     expect(proof.fallbackFired).toBe(true);

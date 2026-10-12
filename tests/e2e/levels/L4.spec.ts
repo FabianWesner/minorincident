@@ -84,6 +84,31 @@ const begin = async (page: Page, level = 'L4', progression: string | undefined =
 };
 
 test.describe('L4 The Safe City Falls in the browser', () => {
+  test('T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds', async ({ page }) => {
+    test.setTimeout(300_000); mkdirSync(output, { recursive: true });
+    await begin(page);
+    const h = helpers(page);
+    for (let i = 0; i < 80 && (await h.mission()).l4!.phase === 'convoy'; i++) await h.step(30);
+    await h.go(at('l4-quartermaster'), .7); await h.interact();
+    for (let i = 0; i < 10 && !(await h.mission()).l4!.gunAt; i++) { await h.interact(); await h.step(10); }
+    expect((await h.mission()).l4!.gunAt).toBeGreaterThan(0);
+    await h.go({ x: -21.5, z: 3 }, 1.4);
+    for (let i = 0; i < 1000 && !(await h.mission()).l4!.warAt; i++) await h.step(3);
+    const alarm = (await h.mission()).l4!.warAt;
+    expect(alarm).toBeGreaterThan(0);
+    let visible = 0, alive = 0, elapsed = 0;
+    for (let i = 0; i < 100; i++) {
+      await h.step(6);
+      const r = await page.evaluate(() => { const a = window.__SS__!, live = a.query({kind:'infected'}).filter(e => e.health.current > 0 && !e.hidden); return { tick:a.tick(), alive:live.length, visible:live.filter(e=>{const p=a.camera.project(e.transform.x,e.transform.y,e.transform.z);return Math.abs(p[0])<1&&Math.abs(p[1])<1&&Math.abs(p[2])<1;}).length }; });
+      visible = r.visible; alive = r.alive; elapsed = (r.tick - alarm) / 60;
+      if (visible && alive) break;
+    }
+    await page.evaluate(() => window.__SS__!.screenshotReady());
+    await page.screenshot({path:`${output}/alarm-visible.png`});
+    writeFileSync(`${output}/alarm-visible.json`,JSON.stringify({visible,alive,elapsed}));
+    expect(alive).toBeGreaterThan(0); expect(visible).toBeGreaterThan(0); expect(elapsed).toBeLessThanOrEqual(10);
+  });
+
   test('T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras', async ({ page }) => {
     test.setTimeout(2_400_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await begin(page);

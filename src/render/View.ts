@@ -10,6 +10,7 @@ export const feetOffset = .72;
 export interface CameraPose { position: [number, number, number]; target: [number, number, number] }
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
+  readonly simCamera = new PerspectiveCamera(cameraFraming.fovDeg, 16 / 9, 0.1, 600);
   readonly camera = new PerspectiveCamera(cameraFraming.fovDeg, 16 / 9, 0.1, 600);
   /** CSS pixels for projected-size LOD selection, independent of render DPR. */
   viewportHeight = 900;
@@ -35,6 +36,7 @@ export class View {
     camera.copy(this.camera); camera.position.copy(this.cameraTarget).add(new Vector3().setFromSphericalCoords(cameraFraming.radiusM, this.polar, this.azimuth));
     camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
   }
+  encounterScale = 1;
   driving = false;
   cameraShake = true;
   spot: string | null = null;
@@ -45,7 +47,8 @@ export class View {
   private pullX = 0;
   private pullZ = 0;
   private pullWeight = 0;
-  pull(x: number, z: number, weight: number): void { this.pullX = x; this.pullZ = z; this.pullWeight = Math.max(0, Math.min(1, weight)); }
+  private pullY?: number;
+  pull(x: number, z: number, weight: number, y?: number): void { this.pullY = y; this.pullX = x; this.pullZ = z; this.pullWeight = Math.max(0, Math.min(1, weight)); }
   private blend = 0;
   private blendTarget = 0;
   private shakeStrength = 0;
@@ -64,11 +67,11 @@ export class View {
     this.viewportHeight = height;
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
-    this.radius = this.defaultRadius * this.zoomRatio;
-    this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
+    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale;
+    this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   reset(player: { x: number; z: number; y?: number }): void {
-    this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
+    this.encounterScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
     this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
@@ -98,13 +101,13 @@ export class View {
   update(player: { x: number; z: number; y?: number }, seconds: number): void {
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
-    this.radius = this.defaultRadius * this.zoomRatio;
+    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
     this.focus.y += (Math.max(0, (player.y ?? feetOffset) - feetOffset) - this.focus.y) * (1 - Math.exp(-6 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
-    const pulled = this.pullWeight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * this.pullWeight, this.focus.y, this.focus.z + (this.pullZ - this.focus.z) * this.pullWeight) : this.cameraTarget.copy(this.focus);
+    const pulled = this.pullWeight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * this.pullWeight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * this.pullWeight, this.focus.z + (this.pullZ - this.focus.z) * this.pullWeight) : this.cameraTarget.copy(this.focus);
     this.camera.position.copy(pulled).add(this.offset); this.camera.lookAt(pulled);
     this.blend += Math.sign(this.blendTarget - this.blend) * Math.min(Math.abs(this.blendTarget - this.blend), seconds);
     if (this.blend > 0) {
@@ -112,6 +115,10 @@ export class View {
       this.cameraTarget.lerp(this.target, t);
       this.camera.position.lerp(this.cinematicCamera.position, t); this.camera.quaternion.slerp(this.cinematicCamera.quaternion, t);
     }
+    // The spawn director uses the same tick-driven follow rig without presentation pull, shake or roll.
+    this.simCamera.position.copy(this.focus).add(this.offset); this.simCamera.lookAt(this.focus);
+    if (this.blend > 0) { const t = this.blend * this.blend * (3 - 2 * this.blend); this.simCamera.position.lerp(this.cinematicCamera.position, t); this.simCamera.quaternion.slerp(this.cinematicCamera.quaternion, t); }
+    this.simCamera.updateMatrixWorld();
     if (!this.cameraShake) this.shakeStrength = 0;
     this.shakeTime += seconds;
     this.shakeStrength *= Math.exp(-8 * seconds);
