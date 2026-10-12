@@ -1,0 +1,3 @@
+Build: `python3 tools/blender/run.py assets/amb.elephant/build.py --glb "$PWD/assets/amb.elephant/model.glb" --lod 0` (repeat with `.lod1/.lod2.glb`, `--lod 1/2`).
+Normal elephant: +X forward, ground origin, about 4.61 × 3.04 × 1.91 m. Three authored closed-surface densities. Four shared palette materials. Rig matches the existing animal/infected pipeline and exposes ear/trunk pivots; generic retained-parent caps remain hidden.
+Reference: read-only `initial-drafts/animals-pets-and-zoo.png`, panicked elephant. Infected appearance derives from this script, not a separate model. Optimize with `optimizeExports` to preserve authored tiers. Review: `docs/reports/elephant-asset/review.md`.
