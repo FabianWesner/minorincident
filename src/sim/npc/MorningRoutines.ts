@@ -74,7 +74,9 @@ export function followSeat(world: SimWorld, e: EntitySnapshot): boolean {
   const destroyed = !item || !entity || entity.health.current <= 0;
   let live: { x: number; y: number; z: number; lift: number } | null = null, upright = false, home: { x: number; y: number; z: number } | null = null, turned = 0;
   if (item && !destroyed) {
-    const rel = multiply(item.pose.q, conj(ref.q)), at = rotate(rel, activity.seatRel);
+    const rel = multiply(item.pose.q, conj(ref.q)), yaw = 2 * Math.atan2(rel[1], rel[3]);
+    // The sitter follows the prop's position and heading only: a slightly settled (tilted) prop must not tilt the fixed sit pose.
+    const at = rotate([0, Math.sin(yaw / 2), 0, Math.cos(yaw / 2)], activity.seatRel);
     live = { x: item.pose.p[0] + at[0], y: item.pose.p[1] + at[1], z: item.pose.p[2] + at[2], lift: at[1] - sitHipHeight };
     home = { x: ref.p[0] + activity.seatRel[0], y: ref.p[1] + activity.seatRel[1], z: ref.p[2] + activity.seatRel[2] };
     upright = rotate(item.pose.q, [0, 1, 0])[1] >= Math.cos(seatTurnLimit);
