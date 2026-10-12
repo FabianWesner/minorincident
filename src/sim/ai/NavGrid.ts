@@ -77,8 +77,11 @@ export class NavGrid {
     if (this.mask && !this.mask(x, z)) return false;
     if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
     if (!this.buckets.size && !this.blockers.size) return true;
-    for (const w of this.buckets.get(Math.floor(x / 4))?.get(Math.floor(z / 4)) ?? []) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
-    for (const [id, w] of this.blockerBuckets.get(Math.floor(x / 4))?.get(Math.floor(z / 4)) ?? []) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
+    const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
+    const walls = this.buckets.get(cellX)?.get(cellZ);
+    if (walls) for (const w of walls) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    const blockers = this.blockerBuckets.get(cellX)?.get(cellZ);
+    if (blockers) for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     return true;
   }
   private intersects(w: Wall, x: number, z: number, radius: number): boolean {
@@ -164,17 +167,21 @@ export class NavGrid {
     if (!this.mask && !this.walls.length && !this.blockers.size) return this.clear(to.x, to.z, radius);
     const dx = to.x - from.x, dz = to.z - from.z, steps = Math.ceil(Math.hypot(dx, dz) / 0.2);
     if (!this.clear(to.x, to.z, radius)) return false;
+    // The outer ground is convex: endpoint clearance covers the complete ray.
+    if (Math.abs(from.x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(from.z - this.center.z) + radius >= this.ground.depth / 2) return false;
+    const divisor = Math.max(1, steps);
     const walls = new Set<Wall>();
     let previousX = Infinity, previousZ = Infinity;
     for (let i = 0; i <= steps; i++) {
-      const x = from.x + dx * i / Math.max(1, steps), z = from.z + dz * i / Math.max(1, steps);
+      const x = from.x + dx * i / divisor, z = from.z + dz * i / divisor;
       if (this.mask && !this.mask(x, z)) return false;
-      if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
       // Consecutive 20 cm samples usually share a 4 m bucket. Collect its walls once.
       const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
       if (bucketX !== previousX || bucketZ !== previousZ) {
-        for (const wall of this.buckets.get(bucketX)?.get(bucketZ) ?? []) walls.add(wall);
-        for (const wall of this.blockerBuckets.get(bucketX)?.get(bucketZ)?.values() ?? []) walls.add(wall);
+        const bucket = this.buckets.get(bucketX)?.get(bucketZ);
+        if (bucket) for (const wall of bucket) walls.add(wall);
+        const blockers = this.blockerBuckets.get(bucketX)?.get(bucketZ);
+        if (blockers) for (const wall of blockers.values()) walls.add(wall);
         previousX = bucketX; previousZ = bucketZ;
       }
     }

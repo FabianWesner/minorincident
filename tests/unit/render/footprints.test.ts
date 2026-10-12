@@ -23,4 +23,13 @@ describe('weather footprints', () => {
     expect(rasterFootprints(data, [{ ...track, x: 64 }], 0, 0, 0)).toBe(0);
     expect(rasterFootprints(data, [track], TRACK_LIFETIME, 0, 0)).toBe(0);
   });
+  it('T-E29-19-tracks @E29-AC19 low resolution retains both height layers and lifetime', () => {
+    const data = new Uint8Array((TRACK_SIZE / 4) ** 2 * 4);
+    const track = { id: 1, x: 2, y: 0, z: -1, yaw: .7, tick: 0, length: .28, paw: false, side: -1 };
+    expect(rasterFootprints(data, [track, { ...track, y: 3.9 }], 0, 0, 0)).toBeGreaterThan(0);
+    expect(data.some((v, i) => i % 4 === 0 && v > 0)).toBe(true);
+    expect(data.some((v, i) => i % 4 === 2 && v > 0)).toBe(true);
+    expect(rasterFootprints(data, [track], TRACK_LIFETIME, 0, 0)).toBe(0);
+  });
+
 });

@@ -319,9 +319,9 @@ export class CivilianCrowd extends Group {
   constructor(private readonly world: SimWorld, shading?: Materials) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
-    const models=world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
+    const models=world.scenario==='L7'?[...new Set([...world.entities.iterate()].filter(e => e.civilian || e.escort).flatMap(e => e.appearance?.asset ? [e.appearance.asset] : e.civilian?.model ? [e.civilian.model] : []))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
     this.known.clear();for(const model of models)this.known.add(model);
-    this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);this.add(...this.batches);
+    this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
   }
   private readonly shading?: Materials;
   private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation); }
