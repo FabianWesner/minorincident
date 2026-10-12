@@ -5,14 +5,14 @@ import { LimbIK } from './LimbIK';
 export const gunHoldOffset = (assetId: string): number => assetId === 'wpn.rocket-launcher' ? .32 : assetId === 'wpn.machine-gun' ? .14 : assetId === 'wpn.assault-rifle' ? .1 : assetId === 'wpn.pistol' ? 0 : .06;
 /** Fitted to the chibi arm span: fore-end contact relative to the trigger grip,
  * +X barrel, +Y up. Crowd code-art weapons use their own +Z contact below. */
-export interface LongGunHold { scale: number; support: [number, number, number]; stance: number; reach: number; drop: number; lateral: number }
+export interface LongGunHold { scale: number; support: [number, number, number]; stance: number; reach: number; drop: number; lateral: number; protract?: number }
 export const longGunHolds: Record<string, LongGunHold> = {
-  'wpn.assault-rifle': { scale: .65, support: [.30, .085, -.04], stance: 1.2, reach: .65, drop: .08, lateral: .15 },
-  'wpn.hunting-rifle': { scale: .65, support: [.34, .015, -.04], stance: 1.2, reach: .65, drop: .08, lateral: .15 },
-  'wpn.shotgun': { scale: .65, support: [.36, .025, -.04], stance: 1.2, reach: .65, drop: .08, lateral: .15 },
-  'wpn.machine-gun': { scale: .55, support: [.46, .035, -.04], stance: 1.2, reach: .65, drop: .08, lateral: .15 },
-  'wpn.rocket-launcher': { scale: .80, support: [.31, -.02, -.045], stance: Math.PI / 2, reach: .02, drop: .07, lateral: .28 },
-  'wpn.smg': { scale: .85, support: [.20, .015, -.04], stance: 1.2, reach: .65, drop: .08, lateral: .15 },
+  'wpn.assault-rifle': { scale: .65, support: [.30, .085, -.04], stance: .3, protract: 1.2, reach: .55, drop: .06, lateral: .05 },
+  'wpn.hunting-rifle': { scale: .65, support: [.34, .015, -.04], stance: .3, protract: 1.2, reach: .55, drop: 0, lateral: .05 },
+  'wpn.shotgun': { scale: .65, support: [.38, .05, -.04], stance: .3, protract: 1.2, reach: .45, drop: .03, lateral: .05 },
+  'wpn.machine-gun': { scale: .55, support: [.485, .09, -.04], stance: .3, protract: 1.2, reach: .45, drop: 0, lateral: .05 },
+  'wpn.rocket-launcher': { scale: .80, support: [.31, -.02, -.045], stance: .8, protract: 1.2, reach: .5, drop: .05, lateral: .18 },
+  'wpn.smg': { scale: .65, support: [.34, .13, -.04], stance: .4, protract: 1.2, reach: .65, drop: .09, lateral: .05 },
 };
 export const crowdLongGunHold: LongGunHold = { scale: 1, support: [0, -.075, .30], stance: Math.PI / 2, reach: .6, drop: .08, lateral: .24 };
 /** Two-handed low ready keeps the barrel forward, clear of the road. */
@@ -67,6 +67,7 @@ export class GunAim {
       this.torso.parent.getWorldQuaternion(this.parentRotation).invert().multiply(this.torsoRotation);
       this.torso.quaternion.copy(this.parentRotation); this.torso.updateWorldMatrix(false,true);
     }
+    if (hold?.protract && this.supportArm) this.protract(direction, hold.protract);
     this.upper.updateWorldMatrix(true, true);
     this.direction.set(direction.x * Math.cos(elevation), Math.sin(elevation), direction.z * Math.cos(elevation)).normalize();
     const length = this.arm.middle.position.length() + this.arm.end.position.length();
@@ -101,6 +102,18 @@ export class GunAim {
         this.head.quaternion.copy(this.parentRotation).multiply(this.gaze);
       }
     }
+  }
+  /** Swing the support clavicle forward about the vertical: the support
+   * shoulder reaches the fore-end while the chest stays near the aim. */
+  private protract(direction: { x: number; z: number }, angle: number): void {
+    const clavicle = this.supportArm!.upper.parent;
+    if (!clavicle || !this.shoulderFrames.includes(clavicle) || !clavicle.parent) return;
+    clavicle.updateWorldMatrix(true, true);
+    const shoulder = this.supportArm!.upper.getWorldPosition(this.target).sub(clavicle.getWorldPosition(this.contact));
+    const sign = Math.sign(shoulder.z * direction.x - shoulder.x * direction.z) || 1;
+    clavicle.getWorldQuaternion(this.torsoRotation).premultiply(this.roll.setFromAxisAngle(this.up, sign * angle));
+    clavicle.quaternion.copy(clavicle.parent.getWorldQuaternion(this.parentRotation).invert().multiply(this.torsoRotation));
+    clavicle.updateWorldMatrix(false, true);
   }
   get contactGap(): number { return this.supportGap; }
 }
