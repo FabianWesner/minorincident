@@ -2229,33 +2229,34 @@ export default {
   },
   "veh.wreck": {
     "class": "heavy",
-    "mass": 1350,
-    "friction": 0.7,
-    "restitution": 0.05,
+    "mass": 1400,
+    "friction": 0.85,
+    "restitution": 0.02,
     "centerOfMass": [
       0,
-      0.65,
+      0.6,
       0
     ],
     "pushable": false,
     "kickable": false,
     "flammable": true,
+    "sounds": "prop.metal-heavy",
     "boxes": [
       {
         "min": [
           -2.125,
-          0.13267381191253658,
+          0.13999999761581416,
           -0.825
         ],
         "max": [
           2.125,
-          1.7326738119125367,
+          1.7399999976158143,
           0.825
         ]
       }
     ],
-    "source": "public/assets/models/veh.sedan-green.glb",
-    "hash": "64372914b11dd315cd653330cfad50f1f61cb9217a82de9c8b5daeeb87e8d7c1"
+    "source": "public/assets/models/veh.sedan-green.wrecked.glb",
+    "hash": "c60cb1ac6a975af62279d91b9e2cac41a06e800a5ca8af8ef5f6a09786743898"
   },
   "bld.police": {
     "class": "fixed",

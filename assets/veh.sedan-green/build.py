@@ -18,6 +18,12 @@ if '--lod-only' in sys.argv:
     build_native_lods(__file__)
     sys.exit(0)
 
+# Wrecked decay: closed native tiers with a deterministic impact transform (shared with the sedans).
+if '--decay' in sys.argv and sys.argv[sys.argv.index('--decay') + 1] == 'wrecked':
+    from sslib.rescue_wrecks import build_wreck
+    build_wreck(Path(__file__).resolve().parent, sys.argv[sys.argv.index('--glb') + 1], dark_lamps=True, glass_faces=('pal_asphalt', .85))
+    raise SystemExit(0)
+
 HERE = Path(__file__).resolve().parent
 p = argparse.ArgumentParser()
 p.add_argument('--render'); p.add_argument('--view', default='ref')
