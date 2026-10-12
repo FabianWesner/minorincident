@@ -386,3 +386,18 @@ retained death pose which returns its brain to the existing pool on the next tic
 Courier `{ "god": false }` enables real impact damage/knockdown (isolation defaults to god mode).
 The named fixtures are `tests/scenes/alpha-s3/qa-alpha-grab-throw.json` and
 `tests/scenes/alpha-s3/qa-alpha-roar.json`; their long timeline retains ordinary AI between specials.
+
+### W6 decay contract (L7-S1)
+
+`tier: 6` selects the heaviest world decay tier, independently of CLI `--tier high|low`
+render quality. Synthetic `props` remain present through W6; layout crops honor exact
+`minTier`/`maxTier` bounds. District authoring must explicitly extend retained W5
+placements and their colliders to `maxTier: 6`, add W6 layers and keep removed nodes
+out of the W6 range. Existing W0–W5 records are not automatically promoted.
+Reviewed asset `decay` names remain manifest variants (`w5`, `wrecked`, etc.); W6
+does not imply a new filename or silently substitute an unreviewed variant.
+A district with a new baked layer at tier 6 must supply its `w6.glb`; older
+districts continue loading their existing base/W1–W5 GLBs when inspected at W6.
+`tests/scenes/l7-tier/{before,after}.json` compare the same game camera and assets at
+W5/W6 with the existing L6 night preset. District dressing and an L7 lighting preset
+belong to the subsequent district lanes.

@@ -1,3 +1,4 @@
+import type { Tier } from '../../levels/districts/types';
 import type { HouseEmergence } from '../outbreak/HouseEmergence';
 import type { DeviceOptions } from '../interact/Interactables';
 import type { TimeOfDay } from '../../data/timeOfDay';
@@ -28,7 +29,7 @@ export type Trigger =
 export type ScriptAction =
   | { kind: 'spawn'; group: string }
   | { kind: 'migration'; group: string; to: string }
-  | { kind: 'tier'; tier: 0 | 1 | 2 | 3 | 4 | 5 }
+  | { kind: 'tier'; tier: Tier }
   | { kind: 'gate'; id: string; open: boolean }
   | { kind: 'radio'; id: string }
   | { kind: 'cinematic'; id: string }
@@ -225,7 +226,7 @@ export interface MissionState {
   volumes: boolean[]; killedBosses: string[];
   completedObjectives: string[]; steps: Record<string, StepState>; actors: Record<string, number>;
   items: string[]; states: Record<string, boolean>; counters: Record<string, number>; gates: Record<string, boolean>;
-  marker: string | null; checkpoint: string | null; tier: number | null; timeOfDay: TimeOfDay | null;
+  marker: string | null; checkpoint: string | null; tier: Tier | null; timeOfDay: TimeOfDay | null;
   subtitle: { id: string; text: string; until: number } | null;
   cinematic: { id: string; elapsed: number; resume: 'playing' | 'retry' } | null; failure: FailReason | null;
   stats: MissionResult; result: MissionResult | null;

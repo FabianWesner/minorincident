@@ -1,3 +1,4 @@
+import { isWorldTier } from './districts/types';
 import { compositions } from "./compositions";
 import type {
   DistrictId,
@@ -16,8 +17,8 @@ export async function loadLayouts(
 ): Promise<{ composition: LevelComposition; layouts: DistrictLayout[] }> {
   const composition = compositions[level];
   if (!composition) throw new Error(`Unknown composition: ${level}`);
-  if (tier !== undefined && (!Number.isInteger(tier) || tier < 0 || tier > 5))
-    throw new RangeError("Tier must be W0…W5");
+  if (tier !== undefined && !isWorldTier(tier))
+    throw new RangeError("Tier must be W0…W6");
   // Keep only layouts resident in this level; a visited L6 must not pin every
   // district document after returning to L1. Shared districts remain cached.
   for (const id of cache.keys())
@@ -44,7 +45,7 @@ export async function loadLayouts(
   );
   const resolvedTier = tier ?? composition.tier;
   const timeOfDay = level.startsWith("D-")
-    ? (["L1", "L2", "L3", "L4", "L5", "L6"] as const)[resolvedTier]
+    ? (["L1", "L2", "L3", "L4", "L5", "L6", "L6"] as const)[resolvedTier]
     : composition.timeOfDay;
   return {
     composition: { ...composition, tier: resolvedTier, timeOfDay },
