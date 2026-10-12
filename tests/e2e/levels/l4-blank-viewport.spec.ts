@@ -20,7 +20,7 @@ const frameContent = (buf: Buffer) => {
 
 /** The cellar door is on the Lakeshore side of the store (PO 10-12: the camera must see it); the lane north of the store is still walked as the roof-hugging regression. */
 /** `maxDominant`: on Lakeshore the asphalt of the road is a legitimately large flat area (about 41% of the frame; the failure being guarded is a roof filling it, near 100%); the lane keeps the original 0.4. */
-const walks = [{ name: 'door', start: { x: 54, z: 41.8 }, maxDominant: .5 }, { name: 'lane', start: { x: 54, z: 27.5 }, maxDominant: .4 }] as const;
+const walks = [{ name: 'door', start: { x: 54, z: 41.2 }, maxDominant: .5 }, { name: 'lane', start: { x: 54, z: 27.5 }, maxDominant: .4 }] as const;
 for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 the walk east along ${walk.name === 'door' ? "Lakeshore Avenue to Kessler's cellar door" : 'Kessler Lane north of the store'} never leaves the viewport one flat colour (${renderer})`, async ({ page }) => {
   const tag = `${walk.name}-${renderer}`;
   test.setTimeout(300_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
