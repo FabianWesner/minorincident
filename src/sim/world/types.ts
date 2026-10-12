@@ -95,6 +95,9 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'prop.broken'; id: number; pieces: number }
   | { tick: number; type: 'interact.completed'; id: number; kind: import('../interact/Interactables').DeviceKind; cycle: number }
   | { tick: number; type: 'interact.interrupted'; id: number; progress: number }
+  /** E31 IDs are monotonically allocated per vehicle, shared across contacts and attacks. */
+  | { tick: number; type: 'vehicle.durability-hit'; sourceId: number; targetId: number; source: 'contact' | 'attack'; contactId: number | null; attackId: number | null; before: number; after: number }
+  | { tick: number; type: 'vehicle.attack-windup'; sourceId: number; targetId: number; attackId: number; hitAt: number }
   | { tick: number; type: 'vehicle.obstacle-broken'; targetId: number }
   | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number; /** E20: absent = driver (E09); the L2 fire truck seats the player as a passenger. */ role?: 'driver' | 'passenger' }
   | { tick: number; type: 'vehicle.smoking' | 'vehicle.burning' | 'vehicle.exploded' | 'vehicle.recovering'; sourceId: number }

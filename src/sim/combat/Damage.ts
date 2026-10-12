@@ -51,6 +51,9 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    // E31 hull attacks own infected melee against the APC; seated people are inside its armor.
+    const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
+    if (target.hidden && transportId != null && source.kind === 'infected' && hit.type === 'melee' && this.world.entities.get(transportId)?.archetype === 'vehicle.military-apc') return 0;
     // Newer campaign PO: shotgun HP depletion kills ordinary human infected permanently.
     if (hit.actionId === 'weapon.shotgun' && /^L[5-9]$/.test(this.world.scenario ?? '') && target.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === target.archetype)) hit = { ...hit, permanent: true };
     if (storyProtected(this.world, target)) {

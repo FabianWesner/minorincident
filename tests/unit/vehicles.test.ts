@@ -65,3 +65,14 @@ test('T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheel
     expect(new Set(hashes).size).toBe(3);
   }
 });
+
+test('T-E31-03-model @E31-AC03 shared APC and every unarmed LOD contain no mounted gun', async () => {
+  const def = vehicles.find(v => v.id === 'vehicle.military-apc')!;
+  expect(def.bodyVariant).toBe('unarmed');
+  expect([def.mass, def.topSpeed, def.hp, def.ramStrength]).toEqual([6000, 18, 1000, 3]);
+  const asset = manifest.find(a => a.id === def.asset) as AssetDef, io = await assetIO();
+  for (const path of [asset.glb, asset.lods!.lod1!, asset.lods!.lod2!]) {
+    const doc = await io.read(variantPath(path, 'unarmed'));
+    expect(doc.getRoot().listNodes().map(n => n.getName()).filter(n => /gun|turret|cannon|barrel|weapon/i.test(n))).toEqual([]);
+  }
+});
