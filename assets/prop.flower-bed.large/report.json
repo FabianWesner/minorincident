@@ -2,8 +2,8 @@
   "id": "prop.flower-bed.large",
   "triangles": {
     "lod0": 9748,
-    "lod1": 1160,
-    "lod2": 284
+    "lod1": 726,
+    "lod2": 200
   },
   "dimensions_blender": [
     0.9789250493049622,
@@ -41,19 +41,19 @@
       "quantized": true
     },
     "model.lod1.glb": {
-      "bytes": 44044,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 50140,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 21824,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 21176,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.11899876897825194,
-    "lod2": 0.029134181370537547
+    "lod1": 0.07447681575707837,
+    "lod2": 0.02051702913418137
   },
   "within_budget": true,
   "nodes_ok": true,
@@ -65,5 +65,6 @@
     "raw_byte_identical": true
   },
   "matches_reference": true,
-  "done": true
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }

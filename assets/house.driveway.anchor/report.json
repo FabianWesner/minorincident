@@ -2,8 +2,8 @@
   "id": "house.driveway.anchor",
   "triangles": {
     "lod0": 3644,
-    "lod1": 432,
-    "lod2": 100
+    "lod1": 338,
+    "lod2": 182
   },
   "dimensions_blender": [
     3.034715175628662,
@@ -38,19 +38,19 @@
       "quantized": true
     },
     "model.lod1.glb": {
-      "bytes": 29600,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 28056,
+      "meshopt": false,
+      "quantized": false
     },
     "model.lod2.glb": {
-      "bytes": 15216,
-      "meshopt": true,
-      "quantized": true
+      "bytes": 17988,
+      "meshopt": false,
+      "quantized": false
     }
   },
   "lod_ratios": {
-    "lod1": 0.11855104281009879,
-    "lod2": 0.027442371020856202
+    "lod1": 0.09275521405049396,
+    "lod2": 0.049945115257958285
   },
   "within_budget": true,
   "nodes_ok": true,
@@ -62,5 +62,6 @@
     "raw_byte_identical": true
   },
   "matches_reference": true,
-  "done": true
+  "done": true,
+  "lod_note": "LOD1/LOD2 authored in build.py (--lod 1|2) from the LOD0 recipe; packed to public by npm run assets:pack"
 }
