@@ -7,6 +7,19 @@ import type { MissionResult } from '../../../src/sim/missions/types';
 
 const result: MissionResult = { time: 120, kills: 3, knockdowns: 0, damage: 10, deaths: 0, rescued: 0, optionalObjectives: [] };
 
+test('@E23 @E23-AC15 L4 completion carries the actual arsenal into L5 before automatic navigation', async () => {
+  const world = new SimWorld(); await world.init();
+  try {
+    world.loadScenario('combat-arena');
+    const racks = { LEFT: ['weapon.fire-axe', 'weapon.bat'], RIGHT: ['weapon.army-mg', 'weapon.handgun', 'weapon.kick'] };
+    world.combat!.rackCapacity = 4; world.combat!.setLoadout(racks.LEFT, racks.RIGHT);
+    const save = preset('L4-default');
+    completeCampaignLevel(save, 4, result, world);
+    expect(save.racks).toEqual(racks);
+    expect(validateSave(save)).toBe(true);
+  } finally { world.dispose(); }
+});
+
 test('@E13 @E13-AC05 completion persists the next unlock and L1 aftermath; replays do not duplicate rewards', async () => {
   const world = new SimWorld(); await world.init();
   try {

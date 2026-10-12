@@ -17,8 +17,8 @@ export const l5 = {
   follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, hp: 60 },
   /** Sparse infected: wanderers at the start (ones and twos), the cap, damage like L4's. */
   infected: { start: { high: 18, low: 12 }, maxGroup: 3, cap: { high: 30, low: 30 }, damage: 1.25, leashM: 14 },
-  /** Metro: the trigger at the foot of the entrance, the group gathers within `gatherM` or `waitS` passes, then the shutter rolls shut. */
-  metro: { triggerM: 3.4, gatherM: 15, waitS: 10, lookoutAfterS: 0 },
+  /** Metro: the trigger at the foot of the entrance, every living follower crosses, the residents are shown briefly, then the shutter rolls shut. */
+  metro: { triggerM: 1.2, gatherM: 15, waitS: 10, occupantViewS: 3, lookoutAfterS: 0, occupants: 24, stationX: 37.7854, stationZ: -78 },
   /** Sunset gloom ramp: sun intensity factor from 1 to `endFactor` over the story (time share and the share of survivors accounted for). */
   gloom: { rampS: 240, endFactor: 0.5, atMetroMax: 0.7 },
   /** No music for the first `musicFromS` seconds, then a sparse low drone. */
@@ -71,13 +71,13 @@ export const l5Survivors: readonly L5Survivor[] = [
 export const l5Anchors: Record<string, P> = {
   'l5-out': [67.2, 27.6],
   'l5-plaza': [-17, 3],
-  'l5-metro-foot': [37.8, -43.4],
-  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [37.8, -43.2],
+  'l5-metro-foot': [38.1854, -50.6],
+  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ...l4PhotoSpots.filter(([name]) => name.startsWith('pair-')),
-  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-28, 24, 0]], ['l5-metro-shelter', [12, 14, 12]],
+  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-28, 24, 0]], ['l5-metro-shelter', [0, 28, -34]], ['l5-metro-doors', [0, 10, 10]],
 ];
 
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */

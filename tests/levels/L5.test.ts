@@ -44,6 +44,9 @@ describe('L5 Aftermath', () => {
       search(fw);
       for (const [i, key] of order.entries()) { visit(fw, key); expect(fw.missions!.state.l5!.found, `${order.join()} #${i}`).toBe(i + 1); }
       expect(fw.missions!.state.states.accounted).toBe(true); expect(fw.missions!.state.steps.metro.status).toBe('active');
+      // Isolate the graph/order check; AC15 separately exercises a stranded follower's real approach.
+      for (const infected of [...fw.infected!.active]) fw.infected!.release(infected);
+      fw.missions!.state.l5!.survivors.forEach((r, i) => place(fw, r.id, l5.metro.stationX + (i % 2 ? .4 : -.4), -42 + Math.floor(i / 2) * .8));
       const foot = at(fw, 'l5-metro-foot'); place(fw, 1, foot.x, foot.z);
       for (let i = 0; i < 40 * 60 && fw.missions!.state.phase === 'playing'; i++) fw.update();
       expect(fw.missions!.state.phase, order.join()).toBe('progression'); fw.dispose();
@@ -87,11 +90,13 @@ describe('L5 Aftermath', () => {
       l.mission.completeObjective('emerge'); step(w, 60 * 60);
       const live = [...w.entities.iterate()].filter(e => e.civilian && !e.civilian.pet && e.civilian.state !== 'finished' && !e.infection);
       const survivors = new Set(l.mission.state.l5!.survivors.map(r => r.id)), lookout = l.mission.state.l5!.lookoutId;
-      expect(live.filter(e => !survivors.has(e.id) && e.id !== lookout && !e.infected && !e.companion)).toEqual([]);
+      expect(live.filter(e => !survivors.has(e.id) && e.id !== lookout && !l.mission.state.l5!.stationIds.includes(e.id) && !e.infected && !e.companion)).toEqual([]);
       expect(live.filter(e => e.civilian!.ally)).toEqual([]); expect(live.filter(e => e.civilian!.survivor?.mode === 'hidden').every(e => e.hidden)).toBe(true);
       expect([...w.entities.iterate()].filter(e => e.kind === 'setpiece' || e.vehicle || e.traffic || e.convoy)).toEqual([]);
       expect(shots).toEqual([]);
       const infected = ai.active.filter(e => e.health.current > 0);
+      expect(infected.filter(e => e.archetype === 'infected.alpha')).toHaveLength(2);
+      expect(l.mission.state.l5!.stationIds).toHaveLength(24);
       expect(infected.length).toBeGreaterThanOrEqual(12); expect(infected.length).toBeLessThanOrEqual(20);
       // Groups: infected within 4 m of each other number at most 3.
       for (const e of infected) expect(infected.filter(o => dist(o.transform, e.transform) <= 4).length).toBeLessThanOrEqual(3);
@@ -282,28 +287,32 @@ describe('L5 Aftermath', () => {
     record('gloom', { atExit, atMetro, intensityAtExit: timeOfDay.L5.intensity * atExit, intensityAtMetro: timeOfDay.L5.intensity * atMetro, samples: samples.filter((_, i) => i % 600 === 0) });
   }, HEAVY);
 
-  test('T-E23-15 @E23 @E23-AC15 metro and handover: the objective switches when all five are accounted for; the shutter closes when the group is within 15 m, or 10 s after the courier arrives; level.completed carries the rescued survivors; no reward screen', async () => {
-    const run = async (strand: boolean) => {
-      const l = await loadL5(4); const w = l.world, m = l.mission, s = m.state.l5!; w.combat!.damage.god = true;
-      search(w); for (const e of [...w.infected!.active]) w.infected!.release(e);
-      for (const s2 of l5Survivors) { expect(m.state.steps.metro.status).toBe('pending'); visit(w, s2.key); }
-      expect(m.state.steps.look.status).toBe('completed'); expect(m.state.steps.metro.status).toBe('active'); expect(m.state.marker).toBe('metro-entrance');
-      const foot = at(w, 'l5-metro-foot'); place(w, 1, foot.x, foot.z - 2);
-      // Gathered: the followers are placed round the courier. Stranded: one follower 40 m away, frozen in cover (it cannot come).
-      const fol = s.survivors.map(r => w.entities.get(r.id)!);
-      fol.forEach((f, i) => place(w, f.id, foot.x + (i - 2) * 1.5, foot.z + 1));
-      if (strand) { const f = fol[0]; place(w, f.id, foot.x - 40, foot.z + 12); f.civilian!.survivor!.mode = 'hidden'; f.civilian!.survivor!.cover = true; f.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; }
-      const heard: string[] = []; w.events.on('level.completed', e => { if (e.type === 'level.completed') heard.push(`${e.id}:${e.result.survivors?.length}:${e.result.rescued}`); });
-      let phaseBeforeDone = '';
-      for (let i = 0; i < 30 * 60 && m.state.phase === 'playing'; i++) { w.update(); if (s.shutterAt && !phaseBeforeDone) phaseBeforeDone = m.state.phase; }
-      const out = { shutterAfter: (s.shutterAt - s.metroAt) / 60, phase: m.state.phase, heard, rescued: m.state.result?.survivors ?? [], states: { ...m.state.states } };
-      w.dispose(); return out;
-    };
-    const gathered = await run(false), stranded = await run(true);
-    record('shutter', { gathered, stranded });
-    expect(gathered.shutterAfter).toBeLessThan(l5.metro.waitS); expect(gathered.phase).toBe('progression'); expect(gathered.heard).toEqual(['L5:5:5']); expect(gathered.rescued.sort()).toEqual(l5Survivors.map(s => s.key).sort());
-    expect(stranded.shutterAfter).toBeGreaterThanOrEqual(l5.metro.waitS - .05); expect(stranded.shutterAfter).toBeLessThanOrEqual(l5.metro.waitS + .5);
-    expect(stranded.heard).toEqual(['L5:4:4']); expect(stranded.rescued).toHaveLength(4); expect(stranded.rescued).not.toContain('dale');
+  test('T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist', async () => {
+    const l = await loadL5(4); world = l.world;
+    const w = l.world, m = l.mission, s = m.state.l5!;
+    search(w); for (const e of [...w.infected!.active]) w.infected!.release(e);
+    for (const survivor of l5Survivors) visit(w, survivor.key);
+    expect(m.state.steps.metro.status).toBe('active');
+    const foot = at(w, 'l5-metro-foot'); place(w, 1, foot.x, foot.z);
+    const fol = s.survivors.map(r => w.entities.get(r.id)!);
+    fol.forEach((e, i) => place(w, e.id, foot.x + (i % 2 ? .5 : -.5), foot.z + .8));
+    const stranded = fol[0]; place(w, stranded.id, foot.x - 30, -39);
+    stranded.civilian!.survivor!.mode = 'hidden'; stranded.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER;
+    step(w, 10 * 60);
+    expect(s.shutterAt).toBe(0); expect(m.state.gates['l5-metro-shutter']).toBe(true);
+    expect(m.state.phase).toBe('playing');
+    let jumps = 0, previous = { ...stranded.transform };
+    for (let i = 0; i < 40 * 60 && m.state.phase === 'playing'; i++) {
+      w.update(); jumps = Math.max(jumps, dist(previous, stranded.transform)); previous = { ...stranded.transform };
+      if (s.shutterAt) for (const e of fol) expect(m.l5!.insideStation(e.transform)).toBe(true);
+    }
+    expect(jumps).toBeLessThan(1); expect(m.state.phase).toBe('progression');
+    expect(m.state.gates['l5-metro-shutter']).toBe(false);
+    const door = at(w, 'l5-metro-shutter');
+    expect(w.infected!.nav.clear(door.x, door.z, .35)).toBe(false);
+    expect(m.state.result!.survivors).toHaveLength(5);
+    expect(m.state.result!.stationOccupants!.map(e => e.id)).toEqual(s.stationIds);
+    expect(m.state.result!.stationOccupants).toHaveLength(24);
   }, HEAVY);
 
   test('T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)', async () => {
@@ -315,12 +324,18 @@ describe('L5 Aftermath', () => {
       expect(m.state.checkpoint, id).toBe(id);
       const s = m.state.l5!;
       const snap = { phase: s.phase, found: s.found, status: status(w), infected: w.infected!.active.filter(e => e.health.current > 0).length, followers: s.survivors.filter(r => r.status === 'following').map(r => ({ id: r.id, x: Math.round(w.entities.get(r.id)!.transform.x), z: Math.round(w.entities.get(r.id)!.transform.z) })), gloom: s.gloom };
+      const occupants = structuredClone(s.stationIds.map(id => w.entities.get(id)!));
+      const alphaIds = w.infected!.active.filter(e => e.archetype === 'infected.alpha').map(e => e.id);
       snaps[id] = snap;
       step(w, 90);
       const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick);
       for (let i = 0; i < 400 && w.entities.get(1)!.health.current <= 0; i++) w.update();
       expect(m.state.checkpoint, id).toBe(id);
       const back = m.state.l5!;
+      expect(back.stationIds).toEqual(occupants.map(e => e.id));
+      expect(w.entities.values().filter(e => back.stationIds.includes(e.id))).toHaveLength(24);
+      for (const prior of occupants) { expect(w.entities.get(prior.id)!.health).toEqual(prior.health); expect(w.entities.get(prior.id)!.appearance).toEqual(prior.appearance); }
+      expect(w.infected!.active.filter(e => e.archetype === 'infected.alpha').map(e => e.id)).toEqual(alphaIds);
       expect(back.phase, `${id} phase`).toBe(snap.phase); expect(back.found).toBe(snap.found); expect(status(w)).toEqual(snap.status);
       for (const f of snap.followers) { const e = w.entities.get(f.id)!; expect(dist(e.transform, f), `${id} follower ${f.id}`).toBeLessThan(2.5); }
       expect(back.gloom).toBeLessThanOrEqual(snap.gloom + 1e-9);

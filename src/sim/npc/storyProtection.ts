@@ -20,7 +20,7 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   if (s.l3 && !s.l3.fallbackAt && id === s.l3.squadIds[0]) return true;
   if (s.l4 && !s.l4.gunAt && id === s.l4.qmId) return true;
   if (s.l5) {
-    if (id === s.l5.lookoutId && !s.l5.shutterAt) return true;
+    if (id === s.l5.lookoutId && !s.l5.shutterAt || s.l5.stationIds.includes(id)) return true;
     if (s.l5.survivors.some(r => r.id === id && r.status === 'hidden')) return true;
   }
   if (s.l6) {

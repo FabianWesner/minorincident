@@ -1,13 +1,20 @@
 #!/bin/sh
-# Reserve both browser slots: a second lane must not start midway through a timing run.
+# Reserve every configured browser slot: a second lane must not start midway through a timing run.
 # Use this instead of an outer e2e-lock wrapper for native performance measurements.
 if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
   if [ -n "${MI_E2E_LOCK_HELD:-}" ]; then
-    printf '%s\n' 'Run quiet-run directly, without an outer e2e-lock (it owns both locks).' >&2
+    printf '%s\n' 'Run quiet-run directly, without an outer e2e-lock (it owns the browser locks).' >&2
     exit 1
   fi
   export MI_PERF_LOCK_HELD=1 MI_E2E_LOCK_HELD=1
-  exec lockf -k "${E2E_LOCK:-/tmp/minor-incident-e2e.lock}.0" lockf -k "${E2E_LOCK:-/tmp/minor-incident-e2e.lock}.1" sh "$0" "$@"
+  slots="${E2E_SLOTS:-4}"
+  slot=$((slots - 1))
+  set -- sh "$0" "$@"
+  while [ "$slot" -ge 0 ]; do
+    set -- lockf -k "${E2E_LOCK:-/tmp/minor-incident-e2e.lock}.$slot" "$@"
+    slot=$((slot - 1))
+  done
+  exec "$@"
 fi
 while :; do
   # pgrep's own command is excluded by pgrep. Also catch native Chrome's --headless flag.
@@ -16,9 +23,9 @@ while :; do
   if ! pgrep -fil 'chrome.*headless' >/dev/null && ! pgrep -f '[n]ode.*/node_modules/.bin/vitest' >/dev/null && node -e 'process.exit(require("node:os").loadavg()[0] < 3 ? 0 : 1)'; then
     uptime
     if [ -n "${PERF_CONDITIONS_LOG:-}" ]; then
-      node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,localVitest:0,browserSlots:[0,1],command:process.argv.slice(1)})+"\n")' "$@"
+      node -e 'const fs=require("node:fs"),os=require("node:os");fs.appendFileSync(process.env.PERF_CONDITIONS_LOG,JSON.stringify({at:new Date().toISOString(),load:os.loadavg(),otherHeadlessChrome:0,localVitest:0,browserSlots:Array.from({length:Number(process.env.E2E_SLOTS||4)},(_,i)=>i),command:process.argv.slice(1)})+"\n")' "$@"
     fi
-    printf '%s\n' 'Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; browser slots .0/.1 held.'
+    printf '%s\n' 'Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; all configured browser slots held.'
     exec "$@"
   fi
   sleep 20

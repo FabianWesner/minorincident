@@ -2,7 +2,7 @@ import { allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
 import { Rng } from '../../core/Rng';
 import { l6, l6Doors, l6InjuryLines } from '../../data/l6';
-import { l5Survivors } from '../../data/l5';
+import { l5, l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
@@ -22,7 +22,8 @@ export class LevelSixSubway {
     const o=w.npcs!.civilians.outbreak ?? new Outbreak(w,{refuges:[],tier:w.infected!.director.tier}); w.npcs!.civilians.outbreak=o; w.infected!.director.levelCap=60;
     const weapons=w.entities.get(1)!.weapons;if(weapons?.RIGHT.rack.some(s=>s.id==='weapon.army-mg')){weapons.selectedSide='RIGHT';weapons.RIGHT.index=weapons.RIGHT.rack.findIndex(s=>s.id==='weapon.army-mg');}
     const keys=w.progression?.campaign?.survivors??[];
-    const count=w.infected!.director.tier==='low'?l6.shelter.low:l6.shelter.high;
+    const carried=w.progression?.campaign?.stationOccupants;
+    const count=carried?.length ?? (w.infected!.director.tier==='low'?l6.shelter.low:l6.shelter.high);
     const all=[...Array.from({length:count},(_,i)=>`shelter-${i}`),...keys];
     all.forEach((key,i)=>{
       const injured=key!=='rosa'&&i>0&&i%5===0, routine=key==='rosa'?'treat':i===3&&keys.includes('rosa')?'talk':i===0?'guard':(['sit','talk','treat','rest','share'] as const)[(i-1)%5];
@@ -31,9 +32,22 @@ export class LevelSixSubway {
       const at=this.snap(key==='rosa'?{x:16.9,z:13.6}:routine==='treat'?{x:base.x-1.1,z:base.z}:base);
       const previous=l5Survivors.find(s=>s.key===key);
       const model=i===0?'npc.marcus.aftermath':previous?.model??(injured?'npc.shelter-survivor.bandaged':routine==='rest'?'npc.shelter-survivor.lying':routine==='sit'?'npc.shelter-survivor.sitting':i%2?'npc.civilian-man-b.aftermath':'npc.civilian-woman-b.aftermath');
-      const id=o.spawnPedestrian(at,{model,role:'cashier',yaw:i%2?Math.PI:0,walkSpeed:injured?1.4:2.2,schedule:[{activity:routine==='talk'?'chat':routine==='sit'?'sit':'look',anchor:`l6/${routine}`,target:at,facing:{x:at.x+(i%2?-3:3),z:at.z},ticks:60*60*10}]});
-      const e=w.entities.get(id)!; e.health={current:60,max:60};e.civilian!.survivor={key,mode:'follow',slot:i,leader:0,cover:false,waitAt:0,foundAt:start};
+      const resident = carried?.[i] ?? w.progression?.campaign?.rescuedSurvivors?.find(e=>e.civilian?.survivor?.key===key);
+      let e: EntitySnapshot;
+      if (resident) {
+        e=structuredClone(resident);
+        if(i<count){e.transform.x-=l5.metro.stationX; e.transform.z-=l5.metro.stationZ; e.transform.y+=.45;}
+        else {e.transform.x=at.x;e.transform.z=at.z;e.transform.y=1.3;}
+        e.civilian!.floorY=.6; e.civilian!.pauseUntil=0;
+        w.entities.replace(e); w.spatial.set(e.id,e.transform.x,e.transform.z);
+      } else {
+        const spawned=o.spawnPedestrian(at,{model,role:'cashier',yaw:i%2?Math.PI:0,walkSpeed:injured?1.4:2.2,schedule:[{activity:routine==='talk'?'chat':routine==='sit'?'sit':'look',anchor:`l6/${routine}`,target:at,facing:{x:at.x+(i%2?-3:3),z:at.z},ticks:60*60*10}]});
+        e=w.entities.get(spawned)!;
+      }
+      const id=e.id;
+      e.health={current:60,max:60};e.civilian!.survivor={key,mode:'follow',slot:i,leader:0,cover:false,waitAt:0,foundAt:start};
       e.civilian!.story={clip:routine==='sit'?'npc-sit':routine==='rest'?'death-side':routine==='talk'?'npc-gesture':routine==='treat'?'npc-cower':routine==='share'?'npc-give':'idle',start:start-i*13, ...(i===0?{prop:'pistol' as const}:{})};
+      if(resident){e.health=structuredClone(resident.health);e.appearance=structuredClone(resident.appearance);if(i<count)e.civilian!.story=structuredClone(resident.civilian!.story);}
       if(i===0){e.civilian!.ally=allyState('officer',at,true);e.civilian!.ally.gun={damage:20,shotS:.5,rangeM:16,nearM:16,hitNear:.5,hitFar:.5};e.civilian!.ally.weapon='pistol';}
       this.s.survivors.push({key,id,injured,routine,status:'shelter',straggler:false,collected:false,rejoined:false,hold:0});
     });
@@ -68,7 +82,7 @@ export class LevelSixSubway {
   private abandon():void {
     if(this.s.abandonAt)return;
     const s=this.s;s.abandonAt=this.w.tick;s.phase='retreat';
-    for(const r of this.living()){r.status='following';this.w.entities.get(r.id)!.civilian!.story=null;}
+    for(const r of this.living()){r.status='following';const c=this.w.entities.get(r.id)!.civilian!;c.story=null;delete c.floorY;}
     this.mission.setState('abandoned',true);this.w.events.emit({type:'l6.abandon',tick:this.w.tick});
     this.say(s.survivors[0].id,'Into the tunnel! Everybody, move!');this.mission.requestCheckpoint('abandon');
   }
