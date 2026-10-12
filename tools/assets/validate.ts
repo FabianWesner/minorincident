@@ -190,7 +190,7 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
 export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
   const io = await assetIO(), results: Validation[] = [];
   const variants = manifest.flatMap(def => def.decayVariants.map(decay => ({
-    ...def, id: `${def.id}.${decay}`, decayVariants: [],
+    ...def, ...def.decayNodes?.[decay], id: `${def.id}.${decay}`, decayVariants: [],
     glb: variantPath(def.glb, decay),
     sourceGlb: variantPath(def.sourceGlb ?? `assets/${def.id}/model.glb`, decay),
     lods: { lod1: def.lods?.lod1 && variantPath(def.lods.lod1, decay), lod2: def.lods?.lod2 && variantPath(def.lods.lod2, decay) },

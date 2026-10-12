@@ -18,7 +18,7 @@ def bake_all(objects, samples=32):
     scene.cycles.use_animated_seed = False
     scene.render.bake.target = 'VERTEX_COLORS'
     for obj in bpy.context.view_layer.objects:
-        obj.select_set(obj in meshes)
+        if obj is not None: obj.select_set(obj in meshes)
     for obj in meshes:
         layer = obj.data.color_attributes.get('ao')
         if layer is None:

@@ -16,6 +16,7 @@ parser.add_argument('--width', type=int, default=960)
 parser.add_argument('--height', type=int, default=540)
 parser.add_argument('--pose', action='store_true')
 parser.add_argument('--lod', type=int, choices=[0,1,2], default=0)
+parser.add_argument('--healthy', action='store_true', help='uninfected amb.lion: same rig and silhouette, no wounds, closed mouth, dark eyes')
 args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 if args.render and args.view in ['turnaround','pose-sheet']:
     import numpy as np
@@ -53,6 +54,8 @@ materials = {k: material(k,c,r) for k,c,r in [
     ('infectedSkin','c9a39a',.68), ('blood','b3121f',.4),
     ('uiDark','25222c',.64), ('sidewalk','b9a4a0',.78)]}
 materials['eye'] = material('infectedEye','ff3b2f',.28,3)
+# Healthy look: four palette materials only (woodWarm, brick, uiDark, picketWhite).
+HEALTHY_TOKEN = {'asphalt':'uiDark','infectedSkin':'woodWarm','blood':'brick','eye':'uiDark'}
 
 def parent_keep(o, parent):
     bpy.context.view_layer.update()
@@ -68,6 +71,10 @@ def node(name, position, parent=None):
 
 def finish(o,name,token,parent,sub=0):
     o.name = name
+    if args.healthy:
+        token = HEALTHY_TOKEN.get(token, token)
+        bpy.context.view_layer.update()
+        if sub and max(o.dimensions) < .32: sub = 0
     o.data.materials.append(materials[token])
     bpy.context.view_layer.objects.active = o
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
@@ -105,9 +112,10 @@ def tube(name,points,radii,token,parent,N=8,sub=1):
     return finish(o,name,token,parent,sub)
 
 def lock(name,start,bend,tip,width,token='brick',parent='head'):
+    if args.healthy and token == 'asphalt': token = 'woodWarm'
     p,q,r=map(Vector,[start,bend,tip])
     return tube(name,[p,p.lerp(q,.4),q,q.lerp(r,.7),r],
-                [.006,(width*.8,width*.30),(width,width*.33),(width*.44,width*.19),.0015],token,parent)
+                [.006,(width*.8,width*.30),(width,width*.33),(width*.44,width*.19),.0015],token,parent,sub=0 if args.healthy else 1)
 
 # A single hierarchy exposes animal joints and the generic infected joint names.
 node('root',(0,0,0)); node('hip',(-.58,0,.76),'root')
@@ -207,26 +215,32 @@ for s in [-1,1]:
         ell('whisker_pore%d%d'%(s,j),(1.076-abs(j-1.5)*.009,s*(.052+j*.026),1.166-(j%2)*.024),
             (.007,.010,.007),'uiDark','head',seg=8,rings=6)
 # The cavity lies in front of the skull and between independent upper/lower jaws.
-ell('maw',(.931,0,1.006),(.071,.147,.144),'uiDark','head',16,10)
-loop=[(.983,.147*math.cos(i*math.tau/24),1.008+.144*math.sin(i*math.tau/24)) for i in range(25)]
-tube('torn_lip',loop,[.014]*25,'blood','head',N=6)
-ell('lower_jaw',(.95,0,.854),(.125,.147,.046),'infectedSkin','jaw')
-ell('chin',(.943,0,.819),(.109,.114,.036),'picketWhite','jaw')
-ell('tongue',(.997,0,.909),(.040,.067,.038),'blood','jaw')
+if not args.healthy:
+    ell('maw',(.931,0,1.006),(.071,.147,.144),'uiDark','head',16,10)
+    loop=[(.983,.147*math.cos(i*math.tau/24),1.008+.144*math.sin(i*math.tau/24)) for i in range(25)]
+    tube('torn_lip',loop,[.014]*25,'blood','head',N=6)
+    ell('lower_jaw',(.95,0,.854),(.125,.147,.046),'infectedSkin','jaw')
+    ell('chin',(.943,0,.819),(.109,.114,.036),'picketWhite','jaw')
+    ell('tongue',(.997,0,.909),(.040,.067,.038),'blood','jaw')
+else:
+    # Calm closed mouth: the jaw meshes sit against the muzzle; mouth line is a dark seam.
+    ell('lower_jaw',(.955,0,1.025),(.125,.147,.062),'woodWarm','jaw')
+    ell('chin',(.948,0,.985),(.105,.112,.040),'picketWhite','jaw')
+    ell('mouth_line',(1.03,0,1.085),(.05,.12,.008),'uiDark','head',seg=10,rings=4)
 ell('nose_bridge',(.929,0,1.235),(.10,.075,.074),'woodWarm','head')
 ell('nose', (1.077,0,1.199),(.044,.074,.037),'uiDark','head')
 for s in [-1,1]:
     ell('nostril'+str(s),(1.105,s*.038,1.199),(.009,.018,.010),'asphalt','head',seg=8,rings=6)
-    tube('fang_upper'+str(s),[(1.021,s*.114,1.122),(1.042,s*.118,1.036),(1.03,s*.108,.973)],
+    if not args.healthy: tube('fang_upper'+str(s),[(1.021,s*.114,1.122),(1.042,s*.118,1.036),(1.03,s*.108,.973)],
          [.028,.021,.002],'picketWhite','head',N=8)
-    tube('fang_lower'+str(s),[(1.002,s*.11,.872),(1.035,s*.11,.927),(1.035,s*.108,.959)],
+    if not args.healthy: tube('fang_lower'+str(s),[(1.002,s*.11,.872),(1.035,s*.11,.927),(1.035,s*.108,.959)],
          [.025,.017,.002],'picketWhite','jaw',N=8)
-for row in [0,1]:
+for row in ([] if args.healthy else [0,1]):
     for j in range(5):
         y=(j-2)*.030; z=1.12 if row==0 else .874; dz=-.030 if row==0 else .029
         tube('incisor_%d_%d'%(row,j),[(1.052,y,z),(1.064,y,z+dz)], [.013,.006], 'picketWhite','head' if row==0 else 'jaw',N=6)
-tube('cheek_scar',[(.90,-.215,1.21),(.935,-.204,1.17),(.965,-.169,1.12)], [.011,.014,.009],'blood','head',N=6)
-for i in range(3):
+if not args.healthy: tube('cheek_scar',[(.90,-.215,1.21),(.935,-.204,1.17),(.965,-.169,1.12)], [.011,.014,.009],'blood','head',N=6)
+for i in range(0 if args.healthy else 3):
     ell('muzzle_blood'+str(i),(1.085,-.075+i*.03,1.144-i*.014),(.006,.013,.011),'blood','head',seg=8,rings=6)
 # Small golden fur ridges make the bare body read as sculpted skin/fur.
 for s in [-1,1]:
@@ -264,14 +278,14 @@ def wound(name,target,center,rx,rz,parent,s):
     inner=[c+Vector((0,s*.018,0))]+[c.lerp(p,.48 if j%2 else .62)+Vector((0,s*.018,0)) for j,p in enumerate(points[1:])]
     data=bpy.data.meshes.new(name+'_raw');data.from_pydata(inner,[],[(0,i+1,(i+1)%count+1) for i in range(count)]);data.update()
     o=bpy.data.objects.new(name+'_raw',data);scene.collection.objects.link(o);finish(o,o.name,'blood',parent)
-for s in [-1,1]:
+for s in ([] if args.healthy else [-1,1]):
     for i,(x,z,rx,rz) in enumerate([(-.54,.98,.12,.12),(-.17,1.01,.071,.15),(.10,.85,.095,.09)]):
         wound('flank_%d_%d'%(s,i),'barrel',(x,s*.3,z),rx,rz,'body',s)
     side='L' if s>0 else 'R'
     wound('front_scar'+side,'front_lower'+side,(.58,s*.36,.38),.067,.082,'foreArm'+side,s)
     wound('haunch_scar'+side,'haunch'+side,(-.68,s*.40,.72),.075,.10,'legB'+side,s)
 # Hidden cap meshes stay attached to the retained parent, at the severance plane.
-for joint in ['head','armL','armR','foreArmL','foreArmR','legL','legR','legFL','legFR','legBL','legBR']:
+for joint in ([] if args.healthy else ['head','armL','armR','foreArmL','foreArmR','legL','legR','legFL','legFR','legBL','legBR']):
     pos=parts[joint].matrix_world.translation.copy()
     parent=parts[joint].parent.name
     r=.12 if 'Arm' in joint else .16
@@ -282,6 +296,11 @@ for joint in ['head','armL','armR','foreArmL','foreArmR','legL','legR','legFL','
     o=ell('stump_'+joint,pos,shape,'blood',parent,seg=8,rings=4,sub=0)
     o['hidden']=True; o['detached_joint']=joint; o.scale=(0,0,0)
     caps.append(o)
+if args.healthy:
+    import re, collections
+    tally=collections.Counter()
+    for o in meshes: tally[re.sub(r'[-_]?\d+$|[LR]\d*$','',o.name)]+=sum(len(f.vertices)-2 for f in o.data.polygons)
+    print('TALLY',tally.most_common(14))
 # Merge static details into one multi-material mesh per rigid parent. Joint nodes survive.
 buckets={}
 for o in meshes:
@@ -293,10 +312,11 @@ for parent,group in buckets.items():
     bpy.context.view_layer.objects.active=group[0]
     if len(group)>1:bpy.ops.object.join()
     o=group[0];o.name=parent+'__surface';merged.append(o)
+print('PRE-DECIMATION',sum(len(f.vertices)-2 for o in merged for f in o.data.polygons))
 # Applied collapse preserves sculpted silhouettes within the infected hero budget.
 for o in merged:
     bpy.context.view_layer.objects.active=o
-    mod=o.modifiers.new('Applied hero density','DECIMATE');mod.ratio=[.235,.030,.008][args.lod]
+    mod=o.modifiers.new('Applied hero density','DECIMATE');mod.ratio=([.385,.125,.045] if args.healthy else [.235,.030,.008])[args.lod]
     bpy.ops.object.modifier_apply(modifier=mod.name)
 meshes=merged+caps
 bpy.context.view_layer.update()
@@ -306,7 +326,7 @@ bpy.context.view_layer.update()
 required=['root','hip','torso','body','neck','head','jaw','tail','backpackSocket']
 required += [p+s for p in ['arm','foreArm','hand','leg','shin','foot'] for s in ['L','R']]
 required += [p+s for p in ['legF','legB','pawF','pawB'] for s in ['L','R']]
-required += ['stump_'+j for j in ['head','armL','armR','foreArmL','foreArmR','legL','legR','legFL','legFR','legBL','legBR']]
+required += [] if args.healthy else ['stump_'+j for j in ['head','armL','armR','foreArmL','foreArmR','legL','legR','legFL','legFR','legBL','legBR']]
 triangles=sum(len(f.vertices)-2 for o in meshes for f in o.data.polygons)
 (HERE/('build-stats.json' if args.lod==0 else f'lod{args.lod}-stats.json')).write_text(json.dumps({'triangles':triangles,'meshes':len(meshes),'missing_nodes':[n for n in required if n not in bpy.data.objects],
     'pivots':{n:list(o.matrix_world.translation) for n,o in parts.items()}},indent=2))

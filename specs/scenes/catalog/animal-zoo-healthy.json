@@ -1,0 +1,23 @@
+{
+ "name": "animal-zoo-healthy",
+ "note": "L8 healthy zoo variants (amb.lion, amb.gorilla, amb.flamingo; static rest pose) beside the shipped infected animals (idle) at the game camera, golden light: same scale, stance and silhouette; healthy has intact fur/plumage, closed mouth and dark eyes, no wounds or red glow. Look for: size/proportion match with the infected base, grounded paws and feet (nothing floating or sunk), no missing parts or flat panels, no perforated look.",
+ "seed": 8,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "props": [
+  { "id": "healthy-lion", "asset": "amb.lion", "at": [-4.5, -2.4], "yaw": 0 },
+  { "id": "healthy-gorilla", "asset": "amb.gorilla", "at": [0, -2.4], "yaw": 0 },
+  { "id": "healthy-flamingo", "asset": "amb.flamingo", "at": [4, -2.4], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "infected-lion", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.lion" }, "at": [-4.5, 2.4], "yaw": 0, "state": "idle" },
+  { "id": "infected-gorilla", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.gorilla" }, "at": [0, 2.4], "yaw": 0, "state": "idle" },
+  { "id": "infected-flamingo", "kind": "infected", "archetype": "infected.lion", "look": { "model": "infected.flamingo" }, "at": [4, 2.4], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [0, 0.9, 0], "zoom": 1.6 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

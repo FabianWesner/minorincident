@@ -254,7 +254,7 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
     sys.exit(0)
 
 
-def build_native_lods(source):
+def build_native_lods(source, suffix=''):
     """Full source builds regenerate native tiers, then restore the hero scene."""
     import runpy
     import tempfile
@@ -265,7 +265,7 @@ def build_native_lods(source):
         bpy.ops.wm.save_as_mainfile(filepath=str(saved))
         try:
             for tier in (1, 2):
-                sys.argv = [str(source), '--', '--distance-tier', str(tier), '--glb', str(source.parent/('model.lod%d.glb' % tier))]
+                sys.argv = [str(source), '--', '--distance-tier', str(tier), '--glb', str(source.parent/('model%s.lod%d.glb' % (suffix, tier)))]
                 try:
                     runpy.run_path(str(source), run_name='__main__')
                 except SystemExit as error:
