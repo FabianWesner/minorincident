@@ -29,6 +29,8 @@ try {
     if (params.has('scenelab')) { const { installSceneLab } = await import('./debug/scenelab/SceneLab'); installSceneLab(game); }
   }
   await ready;
+  // Anonymous play telemetry for real players of the live site (never in tests, dev or automation).
+  void import('./telemetry').then(({ telemetryMode, installTelemetry }) => { const mode = telemetryMode(params, location.hostname, navigator.webdriver); if (mode) installTelemetry(game, mode); }).catch(() => { /* telemetry must never break the game */ });
   if (params.has('lookdev') || import.meta.env.DEV && params.has('debug') && !params.has('scenelab')) {
     if (params.has('lookdev')) await game.loadLevel('L1', { seed: Number(params.get('seed') ?? 1) });
     const { Debug } = await import('./debug/Debug');
