@@ -119,7 +119,9 @@ export class L2Props extends Group {
       panes.push({ x: d.x, y: 1.3, z: d.z - out * .8, sx: 1.3, sy: .9, sz: .06 });
       for (let k = 0; k < 6; k++) shards.push({ x: d.x + Math.sin(k * 2.3) * .7, y: .03, z: d.z + out * (.3 + (k % 3) * .25), sx: .18 + (k % 2) * .1, sy: .02, sz: .12 });
     }
-    this.place(instanced(materials.get('uiDark'), panes.length), panes, () => [0, 0]);
+    const paneMesh = instanced(materials.get('uiDark'), panes.length);
+    paneMesh.name = 'l2-broken-window-panes';
+    this.place(paneMesh, panes, () => [0, 0]);
     this.place(instanced(this.glass, shards.length), shards, () => [0, 0]);
     for (const { mesh, boxes } of this.bars) this.place(mesh, boxes, () => [0, 0]);
     this.update();

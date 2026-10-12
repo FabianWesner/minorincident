@@ -8,7 +8,9 @@ import { PaletteMaterial } from './PaletteMaterial';
 type RenderObjects = { get(...args: unknown[]): unknown };
 const paletteVariantCaches = new WeakSet<RenderObjects>();
 /** Three r186 otherwise retires a warmed daylight graph when warming its fire graph.
- * Keep one render object per cached palette output; normal level/context disposal owns them all. */
+ * Keep one render object per cached palette output; normal level/context disposal owns them all.
+ * FIX-04: replacing the daylight object after fire warm-up leaves L2's window
+ * pane instance bindings stale, drawing a unit cube at the phone camera focus. */
 export function installPaletteVariantCache(objects: RenderObjects): void {
   if (paletteVariantCaches.has(objects)) return;
   paletteVariantCaches.add(objects);
