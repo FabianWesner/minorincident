@@ -19,6 +19,7 @@ import { levelTwoLayouts } from '../../levels/L2/layout';
 import { L2TruckDrive, truckPoseAt, truckBodyOverlap, truckWallOverlap, type TruckRideState } from '../../sim/vehicles/L2TruckDrive';
 import { installL1Outbreak } from '../../sim/outbreak/install';
 import { doorExit, emergeResident, layoutHouseDoors, walkResidents, type HouseEmergence } from '../../sim/outbreak/HouseEmergence';
+import { standNear } from '../../sim/npc/gardening';
 import { seatAnchor } from '../../sim/npc/seats';
 import { allyState } from '../../sim/outbreak/Allies';
 import { infectedDef, type InfectedDef } from '../../data/infected';
@@ -367,6 +368,7 @@ export class SceneLab {
       else if ('moveTo' in a) { const p = toPoint(a.moveTo); reset([{ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }, this.stand(p, e.transform.yaw)]); }
       else if('routine' in a){reset([this.stand(e.transform,e.transform.yaw)]);c.story={clip:a.routine==='sit'?'npc-sit':a.routine==='rest'?'death-side':a.routine==='talk'?'npc-gesture':a.routine==='share'?'npc-give':'npc-cower',start:world.tick};}
       else if ('sit' in a) reset(this.sitSchedule(a.sit, a.seconds));
+      else if ('water' in a) reset(this.waterSchedule(a.water, a.seconds));
       else if ('flee' in a) { c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       else if ('infect' in a) { const by = a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0; if (a.infect.instant) world.npcs!.civilians.outbreak!.turnNow(e); else world.npcs!.civilians.outbreak!.infect(e, by); }
       else if ('hit' in a) this.hit(e, a.hit);
@@ -474,6 +476,15 @@ export class SceneLab {
     const seat = anchored ?? { x: bench.position[0], z: bench.position[2] }, front = { x: Math.cos(bench.yaw), z: -Math.sin(bench.yaw) };
     const approach = { x: seat.x + front.x * .9, z: seat.z + front.z * .9 }, facing = { x: seat.x + front.x * 3, z: seat.z + front.z * 3 };
     return [{ activity: 'sit', anchor: bench.id, target: approach, seat: { x: seat.x, z: seat.z }, seatLift: anchored?.lift, facing, ticks: ticks(seconds) }];
+  }
+  private waterSchedule(target: string, seconds = 600): CivilianActivity[] {
+    const placements = this.built!.placements, nav = this.world.infected!.nav;
+    const bed = placements.find(p => p.id === target) ?? placements.filter(p => p.assetId === target).sort((a, b) => Math.hypot(a.position[0], a.position[2]) - Math.hypot(b.position[0], b.position[2]))[0];
+    if (!bed) throw new Error(`water: no placement ${target}`);
+    const box = { x0: bed.visualAabb.min[0], z0: bed.visualAabb.min[2], x1: bed.visualAabb.max[0], z1: bed.visualAabb.max[2] };
+    const spot = standNear(box, p => nav.clear(p.x, p.z, .35), { x: bed.position[0], z: bed.position[2] + 3 });
+    if (!spot) throw new Error(`water: no standing spot at ${target}`);
+    return [{ activity: 'water', anchor: bed.id, target: spot.target, facing: spot.facing, ticks: ticks(seconds), prop: 'watering-can' }];
   }
   private hit(e: EntitySnapshot, hit: { from?: string | Point; heavy?: boolean; amount?: number }): void {
     const from = typeof hit.from === 'string' ? this.world.entities.get(this.actors.get(hit.from)?.entity ?? 1)!.transform : hit.from ? toPoint(hit.from) : { x: e.transform.x - 1, z: e.transform.z };
