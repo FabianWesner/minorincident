@@ -94,3 +94,24 @@ export function wave(samples: readonly Float32Array[], sampleRate: number): Uint
             view.setInt16(44 + (i * channels + c) * 2, Math.round(Math.max(-1, Math.min(1, samples[c][i])) * 32767), true);
     return bytes;
 }
+
+/**
+ * A military base klaxon (original, synthesised; no third-party recording): a sawtooth-like tone that sweeps up and down once per period
+ * (air-raid style wail). The sweep is periodic and its total phase is rounded to a whole number of cycles, so the buffer loops without a click.
+ */
+export function klaxon(sampleRate: number, periodS: number, lowHz: number, highHz: number): Float32Array {
+    const n = Math.round(periodS * sampleRate), out = new Float32Array(n), tau = 2 * Math.PI;
+    const hz = (i: number) => lowHz + (highHz - lowHz) * (0.5 - 0.5 * Math.cos(tau * i / n));
+    let cycles = 0;
+    for (let i = 0; i < n; i++) cycles += hz(i) / sampleRate;
+    const scale = Math.round(cycles) / cycles;
+    let phase = 0, peak = 0;
+    for (let i = 0; i < n; i++) {
+        phase += hz(i) * scale / sampleRate;
+        let v = 0;
+        for (let k = 1; k <= 7; k++) v += Math.sin(tau * phase * k) / k * (k % 2 ? 1 : 0.6);
+        out[i] = v; peak = Math.max(peak, Math.abs(v));
+    }
+    for (let i = 0; i < n; i++) out[i] = out[i] / peak * 0.8;
+    return out;
+}
