@@ -1,6 +1,6 @@
 import { catalog } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
-import { eligible, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
+import { eligible, lastLevel, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
 import { validAftermath } from './carryover';
 import type { EntitySnapshot } from '../world/types';
 export const SAVE_KEY='minor-incident.campaign';
@@ -48,12 +48,13 @@ export function migrate(raw:unknown):unknown {
   return dropLegacyL3Weapons(raw);
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
-  if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>6||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>6||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(raw.completedLevels===6&&raw.unlockedLevel===6)))return false;
+  if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>lastLevel||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>lastLevel||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(Number(raw.completedLevels)>=6&&Number(raw.unlockedLevel)>=Number(raw.completedLevels))))return false;
   if(!strings(raw.ownedActions)||!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
   if(!validRacks(save,save.racks)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;
   const expectedLevel=save.completedLevels+((save.pending?.phase==='unlock'||save.pending?.phase==='cards')?2:1);
-  if(save.unlockedLevel!==Math.min(6,expectedLevel))return false;
+  // A finished L6 save written before L7 existed keeps unlockedLevel 6; every later completion unlocks the next level.
+  if(save.unlockedLevel!==Math.min(lastLevel,expectedLevel)&&!(save.completedLevels===6&&save.unlockedLevel===6))return false;
   for(const [key,value]of Object.entries(save.settings)){
     if(key==='textSize'){if(![1,1.25,1.5].includes(value as number))return false;continue;}
     const enums:Record<string,string[]>={gore:['Off','Reduced','Full'],quality:['high','low','auto'],aimAssist:['Off','Low','Default','High']};
@@ -70,10 +71,10 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     const people=[...save.stationOccupants??[],...save.rescuedSurvivors];
     if(new Set(people.map(e=>e.id)).size!==people.length)return false;
   }
-  if(save.results!==undefined&&(!record(save.results)||Object.entries(save.results).some(([id,result])=>!/^L[1-6]$/.test(id)||!record(result)||!['time','kills','knockdowns','damage','deaths','rescued'].every(k=>typeof result[k]==='number'&&Number.isFinite(result[k])&&Number(result[k])>=0)||!strings(result.optionalObjectives)||result.survivors!==undefined&&!strings(result.survivors))))return false;
+  if(save.results!==undefined&&(!record(save.results)||Object.entries(save.results).some(([id,result])=>!/^L[1-9]$/.test(id)||!record(result)||!['time','kills','knockdowns','damage','deaths','rescued'].every(k=>typeof result[k]==='number'&&Number.isFinite(result[k])&&Number(result[k])>=0)||!strings(result.optionalObjectives)||result.survivors!==undefined&&!strings(result.survivors))))return false;
   const prefix={...save,upgrades:[] as string[]};
   for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
-  if(save.completedLevels===6&&save.pending)return false;
+  if(save.completedLevels>=6&&save.pending)return false;
   if(save.pending){const p=save.pending;
     if(!record(p)||!Number.isInteger(p.level)||p.level<1||p.level>5||!['unlock','cards','racks'].includes(p.phase)||!strings(p.cards)||p.cards.some(id=>!Object.hasOwn(upgrades,id))||save.unlockedLevel!==p.level+1)return false;
     if(p.phase==='racks'){if(save.completedLevels!==p.level||p.cards.length!==3||p.cards.filter(id=>save.upgrades.includes(id)).length!==2)return false;}

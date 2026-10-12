@@ -71,6 +71,7 @@ export class GameView implements Lifecycle {
   private missionUI: MissionUI | null = null;
   private marker: ObjectiveMarker | null = null;
   private cinematicId: string | null = null;
+  private departureShot = false;
   private storyFraming = false;
   private l5StationView = false;
   private readonly storyFocus = new Vector3();
@@ -506,6 +507,9 @@ export class GameView implements Lifecycle {
       this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
+      // L7-E2: the departure shot takes the camera (it follows the bus), then hands it back.
+      const shot = this.world.l7Departure?.cameraPose();
+      if (shot) { this.view.cinematic(shot); this.departureShot = true; } else if (this.departureShot) { this.departureShot = false; this.view.follow(); }
       const beat = this.world.missions?.state.l1?.beat;
       if (beat && this.world.storyLock && !this.view.spot) {
         this.storyFocus.set(beat.fx, .8, beat.fz); this.storyOffset.setFromSphericalCoords(13, this.view.polar, this.view.azimuth);
