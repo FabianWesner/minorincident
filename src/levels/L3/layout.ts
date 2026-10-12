@@ -129,6 +129,9 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // The central elevated span and entry lips support every walker just like the ramp strips.
     layout.colliders.push({id:'l3-highway-deck',aabb:{min:[167.5,5.2,-2.31],max:[179.5,5.7,2.31]},walkable:true,minTier:0,maxTier:5});
     for (let i=0;i<14;i++) for (const x of [139.3+i*.3,207.7-i*.3]) layout.colliders.push({id:`l3-highway-lip-${x}`,aabb:{min:[x-.155,0,-2.31],max:[x+.155,(i+1)*.05,2.31]},walkable:true,minTier:0,maxTier:5});
+    // PO 10-12: the ramp jersey rails stop at x 167.5 / 179.5 while the central span has none on the far side of each junction, leaving a
+    // 1.3 m slot where actors stepped off the deck onto the lower road. Close each with a solid, nav-blocking rail at deck height.
+    for (const [x0, x1, z0, z1] of [[163, 167.6, 1.6, 2.9], [179.4, 184, -2.9, -1.6]]) layout.colliders.push({id:`l3-highway-seal-${x0}`,aabb:{min:[x0,5.0,z0],max:[x1,6.7,z1],navBlocker:true},minTier:0,maxTier:5});
     for (const [name, [x, z]] of Object.entries(l3Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     // Placement rule shared with L2: dressing never cuts into a fence, wall, lamp, tree or another prop and stays out of
     // gardens; a piece that would moves to the nearest clear spot (cars slide along their own axis first, bumper to obstacle).

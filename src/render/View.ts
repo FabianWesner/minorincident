@@ -5,6 +5,8 @@ import { cameraFraming } from '../data/cameraFraming';
 /** Zoom range as a fraction of the default radius (PO, E19 I1 review): in until the hero is ~1/3.5 of the
  * viewport height (courier 1.4 m at 25° FOV ≈ 0.5), out to about twice the visible ground area (√2 ≈ 1.45). */
 export const zoomLimits = [.5, 1.45] as const;
+/** Body-centre height of the courier above the feet (spawn and locomotion keep the player at ground + .72). */
+export const feetOffset = .72;
 export interface CameraPose { position: [number, number, number]; target: [number, number, number] }
 /** Narrow-FOV follow camera. Presentation seconds are supplied by Game; never read by sim. */
 export class View {
@@ -63,11 +65,11 @@ export class View {
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
     this.radius = this.defaultRadius * this.zoomRatio;
-    this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z }, 0);
+    this.camera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
-  reset(player: { x: number; z: number }): void {
+  reset(player: { x: number; z: number; y?: number }): void {
     this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
-    this.driving = false; this.focus.set(player.x, 0, player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
+    this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
   /** Named deterministic photo pose (instant); cinematic poses can blend over 1 s. */
@@ -78,7 +80,7 @@ export class View {
     this.cinematicCamera.position.fromArray(pose.position); this.target.fromArray(pose.target);
     this.cinematicCamera.lookAt(this.target); this.blendTarget = 1;
     if (instant) this.blend = 1;
-    this.update({ x: this.focus.x, z: this.focus.z }, 0);
+    this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   follow(): void { this.spot = null; this.blendTarget = 0; }
   /** Max displacement 0.4 m; decays over presentation time. Disabled setting clears active kicks. */
@@ -93,14 +95,16 @@ export class View {
   }
   /** Advances the rig by `seconds` (one fixed sim tick in play) and leaves the camera at the new tick pose.
    * `seconds === 0` re-poses without motion (reset, resize, presets) and snaps the interpolation history. */
-  update(player: { x: number; z: number }, seconds: number): void {
+  update(player: { x: number; z: number; y?: number }, seconds: number): void {
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
     this.radius = this.defaultRadius * this.zoomRatio;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
+    // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
+    this.focus.y += (Math.max(0, (player.y ?? feetOffset) - feetOffset) - this.focus.y) * (1 - Math.exp(-6 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
-    const pulled = this.pullWeight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * this.pullWeight, 0, this.focus.z + (this.pullZ - this.focus.z) * this.pullWeight) : this.cameraTarget.copy(this.focus);
+    const pulled = this.pullWeight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * this.pullWeight, this.focus.y, this.focus.z + (this.pullZ - this.focus.z) * this.pullWeight) : this.cameraTarget.copy(this.focus);
     this.camera.position.copy(pulled).add(this.offset); this.camera.lookAt(pulled);
     this.blend += Math.sign(this.blendTarget - this.blend) * Math.min(Math.abs(this.blendTarget - this.blend), seconds);
     if (this.blend > 0) {
