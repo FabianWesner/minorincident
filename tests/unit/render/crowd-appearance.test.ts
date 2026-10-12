@@ -66,6 +66,9 @@ for (const lod of ['lod0','lod1','lod2'] as const) test(`crowd appearance ${lod}
   for (let c=0;c<4;c++) civilian.geometry.setAttribute(`_crowd${c}`,new InterleavedBufferAttribute(matrices,4,c*4));
   expect(crowdVertexLayout(civilian.geometry)).toEqual({ buffers:5, locations:12, webgpu:true, webgl2:true });
   const look = renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null);
+  expect(renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null)).toBe(look);
+  const clone = civilian.geometry.clone(); expect(renderedCrowdLook(1,'npc.civilian-elderly',clone,new Color('#3178ac'),null).key).toBe(look.key); clone.dispose();
+  expect(renderedCrowdLook(1,'npc.civilian-elderly',civilian.geometry,new Color('#b95862'),null).key).not.toBe(look.key);
   expect(look.hair).not.toBeNull(); expect(look.skin).not.toBeNull(); expect(look.trousers).not.toBeNull(); expect(look.shirt).not.toBeNull();
   const looks = Array.from({length:20}, (_,i) => renderedCrowdLook(i+1,'npc.civilian-elderly',civilian.geometry,new Color('#3178ac'),null));
   expect(crowdVariety(looks).per20[0].distinct).toBeGreaterThanOrEqual(15);
@@ -103,6 +106,7 @@ test('head accessories share a rigid instance draw across models and disappear a
     const root = new Group(); root.add(new Mesh(new BoxGeometry(.27,.06,.28), new MeshBasicMaterial())); return Promise.resolve(root);
   });
   const accessories = new CrowdAccessories(); await accessories.init(); accessories.begin();
+  for (const mesh of accessories.children as import('three').InstancedMesh[]) expect((mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count)/3).toBeLessThanOrEqual(mesh.name.endsWith('lod0') ? 150 : 80);
   const matrices = new Matrix4().makeTranslation(0,1.6,0).toArray();
   const poses = new CrowdPosePalette({ parts:['head'],frames:1,duration:1,matrices },10);
   const actor = { id:1, archetype:'infected.runner', appearance:{asset:'npc.civilian-man-a',accessories:[accessories.ids[0]]} } as unknown as import('../../../src/sim/world/types').EntitySnapshot;
@@ -112,9 +116,11 @@ test('head accessories share a rigid instance draw across models and disappear a
   const drawn = accessories.snapshot().filter(b=>b.instances);
   expect(drawn).toHaveLength(1); expect(drawn[0].draws).toBe(1); expect(drawn[0].instances).toBe(2);
   expect(drawn[0].triangles/2).toBeLessThanOrEqual(80);
+  expect(drawn[0].layout).toEqual({buffers:5,locations:8,webgpu:true,webgl2:true});
   const mesh = accessories.children.find(n=>n.name===drawn[0].id) as import('three').InstancedMesh;
   const result = new Matrix4(); mesh.getMatrixAt(0,result); expect(result.elements.slice(12,15)).toEqual([3,expect.closeTo(1.6),4]);
-  expect(accessories.hidesHair(actor, 'lod1')).toBe(true); expect(accessories.hidesHair(actor, 'lod2')).toBe(false);
+  expect(accessories.hidesHair(actor, 'lod1')).toBe(true);
+  expect(accessories.slot({...actor,civilian:{adult:false,model:'npc.civilian-kid'},appearance:{...actor.appearance!,asset:'npc.civilian-kid'}} as unknown as import('../../../src/sim/world/types').EntitySnapshot)).toBeGreaterThan(0); expect(accessories.hidesHair(actor, 'lod2')).toBe(false);
   expect(crowdVertexLayout(mesh.geometry, mesh.instanceMatrix).buffers + 1).toBeLessThanOrEqual(8);
   poses.texture.dispose(); accessories.dispose(); load.mockRestore();
 });

@@ -1,6 +1,7 @@
 import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
-import { attribute } from 'three/tsl';
+import { attribute, instanceColor } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { crowdShirt, crowdVertexLayout } from './CrowdAppearance';
 import { batchRigidParts } from './batchRigidParts';
 import { AssetRegistry } from '../../assets/registry';
 import manifest from '../../assets/manifest.json';
@@ -10,7 +11,7 @@ import type { CrowdPosePalette } from './CrowdPosePalette';
 import { characterNodes } from '../../data/survivor';
 import type { Materials } from '../Materials';
 type Fit = { scale: number[]; offset: number[]; hasHeadwear?: boolean };
-type Accessory = { slot: string; tint?: string; fits: Record<string, Fit> };
+type Accessory = { slot: string; tint?: string; fits?: Record<string, Fit> };
 const definitions = new Map((manifest as unknown as { id: string; accessory?: Accessory }[]).map(a => [a.id, a.accessory]));
 const hairColors = hairTones.map(c => new Color(c));
 export type AccessoryLod = 'lod0' | 'lod1' | 'lod2';
@@ -30,10 +31,11 @@ export class CrowdAccessories extends Group {
     if (!this.ids.length) this.ids.push('acc.placeholder-hat', 'acc.placeholder-hair');
   }
   slot(e: EntitySnapshot): number {
-    // Uniforms, children and animals retain their authored headgear.
+    // Uniforms and animals retain their authored headgear.
+    if (e.civilian?.zooAnimal || e.archetype.startsWith('healthy.')) return 0;
     if (e.infected && !['infected.runner', 'infected.sprinter'].includes(e.archetype)) return 0;
     const model = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
-    if (e.civilian?.adult === false || /firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model)) return 0;
+    if (/firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model)) return 0;
     const explicit = e.appearance?.accessories.find(id => this.ids.includes(id));
     return explicit ? this.ids.indexOf(explicit) + 1 : crowdAppearance(e.id).accessory % (this.ids.length + 1);
   }
@@ -54,13 +56,14 @@ export class CrowdAccessories extends Group {
     this.fits.set(model, new Matrix4().makeScale(scale.x, scale.y, scale.z).setPosition(offset));
   }
   drawnSlot(e: EntitySnapshot, lod: string): string | null {
-    const slot = this.slot(e); return lod === 'lod2' || !slot ? null : this.ids[slot - 1];
+    if (lod === 'lod2') return null;
+    const slot = this.slot(e); return !slot ? null : this.ids[slot - 1];
   }
   async init(): Promise<void> {
     await Promise.all(this.ids.flatMap(id => (['lod0', 'lod1'] as const).map(lod => this.load(id, lod))));
   }
   private async load(id: string, lod: 'lod0' | 'lod1'): Promise<void> {
-    const material = this.shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
+    const material = this.shading?.shaded(attribute('color', 'vec3').mul(instanceColor)) ?? new MeshLambertNodeMaterial({ vertexColors: true });
     let geometry: BufferGeometry;
     if (id.startsWith('acc.placeholder-')) {
       geometry = new BoxGeometry(.27, id.endsWith('hair') ? .1 : .06, .28); geometry.translate(0, .4, 0);
@@ -113,17 +116,21 @@ export class CrowdAccessories extends Group {
     const mesh = this.batches.get(`${this.ids[slot - 1]}:${lod}`); if (!mesh || mesh.count >= 350) return;
     poses.part(frame, blend[0], blend[1], head, this.headTransform).premultiply(transform);
     const id = this.ids[slot - 1], model = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
-    const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits[base];
+    const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
     if (authored) this.fitTransform.makeScale(...authored.scale as [number, number, number]).setPosition(...authored.offset as [number, number, number]);
-    else this.fitTransform.copy(this.fits.get(model) ?? new Matrix4());
+    else { const fit = this.fits.get(model); if (fit) this.fitTransform.copy(fit); else this.fitTransform.identity(); }
     this.headTransform.multiply(this.fitTransform);
     mesh.setMatrixAt(mesh.count, this.headTransform);
-    mesh.setColorAt(mesh.count++, definitions.get(id)?.tint === 'hair' ? hairColors[crowdAppearance(e.id).hair] : new Color(1, 1, 1));
+    mesh.setColorAt(mesh.count++, definitions.get(id)?.tint === 'hair' ? hairColors[crowdAppearance(e.id).hair] : crowdShirt(e.id + 503));
     mesh.visible = true;
   }
   finish(): void {
-    for (const mesh of this.batches.values()) if (mesh.count) { mesh.instanceMatrix.clearUpdateRanges(); mesh.instanceMatrix.addUpdateRange(0, mesh.count * 16); mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor!.needsUpdate = true; }
+    for (const mesh of this.batches.values()) if (mesh.count) { mesh.instanceMatrix.clearUpdateRanges(); mesh.instanceMatrix.addUpdateRange(0, mesh.count * 16); mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor!.clearUpdateRanges(); mesh.instanceColor!.addUpdateRange(0, mesh.count * 3); mesh.instanceColor!.needsUpdate = true; }
   }
-  snapshot() { return [...this.batches].map(([id, mesh]) => ({ id, instances: mesh.count, draws: mesh.count ? 1 : 0, triangles: mesh.count * (mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count) / 3 })); }
+  snapshot() { return [...this.batches].map(([id, mesh]) => {
+    const raw = crowdVertexLayout(mesh.geometry, mesh.instanceMatrix), buffers = raw.buffers + Number(!!mesh.instanceColor), locations = raw.locations + Number(!!mesh.instanceColor);
+    return { id, instances: mesh.count, draws: mesh.count ? 1 : 0, triangles: mesh.count * (mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count) / 3,
+      layout: { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 } };
+  }); }
   dispose(): void { this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); this.clear(); }
 }
