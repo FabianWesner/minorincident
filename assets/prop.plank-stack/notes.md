@@ -11,3 +11,5 @@ LOD0 measured dimensions: 2.684 × 0.968 × 0.728 metres (Blender X/Y/Z). Manife
 WebGPU and WebGL2 study/game captures loaded the reduced GLB without console warnings or errors. Individual courses, staggered ends and both bindings read clearly in the game view.
 
 Final reduced hero re-rendered at 1600 × 900 / 96 samples and game view at 960 × 540 / 24 samples; both visually reviewed. LOD1: 780 triangles; LOD2: 460. Both lower levels also pass WebGPU/WebGL2 without warnings or errors.
+
+Distance tiers (QA 10-11, FIX-15): authored with `python3 tools/blender/run.py assets/prop.plank-stack/build.py --lod 1 --glb assets/prop.plank-stack/model.lod1.glb` (and `--lod 2`): 780 / 460 triangles, 15 solid boards plus rope. The generic simplifier flattened the stack into thin slabs. Then `npx tsx tools/assets/pack.ts prop.plank-stack`.
