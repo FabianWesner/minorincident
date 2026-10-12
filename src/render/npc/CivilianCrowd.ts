@@ -412,8 +412,8 @@ export class CivilianCrowd extends Group {
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
     for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
-    if (this.world.scenario === 'L7') {
-      // Each human belongs to one model. All its LOD batches share this frame's
+    {
+      // Each human belongs to one model (every scenario: the L3/L4 5x hordes made the per-batch full scan the view cost). All its LOD batches share this frame's
       // list instead of rescanning every prop, light and other crowd model.
       for (const list of this.figures.values()) list.length = 0;
       for (const e of this.world.entities.iterate()) {
@@ -422,7 +422,7 @@ export class CivilianCrowd extends Group {
         list.push(e);
       }
       for (const b of this.batches) b.update(alpha, this.low, undefined, this.figures.get(b.model) ?? noFigures);
-    } else for (const b of this.batches) b.update(alpha, this.low);
+    }
     for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish();
   }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts:states.map(s=>s.layout).filter(Boolean),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }

@@ -152,6 +152,8 @@ export interface L3State {
   gatesClosedAt: number;
   /** Finale chase packs and boom closure are checkpoint state, never renderer state. */
   waitingIds?: number[]; finaleAt?: number; finaleNextAt?: number; finalePacks?: number[]; finaleIds?: number[]; barrierClosedAt?: number;
+  /** Finale surges: since when the current group waits at the staging point, the last release, the released pursuers. */
+  stagedAt?: number; surgeAt?: number; surgedIds?: number[];
   /** All police (posts + squad designates), the squad designates, soldiers and medkit pickups. */
   officerIds: number[]; squadIds: number[]; soldierIds: number[]; medkitIds: number[];
   /** The live squad after the fallback (`farSince`: tick it first strayed beyond 40 m) and every loss with its cause. */
