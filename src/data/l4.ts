@@ -61,6 +61,8 @@ export const l4 = {
    * from the camp loudspeakers (positional, at the light towers and the reception) plus a quiet non-positional bed so it is always audible.
    * Full level for `holdS`, then it fades out over `fadeS` under the fight music (total 20-40 s). Synthesised in src/audio/synthesis.ts.
    */
+  /** The in-bus radio (PO 2026-10-12): low, muffled, from the bus until the alarm; `scoreTrim` lowers the adaptive score while it plays. */
+  radio: { gain: .2, cabHz: 3000, openHz: 1600, rangeM: 30, fadeS: 2.5, scoreTrim: .3 },
   alarm: { holdS: 24, fadeS: 8, periodS: 6, lowHz: 420, highHz: 640, speakerGain: 1.1, bedGain: .22, speakers: [[-31.2, 15.4], [-16.6, -12.2], [-26, -8.8]] as readonly P[] },
   /** First Alphas use the district street mouths on both quality tiers, inside the ordinary caps. */
   alphas: { count: { high: 3, low: 2 }, afterTurnS: [10, 22, 34] as readonly number[], lineHp: 300 },
