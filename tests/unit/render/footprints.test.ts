@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { describe, expect, it } from 'vitest';
 import { footprintCoverage, rasterFootprints, TRACK_SIZE, TRACK_LIFETIME } from '../../../src/render/FootprintMask';
 
@@ -30,6 +31,23 @@ describe('weather footprints', () => {
     expect(data.some((v, i) => i % 4 === 0 && v > 0)).toBe(true);
     expect(data.some((v, i) => i % 4 === 2 && v > 0)).toBe(true);
     expect(rasterFootprints(data, [track], TRACK_LIFETIME, 0, 0)).toBe(0);
+  });
+
+  it('T-E29-19-track-raster @E29-AC19 cached crowd probes preserve the shipped mask bytes', () => {
+    const tracks = Array.from({ length: 200 }, (_, i) => ({ id: i, x: Math.sin(i) * 7.8, y: i % 3 ? 0 : 3.9, z: Math.cos(i * 3) * 7.8, yaw: i * .71, tick: i, length: i % 2 ? .28 : .12, paw: !!(i % 2), side: i % 2 ? 1 : -1 }));
+    // Digests captured from the original four-probe rasterizer at both shipped resolutions.
+    for (const [size, pixels, digest] of [[256, 1773, '1162a134f7f734e3f822c5fa0a9c1ca0c12c8f8a19ac2745b545dbb8a13c640e'], [1024, 20537, '6298227fa42e0eb08cf15e2ae12da497ae8115c208f2387ae87a3b7b9a3703f2']] as const) {
+      const data = new Uint8Array(size * size * 4);
+      expect(rasterFootprints(data, tracks, 900, 0, 0)).toBe(pixels);
+      expect(createHash('sha256').update(data).digest('hex')).toBe(digest);
+      rasterFootprints(data, tracks, 900, 0, 0); // Reuse the coverage rather than recomputing four probes.
+      expect(createHash('sha256').update(data).digest('hex')).toBe(digest);
+    }
+    const low = new Uint8Array(256 ** 2 * 4);
+    for (const [tick, x, z, digest] of [[1000, 0, 0, '2d54a8b041844c5c149d14c26fce90f13f9e8c1cab8f74c481bc24c0fab857f6'], [1000, 4, -4, '3723275ae6bf690e28acd5866e7b6857824fac35ae1b2afaa6cb8cb8275e2943'], [1100, 0, 0, '2a80d8af069cdb6c86f2f016c869de073c4135f135b3733e51b6e2f4d4226f68']] as const) {
+      rasterFootprints(low, tracks, tick, x, z);
+      expect(createHash('sha256').update(low).digest('hex')).toBe(digest);
+    }
   });
 
 });

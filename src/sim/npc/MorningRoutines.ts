@@ -23,6 +23,17 @@ function routinePoint(world: SimWorld, p: Point): Point {
   return { x: nav.x(best), z: nav.z(best) };
 }
 
+/**
+ * A seated civilian whose state leaves calm/alarmed (flee, hide, grabbed, bitten...) is no longer on the seat: drop the seat from the
+ * current step (it becomes a plain look at the current spot) so no sitting pose or seat lift can follow them away from the bench.
+ */
+export function leaveSeat(e: EntitySnapshot): void {
+  const c = e.civilian!, step = c.scheduleStep ?? 0, activity = c.schedule?.[step];
+  if (!activity?.seat) return;
+  c.schedule![step] = { activity: 'look', anchor: activity.anchor, target: { x: e.transform.x, z: e.transform.z }, facing: activity.facing, ticks: activity.ticks };
+  c.activityUntil = 0; c.activityStarted = 0; c.lastTravelProgress = undefined;
+}
+
 /** Only calm civilians own their schedule. Notice/grab/flight always take priority. */
 export function updateRoutine(world: SimWorld, e: EntitySnapshot): void {
   const c = e.civilian!, schedule = c.schedule!;

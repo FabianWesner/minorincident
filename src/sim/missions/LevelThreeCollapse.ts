@@ -96,6 +96,7 @@ export class LevelThreeCollapse {
     world.npcs.setAmbient(0);
     // L3-default progression (bat + axe from L1/L2) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.kick']);
+    world.combat?.withholdPickups('weapon.handgun');
     this.spawnOfficers();
     this.spawnSoldiers();
     this.spawnCorpses();

@@ -2,6 +2,16 @@ import type { PaletteToken } from '../data/palette';
 export const statuses = ['placeholder', 'reference', 'upscaled', 'scripted', 'modeled', 'integrated', 'final'] as const;
 export type AssetStatus = typeof statuses[number];
 export type AssetQuality = 'high' | 'low' | 'lod0' | 'lod1' | 'lod2';
+/** Fit of one accessory family on one base rig: scale about the head node, then translate (glTF Y-up head-node space, base source metres). */
+export interface AccessoryFit { scale: [number, number, number]; offset: [number, number, number] }
+export interface AccessoryDef {
+  slot: 'hat' | 'hair';
+  attach: 'head';
+  /** Neutral material: the crowd tints it per instance (hair colours, hat colours). */
+  tint: 'hair' | 'hat';
+  /** Base assets whose head fits this piece; `hasHeadwear` bases already wear a hat or bun and need the base headwear hidden. */
+  fits: Record<string, AccessoryFit & { hasHeadwear?: boolean }>;
+}
 export interface AssetDef {
   /** Runtime leaf crowns in asset-local Y-up metres; layouts export these as foliage empties. */
   foliage?: { colors: [string, string]; tokens?: [PaletteToken, PaletteToken]; crowns: { position: [number, number, number]; radius: [number, number, number] }[] };
@@ -25,7 +35,9 @@ export interface AssetDef {
   presentationSource?: string;
   /** District code placeholder palette and collision ownership. */
   world?: { token: import("../data/palette").PaletteToken; solid: boolean };
-  category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui';
+  category: 'vehicle' | 'character' | 'infected' | 'weapon' | 'prop' | 'building' | 'tile' | 'fx' | 'ui' | 'accessory';
+  /** Crowd accessory (hat or hair piece) parented to a base rig's head node; see assets/<id>/notes.md. */
+  accessory?: AccessoryDef;
   status: AssetStatus;
   tier: 'hero' | 'side' | 'distant';
   script?: string;

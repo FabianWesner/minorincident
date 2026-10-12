@@ -1,0 +1,3263 @@
+[
+  {
+    "species": "lion",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "high",
+    "spec": "tests/scenes/l8-systems/lion.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1432,
+      "loadMs": 2821,
+      "runMs": 2083,
+      "sceneMs": 4904
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 95660,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-lion",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-lion",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 71529,
+          "p95": 94636,
+          "max": 95660
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49137,
+          "p95": 72929,
+          "max": 72929
+        },
+        "stepMs": {
+          "p50": 0.5,
+          "p95": 1.4,
+          "max": 447.9
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 86444,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 72929,
+          "stepMs": 1.4000005722045898,
+          "categories": {
+            "other": 14,
+            "shadows": 15,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 307,
+        "bites": 1,
+        "firstBiteFrame": 152
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -2.43,
+            5.254
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 84.3,
+            "torsoPitchMaxDeg": 87,
+            "contacts": 0,
+            "slideMaxCm": 0,
+            "slideP95Cm": null,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 0,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": null
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.055,
+            3.476
+          ],
+          "yawDeg": -29,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 310,
+            "lod0": 290
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.4,
+            "torsoPitchMaxDeg": 84.5,
+            "contacts": 23,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 2.9,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 18.4,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 0,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 4.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "gorilla",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "high",
+    "spec": "tests/scenes/l8-systems/gorilla.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1432,
+      "loadMs": 4447,
+      "runMs": 1882,
+      "sceneMs": 6329
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 100614,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-gorilla",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-gorilla",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 70934,
+          "p95": 99590,
+          "max": 100614
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49137,
+          "p95": 72929,
+          "max": 72929
+        },
+        "stepMs": {
+          "p50": 0.7,
+          "p95": 1.5,
+          "max": 135.2
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 91398,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 72929,
+          "stepMs": 2.700000762939453,
+          "categories": {
+            "other": 14,
+            "shadows": 15,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 306,
+        "bites": 1,
+        "firstBiteFrame": 151
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -1.53,
+            3.306
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 40.2,
+            "torsoPitchMaxDeg": 66,
+            "contacts": 21,
+            "slideMaxCm": 2.6,
+            "slideP95Cm": 1.3,
+            "yawDriftMaxDeg": 3.9,
+            "liftMaxCm": 12.5,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 2,
+            "worstSlideFrame": 1
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.053,
+            3.481
+          ],
+          "yawDeg": -28.7,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 310,
+            "lod0": 290
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.4,
+            "torsoPitchMaxDeg": 84.5,
+            "contacts": 23,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 2.9,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 17.7,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 0,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 4.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "elephant",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "high",
+    "spec": "tests/scenes/l8-systems/elephant.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1432,
+      "loadMs": 3169,
+      "runMs": 1629,
+      "sceneMs": 4798
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 99910,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-elephant",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-elephant",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 76118,
+          "p95": 98886,
+          "max": 99910
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49137,
+          "p95": 72929,
+          "max": 72929
+        },
+        "stepMs": {
+          "p50": 0.9,
+          "p95": 2.2,
+          "max": 58.6
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 85668,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 72929,
+          "stepMs": 0.6000003814697266,
+          "categories": {
+            "other": 14,
+            "shadows": 15,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 304,
+        "bites": 1,
+        "firstBiteFrame": 143
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -1.196,
+            2.586
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 345,
+            "lod1": 255
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 83.3,
+            "torsoPitchMaxDeg": 84.7,
+            "contacts": 27,
+            "slideMaxCm": 324.6,
+            "slideP95Cm": 4.6,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 58.2,
+            "sinkMaxCm": 0.1,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 1
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.038,
+            3.509
+          ],
+          "yawDeg": -27,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 310,
+            "lod0": 290
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 22.8,
+            "torsoPitchMaxDeg": 84.5,
+            "contacts": 23,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 2.7,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 17.7,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 0,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 4.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "zebra",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "high",
+    "spec": "tests/scenes/l8-systems/zebra.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1432,
+      "loadMs": 2738,
+      "runMs": 1939,
+      "sceneMs": 4677
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 96216,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-zebra",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-zebra",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [
+        {
+          "a": "animal",
+          "b": "biter",
+          "depthCm": 15.4,
+          "frame": 96,
+          "count": 13
+        }
+      ],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 72424,
+          "p95": 95192,
+          "max": 96216
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49137,
+          "p95": 72929,
+          "max": 72929
+        },
+        "stepMs": {
+          "p50": 0.5,
+          "p95": 1.7,
+          "max": 484.8
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 83984,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 72929,
+          "stepMs": 0.6000003814697266,
+          "categories": {
+            "other": 14,
+            "shadows": 15,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 307,
+        "bites": 1,
+        "firstBiteFrame": 154
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -2.007,
+            4.339
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 356,
+            "lod1": 244
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 80.3,
+            "torsoPitchMaxDeg": 80.3,
+            "contacts": 36,
+            "slideMaxCm": 281.6,
+            "slideP95Cm": 257.7,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 39.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 1
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.06,
+            3.468
+          ],
+          "yawDeg": -29.5,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 310,
+            "lod0": 290
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.3,
+            "torsoPitchMaxDeg": 84.5,
+            "contacts": 24,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 2.9,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 17.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 2,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 0,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 4.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "flamingo",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "high",
+    "spec": "tests/scenes/l8-systems/flamingo.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1432,
+      "loadMs": 2886,
+      "runMs": 1721,
+      "sceneMs": 4607
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 99202,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-flamingo",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-flamingo",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "high",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [
+        {
+          "a": "animal",
+          "b": "biter",
+          "depthCm": 16.5,
+          "frame": 204,
+          "count": 17
+        }
+      ],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 68464,
+          "p95": 98178,
+          "max": 99202
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49137,
+          "p95": 72929,
+          "max": 72929
+        },
+        "stepMs": {
+          "p50": 0.9,
+          "p95": 1.8,
+          "max": 181.4
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 89986,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 72929,
+          "stepMs": 0.8000001907348633,
+          "categories": {
+            "other": 14,
+            "shadows": 15,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 307,
+        "bites": 1,
+        "firstBiteFrame": 156
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -1.693,
+            3.662
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.7,
+            "torsoPitchMaxDeg": 26.6,
+            "contacts": 16,
+            "slideMaxCm": 21.2,
+            "slideP95Cm": 18.9,
+            "yawDriftMaxDeg": 3.9,
+            "liftMaxCm": 24,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 3,
+            "worstSlideFrame": 556
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.066,
+            3.458
+          ],
+          "yawDeg": -30.1,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod1": 310,
+            "lod0": 290
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.4,
+            "torsoPitchMaxDeg": 84.5,
+            "contacts": 23,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 2.9,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 17.3,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 0,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 4.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "lion",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "low",
+    "spec": "tests/scenes/l8-systems/phone/lion.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1348,
+      "loadMs": 1125,
+      "runMs": 776,
+      "sceneMs": 1901
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 58521,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-lion-phone",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-lion-phone",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "low",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [
+        {
+          "a": "animal",
+          "b": "biter",
+          "depthCm": 4.4,
+          "frame": 210,
+          "count": 1
+        }
+      ],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 55042,
+          "p95": 58114,
+          "max": 58521
+        },
+        "shadowDrawCalls": {
+          "p50": 9,
+          "p95": 9,
+          "max": 9
+        },
+        "shadowTriangles": {
+          "p50": 44628,
+          "p95": 44628,
+          "max": 44628
+        },
+        "stepMs": {
+          "p50": 0.6,
+          "p95": 1.1,
+          "max": 21
+        },
+        "lastFrame": {
+          "drawCalls": 15,
+          "triangles": 50945,
+          "shadowDrawCalls": 9,
+          "shadowTriangles": 44628,
+          "stepMs": 1.3000001907348633,
+          "categories": {
+            "other": 13,
+            "shadows": 9,
+            "crowd": 2
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 307,
+        "bites": 1,
+        "firstBiteFrame": 152
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -2.43,
+            5.254
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 84.3,
+            "torsoPitchMaxDeg": 87,
+            "contacts": 0,
+            "slideMaxCm": 0,
+            "slideP95Cm": null,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 0,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": null
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.055,
+            3.476
+          ],
+          "yawDeg": -29,
+          "state": "chase",
+          "drawnFrames": 572,
+          "inViewFrames": 536,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 236,
+            "lod1": 336
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.4,
+            "torsoPitchMaxDeg": 84.8,
+            "contacts": 24,
+            "slideMaxCm": 22.3,
+            "slideP95Cm": 4.6,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 18.7,
+            "sinkMaxCm": 0.3,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 166
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 529,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 5.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "gorilla",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "low",
+    "spec": "tests/scenes/l8-systems/phone/gorilla.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1348,
+      "loadMs": 2959,
+      "runMs": 738,
+      "sceneMs": 3697
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 60326,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-gorilla-phone",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-gorilla-phone",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "low",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 56928,
+          "p95": 59302,
+          "max": 60326
+        },
+        "shadowDrawCalls": {
+          "p50": 9,
+          "p95": 9,
+          "max": 9
+        },
+        "shadowTriangles": {
+          "p50": 44628,
+          "p95": 44628,
+          "max": 44628
+        },
+        "stepMs": {
+          "p50": 0.6,
+          "p95": 1,
+          "max": 21.4
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 57254,
+          "shadowDrawCalls": 9,
+          "shadowTriangles": 44628,
+          "stepMs": 0.5999994277954102,
+          "categories": {
+            "other": 14,
+            "shadows": 9,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 306,
+        "bites": 1,
+        "firstBiteFrame": 151
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -1.53,
+            3.306
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 40.2,
+            "torsoPitchMaxDeg": 66,
+            "contacts": 19,
+            "slideMaxCm": 2.6,
+            "slideP95Cm": 2.6,
+            "yawDriftMaxDeg": 17.9,
+            "liftMaxCm": 13.7,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 2,
+            "worstSlideFrame": 1
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.053,
+            3.481
+          ],
+          "yawDeg": -28.7,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 551,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 236,
+            "lod1": 364
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.4,
+            "torsoPitchMaxDeg": 84.8,
+            "contacts": 24,
+            "slideMaxCm": 26.9,
+            "slideP95Cm": 4.3,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 20.7,
+            "sinkMaxCm": 0.2,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 166
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 540,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 5.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "elephant",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "low",
+    "spec": "tests/scenes/l8-systems/phone/elephant.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1348,
+      "loadMs": 3748,
+      "runMs": 933,
+      "sceneMs": 4681
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 54515,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-elephant-phone",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-elephant-phone",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "low",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 51443,
+          "p95": 54467,
+          "max": 54515
+        },
+        "shadowDrawCalls": {
+          "p50": 9,
+          "p95": 9,
+          "max": 9
+        },
+        "shadowTriangles": {
+          "p50": 44628,
+          "p95": 44628,
+          "max": 44628
+        },
+        "stepMs": {
+          "p50": 0.8,
+          "p95": 1.5,
+          "max": 28.2
+        },
+        "lastFrame": {
+          "drawCalls": 17,
+          "triangles": 51443,
+          "shadowDrawCalls": 9,
+          "shadowTriangles": 44628,
+          "stepMs": 0.5999994277954102,
+          "categories": {
+            "other": 14,
+            "shadows": 9,
+            "crowd": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 304,
+        "bites": 1,
+        "firstBiteFrame": 143
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -1.196,
+            2.586
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 83.3,
+            "torsoPitchMaxDeg": 84.7,
+            "contacts": 27,
+            "slideMaxCm": 328.7,
+            "slideP95Cm": 5,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 58.7,
+            "sinkMaxCm": 0.2,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 1
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.038,
+            3.509
+          ],
+          "yawDeg": -27,
+          "state": "chase",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 22.8,
+            "torsoPitchMaxDeg": 84.8,
+            "contacts": 26,
+            "slideMaxCm": 27.6,
+            "slideP95Cm": 3.1,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 19.6,
+            "sinkMaxCm": 0.4,
+            "jitterRunMax": 2,
+            "worstSlideFrame": 166
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 588,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 5.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "zebra",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "low",
+    "spec": "tests/scenes/l8-systems/phone/zebra.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1348,
+      "loadMs": 1359,
+      "runMs": 1152,
+      "sceneMs": 2511
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 57378,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-zebra-phone",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-zebra-phone",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "low",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [
+        {
+          "a": "animal",
+          "b": "biter",
+          "depthCm": 10.9,
+          "frame": 96,
+          "count": 11
+        }
+      ],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 54262,
+          "p95": 57378,
+          "max": 57378
+        },
+        "shadowDrawCalls": {
+          "p50": 9,
+          "p95": 9,
+          "max": 9
+        },
+        "shadowTriangles": {
+          "p50": 44628,
+          "p95": 44628,
+          "max": 44628
+        },
+        "stepMs": {
+          "p50": 0.8,
+          "p95": 1.6,
+          "max": 139.5
+        },
+        "lastFrame": {
+          "drawCalls": 15,
+          "triangles": 49758,
+          "shadowDrawCalls": 9,
+          "shadowTriangles": 44628,
+          "stepMs": 0.6000003814697266,
+          "categories": {
+            "other": 13,
+            "shadows": 9,
+            "crowd": 2
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 307,
+        "bites": 1,
+        "firstBiteFrame": 154
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -2.007,
+            4.339
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 80.3,
+            "torsoPitchMaxDeg": 80.3,
+            "contacts": 36,
+            "slideMaxCm": 281.6,
+            "slideP95Cm": 257.7,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 39.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 1
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.06,
+            3.468
+          ],
+          "yawDeg": -29.5,
+          "state": "chase",
+          "drawnFrames": 585,
+          "inViewFrames": 540,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 236,
+            "lod1": 349
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.3,
+            "torsoPitchMaxDeg": 84.8,
+            "contacts": 24,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 3.5,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 17.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 532,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 5.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  },
+  {
+    "species": "flamingo",
+    "seed": 30,
+    "backend": "webgl",
+    "tier": "low",
+    "spec": "tests/scenes/l8-systems/phone/flamingo.json",
+    "requestedBackend": "webgl2",
+    "frames": 600,
+    "timing": {
+      "openMs": 1348,
+      "loadMs": 1210,
+      "runMs": 951,
+      "sceneMs": 2161
+    },
+    "checks": {
+      "pass": true,
+      "checks": [
+        {
+          "name": "consoleErrors",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "undrawnFramesMax",
+          "pass": true,
+          "value": 0,
+          "limit": 0
+        },
+        {
+          "name": "drawCallsMax",
+          "pass": true,
+          "value": 21,
+          "limit": 600
+        },
+        {
+          "name": "trianglesMax",
+          "pass": true,
+          "value": 58486,
+          "limit": 1500000
+        }
+      ]
+    },
+    "consoleErrors": [],
+    "scene": {
+      "name": "qa-l8-turn-flamingo-phone",
+      "frame": 0,
+      "placements": [],
+      "actors": [
+        {
+          "id": "animal",
+          "kind": "animal",
+          "entity": 3
+        },
+        {
+          "id": "biter",
+          "kind": "infected",
+          "entity": 4
+        },
+        {
+          "id": "courier",
+          "kind": "courier",
+          "entity": 1
+        }
+      ],
+      "vehicles": {}
+    },
+    "metrics": {
+      "armyBoom": null,
+      "scene": "qa-l8-turn-flamingo-phone",
+      "frame": 600,
+      "tick": 600,
+      "backend": "webgl",
+      "quality": "low",
+      "propPenetration": {
+        "samples": 1628,
+        "framesMax": 0,
+        "pairs": []
+      },
+      "props": {
+        "sinkMaxCm": 0,
+        "samples": 0,
+        "gaps": []
+      },
+      "bodies": [
+        {
+          "a": "animal",
+          "b": "biter",
+          "depthCm": 19.1,
+          "frame": 156,
+          "count": 13
+        }
+      ],
+      "wheels": {},
+      "perf": {
+        "drawCalls": {
+          "p50": 16,
+          "p95": 19,
+          "max": 21
+        },
+        "triangles": {
+          "p50": 55414,
+          "p95": 57462,
+          "max": 58486
+        },
+        "shadowDrawCalls": {
+          "p50": 9,
+          "p95": 9,
+          "max": 9
+        },
+        "shadowTriangles": {
+          "p50": 44628,
+          "p95": 44628,
+          "max": 44628
+        },
+        "stepMs": {
+          "p50": 0.8,
+          "p95": 1.5,
+          "max": 21.6
+        },
+        "lastFrame": {
+          "drawCalls": 15,
+          "triangles": 50910,
+          "shadowDrawCalls": 9,
+          "shadowTriangles": 44628,
+          "stepMs": 1.1999998092651367,
+          "categories": {
+            "other": 13,
+            "shadows": 9,
+            "crowd": 2
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "vehicles": {},
+      "pursuit": {
+        "actors": {
+          "biter": {
+            "stuckRunMax": 3,
+            "stuckFrame": 46,
+            "lostNearFrames": 0,
+            "overshootMaxM": 0
+          }
+        },
+        "courierSwings": 6,
+        "courierAttacks": 6,
+        "firstAttackFrame": 307,
+        "bites": 1,
+        "firstBiteFrame": 156
+      },
+      "heldProps": {
+        "samples": 0,
+        "intersections": 0
+      },
+      "companion": {
+        "overlapMaxCm": 0,
+        "overlapFrame": 0,
+        "runLagMaxM": 0,
+        "runLagFrame": 0,
+        "samples": 0,
+        "runningSamples": 0
+      },
+      "bike": {
+        "inViewFrames": 0,
+        "missedFrames": 0,
+        "offFrames": 0,
+        "maxOffsetCm": 0,
+        "firstMissedFrame": -1
+      },
+      "actors": {
+        "animal": {
+          "kind": "animal",
+          "entity": 3,
+          "position": [
+            -1.693,
+            3.662
+          ],
+          "yawDeg": -114.8,
+          "state": "wander",
+          "drawnFrames": 600,
+          "inViewFrames": 600,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              0,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.7,
+            "torsoPitchMaxDeg": 26.6,
+            "contacts": 15,
+            "slideMaxCm": 2.9,
+            "slideP95Cm": 2.4,
+            "yawDriftMaxDeg": 16.3,
+            "liftMaxCm": 24.5,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 1,
+            "worstSlideFrame": 509
+          }
+        },
+        "biter": {
+          "kind": "infected",
+          "entity": 4,
+          "position": [
+            5.066,
+            3.458
+          ],
+          "yawDeg": -30.1,
+          "state": "chase",
+          "drawnFrames": 599,
+          "inViewFrames": 546,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod2": 237,
+            "lod1": 362
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              -3,
+              0
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 23.4,
+            "torsoPitchMaxDeg": 84.8,
+            "contacts": 25,
+            "slideMaxCm": 4.6,
+            "slideP95Cm": 2.2,
+            "yawDriftMaxDeg": 13.8,
+            "liftMaxCm": 19.4,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 2,
+            "worstSlideFrame": 3
+          }
+        },
+        "courier": {
+          "kind": "courier",
+          "entity": 1,
+          "position": [
+            6,
+            4
+          ],
+          "yawDeg": 0,
+          "state": "idle",
+          "drawnFrames": 600,
+          "inViewFrames": 536,
+          "missedInViewFrames": 0,
+          "lod": {
+            "lod0": 600
+          },
+          "firstDrawn": {
+            "frame": 1,
+            "at": [
+              6,
+              4
+            ]
+          },
+          "farLodCloseFrames": 0,
+          "motion": {
+            "frames": 600,
+            "torsoPitchMinDeg": 2.4,
+            "torsoPitchMaxDeg": 3.5,
+            "contacts": 3,
+            "slideMaxCm": 0,
+            "slideP95Cm": 0,
+            "yawDriftMaxDeg": 0,
+            "liftMaxCm": 5.6,
+            "sinkMaxCm": 0,
+            "jitterRunMax": 0,
+            "worstSlideFrame": 10
+          }
+        }
+      },
+      "clicks": {
+        "total": 0,
+        "misses": 0,
+        "rows": [],
+        "swings": []
+      },
+      "visibility": {
+        "frame": 600,
+        "sim": {
+          "infected": 1,
+          "animal": 1,
+          "courier": 1,
+          "actors": 3
+        },
+        "drawn": {
+          "vehicle": 0,
+          "infected": 1,
+          "animal": 1,
+          "courier": 1
+        }
+      },
+      "lods": {},
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      },
+      "emergence": null,
+      "doors": {},
+      "log": []
+    },
+    "clipping": {
+      "static": [],
+      "actors": [],
+      "gunBodies": [],
+      "heldProps": [],
+      "summary": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  }
+]

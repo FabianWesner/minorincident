@@ -10,6 +10,7 @@ import type { CivilianActivity, CivilianProp, CivilianState, Point } from '../np
 import { keepsLook, type Appearance } from './appearance';
 import { HumanTargets } from './humans';
 import { updateAlly } from './Allies';
+import { leaveSeat } from '../npc/MorningRoutines';
 import { updateSurvivor } from './Survivors';
 import type { BiteEvent, InfectionPhase, LosBlockerRegistry, SpeedTier, Vec2 } from './types';
 
@@ -163,12 +164,13 @@ export class Outbreak {
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
-      const c = e.civilian; if (!c || c.pet || !c.l1) continue;
+      const c = e.civilian; if (!c || c.pet && !c.zooAnimal || !c.l1) continue;
       // Inside a shop/house for a routine visit: only the routine clock runs.
       if (e.hidden) { if (c.state === 'calm' && !e.infection) this.routine(e); continue; }
       if (e.infection) { this.transform(e); continue; }
       if (c.state === 'grabbed') { this.held(e); continue; }
       if (c.state === 'finished' || c.state === 'infected') continue;
+      if (c.zooAnimal) { this.animalRoutine(e); continue; }
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if (world.missions?.l6 && c.survivor && updateSurvivor(world,e)) continue;
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
@@ -191,6 +193,7 @@ export class Outbreak {
 
   private state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.world.npcs!.civilians.release(c.attacker);
+    if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
     c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
@@ -346,7 +349,7 @@ export class Outbreak {
       // Alpha hits a soldier's health/knockdown path rather than starting the civilian bite hold.
       if (a.archetype === 'infected.alpha' && e.civilian!.ally?.role === 'soldier') continue;
       if (a.combat && a.combat.staggerUntil > this.world.tick) continue;
-      if (Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) > l1Pedestrians.grabReachM + (a.combat?.radius ?? .35)) continue;
+      if (Math.hypot(a.transform.x - e.transform.x, a.transform.z - e.transform.z) > l1Pedestrians.grabReachM + (a.combat?.radius ?? .35) + (e.civilian?.zooAnimal ? e.combat?.radius ?? .35 : 0) || !this.sees(a.transform, e.transform, a.id)) continue;
       this.grab(e, a); return;
     }
   }
@@ -371,7 +374,7 @@ export class Outbreak {
       return;
     }
     const broken = !attacker?.infected || attacker.health.current <= 0 || this.rescue.has(c.attacker) || (attacker.combat?.staggerUntil ?? 0) > tick
-      || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > l1Pedestrians.grabBreakM;
+      || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > Math.max(l1Pedestrians.grabBreakM, (attacker.combat?.radius ?? .35) + (e.combat?.radius ?? .35) + 1.1);
     if (broken) { this.rescue.delete(c.attacker); this.rescued(e); }
     else if (tick >= c.until) this.bite(e, attacker!);
   }
@@ -379,6 +382,18 @@ export class Outbreak {
     const c = e.civilian!, tick = this.world.tick; this.stats.rescued++;
     this.state(e, 'flee'); c.l1!.repickAt = tick; c.l1!.graceUntil = tick + ticks(1);
     this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
+  }
+  /** Healthy animals stay in their authored enclosure loop; no hostile brain or human refuge removal. */
+  private animalRoutine(e: EntitySnapshot): void {
+    const c = e.civilian!, target = c.waypoints[c.waypoint];
+    if (this.world.tick >= c.pauseUntil && target) {
+      if (Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= .2 || !this.world.npcs!.move(e, target, c.l1!.walkSpeed, c, .08)) {
+        c.waypoint = (c.waypoint + 1) % c.waypoints.length;
+        c.pauseUntil = this.world.tick + 90;
+        this.face(e, c.waypoints[c.waypoint], .2);
+      }
+    } else if (target) this.face(e, target, .2);
+    if (!this.aiBites() && this.world.tick % 2 === e.id % 2) this.contact(e);
   }
   /** At the infected cap a bite kills instead of turning (section 5.9). */
   private canTurn(): boolean {
@@ -408,7 +423,8 @@ export class Outbreak {
 
   /** Start the 3.0 +/- 0.5 s transformation of the same entity (stagger, collapse, eyes, rise). */
   infect(e: EntitySnapshot, sourceId: number): void {
-    if (storyProtected(this.world, e)) return;
+    if (storyProtected(this.world, e) || e.infection || e.infected || e.civilian?.state === 'finished') return;
+    this.humans.invalidate();
     const tick = this.world.tick, total = ticks(civ.transformS + (this.rng.next() * 2 - 1) * civ.transformJitterS);
     this.dropProp(e);
     e.infection = { entityId: e.id, progress: 0, phase: 'stagger', tier: e.appearance?.tier ?? 'average', startedTick: tick, endsTick: tick + total, biteSourceId: sourceId };
@@ -432,7 +448,7 @@ export class Outbreak {
       else if (phase === 'rise') this.state(e, 'rising', ticks(phaseS.rise));
       if (phase !== 'infected') this.world.events.emit({ type: 'outbreak.infection', tick, entityId: e.id, phase, progress: inf.progress });
     }
-    if (phase === 'stagger') {
+    if (phase === 'stagger' && !c.zooAnimal) {
       // Bite reaction: a short stumble away from the biter, clutching the wound.
       const source = this.world.entities.get(inf.biteSourceId)?.transform ?? c.threat;
       const dx = e.transform.x - source.x, dz = e.transform.z - source.z, d = Math.hypot(dx, dz) || 1;
@@ -443,10 +459,10 @@ export class Outbreak {
   /** The same entity becomes an infected: same id, asset, tint, accessories; speed from its tier (section 5.4). */
   private rise(e: EntitySnapshot, bitten = true): void {
     const ai = this.world.infected!, tick = this.world.tick, c = e.civilian!, inf = e.infection!;
-    const nav = ai.nav, cell = nav.clear(e.transform.x, e.transform.z, .4) ? -1 : nav.nearestCell(e.transform.x, e.transform.z);
+    const nav = ai.nav, cell = c.zooAnimal ? -1 : nav.clear(e.transform.x, e.transform.z, .4) ? -1 : nav.nearestCell(e.transform.x, e.transform.z);
     const at = cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: e.transform.x, z: e.transform.z };
     let id: number;
-    try { id = ai.spawn('infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
+    try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
     catch { delete e.infection; this.kill(e); return; }
     const pooled = this.world.entities.get(id)!;
     this.world.entities.delete(id); this.world.spatial.delete(id);
@@ -455,8 +471,9 @@ export class Outbreak {
     e.infected = pooled.infected; e.combat = pooled.combat; e.health = pooled.health;
     Object.assign(e.transform, at);
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
-    if (!e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
-    delete e.civilian; delete e.infection; delete e.motion;
+    if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
+    delete e.civilian; delete e.infection; delete e.motion; if (c.zooAnimal) delete e.locomotion;
+    this.humans.invalidate();
     for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) pet.civilian.owner = null;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     if (!bitten) return;
@@ -477,7 +494,7 @@ export class Outbreak {
   }
   /** Live pedestrians (not escaped, not turning, not dead). */
   liveCivilians(): number {
-    let count = 0; for (const e of this.world.entities.iterate()) if (e.civilian?.l1 && !e.hidden && !e.infection && mobile.has(e.civilian.state)) count++; return count;
+    let count = 0; for (const e of this.world.entities.iterate()) if (e.civilian?.l1 && !e.civilian.zooAnimal && !e.hidden && !e.infection && mobile.has(e.civilian.state)) count++; return count;
   }
   /** Checkpoint restore (after `Npcs.restore` shifted entity timers by `delta`): layer-level clocks only. */
   restore(delta: number): void {

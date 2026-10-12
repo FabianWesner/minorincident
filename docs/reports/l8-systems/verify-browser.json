@@ -1,0 +1,526 @@
+{
+  "stats": {
+    "startTime": "2026-10-12T14:34:18.889Z",
+    "duration": 1320907.494,
+    "expected": 32,
+    "skipped": 2,
+    "unexpected": 5,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 9030
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 8880
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 8549
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 8681
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 8659
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 11476
+        }
+      ]
+    },
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "timedOut",
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+            },
+            {
+              "location": {
+                "file": "/srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/ui-helpers.ts",
+                "column": 14,
+                "line": 19
+              },
+              "message": "Error: page.evaluate: Test timeout of 180000ms exceeded.\n\n   at e2e/ui-helpers.ts:19\n\n  17 |   await keyboardActivate(page, 'mission-button');\n  18 |   // Campaign navigation can still be preparing sound after the briefing appears.\n> 19 |   await page.evaluate(() => window.__SS__!.screenshotReady());\n     |              ^\n  20 |   await expect(page.getByTestId('pause-button')).toBeVisible();\n  21 | }\n  22 | export async function hudStart(page: Page): Promise<void> {\n    at menuStart (/srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/ui-helpers.ts:19:14)\n    at /srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/controls-playtest.spec.ts:9:3"
+            }
+          ],
+          "duration": 185534
+        }
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "timedOut",
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 120000ms exceeded.\u001b[39m"
+            }
+          ],
+          "duration": 126267
+        }
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "errors": [
+            {
+              "location": {
+                "file": "http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js",
+                "column": 1545,
+                "line": 576
+              },
+              "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at HB.createAttribute (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:576:1545)\n    at ik.createAttribute (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:579:35882)\n    at yN.update (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:83238)\n    at xN.updateAttribute (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:85969)\n    at xN.updateAttributes (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:85447)\n    at xN.updateForRender (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:84654)\n    at zi.compileAsync (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:41:48387)\n    at async rm.load (http://127.0.0.1:41999/build/index-Gsaffv3A.js:9:526505)\n    at async http://127.0.0.1:41999/build/index-Gsaffv3A.js:12:38060\n    at HB.createAttribute (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:576:1545)\n    at ik.createAttribute (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:579:35882)\n    at yN.update (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:83238)\n    at xN.updateAttribute (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:85969)\n    at xN.updateAttributes (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:85447)\n    at xN.updateForRender (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:33:84654)\n    at zi.compileAsync (http://127.0.0.1:41999/build/WeatherView-B1LUQ6Fk.js:41:48387)\n    at async rm.load (http://127.0.0.1:41999/build/index-Gsaffv3A.js:9:526505)\n    at async http://127.0.0.1:41999/build/index-Gsaffv3A.js:12:38060\n    at boot (/srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/fixtures.ts:47:14)\n    at /srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/crowd-drawn.spec.ts:23:5"
+            },
+            {
+              "location": {
+                "file": "/srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/fixtures.ts",
+                "column": 81,
+                "line": 39
+              },
+              "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+   \"pageerror: Cannot read properties of undefined (reading 'destroy')\",\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/fixtures.ts:39:81)"
+            }
+          ],
+          "duration": 2210
+        }
+      ]
+    },
+    {
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 37090
+        }
+      ]
+    },
+    {
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 13074
+        }
+      ]
+    },
+    {
+      "title": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "timedOut",
+          "errors": [
+            {
+              "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+            }
+          ],
+          "duration": 180002
+        }
+      ]
+    },
+    {
+      "title": "T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+      "project": "chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "errors": [],
+          "duration": 0
+        }
+      ]
+    },
+    {
+      "title": "T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+      "project": "chromium",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "errors": [],
+          "duration": 0
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-lion-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 14838
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-gorilla-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 28121
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-elephant-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 29127
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-zebra-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 44469
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-flamingo-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 50728
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-lion-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 43694
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-gorilla-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 24528
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-elephant-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 20874
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-zebra-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 20063
+        }
+      ]
+    },
+    {
+      "title": "T-E30-09-flamingo-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 19310
+        }
+      ]
+    },
+    {
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 101750
+        }
+      ]
+    },
+    {
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 83394
+        }
+      ]
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "errors": [
+            {
+              "location": {
+                "file": "/srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/save.spec.ts",
+                "column": 137,
+                "line": 82
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Mission briefing' })\nExpected: visible\nTimeout: 60000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Mission briefing' }) with timeout 60000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Mission briefing' })\u001b[22m\n\n\n  80 |   await page.locator('[data-audio-controls] summary').click();await page.getByRole('checkbox',{name:'Mono audio',exact:true}).check();save.settings.mono=true;\n  81 |   await page.reload();await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);\n> 82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});\n     |                                                                                                                                         ^\n  83 |   await page.evaluate(()=>window.__SS__!.screenshotReady());\n  84 |   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);\n  85 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n    at /srv/mi/jobs/l8-systems-3b7da3-53725-1791815187/tests/e2e/save.spec.ts:82:137"
+            }
+          ],
+          "duration": 116673
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 3536
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1941
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1814
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1801
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1891
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1708
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1876
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1806
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1854
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 1483
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 2744
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "errors": [],
+          "duration": 4172
+        }
+      ]
+    }
+  ]
+}

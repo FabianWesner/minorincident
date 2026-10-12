@@ -50,6 +50,16 @@ export class Combat {
     const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
     this.runner = new ActionRunner(1, loadout, this.runner.lastAttackId); this.runner.infiniteCharges = infinite; this.attach();
   }
+  /**
+   * A level's own pickup is never owned at the level start (a replayed level or a saved rack may still carry it): remove the
+   * given actions from both racks, keep the rest, and fall back to fists/kick when a side would be empty.
+   */
+  withholdPickups(...ids: string[]): void {
+    const st = this.runner.loadout.state, drop = new Set(ids);
+    const left = st.LEFT.rack.map(s => s.id).filter(id => !drop.has(id)), right = st.RIGHT.rack.map(s => s.id).filter(id => !drop.has(id));
+    if (left.length === st.LEFT.rack.length && right.length === st.RIGHT.rack.length) return;
+    this.setLoadout(left.length ? left : ['weapon.fists'], right.length ? right : ['weapon.kick']);
+  }
   /** Empty starting loadout: no visible/effective actions until the display pickup. */
   clearLoadout(): void { delete this.world.entities.get(1)!.weapons; this.projectiles.length = 0; }
   intent(frame: InputFrame): void {
@@ -61,7 +71,7 @@ export class Combat {
   update(frame: InputFrame): void {
     const player = this.world.entities.get(1)!;
     if (!player.weapons) return;
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && this.world.vehicles?.active == null && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update(frame);
   }

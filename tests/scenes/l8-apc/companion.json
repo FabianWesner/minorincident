@@ -1,0 +1,78 @@
+{
+  "name": "l8-apc-companion",
+  "note": "Game camera: corgi steps into the closed troop bay, remains in the roster, exits onto the road and resumes following.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 100,
+  "dof": false,
+  "time": "L6",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0.71,
+        2.025
+      ],
+      "yaw": 90
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        0.71,
+        2.675
+      ],
+      "yaw": 90
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc"
+  },
+  "frames": 260,
+  "sheet": 12,
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "corgi",
+      "do": {
+        "boardCar": "apc"
+      }
+    },
+    {
+      "frame": 100,
+      "actor": "corgi",
+      "do": {
+        "exitCar": "apc"
+      }
+    },
+    {
+      "frame": 180,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0
+  }
+}

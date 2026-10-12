@@ -1,0 +1,594 @@
+{
+  "scope": "L8-S1 systems",
+  "sourceCommit": "83295183",
+  "mainIntegrated": "048e9f97",
+  "typecheck": {
+    "exitCode": 0
+  },
+  "lint": {
+    "exitCode": 0
+  },
+  "build": {
+    "exitCode": 0,
+    "runner": "Hetzner"
+  },
+  "unit": {
+    "passed": 871,
+    "failed": 0,
+    "files": 174,
+    "runner": "Hetzner",
+    "source": "test-results/l8-unit-current.json",
+    "startTime": 1791815260901,
+    "filesPassed": 174
+  },
+  "regressions": {
+    "passed": 70,
+    "failed": 0,
+    "files": 7,
+    "animalLifecycleTests": 11,
+    "existingZooMoveTests": 41,
+    "runner": "Hetzner",
+    "source": "test-results/l8-regressions-final.json",
+    "startTime": 1791815215076,
+    "filesPassed": 7,
+    "tests": [
+      {
+        "title": "T-E30-09-routine @E30-AC09 healthy animals walk their authored enclosure loop without a hostile brain",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-lion @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-gorilla @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-elephant @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-zebra @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-flamingo @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-08-targets @E30-AC08 civilian/soldier/staff/animal bites use local perception, pets/children/corgi excluded",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-rescue @E30-AC09 @E30-AC10 rescuing the grab prevents conversion; solid walls block animal acquisition/bites",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-17-animal @E30-AC17 serialized bitten state resumes remaining timer once; duplicate bite does not restart it",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-cap @E30-AC09 @E30-AC11 bitten zoo victims cannot create duplicate entities or exceed the shared infected cap",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-healthy-hit @E30-AC09 @E30-AC06 healthy animals stay huntable after a harmless player hit, without human protest or magical infection",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-lion-pounce @E07-AC05 @E07-AC19 telegraph, cooldown, recovery, restore",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-lion-flank @E07-AC05 @E07-AC19 telegraph, cooldown, recovery, restore",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-roar @E07-AC05 @E07-AC19 telegraph, cooldown, recovery, restore",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-pound @E07-AC05 @E07-AC19 telegraph, cooldown, recovery, restore",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-lion-pounce-impact @E07-AC19 10m/s, locked target, 30 damage once, 90 tick pin and mash rescue",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-lion-pounce-wall @E07-AC19 maximum 8m, no homing, intact wall, rescue by hitting lion",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-lion-flank-path @E07-AC19 75 degree side approach, 10m/s cap, no damage, expires to base speed",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-pound-boundary @E07-AC19 exact 5m radius, occlusion, 30 damage and 72 tick knockdown",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-roar-origin @E07-AC19 20m convergence, no zoo/Alpha buff, no speed stacking or live-player revelation, 5s expiry",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-lion-pounce-dodge @E07-AC19 a moving target cannot bend the telegraphed leap",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-roar-overlap @E07-AC19 convergence never stacks or extends Alpha speed boost",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-grab-throw-timing @E07-AC05 @E07-AC19 telegraph, pause, recovery and exact restored activation interval",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-charge-timing @E07-AC05 @E07-AC19 telegraph, pause, recovery and exact restored activation interval",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-swipe-timing @E07-AC05 @E07-AC19 telegraph, pause, recovery and exact restored activation interval",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-charge @E07-AC19 locked 8m/s, 16m range, exact 3.5m sweep, 40 HP and 90 tick knockdown once",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-charge-wall @E07-AC19 wall stops the body and blocks sweep damage",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-charge-barricade @E07-AC19 400 HP slot damage clears nav in the impact tick, keeps debris and source logs",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-charge-vehicle @E07-AC19 light E09 chassis takes 80 HP and physical lateral impulse; heavy vehicle unaffected",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-swipe @E07-AC19 exact forward 120 degree/3m arc, 25 damage, 3m knockback, 48 tick down, wall and protected controls",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-throw @E07-AC14 @E07-AC19 nearest corpse within 3m, retained pose/id, 12m/s, first impact 30HP and 48 tick down",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-throw-controls @E07-AC19 nearest medium only, 15m range, locked target and no-object cancellation",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla.grab-throw-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores active state and cooldown",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant.charge-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores active state and cooldown",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant.swipe-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores active state and cooldown",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-gorilla-throw-wall @E07-AC19 intact cover stops a thrown corpse and rejects hidden pickups",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-elephant-charge-slot-boundary @E07-AC19 full telegraphed width contacts an offset E26 slot",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra.kick-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra.stampede-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-flamingo.dive-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra-kick @E07-AC01 @E07-AC19 rear 90 degree/2m boundary, 20 damage, 3m shove and 36 tick stagger; front/cover/protected controls",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra-stampede-wall @E07-AC19 intact walls stop every participant and remain intact",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-group-controls @E07-AC19 no phantom herd/flock, cap, 12m acquisition, busy/dead/occluded animals excluded",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-flamingo-dive @E07-AC19 existing birds steer, locked 3m area, 5 HP/36 tick stagger once, 48 tick obstruction expiry",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-flamingo-dive-wall @E07-AC19 flock cannot affect a target through solid geometry",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra.kick-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra.stampede-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-flamingo.dive-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zebra-stampede-player @E07-AC19 every distinct zebra deals 25HP even inside the ordinary hurt grace window",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-flamingo-dive-lock @E07-AC19 moving target does not drag the marked area; small/absent flock cannot create a dive",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-zoo-stagger-lethal @E07-AC19 lethal kick/dive finishes a civilian instead of leaving a zero-HP moving brain",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-03 @E08 @E08-AC03 50 seeded cycles retain clothes/body position and exact tick timings/eyes",
+        "status": "passed"
+      },
+      {
+        "title": "@E08 @E08-AC13 melee and shots both finish the vulnerable rising body",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-02 @E08 @E08-AC02 attack panic within .5s moves away over 3s",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-12 @E08 @E08-AC12 kill/knockback rescue only during grab",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass through living people",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exceeds L1 cap/chain",
+        "status": "passed"
+      },
+      {
+        "title": "T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection @E19 @E19-AC05 grab rescue window: any hit on the grabber within 1.0 s saves the pedestrian",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection @E19 @E19-AC06 at the infected cap a bite kills instead of turning (60 high / 30 low)",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection @E19 @E19-AC18 scripted turns keep the pedestrian look",
+        "status": "passed"
+      },
+      {
+        "title": "L1 v2 civilians and infection @E19 @E19-AC18 director/stream spawns get a pedestrian look too (no plain runner in L1)",
+        "status": "passed"
+      },
+      {
+        "title": "quality and density never recycle a visible pedestrian or pet @E07",
+        "status": "passed"
+      },
+      {
+        "title": "decay parks existing traffic without deleting its identity or pose @E07",
+        "status": "passed"
+      },
+      {
+        "title": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+        "status": "passed"
+      },
+      {
+        "title": "a dropped hand prop and an uncollected weapon persist for the level @E07",
+        "status": "passed"
+      }
+    ]
+  },
+  "E30Functional": {
+    "passed": 28,
+    "failed": 0,
+    "runner": "Hetzner",
+    "source": "test-results/epics/E30/vitest.json",
+    "startTime": 1791815544661,
+    "filesPassed": 288,
+    "tests": [
+      {
+        "title": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+        "status": "passed"
+      },
+      {
+        "title": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+        "status": "passed"
+      },
+      {
+        "title": "T-E07-19-bars @E07-AC19 @E30-AC15 fill clamps, phone sizes and palette contrast",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-routine @E30-AC09 healthy animals walk their authored enclosure loop without a hostile brain",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-lion @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-gorilla @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-elephant @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-zebra @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-flamingo @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5\u20133.5s conversion and shared bar eligibility",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-08-targets @E30-AC08 civilian/soldier/staff/animal bites use local perception, pets/children/corgi excluded",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-rescue @E30-AC09 @E30-AC10 rescuing the grab prevents conversion; solid walls block animal acquisition/bites",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-17-animal @E30-AC17 serialized bitten state resumes remaining timer once; duplicate bite does not restart it",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-cap @E30-AC09 @E30-AC11 bitten zoo victims cannot create duplicate entities or exceed the shared infected cap",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-09-healthy-hit @E30-AC09 @E30-AC06 healthy animals stay huntable after a harmless player hit, without human protest or magical infection",
+        "status": "passed"
+      },
+      {
+        "title": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+        "status": "passed"
+      },
+      {
+        "title": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-05-district @E30-AC05 intact zoo facilities, named enclosures, public lights and service infrastructure",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-06-walls @E30-AC06 continuous four-metre perimeter blocks exterior navigation on all four faces",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-12-district @E30-AC12 each enclosure has two independent public escape routes with 2.5 m clear width",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-06-sight @E30-AC06 shipped district registers perimeter as actual attack/sight cover",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-06-scene @E30-AC06 district Scene Lab crops retain/recenter masonry collision and excluded pond",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-05-foot-probe @E30-AC05 paused/raised scene starts cannot change the measured asset shoe depth",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-07-outlets @E30-AC07 at least three occluded tunnel outlets, >= 20 m apart, inside the perimeter, on the path network",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-07-doors @E30-AC07 each outlet is a HouseEmergence door: closed masonry shell, spawn point behind the door inside the collider, door faces the apron",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-07-asset @E30-AC07 tunnel mouth budgets, derived looks and unarmed APC variant are registered",
+        "status": "passed"
+      },
+      {
+        "title": "T-E30-05-staff @E30-AC05 zoo staff are civilian bases with a uniform tint no visitor uses, plus cap and a work prop",
+        "status": "passed"
+      },
+      {
+        "title": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+        "status": "passed"
+      },
+      {
+        "title": "crowd fades preserve head position when clips change or interrupt @smoke",
+        "status": "passed"
+      }
+    ]
+  },
+  "animalBrowser": {
+    "passed": 10,
+    "failed": 0,
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "runner": "Hetzner",
+    "tests": [
+      {
+        "title": "T-E30-09-lion-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 14838
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-gorilla-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 28121
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-elephant-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 29127
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-zebra-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 44469
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-flamingo-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 50728
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-lion-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 43694
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-gorilla-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 24528
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-elephant-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 20874
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-zebra-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 20063
+          }
+        ]
+      },
+      {
+        "title": "T-E30-09-flamingo-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+        "project": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": [],
+            "duration": 19310
+          }
+        ]
+      }
+    ]
+  },
+  "sharedBarPixels": {
+    "passed": 3,
+    "failed": 0,
+    "runner": "Mac native Metal",
+    "workers": 1,
+    "headless": true
+  },
+  "captures": {
+    "passed": 10,
+    "species": 5,
+    "tiers": 2,
+    "retainedImages": 30,
+    "missedDraws": 0,
+    "actorClipping": 0,
+    "staticClipping": 0
+  },
+  "broaderVerify": {
+    "exitCode": 1,
+    "browserPassed": 32,
+    "browserFailed": 5,
+    "browserSkipped": 2,
+    "baselineFailureEvidence": "../l8-district/verify-browser.json",
+    "nativeSharedBars": "shared-bars-native.json"
+  }
+}

@@ -30,6 +30,7 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  * calm routine should run instead.
  */
 export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: number; z: number }, b: { x: number; z: number }, id: number) => boolean): boolean {
+  if (e.passengerOf !== undefined) return true;
   const c = e.civilian!, a = c.ally!, tick = world.tick, ai = world.infected!, npcs = world.npcs!;
   if (e.health.current <= 0 || tick < c.knockedUntil) { a.strikeAt = 0; return true; }
   const shooter = a.role !== 'firefighter' && !(a.role === 'civilian' && !a.gun);

@@ -25,13 +25,14 @@ export const l2 = {
     /**
      * Trapped people visible behind the glass before the release (x, z, yaw, behaviour): east glass (front doors at z -42.2) and
      * south glass (loading door at x -55.6). PO 10-08 "the humans are just standing there": every one panics on its own loop —
-     * banging, pressing on the glass, waving both arms, looking back into the shop, crouched crying, holding a child.
+     * banging, pressing on the glass (stand-off from the glass >= the pose's hand reach + margin, so no hand passes the pane;
+     * `tests/unit/data/l2-glass.test.ts`),  waving both arms, looking back into the shop, crouched crying, holding a child.
      */
     atGlass: [
-      [-51.95, -42.95, 0, 'bang'], [-51.95, -41.45, 0, 'bang'], [-51.95, -44.6, 0, 'press'], [-51.95, -39.9, 0, 'plead'], [-52.0, -46.0, 0, 'plead'],
+      [-52.4, -42.95, 0, 'bang'], [-52.4, -41.45, 0, 'bang'], [-52.4, -44.6, 0, 'press'], [-52.3, -39.9, 0, 'plead'], [-52.3, -46.0, 0, 'plead'],
       [-52.85, -42.2, 0, 'look'], [-53.05, -43.85, 0, 'hug'], [-52.5, -43.8, 0, 'child'], [-52.95, -40.6, 0, 'cower'],
-      [-55.05, -38.2, -Math.PI / 2, 'bang'], [-56.35, -38.2, -Math.PI / 2, 'press'], [-57.75, -38.25, -Math.PI / 2, 'plead'], [-53.65, -38.25, -Math.PI / 2, 'look'],
-      [-56.0, -39.15, -Math.PI / 2, 'cower'], [-58.7, -39.4, -Math.PI / 2, 'hug'], [-58.7, -38.75, -Math.PI / 2, 'child'],
+      [-55.05, -39.1, -Math.PI / 2, 'bang'], [-56.35, -39.1, -Math.PI / 2, 'press'], [-57.75, -38.95, -Math.PI / 2, 'plead'], [-53.65, -39.0, -Math.PI / 2, 'look'],
+      [-56.0, -40.0, -Math.PI / 2, 'cower'], [-58.7, -39.7, -Math.PI / 2, 'hug'], [-58.7, -39.05, -Math.PI / 2, 'child'],
     ] as readonly (readonly [number, number, number, GlassRole])[],
     /** The crew's places at the doors: three at the chained front doors, three at the loading door; one directs the people. */
     crewDoors: [[-50.55, -43.05, 'pry'], [-48.6, -42.2, 'direct'], [-50.55, -41.35, 'pry'], [-57.0, -36.85, 'pry'], [-55.6, -36.6, 'pry'], [-54.2, -36.85, 'pry']] as readonly (readonly [number, number, 'pry' | 'direct'])[],
@@ -111,7 +112,7 @@ export const l2 = {
    */
   mercy: { calmM: 10, calmHealth: .7, fromDeaths: 2, stepFrac: .25, maxFrac: .75, nearM: 45 },
   /** Section 4: checkpoints. */
-  checkpoints: ['doors', 'escape', 'cluster'] as const,
+  checkpoints: ['axe', 'doors', 'escape', 'cluster'] as const,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
   bots: { seeds: 1, completeMedianS: [105, 210] as P, newbieMedianS: [120, 240] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 1 },
 } as const;
@@ -131,18 +132,20 @@ const truck = { x: -68.8, z: 36.7, yaw: Math.PI / 2 } as const;
 const truckPoint = (lx: number, lz: number): P => [truck.x + Math.cos(truck.yaw) * lx + Math.sin(truck.yaw) * lz, truck.z - Math.sin(truck.yaw) * lx + Math.cos(truck.yaw) * lz];
 export const l2Truck = truck;
 
+/** The courier stands 1.3 m out from the rack board (facade at x 1.5), clear of the apron bollard row (x ~2.15) that hid the ring from the game camera (PO 10-12). */
+export const axeStandX = 2.85;
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
   'l2-start': stationPoint(3.8, 2.7),   // on the apron in front of the left bay, clear of the centre pier and its bollards
   // Stand-to-interact point of the axe rack on the solid wall left of the left bay (z 5.0), 1.05 m out from the facade (see L2Props); the old spot hung on the centre pier in the bay opening.
-  'l2-axe-rack': stationPoint(2.6, 5.0),
+  'l2-axe-rack': stationPoint(axeStandX, 5.0),
   'l2-truck': [truck.x, truck.z],
   // Crew door on the station side of the cab.
   'l2-board': truckPoint(.3, 2.0),
-  // Two seats on the bench by the open bay, two on the bench deeper in the left bay.
-  'l2-bench-1': stationPoint(1.3, 2.5), 'l2-bench-2': stationPoint(1.3, .7), 'l2-bench-3': stationPoint(-1.3, 3.8), 'l2-bench-4': stationPoint(-1.3, 2.0),
+  // Two benches on the apron (never inside the bay, PO 10-12), two seats each: bench x + the seat's hipX .31, bench z -/+ .5.
+  'l2-bench-1': stationPoint(3.31, -1.4), 'l2-bench-2': stationPoint(3.31, -2.4), 'l2-bench-3': stationPoint(3.31, -3.9), 'l2-bench-4': stationPoint(3.31, -4.9),
   'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
-  'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(4.0, -3.5),
+  'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(5.4, -2.6),
   'l2-truck-stop': [-43.0, -32.0],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],

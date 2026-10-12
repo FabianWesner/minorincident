@@ -15,6 +15,8 @@ export class SpawnDirector {
   levelCap = 200;
   /** Slots held for a scripted entrance; ordinary spawns and bite conversions leave them free. */
   reserved = 0;
+  /** Existing civilian transformations hold arrival slots; bite guards count them separately. */
+  pendingTurns = 0;
   readonly queue: Request[] = [];
   readonly spawnPoints: { x: number; z: number }[] = [];
   readonly camera: CameraEnvelope = { x: 0, z: 0, halfWidth: 32, halfDepth: 32, yaw: 0 };
@@ -102,7 +104,7 @@ export class SpawnDirector {
     let count = this.count;
     for (let i = 0; i < this.queue.length;) {
       const request = this.queue[i], weight = request.archetype === 'infected.crow' ? (request.options.birds ?? 20) * 0.25 : 1;
-      if (count + weight > this.cap - this.reserved || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position, request.options.perched)) || !this.ai.pool.length) { i++; continue; }
+      if (count + weight > this.cap - this.reserved - this.pendingTurns || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position, request.options.perched)) || !this.ai.pool.length) { i++; continue; }
       const id = this.ai.spawn(request.archetype, request.position, request.options);
       if (request.migration) {
         const group = request.migration.group; if (!group.members.length) group.started = this.ai.world.tick;

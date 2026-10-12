@@ -17,6 +17,7 @@ import { l1v2 } from '../data/l1v2';
 import { l5 } from '../data/l5';
 import { humanInfected } from '../data/infected';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
+import { BaseAlarm } from './BaseAlarm';
 /** E23 signs of life: each survivor's sound is an existing cue (knock, clang, radio, a soft voice, a flashlight click). */
 const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> = {
     dale: { cue: 'impact.body.metal', gain: 1.2, rate: 0.8 }, rosa: { cue: 'door.wood', gain: 1.1, rate: 0.9 }, okafor: { cue: 'bark.male.effort', gain: 0.7, rate: 0.7 },
@@ -74,6 +75,8 @@ export class AudioService implements Lifecycle {
     }[] = [];
     private readonly unsubscribers: (() => void)[] = [];
     private readonly loops = new Map<string, GraphVoice>();
+    /** L4 military base alarm at the first turn (PO 2026-10-12). */
+    readonly alarm: BaseAlarm;
     private readonly individualVocals = new Map<number, GraphVoice>();
     private readonly stemVoices = new Map<string, GraphVoice>();
     private metroAmbientAt = -600;
@@ -105,6 +108,7 @@ export class AudioService implements Lifecycle {
     private starting = false;
     private quietMusicUntil = 0;
     private attackMusicUntil = 0;
+    private lastPeakStinger = -Infinity;
     private lastDamageTick = -1000;
     private lastDamage = 0;
     private scheduledTransition: MusicTransition | null = null;
@@ -130,6 +134,7 @@ export class AudioService implements Lifecycle {
         // At most four streaming decks can overlap during rapid state changes.
         this.graph = new AudioGraph(this.context, params.get('quality') === 'low' || navigator.maxTouchPoints > 0 ? 'low' : 'high', params.get('audio') === 'muted', 4);
         this.registry = new AudioRegistry(this.context);
+        this.alarm = new BaseAlarm(this.graph, text => this.caption(text, undefined, 4));
         this.score = new StreamedMusic(this.context, this.graph.buses.music);
         try {
             const stored = localStorage.getItem('minor-incident.audio');
@@ -506,6 +511,11 @@ export class AudioService implements Lifecycle {
         this.score.update();
         const story = storyMusic(this.level, this.world.missions?.state);
         this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 ? { minimum: story.minimum } : {}), incident: this.incident, complete: this.complete });
+        // A dense fight escalates within the combat state (also when a story floor already holds it there).
+        if (this.music.peak !== this.score.peak) {
+            this.score.setPeak(this.music.peak);
+            if (this.music.peak && t - this.lastPeakStinger > 20) { this.lastPeakStinger = t; this.stinger('elite', this.level); }
+        }
         const transition = this.music.pending ?? this.music.transitions.at(-1) ?? { time: t, state: this.music.state, layers: this.music.layers };
         // A transient alert can cancel the first pending change before its bar.
         // Restore the committed state even when the director has no history yet.
@@ -517,7 +527,7 @@ export class AudioService implements Lifecycle {
                 v.gain.gain.cancelScheduledValues(at);
                 v.gain.gain.setValueAtTime(v.gain.gain.value, at);
                 // The recording carries the theme. Add filtered recorded rhythm/dread accents only.
-                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * 0.18 : 0, at + (transition.immediate ? 0.8 : 2));
+                v.gain.gain.linearRampToValueAtTime(layer !== 'base' && transition.layers.includes(layer as typeof musicLayers[number]) ? audioCues[v.cue].gain * (this.music.peak ? 0.5 : 0.18) : 0, at + (transition.immediate ? 0.8 : 2));
             }
         }
     }
@@ -545,6 +555,7 @@ export class AudioService implements Lifecycle {
             this.arc?.event(event.type, t);
             return;
         }
+        if (this.alarm.onEvent(event, t)) return;
         if (event.type === 'l6.bang') { this.play('door.wood', { position: event.position, gain: 1, lowpass: 1800 }); return; }
         if (event.type === 'l5.wait') {
             this.play('civilian.hey', { position, gain: 0.7, rate: 0.9 }, source);
@@ -836,6 +847,7 @@ export class AudioService implements Lifecycle {
             this.graph.buses.ambience.gain.setTargetAtTime(1, this.context.currentTime, 0.25); // combat ducks ambience 3 dB, then it recovers
         }
         this.startBedsAndMusic();
+        this.alarm.update(this.context.currentTime);
         if (this.level === 'L5') this.l5Score();
         const player = this.world.entities.get(1);
         if (!player)
@@ -988,6 +1000,7 @@ export class AudioService implements Lifecycle {
         for (const off of this.unsubscribers)
             off();
         this.unsubscribers.length = 0;
+        this.alarm.stop();
         this.graph.reset();
         this.score.reset();
         this.loops.clear();
@@ -1007,7 +1020,7 @@ export class AudioService implements Lifecycle {
         this.incident = false;
         this.complete = false;
         this.quietMusicUntil = 0;
-        this.attackMusicUntil = 0;
+        this.attackMusicUntil = 0; this.lastPeakStinger = -Infinity;
         this.l5Music = false;
     }
     dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }

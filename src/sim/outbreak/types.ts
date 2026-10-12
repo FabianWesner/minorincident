@@ -6,7 +6,7 @@
 export type Vec2 = { x: number; z: number };
 
 /** Anything an infected may perceive, chase or bite. The corgi is never a HumanTarget. */
-export type HumanKind = 'player' | 'civilian';
+export type HumanKind = 'player' | 'civilian' | 'animal';
 export interface HumanTarget {
   id: number;
   kind: HumanKind;

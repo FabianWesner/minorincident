@@ -4045,7 +4045,9 @@
       "fileKB": 6000,
       "drawCalls": 40
     },
-    "decayVariants": [],
+    "decayVariants": [
+      "wrecked"
+    ],
     "lods": {
       "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
       "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
@@ -4058,6 +4060,11 @@
       "solid": false
     },
     "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "decayTriangleBudget": 15000,
+    "decayAuthoredLodTriangles": {
       "lod1": 6000,
       "lod2": 2000
     }
@@ -11793,7 +11800,7 @@
     "category": "vehicle",
     "status": "integrated",
     "tier": "hero",
-    "glb": "public/assets/models/veh.sedan-green.glb",
+    "glb": "public/assets/models/veh.sedan-green.wrecked.glb",
     "dimensions": {
       "x": 4.400000095367432,
       "y": 1.8999999463558197,
@@ -11840,8 +11847,8 @@
       "solid": true
     },
     "lods": {
-      "lod1": "public/assets/models/veh.sedan-green.lod1.glb",
-      "lod2": "public/assets/models/veh.sedan-green.lod2.glb"
+      "lod1": "public/assets/models/veh.sedan-green.wrecked.lod1.glb",
+      "lod2": "public/assets/models/veh.sedan-green.wrecked.lod2.glb"
     },
     "authoredLodTriangles": {
       "lod1": 6000,
@@ -20337,6 +20344,1482 @@
     "world": {
       "token": "brick",
       "solid": true
+    }
+  },
+  {
+    "id": "acc.hat-baseball-cap",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hat-baseball-cap.glb",
+    "dimensions": {
+      "x": 0.4189,
+      "y": 0.2702,
+      "z": 0.488,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hat-baseball-cap/model.glb",
+    "script": "assets/acc.hat-baseball-cap/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hat-baseball-cap.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hat",
+      "attach": "head",
+      "tint": "hat",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hat-beanie",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hat-beanie.glb",
+    "dimensions": {
+      "x": 0.372,
+      "y": 0.38,
+      "z": 0.516,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hat-beanie/model.glb",
+    "script": "assets/acc.hat-beanie/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hat-beanie.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hat",
+      "attach": "head",
+      "tint": "hat",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hat-sun-hat",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hat-sun-hat.glb",
+    "dimensions": {
+      "x": 0.72,
+      "y": 0.237,
+      "z": 0.7608,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hat-sun-hat/model.glb",
+    "script": "assets/acc.hat-sun-hat/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hat-sun-hat.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hat",
+      "attach": "head",
+      "tint": "hat",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hat-hard-hat",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hat-hard-hat.glb",
+    "dimensions": {
+      "x": 0.4358,
+      "y": 0.2472,
+      "z": 0.5042,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hat-hard-hat/model.glb",
+    "script": "assets/acc.hat-hard-hat/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hat-hard-hat.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hat",
+      "attach": "head",
+      "tint": "hat",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hat-flat-cap",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hat-flat-cap.glb",
+    "dimensions": {
+      "x": 0.519,
+      "y": 0.233,
+      "z": 0.51,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hat-flat-cap/model.glb",
+    "script": "assets/acc.hat-flat-cap/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hat-flat-cap.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hat",
+      "attach": "head",
+      "tint": "hat",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hat-bucket-hat",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hat-bucket-hat.glb",
+    "dimensions": {
+      "x": 0.612,
+      "y": 0.255,
+      "z": 0.6467,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hat-bucket-hat/model.glb",
+    "script": "assets/acc.hat-bucket-hat/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hat-bucket-hat.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hat",
+      "attach": "head",
+      "tint": "hat",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hair-short-crop",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hair-short-crop.glb",
+    "dimensions": {
+      "x": 0.3242,
+      "y": 0.279,
+      "z": 0.472,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hair-short-crop/model.glb",
+    "script": "assets/acc.hair-short-crop/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hair-short-crop.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hair",
+      "attach": "head",
+      "tint": "hair",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hair-ponytail",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hair-ponytail.glb",
+    "dimensions": {
+      "x": 0.5212,
+      "y": 0.459,
+      "z": 0.472,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hair-ponytail/model.glb",
+    "script": "assets/acc.hair-ponytail/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hair-ponytail.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hair",
+      "attach": "head",
+      "tint": "hair",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hair-bun",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hair-bun.glb",
+    "dimensions": {
+      "x": 0.3731,
+      "y": 0.435,
+      "z": 0.488,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hair-bun/model.glb",
+    "script": "assets/acc.hair-bun/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hair-bun.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hair",
+      "attach": "head",
+      "tint": "hair",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hair-afro",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hair-afro.glb",
+    "dimensions": {
+      "x": 0.4265,
+      "y": 0.3326,
+      "z": 0.6001,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hair-afro/model.glb",
+    "script": "assets/acc.hair-afro/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hair-afro.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hair",
+      "attach": "head",
+      "tint": "hair",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hair-side-part",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hair-side-part.glb",
+    "dimensions": {
+      "x": 0.3283,
+      "y": 0.2995,
+      "z": 0.476,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hair-side-part/model.glb",
+    "script": "assets/acc.hair-side-part/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hair-side-part.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hair",
+      "attach": "head",
+      "tint": "hair",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  {
+    "id": "acc.hair-long-straight",
+    "category": "accessory",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/acc.hair-long-straight.glb",
+    "dimensions": {
+      "x": 0.3962,
+      "y": 0.485,
+      "z": 0.5395,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "sourceForward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "head",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 150,
+      "materials": 1,
+      "fileKB": 20,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "sourceGlb": "assets/acc.hair-long-straight/model.glb",
+    "script": "assets/acc.hair-long-straight/build.py",
+    "lods": {
+      "lod1": "public/assets/models/acc.hair-long-straight.lod1.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 0
+    },
+    "accessory": {
+      "slot": "hair",
+      "attach": "head",
+      "tint": "hair",
+      "fits": {
+        "npc.civilian-man-a": {
+          "scale": [
+            1.044,
+            0.75,
+            0.838
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-man-b": {
+          "scale": [
+            0.931,
+            0.85,
+            0.812
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-woman-a": {
+          "scale": [
+            0.844,
+            0.95,
+            0.944
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "npc.civilian-woman-b": {
+          "scale": [
+            0.7,
+            0.85,
+            0.738
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-elderly": {
+          "scale": [
+            0.825,
+            0.819,
+            0.85
+          ],
+          "offset": [
+            -0.01,
+            0.0,
+            0.0
+          ],
+          "hasHeadwear": true
+        },
+        "npc.civilian-kid": {
+          "scale": [
+            0.863,
+            0.85,
+            0.825
+          ],
+          "offset": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
     }
   }
 ]

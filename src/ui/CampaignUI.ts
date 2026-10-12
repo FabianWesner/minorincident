@@ -1,5 +1,5 @@
 import type { Game } from '../Game';
-import { chooseWeapon,revealCards,pickUpgrades,finishRewards,weaponChoices,rackSize,nextLevelAfter,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -56,8 +56,7 @@ export class CampaignUI {
     const save=this.game.campaign!,p=save.pending!;
     if(p.phase==='unlock'){
       this.screen('Unlock reveal');const text=document.createElement('p');text.textContent=`Level ${p.level} complete · Level ${save.unlockedLevel} unlocked · Racks ${rackSize(save.unlockedLevel)}/${rackSize(save.unlockedLevel)}`;this.content.append(text);
-      if(!p.weaponChosen){for(const id of weaponChoices[p.level]!)this.button(`Keep ${label(id)}`,()=>{chooseWeapon(save,id);this.save();this.showRewards();});}
-      else{const unlocked=document.createElement('p');unlocked.textContent=save.ownedActions.map(label).join(' · ');this.content.append(unlocked);this.button('Choose upgrades',()=>{revealCards(save);this.save();this.picks=[];this.showRewards();});}
+      {const unlocked=document.createElement('p');unlocked.textContent=save.ownedActions.map(label).join(' · ');this.content.append(unlocked);this.button('Choose upgrades',()=>{revealCards(save);this.save();this.picks=[];this.showRewards();});}
     }else if(p.phase==='cards'){
       this.screen('Pick 2 of 3 upgrades');const cards=document.createElement('div');cards.className='upgrade-cards';this.content.append(cards);
       const next=this.button('Set up racks',()=>{pickUpgrades(save,this.picks);this.save();this.game.applyCampaign();this.showRewards();});next.disabled=this.picks.length!==2;
