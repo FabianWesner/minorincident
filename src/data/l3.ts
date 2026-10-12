@@ -32,8 +32,8 @@ export const l3 = {
     lowScale: .5,
   },
   /** Section 5.4: allied fighters v2 (police with handguns, a following squad). */
-  /** PO 2026-10-12: "reduce the power of the gun by 50% for the police (not for the player)". Applied to every police and
-   * army gun in L3 (station posts, the squad, the checkpoint riflemen and the mounted gun); the courier's weapons are untouched. */
+  /** PO 2026-10-12: "reduce the power of the gun by 50% for the police (not for the player)". Applied to every police gun in L3
+   * (station posts and the squad); the courier's weapons and the army checkpoint (riflemen, mounted gun) are untouched. */
   allyDamageScale: .5,
   officers: {
     hp: 100,
@@ -63,8 +63,6 @@ export const l3 = {
     ] as readonly (readonly (readonly [number, 'blvd' | 'commerce' | 'oak', number])[])[],
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** PO 2026-10-12 "don't cluster Zombies": street residents scatter over this box (x along the street, z across) around their group home. */
-    spreadM: [56, 7] as P,
     /** Segment 3 also holds the horde: two packs of 125 at the on-ramp end of two avenues (seeded), streaming west. */
     horde: { packSize: 125, fromX: 72, toX: 132 },
     leashM: 9,
@@ -79,7 +77,7 @@ export const l3 = {
     caps: { high: 200, low: 100 },
   },
   /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
-  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, surge: { stageX: 191, count: [25, 15] as P, maxWaitS: 12 }, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
+  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, surge: { stageX: 191, count: [25, 15] as P, maxWaitS: 12 }, minFightS: 60, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */
   medkits: {
     heal: 40,
@@ -88,6 +86,8 @@ export const l3 = {
       // Visible sidewalks on every avenue; 30-35 m between packs, plus relief after the larger clusters.
       ...([-100, -66, -32, 2, 36, 60, 88, 108, 122] as const).flatMap(x =>
         ([-28, 0, 28] as const).map(z => [x === -100 && z === -28 ? x - 1 : x, z + ((x === -100 && z === -28) || (x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * (z === -28 ? 4.4 : 3.4)] as const)),
+      // The turn from the cross street into the Boulevard (real-input death loop, lane l3-finish).
+      [-13.75, -21],
       [147, 3.3], [178, -1.2], [201, -3.3],
     ] as readonly P[],
   },
@@ -98,7 +98,7 @@ export const l3 = {
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by
    * `stepFrac` per death (max `maxFrac`). Hordes and density stay for anyone who plays it through; only a death loop eases.
    */
-  mercy: { fromDeaths: 2, stepFrac: .25, maxFrac: .75, aheadM: [12, 90] as P },
+  mercy: { fromDeaths: 1, stepFrac: .3, maxFrac: .75, aheadM: [12, 90] as P },
   checkpoints: ['armory', 'fallback', 'segment-2', 'segment-2b', 'segment-3', 'segment-3b'] as const,
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,

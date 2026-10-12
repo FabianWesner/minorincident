@@ -148,7 +148,7 @@ export class LevelThreeCollapse {
       const p = this.snap(this.anchor(`l3-soldier-${i}`), .35);
       const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
       const e = this.world.entities.get(id)!;
-      e.civilian!.ally = { ...allyState('soldier', p, true), gun: weak(l3.soldiers.gun), weapon: 'rifle', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
       e.civilian!.floorY = l3.soldiers.deckY;
       e.transform.y = l3.soldiers.deckY + .7;
       e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
@@ -158,7 +158,7 @@ export class LevelThreeCollapse {
     const p = this.snap(this.anchor('l3-hmg'), .35);
     const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
     const e = this.world.entities.get(id)!;
-    e.civilian!.ally = { ...allyState('soldier', p, true), gun: weak(l4.soldiers.hmg), weapon: 'hmg', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+    e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
     e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.transform.yaw = Math.PI;
     this.s.soldierIds.push(id);
   }
@@ -371,11 +371,12 @@ export class LevelThreeCollapse {
     for (const [x, street, size] of l3.density.groups[segment]) {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
       const highway = x > 128;
-      const clusterSize = Math.ceil(size * scale), rng = new Rng(this.world.seed, `l3-pop:${segment}:${x}:${street}`), d = l3.density.spreadM;
+      const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
       for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier / 5)); i++) {
-        // PO 2026-10-12 "don't cluster Zombies": scattered along the street around the group's home, never stacked in lines.
-        const cluster = i < clusterSize ? 0 : 1;
-        const spread = cluster === 0 && i === 0 ? home : this.snap({ x: home.x + (rng.next() - .5) * d[0], z: home.z + (rng.next() - .5) * d[1] }, .5);
+        // Five small clusters across the neighbourhood, with breathing room along the walking line (PO 10-09 lulls; the PO 10-12
+        // "don't cluster" applies to the station attack, which streams in spread from five directions).
+        const cluster = Math.floor(i / clusterSize) % offsets.length;
+        const spread = cluster === 0 ? home : this.snap({ x: home.x + offsets[cluster], z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
         const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, spread) - dist(b, spread)).slice(0, 2);
         s.pending.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
       }
@@ -566,7 +567,8 @@ export class LevelThreeCollapse {
     const group = [1, ...s.officerIds.filter(id => { const e = w.entities.get(id); return !!e?.civilian?.ally && !e.infection && e.health.current > 0; }), ...[...w.entities.iterate()].filter(e => !!e.companion).map(e => e.id)];
     const inside = group.every(id => { const e = w.entities.get(id); return !e || e.health.current <= 0 || e.transform.x >= l3.map.zoneX; });
     if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
-    const arrived = f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
+    // The rescue fight lasts until every pack arrived or minFightS passed (60-90 s); the weaker army (PO 10-12) cannot hold an open boom longer.
+    const arrived = w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
     if (!s.barrierClosedAt && inside && arrived && this.boom.ready(group)) {
       s.barrierClosedAt = w.tick; this.barrier(true);
       w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
