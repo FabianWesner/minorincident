@@ -17,6 +17,8 @@ export class Npcs {
   private ambientTarget = 0;
   private slice = false;
   private readonly waypoint = { x: 0, z: 0 };
+  /** Last walk-out search per follower: repeated only after the body moved or half a second passed (E18 sim budget). */
+  private readonly escapes = new Map<number, { x: number; z: number; tick: number; cell: number }>();
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
@@ -29,7 +31,10 @@ export class Npcs {
     const cell = l3Follower ? nav.nearestCell(e.transform.x, e.transform.z, .35) : -1;
     if (l3Follower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
-      const escape = nav.escapeCell(e.transform, .35, 8, false);
+      const last = this.escapes.get(e.id), tick = this.world.tick;
+      const fresh = !last || tick < last.tick || tick - last.tick >= 30 || Math.hypot(last.x - e.transform.x, last.z - e.transform.z) >= .1;
+      const escape = fresh ? nav.escapeCell(e.transform, .35, 8, false) : last.cell;
+      if (fresh) this.escapes.set(e.id, { x: e.transform.x, z: e.transform.z, tick, cell: escape });
       if (escape < 0) return false;
       this.waypoint.x = nav.x(escape); this.waypoint.z = nav.z(escape);
     } else if (l3Follower && distance > 30) {
