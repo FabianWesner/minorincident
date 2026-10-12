@@ -1,0 +1,15 @@
+{
+  "name": "corgi-catchup",
+  "ground": "grass",
+  "size": 40,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-4, -4],
+      "state": { "run": [[6, -6], [6, 6], [-6, 6], [-6, -6]] } },
+    { "id": "corgi", "kind": "corgi", "at": [-14, -14] }
+  ],
+  "script": [],
+  "camera": { "mode": "follow", "actor": "corgi", "zoom": 0.6 },
+  "frames": 240,
+  "shots": [40, 55, 70, 85, 100, 115],
+  "expect": { "consoleErrors": 0 }
+}
