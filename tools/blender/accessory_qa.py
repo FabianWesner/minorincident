@@ -21,7 +21,7 @@ from sslib import accessories as A
 BASES = ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-kid']
 SHEET_BASES = {'acc.hat-baseball-cap': 0}
 TINT = {'hat': (0.62, 0.12, 0.10), 'hair': (0.16, 0.07, 0.03)}
-HAT_TINTS = [(0.62, 0.12, 0.10), (0.10, 0.25, 0.55), (0.80, 0.62, 0.15), (0.95, 0.55, 0.05), (0.35, 0.35, 0.38), (0.15, 0.45, 0.25)]
+HAT_TINTS = [(0.30, 0.05, 0.04), (0.04, 0.10, 0.30), (0.55, 0.40, 0.08), (0.80, 0.30, 0.02), (0.30, 0.30, 0.32), (0.06, 0.28, 0.12)]
 HAIR_TINTS = [(0.34, 0.16, 0.07), (0.10, 0.08, 0.08), (0.85, 0.62, 0.25), (0.62, 0.25, 0.10), (0.70, 0.70, 0.74), (0.45, 0.22, 0.10)]
 FITS_PATH = ROOT / 'assets/accessory-fits.json'
 args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
@@ -45,6 +45,25 @@ def import_glb(path, tag=None):
 def head_meshes(objs):
     head = next(o for o in objs if o.name.split(':')[-1] == 'head')
     return head, [o for o in objs if o.type == 'MESH' and o.parent == head]
+
+
+HIDE_PREFIX = ('pal_hair', 'pal_cap', 'pal_woodWarm', 'pal_denimLight', 'pal_schoolBusYellow')
+
+
+def mat_names(o):
+    return [m.name if m else '' for m in o.data.materials]
+
+
+def skin_verts(o):
+    """Vertices of polygons with a skin material (head meshes can be multi-material, e.g. the kid)."""
+    names = mat_names(o)
+    ids = {v for poly in o.data.polygons if 'skin' in names[poly.material_index] for v in poly.vertices}
+    return [o.matrix_world @ o.data.vertices[i].co for i in sorted(ids)]
+
+
+def skin_points(objs):
+    head, meshes = head_meshes(objs)
+    return head, [p for o in meshes for p in skin_verts(o)]
 
 
 def head_points(objs):
@@ -94,8 +113,7 @@ def fit_cost(local_verts, polys, base_pts, fit):
     if not gaps:
         return 1e9
     gaps.sort()
-    excess = max(0, deep - .004 * len(base_pts))
-    return 3000 * excess / len(base_pts) + depth * 30 + abs(gaps[len(gaps) // 2] - .012) * 100 + abs(gaps[int(len(gaps) * .95)] - .025) * 50
+    return pokes * .3 + depth * 300 + abs(gaps[len(gaps) // 2] - .024) * 100 + abs(gaps[int(len(gaps) * .95)] - .036) * 50
 
 
 def measure_fits():
@@ -109,16 +127,18 @@ def measure_fits():
     for base in BASES:
         clear()
         bobjs = import_glb(ROOT / f'assets/{base}/model.glb')
-        head, pts = head_points(bobjs)
+        head, pts = skin_points(bobjs)
         jz = head.matrix_world.translation.z
-        fit = {'scale': [1.0, 1.0, 1.0], 'offset': [0.0, 0.0, jz]}
+        fit = {'scale': [.85, .85, .85], 'offset': [0.0, 0.0, jz]}
         best = fit_cost(local, polys, pts, fit)
-        for step in (.08, .04, .02, .01, .005):
-            for _ in range(3):
+        for step in (.1, .05, .025, .0125, .006):
+            for _ in range(4):
                 for key, idx in [('scale', 0), ('scale', 1), ('scale', 2), ('offset', 0), ('offset', 2)]:
                     for delta in (-step, step):
                         trial = {'scale': list(fit['scale']), 'offset': list(fit['offset'])}
                         trial[key][idx] += delta * (1 if key == 'scale' else .5)
+                        if key == 'scale' and not .7 <= trial[key][idx] <= 1.15:
+                            continue
                         cost = fit_cost(local, polys, pts, trial)
                         if cost < best - 1e-6:
                             best, fit = cost, trial
@@ -137,8 +157,11 @@ def place_accessory(acc_id, lod, base_head, fit):
     path = ROOT / f'assets/{acc_id}/model{"" if lod == 0 else ".lod1"}.glb'
     objs = import_glb(path)
     root = next(o for o in objs if o.parent is None and o.type == 'EMPTY')
-    root.scale = tuple(fit['scale'])
-    root.location = base_head.matrix_world.translation + Vector(fit['offset'])
+    # Same head bone at every LOD: the packed LOD1 base carries sourceScale on its nodes, so the fit is
+    # applied in the (scaled) head's frame.
+    k = base_head.matrix_world.to_scale()
+    root.scale = tuple(fit['scale'][i] * k[i] for i in range(3))
+    root.location = base_head.matrix_world.translation + Vector(fit['offset']) * k.x
     bpy.context.view_layer.update()
     return objs
 
@@ -162,8 +185,9 @@ def clip_metrics(acc_objs, base_objs, centre, base_head):
     mw = mesh.matrix_world
     bvh = BVHTree.FromPolygons([mw @ v.co for v in mesh.data.vertices], [tuple(p.vertices) for p in mesh.data.polygons])
     _, meshes = head_meshes(base_objs)
-    pts = [(o.matrix_world @ v.co, o.data.materials[0].name.startswith('pal_skin') if o.data.materials else False) for o in meshes for v in o.data.vertices]
-    top = max(p.z for p, _ in pts)
+    skin_set = {tuple(round(c, 5) for c in p) for o in meshes for p in skin_verts(o)}
+    pts = [(o.matrix_world @ v.co, tuple(round(c, 5) for c in (o.matrix_world @ v.co)) in skin_set) for o in meshes for v in o.data.vertices]
+    top = max(p.z for p, skin in pts if skin)
     out = {'skin': [0, 0.0], 'other': [0, 0.0]}
     outer = {}
     bad = []
@@ -182,7 +206,7 @@ def clip_metrics(acc_objs, base_objs, centre, base_head):
                 bad.append(p)
             rec[0] += 1
             rec[1] = max(rec[1], -gap)
-        elif p.z > top - .12:
+        elif skin and p.z > top - .12:
             key = (int(math.degrees(math.atan2(d.y, d.x)) // 15), int(math.degrees(math.asin(max(-1.0, min(1.0, d.z / dist)))) // 12))
             if key not in outer or dist > outer[key][0]:
                 outer[key] = (dist, gap)
@@ -236,6 +260,36 @@ def hide(objs, state=True):
         o.hide_render = state
 
 
+def strip_copies(objs):
+    """For head meshes carrying base hair/headwear, make a copy without those polygons (the system lane hides them)."""
+    import bmesh
+    made = []
+    for o in list(objs):
+        if o.type != 'MESH' or not o.parent or o.parent.name.split(':')[-1] != 'head':
+            continue
+        names = mat_names(o)
+        bad = [i for i, n in enumerate(names) if n.startswith(HIDE_PREFIX)]
+        if not bad and 'pal_picketWhite' not in names:
+            continue
+        o['has_hideable'] = True
+        copy = o.copy()
+        copy.data = o.data.copy()
+        copy.name = o.name + ':strip'
+        bpy.context.scene.collection.objects.link(copy)
+        copy.parent = o.parent
+        copy.matrix_parent_inverse = o.matrix_parent_inverse
+        bm = bmesh.new()
+        bm.from_mesh(copy.data)
+        mw = o.matrix_world
+        crown = o.parent.matrix_world.translation.z + .26      # cap panels reuse picketWhite above the eyes
+        drop = [f for f in bm.faces if f.material_index in bad or (names[f.material_index] == 'pal_picketWhite' and (mw @ f.calc_center_median()).z > crown)]
+        bmesh.ops.delete(bm, geom=drop, context='FACES')
+        bm.to_mesh(copy.data)
+        bm.free()
+        made.append(copy)
+    return made
+
+
 def sheets(out_dir, only):
     fits = load_fits()
     out = Path(out_dir)
@@ -257,8 +311,11 @@ def sheets(out_dir, only):
         for o in lod0:
             if o.parent is None:
                 o.location.x += 0
+        lod0 += strip_copies(lod0)
         h0 = next(o for o in lod0 if o.name.split(':')[-1] == 'head')
-        base_state[base] = {'lod0': lod0, 'lod1': lod1, 'head': h0}
+        lod1 += strip_copies(lod1)
+        h1 = next(o for o in lod1 if o.name.split(':')[-1] == 'head')
+        base_state[base] = {'lod0': lod0, 'lod1': lod1, 'head': h0, 'head1': h1}
         hide(lod0)
         hide(lod1)
         for o in lod0 + lod1:
@@ -267,9 +324,20 @@ def sheets(out_dir, only):
     r_game = 19 / 1.257
     game_fov = math.degrees(2 * math.atan(res / 1080 * math.tan(math.radians(12.5))))
     close_fov = math.degrees(2 * math.atan(1.0 / (2 * r_close)))
-    def centre_of(base):
-        h = base_state[base]['head'].matrix_world.translation
-        return Vector((h.x - .02, 0, h.z + .16))
+    def centre_of(base, lod=0):
+        h = base_state[base]['head' if lod == 0 else 'head1']
+        k = h.matrix_world.to_scale().x
+        t = h.matrix_world.translation
+        return Vector((t.x - .02 * k, 0, t.z + .16 * k))
+
+    def show(base, lod, strip):
+        objs = base_state[base]['lod0' if lod == 0 else 'lod1']
+        hide(objs, False)
+        for o in objs:
+            if o.name.endswith(':strip'):
+                o.hide_render = not strip
+            elif strip and o.get('has_hideable'):
+                o.hide_render = True
     # before views
     before = {}
     for base in BASES:
@@ -286,15 +354,18 @@ def sheets(out_dir, only):
             head = base_state[base]['head']
             rows['before'].append(before[base][0])
             for lod, front_key, back_key in ((0, 'l0f', 'l0b'), (1, 'l1f', 'l1b')):
-                hide(base_state[base]['lod0' if lod == 0 else 'lod1'], False)
+                show(base, lod, True)
+                head = base_state[base]['head' if lod == 0 else 'head1']
+                ss = head.matrix_world.to_scale().x
+                c = centre_of(base, lod)
                 acc_objs = place_accessory(acc, lod, head, fit)
                 tint(acc_objs, tints[idx % len(tints)])
                 if lod == 0:
                     fc = head.matrix_world.translation + Vector((fit['offset'][0] + fit['scale'][0] * A.C.x, fit['scale'][1] * A.C.y, fit['offset'][2] + fit['scale'][2] * (A.C.z - A.HEAD_JOINT_Z)))
                     cm = clip_metrics(acc_objs, base_state[base]['lod0'], fc, head)
                     report.setdefault(acc, {})[base] = cm
-                rows[front_key].append(shoot(scene, cam, c, 35, r_close, close_fov))
-                rows[back_key].append(shoot(scene, cam, c, 215, r_close, close_fov))
+                rows[front_key].append(shoot(scene, cam, c, 35, r_close * ss, close_fov))
+                rows[back_key].append(shoot(scene, cam, c, 215, r_close * ss, close_fov))
                 if lod == 0:
                     rows['game'].append(shoot(scene, cam, c, 45, r_game, game_fov))
                 for o in acc_objs:
