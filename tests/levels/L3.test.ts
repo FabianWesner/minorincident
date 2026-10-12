@@ -108,10 +108,13 @@ describe('L3 The Police Collapse', () => {
     for (const r of await complete()) { expect(r.handgunS).not.toBeNull(); expect(r.handgunS!).toBeLessThanOrEqual(40); }
   }, HEAVY);
 
-  test('T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 6 m, axe/bat at <= 2.5 m (median, complete runs)', async () => {
+  test('T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs)', async () => {
     const runs = await complete(), gun = runs.flatMap(r => r.killDistances.gun), melee = runs.flatMap(r => r.killDistances.melee);
     record('kill-distances', { gun: median(gun), melee: median(melee), gunN: gun.length, meleeN: melee.length });
-    expect(gun.length).toBeGreaterThan(20); expect(median(gun)).toBeGreaterThanOrEqual(6);
+    // PO 2026-10-12 (verbatim): "reduce the power of the gun by 50% for the police (not for the player). [...] so they are overwhelming
+    // for the police so the user needs to start running away". The half-strength police let runners reach the courier closer than the
+    // full-strength line did (6 m was measured with it); the handgun still works at twice the melee reach (roles stay distinct).
+    expect(gun.length).toBeGreaterThan(20); expect(median(gun)).toBeGreaterThanOrEqual(5);
     expect(melee.length).toBeGreaterThan(5); expect(median(melee)).toBeLessThanOrEqual(2.5);
   }, HEAVY);
 
@@ -198,12 +201,15 @@ describe('L3 The Police Collapse', () => {
     expect(runs.every(r => r.squad!.protected === 0)).toBe(true);
   }, HEAVY);
 
-  test('T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, median S1 damage <= 15, near the courier, never teleports', async () => {
+  test('T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports', async () => {
     const runs = await complete();
     const officers = runs.reduce((a, r) => a + r.s1!.officerKills, 0), player = runs.reduce((a, r) => a + r.s1!.playerKills, 0);
     record('s1', { officers, player, damage: median(runs.map(r => r.s1!.damage)), near8: median(runs.map(r => r.squad!.near8Share)) });
     expect(officers / Math.max(1, officers + player)).toBeGreaterThanOrEqual(.6);
-    expect(median(runs.map(r => r.s1!.damage))).toBeLessThanOrEqual(15);
+    // PO 2026-10-12 (verbatim): "reduce the power of the gun by 50% for the police (not for the player). [...] so they are overwhelming
+    // for the police so the user needs to start running away (with some of the survivors)". The squad still makes most S1 knockdowns,
+    // but it no longer keeps the courier untouched (15 HP was the full-strength squad): segment 1 must not cost a whole life.
+    expect(median(runs.map(r => r.s1!.damage))).toBeLessThan(100);
     expect(median(runs.map(r => r.squad!.near8Share))).toBeGreaterThanOrEqual(.8);
     expect(Math.max(...runs.map(r => r.squad!.maxJumpM))).toBeLessThanOrEqual(1);
   }, HEAVY);

@@ -133,7 +133,9 @@ export class LevelThreeBot {
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // With a strong squad in the first segment a careful courier lets the officers shoot (only close threats are its own).
     // Segment 3 is the run-away part: fight only what is about to grab the courier, keep moving otherwise.
-    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 5 : p.x >= l3.map.segments[2][0] ? 9 : 15;
+    // Brief l3-polish: with the PO 10-12 police at half strength the careful courier no longer waits for runners to reach arm's
+    // length in segment 1 (5 m); she shoots the ones closing in from 8 m and leaves the rest to the squad.
+    const range = newbie ? 11 : this.profile === 'complete' && s.squad.length >= 2 && p.x < l3.map.segments[0][1] ? 8 : p.x >= l3.map.segments[2][0] ? 9 : 15;
     if (fight(range)) return frame;
     // The first two segments with a squad: a careful courier lets the officers keep up (no waiting in segment 3).
     // A newbie sticks to the police too, but only in the first segment and not for as long.
