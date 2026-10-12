@@ -75,6 +75,8 @@ export class CrowdView extends Group {
   private readonly staticCorpses = new StaticCorpses();
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
+  private readonly elephantArrowScale = new Matrix4().makeScale(1, 1, 3.5 / (1.1 * 1.8));
+  private readonly physicalArrowTail = new Matrix4();
   private readonly physicalArrowScale = new Matrix4().makeScale(1.15, .025, 1.8);
   private readonly telegraphs: InstancedMesh[] = [];
   private readonly shadows: InstancedMesh;
@@ -279,7 +281,7 @@ export class CrowdView extends Group {
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
-      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar'].includes(specialAttack.move) ? specialAttack : undefined;
+      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe'].includes(specialAttack.move) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
@@ -292,6 +294,7 @@ export class CrowdView extends Group {
       if (heavy) clip = age < .48 ? reaction!.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up';
       if (physical?.stage === 'telegraph') clip = 'windup';
       else if ((physical?.move === 'alpha.ground-slam' || physical?.move === 'gorilla.pound') && physical.stage === 'recovery') clip = 'swing';
+      else if (physical?.move === 'elephant.swipe' && physical.stage === 'recovery') clip = 'swing';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       if (e.infected?.specialAttack?.stage === 'telegraph') clip = 'windup';
@@ -327,7 +330,7 @@ export class CrowdView extends Group {
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat) ? layers : undefined;
+        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
         // Wide Roar framing still needs planted turns and grounded convergence.
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
@@ -335,7 +338,7 @@ export class CrowdView extends Group {
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
-      if (physical && physical.stage !== 'recovery') {
+      if (physical && physical.stage !== 'recovery' && physical.move !== 'elephant.swipe') {
         const area = physical.area, ground = (this.world.districts?.groundHeight(area.x, area.z) ?? 0) + .065;
         if (physical.move === 'alpha.ground-slam' || physical.move === 'gorilla.pound' || physical.move === 'gorilla.roar') {
           this.transform.makeScale(area.radius / .8, 1, area.radius / .8); this.transform.setPosition(area.x, ground, area.z);
@@ -346,9 +349,13 @@ export class CrowdView extends Group {
           }
         } else {
           // A sequence of fixed, two-metre-wide arrows shows the entire locked twelve-metre corridor.
-          const length = physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : 12;
+          const length = physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : physical.move === 'elephant.charge' ? 16 : 12;
           for (let i = 0; i < Math.ceil(length / 3); i++) {
             this.transform.makeRotationY(-Math.atan2(area.dz, area.dx)); this.transform.multiply(this.physicalArrowScale);
+            if (physical.move === 'elephant.charge') {
+              this.transform.multiply(this.elephantArrowScale);
+              this.physicalArrowTail.makeScale(Math.min(3, length - i * 3) / 3, 1, 1); this.transform.multiply(this.physicalArrowTail);
+            }
             this.transform.setPosition(area.x + area.dx * i * 3, ground, area.z + area.dz * i * 3);
             this.telegraphs[1].setMatrixAt(this.telegraphs[1].count++, this.transform);
           }

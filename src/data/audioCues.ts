@@ -52,7 +52,7 @@ for (const [move, caption] of [['alpha.grab-throw', 'Alpha preparing to throw a 
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', 'vocal', .8, 100, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
-for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce — clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla beating its chest — infected converge here', 1], ['gorilla.pound', 'Gorilla ground pound — leave the marked circle', 1]] as const) {
+for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce — clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla beating its chest — infected converge here', 1], ['gorilla.pound', 'Gorilla ground pound — leave the marked circle', 1], ['gorilla.grab-throw', 'Gorilla preparing to throw a body or prop', .8], ['elephant.charge', 'Elephant stampede — clear the marked path', .9], ['elephant.swipe', 'Elephant trunk swipe — leave the marked arc', .7]] as const) {
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
