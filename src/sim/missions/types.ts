@@ -160,7 +160,7 @@ export interface L3State {
   squad: { id: number; farSince: number }[]; lost: { id: number; cause: 'bite' | 'kill' | 'separated'; tick: number }[];
   turnedOfficers: number[];
   /** Station waves still waiting at their emergence points (`id` 0 = not yet out). */
-  waves: { id: number; dir: 'river' | 'blvd' | 'oak'; at: number; wave: number }[]; waveIds: number[]; wavesSpawned: number;
+  waves: { id: number; dir: 'river' | 'blvd' | 'oak' | 'commerce' | 'station'; at: number; wave: number }[]; waveIds: number[]; wavesSpawned: number;
   /** Corridor population: segments populated, the planned emergences (with their first visible point for the audit) and ids. */
   populated: boolean[]; pending: { id: number; door: string; home: { x: number; z: number }; segment: number; at: number; x?: number; z?: number; seen?: boolean; horde?: boolean; streetExtra?: boolean; kind?: 'spill' | 'pressure' }[]; segmentIds: number[][];
   /** Forward pressure: furthest progress (x) and when it last grew; emergences behind it. */

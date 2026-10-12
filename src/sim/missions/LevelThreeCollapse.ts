@@ -14,10 +14,13 @@ import type { CoverWall } from '../combat/HitQuery';
 
 const TICKS = 60, ticks = (s: number) => Math.round(s * TICKS);
 const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
-type Dir = 'river' | 'blvd' | 'oak';
-const DIRS: readonly Dir[] = ['river', 'blvd', 'oak'];
-/** Where each attack direction runs at: outside the river-path gate, the north-east and the south-east gate. */
-const RUSH: Record<Dir, Point> = { river: { x: -150, z: -4 }, blvd: { x: -136, z: -1 }, oak: { x: -136, z: 1 } };
+type Dir = 'river' | 'blvd' | 'oak' | 'commerce' | 'station';
+const DIRS: readonly Dir[] = ['river', 'blvd', 'oak', 'commerce'];
+/** Where each attack direction runs at: outside the river-path gate, the north-east and the south-east gate, the east gate, and
+ * (police zombies out of the station door) the line's back. */
+const RUSH: Record<Dir, Point> = { river: { x: -150, z: -4 }, blvd: { x: -136, z: -1 }, oak: { x: -136, z: 1 }, commerce: { x: -129, z: 0 }, station: { x: -133, z: 0 } };
+/** PO 2026-10-12: police and army guns at 50 % in L3 (never the courier's). */
+const weak = <G extends { damage: number }>(gun: G): G => ({ ...gun, damage: gun.damage * l3.allyDamageScale });
 /** The yard gates the remaining officers pull shut behind the squad (east = Commerce, the side gates and the river gate). */
 export const L3_GATES: Record<string, CoverWall> = {
   'yard-east': { x: -126, y: .9, z: 0, halfX: .25, halfY: .9, halfZ: 5.2 },
@@ -121,7 +124,7 @@ export class LevelThreeCollapse {
     const o = this.outbreak(), p = this.snap(at, .35);
     const id = o.spawnPedestrian(p, { role: 'officer', model: 'npc.police-officer', tint: '#2f4858', tier: 'average', schedule: this.schedule(p, facing, post ? 'look' : 'chat') });
     const e = this.world.entities.get(id)!;
-    e.civilian!.ally = { ...allyState('officer', p, true), gun: { ...l3.officers.gun }, runSpeed: l3.officers.moveMs };
+    e.civilian!.ally = { ...allyState('officer', p, true), gun: weak(l3.officers.gun), runSpeed: l3.officers.moveMs };
     e.health = { current: l3.officers.hp, max: l3.officers.hp };
     e.transform.yaw = -Math.atan2(facing.z - p.z, facing.x - p.x);
     return id;
@@ -145,7 +148,7 @@ export class LevelThreeCollapse {
       const p = this.snap(this.anchor(`l3-soldier-${i}`), .35);
       const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
       const e = this.world.entities.get(id)!;
-      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+      e.civilian!.ally = { ...allyState('soldier', p, true), gun: weak(l3.soldiers.gun), weapon: 'rifle', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
       e.civilian!.floorY = l3.soldiers.deckY;
       e.transform.y = l3.soldiers.deckY + .7;
       e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
@@ -155,7 +158,7 @@ export class LevelThreeCollapse {
     const p = this.snap(this.anchor('l3-hmg'), .35);
     const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
     const e = this.world.entities.get(id)!;
-    e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+    e.civilian!.ally = { ...allyState('soldier', p, true), gun: weak(l4.soldiers.hmg), weapon: 'hmg', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
     e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.transform.yaw = Math.PI;
     this.s.soldierIds.push(id);
   }
@@ -214,9 +217,11 @@ export class LevelThreeCollapse {
     if (!this.mission.state.states.attack) this.mission.setState('attack', true);
     for (const id of s.officerIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) { a.engaged = true; } }
     const scale = world.infected!.director.tier === 'low' ? l3.attack.lowScale : 1;
-    for (const [w, wave] of l3.attack.waves.entries()) {
+    // Spread streams (PO 10-12): every wave trickles in over streamS from all five directions; every fifth is a police zombie.
+    const a = l3.attack, every = Math.round(1 / a.stationShare);
+    for (const [w, wave] of a.waves.entries()) {
       const n = Math.ceil(wave.count * scale);
-      for (let i = 0; i < n; i++) s.waves.push({ id: 0, dir: DIRS[i % 3], at: tick + ticks(wave.atS + Math.floor(i / 3) * l3.attack.staggerS + (i % 3) * .15), wave: w });
+      for (let i = 0; i < n; i++) s.waves.push({ id: 0, dir: i % every === every - 1 ? 'station' : DIRS[i % DIRS.length], at: tick + ticks(wave.atS + i / n * a.streamS + (i % 3) * .15), wave: w });
     }
     // The S1 wanderers are already out there (out of view, east of the yard).
     this.populate(0);
@@ -224,6 +229,9 @@ export class LevelThreeCollapse {
   /** Emergence points of one attack direction: the river-path end, or building doors on the avenue east of the yard. */
   private sources(dir: Dir): Point[] {
     if (dir === 'river') return [{ x: -157, z: -32 }, { x: -159, z: -33 }, { x: -155, z: -33 }];
+    // The station door behind the line (police zombies) and the street beyond the east gate.
+    if (dir === 'station') return [{ x: -141, z: -16.2 }, { x: -142.5, z: -16.4 }, { x: -139.5, z: -16.4 }];
+    if (dir === 'commerce') return [-112, -110, -108].flatMap(x => [-3, 0, 3].map(z => ({ x, z })));
     const sign = dir === 'blvd' ? -1 : 1;
     return [122, 124, 126].flatMap(x => [13, 15, 17].map(z => ({ x: -x, z: sign * z })));
   }
@@ -233,7 +241,7 @@ export class LevelThreeCollapse {
     for (const q of s.waves) if (!q.id && tick >= q.at) {
       const pts = this.sources(q.dir).filter(p => ai.director.offscreen(p));
       if (!pts.length) continue;
-      const p = pts[(q.at + q.wave) % pts.length], id = this.emerge(p);
+      const p = pts[(q.at + q.wave) % pts.length], id = this.emerge(p, undefined, false, q.dir === 'station');
       if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
       q.id = id; s.waveIds.push(id); s.wavesSpawned = Math.max(s.wavesSpawned, q.wave + 1);
       ai.rush(id, RUSH[q.dir], tick + ticks(60));
@@ -241,12 +249,13 @@ export class LevelThreeCollapse {
     }
   }
   /** An infected comes out of a door: a pedestrian turned in place (same pipeline as L1/L2). Returns the id or 0 at the cap. */
-  private emerge(at: Point, home?: Point, running = false): number {
+  private emerge(at: Point, home?: Point, running = false, police = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
     if (ai.director.count >= ai.director.cap || !ai.pool.length) return 0;
     const out = this.snap(at, .45);
     if (!ai.director.offscreen(out, world.districts?.groundHeight(out.x, out.z) ?? 0) || ai.active.some(e => e.health.current > 0 && dist(e.transform, out) < .85)) return 0;
-    const id = o.spawnPedestrian(out), e = world.entities.get(id)!;
+    // Police zombies: an officer turned in place keeps the police look (the ordinary turned-pedestrian infected variant).
+    const id = o.spawnPedestrian(out, police ? { role: 'officer', model: 'npc.police-officer', tint: '#2f4858' } : undefined), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + (running ? 0 : 30);
@@ -257,7 +266,9 @@ export class LevelThreeCollapse {
   private insideYard(p: Point): boolean { const y = l3.map.yard; return p.x > y.x0 && p.x < y.x1 && p.z > y.z0 && p.z < y.z1; }
   private checkFallback(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
-    const inside = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && this.insideYard(e.transform)).length;
+    // The line breached from outside; police zombies out of the station are already inside and do not call the fallback.
+    const station = new Set(s.waves.filter(q => q.dir === 'station' && q.id).map(q => q.id));
+    const inside = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !station.has(e.id) && this.insideYard(e.transform)).length;
     const cause = s.turnedOfficers.length >= l3.attack.fallback.turned ? 'turned' : inside >= l3.attack.fallback.inside ? 'inside' : tick - s.attackAt >= ticks(l3.attack.fallback.defenseS) ? 'time' : '';
     if (cause) this.fallback(cause);
   }
@@ -272,7 +283,7 @@ export class LevelThreeCollapse {
     const f = l3.officers.squad;
     for (const [slot, id] of squad.entries()) {
       const a = world.entities.get(id)!.civilian!.ally!;
-      a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs; a.gun = { ...f.gun };
+      a.hold = false; a.post = null; a.engaged = true; a.targetId = 0; a.runSpeed = f.moveMs; a.gun = weak(f.gun);
       // Shared allied follower/navigation: all surviving officers can keep pace with the courier.
       a.follow = { targetId: 1, slot, minM: f.minFollowM, maxM: f.maxFollowM, engageM: f.engageM, leashM: f.leashM, moveMs: f.moveMs - slot * f.slowerMs, breakoutUntil: tick + ticks(f.breakoutS) };
       world.entities.get(id)!.civilian!.story = null;
@@ -360,11 +371,11 @@ export class LevelThreeCollapse {
     for (const [x, street, size] of l3.density.groups[segment]) {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
       const highway = x > 128;
-      const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
+      const clusterSize = Math.ceil(size * scale), rng = new Rng(this.world.seed, `l3-pop:${segment}:${x}:${street}`), d = l3.density.spreadM;
       for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier / 5)); i++) {
-        // Five small clusters across the neighbourhood, with breathing room along the walking line.
-        const cluster = Math.floor(i / clusterSize) % offsets.length;
-        const spread = cluster === 0 ? home : this.snap({ x: home.x + offsets[cluster], z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
+        // PO 2026-10-12 "don't cluster Zombies": scattered along the street around the group's home, never stacked in lines.
+        const cluster = i < clusterSize ? 0 : 1;
+        const spread = cluster === 0 && i === 0 ? home : this.snap({ x: home.x + (rng.next() - .5) * d[0], z: home.z + (rng.next() - .5) * d[1] }, .5);
         const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, spread) - dist(b, spread)).slice(0, 2);
         s.pending.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
       }
