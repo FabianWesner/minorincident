@@ -1,15 +1,19 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, test } from 'vitest';
 import { compositions } from '../../../src/levels/compositions';
-import { nearestOnBox, type FlowerBox } from '../../../src/sim/npc/gardening';
+import { flowerClusterBoxes, nearestOnBox, type FlowerBox } from '../../../src/sim/npc/gardening';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { loadL4 } from '../../../tools/sim-runner/l4Bots';
+import { loadL5 } from '../../../tools/sim-runner/l5Bots';
 import { groveWorld, step } from './l1-grove';
 
 /** Every flower prop that exists in the loaded districts, in world metres (decoration flowers and flower-bed footprints). */
-function flowerProps(w: SimWorld): FlowerBox[] {
+function flowerProps(w: SimWorld, single = true): FlowerBox[] {
   const out: FlowerBox[] = [];
   for (const { layout, origin: [ox, oz] } of w.districts!.districts) {
-    for (const d of layout.decorations ?? []) if (d.kind === 'flower') out.push({ x0: d.position[0] + ox, z0: d.position[2] + oz, x1: d.position[0] + ox, z1: d.position[2] + oz });
+    // Single daisies only count as props in the M1 slice (D-RES/D-MAIN); elsewhere flowers belong to a flower box (cluster).
+    if (single) for (const d of layout.decorations ?? []) if (d.kind === 'flower') out.push({ x0: d.position[0] + ox, z0: d.position[2] + oz, x1: d.position[0] + ox, z1: d.position[2] + oz });
+    out.push(...flowerClusterBoxes(layout.decorations, [ox, oz]));
     for (const p of layout.placements) if (p.assetId.startsWith('prop.flower-bed')) out.push({ x0: p.visualAabb.min[0] + ox, z0: p.visualAabb.min[2] + oz, x1: p.visualAabb.max[0] + ox, z1: p.visualAabb.max[2] + oz });
   }
   return out;
@@ -63,4 +67,21 @@ describe('civilian activity anchors', () => {
     expect(r.watering.size).toBeGreaterThanOrEqual(gardeners.length);
     w.dispose();
   }, 120_000);
+
+  // Fairhaven (L4 plaza gardener beside the baked wooden flower boxes) and the L5 twin: every performing civilian faces its target.
+  // L7 reuses the Fairhaven district without a population layer and L8 zoo staff only walk with a prop (no prop-targeted activity).
+  test('L4 Fairhaven: the plaza gardener stands at a real flower box and faces it', async () => {
+    const { world: w } = await loadL4(1);
+    const gardeners = [...w.entities.iterate()].filter(e => e.civilian?.schedule?.some(s => s.activity === 'water'));
+    expect(gardeners.length).toBeGreaterThanOrEqual(1);
+    const r = audit(w, 3000);
+    expect(r.watering.size).toBeGreaterThanOrEqual(gardeners.length);
+    w.dispose();
+  }, 300_000);
+
+  test('L5 Fairhaven aftermath: every performing civilian faces its target', async () => {
+    const { world: w } = await loadL5(1);
+    audit(w, 1200);
+    w.dispose();
+  }, 300_000);
 });
