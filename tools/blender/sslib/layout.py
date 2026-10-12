@@ -181,7 +181,7 @@ class Layout:
             removable=set(sum([l['remove'] for l in self.data['layers']],[]))
             groups={}
             for o in objects:
-                key=o.name if o.name in removable else o.data.materials[0].name
+                key=o.name if o.name in removable else o.get('layoutBatch', o.data.materials[0].name)
                 groups.setdefault(key,[]).append(o)
             merged=[]
             for name,parts in groups.items():

@@ -619,7 +619,10 @@ export class SceneLab {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'), c = this.game.view.labProbes().character, foot = c?.node('footL');
     if (!courier || !c || !foot) return;
     c.updateMatrixWorld(true);
-    courier.sole = (foot.getWorldPosition(this.point).y - (this.world.districts?.pavingHeight(c.position.x, c.position.z) ?? 0)) / foot.getWorldScale(new Vector3()).y;
+    // Sole depth is an asset-local measurement. The paused initial capsule may
+    // still be settling onto raised paving; baking that floor delta into the
+    // shoe depth would report every later planted foot as floating or sunk.
+    courier.sole = (foot.getWorldPosition(this.point).y - c.position.y) / foot.getWorldScale(new Vector3()).y;
   }
   /** Per-frame probes: foot/torso tracks, LOD and visibility of every actor; bone-vs-prop clipping every 3rd frame. */
   /**

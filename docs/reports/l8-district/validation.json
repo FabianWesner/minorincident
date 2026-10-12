@@ -1,0 +1,504 @@
+{
+  "scenes": [
+    {
+      "scene": "l8-district-paths",
+      "tier": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "footSinkMaxCm",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "yawDriftMaxDeg",
+            "pass": true,
+            "value": 0,
+            "limit": 5
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 61,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 105496,
+            "limit": 1500000
+          },
+          {
+            "name": "actorHitsMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "perf": {
+        "drawCalls": {
+          "p50": 42,
+          "p95": 61,
+          "max": 61
+        },
+        "triangles": {
+          "p50": 97371,
+          "p95": 105496,
+          "max": 105496
+        },
+        "shadowDrawCalls": {
+          "p50": 129,
+          "p95": 140,
+          "max": 151
+        },
+        "shadowTriangles": {
+          "p50": 128441,
+          "p95": 150123,
+          "max": 185991
+        },
+        "stepMs": {
+          "p50": 3.2,
+          "p95": 4.8,
+          "max": 94.1
+        },
+        "lastFrame": {
+          "drawCalls": 61,
+          "triangles": 105496,
+          "shadowDrawCalls": 138,
+          "shadowTriangles": 134247,
+          "stepMs": 4.800000190734863,
+          "categories": {
+            "other": 42,
+            "shadows": 138,
+            "props": 17,
+            "buildings": 2
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "motion": {
+        "frames": 480,
+        "torsoPitchMinDeg": 2.9,
+        "torsoPitchMaxDeg": 4.9,
+        "contacts": 1,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 19.7,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 1
+      },
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    {
+      "scene": "l8-district-walk",
+      "tier": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "footSinkMaxCm",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "yawDriftMaxDeg",
+            "pass": true,
+            "value": 0,
+            "limit": 5
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 22,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 70086,
+            "limit": 1500000
+          },
+          {
+            "name": "actorHitsMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "perf": {
+        "drawCalls": {
+          "p50": 20,
+          "p95": 22,
+          "max": 22
+        },
+        "triangles": {
+          "p50": 69282,
+          "p95": 69978,
+          "max": 70086
+        },
+        "shadowDrawCalls": {
+          "p50": 22,
+          "p95": 34,
+          "max": 34
+        },
+        "shadowTriangles": {
+          "p50": 51149,
+          "p95": 103633,
+          "max": 103633
+        },
+        "stepMs": {
+          "p50": 1.3,
+          "p95": 2.1,
+          "max": 67.7
+        },
+        "lastFrame": {
+          "drawCalls": 20,
+          "triangles": 69174,
+          "shadowDrawCalls": 22,
+          "shadowTriangles": 51041,
+          "stepMs": 1.3000001907348633,
+          "categories": {
+            "other": 19,
+            "shadows": 22,
+            "props": 1
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "motion": {
+        "frames": 420,
+        "torsoPitchMinDeg": 2.9,
+        "torsoPitchMaxDeg": 4.9,
+        "contacts": 1,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 19.7,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 1
+      },
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    {
+      "scene": "l8-district-paths",
+      "tier": "low",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "footSinkMaxCm",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "yawDriftMaxDeg",
+            "pass": true,
+            "value": 0,
+            "limit": 5
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 59,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 91510,
+            "limit": 1500000
+          },
+          {
+            "name": "actorHitsMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "perf": {
+        "drawCalls": {
+          "p50": 39,
+          "p95": 59,
+          "max": 59
+        },
+        "triangles": {
+          "p50": 84230,
+          "p95": 91510,
+          "max": 91510
+        },
+        "shadowDrawCalls": {
+          "p50": 112,
+          "p95": 121,
+          "max": 130
+        },
+        "shadowTriangles": {
+          "p50": 107403,
+          "p95": 125663,
+          "max": 161039
+        },
+        "stepMs": {
+          "p50": 2.1,
+          "p95": 3,
+          "max": 80.1
+        },
+        "lastFrame": {
+          "drawCalls": 59,
+          "triangles": 91510,
+          "shadowDrawCalls": 115,
+          "shadowTriangles": 107403,
+          "stepMs": 2.5,
+          "categories": {
+            "other": 42,
+            "shadows": 115,
+            "props": 15,
+            "buildings": 2
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "motion": {
+        "frames": 480,
+        "torsoPitchMinDeg": 2.9,
+        "torsoPitchMaxDeg": 4.9,
+        "contacts": 1,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 19.7,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 1
+      },
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    {
+      "scene": "l8-district-walk",
+      "tier": "low",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "footSinkMaxCm",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "yawDriftMaxDeg",
+            "pass": true,
+            "value": 0,
+            "limit": 5
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 22,
+            "limit": 600
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 58034,
+            "limit": 1500000
+          },
+          {
+            "name": "actorHitsMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "perf": {
+        "drawCalls": {
+          "p50": 20,
+          "p95": 22,
+          "max": 22
+        },
+        "triangles": {
+          "p50": 57614,
+          "p95": 57926,
+          "max": 58034
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 24,
+          "max": 24
+        },
+        "shadowTriangles": {
+          "p50": 50171,
+          "p95": 100511,
+          "max": 100511
+        },
+        "stepMs": {
+          "p50": 1.5,
+          "p95": 2.5,
+          "max": 75.2
+        },
+        "lastFrame": {
+          "drawCalls": 20,
+          "triangles": 57506,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 50171,
+          "stepMs": 2,
+          "categories": {
+            "other": 19,
+            "shadows": 15,
+            "props": 1
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "motion": {
+        "frames": 420,
+        "torsoPitchMinDeg": 2.9,
+        "torsoPitchMaxDeg": 4.9,
+        "contacts": 1,
+        "slideMaxCm": 0,
+        "slideP95Cm": 0,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 19.7,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 2,
+        "worstSlideFrame": 1
+      },
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  ],
+  "scoped": {
+    "numTotalTests": 19,
+    "numPassedTests": 19,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "fullUnit": {
+    "numTotalTests": 854,
+    "numPassedTests": 854,
+    "numFailedTests": 0,
+    "success": true
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "verifyBrowser": {
+    "passed": 25,
+    "failed": 4,
+    "failureTitles": [
+      "S-02",
+      "T-E13-05",
+      "T-E07-crowd-drawn-webgl",
+      "T-E07-crowd-drawn-webgpu"
+    ],
+    "s02Baseline": "e9c95e9e"
+  }
+}
