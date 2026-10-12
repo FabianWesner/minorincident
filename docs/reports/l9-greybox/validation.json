@@ -1,0 +1,79 @@
+{
+  "fullUnit": {
+    "passed": 851,
+    "failed": 0
+  },
+  "routeSim": {
+    "passed": 3,
+    "failed": 0
+  },
+  "routes": [
+    {
+      "id": "road",
+      "lengthM": 1589.6375859826667,
+      "riskAnchors": 2
+    },
+    {
+      "id": "countryside",
+      "lengthM": 1366.038867923396,
+      "riskAnchors": 3
+    },
+    {
+      "id": "dry-shortcut",
+      "lengthM": 1104.4749683231337,
+      "riskAnchors": 6
+    }
+  ],
+  "mapExtentM": [
+    1200,
+    800
+  ],
+  "chunks": 96,
+  "groundSamples": 1655,
+  "groundSamplesMissing": 0,
+  "vision": {
+    "score": 8,
+    "P0": 0,
+    "P1": 0,
+    "read": "Road/countryside/dry fork colours, separated cottages and the taller city cluster read at the game camera. The phone survey retains skyline and long terrain views. Courier and sedan face travel; tyre clearance 0.1 cm, foot sink <=1.4 cm, yaw drift <=5.7 degrees; no visible clipping/jitter or in-view undrawn actors. Telegraphs are absent from district fixtures."
+  },
+  "perf": {
+    "high": {
+      "probes": 31,
+      "pass": true,
+      "draws": 59,
+      "triangles": 151647,
+      "heapMB": 126.83182525634766,
+      "simP95": 1.5,
+      "frameP95": 5.4,
+      "infected": 200,
+      "heroLights": 0,
+      "awakeProps": 0,
+      "particles": 0,
+      "puffs": 0,
+      "parts": 0
+    },
+    "low": {
+      "probes": 31,
+      "pass": true,
+      "draws": 55,
+      "triangles": 119558,
+      "heapMB": 99.19813537597656,
+      "simP95": 3.1999998092651367,
+      "frameP95": 11.9,
+      "infected": 100,
+      "heroLights": 0,
+      "awakeProps": 0,
+      "particles": 0,
+      "puffs": 0,
+      "parts": 0
+    }
+  },
+  "verify": {
+    "passed": true,
+    "unitSim": 12,
+    "remoteBrowser": 14,
+    "nativeBrowser": 12,
+    "command": "MI_RUNNER_IP=157.90.173.117 MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_E2E=1 E2E_PORT=3395 npm run verify -- E31"
+  }
+}

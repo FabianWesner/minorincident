@@ -17,6 +17,7 @@ export const districtOrigins: Record<DistrictId, [number, number]> =
     [groveDistrictId, [0, 0]],
     [corridorDistrictId, [0, 0]],
     [fairDistrictId, [0, 0]],
+    ["D-CROSSING", [0, 0]],
   ]) as Record<DistrictId, [number, number]>;
 const ids = [
   ["D-RES", "D-MAIN", "D-SHOP"],
@@ -96,3 +97,6 @@ compositions["D-SUBWAY"] = { ...compositions.L6, id: "D-SUBWAY" };
 
 /** L7-D1: retained Fairhaven W6, shared Northgate exit; D2 adds corridor/bus. */
 compositions.L7 = { id: 'L7', tier: 6, timeOfDay: 'L6', districts: [{ id: fairDistrictId, origin: [0, 0], overrides: { spawns: [{ anchor: 'l7-night-exit' }] } }] };
+
+/** Isolated L9-D1 greybox; mission registration belongs to the systems/encounter lanes. */
+compositions["D-CROSSING"] = { id: "D-CROSSING", tier: 0, timeOfDay: "L9-crossing", districts: [{ id: "D-CROSSING", origin: [0, 0] }] };

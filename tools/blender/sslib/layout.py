@@ -181,7 +181,8 @@ class Layout:
             removable=set(sum([l['remove'] for l in self.data['layers']],[]))
             groups={}
             for o in objects:
-                key=o.name if o.name in removable else o.data.materials[0].name
+                # Authored open terrain keeps one local root per ownership chunk.
+                key=o.get('terrainChunk') or (o.name if o.name in removable else o.data.materials[0].name)
                 groups.setdefault(key,[]).append(o)
             merged=[]
             for name,parts in groups.items():

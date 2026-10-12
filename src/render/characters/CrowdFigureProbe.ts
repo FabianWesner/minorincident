@@ -40,7 +40,7 @@ export class CrowdFigureProbe {
     if (!this.enabled) return;
     // Ordinary test/perf snapshots need two feet, not a newly allocated full
     // skeleton per figure per frame. Scene Lab still records every requested joint.
-    const pose = CrowdFigureProbe.joints ? palette.pose(frame, outgoing, weight) : undefined;
+    const pose = CrowdFigureProbe.joints || this.animalSoles.length ? palette.pose(frame, outgoing, weight) : undefined;
     const partMatrix = (part: number) => pose ? this.matrix.fromArray(pose, part * 16) : palette.part(frame, outgoing, weight, part, this.matrix);
     const feet = ['footL', 'footR'].map(name => {
       const part = palette.clip.parts.indexOf(name);
@@ -49,7 +49,7 @@ export class CrowdFigureProbe {
       return this.point.setFromMatrixPosition(this.matrix).applyMatrix4(instance).toArray();
     });
     // Heel and toe contact points per foot (same offsets as the footwork solver), for model-free slide probes.
-    const soles = this.animalSoles.length ? this.animalSoles.flatMap(({ part, heel, toe }) => {
+    const soles = this.animalSoles.length && pose ? this.animalSoles.flatMap(({ part, heel, toe }) => {
       const index = palette.clip.parts.indexOf(part);
       if (index < 0) return [];
       this.matrix.fromArray(pose, index * 16).premultiply(instance);

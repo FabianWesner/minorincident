@@ -1,0 +1,70 @@
+{
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "footSinkMaxCm": 2,
+    "footJitterRunMax": 2,
+    "yawDriftMaxDeg": 15,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l9-greybox-road",
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        -60,
+        -365
+      ],
+      [
+        60,
+        -285
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      -330
+    ],
+    "zoom": 1.5
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -8,
+        -330
+      ],
+      "state": {
+        "run": [
+          [
+            -8,
+            -330
+          ],
+          [
+            8,
+            -330
+          ],
+          [
+            8,
+            -315
+          ]
+        ]
+      }
+    }
+  ]
+}

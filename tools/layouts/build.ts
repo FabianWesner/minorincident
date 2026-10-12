@@ -23,6 +23,7 @@ export const districts = [
   "D-GROVE",
   "D-CORRIDOR",
   "D-FAIR",
+  "D-CROSSING",
 ];
 const files = (path: string): string[] =>
   readdirSync(path, { withFileTypes: true }).flatMap((e) =>
@@ -42,6 +43,11 @@ export function layoutSourceHash(id: string): string {
     ...files("tools/blender/sslib").sort(),
   ])
     hash.update(path).update(readFileSync(path));
+  if (id === "D-CROSSING") {
+    hash.update(readFileSync("layouts/D-CROSSING/routes.json"));
+    hash.update(readFileSync("assets/kit.river-terrain/model.glb"));
+    hash.update(readFileSync("tools/layouts/compress.ts"));
+  }
   // Literal placement references in this district and the shared authoring library.
   const source =
     readFileSync(`layouts/${id}/layout.py`, "utf8") +
