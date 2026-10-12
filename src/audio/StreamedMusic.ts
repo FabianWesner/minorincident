@@ -22,7 +22,14 @@ export class StreamedMusic {
     level = '';
     readonly errors: string[] = [];
     readonly transitions: { state: MusicState; requested: number; time: number }[] = [];
-    constructor(private readonly context: AudioContext, private readonly bus: AudioNode) {}
+    /** Master trim of all decks (the in-bus radio lowers the score while it plays). */
+    private readonly trim: GainNode;
+    private trimTarget = 1;
+    constructor(private readonly context: AudioContext, bus: AudioNode) { this.trim = context.createGain(); this.trim.connect(bus); }
+    setTrim(factor: number, time = this.context.currentTime): void {
+        if (factor === this.trimTarget) return;
+        this.trimTarget = factor; this.trim.gain.setTargetAtTime(factor, time, 0.5);
+    }
     private deck(state: MusicState): Deck {
         const file = levelStreams[this.level]?.[state] ?? state;
         const format = (media: HTMLAudioElement) => media.canPlayType('audio/webm; codecs="opus"') ? 'webm' : 'm4a';
@@ -39,7 +46,7 @@ export class StreamedMusic {
         media.src = assetUrl(`/assets/audio/score-${file}.${format(media)}`);
         const source = this.context.createMediaElementSource(media), gain = this.context.createGain();
         gain.gain.value = 0;
-        source.connect(gain).connect(this.bus);
+        source.connect(gain).connect(this.trim);
         deck = { media, source, gain, retire: Infinity, file };
         this.decks.set(state, deck);
         return deck;

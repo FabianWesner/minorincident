@@ -709,7 +709,7 @@ export class GameView implements Lifecycle {
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     pickBodies.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
-    this.entityAssets?.update();
+    this.entityAssets?.update(alpha);
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera);
     this.flashOverlay.style.opacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     this.fixtureProps?.update();

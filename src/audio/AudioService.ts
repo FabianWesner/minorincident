@@ -18,6 +18,8 @@ import { l5 } from '../data/l5';
 import { humanInfected } from '../data/infected';
 import { L1ArcDirector, type ArcFrame } from './L1Arc';
 import { BaseAlarm } from './BaseAlarm';
+import { BusRadio } from './BusRadio';
+import { l4 } from '../data/l4';
 /** E23 signs of life: each survivor's sound is an existing cue (knock, clang, radio, a soft voice, a flashlight click). */
 const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> = {
     dale: { cue: 'impact.body.metal', gain: 1.2, rate: 0.8 }, rosa: { cue: 'door.wood', gain: 1.1, rate: 0.9 }, okafor: { cue: 'bark.male.effort', gain: 0.7, rate: 0.7 },
@@ -77,6 +79,8 @@ export class AudioService implements Lifecycle {
     private readonly loops = new Map<string, GraphVoice>();
     /** L4 military base alarm at the first turn (PO 2026-10-12). */
     readonly alarm: BaseAlarm;
+    /** L4 in-bus radio (PO 2026-10-12). */
+    readonly radio: BusRadio;
     private readonly individualVocals = new Map<number, GraphVoice>();
     private readonly stemVoices = new Map<string, GraphVoice>();
     private metroAmbientAt = -600;
@@ -136,6 +140,7 @@ export class AudioService implements Lifecycle {
         this.registry = new AudioRegistry(this.context);
         this.alarm = new BaseAlarm(this.graph, text => this.caption(text, undefined, 4));
         this.score = new StreamedMusic(this.context, this.graph.buses.music);
+        this.radio = new BusRadio(this.context, this.graph.buses.vehicles, (factor, time) => this.score.setTrim(factor, time));
         try {
             const stored = localStorage.getItem('minor-incident.audio');
             if (stored)
@@ -283,7 +288,7 @@ export class AudioService implements Lifecycle {
         if (patch.muted === undefined)
             return;
         if (this.settings.muted) {
-            this.score.pause();
+            this.score.pause(); this.radio.pause();
             this.graph.master.gain.cancelScheduledValues(0);
             this.graph.master.gain.value = 0;
             void this.context.suspend();
@@ -326,7 +331,7 @@ export class AudioService implements Lifecycle {
         if (this.disposed)
             return;
         this.background = true;
-        this.score.pause();
+        this.score.pause(); this.radio.pause();
         this.host.pause();
         this.host.release();
         this.pauseElement.hidden = false;
@@ -364,7 +369,12 @@ export class AudioService implements Lifecycle {
         this.graph.master.gain.cancelScheduledValues(t);
         this.graph.master.gain.setValueAtTime(0, t);
         this.graph.master.gain.linearRampToValueAtTime(2, t + 0.3);
-        await this.score.resume();
+        await this.score.resume(); await this.radio.resume();
+    }
+    /** The L4 convoy bus plays its radio from the ride until the outbreak alarm (the first turn leaves the plaza phase). */
+    private busRadio(): void {
+        const s = this.world.missions?.state.l4, id = s?.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)], bus = id === undefined ? undefined : this.world.entities.get(id), me = this.world.entities.get(1);
+        this.radio.update(!!s && (s.phase === 'convoy' || s.phase === 'plaza'), !!s?.seated, bus && me ? Math.hypot(bus.transform.x - me.transform.x, bus.transform.z - me.transform.z) : Infinity);
     }
     private available(): boolean { return this.loaded && this.unlocked && !this.background && !this.settings.muted && this.context.state === 'running'; }
     play(id: string, options: PlayOptions = {}, sourceId?: number): GraphVoice | null {
@@ -679,8 +689,10 @@ export class AudioService implements Lifecycle {
             if (event.phase === 'engine') {
                 this.vehicleSpeed = event.speed;
                 const rpm = Math.max(0, Math.min(1, event.rpm / 7000));
-                this.loop(`vehicle:${source}:low`, 'vehicle.engine-low', { position, velocity: event.velocity, rate: 0.6 + rpm, gain: 1 - rpm }, source);
-                this.loop(`vehicle:${source}:high`, 'vehicle.engine-high', { position, velocity: event.velocity, rate: 0.6 + rpm, gain: rpm }, source);
+                // The player's own cab: a muffled, quieter engine and road noise (also see the in-bus radio).
+                const cab = event.inCar ? { lowpass: 700, gain: 0.55 } : { gain: 1, lowpass: undefined };
+                this.loop(`vehicle:${source}:low`, 'vehicle.engine-low', { position, velocity: event.velocity, rate: 0.6 + rpm, gain: (1 - rpm) * cab.gain, lowpass: cab.lowpass }, source);
+                this.loop(`vehicle:${source}:high`, 'vehicle.engine-high', { position, velocity: event.velocity, rate: 0.6 + rpm, gain: rpm * cab.gain, lowpass: cab.lowpass }, source);
                 if (event.health < 0.4)
                     this.loop(`vehicle:${source}:sputter`, 'vehicle.sputter', { position }, source);
                 else
@@ -690,7 +702,7 @@ export class AudioService implements Lifecycle {
                 else
                     this.stopLoop(`vehicle:${source}:fire`);
                 if (event.speed > 0.2)
-                    this.loop(`vehicle:${source}:tires`, `footstep.tires.${event.surface ?? surfaceAt(this.graph.map, event.position)}`, { position, gain: Math.min(1, event.speed / 15) }, source);
+                    this.loop(`vehicle:${source}:tires`, `footstep.tires.${event.surface ?? surfaceAt(this.graph.map, event.position)}`, { position, gain: Math.min(1, event.speed / 15) * (event.inCar ? 0.5 : 1), lowpass: event.inCar ? 900 : undefined }, source);
                 else
                     this.stopLoop(`vehicle:${source}:tires`);
             }
@@ -848,6 +860,7 @@ export class AudioService implements Lifecycle {
         }
         this.startBedsAndMusic();
         this.alarm.update(this.context.currentTime);
+        this.busRadio();
         if (this.level === 'L5') this.l5Score();
         const player = this.world.entities.get(1);
         if (!player)
@@ -994,7 +1007,7 @@ export class AudioService implements Lifecycle {
             if (p.cue === 'l1.blast') this.haptic('explosion');
         }
     }
-    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, story: storyMusic(this.level, this.world.missions?.state), state: this.music.state, streamed: this.score.snapshot(), paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
+    snapshot() { return { state: this.context.state, unlocked: this.unlocked, background: this.background, muted: this.settings.muted, master: this.graph.master.gain.value, output: this.graph.output.gain.value, voices: this.graph.active.size + this.score.voices, voiceLimit: this.graph.limiter.limit, music: { level: this.level, story: storyMusic(this.level, this.world.missions?.state), state: this.music.state, streamed: this.score.snapshot(), radio: { level: this.radio.level, playing: this.radio.playing }, paused: this.context.state !== 'running', position: this.started ? Math.max(0, this.context.currentTime - this.musicEpoch) : 0, layers: this.music.layers, score: this.music.score, transitions: this.music.transitions }, buses: Object.fromEntries(Object.entries(this.graph.buses).map(([k, v]) => [k, v.gain.value])), errors: [...this.registry.errors, ...this.score.errors], cues: [...this.log], clusters: this.horde.clusters.map(c => ({ ...c })), captions: this.captions.map(c => c.text) }; }
     reset(): void {
         this.generation++;
         for (const off of this.unsubscribers)
@@ -1002,7 +1015,7 @@ export class AudioService implements Lifecycle {
         this.unsubscribers.length = 0;
         this.alarm.stop();
         this.graph.reset();
-        this.score.reset();
+        this.score.reset(); this.radio.reset();
         this.loops.clear();
         this.stemVoices.clear();
         this.individualVocals.clear();
@@ -1023,5 +1036,5 @@ export class AudioService implements Lifecycle {
         this.attackMusicUntil = 0; this.lastPeakStinger = -Infinity;
         this.l5Music = false;
     }
-    dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
+    dispose(): void { this.disposed = true; this.reset(); this.score.dispose(); this.radio.dispose(); document.removeEventListener('pointerdown', this.gesture); document.removeEventListener('keydown', this.gesture); document.removeEventListener('visibilitychange', this.visibility); window.removeEventListener('blur', this.blur); window.removeEventListener('focus', this.focus); window.removeEventListener('pagehide', this.pagehide); window.removeEventListener('pageshow', this.pageshow); document.removeEventListener('freeze', this.freeze); document.removeEventListener('resume', this.thaw); this.context.removeEventListener('statechange', this.statechange); this.graph.dispose(); void this.context.close(); this.captionElement.remove(); this.captionStyle.remove(); this.ringElement.remove(); this.controls.remove(); this.pauseElement.remove(); }
 }
