@@ -53,7 +53,7 @@ test('T-E25-08s @E25 @E25-AC08 one pistol hit breaks a lamp once, emits sparks, 
 
 test('T-E25-08p @E25 @E25-AC08 darkness feeds both detection and tracking in the production perception path', async () => {
   const lights = await fixture(); world.lightPower = lights;
-  world.districts = { composition: { timeOfDay: 'night' } } as import('../../src/sim/world/DistrictWorld').DistrictWorld;
+  world.districts = { composition: { timeOfDay: 'night' }, pavingHeight: () => 0 } as unknown as import('../../src/sim/world/DistrictWorld').DistrictWorld;
   const { Perception } = await import('../../src/sim/ai/Perception');
   const perception = new Perception(world);
   const enemy = world.entities.get(world.infected!.spawn('infected.runner', { x: 0, z: 0 }, { yaw: 0 }))!;

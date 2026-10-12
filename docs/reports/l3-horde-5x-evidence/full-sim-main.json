@@ -1,0 +1,102 @@
+{
+  "numTotalTests": 795,
+  "numPassedTests": 775,
+  "numFailedTests": 20,
+  "failures": [
+    {
+      "file": "sim/ai/director.test.ts",
+      "cases": [
+        "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget"
+      ]
+    },
+    {
+      "file": "sim/combat/balance.test.ts",
+      "cases": [
+        "T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon \u00d7 archetype TTK in authored bands"
+      ]
+    },
+    {
+      "file": "sim/performance/horde.test.ts",
+      "cases": [
+        "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms"
+      ]
+    },
+    {
+      "file": "sim/bicycle-knockoff.test.ts",
+      "cases": [
+        "an infected bump at speed knocks the courier off; the bike tips over beside her, stays, and can be remounted @E19 @E19-AC16"
+      ]
+    },
+    {
+      "file": "sim/districts.test.ts",
+      "cases": [
+        "T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier"
+      ]
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "cases": [
+        "T-E25-08p @E25 @E25-AC08 darkness feeds both detection and tracking in the production perception path"
+      ]
+    },
+    {
+      "file": "sim/progression.test.ts",
+      "cases": [
+        "T-E13-02 @E13 @E13-AC02 melee damage is exactly +20% and every firearm magazine grows by two, including reload",
+        "T-E13-07-sim @E13 @E13-AC07 L5 default equips its expected upgraded loadout in sim"
+      ]
+    },
+    {
+      "file": "sim/combat/shot-cover.test.ts",
+      "cases": [
+        "@E21 shot cover: ground officer cannot hit through a 3 m wall; tower shooter can",
+        "@E21 shot cover: ground soldier cannot hit through a 3 m wall; tower shooter can",
+        "@E21 shot cover: ground civilian cannot hit through a 3 m wall; tower shooter can"
+      ]
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "cases": [
+        "T-E29-11-roster @E29-AC11 incoming ids, health, appearance and injury survive; 0\u201335 followers use bounded motion",
+        "T-E29-16-encounters @E29-AC16 checkpoint seam retains queues, Alpha requests, identities and passage state"
+      ]
+    },
+    {
+      "file": "sim/performance/alpha-physical.test.ts",
+      "cases": [
+        "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms"
+      ]
+    },
+    {
+      "file": "sim/performance/alpha-support.test.ts",
+      "cases": [
+        "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms"
+      ]
+    },
+    {
+      "file": "sim/performance/alpha.test.ts",
+      "cases": [
+        "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms"
+      ]
+    },
+    {
+      "file": "sim/performance/zoo-s1.test.ts",
+      "cases": [
+        "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms"
+      ]
+    },
+    {
+      "file": "sim/performance/zoo-s2.test.ts",
+      "cases": [
+        "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms"
+      ]
+    },
+    {
+      "file": "sim/performance/zoo-s3.test.ts",
+      "cases": [
+        "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms"
+      ]
+    }
+  ]
+}

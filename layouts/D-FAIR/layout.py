@@ -141,11 +141,13 @@ for asset, z in (('bld.apartment-block-a', -28.0), ('bld.apartment-block-b', -14
     put('bw', asset, 'E', FRONT_CW, z)
 put('bw', 'bld.cafe-corner', 'E', FRONT_CW, 30.3)
 fill('bw')
-# the yard behind the block (x -85..-73) is the sealed cellar yard
+# the yard behind the block (x -85..-73) is an empty fenced lot (L7's W6 corridor); the cellar yard is in the east lot (see CELLAR_X below)
 for x0, z0, x1, z1 in ((-84.4, -34.6, -73.2, -34.6), (-84.4, 40.6, -73.2, 40.6), (-84.4, -34.6, -84.4, 40.6), (-73.2, -34.6, -73.2, 40.6)):
     g.fence('privacy', x0, z0, x1, z1)
 g.fence('privacy', -73.4, 40.6, -62.8, 40.6)
-CELLAR_X, CELLAR_Z = -79.0, 3.0
+# The cellar yard (sealed island) stands in the empty east lot (x 66..84.4, z -34.4..26.9): the game camera looks from the south-east, and
+# nothing taller than the 1.8 m fence stands on that side. (PO 10-12: it sat behind the 5-storey west block, hidden from the camera.)
+CELLAR_X, CELLAR_Z = 75.0, -4.0
 CELLAR_ID = g.place('int.basement-cellar', CELLAR_X, CELLAR_Z, PI / 2, 1.0, check=False, y=-.3)   # its floor top is 0.3 m: the player walks at y 0
 # The baked slab would block the whole room: the cellar is non-solid and its walls, shelves and stair are authored here
 # (local x, z of the model -> world (cx + z, cz - x) at yaw pi/2), 2.4 m high.
@@ -154,7 +156,7 @@ def cellar_box(name, x0, x1, z0, z1):
 cellar_box('cellar-back', -4.4, -3.3, -3.4, 3.4); cellar_box('cellar-front', 4.0, 4.4, -3.4, 3.4)
 cellar_box('cellar-left', -4.4, 4.4, 2.3, 3.4); cellar_box('cellar-right', -4.4, 4.4, -3.4, -2.3)
 cellar_box('cellar-shelves', -3.05, .25, -2.28, -1.58); cellar_box('cellar-stair', -3.3, 1.7, 1.3, 2.3)
-g.path(-83.0, -1.0, -75.0, 7.0, 'sidewalk')
+g.path(CELLAR_X - 4.0, CELLAR_Z - 4.0, CELLAR_X + 4.0, CELLAR_Z + 4.0, 'sidewalk')
 # The cellar is a building for the audio occlusion (the city's gunfire above is muffled: -6 dB and a 1.2 kHz low-pass) and a small reverberant room.
 _c = (CELLAR_X - 3.6, CELLAR_X + 3.6, CELLAR_Z - 4.6, CELLAR_Z + 4.6)
 l.data['buildings'].append(dict(id=CELLAR_ID, assetId='int.basement-cellar', aabb=dict(min=[_c[0], 0, _c[2]], max=[_c[1], 4, _c[3]]), label="Kessler's cellar"))
@@ -195,20 +197,20 @@ fill('be2')
 for x0, z0, x1, z1 in ((66.0, -34.4, 66.0, 26.9), (66.0, 26.9, 84.4, 26.9), (66.0, -34.4, 84.4, -34.4), (84.4, -34.4, 84.4, 26.9)):
     g.fence('privacy', x0, z0, x1, z1)
 g.fence('privacy', 54.8, 26.9, 66.0, 26.9)
-# Lakeshore front south of Kessler Lane: pharmacy, Kessler's Hardware (cellar door on the lane), a supermarket
+# Lakeshore front south of Kessler Lane: pharmacy, Kessler's Hardware (shopfront on the lane, cellar door on the Lakeshore side that the game camera sees), a supermarket
 FRONT_LK = 40.2
 put('lk', 'bld.pharmacy', 'S', FRONT_LK, 58.0)
 HW_X = 68.0
-_, hwx, hwz = put('lk', 'bld.kessler-hardware', 'S', FRONT_LK, HW_X)
+_, hwx, hwz = put('lk', 'bld.kessler-hardware', 'N', 30.2, HW_X)   # turned round (PO 10-12): the rear cellar door faces the south, not the 10.8 m wall between it and the camera
 put('lk', 'bld.supermarket', 'S', FRONT_LK, 78.5)
 fill('lk', max_gap=3.0)
 g.fence('privacy', 54.8, 30.2, 61.2, 30.2)
 g.fence('privacy', 84.4, 26.9, 84.4, 41.2)
 g.fence('privacy', 84.4, 51.0, 84.4, 56.4)
-# local (-4.1, -1.6) is the cellar door socket (rear wall); with yaw -pi/2 that is world (x + 1.6, z - 4.1)
-ox, oz = rot(FACE_YAW['S'], -4.1, -1.6)
+# local (-4.1, -1.6) is the cellar door socket (rear wall); with yaw +pi/2 that is world (x - 1.6, z + 4.1): on the Lakeshore side, the player stands south of it
+ox, oz = rot(FACE_YAW['N'], -4.1, -1.6)
 CELLAR_DOOR = (hwx + ox, hwz + oz)
-anchors['kessler-cellar-door'] = (CELLAR_DOOR[0], CELLAR_DOOR[1] - 1.4)
+anchors['kessler-cellar-door'] = (CELLAR_DOOR[0], CELLAR_DOOR[1] + 1.4)
 
 # ------------------------------------------------------------------------------------------------ the lake promenade (south of Lakeshore)
 l.box('promenade', 'sidewalk', [W, .12, 5.2], [0, .05, 54.1])

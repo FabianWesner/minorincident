@@ -10,6 +10,8 @@ export interface CivilianActivity {
   anchor: string; target: Point; ticks: number; facing?: Point; prop?: CivilianProp; seat?: Point;
   /** Render-only: raises a seated model so its hip joint rests on the seat anchor (see seats.ts). */
   seatLift?: number;
+  /** Binding to the physics prop the sitter sits on (PropSystem item id) and the seat's offset from the prop's home pose: set lazily by followSeat. `''` = no movable prop under the seat. */
+  seatProp?: string; seatRel?: [number, number, number]; seatRef?: { p: number[]; q: number[] };
 }
 /** Serializable NPC components; no render objects or physics bodies. */
 export interface Civilian {

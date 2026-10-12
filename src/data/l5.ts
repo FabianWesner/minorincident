@@ -69,6 +69,8 @@ export const l5Survivors: readonly L5Survivor[] = [
 
 /** Named world points authored into the L5 layout copy (the cellar anchors come from the layout's own cellar placement). */
 export const l5Anchors: Record<string, P> = {
+  // The courier steps out on Kessler Lane (behind the store; the cellar door the L4 courier used is on its Lakeshore side). Stepping out in front of that
+  // door instead was tried: it starts next to Rosa, 10 m from the first survivor, and the bot follow share drops to 0.72-0.78 (gate 0.8).
   'l5-out': [67.2, 27.6],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [38.1854, -50.6],

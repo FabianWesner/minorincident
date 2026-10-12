@@ -22,6 +22,8 @@ import { RoutineProps } from './RoutineProps';
 import { uprightHand } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
+/** Prop offsets from the hand (RoutineProps shapes): mug body centre, phone. */
+const cupSocket: [number, number, number] = [.035, -.11, .125], phoneSocket: [number, number, number] = [.08, -.03, 0];
 const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
@@ -117,7 +119,7 @@ class CivilianBatch extends Group {
     this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
     // The phone's final-horde carpet keeps every body using the shipped far
     // silhouette. Freeze this choice so later quality changes cannot duplicate it.
-    this.corpseLod = world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
+    this.corpseLod = world.scenario === 'L3' || world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
     this.frame = new InstancedBufferAttribute(new Float32Array(this.capacity), 1).setUsage(StreamDrawUsage);
     this.tint = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
     this.overlay = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
@@ -191,7 +193,8 @@ class CivilianBatch extends Group {
       // Conservative animated bounds retain limbs, falling bodies and interpolated motion.
       if (shotId === undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
-      if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, pixels, this.model)) !== this.lod) continue;
+      // Low-tier downed bodies use the existing far geometry; close bodies and living figures retain their detail.
+      if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, (e.health?.current ?? 1) <= 0 ? pixels * .55 : pixels, this.model)) !== this.lod) continue;
       if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
@@ -231,7 +234,12 @@ class CivilianBatch extends Group {
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
       frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant);
-      if (holding && !weaponProps.has(handProp!)) { frame = this.poses.correct(e.id, frame, ...blend, pose => uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand)); blend[0] = frame; blend[1] = 1; }
+      if (holding && !weaponProps.has(handProp!)) {
+        // Mug and phone: elbow bent, hand at chest height; a standing or seated drinker raises the mug to the mouth every ~8 s.
+        const bent = handProp === 'coffee' || handProp === 'phone', still = speed < .06 && !down && !rising;
+        const cycle = (renderTick / 60 + e.id * 1.7) % 8, sip = handProp === 'coffee' && still && cycle > 5.8 ? Math.sin(Math.PI * Math.min(1, (cycle - 5.8) / 2.2)) ** 2 : 0;
+        frame = this.poses.correct(e.id, frame, ...blend, pose => { if (bent) this.gunAim.hold(pose, sip, handProp === 'coffee' ? cupSocket : phoneSocket); uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand); }); blend[0] = frame; blend[1] = 1;
+      }
       const firing = this.props?.aiming.get(e.id);
       if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'hunting-rifle'].includes(handProp!) ) {
         // Only the torso/arm matrices change; the walking legs retain their heading and gait.
@@ -339,6 +347,25 @@ export class CivilianCrowd extends Group {
   private readonly figures = new Map<string, EntitySnapshot[]>();
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
+  /** E18 low tier: at most this many crowd figures draw near detail (LOD1, ~7k triangles) per frame; the rest the far LOD2.
+   * The L3 5x hordes otherwise put 70+ LOD1 figures in a phone frame (546k > 500k triangles; 36 still peaked there, 16 measured 481k). */
+  static readonly lowNearBudget = 16;
+  private readonly ranked: { id: number; score: number }[] = [];
+  private budgetNear(): void {
+    const v = this.visibility, demoted = v.demoted;
+    if (!this.low) { demoted.clear(); return; }
+    this.ranked.length = 0;
+    for (const e of this.world.entities.iterate()) {
+      // Infected only, and not the police zombies: their officer-model LOD2 batch was first drawn at the fallback (a 70 ms hitch).
+      if (e.corpse || !e.infected || e.health.current <= 0 || !crowdModelOf(e) || crowdModelOf(e) === 'npc.police-officer' || !v.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+      const pixels = v.pixels(e.transform.x, e.transform.y, e.transform.z, 1.8);
+      this.ranked.push({ id: e.id, score: pixels * (demoted.has(e.id) ? .9 : 1) });
+    }
+    demoted.clear();
+    if (this.ranked.length <= CivilianCrowd.lowNearBudget) return;
+    this.ranked.sort((a, b) => b.score - a.score || a.id - b.id);
+    for (let i = CivilianCrowd.lowNearBudget; i < this.ranked.length; i++) demoted.add(this.ranked[i].id);
+  }
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
@@ -409,10 +436,10 @@ export class CivilianCrowd extends Group {
     loadMeasure('view:civilian-crowd', started); this.update();
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
-    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
     for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
-    if (this.world.scenario === 'L7') {
-      // Each human belongs to one model. All its LOD batches share this frame's
+    {
+      // Each human belongs to one model (every scenario: the L3/L4 5x hordes made the per-batch full scan the view cost). All its LOD batches share this frame's
       // list instead of rescanning every prop, light and other crowd model.
       for (const list of this.figures.values()) list.length = 0;
       for (const e of this.world.entities.iterate()) {
@@ -421,7 +448,7 @@ export class CivilianCrowd extends Group {
         list.push(e);
       }
       for (const b of this.batches) b.update(alpha, this.low, undefined, this.figures.get(b.model) ?? noFigures);
-    } else for (const b of this.batches) b.update(alpha, this.low);
+    }
     for (const e of this.world.entities.iterate()) if (e.droppedProp) this.props.dropped(e.droppedProp, e.transform); this.props.finish();
   }
   snapshot() { const states=this.batches.map(b=>b.snapshot());return {instances:states.reduce((n,s)=>n+s.instances,0),draws:states.reduce((n,s)=>n+s.draws,0),figures:states.flatMap(s=>s.figures),muzzles: [...this.props.muzzles].map(([id, position]) => ({ id, position: position.toArray() })),layouts:states.map(s=>s.layout).filter(Boolean),source:states.every(s=>s.source==='glb')?'glb':'placeholder'}; }

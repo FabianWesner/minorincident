@@ -142,6 +142,8 @@ export type EffectSpec =
   | { lightning: Point; consequence?: 'fire' | 'blackout' }
   | { blast: string; at: Point }
   | { barricadeHit: string; amount: number }
+  /** Move a pushable placement (id) by [dx, dz] metres, optionally tipped on its side: seat-follow QA (the sitter must stand up and re-sit or leave). */
+  | { moveProp: string; by: [number, number]; tip?: boolean }
   | { wreck: string }
   | { hazard: import('../../sim/interact/Hazards').HazardKind; at: Point; radius?: number; duration?: number; trigger?: 'bullet' | 'melee' }
   | { fire: Point; radius?: number; duration?: number }

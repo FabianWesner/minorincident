@@ -1,3 +1,4 @@
+import { l3 } from '../../data/l3';
 import { Rng } from '../../core/Rng';
 import { l2 } from '../../data/l2';
 import { l4 } from '../../data/l4';
@@ -20,6 +21,9 @@ export function gunHitChance(gun: AllyGun, distance: number): number {
   return gun.hitNear + (gun.hitFar - gun.hitNear) * Math.min(1, (distance - gun.nearM) / Math.max(1e-6, gun.rangeM - gun.nearM));
 }
 const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
+// A retreat order (`a.run`) can cross a whole district: the L3 straggler route from the station to the relocated army
+// boom needs ~32k A* nodes, far beyond the 1600-node per-tick NPC budget. The route is cached once found.
+const runBudget = 48_000;
 
 /**
  * One tick of an allied fighter (firefighter, officer or soldier), called by the outbreak layer for live civilians with
@@ -37,6 +41,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
+  // The army covers the retreat. Continue the ordinary self-defence shot while moving through the open checkpoint.
+  if (world.missions?.def.l3 && a.follow && a.run && player && player.transform.x > l3.finale.passX && e.transform.x < l3.map.zoneX && c.state !== 'grabbed') {
+    npcs.move(e, a.run, a.follow.moveMs, c, .5);
+  }
   const heard = (target: EntitySnapshot) => ai.hearing.hears(e, target.transform);
   const defence = (target: EntitySnapshot) => a.role === 'officer' && dist(target.transform, e.transform) <= pt.defendM;
   const policeCanEngage = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
@@ -137,7 +145,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       if (!visible(e.transform, target.transform, target.id)) { a.targetId = 0; return true; }
       // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
       if (c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
-        if (a.run) npcs.move(e, a.run, a.runSpeed, c, .25);
+        if (a.run) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget);
         else if (follower && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) regroup(world, e, a, leader!.transform);
       }
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -159,7 +167,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   }
   if (a.run) {
     if (Math.hypot(a.run.x - e.transform.x, a.run.z - e.transform.z) <= .35) { a.run = null; return true; }
-    npcs.move(e, a.run, a.runSpeed, c, .25); return true;
+    npcs.move(e, a.run, a.runSpeed, c, .25, runBudget); return true;
   }
   if (follower) return regroup(world, e, a, leader!.transform);
   // Disengaged fighters follow their routine; a held post (officers) is kept regardless.

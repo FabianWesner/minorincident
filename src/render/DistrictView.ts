@@ -93,6 +93,7 @@ export class DistrictView extends Group {
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
   readonly ground = new GroundField();
+  private readonly mergedLayout: Mesh[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
@@ -201,7 +202,7 @@ export class DistrictView extends Group {
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
         for (const groundLayer of root.children.slice(-scenes.length)) groundLayer.traverse(o => {
-          if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o);
+          if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') { this.ground.add(o); this.mergedLayout.push(o); }
           // W6's layered ground and hundreds of placement markers are static.
           // Their world transforms were composed above; camera frames need no recomposition.
           if (this.world.composition.tier === 6) o.matrixWorldAutoUpdate = false;
@@ -279,7 +280,7 @@ export class DistrictView extends Group {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
               const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
               const batch = new InstancedGroup(prototype, refs.slice(), this.instanceCapacity ?? refs.length);
-              if (this.low && this.world.composition.id === 'L7') batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+              if (this.low && ['L3', 'L7'].includes(this.world.composition.id)) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
               const bounds = new Box3().setFromObject(prototype).getBoundingSphere(new Sphere());
               this.dressingEntries.push({ batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius });
               this.dressingBatches.push(batch); root.add(batch); return;
@@ -421,6 +422,11 @@ export class DistrictView extends Group {
     for (const grass of this.grass) grass.setQuality(tier === 'low', tier === 'low' ? this.materials.look.values.grassDensityLow : this.materials.look.values.grassDensity);
     this.foliage.setQuality(tier === 'low');
     this.ambient?.setQuality(tier === 'low');
+    // L3's merged rail/fence slabs span the district. Keep their visible art, without a second low-tier shadow submission.
+    if (this.world.composition.id === 'L3') for (const mesh of this.mergedLayout) {
+      mesh.userData.qualityCastShadow ??= mesh.castShadow;
+      mesh.castShadow = tier === 'high' && mesh.userData.qualityCastShadow;
+    }
     // Measured L6 cost: many small prop meshes render again into the sun shadow map.
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
