@@ -1,3 +1,4 @@
+import type { Tier } from '../levels/districts/types';
 import { LevelSixBot, type L6Profile } from './bot/LevelSixBot';
 import { weatherRayDither, weatherSurface } from '../render/WeatherView';
 import { LevelOneBot } from './bot/LevelOneBot';
@@ -53,7 +54,7 @@ export interface SSTestApi {
   step(ticks: number): Promise<void>;
   setTimeScale(scale: number): void;
   tick(): number;
-  loadLevel(id: string, opts?: { seed?: number; checkpoint?: string; tier?: 0 | 1 | 2 | 3 | 4 | 5; progression?: ProgressionPreset }): Promise<void>;
+  loadLevel(id: string, opts?: { seed?: number; checkpoint?: string; tier?: Tier; progression?: ProgressionPreset }): Promise<void>;
   loadScenario(name: string, opts?: { seed?: number }): Promise<void>;
   /** Additive E01 harness hook: unload all scenario-owned sim and GPU resources. */
   unloadScenario(): Promise<void>;

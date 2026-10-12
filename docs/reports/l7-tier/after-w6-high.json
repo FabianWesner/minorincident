@@ -1,0 +1,252 @@
+{
+  "spec": "tests/scenes/l7-tier/after.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 120,
+  "timing": {
+    "openMs": 1453,
+    "loadMs": 3393,
+    "runMs": 1261,
+    "sceneMs": 4654
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 16,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 58615,
+        "limit": 500000
+      },
+      {
+        "name": "actorHitsMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "scene": {
+    "name": "l7-tier-after",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "wreck",
+        "asset": "veh.military-truck",
+        "at": [
+          6,
+          5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "rubble",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -6,
+          5
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "l7-tier-after",
+    "frame": 120,
+    "tick": 120,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 120,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "perf": {
+      "drawCalls": {
+        "p50": 16,
+        "p95": 16,
+        "max": 16
+      },
+      "triangles": {
+        "p50": 58615,
+        "p95": 58615,
+        "max": 58615
+      },
+      "shadowDrawCalls": {
+        "p50": 15,
+        "p95": 15,
+        "max": 15
+      },
+      "shadowTriangles": {
+        "p50": 48234,
+        "p95": 48234,
+        "max": 48234
+      },
+      "stepMs": {
+        "p50": 1.7,
+        "p95": 2.8,
+        "max": 10.3
+      },
+      "lastFrame": {
+        "drawCalls": 16,
+        "triangles": 58615,
+        "shadowDrawCalls": 15,
+        "shadowTriangles": 48234,
+        "stepMs": 1.3999996185302734,
+        "categories": {
+          "other": 15,
+          "shadows": 15,
+          "props": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -1.04,
+          0
+        ],
+        "yawDeg": 0,
+        "state": "walk",
+        "drawnFrames": 120,
+        "inViewFrames": 120,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 120
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -4.99,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 120,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 4.9,
+          "contacts": 12,
+          "slideMaxCm": 0.3,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 90
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 120,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "wreck": "lod1",
+      "rubble": "n/a"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

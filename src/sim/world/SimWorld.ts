@@ -1,3 +1,4 @@
+import { isWorldTier, type Tier } from '../../levels/districts/types';
 import { WeatherSystem } from '../weather/WeatherSystem';
 import { LightPower } from '../lighting/LightPower';
 import { levelFourLayouts } from '../../levels/L4/layout';
@@ -52,7 +53,8 @@ export class SimWorld implements Lifecycle {
   /** L1 decay is baked during loading, before its first objective can fire. */
   readonly preparedDistricts = new Map<number, DistrictWorld>();
   readonly preparedNpcNavigation = new Map<number, Uint8Array>();
-  prepareTier(tier: 0|1|2|3|4|5): void {
+  prepareTier(tier: Tier): void {
+    if (!isWorldTier(tier)) throw new RangeError("Tier must be W0…W6");
     const current = this.districts;
     if (!current) return;
     if (!this.preparedDistricts.has(tier)) this.preparedDistricts.set(tier, new DistrictWorld({ ...current.composition, tier }, current.districts.map(d => d.layout), this.seed));
@@ -270,7 +272,8 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai);
   }
   /** Mission script integration: rebuild decay collision/nav once on a tier change. */
-  setTier(tier: 0|1|2|3|4|5): void {
+  setTier(tier: Tier): void {
+    if (!isWorldTier(tier)) throw new RangeError("Tier must be W0…W6");
     const previous = this.districts; if (!previous || previous.composition.tier === tier) return;
     const next = this.preparedDistricts.get(tier) ?? new DistrictWorld({...previous.composition,tier},previous.districts.map(d=>d.layout),this.seed);
     this.districts = next;
