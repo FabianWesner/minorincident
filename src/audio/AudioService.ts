@@ -139,8 +139,10 @@ export class AudioService implements Lifecycle {
         this.graph = new AudioGraph(this.context, params.get('quality') === 'low' || navigator.maxTouchPoints > 0 ? 'low' : 'high', params.get('audio') === 'muted', 4);
         this.registry = new AudioRegistry(this.context);
         this.alarm = new BaseAlarm(this.graph, text => this.caption(text, undefined, 4));
-        this.score = new StreamedMusic(this.context, this.graph.buses.music);
-        this.radio = new BusRadio(this.context, this.graph.buses.vehicles, (factor, time) => this.score.setTrim(factor, time));
+        // The score runs through its own trim node so the in-bus radio can lower it while it plays.
+        const scoreTrim = this.context.createGain(); let trimTarget = 1; scoreTrim.connect(this.graph.buses.music);
+        this.score = new StreamedMusic(this.context, scoreTrim);
+        this.radio = new BusRadio(this.context, this.graph.buses.vehicles, (factor, time) => { if (factor !== trimTarget) { trimTarget = factor; scoreTrim.gain.setTargetAtTime(factor, time, 0.5); } });
         try {
             const stored = localStorage.getItem('minor-incident.audio');
             if (stored)
