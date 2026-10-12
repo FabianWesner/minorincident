@@ -88,6 +88,176 @@ export const audioCredits: readonly Credit[] = [
         ]
     },
     {
+        "title": "Mistake the Getaway",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100699",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Mistake the Getaway.mp3"
+        ]
+    },
+    {
+        "title": "The Builder",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400016",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "The Builder.mp3"
+        ]
+    },
+    {
+        "title": "Run Amok",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400024",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Run Amok.mp3"
+        ]
+    },
+    {
+        "title": "At Launch",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100539",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "At Launch.mp3"
+        ]
+    },
+    {
+        "title": "Clenched Teeth",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100705",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Clenched Teeth.mp3"
+        ]
+    },
+    {
+        "title": "Heroic Age",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100848",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Heroic Age.mp3"
+        ]
+    },
+    {
+        "title": "Death and Axes",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700049",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Death and Axes.mp3"
+        ]
+    },
+    {
+        "title": "Rains Will Fall",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100723",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Rains Will Fall.mp3"
+        ]
+    },
+    {
+        "title": "Zombie Hoodoo",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100004",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Zombie Hoodoo.mp3"
+        ]
+    },
+    {
+        "title": "Static Motion",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200062",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Static Motion.mp3"
+        ]
+    },
+    {
+        "title": "Controlled Chaos",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200059",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Controlled Chaos.mp3"
+        ]
+    },
+    {
+        "title": "Industrial Cinematic",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600047",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Industrial Cinematic.mp3"
+        ]
+    },
+    {
+        "title": "Metalmania",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700023",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Metalmania.mp3"
+        ]
+    },
+    {
+        "title": "Chee Zee Jungle",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100684",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Chee Zee Jungle.mp3"
+        ]
+    },
+    {
+        "title": "Freddy's Menagerie",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100579",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Freddys Menagerie.mp3"
+        ]
+    },
+    {
+        "title": "Limit 70",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1900042",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Limit 70.mp3"
+        ]
+    },
+    {
+        "title": "Hot Pursuit",
+        "author": "Kevin MacLeod (incompetech.com)",
+        "url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700084",
+        "license": "CC-BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "files": [
+            "Hot Pursuit.mp3"
+        ]
+    },
+    {
         "title": "Zombies sound pack",
         "author": "artisticdude",
         "url": "https://opengameart.org/content/zombies-sound-pack",
