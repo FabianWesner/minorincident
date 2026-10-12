@@ -194,10 +194,10 @@ def run(out):
  for o in root.children:o.location+=shift
  dims=hi-lo
  front=empty('front',(dims.x/2+.01,0,dims.z*.5),root)
- if not any(o.name.startswith('col:') for o in groups):collider('body',(0,0,dims.z*.5),dims)
+ if ID!='prop.flower' and not any(o.name.startswith('col:') for o in groups):collider('body',(0,0,dims.z*.5),dims)  # flowers are walk-through ground cover
  masses={'prop.bbq':18,'prop.wheelbarrow':35,'prop.crates':35,'prop.hose-reel':12,'prop.gnome':3,'prop.flamingo':1.5,'prop.recycling-bin':9,'prop.trash-bags':6,'prop.carpet':8,'prop.sprinkler':2,'prop.lawn-chair-a':4,'prop.lawn-chair-b':4,'prop.broken-chair':5}
  mass=masses.get(ID,0);cls='fixed' if not mass else ('light' if mass<=15 else 'medium')
- root['ss_physics']={'class':cls,'mass':mass,'friction':.65,'restitution':.08,'centerOfMass':[0,float(dims.z)*.45,0],'pushable':bool(mass),'kickable':cls=='light','barricadeValue':.5,'barricadeHP':80,'vaultable':float(dims.z)<.9,'flammable':ID in ['prop.crates','prop.carpet','prop.broken-chair'],'burnTime':20,'explosive':None,'sounds':'prop.metal-light'}
+ if ID!='prop.flower':root['ss_physics']={'class':cls,'mass':mass,'friction':.65,'restitution':.08,'centerOfMass':[0,float(dims.z)*.45,0],'pushable':bool(mass),'kickable':cls=='light','barricadeValue':.5,'barricadeHP':80,'vaultable':float(dims.z)<.9,'flammable':ID in ['prop.crates','prop.carpet','prop.broken-chair'],'burnTime':20,'explosive':None,'sounds':'prop.metal-light'}
  bpy.context.view_layer.update()
  tris=sum(len(f.vertices)-2 for o in meshes for f in o.data.polygons)
  report={'id':ID,'triangles':{'lod0':tris},'dimensions_blender':list(dims),'draw_calls':len(meshes),'materials':[m.name for m in M.values()],'nodes':[o.name for o in groups],'backface_culling':True,'rounds':1,'webgpu_ok':False,'webgl2_ok':False,'gaps':[]}
