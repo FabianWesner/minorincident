@@ -1,3 +1,4 @@
+export type ZooSpecies = 'lion' | 'gorilla' | 'elephant' | 'zebra' | 'flamingo';
 export interface Point { x: number; z: number }
 export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
 export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel'
@@ -16,6 +17,7 @@ export interface Civilian {
   floorY?: number;
   /** Stair entry: support the body on the higher tread under either walking foot. */
   supportFeet?: boolean;
+  zooAnimal?: ZooSpecies;
   state: CivilianState; ambient: boolean; adult: boolean; pet: 'dog' | 'cat' | null; owner: number | null;
   model?: string; variant: string; routine: string; waypoints: Point[]; waypoint: number; pauseUntil: number;
   /** Story beat presentation (render-only): a scripted clip from `start` and an optional hand prop. */

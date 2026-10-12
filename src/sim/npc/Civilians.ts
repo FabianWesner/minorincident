@@ -1,10 +1,11 @@
 import { storyProtected } from './storyProtection';
 import { Rng } from '../../core/Rng';
+import { infectedDef } from '../../data/infected';
 import { civilianRoles, npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { updateRoutine } from './MorningRoutines';
-import type { Civilian, CivilianActivity, CivilianState, Point } from './types';
+import type { Civilian, CivilianActivity, CivilianState, Point, ZooSpecies } from './types';
 const mobileStates = new Set<CivilianState>(['calm', 'alarmed', 'flee', 'hide']);
 const grabStates = new Set<CivilianState>(['calm', 'alarmed', 'flee']);
 const immobileStates = new Set<CivilianState>(['grabbed', 'down', 'rising']);
@@ -27,18 +28,21 @@ export class Civilians {
     world.events.on('noise', event => { if (event.type === 'noise' && event.radius >= 6) this.alarm(event.position); });
   }
   private duration(range: readonly [number, number]): number { return range[0] + Math.floor(this.rng.next() * (range[1] - range[0] + 1)); }
-  spawn(role: string, position: Point, options: { ambient?: boolean; child?: boolean; pet?: 'dog' | 'cat'; owner?: number; waypoints?: Point[]; model?: string; schedule?: CivilianActivity[]; panicReaction?: 'flee' | 'freeze' } = {}): number {
+  spawn(role: string, position: Point, options: { ambient?: boolean; child?: boolean; pet?: 'dog' | 'cat'; zooAnimal?: ZooSpecies; owner?: number; waypoints?: Point[]; model?: string; schedule?: CivilianActivity[]; panicReaction?: 'flee' | 'freeze' } = {}): number {
     const def = civilianRoles.find(d => d.role === role) ?? civilianRoles[0];
     const nav = this.world.infected!.nav;
-    if (!nav.clear(position.x, position.z, .35)) throw new RangeError('Civilian spawn outside navigation');
+    const animal = options.zooAnimal ? infectedDef(`infected.${options.zooAnimal}`) : undefined;
+    if (animal && !this.outbreak) throw new Error('Zoo animals require the same-id outbreak lifecycle');
+    if (!nav.clear(position.x, position.z, animal?.radius ?? .35)) throw new RangeError('Civilian spawn outside navigation');
     const waypoints = options.waypoints ?? [position, { x: position.x + 3, z: position.z }, { x: position.x + 3, z: position.z + 3 }, { x: position.x, z: position.z + 3 }];
-    if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.clear(p.x, p.z, .35))) throw new RangeError('Invalid civilian routine');
-    const civilian: Civilian = { state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: options.child ? 'npc.civilian-kid' : options.model ?? ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
+    if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.clear(p.x, p.z, animal?.radius ?? .35))) throw new RangeError('Invalid civilian routine');
+    const civilian: Civilian = { zooAnimal: options.zooAnimal, state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: options.child ? 'npc.civilian-kid' : options.model ?? ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: animal ? animal.asset : options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
       panicReaction: options.panicReaction, schedule: options.schedule ? structuredClone(options.schedule) : undefined, scheduleStep: 0, activityUntil: 0, activityStarted: 0, lastTravelProgress: this.world.tick,
-      routine: options.pet ? 'pet' : options.child ? 'protected' : def.routine, waypoints: structuredClone(waypoints), waypoint: 1 % waypoints.length, pauseUntil: 0,
+      routine: animal ? 'zoo' : options.pet ? 'pet' : options.child ? 'protected' : def.routine, waypoints: structuredClone(waypoints), waypoint: 1 % waypoints.length, pauseUntil: 0,
       entered: this.world.tick, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: { ...position }, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0 };
-    const e = this.world.entities.create({ kind: options.pet ? 'pet' : 'civilian', archetype: options.child ? 'npc.child' : `npc.${role}`, faction: 'civilian', transform: { ...position, y: .7, yaw: 0 }, health: { current: 100, max: 100 }, civilian,
-      combat: { radius: .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+    const e = this.world.entities.create({ kind: animal || options.pet ? 'pet' : 'civilian', archetype: animal ? `animal.${options.zooAnimal}` : options.child ? 'npc.child' : `npc.${role}`, faction: 'civilian', transform: { ...position, y: .7, yaw: 0 }, health: { current: 100, max: 100 }, civilian,
+      combat: { radius: animal?.radius ?? .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
+    if (animal) civilian.l1 = { walkSpeed: 1, fleeSpeed: 2, startleTicks: 30, refuge: null, target: null, repickAt: 0, noticed: -1 };
     this.world.spatial.set(e.id, position.x, position.z); return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
