@@ -268,6 +268,10 @@ export class SceneLab {
         const o = world.npcs!.civilians.outbreak!;
         entity = o.spawnPedestrian(at, { model: a.look?.model, tint: a.look?.tint, accessories: a.look?.accessories, handProp: a.look?.handProp ?? null, tier: a.look?.tier, role: a.look?.role, yaw,
           schedule: [this.stand(at, yaw)] });
+      } else if (a.kind === 'animal') {
+        if (!a.species) throw new Error('Animal fixture requires a zoo species');
+        entity = world.npcs!.civilians.spawn(a.species, at, { zooAnimal: a.species, waypoints: [at] });
+        world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
         entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
       } else {
@@ -335,6 +339,10 @@ export class SceneLab {
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
       else if ('interact' in a) actor.plan = { type: 'interact' };
       else if ('hit' in a) world.player!.damage(a.hit.amount ?? 5, world.tick);
+      return;
+    }
+    if (actor.kind === 'animal') {
+      if ('infect' in a) world.npcs!.civilians.outbreak!.infect(e, a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0);
       return;
     }
     if (actor.kind === 'pedestrian') {

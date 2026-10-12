@@ -723,8 +723,8 @@ export class InfectedSystem {
       return;
     }
     // Civilians: runner lunge burst inside 2.5 m, then grab on contact.
-    const contact = e.combat!.radius + 0.35 + 0.3;
-    if (distance <= contact) { this.startBite(e, b, brain, target); return; }
+    const contact = e.combat!.radius + (this.world.entities.get(target.id)?.combat?.radius ?? .35) + .3;
+    if (distance <= contact && this.l1!.lineOfSight(e.transform, target.position)) { this.startBite(e, b, brain, target); return; }
     this.steerL1(e, brain, target.position, distance <= lunge ? Math.min(7, brain.runSpeed * 1.25) : brain.runSpeed, false, true);
   }
   private startBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, target: HumanTarget): void {
@@ -736,7 +736,7 @@ export class InfectedSystem {
   private updateBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
     const victim = this.victimPosition(brain.biteTargetId);
     // Any hit on the infected during the grab rescues the victim (rescue window = the 1.0 s grab).
-    if (b.grabHits > 0 || !victim || Math.hypot(victim.x - e.transform.x, victim.z - e.transform.z) > 1.8) { this.endBite(e, b, brain, false); return; }
+    if (b.grabHits > 0 || !victim || Math.hypot(victim.x - e.transform.x, victim.z - e.transform.z) > e.combat!.radius + (this.world.entities.get(brain.biteTargetId)?.combat?.radius ?? .35) + 1.1 || !this.l1!.lineOfSight(e.transform, victim)) { this.endBite(e, b, brain, false); return; }
     e.transform.yaw = -Math.atan2(victim.z - e.transform.z, victim.x - e.transform.x);
     if (this.world.tick >= b.grabUntil) this.endBite(e, b, brain, true);
   }
@@ -753,7 +753,7 @@ export class InfectedSystem {
     if (bitten && victim && (!target || !storyProtected(this.world, target))) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
       // At the cap a bite kills instead of turning (L1 section 5.9): L1/L2 60 high / 30 low; a strict level cap (L3: 80 / 40).
-      const cap = this.director.strict ? this.director.cap : this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap - this.director.reserved;
+      const cap = this.director.strict || target?.civilian?.zooAnimal ? this.director.cap : this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap - this.director.reserved;
       if (turns) this.recentTurns.push(tick);
       if (this.l1!.humans instanceof WorldHumans) this.l1!.humans.bitten.add(victimId);
       this.world.events.emit({ type: 'outbreak.bite', tick, sourceId: e.id, targetId: victimId, position: { x: victim.x, z: victim.z }, turns });
@@ -1113,7 +1113,7 @@ export class InfectedSystem {
     return true;
   }
   private physicalHuman(target: EntitySnapshot): boolean {
-    return target.health.current > 0 && !target.hidden && !target.companion && !target.escort?.child && !(target.civilian && (!target.civilian.adult || target.civilian.pet || ['finished', 'infected', 'down', 'rising'].includes(target.civilian.state))) && !storyProtected(this.world, target) && (target.kind === 'player' || target.faction === 'civilian' || target.faction === 'escort' || !!target.civilian);
+    return target.health.current > 0 && !target.hidden && !target.companion && !target.escort?.child && !(target.civilian && (!target.civilian.adult || (target.civilian.pet && !target.civilian.zooAnimal) || ['finished', 'infected', 'down', 'rising'].includes(target.civilian.state))) && !storyProtected(this.world, target) && (target.kind === 'player' || target.faction === 'civilian' || target.faction === 'escort' || !!target.civilian);
   }
   private physicalHit(source: EntitySnapshot, target: EntitySnapshot, base: number): void {
     if (!this.specialHit(source.id, target.id)) return;

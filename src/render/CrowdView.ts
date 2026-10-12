@@ -100,12 +100,16 @@ export class CrowdView extends Group {
     const started = performance.now();
     const variants = manifest.filter(a => a.status === 'integrated' && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
     const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && e.civilian.model ? [e.civilian.model] : []));
-    const allDefinitions = [...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const animals = [...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.zooAnimal ? [e.civilian.zooAnimal] : []))];
+    const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}`, asset: `amb.${species}` }));
+    // Healthy amb.* assets are catalog props, so register their real rigs explicitly as animated crowds.
+    const allDefinitions = [...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario?.startsWith('perf-horde-');
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
+    for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }
     for (const entity of this.world.entities.iterate()) if (entity.infected) {
       l1Roles.add(entity.archetype);
       const model = entity.infected.model ?? entity.infected.variant;
@@ -119,7 +123,8 @@ export class CrowdView extends Group {
     const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
       // Registrations must not remove the asset spelling used by model overrides.
-      const key = registerCrowdModel(this.modelAliases, def);
+      const key = def.id.startsWith('healthy.') ? def.id : registerCrowdModel(this.modelAliases, def);
+      if (def.id.startsWith('healthy.')) this.modelAliases.set(def.id, key);
       this.definitions.set(key, def);
       if (!this.low) {
         const mesh = new InstancedMesh(new BufferGeometry(), this.shading?.shaded(vec3(1)) ?? new MeshBasicNodeMaterial(), 350);
@@ -138,6 +143,7 @@ export class CrowdView extends Group {
       const loaded = await this.registry.loadAsset(asset, lod) as Group;
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
+      const healthy = def.id.startsWith('healthy.');
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
@@ -163,7 +169,8 @@ export class CrowdView extends Group {
       baked.geometry.setAttribute('_state', state); baked.geometry.setAttribute('_variant', tint);
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
-      const base = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0)), glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(parts.z).mul(1.2).add(feedbackState.w.mod(2));
+      const sourceColor = mix(attribute('color', 'vec3'), variant.xyz, parts.y.max(0));
+      const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : sourceColor, glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(parts.z).mul(1.2).add(feedbackState.w.mod(2));
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) material.figureRim.value = 1;
@@ -225,12 +232,12 @@ export class CrowdView extends Group {
     for (const id of heroes) this.previousHeroes.add(id);
     heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
     if (!this.low) for (const e of this.world.entities.iterate()) {
-      if (e.faction !== 'infected' || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e)) continue;
+      if (e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e)) continue;
       if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (distance > this.cullDistance) continue;
       const variant = e.infected?.model ?? e.infected?.variant;
-      const role = this.modelKey(e.archetype) ?? this.modelKey('infected.runner')!;
+      const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const key = (variant && this.modelKey(variant)) || role;
       const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
       if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .75)) continue;
@@ -249,14 +256,14 @@ export class CrowdView extends Group {
     for (const [role, pixels] of this.rolePixels) this.roleLods.set(role, crowdLod(pixels, this.roleLods.get(role)));
     for (const e of this.nearest) heroes.add(e.id);
     for (const e of this.world.entities.iterate()) {
-      if (e.id === 1 || e.faction !== 'infected' || !e.combat) continue;
+      if (e.id === 1 || e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
       if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
-      const role = this.modelKey(e.archetype) ?? this.modelKey('infected.runner')!;
+      const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.infected?.model ?? e.infected?.variant;
       const key = (variant && this.modelKey(variant)) || role;
       const def = this.definitions.get(key)!;
@@ -279,7 +286,7 @@ export class CrowdView extends Group {
       // Quality changes/streaming may not have the requested tier yet. Keep the loaded figure.
       const batch = this.batches.get(`${key}:${lod}`) ?? this.batches.get(`${key}:${availableLod}`) ?? this.batches.get(`${key}:lod2`) ?? this.batches.get(`${key}:lod1`);
       if (!batch) continue;
-      const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
+      const b = e.infected ?? { state: e.health.current <= 0 || e.civilian?.state === 'finished' ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: e.civilian?.entered ?? 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
       const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
@@ -295,6 +302,7 @@ export class CrowdView extends Group {
       if (physical?.stage === 'telegraph') clip = 'windup';
       else if ((physical?.move === 'alpha.ground-slam' || physical?.move === 'gorilla.pound') && physical.stage === 'recovery') clip = 'swing';
       else if (physical?.move === 'elephant.swipe' && physical.stage === 'recovery') clip = 'swing';
+      if (e.civilian?.zooAnimal) clip = e.civilian.state === 'finished' ? death : e.infection ? 'idle' : motion.speed > .06 ? 'walk' : 'idle';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       if (e.infected?.specialAttack?.stage === 'telegraph') clip = 'windup';
@@ -318,7 +326,7 @@ export class CrowdView extends Group {
         }
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
-        this.transform.makeRotationY(presented.yaw); this.transform.setPosition(x, Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        this.transform.makeRotationY(presented.yaw + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
         if (e.corpse) {
           const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
           const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
@@ -337,7 +345,7 @@ export class CrowdView extends Group {
         // Wide Roar framing still needs planted turns and grounded convergence.
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
-        batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
+        batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), e.civilian?.zooAnimal ? e.infection?.progress ?? 0 : feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }

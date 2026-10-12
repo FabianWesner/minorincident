@@ -1,0 +1,57 @@
+{
+  "name": "qa-l8-turn-lion",
+  "seed": 30,
+  "ground": "sidewalk",
+  "size": 28,
+  "time": "L1",
+  "actors": [
+    {
+      "id": "animal",
+      "kind": "animal",
+      "species": "lion",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "biter",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -3,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        6,
+        4
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 600,
+  "shots": [
+    0,
+    310,
+    600
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}
