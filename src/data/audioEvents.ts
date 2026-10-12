@@ -73,6 +73,8 @@ export type AudioSystemEvent = {
     speed: number;
     health: number;
     phase: 'engine' | 'horn' | 'siren' | 'crash' | 'skid' | 'grab' | 'stop';
+    /** The vehicle the player sits in: its engine and tyres are heard muffled through the cab. */
+    inCar?: boolean;
     impulse?: number;
     surface?: Surface;
 } | {

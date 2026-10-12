@@ -27,4 +27,36 @@ describe('L4 convoy ride collisions', () => {
     expect(seen).toBeGreaterThanOrEqual(5);
     expect([...new Set(bad)].slice(0, 400)).toEqual([]);
   }, 600_000);
+
+  test('T-E22-04e @E22 PO 10-12 "sound when the bus is driving": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle', async () => {
+    const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!;
+    const seen: { id: number; phase: string; rpm: number; speed: number; inCar?: boolean }[] = [];
+    w.events.on('vehicle.sound', e => { if (e.type === 'vehicle.sound') seen.push({ id: e.sourceId, phase: e.phase, rpm: e.rpm, speed: e.speed, inCar: e.inCar }); });
+    let t = 0; while (s.phase === 'convoy' && t++ < 60 * 90) w.update();
+    for (let i = 0; i < 60 * 8; i++) w.update();
+    const engine = seen.filter(e => e.phase === 'engine'), player = s.convoyIds[s.convoyIds.length - 1];
+    expect(new Set(engine.map(e => e.id))).toEqual(new Set(s.convoyIds));
+    expect(new Set(engine.filter(e => e.inCar).map(e => e.id))).toEqual(new Set([player]));
+    const mine = engine.filter(e => e.id === player);
+    expect(Math.max(...mine.map(e => e.rpm))).toBeGreaterThan(Math.min(...mine.map(e => e.rpm)) + 2500); // idle -> cruise
+    expect(seen.filter(e => e.phase === 'stop').map(e => e.id).sort()).toEqual([...s.convoyIds].sort());
+  }, 600_000);
+
+  test('T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride', async () => {
+    const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!, bus = w.entities.get(s.convoyIds[s.convoyIds.length - 1])!;
+    const xs: number[] = [], zs: number[] = [], yaws: number[] = [];
+    let t = 0; while (s.phase === 'convoy' && t++ < 60 * 90) { w.update(); xs.push(bus.transform.x); zs.push(bus.transform.z); yaws.push(bus.transform.yaw); }
+    expect(xs.length).toBeGreaterThan(60 * 15);
+    // High-frequency content: the position residual against a +-6 tick centred moving average, the tick-to-tick change of speed
+    // (the last tick of the stop is a tiny remainder step and excluded) and of the yaw rate (a corner starts as a steering ramp).
+    const resid = (a: number[]) => { let m = 0; for (let i = 6; i < a.length - 6; i++) { let sum = 0; for (let k = -6; k <= 6; k++) sum += a[i + k] - a[i]; m = Math.max(m, Math.abs(sum / 13)); } return m; };
+    const speeds = xs.map((x, i) => i ? Math.hypot(x - xs[i - 1], zs[i] - zs[i - 1]) * 60 : 0), n = speeds.length - 4;
+    let dv = 0; for (let i = 2; i < n; i++) dv = Math.max(dv, Math.abs(speeds[i] - speeds[i - 1]));
+    const rates = yaws.map((y, i) => i ? Math.atan2(Math.sin(y - yaws[i - 1]), Math.cos(y - yaws[i - 1])) : 0);
+    let dr = 0; for (let i = 2; i < n; i++) dr = Math.max(dr, Math.abs(rates[i] - rates[i - 1]));
+    console.log('bus jitter', { xz: Math.max(resid(xs), resid(zs)), dv, dr });
+    expect(Math.max(resid(xs), resid(zs))).toBeLessThan(.05);
+    expect(dv, 'speed change per tick (m/s)').toBeLessThan(.2);
+    expect(dr, 'yaw-rate change per tick (rad/tick)').toBeLessThan(.01);
+  }, 600_000);
 });

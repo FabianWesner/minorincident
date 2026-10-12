@@ -5,6 +5,7 @@ import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
 import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
+import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import { L4Spectacle, spawnSetPiece } from './L4Spectacle';
 import type { Mission } from './Mission';
 import type { L4State } from './types';
@@ -192,24 +193,34 @@ export class LevelFourWar {
     const { world } = this.mission, s = this.s, c = l4.convoy, travel = this.stations.travel, done = s.convoyS[0] - this.stations.start[0];
     const remaining = travel - done;
     let target: number = c.speedMs;
-    target = Math.min(target, Math.sqrt(2 * c.brakeMs2 * Math.max(0, remaining)));
+    // Stop with margin (80 % of the braking limit): the speed follows the curve down to a crawl, never into a dead stop at the end of the route.
+    target = Math.min(target, Math.sqrt(2 * c.brakeMs2 * .8 * Math.max(0, remaining)));
     // Slow for the corner any vehicle is on or about to enter (all five share one speed, so the column keeps its shape).
     for (const at of s.convoyS) for (let d = 0; d <= 14; d += 1) {
       const limit = l4RoutePose(this.route, at + d).limit;
       if (limit < Infinity && s.convoyV * s.convoyV - limit * limit <= 2 * c.brakeMs2 * Math.max(0, d - 1)) continue;
       target = Math.min(target, limit);
     }
-    if (remaining > .02) target = Math.max(target, .4);
+    if (remaining > .02) target = Math.max(target, .12);
     s.convoyV += Math.max(-c.brakeMs2 / 60, Math.min(c.accelMs2 / 60, target - s.convoyV));
     const step = Math.min(remaining, s.convoyV / 60);
     for (let i = 0; i < s.convoyS.length; i++) {
       s.convoyS[i] += step;
       const p = l4RoutePose(this.route, s.convoyS[i]), e = world.entities.get(s.convoyIds[i]);
-      if (e) Object.assign(e.transform, { x: p.x, z: p.z, yaw: p.yaw });
+      // The heading eases onto the route tangent (about 5 ticks) so a corner starts as a steering ramp, not a snap of the yaw rate.
+      if (e) { const d = Math.atan2(Math.sin(p.yaw - e.transform.yaw), Math.cos(p.yaw - e.transform.yaw)); Object.assign(e.transform, { x: p.x, z: p.z, yaw: e.transform.yaw + d * .2 }); }
     }
     const bus = world.entities.get(s.convoyIds[this.playerBus()])!;
     this.carry(bus.transform.x, bus.transform.z);
     if (remaining - step < .02 && s.convoyV < .15) this.arrive();
+  }
+  /** Engines of the convoy: all five drive, the courier's bus is muffled; they idle for a few seconds after the stop, then are switched off. */
+  private convoySound(tick: number): void {
+    const { world } = this.mission, s = this.s, idleTicks = ticks(6);
+    if (tick % 6 !== 0 || !s.convoyIds.length) return;
+    if (s.phase === 'convoy') for (const [i, id] of s.convoyIds.entries()) emitEngine(world, id, s.convoyV, i === this.playerBus());
+    else if (s.phase === 'plaza' && tick < s.arrivedAt + idleTicks) for (const id of s.convoyIds) emitEngine(world, id, 0);
+    else if (s.arrivedAt && tick >= s.arrivedAt + idleTicks && tick < s.arrivedAt + idleTicks + 6) for (const id of s.convoyIds) stopEngine(world, id);
   }
   private parkNav(blocked: boolean): void {
     const { world } = this.mission, s = this.s;
@@ -500,6 +511,7 @@ export class LevelFourWar {
     const { world, state } = this.mission, s = state.l4; if (!s) return;
     const tick = world.tick;
     if (s.phase === 'convoy') this.ride();
+    this.convoySound(tick);
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
       if (tick >= s.turnDueAt) this.turn();

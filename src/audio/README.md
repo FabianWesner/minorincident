@@ -134,3 +134,7 @@ L3's active defend/escape objectives set the highest concurrent floor. Safe beat
 briefings and completed levels release the floor. Nearby combat can raise any
 floor, with the same seven-second encounter hold before returning to that floor.
 The active beat and floor are exposed in `audio.snapshot().music.story`.
+
+## Convoy engines and the bus radio (PO 2026-10-12)
+
+Scripted vehicles (L4 convoy; reusable for the L3 -> L4 handover buses and the L7 bus departure) emit `vehicle.sound` events through `src/sim/vehicles/ConvoySound.ts` (`emitEngine` / `stopEngine`, idle -> cruise by speed, `inCar` for the vehicle the player sits in). `AudioService` turns them into positional engine and tyre loops with the usual mixer, doppler and voice limiter. `BusRadio` plays the already licensed `score-calm-L1` recording (Kevin MacLeod "Jazz Brunch", CC-BY 4.0, listed in `public/assets/audio/LICENSES.md`) through a band-pass radio filter on the `vehicles` bus from the L4 ride until the outbreak alarm (`l4.firstTurn`), trimming the adaptive score meanwhile. Tuning: `l4.radio` in `src/data/l4.ts`.
