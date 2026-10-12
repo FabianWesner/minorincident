@@ -118,7 +118,7 @@ export const l3Anchors: Record<string, P> = {
   'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-141, -13], 'photo-l3-squad-strong': [-92, 0],
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
   'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
-  'l3-hmg': [142.8, -9.6],
+  'l3-hmg': [144.0, -7.2],
 };
 for (const [name, point] of Object.entries(l3Anchors)) if (name.startsWith('l3-soldier-') || name === 'l3-hmg' || name === 'photo-l3-army-checkpoint') l3Anchors[name] = [point[0] + l3ArmyOffset, point[1]];
 /** Photo spots (section 6): name and camera offset, same framing scale as the L2 spots. */
