@@ -239,6 +239,7 @@ for r in g.road_list:
             p = x + (8 if side > 0 else 0)
             if abs(p) > 80: continue
             if any(abs(p - c) < 7 for c in (XC, XP, XM)) or abs(p - GATE_X) < 9: continue
+            if z == ZL and side < 0 and abs(p - CELLAR_DOOR[0]) < 5: continue      # keep the pavement in front of Kessler's cellar door clear
             g.place('prop.street-lamp', p, z + side * (r['w'] / 2 + .5), 0, 1.0, soft=True)
         x += 16.0
 for cx in (XC, XP, XM):
