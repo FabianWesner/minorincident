@@ -29,6 +29,7 @@ export class LevelSevenEncounters {
     director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0;
     w.npcs!.setAmbient(0);
     const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier, dressRunners: false });
+    outbreak.options.dressRunners = false;
     w.npcs!.civilians.outbreak = outbreak;
     // Outbreak initialization can configure the shared director; the level owns its cap.
     director.levelCap = 200; director.strict = true;
