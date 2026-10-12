@@ -196,6 +196,14 @@
       ],
       "yaw": 0
     },
+    "l8-tunnel-breach": {
+      "position": [
+        -45,
+        0,
+        68
+      ],
+      "yaw": 0
+    },
     "lion-gate-north": {
       "position": [
         -60,
@@ -305,6 +313,38 @@
         94,
         0,
         32
+      ],
+      "yaw": 0
+    },
+    "tunnel-outlet-1": {
+      "position": [
+        -99.95,
+        0,
+        32.0
+      ],
+      "yaw": 0
+    },
+    "tunnel-outlet-2": {
+      "position": [
+        99.95,
+        0,
+        -48.0
+      ],
+      "yaw": 0
+    },
+    "tunnel-outlet-3": {
+      "position": [
+        -30.0,
+        0,
+        -67.95
+      ],
+      "yaw": 0
+    },
+    "tunnel-outlet-4": {
+      "position": [
+        -45.0,
+        0,
+        67.95
       ],
       "yaw": 0
     },
@@ -6617,6 +6657,74 @@
     {
       "aabb": {
         "max": [
+          -101.2,
+          4.76,
+          34.8
+        ],
+        "min": [
+          -107.8,
+          0,
+          29.2
+        ]
+      },
+      "id": "kit.zoo-tunnel-mouth:415",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          107.8,
+          4.76,
+          -45.2
+        ],
+        "min": [
+          101.2,
+          0,
+          -50.8
+        ]
+      },
+      "id": "kit.zoo-tunnel-mouth:417",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -27.2,
+          4.76,
+          -69.2
+        ],
+        "min": [
+          -32.8,
+          0,
+          -75.8
+        ]
+      },
+      "id": "kit.zoo-tunnel-mouth:419",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          -42.2,
+          4.76,
+          75.8
+        ],
+        "min": [
+          -47.8,
+          0,
+          69.2
+        ]
+      },
+      "id": "kit.zoo-tunnel-mouth:421",
+      "maxTier": 5,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
           105.27376510869439,
           4.148666361223772,
           74.9507822218923
@@ -6627,7 +6735,7 @@
           73.0492177781077
         ]
       },
-      "id": "prop.light-tower:415",
+      "id": "prop.light-tower:423",
       "maxTier": 5,
       "minTier": 0
     },
@@ -6644,7 +6752,7 @@
           74.48299998044968
         ]
       },
-      "id": "prop.vending-machine:416",
+      "id": "prop.vending-machine:424",
       "maxTier": 5,
       "minTier": 0
     },
@@ -6661,7 +6769,7 @@
           30.85599994659424
         ]
       },
-      "id": "veh.sedan-red:420",
+      "id": "veh.sedan-red:428",
       "maxTier": 5,
       "minTier": 0
     },
@@ -6678,7 +6786,7 @@
           40.85599994659424
         ]
       },
-      "id": "veh.sedan-red:421",
+      "id": "veh.sedan-red:429",
       "maxTier": 5,
       "minTier": 0
     },
@@ -6695,7 +6803,7 @@
           45.559457540512085
         ]
       },
-      "id": "prop.hedge:424",
+      "id": "prop.hedge:432",
       "maxTier": 5,
       "minTier": 0
     },
@@ -6712,7 +6820,7 @@
           49.559457540512085
         ]
       },
-      "id": "prop.hedge:425",
+      "id": "prop.hedge:433",
       "maxTier": 5,
       "minTier": 0
     },
@@ -6729,7 +6837,7 @@
           -48.89999997615814
         ]
       },
-      "id": "veh.wreck:428",
+      "id": "veh.wreck:436",
       "maxTier": 5,
       "minTier": 1
     },
@@ -6746,7 +6854,7 @@
           -36.89999997615814
         ]
       },
-      "id": "veh.wreck:429",
+      "id": "veh.wreck:437",
       "maxTier": 5,
       "minTier": 2
     },
@@ -6763,7 +6871,7 @@
           -24.899999976158142
         ]
       },
-      "id": "veh.wreck:430",
+      "id": "veh.wreck:438",
       "maxTier": 5,
       "minTier": 3
     },
@@ -6780,7 +6888,7 @@
           -12.899999976158142
         ]
       },
-      "id": "veh.wreck:431",
+      "id": "veh.wreck:439",
       "maxTier": 5,
       "minTier": 4
     },
@@ -6797,13 +6905,13 @@
           -0.8999999761581421
         ]
       },
-      "id": "veh.wreck:432",
+      "id": "veh.wreck:440",
       "maxTier": 5,
       "minTier": 5
     }
   ],
   "district": "D-ZOO",
-  "geometryHash": "13ecbd8ed0cc699ca0c171169ca605f2155fcb07b1446a4ef7a613c6d165bd33",
+  "geometryHash": "67df97e7e735603e4829250235cc9114435fa91de45858a8d1ad1924650582ea",
   "lawns": [
     {
       "max": [
@@ -19827,8 +19935,256 @@
     },
     {
       "allowRoad": false,
+      "assetId": "kit.zoo-tunnel-mouth",
+      "id": "kit.zoo-tunnel-mouth:415",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -104.5,
+        0,
+        32.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -101.2,
+          4.76,
+          34.8
+        ],
+        "min": [
+          -107.8,
+          0,
+          29.2
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:416",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -99.25,
+        0,
+        34.4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -98.93000000715256,
+          3.865000009536743,
+          34.71999999284744
+        ],
+        "min": [
+          -99.56999999284744,
+          0,
+          34.080000007152556
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.zoo-tunnel-mouth",
+      "id": "kit.zoo-tunnel-mouth:417",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        104.5,
+        0,
+        -48.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          107.8,
+          4.76,
+          -45.2
+        ],
+        "min": [
+          101.2,
+          0,
+          -50.8
+        ]
+      },
+      "yaw": 3.141592653589793
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:418",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        99.25,
+        0,
+        -50.4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          99.56999999284744,
+          3.865000009536743,
+          -50.080000007152556
+        ],
+        "min": [
+          98.93000000715256,
+          0,
+          -50.71999999284744
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.zoo-tunnel-mouth",
+      "id": "kit.zoo-tunnel-mouth:419",
+      "lightGroup": "block-3",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -30.0,
+        0,
+        -72.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -27.2,
+          4.76,
+          -69.2
+        ],
+        "min": [
+          -32.8,
+          0,
+          -75.8
+        ]
+      },
+      "yaw": -1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:420",
+      "lightGroup": "block-0",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -32.4,
+        0,
+        -67.25
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -32.080000007152556,
+          3.865000009536743,
+          -66.93000000715256
+        ],
+        "min": [
+          -32.71999999284744,
+          0,
+          -67.56999999284744
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.zoo-tunnel-mouth",
+      "id": "kit.zoo-tunnel-mouth:421",
+      "lightGroup": "block-1",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -45.0,
+        0,
+        72.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -42.2,
+          4.76,
+          75.8
+        ],
+        "min": [
+          -47.8,
+          0,
+          69.2
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:422",
+      "lightGroup": "block-2",
+      "maxTier": 5,
+      "minTier": 0,
+      "position": [
+        -42.6,
+        0,
+        67.25
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          -42.28000000715256,
+          3.865000009536743,
+          67.56999999284744
+        ],
+        "min": [
+          -42.919999992847444,
+          0,
+          66.93000000715256
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
       "assetId": "prop.light-tower",
-      "id": "prop.light-tower:415",
+      "id": "prop.light-tower:423",
       "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
@@ -19859,7 +20215,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.vending-machine",
-      "id": "prop.vending-machine:416",
+      "id": "prop.vending-machine:424",
       "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
@@ -19890,7 +20246,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.hose-reel",
-      "id": "prop.hose-reel:417",
+      "id": "prop.hose-reel:425",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
@@ -19921,7 +20277,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.wheelbarrow",
-      "id": "prop.wheelbarrow:418",
+      "id": "prop.wheelbarrow:426",
       "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
@@ -19952,7 +20308,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.crates",
-      "id": "prop.crates:419",
+      "id": "prop.crates:427",
       "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
@@ -19983,7 +20339,7 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-red",
-      "id": "veh.sedan-red:420",
+      "id": "veh.sedan-red:428",
       "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
@@ -20014,7 +20370,7 @@
     {
       "allowRoad": false,
       "assetId": "veh.sedan-red",
-      "id": "veh.sedan-red:421",
+      "id": "veh.sedan-red:429",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
@@ -20045,7 +20401,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.picket-fence",
-      "id": "prop.picket-fence:422",
+      "id": "prop.picket-fence:430",
       "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
@@ -20076,7 +20432,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.picket-fence",
-      "id": "prop.picket-fence:423",
+      "id": "prop.picket-fence:431",
       "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
@@ -20107,7 +20463,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.hedge",
-      "id": "prop.hedge:424",
+      "id": "prop.hedge:432",
       "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 0,
@@ -20138,7 +20494,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.hedge",
-      "id": "prop.hedge:425",
+      "id": "prop.hedge:433",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 0,
@@ -20169,7 +20525,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.traffic-cone",
-      "id": "prop.traffic-cone:426",
+      "id": "prop.traffic-cone:434",
       "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 0,
@@ -20200,7 +20556,7 @@
     {
       "allowRoad": false,
       "assetId": "prop.traffic-cone",
-      "id": "prop.traffic-cone:427",
+      "id": "prop.traffic-cone:435",
       "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 0,
@@ -20231,7 +20587,7 @@
     {
       "allowRoad": true,
       "assetId": "veh.wreck",
-      "id": "veh.wreck:428",
+      "id": "veh.wreck:436",
       "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 1,
@@ -20262,7 +20618,7 @@
     {
       "allowRoad": true,
       "assetId": "veh.wreck",
-      "id": "veh.wreck:429",
+      "id": "veh.wreck:437",
       "lightGroup": "block-1",
       "maxTier": 5,
       "minTier": 2,
@@ -20293,7 +20649,7 @@
     {
       "allowRoad": true,
       "assetId": "veh.wreck",
-      "id": "veh.wreck:430",
+      "id": "veh.wreck:438",
       "lightGroup": "block-2",
       "maxTier": 5,
       "minTier": 3,
@@ -20324,7 +20680,7 @@
     {
       "allowRoad": true,
       "assetId": "veh.wreck",
-      "id": "veh.wreck:431",
+      "id": "veh.wreck:439",
       "lightGroup": "block-3",
       "maxTier": 5,
       "minTier": 4,
@@ -20355,7 +20711,7 @@
     {
       "allowRoad": true,
       "assetId": "veh.wreck",
-      "id": "veh.wreck:432",
+      "id": "veh.wreck:440",
       "lightGroup": "block-0",
       "maxTier": 5,
       "minTier": 5,
@@ -24163,6 +24519,214 @@
         [
           -2.5,
           -14.5
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          -101.45,
+          30.2
+        ],
+        [
+          -98.50000000000001,
+          30.2
+        ],
+        [
+          -98.50000000000001,
+          33.8
+        ],
+        [
+          -101.45,
+          33.8
+        ],
+        [
+          -101.45,
+          30.2
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          -101.45,
+          30.2
+        ],
+        [
+          -98.50000000000001,
+          30.2
+        ],
+        [
+          -98.50000000000001,
+          33.8
+        ],
+        [
+          -101.45,
+          33.8
+        ],
+        [
+          -101.45,
+          30.2
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          98.50000000000001,
+          -49.8
+        ],
+        [
+          101.45,
+          -49.8
+        ],
+        [
+          101.45,
+          -46.2
+        ],
+        [
+          98.50000000000001,
+          -46.2
+        ],
+        [
+          98.50000000000001,
+          -49.8
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          98.50000000000001,
+          -49.8
+        ],
+        [
+          101.45,
+          -49.8
+        ],
+        [
+          101.45,
+          -46.2
+        ],
+        [
+          98.50000000000001,
+          -46.2
+        ],
+        [
+          98.50000000000001,
+          -49.8
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          -31.8,
+          -69.45
+        ],
+        [
+          -28.2,
+          -69.45
+        ],
+        [
+          -28.2,
+          -66.50000000000001
+        ],
+        [
+          -31.8,
+          -66.50000000000001
+        ],
+        [
+          -31.8,
+          -69.45
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          -31.8,
+          -69.45
+        ],
+        [
+          -28.2,
+          -69.45
+        ],
+        [
+          -28.2,
+          -66.50000000000001
+        ],
+        [
+          -31.8,
+          -66.50000000000001
+        ],
+        [
+          -31.8,
+          -69.45
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          -46.8,
+          66.50000000000001
+        ],
+        [
+          -43.2,
+          66.50000000000001
+        ],
+        [
+          -43.2,
+          69.45
+        ],
+        [
+          -46.8,
+          69.45
+        ],
+        [
+          -46.8,
+          66.50000000000001
+        ]
+      ],
+      "surface": "tile"
+    },
+    {
+      "height": 0.12,
+      "polygon": [
+        [
+          -46.8,
+          66.50000000000001
+        ],
+        [
+          -43.2,
+          66.50000000000001
+        ],
+        [
+          -43.2,
+          69.45
+        ],
+        [
+          -46.8,
+          69.45
+        ],
+        [
+          -46.8,
+          66.50000000000001
         ]
       ],
       "surface": "tile"

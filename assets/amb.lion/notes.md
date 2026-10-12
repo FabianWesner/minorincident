@@ -1,0 +1,3 @@
+Healthy zoo lion, derived from the shipped `inf.lion` build (`--healthy`): identical rig, node names, proportions and pose; no wounds, no torn lip/fangs/tongue, closed mouth, dark eyes, mane tips in golden/chestnut. Four palette materials (woodWarm, brick, uiDark, picketWhite). No stump caps (a healthy animal is never dismembered; infection swaps to `inf.lion`).
+Build: `python3 tools/blender/run.py assets/amb.lion/build.py --glb "$PWD/assets/amb.lion/model.glb" --lod 0` (repeat `model.lod1.glb --lod 1`, `model.lod2.glb --lod 2`), then `npm run assets:pack -- amb.lion`.
+Budget 12,000 / 4,000 / 1,500 triangles; packed 11,852 / 3,833 / 1,268, 4 materials, 77 KB LOD0.

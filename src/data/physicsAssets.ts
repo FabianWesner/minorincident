@@ -7345,5 +7345,36 @@ export default {
     ],
     "source": "public/assets/models/int.metro-station.glb",
     "hash": "3f23fc07d37a4a67b36679d938a9c24b0279471adf2a82b190aa221a3d3b94d1"
-  }
+  },
+  "kit.zoo-tunnel-mouth": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      2.380000114440918,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [
+      {
+        "min": [
+          -3.3000000000000003,
+          -2.3841857821338408e-8,
+          -2.8000000000000003
+        ],
+        "max": [
+          3.3000000000000003,
+          3.799999976158142,
+          2.8000000000000003
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.zoo-tunnel-mouth.glb",
+    "hash": "41c7cc058032d0ba21fea2dec43351ae209e3f00b4c7617b039886a0c7cb8e06"
+  },
 };
