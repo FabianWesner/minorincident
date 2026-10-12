@@ -45,7 +45,7 @@ test('T-E29-13-board @E29-AC13 the complete living roster boards before the bus 
   for (let i = 0; i < 2400 && d.state.phase !== 'departing'; i++) {
     const before = ids.map(id => ({ ...w.entities.get(id)!.transform })); step(w, 1);
     ids.forEach((id, j) => { const e = w.entities.get(id)!; if (!e.hidden && j > 0) expect(Math.hypot(e.transform.x - before[j].x, e.transform.z - before[j].z), `survivor ${id} (#${j}) teleported at tick ${i} phase ${d.state.phase} entering ${id in d.state.entering} from ${JSON.stringify(before[j])} to ${JSON.stringify(e.transform)}`).toBeLessThanOrEqual(1); });
-    if (d.state.phase === 'departing') departed = i;
+    if ((d.state.phase as string) === 'departing') departed = i;
   }
   expect(d.state.phase).toBe('departing');
   const living = ids.slice(1);
