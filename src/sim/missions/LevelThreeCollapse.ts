@@ -107,6 +107,7 @@ export class LevelThreeCollapse {
     // Gunfire is a loud event (section 5.3): the player's handgun and every ally shot.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') this.gunshot(1, e.position); });
     world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.role !== 'firefighter' && e.from) this.gunshot(e.sourceId, e.from); });
+    world.events.on('player.died', () => { this.lastDeathX = world.entities.get(1)!.transform.x; });
     world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite') this.bitten(e.targetId); });
     world.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') this.turned(e.id); });
     world.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected') this.turned(e.entityId); });
@@ -596,6 +597,7 @@ export class LevelThreeCollapse {
   /** Checkpoint restore: shift the timeline. Entities (officers, squad, infected, pickups) come back from the snapshot. */
   /** Death-loop relief (data: `l3.mercy`), applied on the first tick after a respawn. */
   private mercyDue = false;
+  private lastDeathX = -Infinity;
   /** Respawns per checkpoint (a death loop is several deaths at the same checkpoint, not the level's death total). */
   private readonly respawns: Record<string, number> = {};
   private mercyFraction(): number {
@@ -606,7 +608,9 @@ export class LevelThreeCollapse {
     this.mercyDue = false;
     const { world } = this.mission, s = this.s, m = l3.mercy, ai = world.infected;
     const frac = this.mercyFraction(); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
-    const p = world.entities.get(1)!.transform, [a, b] = m.aheadM, ahead = (x: number) => x > p.x + a && x < p.x + b;
+    // The window reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
+    // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).
+    const p = world.entities.get(1)!.transform, [a, b] = m.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x + a && x < p.x + reach;
     const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
     thin([...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
     const waiting = (s.pending as Pending[]).filter(q => q.id === 0 && ahead(q.home.x));
