@@ -40,6 +40,10 @@ export class InfectedSystem {
   readonly perches: NonNullable<ScenarioDefinition['perches']>;
   readonly crowd: { transform: EntitySnapshot['transform']; radius: number }[] = [];
   private readonly neighbors: number[] = [];
+  private readonly physicalNeighbors: number[] = [];
+  private readonly physicalQuery = { x: 0, z: 0, r: 4 };
+  private readonly physicalDirection = { x: 0, z: 0 };
+  private readonly physicalOrigin = { x: 0, z: 0 };
   private readonly barricades: EntitySnapshot[] = [];
   private readonly query = { x: 0, z: 0, r: 2 };
   /** E08 calls this for adjacent adult civilians; its rescue/turning lifecycle remains in E08. */
@@ -248,9 +252,9 @@ export class InfectedSystem {
       }
       if (b.state === 'chase') {
         if (!this.world.inspectionGhost && this.alphaSupport.tryStart(e, player)) continue;
-        if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.combat!.query.visible(e.transform, player.transform)) {
+        if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
           const move = distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
-          if (move && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) continue;
+          if (move && this.world.tick + infectedSpecialMoves[move].windup >= (b.specialCooldowns?.[move] ?? 0) && this.world.combat!.query.visible(e.transform, player.transform) && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) continue;
         }
         let obstacle = this.world.barricades?.attackTarget(e, player.transform);
         for (const target of this.barricades) if (!obstacle && !target.barricade && target.health.current > 0 && Math.hypot(e.transform.x - target.transform.x, e.transform.z - target.transform.z) <= 2) { obstacle = target; break; }
@@ -902,10 +906,14 @@ export class InfectedSystem {
   private resolveAlphaPhysical(e: EntitySnapshot): void {
     const a = e.infected!.specialAttack!;
     if (a.move !== 'alpha.charge' && a.move !== 'alpha.ground-slam') return;
-    const q = this.world.combat!.query, p = e.transform, direction = { x: a.area.dx, z: a.area.dz };
+    const q = this.world.combat!.query, p = e.transform, direction = this.physicalDirection;
+    direction.x = a.area.dx; direction.z = a.area.dz;
     if (a.move === 'alpha.ground-slam') {
-      for (const target of this.world.entities.iterate()) {
-        if (!this.physicalHuman(target) || Math.hypot(target.transform.x - a.area.x, target.transform.z - a.area.z) > 4 + 1e-8 || !q.visible(a.area, target.transform) || !this.physicalPropVisible(a.area, target.transform)) continue;
+      this.physicalQuery.x = a.area.x; this.physicalQuery.z = a.area.z; this.physicalQuery.r = 4 + 1e-8;
+      this.world.spatial.query(this.physicalQuery, this.physicalNeighbors);
+      for (const id of this.physicalNeighbors) {
+        const target = this.world.entities.get(id);
+        if (!target || !this.physicalHuman(target) || Math.hypot(target.transform.x - a.area.x, target.transform.z - a.area.z) > 4 + 1e-8 || !q.visible(a.area, target.transform) || !this.physicalPropVisible(a.area, target.transform)) continue;
         this.physicalHit(e, target, 25);
       }
       this.finishSpecial(e.id); return;
@@ -927,11 +935,15 @@ export class InfectedSystem {
     p.z += a.area.dz * Math.max(0, distance - (distance < step ? .001 : 0));
     p.y = (this.world.districts?.groundHeight(p.x, p.z) ?? 0) + .7;
     p.yaw = -Math.atan2(a.area.dz, a.area.dx); this.world.spatial.set(e.id, p.x, p.z);
-    for (const target of this.world.entities.iterate()) {
-      if (!this.physicalHuman(target)) continue;
+    this.physicalQuery.x = x; this.physicalQuery.z = z; this.physicalQuery.r = distance + 1 + 1e-8;
+    this.world.spatial.query(this.physicalQuery, this.physicalNeighbors);
+    this.physicalOrigin.x = x; this.physicalOrigin.z = z;
+    for (const id of this.physicalNeighbors) {
+      const target = this.world.entities.get(id);
+      if (!target || !this.physicalHuman(target)) continue;
       const dx = target.transform.x - x, dz = target.transform.z - z;
       const along = Math.max(0, Math.min(distance, dx * a.area.dx + dz * a.area.dz));
-      if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= 1 + 1e-8 && q.visible({ x, z }, target.transform) && this.physicalPropVisible({ x, z }, target.transform)) this.physicalHit(e, target, 30);
+      if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= 1 + 1e-8 && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, 30);
     }
     if (distance < step || travelled + step >= 12 - 1e-8) this.finishSpecial(e.id);
   }

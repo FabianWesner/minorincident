@@ -1,6 +1,7 @@
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
+import { crowdModelKey, registerCrowdModel } from './crowdModels';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { crowdLod } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
@@ -45,6 +46,7 @@ function tierGait(b: { speed?: number; tier?: string; l1?: { tier: string } }): 
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
   private readonly definitions = new Map<string, { id: string; asset: string; windup: number }>();
+  private readonly modelAliases = new Map<string, string>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
   private readonly visibility = new CrowdVisibility();
@@ -102,18 +104,24 @@ export class CrowdView extends Group {
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario?.startsWith('perf-horde-');
     const actors = Object.values(this.world.missions?.def.actors ?? {}).map(actor => actor.archetype);
     const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
-    for (const entity of this.world.entities.iterate()) if (entity.infected) l1Roles.add(entity.archetype);
+    for (const entity of this.world.entities.iterate()) if (entity.infected) {
+      l1Roles.add(entity.archetype);
+      const model = entity.infected.model ?? entity.infected.variant;
+      if (model) l1Roles.add(model);
+    }
     // First Alphas emerge after the Fairhaven crowd has initialized. Warm the
     // derived model now, including its sim definition when A-S1 registers it.
     if (this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L7')
       for (const def of allDefinitions) if (def.asset === 'inf.alpha') l1Roles.add(def.id);
     const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
-    const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id)) : allDefinitions;
+    const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
-      this.definitions.set(def.id, def);
+      // Registrations must not remove the asset spelling used by model overrides.
+      const key = registerCrowdModel(this.modelAliases, def);
+      this.definitions.set(key, def);
       if (!this.low) {
         const mesh = new InstancedMesh(new BufferGeometry(), this.shading?.shaded(vec3(1)) ?? new MeshBasicNodeMaterial(), 350);
-        mesh.count = 0; mesh.visible = false; this.heroSlots.set(def.id, mesh); this.add(mesh);
+        mesh.count = 0; mesh.visible = false; this.heroSlots.set(key, mesh); this.add(mesh);
       }
     }
     // The low tier only ever draws LOD2 (see update); it never loads LOD0/LOD1.
@@ -123,6 +131,7 @@ export class CrowdView extends Group {
     this.update();
   }
   private async loadBatch(def: { id: string; asset: string; windup: number }, lod: 'lod0' | 'lod1' | 'lod2'): Promise<void> {
+      const key = crowdModelKey(def);
       const role = def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
       const loaded = await this.registry.loadAsset(asset, lod) as Group;
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
@@ -142,7 +151,7 @@ export class CrowdView extends Group {
         const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1);
         if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
         packCrowdParts(corpse);
-        this.corpseGeometry.set(def.id, corpse);
+        this.corpseGeometry.set(key, corpse);
       }
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
       packCrowdParts(baked.geometry);
@@ -179,10 +188,10 @@ export class CrowdView extends Group {
         const detached = feedbackState.z.div(2 ** bit).floor().mod(2);
         visible = hidden.select(visible.mul(detached.oneMinus()), visible);
       });
-      const slot = lod === 'lod0' ? this.heroSlots.get(def.id) : undefined;
+      const slot = lod === 'lod0' ? this.heroSlots.get(key) : undefined;
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity); mesh.userData.preRenderTextures = [texture];
       mesh.instanceMatrix.setUsage(StreamDrawUsage);
-      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(def.id); } mesh.userData.preRenderSolo = true; mesh.name = def.id; mesh.frustumCulled = false; mesh.count = 0;
+      if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(key); } mesh.userData.preRenderSolo = true; mesh.name = key; mesh.frustumCulled = false; mesh.count = 0;
       // E17's explicit instance * part order: positionNode runs after default instancing.
       const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
       mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
@@ -191,10 +200,13 @@ export class CrowdView extends Group {
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible), 1))).xyz;
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
       mesh.onAfterRender = () => probe.draw();
-      this.batches.set(`${def.id}:${lod}`, { locomotion, probe, poses, lod, role: def.id, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(`${key}:${lod}`, { locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
-  private hasRole(id: string): boolean { return this.batches.has(`${id}:lod1`) || this.batches.has(`${id}:lod2`); }
+  private modelKey(id: string): string | undefined {
+    const key = this.modelAliases.get(id);
+    return key && (this.batches.has(`${key}:lod1`) || this.batches.has(`${key}:lod2`)) ? key : undefined;
+  }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     this.staticCorpses.begin(id => this.world.entities.get(id));
@@ -216,8 +228,8 @@ export class CrowdView extends Group {
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (distance > this.cullDistance) continue;
       const variant = e.infected?.model ?? e.infected?.variant;
-      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
-      const key = variant && this.hasRole(variant) ? variant : role;
+      const role = this.modelKey(e.archetype) ?? this.modelKey('infected.runner')!;
+      const key = (variant && this.modelKey(variant)) || role;
       const d = this.registry.definition(this.definitions.get(key)!.asset).dimensions;
       if (!this.visibility.visible(e.transform.x, e.transform.y - .7 + d.y / 2, e.transform.z, Math.hypot(d.x, d.y, d.z) / 2 + .75)) continue;
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, d.y);
@@ -242,9 +254,9 @@ export class CrowdView extends Group {
       if (keepsLook(e)) { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
       if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
-      const role = this.hasRole(e.archetype) ? e.archetype : 'infected.runner';
+      const role = this.modelKey(e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.infected?.model ?? e.infected?.variant;
-      const key = variant && this.hasRole(variant) ? variant : role;
+      const key = (variant && this.modelKey(variant)) || role;
       const def = this.definitions.get(key)!;
       const dimensions = this.registry.definition(def.asset).dimensions;
       this.bounds.center.set(e.transform.x, e.transform.y - .7 + dimensions.y / 2, e.transform.z);
@@ -316,7 +328,8 @@ export class CrowdView extends Group {
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
         const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch) ? layers : undefined;
-        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, band === 'lod1' && !crawling, layered, style);
+        // Wide Roar framing still needs planted turns and grounded convergence.
+        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         batch.mesh.setMatrixAt(batch.count, this.transform); batch.tint.setXYZW(batch.count, tint.r, tint.g, tint.b, blend[0] * 2 + blend[1]); batch.state.setXYZW(batch.count++, frame, Number(b.detached && this.goreEnabled), feedback?.mask ?? 0, (feedback?.strength ?? 0) + Math.round(fade * 255) * 2);
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
