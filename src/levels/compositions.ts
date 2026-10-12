@@ -93,3 +93,6 @@ compositions["L1-M1"] = {
 /** E24: Lakeshore shelter, 216 m track tunnel, Northgate and the night exit. */
 compositions.L6 = { id: "L6", tier: 0, timeOfDay: "L6-subway", districts: [{ id: "D-SUBWAY", origin: [0, 0], overrides: { photoSpots: l6PhotoSpots.map(([name]) => ({ name, target: { anchor: `photo-${name}` }, offset: name === "l6-exit-night" ? [30, 38, 30] : [20, 24, 20] })) } }] };
 compositions["D-SUBWAY"] = { ...compositions.L6, id: "D-SUBWAY" };
+
+/** L7-D1: retained Fairhaven W6, shared Northgate exit; D2 adds corridor/bus. */
+compositions.L7 = { id: 'L7', tier: 6, timeOfDay: 'L6', districts: [{ id: fairDistrictId, origin: [0, 0], overrides: { spawns: [{ anchor: 'l7-night-exit' }] } }] };

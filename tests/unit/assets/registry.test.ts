@@ -78,3 +78,25 @@ test('T-E09-06d @E09-AC06 @E27-AC05 variant-less vehicles retain meshes, darken 
   await expect(registry.loadAsset(def.id, 'high', 'typo')).rejects.toThrow('Unknown decay variant');
   await registry.dispose();
 });
+
+test('T-E29-09-decay-lod @E29-AC09 ruined LODs use declared decay dimensions and still reject malformed geometry', async () => {
+  const { def } = fixture(); def.status = 'integrated'; def.decayVariants = ['w6'];
+  def.dimensions = { x: 2, y: 4, z: 2, tolerance: .01 }; def.decayDimensions = { y: 2 };
+  def.lods = { lod1: 'public/test.lod1.glb', lod2: 'public/test.lod2.glb' };
+  for (const malformed of [false, true]) {
+    const urls: string[] = [], logs: PlaceholderLog[] = [];
+    const registry = new AssetRegistry(event => logs.push(event), { manifest: [def], load: async url => {
+      urls.push(url); const root = new Group();
+      const mesh = new Mesh(new BoxGeometry(2, malformed && url.includes('.w6') && url.includes('lod2') ? 3 : url.includes('.w6') ? 2 : 4, 2), new MeshBasicNodeMaterial());
+      mesh.name = 'body'; root.add(mesh);
+      for (const name of [...def.requiredNodes, ...def.animatedNodes, ...def.sockets]) if (!root.getObjectByName(name)) { const node = new Group(); node.name = name; root.add(node); }
+      return root;
+    } });
+    await registry.loadAsset(def.id, 'lod2', 'w6');
+    expect(urls).toEqual(malformed ? ['/test.w6.lod2.glb', '/test.w6.lod1.glb'] : ['/test.w6.lod2.glb']);
+    expect(logs).toEqual([]);
+    await registry.loadAsset(def.id, 'lod2');
+    expect(urls.at(-1)).toBe('/test.lod2.glb');
+    await registry.dispose();
+  }
+});

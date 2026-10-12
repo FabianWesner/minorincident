@@ -1,3 +1,4 @@
+import { l7Contains } from '../../levels/L7/layout';
 import { SimPhase } from '../../core/EventBus';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Combat } from '../combat/Combat';
@@ -38,6 +39,7 @@ export function installNpcSystems(world: SimWorld): void {
   // need only range checks, preserving inside()'s inclusive minimum/exclusive maximum.
   const masks = districts.districts.map(d => {
     const p = d.layout.bounds;
+    if (districts.composition.id === 'L7') return (x: number, z: number) => l7Contains(x - d.origin[0], z - d.origin[1]);
     const rectangle = p.length === 5 && p[0][0] === p[4][0] && p[0][1] === p[4][1] &&
       ((p[0][0] === p[1][0] && p[1][1] === p[2][1] && p[2][0] === p[3][0] && p[3][1] === p[0][1]) ||
        (p[0][1] === p[1][1] && p[1][0] === p[2][0] && p[2][1] === p[3][1] && p[3][0] === p[0][0]));
@@ -51,7 +53,7 @@ export function installNpcSystems(world: SimWorld): void {
   });
   const mask = (x: number, z: number) => { for (const contains of masks) if (contains(x, z)) return true; return false; };
   // Bake the final footprint once. No navigation queries run in these constructors.
-  world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition, mask); world.npcs = new Npcs(world);
+  world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition, districts.composition.id === 'L7' && masks.length === 1 ? masks[0] : mask); world.npcs = new Npcs(world);
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
 }
 

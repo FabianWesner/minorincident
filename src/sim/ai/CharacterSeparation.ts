@@ -23,7 +23,6 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (const e of world.entities.iterate()) { const r = radius(e); radii.set(e.id, r); maximumRadius = Math.max(maximumRadius, r); }
     for (let pass = 0; pass < 3; pass++) for (const e of world.entities.iterate()) {
       const r = radii.get(e.id)!; if (!r || (e.infected?.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
-      if (world.districts && e.infected && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') e.transform.y = .7 + world.districts.pavingHeight(e.transform.x, e.transform.z);
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       world.spatial.query(query, neighbors, false);
       for (const id of neighbors) {
@@ -37,7 +36,7 @@ export function installCharacterSeparation(world: SimWorld): void {
         // Larger attackers keep the same surface clearance around the courier as ordinary humans.
         const infected = (e.infected ? 1 : 0) + (other.infected ? 1 : 0);
         const courier = !!(e.survivor || other.survivor);
-        const contact = infectedContactDistance(e.infected ? r : otherRadius);
+        const contact = infected === 1 ? infectedContactDistance(e.infected ? r : otherRadius) : 0;
         const combatCrowd = infected === 2 && ((e.infected!.l1 && other.infected!.l1) || e.combat!.attacking || other.combat!.attacking || e.infected!.state === 'chase' || other.infected!.state === 'chase');
         const gap = infected === 1 ? Math.max(.015, courier ? contact - r - otherRadius : Math.min(.3, 1.05 - r - otherRadius)) : combatCrowd ? .22 + Math.max(0, r - .35, otherRadius - .35) : .015;
         const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
@@ -52,5 +51,9 @@ export function installCharacterSeparation(world: SimWorld): void {
       }
       world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
+    // Separation changes only X/Z. Ground once at the final position, rather
+    // than sampling every pass and leaving the last push's support stale.
+    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && radii.get(e.id) && !(e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow')
+      e.transform.y = .7 + world.districts.pavingHeight(e.transform.x, e.transform.z);
   }, SimPhase.cleanup);
 }

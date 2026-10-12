@@ -27,6 +27,7 @@ import { l3 } from '../../data/l3';
 import { cameraFraming } from '../../data/cameraFraming';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelFourLayouts } from '../../levels/L4/layout';
+import { levelSevenLayouts } from '../../levels/L7/layout';
 import { levelFiveLayouts } from '../../levels/L5/layout';
 import { inside } from '../../levels/districts/validate';
 import { CrowdFigureProbe } from '../../render/characters/CrowdFigureProbe';
@@ -127,7 +128,7 @@ export class SceneLab {
       if (spec.layout.district === 'D-CORRIDOR') source = levelThreeLayouts([source])[0];
       // Fairhaven likewise (E22): the army reception, sandbag line, nests, parked cars and the L4 anchors.
       // ... and its devastated twin hours later (E23, `level: "L5"`): W5 shells, wrecks, craters, glass, the power out.
-      if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
+      if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L7' ? levelSevenLayouts : spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
@@ -165,6 +166,7 @@ export class SceneLab {
       if (!item) throw new Error(`Rotation fixture needs a pushable id: ${prop.id}`);
       world.props!.place(item, { p: [...item.pose.p], q: prop.rotation });
     }
+    if (spec.layout?.level === 'L7') world.scenario = 'L7';
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     void outbreak;
     if (spec.infectedCap !== undefined) world.infected!.director.levelCap = spec.infectedCap;
@@ -472,7 +474,7 @@ export class SceneLab {
     else if ('blast' in fx) world.explosions!.blast(fx.blast, toPoint(fx.at));
     else if ('wreck' in fx) { const id = this.vehicles.get(fx.wreck); if (id === undefined) throw new Error(`wreck: unknown vehicle ${fx.wreck}`); world.vehicles!.damage(id, 1e6); }
     else if ('hazard' in fx) { const id = world.hazards!.spawn(fx.hazard, toPoint(fx.at), { radius: fx.radius, duration: fx.duration }); if (fx.trigger) world.hazards!.hit(id, 1, fx.trigger); }
-    else if ('fire' in fx && fx.duration !== undefined) world.hazards!.spawn('fire',toPoint(fx.fire),{radius:fx.radius??2,duration:fx.duration});
+    else if ('fire' in fx && fx.duration !== undefined) { const p = toPoint(fx.fire), id = world.hazards!.spawn('fire',p,{radius:fx.radius??2,duration:fx.duration}); world.entities.get(id)!.transform.y += world.districts?.groundHeight(p.x, p.z) ?? 0; }
     else { const kind = 'fire' in fx ? 'fire' : 'smoke', p = toPoint('fire' in fx ? fx.fire : fx.smoke); world.events.emit({ type: 'vfx.effect', tick: world.tick, kind, position: p, radius: fx.radius ?? 2 } as Parameters<typeof world.events.emit>[0]); }
   }
   setTime(preset: TimeOfDay): void { this.game.view.settings({ timeOfDay: preset }); }

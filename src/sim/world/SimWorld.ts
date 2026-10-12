@@ -2,6 +2,8 @@ import { isWorldTier, type Tier } from '../../levels/districts/types';
 import { WeatherSystem } from '../weather/WeatherSystem';
 import { LightPower } from '../lighting/LightPower';
 import { levelFourLayouts } from '../../levels/L4/layout';
+import { installL7Dressing } from '../../levels/L7/dressing';
+import { levelSevenLayouts } from '../../levels/L7/layout';
 import { levelFiveLayouts } from '../../levels/L5/layout';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import type { L1Aftermath } from '../../levels/continuity';
@@ -230,7 +232,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null):void {
-    const districts=new DistrictWorld(composition,composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
+    const districts=new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
     this.loadScenario('survivor',seed);this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
     this.lightPower?.install(districts);
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
@@ -250,6 +252,7 @@ export class SimWorld implements Lifecycle {
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
+    if (composition.id === 'L7') installL7Dressing(this);
     if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     if (this.aftermath && this.toys) this.toys.carryOver(this.aftermath);
     this.events.on('sim.tick',()=>{

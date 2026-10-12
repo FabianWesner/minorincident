@@ -226,7 +226,7 @@ export class GameView implements Lifecycle {
       const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
       // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
       // path, spawn focus and close-view warm-up.
-      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
+      const grove = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7';
       const instanceCapacity = grove ? this.renderer.attributeInstanceCapacity() : undefined;
       const t=performance.now();
       this.districts=new DistrictView(this.world.districts,this.materials,shared.registry,shared.phase,shared.grassMaterial,this.quality === 'low', instanceCapacity);
@@ -251,7 +251,7 @@ export class GameView implements Lifecycle {
           // Phone node builds exceed the frame budget even when compiled asynchronously.
           // Keep its smaller LODs resident and warm them while loading, like the L6 route.
           const route = performance.now();
-          await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget)));
+          await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, this.world.scenario === 'L7' ? 16 : Infinity)));
           loadMeasure('view:route-lods', route);
         } else {
           if (this.quality === 'high' && this.renderer.selectedBackend === 'webgl') { const p = performance.now(); await Promise.all([this.districts, ...variants].map(view => view.prepare(this.view.cameraTarget, () => false, lodPolicy.lod1From))); loadMeasure('view:hero-lod0', p); }
@@ -386,7 +386,7 @@ export class GameView implements Lifecycle {
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6';
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7';
     if (groveTown && this.background) {
       const generation = this.generation;
       this.warming = warm().then(() => {
@@ -434,7 +434,7 @@ export class GameView implements Lifecycle {
       for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
       const start = performance.now();
       // The decay variants follow: their swap at an objective transition then finds LOD0 batches ready.
-      for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale); if (stale()) break; }
+      for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale, this.world.scenario === 'L7' ? lodPolicy.lod2From : Infinity); if (stale()) break; }
       if (!stale()) loadMeasure('view:background-preparation', start);
     })().catch(error => { if (generation === this.generation) console.error(error); });
   }
@@ -793,6 +793,8 @@ export class GameView implements Lifecycle {
       renderer.render(this.barScene, this.camera);
     } finally { renderer.autoClear = autoClear; renderer.toneMapping = tone; renderer.outputColorSpace = color; }
   }
+  /** Compact E18 effect counters without actor/pose snapshots. */
+  effectPerf() { return this.vfx?.snapshot() ?? null; }
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
@@ -823,6 +825,9 @@ export class GameView implements Lifecycle {
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
     lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
+    // Low W6 keeps the palette moon shade and contact shadows; a promoted fire
+    // still owns its one hero shadow map. Avoid a second city-wide moon pass.
+    lighting.sun.visible = !(this.world.scenario === 'L7' && this.quality === 'low');
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

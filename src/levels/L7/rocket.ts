@@ -17,5 +17,5 @@ export function spawnL7Rocket(world: SimWorld, exit: Vec2): number {
   const existing = world.entities.values().find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
   if (existing) return existing.id;
   if (world.combat!.runner.loadout.activeEntries().some(e => e.id === l7Rocket.action)) return 0;
-  return world.combat!.pickups.spawn(l7Rocket.action, position, false, { retain: true, interactTicks: l7Rocket.interactTicks });
+  return world.combat!.pickups.spawn(l7Rocket.action, position, false, { retain: true, interactTicks: l7Rocket.interactTicks, surfaceY: world.districts?.groundHeight(position.x, position.z) ?? 0 });
 }
