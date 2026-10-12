@@ -1,3 +1,4 @@
+import { TrapRescue } from './TrapRescue';
 import { isWorldTier, type Tier } from '../../levels/districts/types';
 import { WeatherSystem } from '../weather/WeatherSystem';
 import { LightPower } from '../lighting/LightPower';
@@ -88,7 +89,16 @@ export class SimWorld implements Lifecycle {
   get deviceInput(): InputFrame { return this.input; }
   get inputFrame(): InputFrame { return this.effectiveInput; }
   /** Attach a validated mission after scenario/composition assembly. */
-  loadMission(def: MissionDef): Mission { const next=new Mission(this,def);this.missions?.dispose();this.missions=next;return next; }
+  /** Trap-pocket safety net of the loaded mission (null without districts). */
+  trapRescue: TrapRescue | null = null;
+  private stopTrapRescue: (() => void) | null = null;
+  loadMission(def: MissionDef): Mission {
+    const next=new Mission(this,def);this.missions?.dispose();this.missions=next;
+    this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
+    const goal = def.steps.at(-1) && def.anchors[def.steps.at(-1)!.anchor];
+    if (this.districts && goal) { const rescue = this.trapRescue = new TrapRescue(this, [goal]); this.stopTrapRescue = this.events.on('sim.tick', () => rescue.update(), SimPhase.missions); }
+    return next;
+  }
   /** Mission actors use the same component/physics owners as authored gameplay placements. */
   spawnMissionActor(def: ActorDef, at: { x: number; z: number }): EntitySnapshot {
     let id: number;
