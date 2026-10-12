@@ -1,0 +1,230 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/L4.spec.ts",
+      "--grep",
+      "T-E22-18",
+      "--project=chromium",
+      "--workers=1",
+      "--reporter=json"
+    ],
+    "configFile": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/playwright.config.ts",
+    "rootDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/test-results/playwright/run-3462",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/srv/mi/jobs/l4-systems-baseline-98b833-17776-1791764227/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3462 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3462",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/L4.spec.ts",
+      "file": "e2e/levels/L4.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L4 The Safe City Falls in the browser",
+          "file": "e2e/levels/L4.spec.ts",
+          "line": 84,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC18",
+                "E22-AC19"
+              ],
+              "tests": [
+                {
+                  "timeout": 2400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 634789,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T00:17:44.878Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-a772483a81f93398a9a0",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 85,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T00:17:43.049Z",
+    "duration": 666906.901,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

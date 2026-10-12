@@ -82,8 +82,8 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     let target = c.state === 'grabbed' ? world.entities.get(c.attacker) : a.targetId ? world.entities.get(a.targetId) : undefined;
     // Recheck the camera/self-defence rule on cached targets as well as new scans.
     if (target && !policeCanEngage(target)) { target = undefined; a.targetId = 0; }
-    if (c.state !== 'grabbed' && !forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % 6 === 0)) {
-      // Re-acquire: biting infected first (rescue), then the nearest visible one.
+    if (c.state !== 'grabbed' && !forced && (!target || target.health.current <= 0 || !target.infected || target.hidden || (tick + e.id) % (a.role === 'soldier' ? 15 : 6) === 0)) {
+      // Soldiers concentrate on visible Alphas within their firing range; other allies keep the rescue priority.
       let best: EntitySnapshot | undefined, score = Infinity;
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       for (const o of ai.active) {
@@ -97,7 +97,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         if (!current && d > 1.2 && (dx * fx + dz * fz) / d < half && !shooter && !heard(o)) continue;
         if (!visible(e.transform, o.transform, o.id)) continue;
         const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0);
-        if (s < score) { score = s; best = o; }
+        const alpha = a.role === 'soldier' && o.archetype === 'infected.alpha';
+        const bestAlpha = a.role === 'soldier' && best?.archetype === 'infected.alpha';
+        if ((alpha && !bestAlpha) || (alpha === bestAlpha && s < score)) { score = s; best = o; }
       }
       if (best && best.id !== a.targetId && (defence(best) || heard(best))) a.nextAttack = Math.min(a.nextAttack, tick + 15);
       target = best; a.targetId = best?.id ?? 0;
@@ -106,7 +108,8 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     // A swing in progress lands after its windup on whatever is still in reach (no tracking, it can whiff).
     if (a.strikeAt && tick >= a.strikeAt) {
       const victim = world.entities.get(a.strikeTarget ?? 0); a.strikeAt = 0;
-      const allowed = !!victim && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id);
+      const allowed = !!victim && policeCanEngage(victim) && !victim.hidden && !victim.infected?.hidden && !victim.infectionRise && visible(e.transform, victim.transform, victim.id)
+        && (!shooter || a.baton || world.combat!.query.alliedShotClear(e, victim, tick));
       if (!allowed) a.baton = false;
       if (allowed && victim?.infected && victim.health.current > 0 && world.combat) {
         const dx = victim.transform.x - e.transform.x, dz = victim.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -123,6 +126,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         } else {
           const def = shooter ? l2.allies.officer : ff, reach = shooter ? (a.range ?? l2.allies.officer.rangeM) + 4 : ff.reachM * 1.1;
           if (d <= reach) world.combat.damage.apply({ attackId: 0, actionId: shooter ? 'weapon.pistol' : 'weapon.fire-axe', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: def.damage, multiplier: 1, type: shooter ? 'bullet' : 'melee', knockback: shooter ? 0 : .3, stagger: shooter ? .25 : .1 });
+          if (shooter && d <= reach) world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: victim.id, role: a.role, hit: true, from: { x: e.transform.x, z: e.transform.z }, to: { x: victim.transform.x, z: victim.transform.z } });
         }
       }
     }
@@ -142,11 +146,12 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       if (shooter && c.state !== 'grabbed' && c.story?.clip !== 'shoot') c.story = { clip: 'shoot', start: tick };
       if (a.role === 'officer' && !a.strikeAt && tactics(world, e, a, target, d, dx, dz)) return true;
       if (d <= reach && tick >= a.nextAttack && world.combat) {
+        if (shooter && !world.combat.query.alliedShotClear(e, target, tick)) return true;
         a.nextAttack = tick + ticks(gun ? gun.shotS : shooter ? l2.allies.officer.shotS : ff.swingS); a.hits++;
         a.strikeAt = tick + Math.max(1, ticks(shooter ? 0 : ff.windupS)); a.strikeTarget = target.id;
         // Shooters raise the gun (recoil replays on every shot), melee fighters swing the halligan (strike frame = windup).
         c.story = shooter ? gun || a.role === 'officer' ? { clip: 'shoot', start: tick } : { clip: 'npc-gesture', start: tick } : { clip: 'swing', start: tick, prop: 'crowbar' };
-        if (!gun) world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: target.id, role: a.role });
+        if (!gun && !shooter) world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: target.id, role: a.role });
       }
       return true;
     }

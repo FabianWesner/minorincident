@@ -1,0 +1,2065 @@
+{
+  "phase": "before",
+  "tier": "high",
+  "samples": [
+    {
+      "frame": 27,
+      "perf": {
+        "drawCalls": 44,
+        "triangles": 128871,
+        "awakeProps": 0,
+        "backend": "webgl"
+      },
+      "actors": [
+        {
+          "name": "courier",
+          "entity": {
+            "id": 1,
+            "archetype": "player.survivor",
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "transform": {
+              "x": -10,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "alpha",
+          "entity": {
+            "id": 4,
+            "archetype": "infected.alpha",
+            "health": {
+              "current": 300,
+              "max": 300
+            },
+            "transform": {
+              "x": 4,
+              "y": 0.7,
+              "z": 0,
+              "yaw": -3.141592653589793
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": {
+              "move": "alpha.charge",
+              "attackId": 1,
+              "stage": "telegraph",
+              "startTick": 0,
+              "activeTick": 48,
+              "cooldownExpiry": 528,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 1,
+                "x": -10,
+                "z": 0
+              },
+              "area": {
+                "x": 4,
+                "z": 0,
+                "radius": 1,
+                "dx": -1,
+                "dz": 0
+              },
+              "hitIds": []
+            }
+          }
+        },
+        {
+          "name": "regular-0",
+          "entity": {
+            "id": 5,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": 7,
+              "y": 0.7,
+              "z": -1.5,
+              "yaw": -0.8137492036291709
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-1",
+          "entity": {
+            "id": 6,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": 7,
+              "y": 0.7,
+              "z": 0,
+              "yaw": -0.6042097495465228
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-2",
+          "entity": {
+            "id": 7,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": 7,
+              "y": 0.7,
+              "z": 1.5,
+              "yaw": -1.386666666666666
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "soldier-a",
+          "entity": {
+            "id": 8,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -10,
+              "z": -4,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -10,
+                "z": -4
+              },
+              "hold": true,
+              "targetId": 0,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26
+            },
+            "knockedUntil": 0,
+            "special": null
+          }
+        },
+        {
+          "name": "soldier-b",
+          "entity": {
+            "id": 9,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -10,
+              "z": 4,
+              "y": 0.7,
+              "yaw": 0
+            },
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -10,
+                "z": 4
+              },
+              "hold": true,
+              "targetId": 0,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26
+            },
+            "knockedUntil": 0,
+            "special": null
+          }
+        }
+      ],
+      "barricades": [
+        {
+          "id": 2,
+          "state": {
+            "slot": {
+              "id": "l4-line",
+              "groupId": "l4-line",
+              "a": {
+                "x": 0,
+                "z": -5
+              },
+              "b": {
+                "x": 0,
+                "z": 5
+              },
+              "height": 0.85,
+              "depth": 0.7,
+              "initialHp": 300,
+              "sandbag": true
+            },
+            "coverage": 1,
+            "props": [],
+            "intact": true,
+            "hitTick": -60,
+            "breaks": 0
+          }
+        }
+      ],
+      "events": []
+    },
+    {
+      "frame": 90,
+      "perf": {
+        "drawCalls": 42,
+        "triangles": 138391,
+        "awakeProps": 0,
+        "backend": "webgl"
+      },
+      "actors": [
+        {
+          "name": "courier",
+          "entity": {
+            "id": 1,
+            "archetype": "player.survivor",
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "transform": {
+              "x": -10,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "alpha",
+          "entity": {
+            "id": 4,
+            "archetype": "infected.alpha",
+            "health": {
+              "current": 291,
+              "max": 300
+            },
+            "transform": {
+              "x": -2.4499999999999975,
+              "y": 0.7,
+              "z": 0,
+              "yaw": -3.141592653589793
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": {
+              "move": "alpha.charge",
+              "attackId": 1,
+              "stage": "active",
+              "startTick": 0,
+              "activeTick": 48,
+              "cooldownExpiry": 528,
+              "recoveryUntil": 0,
+              "target": {
+                "id": 1,
+                "x": -10,
+                "z": 0
+              },
+              "area": {
+                "x": 4,
+                "z": 0,
+                "radius": 1,
+                "dx": -1,
+                "dz": 0
+              },
+              "hitIds": [
+                2
+              ]
+            }
+          }
+        },
+        {
+          "name": "regular-0",
+          "entity": {
+            "id": 5,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": 7.648011827477321,
+              "y": 0.7,
+              "z": -0.8554650380005447,
+              "yaw": -0.7827065300812515
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-1",
+          "entity": {
+            "id": 6,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": 6.696404602770523,
+              "y": 0.7,
+              "z": 0.2546053507988042,
+              "yaw": -2.0616706578449033
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-2",
+          "entity": {
+            "id": 7,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": 7.344071145526087,
+              "y": 0.7,
+              "z": 0.9072191914748527,
+              "yaw": 1.5433333333333343
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "soldier-a",
+          "entity": {
+            "id": 8,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -10,
+              "z": -4,
+              "y": 0.7,
+              "yaw": -0.4872034605819255
+            },
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -10,
+                "z": -4
+              },
+              "hold": true,
+              "targetId": 4,
+              "nextAttack": 92,
+              "hits": 1,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26,
+              "strikeAt": 0,
+              "strikeTarget": 4
+            },
+            "knockedUntil": 0,
+            "special": null
+          }
+        },
+        {
+          "name": "soldier-b",
+          "entity": {
+            "id": 9,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -10,
+              "z": 4,
+              "y": 0.7,
+              "yaw": 0.4872034605819255
+            },
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -10,
+                "z": 4
+              },
+              "hold": true,
+              "targetId": 4,
+              "nextAttack": 92,
+              "hits": 1,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26,
+              "strikeAt": 0,
+              "strikeTarget": 4
+            },
+            "knockedUntil": 0,
+            "special": null
+          }
+        }
+      ],
+      "barricades": [
+        {
+          "id": 2,
+          "state": {
+            "slot": {
+              "id": "l4-line",
+              "groupId": "l4-line",
+              "a": {
+                "x": 0,
+                "z": -5
+              },
+              "b": {
+                "x": 0,
+                "z": 5
+              },
+              "height": 0.85,
+              "depth": 0.7,
+              "initialHp": 300,
+              "sandbag": true
+            },
+            "coverage": 0,
+            "props": [],
+            "intact": false,
+            "hitTick": 68,
+            "breaks": 1
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "infected.special",
+          "tick": 48,
+          "sourceId": 4,
+          "move": "alpha.charge",
+          "attackId": 1,
+          "stage": "active"
+        },
+        {
+          "tick": 68,
+          "attackId": 1,
+          "actionId": "alpha.charge",
+          "sourceId": 4,
+          "targetId": 2,
+          "position": {
+            "x": 0,
+            "z": 0,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "direction": {
+            "x": -1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 300,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "type": "barricade.damaged",
+          "tick": 68,
+          "id": 2,
+          "sourceId": 4,
+          "attackId": 1,
+          "slotId": "l4-line",
+          "groupId": "l4-line",
+          "previousHp": 300,
+          "hp": 0,
+          "amount": 300,
+          "props": []
+        },
+        {
+          "type": "barricade.broken",
+          "tick": 68,
+          "id": 2,
+          "slotId": "l4-line",
+          "groupId": "l4-line"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 69,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": 0.7000000000000017,
+            "z": 0
+          }
+        },
+        {
+          "tick": 69,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": 0.7000000000000017,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.9366884435330111,
+            "z": 0.35016390412449006
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 69,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": 0.7000000000000017,
+            "z": 0
+          }
+        }
+      ]
+    },
+    {
+      "frame": 450,
+      "perf": {
+        "drawCalls": 41,
+        "triangles": 138367,
+        "awakeProps": 0,
+        "backend": "webgl"
+      },
+      "actors": [
+        {
+          "name": "courier",
+          "entity": {
+            "id": 1,
+            "archetype": "player.survivor",
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "transform": {
+              "x": -10,
+              "y": 0.7049999833106995,
+              "z": 0,
+              "yaw": 0
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "alpha",
+          "entity": {
+            "id": 4,
+            "archetype": "infected.alpha",
+            "health": {
+              "current": 57,
+              "max": 300
+            },
+            "transform": {
+              "x": -8.743071239124754,
+              "y": 0.7,
+              "z": 0.03189475498966511,
+              "yaw": -3.141592653589793
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-0",
+          "entity": {
+            "id": 5,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": -6.684922364653696,
+              "y": 0.7,
+              "z": 0.12808211615247272,
+              "yaw": -3.2386713833143568
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-1",
+          "entity": {
+            "id": 6,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": -7.545038133149697,
+              "y": 0.7,
+              "z": 0.5762626561566645,
+              "yaw": -3.774962876583695
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "regular-2",
+          "entity": {
+            "id": 7,
+            "archetype": "infected.runner",
+            "health": {
+              "current": 60,
+              "max": 60
+            },
+            "transform": {
+              "x": -7.482796130159406,
+              "y": 0.7,
+              "z": -0.3438949953744089,
+              "yaw": 3.468760082799641
+            },
+            "ally": null,
+            "knockedUntil": null,
+            "special": null
+          }
+        },
+        {
+          "name": "soldier-a",
+          "entity": {
+            "id": 8,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -10,
+              "z": -4,
+              "y": 0.7,
+              "yaw": -1.2647303525869174
+            },
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -10,
+                "z": -4
+              },
+              "hold": true,
+              "targetId": 4,
+              "nextAttack": 452,
+              "hits": 16,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26,
+              "strikeAt": 0,
+              "strikeTarget": 4
+            },
+            "knockedUntil": 0,
+            "special": null
+          }
+        },
+        {
+          "name": "soldier-b",
+          "entity": {
+            "id": 9,
+            "archetype": "npc.soldier",
+            "health": {
+              "current": 120,
+              "max": 120
+            },
+            "transform": {
+              "x": -10,
+              "z": 4,
+              "y": 0.7,
+              "yaw": 1.2610531380258498
+            },
+            "ally": {
+              "role": "soldier",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.4,
+              "post": {
+                "x": -10,
+                "z": 4
+              },
+              "hold": true,
+              "targetId": 4,
+              "nextAttack": 452,
+              "hits": 16,
+              "forceUntil": 0,
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              },
+              "weapon": "rifle",
+              "range": 26,
+              "strikeAt": 0,
+              "strikeTarget": 4
+            },
+            "knockedUntil": 0,
+            "special": null
+          }
+        }
+      ],
+      "barricades": [
+        {
+          "id": 2,
+          "state": {
+            "slot": {
+              "id": "l4-line",
+              "groupId": "l4-line",
+              "a": {
+                "x": 0,
+                "z": -5
+              },
+              "b": {
+                "x": 0,
+                "z": 5
+              },
+              "height": 0.85,
+              "depth": 0.7,
+              "initialHp": 300,
+              "sandbag": true
+            },
+            "coverage": 0,
+            "props": [],
+            "intact": false,
+            "hitTick": 68,
+            "breaks": 1
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "infected.special",
+          "tick": 48,
+          "sourceId": 4,
+          "move": "alpha.charge",
+          "attackId": 1,
+          "stage": "active"
+        },
+        {
+          "tick": 68,
+          "attackId": 1,
+          "actionId": "alpha.charge",
+          "sourceId": 4,
+          "targetId": 2,
+          "position": {
+            "x": 0,
+            "z": 0,
+            "y": 0.7,
+            "yaw": 0
+          },
+          "direction": {
+            "x": -1,
+            "z": 0
+          },
+          "knockback": 0,
+          "amount": 300,
+          "damageType": "melee",
+          "type": "combat.hit"
+        },
+        {
+          "type": "barricade.damaged",
+          "tick": 68,
+          "id": 2,
+          "sourceId": 4,
+          "attackId": 1,
+          "slotId": "l4-line",
+          "groupId": "l4-line",
+          "previousHp": 300,
+          "hp": 0,
+          "amount": 300,
+          "props": []
+        },
+        {
+          "type": "barricade.broken",
+          "tick": 68,
+          "id": 2,
+          "slotId": "l4-line",
+          "groupId": "l4-line"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 69,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": 0.7000000000000017,
+            "z": 0
+          }
+        },
+        {
+          "tick": 69,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": 0.7000000000000017,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.9366884435330111,
+            "z": 0.35016390412449006
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 69,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": 0.7000000000000017,
+            "z": 0
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 93,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -2.8999999999999972,
+            "z": 0
+          }
+        },
+        {
+          "tick": 93,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -2.8999999999999972,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.8712476277448775,
+            "z": 0.49084373394077585
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 93,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -2.8999999999999972,
+            "z": 0
+          }
+        },
+        {
+          "tick": 93,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -2.8999999999999972,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.8712476277448775,
+            "z": -0.49084373394077585
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 117,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -6.500000000000003,
+            "z": 0
+          }
+        },
+        {
+          "tick": 117,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -6.500000000000003,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.6585046078685178,
+            "z": 0.752576694706878
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 117,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -6.500000000000003,
+            "z": 0
+          }
+        },
+        {
+          "tick": 117,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -6.500000000000003,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.6585046078685178,
+            "z": -0.752576694706878
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "infected.special",
+          "tick": 127,
+          "sourceId": 4,
+          "move": "alpha.charge",
+          "attackId": 1,
+          "stage": "recovery"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 141,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 141,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 141,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 141,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "infected.special",
+          "tick": 163,
+          "sourceId": 4,
+          "move": "alpha.charge",
+          "attackId": 1,
+          "stage": "expiry"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 165,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 165,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 165,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 189,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 189,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 189,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 189,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 213,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 213,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 213,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "type": "infected.special",
+          "tick": 228,
+          "sourceId": 4,
+          "move": "alpha.roar",
+          "attackId": 2,
+          "stage": "active"
+        },
+        {
+          "type": "infected.special",
+          "tick": 228,
+          "sourceId": 4,
+          "move": "alpha.roar",
+          "attackId": 2,
+          "stage": "recovery"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 237,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 237,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 237,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 237,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 261,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "type": "ally.attack",
+          "tick": 261,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 261,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "infected.special",
+          "tick": 264,
+          "sourceId": 4,
+          "move": "alpha.roar",
+          "attackId": 2,
+          "stage": "expiry"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 285,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 285,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 285,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 285,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 309,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 309,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 309,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 309,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 333,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 333,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 333,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": false,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "type": "infected.special",
+          "tick": 336,
+          "sourceId": 4,
+          "move": "alpha.ground-slam",
+          "attackId": 3,
+          "stage": "cancelled"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 357,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 357,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 357,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 357,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 381,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 381,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 381,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 381,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 405,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 405,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 405,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 405,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 429,
+          "sourceId": 8,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": -4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 429,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 8,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": 0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "ally.attack",
+          "tick": 429,
+          "sourceId": 9,
+          "targetId": 4,
+          "role": "soldier",
+          "weapon": "rifle",
+          "hit": true,
+          "from": {
+            "x": -10,
+            "z": 4
+          },
+          "to": {
+            "x": -8,
+            "z": 0
+          }
+        },
+        {
+          "tick": 429,
+          "attackId": 0,
+          "actionId": "weapon.pistol",
+          "sourceId": 9,
+          "targetId": 4,
+          "position": {
+            "x": -8,
+            "y": 0.7,
+            "z": 0,
+            "yaw": -3.141592653589793
+          },
+          "direction": {
+            "x": 0.4472135954999579,
+            "z": -0.8944271909999159
+          },
+          "knockback": 0,
+          "amount": 9,
+          "damageType": "bullet",
+          "type": "combat.hit"
+        },
+        {
+          "type": "infected.special",
+          "tick": 432,
+          "sourceId": 4,
+          "move": "alpha.ground-slam",
+          "attackId": 4,
+          "stage": "cancelled"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}
