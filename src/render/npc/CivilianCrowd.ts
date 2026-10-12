@@ -341,8 +341,8 @@ export class CivilianCrowd extends Group {
   private low = false;
   setQuality(tier: 'high' | 'low'): void { this.low = tier === 'low'; this.footwork.cap = this.low ? 16 : 48; }
   /** E18 low tier: at most this many crowd figures draw near detail (LOD1, ~7k triangles) per frame; the rest the far LOD2.
-   * The L3 5x hordes otherwise put 70+ LOD1 figures in a phone frame (546k > 500k triangles). */
-  static readonly lowNearBudget = 36;
+   * The L3 5x hordes otherwise put 70+ LOD1 figures in a phone frame (546k > 500k triangles; 36 still peaked there, 16 measured 481k). */
+  static readonly lowNearBudget = 16;
   private readonly ranked: { id: number; score: number }[] = [];
   private budgetNear(): void {
     const v = this.visibility, demoted = v.demoted;
