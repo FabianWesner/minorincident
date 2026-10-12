@@ -431,11 +431,24 @@ export class DistrictView extends Group {
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
     this.foliage.update(view, player, target); if (player) this.updateRoofs(player);
     // Solid occluders open the shared hole only while one of them is on the camera-to-courier ray.
+    // PO 10-12 (L4 convoy ride): a ~1.7 m hole left the vehicle and group hidden behind a tall apartment block. The solid-occluder hole now
+    // covers the group's real extent in screen units (about 2.8 m on foot, a vehicle length while driving) and the depth gate reaches the far end.
+    if (player) {
+      const distance = view.camera.position.distanceTo(this.holeTarget.set(player.x, player.y, player.z)), screenHeight = 2 * distance * Math.tan(view.camera.fov * Math.PI / 360);
+      const extent = (view.driving ? 9 : 4.5) * (view.camera.aspect < 1 ? 1.25 : 1);
+      seeThrough.solidRadius.value = Math.min(.7, Math.max(seeThrough.radius.value, extent / screenHeight));
+      // Test reference: every solid occluder nearer than the player is cut, i.e. the unobstructed picture the 80 % visibility check compares against.
+      if (this.seeThroughReference) { seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
+      if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
+    }
     const goal = player && this.foliage.reveal && this.occluded(view, player) ? 1 : 0;
     seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-10 * this.frameSeconds));
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
   }
+  /** Debug/test: open the see-through hole across the whole screen (reference frame for visibility checks). */
+  seeThroughReference = false;
   private frameSeconds = 0;
+  private readonly holeTarget = new Vector3();
   /** Segment (camera to chest) against conservative upright boxes of the tall instanced placements nearby. */
   private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
     const o = view.camera.position, dx = player.x - o.x, dy = player.y + .2 - o.y, dz = player.z - o.z;
