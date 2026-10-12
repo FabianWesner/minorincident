@@ -55,6 +55,26 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   const feet = [rig.footL, rig.footR], soleHeight = (root.updateMatrixWorld(true), rig.footL.getWorldPosition(sole).y / rig.hip.parent!.getWorldScale(sole).y);
   const lowestSole = () => Math.min(...feet.flatMap(foot => [-.05, .085].map(x => sole.set(x, -soleHeight, 0).applyMatrix4(foot.matrixWorld).y)));
   const floor = lowestSole(), animalRig = !!root.getObjectByName('body'), flying = !!root.getObjectByName('wingL');
+  // Zebra's long multi-part legs retain authored joint offsets. Ground all four real
+  // hoof bounds together instead of moving a whole upper leg away from its shoulder.
+  const preserveAnimalJoints = root.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
+  const hoofPoints = preserveAnimalJoints ? ['pawFL', 'pawFR', 'pawBL', 'pawBR'].flatMap(name => {
+    const paw = root.getObjectByName(name); if (!paw) return [];
+    const points: { paw: Object3D; point: Vector3 }[] = [];
+    paw.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      const position = node.geometry.getAttribute('position');
+      for (let i = 0; i < position.count; i++) points.push({ paw, point: paw.worldToLocal(new Vector3().fromBufferAttribute(position, i).applyMatrix4(node.matrixWorld)) });
+    });
+    return points;
+  }) : [];
+  const lowestHoof = () => {
+    let bottom = Infinity;
+    for (const { paw, point } of hoofPoints) bottom = Math.min(bottom, sole.copy(point).applyMatrix4(paw.matrixWorld).y);
+    return bottom;
+  };
+  const hoofFloor = hoofPoints.length ? lowestHoof() : 0;
+
   for (const clip of clipNames) {
     const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     const duration = authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
@@ -63,6 +83,10 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
       const t = frame / (framesPerClip - 1);
       sampleClip(root, name, t * duration);
       updateJoints();
+      if (hoofPoints.length && !unplantedClips.test(clip)) {
+        const deficit = hoofFloor - lowestHoof();
+        if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
+      }
       if (planted) {
         const deficit = floor - lowestSole();
         if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(sole).y; updateJoints(); }
