@@ -83,7 +83,7 @@ export const l4 = {
   },
   heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
   /** Fuel truck at the plaza edge (Plaza Way, by the convoy gap): the tank shell sets it off at the line break (mega chain). */
-  fuelTruck: { x: 13.2, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
+  fuelTruck: { x: 8, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
   /** Beat 5-6: live damage and the collapse (soft marker for the hiding place after `markerAfterS`). */
   collapse: {
     markerAfterS: 15, fires: 4, burningCars: 3, pendingPerTick: 3,
@@ -114,7 +114,7 @@ export const l4Anchors: Record<string, P> = {
   'l4-plaza': [-17, 3],
   'l4-cellar-door': [0, 0],            // replaced by the layout's kessler-cellar-door at load (see levelFourLayouts)
   'l4-brace': [0, 0],                  // replaced from the cellar placement
-  'l4-fuel': [13.2, -9.5],
+  'l4-fuel': [8, -9.5],
   'l4-hmg-1': [-32.4, -14.1], 'l4-hmg-2': [-14.6, 17.3],
   'l4-tank-stop': [-20, 22],
   'photo-l4-convoy-arrival': [-6, 3], 'photo-l4-plaza-safe': [-20, 4], 'photo-l4-harbor-street-safe': [-12, -38], 'photo-l4-metro-entrance-safe': [57, -42],

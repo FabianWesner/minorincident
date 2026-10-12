@@ -17,11 +17,21 @@ function validCivilian(e: unknown): e is EntitySnapshot {
     && Number.isFinite(e.health.current) && Number.isFinite(e.health.max)
     && typeof e.appearance.asset === 'string' && e.appearance.asset.startsWith('npc.');
 }
+/** PO 2026-10-12: L3 no longer grants an SMG or hunting rifle (the handgun is the only L3 firearm). Old saves hold the handgun instead; the pending reward drops its retired weapon choice flag. */
+const legacyL3=new Set(['weapon.smg','weapon.hunting-rifle']);
+function dropLegacyL3Weapons(raw:unknown):unknown {
+  if(!record(raw)||!Array.isArray(raw.ownedActions))return raw;
+  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>legacyL3.has(id)?'weapon.handgun':id))]:ids;
+  const owned=swap(raw.ownedActions) as string[],out:Record<string,unknown>={...raw,ownedActions:owned};
+  if(record(raw.racks))out.racks={...raw.racks,LEFT:swap(raw.racks.LEFT),RIGHT:swap(raw.racks.RIGHT)};
+  if(record(raw.pending)){const {weaponChosen:_,...pending}=raw.pending;out.pending=pending;}
+  return out;
+}
 /** v0 renamed level; v2 persists completion before navigation. Existing v1 aftermath is retained; absent records keep level defaults. */
 export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
-  if(record(raw)&&raw.version===1)return {...raw,version:2};
-  return raw;
+  if(record(raw)&&raw.version===1)raw={...raw,version:2};
+  return dropLegacyL3Weapons(raw);
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
   if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>6||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>6||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(raw.completedLevels===6&&raw.unlockedLevel===6)))return false;
@@ -50,7 +60,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
   if(save.completedLevels===6&&save.pending)return false;
   if(save.pending){const p=save.pending;
-    if(!record(p)||!Number.isInteger(p.level)||p.level<1||p.level>5||!['unlock','cards','racks'].includes(p.phase)||typeof p.weaponChosen!=='boolean'||!strings(p.cards)||p.cards.some(id=>!Object.hasOwn(upgrades,id))||save.unlockedLevel!==p.level+1)return false;
+    if(!record(p)||!Number.isInteger(p.level)||p.level<1||p.level>5||!['unlock','cards','racks'].includes(p.phase)||!strings(p.cards)||p.cards.some(id=>!Object.hasOwn(upgrades,id))||save.unlockedLevel!==p.level+1)return false;
     if(p.phase==='racks'){if(save.completedLevels!==p.level||p.cards.length!==3||p.cards.filter(id=>save.upgrades.includes(id)).length!==2)return false;}
     else if(save.completedLevels!==p.level-1||p.cards.length!==(p.phase==='cards'?3:0)||p.cards.some(id=>!eligible(save,upgrades[id])))return false;
   }return true;
