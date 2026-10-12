@@ -37,6 +37,7 @@ export const l3 = {
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
+  /** The riflemen use `gun` (spec rifles); the mounted gun is one HMG gunner (l4.soldiers.hmg, anchor l3-hmg) in the sandbag nest at the line. */
   soldiers: { deckY: 4.26, count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 26, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
   /** Section 5.3: each gunshot is a loud event for non-chasing infected within 20 m. */
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
@@ -62,12 +63,15 @@ export const l3 = {
     /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
     spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [50, 75] as P, maxPerLink: 2, cooldownS: 18 },
     pressure: { idleS: 20, everyS: 10, count: [25, 75] as P, behindM: [15, 35] as P },
+    /** Brief l3-finish (PO 10-12 "so they have a chance against the policeman group"): infected choosing a target count the
+     * courier this many metres farther away, so the 5x crowd presses the police line before the courier. */
+    playerBiasM: 4,
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
     retireBehindM: 35,
     caps: { high: 200, low: 100 },
   },
   /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
-  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
+  finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, surge: { stageX: 191, count: [25, 15] as P, maxWaitS: 12 }, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
   /** Section 5.7: medkits (+40 HP, capped, consumed). */
   medkits: {
     heal: 40,
@@ -114,8 +118,9 @@ export const l3Anchors: Record<string, P> = {
   'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-141, -13], 'photo-l3-squad-strong': [-92, 0],
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
   'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
+  'l3-hmg': [142.8, -9.6],
 };
-for (const [name, point] of Object.entries(l3Anchors)) if (name.startsWith('l3-soldier-') || name === 'photo-l3-army-checkpoint') l3Anchors[name] = [point[0] + l3ArmyOffset, point[1]];
+for (const [name, point] of Object.entries(l3Anchors)) if (name.startsWith('l3-soldier-') || name === 'l3-hmg' || name === 'photo-l3-army-checkpoint') l3Anchors[name] = [point[0] + l3ArmyOffset, point[1]];
 /** Photo spots (section 6): name and camera offset, same framing scale as the L2 spots. */
 export const l3PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ['l3-station-yard', [16, 20, 16]], ['l3-station-attack', [18, 22, 18]], ['l3-squad-strong', [16, 20, 16]], ['l3-oak-avenue', [18, 22, 18]],

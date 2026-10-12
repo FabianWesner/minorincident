@@ -93,6 +93,7 @@ export class LevelThreeCollapse {
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
     world.infected.director.levelCap = l3.density.caps.high; world.infected.director.strict = true;
+    world.infected.hearing.playerBiasM = l3.density.playerBiasM;
     world.npcs.setAmbient(0);
     // L3-default progression (bat + axe from L1/L2) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.kick']);
@@ -136,18 +137,27 @@ export class LevelThreeCollapse {
       s.officerIds.push(id); s.squadIds.push(id);
     }
   }
+  /** Section 5.10: the soldiers cover the last 20 m before the zone line (coverM) with the L4 HMG stats (PO e50f3a53, kept
+   * strong); outside that band the pursuing horde is the police squad's fight, so it can reach the line. */
   private spawnSoldiers(): void {
     const o = this.outbreak();
     for (let i = 1; i <= l3.soldiers.count; i++) {
       const p = this.snap(this.anchor(`l3-soldier-${i}`), .35);
       const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
       const e = this.world.entities.get(id)!;
-      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'rifle', cover: { x: l3.map.zoneX - 10.5, z: 0 }, range: 45, engaged: true };
+      e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l3.soldiers.gun }, weapon: 'rifle', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
       e.civilian!.floorY = l3.soldiers.deckY;
       e.transform.y = l3.soldiers.deckY + .7;
       e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.appearance!.handProp = 'rifle'; e.transform.yaw = Math.PI;
       this.s.soldierIds.push(id);
     }
+    // The mounted gun: an HMG nest behind the sandbags at the zone line (the L4 HMG post, ground level).
+    const p = this.snap(this.anchor('l3-hmg'), .35);
+    const id = o.spawnPedestrian(p, { role: 'soldier', model: 'npc.national-guard', tint: '#4b5a3a', tier: 'average', schedule: this.schedule(p, { x: l3.map.zoneX - 30, z: 0 }) });
+    const e = this.world.entities.get(id)!;
+    e.civilian!.ally = { ...allyState('soldier', p, true), gun: { ...l4.soldiers.hmg }, weapon: 'hmg', cover: { x: l3.map.zoneX, z: 0 }, range: l3.soldiers.coverM, engaged: true };
+    e.health = { current: l3.soldiers.hp, max: l3.soldiers.hp }; e.transform.yaw = Math.PI;
+    this.s.soldierIds.push(id);
   }
   /** Evacuees already checked in at the bus: visible, idle and outside the outbreak target roster. */
   private spawnWaitingSurvivors(): void {
@@ -380,8 +390,12 @@ export class LevelThreeCollapse {
     const w = this.world, e = w.entities.get(id), b = e?.infected?.l1;
     if (!e || !b || e.health.current <= 0) return;
     const x = e.transform.x;
-    const goal = x < 128 && home ? home : x < 146 ? { x: 146, z: 0 } : x < 174 ? { x: 174, z: 0 }
-      : x < 196 ? { x: 199, z: 0 } : { x: l3.finale.barrierX + 2, z: 0 };
+    // A leg counts as reached 8 m short of it: rush goals are jittered (3 m) and arrive within 4 m, and an infected parked at the near
+    // edge of a leg used to be sent back to that same leg forever (the finale horde stalled at x 195 outside the HMG line).
+    // The column gathers just outside police and HMG reach and hits the line as one surge (a trickle dies one by one).
+    const surge = l3.finale.surge, staged = x >= 166 && x < surge.stageX + 6 && !this.s.surgedIds?.includes(id);
+    const goal = x < 128 && home ? home : x < 138 ? { x: 146, z: 0 } : x < 166 ? { x: 174, z: 0 }
+      : staged ? { x: surge.stageX, z: 0 } : x < 191 ? { x: 199, z: 0 } : { x: l3.finale.barrierX + 2, z: 0 };
     if (b.mode === 'attracted' && Math.hypot(b.goalX - goal.x, b.goalZ - goal.z) < 6) { b.search.until = w.tick + ticks(l3.finale.chaseS); return; }
     w.infected!.rush(id, goal, w.tick + ticks(l3.finale.chaseS));
   }
@@ -530,6 +544,7 @@ export class LevelThreeCollapse {
       s.finalePacks[index] = (s.finalePacks[index] ?? 0) + n;
       if (n) { s.finaleNextAt = w.tick + ticks(f.streamS[index] * n); break; }
     }
+    this.surge();
     this.boom ??= new ArmyCheckpointBoom(w, f.barrierX);
     // Close behind the entire rescued group; an outside survivor always reopens the boom.
     const group = [1, ...s.officerIds.filter(id => { const e = w.entities.get(id); return !!e?.civilian?.ally && !e.infection && e.health.current > 0; }), ...[...w.entities.iterate()].filter(e => !!e.companion).map(e => e.id)];
@@ -540,6 +555,18 @@ export class LevelThreeCollapse {
       s.barrierClosedAt = w.tick; this.barrier(true);
       w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
     }
+  }
+  /** Release the staged finale horde once enough have gathered (or the first has waited `maxWaitS`): all run at the line. */
+  private surge(): void {
+    const s = this.s, w = this.world, f = l3.finale.surge, released = s.surgedIds ??= [];
+    const need = f.count[w.infected!.director.tier === 'low' ? 1 : 0], staged: number[] = [];
+    for (const id of s.finaleIds ?? []) { const e = w.entities.get(id); if (e && e.health.current > 0 && !released.includes(id) && Math.abs(e.transform.x - f.stageX) < 6) staged.push(id); }
+    if (!staged.length) { s.stagedAt = 0; return; }
+    s.stagedAt ||= w.tick;
+    if (staged.length < need && w.tick - s.stagedAt < ticks(f.maxWaitS)) return;
+    s.surgeAt = w.tick; s.stagedAt = 0; released.push(...staged);
+    for (const id of staged) this.rushPursuer(id);
+    w.events.emit({ type: 'l3.surge', tick: w.tick, count: staged.length });
   }
   private inZone(p: Point): boolean { const ring = this.anchor('l3-zone'); return dist(p, ring) <= ring.radius; }
   private zone(tick: number, player: EntitySnapshot): void {
@@ -584,7 +611,7 @@ export class LevelThreeCollapse {
   restore(delta: number): void {
     const s = this.mission.state.l3; if (!s) return;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
-    for (const key of ['handgunAt', 'attackAt', 'fallbackAt', 'crossedAt', 'doneAt', 'furthestAt', 'pressureAt', 'finaleAt', 'finaleNextAt'] as const) if (s[key]) s[key] += delta;
+    for (const key of ['handgunAt', 'attackAt', 'fallbackAt', 'crossedAt', 'doneAt', 'furthestAt', 'pressureAt', 'finaleAt', 'finaleNextAt', 'stagedAt', 'surgeAt'] as const) if (s[key]) s[key] += delta;
     for (const w of s.waves) if (w.at) w.at += delta;
     for (const q of s.pending) if (q.at) q.at += delta;
     for (const m of s.squad) if (m.farSince) m.farSince += delta;

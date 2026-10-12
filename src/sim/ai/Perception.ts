@@ -116,6 +116,9 @@ export class Perception {
   readonly los = new LosRegistry();
   readonly rangeM = l1v2.infected.visionRangeM;
   readonly hearingM = 2;
+  /** Level pressure routing (L3 corridor): the courier counts this many metres farther than she is when choosing a new
+   * target, so a nearby police line draws the crowd first. 0 everywhere else. */
+  playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
@@ -169,7 +172,7 @@ export class Perception {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
       if (!(isCurrent ? this.tracks(e, h.position) : this.notices(e, h.position))) continue;
-      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
+      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }
     }
