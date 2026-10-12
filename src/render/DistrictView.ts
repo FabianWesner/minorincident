@@ -154,7 +154,7 @@ export class DistrictView extends Group {
       initialLods.set(p.assetId, lods);
       // These tiers are required by prepare() before revealing phone/L6 play.
       // Start their decode beside the layout GLB, rather than after it finishes.
-      if (this.low && worldAssets[p.assetId]?.category !== 'prop') this.registry.prefetch(p.assetId, 'lod1', p.decay);
+      if (this.low && worldAssets[p.assetId]?.category !== 'prop' && (this.world.composition.id !== 'L7' || distance <= 16)) this.registry.prefetch(p.assetId, 'lod1', p.decay);
       if (this.world.composition.id === 'L6' && !this.low) {
         this.registry.prefetch(p.assetId, 'lod0', p.decay);
         this.registry.prefetch(p.assetId, 'lod1', p.decay);
@@ -193,7 +193,7 @@ export class DistrictView extends Group {
         }
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
-        root.children.at(-scenes.length)?.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
+        for (const groundLayer of root.children.slice(-scenes.length)) groundLayer.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -225,7 +225,7 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
           if (lab || this.world.composition.id === 'L2') {
@@ -266,7 +266,9 @@ export class DistrictView extends Group {
             if (!worldAssets[id]) {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
               const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
-              const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
+              const batch = new InstancedGroup(prototype, refs, this.instanceCapacity ?? refs.length);
+              if (this.low && this.world.composition.id === 'L7') batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+              this.dressingBatches.push(batch); root.add(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
             const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
@@ -606,6 +608,9 @@ export class DistrictView extends Group {
       batch.visible = batch.references.length > 0;
       for (const child of batch.children) if (child instanceof InstancedMesh) child.count = batch.references.length;
       if (batch.references.length) batch.update();
+    }
+    if (this.world.composition.id === 'L7' && this.low && near.references.length && !entry.nearLoaded && !this.pending.has(entry)) {
+      this.pending.set(entry, this.loadHero(entry, 'lod1').finally(() => this.pending.delete(entry)));
     }
     if (hero.references.length && !entry.loaded && !this.pending.has(entry)) {
       this.pending.set(entry, this.loadHero(entry).finally(() => this.pending.delete(entry)));
