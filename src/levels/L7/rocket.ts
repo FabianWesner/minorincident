@@ -5,7 +5,7 @@ import type { Vec2 } from '../../input/InputFrame';
 
 /** Integration hook until D-FAIR L7 exists. Preserve every campaign-owned weapon as selectable. */
 export function equipL7Arsenal(world: SimWorld, owned?: readonly string[]): void {
-  const weapons = owned?.filter(id => action(id).category === 'melee' || action(id).category === 'ranged');
+  const weapons = owned?.filter(id => id !== l7Rocket.action).filter(id => action(id).category === 'melee' || action(id).category === 'ranged');
   const left = weapons?.filter(id => action(id).category === 'melee') ?? l7DefaultArsenal.LEFT;
   const right = weapons?.filter(id => action(id).category === 'ranged') ?? l7DefaultArsenal.RIGHT;
   world.combat!.rackCapacity = Math.max(world.combat!.rackCapacity, left.length, right.length + 1);

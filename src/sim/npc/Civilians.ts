@@ -3,7 +3,7 @@ import { Rng } from '../../core/Rng';
 import { civilianRoles, npcs } from '../../data/npcs';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
-import { updateRoutine } from './MorningRoutines';
+import { leaveSeat, updateRoutine } from './MorningRoutines';
 import type { Civilian, CivilianActivity, CivilianState, Point } from './types';
 const mobileStates = new Set<CivilianState>(['calm', 'alarmed', 'flee', 'hide']);
 const grabStates = new Set<CivilianState>(['calm', 'alarmed', 'flee']);
@@ -42,7 +42,8 @@ export class Civilians {
     this.world.spatial.set(e.id, position.x, position.z); return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
-    const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
+    const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
+    c.state = state; c.entered = this.world.tick; c.until = this.world.tick + duration;
     this.world.events.emit({ type: 'civilian.state', tick: this.world.tick, id: e.id, state, until: c.until });
   }
   alarm(position: Point): void {
