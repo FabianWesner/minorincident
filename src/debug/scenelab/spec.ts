@@ -276,6 +276,19 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   // Metro assemblies contain traversable rooms: their authored supports and walls
   // must survive a crop rather than becoming one solid manifest footprint.
   if(source && (source.district==='D-SUBWAY' || kept.some(p=>p.assetId==='int.metro-station')))layout.colliders=source.colliders.filter(c=>kept.some(p=>c.id===p.id||c.id.startsWith(p.id+'/'))).filter(c=>c.aabb.max[0]>=x0-shift[0]&&c.aabb.min[0]<=x1-shift[0]&&c.aabb.max[2]>=z0-shift[1]&&c.aabb.min[2]<=z1-shift[1]).map(c=>{const out=structuredClone(c);for(const k of ['min','max'] as const){out.aabb[k][0]+=shift[0];out.aabb[k][2]+=shift[1];}return out;});
+  // Baked district masonry/ponds have no placement empty. Keep their collision
+  // and excluded water in district-ground crops so QA uses the visible geometry.
+  if (spec.ground === 'district' && source) {
+    const placed = new Set(source.placements.map(p => p.id));
+    const existing = new Set(layout.colliders.map(c => c.id));
+    for (const c of source.colliders) {
+      if (placed.has(c.id.split('/')[0]) || existing.has(c.id) || c.aabb.max[0] < x0-shift[0] || c.aabb.min[0] > x1-shift[0] || c.aabb.max[2] < z0-shift[1] || c.aabb.min[2] > z1-shift[1]) continue;
+      const copy = structuredClone(c);
+      for (const k of ['min', 'max'] as const) { copy.aabb[k][0] += shift[0]; copy.aabb[k][2] += shift[1]; }
+      layout.colliders.push(copy);
+    }
+    layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
+  }
   for (const name of spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);

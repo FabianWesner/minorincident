@@ -1,0 +1,30 @@
+{
+  "commit": "e9c95e9e",
+  "stats": {
+    "startTime": "2026-10-12T05:57:41.838Z",
+    "duration": 217789.24099999998,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "status": "timedOut",
+      "errors": [
+        {
+          "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+        },
+        {
+          "location": {
+            "file": "/srv/mi/jobs/l8-district-baseline-3e43bc-8692-1791783755/tests/e2e/ui-helpers.ts",
+            "column": 14,
+            "line": 19
+          },
+          "message": "Error: page.evaluate: Test timeout of 180000ms exceeded.\n\n   at e2e/ui-helpers.ts:19\n\n  17 |   await keyboardActivate(page, 'mission-button');\n  18 |   // Campaign navigation can still be preparing sound after the briefing appears.\n> 19 |   await page.evaluate(() => window.__SS__!.screenshotReady());\n     |              ^\n  20 |   await expect(page.getByTestId('pause-button')).toBeVisible();\n  21 | }\n  22 | export async function hudStart(page: Page): Promise<void> {\n    at menuStart (/srv/mi/jobs/l8-district-baseline-3e43bc-8692-1791783755/tests/e2e/ui-helpers.ts:19:14)\n    at /srv/mi/jobs/l8-district-baseline-3e43bc-8692-1791783755/tests/e2e/controls-playtest.spec.ts:9:3"
+        }
+      ]
+    }
+  ]
+}
