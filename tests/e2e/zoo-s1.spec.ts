@@ -9,7 +9,7 @@ for (const [name, move, windup] of [['lion-pounce', 'lion.pounce', 36], ['lion-f
     await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');
     await page.waitForFunction(() => !!window.__SCENE__ && !!window.__SS__);
     await page.evaluate(async s => { await window.__SS__!.ready; await window.__SCENE__!.load(s); window.__SS__!.settings.set({ flashReduction: true, gore: 'Off' }); }, spec);
-    await page.evaluate(async n => { await window.__SCENE__!.step(n); await window.__SCENE__!.ready(); }, windup - 1);
+    await page.evaluate(async n => { await window.__SCENE__!.step(1); await window.__SS__!.step(n - 1); await window.__SCENE__!.ready(); }, windup - 1);
     const before = await page.evaluate(() => ({ id: window.__SCENE__!.actors.get('animal')!.entity, state: window.__SS__!.getState(), events: window.__SS__!.events() }));
     const a = before.state.entities.find(e => e.id === before.id)!.infected!.specialAttack!;
     expect(a).toMatchObject({ move, stage: 'telegraph' }); expect(a.activeTick - a.startTick).toBe(windup);
@@ -18,7 +18,7 @@ for (const [name, move, windup] of [['lion-pounce', 'lion.pounce', 36], ['lion-f
     await page.evaluate(() => window.__SS__!.pause());
     await page.waitForTimeout(100);
     expect(await page.evaluate(() => window.__SS__!.getState().tick)).toBe(before.state.tick);
-    await page.evaluate(async () => { await window.__SCENE__!.step(1); await window.__SCENE__!.ready(); });
+    await page.evaluate(async () => { await window.__SS__!.step(1); await window.__SCENE__!.ready(); });
     const after = await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events() }));
     expect(after.events.some(ev => ev.type === 'infected.special' && ev.attackId === a.attackId && ev.stage === 'active')).toBe(true);
     expect(after.state.render.vfx?.telegraphs.some(t => t.attackId === a.attackId)).toBe(false);

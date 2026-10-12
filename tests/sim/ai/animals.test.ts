@@ -33,13 +33,13 @@ test('T-E07-18 @E07 @E07-AC18 flock circles, telegraphs wave dives, individual b
   const until = b.scatterUntil; step(w, 299); expect(b.state).toBe('scatter'); expect(w.tick).toBeLessThan(until); step(w, 1); expect(b.state).not.toBe('scatter');
   w.infected!.noise(flock.transform, 25, true); expect(b.scatterUntil).toBe(w.tick + 300);
 });
-test('T-E07-19a @E07 @E07-AC19 gorilla throws nearest medium E26 body with momentum damage and sixfold barricade damage', async () => {
-  const w = await arena(), gorilla = spawn(w, 'gorilla', 10);
+test('T-E07-19a @E07 @E07-AC19 gorilla throws nearest medium E26 body with authored damage and sixfold barricade damage', async () => {
+  const w = await arena(), gorilla = spawn(w, 'gorilla', 10); gorilla.transform.yaw = Math.PI;
   for (const [id, x, cls] of [[101, 10.5, 'light'], [102, 12, 'medium'], [103, 14, 'medium']] as const) {
     const body = w.physics.world!.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setTranslation(x, 0.4, 0)); w.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(0.3, 0.3, 0.3).setMass(35), body); w.infected!.props.props.push({ id, body, mass: 35, class: cls, radius: 0.3 });
   }
-  step(w, 49); expect(w.infected!.props.flights).toHaveLength(1); expect(w.infected!.props.flights[0].prop.id).toBe(102); expect(w.infected!.props.flights[0].prop.body.linvel().x).toBeLessThan(-10); step(w, 80);
-  expect(w.entities.get(1)!.health.current).toBeLessThan(100); expect(w.events.events().some((e) => e.type === 'infected.attack' && e.special === 'prop-throw' && e.amount > 0)).toBe(true); expect(w.infected!.barricadeDamage(gorilla.id, 10)).toBe(60);
+  step(w, 49); const a = gorilla.infected!.specialAttack!; expect(a.move).toBe('gorilla.grab-throw'); expect(a.projectile!.objectId).toBe(102); expect(a.projectile!.dx).toBe(-1); step(w, 80);
+  expect(w.entities.get(1)!.health.current).toBeLessThan(100); expect(w.events.events().some((e) => e.type === 'infected.attack' && e.special === 'gorilla.grab-throw' && e.amount === 30)).toBe(true); expect(w.infected!.barricadeDamage(gorilla.id, 10)).toBe(60);
   const w2 = await arena(), attacker = spawn(w2, 'gorilla', 10);
   const barricade = w2.entities.create({ kind: 'barricade', archetype: 'barricade.test', faction: 'neutral', transform: { ...attacker.transform, x: attacker.transform.x + 1 }, health: { current: 400, max: 400 } });
   step(w2, 49); expect(barricade.health.current).toBe(340);

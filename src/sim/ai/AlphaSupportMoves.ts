@@ -2,7 +2,7 @@ import { humanInfected, infectedSpecialMoves } from '../../data/infected';
 import type { EntitySnapshot } from '../world/types';
 import type { InfectedSystem } from './InfectedSystem';
 
-/** Alpha's support moves use the shared scheduler and entity-owned checkpoint state. */
+/** Alpha and zoo support moves use the shared scheduler and entity-owned checkpoint state. */
 export class AlphaSupportMoves {
   private readonly regularTypes = new Set(humanInfected.filter(d => d.id !== 'infected.alpha').map(d => d.id));
   private readonly neighbors: number[] = [];
@@ -48,8 +48,8 @@ export class AlphaSupportMoves {
         this.ai.world.events.emit({ type: 'infected.roar-buff', tick: this.ai.world.tick, sourceId: e.id, targetId: other.id, attackId: a.attackId, stage: 'active', until: this.ai.world.tick + 300 });
       }
       this.ai.finishSpecial(e.id);
-    } else if (a.move === 'alpha.grab-throw') {
-      if (!a.projectile && !this.ai.props.launchSpecial(e, a, 2)) { this.ai.cancelSpecial(e.id); return; }
+    } else if (a.move === 'alpha.grab-throw' || a.move === 'gorilla.grab-throw') {
+      if (!a.projectile && !this.ai.props.launchSpecial(e, a, a.move === 'gorilla.grab-throw' ? 3 : 2)) { this.ai.cancelSpecial(e.id); return; }
       if (this.ai.props.updateSpecial(e, a)) this.ai.finishSpecial(e.id);
     }
   }

@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
+import { infectedContactDistance } from '../../../src/sim/ai/CharacterSeparation';
 import { infectedDefinitions } from '../../../src/data/infected';
 import type { CoverWall } from '../../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -10,6 +11,8 @@ async function setup(archetype = 'infected.runner', l1 = false, civilian = false
   const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario('horde-arena', 1);
   if (l1) w.infected!.configureL1v2();
   w.combat!.damage.god = true;
+  // Keep the hearing probe outside each species' contact ring; an elephant has a larger body.
+  if (distance === 1.8) distance = Math.max(distance, infectedContactDistance(infectedDefinitions.find(d => d.id === archetype)!.radius) + .02);
   const p = w.entities.get(1)!;
   Object.assign(p.transform, { x: civilian ? -30 : -distance, z: 0 });
   w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, p.transform.x, 0);
@@ -74,7 +77,7 @@ describe('PO 2026-10-11 close infected hearing @E07', () => {
     expect(brain.mode).toBe('chase'); expect(brain.pauseUntil).toBe(100);
     expect(brain.hearingUntil).toBe(0);
   });
-  test('a gorilla hearing a civilian closes for a strike instead of throwing at the distant courier', async () => {
+  test('a gorilla hearing a civilian locks its throw onto that victim without targeting the distant courier', async () => {
     const { w, e, victimId } = await setup('infected.gorilla', false, true);
     // A stationary victim, as in the requested close encounter; suppress only the civilian's routine/flee update.
     vi.spyOn(w.npcs!, 'update').mockImplementation(() => {});
@@ -85,7 +88,10 @@ describe('PO 2026-10-11 close infected hearing @E07', () => {
     w.events.on('infected.attack', ev => { if (ev.type === 'infected.attack' && ev.sourceId === e.id && ev.targetId === victimId) strikes++; });
     w.events.on('infected.prop-thrown', ev => { if (ev.type === 'infected.prop-thrown' && ev.sourceId === e.id) throws++; });
     step(w, 180);
-    expect(throws).toBe(0); expect(strikes).toBeGreaterThan(0);
+    expect(throws).toBe(1); expect(strikes).toBeGreaterThan(0);
+    const tells = w.events.events().filter(ev => ev.type === 'telegraph' && ev.sourceId === e.id && ev.move === 'gorilla.grab-throw');
+    expect(tells).toHaveLength(1); expect(tells[0]).toMatchObject({ target: { id: victimId } });
+    expect(w.events.events().filter(ev => ev.type === 'infected.attack' && ev.sourceId === e.id && ev.targetId === 1)).toHaveLength(0);
   });
   test('closed dynamic blocker blocks hearing; opening it permits detection', async () => {
     const { w, e, alerts } = await setup('infected.runner', true);
