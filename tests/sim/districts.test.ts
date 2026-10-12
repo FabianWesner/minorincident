@@ -6,6 +6,7 @@ import {
   corridorDistrictId,
   fairDistrictId,
   subwayDistrictId,
+  crossingDistrictId,
   districtIds,
   groveDistrictId,
   type DistrictLayout,
@@ -18,7 +19,7 @@ import { bakeNav } from "../../src/sim/world/NavGrid";
 import { placementColliders } from "../../src/levels/districts/staticCollision";
 import { pushableProps } from "../../src/data/pushableProps";
 const layouts = Object.fromEntries(
-  [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId].map((id) => [
+  [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId, crossingDistrictId].map((id) => [
     id,
     JSON.parse(
       readFileSync(`public/assets/layouts/${id}.layout.json`, "utf8"),
