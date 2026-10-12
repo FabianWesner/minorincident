@@ -31,6 +31,10 @@ export async function bakeStaticCollision(path: string): Promise<Aabb[]> {
   }
   for (const node of doc.getRoot().listNodes()) {
     const mesh = node.getMesh(); if (!mesh) continue;
+    // The cutaway `roof` group of an enterable kit (roofed_shell.py) also carries its closed exterior wall and panes. Those
+    // are visual only (they lift with the roof when the courier steps in), so they never become a collision blocker.
+    let underRoof = false; for (let parent = node.getParentNode(); parent; parent = parent.getParentNode()) if (parent.getName() === 'roof') underRoof = true;
+    if (underRoof) continue;
     const matrix = new Matrix4().fromArray(node.getWorldMatrix());
     // Merge connected geometry across materials in the same delivered node.
     const vertices: number[][] = [], triangles: number[][] = [], welded = new Map<string, number>();
