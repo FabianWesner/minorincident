@@ -56,6 +56,12 @@ export const l4 = {
     infectedDamage: 1.5,
     emergeLeashM: 26,
   },
+  /**
+   * The base alarm at the first turn (PO 2026-10-12: "when contact starts, play an alarm sound (typical for military)"): a rising and falling klaxon
+   * from the camp loudspeakers (positional, at the light towers and the reception) plus a quiet non-positional bed so it is always audible.
+   * Full level for `holdS`, then it fades out over `fadeS` under the fight music (total 20-40 s). Synthesised in src/audio/synthesis.ts.
+   */
+  alarm: { holdS: 24, fadeS: 8, periodS: 6, lowHz: 420, highHz: 640, speakerGain: 1.1, bedGain: .22, speakers: [[-31.2, 15.4], [-16.6, -12.2], [-26, -8.8]] as readonly P[] },
   /** First Alphas use the district street mouths on both quality tiers, inside the ordinary caps. */
   alphas: { count: { high: 3, low: 2 }, afterTurnS: [10, 22, 34] as readonly number[], lineHp: 300 },
   /** Section 5.6: the line breaks at the first of these. */
