@@ -259,14 +259,14 @@ export class Vfx extends Group {
       if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
 
       const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
-      const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' ? 'splash' : 'lunge';
+      const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' ? 'splash' : 'lunge';
       const throwing = 'move' in event && event.move === 'alpha.grab-throw' && event.area && event.target;
       const length = throwing ? Math.min(15, Math.hypot(event.target!.x - event.area!.x, event.target!.z - event.area!.z)) : 0;
       const position = throwing ? { x: event.area!.x + event.area!.dx * length / 2, z: event.area!.z + event.area!.dz * length / 2 } : 'position' in event ? event.position : event.area ?? source?.transform;
       if (!position) return;
       const radius = throwing ? Math.max(1, length / 2) : 'radius' in event ? event.radius : event.area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
       const angle = 'angle' in event ? event.angle : -Math.atan2(event.area?.dz ?? source?.infected?.dz ?? 0, event.area?.dx ?? source?.infected?.dx ?? 1);
-      const shape = 'move' in event && event.move === 'alpha.roar' ? 8 : telegraphShapes[kind];
+      const shape = 'move' in event && (event.move === 'alpha.roar' || event.move === 'gorilla.roar') ? 8 : telegraphShapes[kind];
       const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, throwing ? 1 / radius : kind === 'charge' ? 0.3 : 1, true);
       this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
     } else if (event.type === 'attack.resolved') {

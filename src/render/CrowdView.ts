@@ -279,7 +279,7 @@ export class CrowdView extends Group {
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
-      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam'].includes(specialAttack.move) ? specialAttack : undefined;
+      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar'].includes(specialAttack.move) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
@@ -291,7 +291,7 @@ export class CrowdView extends Group {
       const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
       if (heavy) clip = age < .48 ? reaction!.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up';
       if (physical?.stage === 'telegraph') clip = 'windup';
-      else if (physical?.move === 'alpha.ground-slam' && physical.stage === 'recovery') clip = 'swing';
+      else if ((physical?.move === 'alpha.ground-slam' || physical?.move === 'gorilla.pound') && physical.stage === 'recovery') clip = 'swing';
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       if (e.infected?.specialAttack?.stage === 'telegraph') clip = 'windup';
@@ -327,7 +327,7 @@ export class CrowdView extends Group {
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch) ? layers : undefined;
+        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat) ? layers : undefined;
         // Wide Roar framing still needs planted turns and grounded convergence.
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
@@ -337,12 +337,17 @@ export class CrowdView extends Group {
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       if (physical && physical.stage !== 'recovery') {
         const area = physical.area, ground = (this.world.districts?.groundHeight(area.x, area.z) ?? 0) + .065;
-        if (physical.move === 'alpha.ground-slam') {
-          this.transform.makeScale(4 / .8, 1, 4 / .8); this.transform.setPosition(area.x, ground, area.z);
+        if (physical.move === 'alpha.ground-slam' || physical.move === 'gorilla.pound' || physical.move === 'gorilla.roar') {
+          this.transform.makeScale(area.radius / .8, 1, area.radius / .8); this.transform.setPosition(area.x, ground, area.z);
           this.telegraphs[0].setMatrixAt(this.telegraphs[0].count++, this.transform);
+          if (physical.move === 'gorilla.roar') {
+            this.transform.makeScale(1.5 / .8, 1, 1.5 / .8); this.transform.setPosition(area.x, ground, area.z);
+            this.telegraphs[0].setMatrixAt(this.telegraphs[0].count++, this.transform);
+          }
         } else {
           // A sequence of fixed, two-metre-wide arrows shows the entire locked twelve-metre corridor.
-          for (let i = 0; i < 4; i++) {
+          const length = physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : 12;
+          for (let i = 0; i < Math.ceil(length / 3); i++) {
             this.transform.makeRotationY(-Math.atan2(area.dz, area.dx)); this.transform.multiply(this.physicalArrowScale);
             this.transform.setPosition(area.x + area.dx * i * 3, ground, area.z + area.dz * i * 3);
             this.telegraphs[1].setMatrixAt(this.telegraphs[1].count++, this.transform);

@@ -1,0 +1,94 @@
+{
+  "name": "qa-zoo-s1-budget-low",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 80,
+  "infectedCap": 200,
+  "barArchetypes": [
+    "infected.runner"
+  ],
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "lion",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "at": [
+        -5,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "gorilla",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        0,
+        -4
+      ],
+      "yaw": -90,
+      "state": "idle"
+    },
+    {
+      "id": "horde",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        0,
+        0
+      ],
+      "count": 98,
+      "spread": 14,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 4
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "lion",
+      "do": {
+        "special": "lion.flank",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "gorilla",
+      "do": {
+        "special": "gorilla.roar",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 90,
+  "shots": [
+    30,
+    90
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "note": "Mixed zoo/regular horde at full E18 cap; shared bars plus active telegraphs. Inspect game-camera visibility and actual budget counters."
+}
