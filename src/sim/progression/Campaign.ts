@@ -3,7 +3,8 @@ import { catalog } from '../../data/actions/catalog';
 import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
 import type { GearTier, SurvivorVariant } from '../../data/survivor';
 import type { L1Aftermath } from '../../levels/continuity';
-export type Level = 1|2|3|4|5|6;
+/** L7 the ruined city, L8 the zoo and L9 the crossing continue the campaign after L6 (specs/po-levels-4-9-2026-10-11.md). */
+export type Level = 1|2|3|4|5|6|7|8|9;
 export type ProgressionPreset = `L${2|3|4|5|6}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
@@ -25,10 +26,11 @@ export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
   // E21: the handgun from the L3 armory is carried on (L4 starts with it). L2's fire axe is a pickup, not an unlock.
   1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.handgun'],
-  4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],
+  4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],7:[],8:[],9:[],
 };
-/** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after the last level. */
-export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<6?(finished+1) as Level:null;}
+/** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after the last level (L9 ends in the credits until an L10 exists). */
+export const lastLevel:Level=9;
+export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<lastLevel?(finished+1) as Level:null;}
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
 /** PO 2026-10-12: the only L3 firearm is the armory handgun; no weapon choice after any level (the L4 machine gun is the army's pickup). */
 export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignSave {

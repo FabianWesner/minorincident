@@ -174,7 +174,7 @@ export class Hud {
     const world = this.game.world, player = world.entities.get(1), mission = world.missions;
     const visible = !!player && document.body.dataset.uiScreen === 'game' && (!mission || ['playing', 'cinematic'].includes(mission.state.phase));
     // Keep HUD visible beneath Pause / Settings, and update independently of the renderer.
-    const hidden = !player || (document.body.dataset.uiScreen !== 'game' && !['pause', 'settings'].includes(document.body.dataset.uiScreen ?? '')) || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
+    const hidden = !player || !!world.l7Departure?.cinematic || (document.body.dataset.uiScreen !== 'game' && !['pause', 'settings'].includes(document.body.dataset.uiScreen ?? '')) || (!!mission && !['playing', 'cinematic'].includes(mission.state.phase));
     this.root.hidden = hidden && !this.prepared;
     const visibility = hidden ? 'hidden' : '';
     if (this.root.style.visibility !== visibility) this.root.style.visibility = visibility;

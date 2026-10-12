@@ -1,12 +1,13 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { l5Fires } from '../../../src/data/l5';
-import { l7Rocket } from '../../../src/data/l7';
-import { l7CorridorFires, l7Bus } from '../../../src/levels/L7/corridor';
+import { l7Rocket, l7Departure } from '../../../src/data/l7';
+import { l7CorridorFires, l7CorridorItems, l7Bus } from '../../../src/levels/L7/corridor';
 import { levelFiveLayouts, l5ShellAssets } from '../../../src/levels/L5/layout';
 import { levelSevenLayouts, l7Exit, l7Fires, l7StreetDamage, l7Contains } from '../../../src/levels/L7/layout';
 import { resolveDecay, validateLayout, inside } from '../../../src/levels/districts/validate';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
+import manifest from '../../../src/assets/manifest.json' with { type: 'json' };
 import { worldAssets } from '../../../src/assets/worldDefinitions';
 import { DistrictWorld } from '../../../src/sim/world/DistrictWorld';
 import { compositions } from '../../../src/levels/compositions';
@@ -89,8 +90,8 @@ test('T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and 
 
 test('T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it', () => {
   const retained = resolveDecay(w6, 6);
-  const bus = retained.placements.find(p => p.id === l7Bus.id)!;
-  expect(bus.assetId).toBe('veh.evac-bus'); expect(bus.decay).toBeUndefined();
+  // The working bus is a set piece spawned by LevelSevenDeparture (it drives away), so the layout holds no static copy.
+  expect(retained.placements.some(p => p.id === l7Bus.id || p.assetId === 'veh.evac-bus')).toBe(false);
   expect(retained.placements.filter(p => p.id.startsWith('l7-corridor-')).length).toBeGreaterThanOrEqual(25);
   expect(retained.placements.filter(p => p.id.startsWith('l7-corridor-') && /veh\.military/.test(p.assetId)).length).toBeGreaterThanOrEqual(6);
   expect(retained.placements.some(p => p.assetId === 'int.basement-cellar' || p.assetId === 'prop.privacy-fence' && p.position[0] > -84 && p.position[0] < -64 && p.position[2] > -36 && p.position[2] < 42)).toBe(false);
@@ -109,4 +110,17 @@ test('T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and it
   // At least 3 m of reachable lane across every cross-section of both corridors, wrecks notwithstanding.
   for (let z = -34; z <= 40; z += 2) expect([...Array(12).keys()].filter(i => ok(fromExit, [-84 + i, z])).length, `alley z ${z}`).toBeGreaterThanOrEqual(3);
   for (let x = -82; x <= -30; x += 2) expect([...Array(14).keys()].filter(i => ok(fromExit, [x, 43 + i])).length, `corridor x ${x}`).toBeGreaterThanOrEqual(3);
+});
+
+test('T-E29-13-lane @E29-AC13 the departure lane east of the bus is free of solid corridor items and fires', () => {
+  const half = (l7Bus.asset === 'veh.evac-bus' ? [4.68, 1.48] : [0, 0]) as [number, number];
+  const solid = l7CorridorItems.filter(([, asset, , z]) => z > 40 && !['decay.dropped-belongings', 'prop.light-tower', 'prop.crates'].includes(asset));
+  for (const [id, asset, x, z, yaw, scale] of solid) {
+    const d = manifest.find(a => a.id === asset)!.dimensions, c = Math.abs(Math.cos(yaw)), sn = Math.abs(Math.sin(yaw));
+    const hx = (c * d.x + sn * d.z) * scale / 2, hz = (sn * d.x + c * d.z) * scale / 2;
+    // Bus footprint at its lane (z 47) at any x from just clear of the corridor's west end to the east mouth.
+    const overlapX = x + hx > l7Departure.lane.fromX + 4.68 + 1 && x - hx < -28;
+    expect(overlapX && z - hz < l7Departure.lane.z + half[1] && z + hz > l7Departure.lane.z - half[1], `${id} blocks the bus lane`).toBe(false);
+  }
+  for (const f of l7CorridorFires) expect(Math.abs(f.at[1] - l7Departure.lane.z) > f.r + 1.5 || f.at[0] < -74 || f.at[0] > -28, `fire ${f.at} on the bus lane`).toBe(true);
 });

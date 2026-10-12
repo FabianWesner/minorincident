@@ -114,6 +114,7 @@ export class LevelSevenEncounters {
   follower(e: EntitySnapshot): boolean {
     const r = this.state.roster.find(r => r.id === e.id);
     if (!r || r.status !== 'following') return false;
+    if (this.world.l7Departure?.claims(e)) return true;
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
     c.state = 'calm'; c.story = null; s.cover = false;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity, speed = Math.hypot(v.x, v.z);
