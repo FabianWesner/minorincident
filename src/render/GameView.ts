@@ -326,7 +326,7 @@ export class GameView implements Lifecycle {
         vehicleBloodEnabled: enabled => { this.vehicles?.setBloodEnabled(enabled); this.vehicleFeedback?.setBloodEnabled(enabled); },
         clearGore: () => { this.crowd?.clearGore(); },
         shake: strength => this.view.shake(strength),
-        roll: strength => this.view.roll(strength), focus: () => this.view.focus,
+        camera: () => this.camera, roll: strength => this.view.roll(strength), focus: () => this.view.focus,
         light: (x, z, hex, intensity, radius, ttl, flicker) => this.lightField?.addTransient({ x, z }, hex, intensity, radius, ttl, flicker) ?? null,
         field: this.lightField ?? undefined,
         ambient: this.lighting?.intensity,
@@ -836,7 +836,7 @@ export class GameView implements Lifecycle {
     // Once a test has begun the mission, snapshots/heap checks settle the same streamed
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
-    this.districts?.updateLods(this.view); this.crowd?.update(this.view);
+    this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera);
     await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {

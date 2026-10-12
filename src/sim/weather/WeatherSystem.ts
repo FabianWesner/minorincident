@@ -36,6 +36,13 @@ export class WeatherSystem {
     if (kind !== null && !weatherKinds.includes(kind)) throw new RangeError('Unknown weather');
     this.override = kind; this.configure();
   }
+  private readonly mergedPresets = new WeakMap<WeatherKey, WeatherPreset>();
+  private preset(key: WeatherKey): WeatherPreset {
+    if (!key.preset) return weatherPresets[key.kind];
+    let preset = this.mergedPresets.get(key);
+    if (!preset) { preset = { ...weatherPresets[key.kind], ...key.preset }; this.mergedPresets.set(key, preset); }
+    return preset;
+  }
   private configure(): void {
     let key = this.timeline[0] ?? { tick: 0, kind: 'clear' as const }, previous = key;
     for (const candidate of this.timeline) if (candidate.tick <= this.world.tick) { previous = key; key = candidate; }
@@ -50,8 +57,8 @@ export class WeatherSystem {
     const duration = (key.blend ?? 0) * 60;
     const t = this.override || kind !== key.kind || !duration ? 1 : Math.min(1, Math.max(0, (this.world.tick - key.tick) / duration));
     this.blend = t * t * (3 - 2 * t);
-    const from = { ...weatherPresets[previous.kind], ...previous.preset };
-    const to = this.override || kind !== key.kind ? weatherPresets[this.kind] : { ...weatherPresets[key.kind], ...key.preset };
+    const from = this.preset(previous);
+    const to = this.override || kind !== key.kind ? weatherPresets[this.kind] : this.preset(key);
     const mix = (a: number, b: number) => a + (b - a) * this.blend;
     this.rain = mix(from.rain, to.rain) * this.precipitationIntensity;
     this.flakes = mix(from.flakes, to.flakes) * this.precipitationIntensity;
@@ -60,9 +67,14 @@ export class WeatherSystem {
     this.snow = weight('snow'); this.ash = weight('ash'); this.haze = weight('haze'); this.windLines = weight('wind');
     // Ash continues drifting as dusk fog rolls in.
     if (to.flakes && this.kind === 'fog') this.ash = 1;
-    const modifiers = (k: WeatherKind, p: WeatherPreset): WeatherModifiers => ({ noiseRadius: p.rain ? .8 : 1, fireDuration: p.rain ? .6 : 1, fireSpread: p.rain ? .6 : p.wind > .3 ? 1.4 : 1, vehicleGrip: p.rain ? .85 : k === 'snow' ? .6 : p.flakes ? .9 : 1, playerSpeed: k === 'snow' ? .95 : 1, infectedSight: k === 'fog' ? .6 : k === 'thunderstorm' ? .85 : 1 });
-    const before = modifiers(previous.kind, from), after = modifiers(this.kind, to);
-    for (const name of Object.keys(after) as (keyof WeatherModifiers)[]) this.modifiers[name] = mix(before[name], after[name]);
+    // Six scalar blends retain live transitions without allocating two modifier
+    // objects and a key array on every tick of the persistent L7 weather.
+    this.modifiers.noiseRadius = mix(from.rain ? .8 : 1, to.rain ? .8 : 1);
+    this.modifiers.fireDuration = mix(from.rain ? .6 : 1, to.rain ? .6 : 1);
+    this.modifiers.fireSpread = mix(from.rain ? .6 : from.wind > .3 ? 1.4 : 1, to.rain ? .6 : to.wind > .3 ? 1.4 : 1);
+    this.modifiers.vehicleGrip = mix(from.rain ? .85 : previous.kind === 'snow' ? .6 : from.flakes ? .9 : 1, to.rain ? .85 : this.kind === 'snow' ? .6 : to.flakes ? .9 : 1);
+    this.modifiers.playerSpeed = mix(previous.kind === 'snow' ? .95 : 1, this.kind === 'snow' ? .95 : 1);
+    this.modifiers.infectedSight = mix(previous.kind === 'fog' ? .6 : previous.kind === 'thunderstorm' ? .85 : 1, this.kind === 'fog' ? .6 : this.kind === 'thunderstorm' ? .85 : 1);
   }
   /** Authored developer fixture; gameplay uses the campaign timeline by default. */
   setTimeline(keys: readonly WeatherKey[]): void { this.timeline = keys; this.override = null; this.configure(); }

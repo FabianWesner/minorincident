@@ -60,6 +60,7 @@ export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
   private readonly dressingBatches: InstancedGroup[] = [];
+  private readonly dressingEntries: { batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number }[] = [];
   readonly windows: Mesh[] = [];
   private readonly machineGuns: { root: Object3D; gun: Object3D; muzzle: Object3D }[] = [];
   /** HMG nests retain their authored gun/muzzle hierarchy so shots rotate the
@@ -193,7 +194,12 @@ export class DistrictView extends Group {
         }
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
-        for (const groundLayer of root.children.slice(-scenes.length)) groundLayer.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
+        for (const groundLayer of root.children.slice(-scenes.length)) groundLayer.traverse(o => {
+          if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o);
+          // W6's layered ground and hundreds of placement markers are static.
+          // Their world transforms were composed above; camera frames need no recomposition.
+          if (this.world.composition.tier === 6) o.matrixWorldAutoUpdate = false;
+        });
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -266,8 +272,10 @@ export class DistrictView extends Group {
             if (!worldAssets[id]) {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
               const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
-              const batch = new InstancedGroup(prototype, refs, this.instanceCapacity ?? refs.length);
+              const batch = new InstancedGroup(prototype, refs.slice(), this.instanceCapacity ?? refs.length);
               if (this.low && this.world.composition.id === 'L7') batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+              const bounds = new Box3().setFromObject(prototype).getBoundingSphere(new Sphere());
+              this.dressingEntries.push({ batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius });
               this.dressingBatches.push(batch); root.add(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
@@ -570,11 +578,23 @@ export class DistrictView extends Group {
     this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
+    for (const entry of this.dressingEntries) {
+      const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
+      for (const ref of refs) {
+        this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
+        this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
+        if (this.frustum.intersectsSphere(this.bounds)) next.push(ref);
+      }
+      if (next.length === batch.references.length && next.every((ref, i) => ref === batch.references[i])) continue;
+      batch.references.length = 0; batch.references.push(...next); batch.visible = next.length > 0;
+      for (const child of batch.children) if (child instanceof InstancedMesh) child.count = next.length;
+      if (next.length) batch.update();
+    }
     this.dirtyEntries.clear();
   }
   private partition(entry: LodBatch, view: View): void {
     const { hero, near, far, refs, origin, height, radius } = entry;
-    hero.references.length = 0; near.references.length = 0; far.references.length = 0;
+    const selectedRefs = new Map([[hero, [] as Object3D[]], [near, [] as Object3D[]], [far, [] as Object3D[]]]);
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     for (const [index, ref] of refs.entries()) {
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
@@ -602,9 +622,15 @@ export class DistrictView extends Group {
         if (Number.isFinite(gap)) ref.position.y -= ref.userData.propAwake ? Math.min(0, gap) : gap;
         ref.userData.propContactDirty = false; ref.userData.propContactBatch = selected;
       }
-      selected.references.push(ref);
+      selectedRefs.get(selected)!.push(ref);
     }
     for (const batch of [hero, near, far]) {
+      const next = selectedRefs.get(batch)!;
+      // Camera shake changes the frustum every frame, but usually keeps the same
+      // wreck/collapse instances. Upload only a changed partition or moved prop.
+      const changed = this.dirtyEntries.has(entry) || next.length !== batch.references.length || next.some((ref, i) => ref !== batch.references[i]);
+      if (!changed) continue;
+      batch.references.length = 0; batch.references.push(...next);
       batch.visible = batch.references.length > 0;
       for (const child of batch.children) if (child instanceof InstancedMesh) child.count = batch.references.length;
       if (batch.references.length) batch.update();

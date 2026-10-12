@@ -657,7 +657,15 @@ export class InfectedSystem {
    */
   private herdCue(e: EntitySnapshot, brain: L1Brain): void {
     this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = this.l1!.rangeM;
-    for (const id of this.world.spatial.query(this.query, this.neighbors)) {
+    this.world.spatial.query(this.query, this.neighbors, false);
+    // Sort only potential cues, retaining the original lowest-ID visible choice.
+    let count = 0;
+    for (const id of this.neighbors) {
+      const other = this.world.entities.get(id), ob = other?.infected?.l1;
+      if (other && other !== e && ob && other.health.current > 0 && (ob.mode === 'chase' || ob.mode === 'bite' || other.infected!.state === 'attack')) this.neighbors[count++] = id;
+    }
+    this.neighbors.length = count; this.neighbors.sort((a, b) => a - b);
+    for (const id of this.neighbors) {
       const other = this.world.entities.get(id), ob = other?.infected?.l1;
       if (!other || other === e || !ob || other.health.current <= 0 || (ob.mode !== 'chase' && ob.mode !== 'bite' && other.infected!.state !== 'attack')) continue;
       if (!this.l1!.sees(e, other.transform)) continue;
