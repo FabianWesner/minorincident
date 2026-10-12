@@ -1,0 +1,169 @@
+{
+  "scope": [
+    "L8-E1 encounters",
+    "L8-E2 escape"
+  ],
+  "seed": 1,
+  "sameRun": {
+    "seed": 1,
+    "time": 89.78333333333333,
+    "breach": 60,
+    "outlets": 4,
+    "animalTurns": [
+      10396,
+      10394,
+      10395
+    ],
+    "alphas": 4,
+    "rescued": 12
+  },
+  "browser": {
+    "passed": 3,
+    "headless": true,
+    "renderer": "WebGL2 / Metal",
+    "physicalKeyboardMouse": true,
+    "touch": true,
+    "godModeCompletion": false,
+    "destination": "L9 inside transferred APC"
+  },
+  "validation": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed",
+    "unitAndSeparationRegressions": 993,
+    "fullUnit": 973,
+    "fullLevels": {
+      "passed": 187,
+      "baselineFailures": 6,
+      "rerun": "187 passed; same 6 baseline failures"
+    },
+    "verifyE30": {
+      "functionalPassed": 52,
+      "browserPassed": 42,
+      "baselineSaveFailure": 1,
+      "performance": "High/low pass in final native rerun; phone fails frame and simulation budgets. E30 overall remains failing (also baseline save assertion).",
+      "finalFunctionalPassed": 52
+    },
+    "finalArrivalTests": 8,
+    "finalCarryClockTests": 8,
+    "fullUnitFinalCarryClock": "passed",
+    "finalSource": {
+      "passed": 993,
+      "files": 193,
+      "unit": 973,
+      "L8": 8,
+      "props": 9,
+      "combatGoldens": 3,
+      "runner": "Hetzner",
+      "maxWorkers": 4
+    },
+    "fullUnitAndLevels": {
+      "passed": 1163,
+      "baselineFailures": 6
+    }
+  },
+  "measurement": {
+    "sim": "Largest fixed world.update tick; original aggregate simMs retained as simFrameP95",
+    "heap": "CDP Runtime.getHeapUsage.usedSize, matching E18 memory gate; ArrayBuffer backing storage reported separately",
+    "budgetsChanged": false,
+    "frame": "RAF subtraction normalized to a picosecond to remove floating subtraction noise; limits unchanged."
+  },
+  "capturesReviewed": [
+    "calm",
+    "breach",
+    "animal-turning",
+    "animal-infected",
+    "real-calm",
+    "real-escape",
+    "real-l9-arrival",
+    "touch-l9-arrival"
+  ],
+  "forbiddenPathsChanged": false,
+  "completion": "Gameplay implemented; phone performance acceptance remains unmet.",
+  "performance": {
+    "high": {
+      "frameP95": 11.3,
+      "simP95": 3.1999998092651367,
+      "simFrameP95": 2.8000001907348633,
+      "draws": 148,
+      "triangles": 845694,
+      "lights": 0,
+      "peak": 200,
+      "heapMB": 132.097528,
+      "species": {
+        "lion": 2,
+        "gorilla": 2,
+        "elephant": 2,
+        "zebra": 3,
+        "flamingo": 4,
+        "alpha": 4,
+        "runner": 183
+      },
+      "passed": true
+    },
+    "low": {
+      "frameP95": 7.8,
+      "simP95": 2.1000003814697266,
+      "simFrameP95": 1.8999996185302734,
+      "draws": 135,
+      "triangles": 421605,
+      "lights": 0,
+      "peak": 100,
+      "heapMB": 91.186348,
+      "species": {
+        "lion": 2,
+        "gorilla": 2,
+        "elephant": 2,
+        "zebra": 3,
+        "flamingo": 4,
+        "alpha": 4,
+        "runner": 83
+      },
+      "passed": true
+    },
+    "phone": {
+      "frameP95": 35.2,
+      "simP95": 7.399999618530273,
+      "simFrameP95": 13.100000381469727,
+      "draws": 126,
+      "triangles": 320171,
+      "lights": 0,
+      "peak": 100,
+      "heapMB": 90.39636,
+      "species": {
+        "lion": 2,
+        "gorilla": 2,
+        "elephant": 2,
+        "zebra": 3,
+        "flamingo": 4,
+        "alpha": 4,
+        "runner": 83
+      },
+      "passed": false
+    },
+    "conditions": {
+      "at": "2026-10-12T23:43:57.633Z",
+      "load": [
+        1.45654296875,
+        2.203125,
+        2.6640625
+      ],
+      "otherHeadlessChrome": 0,
+      "localVitest": 0,
+      "browserSlots": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l8-budgets.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ]
+    }
+  }
+}

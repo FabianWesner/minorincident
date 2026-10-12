@@ -107,12 +107,20 @@ export class PropSystem {
   }
   /** Before the physics step: infected on contact shove props away from their body (they ignore props on the nav grid). */
   prePhysics(): void {
+    // Most zoo props are far from the outbreak. Cull them before crossing into WASM for velocity/enabled reads.
+    let minX = Infinity, minZ = Infinity, maxX = -Infinity, maxZ = -Infinity;
+    for (const e of this.world.entities.iterate()) if (e.infected && e.health.current > 0) {
+      minX = Math.min(minX, e.transform.x); minZ = Math.min(minZ, e.transform.z);
+      maxX = Math.max(maxX, e.transform.x); maxZ = Math.max(maxZ, e.transform.z);
+    }
+    if (minX === Infinity) return;
     for (const item of this.items) {
+      const [x, , z] = item.pose.p, reach = item.radius + .4;
+      if (x + reach < minX || x - reach > maxX || z + reach < minZ || z - reach > maxZ) continue;
       if (item.fixed || item.braced || !item.body.isEnabled()) continue;
       if (item.metadata.class === 'heavy') continue;
       const velocity = item.body.linvel();
       if (Math.hypot(velocity.x, velocity.y, velocity.z) > 4) continue;
-      const [x, , z] = item.pose.p;
       this.world.spatial.query({ x, z, r: item.radius + .4 }, this.nearby);
       for (const id of this.nearby) {
         const entity = id === 1 ? undefined : this.world.entities.get(id);

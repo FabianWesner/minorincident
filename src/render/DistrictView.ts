@@ -202,9 +202,9 @@ export class DistrictView extends Group {
         root.updateMatrixWorld(true);
         for (const groundLayer of root.children.slice(-scenes.length)) groundLayer.traverse(o => {
           if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o);
-          // W6's layered ground and hundreds of placement markers are static.
+          // W6 and the zoo ground/placement markers are baked static geometry.
           // Their world transforms were composed above; camera frames need no recomposition.
-          if (this.world.composition.tier === 6) o.matrixWorldAutoUpdate = false;
+          if (this.world.composition.tier === 6 || this.world.composition.id === 'L8') o.matrixWorldAutoUpdate = false;
         });
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();

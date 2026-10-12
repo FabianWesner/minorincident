@@ -81,6 +81,7 @@ export class MissionUI {
       this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'—':String(Math.round(value*100)/100));
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
+    if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
     this.marker.hidden=!playing||!anchor||!player;
     if(player&&objective&&playing){

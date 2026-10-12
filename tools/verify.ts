@@ -29,7 +29,7 @@ const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
+  target === 'E30' || target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
@@ -108,6 +108,11 @@ const commands: string[][] = [
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
           ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/explosions.spec.ts', '--project=chromium', '--workers=1'],
         ]
+        : target === 'E30'
+          ? [
+            ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
+            ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l8-budgets.spec.ts', '--project=chromium', '--workers=1'],
+          ]
         : target === 'E29' || target === 'E31'
           ? [
             ...(process.env.MI_VERIFY_REMOTE_E2E === '1'
@@ -131,12 +136,13 @@ for (const [command, ...args] of commands) {
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);
   if ((target === 'E23' || target === 'E24') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.some(a=>a==='tests/perf/l5-budgets.spec.ts'||a==='tests/perf/l6-budgets.spec.ts') ? 'gpu' : 'headless'}.json`);
   if ((target === 'E25' || target === 'E27') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
+  if (target === 'E30' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (target === 'E31' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');
   if (result.error || result.status !== 0) {
     process.exitCode = result.status || 1;
-    // E18 still records the local GPU gate when a headless/manual criterion fails.
-    if (target !== 'E18' || !args.includes('playwright')) break;
+    // Still record the native GPU gate when a browser criterion fails.
+    if (!['E18', 'E30'].includes(target) || !args.includes('playwright')) break;
   }
 }
