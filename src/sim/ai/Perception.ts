@@ -79,8 +79,10 @@ export class WorldHumans implements HumanTargetQuery {
     if (!e || e.health.current <= 0 || e.hidden || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) return undefined;
     if (e.id !== 1 && !(e.civilian?.adult && (!e.civilian.pet || !!e.civilian.zooAnimal) && !e.infection && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
     let target = this.cache.get(e.id);
-    if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0 }, facing: 0 }; this.cache.set(e.id, target); }
-    target.position.x = e.transform.x; target.position.z = e.transform.z; target.facing = e.transform.yaw;
+    if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0, y: 0 } as Vec2, facing: 0 }; this.cache.set(e.id, target); }
+    // The height travels with the position: sight to a courier on the elevated L3 on-ramp is the same height-aware line as
+    // shots and cover (2D sight let infected under the bridge deck see her; omniscience audit T-E21-06b).
+    target.position.x = e.transform.x; target.position.z = e.transform.z; (target.position as Vec2 & { y: number }).y = e.transform.y; target.facing = e.transform.yaw;
     return target;
   }
   all(): readonly HumanTarget[] {
