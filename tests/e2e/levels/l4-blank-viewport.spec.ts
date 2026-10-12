@@ -61,8 +61,9 @@ for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 t
   await page.evaluate(() => window.__SS__!.pause());
   writeFileSync(`${output}/${renderer}.json`, JSON.stringify(frames, null, 1) + '\n');
   // The walk crossed the band where the roof hugged the lens (z 26-28.5 with the default zoom).
-  // Before the fix the roof filled the frame for courier x 58-63 (camera 2.5-5 m above the pitched roof).
-  expect(frames.filter(f => f.x > 58 && f.x < 63).length, 'sampled the roof band').toBeGreaterThanOrEqual(2);
+  // Before the fix the roof filled the frame for courier x 58-63 (camera 2.5-5 m above the pitched roof). The camera now follows the
+  // player's y and the cutaway scales to the group, so the hugging span is wider and a real-time sample lands every ~1.7 m: count x 56-65 (>= 3 samples).
+  expect(frames.filter(f => f.x > 56 && f.x < 65).length, 'sampled the roof band').toBeGreaterThanOrEqual(3);
   expect(frames.at(-1)!.x, 'walked east toward the door').toBeGreaterThan(66);
   for (const f of frames) {
     expect(f.dominant, `one colour fills the frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)} (${f.hits.join(',')})`).toBeLessThan(.4);
