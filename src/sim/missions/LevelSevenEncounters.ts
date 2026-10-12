@@ -26,7 +26,7 @@ export class LevelSevenEncounters {
     if (this.prepared) return;
     this.prepared = true;
     const w = this.world, ai = w.infected!, director = ai.director;
-    director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0;
+    director.levelCap = 200; director.strict = true; director.ambientTarget = 0; director.reserved = 0; director.pendingTurns = 0;
     w.npcs!.setAmbient(0);
     const outbreak = w.npcs!.civilians.outbreak ?? new Outbreak(w, { refuges: [], tier: director.tier });
     w.npcs!.civilians.outbreak = outbreak;
@@ -86,7 +86,8 @@ export class LevelSevenEncounters {
   reserveSlots(): void {
     const ai = this.world.infected!;
     const turning = this.state.roster.reduce((n, r) => n + (this.world.entities.get(r.id)?.infection ? 1 : 0), 0);
-    ai.director.reserved = Math.max(0, ai.active.length - ai.director.count) + turning;
+    ai.director.reserved = Math.max(0, ai.active.length - ai.director.count);
+    ai.director.pendingTurns = turning;
   }
   update(): void {
     this.prepare();
