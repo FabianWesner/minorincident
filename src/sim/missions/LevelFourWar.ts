@@ -380,8 +380,14 @@ export class LevelFourWar {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform, centre = l4.map.centre;
     for (let i = 0; i < s.pend.length; i++) {
       if (s.pend[i] <= 0) continue;
-      const at = this.spectacle.edgePoint(i);
-      if (!ai.director.offscreen(at) || dist(at, p) < 30) continue;
+      // The first stream comes from the nearby authored buildings inside the military perimeter.
+      // Later escalation retains the street-edge ring. Do not leave a 28 s empty alarm.
+      const internal = s.phase === 'war' && s.wave === 1;
+      const edge = this.spectacle.edgePoint(i);
+      const near = internal ? this.doors().filter(d => dist(d, centre) < 26 && ai.director.offscreen(this.snap(d, .45)))
+        .sort((a, b) => dist(a, edge) - dist(b, edge)) : [];
+      const at = near.length ? near[0] : edge;
+      if (!ai.director.offscreen(at) || dist(at, p) < (internal ? 8 : 30)) continue;
       for (let k = 0; k < 3 && s.pend[i] > 0; k++) {
         const id = this.emerge({ x: at.x + (k - .5) * 1.2, z: at.z + (i % 2 ? 1 : -1) * k * .8 }); if (!id) return;
         s.pend[i]--; (s.phase === 'collapse' ? s.collapseIds : s.emergedIds).push(id);
