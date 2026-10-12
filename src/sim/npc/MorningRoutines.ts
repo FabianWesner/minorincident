@@ -1,7 +1,7 @@
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { standNear } from './gardening';
-import { seatAnchor } from './seats';
+import { seatAnchor, sitHipHeight } from './seats';
 import type { CivilianActivity, Point } from './types';
 
 /** A clear lawn pocket can still be fenced off. Author only cells connected to the sidewalk network. */
@@ -37,6 +37,77 @@ export function leaveSeat(e: EntitySnapshot): void {
   if (!activity?.seat) return;
   c.schedule![step] = { activity: 'look', anchor: activity.anchor, target: { x: e.transform.x, z: e.transform.z }, facing: activity.facing, ticks: activity.ticks };
   c.activityUntil = 0; c.activityStarted = 0; c.lastTravelProgress = undefined;
+}
+
+/** Seat movement that makes a sitter stand up: displacement of the seat, or turn of the prop (metres, radians). */
+export const seatMoveLimit = .3, seatTurnLimit = 20 * Math.PI / 180;
+const rotate = (q: number[], v: number[]): [number, number, number] => {
+  const [x, y, z, w] = q, [vx, vy, vz] = v;
+  const tx = 2 * (y * vz - z * vy), ty = 2 * (z * vx - x * vz), tz = 2 * (x * vy - y * vx);
+  return [vx + w * tx + y * tz - z * ty, vy + w * ty + z * tx - x * tz, vz + w * tz + x * ty - y * tx];
+};
+const conj = (q: number[]) => [-q[0], -q[1], -q[2], q[3]];
+const multiply = (a: number[], b: number[]) => [a[3] * b[0] + a[0] * b[3] + a[1] * b[2] - a[2] * b[1], a[3] * b[1] - a[0] * b[2] + a[1] * b[3] + a[2] * b[0], a[3] * b[2] + a[0] * b[1] - a[1] * b[0] + a[2] * b[3], a[3] * b[3] - a[0] * b[0] - a[1] * b[1] - a[2] * b[2]];
+
+/**
+ * Seats follow the live (physics-moved) prop. The sitter's hip anchor is the authored anchor carried rigidly with the prop's pose, so a
+ * pushed bench carries the sitter a little; a prop moved more than seatMoveLimit / seatTurnLimit, tipped, or destroyed stands the sitter up
+ * with a short reaction. An upright prop is sat on again at its new place; a tipped or destroyed one is left behind. Returns true when the
+ * sitter stood up this tick.
+ */
+export function followSeat(world: SimWorld, e: EntitySnapshot): boolean {
+  const props = world.props, c = e.civilian!, step = c.scheduleStep ?? 0, activity = c.schedule?.[step];
+  if (!props || !activity?.seat) return false;
+  if (activity.seatProp === undefined) {
+    // Bind once to the nearest movable prop whose home pose is under the authored seat.
+    let best: (typeof props.items)[number] | undefined, distance = 1.1;
+    for (const item of props.items) { const d = Math.hypot(item.home.p[0] - activity.seat.x, item.home.p[2] - activity.seat.z); if (d < distance) { best = item; distance = d; } }
+    activity.seatProp = best?.id ?? '';
+    if (best) {
+      activity.seatRel = [activity.seat.x - best.home.p[0], activity.seatLift === undefined ? 0 : activity.seatLift + sitHipHeight, activity.seat.z - best.home.p[2]];
+      activity.seatRef = { p: [...best.home.p], q: [...best.home.q] };
+    }
+  }
+  if (!activity.seatProp || !activity.seatRel || !activity.seatRef) return false;
+  const ref = activity.seatRef;
+  const item = props.items.find(i => i.id === activity.seatProp), entity = item && world.entities.get(item.entityId);
+  const destroyed = !item || !entity || entity.health.current <= 0;
+  let live: { x: number; y: number; z: number; lift: number } | null = null, upright = false, home: { x: number; y: number; z: number } | null = null, turned = 0;
+  if (item && !destroyed) {
+    const rel = multiply(item.pose.q, conj(ref.q)), at = rotate(rel, activity.seatRel);
+    live = { x: item.pose.p[0] + at[0], y: item.pose.p[1] + at[1], z: item.pose.p[2] + at[2], lift: at[1] - sitHipHeight };
+    home = { x: ref.p[0] + activity.seatRel[0], y: ref.p[1] + activity.seatRel[1], z: ref.p[2] + activity.seatRel[2] };
+    upright = rotate(item.pose.q, [0, 1, 0])[1] >= Math.cos(seatTurnLimit);
+    turned = 2 * Math.acos(Math.min(1, Math.abs(rel[3])));
+  }
+  const peers: number[] = [];
+  c.schedule!.forEach((s, i) => { if (i === step || s.seat && Math.hypot(s.seat.x - activity.seat!.x, s.seat.z - activity.seat!.z) < .5) peers.push(i); });
+  const moved = !live || !home || Math.hypot(live.x - home.x, live.y - home.y, live.z - home.z) > seatMoveLimit || turned > seatTurnLimit || !upright;
+  if (!moved) {
+    // Within tolerance: the sitter rides along with the prop.
+    const seat = { x: live!.x, z: live!.z };
+    for (const i of peers) { const s = c.schedule![i]; s.seat = seat; if (s.seatLift !== undefined) s.seatLift = live!.lift; }
+    return false;
+  }
+  const original = { ...activity }, seated = !!c.activityUntil && activity.activity === 'sit';
+  const resit = !!live && upright && !destroyed;
+  const front = item ? rotate(item.pose.q, [1, 0, 0]) : [0, 0, 0], fl = Math.hypot(front[0], front[2]) || 1;
+  for (const i of peers) {
+    const s = i === step ? original : c.schedule![i];
+    if (resit) {
+      const seat = { x: live!.x, z: live!.z }, fx = front[0] / fl, fz = front[2] / fl;
+      c.schedule![i] = { ...s, seat, seatLift: s.seatLift === undefined ? undefined : live!.lift, target: { x: seat.x + fx * .9, z: seat.z + fz * .9 }, facing: { x: seat.x + fx * 3, z: seat.z + fz * 3 }, seatProp: activity.seatProp, seatRel: activity.seatRel, seatRef: { p: [...item!.pose.p], q: [...item!.pose.q] } };
+    } else {
+      c.schedule![i] = { ...s, seat: undefined, seatLift: undefined, seatProp: '', seatRel: undefined, seatRef: undefined, activity: s.activity === 'sit' || s.activity === 'stand' ? 'look' : s.activity, ticks: s.activity === 'sit' ? Math.min(s.ticks, 90) : s.activity === 'stand' ? 30 : s.ticks, facing: item ? { x: item.pose.p[0], z: item.pose.p[2] } : s.facing };
+    }
+  }
+  // The reaction: a protest and a look at the displaced bench (annoyed/surprised); a re-sit follows for an upright bench.
+  if (seated) {
+    world.events.emit({ type: 'civilian.bark', tick: world.tick, id: e.id, text: 'Hey!', position: { x: e.transform.x, z: e.transform.z } });
+    if (resit) c.schedule!.splice(step, 0, { activity: 'look', anchor: activity.anchor, target: { x: e.transform.x, z: e.transform.z }, facing: { x: item!.pose.p[0], z: item!.pose.p[2] }, ticks: 60, prop: activity.prop });
+  }
+  c.activityUntil = 0; c.activityStarted = 0; c.lastTravelProgress = undefined;
+  return true;
 }
 
 /** Only calm civilians own their schedule. Notice/grab/flight always take priority. */

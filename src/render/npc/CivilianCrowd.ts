@@ -22,6 +22,8 @@ import { RoutineProps } from './RoutineProps';
 import { uprightHand } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
+/** Prop offsets from the hand (RoutineProps shapes): mug body centre, phone. */
+const cupSocket: [number, number, number] = [.035, -.11, .125], phoneSocket: [number, number, number] = [.08, -.03, 0];
 const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';
@@ -231,7 +233,12 @@ class CivilianBatch extends Group {
       const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
       frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant);
-      if (holding && !weaponProps.has(handProp!)) { frame = this.poses.correct(e.id, frame, ...blend, pose => uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand)); blend[0] = frame; blend[1] = 1; }
+      if (holding && !weaponProps.has(handProp!)) {
+        // Mug and phone: elbow bent, hand at chest height; a standing or seated drinker raises the mug to the mouth every ~8 s.
+        const bent = handProp === 'coffee' || handProp === 'phone', still = speed < .06 && !down && !rising;
+        const cycle = (renderTick / 60 + e.id * 1.7) % 8, sip = handProp === 'coffee' && still && cycle > 5.8 ? Math.sin(Math.PI * Math.min(1, (cycle - 5.8) / 2.2)) ** 2 : 0;
+        frame = this.poses.correct(e.id, frame, ...blend, pose => { if (bent) this.gunAim.hold(pose, sip, handProp === 'coffee' ? cupSocket : phoneSocket); uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand); }); blend[0] = frame; blend[1] = 1;
+      }
       const firing = this.props?.aiming.get(e.id);
       if (holding && c.story?.clip !== 'swing' && ['pistol', 'rifle', 'hunting-rifle'].includes(handProp!) ) {
         // Only the torso/arm matrices change; the walking legs retain their heading and gait.

@@ -509,6 +509,12 @@ export class SceneLab {
       this.metroClosed = closed;
       this.staticClips = null;
     }
+    else if ('moveProp' in fx) {
+      const item = world.props?.items.find(p => p.id.endsWith(`/${fx.moveProp}`));
+      if (!item) throw new Error(`moveProp: no pushable ${fx.moveProp}`);
+      const h = Math.SQRT1_2;
+      world.props!.place(item, { p: [item.pose.p[0] + fx.by[0], item.pose.p[1] + (fx.tip ? .3 : 0), item.pose.p[2] + fx.by[1]], q: fx.tip ? [h, 0, 0, h] : [...item.pose.q] });
+    }
     else if ('weaponPickup' in fx) { const id = world.combat!.pickups.spawn(fx.weaponPickup, toPoint(fx.at), false, { surfaceY: fx.surfaceY, retain: true, interactTicks: 36 }); world.entities.get(id)!.transform.yaw = (fx.yaw ?? 0) * Math.PI / 180; }
     else if ('barricadeHit' in fx) { const target = world.entities.values().find(e => e.barricade?.slot.id === fx.barricadeHit); if (!target) throw new Error(`Unknown barricade: ${fx.barricadeHit}`); world.hazards!.hit(target.id, fx.amount, 'bullet'); }
     else if ('lightning' in fx) world.weather?.strike({ ...toPoint(fx.lightning), y: 0 }, fx.consequence);
