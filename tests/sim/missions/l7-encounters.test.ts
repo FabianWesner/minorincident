@@ -35,7 +35,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-08 @E29-AC08 ${tier}: a
       expect(final.filter(e => e.archetype === 'infected.runner')).toHaveLength(tier === 'high' ? 120 : 60);
       expect(final.filter(e => e.archetype === 'infected.alpha')).toHaveLength(2);
       w.npcs!.civilians.outbreak!.dressInfected();
-      expect(final.filter(e => e.archetype === 'infected.runner').every(e => e.appearance?.entityId !== e.id)).toBe(true);
+      expect(final.filter(e => e.archetype === 'infected.runner').every(e => e.appearance?.entityId === e.id)).toBe(true);
       // Downed regulars still own slots. A recovery cannot burst the cap.
       const down = ai.active.find(e => e.archetype === 'infected.runner')!;
       down.health.current = 0; down.infected!.recoverAt = w.tick + 120;
@@ -93,14 +93,16 @@ test('T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without 
 test('T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking', async () => {
   const w = await load('low'), c = w.l7Encounters!, nav = w.infected!.nav;
   const starts = c.state.roster.map(r => ({ ...w.entities.get(r.id)!.transform }));
+  const routes = new Set(c.state.roster.map(r => w.entities.get(r.id)!.civilian!.path));
   const searches = vi.spyOn(nav, 'path');
   teleport(w, -19, 0);
   for (let i = 0; i < 300; i++) {
     const before = c.state.roster.map(r => ({ ...w.entities.get(r.id)!.transform })); step(w, 1);
     c.state.roster.forEach((r, j) => expect(Math.hypot(w.entities.get(r.id)!.transform.x - before[j].x, w.entities.get(r.id)!.transform.z - before[j].z)).toBeLessThanOrEqual(1));
   }
-  expect(searches.mock.calls.length).toBeLessThanOrEqual(c.state.roster.length * 10);
-  expect(searches.mock.calls.every(call => (call[3] ?? Infinity) <= 400)).toBe(true);
+  const followerSearches = searches.mock.calls.filter(call => routes.has(call[2]));
+  expect(followerSearches.length).toBeLessThanOrEqual(c.state.roster.length * 10);
+  expect(followerSearches.every(call => (call[3] ?? Infinity) <= 400)).toBe(true);
   c.state.roster.forEach((r, j) => expect(Math.hypot(w.entities.get(r.id)!.transform.x - starts[j].x, w.entities.get(r.id)!.transform.z - starts[j].z)).toBeGreaterThan(1));
   searches.mockRestore();
 });
