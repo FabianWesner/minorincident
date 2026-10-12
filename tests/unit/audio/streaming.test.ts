@@ -47,7 +47,7 @@ test('@E16 failed incoming music leaves the outgoing deck and its fade untouched
     expect(media[0].paused).toBe(false);
     expect(score.errors).toEqual(['Music playback failed: combat']);
 });
-test('@E16 L1 streams its own calm recording; other levels and states keep the shared score', async () => {
+test('@E16 each level streams its own calm recording; tension and unmapped levels keep the shared score', async () => {
     const { score, media } = fixture();
     score.level = 'L1';
     await score.transition('calm', 1, 1, 2);
@@ -58,8 +58,12 @@ test('@E16 L1 streams its own calm recording; other levels and states keep the s
     await score.transition('calm', 1, 1, 2);
     // The cached calm deck is repointed, never duplicated: at most one deck per state.
     expect(media).toHaveLength(2);
+    expect(media[0].src).toContain('/assets/audio/score-calm-L2.webm');
+    expect(score.snapshot().decks.find(d => d.state === 'calm')!.file).toBe('calm-L2');
+    score.reset();
+    score.level = '';
+    await score.transition('calm', 1, 1, 2);
     expect(media[0].src).toContain('/assets/audio/score-calm.webm');
-    expect(score.snapshot().decks.find(d => d.state === 'calm')!.file).toBe('calm');
 });
 test('@E16 danger preloads silently and crossfades immediately in 0.8 s without a second full bed', async () => {
     const { score, media, gains, context } = fixture();
