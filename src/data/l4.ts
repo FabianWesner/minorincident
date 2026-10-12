@@ -46,7 +46,7 @@ export const l4 = {
   turn: { afterGunS: [40, 50] as P, latestAfterArrivalS: 100 },
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
-    fromS: 28, waveEveryS: 11,
+    fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small. */
     waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3,
     /** Seconds the streets keep emerging after the line break (collapse). */
