@@ -1,3 +1,4 @@
+import { isWorldTier } from './types';
 import type { DistrictLayout, PositionRef, Point, Tier, Aabb } from "./types";
 /** Resolve on load, so gameplay can tune coordinates without rebuilding a layout. */
 export function resolvePosition(
@@ -63,6 +64,13 @@ export function validateLayout(
   manifest: Record<string, unknown>,
 ): string[] {
   const errors: string[] = [];
+  for (const item of [...layout.placements, ...layout.colliders])
+    if (!isWorldTier(item.minTier) || !isWorldTier(item.maxTier) || item.minTier > item.maxTier)
+      errors.push(`invalid tier range ${item.id}`);
+  for (const layer of layout.layers)
+    if (!isWorldTier(layer.tier)) errors.push(`invalid layer tier ${layer.tier}`);
+  for (const group of layout.lightGroups)
+    if (!isWorldTier(group.offAt)) errors.push(`invalid light tier ${group.id}`);
   if (
     layout.version !== 1 ||
     layout.bounds.length < 5 ||
@@ -118,6 +126,7 @@ export function validateLayout(
 }
 /** Cumulative layer resolution is shared by render, physics and tests. */
 export function resolveDecay(layout: DistrictLayout, tier: Tier) {
+  if (!isWorldTier(tier)) throw new RangeError("Tier must be W0…W6");
   const layers = layout.layers.filter((l) => l.tier <= tier),
     off = new Set(layers.flatMap((l) => l.disableLights));
   return {

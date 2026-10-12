@@ -20,7 +20,11 @@ export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId |
 /** Districts that run the L1 v2 outbreak rules (sight-only infected brain, pedestrian outbreak layer, corgi). */
 export const outbreakDistrictIds: readonly DistrictId[] = [groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId];
 export const isOutbreakDistrict = (id: string): boolean => (outbreakDistrictIds as readonly string[]).includes(id);
-export type Tier = 0 | 1 | 2 | 3 | 4 | 5;
+/** World decay only; independent of render quality (high/low). */
+export const worldTiers = [0, 1, 2, 3, 4, 5, 6] as const;
+export type Tier = (typeof worldTiers)[number];
+export const isWorldTier = (value: unknown): value is Tier =>
+  typeof value === 'number' && (worldTiers as readonly number[]).includes(value);
 export type Point = [number, number];
 export interface PlacementTransform {
   position: [number, number, number];

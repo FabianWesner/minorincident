@@ -1,3 +1,4 @@
+import { worldTiers } from '../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import {
   BoxGeometry,
@@ -174,7 +175,8 @@ export class DistrictView extends Group {
           new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(0, ...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
         ) });
         const scenes = lab && !lab.glb ? [] : await Promise.all(
-          Array.from({ length: this.world.composition.tier + 1 }, (_, tier) =>
+          // Preserve legacy W0–W5 loading; W6 geometry is opt-in by an authored layer.
+          worldTiers.filter(tier => tier <= this.world.composition.tier && tier <= Math.max(5, ...d.layout.layers.map(layer => layer.tier))).map(tier =>
             this.registry.glb(
               `/assets/layouts/${d.id}.${tier === 0 ? "base" : `w${tier}`}.glb`,
             ),
@@ -313,7 +315,7 @@ export class DistrictView extends Group {
               0,
               p[1] + d.origin[1],
             ];
-          for (let tier = 0; tier <= 5; tier++)
+          for (const tier of worldTiers)
             this.spots.set(`${d.id}/W${tier}/${spot.name}`, {
               target,
               position: [

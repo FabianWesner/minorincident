@@ -1,3 +1,4 @@
+import { isWorldTier } from '../../levels/districts/types';
 import { vehicleDecayFallback } from '../../assets/vehicleDecay';
 import type { TimeOfDay } from '../../data/timeOfDay';
 import type { DistrictGameplay, DistrictId, DistrictLayout, LevelComposition, Placement, Point, Tier } from '../../levels/districts/types';
@@ -26,7 +27,7 @@ export interface SceneSpec {
   weatherTimeline?: readonly import('../../data/weather').WeatherKey[];
   /** Evolve only the weather before assembly (seconds of precipitation accumulation). */
   weatherWarmup?: number;
-  /** Decay tier W0-W5 (placements with minTier/maxTier outside it are dropped). */
+  /** Decay tier W0-W6 (placements with minTier/maxTier outside it are dropped). */
   tier?: Tier;
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
@@ -220,6 +221,7 @@ export interface BuiltScene { composition: LevelComposition; layout: DistrictLay
 export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): string[] {
   const errors: string[] = [], ids = new Set<string>();
   const point = (p: unknown, label: string) => { if (!Array.isArray(p) || p.length < 2 || p.length > 3 || !p.every(Number.isFinite)) errors.push(`${label}: expected [x, z] numbers`); };
+  if (spec.tier !== undefined && !isWorldTier(spec.tier)) errors.push('tier: expected W0..W6 integer');
   if (spec.infectedCap !== undefined && (!Number.isInteger(spec.infectedCap) || spec.infectedCap < 1 || spec.infectedCap > 200)) errors.push('infectedCap: integer 1..200');
   if (spec.size !== undefined && !(spec.size >= 8 && spec.size <= 400)) errors.push('size: 8..400 m');
   if (spec.ground && !['grass', 'asphalt', 'sidewalk', 'district'].includes(spec.ground)) errors.push(`ground: unknown ${spec.ground}`);
@@ -267,7 +269,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     roads: { nodes: [], edges: [] }, placements: kept, anchors: {}, zones: {}, buildings: [],
     colliders: solid.map(p => ({ id: p.id, aabb: structuredClone(p.visualAabb), minTier: p.minTier, maxTier: p.maxTier })),
     walkable: { cellSize: 1, excluded: [] }, lawns: spec.ground === 'district' && source ? source.lawns : spec.ground === undefined || spec.ground === 'grass' ? [{ min: [x0, z0], max: [x1, z1] }] : [],
-    decorations: [], lightGroups: [{ id: labLightGroup, offAt: 5 }, ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 5 as Tier }))], acousticZones: [],
+    decorations: [], lightGroups: [{ id: labLightGroup, offAt: 6 }, ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 6 as Tier }))], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [{ tier: 0, remove: [], disableLights: spec.props?.filter(p => p.powerGroup && p.powered === false).map(p => p.powerGroup!) ?? [] }],
   };
   // Metro assemblies contain traversable rooms: their authored supports and walls
@@ -296,6 +298,6 @@ export function placementFor(prop: PropSpec, index: number, assets: Map<string, 
   const yaw = rad(prop.yaw), pos: [number, number, number] = prop.at.length === 3 ? [prop.at[0], prop.at[1], prop.at[2]] : [prop.at[0], 0, prop.at[1]];
   const dims = [def.dimensions.x * scale[0], def.dimensions.y * scale[1], def.dimensions.z * scale[2]];
   const sx = Math.abs(Math.cos(yaw)) * dims[0] + Math.abs(Math.sin(yaw)) * dims[2], sz = Math.abs(Math.sin(yaw)) * dims[0] + Math.abs(Math.cos(yaw)) * dims[2];
-  return { id: prop.id ?? `${prop.asset}:lab${index}`, assetId: prop.asset, position: pos, yaw, scale, minTier: 0, maxTier: 5, allowRoad: true, lightGroup: prop.powerGroup ?? labLightGroup,
+  return { id: prop.id ?? `${prop.asset}:lab${index}`, assetId: prop.asset, position: pos, yaw, scale, minTier: 0, maxTier: 6, allowRoad: true, lightGroup: prop.powerGroup ?? labLightGroup,
     visualAabb: { min: [pos[0] - sx / 2, pos[1], pos[2] - sz / 2], max: [pos[0] + sx / 2, pos[1] + dims[1], pos[2] + sz / 2] }, ...(prop.tint ? { tint: prop.tint } : {}), ...(prop.decay ? { decay: prop.decay } : {}) };
 }
