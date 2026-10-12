@@ -159,7 +159,8 @@ describe('L3 The Police Collapse', () => {
     const angles = sources.map(p => Math.atan2(p.z - yard.z, p.x - yard.x));
     for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) { const d = Math.abs(Math.atan2(Math.sin(angles[i] - angles[j]), Math.cos(angles[i] - angles[j]))); expect(d * 180 / Math.PI).toBeGreaterThanOrEqual(60); }
     const runs = await complete();
-    for (const r of runs) { expect(r.attack!.directions.sort()).toEqual(['blvd', 'oak', 'river']); expect(r.attack!.officers).toBeGreaterThanOrEqual(8); expect(r.attack!.sameLook).toBe(true); }
+    // PO 2026-10-12: "let they come from all directions and also spawn them in the policestation (as police Zombies)".
+    for (const r of runs) { expect(r.attack!.directions.sort()).toEqual(['blvd', 'commerce', 'oak', 'river', 'station']); expect(r.attack!.officers).toBeGreaterThanOrEqual(8); expect(r.attack!.sameLook).toBe(true); }
     expect(runs.filter(r => r.attack!.turnedDuring >= 1).length).toBeGreaterThanOrEqual(1);
     for (const r of runs) {
       expect(['time', 'turned', 'inside']).toContain(r.attack!.fallbackCause);
@@ -169,9 +170,31 @@ describe('L3 The Police Collapse', () => {
     expect(idleRuns.every(r => r.attack && r.attack.fallbackCause !== '')).toBe(true);
   }, HEAVY);
 
-  test('T-E21-08 @E21 @E21-AC08 squad: 3-4 living officers join at the fallback on single seed; no immunity or scripted-survival flag', async () => {
+  test('T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station', async () => {
+    // PO 2026-10-12 (verbatim): "Ideally the Zombies will win against police when the player isn#t doing anything. Let's try this:
+    // reduce the power of the gun by 50% for the police (not for the player). And don't cluster Zombies, let they come from all
+    // directions and also spawn them in the policestation (as police Zombies), so they are overwhelming for the police so the user
+    // needs to start running away (with some of the survivors)".
+    const l = await loadL3(1); world = l.world; const w = l.world, m = l.mission;
+    runL3(w, m, 'complete', { stopWhen: mm => !!mm.state.l3!.attackAt });
+    w.combat!.damage.god = true; // an idle observer: the police fight alone (the courier's own weapons are never scaled)
+    const s = m.state.l3!, start = w.tick;
+    for (const id of s.officerIds) expect(w.entities.get(id)!.civilian!.ally!.gun!.damage).toBe(l3.officers.gun.damage * .5);
+    for (let t = 0; t < 75 * 60; t++) { followFrustum(w); w.applyInput(emptyInput(), 'keyboard'); w.update(); }
+    const standing = s.officerIds.filter(id => { const e = w.entities.get(id); return !!e?.civilian?.ally && e.health.current > 0 && !e.infection; }).length;
+    const first = s.waves.filter(q => q.wave === 0 && q.id).map(q => q.at - start);
+    const police = s.waves.filter(q => q.dir === 'station' && q.id).map(q => w.entities.get(q.id)).filter(e => e);
+    record('police-collapse', { standing, officers: s.officerIds.length, firstWaveSpanS: (Math.max(...first) - Math.min(...first)) / 60, policeZombies: police.length });
+    expect(standing).toBeLessThanOrEqual(Math.floor(s.officerIds.length / 2));
+    expect((Math.max(...first) - Math.min(...first)) / 60).toBeGreaterThanOrEqual(10);
+    expect(police.length).toBeGreaterThanOrEqual(1);
+    for (const e of police) expect(e!.appearance!.asset).toBe('npc.police-officer');
+  }, HEAVY);
+
+  test('T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag', async () => {
     const runs = await complete();
-    expect(runs.filter(r => r.squad!.atFallback >= 3 && r.squad!.atFallback <= 4).length).toBeGreaterThanOrEqual(1);
+    // PO 10-11/10-12: every surviving officer retreats with the courier ("running away (with some of the survivors)").
+    expect(runs.filter(r => r.squad!.atFallback >= 3).length).toBeGreaterThanOrEqual(1);
     expect(runs.every(r => r.squad!.protected === 0)).toBe(true);
   }, HEAVY);
 
@@ -190,8 +213,8 @@ describe('L3 The Police Collapse', () => {
     const ends = [0, 1, 2].map(k => median(runs.map(r => r.squad!.segmentEnds[k])));
     record('squad', { ends, atCheckpoint: runs.map(r => r.squad!.atCheckpoint), losses: runs.map(r => r.squad!.losses) });
     expect(ends[0]).toBeGreaterThanOrEqual(ends[1]); expect(ends[1]).toBeGreaterThanOrEqual(ends[2]);
-    expect(median(runs.map(r => r.squad!.atCheckpoint))).toBeLessThanOrEqual(2);
-    expect(runs.filter(r => r.squad!.atCheckpoint === 4).length).toBeLessThanOrEqual(Math.floor(.15 * runs.length));
+    // PO 10-11/10-12 superseded "<= 2 at the checkpoint": the army rescues the surviving group, but the squad still loses officers on the way.
+    for (const r of runs) expect(r.squad!.atCheckpoint).toBeLessThan(r.squad!.atFallback);
     expect(runs.filter(r => r.squad!.turnedInCorridor >= 1).length).toBeGreaterThanOrEqual(runs.length / 2);
     for (const r of runs) for (const loss of r.squad!.losses) expect(['bite', 'kill', 'separated']).toContain(loss.cause);
   }, HEAVY);
@@ -203,9 +226,9 @@ describe('L3 The Police Collapse', () => {
     }
   }, HEAVY);
 
-  test('T-E21-12 @E21 @E21-AC12 escalation: pre-populated 10/25/40 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded', async () => {
+  test('T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded', async () => {
     const runs = await complete();
-    for (const r of runs) for (const [k, target] of [10, 25, 40].entries()) { expect(r.density.prepopulated[k]).toBeGreaterThanOrEqual(target * .8); expect(r.density.prepopulated[k]).toBeLessThanOrEqual(target * 1.2); }
+    for (const r of runs) for (const [k, target] of [250, 625, 1000].entries()) { expect(r.density.prepopulated[k]).toBeGreaterThanOrEqual(target * .8); expect(r.density.prepopulated[k]).toBeLessThanOrEqual(target * 1.2); }
     expect(median(runs.map(r => r.density.near30[2]))).toBeGreaterThan(median(runs.map(r => r.density.near30[0])));
     for (const r of runs) expect(r.density.maxConcurrent).toBeLessThanOrEqual(r.density.cap);
   }, HEAVY);
@@ -225,9 +248,9 @@ describe('L3 The Police Collapse', () => {
     expect(emergences.length).toBeGreaterThanOrEqual(1);
     expect(Math.min(...emergences.map(e => e.tick))).toBeGreaterThanOrEqual(19 * 60);
     for (const e of emergences) { expect(furthest - e.x).toBeGreaterThanOrEqual(14); expect(furthest - e.x).toBeLessThanOrEqual(36); expect(e.seen).toBe(false); }
-    // Per 10 s window: 1-3.
+    // PO 2026-10-12: queued pressure packs contain 25-75 infected.
     const windows = new Map<number, number>(); for (const e of emergences) windows.set(Math.floor(e.tick / 600), (windows.get(Math.floor(e.tick / 600)) ?? 0) + 1);
-    for (const n of windows.values()) expect(n).toBeLessThanOrEqual(3);
+    for (const n of windows.values()) expect(n).toBeLessThanOrEqual(75);
     record('pressure', { before, emergences });
     // Advancing: while the furthest line keeps moving, nothing emerges behind it (every new emergence needs 20 s idle).
     let early = 0, seen = s.pressureIds.length;

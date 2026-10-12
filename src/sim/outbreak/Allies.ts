@@ -1,3 +1,4 @@
+import { l3 } from '../../data/l3';
 import { Rng } from '../../core/Rng';
 import { l2 } from '../../data/l2';
 import { l4 } from '../../data/l4';
@@ -40,6 +41,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const visible = (from: EntitySnapshot['transform'], to: EntitySnapshot['transform'], id: number) => shooter
     ? (from.y > 2.5 || sees(from, to, id)) && world.combat!.query.shotVisible(from, to, id) : sees(from, to, id);
   const player = world.entities.get(1);
+  // The army covers the retreat. Continue the ordinary self-defence shot while moving through the open checkpoint.
+  if (world.missions?.def.l3 && a.follow && a.run && player && player.transform.x > l3.finale.passX && e.transform.x < l3.map.zoneX && c.state !== 'grabbed') {
+    npcs.move(e, a.run, a.follow.moveMs, c, .5);
+  }
   const heard = (target: EntitySnapshot) => ai.hearing.hears(e, target.transform);
   const defence = (target: EntitySnapshot) => a.role === 'officer' && dist(target.transform, e.transform) <= pt.defendM;
   const policeCanEngage = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);

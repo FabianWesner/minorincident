@@ -76,11 +76,13 @@ export class WorldHumans implements HumanTargetQuery {
     for (const e of this.world.entities.iterate()) if (e.id === 1 || e.civilian || e.kind === 'npc' || e.kind === 'escort') this.candidates.push(e.id);
   }
   private human(e: EntitySnapshot | undefined): HumanTarget | undefined {
-    if (!e || e.health.current <= 0 || e.hidden || e.id === 1 && this.world.inspectionGhost) return undefined;
+    if (!e || e.health.current <= 0 || e.hidden || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) return undefined;
     if (e.id !== 1 && !(e.civilian?.adult && (!e.civilian.pet || !!e.civilian.zooAnimal) && !e.infection && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
     let target = this.cache.get(e.id);
-    if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0 }, facing: 0 }; this.cache.set(e.id, target); }
-    target.position.x = e.transform.x; target.position.z = e.transform.z; target.facing = e.transform.yaw;
+    if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0, y: 0 } as Vec2, facing: 0 }; this.cache.set(e.id, target); }
+    // The height travels with the position: sight to a courier on the elevated L3 on-ramp is the same height-aware line as
+    // shots and cover (2D sight let infected under the bridge deck see her; omniscience audit T-E21-06b).
+    target.position.x = e.transform.x; target.position.z = e.transform.z; (target.position as Vec2 & { y: number }).y = e.transform.y; target.facing = e.transform.yaw;
     return target;
   }
   all(): readonly HumanTarget[] {
@@ -116,6 +118,9 @@ export class Perception {
   readonly los = new LosRegistry();
   readonly rangeM = l1v2.infected.visionRangeM;
   readonly hearingM = 2;
+  /** Level pressure routing (L3 corridor): the courier counts this many metres farther than she is when choosing a new
+   * target, so a nearby police line draws the crowd first. 0 everywhere else. */
+  playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
@@ -169,7 +174,7 @@ export class Perception {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
       if (!(isCurrent ? this.tracks(e, h.position) : this.notices(e, h.position))) continue;
-      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
+      const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }
     }

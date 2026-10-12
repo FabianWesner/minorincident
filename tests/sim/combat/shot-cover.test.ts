@@ -54,8 +54,11 @@ test('@E21 player bullets and explicit muzzle rays stop at world and dynamic cov
 
 test('@E21 checkpoint guard feet stay on all four tower decks', async () => {
   const loaded = await loadL3(1); world = loaded.world;
-  const guards = loaded.mission.state.l3!.soldierIds.map(id => world!.entities.get(id)!);
+  // Eight tower riflemen; the ninth soldier is the mounted-gun (HMG nest) gunner on the ground at the line (lane l3-finish).
+  const soldiers = loaded.mission.state.l3!.soldierIds.map(id => world!.entities.get(id)!);
+  const guards = soldiers.filter(e => e.civilian!.ally?.weapon !== 'hmg');
   expect(guards).toHaveLength(8);
+  expect(soldiers.filter(e => e.civilian!.ally?.weapon === 'hmg')).toHaveLength(1);
   for (const e of guards) {
     expect(e.transform.y - .7).toBeCloseTo(l3.soldiers.deckY);
     expect(e.transform.x).toBe(138.5 + l3ArmyOffset);

@@ -65,13 +65,13 @@ Each player or ally gunshot is a deliberate loud event (like the L1 car alarm, E
 - Player weapons never damage officers or civilians; officers never damage humans.
 
 ### 5.5 Station attack and fallback
-- Waves from ≥ 3 directions, escalating (orchestrator default: 6, then 12 at +20 s, then 20 at +40 s; all via emergence points outside the frustum).
+- Waves from ≥ 3 directions, escalating (orchestrator default: 30, then 60 at +20 s, then 100 at +40 s; all via emergence points outside the frustum).
 - `l3.fallback` fires at the first of: 60 s of defense, ≥ 3 officers turned, or ≥ 8 infected inside the yard fence. The non-squad officers stay and keep fighting (and fall).
 
 ### 5.6 Density and pressure
-- Pre-populated wanderers per segment (orchestrator default): S1 ≈ 10, S2 ≈ 25, S3 ≈ 40 (±20 %), spread over the three streets in groups; plus everything the gunfire attracts and everyone who turns.
-- **Forward pressure:** while the player stays behind their furthest progress line for > 20 s, the director lets 1–3 infected emerge from doors 15–35 m *behind* that line every 10 s (E19 emergence rule). No timer, no invisible wall.
-- Caps: concurrent infected ≤ 80 (high) / 40 (low); at the cap bites kill.
+- Pre-populated wanderers per segment (orchestrator default): S1 ≈ 250, S2 ≈ 625, S3 ≈ 1000 (±20 %), spread over the three streets in groups; plus everything the gunfire attracts and everyone who turns.
+- **Forward pressure:** while the player stays behind their furthest progress line for > 20 s, the director lets 25–75 infected emerge from doors 15–35 m *behind* that line every 10 s (E19 emergence rule). No timer, no invisible wall.
+- Caps: concurrent infected ≤ 200 (high) / 100 (low); at the cap bites kill.
 
 ### 5.7 Medkits
 - `pick.medkit`: walk-over pickup, +40 HP (capped at max), removed on pickup. Placement: 1 at the armory, **≥ 2 per street** (≥ 7 total), biased to S2/S3 and to cross-link mouths.
@@ -115,8 +115,8 @@ Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Ti
 | E21-AC09 | **Squad feels strong first:** in segment 1, officers make ≥ 60 % of infected kills and the player's damage taken is ≤ 15 HP (one `complete` seed); squad members stay within 8 m of the player ≥ 80 % of non-combat time and never teleport (no position jump > 1 m per tick) PO 10-09: single seed. | sim |
 | E21-AC10 | **Squad falls apart (systemically):** the squad size at the ends of segments 1, 2, 3 is non-increasing and is ≤ 2 at the army checkpoint; at most 3 arrive; ≥ 1 officer turns during the corridor on one seed; every squad loss is a `bite`/`combat.kill` event or a separation > 40 m (no scripted removal) PO 10-09: single seed. | sim |
 | E21-AC11 | **PO 2026-10-11 route correction:** police start stays fixed; wreck pile-ups seal carriageways and sidewalks and force a detour around a block through the three streets. Walking distance is 50–80 % longer than the previous 301 m route. The army compound moves east as a unit; the final approach traverses the existing elevated highway, with the exit gantry visible. ≥ 6 city cross-links spaced ≤ 60 m; detour encounter gaps ≤ 60 m; squad and objective guidance use the connected route. One single-seed `complete` run finishes. | sim (layout + sim), headless captures |
-| E21-AC12 | **Escalation:** pre-populated infected per segment are within ±20 % of 10 / 25 / 40; the median live infected count within 30 m of the player rises from segment 1 to segment 3; caps 80 (high) / 40 (low) are never exceeded | sim |
-| E21-AC13 | **Forward pressure:** when the player idles 20 s behind the furthest progress line, emergence behind that line starts (1–3 infected per 10 s from doors 15–35 m behind, outside the frustum) and stops when the player advances | sim |
+| E21-AC12 | **Escalation:** pre-populated infected per segment are within ±20 % of 250 / 625 / 1000; the median live infected count within 30 m of the player rises from segment 1 to segment 3; caps 200 (high) / 100 (low) are never exceeded | sim |
+| E21-AC13 | **Forward pressure:** when the player idles 20 s behind the furthest progress line, emergence behind that line starts (25–75 infected per 10 s from doors 15–35 m behind, outside the frustum) and stops when the player advances | sim |
 | E21-AC14 | **Medkits:** ≥ 2 per street and ≥ 7 total; a pickup restores 40 HP (capped) and is consumed; the `newbie` bot picks up ≥ 2 per run (median); the time-weighted share of the `newbie` run spent below 20 % HP is ≤ 10 % | sim |
 | E21-AC15 | **Per-street damage:** the static dressing manifest gives each street its type set (Oak: gardens/abandoned houses/crashed cars/barricades/bodies; Commerce: broken windows/looted stores/merchandise/bags/damaged signs; Boulevard: ≥ 2 wrecked buses, ≥ 3 abandoned police vehicles, ≥ 8-car jam) and the §5.8 totals (fires ≥ 6, corpses ≥ 12, vehicles ≥ 15), and zero collapsed/rubble assets | static |
 | E21-AC16 | **Late-afternoon light:** `timeOfDay.L3.polar` in 1.00–1.20 rad, sun hue 25–45°; the 1.8 m probe's shadow at `l3-grove-boulevard` is ≥ 1.6× its L2 length (shadow-mask measurement); ≥ 2 smoke columns are in frame at every street photo spot | unit + visual |
@@ -130,3 +130,26 @@ Bots: `complete`, `newbie`, `evade-only`, `idle` (stays in the station yard). Ti
 - `src/levels/L3/` (old route-choice level) is the starting scaffold: keep the builder pattern, replace the content. The old `deadline` stays supported by E12 but is not used.
 - The squad uses the E08 escort follower with `failOnDeath: false` plus the E20 allied-fighter combat brain.
 - E08's per-level density table (L3 = 24 ambient civilians) is superseded for L3 (few civilians: stragglers in houses and the bus passengers at the checkpoint); update the E08-AC11 fixture when L3 is rebuilt.
+
+## PO balance and rescue correction · 2026-10-12
+
+> "L3: Given the high number of policeman and the power of the guns (both is good, keep it), the nr of Zombies is far too low. We need 5x mor eZombies, so they havre a chance against the policeman group."
+> "even the final fight takes only 3s and is far too easy."
+> "L3 begining. When the alarm rings, actually nothing happens. No hordes of Zombies anywhere"
+> "The bar went down and locked-up all policemen and the dog. Also no Zombies are followong here, so the entire "army rescues us" idea isnm't working at the moment"
+> "Also the bus needs to be closer to the yellow cirle an dsome survivos standing there already"
+
+These corrections supersede older encounter counts and player-only closure/transition criteria above. Every existing L3 infected encounter is multiplied by five: defence 30/60/100, each horde pack 125, street clusters (already ×5 on 10-09) now ×25 their original size, spill 50/75, pressure 25–75, finale 40/60/75. Low-tier authored totals retain their existing scaling; concurrent simulated infected are bounded by E18 at 200/100, with unspawned entries retained until a safe offscreen slot becomes available. Police and soldier strength and counts stay unchanged.
+
+E21-AC07 additionally requires real input to trigger the alarm, visible infected and police engagement within 10 s. E21-AC17/19 now require a 60–90 s escalating rescue fight from multiple approach directions; living police and the corgi must enter the safe compound before the boom closes, with visible pursuit during the preceding 30 s. The boom waits or reopens while a living group member is outside; rendezvous completion waits for the safe closure. Move the evacuation bus next to the ring without blocking access, with five visible waiting civilians excluded from the outbreak target roster. Capture the rescue, bus and waiting group through the game camera on desktop and phone.
+
+Finale correction (lane l3-finish, 2026-10-12, "army rescues us"): the eight checkpoint soldiers are riflemen with the spec rifle (`l3.soldiers.gun`) covering the last 20 m before the zone line (`coverM`); the L4 HMG stats they carried were a leftover from moving them onto the watchtower decks (69cbf98e). The army's mounted gun is one HMG gunner (`l4.soldiers.hmg`) in an L4 `prop.hmg-nest` behind the sandbags at the line. Finale pursuers gather just outside police and HMG reach (`l3.finale.surge`) and hit the line in surges of up to 25 (low 15, or after 12 s), so the horde visibly reaches the line instead of dying one by one at the edge of the fire band. During the station attack, infected choosing a target count the courier 4 m farther away (`l3.density.playerBiasM`), so the waves press the police line first. The boom may close once the group is inside and either every finale pack has arrived or 60 s of rescue fight have passed (`l3.finale.minFightS`).
+
+PO correction 2026-10-12 (verbatim, supersedes "police strength stays unchanged" above): "L3. I am just watching the figt police vs Zombies. Ideally the Zombies will win against police when the player isn#t doing anything. Let's try this: reduce the power of the gun by 50% for the police (not for the player). And don't cluster Zombies, let they come from all directions and also spawn them in the policestation (as police Zombies), so they are overwhelming for the police so the user needs to start running away (with some of the survivors)".
+
+- Police guns (station posts and the squad) deal 50 % damage (`l3.allyDamageScale`); the courier's weapons are unchanged. The army checkpoint keeps full strength (the quote names the police only), so the finale stays a rescue.
+- The station attack streams in spread over 18 s per wave from five directions (river path, Boulevard and Oak doors, the street beyond the east gate, and the station door behind the line). Every fifth attacker is a police zombie: an officer turned in place, keeping the police look, who hits the line from behind. Police zombies do not count towards the "8 inside" fallback rule.
+- A grabbed L3 officer no longer frees himself from the hold; a teammate's or the courier's hit on the grabber still rescues him.
+- Acceptance (T-E21-07d, single seed, courier idle in god mode): after 75 s at most half of the officers still stand (measured: 0 of 10), the first wave spans at least 10 s, and at least one police zombie emerged. All surviving officers still retreat with the courier at the fallback, and the army gate waits for the group.
+- The corridor keeps its PO 10-09 cluster-and-lull layout. Death-loop relief (`l3.mercy`) starts at the first death at a checkpoint, scales spills and forward pressure planned after the respawn, and thins from 20 m behind the respawn to 30 m past the last death spot. A medkit stands at the turn from the cross street into the Boulevard.
+- Infected sight uses the height of the target (the elevated on-ramp), matching the height-aware cover of shots.

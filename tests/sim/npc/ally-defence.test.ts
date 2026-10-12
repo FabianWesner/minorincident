@@ -34,7 +34,9 @@ describe('armed ally close hearing and self-defence @E21', () => {
       expect(z.health.current).toBeLessThan(z.health.max);
     } finally { w.dispose(); }
   });
-  test('a grabbed L3 officer shoves before the bite completes, even away from the courier', async () => {
+  // PO 2026-10-12: "Ideally the Zombies will win against police when the player isn#t doing anything": a grabbed L3 officer no
+  // longer frees himself; only a teammate's or the courier's hit on the grabber rescues him.
+  test('a grabbed L3 officer does not fight his own way out of the hold (PO 10-12)', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
       const e = w.entities.get(m.state.l3!.officerIds[0])!;
@@ -45,10 +47,7 @@ describe('armed ally close hearing and self-defence @E21', () => {
       expect(e.civilian!.state).toBe('grabbed');
       for (let i = 0; i < 24; i++) w.update();
       const attacks = w.events.events().filter(event => event.type === 'ally.attack' && event.sourceId === e.id && event.targetId === zid);
-      expect(attacks.some(event => event.tick - start <= 24)).toBe(true);
-      expect(e.infection).toBeUndefined();
-      expect(e.civilian!.state).not.toBe('grabbed');
-      expect(w.events.events().some(event => event.type === 'civilian.saved' && event.id === e.id)).toBe(true);
+      expect(attacks.some(event => event.tick - start <= 24)).toBe(false);
     } finally { w.dispose(); }
   }, 120_000);
 
