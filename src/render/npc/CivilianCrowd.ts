@@ -271,7 +271,7 @@ class CivilianBatch extends Group {
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
-    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !this.distant;
+    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !this.distant || !!b.roar || (b.state !== 'dead' && !heavy && !strides[clip]);
     const moving = !!strides[clip] && motion.speed > .06;
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
     const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);

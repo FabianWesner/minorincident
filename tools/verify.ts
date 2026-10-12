@@ -6,7 +6,14 @@ const target = process.argv[2];
 const selection = selectionFor(target);
 const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
+// E07's Alpha wall-clock fixtures stay on the Mac when functional sims run remotely.
+const alphaTiming = ['tests/sim/ai/director.test.ts', 'tests/sim/performance/alpha.test.ts', 'tests/sim/performance/alpha-physical.test.ts'];
+const infectedGpuPattern = 'alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13';
+const gpuSelectionPattern = `^(?=.*(?:${selection.pattern}|T-E07-physical-budget))(?=.*(?:${infectedGpuPattern}))`;
+const splitAlphaTiming = target === 'E07' && process.env.MI_VERIFY_REMOTE_SIM === '1';
+const simPattern = splitAlphaTiming ? `^(?!.*T-E07-11).*(?:${selection.pattern})` : selection.pattern;
 const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
+if (splitAlphaTiming) simArgs[3] = simPattern;
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
   ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, '--', 'npx', ...simArgs]
@@ -19,8 +26,15 @@ const commands: string[][] = [
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
+  ...(splitAlphaTiming ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   simCommand,
-  ...(target === 'E10'
+  // Keep E07 visual/counter probes on the Mac; offload its remaining browser checks.
+  ...(target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1'
+    ? [
+      ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', 'test-results/playwright/results.json', '--env', `E2E_PORT=${process.env.E2E_PORT ?? 3400 + process.pid % 1000}`, '--', 'sh', '-c', 'npm run build && npx playwright test --grep "$1" --grep-invert "$2" --workers=1', 'sh', selection.pattern, infectedGpuPattern],
+      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', gpuSelectionPattern, '--workers=1'],
+    ]
+    : target === 'E10'
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
       // Native GPU load timing stays headless: run once, after the other browser checks.
@@ -79,6 +93,7 @@ const checks: { command: string[]; exitCode: number | null }[] = [];
 for (const [command, ...args] of commands) {
   console.log(`\nVerifying ${target}: ${command} ${args.join(' ')}`);
   const result = spawnSync(command, args, { stdio: 'inherit', env: process.env });
+  if (target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
   if (target === 'E10' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('@E10-AC06') && !args.includes('--grep-invert') ? 'gpu' : 'headless'}.json`);
   if (target === 'E19' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/l1-transitions.spec.ts') ? 'gpu' : 'headless'}.json`);
   if (target === 'E18' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tests/perf/e18-desktop.spec.ts') ? 'gpu' : 'headless'}.json`);

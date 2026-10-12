@@ -160,7 +160,7 @@ export class CrowdLocomotion {
       paws.update(phase, stride, 'corgi-trot');
     } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
-    if (layers && !this.animal) this.ground();
+    if (!this.animal) this.ground();
     this.store(pose, instance);
   }
   /** Pose layers (hunch, lunge, flinch) pivot the legs with the pelvis: lift the pelvis by whatever heel or toe they
@@ -215,6 +215,7 @@ export class CrowdLocomotion {
           if (layers) this.layer(layers, phase);
           const stride = moving ? cadenceStride(clip, scale, speed) : 0;
           footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { stance: footwork.stance, knee: gait?.knee, maxSwing: .4, ...style });
+          this.ground();
           this.store(pose, instance);
         });
         // Never draw a broken solve: a non-finite pose collapses the figure to nothing on the GPU. Drop the
