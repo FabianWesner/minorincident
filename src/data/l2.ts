@@ -131,18 +131,20 @@ const truck = { x: -68.8, z: 36.7, yaw: Math.PI / 2 } as const;
 const truckPoint = (lx: number, lz: number): P => [truck.x + Math.cos(truck.yaw) * lx + Math.sin(truck.yaw) * lz, truck.z - Math.sin(truck.yaw) * lx + Math.cos(truck.yaw) * lz];
 export const l2Truck = truck;
 
+/** The courier stands 1.3 m out from the rack board (facade at x 1.5), clear of the apron bollard row (x ~2.15) that hid the ring from the game camera (PO 10-12). */
+export const axeStandX = 2.85;
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
   'l2-start': stationPoint(3.8, 2.7),   // on the apron in front of the left bay, clear of the centre pier and its bollards
   // Stand-to-interact point of the axe rack on the solid wall left of the left bay (z 5.0), 1.05 m out from the facade (see L2Props); the old spot hung on the centre pier in the bay opening.
-  'l2-axe-rack': stationPoint(2.6, 5.0),
+  'l2-axe-rack': stationPoint(axeStandX, 5.0),
   'l2-truck': [truck.x, truck.z],
   // Crew door on the station side of the cab.
   'l2-board': truckPoint(.3, 2.0),
-  // Two seats on the bench by the open bay, two on the bench deeper in the left bay.
-  'l2-bench-1': stationPoint(1.3, 2.5), 'l2-bench-2': stationPoint(1.3, .7), 'l2-bench-3': stationPoint(-1.3, 3.8), 'l2-bench-4': stationPoint(-1.3, 2.0),
+  // Two benches on the apron (never inside the bay, PO 10-12), two seats each: bench x + the seat's hipX .31, bench z -/+ .5.
+  'l2-bench-1': stationPoint(3.31, -1.4), 'l2-bench-2': stationPoint(3.31, -2.4), 'l2-bench-3': stationPoint(3.31, -3.9), 'l2-bench-4': stationPoint(3.31, -4.9),
   'l2-crew-1': stationPoint(6.0, 3.1), 'l2-crew-2': stationPoint(4.6, 3.9), 'l2-crew-3': stationPoint(2.4, -.1), 'l2-crew-4': stationPoint(3.4, -.5),
-  'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(4.0, -3.5),
+  'l2-crew-5': truckPoint(-4.5, 3.6), 'l2-crew-6': stationPoint(5.4, -2.6),
   'l2-truck-stop': [-43.0, -32.0],
   'l2-market': [-55.6, -42.2],
   'l2-door-front': [-50.7, -42.2],
