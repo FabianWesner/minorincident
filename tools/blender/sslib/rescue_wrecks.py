@@ -10,7 +10,7 @@ from mathutils import Vector
 from . import palette, ao
 
 
-def build_wreck(directory, output):
+def build_wreck(directory, output, dark_lamps=False, glass_faces=None):
     directory=Path(directory);asset=directory.name;stats={}
     for lod in (0,1,2):
         bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -51,7 +51,16 @@ def build_wreck(directory, output):
                 bmesh.ops.delete(bm,geom=faces,context='FACES');bm.to_mesh(obj.data);bm.free()
             # Remove front glass faces by authored spatial region; keep surrounding pillars.
             # Original panes are independent palette batches, so no panel triangulation collapses.
-            if 'glass' in obj.name.lower() or any(m and m.name in ('pal_backpackTeal','pal_glassBlue') for m in obj.data.materials):
+            if glass_faces:
+                # Sedans whose glazing shares a batch with trim (green: pal_asphalt): break only window faces, keep paint.
+                import bmesh
+                bm=bmesh.new();bm.from_mesh(obj.data)
+                faces=[f for f in bm.faces if obj.data.materials[f.material_index].name==glass_faces[0] and all((obj.matrix_world@v.co).z>glass_faces[1] for v in f.verts)]
+                bmesh.ops.delete(bm,geom=faces,context='FACES');bm.to_mesh(obj.data);bm.free()
+                if not obj.data.polygons:
+                    bpy.data.objects.remove(obj,do_unlink=True)
+                    continue
+            elif 'glass' in obj.name.lower() or any(m and m.name in ('pal_backpackTeal','pal_glassBlue') for m in obj.data.materials):
                 # Entire glazing batch becomes empty frame area, including rear panes.
                 obj.hide_render=True
                 bpy.data.objects.remove(obj,do_unlink=True)
@@ -76,6 +85,14 @@ def build_wreck(directory, output):
         hub=bpy.context.object;hub.name='exposedAxleHub';hub.data.materials.append(palette.mat('sidewalk'))
         matrix=hub.matrix_world.copy();hub.parent=wheel;hub.matrix_world=matrix
         root=next(o for o in bpy.context.scene.objects if o.type=='EMPTY' and o.parent is None)
+        if dark_lamps:
+            # A dead wreck shows no lit lamps: drop the light anchors and swap emissive lenses for dark trim.
+            for obj in list(bpy.context.scene.objects):
+                if 'ss_light' in obj:
+                    del obj['ss_light'];obj['wreckLightOff']=True
+                if obj.type=='MESH':
+                    for i,m in enumerate(obj.data.materials):
+                        if m and m.name.startswith('emi_'):obj.data.materials[i]=palette.mat('uiDark')
         root['decay']='wrecked'
         root['ss_physics']=json.dumps({'class':'heavy','mass':1400,'friction':.85,'restitution':.02,'centerOfMass':[0,.6,0],'pushable':False,'kickable':False,'flammable':True,'sounds':'prop.metal-heavy'})
         # Keep a named collider in native coordinates (Blender Z up).
