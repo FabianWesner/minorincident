@@ -1,4 +1,4 @@
-import { l4Anchors, l4Line } from '../../data/l4';
+import { l4, l4Anchors, l4Edges, l4Line } from '../../data/l4';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W0 "clean, intact, alive" dressing and the army's orderly reception (E22 section 5.2); counted by the static AC05 test. */
@@ -35,6 +35,26 @@ export const l4Dressing: readonly L4Dressing[] = [
     [51.8, -22, 'veh.sedan-white', H], [51.8, 5, 'veh.sedan-blue', -H]] as const).map(([x, z, assetId, yaw]) => d('parked', assetId, x, z, { yaw })),
 ];
 
+/** Street mouths for the encounter lane's first Alphas. No actor is spawned by the layout. */
+export const l4AlphaEmergence = [
+  { edgeId: 'north', anchor: 'l4-alpha-north' },
+  { edgeId: 'west', anchor: 'l4-alpha-west' },
+  { edgeId: 'south-east', anchor: 'l4-alpha-south' },
+] as const;
+
+/**
+ * Three existing pallets with clear ground on both sides. Systems resolve the named endpoints into E26 slots and own HP,
+ * blockers and broken visuals; placementId identifies the intact static pallet they replace (never leave both blockers).
+ * Indices address the existing north, west and south l4Line runs, preserving the reception and convoy dressing.
+ */
+export const l4BreakableLine = ([['north', 6], ['west', 13], ['south', 20]] as const).map(([side, index]) => {
+  const pallet = l4Line[index];
+  const dressingIndex = l4Dressing.findIndex(d => d.kind === 'sandbag' && d.x === pallet.x && d.z === pallet.z);
+  const id = `l4-line-${side}`;
+  return { id, lineIndex: index, placementId: `l4-sandbag-${dressingIndex}`, emergenceAnchor: `l4-alpha-${side}`,
+    anchors: { center: `${id}-center`, a: `${id}-a`, b: `${id}-b`, inside: `${id}-inside`, outside: `${id}-outside` } };
+});
+
 /**
  * L4 copy of the D-FAIR layout: authored L4 anchors (the cellar anchors come from the layout's own cellar and door placements)
  * and the clean army/city dressing. Feeds collision, navigation and rendering alike (the same pattern as the L2/L3 layout copies).
@@ -44,6 +64,22 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (layout.district !== 'D-FAIR') return layout;
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l4Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    for (const entry of l4AlphaEmergence) {
+      const edge = l4Edges.find(e => e.id === entry.edgeId)!;
+      const [x, z] = edge.at;
+      layout.anchors[entry.anchor] = { position: [x, 0, z], yaw: -Math.atan2(l4.map.centre.z - z, l4.map.centre.x - x) };
+    }
+    for (const line of l4BreakableLine) {
+      const p = l4Line[line.lineIndex], yaw = p.yaw === 0 ? 0 : H;
+      const inward = p.yaw === 0 ? [0, p.z < 0 ? 1 : -1] : [1, 0];
+      const set = (name: string, dx = 0, dz = 0) => { layout.anchors[name] = { position: [p.x + dx, 0, p.z + dz], yaw }; };
+      set(line.anchors.center);
+      // The existing pallet is 1.4 m along local X; the approach anchors clear its 1.19 m depth plus character radius.
+      set(line.anchors.a, -.7 * Math.cos(yaw), .7 * Math.sin(yaw));
+      set(line.anchors.b, .7 * Math.cos(yaw), -.7 * Math.sin(yaw));
+      set(line.anchors.inside, 2.4 * inward[0], 2.4 * inward[1]);
+      set(line.anchors.outside, -2.4 * inward[0], -2.4 * inward[1]);
+    }
     const metro = layout.anchors['metro-entrance'];
     if (metro) for (const name of ['photo-l4-metro-entrance-safe', 'pair-metro-entrance']) layout.anchors[name] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
     if (door) layout.anchors['l4-cellar-door'] = { position: [...door.position], yaw: 0 };
