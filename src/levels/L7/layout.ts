@@ -4,6 +4,7 @@ import { l7Rocket } from '../../data/l7';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { DistrictLayout, Placement, PlacementTransform, Point } from '../districts/types';
 import { levelFiveLayouts, l5ShellAssets } from '../L5/layout';
+import { l7Bus, l7CorridorAnchors, l7CorridorItems } from './corridor';
 
 /** The authored city and Northgate strip; fast mask matches the stepped bounds exactly. */
 export const l7Areas = [{ min: [-85, -65], max: [94, 65] }, { min: [94, -15], max: [290, 45] }] as const;
@@ -22,12 +23,18 @@ export const l7Fires = [...l5Fires, ...([
 /** Four destroyed segments retain broad kerb detours, not invisible gates. */
 export const l7StreetDamage: readonly Point[] = [[232, 15], [194, 15], [156, 15], [118, 15]];
 
+/** Rear-yard fences that closed the west alley: its inner row and the two end rows (the outer edge fence stays). */
+const westYardFence = ({ position: [x, , z] }: Placement) => x > -84 && x < -64 && z > -36 && z < 42 &&
+  (Math.abs(x + 73.2) < .1 || Math.abs(z + 34.6) < .1 || Math.abs(z - 40.6) < .1);
+
 export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return levelFiveLayouts(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
     // Explicit W5 retention: keep city shells, road furniture, rubble, wrecks and
     // their colliders. The underground concourse and signs of rescue expire.
-    const remove = new Set(layout.placements.filter(p => p.id === 'l5-station' || p.id.startsWith('l5-cue-') || p.assetId === 'prop.hmg-nest' || (p.assetId === 'prop.privacy-fence' && p.position[0] > 80)).map(p => p.id));
+    const remove = new Set(layout.placements.filter(p => p.id === 'l5-station' || p.id.startsWith('l5-cue-') || p.assetId === 'prop.hmg-nest' || p.assetId === 'int.basement-cellar' || (p.assetId === 'prop.privacy-fence' && (p.position[0] > 80 || westYardFence(p)))).map(p => p.id));
+    // The Kessler cellar's walls would close the west corridor: W6 buries it with the rest of the yard.
+    for (const c of layout.colliders) if (c.id.startsWith('dressing:cellar-')) remove.add(c.id);
     for (const p of layout.placements) if (p.maxTier === 5 && !remove.has(p.id)) p.maxTier = 6;
     for (const c of layout.colliders) if (c.maxTier === 5 && ![...remove].some(id => c.id === id || c.id.startsWith(id + '/'))) c.maxTier = 6;
     for (const p of layout.placements) if (l5ShellAssets.includes(p.assetId)) p.decay = 'w6';
@@ -77,6 +84,10 @@ export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // Extra collapses at existing frontages; recognizable footprints stay exact.
     for (const [i, [x, z, yaw]] of [[18.4, 8.6, Math.PI], [54.8, 8.6, 0], [-38.4, -15.5, 0], [-13.7, -23.7, -Math.PI / 2]].entries())
       add(`l7-collapse-${i}`, 'decay.collapsed-facade', x, z, yaw);
+    // D2: west evacuation corridor, working bus and two-sided approach.
+    for (const [id, anchor] of Object.entries(l7CorridorAnchors)) layout.anchors[id] = structuredClone(anchor);
+    for (const [id, assetId, x, z, yaw, scale, decay] of l7CorridorItems) add(`l7-corridor-${id}`, assetId, x, z, yaw, scale, decay);
+    add(l7Bus.id, l7Bus.asset, l7Bus.x, l7Bus.z, l7Bus.yaw);
     return layout;
   });
 }

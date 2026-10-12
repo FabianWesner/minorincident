@@ -1,0 +1,106 @@
+{
+ "name": "l7-corridor-alley",
+ "note": "Route A west rear-yard alley in the game camera: courier walks the convoy wrecks from the Harbor mouth; yard fences and cellar expired at W6.",
+ "seed": 29,
+ "tier": 6,
+ "time": "L6",
+ "ground": "district",
+ "dof": false,
+ "layout": {
+  "level": "L7",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -90,
+    -48
+   ],
+   [
+    -52,
+    46
+   ]
+  ],
+  "anchors": [
+   "l7-alley-south",
+   "l7-alley"
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -78,
+    -36
+   ],
+   "state": {
+    "walk": [
+     [
+      -78,
+      -24
+     ],
+     [
+      -76,
+      -10
+     ],
+     [
+      -79,
+      4
+     ],
+     [
+      -77,
+      16
+     ]
+    ]
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -78,
+   0,
+   -8
+  ],
+  "zoom": 2.2
+ },
+ "frames": 300,
+ "shots": [
+  0,
+  150,
+  300
+ ],
+ "sheet": 60,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "actorHitsMax": 0,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "footSinkMaxCm": 0,
+  "yawDriftMaxDeg": 6
+ },
+ "script": [
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -81,
+     -19
+    ],
+    "radius": 1.8,
+    "duration": 300
+   }
+  },
+  {
+   "frame": 0,
+   "effect": {
+    "fire": [
+     -75,
+     7
+    ],
+    "radius": 1.8,
+    "duration": 300
+   }
+  }
+ ]
+}

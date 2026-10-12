@@ -13,7 +13,7 @@ test('T-E29-10-district-browser @E29-AC10 persistent W6 fires and late civilian 
     return { before, after, id };
   });
   console.log(JSON.stringify(result));
-  expect(result.before).toBe(22); expect(result.after).toBe(22); await expect.poll(async () => {
+  expect(result.before).toBe(28); expect(result.after).toBe(28); await expect.poll(async () => {
     await page.evaluate(() => window.__SS__!.step(0));
     await page.waitForTimeout(100);
     return page.evaluate(id => window.__SS__!.getState().render.npcs!.civilians.figures.some(f => f.id === id && f.drawn), result.id);
