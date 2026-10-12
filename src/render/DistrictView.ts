@@ -187,6 +187,12 @@ export class DistrictView extends Group {
           const clone = scene.clone(true);
           // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
           clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
+          // PO 2026-10-12: the Grove back alleys were baked in the near-black UI token and read as a hole in the ground next to the
+          // fences (shadowed they went pure black). Draw that ground like asphalt; the baked GLB stays unchanged.
+          if (d.id === 'D-GROVE') {
+            const alley = this.materials.world('asphalt').seeThrough();
+            clone.traverse(o => { if (o instanceof Mesh && typeof o.userData.assetId !== 'string' && (o.material as { token?: string }).token === 'uiDark') o.material = alley; });
+          }
           clone.traverse((o) => {
             if (d.decay.removed.includes(o.name)) o.visible = false;
           });
