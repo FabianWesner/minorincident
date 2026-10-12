@@ -6,6 +6,7 @@ import { LevelFourBot } from './debug/bot/LevelFourBot';
 import { LevelFiveBot } from './debug/bot/LevelFiveBot';
 import type { LevelTwoBot } from './debug/bot/LevelTwoBot';
 import { LevelTransition, transitionPaint } from './ui/LevelTransition';
+import { RescueFade } from './ui/RescueFade';
 import { GameUI } from './ui/GameUI';
 import { CampaignUI } from './ui/CampaignUI';
 import { completePending,newCampaign, preset, type CampaignSave, type CampaignSettings, type Level, type ProgressionPreset } from './sim/progression/Campaign';
@@ -52,6 +53,7 @@ export class Game {
   readonly audio: AudioService;
   readonly ui: GameUI;
   readonly transition: LevelTransition;
+  private readonly rescueFade = new RescueFade();
   readonly ticker = new Ticker();
   campaign: CampaignSave | null = null;
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
@@ -138,6 +140,7 @@ export class Game {
         this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
         this.inspect?.update(seconds);
+        this.rescueFade.set(this.world.trapRescue?.fading ?? false);
         if (!this.clock.paused || this.restoredWhilePaused || this.inspect?.enabled) this.view.update(this.clock.paused ? 1 : this.clock.alpha);
       }
       if (!this.loading) {
