@@ -296,7 +296,6 @@ export class InfectedSystem {
         if (b.special === 'cling') range = 6;
         if (b.special === 'pounce') range = 4;
         if (b.special === 'dive') range = 6;
-        if (b.special === 'prop-throw' && player.id === 1 && this.props.nearestMedium(e)) range = 20;
         if (b.special === 'scream') range = 20;
         if (b.special === 'revive' && this.revivable(e)) range = 20;
         const packAngle = b.packIndex * Math.PI / 2;
@@ -421,8 +420,6 @@ export class InfectedSystem {
         downed.health.current = downed.health.max; downed.infected!.recoverAt = -1; downed.infected!.revived = true; downed.infected!.deadAt = -1; downed.infected!.state = 'chase'; b.reviveUsed = true; this.world.events.emit({ type: 'infected.revived', tick: this.world.tick, sourceId: e.id, targetId: downed.id }); return true;
       }
     }
-    // The prop flight system hits the courier; a heard civilian gets the ordinary close strike.
-    if (b.special === 'prop-throw' && player.id === 1 && this.props.launch(e, b.attackId)) return true;
     if (b.special === 'dive') {
       if (this.world.tick - b.until < 120) {
         if ((this.world.tick - b.until) % 30 === 29) this.attackVictim(e, 5);
@@ -889,10 +886,10 @@ export class InfectedSystem {
     const attackId = this.nextAttackId(), activeTick = tick + timing.windup;
     let destination: { x: number; z: number } | undefined;
     b.attackId = attackId;
-    if (move === 'alpha.grab-throw' || move === 'alpha.roar') { if (e.locomotion) resetResponse(e.locomotion); b.dx = area.dx; b.dz = area.dz; }
-    if (['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar'].includes(move)) {
+    if (move === 'alpha.grab-throw' || move === 'gorilla.grab-throw' || move === 'alpha.roar') { if (e.locomotion) resetResponse(e.locomotion); b.dx = area.dx; b.dz = area.dz; }
+    if (['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'gorilla.grab-throw'].includes(move)) {
       const dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz);
-      area = { x: e.transform.x, z: e.transform.z, radius: move === 'gorilla.pound' ? 5 : move === 'gorilla.roar' ? 20 : move === 'alpha.ground-slam' ? 4 : 1, dx: length > .001 ? dx / length : Math.cos(e.transform.yaw), dz: length > .001 ? dz / length : -Math.sin(e.transform.yaw) };
+      area = { x: e.transform.x, z: e.transform.z, radius: move === 'elephant.charge' ? 1.75 : move === 'elephant.swipe' ? 3 : move === 'gorilla.pound' ? 5 : move === 'gorilla.roar' ? 20 : move === 'alpha.ground-slam' ? 4 : 1, dx: length > .001 ? dx / length : Math.cos(e.transform.yaw), dz: length > .001 ? dz / length : -Math.sin(e.transform.yaw) };
       if (move === 'lion.flank') {
         // End at the visible target's side: a deterministic 75 degree approach offset.
         const side = e.id % 2 ? 1 : -1, r = Math.min(6, Math.max(2, length));
@@ -909,11 +906,11 @@ export class InfectedSystem {
     return true;
   }
   private tryZooSpecial(e: EntitySnapshot, target: EntitySnapshot): boolean {
-    if (e.archetype !== 'infected.lion' && e.archetype !== 'infected.gorilla') return false;
+    if (e.archetype !== 'infected.lion' && e.archetype !== 'infected.gorilla' && e.archetype !== 'infected.elephant') return false;
     const distance = Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z);
     if (!this.hearing.tracks(e, target.transform)) return false;
-    const moves: InfectedSpecialMove[] = e.archetype === 'infected.lion' ? distance <= 8 ? ['lion.pounce', 'lion.flank'] : distance <= 14 ? ['lion.flank'] : [] : distance <= 5 ? ['gorilla.pound', 'gorilla.roar'] : distance <= 14 ? ['gorilla.roar'] : [];
-    for (const move of moves) if ((move !== 'lion.flank' || this.hearing.sees(e, target.transform)) && this.startSpecial(e.id, move, { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: 1, dz: 0 })) return true;
+    const moves: InfectedSpecialMove[] = e.archetype === 'infected.lion' ? distance <= 8 ? ['lion.pounce', 'lion.flank'] : distance <= 14 ? ['lion.flank'] : [] : e.archetype === 'infected.elephant' ? distance <= 3 ? ['elephant.swipe', 'elephant.charge'] : distance <= 16 ? ['elephant.charge'] : [] : distance <= 5 ? ['gorilla.grab-throw', 'gorilla.pound', 'gorilla.roar'] : distance <= 15 ? ['gorilla.grab-throw', 'gorilla.roar'] : [];
+    for (const move of moves) if ((move !== 'gorilla.grab-throw' || !!this.props.nearestObject(e, 3)) && (move !== 'lion.flank' || this.hearing.sees(e, target.transform)) && this.startSpecial(e.id, move, { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: 1, dz: 0 })) return true;
     return false;
   }
   /** Active resolvers call this before each target effect, never during the windup. */
@@ -943,7 +940,7 @@ export class InfectedSystem {
   private updateSpecial(e: EntitySnapshot): boolean {
     const b = e.infected!, a = b.specialAttack, tick = this.world.tick;
     if (!a) return tick < (b.specialRecoveryUntil ?? 0);
-    if (a.stage === 'telegraph' && (a.move === 'alpha.grab-throw' || a.move === 'alpha.roar')) {
+    if (a.stage === 'telegraph' && (a.move === 'alpha.grab-throw' || a.move === 'gorilla.grab-throw' || a.move === 'alpha.roar')) {
       const yaw = -Math.atan2(a.area.dz, a.area.dx), delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
       e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
     }
@@ -957,34 +954,35 @@ export class InfectedSystem {
       this.world.events.emit({ type: 'infected.special', tick, sourceId: e.id, move: a.move, attackId: a.attackId, stage: 'expiry' });
       delete b.specialAttack; return false;
     }
-    if (a.stage === 'active' && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound'].includes(a.move)) this.resolvePhysical(e);
+    if (a.stage === 'active' && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'elephant.charge', 'elephant.swipe'].includes(a.move)) this.resolvePhysical(e);
     return true;
   }
   /** Fixed, locked physical moves use combat hits, E26 blockers and the existing human hurt state. */
   private resolvePhysical(e: EntitySnapshot): void {
     const a = e.infected!.specialAttack!;
-    const pounce = a.move === 'lion.pounce', pound = a.move === 'gorilla.pound';
+    const pounce = a.move === 'lion.pounce', pound = a.move === 'gorilla.pound', elephant = a.move === 'elephant.charge', swipe = a.move === 'elephant.swipe';
     const q = this.world.combat!.query, p = e.transform, direction = this.physicalDirection;
     direction.x = a.area.dx; direction.z = a.area.dz;
     if (a.move === 'lion.flank') {
       if (this.world.tick - a.activeTick >= 120 || !a.destination || Math.hypot(p.x - a.destination.x, p.z - a.destination.z) <= e.combat!.radius + .5) { this.finishSpecial(e.id); return; }
       this.seek(e, a.destination, 10); this.world.spatial.set(e.id, p.x, p.z); return;
     }
-    if (a.move === 'alpha.ground-slam' || pound) {
-      const radius = pound ? 5 : 4;
+    if (a.move === 'alpha.ground-slam' || pound || swipe) {
+      const radius = swipe ? 3 : pound ? 5 : 4;
       this.physicalQuery.x = a.area.x; this.physicalQuery.z = a.area.z; this.physicalQuery.r = radius + 1e-8;
       this.world.spatial.query(this.physicalQuery, this.physicalNeighbors);
       for (const id of this.physicalNeighbors) {
         const target = this.world.entities.get(id);
         if (!target || !this.physicalHuman(target) || Math.hypot(target.transform.x - a.area.x, target.transform.z - a.area.z) > radius + 1e-8 || !q.visible(a.area, target.transform) || !this.physicalPropVisible(a.area, target.transform)) continue;
+        if (swipe) { const dx = target.transform.x - a.area.x, dz = target.transform.z - a.area.z; if (dx * a.area.dx + dz * a.area.dz < Math.hypot(dx, dz) * .5 - 1e-8) continue; }
         this.physicalHit(e, target, pound ? 30 : 25);
       }
       this.finishSpecial(e.id); return;
     }
-    const hitRadius = pounce ? infectedContactDistance(e.combat!.radius) : 1;
+    const hitRadius = pounce ? infectedContactDistance(e.combat!.radius) : elephant ? 1.75 : 1;
     const travelled = (p.x - a.area.x) * a.area.dx + (p.z - a.area.z) * a.area.dz;
-    const range = pounce ? Math.min(8, Math.hypot(a.target.x - a.area.x, a.target.z - a.area.z)) : 12;
-    const step = Math.min((pounce ? 10 : 9) / 60, Math.max(0, range - travelled));
+    const range = pounce ? Math.min(8, Math.hypot(a.target.x - a.area.x, a.target.z - a.area.z)) : elephant ? 16 : 12;
+    const step = Math.min((pounce ? 10 : elephant ? 8 : 9) / 60, Math.max(0, range - travelled));
     let distance = this.physicalClearDistance(e, direction, step);
     if (pounce) {
       const target = this.world.entities.get(a.target.id);
@@ -996,13 +994,14 @@ export class InfectedSystem {
     }
     // Break only the nearest contacted E26 blocker. Re-query immediately after its ordinary hit event clears nav.
     for (let tries = 0; !pounce && distance < step && tries < 8; tries++) {
-      let wall = q.dynamicWalls.find(w => w.entityId !== undefined && q.wallDistance(w, p, direction, step, e.combat!.radius) <= distance + 1e-8);
-      if (!wall) for (const propWall of this.world.props?.navWalls.values() ?? []) if (q.wallDistance(propWall, p, direction, step, e.combat!.radius) <= distance + 1e-8) { wall = propWall; break; }
+      let wall = q.dynamicWalls.find(w => w.entityId !== undefined && q.wallDistance(w, p, direction, step, elephant ? hitRadius : e.combat!.radius) <= distance + 1e-8);
+      if (!wall) for (const propWall of this.world.props?.navWalls.values() ?? []) if (q.wallDistance(propWall, p, direction, step, elephant ? hitRadius : e.combat!.radius) <= distance + 1e-8) { wall = propWall; break; }
       const target = wall && this.world.entities.get(wall.entityId!);
       if (!target || (!target.barricade?.intact && target.kind !== 'physics-prop') || !this.specialHit(e.id, target.id)) break;
-      this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: a.attackId, actionId: a.move, origin: p, direction, base: 300, multiplier: 1, type: 'melee', knockback: 0, stagger: 0, hitStopMs: 0 });
+      this.world.combat!.damage.apply({ sourceId: e.id, targetId: target.id, attackId: a.attackId, actionId: a.move, origin: p, direction, base: elephant ? 400 : 300, multiplier: 1, type: 'melee', knockback: 0, stagger: 0, hitStopMs: 0 });
       distance = this.physicalClearDistance(e, direction, step);
     }
+    if (elephant) this.elephantVehicles(e, direction, distance);
     const x = p.x, z = p.z;
     p.x += a.area.dx * Math.max(0, distance - (distance < step ? .001 : 0));
     p.z += a.area.dz * Math.max(0, distance - (distance < step ? .001 : 0));
@@ -1016,7 +1015,7 @@ export class InfectedSystem {
       if (!target || !this.physicalHuman(target) || pounce && target.id !== a.target.id) continue;
       const dx = target.transform.x - x, dz = target.transform.z - z;
       const along = Math.max(0, Math.min(distance, dx * a.area.dx + dz * a.area.dz));
-      if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= hitRadius + 1e-8 && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, 30);
+      if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= hitRadius + 1e-8 && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, elephant ? 40 : 30);
       if (pounce && a.hitIds.includes(target.id)) {
         const b = e.infected!; b.grabUntil = this.world.tick + 90; b.grabHits = 0; b.heardTargetId = target.id; b.grabX = target.transform.x; b.grabZ = target.transform.z;
         this.finishSpecial(e.id); return;
@@ -1024,10 +1023,29 @@ export class InfectedSystem {
     }
     if (distance < step || travelled + step >= range - 1e-8) this.finishSpecial(e.id);
   }
+  /** Swept chassis contact borrows E09's Rapier body; heavy/armored vehicles stay put. */
+  private elephantVehicles(e: EntitySnapshot, direction: { x: number; z: number }, step: number): void {
+    const a = e.infected!.specialAttack!, q = this.world.combat!.query;
+    for (const car of this.world.vehicles?.cars.values() ?? []) {
+      const { entity, physics } = car, p = entity.transform, def = physics.def;
+      if (def.mass > 2000 || entity.health.current <= 0 || physics.body.isKinematic() || a.hitIds.includes(entity.id)) continue;
+      // Transform the sweep into chassis space, then use the existing slab resolver.
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw), dx = e.transform.x - p.x, dz = e.transform.z - p.z;
+      const local = { x: dx * c - dz * s, z: dx * s + dz * c };
+      const ray = { x: direction.x * c - direction.z * s, z: direction.x * s + direction.z * c };
+      if (q.wallDistance({ x: 0, y: .7, z: 0, halfX: def.length / 2, halfY: 1, halfZ: def.width / 2 }, local, ray, step + 1e-8, 1.75) > step || !q.visible(e.transform, p) || !this.physicalPropVisible(e.transform, p) || !this.specialHit(e.id, entity.id)) continue;
+      this.world.vehicles!.damage(entity.id, 80);
+      // Eight m/s sideways clears parked tyre friction without teleporting the chassis.
+      const side = local.z <= 0 ? 1 : -1;
+      physics.body.applyImpulse({ x: s * def.mass * 8 * side, y: 0, z: c * def.mass * 8 * side }, true);
+      this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, targetId: entity.id, attackId: a.attackId, special: a.move, amount: 80 });
+    }
+  }
   private physicalClearDistance(e: EntitySnapshot, direction: { x: number; z: number }, step: number): number {
     const q = this.world.combat!.query;
-    let distance = q.clearDistance(e.transform, direction, step, undefined, e.combat!.radius);
-    for (const wall of this.world.props?.navWalls.values() ?? []) distance = Math.min(distance, q.wallDistance(wall, e.transform, direction, step, e.combat!.radius));
+    const radius = e.infected?.specialAttack?.move === 'elephant.charge' ? 1.75 : e.combat!.radius;
+    let distance = q.clearDistance(e.transform, direction, step, undefined, radius);
+    for (const wall of this.world.props?.navWalls.values() ?? []) distance = Math.min(distance, q.wallDistance(wall, e.transform, direction, step, radius));
     return distance;
   }
   private physicalPropVisible(origin: { x: number; z: number }, target: { x: number; z: number }): boolean {
@@ -1043,7 +1061,7 @@ export class InfectedSystem {
     if (!this.specialHit(source.id, target.id)) return;
     const a = source.infected!.specialAttack!;
     const dx = target.transform.x - source.transform.x, dz = target.transform.z - source.transform.z, length = Math.hypot(dx, dz);
-    const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: target.id, attackId: a.attackId, actionId: a.move.startsWith('alpha.') ? a.move : `infected.${a.move}`, origin: source.transform, direction: length ? { x: dx / length, z: dz / length } : { x: a.area.dx, z: a.area.dz }, base, multiplier: 1, type: 'melee', knockback: 0, stagger: 0, knockdownTicks: a.move === 'lion.pounce' ? target.kind === 'player' ? 0 : 90 : 72, hitStopMs: 0 });
+    const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: target.id, attackId: a.attackId, actionId: a.move.startsWith('alpha.') ? a.move : `infected.${a.move}`, origin: source.transform, direction: length ? { x: dx / length, z: dz / length } : { x: a.area.dx, z: a.area.dz }, base, multiplier: 1, type: 'melee', knockback: a.move === 'elephant.swipe' ? 3 : 0, stagger: 0, knockdownTicks: a.move === 'elephant.charge' ? 90 : a.move === 'elephant.swipe' ? 48 : a.move === 'lion.pounce' ? target.kind === 'player' ? 0 : 90 : 72, hitStopMs: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: source.id, targetId: target.id, attackId: a.attackId, special: a.move, amount });
   }
   /** Stable test/debug surface, including RNG and pool/director counters needed for deterministic replay. */

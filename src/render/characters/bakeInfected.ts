@@ -76,7 +76,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   const hoofFloor = hoofPoints.length ? lowestHoof() : 0;
 
   for (const clip of clipNames) {
-    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : root.getObjectByName('trunk') && /^(windup|swing)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     const duration = authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
     for (let frame = 0; frame < framesPerClip; frame++) {
       for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }

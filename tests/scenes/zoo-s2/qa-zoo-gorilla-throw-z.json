@@ -1,0 +1,81 @@
+{
+  "name": "qa-zoo-gorilla-throw-z",
+  "note": "Positive-Z direction control: throw corridor, raised-arm pose and corpse velocity must point at the locked courier, not its mirrored location.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        8
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "animal",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "body",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        2.9,
+        0
+      ],
+      "yaw": 90,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      4
+    ],
+    "zoom": 1.4
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "body",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "animal",
+      "do": {
+        "special": "gorilla.grab-throw",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 110,
+  "shots": [
+    47,
+    90
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  }
+}
