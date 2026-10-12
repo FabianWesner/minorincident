@@ -1,0 +1,55 @@
+
+Running 1 test using 1 worker
+
+{"attackShotEarly":true,"inFrameAtFallback":4}
+L3 death #1 near x=-118 z=-29
+L3 death #2 near x=-121 z=-22
+L3 death #3 near x=-69 z=30
+L3 death #4 near x=-5 z=-23
+L3 death #5 near x=-20 z=26
+L3 death #6 near x=19 z=-23
+L3 death #7 near x=11 z=-23
+L3 death #8 near x=-5 z=-24
+L3 death #9 near x=20 z=-23
+L3 death #10 near x=30 z=-25
+L3 death #11 near x=30 z=-26
+L3 death #12 near x=51 z=-26
+L3 death #13 near x=30 z=-26
+L3 death #14 near x=19 z=-23
+L3 death #15 near x=35 z=-24
+L3 death #16 near x=42 z=-26
+L3 death #17 near x=78 z=-24
+L3 death #18 near x=50 z=-25
+L3 death #19 near x=76 z=-24
+L3 death #20 near x=87 z=-24
+L3 death #21 near x=85 z=-22
+L3 death #22 near x=149 z=3
+L3 death #23 near x=148 z=2
+L3 RESULT street=blvd deaths=23
+  ✘  1 [chromium] › tests/e2e/levels/L3.spec.ts:149:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review (7.8m)
+
+
+  1) [chromium] › tests/e2e/levels/L3.spec.ts:149:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review
+
+    Error: a fleeing courier can escape Boulevard
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 5
+    Received:    23
+
+      246 |     writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ lastPursuitAt, closedGroup, phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\n');
+      247 |     console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);
+    > 248 |     if (street === 'blvd') expect(final.stats.deaths, 'a fleeing courier can escape Boulevard').toBeLessThanOrEqual(5);
+          |                                                                                                 ^
+      249 |     expect(['result', 'progression']).toContain(final.phase);
+      250 |     expect(final.l3!.crossedAt).toBeGreaterThan(0);
+      251 |     expect(final.l3!.barrierClosedAt).toBeGreaterThan(0);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests/e2e/levels/L3.spec.ts:248:97
+
+    Error Context: test-results/playwright/run-3463/e2e-levels-L3-L3-The-Polic-9d049-spots-for-the-vision-review-chromium/error-context.md
+
+  Slow test file: [chromium] › tests/e2e/levels/L3.spec.ts (7.8m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [chromium] › tests/e2e/levels/L3.spec.ts:149:62 › L3 The Police Collapse in the browser › T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review
