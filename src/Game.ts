@@ -25,6 +25,7 @@ import { Matrix4 } from 'three';
 import { missionSandbox } from '../tests/fixtures/scenarios/mission-sandbox';
 import { missionIds, resolveCampaignMission, type MissionId } from './levels/missions';
 import { Combat } from './sim/combat/Combat';
+import type { TelemetrySink } from './telemetry/sink';
 import { InputSystem } from './input/InputSystem';
 import { Clock } from './core/Clock';
 import { Services } from './core/Services';
@@ -56,6 +57,8 @@ export class Game {
   private readonly rescueFade = new RescueFade();
   readonly ticker = new Ticker();
   campaign: CampaignSave | null = null;
+  /** Anonymous play telemetry (src/telemetry), installed after boot on the live site; null in tests and local dev. */
+  telemetry: TelemetrySink | null = null;
   readonly saves = new SaveStore({ getItem: key => localStorage.getItem(key), setItem: (key,value) => localStorage.setItem(key,value), removeItem: key => localStorage.removeItem(key) });
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
@@ -90,7 +93,7 @@ export class Game {
       this.ticker.reset();
       if (this.world.missions?.state.phase === 'playing') this.view.refreshMissionUI(); else this.view.update(1);
     };
-    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => this.view.view.zoom(delta)));
+    this.input = this.services.add(new InputSystem(this.view.renderer.domElement, this.view.camera, delta => { this.telemetry?.zoom(delta); this.view.view.zoom(delta); }));
     this.input.reach = () => {
       const combat = this.world.combat, weapons = this.world.entities.get(1)?.weapons;
       if (!combat || !weapons) return null;
@@ -162,7 +165,7 @@ export class Game {
   loadScenario(name: string | null, seed = 1, deferAudio = false): Promise<void> {
     if (name && performanceLevels[name]) return this.loadLevel(performanceLevels[name].level, { seed }, name);
     const load = this.levelQueue.then(async () => {
-      this.speculative = null; this.levelStart = null; this.view.missionHidden = false; this.view.unfreeze();
+      this.speculative = null; this.levelStart = null; this.telemetry?.scenarioUnloaded(); this.view.missionHidden = false; this.view.unfreeze();
       this.loading = true; this.restoredWhilePaused = false;
       try {
         await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
@@ -253,6 +256,7 @@ export class Game {
   private firstLevelFrame(id: string): void {
     if (this.completedAt?.target === id) loadMeasure(`transition:${id}:complete-to-first-frame`, this.completedAt.at);
     this.completedAt = null; this.transition.finish();
+    this.telemetry?.levelLoaded(this.levelStart ? { id: this.levelStart.id, seed: this.levelStart.seed, tier: this.levelStart.tier, campaign: this.levelStart.campaign } : null);
   }
   private noteLevelStart(id: string, opts?: { seed?: number; tier?: Tier; source?: unknown; setup?: unknown }, perf = false): void {
     this.levelStart = !perf && !opts?.source && !opts?.setup && missionIds.includes(id as MissionId) ? { id, seed: opts?.seed, tier: opts?.tier, campaign: this.campaign ? structuredClone(this.campaign) : null } : null;
@@ -261,6 +265,7 @@ export class Game {
   /** Restart the current level from its very beginning: same level, campaign state and options as at level start (a seedless level draws a new run seed). */
   restartLevel(): Promise<void> {
     const start = this.levelStart; if (!start) return Promise.reject(new Error('No level to restart'));
+    this.telemetry?.restarting();
     if (start.campaign) this.campaign = structuredClone(start.campaign);
     return this.loadLevel(start.id, { seed: start.seed, tier: start.tier });
   }
@@ -330,19 +335,20 @@ export class Game {
     const dead = this.world.entities.get(1)?.survivor?.diedAt != null;
     if (this.wasDead && !dead) { this.input.release(); this.world.controls.reset(); }
     this.wasDead = dead;
-    if (this.driver) this.world.applyInput(this.driver.sample(), 'keyboard');
+    if (this.driver) { const frame = this.driver.sample(); this.input.tap?.(frame, 'keyboard'); this.world.applyInput(frame, 'keyboard'); }
     else if (this.inspect?.enabled) this.world.clearInput();
     else if (player) {
       this.input.cursor.setGroundHeight(this.world.districts?.groundHeight(player.x, player.z) ?? 0);
       const frame = this.input.sample(player, 1 / 60, this.world.entities.iterate());
       if (frame.pause && this.ui.enabled) { this.ui.pause(); return; }
-      this.world.applyInput(frame, this.input.scheme);
+      this.world.applyInput(frame, this.input.feed?.scheme ?? this.input.scheme);
     }
     if (this.world.infected) {
-      // The director sees the tick pose, never a render-rate interpolated one (determinism across displays).
-      this.view.view.present(1, true);
-      this.spawnFrustum.multiplyMatrices(this.view.camera.projectionMatrix, this.view.camera.matrixWorldInverse);
-      this.world.infected.director.setFrustum(this.spawnFrustum.elements, this.view.camera.position);
+      // The director sees the tick pose of the follow rig, never a render-rate interpolated one and never presentation kicks
+      // (pull/shake/roll): spawns must be a function of the recorded inputs alone (telemetry replays).
+      const sim = this.view.view.simCamera;
+      this.spawnFrustum.multiplyMatrices(sim.projectionMatrix, sim.matrixWorldInverse);
+      this.world.infected.director.setFrustum(this.spawnFrustum.elements, sim.position);
     }
     this.world.update();
     if (this.ui.enabled) this.ui.hud.onboarding.observe(this.world.inputFrame);
