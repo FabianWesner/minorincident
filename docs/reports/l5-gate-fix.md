@@ -1,0 +1,6 @@
+Fixed L4→L5 firearm selection, Harbor Street blackout and the companion cellar-stair spawn; no criteria or tolerances changed.
+Only the live L4 progression handover selects RIGHT; menu Continue retains its exact campaign racks and LEFT selection (T-E13-05).
+Packed lantern names left `_light=-1` in static bakes; bind the authored lamp and regenerate both LODs. [Before](l5-gate-fix/harbor-before.png) / [after](l5-gate-fix/harbor-after.png): same road/buildings, L4 intact lit shops versus L5 broken frontage, wrecked SUV, orange dusk and dark lanterns; Harbor difference 0.29751875→0.31203611 (>0.3 unchanged), all four pairs pass.
+The moved cellar start put companion actor 18 against the stair; existing navigation clearance search fixes its spawn (1,200 frames, 52,999 samples, zero overlaps).
+Passed: typecheck/lint/build, focused 4/4, Hetzner unit 828/828, smoke 6 sim +26 browser. Full levels: 48/51 initially; continuity and high timing pass isolated reruns; phone timing also fails on untouched HEAD (L1 5.465 s, L3 5.888 s).
+E23 verify: 46 sim passed, 2 failed; untouched HEAD 233c082c reproduces T-E23-02 LEFT selection and T-E23-03 newbie 305.8167 s >300 s. Baseline removed; generated media cleaned except report before/after; no deploy or merge.

@@ -261,12 +261,16 @@ export class Game {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
   }
   async continueCampaign(save:CampaignSave,level?:Level):Promise<void> {
+    const fromL4 = this.world.missions?.def.id === 'L4' && this.world.missions.state.phase === 'progression';
     this.campaign=structuredClone(save);
     if(save.pending){completePending(this.campaign);this.saveCampaign();}
     if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);
-    await this.loadLevel(`L${level??save.unlockedLevel}`);
+    await this.loadLevel(`L${level??save.unlockedLevel}`, fromL4 ? { setup: world => {
+      // A fresh handover equips the carried firearm; menu Continue keeps its loadout selection.
+      if (world.scenario === 'L5' && world.combat) world.combat.runner.loadout.state.selectedSide = 'RIGHT';
+    } } : undefined);
     this.view.settings(settings);
   }
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
