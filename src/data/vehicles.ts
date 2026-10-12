@@ -1,3 +1,4 @@
+export const vehicleBoardingTicks = 60;
 /** E09 tuning in SI units; +X forward, +Y up, +Z left. */
 export interface VehicleDef {
   /** Door centre in authored +X metres, shared by interaction and presentation. */

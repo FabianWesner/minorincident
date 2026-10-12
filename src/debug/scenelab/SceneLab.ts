@@ -288,7 +288,7 @@ export class SceneLab {
     return ids;
   }
   private teleport(e: EntitySnapshot, p: { x: number; z: number }): void {
-    e.transform.x = p.x; e.transform.z = p.z; e.transform.y=(this.world.districts?.groundHeight(p.x,p.z)??0)+.705; this.world.spatial.set(e.id, p.x, p.z);
+    e.transform.x = p.x; e.transform.z = p.z; e.transform.y=(this.world.districts?.groundHeight(p.x,p.z)??0)+(e.companion ? .305 : .705); this.world.spatial.set(e.id, p.x, p.z);
     if (e.id === 1) { this.world.physics.playerBody!.setTranslation(e.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(e.transform); this.world.player!.setCheckpoint(e.transform); }
   }
   private stand(at: { x: number; z: number }, yaw: number): CivilianActivity {
@@ -323,6 +323,11 @@ export class SceneLab {
     if (!e) throw new Error(`Actor ${id} no longer exists`);
     const a: Exclude<Action, string> = typeof action === 'string' ? (action === 'idle' ? { idle: true } : action === 'chase' ? { chase: 'courier' } : action === 'flee' ? { flee: [e.transform.x - 1, e.transform.z] } : action === 'infect' ? { infect: {} } : { idle: true }) : action;
     actor.plan = null;
+    if ('boardCar' in a || 'exitCar' in a) {
+      const id = this.vehicles.get('boardCar' in a ? a.boardCar : a.exitCar);
+      if (id === undefined || !('boardCar' in a ? world.vehicles!.boardPassenger(id, e.id) : world.vehicles!.disembarkPassenger(id, e.id))) throw new Error(`Transport doorway unavailable: ${actor.kind} ${'boardCar' in a ? 'board' : 'exit'} at frame ${this.frame}`);
+      return;
+    }
     if (actor.kind === 'courier') {
       if ('god' in a) world.combat!.damage.god = a.god;
       else if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
@@ -341,10 +346,7 @@ export class SceneLab {
     }
     if (actor.kind === 'pedestrian') {
       const c = e.civilian!, reset = (schedule: CivilianActivity[]) => { c.schedule = schedule; c.scheduleStep = 0; c.activityUntil = 0; c.activityStarted = 0; c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.state = 'calm'; };
-      if ('boardCar' in a || 'exitCar' in a) {
-        const id = this.vehicles.get('boardCar' in a ? a.boardCar : a.exitCar);
-        if (id === undefined || !('boardCar' in a ? world.vehicles!.boardPassenger(id, e.id) : world.vehicles!.disembarkPassenger(id, e.id))) throw new Error('Transport doorway is unavailable');
-      } else if ('idle' in a) reset([this.stand(e.transform, e.transform.yaw)]);
+      if ('idle' in a) reset([this.stand(e.transform, e.transform.yaw)]);
       else if ('turn' in a) reset([this.stand(e.transform, rad(a.turn))]);
       else if ('walk' in a || 'run' in a) { const points = ('walk' in a ? a.walk : a.run).map(toPoint); if (c.l1) c.l1.walkSpeed = 'run' in a ? 3.2 : c.l1.walkSpeed; reset(points.map(p => ({ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }))); if (!a.loop) c.schedule!.push(this.stand(points[points.length - 1], e.transform.yaw)); }
       else if ('moveTo' in a) { const p = toPoint(a.moveTo); reset([{ activity: 'walk', anchor: 'lab/walk', target: p, ticks: 1 }, this.stand(p, e.transform.yaw)]); }

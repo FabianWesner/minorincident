@@ -2,7 +2,8 @@
 
 `vehicle.military-apc` uses the E09 driver input, safe capsule exit and transition presentation.
 Its `veh.military-apc` shell selects the authored `unarmed` variant; the base shell is rendered
-without gun/turret/muzzle if that variant has not arrived yet. Transport never grants a weapon.
+without gun/turret/muzzle if that variant has not arrived yet. Opaque set-piece cabs get
+a glazed driver opening and E09 door pivots in presentation; authored translucent cabs bypass that fallback. Transport never grants a weapon.
 
 Escape encounters guide each living survivor to the usual driver doorway (`doorX`,
 `width / 2 + .55`, transformed by chassis yaw), then call `boardPassenger(carId, actorId)`.
@@ -12,7 +13,7 @@ Use `groupBoarded(carId, completeRoster)` before departure; zero living survivor
 `disembarkPassenger` checks navigation, a full capsule and other occupants, returning false
 when all exits are blocked. Retry as other occupants finish exiting. Driver exit uses E09 `exit()`.
 
-Before replacing L8, retain `transfer(carId)` alongside the campaign save (owned actions,
+Before replacing L8, assign `save.transport = transfer(carId)` (owned actions,
 settings and losses still belong to campaign). After L9 creates its empty simulation and
 before it spawns population with conflicting IDs, call `restoreTransfer(payload, arrival, yaw)`.
 The payload keeps vehicle/occupant numeric IDs, vehicle HP, survivor health/identity/infection,

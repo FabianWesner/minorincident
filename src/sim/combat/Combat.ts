@@ -61,7 +61,7 @@ export class Combat {
   update(frame: InputFrame): void {
     const player = this.world.entities.get(1)!;
     if (!player.weapons) return;
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && this.world.vehicles?.active == null && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update(frame);
   }
