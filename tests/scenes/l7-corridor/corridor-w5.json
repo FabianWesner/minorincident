@@ -1,0 +1,68 @@
+{
+ "name": "l7-corridor-w5",
+ "note": "Same game camera at W5 (before): the intact Lakeshore promenade and drive, no corridor dressing, no bus.",
+ "seed": 29,
+ "tier": 5,
+ "time": "L6",
+ "ground": "district",
+ "dof": false,
+ "layout": {
+  "level": "L5",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -90,
+    38
+   ],
+   [
+    -26,
+    62
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -30,
+    47
+   ],
+   "state": {
+    "walk": [
+     [
+      -71,
+      48
+     ]
+    ]
+   },
+   "yaw": 180
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -58,
+   0,
+   49
+  ],
+  "zoom": 2.2
+ },
+ "frames": 300,
+ "shots": [
+  0,
+  150,
+  300
+ ],
+ "sheet": 60,
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0,
+  "actorHitsMax": 0,
+  "drawCallsMax": 600,
+  "trianglesMax": 1500000,
+  "footSinkMaxCm": 0,
+  "yawDriftMaxDeg": 5
+ },
+ "script": []
+}
