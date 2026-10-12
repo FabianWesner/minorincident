@@ -60,7 +60,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   fire('commerce', 110, -1.3, 1.1), fire('commerce', 70.4, -3.7, .9),
   // ---------------------------------------------------------------- Oak Avenue: crashed cars, barricades, trampled gardens
   d('crashed', 'oak', 'veh.sedan-red', -72, 26.8, { yaw: .6, decay: 'wrecked' }),
-  d('crashed', 'oak', 'veh.suv-dark', 14, 29.4, { yaw: -.5, decay: 'wrecked' }),
+  d('crashed', 'oak', 'veh.suv-dark', 20, 28.2, { yaw: -.5, decay: 'wrecked' }),
   d('crashed', 'oak', 'veh.pickup-red', 98, 27.2, { yaw: 2.6, decay: 'wrecked' }),
   d('abandoned', 'oak', 'veh.sedan-green', -36, 29.6, { yaw: PI }), d('abandoned', 'oak', 'veh.suv-green', 58, 26.2, { yaw: .1 }),
   d('barricade', 'oak', 'decay.makeshift-barricade', -24, 26.6, { yaw: H }),
@@ -75,7 +75,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   // Fires deep inside the blocks (unreachable service strips): their smoke columns stand over every street.
   d('smoke', 'commerce', 'fx.fire', -18, -13.5, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', -44, 13.4, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', 30, 13.4, { scale: 1.6, entity: true }), d('smoke', 'blvd', 'fx.fire', 88, -13.5, { scale: 1.6, entity: true }),
   d('abandoned', 'commerce', 'veh.sedan-white', 130, 2.2, {decay:'wrecked'}),
-  d('abandoned', 'commerce', 'veh.pickup-red', 209, 1.1, {decay:'wrecked'}),
+  d('abandoned', 'commerce', 'veh.pickup-red', 207, 7.8, {yaw: -.3, decay:'wrecked'}),
   // ---------------------------------------------------------------- the station yard and the bridgehead (W1, organized)
   d('station', 'yard', 'prop.armory-table', -140.6, -8.4, { yaw: H }),
   d('station', 'yard', 'veh.police-sedan', -148, 10.4, { yaw: .1, lit: true }), d('station', 'yard', 'veh.police-suv', -140.6, 12.6, { yaw: -.2, lit: true }),
@@ -96,6 +96,9 @@ export const l3Roadblocks = [
   {x:-72,z:0,halfWidth:5}, {x:-72,z:-28,halfWidth:6},
   {x:12,z:0,halfWidth:5}, {x:12,z:28,halfWidth:5},
 ] as const;
+
+/** The big hull of each crash line (PO 10-12: a blocker must read as a real vehicle, never a box): bus, army truck, bus, APC. */
+export const l3RoadblockHulls = ['veh.school-bus', 'veh.military-truck', 'veh.school-bus', 'veh.military-apc'] as const;
 
 /** Commerce Street shop fronts: broken glass at every frontage (E21 section 5.8), one per shop door. */
 export function commerceFrontages(layout: DistrictLayout): { x: number; z: number; facing: 1 | -1 }[] {
@@ -178,7 +181,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const [i, block] of l3Roadblocks.entries()) {
       for (const [j, z] of [-(block.halfWidth-2), 0, block.halfWidth-2].entries()) {
         const x = block.x + (j === 1 ? 1 : 0);
-        const wreck: Placement = {id:`l3-roadblock-${i}-${j}`,assetId:j===1?'veh.school-bus':'veh.sedan-blue',position:[x,0,block.z+z],yaw:Math.PI/2+(j-1)*.08,scale:j===1?[1,1,1]:[.65,.65,.65],decay:j===1?'burned':'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[x-1.7,0,block.z+z-4],max:[x+1.7,3.4,block.z+z+4]}};
+        const wreck: Placement = {id:`l3-roadblock-${i}-${j}`,assetId:j===1?l3RoadblockHulls[i]:'veh.sedan-blue',position:[x,0,block.z+z],yaw:Math.PI/2+(j-1)*.08,scale:j===1?[1,1,1]:[.65,.65,.65],decay:'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[x-1.7,0,block.z+z-4],max:[x+1.7,3.4,block.z+z+4]}};
         if(j!==1) for(let k=0;k<15 && firstOverlap(wreck,walls,0)!==undefined;k++) wreck.position[2]+=(j===0?.1:-.1);
         layout.placements.push(wreck);
       }

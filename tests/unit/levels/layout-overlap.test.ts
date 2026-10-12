@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { levelTwoLayouts } from '../../../src/levels/L2/layout';
-import { levelThreeLayouts } from '../../../src/levels/L3/layout';
-import { addedOverlaps } from '../../../src/levels/placementClearance';
+import { l3RoadblockHulls, levelThreeLayouts } from '../../../src/levels/L3/layout';
+import { addedOverlaps, solidOverlaps } from '../../../src/levels/placementClearance';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 
 /**
@@ -32,4 +32,14 @@ test('L3 additions on D-CORRIDOR do not cut into any other placement (staticOver
     return true;
   });
   expect(show(accidental)).toEqual([]);
+}, 90_000);
+
+test('L3 vehicles never sit inside a wall, barrier rail, fence, building or other solid (PO 10-12: wreck inside the bridge barrier)', () => {
+  const [layout] = levelThreeLayouts([load('D-CORRIDOR.layout.json')]);
+  // The four crash lines are deliberate pile-ups: their wrecks overlap each other and the compacting collider by design.
+  for (const tier of [0, 2, 5] as const) {
+    expect(solidOverlaps(layout, tier, p => p.assetId.startsWith('veh.') && !p.id.startsWith('l3-roadblock')).map(o => `${o.placement} (${o.assetId}) x ${o.collider}`), `tier ${tier}`).toEqual([]);
+  }
+  // Each crash line shows real vehicles (never a box) and keeps its hull between the two end cars.
+  for (const [i, hull] of l3RoadblockHulls.entries()) expect(layout.placements.find(p => p.id === `l3-roadblock-${i}-1`)?.assetId).toBe(hull);
 }, 90_000);
