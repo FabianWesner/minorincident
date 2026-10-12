@@ -69,7 +69,7 @@ export class Damage {
     }
     if (hit.type !== 'explosive' && hit.type !== 'status' && target.faction === source.faction) return 0;
     const alphaSoldierHit = source.archetype === 'infected.alpha' && target.civilian?.ally?.role === 'soldier';
-    if (target.civilian && !alphaSoldierHit && !hit.knockdownTicks) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
+    if (target.civilian && !alphaSoldierHit && !hit.knockdownTicks && !(hit.stagger > 0 && hit.actionId.startsWith('infected.'))) { this.world.npcs?.civilians.hit(target, hit.type); if (hit.type === 'explosive' && hit.knockback > 0) this.world.npcs?.moveStep(target, hit.direction.x * hit.knockback, hit.direction.z * hit.knockback); return 0; }
     if (target.companion) { this.world.npcs?.companion.hit(target, hit.base * hit.multiplier); return 0; }
     if (target.escort?.state === 'downed' || target.escort?.state === 'dead') return 0;
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
@@ -79,7 +79,7 @@ export class Damage {
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
     if (target.id === 1 && (this.god || this.world.inspectionGhost)) amount = 0;
-    if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick);
+    if (target.id === 1 && this.world.player) amount = this.world.player.damage(amount, this.world.tick, hit.actionId === 'infected.zebra.stampede');
     else { amount = Math.min(amount, target.health.current); target.health.current -= amount; }
     // Keep ordinary player melee in reach even after knockback upgrades. Special
     // kicks/ground slam retain their authored shove; raw damage is never a finisher.
@@ -100,6 +100,7 @@ export class Damage {
         if (target.health.current === 0) c.state = 'finished';
         if (target.combat) target.combat.staggerUntil = Math.max(target.combat.staggerUntil, until);
       }
+      if (target.civilian && target.health.current === 0) { target.civilian.state = 'finished'; target.civilian.entered = this.world.tick; target.civilian.story = null; }
       if (target.combat && stagger > 0) { target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + Math.ceil(stagger * 60)); target.combat.attacking = false; }
       const from = { x: target.transform.x, z: target.transform.z };
       if (knockback > 0 && target.faction !== 'environment') this.world.knockback(target, hit.direction, knockback);

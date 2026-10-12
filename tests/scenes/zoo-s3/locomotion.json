@@ -1,0 +1,84 @@
+{
+  "name": "shared-locomotion",
+  "note": "Same game camera/seed before and after the shared quadruped stance/stop correction. Real paw/hoof probes; elephant charge crosses and breaks the original 400HP line.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        20,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "animal",
+      "kind": "infected",
+      "archetype": "infected.elephant",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": {
+        "chase": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      3,
+      0
+    ],
+    "zoom": 1.4
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "animal",
+      "do": {
+        "special": "elephant.charge",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 180,
+  "shots": [
+    0,
+    53,
+    110,
+    180
+  ],
+  "sheet": 15,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "vehicles": [],
+  "barricadeSlots": [
+    {
+      "id": "line",
+      "groupId": "line",
+      "a": {
+        "x": 4,
+        "z": -3
+      },
+      "b": {
+        "x": 4,
+        "z": 3
+      },
+      "height": 1,
+      "initialHp": 400
+    }
+  ],
+  "props": []
+}

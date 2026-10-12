@@ -67,7 +67,13 @@ for (const [lod, budget] of [6000, 2000, 700].entries()) {
         expect(leg.quaternion.equals(rest)).toBe(false);
         mixer.stopAllAction();
       }
+      gltf.scene.animations = gltf.animations; // Registry retains the GLB's authored special clips.
       const baked = bakeInfected(gltf.scene, def.animatedNodes);
+      for (const special of ['zebra-rear-kick', 'zebra-stampede'] as const) {
+        const start = infectedClips.indexOf(special) * framesPerClip * baked.clip.parts.length * 16;
+        const joint = baked.clip.parts.indexOf('legBL') * 16;
+        expect(new Matrix4().fromArray(baked.clip.matrices, start + joint).equals(new Matrix4().fromArray(baked.clip.matrices, start + joint + 14 * baked.clip.parts.length * 16)), special).toBe(false);
+      }
       expect(baked.clip.matrices.every(Number.isFinite)).toBe(true);
       const offset = infectedClips.indexOf('run') * framesPerClip * baked.clip.parts.length * 16;
       const leg = baked.clip.parts.indexOf('legFL') * 16;

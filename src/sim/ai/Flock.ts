@@ -26,3 +26,17 @@ export function updateFlock(entity: EntitySnapshot, tick: number, target: { x: n
     positions[i * 3 + 2] += horizontal[i].vz / 60;
   }
 }
+
+/** Flamingo dive shares the flock's bounded cohesion response; walls clip every step. */
+export function steerFlockDive(entity: EntitySnapshot, area: { x: number; z: number }, age: number, tick: number, impactAge: number | undefined, index: number, query: import('../combat/HitQuery').HitQuery): void {
+  const p = entity.transform, response = entity.locomotion ??= motionResponse();
+  const angle = index * 2.399963, spread = impactAge === undefined ? .7 : 2;
+  const dx = area.x + Math.cos(angle) * spread - p.x, dz = area.z + Math.sin(angle) * spread - p.z;
+  const scale = Math.min(1, 7.2 / (Math.hypot(dx, dz) * 4 || 1));
+  respond(response, dx * 4 * scale, dz * 4 * scale); response.updatedAt = tick;
+  const speed = Math.hypot(response.vx, response.vz), direction = { x: response.vx / (speed || 1), z: response.vz / (speed || 1) };
+  const distance = query.clearDistance(p, direction, speed / 60, undefined, entity.combat!.radius);
+  p.x += direction.x * distance; p.z += direction.z * distance;
+  p.y = .7 + 2.3 * Math.sin(Math.PI * Math.min(1, age / 24));
+  if (speed > .025) p.yaw = -Math.atan2(direction.z, direction.x);
+}

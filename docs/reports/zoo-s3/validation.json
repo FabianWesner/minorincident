@@ -1,0 +1,183 @@
+{
+  "lane": "Z-S3 systems",
+  "scope": [
+    "E07-AC01 zebra definition",
+    "E07-AC05 zebra/flamingo scheduler",
+    "E07-AC19 zebra kick/stampede and flamingo dive"
+  ],
+  "unitAndMoves": {
+    "passed": 865,
+    "failed": 0,
+    "unit": 850,
+    "moves": 15
+  },
+  "lastMoves": {
+    "passed": 15,
+    "failed": 0
+  },
+  "browser": {
+    "startTime": "2026-10-12T06:25:31.039Z",
+    "duration": 107035.078,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "performance": [
+    {
+      "quality": "high",
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "backend": "webgl",
+      "headless": true,
+      "unthrottled": true,
+      "count": 200,
+      "zebraCount": 4,
+      "specialActivations": 15,
+      "durationMs": 12006.89999961853,
+      "ticks": 719,
+      "renderedFrames": 2232,
+      "samples": 2112,
+      "frameMsP95": 6.300000000000182,
+      "frameMsP50": 5.200000000000728,
+      "simMsP95": 1.1000003814697266,
+      "heapBytes": 599011630,
+      "drawCalls": 57,
+      "triangles": 657557,
+      "crowdDrawCalls": 6,
+      "nonInstancedMeshes": 0,
+      "recordedAt": "2026-10-12T05:57:12.886Z",
+      "cdpHeapUsedBytes": 135493684,
+      "consoleErrors": []
+    },
+    {
+      "quality": "low",
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "backend": "webgl",
+      "headless": true,
+      "unthrottled": true,
+      "count": 100,
+      "zebraCount": 4,
+      "specialActivations": 17,
+      "durationMs": 12006.800000190735,
+      "ticks": 719,
+      "renderedFrames": 3287,
+      "samples": 3167,
+      "frameMsP95": 4.300000000000182,
+      "frameMsP50": 3.5999999999994543,
+      "simMsP95": 0.6999998092651367,
+      "heapBytes": 428310948,
+      "drawCalls": 57,
+      "triangles": 214353,
+      "crowdDrawCalls": 6,
+      "nonInstancedMeshes": 0,
+      "recordedAt": "2026-10-12T05:57:27.932Z",
+      "cdpHeapUsedBytes": 126141056,
+      "consoleErrors": []
+    }
+  ],
+  "e07Verify": {
+    "passed": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "tests/sim/ai/director.test.ts",
+          "tests/sim/performance/alpha.test.ts",
+          "tests/sim/performance/alpha-physical.test.ts",
+          "-t",
+          "T-E07-11",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest-timing.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra-flamingo",
+          "--pull",
+          "test-results/epics/E07/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$))",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/zoo-zebra-flamingo",
+          "--pull",
+          "test-results/playwright/results.json",
+          "--env",
+          "E2E_PORT=3492",
+          "--",
+          "sh",
+          "-c",
+          "npm run build && npx playwright test --grep \"$1\" --grep-invert \"$2\" --workers=1",
+          "sh",
+          "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)|T-E07-physical-budget))(?=.*(?:alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13))",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "functional": 285,
+    "timing": 5,
+    "remoteBrowser": 32,
+    "nativeBrowser": 42,
+    "failures": 0
+  }
+}

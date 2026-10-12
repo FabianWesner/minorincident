@@ -15,7 +15,7 @@ test('T-E07-06-bars @E07-AC06 @E07-AC19 visibility boundary, damage, conversion 
   e.health.current = 299; expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(true);
   expect(barEligible(e, { x: 0, z: 0 }, false)).toBe(false);
   e.faction = 'neutral';
-  for (const species of ['lion', 'gorilla', 'flamingo']) {
+  for (const species of ['lion', 'gorilla', 'elephant', 'zebra', 'flamingo']) {
     e.archetype = `infected.${species}`; // Even a flagged zoo archetype stays hidden until infection.
     expect(barEligible(e, { x: 0, z: 0 }, true)).toBe(false);
   }
@@ -33,7 +33,7 @@ test('T-E07-19-bars @E07-AC19 @E30-AC15 fill clamps, phone sizes and palette con
   const luminance = (hex: string) => hex.slice(1).match(/../g)!.map(s => parseInt(s, 16) / 255).map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4).reduce((sum, c, i) => sum + c * [.2126, .7152, .0722][i], 0);
   const colors = Object.values(healthBarColors).map(luminance);
   for (let a = 0; a < colors.length; a++) for (let b = a + 1; b < colors.length; b++) expect((Math.max(colors[a], colors[b]) + .05) / (Math.min(colors[a], colors[b]) + .05)).toBeGreaterThanOrEqual(3);
-  for (const species of ['lion', 'gorilla', 'flamingo']) expect(infectedDefinitions.find(d => d.id === `infected.${species}`)?.bar).toBe(true);
+  for (const species of ['lion', 'gorilla', 'elephant', 'zebra', 'flamingo']) expect(infectedDefinitions.find(d => d.id === `infected.${species}`)?.bar).toBe(true);
   expect(infectedDefinitions.find(d => d.id === 'infected.runner')?.bar).toBeUndefined();
 });
 test('T-E07-06-bars-bounds @E07-AC06 bounds follow displayed poses, interpolation and same-id conversion, without stale invisible figures', () => {

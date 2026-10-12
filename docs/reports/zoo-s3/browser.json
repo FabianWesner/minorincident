@@ -1,0 +1,370 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/zoo-s3.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/playwright.config.ts",
+    "rootDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/test-results/playwright/run-3494",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/test-results/playwright/run-3494",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/test-results/playwright/run-3494",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/test-results/playwright/run-3494",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/test-results/playwright/run-3494",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 180000
+      },
+      {
+        "outputDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/test-results/playwright/run-3494",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/srv/mi/jobs/zoo-zebra-flamingo-03f433-1201-1791786311/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3494 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3494",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/zoo-s3.spec.ts",
+      "file": "e2e/zoo-s3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-19-zebra-kick-browser @E07-AC05 @E07-AC19 production cue, pause, bar, impact and expiry",
+          "ok": true,
+          "tags": [
+            "E07-AC05",
+            "E07-AC19"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13431,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:25:32.464Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f2e35dad66e401b1b49e-da2c25c7911eb1026c98",
+          "file": "e2e/zoo-s3.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "T-E07-19-zebra-stampede-browser @E07-AC05 @E07-AC19 production cue, pause, bar, impact and expiry",
+          "ok": true,
+          "tags": [
+            "E07-AC05",
+            "E07-AC19"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27482,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:25:46.429Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f2e35dad66e401b1b49e-ed394410d89da718a4f1",
+          "file": "e2e/zoo-s3.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "T-E07-19-flamingo-dive-browser @E07-AC05 @E07-AC19 production cue, pause, bar, impact and expiry",
+          "ok": true,
+          "tags": [
+            "E07-AC05",
+            "E07-AC19"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 30838,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:26:13.937Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f2e35dad66e401b1b49e-3ccbcd31f7755522870f",
+          "file": "e2e/zoo-s3.spec.ts",
+          "line": 5,
+          "column": 3
+        },
+        {
+          "title": "T-E07-19-zebra-flamingo-phone-390 @E07-AC19 shared phone bars update from real HP in low tier",
+          "ok": true,
+          "tags": [
+            "E07-AC19"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:26:44.791Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f2e35dad66e401b1b49e-c95ed1be0aa957a9de3a",
+          "file": "e2e/zoo-s3.spec.ts",
+          "line": 40,
+          "column": 66
+        },
+        {
+          "title": "T-E07-19-zebra-flamingo-phone-844 @E07-AC19 shared phone bars update from real HP in low tier",
+          "ok": true,
+          "tags": [
+            "E07-AC19"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11096,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T06:27:03.902Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f2e35dad66e401b1b49e-a96e26266ec9dbbe176a",
+          "file": "e2e/zoo-s3.spec.ts",
+          "line": 40,
+          "column": 66
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T06:25:31.039Z",
+    "duration": 107035.078,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

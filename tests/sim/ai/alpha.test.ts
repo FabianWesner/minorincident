@@ -58,6 +58,9 @@ for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
     vi.spyOn(ai.alphaSupport, 'update').mockImplementation(() => {}); // Test scheduling independently of move effects.
     // The scheduler also serves the later zoo lanes; no animal effects are claimed here.
     e.archetype = timing.archetype;
+    // Group moves require existing participants; retain every scheduler assertion.
+    if (move === 'zebra.stampede' || move === 'flamingo.dive') spawn(w, move.split('.')[0], 6, -2, 'idle');
+    if (move === 'flamingo.dive') spawn(w, 'flamingo', 6, 2, 'idle');
     const locked = { ...target }; expect(ai.startSpecial(e.id, move, locked, area)).toBe(true); locked.x = 90;
     expect(ai.startSpecial(e.id, move, target, area)).toBe(false); expect(ai.specialHit(e.id, 1)).toBe(false);
     const attack = e.infected!.specialAttack!, hp = w.entities.get(1)!.health.current;
@@ -80,6 +83,7 @@ for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
     // Starting a windup exactly one windup before expiry yields the next activation at expiry.
     // Finish recovery without calling unrelated animal brains.
     ai.cancelSpecial(e.id);
+    for (const id of attack.members ?? []) if (id !== e.id) { const member = w.entities.get(id)!; ai.cancelSpecial(id); ai.restoreSpecialTimers(member.infected!, 100); }
     w.tick = restored.specialCooldowns[move] - timing.windup - 1;
     expect(ai.startSpecial(e.id, move, target, area)).toBe(false); w.tick++;
     expect(ai.startSpecial(e.id, move, target, area)).toBe(true); expect(restored.specialAttack!.attackId).toBeGreaterThan(attack.attackId);

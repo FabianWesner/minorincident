@@ -33,7 +33,7 @@ import { MotionPresentation, crowdTurnRate } from './characters/MotionPresentati
 import { MotionPhase } from './characters/MotionPhase';
 import { loadMeasure } from '../assets/loadTiming';
 import { keepsLook } from '../sim/outbreak/appearance';
-interface Batch { locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
+interface Batch { animal: boolean; locomotion: CrowdLocomotion; probe: CrowdFigureProbe; poses: CrowdPosePalette; mesh: InstancedMesh; state: InstancedBufferAttribute; tint: InstancedBufferAttribute; shirt: Color; strideScale: number; windup: number; texture: import('three').DataTexture; count: number; placeholders: boolean; lod: string; role: string }
 const variantShirts: Record<string, Color> = { 'inf.jogger': new Color('#3178ac'), 'inf.cashier': new Color('#e5d9b9'), 'inf.delivery-driver': new Color('#d4ad32'), 'inf.suburban-mom': new Color('#79865b'), 'inf.bbq-dad': new Color('#a86645'), 'inf.bathrobe-neighbor': new Color('#ac7a91') };
 /** One instanced, rigid-part GPU batch per archetype. Scene graph size never grows with infected population. */
 /** E19 §5.4: the speed tier must read from the silhouette. Prefer the sim's tier,
@@ -141,7 +141,7 @@ export class CrowdView extends Group {
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
       const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
-      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole;
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
       // Baking expands rigid parts to triangle soup. Index identical vertices before
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
@@ -202,7 +202,7 @@ export class CrowdView extends Group {
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible), 1))).xyz;
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
       mesh.onAfterRender = () => probe.draw();
-      this.batches.set(`${key}:${lod}`, { locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
+      this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });
   }
   private modelKey(id: string): string | undefined {
@@ -281,7 +281,7 @@ export class CrowdView extends Group {
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
-      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe'].includes(specialAttack.move) ? specialAttack : undefined;
+      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
@@ -298,8 +298,11 @@ export class CrowdView extends Group {
       if (e.infectionRise) clip = 'infection-rise';
       if (b.special === 'dive') clip = 'run';
       if (e.infected?.specialAttack?.stage === 'telegraph') clip = 'windup';
-      const duration = authoredClips.get(clip)!.duration;
-      const phase = e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+      if (specialAttack?.move === 'zebra.kick') clip = 'zebra-rear-kick';
+      if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
+      if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
+      const duration = authoredClips.get(clip)?.duration ?? 1;
+      const phase = clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? 'corgi-trot' : clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = variantShirts[b.variant] ?? batch.shirt;
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -349,11 +352,12 @@ export class CrowdView extends Group {
           }
         } else {
           // A sequence of fixed, two-metre-wide arrows shows the entire locked twelve-metre corridor.
-          const length = physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : physical.move === 'elephant.charge' ? 16 : 12;
+          const length = physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : physical.move === 'elephant.charge' ? 16 : physical.move === 'zebra.stampede' ? 15 : 12;
           for (let i = 0; i < Math.ceil(length / 3); i++) {
             this.transform.makeRotationY(-Math.atan2(area.dz, area.dx)); this.transform.multiply(this.physicalArrowScale);
-            if (physical.move === 'elephant.charge') {
-              this.transform.multiply(this.elephantArrowScale);
+            if (physical.move === 'elephant.charge' || physical.move === 'zebra.stampede') {
+              if (physical.move === 'elephant.charge') this.transform.multiply(this.elephantArrowScale);
+              else this.transform.multiply(this.physicalArrowTail.makeScale(1, 1, 1.5 / (1.1 * 1.8)));
               this.physicalArrowTail.makeScale(Math.min(3, length - i * 3) / 3, 1, 1); this.transform.multiply(this.physicalArrowTail);
             }
             this.transform.setPosition(area.x + area.dx * i * 3, ground, area.z + area.dz * i * 3);

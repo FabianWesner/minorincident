@@ -54,6 +54,9 @@ export class Vfx extends Group {
   private readonly rng: Rng;
   private readonly goreRng: Rng;
   private flashUntil = 0;
+  /** One reusable edge feather veil: no stacking, central player and HUD stay clear. */
+  private readonly featherVeil = typeof document === 'undefined' ? null : document.createElement('div');
+  private obstruction = { remainingTicks: 0, opacity: 0 };
   private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
@@ -99,7 +102,14 @@ export class Vfx extends Group {
     for (let i = 0; i <= Math.min(80, Math.floor(distance / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, muzzle.x + direction.x * i * spacing, muzzle.y + slope * i * spacing, muzzle.z + direction.z * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
   }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
-    super(); this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
+    super();
+    if (this.featherVeil) {
+      this.featherVeil.dataset.testid = 'flamingo-feathers';
+      this.featherVeil.setAttribute('aria-hidden', 'true');
+      this.featherVeil.style.cssText = 'position:fixed;inset:8% 0 18%;pointer-events:none;z-index:2;opacity:0;background:repeating-conic-gradient(from 15deg at 0% 50%,#ef9fc1 0deg 8deg,transparent 8deg 25deg);mask-image:radial-gradient(ellipse at center,transparent 0 38%,black 78%);';
+      document.querySelector('#game')?.append(this.featherVeil);
+    }
+    this.rng = new Rng(world.seed, 'vfx'); this.goreRng = new Rng(world.seed, 'dismemberment');
     this.gibs = new GibPool(geometries);
     this.blasts = new Blasts(world, { particles: this.particles, shake: s => targets.shake(s), roll: s => targets.roll?.(s), focus: () => targets.focus?.() ?? world.entities.get(1)?.transform ?? { x: 0, z: 0 }, light: (...args) => targets.light?.(...args) ?? null, field: targets.field, ambient: targets.ambient, sunDirection: targets.sunDirection });
     this.add(this.blasts, this.gibs.heads, this.particles.mesh, this.decals.mesh, this.surfaceSplats.mesh, this.telegraphs.mesh, this.waves.mesh, this.gibs.mesh);
@@ -127,15 +137,15 @@ export class Vfx extends Group {
       if (this.gore === 'Off') { this.coverage = 0; this.targets.blood(0); }
     }
     this.targets.vehicleBloodEnabled?.(this.enabled && this.gore !== 'Off');
-    this.visible = this.enabled;
+    this.visible = this.enabled || this.tells.size > 0;
     if (!this.enabled) {
       this.hitStop.reset(); this.targets.clearGore(); this.targets.blood(0);
       for (let i = 0; i < this.hitCount; i++) this.targets.flash(this.hitIds[i], 0);
-      this.resetPools(); for (const landing of this.landings) landing.at = Infinity;
+      this.resetPools(true); for (const landing of this.landings) landing.at = Infinity;
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xffe45b : 0x59e8ff; }
-  private resetPools(): void { this.blasts.reset(); for (const pool of this.pools) pool.reset(this.time); this.gibs.reset(); this.tells.clear(); this.hitCount = this.hitCursor = 0; }
+  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; }
   private pulse(id: number): void {
     let slot = 0;
     while (slot < this.hitCount && this.hitIds[slot] !== id) slot++;
@@ -195,7 +205,7 @@ export class Vfx extends Group {
       this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
     }
     if (event.type === 'explosion.slowmo') { this.blasts.slowmo(event); return; }
-    if (!this.enabled) {
+    if (!this.enabled && !(event.type === 'telegraph' && 'move' in event && event.move) && event.type !== 'infected.special' && event.type !== 'attack.resolved') {
       if (event.type === 'combat.attack' && actions[event.actionId]?.category === 'ranged') this.gunshot(event.sourceId, event.direction, actions[event.actionId].range, event.position);
       else if (event.type === 'ally.attack' && event.from && event.to) {
         const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
@@ -259,15 +269,16 @@ export class Vfx extends Group {
       if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
 
       const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
-      const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' ? 'splash' : 'lunge';
+      const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
       const throwing = 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
       const length = throwing ? Math.min(15, Math.hypot(event.target!.x - event.area!.x, event.target!.z - event.area!.z)) : 0;
       const position = throwing ? { x: event.area!.x + event.area!.dx * length / 2, z: event.area!.z + event.area!.dz * length / 2 } : 'position' in event ? event.position : event.area ?? source?.transform;
       if (!position) return;
       const radius = throwing ? Math.max(1, length / 2) : 'radius' in event ? event.radius : event.area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
-      const angle = 'move' in event && (event.move === 'elephant.swipe' || event.move === 'elephant.charge' || event.move === 'gorilla.grab-throw') ? Math.atan2(event.area?.dz ?? 0, event.area?.dx ?? 1) : 'angle' in event ? event.angle : -Math.atan2(event.area?.dz ?? source?.infected?.dz ?? 0, event.area?.dx ?? source?.infected?.dx ?? 1);
-      const shape = 'move' in event && event.move === 'elephant.swipe' ? 9 : 'move' in event && (event.move === 'alpha.roar' || event.move === 'gorilla.roar') ? 8 : telegraphShapes[kind];
+      const angle = 'move' in event && (event.move === 'elephant.swipe' || event.move === 'elephant.charge' || event.move === 'gorilla.grab-throw' || event.move === 'zebra.kick' || event.move === 'zebra.stampede') ? Math.atan2(event.area?.dz ?? 0, event.area?.dx ?? 1) : 'angle' in event ? event.angle : -Math.atan2(event.area?.dz ?? source?.infected?.dz ?? 0, event.area?.dx ?? source?.infected?.dx ?? 1);
+      const shape = 'move' in event && event.move === 'zebra.kick' ? 10 : 'move' in event && event.move === 'elephant.swipe' ? 9 : 'move' in event && (event.move === 'alpha.roar' || event.move === 'gorilla.roar') ? 8 : telegraphShapes[kind];
       const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, throwing ? 1 / radius : kind === 'charge' ? 0.3 : 1, true);
+      this.visible = true;
       this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
     } else if (event.type === 'attack.resolved') {
       const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
@@ -314,10 +325,22 @@ export class Vfx extends Group {
       this.burst(x, kind === 'ash' ? 3 : smoke ? 1.7 : 0.5, z, effectColors[kind], sparkle ? 8 : 24, sparkle || kind === 'ash' ? 0.1 : radius * 0.6, smoke ? 4 : 1.2, smoke || kind.includes('fire') ? -1 : sparkle ? 0 : 0.5);
     }
   }
+  /** Read fixed-tick veil state on every rendered frame, including paused test stepping. */
+  updateObstruction(): void {
+    let remaining = 0;
+    for (const e of this.world.infected?.active ?? []) {
+      const a = e.infected?.specialAttack;
+      if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
+    }
+    this.obstruction.remainingTicks = Math.max(0, Math.min(48, remaining));
+    this.obstruction.opacity = remaining > 0 && this.enabled ? (this.flashReduction ? .18 : .35) * Math.min(1, remaining / 12) : 0;
+    if (this.featherVeil) this.featherVeil.style.opacity = String(this.obstruction.opacity);
+  }
   /** Explicit render clock. Paused test stepping uses this without advancing the sim. */
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');
     this.time += seconds;
+    this.updateObstruction();
     for (const landing of this.landings) if (landing.at <= this.time) {
       if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
       landing.at = Infinity;
@@ -329,6 +352,7 @@ export class Vfx extends Group {
         else if (brain?.attackId === attackId && brain.special === 'scream') this.effect('screamer', source!.transform.x, source!.transform.z, 20);
         this.telegraphs.remove(tell.slot); this.tells.delete(attackId); }
     }
+    this.visible = this.enabled || this.tells.size > 0;
     for (const id of this.world.vehicles?.cars.keys() ?? []) this.updateVehicle(id);
     for (const pool of this.pools) pool.advance(this.time);
     if (this.enabled) this.blasts.advance(this.time, seconds);
@@ -356,10 +380,10 @@ export class Vfx extends Group {
   }
   get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6), this.blasts.flash) : 0; }
   snapshot() {
-    return { shots: this.shots, enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
+    return { obstruction: { ...this.obstruction }, shots: this.shots, enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
       lastSpray: this.lastSpray, surfaceSplats: this.surfaceSplats.count, pendingSplats: this.landings.filter(l => l.at < Infinity).length, particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
       telegraphs: [...this.tells].map(([attackId, tell]) => ({ attackId, ...tell })), hitStop: { active: this.hitStop.active(this.time), until: this.hitStop.until, started: this.hitStop.started, suppressed: this.hitStop.suppressed },
       flash: this.flash, blasts: this.blasts.snapshot(), coverage: this.coverage, detached: this.detached, dismemberedKills: this.dismemberedKills, kills: this.kills, explosionRadius: this.lastExplosionRadius };
   }
-  dispose(): void { for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.blasts.dispose(); this.clear(); }
+  dispose(): void { this.featherVeil?.remove(); for (const stop of this.stops) stop(); this.stops.length = 0; for (const pool of this.pools) pool.dispose(); this.gibs.dispose(); this.blasts.dispose(); this.clear(); }
 }

@@ -1,5 +1,5 @@
 // Runtime adaptation of E17 bake-crowd.ts and Bruno InstancedGroup.js (MIT).
-import { BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial } from 'three';
+import { AnimationMixer, LoopOnce, BufferAttribute, DoubleSide, InterleavedBuffer, InterleavedBufferAttribute, Matrix4, Mesh, Vector3, type Group, type Object3D, type MeshBasicMaterial } from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { characterNodes } from '../../data/survivor';
 import { authoredClips, sampleClip, strideScale } from './clips';
@@ -10,8 +10,8 @@ type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; s
 const bakedCrowds = new Map<string, BakedCrowd>();
 const bakedCrowdLimit = 64;
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
-  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed'] as const;
-export const civilianClips = [...infectedClips, 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
+  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede'] as const;
+export const civilianClips = [...infectedClips.filter(clip => !clip.startsWith('zebra-')), 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
   'npc-give', 'npc-wave', 'npc-glance', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-cower', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot'] as const;
 export const framesPerClip = 24;
 /** Clips whose feet legitimately leave the floor plane (seated, knocked down, rising, dying): Scene Lab's rule. */
@@ -75,13 +75,17 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
   };
   const hoofFloor = hoofPoints.length ? lowestHoof() : 0;
 
+  const mixer = new AnimationMixer(root);
   for (const clip of clipNames) {
-    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : root.getObjectByName('trunk') && /^(windup|swing)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
-    const duration = authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
+    const embedded = root.animations.find(animation => animation.name === clip);
+    const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
+    if (action) { action.clampWhenFinished = true; action.reset().play(); }
+    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
     for (let frame = 0; frame < framesPerClip; frame++) {
       for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
       const t = frame / (framesPerClip - 1);
-      sampleClip(root, name, t * duration);
+      if (action) mixer.setTime(t * duration); else sampleClip(root, name, t * duration);
       updateJoints();
       if (hoofPoints.length && !unplantedClips.test(clip)) {
         const deficit = hoofFloor - lowestHoof();
@@ -93,7 +97,9 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
       }
       for (const part of parts) { part.matrixWorld.toArray(matrices, matrixOffset); matrixOffset += 16; }
     }
+    action?.stop();
   }
+  mixer.uncacheRoot(root);
   for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
   root.updateMatrixWorld(true);
   const geometries: import('three').BufferGeometry[] = [], relative = new Matrix4();
