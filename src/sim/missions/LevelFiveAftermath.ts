@@ -174,7 +174,7 @@ export class LevelFiveAftermath {
     if (id === 'look') this.findAll();
     if (id === 'metro') this.forceShelter();
   }
-  /** The courier unbars the door and steps out of the cellar door onto Lakeshore Avenue (the store's south side, the one the camera sees): the first look at the devastated city. */
+  /** The courier unbars the door and steps out at the foot of Kessler Lane: the first look at the devastated city. */
   private emerge(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'cellar') return;

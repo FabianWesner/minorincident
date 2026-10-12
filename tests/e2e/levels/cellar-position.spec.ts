@@ -47,7 +47,7 @@ test.describe('Kessler cellar position', () => {
       for (const id of ['ride', 'quartermaster']) { a.cheats.completeObjective(id); await a.step(30); }
       a.teleport(1, { x: -21.5, z: 3 });
       for (let i = 0; i < 400 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
-      a.teleport(1, { x: 54, z: 41.8 }); a.camera.follow(); await a.step(5);
+      a.teleport(1, { x: 54, z: 41.2 }); a.camera.follow(); await a.step(5);
     });
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
     await page.evaluate(() => document.body.classList.add('ui-hidden'));
@@ -67,7 +67,7 @@ test.describe('Kessler cellar position', () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.barredAt)).toBeGreaterThan(0);
   });
 
-  test('T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out onto Lakeshore', async ({ page }) => {
+  test('T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane', async ({ page }) => {
     test.setTimeout(300_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await boot(page, `${testUrl}&ui=1`);
     await page.evaluate(() => window.__SS__!.loadLevel('L5', { seed: 1, progression: 'L5-default' }));
@@ -84,7 +84,7 @@ test.describe('Kessler cellar position', () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l5!.phase)).not.toBe('cellar');
     await page.evaluate(() => window.__SS__!.step(30));
     const out = await pos(page);
-    expect(out.z, 'steps out on the Lakeshore pavement south of the store').toBeGreaterThan(40);
-    await shot(page, 'l5-03-outside-on-lakeshore');
+    expect(Math.hypot(out.x - 67.2, out.z - 27.6), 'steps out on Kessler Lane (l5-out)').toBeLessThan(3);
+    await shot(page, 'l5-03-outside-on-kessler-lane');
   });
 });

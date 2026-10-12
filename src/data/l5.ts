@@ -69,15 +69,17 @@ export const l5Survivors: readonly L5Survivor[] = [
 
 /** Named world points authored into the L5 layout copy (the cellar anchors come from the layout's own cellar placement). */
 export const l5Anchors: Record<string, P> = {
-  'l5-out': [66.8, 41.7],            // outside Kessler's cellar door, on the Lakeshore side the game camera sees (D-FAIR layout.py turns the store round)
+  // The courier steps out on Kessler Lane (behind the store; the cellar door the L4 courier used is on its Lakeshore side). Stepping out in front of that
+  // door instead was tried: it starts next to Rosa, 10 m from the first survivor, and the bot follow share drops to 0.72-0.78 (gate 0.8).
+  'l5-out': [67.2, 27.6],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [38.1854, -50.6],
-  'photo-l5-basement-exit': [66.8, 41.7], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
+  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
   ...l4PhotoSpots.filter(([name]) => name.startsWith('pair-')),
-  ['l5-basement-exit', [9, 12, 9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-28, 24, 0]], ['l5-metro-shelter', [0, 28, -34]], ['l5-metro-doors', [0, 10, 10]],
+  ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-28, 24, 0]], ['l5-metro-shelter', [0, 28, -34]], ['l5-metro-doors', [0, 10, 10]],
 ];
 
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
