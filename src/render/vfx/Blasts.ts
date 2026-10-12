@@ -142,19 +142,30 @@ export class Blasts extends Group {
     ({ mesh: this.flames, attrs: this.fl } = instanced(flameGeometry, flameMaterial, FLAMES, { fOrigin: 4, fStyle: 4 }));
     {
       const o = attribute('fOrigin', 'vec4'), st = attribute('fStyle', 'vec4');
+      // Per-card hash from the seed: every flame gets its own width exponent, lean, flicker rate and wisp phase.
+      const hash = (k: number) => fract(o.w.mul(12.9898).add(k * 78.233).sin().mul(43758.5453));
+      const SPREAD = 1.7; // the card is wider than the flame body so the tongue can sway and lick sideways
       flameMaterial.positionNode = Fn(() => {
         const right = cameraWorldMatrix.mul(vec4(1, 0, 0, 0)).xyz.mul(vec3(1, 0, 1)).normalize();
-        const flicker = clock.mul(9).add(o.w.mul(6.3)).sin().mul(.12).add(1);
-        return o.xyz.add(right.mul(positionGeometry.x.mul(st.x))).add(vec3(0, positionGeometry.y.mul(st.y).mul(flicker), 0));
+        const flicker = clock.mul(hash(1).mul(5).add(6)).add(o.w.mul(6.3)).sin().mul(.13).add(clock.mul(hash(2).mul(2).add(2.4)).add(hash(3).mul(9)).sin().mul(.09)).add(1);
+        return o.xyz.add(right.mul(positionGeometry.x.mul(st.x).mul(SPREAD))).add(vec3(0, positionGeometry.y.mul(st.y).mul(flicker), 0));
       })();
       flameMaterial.outputNode = Fn(() => {
-        const p = uv(), x = p.x.sub(.5).mul(2), y = p.y;
-        const n = mx_noise_float(vec3(x.mul(2.2), y.mul(3).sub(clock.mul(3.2)), o.w.mul(7))).mul(.5).add(.5);
-        const width = float(1).sub(y).pow(.75).mul(.85).add(n.mul(.22)).sub(.08);
-        const mask = smoothstep(width, width.mul(.55), x.abs()).mul(smoothstep(1, .55, y.add(n.mul(.25)))).mul(smoothstep(0, .08, y));
-        const core = mask.pow(2);
-        const color = mix(vec3(.9, .2, .03), vec3(1, .7, .25), core).mul(mix(.85, 1.5, core)).mul(st.z).mul(heat);
-        return vec4(color, mask.mul(st.w));
+        const p = uv(), y = p.y, x = p.x.sub(.5).mul(2).mul(SPREAD);
+        const h1 = hash(4), h2 = hash(5), h3 = hash(6);
+        // Moving silhouette: the tongue sways with height, leans per card, and its edge wobbles with two noise octaves.
+        const sway = mx_noise_float(vec3(y.mul(1.7), clock.mul(h1.mul(.8).add(.9)).add(h2.mul(10)), h3.mul(9))).mul(.95).add(h2.sub(.5).mul(.6)).mul(y);
+        const lx = x.sub(sway);
+        const n = mx_noise_float(vec3(lx.mul(2.1), y.mul(2.8).sub(clock.mul(h3.mul(1.6).add(2.2))), o.w.mul(7))).mul(.5).add(.5);
+        const wisp = mx_noise_float(vec3(lx.mul(5), y.mul(6).sub(clock.mul(5.5)), o.w.mul(3).add(4))).mul(.5).add(.5);
+        const body = float(1).sub(y).max(0).pow(h3.mul(.5).add(.55)).mul(h1.mul(.4).add(.85)).add(n.sub(.5).mul(y.mul(.8).add(.25)).mul(.5));
+        const across = float(1).sub(smoothstep(body.mul(.3), body.add(.14), lx.abs()));
+        const along = float(1).sub(smoothstep(n.mul(.35).add(.4), 1, y.add(wisp.sub(.5).mul(.3)))).mul(smoothstep(0, .2, y.sub(lx.mul(lx).mul(.16))));
+        const mask = across.mul(along);
+        // Core stays small and low: hot yellow, never the old flat white.
+        const core = smoothstep(.55, 1, mask).mul(smoothstep(.55, 0, y)).mul(.75);
+        const color = mix(mix(vec3(.8, .1, .02), vec3(1, .45, .08), smoothstep(.1, .65, mask)), vec3(1, .8, .38), core).mul(mix(.65, 1.05, core)).mul(st.z).mul(heat);
+        return vec4(color, mask.mul(st.w).mul(.9));
       })();
       this.flames.renderOrder = 4;
     }
