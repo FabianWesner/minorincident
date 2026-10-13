@@ -1,0 +1,102 @@
+{
+  "kind": "pet",
+  "archetype": "animal.lion",
+  "faction": "civilian",
+  "transform": {
+    "x": -57.5970125398727,
+    "z": -30.39725463987261,
+    "y": 0.7,
+    "yaw": -23.407421276024408
+  },
+  "health": {
+    "current": 100,
+    "max": 100
+  },
+  "civilian": {
+    "zooAnimal": "lion",
+    "state": "bitten",
+    "ambient": false,
+    "adult": true,
+    "pet": null,
+    "owner": null,
+    "model": "amb.lion",
+    "variant": "inf.lion",
+    "scheduleStep": 0,
+    "activityUntil": 0,
+    "activityStarted": 0,
+    "lastTravelProgress": 0,
+    "routine": "zoo",
+    "waypoints": [
+      {
+        "x": -60,
+        "z": -32
+      },
+      {
+        "x": -57,
+        "z": -30
+      }
+    ],
+    "waypoint": 0,
+    "pauseUntil": 4781,
+    "entered": 4908,
+    "until": 4938,
+    "downTicks": 0,
+    "eyesGlow": false,
+    "veins": 0,
+    "attacker": 436,
+    "threat": {
+      "x": -57.78042553829602,
+      "z": -31.577827652799133
+    },
+    "path": [],
+    "goal": -1,
+    "pathIndex": 0,
+    "gore": false,
+    "knockedUntil": 0,
+    "l1": {
+      "walkSpeed": 1,
+      "fleeSpeed": 2,
+      "startleTicks": 30,
+      "refuge": null,
+      "target": null,
+      "repickAt": 0,
+      "noticed": -1
+    }
+  },
+  "combat": {
+    "radius": 0.6,
+    "armor": 0,
+    "shield": false,
+    "staggerUntil": 0,
+    "attacking": false,
+    "damageMultiplier": 1,
+    "statuses": []
+  },
+  "id": 396,
+  "locomotion": {
+    "vx": 0,
+    "vz": 0,
+    "ax": 0,
+    "az": 0,
+    "omega": 0,
+    "updatedAt": 4927
+  },
+  "motion": {
+    "velocity": {
+      "x": 0,
+      "z": 0
+    },
+    "speed": 0,
+    "moving": false,
+    "distance": 111.62175951507032
+  },
+  "infection": {
+    "entityId": 396,
+    "progress": 0.10270270270270271,
+    "phase": "stagger",
+    "tier": "average",
+    "startedTick": 4908,
+    "endsTick": 5093,
+    "biteSourceId": 436
+  }
+}

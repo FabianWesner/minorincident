@@ -1,0 +1,377 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l8-budgets.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3434 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3434",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/l8-budgets.spec.ts",
+      "file": "perf/l8-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E30-budget @E30-AC20 @perf high mixed outbreak E18 budgets",
+          "ok": true,
+          "tags": [
+            "E30-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16545,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "buffer": "Cj4gYnVpbGQKPiBOT0RFX0VOVj1wcm9kdWN0aW9uIHZpdGUgYnVpbGQgLS1jb25maWdMb2FkZXIgcnVubmVyCgo="
+                    },
+                    {
+                      "buffer": "G1szNm12aXRlIHY2LjQuMyAbWzMybWJ1aWxkaW5nIGZvciBwcm9kdWN0aW9uLi4uG1szNm0bWzM5bQo="
+                    },
+                    {
+                      "buffer": "dHJhbnNmb3JtaW5nLi4uCg=="
+                    },
+                    {
+                      "buffer": "G1szMm3inJMbWzM5bSA0NjIgbW9kdWxlcyB0cmFuc2Zvcm1lZC4K"
+                    },
+                    {
+                      "buffer": "cmVuZGVyaW5nIGNodW5rcy4uLgo="
+                    },
+                    {
+                      "buffer": "Y29tcHV0aW5nIGd6aXAgc2l6ZS4uLgo="
+                    },
+                    {
+                      "buffer": "G1sybWRpc3QvG1syMm0bWzMybXByZXZpZXcvaW5kZXguaHRtbCAgICAgICAgICAgICAgICAgICAgICAgICAbWzM5bRtbMW0bWzJtICAgIDEuNjUga0IbWzIybRtbMW0bWzIybRtbMm0g4pSCIGd6aXA6ICAgICAwLjcyIGtCG1syMm0K"
+                    },
+                    {
+                      "buffer": "G1sybWRpc3QvG1syMm0bWzMybWluZGV4Lmh0bWwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAbWzM5bRtbMW0bWzJtICAgIDIuNTYga0IbWzIybRtbMW0bWzIybRtbMm0g4pSCIGd6aXA6ICAgICAwLjgzIGtCG1syMm0KG1sybWRpc3QvG1syMm0bWzJtYnVpbGQvG1syMm0bWzMybWNpdmlsaWFuQmFrZURhdGEtQzN0RjJweW0uanMgICAgICAgICAbWzM5bRtbMW0bWzJtICAgIDMuNjgga0IbWzIybRtbMW0bWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzJtQnVmZmVyR2VvbWV0cnlVdGlscy1FOEhpb3h0TS5qcyAgICAgIBtbMzltG1sxbRtbMm0gICAgNi44OCBrQhtbMjJtG1sxbRtbMjJtChtbMm1kaXN0LxtbMjJtG1sybWJ1aWxkLxtbMjJtG1szMm1jaXZpbGlhbkJha2Uud29ya2VyLUM0d0JxVV8wLmpzICAgICAgG1szOW0bWzFtG1sybSAgICA4LjczIGtCG1syMm0bWzFtG1syMm0KG1sybWRpc3QvG1syMm0bWzJtYnVpbGQvG1syMm0bWzMybWJhc2lzX3RyYW5zY29kZXItbzRIZGVfTDcuanMgICAgICAgICAbWzM5bRtbMW0bWzJtICAgNTcuNTMga0IbWzIybRtbMW0bWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzJtdGhyZWUubW9kdWxlLUItbkhCZ2xXLmpzICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gIDIwNi4xMSBrQhtbMjJtG1sxbRtbMjJtChtbMm1kaXN0LxtbMjJtG1sybWJ1aWxkLxtbMjJtG1szMm1jaXZpbGlhblNvdXJjZS1DOWlBZEpBai5qcyAgICAgICAgICAgG1szOW0bWzFtG1sybSAgMzgzLjUyIGtCG1syMm0bWzFtG1syMm0KG1sybWRpc3QvG1syMm0bWzJtYnVpbGQvG1syMm0bWzMybWJhc2lzX3RyYW5zY29kZXItVlhkeDVOYkkud2FzbSAgICAgICAbWzM5bRtbMW0bWzJtICA1MjcuMzMga0IbWzIybRtbMW0bWzIybRtbMm0g4pSCIGd6aXA6ICAgMjQ0LjU3IGtCG1syMm0KG1sybWRpc3QvG1syMm0bWzJtYnVpbGQvG1syMm0bWzMybXByZXBhcmVDaXZpbGlhbkdlb21ldHJ5LUNCSm1HWWlsLmpzICAbWzM5bRtbMW0bWzJtMiwwMjAuMTEga0IbWzIybRtbMW0bWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzJtcmFwaWVyLUM2R0NiS1ZKLndhc20gICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0zLDA4Mi4xMCBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogMSwxNzEuMTcga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzVtaW5kZXgtRDRaTEtvQk0uY3NzICAgICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAzMS4yOCBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDYuOTkga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtbG9va1ZpZXdwb2ludHMtQlgtT0Vhbm4uanMgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMC4yMyBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuMTYga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtc3Vydml2b3ItWkxRNmRNNTcuanMgICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMC41OCBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuMzcga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtbW9kdWxlcHJlbG9hZC1wb2x5ZmlsbC1CNVF0OUVNWC5qcyAgIBtbMzltG1sxbRtbMm0gICAgMC43MSBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuNDAga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtcHJlbG9hZC1oZWxwZXItQmxUeEhTY1cuanMgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMS4xMSBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuNjUga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtY3Jvd2RQcm9iZS05VWE2Z0hZUC5qcyAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMS4zNSBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuNzgga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtY29udHJvbHMtREdkamtxeVAuanMgICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMS40MCBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuNzQga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtd29ybGRMb29rLURUOG14aF96LmpzICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMS42NCBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDAuNzYga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtY3Jvd2QtQ21KbGgza1UuanMgICAgICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgMi4yMiBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDEuMjEga0IbWzIybQobWzJtZGlzdC8bWzIybRtbMm1idWlsZC8bWzIybRtbMzZtbG9va1BhdGNoLUJUN2VmN19ELmpzICAgICAgICAgICAgICAgIBtbMzltG1sxbRtbMm0gICAgNS4yNiBrQhtbMjJtG1sxbRtbMjJtG1sybSDilIIgZ3ppcDogICAgIDIuNjkga0IbWzIybQo="
+                    },
+                    {
+                      "buffer": "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"
+                    },
+                    {
+                      "buffer": "G1sybWRpc3QvG1syMm0bWzJtYnVpbGQvG1syMm0bWzM2bWNoYXJhY3Rlci1jbGlwcy1CZ2NSWUZkbi5qcyAgICAgICAgICAbWzM5bRtbMW0bWzJtMSw5MzkuNzAga0IbWzIybRtbMW0bWzIybRtbMm0g4pSCIGd6aXA6ICAgMzQxLjc4IGtCG1syMm0KG1szMm3inJMgYnVpbHQgaW4gMy41NXMbWzM5bQo="
+                    },
+                    {
+                      "text": "{\"tier\":\"high\",\"frameP95\":11.3,\"simP95\":3.1999998092651367,\"simFrameP95\":2.8000001907348633,\"draws\":148,\"triangles\":845694,\"lights\":0,\"peak\":200,\"heapMB\":132.097528,\"species\":{\"lion\":2,\"gorilla\":2,\"elephant\":2,\"zebra\":3,\"flamingo\":4,\"alpha\":4,\"runner\":183},\"heapAudit\":{\"usedSize\":132097528,\"totalSize\":133791744,\"embedderHeapUsedSize\":1926200,\"backingStorageSize\":604545060}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T23:43:58.604Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "703169108b866da3b536-12c2597c505a59f5913f",
+          "file": "perf/l8-budgets.spec.ts",
+          "line": 7,
+          "column": 58
+        },
+        {
+          "title": "T-E30-budget @E30-AC20 @perf low mixed outbreak E18 budgets",
+          "ok": true,
+          "tags": [
+            "E30-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14676,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"low\",\"frameP95\":7.8,\"simP95\":2.1000003814697266,\"simFrameP95\":1.8999996185302734,\"draws\":135,\"triangles\":421605,\"lights\":0,\"peak\":100,\"heapMB\":91.186348,\"species\":{\"lion\":2,\"gorilla\":2,\"elephant\":2,\"zebra\":3,\"flamingo\":4,\"alpha\":4,\"runner\":83},\"heapAudit\":{\"usedSize\":91186348,\"totalSize\":92635136,\"embedderHeapUsedSize\":1789928,\"backingStorageSize\":344250237}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T23:44:19.631Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "703169108b866da3b536-492b9378b2e577e09dac",
+          "file": "perf/l8-budgets.spec.ts",
+          "line": 7,
+          "column": 58
+        },
+        {
+          "title": "T-E30-budget @E30-AC20 @perf phone mixed outbreak E18 budgets",
+          "ok": false,
+          "tags": [
+            "E30-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 22583,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m35.2\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m35.2\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/perf/l8-budgets.spec.ts:44:27",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/perf/l8-budgets.spec.ts",
+                      "column": 27,
+                      "line": 44
+                    },
+                    "snippet": "  42 |   mkdirSync('test-results/epics/E30', { recursive: true }); writeFileSync(`test-results/epics/E30/perf-${profile}.json`, JSON.stringify({ ...result, heapAudit }, null, 2)); console.log(JSON.stringify({ ...result, perf: undefined, heapAudit }));\n  43 |   expect(result.peak).toBe(low ? 100 : 200); for (const count of Object.values(result.species)) expect(count).toBeGreaterThan(0);\n> 44 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  45 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400); expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8);\n  46 | });\n  47 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/perf/l8-budgets.spec.ts",
+                        "column": 27,
+                        "line": 44
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m35.2\u001b[39m\n\n  42 |   mkdirSync('test-results/epics/E30', { recursive: true }); writeFileSync(`test-results/epics/E30/perf-${profile}.json`, JSON.stringify({ ...result, heapAudit }, null, 2)); console.log(JSON.stringify({ ...result, perf: undefined, heapAudit }));\n  43 |   expect(result.peak).toBe(low ? 100 : 200); for (const count of Object.values(result.species)) expect(count).toBeGreaterThan(0);\n> 44 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  45 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400); expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8);\n  46 | });\n  47 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/perf/l8-budgets.spec.ts:44:27"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"low\",\"frameP95\":35.2,\"simP95\":7.399999618530273,\"simFrameP95\":13.100000381469727,\"draws\":126,\"triangles\":320171,\"lights\":0,\"peak\":100,\"heapMB\":90.39636,\"species\":{\"lion\":2,\"gorilla\":2,\"elephant\":2,\"zebra\":3,\"flamingo\":4,\"alpha\":4,\"runner\":83},\"heapAudit\":{\"usedSize\":90396360,\"totalSize\":91586560,\"embedderHeapUsedSize\":1782120,\"backingStorageSize\":344247040}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T23:44:34.313Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434/perf-l8-budgets-T-E30-budg-7f8e4--mixed-outbreak-E18-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/playwright/run-3434/perf-l8-budgets-T-E30-budg-7f8e4--mixed-outbreak-E18-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/perf/l8-budgets.spec.ts",
+                    "column": 27,
+                    "line": 44
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "703169108b866da3b536-c379f228b982daef147a",
+          "file": "perf/l8-budgets.spec.ts",
+          "line": 7,
+          "column": 58
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T23:43:58.022Z",
+    "duration": 60061.966,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

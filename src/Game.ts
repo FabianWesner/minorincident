@@ -1,3 +1,4 @@
+import { LevelEightBot } from './debug/bot/LevelEightBot';
 import { LevelSixBot } from './debug/bot/LevelSixBot';
 import type { Inspection } from './debug/Inspection';
 import { LevelOneBot } from './debug/bot/LevelOneBot';
@@ -64,11 +65,13 @@ export class Game {
   campaignUI!: CampaignUI;
   lastLoad:{dataMs:number;simMs:number;viewMs:number}|null=null;
   inspect: Inspection | null = null;
-  driver: LevelSixBot | BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
+  driver: LevelEightBot | LevelSixBot | BarricadeBot | LevelOneBot | Driver | LevelThreeBot | LevelFourBot | LevelFiveBot | LevelTwoBot | null = null;
   frameMs = 0;
   simMs = 0;
   simTicks = 0;
   simWorldMs = 0;
+  /** Largest fixed simulation tick in the last render frame; simMs includes every catch-up tick. */
+  simTickMs = 0;
   private readonly spawnFrustum = new Matrix4();
   private loading = false;
   private prefetchedMission: object | null = null;
@@ -142,7 +145,7 @@ export class Game {
         // E27 bullet time: big blasts near the player slow the presentation and the fixed-step clock together.
         const slow = this.clock.paused ? 1 : this.view.vfx?.blasts.timeScale(seconds) ?? 1;
         if (!this.clock.paused) this.view.frame(seconds * slow);
-        const start = performance.now(), tickBefore = this.world.tick; this.simWorldMs = 0;
+        const start = performance.now(), tickBefore = this.world.tick; this.simWorldMs = 0; this.simTickMs = 0;
         this.clock.advance(seconds * slow, () => this.simTick());
         this.simMs = performance.now() - start;
         this.simTicks = this.world.tick - tickBefore;
@@ -227,7 +230,7 @@ export class Game {
         const data=loadMeasure('level:layouts',start);
         if (!speculative) this.transition.update(.1, 'Building the neighborhood…');
         const cosmetic=this.world.entities.get(1)?.survivor;
-        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null,id==='L7'?this.campaign?.results?.L6?.escapedSurvivors:undefined);
+        const audioWait=performance.now(); await this.audioLoad; loadMeasure('level:boot-audio-wait',audioWait); this.audio.reset(); if (!speculative) this.ui.reset(); this.view.missionHidden = speculative; this.view.background = speculative && !this.preloadForeground; if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset();this.view.reset(composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|'));this.world.reset();this.clock.reset();const worldStart = performance.now(); this.world.loadComposition(composition,layouts,opts?.seed??1,id==='L2'?this.campaign?.world?.L1??null:null,id==='L7'?this.campaign?.results?.L6?.escapedSurvivors:id==='L8'?this.campaign?.results?.L7?.escapedSurvivors:undefined);
         const missionStart = loadMeasure('level:world+nav', worldStart);
         const quality = this.campaign?.settings.quality ?? this.params.get('quality');
         if(quality === 'low' || quality === 'auto' && matchMedia('(pointer:coarse)').matches) this.world.npcs?.setQuality('low');
@@ -243,6 +246,10 @@ export class Game {
         if (id === 'L7') {
           if (this.campaign) this.applyCampaign();
           this.world.l7Encounters!.prepare();
+        }
+        if (id === 'L9' && this.campaign?.transport) {
+          this.applyCampaign();
+          this.world.vehicles!.restoreTransfer(this.campaign.transport, { x: this.world.districts!.playerStart[0], z: this.world.districts!.playerStart[1] });
         }
         opts?.setup?.(this.world);
         if(this.campaign)this.watchCampaign();
@@ -309,6 +316,7 @@ export class Game {
     const save=this.campaign!;
     this.world.events.on('level.completed',event=>{
       if(event.type!=='level.completed'||!/^L[1-9]$/.test(event.id))return;
+      if (event.id === 'L8' && this.world.missions?.l8) save.transport = this.world.vehicles!.transfer(this.world.missions.l8.state.carId);
       completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
       this.saveCampaign();
       const next = Number(event.id.slice(1)) + 1;
@@ -363,7 +371,8 @@ export class Game {
       this.spawnFrustum.multiplyMatrices(sim.projectionMatrix, sim.matrixWorldInverse);
       this.world.infected.director.setFrustum(this.spawnFrustum.elements, sim.position);
     }
-    const simStart = performance.now(); this.world.update(); this.simWorldMs += performance.now() - simStart;
+    const simStart = performance.now(); this.world.update(); const simDt = performance.now() - simStart; this.simWorldMs += simDt;
+    this.simTickMs = Math.max(this.simTickMs, simDt);
     if (this.ui.enabled) this.ui.hud.onboarding.observe(this.world.inputFrame);
     this.view.advance(1 / 60);
   }
@@ -379,7 +388,7 @@ export class Game {
    * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
+    return { infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }

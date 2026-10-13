@@ -1,3 +1,4 @@
+import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
 import { LevelSixBot } from '../../src/debug/bot/LevelSixBot';
 import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
 import { LevelFourBot } from '../../src/debug/bot/LevelFourBot';
@@ -30,8 +31,9 @@ export async function loadLevel(level: MissionId, seed: number, campaign?: Campa
   const world = new SimWorld();
   try {
     await world.init(); const composition = compositions[level];
-    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed);
+    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, null, level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined);
     if(campaign)applyCampaign(world,campaign);
+    if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));
     if (!campaign && level === 'L6') applyCampaign(world, preset('L6-default'));
     if (!campaign && level === 'L5') applyCampaign(world, preset('L5-default'));
     if (!campaign && level === 'L4') applyCampaign(world, preset('L4-default'));
@@ -62,6 +64,9 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelTwoBot(world, policy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+    } else if (level === 'L8') {
+      const bot = new LevelEightBot(world, policy);
+      for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
     } else if (level === 'L6') {
       const bot = new LevelSixBot(world, policy);
       for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
