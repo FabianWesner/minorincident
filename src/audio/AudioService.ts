@@ -1,10 +1,11 @@
+import { megaBands, cureRecordingText, isMega } from '../data/megaPresentation';
 import { apcEngineStages, apcDamageCaptions } from './apcEngine';
 import { action } from '../data/actions/catalog';
 import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
 import type { SoundPosition } from '../data/audioEvents';
-import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers, pickupFanfare } from '../data/audioCues';
+import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers, pickupFanfare, megaCueRates } from '../data/audioCues';
 import { AudioGraph, type GraphVoice, type PlayOptions } from './AudioGraph';
 import { AudioRegistry } from './AudioRegistry';
 import { fromDistricts, surfaceAt, zoneAt, dbGain } from './acoustics';
@@ -175,13 +176,14 @@ export class AudioService implements Lifecycle {
         this.reset();
         if (!this.world.scenario)
             return;
-        this.level = /^L[1-68]$/.test(this.world.scenario) ? this.world.scenario : 'L1';
+        this.level = /^(?:L[1-68]|L10)$/.test(this.world.scenario) ? this.world.scenario : 'L1';
         this.score.level = this.level;
         this.tier = this.world.districts?.composition.tier ?? 0;
         this.graph.map = fromDistricts(this.world.districts);
         this.registry.reset(this.world.seed);
         const generation = this.generation;
         await this.registry.prepare(this.level, false);
+        if (this.level === 'L10' || this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
         if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
             return;
@@ -211,7 +213,7 @@ export class AudioService implements Lifecycle {
         for (const bed of ambienceTiers[tier].beds)
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: tier === 5 ? dbGain(-16) : 1 });
     }
-    private get hasScore(): boolean { return /^L[1-68]$/.test(this.world.scenario ?? ''); }
+    private get hasScore(): boolean { return /^(?:L[1-68]|L10)$/.test(this.world.scenario ?? ''); }
     private mount(): void {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');
@@ -483,10 +485,10 @@ export class AudioService implements Lifecycle {
     private startBedsAndMusic(): void {
         if (!this.available() || this.started || this.starting || this.host.readyForBackground?.() === false)
             return;
-        if (!this.registry.buffers.has('ambience') || !this.registry.buffers.has(`music-${this.level}`)) {
+        if (!this.registry.buffers.has('ambience') || !this.registry.buffers.has(`music-${this.level === 'L10' ? 'L6' : this.level}`)) {
             this.starting = true;
             const generation = this.generation;
-            void Promise.all(['ambience', `music-${this.level}`].map(category => this.registry.load(category))).then(() => {
+            void Promise.all(['ambience', `music-${this.level === 'L10' ? 'L6' : this.level}`].map(category => this.registry.load(category))).then(() => {
                 if (generation !== this.generation || this.disposed) return;
                 this.starting = false; this.startBedsAndMusic();
             }).catch(error => { if (generation === this.generation) { this.starting = false; this.registry.errors.push(String(error)); } });
@@ -502,7 +504,7 @@ export class AudioService implements Lifecycle {
         if (this.hasScore && this.level !== 'L5') void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
         // L5 has no stems: no layered music exists in the silent city (the calm score starts after 60 s, see l5Score).
         for (const layer of this.level === 'L5' ? [] : musicLayers) {
-            const v = this.play(`music.${this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
+            const v = this.play(`music.${this.level === 'L10' ? 'L6' : this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
                 this.stemVoices.set(layer, v);
         }
@@ -524,7 +526,9 @@ export class AudioService implements Lifecycle {
         const t = this.context.currentTime;
         this.score.update();
         const story = storyMusic(this.level, this.world.missions?.state);
-        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 ? { minimum: story.minimum } : {}), incident: this.incident, complete: this.complete });
+        const band = this.world.megaPursuit?.band();
+        const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
+        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.incident, complete: this.complete || input.complete });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
         if (this.music.peak !== this.score.peak) {
             this.score.setPeak(this.music.peak);
@@ -603,11 +607,20 @@ export class AudioService implements Lifecycle {
             return; // One-shots only: keep the collapse quiet between state reactions.
         }
         if (event.type === 'barricade.damaged') return; // The paired barricade.sound event owns the impact cue.
+        if (event.type === 'mega.cue') {
+            const cue = `mega.${event.kind}`;
+            this.play(cue, { gain: megaBands[event.band].gain, rate: megaCueRates[cue], lowpass: 900, dry: true }, event.sourceId);
+            return;
+        }
         if (event.type === 'telegraph') {
+            if (isMega(entity) && 'special' in event) {
+                const cue = event.special === 'alpha.charge' ? 'mega.charge' : event.special === 'alpha.ground-slam' ? 'mega.slam' : event.special === 'alpha.grab-throw' ? 'mega.grab' : 'mega.roar';
+                this.play(cue, { gain: 1, rate: megaCueRates[cue], priority: 150, dry: true }, source);
+                return;
+            }
             const special = 'special' in event ? event.special : event.kind;
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging — clear the marked path' : 'Alpha ground slam — leave the marked circle', position, event.duration);
-            if ('duration' in event && entity?.infected?.pursuit && special === 'alpha.grab-throw') this.caption('Mega Alpha grabbing — leave the marked circle', position, event.duration);
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }
@@ -751,6 +764,12 @@ export class AudioService implements Lifecycle {
             return;
         }
         if (event.type === 'dialogue' || event.type === 'dialogue.line') {
+            if (event.type === 'dialogue' && event.recording === 'cure' || event.type === 'dialogue.line' && event.id === 'L10.research') {
+                this.graph.duck('radio', t, 14);
+                this.play('cure.recording', { gain: .3, lowpass: 2400, dry: true });
+                this.caption(event.text || cureRecordingText, undefined, 14);
+                return;
+            }
             const duration = 'duration' in event ? event.duration ?? 3 : 3;
             this.graph.duck('radio', t, duration);
             this.play('dialogue.radio', { position, gain: this.level === 'L5' ? dbGain(l5.audio.quietDb) : 1 });
@@ -847,7 +866,7 @@ export class AudioService implements Lifecycle {
         }
         if (event.type === 'infected.groan' || event.type === 'infected.recovered') {
             const body = this.world.entities.get(event.sourceId);
-            if (body && voicedInfected.has(body.archetype))
+            if (body && !isMega(body) && voicedInfected.has(body.archetype))
                 this.play(eventCues[event.type], { position: body.transform, gain: event.type === 'infected.groan' ? 0.7 : 1 }, body.id);
             return;
         }
@@ -923,7 +942,7 @@ export class AudioService implements Lifecycle {
             this.points.length = 0;
             let index = 0;
             for (const e of this.world.entities.iterate())
-                if (e.infected && e.health.current > 0) {
+                if (e.infected && !isMega(e) && e.health.current > 0) {
                     let p = this.pointPool[index];
                     if (!p) {
                         p = { id: 0, x: 0, z: 0 };

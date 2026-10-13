@@ -9,6 +9,8 @@ export type Surface = 'asphalt' | 'sidewalk' | 'grass' | 'wood' | 'gravel' | 'ti
 export type PropMaterial = 'wood' | 'metal' | 'plastic' | 'glass' | 'rubber' | 'sandbag';
 export type ExplosionBeat = 'tell' | 'crack' | 'boom' | 'sub' | 'debris' | 'roar' | 'crackle';
 export type AudioSystemEvent = {
+    type: 'mega.cue'; tick: number; sourceId: number; kind: 'roar' | 'impact' | 'step'; band: import('../sim/ai/MegaPursuit').PursuitBand;
+} | {
     type: 'footstep';
     tick: number;
     sourceId: number;
@@ -88,6 +90,8 @@ export type AudioSystemEvent = {
     stop?: boolean;
 } | {
     type: 'dialogue';
+    /** Instrumental campus recording; text remains available with audio disabled. */
+    recording?: 'cure';
     tick: number;
     position?: SoundPosition;
     text: string;
@@ -99,6 +103,9 @@ export type AudioSystemEvent = {
     level: string;
 } | {
     type: 'music.intensity';
+    /** Existing director story controls, for discovery/delivery and release resolution. */
+    minimum?: number;
+    complete?: boolean;
     tick: number;
     alerted: number;
     damage: number;

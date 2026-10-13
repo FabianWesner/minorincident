@@ -1,3 +1,5 @@
+import { isMega } from '../data/megaPresentation';
+import { MegaRing } from './MegaRing';
 import { healthFraction } from './health';
 import { weatherLabels } from '../data/weather';
 // Adapted from folio-2025 Map.js / Notifications.js by Bruno Simon (MIT, 41046b5):
@@ -27,6 +29,7 @@ export class Hud {
   private readonly fullText = node('p', 'objective-full-text');
   private readonly trackerText = node('span', 'objective-text');
   private readonly map = node('div', 'minimap');
+  private readonly megaRing = new MegaRing(this.map);
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
   private readonly homePin = this.pin('home', '⌂');
@@ -149,9 +152,9 @@ export class Hud {
       this.civilianBark.style.left = `${(p[0] + 1) * 50}%`; this.civilianBark.style.top = `${(1 - p[1]) * 50}%`;
       this.civilianBarkUntil = this.game.world.tick + 72;
     } else if (event.type === 'combat.hit' && event.targetId === 1) {
-      this.damagedUntil = this.game.world.tick + 60;
+      this.damagedUntil = isMega(this.game.world.entities.get(event.sourceId)) ? -1 : this.game.world.tick + 60;
       const source = this.game.world.entities.get(event.sourceId), player = this.game.world.entities.get(1);
-      if (source && player) {
+      if (source && player && !isMega(source)) {
         const origin = this.game.view.project(player.transform.x, player.transform.y, player.transform.z);
         const projected = this.game.view.project(source.transform.x, source.transform.y, source.transform.z);
         this.damage.style.setProperty('--direction', `${Math.atan2(origin[1] - projected[1], projected[0] - origin[0]) - Math.PI / 2}rad`);
@@ -202,10 +205,12 @@ export class Hud {
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
     style(this.portrait, 'background-image', portrait);
     style(this.vignette, 'opacity', String(clamp((.3 - hp) / .3)));
+    this.megaRing.update(world.megaPursuit?.band() ?? null);
     let corgi = null, pinCount = 0;
     const px = player.transform.x, pz = player.transform.z;
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
+      if (isMega(entity)) continue;
       if (entity.faction !== 'infected' || entity.health.current <= 0 || ((entity.hidden || entity.infected?.hidden) && !world.weather?.reveals.has(entity.id)) || Math.hypot(entity.transform.x - px, entity.transform.z - pz) > (world.weather?.reveals.has(entity.id) ? 40 : 30)) continue;
       const pin = this.threats[pinCount]; if (!pin) break; pinCount++;
       setHidden(pin, false); attribute(pin, 'data-entity-id', String(entity.id)); this.place(pin, entity.transform.x, entity.transform.z, px, pz);

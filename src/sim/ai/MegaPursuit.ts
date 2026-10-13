@@ -1,3 +1,4 @@
+import { megaCueInterval } from '../../data/megaPresentation';
 import { SimPhase } from '../../core/EventBus';
 import { megaAlpha } from '../../data/megaAlpha';
 import { Status } from '../combat/Status';
@@ -52,6 +53,7 @@ export interface MegaPursuitState {
   lastDamage: { tick: number; amount: number; sourceId: number } | null;
   /** Metres advanced while coarse (telemetry). */
   coarseM: number;
+  audio?: { next: number; step: number; index: number; last?: { x: number; z: number } };
 }
 const key = (a: string, b: string) => a < b ? `${a}|${b}` : `${b}|${a}`;
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -147,7 +149,23 @@ export class MegaPursuit {
     }
     if (e.health.current <= 0 && (e.infected!.recoverAt ?? -1) < 0) { s.mode = 'dead'; s.hp = 0; s.route.length = 0; return; }
     s.x = e.transform.x; s.z = e.transform.z; s.hp = e.health.current; s.maxHp = e.health.max;
+    this.sound();
     if (tick - s.routeAt >= megaAlpha.routeTicks) this.refresh();
+  }
+
+  private sound(): void {
+    const band = this.band(), e = this.entity(); if (!band || !e || !this.alive()) return;
+    const tick = this.world.tick, audio = this.state.audio ??= { next: tick, step: tick, index: 0 };
+    const last = audio.last ??= { x: e.transform.x, z: e.transform.z };
+    const moving = dist(last, e.transform) > .005; last.x = e.transform.x; last.z = e.transform.z;
+    const emit = (kind: 'roar' | 'impact' | 'step') => this.world.events.emit({ type: 'mega.cue', tick, sourceId: e.id, kind, band });
+    if (tick >= audio.next) {
+      emit('roar'); emit('impact'); audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
+    }
+    if (tick >= audio.step) {
+      audio.step = tick + 48;
+      if (this.distance() < 60 && !e.infected?.specialAttack && moving) emit('step');
+    }
   }
 
   /**
@@ -367,6 +385,7 @@ export class MegaPursuit {
     e.transform.x = spot.x; e.transform.z = spot.z; e.transform.y = .7 + (this.world.districts?.groundHeight(spot.x, spot.z) ?? 0);
     if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
     this.world.spatial.set(e.id, spot.x, spot.z);
+    if (this.state.audio?.last) { this.state.audio.last.x = spot.x; this.state.audio.last.z = spot.z; }
     this.state.x = spot.x; this.state.z = spot.z; this.state.routeAt = -Infinity; this.path.path.length = 0; this.path.goal = -1;
   }
 
@@ -379,6 +398,7 @@ export class MegaPursuit {
   restore(saved: unknown): void {
     const s = structuredClone(saved as MegaPursuitState), delta = this.world.tick - s.tick, ai = this.world.infected!;
     const killed = this.state.mode === 'dead' && this.state.id !== 0, shift = (t: number) => t >= 0 && Number.isFinite(t) ? t + delta : t;
+    if (s.audio) { s.audio.next = shift(s.audio.next); s.audio.step = shift(s.audio.step); }
     s.introducedAt = shift(s.introducedAt); s.routeAt = -Infinity; if (s.introduceTick !== null) s.introduceTick = shift(s.introduceTick);
     for (const link of Object.keys(s.blocked)) s.blocked[link] = shift(s.blocked[link]);
     if (s.breach) s.breach.until = shift(s.breach.until);
