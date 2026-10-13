@@ -1,0 +1,973 @@
+[
+  {
+    "profile": "high",
+    "route": "road",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 8586,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.1696472167969,
+          "z": 5.200980186462402,
+          "y": 0.995434582233429,
+          "yaw": 0.0161884426374425
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 9426
+    },
+    "seconds": 78.57230000019074,
+    "distance": 1562.959653145877,
+    "frameP95": 14.4,
+    "simP95": 0.8999996185302734,
+    "hitch": 37.1,
+    "draws": 118,
+    "triangles": 1083104,
+    "resident": 25,
+    "loading": 2,
+    "geometries": 390,
+    "heapPeakMB": 1264.036896,
+    "hp": 0,
+    "hitches": [],
+    "coldPipelines": [],
+    "shadowTriangles": 750479,
+    "submittedTriangles": 1683110,
+    "heroLights": 0,
+    "awakeProps": 2,
+    "particles": 453,
+    "puffs": 60,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 200,
+    "nodeBuilds": 303,
+    "heapMB": 159.192604,
+    "limits": {
+      "frameP95": 16.7,
+      "simP95": 4,
+      "draws": 600,
+      "triangles": 1500000,
+      "resident": 25,
+      "heapMB": 400,
+      "heroLights": 8,
+      "awakeProps": 150,
+      "particles": 6000,
+      "puffs": 400,
+      "parts": 120
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "high",
+    "route": "countryside",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 7303,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.0666198730469,
+          "z": -2.9827258586883545,
+          "y": 0.9954345226287842,
+          "yaw": -0.007689785740653973
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 8143
+    },
+    "seconds": 67.88480000019074,
+    "distance": 1335.1868799773902,
+    "frameP95": 15.5,
+    "simP95": 0.9000005722045898,
+    "hitch": 37.1,
+    "draws": 117,
+    "triangles": 1082080,
+    "resident": 25,
+    "loading": 2,
+    "geometries": 390,
+    "heapPeakMB": 1315.313338,
+    "hp": 0,
+    "hitches": [],
+    "coldPipelines": [],
+    "shadowTriangles": 946556,
+    "submittedTriangles": 2028636,
+    "heroLights": 0,
+    "awakeProps": 2,
+    "particles": 453,
+    "puffs": 60,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 200,
+    "nodeBuilds": 598,
+    "heapMB": 161.909388,
+    "limits": {
+      "frameP95": 16.7,
+      "simP95": 4,
+      "draws": 600,
+      "triangles": 1500000,
+      "resident": 25,
+      "heapMB": 400,
+      "heroLights": 8,
+      "awakeProps": 150,
+      "particles": 6000,
+      "puffs": 400,
+      "parts": 120
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "high",
+    "route": "dry-shortcut",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 5816,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.04498291015625,
+          "z": 0.16373874247074127,
+          "y": 0.9954344630241394,
+          "yaw": -0.00048825009474177727
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 6656
+    },
+    "seconds": 55.48719999980926,
+    "distance": 1072.1330896134345,
+    "frameP95": 16.6,
+    "simP95": 0.9000005722045898,
+    "hitch": 52.6,
+    "draws": 118,
+    "triangles": 1083104,
+    "resident": 25,
+    "loading": 2,
+    "geometries": 385,
+    "heapPeakMB": 1327.907331,
+    "hp": 0,
+    "hitches": [
+      {
+        "elapsed": 52.6,
+        "position": {
+          "x": 124.54658508300781,
+          "z": -30.04646110534668,
+          "y": 0.9954344630241394,
+          "yaw": -0.0003710209993404871
+        },
+        "terrain": {
+          "resident": 25,
+          "queued": 0,
+          "loading": 0,
+          "unloaded": 33,
+          "limit": 25,
+          "prefetchSeconds": 2,
+          "chunks": [
+            "crossing-5-4",
+            "crossing-5-3",
+            "crossing-5-2",
+            "crossing-5-5",
+            "crossing-5-1",
+            "crossing-6-4",
+            "crossing-6-3",
+            "crossing-6-2",
+            "crossing-6-5",
+            "crossing-6-1",
+            "crossing-7-3",
+            "crossing-7-4",
+            "crossing-7-2",
+            "crossing-7-5",
+            "crossing-7-1",
+            "crossing-8-3",
+            "crossing-8-4",
+            "crossing-8-2",
+            "crossing-8-5",
+            "crossing-8-1",
+            "crossing-9-3",
+            "crossing-9-4",
+            "crossing-9-2",
+            "crossing-9-5",
+            "crossing-9-1"
+          ],
+          "origins": [
+            {
+              "id": "crossing-7-3",
+              "origin": [
+                100,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-6-3",
+              "origin": [
+                0,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-7-4",
+              "origin": [
+                100,
+                0
+              ]
+            },
+            {
+              "id": "crossing-6-4",
+              "origin": [
+                0,
+                0
+              ]
+            },
+            {
+              "id": "crossing-7-2",
+              "origin": [
+                100,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-8-3",
+              "origin": [
+                200,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-6-2",
+              "origin": [
+                0,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-8-4",
+              "origin": [
+                200,
+                0
+              ]
+            },
+            {
+              "id": "crossing-8-2",
+              "origin": [
+                200,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-5-3",
+              "origin": [
+                -100,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-7-5",
+              "origin": [
+                100,
+                100
+              ]
+            },
+            {
+              "id": "crossing-5-4",
+              "origin": [
+                -100,
+                0
+              ]
+            },
+            {
+              "id": "crossing-6-5",
+              "origin": [
+                0,
+                100
+              ]
+            },
+            {
+              "id": "crossing-5-2",
+              "origin": [
+                -100,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-8-5",
+              "origin": [
+                200,
+                100
+              ]
+            },
+            {
+              "id": "crossing-7-1",
+              "origin": [
+                100,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-9-3",
+              "origin": [
+                300,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-6-1",
+              "origin": [
+                0,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-9-4",
+              "origin": [
+                300,
+                0
+              ]
+            },
+            {
+              "id": "crossing-5-5",
+              "origin": [
+                -100,
+                100
+              ]
+            },
+            {
+              "id": "crossing-8-1",
+              "origin": [
+                200,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-9-2",
+              "origin": [
+                300,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-5-1",
+              "origin": [
+                -100,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-9-5",
+              "origin": [
+                300,
+                100
+              ]
+            },
+            {
+              "id": "crossing-9-1",
+              "origin": [
+                300,
+                -300
+              ]
+            }
+          ]
+        },
+        "updateCpuMs": 13.199999809265137,
+        "renderCpuMs": 1.3999996185302734,
+        "nodeBuilds": 893
+      }
+    ],
+    "coldPipelines": [],
+    "shadowTriangles": 844049,
+    "submittedTriangles": 1794834,
+    "heroLights": 0,
+    "awakeProps": 2,
+    "particles": 453,
+    "puffs": 64,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 200,
+    "nodeBuilds": 893,
+    "heapMB": 162.76678,
+    "limits": {
+      "frameP95": 16.7,
+      "simP95": 4,
+      "draws": 600,
+      "triangles": 1500000,
+      "resident": 25,
+      "heapMB": 400,
+      "heroLights": 8,
+      "awakeProps": 150,
+      "particles": 6000,
+      "puffs": 400,
+      "parts": 120
+    },
+    "pass": false,
+    "errors": []
+  },
+  {
+    "profile": "low",
+    "route": "road",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 8586,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.1696472167969,
+          "z": 5.200980186462402,
+          "y": 0.995434582233429,
+          "yaw": 0.0161884426374425
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 9426
+    },
+    "seconds": 78.5639000005722,
+    "distance": 1562.9606072447318,
+    "frameP95": 6.8,
+    "simP95": 0.6999998092651367,
+    "hitch": 21.7,
+    "draws": 98,
+    "triangles": 298794,
+    "resident": 9,
+    "loading": 2,
+    "geometries": 286,
+    "heapPeakMB": 870.818939,
+    "hp": 0,
+    "hitches": [],
+    "coldPipelines": [],
+    "shadowTriangles": 55874,
+    "submittedTriangles": 351276,
+    "heroLights": 0,
+    "awakeProps": 1,
+    "particles": 125,
+    "puffs": 31,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 100,
+    "nodeBuilds": 220,
+    "heapMB": 119.75676,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "resident": 9,
+      "heapMB": 250,
+      "heroLights": 3,
+      "awakeProps": 60,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "low",
+    "route": "countryside",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 7303,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.0666198730469,
+          "z": -2.9827258586883545,
+          "y": 0.9954345226287842,
+          "yaw": -0.007689785740653973
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 8143
+    },
+    "seconds": 67.8695,
+    "distance": 1335.187231867465,
+    "frameP95": 6.9,
+    "simP95": 0.8000001907348633,
+    "hitch": 25.7,
+    "draws": 98,
+    "triangles": 297568,
+    "resident": 9,
+    "loading": 2,
+    "geometries": 286,
+    "heapPeakMB": 851.527132,
+    "hp": 0,
+    "hitches": [],
+    "coldPipelines": [],
+    "shadowTriangles": 55874,
+    "submittedTriangles": 350050,
+    "heroLights": 0,
+    "awakeProps": 1,
+    "particles": 125,
+    "puffs": 32,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 100,
+    "nodeBuilds": 432,
+    "heapMB": 109.897976,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "resident": 9,
+      "heapMB": 250,
+      "heroLights": 3,
+      "awakeProps": 60,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "low",
+    "route": "dry-shortcut",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 5816,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.04498291015625,
+          "z": 0.16373874247074127,
+          "y": 0.9954344630241394,
+          "yaw": -0.00048825009474177727
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 6656
+    },
+    "seconds": 55.478699999809265,
+    "distance": 1072.1331141294859,
+    "frameP95": 7.1,
+    "simP95": 0.7000007629394531,
+    "hitch": 14,
+    "draws": 98,
+    "triangles": 298463,
+    "resident": 9,
+    "loading": 2,
+    "geometries": 286,
+    "heapPeakMB": 872.107829,
+    "hp": 0,
+    "hitches": [],
+    "coldPipelines": [],
+    "shadowTriangles": 56788,
+    "submittedTriangles": 350945,
+    "heroLights": 0,
+    "awakeProps": 2,
+    "particles": 126,
+    "puffs": 32,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 100,
+    "nodeBuilds": 644,
+    "heapMB": 110.750292,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "resident": 9,
+      "heapMB": 250,
+      "heroLights": 3,
+      "awakeProps": 60,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "phone",
+    "route": "road",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 8586,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.1696472167969,
+          "z": 5.200980186462402,
+          "y": 0.995434582233429,
+          "yaw": 0.0161884426374425
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 9426
+    },
+    "seconds": 78.5964000005722,
+    "distance": 1562.958195652322,
+    "frameP95": 19.4,
+    "simP95": 2.3999996185302734,
+    "hitch": 52.5,
+    "draws": 94,
+    "triangles": 215930,
+    "resident": 9,
+    "loading": 2,
+    "geometries": 286,
+    "heapPeakMB": 641.779421,
+    "hp": 0,
+    "hitches": [
+      {
+        "elapsed": 52.5,
+        "position": {
+          "x": 362.11669921875,
+          "z": -308.4523010253906,
+          "y": 0.9954345226287842,
+          "yaw": -1.282817471343443
+        },
+        "terrain": {
+          "resident": 9,
+          "queued": 0,
+          "loading": 0,
+          "unloaded": 30,
+          "limit": 9,
+          "prefetchSeconds": 2,
+          "chunks": [
+            "crossing-8-0",
+            "crossing-8-1",
+            "crossing-9-0",
+            "crossing-9-1",
+            "crossing-10-0",
+            "crossing-10-1",
+            "crossing-9-2",
+            "crossing-10-2",
+            "crossing-8-2"
+          ],
+          "origins": [
+            {
+              "id": "crossing-9-0",
+              "origin": [
+                300,
+                -400
+              ]
+            },
+            {
+              "id": "crossing-9-1",
+              "origin": [
+                300,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-10-0",
+              "origin": [
+                400,
+                -400
+              ]
+            },
+            {
+              "id": "crossing-10-1",
+              "origin": [
+                400,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-8-0",
+              "origin": [
+                200,
+                -400
+              ]
+            },
+            {
+              "id": "crossing-8-1",
+              "origin": [
+                200,
+                -300
+              ]
+            },
+            {
+              "id": "crossing-9-2",
+              "origin": [
+                300,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-10-2",
+              "origin": [
+                400,
+                -200
+              ]
+            },
+            {
+              "id": "crossing-8-2",
+              "origin": [
+                200,
+                -200
+              ]
+            }
+          ]
+        },
+        "updateCpuMs": 12.699999809265137,
+        "renderCpuMs": 3.3999996185302734,
+        "nodeBuilds": 220
+      }
+    ],
+    "coldPipelines": [],
+    "shadowTriangles": 52972,
+    "submittedTriangles": 266570,
+    "heroLights": 0,
+    "awakeProps": 1,
+    "particles": 125,
+    "puffs": 31,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 100,
+    "nodeBuilds": 220,
+    "heapMB": 119.256252,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "resident": 9,
+      "heapMB": 250,
+      "heroLights": 3,
+      "awakeProps": 60,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "phone",
+    "route": "countryside",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 7303,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.0666198730469,
+          "z": -2.9827258586883545,
+          "y": 0.9954345226287842,
+          "yaw": -0.007689785740653973
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 8143
+    },
+    "seconds": 67.9035,
+    "distance": 1335.1860895244213,
+    "frameP95": 22.8,
+    "simP95": 2.3999996185302734,
+    "hitch": 50.5,
+    "draws": 94,
+    "triangles": 216150,
+    "resident": 9,
+    "loading": 2,
+    "geometries": 286,
+    "heapPeakMB": 626.885098,
+    "hp": 0,
+    "hitches": [
+      {
+        "elapsed": 50.5,
+        "position": {
+          "x": 517.7,
+          "z": 0,
+          "y": -4.45,
+          "yaw": 1.5707963267948966
+        },
+        "terrain": {
+          "resident": 6,
+          "queued": 0,
+          "loading": 0,
+          "unloaded": 51,
+          "limit": 9,
+          "prefetchSeconds": 2,
+          "chunks": [
+            "crossing-10-4",
+            "crossing-10-3",
+            "crossing-11-4",
+            "crossing-11-3",
+            "crossing-11-5",
+            "crossing-10-5"
+          ],
+          "origins": [
+            {
+              "id": "crossing-11-3",
+              "origin": [
+                500,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-11-4",
+              "origin": [
+                500,
+                0
+              ]
+            },
+            {
+              "id": "crossing-10-3",
+              "origin": [
+                400,
+                -100
+              ]
+            },
+            {
+              "id": "crossing-10-4",
+              "origin": [
+                400,
+                0
+              ]
+            },
+            {
+              "id": "crossing-11-5",
+              "origin": [
+                500,
+                100
+              ]
+            },
+            {
+              "id": "crossing-10-5",
+              "origin": [
+                400,
+                100
+              ]
+            }
+          ]
+        },
+        "updateCpuMs": 8.300000190734863,
+        "renderCpuMs": 5.899999618530273,
+        "nodeBuilds": 432
+      }
+    ],
+    "coldPipelines": [],
+    "shadowTriangles": 51847,
+    "submittedTriangles": 266790,
+    "heroLights": 0,
+    "awakeProps": 1,
+    "particles": 126,
+    "puffs": 32,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 100,
+    "nodeBuilds": 432,
+    "heapMB": 109.380228,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "resident": 9,
+      "heapMB": 250,
+      "heroLights": 3,
+      "awakeProps": 60,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "profile": "phone",
+    "route": "dry-shortcut",
+    "completed": true,
+    "crash": {
+      "state": {
+        "phase": "done",
+        "carId": 5,
+        "startedAt": 5816,
+        "preCrashDurability": 0,
+        "from": {
+          "x": 468.04498291015625,
+          "z": 0.16373874247074127,
+          "y": 0.9954344630241394,
+          "yaw": -0.00048825009474177727
+        },
+        "crawlAnchor": "crawl-start",
+        "finished": true,
+        "ended": true
+      },
+      "tick": 6656
+    },
+    "seconds": 55.5174000005722,
+    "distance": 1072.133081585262,
+    "frameP95": 17.1,
+    "simP95": 2.3000001907348633,
+    "hitch": 37.7,
+    "draws": 94,
+    "triangles": 215990,
+    "resident": 9,
+    "loading": 2,
+    "geometries": 286,
+    "heapPeakMB": 656.835757,
+    "hp": 0,
+    "hitches": [],
+    "coldPipelines": [],
+    "shadowTriangles": 53611,
+    "submittedTriangles": 266630,
+    "heroLights": 0,
+    "awakeProps": 2,
+    "particles": 125,
+    "puffs": 32,
+    "parts": 3,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "backend": "webgl",
+    "infected": 100,
+    "nodeBuilds": 644,
+    "heapMB": 110.003564,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "resident": 9,
+      "heapMB": 250,
+      "heroLights": 3,
+      "awakeProps": 60,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40
+    },
+    "pass": true,
+    "errors": []
+  }
+]

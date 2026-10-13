@@ -13,7 +13,7 @@ import type { EntitySnapshot } from '../world/types';
  * - It cruises at 0.7 × the nominal run everywhere. Where detailed collision/nav is resident it steers on the shared nav grid
  *   (towards the next authored route node while far, towards the player while near); inside `closeM` the shared Alpha chase brain
  *   (contact, barricade breach, special scheduler) runs it. Off-region it advances along the authored route graph at the same
- *   speed × sim-time in 2 Hz steps, without a mesh or collider.
+ *   speed × sim-time every tick (route planning remains 2 Hz), without a mesh or collider.
  * - Stuck recovery escalates replan → authored alternate link → shared Alpha breach brain, and cycles, so no obstacle traps it for good.
  * - One entity, spawned once, always in the infected system (it counts against the cap even while coarse). Its compact pursuit state
  *   is a checkpoint seam (`world.megaPursuit`); entity HP/position/cooldowns ride the ordinary entity snapshot.
@@ -68,7 +68,15 @@ export class MegaPursuit {
   private readonly stops: (() => void)[] = [];
   private reservation = false;
   /** Nav baked at the Mega's own clearance (falls back to the shared crowd grid on very large grids). */
-  readonly grid: NavGrid;
+  private localGrid: NavGrid;
+  get grid(): NavGrid { return this.localGrid; }
+  invalidateNavigation(): void {
+    this.path.path.length = 0; this.path.goal = -1;
+    if (!this.world.chunks) return;
+    const nav = this.world.infected!.nav;
+    if (this.localGrid.ground.width === nav.ground.width && this.localGrid.ground.depth === nav.ground.depth && this.localGrid.walls === nav.walls) { this.localGrid.mask = nav.mask; this.localGrid.recenter(nav.center); }
+    else this.localGrid = nav.withClearance(this.radius);
+  }
   readonly radius: number;
   constructor(readonly world: SimWorld, readonly options: PursuitOptions = {}) {
     for (const node of options.route?.nodes ?? []) { if (this.nodes.has(node.id)) throw new Error(`Duplicate pursuit node ${node.id}`); this.nodes.set(node.id, node); this.adjacency.set(node.id, []); }
@@ -77,10 +85,10 @@ export class MegaPursuit {
       this.adjacency.get(a)!.push(b); this.adjacency.get(b)!.push(a);
     }
     const ai = world.infected!;
-    const own = ai.nav.width * ai.nav.depth <= megaAlpha.ownGridMaxCells;
-    this.grid = own ? ai.nav.withClearance(megaAlpha.radius) : ai.nav; this.radius = own ? megaAlpha.radius : ai.nav.clearance;
+    const own = !!world.chunks || ai.nav.width * ai.nav.depth <= megaAlpha.ownGridMaxCells;
+    this.localGrid = own ? ai.nav.withClearance(megaAlpha.radius) : ai.nav; this.radius = own ? megaAlpha.radius : ai.nav.clearance;
     if (own) this.stops.push(world.events.on('world.blocker.changed', ev => { if (ev.type === 'world.blocker.changed') this.grid.setBlocker(ev.id, ev.wall, ev.blocked); }));
-    this.resident = options.resident ?? ((x, z) => ai.nav.cell(x, z) >= 0 && (!ai.nav.mask || ai.nav.mask(x, z)));
+    this.resident = options.resident ?? ((x, z) => world.chunks ? world.chunks.resident(x, z) : ai.nav.cell(x, z) >= 0 && (!ai.nav.mask || ai.nav.mask(x, z)));
     const player = world.entities.get(1)!.transform;
     this.state = {
       tick: world.tick, id: 0, mode: 'dormant', introducedAt: -1,
@@ -231,14 +239,13 @@ export class MegaPursuit {
     s.breach = { link, until: tick + Math.round(megaAlpha.breachS * 60) };
     return true;
   }
-  /** Off-region: advance the same cruise speed × sim-time along the node route, in 2 Hz steps; no mesh, collider or nav. */
+  /** Off-region: advance the same cruise speed × sim-time along the node route, every tick; no mesh, collider or nav. */
   private coarse(e: EntitySnapshot): void {
     const s = this.state, tick = this.world.tick;
     s.mode = 'coarse'; e.combat!.attacking = false; e.infected!.state = 'chase';
     s.stuck.sampleAt = tick; s.stuck.x = e.transform.x; s.stuck.z = e.transform.z; s.stuck.noPath = 0;
     if (s.breach || this.legBlocked()) { if (this.breachStep()) s.mode = 'breach'; return; }
-    if ((tick - s.introducedAt) % megaAlpha.routeTicks !== 0) return;
-    let budget = megaAlpha.cruiseMs * Status.speed(e) * megaAlpha.routeTicks / 60;
+    let budget = megaAlpha.cruiseMs * Status.speed(e) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;

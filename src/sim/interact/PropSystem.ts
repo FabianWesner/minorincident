@@ -258,6 +258,29 @@ export class PropSystem {
     const moved = (a: PropPose, b: PropPose) => a.p.some((v, i) => Math.abs(v - b.p[i]) > 1e-4) || a.q.some((v, i) => Math.abs(v - b.q[i]) > 1e-4);
     return this.items.filter(i => moved(i.pose, i.home)).map(i => ({ id: i.id, p: [...i.pose.p], q: [...i.pose.q] }));
   }
+  /** Chunk ownership uses the same pose snapshot as checkpoints; native bodies are released while inactive. */
+  chunkState(entityId: number): (PropSnapshot[number] & { fixed: boolean; braced: boolean }) | undefined {
+    const item = this.items.find(p => p.entityId === entityId);
+    return item ? { id: item.id, p: [...item.pose.p], q: [...item.pose.q], fixed: item.fixed, braced: item.braced } : undefined;
+  }
+  unloadChunk(entityId: number): void {
+    const index = this.items.findIndex(p => p.entityId === entityId); if (index < 0) return;
+    const [item] = this.items.splice(index, 1), wall = this.navWalls.get(entityId);
+    if (wall) { this.navWalls.delete(entityId); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: entityId, wall, blocked: false }); }
+    this.world.physics.world!.removeRigidBody(item.body);
+  }
+  loadChunk(entityId: number, saved: NonNullable<ReturnType<PropSystem['chunkState']>>): void {
+    for (const d of this.world.districts!.districts) {
+      const placement = d.pushables.find(p => `${d.id}/${p.id}` === saved.id); if (!placement) continue;
+      this.rebuildingIds.set(saved.id, entityId);
+      const item = this.spawn(placement, d.origin, saved, saved.id); this.rebuildingIds.delete(saved.id);
+      item.fixed = saved.fixed; item.braced = saved.braced;
+      if (item.fixed || item.braced) item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false);
+      item.body.setEnabled(!item.braced && (this.world.entities.get(entityId)?.health.current ?? 0) > 0);
+      this.updateNavigation(); return;
+    }
+    throw new Error(`Missing streamed prop placement: ${saved.id}`);
+  }
   /** Checkpoint seam: every prop returns to its saved (or home) pose, asleep. */
   restore(saved: unknown): void {
     this.clearNavigation();

@@ -31,11 +31,11 @@ const hearingReactionTicks = 15, hearingTurnRadS = 14;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
-  readonly navigation: DistrictNavigation;
+  navigation: DistrictNavigation;
   readonly props: PropThrows;
   readonly alphaSupport: AlphaSupportMoves;
   readonly director: SpawnDirector;
-  readonly nav: NavGrid;
+  nav: NavGrid;
   readonly rng: Rng;
   readonly active: EntitySnapshot[] = [];
   readonly pool: EntitySnapshot[] = [];

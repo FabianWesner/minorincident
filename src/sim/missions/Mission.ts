@@ -386,7 +386,7 @@ export class Mission {
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
     const entities = structuredClone(checkpoint.entities);
     // Consumed health pickups stay consumed (00 §6.2: a respawn keeps the level's pickups; PO 2026-10-07 med packs never respawn).
-    const consumed = new Set<number>();
+    const consumed = new Set<number>(this.world.chunks?.consumedPickups());
     for (const e of this.world.entities.iterate()) if (e.pickup && 'kind' in e.pickup && e.pickup.collected && e.pickup.kind !== 'item' && e.pickup.kind !== 'throwable') consumed.add(e.id);
     for (const e of entities) if (e.pickup && 'kind' in e.pickup && consumed.has(e.id)) e.pickup.collected = true;
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }

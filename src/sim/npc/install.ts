@@ -33,9 +33,10 @@ export function installCampaignNpcs(world: SimWorld): void {
 /** Combat, infected brains and NPC systems on the loaded district colliders, without any population. */
 export function installNpcSystems(world: SimWorld): void {
   const districts = world.districts!;
-  const { min, max } = districts.nav, walls = campaignWalls(world);
+  const { min, max } = districts.nav, walls = world.chunks?.walls ?? campaignWalls(world);
   // Grid cells need room for the survivor's .45 m corner-steering clearance.
   const definition: ScenarioDefinition = { name: districts.composition.id, survivor: true, combat: true, infected: true, navigationClearance: .5, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, player: { ...world.entities.get(1)!.transform }, walls };
+  if (world.chunks) definition.ground = world.chunks.bounds();
   // Steering samples this boundary every 20 cm. Authored rectangular districts
   // need only range checks, preserving inside()'s inclusive minimum/exclusive maximum.
   const masks = districts.districts.map(d => {
@@ -54,7 +55,8 @@ export function installNpcSystems(world: SimWorld): void {
   });
   const mask = (x: number, z: number) => { for (const contains of masks) if (contains(x, z)) return true; return false; };
   // Bake the final footprint once. No navigation queries run in these constructors.
-  world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition, districts.composition.id === 'L7' && masks.length === 1 ? masks[0] : mask); world.npcs = new Npcs(world);
+  world.combat = new Combat(world, definition); world.infected = new InfectedSystem(world, definition, world.chunks ? null : districts.composition.id === 'L7' && masks.length === 1 ? masks[0] : mask); world.npcs = new Npcs(world);
+  if (world.chunks) world.infected.director.strict = true;
   world.events.on('sim.tick', () => world.infected?.update(), SimPhase.ai); world.events.on('sim.tick', () => world.npcs?.update(), SimPhase.ai);
 }
 
