@@ -16,6 +16,7 @@
     "killedBosses": [
       "boss"
     ],
+    "deadlineTicks": null,
     "steps": {
       "escort": {
         "status": "completed",
@@ -51,7 +52,7 @@
     "timeOfDay": null,
     "subtitle": {
       "id": "L1.briefing",
-      "text": "Reports of an incident at Joe’s Diner. Check it out.",
+      "text": "Morning! One cold-chain parcel at the depot, goes to the Medical Annex on Larch Street. Easy one.",
       "until": 300
     },
     "cinematic": null,
@@ -59,6 +60,7 @@
     "stats": {
       "time": 2.0166666666666666,
       "kills": 1,
+      "knockdowns": 0,
       "damage": 100,
       "deaths": 1,
       "rescued": 1,
@@ -67,6 +69,7 @@
     "result": {
       "time": 2.0166666666666666,
       "kills": 1,
+      "knockdowns": 0,
       "damage": 100,
       "deaths": 1,
       "rescued": 1,
@@ -94,13 +97,18 @@
     {
       "type": "dialogue.line",
       "id": "L1.briefing",
-      "text": "Reports of an incident at Joe’s Diner. Check it out.",
+      "text": "Morning! One cold-chain parcel at the depot, goes to the Medical Annex on Larch Street. Easy one.",
       "tick": 0
     },
     {
       "type": "objective.started",
       "id": "escort",
       "tick": 0
+    },
+    {
+      "type": "level.started",
+      "tick": 0,
+      "id": "mission-sandbox"
     },
     {
       "type": "checkpoint.set",
@@ -116,9 +124,15 @@
       "position": {
         "x": -5,
         "z": 0,
+        "radius": 2,
         "y": 0.7,
         "yaw": 0
       },
+      "direction": {
+        "x": 0,
+        "z": 0
+      },
+      "knockback": 0,
       "amount": 100,
       "damageType": "explosive",
       "type": "combat.hit"
@@ -132,9 +146,15 @@
       "position": {
         "x": -5,
         "z": 0,
+        "radius": 2,
         "y": 0.7,
         "yaw": 0
       },
+      "direction": {
+        "x": 0,
+        "z": 0
+      },
+      "knockback": 0,
       "amount": 100,
       "damageType": "explosive",
       "type": "combat.kill"
@@ -153,6 +173,12 @@
     {
       "type": "sim.tick",
       "tick": 1
+    },
+    {
+      "type": "vehicle.grabbed",
+      "tick": 1,
+      "sourceId": 5,
+      "targetId": 3
     },
     {
       "type": "sim.tick",
@@ -631,6 +657,15 @@
       "tick": 120
     },
     {
+      "type": "weather.gust",
+      "tick": 120,
+      "wind": {
+        "x": 0.9926457935177753,
+        "z": 0.1210550643776054
+      },
+      "strength": 0.14266343710944057
+    },
+    {
       "type": "player.respawned",
       "tick": 120,
       "id": 1
@@ -639,6 +674,12 @@
       "type": "checkpoint.restored",
       "id": "C",
       "tick": 120
+    },
+    {
+      "type": "vehicle.grabbed",
+      "tick": 120,
+      "sourceId": 5,
+      "targetId": 3
     },
     {
       "type": "sim.tick",
@@ -660,6 +701,7 @@
       "result": {
         "time": 2.0166666666666666,
         "kills": 1,
+        "knockdowns": 0,
         "damage": 100,
         "deaths": 1,
         "rescued": 1,
@@ -669,15 +711,137 @@
     }
   ],
   "perf": {
-    "fps": 59.88023952095874,
-    "frameMs": 16.699999999999818,
+    "infected": null,
+    "effects": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
+      "enabled": true,
+      "colorblind": false,
+      "gore": "Full",
+      "quality": "high",
+      "flashReduction": false,
+      "time": 0,
+      "lastSpray": {
+        "actionId": "",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 0,
+        "chunks": 0,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 0,
+      "particles": 0,
+      "particleCap": 2048,
+      "decals": 0,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 80,
+      "telegraphs": [],
+      "hitStop": {
+        "active": false,
+        "until": 0,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 400,
+        "fireballs": 0,
+        "fireballCap": 48,
+        "flames": 0,
+        "glows": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
+      "coverage": 0,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 0,
+      "explosionRadius": 0
+    },
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 0,
+      "submitted": 0,
+      "completed": 0,
+      "prebuilt": 0,
+      "failed": 0
+    },
+    "nodeBuilds": 82,
+    "profile": null,
+    "profileAssets": null,
+    "updateCpuMs": 0,
+    "renderCpuMs": 0,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 11.990407673860899,
+    "frameMs": 83.40000000000009,
     "simMs": 0,
-    "drawCalls": 119,
-    "triangles": 22087,
-    "geometries": 70,
-    "textures": 7,
+    "simTicks": 0,
+    "simWorldMs": 0,
+    "simTickMs": 0,
+    "uiMs": 0,
+    "drawCalls": 123,
+    "triangles": 304774,
+    "geometries": 157,
+    "textures": 11,
     "entities": 6,
     "backend": "webgl",
-    "loadTiming": null
+    "loadTiming": null,
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 16,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 521000000,
+    "lighting": {
+      "lightFieldMs": 0.09999942779541016,
+      "lightPools": 0,
+      "lightCandidates": 0,
+      "shadowMaps": 1,
+      "heroLights": 0,
+      "heroShadow": 0,
+      "preset": "golden"
+    }
   }
 }

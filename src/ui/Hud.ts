@@ -19,7 +19,6 @@ export class Hud {
   readonly onboarding: Onboarding;
   private readonly portrait = node('div', 'survivor-portrait');
   private readonly health = this.bar('health');
-  private readonly armor = this.bar('armor');
   private readonly companion = node('span', 'corgi-state');
   private readonly corgiBadge = node('span', 'corgi-badge', '🐕');
   private readonly detail = node('dialog', 'objective-detail');
@@ -35,7 +34,9 @@ export class Hud {
   private readonly cueText = node('span', 'sign-of-life');
   private readonly threats: HTMLSpanElement[] = [];
   private readonly tracker = node('div', 'objective-tracker');
-  private readonly slots = sides.map(side => this.card(side));
+  private readonly weapon = this.weaponIcon();
+  private weaponActionId = '';
+  private weaponHintUntil = -1;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
   private readonly bark = node('div', 'corgi-bark', 'Woof!');
@@ -59,9 +60,9 @@ export class Hud {
     this.root.className = 'hud'; this.root.hidden = true;
     const vitals = node('div', 'vitals'); vitals.className = 'hud-vitals hud-panel';
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
-    const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root, this.armor.root);
+    const bars = node('div', 'vital-bars'); bars.className = 'hud-bars'; bars.append(this.health.root);
     this.corgiBadge.className = 'hud-corgi-badge';
-    vitals.append(this.portrait, bars, this.corgiBadge);
+    vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
@@ -86,11 +87,10 @@ export class Hud {
     });
     if (this.map.getAttribute('role') === 'button') this.map.setAttribute('aria-expanded', 'true');
     activate(this.tracker, () => { text(this.fullText, this.trackerText.textContent ?? ''); this.detail.showModal(); });
-    const slots = node('div', 'slot-cards'); slots.className = 'hud-slots'; for (const slot of this.slots) slots.append(slot.root);
     this.vignette.className = 'hud-vignette'; this.damage.className = 'hud-damage'; this.bark.className = 'hud-bark'; this.interaction.className = 'hud-interaction';
     this.damage.hidden = this.bark.hidden = this.interaction.hidden = true;
     const stick = node('div', 'stick-zone'); stick.className = 'hud-stick-zone';
-    this.root.append(stick, this.vignette, vitals, companion, this.map, this.tracker, slots, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
+    this.root.append(stick, this.vignette, vitals, companion, this.map, this.tracker, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
   }
   private bar(name: string) {
     const root = node('div', `${name}-bar`), fill = node('div', `${name}-fill`), label = node('span', `${name}-label`);
@@ -101,18 +101,16 @@ export class Hud {
   private pin(id: string, label = ''): HTMLSpanElement {
     const pin = node('span', `minimap-${id}`, label); pin.className = `hud-pin hud-pin-${id}`; return pin;
   }
-  private card(side: 'LEFT' | 'RIGHT') {
-    const root = node('div', `slot-${side}`), icon = node('img', `icon-${side}`), title = node('span', `side-${side}`, side);
-    const name = node('div', `action-${side}`), stats = node('div', `stats-${side}`), ring = node('div', `reload-${side}`), rack = node('div', `rack-${side}`);
-    root.setAttribute('role', 'button'); root.tabIndex = 0; root.setAttribute('aria-label', `Cycle ${side} weapon`);
-    root.addEventListener('click', () => this.game.input.cycle(side));
-    root.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); this.game.input.cycle(side); } });
-    root.title = `${side === 'LEFT' ? '1/2/3' : 'Shift+1/2/3'} · click to cycle`;
-    root.className = 'hud-slot hud-panel'; title.className = 'hud-slot-title'; name.className = 'hud-slot-name'; stats.className = 'hud-slot-stats'; ring.className = 'hud-progress'; rack.className = 'hud-rack';
-    icon.alt = ''; root.append(icon, title, stats, name, ring, rack);
-    const strips = [];
-    for (let i = 0; i < 3; i++) { const strip = node('span', `rack-${side}-item-${i}`); rack.append(strip); strips.push(strip); }
-    return { root, icon, title, name, stats, ring, strips, actionId: '' };
+  /** PO 10-13: one small icon for the active weapon in the vitals panel; ring = cooldown/reload progress, name as tooltip and brief hint on change. */
+  private weaponIcon() {
+    const root = node('div', 'weapon-active'), icon = node('img', 'weapon-icon'), hint = node('span', 'weapon-hint');
+    root.className = 'hud-weapon'; icon.className = 'hud-weapon-icon'; icon.alt = ''; hint.className = 'hud-weapon-hint';
+    root.setAttribute('role', 'button'); root.tabIndex = 0;
+    root.append(icon, hint);
+    const cycle = (): void => { const side = this.game.world.entities.get(1)?.weapons?.selectedSide ?? 'LEFT'; this.game.input.cycle(side); };
+    root.addEventListener('click', cycle);
+    root.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); cycle(); } });
+    return { root, icon, hint };
   }
   init(): void { document.querySelector('#game')!.append(this.root); }
   /** Reset subscriptions after EventBus.reset; old-level feedback cannot survive a load. */
@@ -132,7 +130,7 @@ export class Hud {
   }
   loaded(): void {
     this.clear();
-    this.damagedUntil = this.barkUntil = this.civilianBarkUntil = -1;
+    this.damagedUntil = this.barkUntil = this.civilianBarkUntil = this.weaponHintUntil = -1; this.weaponActionId = '';
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
@@ -184,9 +182,6 @@ export class Hud {
     const hp = healthFraction(player.health.current, player.health.max);
     style(this.health.fill, 'width', `${hp * 100}%`); text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
     attribute(this.health.root, 'aria-valuenow', String(hp * 100));
-    const shield = world.combat?.effects.shielded(player.transform) || player.combat?.shield ? 1 : player.combat?.armor ?? 0;
-    style(this.armor.fill, 'width', `${clamp(shield) * 100}%`); text(this.armor.label, shield ? `Armor ${Math.round(shield * 100)}%` : 'Armor 0%');
-    attribute(this.armor.root, 'aria-valuenow', String(clamp(shield) * 100));
     attribute(this.portrait, 'data-variant', player.survivor?.variant ?? 'female');
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
     style(this.portrait, 'background-image', portrait);
@@ -231,34 +226,36 @@ export class Hud {
       else if (optional.length) text(this.trackerText, `${this.trackerText.textContent} · ${optional[0].text}`);
     }
     this.updateSurvivors(mission, px, pz);
-    for (let i = 0; i < sides.length; i++) {
-      const side = sides[i], card = this.slots[i], state = player.weapons?.[side]; setHidden(card.root, !state && !mission?.def.l1);
-      if (!state) { text(card.name, side === 'LEFT' ? 'Unarmed' : 'Locked'); text(card.stats, 'Find a weapon'); setHidden(card.icon, false);attribute(card.icon, 'src', actionIconUrl(side==='LEFT'?'icon.fists':'icon.kick'));card.actionId=''; setHidden(card.ring, true); for(const strip of card.strips)setHidden(strip, true);this.game.input.touch.setEmpty(side==='LEFT'?'left':'right');continue; }
-      setHidden(card.icon, false); setHidden(card.ring, false);
-      const slot = state.rack[state.index], def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id);
-      card.root.classList.toggle('is-selected', player.weapons!.selectedSide === side);
-      attribute(card.root, 'aria-label', `${side}${player.weapons!.selectedSide === side ? ' selected' : ''}`);
-      const key = this.game.input.scheme === 'touch' ? '☝' : this.game.input.scheme === 'keyboard' ? this.game.input.bindings.keyLabel(side === 'LEFT' ? 'left' : 'right') : side === 'LEFT' ? 'LMB' : 'RMB';
-      const mouse = this.game.input.scheme.startsWith('mouse');
-      const loadout = world.combat?.runner.loadout, entries = loadout?.activeEntries() ?? [];
-      const active = entries.findIndex(e => e.side === player.weapons!.selectedSide && e.index === player.weapons![e.side].index);
-      const next = entries[(active + 1) % entries.length];
-      const label = (id: string) => ['weapon.fists', 'weapon.kick'].includes(id) ? 'unarmed' : id === 'weapon.handgun' ? 'Handgun' : id === 'weapon.army-mg' ? 'Machine gun' : id.split('.')[1].replaceAll('-', ' ');
-      text(card.title, mouse ? side === player.weapons!.selectedSide ? 'ACTIVE · LMB' : 'RMB · NEXT' : `${side} · ${key}`);
-      const preview = mouse && side !== player.weapons!.selectedSide;
-      const displayId = preview && next ? next.id : slot.id;
-      if (card.actionId !== displayId) { card.actionId = displayId; card.icon.src = actionIconUrl(action(displayId).iconId); text(card.name, label(displayId)); }
-      setHidden(card.ring, preview);
-      text(card.stats, def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready');
-      if (preview) text(card.stats, 'RMB to equip');
-      attribute(card.stats, 'data-ammo', String(slot.magazine)); attribute(card.stats, 'data-charges', String(slot.charges));
+    const label = (id: string) => ['weapon.fists', 'weapon.kick'].includes(id) ? 'unarmed' : id === 'weapon.handgun' ? 'Handgun' : id === 'weapon.army-mg' ? 'Machine gun' : id.split('.')[1].replaceAll('-', ' ');
+    let shown: { id: string; name: string; stats: string; progress: number; ammo: number; charges: number; state: string } | null = null;
+    for (const side of sides) {
+      const state = player.weapons?.[side], touchSide = side === 'LEFT' ? 'left' : 'right';
+      if (!state) {
+        this.game.input.touch.setEmpty(touchSide);
+        if (side === (player.weapons?.selectedSide ?? 'LEFT')) shown = { id: side === 'LEFT' ? 'weapon.fists' : 'weapon.kick', name: side === 'LEFT' ? 'Unarmed' : 'Locked', stats: 'Find a weapon', progress: 1, ammo: 0, charges: 0, state: 'empty' };
+        continue;
+      }
+      const slot = state.rack[state.index], def = world.combat?.runner.loadout.definition(slot.id) ?? action(slot.id), selected = player.weapons!.selectedSide === side;
+      const name = label(slot.id);
+      const stats = def.magazine ? `${slot.magazine} / ${def.magazine}` : def.charges ? `${slot.charges} charges` : def.cooldown ? `${Math.max(0, (slot.readyAt - world.tick) / 60).toFixed(1)}s` : 'Ready';
       const until = slot.reloadUntil || slot.nextCharge || slot.readyAt;
       const duration = (slot.reloadUntil ? def.reloadTime : slot.nextCharge ? def.recharge : Math.max(def.cooldown, def.windup + def.active + def.recovery)) * 60;
       const progress = until > world.tick ? 1 - clamp((until - world.tick) / (duration || 1)) : 1;
-      style(card.ring, '--progress', String(progress));
-      this.game.input.touch.setWeapon(side === 'LEFT' ? 'left' : 'right', actionIconUrl(def.iconId), `${card.name.textContent}, ${card.stats.textContent}`, progress, player.weapons!.selectedSide === side, slot.magazine, slot.charges);
-      attribute(card.ring, 'data-until', String(until)); text(card.ring, slot.reloadUntil ? '↻' : until > world.tick ? Math.max(0, (until - world.tick) / 60).toFixed(1) : '✓');
-      for (let j = 0; j < card.strips.length; j++) { setHidden(card.strips[j], j >= state.rack.length); card.strips[j].classList.toggle('is-current', j === state.index); }
+      if (selected) shown = { id: slot.id, name, stats, progress, ammo: slot.magazine, charges: slot.charges, state: slot.reloadUntil > world.tick ? 'reloading' : until > world.tick && stats !== 'Ready' ? 'cooldown' : 'ready' };
+      this.game.input.touch.setWeapon(touchSide, actionIconUrl(def.iconId), `${name}, ${stats}`, progress, selected, slot.magazine, slot.charges);
+    }
+    setHidden(this.weapon.root, !shown || (!player.weapons?.LEFT && !player.weapons?.RIGHT && !mission?.def.l1));
+    if (shown) {
+      const w = this.weapon.root;
+      if (this.weaponActionId !== shown.id) {
+        if (this.weaponActionId) this.weaponHintUntil = world.tick + 120;
+        this.weaponActionId = shown.id; this.weapon.icon.src = actionIconUrl(action(shown.id).iconId);
+      }
+      text(this.weapon.hint, shown.name); setHidden(this.weapon.hint, world.tick > this.weaponHintUntil);
+      const description = `${shown.name}, ${shown.stats}`;
+      attribute(w, 'title', `${description} · click, RMB or Q to switch`); attribute(w, 'aria-label', `Active weapon: ${description}`);
+      attribute(w, 'data-weapon', shown.id); attribute(w, 'data-state', shown.state); attribute(w, 'data-ammo', String(shown.ammo)); attribute(w, 'data-charges', String(shown.charges));
+      style(w, '--progress', String(shown.progress));
     }
     const id = world.interactables?.activeId, device = id != null ? world.entities.get(id)?.interactable : null;
     setHidden(this.interaction, !device);

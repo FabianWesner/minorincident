@@ -27,7 +27,7 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
       const elements = [...roots.flatMap(root => [...root.querySelectorAll<HTMLElement>('*')]), document.querySelector<HTMLElement>('[data-testid=pause-button]')!].filter(visible);
       // Include every rendered HUD node, even passive feedback; exclude only structural
       // containers and the transparent, zero-opacity full-screen damage overlay.
-      const boxes = elements.filter(e => !['slot-cards', 'vital-bars'].includes(e.dataset.testid ?? '') && !(e.dataset.testid === 'low-health-vignette' && Number(getComputedStyle(e).opacity) === 0)).map(rect);
+      const boxes = elements.filter(e => !['weapon-hint', 'vital-bars'].includes(e.dataset.testid ?? '') && !(e.dataset.testid === 'low-health-vignette' && Number(getComputedStyle(e).opacity) === 0)).map(rect);
       const xs = [...new Set(boxes.flatMap(b => [Math.max(0, b.x), Math.min(innerWidth, b.x + b.width)]))].sort((a,b) => a-b);
       let area = 0;
       for (let i = 1; i < xs.length; i++) {
@@ -57,7 +57,7 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
     expect(vitals!.height).toBeLessThanOrEqual(56);
     if (viewport.width < viewport.height) expect(vitals!.width).toBeLessThanOrEqual(viewport.width*.45);
     const map = await page.getByTestId('minimap').boundingBox(); expect(map!.width).toBeLessThanOrEqual(Math.min(viewport.width,viewport.height)*.28);
-    await expect(page.getByTestId('slot-cards')).toBeHidden();
+    await expect(page.getByTestId('weapon-active')).toBeHidden();
     await page.getByTestId('minimap').tap(); await expect(page.getByTestId('minimap')).toHaveAttribute('aria-expanded','false');
     expect((await page.getByTestId('minimap').boundingBox())!.width).toBeLessThan(map!.width);
     await page.getByTestId('minimap').tap(); await expect(page.getByTestId('minimap')).toHaveAttribute('aria-expanded','true');

@@ -535,8 +535,8 @@ export class GameView implements Lifecycle {
       this.l5StationView = showStation;
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
-      this.l3AttackScale += ((l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
-      this.view.encounterScale = rescue ? 3.3 : this.world.scenario === 'L3' ? this.l3AttackScale : 1;
+      this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
+      this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : 1;
       // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
       // the courier and her group stay in frame next to the surge.
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
