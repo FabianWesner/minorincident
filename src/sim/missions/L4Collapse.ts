@@ -5,6 +5,7 @@ import type { L4Director, L4Line, L4State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Outbreak } from '../outbreak/Outbreak';
+import { allyState } from '../outbreak/Allies';
 
 const ticks = (s: number) => Math.round(s * 60);
 const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -12,7 +13,7 @@ const D = l4.director;
 const pt = (p: readonly [number, number]): Point => ({ x: p[0], z: p[1] });
 
 export function freshDirector(): L4Director {
-  return { lines: D.lines.map(l => ({ id: l.id, soldierIds: [], size: 0, brokeAt: 0, cause: '', pushAt: 0, pushes: 0 })), alphaJobs: [], knockdowns: 0, barricades: 0, turnedInside: 0, spawned: 0, cutOff: [], swarmedAt: 0, fallBackAt: 0, settled: 0, burnAt: 0 };
+  return { lines: D.lines.map(l => ({ id: l.id, soldierIds: [], size: 0, brokeAt: 0, cause: '', pushAt: 0, pushes: 0 })), alphaJobs: [], knockdowns: 0, barricades: 0, turnedInside: 0, spawned: 0, cutOff: [], swarmedAt: 0, fallBackAt: 0, settled: 0, burnAt: 0, gapUntil: 0, refugees: [] };
 }
 /** Which line a soldier post defends at the turn (the army gate posts stay out of the plaza war). */
 export function postLine(role: 'qm' | 'line' | 'hmg' | 'truck' | 'gate'): number { return role === 'line' ? 0 : role === 'hmg' ? 1 : role === 'gate' ? -1 : 2; }
@@ -21,7 +22,7 @@ export function postLine(role: 'qm' | 'line' | 'hmg' | 'truck' | 'gate'): number
 export interface CollapseHost {
   mission: Mission; s: () => L4State; low: () => boolean; outbreak: () => Outbreak;
   snap: (p: Point, r?: number) => Point; emerge: (at: Point, push?: boolean) => number; human: (e: EntitySnapshot | undefined) => boolean;
-  insideRing: (p: Point) => boolean; doors: () => { name: string; x: number; z: number }[]; fallBack: () => void;
+  insideRing: (p: Point) => boolean; doors: () => { name: string; x: number; z: number }[]; fallBack: () => void; room: () => boolean;
 }
 
 /**
@@ -70,6 +71,7 @@ export class L4Collapse {
     this.alphaJobs();
     if (d.lines[2].brokeAt && !d.fallBackAt && tick >= d.lines[2].brokeAt + ticks(l4.lineBreak.fallBackS)) { d.fallBackAt = tick; this.h.mission.radio('L4.fallback'); this.h.fallBack(); return; }
     if (tick % 10) return;
+    this.refugeesTurn();
     const i = this.current(); if (i < 0) return;
     const line = d.lines[i], def = D.lines[i], t = this.t;
     if (i === 0 && t >= def.pushS && !line.pushes) this.frontWave();
@@ -96,18 +98,54 @@ export class L4Collapse {
     const soldiers = new Set(this.s.soldierIds);
     const people = [...world.entities.iterate()].filter(e => this.h.human(e) && !soldiers.has(e.id) && e.civilian!.state !== 'grabbed' && zone(e.transform))
       .sort((a, b) => dist(a.transform, player) - dist(b.transform, player));
-    let left = n;
-    for (const e of people.slice(0, Math.ceil(n / 2))) { o.infect(e, 0); this.d.turnedInside++; left--; }
     const targets = this.standing(line), centre = targets[0]?.transform ?? l4.map.centre;
-    // Flank points out of view; when the camera covers them all, the nearest street mouths (always beyond the view).
+    // Inside: the people nearest the line's soldiers turn (behind their backs; l4-collapse-2: the player-near pick turned people far from the line).
+    const near = (p: Point) => targets.length ? Math.min(...targets.map(t => dist(t.transform, p))) : dist(p, player);
+    let left = n;
+    const inside = i === 0 ? people.sort((a, b) => near(a.transform) - near(b.transform)).slice(0, Math.ceil(n / 3)) : people.slice(0, Math.ceil(n / 2));
+    for (const e of inside) { o.infect(e, 0); this.d.turnedInside++; left--; }
+    // Flank: the rest come as one burst at the out-of-view flank point nearest a standing soldier (a trickle is shot down on the way;
+    // a burst reaches the sandbags). When the camera covers them all, the nearest street mouths (always beyond the view).
     let flanks = D.flanks[i].map(pt).filter(p => world.infected!.director.offscreen(p) && dist(p, player) >= 12);
     if (!flanks.length) flanks = l4Edges.slice(0, 6).map(e => pt(e.at)).filter(p => world.infected!.director.offscreen(p) && dist(p, player) >= 20).sort((p, q) => dist(p, centre) - dist(q, centre)).slice(0, 2);
-    for (let k = 0; k < left && flanks.length && targets.length; k++) {
+    if (!flanks.length || !targets.length) return;
+    // Line 1 burst: everything at the one flank point nearest a soldier, plus the bitten refugees; the later lines keep their spread flanks.
+    // The refugees come from the nearest point, the burst from the next one (refugees chased by their own burst stop to fight it).
+    if (i === 0) {
+      flanks.sort((p, q) => near(p) - near(q)); const from = flanks[0];
+      this.refugees(from, targets.slice().sort((a, b) => dist(a.transform, from) - dist(b.transform, from)).slice(0, 3)); flanks = [flanks[1] ?? from];
+    }
+    for (let k = 0; k < left; k++) {
       const at = flanks[k % flanks.length], id = this.h.emerge({ x: at.x + (k % 3 - 1) * .9, z: at.z + Math.floor(k / 3) * .9 }, true); if (!id) break;
       this.d.spawned++;
-      const to = targets.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0].transform;
+      const to = targets.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[k % Math.min(3, targets.length)].transform;
       world.infected!.rush(id, { x: to.x, z: to.z }, world.tick + ticks(20));
     }
+  }
+  /**
+   * From the inside (l4-collapse-2, line 1 read as forced, not overrun): bitten refugees come out of the flank and run in through the
+   * line to the soldiers (who never shoot people), then turn right behind them (the 3 s transformation). Plain pedestrians as allies
+   * with a run point; they fight what blocks them like any armed civilian.
+   */
+  private refugees(at: Point, victims: EntitySnapshot[]): void {
+    const o = this.h.outbreak(), c = l4.civilians, tick = this.world.tick, list = this.d.refugees ??= [];
+    for (let k = 0; k < this.tier(D.refugees) && this.h.room(); k++) {
+      const v = victims[k % victims.length].transform, dx = l4.map.centre.x - v.x, dz = l4.map.centre.z - v.z, len = Math.hypot(dx, dz) || 1;
+      const to = this.h.snap({ x: v.x + dx / len * 1.1 + (k % 3 - 1) * .5, z: v.z + dz / len * 1.1 }, .35);
+      const id = o.spawnPedestrian(this.h.snap({ x: at.x + (k % 2 ? .8 : -.8), z: at.z + k * .5 }, .35), { tier: 'average' }), e = this.world.entities.get(id)!;
+      e.civilian!.ally = { ...allyState('civilian', null, false), run: { ...to }, runSpeed: 3.8, melee: { ...c.melee }, range: 8 };
+      list.push({ id, turnAt: tick + ticks(D.refugeeTurnS) });
+    }
+  }
+  /** A refugee turns on arrival behind the soldier, at the latest `refugeeTurnS` after it set off (wherever the fight held it up). */
+  private refugeesTurn(): void {
+    const list = this.d.refugees; if (!list?.length) return;
+    const o = this.h.outbreak(), tick = this.world.tick;
+    this.d.refugees = list.filter(r => {
+      const e = this.world.entities.get(r.id); if (!this.h.human(e)) return false;
+      if (e!.civilian!.ally?.run && tick < r.turnAt) return true;
+      o.infect(e!, 0); this.d.turnedInside++; return false;
+    });
   }
   /** The armour beat: every infected near the tank goes for it, and a swarm comes up from the lake garden; `swarmedAt` once it is buried. */
   private swarmTank(): void {

@@ -42,7 +42,7 @@ export class LevelFourWar {
   private readonly director: L4Collapse;
   constructor(private readonly mission: Mission) {
     this.spectacle = new L4Spectacle(mission.world, () => this.s, () => this.allyEntities());
-    this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, outbreak: () => this.outbreak(), snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats') });
+    this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, outbreak: () => this.outbreak(), snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats'), room: () => this.spawnRoom() });
   }
   private get s(): L4State { return this.mission.state.l4!; }
   private get world() { return this.mission.world; }
@@ -371,7 +371,7 @@ export class LevelFourWar {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
     const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - l4.war.headroom;
     if (ai.director.count >= limit) this.settleDowned(1);
-    if (!this.spawnRoom() || ai.director.count >= limit || !ai.pool.length) return 0;
+    if (!this.spawnRoom() || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
     const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
@@ -418,7 +418,7 @@ export class LevelFourWar {
       const near = internal ? this.doors().filter(d => dist(d, centre) < 26 && ai.director.offscreen(this.snap(d, .45)))
         .sort((a, b) => dist(a, edge) - dist(b, edge)) : [];
       const at = near.length ? near[0] : edge;
-      if (!ai.director.offscreen(at) || dist(at, p) < (internal ? 8 : 30)) continue;
+      if (!ai.director.offscreen(at) || dist(at, p) < (internal ? 8 : 30) || this.inGap(at)) continue;
       for (let k = 0; k < 3 && s.pend[i] > 0; k++) {
         const id = this.emerge({ x: at.x + (k - .5) * 1.2, z: at.z + (i % 2 ? 1 : -1) * k * .8 }); if (!id) return;
         s.pend[i]--; (s.phase === 'collapse' ? s.collapseIds : s.emergedIds).push(id);
@@ -444,17 +444,29 @@ export class LevelFourWar {
     let done = 0;
     for (const e of downed) { if (done >= n) break; ai.settle(e); done++; }
     this.s.director.settled += done;
-    if (done) this.clearBodies();
     return done;
   }
-  /** Keep at most `corpseMax` drawn bodies: the oldest out of view go first (never one the camera shows). */
+  /**
+   * Keep at most `corpseMax` drawn bodies (the oldest out of view go first) and at most `heap.max` per `heap.cellM` square (the oldest
+   * first, also in view: a courier camping at one spot would otherwise stand on a mound). Removed bodies leave the world: settled bodies
+   * have their own ids (the pool assigns new ones) and the corpse renderer drops them one by one, so ~1000 dead records no longer cost
+   * every entity scan and checkpoint.
+   */
   private clearBodies(): void {
-    const { world } = this.mission, max = l4.war.corpseMax[this.low ? 'low' : 'high'];
-    const bodies = [...world.entities.iterate()].filter(e => e.corpse && e.faction === 'infected' && !e.hidden);
-    if (bodies.length <= max) return;
-    bodies.sort((a, b) => (a.infected?.deadAt ?? 0) - (b.infected?.deadAt ?? 0));
-    let excess = bodies.length - max;
-    for (const e of bodies) { if (excess <= 0) break; if (!world.infected!.director.offscreen(e.transform)) continue; e.hidden = true; world.spatial.delete(e.id); excess--; } // hidden, not deleted: the settled body keeps its id (pooled brains reuse ids)
+    const { world } = this.mission, tier = this.low ? 'low' : 'high', max = l4.war.corpseMax[tier], heap = l4.war.heap;
+    // A body an Alpha is throwing stays until it lands (the throw keeps positioning it).
+    const flying = new Set(world.infected!.active.map(a => a.infected?.specialAttack?.projectile?.objectId ?? 0));
+    const bodies = [...world.entities.iterate()].filter(e => e.corpse && e.faction === 'infected' && !e.hidden && !flying.has(e.id));
+    bodies.sort((a, b) => (b.infected?.deadAt ?? 0) - (a.infected?.deadAt ?? 0)); // newest first
+    const cells = new Map<number, number>(), drop = (e: EntitySnapshot) => { world.entities.delete(e.id); world.spatial.delete(e.id); };
+    const kept: EntitySnapshot[] = [];
+    for (const e of bodies) {
+      const cell = Math.floor(e.transform.x / heap.cellM) * 4096 + Math.floor(e.transform.z / heap.cellM), n = cells.get(cell) ?? 0;
+      if (n >= heap.max[tier]) { drop(e); continue; }
+      cells.set(cell, n + 1); kept.push(e);
+    }
+    let excess = kept.length - max;
+    for (let i = kept.length - 1; i >= 0 && excess > 0; i--) { const e = kept[i]; if (!world.infected!.director.offscreen(e.transform)) continue; drop(e); excess--; }
   }
   /** The line breaks when the collapse director has taken all three lines (`beats`), at the latest `defenseS` after the turn. */
   private checkLineBreak(): void {
@@ -490,6 +502,32 @@ export class LevelFourWar {
   private escapeWindow(): void {
     const { world } = this.mission, p = world.entities.get(1)!.transform, e = l4.director.escape;
     for (const a of world.infected!.active) { const b = a.infected?.l1; if (!b || a.health.current <= 0 || dist(a.transform, p) <= e.nearM) continue; b.ignoreId = 1; b.ignoreUntil = world.tick + ticks(e.s); if (b.mode === 'chase' && b.targetId === 1) b.targetId = 0; }
+    this.s.director.gapUntil = world.tick + ticks(e.gapS); this.clearGap();
+  }
+  /** Distance to the escape street (the polyline from the ring's east side to Kessler's door). */
+  private escapeDistance(p: Point): number {
+    const r = l4.director.escape.route; let best = Infinity;
+    for (let i = 1; i < r.length; i++) {
+      const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz)));
+      best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t));
+    }
+    return best;
+  }
+  private gapOpen(): boolean { const g = this.s.director.gapUntil ?? 0; return g > 0 && this.world.tick < g; }
+  /** While the gap is open nothing emerges on the escape street. */
+  private inGap(p: Point): boolean { return this.gapOpen() && this.escapeDistance(p) < l4.director.escape.gapM; }
+  /**
+   * The gap: infected on the escape street farther than `nearM` from the courier run off toward the army (the nearest soldier or armed
+   * civilian off the street, else back into the ring), so the street reads as a way out; the ones on her heels keep chasing.
+   */
+  private clearGap(): void {
+    const { world } = this.mission, ai = world.infected!, p = world.entities.get(1)!.transform, e = l4.director.escape;
+    const allies = this.allyEntities().filter(a => this.escapeDistance(a.transform) >= e.gapM + 2);
+    for (const a of ai.active) {
+      if (a.health.current <= 0 || a.hidden || a.archetype === 'infected.alpha' || dist(a.transform, p) <= e.nearM || this.escapeDistance(a.transform) >= e.gapM) continue;
+      const to = allies.length ? allies.reduce((q, b) => dist(b.transform, a.transform) < dist(q.transform, a.transform) ? b : q).transform : { x: -26, z: 0 };
+      ai.rush(a.id, { x: to.x, z: to.z }, world.tick + ticks(10));
+    }
   }
   /** Cars along the streets catch fire from the shockwave and the burning wreckage (E09 car explosions: fires persist). */
   /** One car per call (staggered after the break, l4-collapse perf: the fuel-truck chain and three car blasts used to land in one frame). */
@@ -522,7 +560,7 @@ export class LevelFourWar {
     // Soldier pockets: three soldiers hold a street corner against a few infected (spawned out of view).
     for (const i of [...s.pockets]) {
       const pocket = l4Pockets[i], c = { x: pocket.at[0][0], z: pocket.at[0][1] };
-      if (!ai.director.offscreen(c) || dist(c, p) < 24) continue;
+      if (!ai.director.offscreen(c) || dist(c, p) < 24 || this.inGap({ x: pocket.foes[0], z: pocket.foes[1] })) continue;
       s.pockets = s.pockets.filter(k => k !== i);
       const survivors = this.liveSoldiers().filter(e => !s.hmgIds.includes(e.id)).sort((a, b) => dist(a.transform, c) - dist(b.transform, c)).slice(0, pocket.at.length);
       for (const [k, e] of survivors.entries()) {
@@ -599,7 +637,7 @@ export class LevelFourWar {
       if (tick >= s.turnDueAt) this.turn();
     }
     if (s.phase === 'war' || s.phase === 'collapse' || s.phase === 'cellar' || s.phase === 'done') {
-      this.alphas(); this.waves(); this.replenish();
+      this.alphas(); this.waves(); this.replenish(); if (tick % 30 === 0) this.clearBodies();
       if (s.phase === 'war') {
         if (s.infectedAtT30 < 0 && tick >= s.warAt + ticks(30)) s.infectedAtT30 = world.infected!.active.filter(e => e.health.current > 0).length;
         if (s.tankPhase === 'off' && tick >= s.warAt + ticks(l4.tank.enterAfterS)) this.spectacle.startTank();
@@ -611,6 +649,7 @@ export class LevelFourWar {
         this.emergeCollapse();
         if (this.breakRadioAt && tick >= this.breakRadioAt) { this.breakRadioAt = 0; this.mission.radio('L4.break'); }
         if (s.director.burnAt && tick >= s.director.burnAt) this.burnCars();
+        if (tick % 20 === 0 && this.gapOpen()) this.clearGap();
         // The hiding place is only a soft marker for the first seconds: the courier finds her own way first.
         if (tick < s.markerAt && this.mission.state.marker === 'l4-cellar-door') this.mission.state.marker = null;
       }
@@ -633,7 +672,7 @@ export class LevelFourWar {
     const d = s.director;
     for (const l of d.lines) { if (l.brokeAt) l.brokeAt += delta; if (l.pushAt) l.pushAt += delta; }
     for (const j of d.alphaJobs) j.startedAt += delta;
-    if (d.swarmedAt) d.swarmedAt += delta; if (d.fallBackAt) d.fallBackAt += delta; if (d.burnAt) d.burnAt += delta;
+    if (d.swarmedAt) d.swarmedAt += delta; if (d.fallBackAt) d.fallBackAt += delta; if (d.burnAt) d.burnAt += delta; if (d.gapUntil) d.gapUntil += delta; for (const r of d.refugees ?? []) r.turnAt += delta;
     for (const a of s.armed) if (a.armedAt) a.armedAt += delta;
     for (const k of Object.keys(s.lastShot)) s.lastShot[Number(k)] += delta;
     for (const k of Object.keys(s.hmgLastAt)) s.hmgLastAt[Number(k)] += delta;

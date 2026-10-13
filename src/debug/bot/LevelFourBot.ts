@@ -13,8 +13,18 @@ type P = { x: number; z: number };
 const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 const ROUTES: Record<'harbor' | 'lakeshore', P[]> = {
   harbor: [{ x: -39.2, z: -36.4 }, { x: 24, z: -36.4 }, { x: 48.6, z: -30 }],
-  lakeshore: [{ x: -19, z: 43.4 }, { x: 24, z: 43.4 }, { x: 48.6, z: 40 }],
+  // The escape street (l4-collapse-2): the horde leaves a gap on it at "Fall back!" (LevelFourWar.clearGap).
+  lakeshore: l4.director.escape.route.map(([x, z]) => ({ x, z })),
 };
+/** First leg to walk: the end of the route segment nearest the courier (no walking back into the ring after a respawn). */
+function joinLeg(legs: P[], p: P): number {
+  let best = 0, score = Infinity;
+  for (let i = 1; i < legs.length; i++) {
+    const a = legs[i - 1], b = legs[i], dx = b.x - a.x, dz = b.z - a.z, t = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / (dx * dx + dz * dz)));
+    const d = Math.hypot(p.x - a.x - dx * t, p.z - a.z - dz * t); if (d < score) { score = d; best = i; }
+  }
+  return dist(p, legs[0]) < score ? 0 : best;
+}
 
 /**
  * L4 policy shared by the Node battery and the browser (ordinary controls only: movement, attack, interact; no cheats).
@@ -93,8 +103,10 @@ export class LevelFourBot {
     }
     const hp = player.health.current / player.health.max;
     if (!this.medkit && hp <= (newbie ? .9 : .65)) {
+      // Never back into the flooded ring for a kit: only kits on the way (not farther from the door than the courier).
+      const ring = l4.map.ring, cellar = a['l4-cellar-door'], ahead = (e: EntitySnapshot) => !(e.transform.x > ring.x0 && e.transform.x < ring.x1 && e.transform.z > ring.z0 && e.transform.z < ring.z1) && dist(e.transform, cellar) <= dist(p, cellar) + 4;
       const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
-        .filter(e => dist(e.transform, p) < (newbie ? 34 : 22)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
+        .filter(e => dist(e.transform, p) < (newbie ? 34 : 22) && ahead(e)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
       if (kit) this.medkit = kit.id;
     }
     if (this.medkit) {
@@ -102,11 +114,11 @@ export class LevelFourBot {
       if (!kit?.pickup || !('kind' in kit.pickup) || kit.pickup.collected || hp > (newbie ? .99 : .95)) this.medkit = 0;
       else { if (fight(8)) return frame; go(kit.transform, .2, `kit-${this.medkit}`); return frame; }
     }
-    // Pick the emptier route once, at the break (forced runs keep theirs).
-    if (!this.picked && this.leg === 0 && this.forced === 'auto' && !this.detour) {
+    // At the break (and after a respawn): the escape street with the gap (forced runs keep theirs), joined at the nearest leg.
+    if (!this.picked && this.leg === 0 && !this.detour) {
       this.picked = true;
-      const density = (r: 'harbor' | 'lakeshore') => this.threats({ x: p.x, z: p.z }, 40).filter(e => (r === 'harbor') === (e.transform.z < 0)).length;
-      this.route = density('harbor') < density('lakeshore') ? 'harbor' : 'lakeshore';
+      if (this.forced === 'auto') this.route = 'lakeshore';
+      this.leg = joinLeg(ROUTES[this.route], p);
     }
     // A jammed walker steps aside along a connected route.
     if (w.tick >= this.stuck.next) {
@@ -126,7 +138,7 @@ export class LevelFourBot {
     const legs = ROUTES[this.route];
     while (this.leg < legs.length && dist(p, legs[this.leg]) < 3) this.leg++;
     if (this.leg < legs.length) {
-      if (go(legs[this.leg], 1.5, `route-${this.route}-${this.leg}`) && dist(p, legs[this.leg]) > 3) { if (++this.noPath >= 90) { this.noPath = 0; this.route = this.route === 'harbor' ? 'lakeshore' : 'harbor'; this.leg = 0; this.walker.reset(); } } else this.noPath = 0;
+      if (go(legs[this.leg], 1.5, `route-${this.route}-${this.leg}`) && dist(p, legs[this.leg]) > 3) { if (++this.noPath >= 90) { this.noPath = 0; this.route = this.route === 'harbor' ? 'lakeshore' : 'harbor'; this.leg = joinLeg(ROUTES[this.route], p); this.walker.reset(); } } else this.noPath = 0;
       return frame;
     }
     if (go(door, .45, 'door')) frame.interact = !newbie || this.rng.next() < .6;
