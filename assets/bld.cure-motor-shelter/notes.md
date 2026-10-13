@@ -4,7 +4,7 @@ L10 (The Cure), epic 32 row L10-A5, kit `kit.cure-military`. Forward +X (open si
 
 Steel-post canopy over two vehicle bays: olive roof with a yellow fascia on the open side, eight posts, cross beams, concrete back wall, wheel stops, a tool locker, two fuel drums and two light strips (LOD0 only). Park `veh.military-truck` / `veh.military-apc` inside. Materials: olive, uiDark, khaki, schoolBusYellow.
 
-Tiers: LOD0 / LOD1 / LOD2 triangles 2,864 / 552 / 144 (caps 8,000 / 3,000 / 1,000). Authored closed solids at every tier; LOD1 drops locker, drums and lamps, LOD2 also beams and wheel stops.
+Tiers: LOD0 / LOD1 / LOD2 triangles 2,864 / 552 / 180 (caps 8,000 / 3,000 / 1,000). Authored closed solids at every tier; LOD1 drops locker, drums and lamps, LOD2 also wheel stops and two of the five beams (the beams hold the side silhouette, lod-fidelity gate).
 
 Rebuild: `python3 tools/blender/run.py assets/bld.cure-motor-shelter/build.py`, then `npm run assets:pack -- bld.cure-motor-shelter` and `npm run assets:validate -- --ids bld.cure-motor-shelter`.
 

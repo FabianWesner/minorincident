@@ -94,9 +94,9 @@ def motor_shelter(s):
         for y in (-5.4, -1.8, 1.8, 5.4):
             s.plain('post', (x, y, 2.25), (.3, .3, 4.2), 'uiDark')
     s.plain('backWall', (-4.0, 0, 1.9), (.3, 11.0, 3.4), 'olive')
+    for y in ((-5.4, -2.7, 0, 2.7, 5.4) if L < 2 else (-5.4, 0, 5.4)):  # beams keep the side silhouette at every tier
+        s.plain('beam', (0, y, 4.1), (8.0, .22, .3), 'uiDark')
     if L < 2:
-        for y in (-5.4, -2.7, 0, 2.7, 5.4):
-            s.plain('beam', (0, y, 4.1), (8.0, .22, .3), 'uiDark')
         for y in (-2.75, 2.75):
             s.plain('wheelStop', (-2.7, y, .3), (.3, 2.6, .28), 'schoolBusYellow')
     if L == 0:
