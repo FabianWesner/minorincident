@@ -131,7 +131,13 @@ export class MegaPursuit {
     if (s.mode === 'dead') return;
     if (!s.id) { if (s.introduceTick !== null && tick >= s.introduceTick) this.introduce(); return; }
     const e = this.entity();
-    if (!e || (e.health.current <= 0 && (e.infected!.recoverAt ?? -1) < 0)) { s.mode = 'dead'; s.hp = 0; s.route.length = 0; return; }
+    if (!e) {
+      // Removed without dying (a checkpoint captured before this pursuit was installed restored the world without it): it comes back.
+      Object.assign(s, { id: 0, mode: 'dormant', introduceTick: tick, route: [], passed: null, breach: null });
+      if (!this.reservation) { this.world.infected!.director.reserved++; this.reservation = true; }
+      return;
+    }
+    if (e.health.current <= 0 && (e.infected!.recoverAt ?? -1) < 0) { s.mode = 'dead'; s.hp = 0; s.route.length = 0; return; }
     s.x = e.transform.x; s.z = e.transform.z; s.hp = e.health.current; s.maxHp = e.health.max;
     if (tick - s.routeAt >= megaAlpha.routeTicks) this.refresh();
   }
@@ -147,7 +153,7 @@ export class MegaPursuit {
     delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = megaAlpha.cruiseMs;
     if (b.specialAttack) { s.mode = 'close'; return false; }
     if (!this.resident(e.transform.x, e.transform.z)) { this.coarse(e); return true; }
-    const d = dist(e.transform, player.transform), free = !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick;
+    const d = dist(e.transform, player.transform), free = !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick && b.state !== 'attack' && !e.combat!.attacking;
     this.monitor(e, d, free);
     if (s.breach) { s.mode = 'breach'; e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true; }
     if (s.stuck.level === 3 || (d <= megaAlpha.closeM && s.stuck.level < 2)) {
