@@ -286,7 +286,7 @@ export class SimWorld implements Lifecycle {
       for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
       for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
     }
-    this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))));
+    this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))), !!this.aftermath);
     this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
     this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
     this.physics.world!.step();
