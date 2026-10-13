@@ -88,17 +88,24 @@ export class LevelFourBot {
     if (s.phase === 'plaza') { const q = a['l4-quartermaster']; if (go(q, .4, 'qm')) frame.interact = !newbie || this.rng.next() < .6; return frame; }
     if (this.profile === 'idle') { go(a['l4-quartermaster'], .6, 'idle'); if (!s.gunAt) frame.interact = true; return frame; }
     if (s.phase === 'war') {
-      // l4-collapse-2: the war now comes inside the ring; a hurt courier grabs a near medkit between fights instead of dying at the post.
-      const hurt = player.health.current / player.health.max <= (newbie ? .4 : .5);
-      const kit = hurt ? s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected && dist(e.transform, p) < 14).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0] : undefined;
-      if (kit) { if (fight(6)) return frame; go(kit.transform, .2, `war-kit-${kit.id}`); return frame; }
-      if (fight(newbie ? 13 : 20)) return frame;
-      // Back off from a crowd that is closing in (fight a few, flee from many): toward the middle of the ring, away from the nearest.
-      // Evade-only never fights, so it steps away from anything that comes at it (l4-po-round: the war reaches the hold spot inside the ring).
+      // Follow the camp's checkpoint as the lines fall; returning to the original hold point re-enters a lost line after respawn.
+      const retreating = ['line-1', 'nests', 'armor'].includes(m.state.checkpoint ?? '');
+      const hold = retreating ? player.survivor!.checkpoint : { x: -21.5, z: 3 };
+      // Keep moving during a retreat: stopping for every shot sent the courier back into a lost line's crowd.
+      const movingFight = (range: number) => { const move = frame.move; fight(range); frame.move = move; };
       const crowd = this.threats(p, 5), many = this.threats(p, 10).filter(e => this.chasing(e)).length;
-      if (fights ? crowd.length >= 4 || many >= 6 : crowd.length >= 1 || many >= 2) { const at = this.walker.detour(w, { x: -20, z: 3 }, crowd[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 70 }; }
-      if (this.detour && w.tick < this.detour.until && dist(p, this.detour) > .8) { go(this.detour, .8, `det-${this.detour.until}`); return frame; }
-      go({ x: -21.5, z: 3 }, 1.4, 'hold');
+      const alpha = crowd.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack);
+      if (alpha || (fights ? crowd.length >= 4 || many >= 6 : crowd.length >= 1 || many >= 2)) {
+        const at = this.walker.detour(w, hold, (alpha ?? crowd[0])?.transform);
+        if (at) this.detour = { ...at, until: w.tick + 70 };
+      }
+      if (this.detour && w.tick < this.detour.until && dist(p, this.detour) > .8) {
+        go(this.detour, .8, `det-${this.detour.until}`); movingFight(newbie ? 13 : 20); return frame;
+      }
+      const hurt = player.health.current / player.health.max <= (newbie ? .4 : .5);
+      const kit = hurt ? s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected && dist(e.transform, p) < 14 && (!retreating || e.transform.x >= hold.x)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0] : undefined;
+      if (kit) { go(kit.transform, .2, `war-kit-${kit.id}`); movingFight(6); return frame; }
+      go(hold, 1.4, `hold-${m.state.checkpoint}`); movingFight(newbie ? 13 : 20);
       return frame;
     }
     // ---------------------------------------------------------------- the collapse: run for the cellar, then bar the door

@@ -29,7 +29,7 @@ describe('L4 The Safe City Falls', () => {
     expect(validateMission(m.def)).toEqual([]);
     expect(m.def.steps.map(s => s.id)).toEqual(['ride', 'quartermaster', 'hold', 'hide', 'bar', 'wait']);
     expect(m.def.steps.every(s => s.timer === undefined && s.fail.length === 0) && m.def.deadline === undefined).toBe(true);
-    expect(m.def.finish).toEqual(['wait']); expect(m.def.checkpoints).toEqual(['arrival', 'turn', 'line-break']);
+    expect(m.def.finish).toEqual(['wait']); expect(m.def.checkpoints).toEqual(['arrival', 'turn', 'line-1', 'nests', 'armor', 'line-break']);
     // E12-AC07 walk: complete exactly the active objective; the gap before the first turn is bridged by the controller.
     for (let guard = 0; guard < 12 && m.state.phase === 'playing'; guard++) { m.completeObjective(); if (m.state.l4!.phase === 'cellar') step(l.world, 8 * 60); }
     expect(m.state.completedObjectives).toEqual(['ride', 'quartermaster', 'hold', 'hide', 'bar', 'wait']);

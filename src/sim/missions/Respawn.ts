@@ -47,7 +47,8 @@ function clearThreat(world: SimWorld, at: Spot): void {
   for (const e of ai.active) {
     const d = dist(e.transform, at);
     // E32 Mega Alpha: never pushed or blinded here; its pursuit seam already restored it ≥ respawnGapM away.
-    if (e.health.current <= 0 || e.corpse || !e.infected || e.infected.pursuit || d > r.pursueM) continue;
+    if (!e.infected || (e.health.current <= 0 && e.infected.recoverAt < 0) || e.corpse || e.infected.pursuit || d > r.pursueM) continue;
+    // Downed infected that will recover are threats too: leaving their bodies inside the ring revived them beside the courier.
     const pushed = d < r.clearM;
     if (pushed) {
       const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - at.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - at.z) * k : Math.sin(e.id);
