@@ -3726,7 +3726,7 @@ export default {
       }
     ],
     "source": "public/assets/models/int.fire-station-bay.glb",
-    "hash": "7c162217584040b95e21ce3c285252d6b680332bb12a1c3cd9be78c1299381ac"
+    "hash": "72cc402c51658a51344084067f8ea8f4da966cfb231c919998588d11cf58262d"
   },
   "prop.axe-rack": {
     "class": "fixed",
@@ -4500,7 +4500,7 @@ export default {
     "restitution": 0.05,
     "centerOfMass": [
       0.35000014305114746,
-      5.099999904632568,
+      5.110000133514404,
       0
     ],
     "pushable": false,
@@ -4522,7 +4522,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.storefront-row.glb",
-    "hash": "94e42ea91bcc562a5638764e17d9365643df226bde161a802ad69034807a14f6"
+    "hash": "d434ed4ed409386ebbdf38115ab69e6df7dd9d964924bef04610b2a737182b88"
   },
   "bld.kessler-hardware": {
     "class": "fixed",
@@ -4982,7 +4982,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.apartment-block-a.glb",
-    "hash": "c434a7e1a6e30e2895641d3e3b928a1814b76d61dd48dba7e477bf99cef5c688"
+    "hash": "a871ddb2ca85cdc2673efb359fcc598572d8c832da9ea1edd6446af19b1c268e"
   },
   "bld.apartment-block-b": {
     "class": "fixed",
@@ -5061,7 +5061,7 @@ export default {
       }
     ],
     "source": "public/assets/models/bld.apartment-block-b.glb",
-    "hash": "7722711b6bd894e81f18b9ef985db84dca6f0296f0183838a9312446d405b6de"
+    "hash": "e109ada9775baa2652974b5869a27753d1c875645f32b0744b3cbf16e9eb2022"
   },
   "bld.town-hall": {
     "class": "fixed",

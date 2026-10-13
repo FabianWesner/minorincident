@@ -12,7 +12,7 @@ export const sitHipAboveSeat = 0.12;
 /** Local to the prop, +X is the seat front. `hipX` puts the back a hand from the backrest and the heels past the front edge. */
 /** Lawn chair hipX 0.18 (was 0.10): the sitter's shins clear the chair's front rail (Scene Lab qa-ped-sit-all). Bench hipX 0.31 (was 0.16): the sitter's shins clear the seat's front stretcher (Scene Lab bench-sitter, clippingMax 0); the back stays 0.26 m off the backrest. */
 export const seatSpecs: Record<string, { hipX: number; top: number }> = {
-  'prop.bench': { hipX: 0.34, top: 0.5625 },
+  'prop.bench': { hipX: 0.33, top: 0.5625 },
   'prop.lawn-chair-a': { hipX: 0.18, top: 0.4875 },
   'prop.lawn-chair-b': { hipX: 0.18, top: 0.4875 },
 };
