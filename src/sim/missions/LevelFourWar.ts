@@ -662,7 +662,8 @@ export class LevelFourWar {
     s.killsAtBreak = s.kills.player + s.kills.soldiers + s.kills.armedCivilians + s.kills.unarmedCivilians + s.kills.heli + s.kills.tank + s.kills.other;
     s.infectedAtBreak = world.infected!.active.filter(e => e.health.current > 0).length; s.soldiersAtBreak = this.liveSoldiers().length;
     world.events.emit({ type: 'l4.lineBreaks', tick, cause });
-    this.openGate();
+    // The gate opens a moment later (the fuel-truck chain lands on this tick; l4-po-round perf: the break frame peaked at 54 ms).
+    this.gateOpenAt = tick + ticks(.4);
     this.escapeWindow();
     this.mission.radio('L4.air'); this.spectacle.withdrawHeli(); this.spectacle.detonateFuelTruck(); this.spectacle.fires();
     s.director.burnAt = tick + ticks(1); this.populateCollapse(); s.pockets = l4Pockets.map((_, i) => i);
@@ -671,6 +672,7 @@ export class LevelFourWar {
     this.breakRadioAt = tick + ticks(3);
   }
   private breakRadioAt = 0;
+  private gateOpenAt = 0;
   private safeRespawn(): void {
     const { world } = this.mission, player = world.entities.get(1)!, live = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden);
     const spots = l4.director.respawn.map(([x, z]) => this.snap({ x, z }, .45)).map(p => ({ p, n: live.filter(e => dist(e.transform, p) < 12).length })).sort((a, b) => a.n - b.n);
@@ -831,6 +833,7 @@ export class LevelFourWar {
       if (s.phase === 'collapse') {
         this.emergeCollapse();
         if (this.breakRadioAt && tick >= this.breakRadioAt) { this.breakRadioAt = 0; this.mission.radio('L4.break'); }
+        if (this.gateOpenAt && tick >= this.gateOpenAt) { this.gateOpenAt = 0; this.openGate(); }
         if (s.director.burnAt && tick >= s.director.burnAt) this.burnCars();
         if (tick % 20 === 0 && this.gapOpen()) this.clearGap();
         // The hiding place is only a soft marker for the first seconds: the courier finds her own way first.
@@ -867,7 +870,8 @@ export class LevelFourWar {
     for (let i = 0; i < s.edgeNext.length; i++) if (s.edgeNext[i]) s.edgeNext[i] += delta;
     if (s.insideAt) s.insideAt += delta;
     const camp = s.phase === 'plaza' || s.phase === 'war';
-    this.gateNav(camp); this.perimeter(camp);
+    this.gateNav(camp); this.perimeter(camp); this.gateOpenAt = 0;
+    if (!camp) for (const id of s.gateIds) { const e = this.world.entities.get(id); if (e) e.hidden = true; }
     this.world.infected!.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
     const fuel = this.world.entities.get(s.fuelId);
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_450, blocked: !!fuel && !fuel.hidden, wall: { x: l4.fuelTruck.x, y: 1, z: l4.fuelTruck.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
