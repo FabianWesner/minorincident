@@ -287,6 +287,13 @@ export class Outbreak {
     for (const g of this.gunfire) { const d = Math.hypot(g.x - e.transform.x, g.z - e.transform.z); if (d < best) { best = d; shot = g; } }
     if (!shot) return;
     c.threat.x = shot.tx; c.threat.z = shot.tz; c.l1!.noticed = this.world.tick; this.dropProp(e);
+    // Hide nearby rather than run for the map edge: a few metres away from what is being shot at, then crouch there. They stay in
+    // the fight's world (still biteable), which keeps the war's victims around the player (L4 balance).
+    const dx = e.transform.x - shot.tx, dz = e.transform.z - shot.tz, d = Math.hypot(dx, dz) || 1, nav = this.world.infected!.nav;
+    for (const r of [civ.hideM, civ.hideM * .6, civ.hideM * .3]) {
+      const x = e.transform.x + dx / d * r, z = e.transform.z + dz / d * r;
+      if (nav.clear(x, z, .35) && nav.visible(e.transform, { x, z }, .3)) { c.l1!.haven = { route: [], leg: 0, x, z, cower: { x: shot.tx, z: shot.tz } }; break; }
+    }
     this.state(e, 'alarmed', c.l1!.startleTicks);
   }
   private sees(a: Vec2, b: Vec2, ignoreId: number): boolean {
@@ -313,7 +320,9 @@ export class Outbreak {
     if (h.sx === undefined || Math.hypot(e.transform.x - h.sx, e.transform.z - (h.sz ?? 0)) > .4) { h.sx = e.transform.x; h.sz = e.transform.z; h.since = tick; }
     if (left <= 1.2 || left <= 6 && tick - (h.since ?? tick) > 60) {
       this.state(e, 'calm'); c.path.length = 0; c.goal = -1;
-      c.schedule = [{ activity: 'look', anchor: 'l2/haven', target: { x: h.x, z: h.z }, facing: { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+      c.schedule = [{ activity: 'look', anchor: h.cower ? 'fight/hide' : 'l2/haven', target: { x: h.x, z: h.z }, facing: h.cower ?? { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+      // A person hiding from a gunfight crouches there, facing the fight.
+      if (h.cower) c.story = { clip: 'npc-cower', start: tick };
       return;
     }
     const before = { x: e.transform.x, z: e.transform.z };

@@ -525,9 +525,28 @@ export class LevelFourWar {
     const allies = this.allyEntities().filter(a => this.escapeDistance(a.transform) >= e.gapM + 2);
     for (const a of ai.active) {
       if (a.health.current <= 0 || a.hidden || a.archetype === 'infected.alpha' || dist(a.transform, p) <= e.nearM || this.escapeDistance(a.transform) >= e.gapM) continue;
-      const to = allies.length ? allies.reduce((q, b) => dist(b.transform, a.transform) < dist(q.transform, a.transform) ? b : q).transform : { x: -26, z: 0 };
+      // Off the street first (ally-combat-feel: allies no longer shoot the runners down off screen, so they must leave the corridor
+      // themselves): the nearest clear point beside the route, then on toward the fight.
+      const side = this.offStreet(a.transform);
+      const to = side ?? (allies.length ? allies.reduce((q, b) => dist(b.transform, a.transform) < dist(q.transform, a.transform) ? b : q).transform : { x: -26, z: 0 });
       ai.rush(a.id, { x: to.x, z: to.z }, world.tick + ticks(10));
     }
+  }
+  /** A clear point `gapM + 3` m from the escape route on the side `p` is on (null when the street is walled in there). */
+  private offStreet(p: Point): Point | null {
+    const r = l4.director.escape.route, nav = this.world.infected!.nav, want = l4.director.escape.gapM + 3;
+    let best = Infinity, qx = p.x, qz = p.z, nx = 0, nz = 0;
+    for (let i = 1; i < r.length; i++) {
+      const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz)));
+      const cx = ax + dx * t, cz = az + dz * t, d = Math.hypot(p.x - cx, p.z - cz);
+      if (d < best) { best = d; qx = cx; qz = cz; const l = Math.hypot(dx, dz) || 1; nx = -dz / l; nz = dx / l; }
+    }
+    const away = best > .3 ? { x: (p.x - qx) / best, z: (p.z - qz) / best } : { x: nx, z: nz };
+    for (const s of [1, -1]) for (const k of [1, .8, .6]) {
+      const x = qx + away.x * s * want * k, z = qz + away.z * s * want * k;
+      if (Math.hypot(x - qx, z - qz) > l4.director.escape.gapM + .5 && nav.clear(x, z, .5)) return { x, z };
+    }
+    return null;
   }
   /** Cars along the streets catch fire from the shockwave and the burning wreckage (E09 car explosions: fires persist). */
   /** One car per call (staggered after the break, l4-collapse perf: the fuel-truck chain and three car blasts used to land in one frame). */
