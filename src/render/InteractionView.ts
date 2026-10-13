@@ -96,7 +96,7 @@ export class InteractionView extends Group {
     const load = this.create(e, lod).then(object => {
       if (!this.disposed) {
         this.objects.get(e.id)?.removeFromParent(); this.objects.set(e.id, object); this.lods.set(e.id, lod);
-        object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:0, e.transform.z); object.rotation.y = e.transform.yaw;
+        object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:e.pickup&&'kind' in e.pickup?e.transform.y-.3:0, e.transform.z); object.rotation.y = e.transform.yaw;
         if(e.archetype==='l6.service-gate'){const leaf=object.getObjectByName('gate');if(leaf)leaf.rotation.y=e.barricade?.intact?0:-Math.PI/2;} this.add(object);
       }
       this.pending.delete(e.id);
@@ -219,6 +219,12 @@ export class InteractionView extends Group {
     if (s.boardUp) for (let row = 0; row < 4; row++) { const plank = new Mesh(this.box, this.materials.get('woodWarm')); plank.scale.set(1, .08, .3); plank.position.set(width / 2 + .7, .05 + row * .08, .2); g.add(plank); }
     g.add(ghost, brace); return g;
   }
+  /** Scene Lab probe: ground pickups as drawn (object origin = the base of the model). */
+  drawnPickups(): { id: number; kind: string; x: number; y: number; z: number }[] {
+    const out: { id: number; kind: string; x: number; y: number; z: number }[] = [];
+    for (const [id, o] of this.objects) { const p = this.world.entities.get(id)?.pickup; if (p && 'kind' in p && !p.collected && o.visible) out.push({ id, kind: p.kind, x: o.position.x, y: o.position.y, z: o.position.z }); }
+    return out;
+  }
   update(camera: Camera): void {
     let selected: EntitySnapshot | null = null, nearest = 64, ringTarget: EntitySnapshot | null = null, ringDistance = 64;
     const player = this.world.entities.get(1);
@@ -227,7 +233,7 @@ export class InteractionView extends Group {
       const object = this.objects.get(e.id);
       if (object) {
         const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
-        object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:0, e.transform.z); object.rotation.y = e.transform.yaw;
+        object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:pickup?e.transform.y-.3:0, e.transform.z); object.rotation.y = e.transform.yaw;
         if(e.archetype==='l6.service-gate'){const leaf=object.getObjectByName('gate');if(leaf)leaf.rotation.y=e.barricade?.intact?0:-Math.PI/2;}
         object.visible = !pickup?.collected && !e.destructible?.broken && !e.hazard?.exploded;
         if (e.hazard?.kind === 'toxic') object.visible &&= this.world.tick < e.hazard.activeUntil;

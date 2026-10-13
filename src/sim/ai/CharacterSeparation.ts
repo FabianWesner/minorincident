@@ -30,6 +30,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     const reach = Math.max(r + maximum + .3, meleeRing) + Math.max(0, r - .35, maximum - .35);
     return dx * dx + dz * dz < reach * reach;
   } };
+  const settled = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
@@ -98,6 +99,18 @@ export function installCharacterSeparation(world: SimWorld): void {
     }
     // Separation changes only X/Z. Ground once at the final position, rather
     // than sampling every pass and leaving the last push's support stale.
+    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && !radii[e.id] && (e.health.current <= 0 || e.transform.y > 2) && !e.hidden && !e.infected.hidden && !e.infected.perched && e.infected.special !== 'cling' && !e.infected.specialAttack && !e.corpseThrown && e.attachedTo === undefined && !e.infectionRise && e.archetype !== 'infected.crow') {
+      // Dead bodies and anything above the 2 m separation cut-off (L3 highway ramp/deck) are not separated, but still stand on
+      // the support under them: a body that ends past the deck edge drops to the street, one on the ramp follows its slope, and none
+      // keeps a stale height (PO: "Dead Zombies fliying"). `supportBelow` ignores a deck above the body.
+      const { x, z } = e.transform; let support = settled.get(e);
+      if (!support || support.district !== world.districts || support.x !== x || support.z !== z) {
+        const y = .7 + world.districts.supportBelow(x, z, e.transform.y - .7);
+        if (support) { support.district = world.districts; support.x = x; support.z = z; support.y = y; }
+        else { support = { district: world.districts, x, z, y }; settled.set(e, support); }
+      }
+      e.transform.y = support.y;
+    }
     if (world.districts) for (const e of world.entities.iterate()) if (e.infected && radii[e.id] && !(e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') {
       // Static district support cannot change beneath a stationary body. Reuse
       // its exact height until movement or a tier/checkpoint replaces the district.

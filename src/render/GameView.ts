@@ -621,7 +621,7 @@ export class GameView implements Lifecycle {
   /** Scene Lab probes (src/debug/scenelab): the presentation objects it measures. Test/debug use only. */
   /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
-  labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
+  labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles, drawnCorpses: () => [...(this.crowd?.drawnCorpses() ?? []), ...(this.npcs?.drawnCorpses() ?? [])], drawnPickups: () => this.interactions?.drawnPickups() ?? [] }; }
   renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
   renderProbe() {
     const c = this.camera, finite = (m: { elements: number[] }) => m.elements.every(Number.isFinite);
