@@ -38,6 +38,11 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-panel{background:#182333e8;border:2px solid #b7a38a;border-radius:16px;box-shadow:0 4px 0 #10182488}
 .hud-vitals{position:absolute;top:max(20px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));width:300px;display:grid;grid-template-columns:72px minmax(0,1fr) 52px;align-items:center;gap:8px;padding:8px}
 .hud-portrait{box-sizing:border-box;width:72px;height:72px;border-radius:50%;border:3px solid #fff3da;background-color:#f1cfa4;display:grid;place-items:center;font-size:32px;overflow:hidden}
+.hud-durability-panel{position:absolute;top:calc(max(20px,env(safe-area-inset-top)) + 96px);left:max(20px,env(safe-area-inset-left));width:300px;box-sizing:border-box;padding:6px 8px}
+.hud-durability .hud-bar-fill{background:#2f7d4f}
+.hud-durability-panel[data-stage="2"] .hud-bar-fill{background:#a86a12}
+.hud-durability-panel[data-stage="3"] .hud-bar-fill,.hud-durability-panel[data-stage="4"] .hud-bar-fill{background:#b3262e}
+.hud-durability-panel[data-floor="true"] .hud-bar-label{color:#ffd083}
 .hud-bars{display:grid;gap:5px;align-content:center;min-width:0}
 .hud-bar{height:24px;border:2px solid #101824;border-radius:8px;background:#3c3546;overflow:hidden;position:relative}
 .hud-bar-fill{height:100%;background:linear-gradient(#ef6670,#d9363e);width:100%;border-radius:4px}
@@ -67,6 +72,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .colorblind-ui .hud-pin-threat{background:#ff8352;border-radius:0;transform:translate(-50%,-50%) rotate(45deg)}
 @media(max-width:600px){
  .menu-panel{padding:20px}.menu-title{padding:32px 20px}.settings-fields{grid-template-columns:1fr}
+ .hud-durability-panel{top:76px;left:12px;width:220px}
  .hud-vitals{top:12px;left:12px;width:220px;grid-template-columns:46px minmax(0,1fr) 36px;padding:6px;gap:6px}.hud-vitals .hud-portrait{width:46px;height:46px;font-size:24px}.hud-vitals .hud-weapon{width:36px;height:36px;padding:2px}.hud-bar{height:22px}.hud-bar-label{line-height:18px}
  .hud-companion{top:92px;left:12px;padding:4px 8px;font-size:calc(11px * var(--text-scale))}.hud-companion .hud-portrait{width:28px;height:28px;font-size:19px}
  .hud-map{right:12px;top:12px;width:116px;height:116px}.hud-tracker{right:12px;top:142px;max-width:calc(100vw - 24px);font-size:calc(12px * var(--text-scale));padding:8px 12px}
