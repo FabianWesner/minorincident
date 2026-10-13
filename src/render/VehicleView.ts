@@ -41,6 +41,7 @@ export class VehicleView extends Group {
   private disposed = false;
   private readonly contact = new Vector3();
   private readonly chassisRotation = new Quaternion();
+  private readonly crashModels = new Map<string, { model: Object3D; paint: Record['paint'] }>();
   private readonly pending = new Map<number, Promise<void>>();
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) { super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.fireMaterial.color.multiplyScalar(3); }
   /** Compile transport passenger rigs during level loading, before boarding can hitch. */
@@ -56,16 +57,21 @@ export class VehicleView extends Group {
     let cleaned = false;
     return () => { if (cleaned) return; cleaned = true; for (const copy of copies) copy.dispose(); };
   }
+  /** The mandatory L9 wreck is loaded and compiled before driving, through the existing registry. */
+  async prewarmCrash(): Promise<(() => void) | undefined> {
+    const id = this.world.missions?.l9?.state.carId, car = id === undefined ? undefined : this.world.vehicles!.cars.get(id);
+    if (!car) return;
+    const root = new Group(); root.position.copy(car.entity.transform);
+    const def = car.physics.def;
+    for (const lod of this.low ? ['lod1', 'lod2'] as const : ['lod0', 'lod1', 'lod2'] as const) {
+      const model = await this.registry.loadAsset(def.asset, lod, 'wrecked');
+      prepareTransportModel(model, def); this.crashModels.set(lod, { model, paint: this.paintModel(model) }); model.position.y = -(def.suspension + def.wheelRadius + .15); root.add(model);
+    }
+    this.add(root);
+    return () => root.removeFromParent();
+  }
   async load(): Promise<void> { for (const car of this.world.vehicles!.cars.values()) await this.addCar(car.entity.id); this.update(1); }
-  private async addCar(id: number): Promise<void> {
-    const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
-    const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
-    const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
-    const decay = car.entity.vehicle!.decay;
-    const asset = def.asset, shell = def.bodyVariant && this.registry.definition(asset).decayVariants.includes(def.bodyVariant) ? def.bodyVariant : decay;
-    const model = atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed'));
-    if (this.disposed) return;
-    model.userData.assetId = def.asset; prepareTransportModel(model, def);
+  private paintModel(model: Object3D): Record['paint'] {
     const paint: Record['paint'] = [], copies = new Map<import('three').Material, Record['paint'][number]>();
     model.traverse(node => { if (!(node instanceof Mesh)) return; const convert = (material: import('three').Material) => {
       if (material.name.startsWith('emi_') || material.userData.emissiveStrength > 0) return material;
@@ -88,7 +94,21 @@ export class VehicleView extends Group {
       }
       return copy;
     }; node.material = Array.isArray(node.material) ? node.material.map(convert) : convert(node.material); });
-    openTransportCab(model, def);
+    return paint;
+  }
+  private async addCar(id: number): Promise<void> {
+    const car = this.world.vehicles!.cars.get(id)!, def = car.physics.def;
+    const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
+    const lod = modelLod(distance, this.records.get(id)?.lod, this.low);
+    const decay = car.entity.vehicle!.decay;
+    const asset = def.asset, shell = decay ?? (def.bodyVariant && this.registry.definition(asset).decayVariants.includes(def.bodyVariant) ? def.bodyVariant : undefined);
+    const prepared = decay === 'wrecked' && id === this.world.missions?.l9?.state.carId ? this.crashModels.get(lod) : undefined;
+    if (prepared) this.crashModels.delete(lod);
+    const model = prepared?.model ?? (atLeast(this.registry.definition(asset).status, 'integrated') ? await this.registry.loadAsset(asset, lod, shell) : vehiclePlaceholder(def, this.materials.get(def.emergency ? 'picketWhite' : def.id === 'vehicle.school-bus' ? 'schoolBusYellow' : 'survivorRed')));
+    if (this.disposed) return;
+    model.userData.assetId = def.asset; prepareTransportModel(model, def);
+    const paint = prepared?.paint ?? this.paintModel(model);
+    if (!decay) openTransportCab(model, def);
     const parent = new Group(); parent.add(model); this.add(parent); model.position.y = -(def.suspension + def.wheelRadius + .15);
     const wheels = ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR', ...(def.transport ? ['wheelML', 'wheelMR'] : [])].filter(name => model.getObjectByName(name)).map(name => { const node = model.getObjectByName(name)!; node.rotation.order = 'YXZ'; return { node, y: node.position.y, steer: node.rotation.y, spin: node.rotation.z, contacts: tyreSurface(node), contactPose: new Matrix4(), contactOffset: 0, contactGround: null }; });
     const lamp = (name: string, color: string) => {
@@ -305,6 +325,7 @@ export class VehicleView extends Group {
   }
   dispose(): void {
     this.disposed = true;
+    for (const { model, paint } of this.crashModels.values()) { model.removeFromParent(); for (const material of paint) material.dispose(); } this.crashModels.clear();
     const geometries = new Set<import('three').BufferGeometry>(), materials = new Set<MeshBasicNodeMaterial>();
     for (const r of this.records.values()) { r.apc?.dispose(); disposeTransportCab(r.model); for (const material of r.paint) material.dispose(); geometries.add(r.door.geometry); materials.add(r.brake); for (const s of r.sirens) materials.add(s); if (r.model.userData.placeholder) r.model.traverse(node => { if (node instanceof Mesh) { geometries.add(node.geometry); const m = node.material; if (!Array.isArray(m) && m instanceof MeshBasicNodeMaterial) materials.add(m); } }); }
     for (const g of geometries) g.dispose(); for (const m of materials) m.dispose();

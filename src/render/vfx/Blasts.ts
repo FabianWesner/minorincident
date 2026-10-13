@@ -14,7 +14,7 @@ import type { LightField } from '../LightField';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
 interface Column { ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
-interface Glow { x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
+interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
 export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
@@ -223,12 +223,12 @@ export class Blasts extends Group {
   play(event: Blast): void {
     const fx = blastFxPresets[event.fx]; if (!fx) return;
     this.blasts++;
-    const { x, z } = event.position, r = event.radius, now = this.time, low = this.quality === 'low';
+    const { x, z } = event.position, ground = event.position.y < 0 ? event.position.y - .7 : 0, r = event.radius, now = this.time, low = this.quality === 'low';
     // Beat 2 flash: screen flash (capped by flash reduction) + a strong, short ground light pool.
     // The white-out belongs to blasts close to the player; a distant tank round or fuel chain only gets a weak flash.
     const focus0 = this.host.focus?.(), flashNear = focus0 ? Math.max(.15, Math.min(1, 1.4 - Math.hypot(focus0.x - x, focus0.z - z) / 18)) : 1;
     this.flashPeak = Math.max(this.flash, (this.flashReduction ? Math.min(.12, fx.flash) : fx.flash) * flashNear); this.flashAt = now;
-    this.glow(x, z, r * 2.2, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(2.2, fx.light.intensity / 100), fx.light.seconds);
+    this.glow(x, z, r * 2.2, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(2.2, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
     const hex = `#${fx.light.color.toString(16).padStart(6, '0')}`;
     this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
@@ -237,23 +237,23 @@ export class Blasts extends Group {
     const count = low ? Math.ceil(fx.fireball.count / 2) : fx.fireball.count;
     for (let i = 0; i < count; i++) {
       const a = this.rng.next() * Math.PI * 2, d = this.rng.next() * fx.fireball.size * .55, size = fx.fireball.size * (.5 + this.rng.next() * .5);
-      this.fireball(x + Math.cos(a) * d, .4 + this.rng.next() * fx.fireball.size * .5, z + Math.sin(a) * d, size, fx.fireball.seconds * (.75 + this.rng.next() * .5), i ? this.rng.next() * .12 : 0, fx.fireball.rise * (.6 + this.rng.next() * .6));
+      this.fireball(x + Math.cos(a) * d, ground + .4 + this.rng.next() * fx.fireball.size * .5, z + Math.sin(a) * d, size, fx.fireball.seconds * (.75 + this.rng.next() * .5), i ? this.rng.next() * .12 : 0, fx.fireball.rise * (.6 + this.rng.next() * .6));
     }
     // Beat 4 shockwave: a ground dust ring pushing outward (the E15 ring wave draws the 2r ring).
     const dust = low ? Math.ceil(fx.dust / 3) : fx.dust;
     for (let i = 0; i < dust; i++) {
       const a = i / dust * Math.PI * 2 + this.rng.next() * .2, speed = r * (1.2 + this.rng.next() * .6);
-      this.host.particles.spawn(now, .9 + this.rng.next() * .5, x + Math.cos(a) * .6, .25, z + Math.sin(a) * .6, Math.cos(a) * speed, .3 + this.rng.next() * .5, Math.sin(a) * speed, .5 + this.rng.next() * .5, 0, 0x8d7b68, .4);
+      this.host.particles.spawn(now, .9 + this.rng.next() * .5, x + Math.cos(a) * .6, ground + .25, z + Math.sin(a) * .6, Math.cos(a) * speed, .3 + this.rng.next() * .5, Math.sin(a) * speed, .5 + this.rng.next() * .5, 0, 0x8d7b68, .4);
     }
     // Beat 5 debris: bright spark streaks plus slower burning fragments.
     const sparks = low ? Math.ceil(fx.sparks / 4) : fx.sparks;
     for (let i = 0; i < sparks; i++) {
       const a = this.rng.next() * Math.PI * 2, out = 3 + this.rng.next() * r * 1.3, burning = i % 5 === 0;
-      this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .16 : .07, 0, burning ? 0xff7a26 : 0xffe9a8, 9.81);
+      this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, ground + .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .16 : .07, 0, burning ? 0xff7a26 : 0xffe9a8, 9.81);
     }
     // Beat 6 smoke column, beat 7 scorch decal (persists to the end of the level; independent of the gore setting).
-    if (fx.smoke.seconds > 0) this.columns.push({ born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .17, cloud: 0 });
-    if (fx.scorch > 0) this.scorch.spawn(now, 900, x, .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, 0, 0x16110f);
+    if (fx.smoke.seconds > 0) this.columns.push({ ground: ground || undefined, born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .17, cloud: 0 });
+    if (fx.scorch > 0) this.scorch.spawn(now, 900, x, ground + .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, 0, 0x16110f);
     // Camera: shake by size, Bruno's roll kick by distance from the focus.
     const focus = this.host.focus?.(), distance = focus ? Math.hypot(focus.x - x, focus.z - z) : 0;
     const near = Math.max(0, Math.min(1, 1 - (distance - 2) / (13 + r)));
@@ -273,9 +273,9 @@ export class Blasts extends Group {
     this.puffExpiry[slot] = born + life;
     this.pf.pOrigin.needsUpdate = this.pf.pMotion.needsUpdate = this.pf.pStyle.needsUpdate = true; this.puffs.visible = true;
   }
-  private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number): void {
+  private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void {
     if (this.glowList.length >= 12) this.glowList.shift();
-    this.glowList.push({ x, z, radius, color, intensity, born: this.time, life });
+    this.glowList.push({ ground, x, z, radius, color, intensity, born: this.time, life });
   }
   /** Explicit render clock (Vfx time). Columns emit puffs; fires refresh at 4 Hz from the sim. */
   advance(now: number, seconds: number): void {
@@ -378,7 +378,7 @@ export class Blasts extends Group {
     for (const c of [...this.columns, ...this.fireColumns.values()]) {
       if (shadows >= 64 || c.cloud || horizontal < .01 || !this.sourceVisible(c.x, c.z, 32)) continue;
       const length = Math.min(30, (c.size >= 2 ? 18 : 10) * horizontal / Math.max(.15, Math.abs(sun.y)));
-      this.pos.set(c.x - sun.x / horizontal * length / 2, .025, c.z - sun.z / horizontal * length / 2);
+      this.pos.set(c.x - sun.x / horizontal * length / 2, (c.ground ?? 0) + .025, c.z - sun.z / horizontal * length / 2);
       this.quat.setFromAxisAngle(up, Math.atan2(sun.x, sun.z));
       this.scl.set(c.size * 1.6, 1, length);
       this.columnShadows.setMatrixAt(shadows++, this.partMatrix.compose(this.pos, this.quat, this.scl));
@@ -388,9 +388,9 @@ export class Blasts extends Group {
       if (flames >= FLAMES) return;
       this.fl.fOrigin.setXYZW(flames, x, y, z, seed); this.fl.fStyle.setXYZW(flames, width, height, intensity, 1); flames++;
     };
-    const pool = (x: number, z: number, radius: number, color: number, intensity: number) => {
+    const pool = (x: number, z: number, radius: number, color: number, intensity: number, ground?: number) => {
       if (glows >= GLOWS) return;
-      this.gl.gOrigin.setXYZW(glows, x, (this.world.districts?.groundHeight(x,z)??0)+.03, z, radius);
+      this.gl.gOrigin.setXYZW(glows, x, (ground ?? this.world.districts?.groundHeight(x,z) ?? 0)+.03, z, radius);
       this.gl.gColor.setXYZW(glows, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255, intensity); glows++;
     };
     for (const [id, c] of this.fireColumns) {
@@ -407,7 +407,7 @@ export class Blasts extends Group {
     for (let i = this.glowList.length - 1; i >= 0; i--) {
       const g = this.glowList[i], k = (now - g.born) / g.life;
       if (k >= 1) { this.glowList.splice(i, 1); continue; }
-      pool(g.x, g.z, g.radius, g.color, g.intensity * (1 - k) ** 2);
+      pool(g.x, g.z, g.radius, g.color, g.intensity * (1 - k) ** 2, g.ground);
     }
     this.glowCount = glows;
     this.fl.fOrigin.needsUpdate = this.fl.fStyle.needsUpdate = this.gl.gOrigin.needsUpdate = this.gl.gColor.needsUpdate = true;

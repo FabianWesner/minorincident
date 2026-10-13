@@ -22,6 +22,8 @@ export interface SurvivorState {
   variant: SurvivorVariant; gearTier: GearTier; animation: AnimationState; animationTick: number;
   /** E19 presentation hook set by the mission sim (E) while the parcel is held; render-only. */
   carrying?: string;
+  /** Mission presentation while crawling away from the APC wreck. */
+  scriptedClip?: 'crawl';
   velocity: { x: number; z: number }; grounded: boolean; invulnerableUntil: number;
   checkpoint: { x: number; y: number; z: number }; diedAt: number | null;
 }
