@@ -1,4 +1,5 @@
 import type { SimWorld } from '../world/SimWorld';
+import { soilDecorations } from '../../levels/districts/decorationSurface';
 import type { EntitySnapshot } from '../world/types';
 import { standNear } from './gardening';
 import { seatAnchor, sitHipHeight } from './seats';
@@ -175,7 +176,7 @@ export function populateMorning(world: SimWorld): void {
     }
     // Gardening stands within 0.5 m of a real flower (derived from the live decoration positions), facing it; the second stop is
     // another real flower 2.5-7 m away. Flowers with no reachable standing spot are skipped.
-    const flowers = (layout.decorations ?? []).filter(d => d.kind === 'flower').map(d => point(d.position[0], d.position[2]));
+    const flowers = soilDecorations(layout).filter(d => d.kind === 'flower').map(d => point(d.position[0], d.position[2]));
     const tend = (f: Point, prefer: Point) => standNear({ x0: f.x, z0: f.z, x1: f.x, z1: f.z }, p => routineOk(world, p), prefer);
     let first: ReturnType<typeof tend> = null, second: ReturnType<typeof tend> = null, flowerA: Point | undefined;
     for (const f of flowers.slice(6)) {

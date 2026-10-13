@@ -141,6 +141,9 @@ export class LightField {
       this.visibilityRows.set(light, index + 1);
       light.visibility.slice(1).forEach(([x, z], ray) => { data[((index + 1) * 65 + ray) * 4] = Math.hypot(x - light.x, z - light.z); });
     });
+    // WebGPU keeps the GPU texture from the first upload, so a level with more lights would write past it
+    // ("Texture copy range 65×N touches outside 65×M"): drop the GPU copy whenever the row count changes.
+    if (this.visibilityData.image.height !== lights.length + 1) this.visibilityData.dispose();
     this.visibilityData.image = { data, width: 65, height: lights.length + 1 }; this.visibilitySize.value = lights.length + 1; this.visibilityData.needsUpdate = true;
   }
   /** Retire per-level lights while retaining the field's shared GPU resources. */

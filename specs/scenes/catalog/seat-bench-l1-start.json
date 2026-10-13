@@ -1,0 +1,16 @@
+{
+ "name": "seat-bench-l1-start",
+ "note": "PO 10-13 'Bank isn't fully rendered' + 'Coffee cup still wrong': the L1 start bench (prop.bench:1301) with a seated coffee drinker while the cafe corner occludes the courier (see-through hole open). Look for: bench planks and back complete at every tier/zoom; mug upright at chest height above the lap, never on the thigh or at the hip. Run with --matrix.",
+ "seed": 1,
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-80, 0], [-56, 24]] },
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-66.4, 9] },
+  { "id": "sitter", "kind": "pedestrian", "at": [-67, 10.5], "yaw": 180,
+    "look": { "model": "npc.civilian-man-b", "tint": "#e07aa0", "accessories": ["cap"], "handProp": "coffee" },
+    "state": { "sit": "prop.bench:1301", "seconds": 600 } }
+ ],
+ "camera": { "mode": "game", "target": [-66.4, 9], "zoom": 0.66 },
+ "frames": 240,
+ "expect": { "consoleErrors": 0, "seeThroughLowPropsMax": 0, "seeThroughOpenFramesMin": 100, "heldPropHoldMin": 0.5, "heldPropArmStraightMax": 0.95, "heldPropSamplesMin": 20, "undrawnFramesMax": 0 }
+}
