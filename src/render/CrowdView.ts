@@ -355,8 +355,8 @@ export class CrowdView extends Group {
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
         const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
-        // Wide Roar framing still needs planted turns and grounded convergence.
-        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
+        // Zoomed-out encounters retain planted feet inside the same 12 m action range; the footwork cap is unchanged.
+        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
         if (!batch.animal) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         const figure = batch.probe.figures.at(-1);

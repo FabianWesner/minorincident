@@ -224,7 +224,9 @@ export class CrowdLocomotion {
       if (!state) {
         const previous = this.footwork.far.get(id);
         const far = previous && time - previous.time <= .3 ? previous.contacts : undefined, left = far?.contact(0), right = far?.contact(1);
-        this.toRest(); state = { contacts: new CourierGroundContacts(this.rig, this.rig.hip.parent!), owner: this, time, weight: left && right ? 1 : 0, active: 0, run: gaitStyles[clip]?.run ?? 0, stance: gaitStyles[clip]?.stance ?? .55 };
+        // A newly visible figure plants at its currently drawn foot positions.
+        // Blending that first solve lets those contacts slide before they lock.
+        this.toRest(); state = { contacts: new CourierGroundContacts(this.rig, this.rig.hip.parent!), owner: this, time, weight: 1, active: 0, run: gaitStyles[clip]?.run ?? 0, stance: gaitStyles[clip]?.stance ?? .55 };
         if (left && right) state.contacts.inherit(phase, [left, right]);
         this.footwork.far.delete(id);
         this.footwork.states.set(id, state);
