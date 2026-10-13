@@ -62,7 +62,8 @@ export const l3 = {
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
       // S2 (x -40..50): about 25 in groups of 3-4 on the walking lines (wrecks and the jam split the Boulevard ones).
-      [[-30, 'commerce', 4], [-22, 'blvd', 3], [-8, 'oak', 3], [2, 'commerce', 3], [10, 'blvd', 3], [22, 'oak', 3], [30, 'commerce', 3], [44, 'blvd', 2]],
+      // Orchestrator 10-13: Boulevard has 100 rather than 200 residents; the other 100 remain on Commerce.
+      [[-30, 'commerce', 5], [-22, 'blvd', 2], [-8, 'oak', 3], [2, 'commerce', 4], [10, 'blvd', 1], [22, 'oak', 3], [30, 'commerce', 5], [44, 'blvd', 1]],
       // S3 (x 50..128): about 40: one dense cluster per street (7) staggered along the corridor, plus groups between them.
       // PO 10-09: the clusters of 8 are two waves of 4 about 14 m apart (a lull to back off, take the medkit and set up), not one blob.
       [[146, 'commerce', 2], [174, 'commerce', 2], [199, 'commerce', 2], [62, 'commerce', 4], [76, 'commerce', 4], [86, 'commerce', 3], [92, 'blvd', 3], [80, 'blvd', 3], [58, 'blvd', 2], [70, 'oak', 4], [82, 'oak', 4], [92, 'oak', 3]],
@@ -102,6 +103,8 @@ export const l3 = {
   },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
   infectedDamage: 1.1,
+  /** Orchestrator 2026-10-13: the courier can outrun regulars; at most one in twenty human spawns is a sprinter. */
+  infected: { maxRegularMs: 4, sprinterEvery: 20 },
   /**
    * PO 10-09: a courier who keeps dying at one spot is not meant to hit the same wall for 20 deaths. From the `fromDeaths`-th death at the same checkpoint on,
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by

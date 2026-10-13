@@ -1,0 +1,534 @@
+{
+  "numTotalTests": 1988,
+  "numPassedTests": 78,
+  "numFailedTests": 7,
+  "numPendingTests": 1903,
+  "success": false,
+  "startTime": 1791845953357,
+  "selected": [
+    {
+      "file": "sim/combat/balance.test.ts",
+      "test": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3-bridge.test.ts",
+      "test": "@E21 L3 nav: no deck cell links to the lower road except along the authored ramps",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3-bridge.test.ts",
+      "test": "@E21 L3 sim: nobody leaves the deck through the ramp-to-span junctions, and the group crosses the whole bridge on the deck",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3-bridge.test.ts",
+      "test": "@E21 L3 safety net: a player stranded off the route for 3 s is faded out and put back on a cell that reaches the objective",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3-follow.test.ts",
+      "test": "L3 squad and checkpoint @E21 army compound is walkable before the rendezvous and does not finish while the courier rests",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3-follow.test.ts",
+      "test": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with stalled officer",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 0 to be greater than 0\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3-follow.test.ts:54:27\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3-follow.test.ts",
+      "test": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with dead officer",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 0 to be greater than 0\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3-follow.test.ts:54:27\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3-follow.test.ts",
+      "test": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with turning officer",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 0 to be greater than 0\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3-follow.test.ts:54:27\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3-follow.test.ts",
+      "test": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with occupied boom",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 0 to be greater than 0\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3-follow.test.ts:54:27\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3-route.test.ts",
+      "test": "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 433.65 to be less than or equal to 405\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3.test.ts:54:77\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 452.1666666666667 to be less than or equal to 270\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3.test.ts:62:75\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs)",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them",
+      "status": "failed",
+      "failureMessages": [
+        "AssertionError: expected 0 to be greater than or equal to 1\n    at /srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/tests/levels/L3.test.ts:254:31\n    at file:///srv/mi/jobs/l3-flee-speed-8103ff-85240-1791845940/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-bots @E21 evade-only never attacks and still reaches the army zone",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-segments @E21 segment helper matches the corridor bounds",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "levels/story-protection.test.ts",
+      "test": "story protection L3 @E21 : every required actor resists bites, damage and collapse, then releases",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/determinism.test.ts",
+      "test": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "test": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/combat/shot-cover.test.ts",
+      "test": "@E21 shot cover: ground officer cannot hit through a 3 m wall; tower shooter can",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/combat/shot-cover.test.ts",
+      "test": "@E21 shot cover: ground soldier cannot hit through a 3 m wall; tower shooter can",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/combat/shot-cover.test.ts",
+      "test": "@E21 shot cover: ground civilian cannot hit through a 3 m wall; tower shooter can",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/combat/shot-cover.test.ts",
+      "test": "@E21 player bullets and explicit muzzle rays stop at world and dynamic cover",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/combat/shot-cover.test.ts",
+      "test": "@E21 checkpoint guard feet stay on all four tower decks",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/missions/l3-flee-speed.test.ts",
+      "test": "T-E21-flee-speed @E21 regulars stay below courier speed, sprinters are at most 5% of successful spawns",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/missions/l3-flee-speed.test.ts",
+      "test": "T-E21-flee-density @E21 S2 Boulevard is thinned to <=60% while the fivefold segment total stays queued",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/missions/l3-rescue.test.ts",
+      "test": "T-E21-rescue @E21 @E21-AC17 boom waits for police and dog, reopens on an outside survivor; bus civilians stand safely",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/missions/l3-rescue.test.ts",
+      "test": "T-E21-spawn-deck @E21 emergence tests the elevated silhouette rather than the ground beneath it",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/missions/objectives.test.ts",
+      "test": "@E21 non-location objectives keep their text without a waypoint; the next destination restores it",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 officer hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 soldier hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 firefighter hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 civilian hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 a grabbed L3 officer does not fight his own way out of the hold (PO 10-12)",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 L3 regroup orders preserve the pending self-defence shot beyond the follow band",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/ally-defence.test.ts",
+      "test": "armed ally close hearing and self-defence @E21 a rescued station straggler can still retreat across the district",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "test": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/assets/gun-pose.test.ts",
+      "test": "@E21 officer low ready keeps the barrel forward/down and the gun in the animated hand through idle, walk and run",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "L3 static T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "L3 static T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "L3 static T-E21-11c @E21 @E21-AC11 gameplay points are walkable and reachable from the start",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "L3 static T-E21-15 @E21 @E21-AC15 per-street damage: each street its type set, section 5.8 totals, nothing collapsed",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "L3 static T-E21-16 @E21 @E21-AC16 late-afternoon light: polar 1.00-1.20 rad, sun hue 25-45 deg, probe shadow >= 1.6x L2, >= 2 smoke sources per street spot",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "L3 static T-E21-17a @E21 @E21-AC17 army checkpoint: heavier than the L2 police line (T-walls, sandbag nests, razor wire), military vehicles, evacuation buses",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "test": "T-E21-12b @E21 @E21-AC12 five times every L3 encounter with E18 concurrent caps",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "@E21 an alerted ally turns through 180 degrees within 0.25 seconds",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "test": "@E21 elevated road blockers remain in navigation while overhead roofs stay clear",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/render/roof-cutaway.test.ts",
+      "test": "@E21 roofs hide only the occupied instance, restore on exit and survive LOD repartition",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/render/roof-cutaway.test.ts",
+      "test": "@E21 rotated rectangular footprints use courier position, scale and district origin for cutaways",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/render/view.test.ts",
+      "test": "T-E21-spawn-camera @E21 spawn framing retains ramp height and zoom while ignoring pull, shake and roll",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 rejects distant offscreen targets (gun=true)",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 rejects distant offscreen targets (gun=false)",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 pending shot cancels immediately when target moves",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 pending shot cancels immediately when LOS blocked",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 pending shot cancels immediately when hidden",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 fires at a visible near target and retains LOS on cached targets",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 a following officer can cover the player from its formation, but cannot exceed self-defence reach",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 idle officer defends at 9 m from behind outside the courier view within 0.4 s",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 self-defence interrupts breakout even outside the follow leash",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 an explicit retreat continues while the officer fires in self-defence",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 a squadmate prioritises the infected grabbing a colleague over a nearer threat",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 regroup clears a stale target and pending strike once nearby threats are gone",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 soldiers keep their own engagement rule",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 breakout cannot force an offscreen target into the sights",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 accepted targets have a screen margin at 1600x900 default framing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 accepted targets have a screen margin at 390x844 default framing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 accepted targets have a screen margin at 844x390 default framing",
+      "status": "passed",
+      "failureMessages": []
+    },
+    {
+      "file": "unit/sim/police-range.test.ts",
+      "test": "police visible engagement @E21 visible street targets beyond the old disc are allowed; screen-edge targets are rejected",
+      "status": "passed",
+      "failureMessages": []
+    }
+  ]
+}

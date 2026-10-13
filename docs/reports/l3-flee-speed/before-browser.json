@@ -1,0 +1,347 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/L3.spec.ts",
+      "--config",
+      "playwright.before.config.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--grep",
+      "fallback, blvd"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/playwright.before.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3463 --strictPort --configLoader runner --outDir /tmp/l3-flee-speed-before-dist",
+      "url": "http://127.0.0.1:3463",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/L3.spec.ts",
+      "file": "e2e/levels/L3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L3 The Police Collapse in the browser",
+          "file": "e2e/levels/L3.spec.ts",
+          "line": 120,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E21-19 @E21 @E21-AC19 @E21-AC04 @E21-AC20 real-input playthrough: armory, station attack, fallback, blvd to the army zone; photo spots for the vision review",
+              "ok": false,
+              "tags": [
+                "E21",
+                "E21-AC19",
+                "E21-AC04",
+                "E21-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 1800000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 465876,
+                      "error": {
+                        "message": "Error: a fleeing courier can escape Boulevard\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m5\u001b[39m\nReceived:    \u001b[31m23\u001b[39m",
+                        "stack": "Error: a fleeing courier can escape Boulevard\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m5\u001b[39m\nReceived:    \u001b[31m23\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests/e2e/levels/L3.spec.ts:248:97",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests/e2e/levels/L3.spec.ts",
+                          "column": 97,
+                          "line": 248
+                        },
+                        "snippet": "  246 |     writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ lastPursuitAt, closedGroup, phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\\n');\n  247 |     console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);\n> 248 |     if (street === 'blvd') expect(final.stats.deaths, 'a fleeing courier can escape Boulevard').toBeLessThanOrEqual(5);\n      |                                                                                                 ^\n  249 |     expect(['result', 'progression']).toContain(final.phase);\n  250 |     expect(final.l3!.crossedAt).toBeGreaterThan(0);\n  251 |     expect(final.l3!.barrierClosedAt).toBeGreaterThan(0);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests/e2e/levels/L3.spec.ts",
+                            "column": 97,
+                            "line": 248
+                          },
+                          "message": "Error: a fleeing courier can escape Boulevard\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m5\u001b[39m\nReceived:    \u001b[31m23\u001b[39m\n\n  246 |     writeFileSync(`${output}/browser-real-input-${street}.json`, JSON.stringify({ lastPursuitAt, closedGroup, phase: final.phase, stats: final.stats, street, scenario, player: (await player()).transform, l3: { crossedAt: final.l3!.crossedAt, barrierClosedAt: final.l3!.barrierClosedAt, fallbackCause: final.l3!.fallbackCause, squadLost: final.l3!.lost, squad: final.l3!.squad.length }, shots: [...h.shots] }, null, 2) + '\\n');\n  247 |     console.log(`L3 RESULT street=${street} deaths=${final.stats.deaths}`);\n> 248 |     if (street === 'blvd') expect(final.stats.deaths, 'a fleeing courier can escape Boulevard').toBeLessThanOrEqual(5);\n      |                                                                                                 ^\n  249 |     expect(['result', 'progression']).toContain(final.phase);\n  250 |     expect(final.l3!.crossedAt).toBeGreaterThan(0);\n  251 |     expect(final.l3!.barrierClosedAt).toBeGreaterThan(0);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests/e2e/levels/L3.spec.ts:248:97"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"attackShotEarly\":true,\"inFrameAtFallback\":4}\n"
+                        },
+                        {
+                          "text": "L3 death #1 near x=-118 z=-29\n"
+                        },
+                        {
+                          "text": "L3 death #2 near x=-121 z=-22\n"
+                        },
+                        {
+                          "text": "L3 death #3 near x=-69 z=30\n"
+                        },
+                        {
+                          "text": "L3 death #4 near x=-5 z=-23\n"
+                        },
+                        {
+                          "text": "L3 death #5 near x=-20 z=26\n"
+                        },
+                        {
+                          "text": "L3 death #6 near x=19 z=-23\n"
+                        },
+                        {
+                          "text": "L3 death #7 near x=11 z=-23\n"
+                        },
+                        {
+                          "text": "L3 death #8 near x=-5 z=-24\n"
+                        },
+                        {
+                          "text": "L3 death #9 near x=20 z=-23\n"
+                        },
+                        {
+                          "text": "L3 death #10 near x=30 z=-25\n"
+                        },
+                        {
+                          "text": "L3 death #11 near x=30 z=-26\n"
+                        },
+                        {
+                          "text": "L3 death #12 near x=51 z=-26\n"
+                        },
+                        {
+                          "text": "L3 death #13 near x=30 z=-26\n"
+                        },
+                        {
+                          "text": "L3 death #14 near x=19 z=-23\n"
+                        },
+                        {
+                          "text": "L3 death #15 near x=35 z=-24\n"
+                        },
+                        {
+                          "text": "L3 death #16 near x=42 z=-26\n"
+                        },
+                        {
+                          "text": "L3 death #17 near x=78 z=-24\n"
+                        },
+                        {
+                          "text": "L3 death #18 near x=50 z=-25\n"
+                        },
+                        {
+                          "text": "L3 death #19 near x=76 z=-24\n"
+                        },
+                        {
+                          "text": "L3 death #20 near x=87 z=-24\n"
+                        },
+                        {
+                          "text": "L3 death #21 near x=85 z=-22\n"
+                        },
+                        {
+                          "text": "L3 death #22 near x=149 z=3\n"
+                        },
+                        {
+                          "text": "L3 death #23 near x=148 z=2\n"
+                        },
+                        {
+                          "text": "L3 RESULT street=blvd deaths=23\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T22:58:35.275Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/test-results/playwright/run-3463/e2e-levels-L3-L3-The-Polic-9d049-spots-for-the-vision-review-chromium/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/l3-flee-speed/tests/e2e/levels/L3.spec.ts",
+                        "column": 97,
+                        "line": 248
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "5f807197d311999ac35b-fa29c4709f10606ecc1e",
+              "file": "e2e/levels/L3.spec.ts",
+              "line": 149,
+              "column": 62
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T22:58:34.577Z",
+    "duration": 466764.73600000003,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
