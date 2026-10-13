@@ -348,7 +348,7 @@ export class CourierGroundContacts {
         const dragged = swing.gait ? drag(foot) : 0;
         // A dragged foot scrapes just above the ground (toes down), lifting off and touching down quickly.
         const clearance = dragged ? Math.max(.016, (.025 + .02 * run) * (1 - .8 * dragged) * s) * Math.min(1, u / .04, (1 - u) / .06)
-          : Math.max(style?.maxSwing ? .022 : 0, (swing.gait ? .025 + .02 * run : .02) * s) * Math.min(1, u / .1, (1 - u) / .12);
+          : Math.max(style?.maxSwing ? (swing.gait ? .022 : .05) : 0, (swing.gait ? .025 + .02 * run : .02) * s) * Math.min(1, u / .1, (1 - u) / .12);
         const needed = kneeOf(foot, Math.hypot(dx, dz, this.joint.y - floor - clearance));
         const peak = Math.max(peakKnee(swing.gait, foot), swing.knee0);
         const profile = swing.knee0 + (peak - swing.knee0) * ease(u / .35);
