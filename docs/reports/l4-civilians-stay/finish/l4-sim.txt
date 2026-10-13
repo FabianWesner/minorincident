@@ -1,0 +1,66 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l4-civilians-stay -> 2.28.24.66:/srv/mi/ws/l4-civilians-stay-81bad6
+[remote] cache-gc deleted: acf-base-b48ebc-* agent-a010011bd74901334-919d99-* agent-a019832553332cf57-d020e9-* agent-a033c4b433b3a4ef6-0b61ea-* agent-a044acd96c916c70b-8901f6-* agent-a5416f79a576951e6-5633fc-* agent-a87a830b8bfbd1985-e5d7ea-* agent-a884cd8f49d16de4e-ae036a-* agent-a8dd82e276fce4959-4be236-* agent-a90cc7cf5bb910fbb-e3b88b-* agent-aa0e62a57d22eabc8-74ea2f-* agent-ab75402ee796cfb41-5bcb2d-* agent-ab84220d570fd37e4-0be8f2-* agent-ad5be2f0bacf50473-60e117-* agent-ad9026f5fd12b7c8e-40e1d0-* agent-ad949052fe228e5ba-f9a24e-* agent-ae496abe6cf7d216d-6a042b-* agent-af7fc3bc812943c13-c22768-* l10-mega-moves-8833a4-* l4-fallback-respawn-728339-* l9-crash-36e192-* l9-damage-art-57eb0f-* l9-handover-20b9e0-* l9-stream-531396-* mi-l4-civilians-stay-unit-baseline-586a82-* minorincident-b7585c-* minorincident-l9-crash-baseline-458477-* tracers-85cf7b-* webgpu-blank-z1-e316cf-* zoom-cap-4b93e2-*
+[remote] sync 17s, 9275 files; job /srv/mi/jobs/l4-civilians-stay-81bad6-33399-1791916736; queueing for a slot
+[runner] slot 0 acquired; load 0.15 0.55 1.27
+
+ RUN  v5.0.3 /srv/mi/jobs/l4-civilians-stay-81bad6-33399-1791916736
+
+ ✓  functional  tests/levels/L4-po-round.test.ts > L4 PO round 10-13 > T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks 12626ms
+ ✓  functional  tests/levels/L4-po-round.test.ts > L4 PO round 10-13 > T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding 9779ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer 10241ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band 89021ms
+ ✓  functional  tests/levels/L4-po-round.test.ts > L4 PO round 10-13 > T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 58300ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop 2421ms
+ ✓  functional  tests/levels/L4-collapse.test.ts > L4 collapse director > T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 64932ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts 5810ms
+ ✓  functional  tests/levels/L4-respawn.test.ts > L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint 102862ms
+ ✓  functional  tests/levels/L4-respawn.test.ts > L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock 54384ms
+ ✓  functional  tests/levels/L4-respawn.test.ts > L4 @E22 @E22-AC17 director goals respect the shared respawn pause and resume when it expires 529ms
+ ✓  functional  tests/levels/L4-respawn.test.ts > L4 @E22 @E22-AC17 respawn clears live and recovering infected when cover blocks the outward ray 455ms
+ ✓  functional  tests/levels/L4-respawn.test.ts > L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rather than an overrun post 357ms
+ ✓  functional  tests/levels/L4-respawn.test.ts > L4 @E22 @E22-AC17 camp perimeter constrains player retreat routes until the gate opens, without blocking infected 3ms
+ ✓  functional  tests/levels/L4-po-round.test.ts > L4 PO round 10-13 > T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 25811ms
+ ✓  functional  tests/levels/L4-po-round.test.ts > L4 PO round 10-13 > T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold 53218ms
+ ↓  functional  tests/levels/L4-probe.test.ts > L4 collapse probe (idle player, god)
+ ↓  functional  tests/levels/L4-botprobe.test.ts > L4 complete bot probe
+ ✓  functional  tests/levels/L4-convoy.test.ts > L4 convoy ride collisions > T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic) 3367ms
+ ✓  functional  tests/levels/L4-convoy.test.ts > L4 convoy ride collisions > T-E22-04f @E22 PO 10-12 "move this soldier away, all busses drive through him": during the live ride no actor stands inside a convoy vehicle hull 2341ms
+stdout | tests/levels/L4-convoy.test.ts > L4 convoy ride collisions > T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride
+bus jitter {
+  xz: 0.02941284554974227,
+  dv: 0.0775944159949784,
+  dr: 0.005467725079275398
+}
+
+ ✓  functional  tests/levels/L4-convoy.test.ts > L4 convoy ride collisions > T-E22-04e @E22 PO 10-12 "sound when the bus is driving": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle 3464ms
+ ✓  functional  tests/levels/L4-convoy.test.ts > L4 convoy ride collisions > T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride 2598ms
+ ✓  functional  tests/levels/L4-collapse.test.ts > L4 collapse director > T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; no corpse mound and no stack around a still courier 52378ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower) 49709ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-07 @E22 @E22-AC07 the alarm: 40-50 s after the gun (or arrival + 100 s), 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm 34746ms
+ ✓  functional  tests/levels/L4-collapse.test.ts > L4 collapse director > T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows 54066ms
+ ✓  functional  tests/levels/L4-collapse.test.ts > L4 collapse director > T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps 26530ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold 432ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune 24286ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view 34096ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing 39472ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Find somewhere to hide", the helicopter withdraws 74841ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run 76804ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed 5600ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break 5795ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-17 @E22 @E22-AC17 checkpoints arrival, turn, line-break restore the war state (soldiers, armed state, spectacle actors) 64647ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too 102150ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths 68917ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed) 76288ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-12-alphas-high @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps 62338ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-12-alphas-low @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps 28314ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage 473ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards 4925ms
+ ✓  functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy 177ms
+
+ Test Files  5 passed | 2 skipped (7)
+      Tests  42 passed | 2 skipped (44)
+   Start at  18:39:14
+   Duration  864.87s (tests 99%, transform 1%)
+
+[remote] pulled test-results/epics/E22
+[remote] done exit=0 (runner 2.28.24.66, sync 17s, remote total 868s)

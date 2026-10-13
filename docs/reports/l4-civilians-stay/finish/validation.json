@@ -1,0 +1,100 @@
+{
+  "merge": "28c7b56b",
+  "sourceSha256": "e4d1355b8e5356e8f20e64ab0cc480c2c65ae7f3abc9cbe827d4248ba7b0f336",
+  "requestedBrowser": {
+    "passed": 21,
+    "command": "E2E_PORT=3424 L4_CAPTURE_TAG=final sh tools/e2e-lock.sh npx playwright test tests/e2e/levels/L4.spec.ts tests/e2e/levels/l4-po-round.spec.ts tests/e2e/levels/l4-blank-viewport.spec.ts tests/e2e/levels/cellar-position.spec.ts --project=chromium --workers=2"
+  },
+  "l4Simulation": {
+    "passed": 42,
+    "skipped": 2,
+    "runner": "Hetzner",
+    "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/epics/E22 -- sh -c \"npx vitest run tests/levels/L4*.test.ts --maxWorkers=4 --reporter=verbose\""
+  },
+  "unit": {
+    "passed": 1327,
+    "skipped": 7,
+    "runner": "Hetzner"
+  },
+  "browserSmoke": {
+    "passed": 31
+  },
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "epicVerification": {
+    "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=3423 npm run verify -- E22",
+    "exitCode": 0,
+    "simulationAndSmokePassed": 78,
+    "browserPassed": 48,
+    "performancePassed": 2
+  },
+  "performance": [
+    {
+      "tier": "high",
+      "seed": 2,
+      "counts": {
+        "infected": 85,
+        "alphas": 2,
+        "alphasArrived": 3,
+        "turnS": 84,
+        "soldiersAtTurn": 20,
+        "soldiers": 12,
+        "civilians": 40
+      },
+      "firingSoldiers": 8,
+      "warAwakeProps": 1,
+      "collapseAwakeProps": 0,
+      "warDrawCalls": 334,
+      "warTriangles": 1239978,
+      "collapseDrawCalls": 262,
+      "collapseTriangles": 1424738,
+      "warP50": 8.700000000000728,
+      "warP95": 10.700000000000728,
+      "warMax": 14.400000000001455,
+      "turnMaxMs": 18.80000000000109,
+      "tankMaxMs": 12.89999999999418,
+      "breakMaxMs": 17.799999999995634,
+      "collapseP50": 8.5,
+      "collapseP95": 10.30000000000291,
+      "simP95": 2.6000003814697266,
+      "simFrameP95": 2.5,
+      "updateP95": 4.100000381469727,
+      "renderP95": 4.100000381469727,
+      "lineBroke": true
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "counts": {
+        "infected": 48,
+        "alphas": 2,
+        "alphasArrived": 3,
+        "turnS": 92,
+        "soldiersAtTurn": 10,
+        "soldiers": 6,
+        "civilians": 20
+      },
+      "firingSoldiers": 6,
+      "warAwakeProps": 0,
+      "collapseAwakeProps": 0,
+      "warDrawCalls": 180,
+      "warTriangles": 334709,
+      "collapseDrawCalls": 217,
+      "collapseTriangles": 367545,
+      "warP50": 21.19999999999709,
+      "warP95": 33.299999999995634,
+      "warMax": 51.099999999998545,
+      "turnMaxMs": 61.70000000000073,
+      "tankMaxMs": 35.400000000001455,
+      "breakMaxMs": 63.89999999999418,
+      "collapseP50": 23.5,
+      "collapseP95": 32.80000000000291,
+      "simP95": 5.300000190734863,
+      "simFrameP95": 9.100000381469727,
+      "updateP95": 8,
+      "renderP95": 10.800000190734863,
+      "lineBroke": true
+    }
+  ]
+}

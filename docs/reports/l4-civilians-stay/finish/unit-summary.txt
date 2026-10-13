@@ -1,0 +1,14 @@
+sh tools/remote/run.sh "$PWD" -- npm run test:unit -- --maxWorkers=4
+
+   ✓ @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits 1482ms
+ ✓  functional  tests/unit/static.test.ts (1 test) 105870ms
+   ✓ T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings 105866ms
+ ✓  timing  tests/unit/progression/perf.test.ts (1 test) 326ms
+   ✓ @E13 @perf progression combat-arena sim timing and power progression counters 324ms
+
+ Test Files  203 passed | 1 skipped (204)
+      Tests  1327 passed | 7 skipped (1334)
+   Start at  18:22:09
+   Duration  287.12s (tests 92%, import 6%, transform 2%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 14s, remote total 291s)
