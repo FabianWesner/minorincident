@@ -17,6 +17,8 @@ export interface VfxTargets {
   camera?(): import('three').Camera;
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
   muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
+  /** Drawn spout of a pouring watering can (gardener routine), null when none. */
+  spout?(id: number): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
   detach(id: number, limb: number): { x: number; y: number; z: number } | void;
   blood(coverage: number): void;
@@ -349,8 +351,15 @@ export class Vfx extends Group {
     for (const e of this.world.entities.iterate()) {
       const c = e.civilian; if (!c?.activityUntil || c.state !== 'calm' || e.hidden) continue;
       const a = c.schedule?.[c.scheduleStep ?? 0]; if (a?.activity !== 'water' || !a.facing || this.world.tick - (c.activityStarted ?? 0) < 40) continue;
-      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), t = .4, ox = dx / d * .4 - dz / d * .12, oz = dz / d * .4 + dx / d * .12;
-      for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, .6,e.transform.z + oz,
+      const spout = this.targets.spout?.(e.id), t = .4, base = this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0;
+      if (spout) {
+        // The stream leaves the tilted spout and arcs onto the flowers (target a little above the soil).
+        const vx = (a.facing.x - spout.x) / t, vz = (a.facing.z - spout.z) / t, vy = (base + .3 - spout.y + 4.905 * t * t) / t;
+        for (let i = 0; i < (this.quality === 'low' ? 4 : 6); i++) this.particles.spawn(this.time, t + .05, spout.x, spout.y, spout.z, vx + (this.rng.next() - .5) * .2, vy + (this.rng.next() - .5) * .2, vz + (this.rng.next() - .5) * .2, .26, 0, 0x7cc4ff, 9.81);
+        continue;
+      }
+      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), ox = dx / d * .4 - dz / d * .12, oz = dz / d * .4 + dx / d * .12;
+      for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, base + .6, e.transform.z + oz,
         (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .16, 0, 0xe6f6ff, 9.81);
     }
   }

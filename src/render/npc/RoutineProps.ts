@@ -10,6 +10,8 @@ export class RoutineProps extends Group {
   /** Authored barrel endpoints in prop-local metres (+Z). */
   readonly guns: { entity: number; geometry: BufferGeometry; matrix: Matrix4 }[] = [];
   readonly muzzles = new Map<number, Vector3>();
+  /** World position of a tilted watering can's spout while its holder pours (kept between frames; removed when the pour ends). */
+  readonly spouts = new Map<number, Vector3>();
   readonly aiming = new Map<number, { until: number; direction: { x: number; y?: number; z: number } }>();
   private readonly meshes = new Map<CivilianProp, InstancedMesh>();
   private readonly gripMatrix = new Matrix4();

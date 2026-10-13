@@ -326,6 +326,7 @@ export class GameView implements Lifecycle {
           }
           return null; // Vehicle weapons carry their own authored event origin.
         },
+        spout: id => this.npcs?.spout(id) ?? null,
         flash: (id, strength) => { this.crowd?.flash(id, strength); },
         detach: (id, limb) => this.crowd?.detach(id, limb),
         blood: coverage => { this.character?.setBlood(coverage); this.actions?.setBlood(coverage); },
