@@ -33,8 +33,7 @@ const fresh = (): L4State => ({
 /**
  * L4 "The Safe City Falls" controller (specs/epic-22 sections 4 and 5). Scripted up to the first turn (the convoy ride, the calm plaza,
  * the quartermaster's machine gun); from there the war is systemic with a few scripted spectacles: the street-edge waves, soldiers and armed
- * civilians fighting (allied fighters v3), the tank, the helicopter and the HMG nests, the first-of line break (75 s / half the soldiers
- * gone / 15 infected inside the line) that detonates the fuel truck, the collapse along both routes, and the cellar of Kessler's Hardware.
+ * civilians fighting (allied fighters v3), the tank, the helicopter and the HMG nests, the collapse director's three line losses and the final fall-back that detonates the fuel truck, the collapse along both routes, and the cellar of Kessler's Hardware.
  * All state lives in `mission.state.l4`, so checkpoints restore it.
  */
 export class LevelFourWar {
@@ -44,7 +43,7 @@ export class LevelFourWar {
   private readonly director: L4Collapse;
   constructor(private readonly mission: Mission) {
     this.spectacle = new L4Spectacle(mission.world, () => this.s, () => this.allyEntities());
-    this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, outbreak: () => this.outbreak(), snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats'), room: () => this.spawnRoom() });
+    this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats') });
   }
   private get s(): L4State { return this.mission.state.l4!; }
   private get world() { return this.mission.world; }
@@ -129,8 +128,6 @@ export class LevelFourWar {
   private spawnEvacuees(): void {
     const o = this.outbreak(), s = this.s, n = this.low ? l4.calm.evacuees.low : l4.calm.evacuees.high;
     const slots = [...l4Crowd.queue.line1, ...l4Crowd.queue.line2, ...l4.calm.waiting];
-    const rng = new Rng(this.world.seed, 'l4-evacuees'), turners = new Set<number>();
-    while (turners.size < Math.min(this.turners(), n)) turners.add(Math.floor(rng.next() * n));
     for (let i = 0; i < n; i++) {
       const at = this.snap({ x: -26, z: -8 }, .35);
       const id = o.spawnPedestrian(at, { tier: 'average', schedule: this.queueSchedule(slots[i % slots.length]) });
@@ -138,10 +135,10 @@ export class LevelFourWar {
       // Inside the buses until they stop (hidden, parked at the bus, no routine).
       e.hidden = true; e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; this.world.spatial.delete(id);
       e.appearance!.origin = 'L3-bus';
-      s.evacueeIds.push(id); if (turners.has(i)) s.turnerIds.push(id);
+      s.evacueeIds.push(id);
     }
   }
-  private turners(): number { return this.low ? l4.calm.turners.low : l4.calm.turners.high; }
+  private alarmInfected(): number { return this.low ? l4.calm.alarmInfected.low : l4.calm.alarmInfected.high; }
   private queueSchedule(slot: readonly number[]): CivilianActivity[] {
     const p = this.snap({ x: slot[0], z: slot[1] }, .35), table = { x: l4Crowd.queue.table[0], z: l4Crowd.queue.table[1] };
     return [{ activity: 'walk', anchor: 'l4/queue', target: p, ticks: 1 }, { activity: 'look', anchor: 'l4/queue', target: p, facing: table, ticks: 60 * 60 * 6 }];
@@ -435,26 +432,31 @@ export class LevelFourWar {
     }
   }
   private turn(): void {
-    const { world } = this.mission, s = this.s, tick = world.tick, o = this.outbreak();
-    // The evacuees from the L3 buses collapse in the queue and turn (the visible 3 s transformation, same entity, same look).
-    // Collapse design: the evacuees who turn stand inside the perimeter (a seeded one may still be walking in from the bus), topped up from the queue.
-    const ring = l4.map.ring, inside = (id: number) => { const t = world.entities.get(id)!.transform; return t.x > ring.x0 && t.x < ring.x1 && t.z > ring.z0 && t.z < ring.z1; };
-    const want = this.turners(), centre = { x: -25, z: -9 };
-    let ids = s.turnerIds.filter(id => this.human(world.entities.get(id)) && inside(id));
-    if (ids.length < want) {
-      const rest = s.evacueeIds.filter(id => !ids.includes(id) && this.human(world.entities.get(id)) && inside(id));
-      ids = [...ids, ...rest.sort((a, b) => dist(world.entities.get(a)!.transform, centre) - dist(world.entities.get(b)!.transform, centre))].slice(0, want);
-    }
-    if (!ids.length) {
-      const queue = [...s.evacueeIds, ...s.residentIds].filter(id => this.human(world.entities.get(id)));
-      ids = queue.sort((a, b) => dist(world.entities.get(a)!.transform, centre) - dist(world.entities.get(b)!.transform, centre)).slice(0, want);
-    }
-    const first = world.entities.get(ids[0])?.transform ?? { x: -25, z: -9 };
+    const { world } = this.mission, s = this.s, tick = world.tick;
+    // The alarm brings new infected out of camp buildings; the evacuees remain human.
+    const first = { x: -25, z: -9 };
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
-    for (const id of ids) o.infect(world.entities.get(id)!, 0);
     s.turnAt = s.warAt = tick; s.phase = 'war'; s.waveAt = tick + ticks(l4.war.fromS);
     s.soldiersAtTurn = this.liveSoldiers().length; s.civiliansAtTurn = [...world.entities.iterate()].filter(e => this.human(e)).length;
-    world.events.emit({ type: 'l4.firstTurn', tick, ids: [...ids], humansNear: near });
+    const ids: number[] = [];
+    const courier = world.entities.get(1)!.transform, ai = world.infected!;
+    const entries = l4Inside.map((at, k) => ({ at: this.snap({ x: at[0], z: at[1] }, .45), origin: l4Emergence.length + k }))
+      .filter(({ at }) => dist(at, courier) >= l4.war.inside.minM && (ai.director.offscreen(at) || ai.director.occluded(at)));
+    // A wide camera may see every camp door. Keep the alarm pressure by using the street mouths instead.
+    if (entries.length * l4.war.group[1] < this.alarmInfected()) {
+      entries.push(...l4Emergence.map((entry, k) => ({ at: this.snap({ x: entry.at[0], z: entry.at[1] }, .45), origin: k, edge: entry.edge }))
+        .filter(({ at, edge }) => edge < l4Edges.length - 1 && dist(at, courier) >= 30 && ai.director.offscreen(at)));
+    }
+    const count = Math.min(this.alarmInfected(), entries.length * l4.war.group[1]);
+    for (let n = 0; n < count; n++) {
+      const { at, origin } = entries[n % entries.length];
+      const id = this.emerge({ x: at.x + (Math.floor(n / entries.length) % 3 - 1) * .8, z: at.z }, true);
+      if (!id) break;
+      ids.push(id); s.emergedIds.push(id); s.origin[id] = origin;
+      const soldier = this.liveSoldiers().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
+      if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
+    }
+    world.events.emit({ type: 'l4.firstTurn', tick, ids, humansNear: near });
     this.mission.radio('L4.turn');
     if (!this.mission.state.states.turned) this.mission.setState('turned', true);
     this.engageAll();
@@ -467,23 +469,26 @@ export class LevelFourWar {
   private engageAll(): void {
     const { world } = this.mission, tick = world.tick;
     for (const id of this.s.soldierIds) { const a = world.entities.get(id)?.civilian?.ally; if (a) a.engaged = true; }
+    // Civilians first panic with the crowd, then armed survivors rally after the initial alarm.
+    if (tick <= this.s.turnAt + ticks(5)) return;
     const c = l4.civilians;
     for (const entry of this.s.armed) {
-      const e = world.entities.get(entry.id); if (!this.human(e) || e!.civilian!.ally) continue;
+      const e = world.entities.get(entry.id); if (!this.human(e) || e!.civilian!.ally || e!.civilian!.state === 'grabbed') continue;
       const gun = entry.weapon === 'pistol' ? c.pistol : entry.weapon === 'hunting-rifle' ? c.rifle : null, p = { x: e!.transform.x, z: e!.transform.z };
+      e!.civilian!.state = 'calm';
       e!.civilian!.ally = { ...allyState('civilian', gun ? p : null, !!gun), engaged: true, runSpeed: 3.4, ...(gun ? { gun: { ...gun }, weapon: entry.weapon as 'pistol' | 'hunting-rifle', range: gun.rangeM } : { melee: { ...c.melee }, range: 8 }) };
       e!.health = { current: Math.max(e!.health.current, c.hp), max: c.hp }; e!.appearance!.handProp = entry.weapon; entry.armedAt = tick;
     }
   }
   /**
-   * PO 10-13: "when the alarm is on, they panik and try to hide": every unarmed person who is not a soldier flees at the alarm, to the
+   * PO 10-13: "when the alarm is on, they panik and try to hide": every person who is not a soldier flees at the alarm, to the
    * nearest refuge away from the turn (a shop or house door, or out of the city along a street edge).
    */
   private panic(at: Point): void {
-    const { world } = this, o = this.outbreak(), soldiers = new Set(this.s.soldierIds), turners = new Set(this.s.turnerIds);
+    const { world } = this, o = this.outbreak(), soldiers = new Set(this.s.soldierIds);
     for (const e of world.entities.iterate()) {
       const c = e.civilian;
-      if (!this.human(e) || !c || c.ally || c.pet || soldiers.has(e.id) || turners.has(e.id) || c.state !== 'calm') continue;
+      if (!this.human(e) || !c || c.ally || c.pet || soldiers.has(e.id) || c.state !== 'calm') continue;
       o.panic(e, { x: at.x, z: at.z });
     }
   }
@@ -652,6 +657,7 @@ export class LevelFourWar {
   /** The line breaks when the collapse director has taken all three lines (`beats`), at the latest `defenseS` after the turn. */
   private checkLineBreak(): void {
     const { world } = this.mission, s = this.s;
+    this.engageAll();
     this.director.update();
     if (s.phase === 'war' && world.tick - s.warAt >= ticks(l4.lineBreak.defenseS)) this.lineBreak('time');
   }

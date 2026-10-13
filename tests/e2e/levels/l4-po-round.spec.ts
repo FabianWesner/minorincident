@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import type { Page } from '@playwright/test';
-import { test, boot } from '../fixtures';
+import { test, expect, boot } from '../fixtures';
 
 /**
  * l4-po-round game-camera captures (PO 10-13 L4 requests) at both quality tiers and both player zooms (1.0 = default framing,
@@ -13,10 +13,10 @@ const tag = process.env.L4_CAPTURE_TAG ?? 'after';
 const output = `test-results/l4-po-round/${tag}`;
 test.use({ trace: 'off', viewport: { width: 1280, height: 720 } });
 
-async function run(page: Page, quality: 'high' | 'low', zoom: number): Promise<void> {
-  const name = `${quality}-z${zoom}`;
+async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 'webgl' | 'webgpu' = 'webgl'): Promise<void> {
+  const name = `${renderer}-${quality}-z${zoom}`;
   mkdirSync(output, { recursive: true });
-  await boot(page, `/?test=1&renderer=webgl&dpr=1&quality=${quality}&audio=muted&seed=2&ui=1`);
+  await boot(page, `/?test=1&renderer=${renderer}&dpr=1&quality=${quality}&audio=muted&seed=2&ui=1`);
   // A campaign level load takes the tier from the campaign settings (the URL parameter alone keeps a progression load on high).
   await page.evaluate(q => window.__SS__!.settings.set({ quality: q }), quality);
   await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 2, progression: 'L4-default' }));
@@ -51,7 +51,7 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number): Promise<v
       const peds = civ.filter(e => !s.soldierIds.includes(e.id) && !armed.has(e.id) && !e.civilian!.ally && !e.civilian!.pet);
       const infected = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden);
       return {
-        tier: a.perf().quality.tier, t: s.turnAt ? +((a.tick() - s.turnAt) / 60).toFixed(1) : null, phase: s.phase,
+        backend: a.perf().backend, tier: a.perf().quality.tier, t: s.turnAt ? +((a.tick() - s.turnAt) / 60).toFixed(1) : null, phase: s.phase,
         player: { x: +p.x.toFixed(1), z: +p.z.toFixed(1), insideRing: p.x > ring.x0 && p.x < ring.x1 && p.z > ring.z0 && p.z < ring.z1 },
         soldiers: soldiers.length, aiming: soldiers.filter(e => e.civilian!.story?.clip === 'shoot' || !!e.civilian!.ally?.targetId).length,
         engaged: soldiers.filter(e => e.civilian!.ally?.engaged).length,
@@ -60,6 +60,7 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number): Promise<v
       };
     });
     await page.screenshot({ path: `${output}/${name}-${label}.png` });
+    expect(m.backend).toBe(renderer);
     report[label] = m;
   };
   // 1: the bus exit (the courier and the corgi step off), framed by the follow camera.
@@ -77,14 +78,17 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number): Promise<v
   await step(120); await overview('3-alarm-5s-overview', -22, 2, 17);
   await step(180); await shot('4-alarm-8s');
   // 5: the war (t = 40 s): infected come from every side; 6: the Alphas at the line (t = 95 s).
-  const until = async (s: number) => { for (let i = 0; i < 400; i++) { const st = await l4(); if (st.turnAt && (await page.evaluate(() => window.__SS__!.tick())) - st.turnAt >= s * 60) return; await step(60); } };
+  const until = async (s: number) => { for (let i = 0; i < 400; i++) { const st = await l4(), elapsed = (await page.evaluate(() => window.__SS__!.tick())) - st.turnAt; if (st.turnAt && elapsed >= s * 60) return; await step(Math.min(60, s * 60 - elapsed)); } };
+  await until(10); await shot('4-alarm-10s');
+  await page.evaluate(() => document.body.classList.add('ui-hidden')); await shot('4-alarm-10s-clean');
+  await page.evaluate(() => document.body.classList.remove('ui-hidden'));
   await until(40); await shot('5-war-40s');
   await until(95); await shot('6-war-95s');
   writeFileSync(`${output}/${name}.json`, JSON.stringify(report, null, 1) + '\n');
 }
 
 test.describe('l4-po-round captures', () => {
-  for (const quality of ['high', 'low'] as const) for (const zoom of [1, .5]) {
-    test(`${quality} zoom ${zoom}`, async ({ page }) => { test.setTimeout(900_000); page.setDefaultTimeout(180_000); await run(page, quality, zoom); });
+  for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['high', 'low'] as const) for (const zoom of (renderer === 'webgl' ? [1, .5, 1.5] : [1, 1.5])) {
+    test(`${renderer} ${quality} zoom ${zoom}`, async ({ page }) => { test.setTimeout(900_000); page.setDefaultTimeout(180_000); await run(page, quality, zoom, renderer); });
   }
 });

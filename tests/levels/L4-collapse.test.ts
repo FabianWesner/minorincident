@@ -71,7 +71,7 @@ function beatsOnTime(tr: Trace): void {
 }
 
 describe('L4 collapse director', () => {
-  test('T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 evacuees turn inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down', async () => {
+  test('T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down', async () => {
     const l = await loadL4(2); world = l.world;
     const tr = war(l.world, l.mission, 2, 'high', false);
     expect(tr.turnedAtTurn).toBeGreaterThanOrEqual(15); expect(tr.turnedAtTurn).toBeLessThanOrEqual(25);
