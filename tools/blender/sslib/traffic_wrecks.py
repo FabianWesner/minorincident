@@ -31,6 +31,8 @@ CFG = {
                            open={'doorL': 30}, cr=1.0, roof=.12, alias={'blood': 'survivorRed'}),
     'veh.ambulance': dict(paint='picketWhite', keep=['picketWhite', 'survivorRed', 'policeBlue', 'uiDark'], shard='picketWhite',
                           open={'doorL': 38}, cr=.8, roof=.07, alias={'sidewalk': 'uiDark'}),
+    'veh.evac-bus': dict(paint='picketWhite', keep=['picketWhite', 'policeBlue', 'uiDark'], shard='sidewalk',
+                         open={'doorR': 38}, cr=.85, roof=.10, refine=1.8, alias={'sidewalk': 'uiDark', 'silver': 'uiDark', 'blueTrim': 'uiDark', 'asphalt': 'uiDark'}),
     'veh.school-bus': dict(paint='schoolBusYellow', keep=['schoolBusYellow', 'survivorRed', 'sidewalk', 'uiDark'], shard='sidewalk',
                            open={'door_near_0': -38, 'door_near_1': -38}, cr=.85, roof=.10),
 }
@@ -87,7 +89,7 @@ def build_wreck(directory, output):
         bpy.ops.wm.read_factory_settings(use_empty=True)
         bpy.ops.import_scene.gltf(filepath=str(directory / ('model.lod2.glb' if lod == 2 else 'model.lod1.glb')))
         bpy.context.view_layer.update()
-        root = bpy.data.objects[asset]
+        root = bpy.data.objects.get(asset) or next(o for o in bpy.context.scene.objects if o.parent is None and o.type == 'EMPTY')
         meshes = [o for o in root.children_recursive if o.type == 'MESH']
         pts = [o.matrix_world @ v.co for o in meshes for v in o.data.vertices]
         low = Vector(tuple(min(v[k] for v in pts) for k in range(3)))
@@ -157,7 +159,7 @@ def build_wreck(directory, output):
             i = info[obj]
             if i['glass']:
                 glass_pts += [v.co.copy() for v in obj.data.vertices]
-                refine(obj, .30 if lod == 0 else .55, passes=2)
+                refine(obj, (.30 if lod == 0 else .55) * cfg.get('refine', 1), passes=2)
                 bm = bmesh.new(); bm.from_mesh(obj.data)
                 kill = []
                 for f in bm.faces:
@@ -231,9 +233,9 @@ def build_wreck(directory, output):
             if i['wheel'] or i['emissive']:
                 continue
             if lod < 2:
-                refine(obj, .34 if lod == 0 else .62, zone_front, passes=3 if lod == 0 else 2)
+                refine(obj, (.34 if lod == 0 else .62) * cfg.get('refine', 1), zone_front, passes=3 if lod == 0 else 2)
                 if lod == 0:
-                    refine(obj, .9, None, passes=2)
+                    refine(obj, .9 * cfg.get('refine', 1), None, passes=2)
             for v in obj.data.vertices:
                 v.co = deform(v.co)
             obj.data.update()
@@ -301,7 +303,7 @@ def build_wreck(directory, output):
             sockets.empty('front', (nose, 0, top * .5), root)
         root['decay'] = 'wrecked'
         root['ss_physics'] = json.dumps({
-            'class': 'heavy', 'mass': 1900 if asset in ('veh.ambulance', 'veh.school-bus') else 1400,
+            'class': 'heavy', 'mass': 1900 if asset in ('veh.ambulance', 'veh.school-bus', 'veh.evac-bus') else 1400,
             'friction': .85, 'restitution': .02, 'centerOfMass': [0, .6, 0],
             'pushable': False, 'kickable': False, 'flammable': True, 'sounds': 'prop.metal-heavy'})
 

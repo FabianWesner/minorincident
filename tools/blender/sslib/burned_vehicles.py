@@ -22,6 +22,7 @@ CONFIG = {
     'veh.police-sedan': ('picketWhite', 'uiDark', 'sidewalk'),
     'veh.ambulance': ('picketWhite', 'survivorRed', 'policeBlue'),
     'veh.school-bus': ('schoolBusYellow', 'survivorRed', 'sidewalk'),
+    'veh.evac-bus': ('picketWhite', 'policeBlue', 'sidewalk'),
 }
 LIMITS = (15000, 6000, 2000)
 
@@ -45,7 +46,7 @@ def build_burned(directory, output):
         lo = Vector(tuple(min(p[k] for p in points) for k in range(3)))
         hi = Vector(tuple(max(p[k] for p in points) for k in range(3)))
         L, W, H = hi.x-lo.x, hi.y-lo.y, hi.z-lo.z
-        bus = asset == 'veh.school-bus'
+        bus = asset in ('veh.school-bus', 'veh.evac-bus')
         ambulance = asset == 'veh.ambulance'
         police = asset == 'veh.police-sedan'
         # A large central roof section is physically absent, leaving native rim/pillars.
@@ -61,6 +62,9 @@ def build_burned(directory, output):
                 ancestors.append(owner.name); owner = owner.parent
             wheel = next((a for a in ancestors if a in WHEELS), None)
             obj.data.transform(obj.matrix_world)
+            if 'doorRear' in ancestors:
+                # The rear door panel shares its outer plane with the header: 9 mm out so the burn tint cannot z-fight.
+                obj.data.transform(Matrix.Translation((-.009, 0, 0)))
             obj.parent = None
             obj.matrix_world = Matrix.Identity(4)
             tokens = [m.name.removeprefix('pal_').removeprefix('emi_').split('.')[0] for m in obj.data.materials]
@@ -75,7 +79,7 @@ def build_burned(directory, output):
                 # Burned rear ambulance panes and bus window batches are uiDark.
                 glass |= not wheel and token == 'uiDark' and (
                     ambulance and any(a in ('doorL', 'doorR', 'doorPatient', 'doorRearL', 'doorRearR') for a in ancestors) and c.z > .50 * H and f.calc_area() > .025 and max(abs(f.normal.x),abs(f.normal.y)) > .7 or
-                    bus and .56 * H < c.z < .86 * H and f.calc_area() > .06 and (
+                    asset == 'veh.school-bus' and .56 * H < c.z < .86 * H and f.calc_area() > .06 and (
                         abs(c.y) > .32 * W and abs(f.normal.y) > .7 or
                         (c.x > .16 * L or c.x < -.43 * L) and abs(f.normal.x) > .7))
                 if not police and not wheel and obj.data.materials[f.material_index].name.startswith('emi_'):
@@ -91,7 +95,7 @@ def build_burned(directory, output):
                 continue
             if not wheel:
                 # Local edge splitting only adds authored fold/rupture boundaries.
-                refine(obj, (.40, .65, 1.30)[lod], lambda p: p.z > roof_z or p.x > hi.x-.28*L, passes=(3, 2, 1)[lod])
+                refine(obj, (.40, .65, 1.30)[lod] * (1.25 if asset == 'veh.school-bus' else 1.0), lambda p: p.z > roof_z or p.x > hi.x-.28*L, passes=(3, 2, 1)[lod])
                 bm = bmesh.new(); bm.from_mesh(obj.data)
                 kill = [f for f in bm.faces if f.calc_center_median().z > roof_z and
                         abs(f.calc_center_median().x-roof_x) < roof_half and
@@ -154,7 +158,7 @@ def build_burned(directory, output):
         for x in (roof_x-roof_half*.85, roof_x+roof_half*.85):
             meshes.append(box('warpedRoofRib',(x,0,roof_z-.09*H),(.028,.62*W,.035),'sidewalk',(0,.18,0)))
         for k in range((5,3,2)[lod]):
-            meshes.append(box('fallenScorchedPanel',(roof_x+.15*k,-.33*W,lo.z+.055),(.24,.27,.06),'uiDark',(0,.1,k*.7)))
+            meshes.append(box('fallenScorchedPanel',(roof_x+.15*k,-.33*W,lo.z+.055+.014*k),(.24,.27,.06),'uiDark',(0,.1,k*.7)))
         for obj in meshes:
             owner = bpy.data.objects[info[obj]] if info.get(obj) else body
             obj.parent = owner

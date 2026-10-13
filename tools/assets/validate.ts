@@ -10,6 +10,7 @@ import { validMaterial } from '../../src/assets/palette';
 import { assetIO } from './io';
 import { reviewErrors } from './review';
 import { requiredLods, semanticNodeNames, lodTriangleLimit } from './delivery';
+import { zfightErrors } from './zfight';
 
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; animatedDrawCalls?: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
@@ -67,7 +68,7 @@ function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
 }
 
 /** No renderer needed: validate actual geometry, hierarchy and export contracts. */
-export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document): Validation {
+export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`): Validation {
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
@@ -185,6 +186,8 @@ export function validateDocument(document: Document, def: AssetDef, bytes: numbe
     if (!cap || !descendants(cap).some((n) => n.getMesh())) errors.push(`${name}: missing geometry`);
     if (cap && cap.getExtras().hidden !== true) errors.push(`${name}: not hidden by default`);
   }
+  // PO 10-13: coplanar overlapping faces with different materials flicker (z-fighting) at the game camera.
+  errors.push(...zfightErrors(document, def, label));
   return { id: def.id, errors: [...new Set(errors)], triangles, materials, drawCalls, animatedDrawCalls, fileKB, dimensions, hash: geometryHash(document) };
 }
 export async function validateAssets(manifest: AssetDef[], production = true): Promise<Validation[]> {
