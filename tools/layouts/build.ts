@@ -24,6 +24,7 @@ export const districts = [
   "D-CORRIDOR",
   "D-FAIR",
   "D-CROSSING",
+  "D-CURE",
 ];
 const files = (path: string): string[] =>
   readdirSync(path, { withFileTypes: true }).flatMap((e) =>
@@ -49,6 +50,7 @@ export function layoutSourceHash(id: string): string {
     hash.update(readFileSync("assets/kit.crossing-crash/model.glb"));
     hash.update(readFileSync("tools/layouts/compress.ts"));
   }
+  if (id === "D-CURE") hash.update(readFileSync("layouts/D-CURE/routes.json")).update(readFileSync("tools/l9/build-terrain.ts"));
   // Literal placement references in this district and the shared authoring library.
   const source =
     readFileSync(`layouts/${id}/layout.py`, "utf8") +
@@ -86,6 +88,7 @@ export function buildLayout(
     "w4.glb",
     "w5.glb",
   ].map((suffix) => `public/assets/layouts/${id}.${suffix}`);
+  if (id === 'D-CURE') outputs.push(`public/assets/layouts/${id}.horizon.glb`, `public/assets/layouts/${id}.chunks/manifest.json`);
   if (
     !force &&
     existsSync(cache) &&
@@ -98,13 +101,17 @@ export function buildLayout(
     ["tools/blender/run.py", "tools/blender/build_layout.py", id],
     { encoding: "utf8", env: { ...process.env, PYTHONHASHSEED: "0" } },
   );
-  if (result.status !== 0 || !outputs.every(existsSync))
+  if (result.status !== 0 || !outputs.filter(path => !path.endsWith("horizon.glb") && !path.endsWith("manifest.json")).every(existsSync))
     throw new Error(
       `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`,
     );
   // Blender exports float32 attributes; meshopt + quantization cuts L1 district GLBs ~4x (load lane).
-  const compressed = spawnSync(process.execPath, ["--import", "tsx", "tools/layouts/compress.ts", ...outputs.filter((path) => path.endsWith(".glb"))], { encoding: "utf8" });
+  const compressed = spawnSync(process.execPath, ["--import", "tsx", "tools/layouts/compress.ts", ...outputs.filter((path) => path.endsWith(".glb") && !path.endsWith("horizon.glb"))], { encoding: "utf8" });
   if (compressed.status !== 0) throw new Error(`layout GLB compression failed\n${compressed.stdout}\n${compressed.stderr}`);
+  if (id === 'D-CURE') {
+    const streamed = spawnSync(process.execPath, ['--import', 'tsx', 'tools/l9/build-terrain.ts', id], { encoding: 'utf8' });
+    if (streamed.status !== 0) throw new Error(`terrain split failed\n${streamed.stdout}\n${streamed.stderr}`);
+  }
   mkdirSync(".cache/layouts", { recursive: true });
   writeFileSync(cache, JSON.stringify({ sourceHash }) + "\n");
   return { rebuilt: true, sourceHash };

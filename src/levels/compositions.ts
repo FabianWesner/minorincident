@@ -18,6 +18,7 @@ export const districtOrigins: Record<DistrictId, [number, number]> =
     [corridorDistrictId, [0, 0]],
     [fairDistrictId, [0, 0]],
     ["D-CROSSING", [0, 0]],
+    ["D-CURE", [0, 0]],
   ]) as Record<DistrictId, [number, number]>;
 const ids = [
   ["D-RES", "D-MAIN", "D-SHOP"],
@@ -106,5 +107,6 @@ compositions.L8 = { id: 'L8', tier: 0, timeOfDay: 'L8-zoo', districts: [{ id: 'D
 /** The zoo's transport arrives before any crossing population is installed. */
 compositions.L9 = { ...compositions['D-CROSSING'], id: 'L9' };
 
-/** S7 handover opening reuses the authored safe crash ground; E32 region lanes extend this composition. */
-compositions.L10 = { ...compositions['D-CROSSING'], id: 'L10', districts: [{ id: 'D-CROSSING', origin: [0, 0], overrides: { playerStart: { anchor: 'crawl-end' }, spawns: [{ anchor: 'crawl-end' }] } }] };
+/** L10-D1: same global crawl-end, now continuing into the streamed cure district. */
+compositions['D-CURE'] = { id: 'D-CURE', tier: 0, timeOfDay: 'L9-crossing', districts: [{ id: 'D-CURE', origin: [0, 0] }] };
+compositions.L10 = { ...compositions['D-CURE'], id: 'L10' };

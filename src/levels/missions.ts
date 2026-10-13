@@ -1,3 +1,4 @@
+import { cure } from './L10/district';
 import { levelNineMission } from './L9/mission';
 import { levelEightMission } from './L8/mission';
 import { levelSixMission } from './L6/mission';
@@ -16,8 +17,8 @@ export type MissionId = typeof missionIds[number];
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
   if (id === 'L10') {
-    const at = resolve('D-CROSSING', 'crawl-end');
-    return { id, briefing: 'The arsenal is lost. Reach the city with your axe.', anchors: { 'cure-crash': at }, actors: {}, groups: {}, gates: {}, items: [], states: ['opening-complete'], counters: [], checkpoints: ['cure-crash'], cinematics: {}, steps: [{ id: 'cure-opening', type: 'custom', text: 'Find a way into the city', anchor: 'cure-crash', start: { kind: 'start' }, complete: { kind: 'state', key: 'opening-complete', equals: true }, fail: [] }], finish: ['cure-opening'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
+    const anchors = Object.fromEntries(cure.regions.map(r => [r.checkpoint, resolve('D-CURE', r.checkpoint)]));
+    return { id, briefing: 'The arsenal is lost. Reach the city with your axe.', anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['opening-complete'], counters: [], checkpoints: Object.keys(anchors), cinematics: {}, steps: [{ id: 'cure-opening', type: 'custom', text: 'Find a way into the city', anchor: 'cure-crash', start: { kind: 'start' }, complete: { kind: 'state', key: 'opening-complete', equals: true }, fail: [] }], finish: ['cure-opening'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
   }
   if (id === 'L9') return levelNineMission(resolve);
   if (id === 'L8') return levelEightMission(resolve);

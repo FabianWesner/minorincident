@@ -217,7 +217,7 @@ export class GameView implements Lifecycle {
   }
   async load(): Promise<void> {
     // The crossing survey views span hundreds of metres, including portrait framing.
-    this.camera.far = this.world.districts?.districts.some(d => d.id === 'D-CROSSING') ? 1600 : 600;
+    this.camera.far = this.world.districts?.districts.some(d => !!d.layout.terrainChunks?.length) ? 1600 : 600;
     this.camera.updateProjectionMatrix();
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
@@ -245,7 +245,7 @@ export class GameView implements Lifecycle {
       const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      const initialFocus = grove || this.world.districts.districts.some(d => d.id === 'D-CROSSING') ? this.view.cameraTarget : undefined;
+      const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
       const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
       await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
       if (this.districts.terrainState()) { this.districts.warmHero = batch => this.warmHidden(batch); this.districts.swapSlot = () => this.swapSlot(); }
