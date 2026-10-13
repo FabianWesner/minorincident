@@ -173,7 +173,7 @@ describe('L1 v2 mission', () => {
     }
   }, HEAVY);
 
-  test('T-E19-respawn @E19 death at the door after the exits respawns at a safe street point with 2 s invulnerability', async () => {
+  test('T-E19-respawn @E19 death at the door after the exits respawns on the checkpoint anchor with 2 s invulnerability and no infected within 9 m', async () => {
     for (const seed of [1, 2, 3]) {
       const { world: w, mission } = await loadL1(seed); world = w;
       runL1(w, mission, 'idle', { seed, stopWhen: m => m.state.l1!.exitIds.length > 0 });
@@ -185,8 +185,10 @@ describe('L1 v2 mission', () => {
       expect(w.events.events().some(e => e.type === 'checkpoint.restored'), 'respawn keeps the world: no checkpoint restore').toBe(false);
       expect(p.health.current).toBe(p.health.max);
       expect(p.survivor!.invulnerableUntil).toBeGreaterThan(w.tick + 60);
-      const close = w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 8);
+      const close = w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 8.5);
       expect(close, `seed ${seed}`).toHaveLength(0);
+      const cp = p.survivor!.checkpoint;
+      expect(Math.hypot(p.transform.x - cp.x, p.transform.z - cp.z), `seed ${seed} exactly on the checkpoint`).toBeLessThanOrEqual(1.5);
       w.dispose(); world = undefined;
     }
   }, HEAVY);
@@ -323,7 +325,10 @@ describe('L1 v2 mission', () => {
     w.player!.damage(1000, w.tick);
     for (let i = 0; i < 400 && !after; i++) w.update();
     expect(after, 'respawned').not.toBeNull();
-    const [b, a] = [before!, after!] as ReturnType<typeof snapshot>[];
+    const [b0, a0] = [before!, after!] as ReturnType<typeof snapshot>[];
+    // PO 2026-10-13: the shared respawn pushes the living infected out of 9 m and gathers the companion; everything else stays as it is.
+    const still = (r: { kind: string; dead: boolean }) => r.dead || (r.kind !== 'infected' && r.kind !== 'companion' && r.kind !== 'escort');
+    const [b, a] = [{ ...b0, rows: b0.rows.filter(still) }, { ...a0, rows: a0.rows.filter(still) }];
     expect(w.events.events().some(e => e.type === 'checkpoint.restored')).toBe(false);
     expect(a.corpses).toBeGreaterThan(0);
     expect({ corpses: a.corpses, infected: a.infected, pedestrians: a.pedestrians }).toEqual({ corpses: b.corpses, infected: b.infected, pedestrians: b.pedestrians });
