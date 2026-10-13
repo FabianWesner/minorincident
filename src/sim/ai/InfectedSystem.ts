@@ -192,6 +192,10 @@ export class InfectedSystem {
         this.world.spatial.set(e.id,e.transform.x,e.transform.z); continue;
       }
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (b.scripted && !b.specialAttack) {
+        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted);
+        e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+      }
       if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack) {
         const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
         if (seen) {
@@ -1274,7 +1278,7 @@ export class InfectedSystem {
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
     const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
-    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack; // Roar paths must never follow the live-player flow field.
+    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted; // Roar and scripted paths must never follow the live-player flow field.
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       let next = from;
       if (useFlow) next = nav.flowNext(from);

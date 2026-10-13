@@ -35,7 +35,11 @@ export const l4 = {
   /** Beat 2: free walk, the quartermaster issues the machine gun. */
   calm: {
     /** Civilians already in the city before the convoy arrives, and the evacuees who step off the buses. */
-    residents: { high: 40, low: 20 }, evacuees: { high: 8, low: 4 }, turners: 2,
+    residents: { high: 40, low: 20 }, evacuees: { high: 24, low: 12 },
+    /** The turn (l4-collapse, PO-approved design 2026-10-12): this many evacuees inside the perimeter turn at once, in the crowd behind the soldiers. */
+    turners: { high: 18, low: 9 },
+    /** Where the evacuees beyond the eight queue slots wait: two rows between the armory table and the tents, facing the registration. */
+    waiting: [5.8, 10].flatMap(z => [-31, -29.5, -28, -24.5, -23, -21.5, -18.5, -17, -15.5].map(x => [x, z] as P)) as readonly P[],
     soldiers: { high: 20, low: 10 },
     /** Radio line (loudspeaker) once the convoy has stopped, and the quartermaster's interact time. */
     welcomeAtS: 1.5, issueS: .6,
@@ -47,8 +51,12 @@ export const l4 = {
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
     fromS: 0, waveEveryS: 11,
-    /** Infected per wave per street edge, the first waves small. */
-    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3,
+    /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
+    waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
+    /** Replenishment: downed infected settle into drawn bodies when the alive count needs room, keeping this many slots free so bites still turn. */
+    headroom: 12,
+    /** Drawn bodies kept at most (the oldest out of view are cleared first): replenishment would otherwise leave 800+ on the plaza. */
+    corpseMax: { high: 160, low: 70 },
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },
@@ -65,9 +73,48 @@ export const l4 = {
   radio: { gain: .2, cabHz: 3000, openHz: 1600, rangeM: 30, fadeS: 2.5, scoreTrim: .3 },
   alarm: { holdS: 24, fadeS: 8, periodS: 6, lowHz: 420, highHz: 640, speakerGain: 1.1, bedGain: .22, speakers: [[-31.2, 15.4], [-16.6, -12.2], [-26, -8.8]] as readonly P[] },
   /** First Alphas use the district street mouths on both quality tiers, inside the ordinary caps. */
-  alphas: { count: { high: 3, low: 2 }, afterTurnS: [10, 22, 34] as readonly number[], lineHp: 300 },
-  /** Section 5.6: the line breaks at the first of these. */
-  lineBreak: { defenseS: 75, soldiersLeft: .5, inside: 15, mockupLatestS: 120 },
+  /** The Alphas enter for the gun-nest beat (two) and the armour beat (the third, high tier only). */
+  alphas: { count: { high: 3, low: 2 }, afterTurnS: [84, 84, 150] as readonly number[], lineHp: 300 },
+  /** Section 5.6 (changed by the l4-collapse design): the final "Fall back!" comes `fallBackS` after the third line broke, at the latest `defenseS` after the turn. */
+  lineBreak: { defenseS: 200, fallBackS: 8, mockupLatestS: 120 },
+  /**
+   * The collapse director (PO 2026-10-12, "the soldiers cannot hold the lines, but they do easily ... How should we solve that?", design approved "ok let's try that!").
+   * Three lines break at fixed beats (seconds after the turn): a line breaks at the first of (from `earliestS`: half its soldiers down) or `dueS`.
+   * From `pushS` the director adds pressure every `pushEveryS` while more than half the line still stands: people inside the line turn and
+   * infected come at its flank (out of view). It never touches soldier accuracy or damage.
+   */
+  director: {
+    lines: [
+      { id: 'line-1', earliestS: 50, dueS: 62, pushS: 40 },
+      { id: 'nests', earliestS: 110, dueS: 124, pushS: 104 },
+      { id: 'armor', earliestS: 170, dueS: 182, pushS: 150 },
+    ] as readonly { id: 'line-1' | 'nests' | 'armor'; earliestS: number; dueS: number; pushS: number }[],
+    pushEveryS: 4, push: { high: 8, low: 4 }, frontWave: { high: 30, low: 15 }, standing: .5,
+    /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
+    alive: [.8, .9, .7] as readonly number[], aliveLow: [.7, .8, .6] as readonly number[],
+    /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
+    fallback1: [[-27.5, -11.8], [-23.5, -11.8], [-19.5, -11.8], [-28.4, -2], [-28.4, 6.8], [-27.5, 15.2], [-24, 15.2], [-17.5, 9.2], [-20.5, -1]] as readonly P[],
+    fallback2: [[-14.2, -10], [-14.2, -6.7], [-14.2, -3.4], [-14.2, 0], [-14.2, 3.3], [-14.2, 6.6], [-14.2, 10], [-13, -15.5], [-13, 13.5]] as readonly P[],
+    retreat: [[-6, -30], [4, -4], [-4, 30]] as readonly P[],
+    /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
+    flanks: [
+      [[-37, -18], [-37, 21], [-11, -19], [-11, 22], [-40, 2]],
+      [[-37, -18], [-37, 21], [-30, -24], [-25, 27]],
+      [[2, -14], [2, 16], [-4, -22], [-4, 26]],
+    ] as readonly (readonly P[])[],
+    /** Alpha jobs: each nest Alpha waits, then charges from a stage point ~8 m outside an authored E26 slot (north, south) through it and slams the crew behind. */
+    alphaStage: { north: [-18.6, -22.5] as P, south: [-25.9, 25.4] as P },
+    /** Where they wait (out of the plaza sight lines) until the beat: the NW alley and Lakeshore Avenue. */
+    alphaHold: { north: [-39, -25] as P, south: [-21, 38] as P },
+    /** The armour beat: infected swarm the tank; it goes silent once `swarm` infected are within `swarmM`. */
+    swarm: 6, swarmM: 6.5, cutOff: { high: 6, low: 3 },
+    /** Readability: short camera beats (sim pauses, <= 2 s, skippable after 0.5 s) at the line-1 overrun and the swarmed tank. */
+    cameraS: 1.6,
+    /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
+    escape: { nearM: 7, s: 15 },
+    /** Respawn in the collapse: the courier comes back at whichever plaza exit has the fewest infected within 12 m (no death loop in the flooded ring). */
+    respawn: [[-18.6, -24], [-6, -28], [4, -6], [-4, 28]] as readonly P[],
+  },
   /** Section 5.4: allied fighters v3. */
   soldiers: {
     hp: 120,
@@ -107,7 +154,7 @@ export const l4 = {
   ] as readonly P[] },
   checkpoints: ['arrival', 'turn', 'line-break'] as const,
   /** Bots (section 8). Bands are provisional until the first green run (staging decision section 6). */
-  bots: { seeds: 20, completeMedianS: [150, 330] as P, newbieMedianS: [165, 360] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
+  bots: { seeds: 20, completeMedianS: [260, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;
 
 /** Convoy parking: the column ends along the plaza at x = -11, head (APC) in the north. See `l4Route`. */

@@ -17,6 +17,8 @@ export interface InfectedState {
   heardTargetId?: number;
   /** L5 Alpha investigates a heard burst position until `until`, without acquiring a human through cover. */
   investigate?: { x: number; z: number };
+  /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */
+  scripted?: { x: number; z: number };
   /** Authored encounter boundary for heavy infected; preserved through checkpoints. */
   territory?: { x: number; z: number; radius: number };
   activeUntil: number;
