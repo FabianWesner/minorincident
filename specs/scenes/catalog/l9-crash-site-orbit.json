@@ -1,0 +1,17 @@
+{
+  "name": "l9-crash-site-orbit",
+  "note": "L9 crash site (L9-A2) alone: the 16 m collapsed road/bridge gap with fallen deck slabs, pier stubs, torn rails, rebar and rubble, plus the wrecked APC resting at the crash-wreck anchor (the final state after the scripted crash). Orbit turntable, one turn in 6 s. Look for: the wreck sitting on the gully floor and not through a slab or pier, deck slabs resting on the banks (no gaps under them), no floating rail or rebar, banks and floor reading as solid ground, LOD swaps while the camera orbits.",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": { "district": "D-CROSSING", "bbox": [[480, -45], [555, 45]] },
+  "props": [
+    { "id": "apc-wreck", "asset": "veh.military-apc", "decay": "wrecked", "at": [517.7, -5.5, 0.0], "yaw": 90 }
+  ],
+  "camera": { "mode": "orbit", "target": [516, -2, 0], "radius": 34, "azimuth": 40, "polar": 56, "spin": 60 },
+  "frames": 360,
+  "sheet": 30,
+  "clipping": { "ignoreFoliage": true },
+  "expect": { "consoleErrors": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

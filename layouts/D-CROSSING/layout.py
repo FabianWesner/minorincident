@@ -43,6 +43,10 @@ for z in range(8):
 l.data['terrainChunks'] = chunks
 
 patches=[]
+# L9-A2 collapsed road/bridge section, one gully across the outskirts approach (all routes share x 450..550).
+# Centre x=516, 16 m gap, floor 5.5 m down, 8 m wide; it tapers out to ground level at z=+-90. CCW polygon.
+GULLY_X, GULLY_HALF, GULLY_DEPTH, GULLY_FLOOR, GULLY_LEN = 516.0, 8.0, 5.5, 4.0, 90.0
+GULLY_HOLE=[[GULLY_X-GULLY_HALF,-GULLY_LEN],[GULLY_X+GULLY_HALF,-GULLY_LEN],[GULLY_X+GULLY_HALF,GULLY_LEN],[GULLY_X-GULLY_HALF,GULLY_LEN]]
 def surface(name, poly, token, height=0):
     # Arrow silhouettes are concave; partition them into convex triangles.
     if any((b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0]) < -1e-8 for a,b,c in zip(poly,poly[1:]+poly[:1],poly[2:]+poly[:2])):
@@ -83,6 +87,8 @@ def emit_surfaces():
         # even at the 200 m review camera; paint and intersecting fork lanes have one owner.
         for _,cutter,_,_ in patches[index+1:]:
             pieces=[piece for p in pieces for piece in subtract(p,cutter)]
+        # L9-A2: the collapsed-road gully replaces the flat ground (the sim ground stays flat; S6 owns the crash).
+        pieces=[piece for p in pieces for piece in subtract(p,GULLY_HOLE)]
         for c in chunks:
             ox,oz=c['origin']
             for poly in pieces:
@@ -178,6 +184,49 @@ for obj in imported: bpy.data.objects.remove(obj,do_unlink=True)
 # Visible fork direction arrows: three traces branch towards the skyline, no route rails.
 for z in [-16,0,16]:
     surface('outskirts-arrow',[[-445,z-2],[-438,z-2],[-438,z-4],[-432,z],[-438,z+4],[-438,z+2],[-445,z+2]],'picketWhite',.01)
+# ---- L9-A2 crash site: gully terrain, collapsed road/bridge kit, wrecks, anchors --------------------
+def gully():
+    """Banks and floor of the gully as terrain-chunk meshes (z<0 belongs to chunk row 3, z>=0 to row 4)."""
+    stations=[-GULLY_LEN+5*i for i in range(int(2*GULLY_LEN/5)+1)]
+    def depth(z):
+        t=max(0,min(1,(GULLY_LEN-abs(z))/50)); return GULLY_DEPTH*t*t*(3-2*t)
+    ring=lambda z:[(GULLY_X-GULLY_HALF,0),(GULLY_X-GULLY_FLOOR,-depth(z)),(GULLY_X+GULLY_FLOOR,-depth(z)),(GULLY_X+GULLY_HALF,0)]
+    for row,(z0,z1) in enumerate([(-GULLY_LEN,0),(0,GULLY_LEN)]):
+        cid=f'crossing-11-{3+row}'; ox,oz=500,-400+(3+row)*100
+        zs=[z for z in stations if z0<=z<=z1]
+        for part,token in (('bank-w','khaki'),('floor','khakiSeam'),('bank-e','khaki')):
+            verts=[];faces=[]
+            for z in zs:
+                r=ring(z); a,b={'bank-w':(0,1),'floor':(1,2),'bank-e':(2,3)}[part]
+                for x,h in (r[a],r[b]): verts.append((x-ox,-(z-oz),h))
+            for i in range(len(zs)-1):
+                q=[2*i,2*i+1,2*i+3,2*i+2]
+                n=(Vector(verts[q[1]])-Vector(verts[q[0]])).cross(Vector(verts[q[3]])-Vector(verts[q[0]]))
+                faces.append(tuple(q) if n.z>=0 else tuple(reversed(q)))
+            mesh=bpy.data.meshes.new('gully-'+part);mesh.from_pydata(verts,[],faces);mesh.update()
+            obj=bpy.data.objects.new(cid,mesh);bpy.context.collection.objects.link(obj)
+            obj.location=(ox,-oz,0);mesh.materials.append(material(token))
+            obj['terrainChunk']=cid;obj['chunkOrigin']=[ox,oz];l.layers[0].append(obj)
+gully()
+# Collapsed deck, broken lips, pier stubs, rebar, rails and rubble: one visual-only kit (no collider, sim ground unchanged).
+l.place('kit.crossing-crash',[GULLY_X,0,0],allowed=True)
+# Wrecks on the approach. In-lane blockers are the shared `veh.wreck` (the only vehicle the road validator allows on a lane)
+# at x >= 486 with >= 4.7 m of the 12 m lane free either side of the route line; cars overshoot the (450, 0) corner by up to
+# +-4 m, so nothing sits in the lane before x=486 and the large wrecks flank the verge (outside the lane, x >= 472).
+def wreck(asset,x,z,yaw,decay='wrecked',road=False):
+    l.place(asset,[x,0,z],yaw,allowed=road)
+    if asset!='veh.wreck': l.data['placements'][-1]['decay']=decay
+for x,z,yaw in [(488,-6.7,.5),(493,6.8,-.6)]: wreck('veh.wreck',x,z,yaw,road=True)
+for asset,x,z,yaw in [('veh.military-truck',478,-8.9,.35),('veh.school-bus',490,9.7,-.42),('veh.sedan-red',494,-9.3,.9),('veh.police-sedan',476,8.8,2.6),('veh.pickup-red',465,-8.9,-.5)]:
+    wreck(asset,x,z,yaw)
+for x,z,yaw in [(461,-7.4,.2),(462,7.4,-.15),(483,7.4,1.1),(505,-7.7,.3)]: l.place('prop.barricade',[x,0,z],yaw)
+# Crash sequence anchors (game space). S6 owns the trigger/camera; these are validated safe positions.
+l.anchor('crash-approach',[470,0,0])          # take driving input here, before the first wreck
+l.anchor('crash-impact',[GULLY_X-GULLY_HALF,0,0])  # near lip: the APC leaves the road here
+l.anchor('crash-wreck',[GULLY_X+1.7,-GULLY_DEPTH,0.0])  # final APC wreck on the gully floor, yaw 90 (clear of slabs and piers)
+l.anchor('crawl-start',[GULLY_X+GULLY_HALF+3.5,0,2.6])   # player thrown clear on the far lip, beside the wreck
+l.anchor('crawl-fallback',[GULLY_X+GULLY_HALF+3.5,0,-3.2])
+l.anchor('crawl-end',[547,0,0])               # safe L10 on-foot start, in sight of the city
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 emit_surfaces()
