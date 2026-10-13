@@ -764,11 +764,16 @@ export class InfectedSystem {
       // QA2-04: hold at arm's reach between swings instead of walking into the courier's body.
       if (distance < Math.max(1.3, infectedContactDistance(e.combat!.radius)) && strikable) { brain.stuckTick = this.world.tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z; e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
       // L4 (l4-collapse-2: "corpse heaps around a camping courier"): around a courier standing still the chasers take a slot on a ring
-      // (per id, at most ~90 degrees around from where they come) instead of queueing behind the first one; the strike rule is unchanged.
-      if (distance > 1.7 && distance < 5 && this.world.missions?.state.l4 && this.courierStill()) {
+      // (per id, at most ~90 degrees around from where they come) instead of queueing behind the first one; past the first eight closer
+      // chasers a body waits on an outer ring (1.1 m further out per eight) rather than pressing into a mound. The strike rule is unchanged.
+      if (distance > 1.7 && distance < 7 && this.world.missions?.state.l4 && this.courierStill()) {
+        let ahead = 0; const d2 = distance * distance;
+        for (const o of this.active) if (o !== e && o.health.current > 0 && o.infected?.l1?.targetId === 1 && (o.transform.x - target.position.x) ** 2 + (o.transform.z - target.position.z) ** 2 < d2) ahead++;
+        const ring = Math.min(4.7, 1.4 + 1.1 * Math.floor(ahead / 8));
         const slot = (e.id * 2.399963) % (Math.PI * 2), bearing = Math.atan2(e.transform.z - target.position.z, e.transform.x - target.position.x);
         const a = bearing + Math.max(-1.6, Math.min(1.6, Math.atan2(Math.sin(slot - bearing), Math.cos(slot - bearing))));
-        this.ringPoint.x = target.position.x + Math.cos(a) * 1.4; this.ringPoint.z = target.position.z + Math.sin(a) * 1.4;
+        this.ringPoint.x = target.position.x + Math.cos(a) * ring; this.ringPoint.z = target.position.z + Math.sin(a) * ring;
+        if (ring > 1.4 && Math.abs(distance - ring) < .5) { e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
         if (this.nav.clear(this.ringPoint.x, this.ringPoint.z, e.combat!.radius)) { this.steerL1(e, brain, this.ringPoint, brain.runSpeed, true, true); return; }
       }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
