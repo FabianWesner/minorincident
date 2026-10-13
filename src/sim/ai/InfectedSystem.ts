@@ -24,7 +24,7 @@ import { steerFlockDive, updateFlock } from './Flock';
 import { SpawnDirector } from './SpawnDirector';
 import { NavGrid } from './NavGrid';
 import type { InfectedState } from './types';
-export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier }
+export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
@@ -128,12 +128,12 @@ export class InfectedSystem {
     if (id === 'infected.crow' && opts.birds !== undefined && (!Number.isInteger(opts.birds) || opts.birds < 1 || opts.birds > 20)) throw new RangeError('A flock contains 1–20 birds');
     const weight = id === 'infected.crow' ? (opts.birds ?? 20) * 0.25 : 1;
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
-    if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || !this.nav.clear(position.x, position.z, def.radius)) throw new RangeError('Infected spawn inside collider or outside grid');
+    if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || (!opts.offNav && !this.nav.clear(position.x, position.z, def.radius))) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.roar; delete entity.corpseThrown;
+    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit;
     delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
@@ -182,6 +182,8 @@ export class InfectedSystem {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
+      // E32 Mega Alpha: global pursuit owns its movement; close range and recovery hand the tick to the Alpha brain below.
+      if (b.pursuit && this.world.megaPursuit?.drive(e)) continue;
       if (this.world.barricades?.vault(e)) continue;
       // E18: far L3 crowds keep swept motion every tick, with decision work spread over six stable slots.
       // Nearby humans, reactions and the rescue fight retain the full-rate brain.
@@ -198,7 +200,7 @@ export class InfectedSystem {
         if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted);
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
-      if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack) {
+      if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit) {
         const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
         if (seen) {
           delete b.investigate; b.heardTargetId = seen.id;
@@ -310,7 +312,7 @@ export class InfectedSystem {
         continue;
       }
       // E27-AC08: smoke on the sight line (or around the infected) breaks the chase; it wanders until sight returns.
-      if (b.state === 'chase' && this.world.combat?.effects.smokeBlocks(e.transform, player.transform)) {
+      if (b.state === 'chase' && !b.pursuit && this.world.combat?.effects.smokeBlocks(e.transform, player.transform)) {
         b.state = 'wander'; b.until = this.world.tick + 90; e.combat!.attacking = false;
         const angle = this.rng.next() * Math.PI * 2; b.dx = Math.cos(angle); b.dz = Math.sin(angle);
         this.world.events.emit({ type: 'ai.lostTarget', tick: this.world.tick, sourceId: e.id, targetId: player.id, cause: 'smoke' });

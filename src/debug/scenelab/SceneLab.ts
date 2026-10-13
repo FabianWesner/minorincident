@@ -39,6 +39,8 @@ import { buildingDoors, doorwayOf, inDoorway, type Doorway } from '../../data/bu
 import { doorRoute, routeAt, routeLength } from '../../sim/missions/doorRoute';
 import { LevelSevenDeparture } from '../../sim/missions/LevelSevenDeparture';
 import { LevelSevenEncounters } from '../../sim/missions/LevelSevenEncounters';
+import { installMegaPursuit } from '../../sim/ai/MegaPursuit';
+import { megaAlpha } from '../../data/megaAlpha';
 import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene, type CameraSpec, type EffectSpec, type PropSpec, type SceneSpec } from './spec';
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
@@ -142,7 +144,7 @@ export class SceneLab {
       if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L7' ? levelSevenLayouts : spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
-    this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
+    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
@@ -219,6 +221,13 @@ export class SceneLab {
       const mission = world.loadMission(def); mission.begin();
       const id = mission.l9!.state.carId;
       world.vehicles!.damage(id, 1000 - spec.crossingCrash.health); this.vehicles.set('apc', id);
+    }
+    if (spec.megaAlpha) {
+      const m = spec.megaAlpha, box = m.resident;
+      const pursuit = installMegaPursuit(world, { introduceTick: null, route: m.route, ...(box ? { resident: (x: number, z: number) => x >= Math.min(box[0][0], box[1][0]) && x <= Math.max(box[0][0], box[1][0]) && z >= Math.min(box[0][1], box[1][1]) && z <= Math.max(box[0][1], box[1][1]) } : {}) });
+      const id = m.id ?? 'mega', entity = pursuit.introduce({ x: m.at[0], z: m.at[1] });
+      this.actors.set(id, { id, kind: 'infected', entity, spec: { id, kind: 'infected', archetype: megaAlpha.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
+      this.mega = { last: null, speeds: [], stepMaxM: 0, stepFrame: -1, modes: {}, samples: [], stuckLevelMax: 0, distanceMinM: Infinity };
     }
     if (spec.l7Group) {
       world.scenario = 'L7';
@@ -562,8 +571,12 @@ export class SceneLab {
     // Match View.resize's portrait framing as well as the desktop game camera.
     const aspect = view.camera.aspect, { radiusM, portraitWidthM, fovDeg } = cameraFraming;
     const radius = aspect >= 1 ? radiusM : Math.max(radiusM, portraitWidthM / (2 * Math.tan(fovDeg * Math.PI / 360) * aspect));
-    if (c.mode === 'game') spherical(this.target(c.target, 0), radius * (c.zoom ?? 1), view.polar, view.azimuth);
-    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), radius * (c.zoom ?? 1), view.polar, view.azimuth);
+    // Vehicle-focused fixtures mirror View's 15% driving pull-back. Otherwise
+    // the APC's bumper clips at the actual closest player zoom (0.5).
+    const vehicleTarget = c.mode === 'game' ? typeof c.target === 'string' && this.vehicles.has(c.target) : c.mode === 'follow' && this.vehicles.has(c.actor);
+    const gameRadius = radius * (vehicleTarget ? 1.15 : 1);
+    if (c.mode === 'game') spherical(this.target(c.target, 0), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
+    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
     else if (c.mode === 'close') spherical(this.target(c.target), c.radius ?? 5, view.polar, c.azimuth === undefined ? view.azimuth : rad(c.azimuth));
     else if (c.mode === 'orbit') spherical(this.target(c.target), c.radius ?? 10, rad(c.polar ?? 54), rad((c.azimuth ?? 45) + (c.spin ?? 0) * this.frame / 60));
     else view.preset('scene-lab', { position: c.position, target: c.target });
@@ -768,7 +781,27 @@ export class SceneLab {
     }
     for (const [key, m] of this.propPenetration) if (!touching.has(key)) m.run = 0;
   }
+  /** E32-AC10 Mega Alpha pursuit probe: speed in detailed mode, largest resident step (no teleport), modes, distance every 0.5 s. */
+  private mega: { last: { x: number; z: number; mode: string } | null; speeds: number[]; stepMaxM: number; stepFrame: number; modes: Record<string, number>; samples: { frame: number; d: number; mode: string; band: string | null }[]; stuckLevelMax: number; distanceMinM: number } | null = null;
+  private sampleMega(): void {
+    const m = this.mega, pursuit = this.world.megaPursuit, e = pursuit?.entity();
+    if (!m || !pursuit || !e) return;
+    const s = pursuit.state, mode = s.mode, step = m.last ? Math.hypot(e.transform.x - m.last.x, e.transform.z - m.last.z) : 0;
+    m.modes[mode] = (m.modes[mode] ?? 0) + 1; m.stuckLevelMax = Math.max(m.stuckLevelMax, s.stuck.level);
+    if (m.last && mode !== 'coarse' && m.last.mode !== 'coarse' && step > m.stepMaxM) { m.stepMaxM = step; m.stepFrame = this.frame; }
+    if (m.last && mode === 'detailed' && m.last.mode === 'detailed' && !Status.stunned(e, this.world.tick) && step > .5 / 60) m.speeds.push(step * 60);
+    const d = pursuit.distance(); m.distanceMinM = Math.min(m.distanceMinM, d);
+    if (this.frame % 30 === 0) m.samples.push({ frame: this.frame, d: +d.toFixed(2), mode, band: pursuit.band() });
+    m.last = { x: e.transform.x, z: e.transform.z, mode };
+  }
+  private megaReport() {
+    const m = this.mega; if (!m) return null;
+    const sorted = [...m.speeds].sort((a, b) => a - b), median = sorted.length ? sorted[sorted.length >> 1] : 0;
+    return { cruiseMs: +megaAlpha.cruiseMs.toFixed(3), detailedMedianMs: +median.toFixed(3), cruiseError: sorted.length ? +Math.abs(median / megaAlpha.cruiseMs - 1).toFixed(4) : Infinity, detailedFrames: sorted.length,
+      stepMaxM: +m.stepMaxM.toFixed(3), stepFrame: m.stepFrame, modes: m.modes, stuckLevelMax: m.stuckLevelMax, distanceMinM: +m.distanceMinM.toFixed(2), samples: m.samples, state: structuredClone(this.world.megaPursuit?.state ?? null) };
+  }
   private sample(): void {
+    this.sampleMega();
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const audit = probes.districts?.seeThroughAudit();
@@ -1097,6 +1130,7 @@ export class SceneLab {
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       grounding: this.grounding(),
       pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
+      megaAlpha: this.megaReport(),
       heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };

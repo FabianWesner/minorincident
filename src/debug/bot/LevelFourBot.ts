@@ -94,8 +94,9 @@ export class LevelFourBot {
       if (kit) { if (fight(6)) return frame; go(kit.transform, .2, `war-kit-${kit.id}`); return frame; }
       if (fight(newbie ? 13 : 20)) return frame;
       // Back off from a crowd that is closing in (fight a few, flee from many): toward the middle of the ring, away from the nearest.
+      // Evade-only never fights, so it steps away from anything that comes at it (l4-po-round: the war reaches the hold spot inside the ring).
       const crowd = this.threats(p, 5), many = this.threats(p, 10).filter(e => this.chasing(e)).length;
-      if ((crowd.length >= 4 || many >= 6) && fights) { const at = this.walker.detour(w, { x: -20, z: 3 }, crowd[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 70 }; }
+      if (fights ? crowd.length >= 4 || many >= 6 : crowd.length >= 1 || many >= 2) { const at = this.walker.detour(w, { x: -20, z: 3 }, crowd[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 70 }; }
       if (this.detour && w.tick < this.detour.until && dist(p, this.detour) > .8) { go(this.detour, .8, `det-${this.detour.until}`); return frame; }
       go({ x: -21.5, z: 3 }, 1.4, 'hold');
       return frame;

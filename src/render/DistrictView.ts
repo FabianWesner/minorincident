@@ -50,6 +50,8 @@ import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lo
 import { occluderMinHeight, seeThrough } from './SeeThrough';
 import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
+import { crossing, crossingChunks } from '../levels/L9/district';
+import { TerrainView } from './TerrainView';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
@@ -98,6 +100,11 @@ export class DistrictView extends Group {
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
   readonly ground = new GroundField();
+  private terrain?: TerrainView;
+  private terrainHorizon?: Group;
+  terrainState() { return this.terrain?.snapshot() ?? null; }
+  /** Borrowed geometry/materials: the caller warms and detaches this copy. */
+  horizonForWarmup(): Group | null { return this.terrainHorizon?.clone(true) ?? null; }
   private readonly mergedLayout: Mesh[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
   private readonly ownedMaterials: Material[] = [];
@@ -194,7 +201,7 @@ export class DistrictView extends Group {
           // Preserve legacy W0–W5 loading; W6 geometry is opt-in by an authored layer.
           worldTiers.filter(tier => tier <= this.world.composition.tier && tier <= Math.max(5, ...d.layout.layers.map(layer => layer.tier))).map(tier =>
             this.registry.glb(
-              `/assets/layouts/${d.id}.${tier === 0 ? "base" : `w${tier}`}.glb`,
+              `/assets/layouts/${d.id}.${tier === 0 ? d.id === 'D-CROSSING' ? 'horizon' : 'base' : `w${tier}`}.glb`,
             ),
           ),
         );
@@ -215,6 +222,7 @@ export class DistrictView extends Group {
           stripStrayDecorations(clone, d.layout);
           this.stripLayoutMarkers(clone);
           root.add(clone);
+          if (d.id === 'D-CROSSING') this.terrainHorizon = clone;
         }
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
@@ -226,6 +234,13 @@ export class DistrictView extends Group {
             o.matrixWorldAutoUpdate = false;
           });
           this.freezeLayout(groundLayer);
+        }
+        if (d.id === 'D-CROSSING' && scenes.length) {
+          const chunks = crossingChunks.map(c => ({ id: c.id, origin: [c.origin[0] + d.origin[0], c.origin[1] + d.origin[1]] as [number, number], max: [c.max[0] + d.origin[0], c.max[1] + d.origin[1]] as [number, number] }));
+          this.terrain = new TerrainView(chunks, crossing.chunkSize, id => `/assets/layouts/D-CROSSING.chunks/${id}.glb`, this.registry, this.low ? 'low' : 'high');
+          this.add(this.terrain);
+          this.terrain.update(focus ? [focus.x, focus.z] : [crossing.start[0] + d.origin[0], crossing.start[1] + d.origin[1]]);
+          await this.terrain.ready();
         }
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
@@ -258,10 +273,10 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (d.id === 'D-CROSSING' || this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
-          if (lab || this.world.composition.id === 'L2') {
+          if (d.id === 'D-CROSSING' || lab || this.world.composition.id === 'L2') {
             crowns.clear();
             for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
               const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();
@@ -396,7 +411,7 @@ export class DistrictView extends Group {
   }
 
   /** Drawn ground at a world point (null outside the baked district ground). */
-  groundAt(x: number, z: number): number | null { return this.ground.height(x, z); }
+  groundAt(x: number, z: number): number | null { return this.terrain?.height(x, z) ?? this.ground.height(x, z); }
   private restOnGround(ref: Object3D, id: string, origin: [number, number]): void {
     const size = (manifest as AssetDef[]).find(a => a.id === id)?.dimensions; if (!size || ref.position.y > .01 || /^veh\.(train|helicopter)/.test(id)) return;
     const hx = size.x * ref.scale.x * .32, hz = size.z * ref.scale.z * .4, c = Math.cos(ref.rotation.y), s = Math.sin(ref.rotation.y);
@@ -439,6 +454,7 @@ export class DistrictView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void {
     if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
+    this.terrain?.setQuality(tier);
     for (const grass of this.grass) grass.setQuality(tier === 'low', tier === 'low' ? this.materials.look.values.grassDensityLow : this.materials.look.values.grassDensity);
     this.foliage.setQuality(tier === 'low');
     this.ambient?.setQuality(tier === 'low');
@@ -646,7 +662,11 @@ export class DistrictView extends Group {
     this.frameSeconds = seconds; this.phase.value += seconds; this.labelTime += seconds;
   }
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
-  updateLods(view: View): void {
+  updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
+    if (this.terrain) {
+      this.terrain.warm = this.warmHero; this.terrain.swap = this.swapSlot;
+      this.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
+    }
     this.ambient?.focus.value.set(view.focus.x, view.focus.z);
     for (const tag of this.tags) {
       const position = tag.sprite.getWorldPosition(this.bounds.center);
@@ -901,7 +921,7 @@ export class DistrictView extends Group {
     };
     await Promise.all(Array.from({ length: 4 }, worker));
   }
-  async ready(): Promise<void> { await Promise.all(this.pending.values()); }
+  async ready(): Promise<void> { await Promise.all([...this.pending.values(), this.terrain?.ready()]); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */
   mask(on: boolean): void {
     if (on) {
@@ -937,6 +957,7 @@ export class DistrictView extends Group {
     return {
       labels: this.tags.map(({ sprite }) => ({ text: sprite.name, visible: sprite.visible, opacity: sprite.material.opacity, width: sprite.scale.x, height: sprite.scale.y })),
       districts: this.world.districts.map((d) => d.id),
+      terrain: this.terrainState(),
       batches: this.batches.map((b) => ({
         assetId: b.name.slice(5),
         instances: b.references.length,
@@ -960,6 +981,7 @@ export class DistrictView extends Group {
   }
   dispose(): void {
     this.disposed = true;
+    this.terrain?.dispose();
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.ambient?.dispose();
     this.foliage.dispose();

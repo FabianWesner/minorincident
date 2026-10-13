@@ -106,6 +106,12 @@ export class NavGrid {
       bucket.push(wall);
     }
   }
+  /** The same walls, live blockers and mask baked for a wider body (E32 Mega Alpha); the caller forwards later blocker changes. */
+  withClearance(clearance: number): NavGrid {
+    const grid = new NavGrid(this.ground, this.walls, clearance, this.center, this.mask);
+    for (const [id, wall] of this.blockers) grid.setBlocker(id, wall, true);
+    return grid;
+  }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
   prepare(walls: readonly Wall[]): Uint8Array {
     return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask).blocked;
