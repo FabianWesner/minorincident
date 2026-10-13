@@ -57,6 +57,8 @@ export const l4 = {
     headroom: 12,
     /** Drawn bodies kept at most (the oldest out of view are cleared first): replenishment would otherwise leave 800+ on the plaza. */
     corpseMax: { high: 160, low: 70 },
+    /** Corpse heaps (l4-collapse-2): at most `max` drawn bodies per `cellM` square (a camping courier piles them up); the oldest go first, also in view. */
+    heap: { cellM: 4, max: { high: 7, low: 5 } },
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },
@@ -85,11 +87,13 @@ export const l4 = {
    */
   director: {
     lines: [
-      { id: 'line-1', earliestS: 50, dueS: 62, pushS: 40 },
+      { id: 'line-1', earliestS: 50, dueS: 62, pushS: 34 },
       { id: 'nests', earliestS: 110, dueS: 124, pushS: 104 },
       { id: 'armor', earliestS: 170, dueS: 182, pushS: 150 },
     ] as readonly { id: 'line-1' | 'nests' | 'armor'; earliestS: number; dueS: number; pushS: number }[],
-    pushEveryS: 4, push: { high: 8, low: 4 }, frontWave: { high: 30, low: 15 }, standing: .5,
+    pushEveryS: 4, push: { high: 10, low: 5 }, frontWave: { high: 30, low: 15 }, standing: .5,
+    /** Per push at line 1: bitten refugees that run in behind a soldier and turn there (at the latest after `refugeeTurnS`). */
+    refugees: { high: 5, low: 3 }, refugeeTurnS: 7,
     /** Alive infected allowed per stage (share of the tier cap): the pressure grows with the beats; full cap after the fall back. */
     alive: [.8, .9, .7] as readonly number[], aliveLow: [.7, .8, .6] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
@@ -111,7 +115,15 @@ export const l4 = {
     /** Readability: short camera beats (sim pauses, <= 2 s, skippable after 0.5 s) at the line-1 overrun and the swarmed tank. */
     cameraS: 1.6,
     /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
-    escape: { nearM: 7, s: 15 },
+    escape: {
+      nearM: 7, s: 15,
+      /**
+       * The escape street (l4-collapse-2): out of the ring's east side, down the x = -4 street to Lakeshore Avenue and east to Kessler's
+       * cellar door. From "Fall back!" (and after a respawn in the collapse) for `gapS` the horde leaves a gap on it: infected farther than
+       * `nearM` from the courier within `gapM` of the route run off toward the army, and nothing emerges on it. Pursuers still chase.
+       */
+      route: [[-12, 4], [-4, 4], [-4, 28], [-2, 41], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
+    },
     /** Respawn in the collapse: the courier comes back at whichever plaza exit has the fewest infected within 12 m (no death loop in the flooded ring). */
     respawn: [[-18.6, -24], [-6, -28], [4, -6], [-4, 28]] as readonly P[],
   },

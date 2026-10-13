@@ -214,6 +214,10 @@ export interface L4Director {
   swarmedAt: number; fallBackAt: number; settled: number;
   /** Tick the next street car catches fire after the line break (staggered so the blasts do not land in one frame); 0 = none pending. */
   burnAt: number;
+  /** The gap on the escape street stays open until this tick (from "Fall back!" and after a collapse respawn); 0 = closed. */
+  gapUntil?: number;
+  /** Bitten refugees the director sends in through the line (they run behind a soldier and turn there at `turnAt` or on arrival). */
+  refugees?: { id: number; turnAt: number }[];
 }
 /** Serializable L5 controller state. Ticks are sim ticks, 0 = not yet. */
 export interface L5State {
