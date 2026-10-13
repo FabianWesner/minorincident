@@ -42,7 +42,7 @@ export interface Civilian {
   survivor?: SurvivorState;
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number;
     /** E20 rescued people: flee along a street route to a safe spot (the bridge checkpoint) instead of a refuge; never removed. */
-    haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number } };
+    haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number; cower?: { x: number; z: number } } };
 }
 /** Serializable E23 survivor state. `leader` = entity id it follows in single file (the player or the follower ahead); ticks are sim ticks. */
 export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: number; leader: number; cover: boolean; waitAt: number; foundAt: number }

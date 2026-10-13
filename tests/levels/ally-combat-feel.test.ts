@@ -29,6 +29,8 @@ interface FightMetrics {
   /** Most unarmed civilians still standing in the registration queue (calm) 3 s or more into the fight. */
   queued: number;
   fighters: number; samples: number;
+  /** Mean and worst sim tick (ms) over the fight window: the AI cost of the fighting (E18). */
+  tickMs?: number; tickMaxMs?: number;
 }
 const fighting = (e: EntitySnapshot, tick: number) => e.health.current > 0 && !e.infection && !e.hidden && !!e.civilian?.ally && e.civilian.state !== 'grabbed' && e.civilian.state !== 'bitten' && tick >= e.civilian.knockedUntil;
 
@@ -64,11 +66,12 @@ function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => n
         if (tick - tr[0].tick >= 120 || since > 2) { stillN++; if (since > 2) still++; }
         if (tick - tr[0].tick >= 285) { movedN++; if (tr.some(q => Math.hypot(q.x - tr[0].x, q.z - tr[0].z) >= .5)) moved++; }
       }
-      if (combatS >= 3 && tick - restoredAt >= 180) {
+      if (combatS >= 3 && tick - restoredAt >= 90) {
         let n = 0;
         for (const id of queueIds()) {
           const e = w.entities.get(id), c = e?.civilian;
-          if (!c || c.ally || e!.infection || e!.health.current <= 0 || e!.hidden) continue;
+          // A person crouching in a hiding spot (gunfire) is no longer in line, wherever the spot is.
+          if (!c || c.ally || e!.infection || e!.health.current <= 0 || e!.hidden || c.l1?.haven?.cower) continue;
           // Standing in line: a calm (or frozen alarmed) person on a registration-queue or waiting slot.
           if ((c.state === 'calm' || c.state === 'alarmed') && slots.some(([x, z]) => Math.hypot(e!.transform.x - x, e!.transform.z - z) < 1.2)) n++;
         }
@@ -93,8 +96,9 @@ describe('ally combat feel', () => {
     const s = m.state.l4!, allies = () => [...s.soldierIds, ...s.armed.map(a => a.id)].map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.civilian?.ally);
     const queue = () => [...s.evacueeIds, ...s.residentIds];
     const o = observer(w, allies, queue);
-    for (let t = 0; t < 30 * 60; t++) { followFrustum(w); w.applyInput(emptyInput(), 'keyboard'); w.update(); o.tick((w.tick - s.turnAt) / 60); }
-    const r = o.done(); record('ally-feel-l4', r);
+    let ms = 0, max = 0;
+    for (let t = 0; t < 30 * 60; t++) { followFrustum(w); w.applyInput(emptyInput(), 'keyboard'); const t0 = performance.now(); w.update(); const dt = performance.now() - t0; ms += dt; max = Math.max(max, dt); o.tick((w.tick - s.turnAt) / 60); }
+    const r = { ...o.done(), tickMs: +(ms / 1800).toFixed(3), tickMaxMs: +max.toFixed(2) }; record('ally-feel-l4', r);
     feel(r);
     expect(r.queued).toBe(0);
   }, HEAVY);
