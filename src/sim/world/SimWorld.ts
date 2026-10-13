@@ -25,6 +25,8 @@ import { installVfxScenario } from '../../../tests/fixtures/scenarios/vfx';
 import { installBlastScenario } from '../../../tests/fixtures/scenarios/blasts';
 import { survivor } from '../../data/survivor';
 import { Combat } from '../combat/Combat';
+import { MountedGun } from '../combat/MountedGun';
+import type { GunPlacement } from '../../data/minigun';
 import { Interactables } from '../interact/Interactables';
 import { Toys } from '../interact/Toys';
 import { Hazards } from '../interact/Hazards';
@@ -95,6 +97,13 @@ export class SimWorld implements Lifecycle {
   l7Departure: LevelSevenDeparture | null = null;
   /** E32 L10 Mega Alpha global pursuit (one persistent boss); null outside L10 and its fixtures. */
   megaPursuit: import('../ai/MegaPursuit').MegaPursuit | null = null;
+  /** E32 L10-S6 the manned rotary minigun of the finale deck; null elsewhere. See `installMountedGun`. */
+  mountedGun: MountedGun | null = null;
+  /** Places the mounted rotary minigun (needs combat); a second call replaces the first and keeps nothing of its heat. */
+  installMountedGun(placement: GunPlacement): MountedGun {
+    if (!this.combat) throw new Error('The mounted gun needs combat');
+    return this.mountedGun = new MountedGun(this, placement);
+  }
   /** Borrowed input before controls resolve it; shared browser/headless bot policies use this. */
   get deviceInput(): InputFrame { return this.input; }
   get inputFrame(): InputFrame { return this.effectiveInput; }
@@ -195,14 +204,14 @@ export class SimWorld implements Lifecycle {
         if (press) this.storyLock.skip = true;
         raw = this.storyLock.scripted ?? emptyInput();
       }
-      const frame = this.controls.resolve(raw); this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;
+      const resolved = this.controls.resolve(raw), frame = this.mountedGun?.intent(raw, resolved) ?? resolved; this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;
     }, SimPhase.input);
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
-    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null) this.combat.intent(this.effectiveInput); }, SimPhase.input);
+    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null && !this.mountedGun?.mounted) this.combat.intent(this.effectiveInput); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
-      if (this.vehicles?.active != null) return;
+      if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
       if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
@@ -231,7 +240,8 @@ export class SimWorld implements Lifecycle {
       if (this.combat) {
         const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z);
         this.infected?.props.update();
-        this.combat.update(this.vehicles?.active != null ? this.drivingCombatInput : this.effectiveInput);
+        this.combat.update(this.vehicles?.active != null || this.mountedGun?.mounted ? this.drivingCombatInput : this.effectiveInput);
+        this.mountedGun?.update();
       }
     }, SimPhase.combat);
     this.events.on('sim.tick', () => {
@@ -239,7 +249,7 @@ export class SimWorld implements Lifecycle {
       this.hazards?.update(); this.pickups?.update(); this.barricades?.update(); this.interactables?.update(this.effectiveInput);
     }, SimPhase.missions);
     this.events.on('sim.tick', () => {
-      if (this.vehicles?.active != null) return;
+      if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
       Object.assign(this.entities.get(1)!.transform, p);
@@ -384,7 +394,7 @@ export class SimWorld implements Lifecycle {
     this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
-    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.aftermath = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }
