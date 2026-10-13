@@ -18,4 +18,14 @@ export class ArmyCheckpointBoom {
     if (!ids.every(id => { const e = this.world.entities.get(id); return !e || e.health.current <= 0 || !!e.infection || e.transform.x > this.wall.x + 1.1; })) return false;
     return ![...this.world.entities.iterate()].some(e => e.health.current > 0 && Math.abs(e.transform.x - this.wall.x) < .6 && Math.abs(e.transform.z - this.wall.z) < 2.2);
   }
+  /**
+   * A stray civilian standing in the arm's path must not hold the rescue open for ever (completion now waits for the closure):
+   * step bystanders that are not part of the rescued group through to the compound side.
+   */
+  clearBystanders(ids: readonly number[]): void {
+    for (const e of this.world.entities.iterate()) {
+      if (!e.civilian || e.health.current <= 0 || ids.includes(e.id) || Math.abs(e.transform.x - this.wall.x) >= .6 || Math.abs(e.transform.z - this.wall.z) >= 2.2) continue;
+      e.transform.x = this.wall.x + 1.6; this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+  }
 }

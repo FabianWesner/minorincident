@@ -595,7 +595,7 @@ export class LevelThreeCollapse {
     if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
     // The rescue fight lasts until every pack arrived or minFightS passed (60-90 s); the weaker army (PO 10-12) cannot hold an open boom longer.
     const arrived = w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
-    if (!s.barrierClosedAt && inside && arrived && this.boom.ready(group)) {
+    if (!s.barrierClosedAt && inside && arrived && (this.boom.ready(group) || (this.boom.clearBystanders(group), this.boom.ready(group)))) {
       s.barrierClosedAt = w.tick; this.barrier(true);
       w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
     }
