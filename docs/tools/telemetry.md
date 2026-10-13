@@ -16,7 +16,7 @@ Client code: `src/telemetry/`. Never sent: IP addresses (the server does not sto
 | replay | per level attempt: the input frame the sim consumes for every fixed tick (delta/RLE, float64, gzip), plus campaign save at level start, seed, level, quality, build, viewport |
 
 Batches go out every 30 s and on `visibilitychange`/`pagehide` (`navigator.sendBeacon`). Telemetry is off for `?test`, `?scenelab`,
-`?debug=true`, local hosts and webdriver (so automation never pollutes PROD). `?telemetry=record` keeps the log in memory without any network (replay
+the other tool flags (`inspect`, `motionlab`, `perf`, `lookdev`), local hosts and webdriver (`?debug=true` still sends: the PO plays PROD with it for the pause-menu build/tick panel, 10-13) (so automation never pollutes PROD). `?telemetry=record` keeps the log in memory without any network (replay
 tests); `?telemetry=live` forces sending (local wrangler checks).
 
 ## Backend
