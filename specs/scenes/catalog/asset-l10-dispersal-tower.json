@@ -1,6 +1,6 @@
 {
  "name": "asset-l10-dispersal-tower",
- "note": "L10 filtration tower (17.8 m) with side duct, riser pipe and catwalks, courier for scale. Look for: no LOD pop, catwalk rings, glowing status slits, plinth grounded. The game camera never zooms out past 1.0 (about 20 m across): pieces taller or wider than that are seen in part, which is the intended monumental read.",
+ "note": "L10 filtration tower (17.8 m) with side duct, riser pipe and catwalks, courier for scale. Look for: no LOD pop, catwalk rings, glowing status slits, plinth grounded. The game camera never zooms out past 1.0 (about 20 m across): pieces taller or wider than that are seen in part, which is the intended monumental read. Framing: the courier stands on the camera side (+X/+Z) of the tower; with the courier behind it the occlusion fade removed the tower from every frame after 0 and zoom 0.5 had a blank first frame.",
  "ground": "sidewalk",
  "size": 40,
  "props": [
@@ -19,8 +19,8 @@
    "id": "courier",
    "kind": "courier",
    "at": [
-    2,
-    -8
+    8,
+    7
    ],
    "yaw": 0
   }
@@ -28,8 +28,8 @@
  "camera": {
   "mode": "game",
   "target": [
-   -3,
-   -3
+   3,
+   3
   ],
   "zoom": 1
  },
