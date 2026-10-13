@@ -48,7 +48,7 @@ describe('run-out after the final objective', () => {
   for (const level of ['L2', 'L6'] as const) {
     // L2 ends in the middle of its horde: the no-action case is L6 (night walk, nothing chasing).
     if (level === 'L6') test(`${level}: without action the level ends at once`, async () => {
-      const { m, requested, completed } = await finishLevel(level, false);
+      const { m, requested } = await finishLevel(level, false);
       expect(m.state.runOutUntil, `no run-out, phase ${m.state.phase}`).toBeUndefined();
       expect(m.def.finish.every(id => m.state.steps[id].status === 'completed'), 'finish objectives done').toBe(true);
       expect(m.state.phase === 'result' || m.state.phase === 'progression' || m.state.phase === 'cinematic').toBe(true);

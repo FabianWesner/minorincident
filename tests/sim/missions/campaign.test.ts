@@ -15,6 +15,8 @@ for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat adv
   world.loadMission(resolveCampaignMission(id,world.districts!)); const api = missionControls(world); api.begin();
   let calls=0;
   while(api.state()!.phase === 'playing') {
+    // PO 2026-10-13 run-out: with action still going on the world runs 5 s before the level completes.
+    if (api.state()!.runOutUntil !== undefined) { world.update(); continue; }
     const before=api.state()!.completedObjectives.length; api.completeObjective(); expect(api.state()!.completedObjectives.length).toBe(before+1); expect(++calls).toBeLessThan(100);
   }
   // E20: L2 ends on the closing gate with no cinematic or reward screen; the campaign continues straight into L3.
@@ -32,7 +34,7 @@ test('@E12 @E12-AC07 @E22-AC01 L4 ride -> quartermaster -> hold -> hide -> bar -
   world=new SimWorld();await world.init();const c=compositions.L4;world.loadComposition(c,c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))));world.loadMission(resolveCampaignMission('L4',world.districts!));const api=missionControls(world);api.begin();
   api.completeObjective('ride');expect(api.state()!.states.arrived).toBe(true);api.completeObjective('quartermaster');expect(api.state()!.steps.hold.status).toBe('pending');
   api.completeObjective();expect(api.state()!.states.turned).toBe(true);expect(api.state()!.states['line-broken']).toBe(true);
-  api.completeObjective('hide');api.completeObjective('bar');api.completeObjective('wait');expect(api.state()!.phase).toBe('progression');
+  api.completeObjective('hide');api.completeObjective('bar');api.completeObjective('wait');for(let i=0;i<400&&api.state()!.phase==='playing';i++)world.update();expect(api.state()!.phase).toBe('progression');
 });
 for (const action of ['left','right','interact','selector','move','pause'] as const) test(`T-E12-06-${action} @E12 @E12-AC06 ${action} skips at 0.5s and watch/skip gameplay hashes match`, async () => {
   const def=missionSandbox();def.onComplete=[{kind:'cinematic',id:'twist'}];
