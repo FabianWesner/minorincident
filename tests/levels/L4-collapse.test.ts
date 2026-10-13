@@ -17,14 +17,14 @@ const inRing = (p: { x: number; z: number }) => { const r = l4.map.ring; return 
 
 interface Trace {
   beats: { beat: string; t: number; cause: string; soldiers: number; inside: number }[]; soldiers: { t: number; n: number }[]; fallBackRadio: number; breakT: number; cause: string; knockdowns: number; barricades: number; turnedAtTurn: number; tank: string; maxAlive: number;
-  /** l4-collapse-2: line-1 size at the turn; infected on the escape street (> 12 m from the courier) at "Fall back!" and 4 s later; the most drawn bodies in one 4 m square; attackers around the still courier (samples with >= 4 within 2.5 m: occupied 90-degree quadrants). */
+  /** l4-collapse-2: line-1 size at the turn; infected on the escape street east of the ring (> 12 m from the courier) at "Fall back!" and 4 s later; the most drawn bodies in one 4 m square; attackers around the still courier (samples with >= 4 within 2.5 m: occupied 90-degree quadrants). */
   line1Size: number; gapAtFallBack: number; gapAfter: number; heapMax: number; ringSamples: number[]; pressMax: number;
 }
 const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.escape.route; let best = Infinity; for (let i = 1; i < r.length; i++) { const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz))); best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t)); } return best; };
 /** Runs the war with the courier idle at the quartermaster (god); `shoot` downs the nearest live infected in 26 m every 6 ticks (an oracle machine gunner). */
 function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean): Trace {
   const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, line1Size: 0, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, ringSamples: [], pressMax: 0 };
-  const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && escapeDistance(e.transform) < l4.director.escape.gapM).length; };
+  const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
   const t = (tick: number) => +((tick - s.turnAt) / 60).toFixed(2);
   w.events.on('l4.beat', e => { if (e.type === 'l4.beat') tr.beats.push({ beat: e.beat, t: t(e.tick), cause: e.cause, soldiers: e.soldiers, inside: e.inside }); });
   w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') tr.turnedAtTurn = e.ids.length; });
