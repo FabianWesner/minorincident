@@ -159,6 +159,19 @@ export class DistrictWorld {
     }
     return height;
   }
+  /**
+   * The walkable support a body at (x, z) whose feet are at `feet` stands on: the highest support or paving top that is at most
+   * `rise` (a step) above the feet. Unlike `pavingHeight` (the highest top anywhere in the column) a body on the street below the
+   * highway deck stays on the street, and one that left the deck edge drops to what is under it.
+   */
+  supportBelow(x: number, z: number, feet: number, rise = .6): number {
+    const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
+    let height = 0;
+    for (const a of this.supports.get(key) ?? []) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
+    for (const s of this.slabs.get(key) ?? []) if (s.height <= limit && s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
+    for (const s of this.paving.get(key) ?? []) if (s.height <= limit && s.height > height && inside([x - s.origin[0], z - s.origin[1]], s.polygon)) height = s.height;
+    return height;
+  }
   /** Visible paving is baked into the layout GLB rather than the solid-prop collider set. */
   pavingHeight(x: number, z: number): number {
     let height = this.groundHeight(x, z);

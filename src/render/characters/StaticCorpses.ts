@@ -19,6 +19,12 @@ export class StaticCorpses extends Group {
   private readonly partMatrix = new Matrix4();
   private readonly point = new Vector3();
   has(id: number): boolean { return this.bodies.has(String(id)); }
+  /** Scene Lab probe: where each frozen body is drawn (matrix translation = the figure's feet). */
+  drawn(): { id: number; x: number; y: number; z: number }[] {
+    const out: { id: number; x: number; y: number; z: number }[] = [], m = new Matrix4();
+    for (const [key, body] of this.bodies) { const slot = this.slots.get(key); if (!slot) continue; slot.page.mesh.getMatrixAt(slot.index, m); out.push({ id: body.id, x: m.elements[12], y: m.elements[13], z: m.elements[14] }); }
+    return out;
+  }
   begin(get: (id: number) => EntitySnapshot | undefined): void {
     // Checkpoint restore replaces the records (revives a body or re-uses its ID at a new pose): rebuild. A body that is
     // hidden or deleted (L4 keeps a corpse budget) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).

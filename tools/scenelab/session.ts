@@ -165,6 +165,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
   add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
+  if (e.groundingMaxCm !== undefined) add('groundingMaxCm', Math.max(metrics.grounding?.corpseOffMaxCm ?? Infinity, metrics.grounding?.pickupOffMaxCm ?? Infinity), e.groundingMaxCm);
+  if (e.groundingCorpsesMin !== undefined) checks.push({ name: 'groundingCorpsesMin', pass: (metrics.grounding?.corpses ?? 0) >= e.groundingCorpsesMin, value: metrics.grounding?.corpses ?? 0, limit: e.groundingCorpsesMin });
+  if (e.groundingPickupsMin !== undefined) checks.push({ name: 'groundingPickupsMin', pass: (metrics.grounding?.pickups ?? 0) >= e.groundingPickupsMin, value: metrics.grounding?.pickups ?? 0, limit: e.groundingPickupsMin });
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
   add('clickMissMax', metrics.clicks.misses, e.clickMissMax);
