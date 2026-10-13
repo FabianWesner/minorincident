@@ -31,11 +31,11 @@ const hearingReactionTicks = 15, hearingTurnRadS = 14;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
-  readonly navigation: DistrictNavigation;
+  navigation: DistrictNavigation;
   readonly props: PropThrows;
   readonly alphaSupport: AlphaSupportMoves;
   readonly director: SpawnDirector;
-  readonly nav: NavGrid;
+  nav: NavGrid;
   readonly rng: Rng;
   readonly active: EntitySnapshot[] = [];
   readonly pool: EntitySnapshot[] = [];
@@ -626,6 +626,8 @@ export class InfectedSystem {
   private goTo(id: number, point: { x: number; z: number }, untilTick: number, distractionId: number): boolean {
     const e = this.world.entities.get(id), brain = e?.infected?.l1;
     if (!e || !brain || e.health.current <= 0 || brain.mode === 'chase' || brain.mode === 'bite' || e.infected!.state === 'attack') return false;
+    // Pushed bodies retain Respawn's existing pause; gunfire and director goals must not immediately walk them back into its cleared ring.
+    if (brain.ignoreId === 1 && this.world.tick < brain.ignoreUntil && this.world.tick < brain.pauseUntil) return false;
     const rng = this.l1Rng!, radius = l1v2.infected.attracted.pointRadiusM;
     brain.goalX = point.x; brain.goalZ = point.z;
     for (let k = 0; k < 6; k++) {

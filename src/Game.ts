@@ -257,7 +257,7 @@ export class Game {
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
-        if (id === 'L9') this.world.missions?.begin();
+        if (id === 'L9' || id === 'L10') this.world.missions?.begin();
         if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
@@ -283,7 +283,7 @@ export class Game {
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
   }
-  /** Levels without a mission screen (L7 onwards) hand over directly: the next level when it exists, else the credits (L9 until an L10 exists). */
+  /** Levels without a mission screen (L7 onwards) hand over directly: the next level when it exists, else the credits. */
   private async handOver(finished: number): Promise<void> {
     const save = this.campaign, next = nextLevelAfter(finished);
     if (!save) return;
@@ -306,7 +306,7 @@ export class Game {
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
   saveCampaign():boolean {
     if(!this.campaign)return false;
-    if (this.world.scenario === 'L9' && this.world.missions?.l9) this.campaign.l9Crash = this.world.missions.l9.save();
+    if (this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
     if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
     return this.saves.write(this.campaign);
   }
@@ -314,7 +314,7 @@ export class Game {
   private watchCampaign():void {
     const save=this.campaign!;
     this.world.events.on('level.completed',event=>{
-      if(event.type!=='level.completed'||!/^L[1-9]$/.test(event.id))return;
+      if(event.type!=='level.completed'||!/^L(?:[1-9]|10)$/.test(event.id))return;
       if (event.id === 'L8' && this.world.missions?.l8) { const transport = this.world.missions.l8.transferOrNull(); if (transport) save.transport = transport; }
       completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
       this.saveCampaign();
@@ -388,13 +388,14 @@ export class Game {
    * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { terrain: this.view.terrainPerf(), infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
+    return { chunkResidency: this.world.chunks?.stats() ?? null, terrain: this.view.terrainPerf(), infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
   setQuality(setting: QualitySetting): void { this.quality.set(setting); }
   private applyQuality(): void {
     this.view.setQuality(this.quality.tier); this.audio.graph.setTier(this.quality.tier);
+    this.world.chunks?.setQuality(this.quality.tier);
     if (this.world.districts) this.world.npcs?.setQuality(this.quality.tier);
     // The fixed 200-actor benchmark keeps its load on both render tiers.
     if (this.world.infected) this.world.infected.director.setTier(this.world.scenario === 'perf-horde-200' ? 'high' : this.quality.tier);

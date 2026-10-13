@@ -1,0 +1,69 @@
+{
+  "name": "l9-residency-seam",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        -600,
+        -400
+      ],
+      [
+        600,
+        400
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -8,
+        -330
+      ],
+      "yaw": 0,
+      "path": [
+        [
+          20,
+          -330
+        ]
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 60,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "wheelSinkMaxCm": 2,
+    "wheelFloatMaxCm": 2.5,
+    "wheelSpikeMaxCm": 3
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -8,
+        -320
+      ],
+      "state": "idle"
+    }
+  ]
+}

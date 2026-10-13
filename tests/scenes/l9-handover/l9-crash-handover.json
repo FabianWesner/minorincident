@@ -1,0 +1,74 @@
+{
+  "name": "l9-crash-handover",
+  "note": "S7 real crash/crawl then campaign axe reset. Inspect axe only, safe corgi, free ground and surviving wreck; production handover callback, game camera.",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        450,
+        -70
+      ],
+      [
+        585,
+        70
+      ]
+    ],
+    "anchors": [
+      "crossing-start",
+      "outskirts",
+      "crash-approach",
+      "crash-impact",
+      "crash-wreck",
+      "crawl-start",
+      "crawl-fallback",
+      "crawl-end"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        470,
+        0
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        547,
+        2
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 900,
+  "shots": [
+    840,
+    900
+  ],
+  "sheet": 60,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "crossingCrash": {
+    "health": 1000,
+    "handover": true
+  }
+}

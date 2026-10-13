@@ -119,9 +119,9 @@ class CivilianBatch extends Group {
     // L7 has a strict infected pool plus at most 35 incoming survivors. Size
     // every model's mutable pose rows for that population instead of 350.
     this.capacity = world.scenario === 'L7' ? (world.infected!.director.tier === 'low' ? 100 : 200) + 35 : 350;
-    // The phone's final-horde carpet keeps every body using the shipped far
+    // The phone's plaza war and final-horde carpet keep every body using the shipped far
     // silhouette. Freeze this choice so later quality changes cannot duplicate it.
-    this.corpseLod = world.scenario === 'L3' || world.scenario === 'L7' && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
+    this.corpseLod = world.scenario === 'L3' || (world.scenario === 'L4' || world.scenario === 'L7') && world.infected!.director.tier === 'low' ? 'lod2' : 'lod1';
     this.frame = new InstancedBufferAttribute(new Float32Array(this.capacity), 1).setUsage(StreamDrawUsage);
     this.tint = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);
     this.overlay = new InstancedBufferAttribute(new Float32Array(this.capacity * 4), 4).setUsage(StreamDrawUsage);

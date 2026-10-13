@@ -1,0 +1,2460 @@
+{
+  "baseline": "a2753b00",
+  "productionRenderBarsIdentical": "fa96264b",
+  "limits": {
+    "varianceMin": 1,
+    "variedTilesMin": 8
+  },
+  "game": [
+    {
+      "name": "L1-high-z0.5",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          137.0456986111111,
+          98.14592361111112,
+          92.4913548611111
+        ],
+        "variance": 2881.8377269147204,
+        "variedTiles": 63,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 0.5000000000188757,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.500000000358638,
+        "focus": [
+          -66.40000152587886,
+          0,
+          9
+        ],
+        "target": [
+          -66.40000152587886,
+          0,
+          9
+        ],
+        "position": [
+          -60.9654181989057,
+          5.583959896989296,
+          14.434583326973165
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L1-high-z1",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          135.19910416666667,
+          96.37392083333333,
+          90.46161875
+        ],
+        "variance": 3134.5612894752594,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "focus": [
+          -66.40000152582026,
+          0,
+          9
+        ],
+        "target": [
+          -66.40000152582026,
+          0,
+          9
+        ],
+        "position": [
+          -55.53083487228426,
+          11.16791979355699,
+          19.869166653536006
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 158,
+            "fraction": 1,
+            "x": 811.7632110811933,
+            "y": 103.76602507019327,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -68.66168643995596,
+              1.9231501711334698,
+              6.569864812226292
+            ]
+          }
+        ]
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L1-low-z0.5",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          138.25249444444444,
+          99.39582847222222,
+          92.802375
+        ],
+        "variance": 2871.7903382221957,
+        "variedTiles": 62,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 0.5000000000188757,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.500000000358638,
+        "focus": [
+          -66.40000152587886,
+          0,
+          9
+        ],
+        "target": [
+          -66.40000152587886,
+          0,
+          9
+        ],
+        "position": [
+          -60.9654181989057,
+          5.583959896989296,
+          14.434583326973165
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L1-low-z1",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          139.34601597222223,
+          99.85364097222222,
+          90.84265069444444
+        ],
+        "variance": 2924.206656974744,
+        "variedTiles": 63,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "focus": [
+          -66.40000152582026,
+          0,
+          9
+        ],
+        "target": [
+          -66.40000152582026,
+          0,
+          9
+        ],
+        "position": [
+          -55.53083487228426,
+          11.16791979355699,
+          19.869166653536006
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 148,
+            "fraction": 1,
+            "x": 815.3358427470478,
+            "y": 105.48799576871076,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -68.61971256582969,
+              1.915509507010139,
+              6.560831628429344
+            ]
+          }
+        ]
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-high-z0.5",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          98.26113958333333,
+          84.95280277777778,
+          97.59284861111111
+        ],
+        "variance": 3129.429574868016,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 0.5000000000188757,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 10.925000000412432,
+        "focus": [
+          -56.75000000172202,
+          0,
+          28.667734225647163
+        ],
+        "target": [
+          -56.75000000172202,
+          0,
+          28.667734225647163
+        ],
+        "position": [
+          -50.500229175702884,
+          6.42155388153769,
+          34.9175050516663
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-high-z1",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          104.11024444444445,
+          81.66461597222222,
+          83.002525
+        ],
+        "variance": 2724.6501767180234,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 21.849999999999998,
+        "focus": [
+          -56.96856181962285,
+          0,
+          42.41353123700823
+        ],
+        "target": [
+          -56.96856181962285,
+          0,
+          42.41353123700823
+        ],
+        "position": [
+          -44.469020168056446,
+          12.843107762590536,
+          54.91307288857463
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 142,
+            "fraction": 1,
+            "x": 796.9740318245216,
+            "y": 90.03253825507215,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -59.795338071854495,
+              2.315177565706847,
+              39.63670949036694
+            ]
+          }
+        ]
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-low-z0.5",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          94.5253736111111,
+          82.66039097222222,
+          94.06659166666667
+        ],
+        "variance": 2953.815315902082,
+        "variedTiles": 62,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 0.5000000000188757,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 10.925000000412432,
+        "focus": [
+          -56.75000000172202,
+          0,
+          28.667734225647163
+        ],
+        "target": [
+          -56.75000000172202,
+          0,
+          28.667734225647163
+        ],
+        "position": [
+          -50.500229175702884,
+          6.42155388153769,
+          34.9175050516663
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-low-z1",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          105.42483541666667,
+          83.0945125,
+          82.86103819444445
+        ],
+        "variance": 2831.411368340967,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 21.849999999999998,
+        "focus": [
+          -56.96856181962285,
+          0,
+          42.41353123700823
+        ],
+        "target": [
+          -56.96856181962285,
+          0,
+          42.41353123700823
+        ],
+        "position": [
+          -44.469020168056446,
+          12.843107762590536,
+          54.91307288857463
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 99,
+            "fraction": 1,
+            "x": 784.7335166999084,
+            "y": 90.39235080867117,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -59.88953681156371,
+              2.3152562133117254,
+              39.744501346674944
+            ]
+          }
+        ]
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-high-z0.5",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          53.206406944444446,
+          36.21690347222222,
+          45.15988194444444
+        ],
+        "variance": 1267.457079506618,
+        "variedTiles": 59,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 0.5000000000188757,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.500000000358638,
+        "focus": [
+          0,
+          0.1199999719875525,
+          70
+        ],
+        "target": [
+          0,
+          0.1199999719875525,
+          70
+        ],
+        "position": [
+          5.434583326973163,
+          5.703959868976849,
+          75.43458332697317
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-high-z1",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          56.105381944444446,
+          42.47763888888889,
+          41.92313611111111
+        ],
+        "variance": 1581.3163057568963,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "focus": [
+          0,
+          0.11970922798906071,
+          70
+        ],
+        "target": [
+          0,
+          0.11970922798906071,
+          70
+        ],
+        "position": [
+          10.869166653536002,
+          11.287629021546051,
+          80.869166653536
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 406,
+            "fraction": 1,
+            "x": 832.6225315860404,
+            "y": 46.61232976500766,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -2.2956861864181892,
+              2.5490162553860465,
+              67.23917641748157
+            ]
+          }
+        ]
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-low-z0.5",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          53.09287222222222,
+          37.00699027777778,
+          46.44041111111111
+        ],
+        "variance": 1246.7639428058956,
+        "variedTiles": 58,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 0.5000000000188757,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 9.500000000358638,
+        "focus": [
+          0,
+          0.1199999719875525,
+          70
+        ],
+        "target": [
+          0,
+          0.1199999719875525,
+          70
+        ],
+        "position": [
+          5.434583326973163,
+          5.703959868976849,
+          75.43458332697317
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 0,
+        "draws": 0,
+        "bars": []
+      },
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-low-z1",
+      "pixels": {
+        "width": 1600,
+        "height": 900,
+        "mean": [
+          56.88904236111111,
+          44.14326111111111,
+          43.81829166666667
+        ],
+        "variance": 1582.4999404857053,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "focus": [
+          0,
+          0.11970922798906071,
+          70
+        ],
+        "target": [
+          0,
+          0.11970922798906071,
+          70
+        ],
+        "position": [
+          10.869166653536002,
+          11.287629021546051,
+          80.869166653536
+        ],
+        "spot": null
+      },
+      "bars": {
+        "count": 1,
+        "draws": 3,
+        "bars": [
+          {
+            "id": 406,
+            "fraction": 1,
+            "x": 832.5203465557311,
+            "y": 47.346292518806,
+            "width": 64,
+            "height": 8,
+            "gap": 2,
+            "anchor": [
+              -2.296773924888745,
+              2.540747703984989,
+              67.23942464995712
+            ]
+          }
+        ]
+      },
+      "backend": "webgpu"
+    }
+  ],
+  "sceneRuns": {
+    "broken-gate": {
+      "seconds": 16.419,
+      "rows": [
+        {
+          "name": "l10-mega-slam@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1290.264217369324,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@high-z1",
+          "pass": false,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [
+            "canvas.f0.variedTilesMin 1 > 8",
+            "canvas.f12.variedTilesMin 1 > 8",
+            "canvas.f24.variedTilesMin 1 > 8",
+            "canvas.f36.variedTilesMin 1 > 8",
+            "canvas.f48.variedTilesMin 1 > 8",
+            "canvas.f60.variedTilesMin 1 > 8",
+            "canvas.f72.variedTilesMin 2 > 8",
+            "canvas.f96.variedTilesMin 2 > 8",
+            "canvas.f132.variedTilesMin 1 > 8",
+            "canvas.f144.variedTilesMin 1 > 8"
+          ],
+          "sampledFrames": 13,
+          "varianceMin": 95.89771614648825,
+          "variedTilesMin": 1
+        },
+        {
+          "name": "l10-mega-slam@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1362.2326784202478,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@low-z1",
+          "pass": false,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [
+            "canvas.f0.variedTilesMin 1 > 8",
+            "canvas.f12.variedTilesMin 1 > 8",
+            "canvas.f24.variedTilesMin 1 > 8",
+            "canvas.f36.variedTilesMin 1 > 8",
+            "canvas.f48.variedTilesMin 1 > 8",
+            "canvas.f60.variedTilesMin 1 > 8",
+            "canvas.f72.variedTilesMin 2 > 8",
+            "canvas.f96.variedTilesMin 2 > 8",
+            "canvas.f132.variedTilesMin 1 > 8",
+            "canvas.f144.variedTilesMin 1 > 8"
+          ],
+          "sampledFrames": 13,
+          "varianceMin": 94.39907002648224,
+          "variedTilesMin": 1
+        }
+      ]
+    },
+    "fixed-gate": {
+      "seconds": 18.957,
+      "rows": [
+        {
+          "name": "l10-mega-slam@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1290.264217369324,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 442.4400290115391,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1362.2326784202478,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 449.07969497419435,
+          "variedTilesMin": 64
+        }
+      ]
+    },
+    "mega-moves": {
+      "seconds": 86.04,
+      "rows": [
+        {
+          "name": "l10-mega-charge-wall@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 4724.480971723759,
+          "variedTilesMin": 62
+        },
+        {
+          "name": "l10-mega-charge-wall@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 2566.4945655715037,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-charge-wall@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 6015.162082961819,
+          "variedTilesMin": 52
+        },
+        {
+          "name": "l10-mega-charge-wall@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 2858.9206237654325,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-charge@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 686.7438774701914,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-charge@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 372.0260182144266,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-charge@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 687.3466237058619,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-charge@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 382.45089148337684,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-grab-wall@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1392.0664114743158,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-grab-wall@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1506.3631312174784,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-grab-wall@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1393.928714320402,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-grab-wall@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1041.2518132297755,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-grab@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1333.0330731899267,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-grab@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 432.1364245994282,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-grab@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1393.928714320402,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-grab@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 440.39518128241434,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam-wall@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1339.976150498831,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam-wall@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1500.10568248233,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam-wall@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1362.2326784202478,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam-wall@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1049.4723855164502,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "l10-mega-slam@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1290.264217369324,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 442.4400290115391,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 1362.2326784202478,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "l10-mega-slam@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 13,
+          "varianceMin": 449.07969497419435,
+          "variedTilesMin": 64
+        }
+      ]
+    },
+    "mega-catalog": {
+      "seconds": 55.487,
+      "rows": [
+        {
+          "name": "inf-mega-alpha-lineup@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 1305.9058796616446,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "inf-mega-alpha-lineup@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 495.8181010609587,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "inf-mega-alpha-lineup@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 1249.9351497730695,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "inf-mega-alpha-lineup@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 546.2220037607367,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "inf-mega-arrival@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 21,
+          "varianceMin": 1222.1451310335078,
+          "variedTilesMin": 60
+        },
+        {
+          "name": "inf-mega-arrival@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 21,
+          "varianceMin": 1462.0005189183703,
+          "variedTilesMin": 64
+        },
+        {
+          "name": "inf-mega-arrival@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 21,
+          "varianceMin": 1507.2325510609408,
+          "variedTilesMin": 52
+        },
+        {
+          "name": "inf-mega-arrival@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 21,
+          "varianceMin": 1219.576773650464,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "inf-mega-pursuit@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 1125.075855707193,
+          "variedTilesMin": 59
+        },
+        {
+          "name": "inf-mega-pursuit@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 553.1820645923472,
+          "variedTilesMin": 63
+        },
+        {
+          "name": "inf-mega-pursuit@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 979.0188282909276,
+          "variedTilesMin": 57
+        },
+        {
+          "name": "inf-mega-pursuit@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "errors": 0,
+          "failed": [],
+          "sampledFrames": 16,
+          "varianceMin": 581.1484913057484,
+          "variedTilesMin": 62
+        }
+      ]
+    },
+    "matrix": {
+      "seconds": 433.046,
+      "rows": [
+        {
+          "name": "area-grove-depot@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2144.484804320975,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-depot@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2449.4200967118013,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-depot@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2160.138953745667,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-depot@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2414.473440272959,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-clinic@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1826.399039791224,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-clinic@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1826.399039791224,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-clinic@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1580.3696308106155,
+          "variedTilesMin": 59,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-clinic@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1612.6869174525418,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-south@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2607.281316447148,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-south@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2607.281316447148,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-south@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2484.2364321606838,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-east-south@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2484.2364321606838,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-garden-path@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 2957.346528446442,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-garden-path@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 2894.7832062691577,
+          "variedTilesMin": 60,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-garden-path@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 3021.1866356752034,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-garden-path@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 2916.627122524298,
+          "variedTilesMin": 60,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-gas@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1969.8342983213843,
+          "variedTilesMin": 57,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-gas@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2900.2480744050863,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-gas@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1999.8787185490019,
+          "variedTilesMin": 56,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-gas@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2658.902215999722,
+          "variedTilesMin": 62,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-mid@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 662.5530272138058,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-mid@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1551.7174346991214,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-mid@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 644.9942366647119,
+          "variedTilesMin": 26,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-mid@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1573.7520024333553,
+          "variedTilesMin": 49,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-south@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2545.682608321167,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-south@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2545.7813842460273,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-south@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2513.5093225332384,
+          "variedTilesMin": 59,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-houses-south@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2513.5093225332384,
+          "variedTilesMin": 59,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-fire@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2367.825494332181,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-fire@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2242.4961566596103,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-fire@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2372.2318784404197,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-fire@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2161.906435744462,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-main@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2502.2286522628383,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-main@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2517.44466617332,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-main@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 2133.648853081595,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "area-grove-west-main@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 7,
+          "varianceMin": 1763.1823438150132,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-behaviour@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 345.0007039648881,
+          "variedTilesMin": 62,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-behaviour@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 97.42765507638433,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-behaviour@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 330.13896712105634,
+          "variedTilesMin": 60,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-behaviour@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 92.5481227316086,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-firestation-apron@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 1141.4222180254897,
+          "variedTilesMin": 47,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-firestation-apron@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2245.5756611677734,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-firestation-apron@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 1119.821656075224,
+          "variedTilesMin": 59,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-firestation-apron@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2364.716244982599,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-follow@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 626.7542310955469,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-follow@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 346.711773844283,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-follow@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 406.7793591172667,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-follow@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 152.86063903808827,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-sit@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 3069.2396225128214,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "corgi-sit@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 3017.0252397761724,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-bench-sitter@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 1545.3973413065542,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-bench-sitter@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 943.7969463648842,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-bitten@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 75.28870085827657,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-bitten@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 49.593635863422605,
+          "variedTilesMin": 60,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-downed-kerb@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 11,
+          "varianceMin": 4464.678848592477,
+          "variedTilesMin": 62,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-downed-kerb@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 11,
+          "varianceMin": 3669.9843467074425,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-downed-kerb@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 11,
+          "varianceMin": 4196.296754918887,
+          "variedTilesMin": 61,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-downed-kerb@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 11,
+          "varianceMin": 3674.0674574491677,
+          "variedTilesMin": 62,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-flee@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 14.078253881511046,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-flee@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 13.871991346533832,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-0@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 2037.6546248189989,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-0@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1490.0305746526428,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-1@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1842.0709349183016,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-1@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1395.705572541483,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-2@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1673.1678894055294,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-2@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1193.6868341790032,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-3@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1466.7740175579966,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-3@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1178.415111082475,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-4@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1479.8589483593896,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-idle-4@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1000.5021313776961,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-run@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 47.70291775010264,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-run@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 358.27340234419535,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-run@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 46.17956790122844,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-run@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 341.953493893845,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-sit@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2591.0520825962594,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-sit@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 1957.2687804265006,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-0@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 243.26701896206214,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-0@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 413.38870108666015,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-0@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 132.9433676212284,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-0@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 396.228618177367,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-1@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 183.49593645079585,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-1@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 399.8144691700072,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-1@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 103.05511596576252,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-1@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 383.4265424666737,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-2@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 160.09210693155183,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-2@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 352.60016209106834,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-2@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 72.50913183727243,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-2@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 338.98494367007515,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-3@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 137.3735779249473,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-3@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 320.5905105091733,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-3@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 51.12704771351855,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-newchars-walk-3@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 308.2870325181357,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-sit-all@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 1024.0104920552621,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-sit-all@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 718.7459745950837,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-walk-all@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 206.04032886159257,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-walk-all@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 198.20884905281127,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-water-flowerbed@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 1033.9502299133237,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-water-flowerbed@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 802.7766941930458,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-zoo-staff@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 1213.5925338896523,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "ped-zoo-staff@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 16,
+          "varianceMin": 992.039841462276,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-l1-start@high-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2670.7585138626273,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-l1-start@high-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2994.772551926955,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-l1-start@low-z0.5",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2688.5796201967605,
+          "variedTilesMin": 62,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-l1-start@low-z1",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 17,
+          "varianceMin": 2776.929559088494,
+          "variedTilesMin": 63,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-pushed@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 21,
+          "varianceMin": 730.7542425807114,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-pushed@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 21,
+          "varianceMin": 445.120971766657,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-tipped@high",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 15,
+          "varianceMin": 730.7542425807114,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        },
+        {
+          "name": "seat-bench-tipped@low",
+          "pass": true,
+          "backend": "webgpu",
+          "sampledFrames": 15,
+          "varianceMin": 445.120971766657,
+          "variedTilesMin": 64,
+          "consoleErrors": 0
+        }
+      ]
+    }
+  },
+  "brokenGame": [
+    {
+      "name": "L1-high-z1",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          0.38558641975308644,
+          0.25027777777777777,
+          0.26015432098765434
+        ],
+        "variance": 94.39907002648224,
+        "variedTiles": 2,
+        "tiles": 64
+      },
+      "bars": 1,
+      "zoom": 1,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L1-high-z0.5",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          137.19555941358024,
+          98.2056674382716,
+          92.52884452160494
+        ],
+        "variance": 2857.018793552801,
+        "variedTiles": 63,
+        "tiles": 64
+      },
+      "bars": 0,
+      "zoom": 0.5000000000188757,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-high-z1",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          0.42493827160493824,
+          0.28975308641975306,
+          0.29962770061728394
+        ],
+        "variance": 104.38473610730071,
+        "variedTiles": 2,
+        "tiles": 64
+      },
+      "bars": 1,
+      "zoom": 1,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-high-z0.5",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          98.64110146604938,
+          84.79500964506173,
+          97.68340663580247
+        ],
+        "variance": 3111.1286166108475,
+        "variedTiles": 64,
+        "tiles": 64
+      },
+      "bars": 0,
+      "zoom": 0.5000000000188757,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-high-z1",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          0.42493827160493824,
+          0.28964506172839505,
+          0.29951967592592593
+        ],
+        "variance": 104.38819289742418,
+        "variedTiles": 2,
+        "tiles": 64
+      },
+      "bars": 1,
+      "zoom": 1,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-high-z0.5",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          53.86358410493827,
+          36.69341820987654,
+          45.345354938271605
+        ],
+        "variance": 1235.0639832961674,
+        "variedTiles": 59,
+        "tiles": 64
+      },
+      "bars": 0,
+      "zoom": 0.5000000000188757,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L1-low-z1",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          0.3914891975308642,
+          0.2561805555555556,
+          0.2660570987654321
+        ],
+        "variance": 95.89820997364873,
+        "variedTiles": 2,
+        "tiles": 64
+      },
+      "bars": 1,
+      "zoom": 1,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L1-low-z0.5",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          138.39322916666666,
+          99.48740933641976,
+          92.84879822530864
+        ],
+        "variance": 2843.4458183533498,
+        "variedTiles": 62,
+        "tiles": 64
+      },
+      "bars": 0,
+      "zoom": 0.5000000000188757,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-low-z1",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          0.42493827160493824,
+          0.2896315586419753,
+          0.29950617283950615
+        ],
+        "variance": 104.3886249961896,
+        "variedTiles": 2,
+        "tiles": 64
+      },
+      "bars": 1,
+      "zoom": 1,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L4-low-z0.5",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          94.28406442901235,
+          82.31756558641975,
+          94.05367669753086
+        ],
+        "variance": 2957.8552854094287,
+        "variedTiles": 62,
+        "tiles": 64
+      },
+      "bars": 0,
+      "zoom": 0.5000000000188757,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-low-z1",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          0.3914891975308642,
+          0.256195987654321,
+          0.2660725308641975
+        ],
+        "variance": 95.89771614648825,
+        "variedTiles": 2,
+        "tiles": 64
+      },
+      "bars": 1,
+      "zoom": 1,
+      "backend": "webgpu"
+    },
+    {
+      "name": "L8-low-z0.5",
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          53.173300540123456,
+          37.101037808641976,
+          46.52121141975309
+        ],
+        "variance": 1240.5376308888422,
+        "variedTiles": 58,
+        "tiles": 64
+      },
+      "bars": 0,
+      "zoom": 0.5000000000188757,
+      "backend": "webgpu"
+    }
+  ],
+  "unit": {
+    "numPassedTests": 1311,
+    "numFailedTests": 0,
+    "numPendingTests": 7,
+    "success": true
+  },
+  "verifyE02": {
+    "stats": {
+      "startTime": "2026-10-13T15:20:56.153Z",
+      "duration": 155017.946,
+      "expected": 52,
+      "skipped": 0,
+      "unexpected": 6,
+      "flaky": 0
+    },
+    "knownBaselineFailures": [
+      "T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials",
+      "T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau",
+      "T-E02-06 @E02 @E02-AC06 shadow probe is purple-blue and above 15% lightness",
+      "T-E02-09 @E02 @E02-AC09 L1, L4 and L6 change lighting and screenshot hue/luminance",
+      "T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%",
+      "T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color"
+    ],
+    "baselineConfirmed": true
+  },
+  "baselineE02": {
+    "commit": "a2753b00",
+    "stats": {
+      "startTime": "2026-10-13T15:25:19.931Z",
+      "duration": 21600.253,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 6,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "title": "T-E02-05b @E02 @E02-AC05 lookdev only uses palette or explicitly retained materials",
+        "reason": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true\nReceived: false"
+        ]
+      },
+      {
+        "title": "T-E02-perf @E02 @perf lookdev counters, frame costs and lifecycle plateau",
+        "reason": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: 1\nReceived: 11"
+        ]
+      },
+      {
+        "title": "T-E02-06 @E02 @E02-AC06 shadow probe is purple-blue and above 15% lightness",
+        "reason": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)",
+          "Expected: <= 290\nReceived:    295.5555555555556"
+        ]
+      },
+      {
+        "title": "T-E02-09 @E02 @E02-AC09 L1, L4 and L6 change lighting and screenshot hue/luminance",
+        "reason": [
+          "Error: expect(received).toBeGreaterThan(expected)",
+          "Expected: > 5\nReceived:   4.282871817707104"
+        ]
+      },
+      {
+        "title": "T-E02-11 @E02 @E02-AC11 overview, street and shadow-probe match reviewed goldens within 1.5%",
+        "reason": [
+          "Error: expect(Buffer).toMatchSnapshot(expected) failed",
+          "  52769 pixels (ratio 0.04 of all image pixels) are different."
+        ]
+      },
+      {
+        "title": "T-E02-fog @E02 @E02-AC09 palette surfaces beyond fogFar resolve to the preset fog color",
+        "reason": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)",
+          "Expected: <= 2\nReceived:    8"
+        ]
+      }
+    ]
+  },
+  "smoke": {
+    "command": "E2E_PORT=3498 SCENE_PORT=3498 SCENE_SERVER=preview npm run test:smoke",
+    "exitCode": 0,
+    "selectedSimTests": 6,
+    "browser": {
+      "startTime": "2026-10-13T15:25:19.432Z",
+      "duration": 105512.14,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  }
+}
