@@ -248,7 +248,13 @@ export class ActionView extends Group {
     // Persistent zone silhouettes; hot fire, smoke, lure and shield share their authored radius.
     for (const zone of combat.effects.zones) this.circle(zone.x, zone.z, zone.radius);
     this.geometry.setDrawRange(0, this.offset / 3); this.geometry.getAttribute('position').needsUpdate = true;
-    for (let i = 0; i < this.projectiles.length; i++) { const p = combat.projectiles[i], mesh = this.projectiles[i]; mesh.visible = !!p; if (p) mesh.position.set(p.x, p.y, p.z); }
+    for (let i = 0; i < this.projectiles.length; i++) {
+      const p = combat.projectiles[i], mesh = this.projectiles[i];
+      // Gun rounds already have a fast pooled VFX streak. Keep these body meshes
+      // for rockets/throwables, rather than also drawing the MG as slow orange balls.
+      mesh.visible = !!p && (p.attack.def.category !== 'ranged' || !!p.attack.def.splash);
+      if (p) mesh.position.set(p.x, p.y, p.z);
+    }
     this.updateTrail();
   }
   /** Rest each authored model on its broad side, with its lowest drawn vertex on the paving.
