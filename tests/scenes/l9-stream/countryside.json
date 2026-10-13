@@ -1,0 +1,58 @@
+{
+  "name": "l9-stream-countryside",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        -600,
+        -400
+      ],
+      [
+        600,
+        400
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -8,
+        240
+      ],
+      "yaw": 0,
+      "path": [
+        [
+          20,
+          240
+        ]
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 60,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "wheelSinkMaxCm": 2,
+    "wheelFloatMaxCm": 2.5,
+    "wheelSpikeMaxCm": 3
+  }
+}

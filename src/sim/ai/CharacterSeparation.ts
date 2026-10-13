@@ -47,11 +47,11 @@ export function installCharacterSeparation(world: SimWorld): void {
       body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
-      body.fixed = body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
+      body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
       body.charge = !!attack && attack.stage === 'active' && (attack.move === 'alpha.charge' || attack.move === 'elephant.charge' || attack.move === 'zebra.stampede');
       radii[e.id] = body; radiusIds.push(e.id); maximumRadius = Math.max(maximumRadius, r);
-      if ((e.infected?.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
+      if ((e.infected?.specialAttack && (e.infected.pursuit || e.infected.specialAttack.stage !== 'recovery') && e.infected.specialAttack.move !== 'lion.flank') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       bodies[bodyCount++] = body;
     }
     bodies.length = bodyCount; contacts.epoch++;
@@ -111,7 +111,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       }
       e.transform.y = support.y;
     }
-    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && radii[e.id] && !(e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') {
+    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && radii[e.id] && !(e.infected.specialAttack && (e.infected.pursuit || e.infected.specialAttack.stage !== 'recovery') && e.infected.specialAttack.move !== 'lion.flank') && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') {
       // Static district support cannot change beneath a stationary body. Reuse
       // its exact height until movement or a tier/checkpoint replaces the district.
       let support = ground.get(e);

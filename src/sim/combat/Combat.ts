@@ -120,10 +120,10 @@ export class Combat {
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
   }
-  private splash(attack: Attack, position: Vec2): void {
+  private splash(attack: Attack, position: Vec2, directTargetId?: number): void {
     const def = attack.def, splash = def.splash!;
     if (def.id === 'weapon.rocket-launcher' && this.world.explosions) {
-      this.world.explosions.blast(actionExplosions[def.id], position, { sourceId: attack.sourceId, radius: splash.radius, attackId: attack.id, actionId: def.id, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1 });
+      this.world.explosions.blast(actionExplosions[def.id], position, { sourceId: attack.sourceId, radius: splash.radius, directTargetId, attackId: attack.id, actionId: def.id, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1 });
       return;
     }
     for (const target of this.query.splash(position, splash.radius)) {
@@ -211,7 +211,7 @@ export class Combat {
         if (def.splash && (target || wall < step || p.travelled + wall >= def.range)) {
           if (target) { p.x = target.transform.x; p.z = target.transform.z; }
           else { p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; }
-          this.splash(p.attack, p); this.blast(p.attack, p); this.effects.noise(p, def.noiseRadius, def.id);
+          this.splash(p.attack, p, target?.id); this.blast(p.attack, p); this.effects.noise(p, def.noiseRadius, def.id);
           this.world.events.emit({ type: 'combat.exploded', tick: this.world.tick, sourceId: p.attack.sourceId, attackId: p.attack.id, radius: def.splash?.radius ?? 0, position: { x: p.x, y: p.y, z: p.z } });
           this.projectiles.splice(i, 1); continue;
         }

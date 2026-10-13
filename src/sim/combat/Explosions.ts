@@ -12,10 +12,14 @@ export interface BlastOptions {
   sourceId?: number;
   /** Upgrade-resolved radius (throwables); defaults to the def radius. */
   radius?: number;
+  /** Authored below-ground set pieces (L9 gully): presentation origin, simulation ground is still flat. */
+  height?: number;
+  /** Safe story blasts keep the visual wreck fire without spawning damaging ground fires. */
+  fires?: boolean;
   /** False when the caller already resolved damage (E05 throwables/projectiles keep their own resolver). */
   damage?: boolean;
   /** Player projectile attribution; environmental blasts keep their definition id. */
-  attackId?: number; actionId?: string; multiplier?: number;
+  attackId?: number; actionId?: string; multiplier?: number; directTargetId?: number;
 }
 /** Detached car body panels (E27-AC05): cosmetic physics bodies that tumble and settle; 30 s lifetime. */
 export interface CarPart { body: RAPIER.RigidBody; kind: 'door' | 'hood'; sourceId: number; until: number; half: [number, number, number] }
@@ -51,14 +55,14 @@ export class Explosions {
     }
     const r = opts.radius ?? d.radius;
     this.last = { tick, id, x: at.x, z: at.z, radius: r };
-    this.world.events.emit({ type: 'explosion', tick, defId: id, cls: d.class, fx: d.fx, sourceId, position: { x: at.x, y: .7, z: at.z }, radius: r });
+    this.world.events.emit({ type: 'explosion', tick, defId: id, cls: d.class, fx: d.fx, sourceId, position: { x: at.x, y: opts.height ?? .7, z: at.z }, radius: r });
     const size = audioSize(d.class);
     this.world.events.emit({ type: 'explosion.beat', tick, sourceId, position: { x: at.x, y: .7, z: at.z }, beat: 'crack', size });
     this.scheduled.push({ at: tick + 4, kind: 'beat', beat: 'debris', size, x: at.x, z: at.z, sourceId }, { at: tick + 15, kind: 'beat', beat: 'roar', size, x: at.x, z: at.z, sourceId });
     this.damage(d, at, r, sourceId, opts.damage !== false, opts);
     this.queueImpulses(d, at, r);
     if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
-    this.ignite(d, at, r);
+    if (opts.fires !== false) this.ignite(d, at, r);
     if (d.gas) this.world.hazards?.spawn(d.gas.kind, at, { radius: r, duration: d.gas.seconds });
     const player = this.world.entities.get(1);
     if (d.slowMo && player && player.health.current > 0 && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) <= d.slowMo.within)
@@ -78,7 +82,7 @@ export class Explosions {
       // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
       if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
       if (!apply || !damage || amount <= 0) continue;
-      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
+      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
     }
     // Barricade rails are not in the spatial hash: distance to the rail segment (spec 07 §5 barricade damage).
     if (!damage || d.barricade <= 0) return;

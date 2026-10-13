@@ -5,7 +5,7 @@ import { runSpec } from './run';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { zoomLimits } from '../../src/render/View';
 
-/** npm run scene:catalog [-- --filter <glob>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--size 960x540] [--out dir] [--list]
+/** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--size 960x540] [--out dir] [--list]
  * Runs the ready-made QA scenes in specs/scenes/catalog/ (own specs, or `extends` of specs/scenes/*.json) headless with
  * at most `jobs` browsers (default 2, under tools/e2e-lock.sh), and writes <out>/index.md: one row per scene with the
  * gate results and the contact sheet (<out>/<scene>/sheet.jpg). The filter is a glob on the scene name, comma separated
@@ -13,7 +13,7 @@ import { zoomLimits } from '../../src/render/View';
  * `--matrix` (PO 10-13 low tier / close zoom): every scene runs at the high and the low quality tier, and scenes with a
  * game/follow camera also at zoom 1 and the closest player zoom (`zoomLimits[0]`), as `<scene>@<tier>-z<zoom>` rows. */
 const args = process.argv.slice(2), flag = (name: string) => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : undefined; };
-const dir = resolve('specs/scenes/catalog'), out = resolve(flag('out') ?? 'test-results/scene-catalog');
+const dir = resolve(flag('dir') ?? 'specs/scenes/catalog'), out = resolve(flag('out') ?? 'test-results/scene-catalog');
 const backend = (flag('backend') ?? 'webgl2') as Backend, matrix = args.includes('--matrix');
 const tiers = (matrix ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
 const [width, height] = (flag('size') ?? '960x540').split('x').map(Number);

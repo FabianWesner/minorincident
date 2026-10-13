@@ -14,6 +14,8 @@ export interface CampaignSave {
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];
   /** L8/E31: the same unarmed APC and its complete living roster, retained across handover/save. */
+  /** L9 authored crash resume payload; the S7 handover clears this after committing L10. */
+  l9Crash?: ReturnType<import('../missions/LevelNineCrash').LevelNineCrash['save']>;
   transport?:import('../vehicles/Vehicles').VehicleTransfer;
   stationOccupants?:import('../world/types').EntitySnapshot[];
   rescuedSurvivors?:import('../world/types').EntitySnapshot[];

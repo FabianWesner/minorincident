@@ -247,10 +247,6 @@ export class Game {
           if (this.campaign) this.applyCampaign();
           this.world.l7Encounters!.prepare();
         }
-        if (id === 'L9' && this.campaign?.transport) {
-          this.applyCampaign();
-          this.world.vehicles!.restoreTransfer(this.campaign.transport, { x: this.world.districts!.playerStart[0], z: this.world.districts!.playerStart[1] });
-        }
         opts?.setup?.(this.world);
         if(this.campaign)this.watchCampaign();
         this.quality.startLevel();this.applyQuality();
@@ -261,6 +257,7 @@ export class Game {
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
+        if (id === 'L9') this.world.missions?.begin();
         if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
@@ -309,6 +306,7 @@ export class Game {
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
   saveCampaign():boolean {
     if(!this.campaign)return false;
+    if (this.world.scenario === 'L9' && this.world.missions?.l9) this.campaign.l9Crash = this.world.missions.l9.save();
     if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
     return this.saves.write(this.campaign);
   }
@@ -324,6 +322,7 @@ export class Game {
       this.completedAt = compositions[`L${next}`] ? { target: `L${next}`, at: performance.now() } : null;
       if (compositions[`L${next}`]) void prefetchLevel(`L${next}`, 4, this.quality.tier);
     });
+    this.world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && event.name.startsWith('l9.')) this.saveCampaign(); });
     this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
     this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});
   }
@@ -389,7 +388,7 @@ export class Game {
    * they are not GPU timer queries. Without profiling, the extra timers stay zero. */
   perf() {
     const info = this.view.renderer.info;
-    return { infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
+    return { terrain: this.view.terrainPerf(), infected: this.world.infected ? { count: this.world.infected.active.length, available: this.world.infected.pool.length } : null, effects: this.view.effectPerf(), nodeBuildMaterials: { ...this.view.renderer.nodeBuildMaterials }, crowdPreparation: { ...civilianBakeStats }, nodeBuilds: this.view.renderer.nodeBuilds, profile: this.view.renderer.profile, profileAssets: this.view.renderer.profileAssets, updateCpuMs: this.view.updateCpuMs, renderCpuMs: this.view.renderCpuMs, propUploads: this.view.propUploads, awakeProps: this.world.props?.items.filter(p => p.awake).length ?? 0, fps: this.frameMs ? 1000 / this.frameMs : 0, frameMs: this.frameMs, simMs: this.simMs, simTicks: this.simTicks, simWorldMs: this.simWorldMs, simTickMs: this.simTickMs, uiMs: this.ui.updateMs, drawCalls: info.render.drawCalls, triangles: info.render.triangles, geometries: info.memory.geometries, textures: info.memory.textures, entities: this.world.entities.size, backend: this.view.renderer.selectedBackend,loadTiming:this.lastLoad, quality: this.quality.snapshot(), renderedFrames: this.view.renderedFrames, contextLost: this.view.contextLost, paused: this.clock.paused, heapBytes: (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory?.usedJSHeapSize ?? null, lighting: this.view.lightingPerf() };
   }
   /** Debug-only synthetic GPU cost. It changes the quality observation, never sim time. */
   simulateFrameCost(ms: number): void { if (!Number.isFinite(ms) || ms < 0) throw new RangeError('Invalid frame cost'); this.simulatedFrameMs = ms; }
