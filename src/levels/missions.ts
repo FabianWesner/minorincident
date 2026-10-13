@@ -10,11 +10,15 @@ import type { DistrictId } from './districts/types';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
 import type { Anchor, MissionDef, ObjectiveDef, ObjectiveType, Trigger } from '../sim/missions/types';
 
-export const missionIds = ['L1','L2','L3','L4','L5','L6','L8','L9'] as const;
+export const missionIds = ['L1','L2','L3','L4','L5','L6','L8','L9','L10'] as const;
 export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
+  if (id === 'L10') {
+    const at = resolve('D-CROSSING', 'crawl-end');
+    return { id, briefing: 'The arsenal is lost. Reach the city with your axe.', anchors: { 'cure-crash': at }, actors: {}, groups: {}, gates: {}, items: [], states: ['opening-complete'], counters: [], checkpoints: ['cure-crash'], cinematics: {}, steps: [{ id: 'cure-opening', type: 'custom', text: 'Find a way into the city', anchor: 'cure-crash', start: { kind: 'start' }, complete: { kind: 'state', key: 'opening-complete', equals: true }, fail: [] }], finish: ['cure-opening'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
+  }
   if (id === 'L9') return levelNineMission(resolve);
   if (id === 'L8') return levelEightMission(resolve);
   if (id === 'L6') return levelSixMission(resolve);

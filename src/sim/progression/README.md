@@ -18,7 +18,7 @@ truncate equipped racks to that level's capacity without deleting the saved setu
 `SaveStore` receives a storage adapter; the browser supplies localStorage under
 `minor-incident.campaign`. Version 2 stores character, seed, unlocked/completed levels,
 owned actions, upgrades, racks, settings, usage, and an optional reward transaction.
-No physics, health, combat timers or mid-level position is persisted. Continue restarts
+Outside L9's crash resume record, no physics, health, combat timers or mid-level position is persisted. Continue restarts
 an unlocked level at its briefing or resumes pending upgrade choices. Corrupt, invalid,
 unknown-version, and inaccessible saves return an error result; CampaignUI displays
 Start new. Version 0 compatibility renames `level` to `unlockedLevel`; version 1 migrates
@@ -42,3 +42,17 @@ Power is a weighted sum of player/action modifiers, weapon tiers and abilities. 
 thresholds map that power to E04's existing cumulative tiers. The default seed reaches
 0–4 after L1–L5. Tests enumerate all 243 upgrade paths, sample 1,000 offer seeds, exercise
 save migration/reload and all input schemes, and capture five actual avatar gear tiers.
+
+L9's completed crash/crawl commits `crossingHandover` before navigation: both racks and
+active combat selections become fire axe only, old projectile/drop/reward state is
+removed, and ordinary next-level health is restored. Lost weapon IDs and living human
+passengers are history; abilities/upgrades remain progression. The protected corgi
+keeps its identity at L10. Save validation uses the lost IDs only to validate historical
+upgrade prerequisites, never to equip them. Finished S6 saves migrate to this transaction;
+pre-finale zero-HP crash saves migrate to the driveable floor at the saved position.
+Continue starts L10 on foot at `cure-crash`, with no reward or credits screen. The S7
+composition reuses the authored safe crawl ground; E32's region lanes replace/extend
+that opening without changing the campaign transaction.
+
+Scene catalog for S7: `npm run scene:catalog -- --filter 'l9-crash-handover,l9-crash-axe-start' --matrix --backend webgl2` (repeat with `webgpu`). These scenes live in `tests/` to keep the
+source-of-truth specs unchanged.

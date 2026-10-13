@@ -24,11 +24,18 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
 }
 export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   if(!world.player)throw new Error('Progression needs a survivor');
+  if (world.scenario === 'L10' && save.crossingHandover?.corgi && world.npcs) {
+    for (const e of [...world.entities.iterate()]) if (e.companion) { world.entities.remove(e.id); world.spatial.delete(e.id); }
+    const corgi = structuredClone(save.crossingHandover.corgi); delete corgi.passengerOf;
+    Object.assign(corgi.companion!, { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0 });
+    world.entities.reserveIds([corgi.id]); world.entities.replace(corgi);
+    world.npcs.companion.forceSafe = true; world.npcs.companion.respawnNear();
+  }
   const m=modifiers(save),player=world.player;
   world.progression={pickups:[],campaign:structuredClone(save),powerScore:powerScore(save)};
   player.entity.health.max=100+m.health;player.entity.health.current=player.entity.health.max;
   player.progressionSpeed=(4.5+m.speed)/4.5;player.select(save.character,gearTier(save));
   if(world.vehicles){world.vehicles.progressionArmor=m.ramArmor;world.vehicles.progressionBoost=1+m.boost;}
-  if(world.combat){const level=/^L([1-9])$/.exec(world.scenario??'');const size=rackSize(level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(save.racks.LEFT.slice(0,size),save.racks.RIGHT.slice(0,size));if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
+  if(world.combat){const level=/^L([1-9]|10)$/.exec(world.scenario??'');const size=rackSize(level?Number(level[1]):save.unlockedLevel);world.combat.rackCapacity=size;world.combat.actionDefinitions=modifiedActions(save);world.combat.setLoadout(save.racks.LEFT.slice(0,size),save.racks.RIGHT.slice(0,size));if(save.settings.aimAssist)world.combat.assist.setting=save.settings.aimAssist;}
 }
 export function actionResolver(defs:Record<string,ActionDef>|null):(id:string)=>ActionDef {return id=>defs?.[id]??action(id);}

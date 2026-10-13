@@ -1,4 +1,4 @@
-import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { basename, relative, resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer, type Backend } from './session';
 import { runSpec } from './run';
@@ -6,14 +6,15 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { zoomLimits } from '../../src/render/View';
 
 /** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--size 960x540] [--out dir] [--list]
- * Runs the ready-made QA scenes in specs/scenes/catalog/ (own specs, or `extends` of specs/scenes/*.json) headless with
+ * Runs the ready-made QA scenes in specs/scenes/catalog/ and tests/scenes/catalog/ (own specs, or `extends` of specs/scenes/*.json) headless with
  * at most `jobs` browsers (default 2, under tools/e2e-lock.sh), and writes <out>/index.md: one row per scene with the
  * gate results and the contact sheet (<out>/<scene>/sheet.jpg). The filter is a glob on the scene name, comma separated
  * (`bld-grove-*`, `fight-*,ped-*`). Exit 1 when any gate fails or a scene throws. Docs: docs/tools/scene-lab.md.
  * `--matrix` (PO 10-13 low tier / close zoom): every scene runs at the high and the low quality tier, and scenes with a
  * game/follow camera also at zoom 1 and the closest player zoom (`zoomLimits[0]`), as `<scene>@<tier>-z<zoom>` rows. */
 const args = process.argv.slice(2), flag = (name: string) => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : undefined; };
-const dir = resolve(flag('dir') ?? 'specs/scenes/catalog'), out = resolve(flag('out') ?? 'test-results/scene-catalog');
+const dirs = (flag('dir') ? [resolve(flag('dir')!)] : [resolve('specs/scenes/catalog'), resolve('tests/scenes/catalog')]).filter(existsSync);
+const out = resolve(flag('out') ?? 'test-results/scene-catalog');
 const backend = (flag('backend') ?? 'webgl2') as Backend, matrix = args.includes('--matrix');
 const tiers = (matrix ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
 const [width, height] = (flag('size') ?? '960x540').split('x').map(Number);
@@ -22,16 +23,16 @@ const globs = (flag('filter') ?? '*').split(',').map(g => new RegExp(`^${g.trim(
 
 interface Entry { name: string; file: string; spec: SceneSpec; tier: 'high' | 'low' }
 const zoomed = (spec: SceneSpec) => spec.camera?.mode === 'game' || spec.camera?.mode === 'follow';
-const entries: Entry[] = readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'index.json').sort().map(f => {
+const entries: Entry[] = dirs.flatMap(dir => readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'index.json').sort().map(f => {
   const file = `${dir}/${f}`, spec = readSpec(file);
   return { name: spec.name ?? basename(f, '.json'), file, spec };
-}).filter(e => globs.some(g => g.test(e.name))).flatMap(e => tiers.flatMap(tier => {
+})).filter(e => globs.some(g => g.test(e.name))).flatMap(e => tiers.flatMap(tier => {
   if (!matrix) return [{ ...e, tier }];
   // The camera override keeps the authored target/actor; closer zoom is what the player sees at the scroll limit.
   const zooms = zoomed(e.spec) ? [zoomLimits[1], 1, zoomLimits[0]] : [null];
   return zooms.map(zoom => ({ ...e, tier, name: `${e.name}@${tier}${zoom === null ? '' : `-z${zoom}`}`, spec: zoom === null ? e.spec : { ...e.spec, camera: { ...e.spec.camera!, zoom } as SceneSpec['camera'] } }));
 }));
-if (!entries.length) { console.error(`no catalog scene matches ${flag('filter')}; names: ${readdirSync(dir).filter(f => f.endsWith('.json')).map(f => basename(f, '.json')).join(' ')}`); process.exit(2); }
+if (!entries.length) { console.error(`no catalog scene matches ${flag('filter')}; names: ${dirs.flatMap(dir => readdirSync(dir).filter(f => f.endsWith('.json')).map(f => basename(f, '.json'))).join(' ')}`); process.exit(2); }
 if (args.includes('--list')) { console.log(entries.map(e => e.name).join('\n')); process.exit(0); }
 
 type Row = { name: string; file: string; pass: boolean; seconds: number; frames: number; gates: string; failed: string[]; sheet?: string; sheetKb?: number; error?: string; errors: number; note?: string };

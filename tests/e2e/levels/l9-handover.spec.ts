@@ -1,0 +1,44 @@
+import { mkdirSync } from 'node:fs';
+import { test, expect, boot, testUrl } from '../fixtures';
+import type { Game } from '../../../src/Game';
+import { preset } from '../../../src/sim/progression/Campaign';
+const dir = 'test-results/epics/E31/S7/browser';
+for (const quality of ['high', 'low']) test(`T-E31-15-handover-browser @E31-AC14 @E31-AC15 ${quality} crash directly continues and reloads L10`, async ({ page }) => {
+  test.setTimeout(240_000); mkdirSync(dir, { recursive: true });
+  if (quality === 'low') await page.setViewportSize({ width: 390, height: 844 });
+  await boot(page, `${testUrl.replace('quality=high', `quality=${quality}`)}&scenelab=1&ui=1`);
+  const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9; save.settings.quality = quality as 'high'|'low';
+  await page.evaluate(async save => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    game.campaign = save; await game.loadLevel('L9', { seed: 31 }); window.__SS__!.pause();
+    const w = game.world, car = w.vehicles!.cars.get(w.missions!.l9!.state.carId)!;
+    car.physics.body.setTranslation({ x: 470, y: 1, z: 0 }, true);
+    w.entities.get(1)!.health.current = 1;
+    await window.__SS__!.step(850);
+  }, save);
+  await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
+  await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
+  const opening = await page.evaluate(() => ({ state: window.__SS__!.getState(), save: window.__SS__!.campaign.state() }));
+  expect(opening.save!.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
+  expect(opening.state.player!.weapons!.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
+  expect(opening.state.player!.weapons!.RIGHT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
+  expect(opening.state.player!.transform.x).toBe(547);
+  expect(opening.state.player!.health.current).toBe(opening.state.player!.health.max);
+  expect(opening.state.mission && 'checkpoint' in opening.state.mission ? opening.state.mission.checkpoint : null).toBe('cure-crash');
+  await expect(page.locator('.campaign-ui')).toBeHidden();
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  await page.screenshot({ path: `${dir}/${quality}-start.png` });
+  await page.reload();
+  await page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__);
+  await page.evaluate(async () => {
+    await window.__SS__!.ready;
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    game.ui.show('title');
+  });
+  await page.getByTestId('continue-game').click();
+  await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
+  await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
+  expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.rack.map(s => s.id))).toEqual(['weapon.fire-axe']);
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  await page.screenshot({ path: `${dir}/${quality}-reload.png` });
+});

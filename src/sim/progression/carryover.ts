@@ -1,6 +1,7 @@
 import { clearOfL2Script, MAX_BODIES, type L1Aftermath } from '../../levels/continuity';
 import type { SimWorld } from '../world/SimWorld';
 import type { MissionResult } from '../missions/types';
+import { commitCrossingHandover } from './crossingHandover';
 import { autoRewards, lastLevel, type CampaignSave, type Level } from './Campaign';
 
 /** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
@@ -9,6 +10,7 @@ export function completeCampaignLevel(save: CampaignSave, level: Level, result: 
   save.results ??= {};
   save.results[`L${level}`] = structuredClone(result);
   if (level === 5) { save.survivors = [...result.survivors ?? []]; save.stationOccupants = structuredClone(result.stationOccupants); save.rescuedSurvivors = structuredClone(result.rescuedSurvivors); }
+  if (level === 9) { commitCrossingHandover(save, world); return; }
   if (level !== save.completedLevels + 1) return;
   // L6 onwards has no reward screen: finishing a level unlocks and hands over to the next one directly.
   if (level >= 6) {
