@@ -31,7 +31,7 @@ export class Mission {
   private readonly gateHandles = new Map<string, number>();
   private markerObjective: string | null = null;
   private pendingMarker: string | null = null;
-  private readonly pendingCheckpoints: string[] = [];
+  private readonly pendingCheckpoints: { id: string; anchor?: { x: number; z: number } }[] = [];
   private finishApplied = false;
   /** Last tick with a swing, shot or explosion (run-out rule). */
   private lastActionTick = -Infinity;
@@ -245,12 +245,15 @@ export class Mission {
   }
   private event(event: GameEvent): void {
     if (event.type === 'player.respawned') {
-      // One path for every level (PO 2026-10-13): L1 keeps the world (PO 2026-10-07), the other levels restore the checkpoint snapshot;
-      // then the courier stands exactly on the last reached checkpoint (the Player already put her there), made safe by Respawn.ts.
+      // L1 and the L4 escape keep the live world; L4 camp restores keep the collapse director progressing.
+      // Shared Respawn always places the courier at the last anchor and clears its threats (PO 2026-10-13).
       if (this.state.phase === 'playing') {
         const cp = this.world.entities.get(1)!.survivor!.checkpoint, anchor = { x: cp.x, z: cp.z };
-        if (this.l1) this.l1.respawn(); else this.restore(this.state.checkpoint ?? 'start');
-        respawnAtCheckpoint(this.world, anchor, !!this.l1);
+        const l4Kept = this.state.l4?.phase === 'war' || this.state.l4?.phase === 'collapse';
+        if (this.l1) this.l1.respawn();
+        else if (l4Kept) { this.world.controls.reset(); this.world.player!.restoreVitals(this.world.tick); this.l4!.respawn(); }
+        else this.restore(this.state.checkpoint ?? 'start');
+        respawnAtCheckpoint(this.world, anchor, !!this.l1 || l4Kept);
       }
       return;
     }
@@ -319,7 +322,7 @@ export class Mission {
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
       case 'grant': this.collect(action.item); break;
-      case 'checkpoint': this.pendingCheckpoints.push(action.id); break;
+      case 'checkpoint': this.requestCheckpoint(action.id); break;
       case 'marker': this.pendingMarker = action.anchor; break;
       case 'state': this.setState(action.key, action.value); break;
     }
@@ -334,8 +337,8 @@ export class Mission {
     this.emit({ type: 'cinematic.completed', id: current.id });
     this.activate(); this.flushCheckpoint(); if (this.finishApplied && !this.state.cinematic) this.result();
   }
-  /** Story-triggered checkpoint: captured at the end of the current tick, after all of its spawns. */
-  requestCheckpoint(id: string): void { this.pendingCheckpoints.push(id); }
+  /** Story-triggered checkpoint: captured at tick end after spawns; an explicit anchor sets the respawn position without teleporting. */
+  requestCheckpoint(id: string, anchor?: { x: number; z: number }): void { this.pendingCheckpoints.push({ id, anchor }); }
   /** Story-controller camera beat (a defined cinematic): only while playing and when no other cinematic runs; returns whether it started. */
   cinematic(id: string): boolean { if (this.state.phase !== 'playing' || this.state.cinematic || !this.def.cinematics[id]) return false; this.run([{ kind: 'cinematic', id }]); return true; }
   /** Dispatcher/toast line through the same path as scripted radio actions. */
@@ -344,12 +347,12 @@ export class Mission {
   checkpointPositions(): { id: string; position: [number, number, number] }[] {
     return [...this.checkpoints].flatMap(([id, checkpoint]) => {
       const player = checkpoint.entities.find(entity => entity.id === 1);
-      return player ? [{ id, position: [player.transform.x, player.transform.y, player.transform.z] as [number, number, number] }] : [];
+      return player ? [{ id, position: [player.survivor!.checkpoint.x, player.transform.y, player.survivor!.checkpoint.z] as [number, number, number] }] : [];
     });
   }
-  checkpoint(id: string): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint(this.world.entities.get(1)!.transform); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
+  checkpoint(id: string, anchor: { x: number; z: number } = this.world.entities.get(1)!.transform): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint({ ...this.world.entities.get(1)!.transform, ...anchor }); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
   private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), seams: captureSeams(this.world) }; }
-  private flushCheckpoint(): void { for(const id of this.pendingCheckpoints)this.checkpoint(id);this.pendingCheckpoints.length=0; }
+  private flushCheckpoint(): void { for(const { id, anchor } of this.pendingCheckpoints)this.checkpoint(id, anchor);this.pendingCheckpoints.length=0; }
   /** Test loading can reconstruct an authored checkpoint by walking its graph prefix.
    * Existing reached snapshots are always preferred; this is not a gameplay playthrough. */
   loadCheckpoint(id: string): void {

@@ -147,6 +147,8 @@ export const l4 = {
     cameraS: 1.6,
     /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
     escape: {
+      /** First street point beyond the east camp perimeter: the escape checkpoint after Fall back. */
+      checkpoint: [-4, 4] as P,
       nearM: 7, s: 15,
       /**
        * The escape street (l4-collapse-2): out of the ring's east side, down the x = -4 street to Lakeshore Avenue and east to Kessler's
@@ -155,8 +157,12 @@ export const l4 = {
        */
       route: [[-12, 4], [-4, 4], [-4, 28], [-2, 41], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
     },
-    /** Respawn in the collapse: the courier comes back at whichever plaza exit has the fewest infected within 12 m (no death loop in the flooded ring). */
-    respawn: [[-18.6, -24], [-6, -28], [4, -6], [-4, 28]] as readonly P[],
+    /** Camp checkpoints behind each remaining line; choose the nearest navigable post when the line falls. */
+    checkpoints: [
+      [[-25, -8], [-25, 4], [-25, 10]],
+      [[-11, 21.5]], // rear camp corner, clear of charges through the gun nests
+      [[-11, 21.5]], // behind the convoy crews and their ground-slam area
+    ] as readonly (readonly P[])[],
   },
   /** Section 5.4: allied fighters v3. */
   soldiers: {
@@ -197,7 +203,7 @@ export const l4 = {
     [-56, 18], [-44, -37.5], [-4, -37.2], [30, -37.2], [52.5, -2], [60, 22], [58, 43],   // both routes to Kessler Lane
     [38, 43.2], [18, 43.2], [-6, 43.4],
   ] as readonly P[] },
-  checkpoints: ['arrival', 'turn', 'line-break'] as const,
+  checkpoints: ['arrival', 'turn', 'line-1', 'nests', 'armor', 'line-break'] as const,
   /** Bots (section 8). Bands are provisional until the first green run (staging decision section 6). */
   bots: { seeds: 20, completeMedianS: [260, 460] as P, newbieMedianS: [275, 490] as P, newbieMinSeeds: 18, newbieMaxMedianDeaths: 2 },
 } as const;

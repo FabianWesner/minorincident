@@ -461,7 +461,7 @@ export class LevelFourWar {
     this.toPosts();
     this.panic(first);
     this.director.start();
-    this.mission.requestCheckpoint('turn');
+    this.campCheckpoint('turn', 0);
   }
   /** Soldiers take their posts' war footing; armed civilians draw their weapons and fight where they stand. */
   private engageAll(): void {
@@ -668,25 +668,24 @@ export class LevelFourWar {
     this.mission.radio('L4.air'); this.spectacle.withdrawHeli(); this.spectacle.detonateFuelTruck(); this.spectacle.fires();
     s.director.burnAt = tick + ticks(1); this.populateCollapse(); s.pockets = l4Pockets.map((_, i) => i);
     if (!this.mission.state.states['line-broken']) this.mission.setState('line-broken', true);
-    this.mission.requestCheckpoint('line-break');
+    const [x, z] = l4.director.escape.checkpoint;
+    this.mission.requestCheckpoint('line-break', this.snap({ x, z }, .35));
     this.breakRadioAt = tick + ticks(3);
   }
   private breakRadioAt = 0;
   private gateOpenAt = 0;
-  private safeRespawn(): void {
-    const { world } = this.mission, player = world.entities.get(1)!, live = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden);
-    const spots = l4.director.respawn.map(([x, z]) => this.snap({ x, z }, .45)).map(p => ({ p, n: live.filter(e => dist(e.transform, p) < 12).length })).sort((a, b) => a.n - b.n);
-    const to = spots[0]?.p; if (!to) return;
-    Object.assign(player.transform, { x: to.x, z: to.z });
-    world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
-    Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, to.x, to.z); world.player!.locomotion.reset();
-    for (const e of world.entities.iterate()) if (e.companion) { const c = this.snap({ x: to.x + 1.2, z: to.z + .8 }, .4); Object.assign(e.transform, c); world.spatial.set(e.id, c.x, c.z); }
+  /** Record the closest camp post behind the surviving line without moving the courier. */
+  campCheckpoint(id: string, line: number): void {
+    const player = this.world.entities.get(1)!.transform;
+    const posts = l4.director.checkpoints[Math.min(line, 2)].map(([x, z]) => this.snap({ x, z }, .35));
+    posts.sort((a, b) => dist(a, player) - dist(b, player));
+    this.mission.requestCheckpoint(id, posts[0]);
   }
   /** Alone after "Fall back!": the infected beyond `nearM` are busy with the army for a few seconds, so a way out opens (also after a respawn in the collapse). */
-  private escapeWindow(): void {
-    const { world } = this.mission, p = world.entities.get(1)!.transform, e = l4.director.escape;
+  private escapeWindow(p: Point = this.world.entities.get(1)!.transform): void {
+    const { world } = this.mission, e = l4.director.escape;
     for (const a of world.infected!.active) { const b = a.infected?.l1; if (!b || a.health.current <= 0 || dist(a.transform, p) <= e.nearM) continue; b.ignoreId = 1; b.ignoreUntil = world.tick + ticks(e.s); if (b.mode === 'chase' && b.targetId === 1) b.targetId = 0; }
-    this.s.director.gapUntil = world.tick + ticks(e.gapS); this.clearGap();
+    this.s.director.gapUntil = world.tick + ticks(e.gapS); this.clearGap(p);
   }
   /** Distance to the escape street (the polyline from the ring's east side to Kessler's door). */
   private escapeDistance(p: Point): number {
@@ -704,8 +703,8 @@ export class LevelFourWar {
    * The gap: infected on the escape street farther than `nearM` from the courier run off toward the army (the nearest soldier or armed
    * civilian off the street, else back into the ring), so the street reads as a way out; the ones on her heels keep chasing.
    */
-  private clearGap(): void {
-    const { world } = this.mission, ai = world.infected!, p = world.entities.get(1)!.transform, e = l4.director.escape;
+  private clearGap(p: Point = this.world.entities.get(1)!.transform): void {
+    const { world } = this.mission, ai = world.infected!, e = l4.director.escape;
     const allies = this.allyEntities().filter(a => this.escapeDistance(a.transform) >= e.gapM + 2);
     for (const a of ai.active) {
       if (a.health.current <= 0 || a.hidden || a.archetype === 'infected.alpha' || dist(a.transform, p) <= e.nearM || this.escapeDistance(a.transform) >= e.gapM) continue;
@@ -870,6 +869,16 @@ export class LevelFourWar {
     if (s.phase === 'plaza') { this.turn(); return true; }
     return false;
   }
+  /** Camp retries restore actors without rewinding the collapse director; escape retries keep their ongoing world. */
+  respawn(): void {
+    if (this.s.phase === 'war') {
+      // Restore the reached camp snapshot while keeping the collapse's clock, lost lines and run counters.
+      const live = this.s, { director, arrivedAt, gunAt, turnDueAt, turnAt, warAt, kills, infectedAtT30 } = live;
+      this.mission.restore();
+      Object.assign(live, this.s, { director, arrivedAt, gunAt, turnDueAt, turnAt, warAt, kills, infectedAtT30 });
+      this.mission.state.l4 = live;
+    } else if (this.s.phase === 'collapse') this.escapeWindow(this.world.entities.get(1)!.survivor!.checkpoint);
+  }
   /** Checkpoint restore: shift the timeline. Entities (soldiers, convoy, tank, infected, pickups) come back from the snapshot. */
   restore(delta: number): void {
     const s = this.mission.state.l4; if (!s) return;
@@ -894,8 +903,8 @@ export class LevelFourWar {
     this.world.infected!.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
     const fuel = this.world.entities.get(s.fuelId);
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_450, blocked: !!fuel && !fuel.hidden, wall: { x: l4.fuelTruck.x, y: 1, z: l4.fuelTruck.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
-    // A retry in the collapse: back at the quietest plaza exit, with the escape window (no death loop in the flooded ring).
-    if (s.phase === 'collapse') { this.safeRespawn(); this.escapeWindow(); }
+    // A collapse retry restores the escape window; shared Respawn places the courier at its checkpoint anchor.
+    if (s.phase === 'collapse') this.escapeWindow(this.world.entities.get(1)!.survivor!.checkpoint);
   }
 }
 void l4Anchors;
