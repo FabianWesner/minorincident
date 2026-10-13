@@ -1,0 +1,17 @@
+{
+ "name": "inf-dog-pounce",
+ "note": "L10 infected dog, one dog against the idle courier on a close camera: gallop in, telegraph (>= 0.6 s), spring and bite, 2 s cooldown, second pounce. Look for: low body, fast legs, jaw open at the spring, paws on the ground, no sinking or flipped body.",
+ "seed": 11,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 36,
+ "dof": false,
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 0, "state": "idle", "loadout": ["weapon.fire-axe", "weapon.fists"] },
+  { "id": "dog", "kind": "infected", "archetype": "infected.dog", "at": [9, 0], "yaw": 180, "state": "chase" }
+ ],
+ "camera": { "mode": "close", "target": "courier", "radius": 7, "azimuth": 35 },
+ "frames": 420,
+ "sheet": 48,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "footSinkMaxCm": 1 }
+}
