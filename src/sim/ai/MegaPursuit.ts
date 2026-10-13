@@ -394,8 +394,9 @@ export class MegaPursuit {
   /**
    * After the entity restore of a checkpoint. Timers shift by the checkpoint delta; a Mega killed since the checkpoint stays dead
    * (E32: a legitimate early kill remains dead); a living one keeps ≥ respawnGapM from the restored player.
+   * `respawn=false` is a live save resume: retain the captured position without applying the death/checkpoint fairness gap.
    */
-  restore(saved: unknown): void {
+  restore(saved: unknown, respawn = true): void {
     const s = structuredClone(saved as MegaPursuitState), delta = this.world.tick - s.tick, ai = this.world.infected!;
     const killed = this.state.mode === 'dead' && this.state.id !== 0, shift = (t: number) => t >= 0 && Number.isFinite(t) ? t + delta : t;
     if (s.audio) { s.audio.next = shift(s.audio.next); s.audio.step = shift(s.audio.step); }
@@ -415,7 +416,7 @@ export class MegaPursuit {
       s.mode = 'dead'; s.hp = 0; return;
     }
     if (killed) { s.mode = 'dead'; s.hp = 0; return; }
-    if (e) this.keepGap();
+    if (e && respawn) this.keepGap();
   }
   dispose(): void {
     this.stops.forEach(stop => stop()); this.stops.length = 0;

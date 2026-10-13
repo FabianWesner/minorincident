@@ -1,3 +1,4 @@
+import { matchesBackend } from '../../../tools/scenelab/run';
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import manifest from '../../../src/assets/manifest.json';
@@ -105,4 +106,12 @@ describe('Scene Lab motion metrics', () => {
     expect(torsoPitch([0, 1, 0], [.5, 1.5, 0], [1, 0, 0])).toBeCloseTo(45);
     expect(torsoPitch([0, 1, 0], [-.5, 1.5, 0], [1, 0, 0])).toBeCloseTo(-45);
   });
+});
+
+it('backend gate recognizes the WebGL2 label and rejects fallback to the wrong backend', () => {
+  expect(matchesBackend('webgl', 'webgl2')).toBe(true);
+  expect(matchesBackend('webgpu', 'webgpu')).toBe(true);
+  expect(matchesBackend('webgl', 'webgpu')).toBe(false);
+  expect(matchesBackend('webgpu', 'webgl2')).toBe(false);
+  expect(matchesBackend('unknown', 'webgl2')).toBe(false);
 });

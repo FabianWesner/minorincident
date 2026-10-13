@@ -1,3 +1,4 @@
+import { levelTenMission } from '../../levels/L10/mission';
 import { preset } from '../../sim/progression/Campaign';
 import { applyCampaign } from '../../sim/progression/apply';
 import { completeCampaignLevel } from '../../sim/progression/carryover';
@@ -264,6 +265,15 @@ export class SceneLab {
       const id = m.id ?? 'mega', entity = pursuit.introduce({ x: m.at[0], z: m.at[1] });
       this.actors.set(id, { id, kind: 'infected', entity, spec: { id, kind: 'infected', archetype: megaAlpha.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
       this.mega = { last: null, speeds: [], stepMaxM: 0, stepFrame: -1, modes: {}, samples: [], stuckLevelMax: 0, distanceMinM: Infinity };
+    }
+    if (spec.cureProgression) {
+      const save = preset('L10-default');
+      applyCampaign(world, save);
+      const at = world.entities.get(1)!.transform;
+      const mission = world.loadMission(levelTenMission(name => !spec.cureProgression?.checkpoint && name !== 'cure-crash' ? undefined : { x: at.x, z: at.z, radius: 2 }));
+      mission.begin();
+      if (spec.cureProgression.checkpoint) mission.loadCheckpoint(spec.cureProgression.checkpoint);
+      world.combat!.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
     }
     if (spec.l7Group) {
       world.scenario = 'L7';

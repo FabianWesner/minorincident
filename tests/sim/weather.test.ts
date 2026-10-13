@@ -1,3 +1,5 @@
+import { applyCampaign } from '../../src/sim/progression/apply';
+import { preset } from '../../src/sim/progression/Campaign';
 import { afterEach, expect, test } from 'vitest';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { WeatherSystem } from '../../src/sim/weather/WeatherSystem';
@@ -112,6 +114,7 @@ test('T-E28-08 @E28 @E28-AC08 every override preserves all registered mission gr
     w.loadComposition(c,layouts,28);
     for (const kind of weatherKinds) {
     if(id==='L6'&&kind!==weatherKinds[0]){w.reset();w.loadComposition(c,layouts,28);}
+    if (id === 'L10') applyCampaign(w, preset('L10-default'));
     const m = w.loadMission(resolveCampaignMission(id, w.districts!)); w.weather!.setOverride(kind); m.begin();
     let guard = 0;
     while (m.state.phase === 'playing' && guard < 100) {

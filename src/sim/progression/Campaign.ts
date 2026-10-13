@@ -5,7 +5,7 @@ import type { GearTier, SurvivorVariant } from '../../data/survivor';
 import type { L1Aftermath } from '../../levels/continuity';
 /** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
 export type Level = 1|2|3|4|5|6|7|8|9|10;
-export type ProgressionPreset = `L${2|3|4|5|6|8}-default`;
+export type ProgressionPreset = `L${2|3|4|5|6|8|10}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
   version:2; seed:number; character:SurvivorVariant; unlockedLevel:Level; completedLevels:number;
@@ -18,6 +18,8 @@ export interface CampaignSave {
   l9Crash?: ReturnType<import('../missions/LevelNineCrash').LevelNineCrash['save']>;
   /** Committed crash transaction: history only; never usable equipment or L10 followers. */
   crossingHandover?: { applied: true; checkpoint: 'cure-crash'; anchor: import('../world/types').Transform; corgi?: import('../world/types').EntitySnapshot; preCrashDurability: number; lostWeapons: string[]; shelteredPassengers: import('../world/types').EntitySnapshot[] };
+  /** Latest live L10 state and last reached retry snapshot; uses the existing mission/chunk seams. */
+  cureResume?: { current: import('../missions/types').MissionCheckpoint; checkpoint: import('../missions/types').MissionCheckpoint };
   transport?:import('../vehicles/Vehicles').VehicleTransfer;
   stationOccupants?:import('../world/types').EntitySnapshot[];
   rescuedSurvivors?:import('../world/types').EntitySnapshot[];
@@ -112,6 +114,15 @@ export function completePending(save:CampaignSave):void {
 }
 export function autoRewards(save:CampaignSave,level:Level):void {beginRewards(save,level);completePending(save);}
 export function preset(name:ProgressionPreset):CampaignSave {
+  if (name === 'L10-default') {
+    const save = preset('L8-default');
+    const lostWeapons = save.ownedActions.filter(id => catalog[id].category !== 'ability' && id !== 'weapon.fire-axe');
+    save.completedLevels = 9; save.unlockedLevel = 10;
+    save.crossingHandover = { applied: true, checkpoint: 'cure-crash', anchor: { x: 0, y: .7, z: 0, yaw: 0 }, preCrashDurability: 0, lostWeapons, shelteredPassengers: [] };
+    save.ownedActions = ['weapon.fire-axe', ...save.ownedActions.filter(id => catalog[id].category === 'ability')];
+    save.racks = { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] };
+    return save;
+  }
   if(!/^L[2-68]-default$/.test(name))throw new Error('Unknown progression preset');
   const target=Number(name[1]),save=newCampaign();
   for(let level=1;level<Math.min(target,6);level++){

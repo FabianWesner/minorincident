@@ -1,12 +1,14 @@
 import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
-import { SceneSession, encodeWebm, evaluate, writeJson } from './session';
+import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
  * load, step in batches, capture shots / video / contact sheet, write metrics.json, evaluate the gates. */
 export interface RunOptions { file?: string; out: string; frames?: number; shots?: number[]; video?: number; sheet?: number; openMs?: number; inspect?: boolean }
 export const maxSheetCells = 24;
+/** The production renderer names its WebGL2 backend `webgl`; catalog requests use `webgl2`. */
+export function matchesBackend(actual: string, requested: Backend): boolean { return actual === (requested === 'webgl2' ? 'webgl' : 'webgpu'); }
 
 /** Frames of the contact sheet: every `sheet` frames from 0, thinned evenly to at most 24 cells. */
 export function sheetFrames(sheet: number, frames: number): number[] {

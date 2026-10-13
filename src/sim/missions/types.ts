@@ -27,6 +27,7 @@ export type Trigger =
   | { kind: 'event'; type: string; actor?: string; count: number }
   | { kind: 'all' | 'any'; triggers: Trigger[] };
 export type ScriptAction =
+  | { kind: 'arsenal'; add: string[]; remove: string[] }
   | { kind: 'spawn'; group: string }
   | { kind: 'migration'; group: string; to: string }
   | { kind: 'tier'; tier: Tier }
@@ -269,6 +270,10 @@ export interface MissionState {
 }
 export interface MissionCheckpoint {
   tick: number; state: MissionState; entities: EntitySnapshot[];
+  /** Weapon entitlement and rack transaction captured with entities, never historical unlocks. */
+  arsenal?: Pick<import('../progression/Campaign').CampaignSave, 'ownedActions' | 'racks'>;
+  /** Monotonic combat identity: a resumed rocket must not reuse an ID in the Mega's hit ledger. */
+  combatSequence?: number;
   /** Snapshots of the optional L1 toy systems (bicycle, yard gates, dumpsters, outbreak overlay). */
   seams?: Record<string, unknown>;
 }
