@@ -162,6 +162,8 @@ export class WeatherView extends Group {
     // bilinear filtering stay identical while horde raster work falls by 16x.
     const trackSize = tier === 'low' && this.world.scenario === 'L7' ? TRACK_SIZE / 4 : TRACK_SIZE;
     if (weatherSurface.tracks.image.width !== trackSize) {
+      // WebGPU never resizes an uploaded texture in place; dispose so the next upload allocates the new size.
+      weatherSurface.tracks.dispose();
       weatherSurface.tracks.image = { data: new Uint8Array(trackSize * trackSize * 4), width: trackSize, height: trackSize };
       weatherSurface.tracks.needsUpdate = true; this.lastTrackTick = -1;
     }
