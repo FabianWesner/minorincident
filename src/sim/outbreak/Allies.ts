@@ -59,9 +59,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const policeRule = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
-  // Optional off-screen self-defence (0 = strict PO rule): an ally the player cannot see may shoot what is this close to it.
+  // Off-screen self-defence (orchestrator 2026-10-13): an ally the player cannot see may shoot what is this close to it. Police keep the
+  // strict rule (PO 10-12: "Ideally the Zombies will win against police"; with it the L3 squad stopped losing officers) and only shove.
   const inView = (target: EntitySnapshot) => playerSees(world, target.transform)
-    || allyOffscreenDefenceM > 0 && dist(target.transform, e.transform) <= allyOffscreenDefenceM && !playerSees(world, e.transform, 1.05);
+    || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM && !playerSees(world, e.transform, 1.05);
   const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   const audibleThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.

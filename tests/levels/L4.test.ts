@@ -183,7 +183,7 @@ describe('L4 The Safe City Falls', () => {
     // At the infected cap a bite kills instead of turning (section 5.9); make room first so the test checks the turn itself.
     w.infected!.director.levelCap += 400;
     // A soldier bitten turns: same entity id, same model and tint, the rifle lies on the ground.
-    const soldier = s.soldierIds.map(id => w.entities.get(id)!).filter(e => e.health.current > 0 && e.civilian && e.civilian.state !== 'finished' && !e.infected)[2], before = { asset: soldier.appearance!.asset, tint: soldier.appearance!.tint, id: soldier.id };
+    const soldier = s.soldierIds.map(id => w.entities.get(id)).filter((e): e is NonNullable<typeof e> => !!e && e.health.current > 0 && !!e.civilian && e.civilian.state !== 'finished' && !e.infected)[2], before = { asset: soldier.appearance!.asset, tint: soldier.appearance!.tint, id: soldier.id };
     w.npcs!.civilians.outbreak!.infect(soldier, 0);
     for (let i = 0; i < 6 * 60 && !soldier.infected; i++) w.update();
     expect(soldier.infected).toBeDefined(); expect(soldier.id).toBe(before.id); expect(soldier.appearance!.asset).toBe(before.asset); expect(soldier.appearance!.tint).toBe(before.tint);
