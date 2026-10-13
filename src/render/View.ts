@@ -2,9 +2,9 @@
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
 import { cameraFraming } from '../data/cameraFraming';
 
-/** Zoom range as a fraction of the default radius (PO, E19 I1 review): in until the hero is ~1/3.5 of the
- * viewport height (courier 1.4 m at 25° FOV ≈ 0.5), out to about twice the visible ground area (√2 ≈ 1.45). */
-export const zoomLimits = [.5, 1.45] as const;
+/** Player zoom range as a fraction of the default radius: in until the hero is ~1/3.5 of the viewport height. */
+// PO 2026-10-13: "End of L3, I can zoom out whihc I shouldn't"
+export const zoomLimits = [.5, 1] as const;
 /** Body-centre height of the courier above the feet (spawn and locomotion keep the player at ground + .72). */
 export const feetOffset = .72;
 export interface CameraPose { position: [number, number, number]; target: [number, number, number] }

@@ -567,7 +567,7 @@ export class GameView implements Lifecycle {
       this.view.preset(name, { position: [p.x + 15, 18, p.z + 15], target: [p.x, .4, p.z] }); this.update(1); return;
     }
     if (this.world.vehicles && name === 'vehicle') { this.view.preset(name, { position: [-9, 6, 21], target: [0, .8, 12] }); this.update(1); return; }
-    // E27 labs: the game camera geometry (radius 19, max zoom-out 1.45×) centred on the blast origin.
+    // E27 labs: the game camera geometry (radius 19, default player zoom) centred on the blast origin.
     if ((this.world.scenario?.startsWith('blast') || this.world.scenario === 'smoke-lab') && (name === 'blast' || name === 'blast-wide' || name === 'blast-car')) { const k = name === 'blast-wide' ? 1.45 : 1, [x, z] = name === 'blast-car' ? [7, -3] : [0, 0]; this.view.preset(name, { position: [x + 10.9 * k, 11.2 * k, z + 10.9 * k], target: [x, 0, z] }); this.update(1); return; }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if (this.world.scenario?.startsWith('vfx') || this.world.scenario === 'blood-probe' || this.world.scenario === 'gore-probe') {
