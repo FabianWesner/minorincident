@@ -1,10 +1,12 @@
 import { boot, expect, test } from './fixtures';
+import { canvasFrame, canvasFrameChecks } from './canvas-frame';
 
 test('S-01 @smoke foundation boots, ready resolves and a screenshot is available', async ({ page }, testInfo) => {
   await boot(page);
   await page.evaluate(async () => { await window.__SS__!.step(60); await window.__SS__!.screenshotReady(); });
   await expect(page).toHaveTitle('Minor Incident');
   await expect(page.locator('canvas')).toBeVisible();
+  expect(canvasFrameChecks(await canvasFrame(page)).filter(c => !c.pass), 'Game canvas contains visible spatial detail').toEqual([]);
   expect(await page.evaluate(() => window.__SS__!.getState().perf)).toMatchObject({ entities: 1, bodies: 2 });
   await page.screenshot({ path: `test-results/epics/E01/empty-${testInfo.project.name}.png` });
 });

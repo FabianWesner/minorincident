@@ -841,7 +841,7 @@ export class GameView implements Lifecycle {
     try {
       // The material performs its own color conversion, like RenderPipeline's output quad.
       renderer.autoClear = false; renderer.toneMapping = NoToneMapping; renderer.outputColorSpace = ColorManagement.workingColorSpace;
-      renderer.render(this.barScene, this.camera);
+      renderer.renderOverlay(this.barScene, this.camera);
     } finally { renderer.autoClear = autoClear; renderer.toneMapping = tone; renderer.outputColorSpace = color; }
   }
   /** Compact E18 effect counters without actor/pose snapshots. */
