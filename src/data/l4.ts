@@ -89,7 +89,7 @@ export const l4 = {
      * and staggered. `inside`: during the war groups of 1-2 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [1.2, 2.6] as P, inside: { everyS: 9, group: [1, 2] as P, minM: 9 },
+    group: [2, 5] as P, groupEveryS: [1.2, 2.6] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: 1.5,
     emergeLeashM: 26,
@@ -107,7 +107,7 @@ export const l4 = {
    * holds when and what each one does), inside the ordinary caps. `allyResist` scales the damage they take from anyone but the courier
    * (soldiers, HMG nests, tank, helicopter, armed civilians); the courier's damage is unchanged.
    */
-  alphas: { count: { high: 8, low: 6 }, allyResist: .15, lineHp: 300 },
+  alphas: { count: { high: 8, low: 6 }, allyResist: .5, lineHp: 300 },
   /** Section 5.6 (changed by the l4-collapse design): the final "Fall back!" comes `fallBackS` after the third line broke, at the latest `defenseS` after the turn. */
   lineBreak: { defenseS: 200, fallBackS: 8, mockupLatestS: 120 },
   /**
