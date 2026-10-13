@@ -1,0 +1,36 @@
+Validation for lane/l4-fallback-respawn after merging main
+T-E22-02: seed 3; complete; 296.83 sim seconds; 1 death; unchanged limit 2.
+Typecheck and lint: passed in E22 verify preparation and the unit static gate.
+
+Focused completion gate
+Test Files  1 passed (1)
+Tests  1 passed | 22 skipped (23)
+[remote] done exit=0 (runner 2.28.24.66, sync 19s, remote total 101s)
+
+All L4 suites on Hetzner
+Test Files  5 passed | 2 skipped (7)
+Tests  40 passed | 2 skipped (42)
+[remote] done exit=0 (runner 2.28.24.66, sync 16s, remote total 881s)
+
+Full unit and all-level respawn suites on Hetzner
+Test Files  201 passed | 1 skipped (202)
+Tests  1326 passed | 7 skipped (1333)
+[remote] done exit=0 (runner 2.28.24.66, sync 422s, remote total 457s)
+
+The first final unit attempt hit the existing 300000 ms T-E17-02b timeout under shared runner load.
+The complete suite passed with 2 workers; no timeout or assertion was changed.
+
+E22 verify remote sim stage
+76 passed; 2391 unrelated tests skipped by the epic/smoke selector; exit 0.
+
+E22 verify native browser stage
+44 passed on macOS, headless Chromium with ANGLE Metal, port 3473; fresh production build.
+Includes all five tests in tests/e2e/levels/L4.spec.ts, including WebGL and WebGPU body drawing.
+
+Remaining native checks: NOT COMPLETED
+Final l4-po-round.spec.ts and respawn-bat.spec.ts rerun: waiting for shared GPU locks; cancelled at the job time limit.
+E22 native performance stage: waiting for shared GPU locks; cancelled at the job time limit.
+These two files passed an earlier fresh native build (10 requested browser tests passed before the final camp/navigation refinement).
+The final native E22 run independently passed every L4.spec.ts case.
+A fresh Hetzner browser fallback passed its first high-tier PO capture in 8.9 minutes, then was cancelled as redundant/too slow for the remaining budget.
+No test assertions, timeouts, bot policy, respawn grace or infected behavior were loosened.
