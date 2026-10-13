@@ -22,6 +22,14 @@ loadout and physics driver. Tick deadlines shift to preserve remaining times in 
 Vehicle snapshots/checkpoints own passenger lists and pending entry/exit progress.
 L9's durability and breakdown policy are added by L9-S1.
 
+L9 floor policy (L9-S5, PO 10-13): `Vehicles.setFloorPolicy(id)` marks the mission APC. Durability still clamps to 0, but the
+car stays driveable at 60% of the healthy top speed (`apcFloor.speedShare`, `VehicleBody.speedCap`), the interact/exit input is
+ignored, and E09 smoking/burning/explosion never run (`state.floor`, `state.stage`). Cumulative stages at <=75/50/25/0% emit one
+`vehicle.damage-stage` each; `state.stage` persists with the checkpoint snapshot, so a retry restores the stage without
+replaying cues. Obstacle, parked-car and registered-wreck (`Vehicles.wrecks`, several boxes per logical id) contacts bill 10
+per onset (`source: 'obstacle'`) with the infected separation rule. Other vehicles keep the E09 rules. The HUD shows
+`Armor cur / max` and `Barely functional` at the floor (`vehicle-durability` panel).
+
 Scene Lab pedestrians accept `{ "boardCar": "apc" }` and `{ "exitCar": "apc" }`.
 `tests/scenes/l8-apc/transport.json` exercises the courier and a passenger at the game camera;
 `tools/scenelab/l8-apc.ts` records the reviewed before/after set and renderer/CPU counters.

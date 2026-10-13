@@ -90,7 +90,7 @@ export interface ActorSpec {
   loadout?: [string | string[], string | string[]];
   god?: boolean;
 }
-export interface VehicleSpec { decay?: import('../../sim/vehicles/Vehicles').VehicleState['decay']; id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
+export interface VehicleSpec { /** E31: L9 floor policy (zero HP stays driveable at 60% speed, staged damage). `health` sets the durability. */ floor?: boolean; health?: number; decay?: import('../../sim/vehicles/Vehicles').VehicleState['decay']; id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
 /** Actor commands. Strings are shorthands: 'idle' | 'chase' | 'follow' | 'flee' | 'infect'. */
 export type Action =
   | 'idle' | 'chase' | 'follow' | 'flee' | 'infect'
