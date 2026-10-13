@@ -1,0 +1,218 @@
+{
+ "1-exit": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": null,
+  "phase": "plaza",
+  "player": {
+   "x": -13.4,
+   "z": 3.9,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 0,
+  "engaged": 0,
+  "peds": 19,
+  "fleeing": 0,
+  "infected": 0,
+  "alphas": 0
+ },
+ "2-calm-plaza": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": null,
+  "phase": "plaza",
+  "player": {
+   "x": -21.5,
+   "z": 5,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 0,
+  "engaged": 0,
+  "peds": 19,
+  "fleeing": 0,
+  "infected": 0,
+  "alphas": 0
+ },
+ "2-calm-north": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": null,
+  "phase": "plaza",
+  "player": {
+   "x": -23,
+   "z": -9.9,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 0,
+  "engaged": 0,
+  "peds": 19,
+  "fleeing": 0,
+  "infected": 0,
+  "alphas": 0
+ },
+ "2-calm-overview-n": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": null,
+  "phase": "plaza",
+  "player": {
+   "x": -23,
+   "z": -9.9,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 0,
+  "engaged": 0,
+  "peds": 19,
+  "fleeing": 0,
+  "infected": 0,
+  "alphas": 0
+ },
+ "2-calm-overview-s": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": null,
+  "phase": "plaza",
+  "player": {
+   "x": -23,
+   "z": -9.9,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 0,
+  "engaged": 0,
+  "peds": 19,
+  "fleeing": 0,
+  "infected": 0,
+  "alphas": 0
+ },
+ "3-alarm-3s": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 3,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 1,
+  "engaged": 10,
+  "peds": 15,
+  "fleeing": 15,
+  "infected": 22,
+  "alphas": 0
+ },
+ "3-alarm-5s-overview": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 5,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 3,
+  "engaged": 10,
+  "peds": 9,
+  "fleeing": 9,
+  "infected": 18,
+  "alphas": 0
+ },
+ "4-alarm-8s": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 8,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 2,
+  "engaged": 10,
+  "peds": 5,
+  "fleeing": 5,
+  "infected": 18,
+  "alphas": 0
+ },
+ "4-alarm-10s": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 10,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 3,
+  "engaged": 10,
+  "peds": 3,
+  "fleeing": 3,
+  "infected": 14,
+  "alphas": 0
+ },
+ "4-alarm-10s-clean": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 10,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 3,
+  "engaged": 10,
+  "peds": 3,
+  "fleeing": 3,
+  "infected": 14,
+  "alphas": 0
+ },
+ "5-war-40s": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 40,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 10,
+  "aiming": 4,
+  "engaged": 10,
+  "peds": 0,
+  "fleeing": 0,
+  "infected": 15,
+  "alphas": 1
+ },
+ "6-war-95s": {
+  "backend": "webgl",
+  "tier": "low",
+  "t": 95,
+  "phase": "war",
+  "player": {
+   "x": -21.8,
+   "z": 3,
+   "insideRing": true
+  },
+  "soldiers": 3,
+  "aiming": 1,
+  "engaged": 3,
+  "peds": 0,
+  "fleeing": 0,
+  "infected": 27,
+  "alphas": 3
+ }
+}

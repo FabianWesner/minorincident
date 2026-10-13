@@ -1,0 +1,6 @@
+Committed 87ba6f50: L4 alarm/collapse pressure spawn new infected; pre-existing camp civilians stay human, panic and hide, and can still turn after bites.
+Alarm +5 s: high 28/28 and low 16/16 camp civilians are human in panic/hide, zero infections; 37/24 new infected spawns. Refuges retain human entities; tank clearance includes sheltered humans.
+Collapse unchanged: eight Alphas (seven reach the army), nine knockdowns, two broken barricades; beats 61.1/110.1/182.1 s, Fall back at 190.1 s; regular emergence groups ≤5, six approach directions, 469 arrivals.
+Validation: all 36 L4 sim tests pass on Hetzner; typecheck/lint/build pass. Unit suite: 1,310 pass, one pre-existing zoom assertion also fails on clean baseline 0a8be398. E22 verify sim: 72 pass; broader browser verification fails.
+Opened/described four fresh-build WebGL/WebGPU high/low game-camera captures at alarm +10 s (review.md). Civilians remain near shelters, registration rows empty, soldiers hold posts; incoming infected are outside the frame, so visual acceptance is incomplete.
+NOT FULLY COMPLETE within the two-hour limit: final full native run 13/15 passed; L4.spec.ts alarm visibility (+10 s) and escape after repeated deaths fail, while all ten l4-po-round capture cases pass. Final input-helper follow-up was stopped at the limit; no assertions were relaxed and no deployment/merge occurred.
