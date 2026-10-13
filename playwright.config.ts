@@ -7,7 +7,8 @@ delete process.env.NO_COLOR;
 const port = Number(process.env.E2E_PORT ?? 3301);
 // Browser tests are ALWAYS headless (the user works on this Mac; windows must never appear).
 // macOS: headless Chromium renders WebGL2 on the real GPU via ANGLE/Metal (low CPU load);
-// elsewhere (CI) SwiftShader. WebGPU is unavailable in headless Chromium on macOS and is checked manually.
+// elsewhere (CI) SwiftShader. Headless WebGPU availability depends on the pinned browser and GPU;
+// manual WebGPU validation remains the project policy (see docs/reports/render-test-parallel.md).
 const gpuArgs = process.platform === 'darwin'
   ? ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu']
   : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
