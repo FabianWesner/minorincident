@@ -6,7 +6,7 @@ import { selectTerrainChunks, terrainChunkBudgets, terrainPrefetchSeconds, type 
 import { InstancedGroup } from './InstancedGroup';
 import { GroundField } from './GroundField';
 
-interface Resident { batch: InstancedGroup; ground: GroundField; release: () => void }
+interface Resident { batch: InstancedGroup; ground: GroundField; release: () => void; chunk: TerrainChunk }
 /** Visual ownership only. Delayed downloads never change simulation support or input.
  * Coarse terrain stays in DistrictView; cell buffers and height samples unload together. */
 export class TerrainView extends Group {
@@ -61,7 +61,7 @@ export class TerrainView extends Group {
       // GroundField reads ordinary prototype meshes, using the same cell transform.
       const groundRoot = source.clone(true); groundRoot.position.copy(ref.position); groundRoot.updateMatrixWorld(true);
       const ground = new GroundField(); groundRoot.traverse(node => { if (node instanceof Mesh) ground.add(node); });
-      this.resident.set(chunk.id, { batch, ground, release: lease.release }); batch = undefined;
+      this.resident.set(chunk.id, { batch, ground, release: lease.release, chunk }); batch = undefined;
     } finally {
       batch?.removeFromParent();
       batch?.dispose();
@@ -69,7 +69,13 @@ export class TerrainView extends Group {
     }
   }
   height(x: number, z: number): number | null {
-    for (const cell of this.resident.values()) { const h = cell.ground.height(x, z); if (h !== null) return h; }
+    for (const cell of this.resident.values()) {
+      // NPC feet, tyres and effects ask many times per frame. Reject unrelated
+      // cells before the height-field lookup; keep the authored 1 mm seam apron.
+      const { origin, max } = cell.chunk;
+      if (x < origin[0] - .01 || x > max[0] + .01 || z < origin[1] - .01 || z > max[1] + .01) continue;
+      const h = cell.ground.height(x, z); if (h !== null) return h;
+    }
     return null;
   }
   snapshot() {

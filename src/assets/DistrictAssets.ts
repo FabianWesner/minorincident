@@ -201,7 +201,11 @@ export class DistrictAssets {
       const muzzleLocal = machineGun && muzzle ? machineGun.worldToLocal(muzzle.getWorldPosition(new Vector3())) : undefined;
       if (machineGun) asset.userData.splitDoors = ['gun'];
       asset.userData.assetId = id;
-      const root = this.remember(loadGate.paced ? await staticBatchAsync(asset, true, this.materials, () => loadGate.wait()) : staticBatch(asset, true, this.materials));
+      // LOD0 can arrive during driving even with an unpaced load gate (Scene Lab
+      // and foreground loads). Slice the same batch work instead of blocking a frame.
+      const paced = loadGate.paced;
+      const pause = () => paced ? loadGate.wait() : new Promise<void>(resolve => setTimeout(resolve, 0));
+      const root = this.remember(paced || canonical === 'lod0' ? await staticBatchAsync(asset, true, this.materials, pause) : staticBatch(asset, true, this.materials));
       if (muzzleLocal) {
         const gun = root.children.find(n => n.userData.door === 'gun');
         if (gun) { gun.name = 'gun'; const socket = new Object3D(); socket.name = 'muzzle'; socket.position.copy(muzzleLocal); gun.add(socket); }

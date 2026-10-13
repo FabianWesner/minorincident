@@ -1,0 +1,618 @@
+{
+  "source": "test-results/epics/E31/playwright-gpu.json",
+  "stats": {
+    "startTime": "2026-10-13T21:49:38.218Z",
+    "duration": 353210.107,
+    "expected": 55,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "T-E31-22-audio @E31-AC16 @E31-AC22 high snapshot stages own persistent engine voices and restore without transition cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4350
+        }
+      ]
+    },
+    {
+      "title": "T-E31-22-audio @E31-AC16 @E31-AC22 low snapshot stages own persistent engine voices and restore without transition cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3117
+        }
+      ]
+    },
+    {
+      "title": "T-E31-07-browser @E31-AC06 @E31-AC07 stopped hull attackers damage the APC; real driving ends attacks",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5495
+        }
+      ]
+    },
+    {
+      "title": "T-E31-08 @E31-AC08 durability HUD follows current/max within a frame, says Barely functional at zero, and no exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3614
+        }
+      ]
+    },
+    {
+      "title": "T-E31-08 @E31-AC08 durability HUD follows current/max within a frame, says Barely functional at zero, and no exit",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4320
+        }
+      ]
+    },
+    {
+      "title": "T-E31-08 @E31-AC08 durability HUD follows current/max within a frame, says Barely functional at zero, and no exit",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4394
+        }
+      ]
+    },
+    {
+      "title": "T-E30-14-browser T-E31-03-browser @E30-AC14 @E31-AC03 real APC enter, drive, both firing inputs and exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3687
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6034
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5934
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5794
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6051
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6025
+        }
+      ]
+    },
+    {
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8830
+        }
+      ]
+    },
+    {
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 18005
+        }
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 18755
+        }
+      ]
+    },
+    {
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 17501
+        }
+      ]
+    },
+    {
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3930
+        }
+      ]
+    },
+    {
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3342
+        }
+      ]
+    },
+    {
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 14141
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/high/1000",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7073
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/high/0",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6344
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/low/1000",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6464
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgl/low/0",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6588
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/high/1000",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8791
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/high/0",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6263
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/low/1000",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6221
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-browser-crash @E31-AC10 @E31-AC14 @E31-AC15 keyboard approach webgpu/low/0",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6416
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-handover-browser @E31-AC14 @E31-AC15 high crash directly continues and reloads L10",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 15241
+        }
+      ]
+    },
+    {
+      "title": "T-E31-15-handover-browser @E31-AC14 @E31-AC15 low crash directly continues and reloads L10",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 13640
+        }
+      ]
+    },
+    {
+      "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 high zoom 1 unload/revisit keeps identities and support",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5398
+        }
+      ]
+    },
+    {
+      "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 high zoom 0.5 unload/revisit keeps identities and support",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5290
+        }
+      ]
+    },
+    {
+      "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 low zoom 1 unload/revisit keeps identities and support",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4317
+        }
+      ]
+    },
+    {
+      "title": "T-E31-13-S4-browser @E31-AC12 @E31-AC13 low zoom 0.5 unload/revisit keeps identities and support",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4041
+        }
+      ]
+    },
+    {
+      "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 high bounded load/revisit and quality switch",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5628
+        }
+      ]
+    },
+    {
+      "title": "T-E31-12-S3-browser @E31-AC12 @E31-AC13 low bounded load/revisit and quality switch",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4584
+        }
+      ]
+    },
+    {
+      "title": "T-E31-12-delayed-S3-browser @E31-AC12 delayed terrain downloads keep sim/input progressing",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 11613
+        }
+      ]
+    },
+    {
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2994
+        }
+      ]
+    },
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7218
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 588
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 665
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 526
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 676
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 546
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 669
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 560
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 672
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 540
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 652
+        }
+      ]
+    },
+    {
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1575
+        }
+      ]
+    },
+    {
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2684
+        }
+      ]
+    },
+    {
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6673
+        }
+      ]
+    },
+    {
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 32063
+        }
+      ]
+    },
+    {
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3413
+        }
+      ]
+    },
+    {
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7697
+        }
+      ]
+    },
+    {
+      "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9811
+        }
+      ]
+    }
+  ]
+}
