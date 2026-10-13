@@ -1,0 +1,67 @@
+{
+ "name": "l9-enc-zero-ram",
+ "note": "L9-E1: zero-HP floor APC (60% speed cap, smoke) rams the same group. Look for: it keeps driving and ramming, no stop or breakdown.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -240,
+    -90
+   ],
+   [
+    -60,
+    30
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "group",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "count": 8,
+   "at": [
+    -150,
+    -30
+   ],
+   "spread": 2.2,
+   "yaw": 270
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -190,
+    -30
+   ],
+   "yaw": 0,
+   "health": 0,
+   "path": [
+    [
+     -100,
+     -30
+    ]
+   ],
+   "floor": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 420,
+ "sheet": 30,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}
