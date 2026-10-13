@@ -43,4 +43,6 @@ export type MissionEvent =
   | { tick: number; type: 'l4.tankFire'; from: { x: number; z: number }; to: { x: number; z: number }; shot: number }
   | { tick: number; type: 'l4.heliPass'; from: { x: number; z: number }; to: { x: number; z: number } }
   | { tick: number; type: 'hmg.burst'; sourceId: number }
+  /** ally-combat-feel: a fighter's call-out (speech bubble and a voice bark). */
+  | { tick: number; type: 'ally.callout'; id: number; text: 'Reloading!' | "They're inside!" | 'Behind us!'; position: { x: number; z: number } }
   | { tick: number; type: 'ally.attack'; sourceId: number; targetId: number; role: 'firefighter' | 'officer' | 'soldier' | 'civilian' | 'heli' | 'tank'; weapon?: 'hmg' | 'rifle' | 'pistol' | 'hunting-rifle' | 'door-gun'; hit?: boolean; from?: { x: number; z: number }; to?: { x: number; z: number } }
