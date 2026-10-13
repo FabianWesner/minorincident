@@ -159,7 +159,7 @@ class Bus:
         rings = []
         for inset, z in layers:
             rings.append([(x, y, z) for x, y in rrect(X_REAR + inset, X_FRONT - inset, HW - inset, max(.3 - inset, .08), max(.45 - inset, .08), seg)])
-        obj = self.add('lowerBody', loft_bm(rings), 'picketWhite', mat=[self.mat('picketWhite'), self.mat('picketWhite'), self.mat('sidewalk')])
+        obj = self.add('lowerBody', loft_bm(rings), 'picketWhite', mat=[self.mat('picketWhite'), self.mat('picketWhite'), self.mat('sidewalk'), self.mat('uiDark')])
         cut = []
         # interior pocket (floor at FLOOR) and the stair well of the entry door
         cut.append(self._cutter('pocket', (-4.42, 3.95), (-1.10, 1.10), (FLOOR, SILL + .2)))
@@ -175,6 +175,9 @@ class Bus:
             stair = DOOR_X0 - .005 <= c.x <= DOOR_X1 + .005 and .615 <= c.y <= HW + .21 and .575 <= c.z <= SILL + .2 and abs(c.y) < HW - .005
             if inside or stair:
                 p.material_index = 2 if p.normal.z > .9 else 1
+            elif p.normal.z > .9 and abs(c.z - SILL) < .004:
+                # sill ledge and cowl top: dark window surround instead of a sunlit white line under the glass
+                p.material_index = 3
         return obj
 
     def _cutter(self, name, xr, yr, zr):
@@ -339,7 +342,6 @@ class Bus:
         for sy in (-1, 1):
             x1 = DOOR_X0 - .03 if sy > 0 else 4.0
             self.box('stripe', ((X_REAR + .35 + x1) / 2, sy * (HW + .012), 1.29), (x1 - X_REAR - .35, .024, .14), 'policeBlue')
-            self.box('stripeLow', (-.25, sy * (HW + .012), .52), (5.0 if L < 2 else 5.0, .024, .06), 'policeBlue') if L < 2 else None
         if L < 1:
             for sy, face in ((1, 'left'), (-1, 'right')):
                 self._text('EVAC', .46, 'blueTrim', Vector((.3, sy * (HW + .016), .83)), self.s.body, face=face, extrude=.02)
