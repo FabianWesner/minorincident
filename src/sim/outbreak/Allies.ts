@@ -6,6 +6,7 @@ import { policeTactics as pt } from '../../data/l3';
 import { policeTargetInView, policeShotRangeM } from '../../data/cameraFraming';
 import { allyCadence, allyCallout, allyOffscreenDefenceM, allyTactics, allyViewM, type AllyTactic } from '../../data/allyCombat';
 import type { SimWorld } from '../world/SimWorld';
+import type { SpawnDirector } from '../ai/SpawnDirector';
 import type { EntitySnapshot } from '../world/types';
 import type { AllyGun, AllyState, Point } from '../npc/types';
 
@@ -58,10 +59,9 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const policeRule = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
-  const director = world.infected!.director;
   // Optional off-screen self-defence (0 = strict PO rule): an ally the player cannot see may shoot what is this close to it.
-  const inView = (target: EntitySnapshot) => director.inPlayerView(target.transform, allyViewM)
-    || allyOffscreenDefenceM > 0 && dist(target.transform, e.transform) <= allyOffscreenDefenceM && !director.inPlayerView(e.transform, allyViewM, 1.05);
+  const inView = (target: EntitySnapshot) => playerSees(world, target.transform)
+    || allyOffscreenDefenceM > 0 && dist(target.transform, e.transform) <= allyOffscreenDefenceM && !playerSees(world, e.transform, 1.05);
   const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   const audibleThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
@@ -249,12 +249,17 @@ function cadence(world: SimWorld, e: EntitySnapshot, a: AllyState, shotS: number
   const pause = c.burst * shotS - (c.burst - 1) * c.gapS - c.reloadS * c.burst / c.mag;
   return Math.max(1, ticks(Math.max(pause, c.burst > 1 ? .25 : shotS * .5)));
 }
+/** The player's view rule (SpawnDirector.inPlayerView); bare test worlds without a spawn director see everything. */
+function playerSees(world: SimWorld, p: { x: number; z: number; y?: number }, inset?: number): boolean {
+  const director = world.infected?.director as SpawnDirector | undefined;
+  return director ? director.inPlayerView(p, allyViewM, inset) : true;
+}
 const lastCallout = new WeakMap<SimWorld, number>();
 /** A short shout (speech bubble + bark) from a fighter the player can see; one at a time, each fighter rarely. */
 function callout(world: SimWorld, e: EntitySnapshot, text: "Reloading!" | "They're inside!" | 'Behind us!'): void {
   const a = e.civilian!.ally!, tick = world.tick;
   if (tick - (a.calloutAt ?? -1e9) < ticks(allyCallout.perAllyS) || tick - (lastCallout.get(world) ?? -1e9) < ticks(allyCallout.globalS)) return;
-  if (!world.infected!.director.inPlayerView(e.transform, allyViewM, .85)) return;
+  if (!playerSees(world, e.transform, .85)) return;
   a.calloutAt = tick; lastCallout.set(world, tick);
   world.events.emit({ type: 'ally.callout', tick, id: e.id, text, position: { x: e.transform.x, z: e.transform.z } });
 }
