@@ -201,3 +201,12 @@ test('T-E32-10j @E32-AC10 the pursuit seam round-trips through captureSeams and 
   const before = structuredClone(pursuit.state.route); run(w, 10); restoreSeams(w, seams);
   expect(pursuit.state.route).toEqual(before);
 });
+
+test('T-E32-10k @E32-AC10 removed without dying (restore from a pre-install snapshot): it is introduced again, still exactly one', async () => {
+  const w = await course(), pursuit = installMegaPursuit(w, { introduceTick: null });
+  const id = pursuit.introduce({ x: -60, z: 0 }), e = w.entities.get(id)!;
+  w.infected!.release(e); run(w, 0.1);
+  expect(pursuit.state.id).toBeGreaterThan(0);
+  expect([...w.entities.iterate()].filter(x => x.infected?.pursuit).length).toBe(1);
+  expect(pursuit.state.mode).not.toBe('dead');
+});

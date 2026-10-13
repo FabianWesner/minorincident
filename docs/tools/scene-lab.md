@@ -177,6 +177,16 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 - **Bicycle:** `vehicle.bicycle` is the courier bike. It needs `sidewalk` ground, because of the game's parking rule.
 - **Traffic:** `traffic` is the kinematic ambient-traffic box.
 
+### Mega Alpha pursuit (E32, L10-S3)
+
+`"megaAlpha": { "id": "mega", "at": [x, z], "route": { "nodes": [...], "links": [...] }, "resident": [[x0, z0], [x1, z1]] }`
+installs the shipped `MegaPursuit` (`src/sim/ai/MegaPursuit.ts`) and introduces the one Mega Alpha at `at` as actor `id`
+(camera targets may name it). It always pursues the courier (no sight, hearing or lure), at 0.7 x her run. Outside the optional
+`resident` box it runs coarse (the off-region 2 Hz route advance); `route` is an authored node graph. `metrics.megaAlpha`: `cruiseMs`,
+`detailedMedianMs`, `cruiseError`, `stepMaxM`, `modes` (frames per coarse/detailed/close/recover/breach), `stuckLevelMax`, `distanceMinM`,
+distance/mode/band `samples` every 30 frames and the pursuit `state`. Catalog: `inf-mega-pursuit` (follow camera on the Mega through a
+container yard), `inf-mega-arrival` (off-region start, arrival at a waiting courier).
+
 ### House emergence
 
 `"emerge": { "house": "bld.house-a:405", "count": 4, "staggerS": 1.5, "frame": 30 }` runs the game's own L1 beat-9
@@ -230,6 +240,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
 - `undrawnFramesMax` (frames a living actor was inside the camera frustum but not drawn: invisible-but-active)
+- `megaCruiseErrorMax` (E32-AC10: |median detailed-mode speed of the Mega Alpha / cruise 0.7 x run - 1|; use 0.02) and `megaStepMaxM` (largest single-tick move while resident: no teleport; use 0.25). Need `megaAlpha`.
 - `corgiCourierOverlapMaxCm`: corgi trunk/head/muzzle capsule penetration into the drawn courier body, including both legs (cm). Requires contact samples.
 - `corgiRunLagMaxM`: greatest distance behind the courier along her movement direction while she runs above 2.5 m/s. Requires running samples. Both companion gates report worst frames in `metrics.companion`.
 - `bodyOverlapMaxCm` (deepest torso/neck/head interpenetration between two living, standing actors; see `metrics.bodies`)
