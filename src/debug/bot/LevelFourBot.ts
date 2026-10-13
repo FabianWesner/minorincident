@@ -88,6 +88,10 @@ export class LevelFourBot {
     if (s.phase === 'plaza') { const q = a['l4-quartermaster']; if (go(q, .4, 'qm')) frame.interact = !newbie || this.rng.next() < .6; return frame; }
     if (this.profile === 'idle') { go(a['l4-quartermaster'], .6, 'idle'); if (!s.gunAt) frame.interact = true; return frame; }
     if (s.phase === 'war') {
+      // l4-collapse-2: the war now comes inside the ring; a hurt courier grabs a near medkit between fights instead of dying at the post.
+      const hurt = player.health.current / player.health.max <= (newbie ? .4 : .5);
+      const kit = hurt ? s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected && dist(e.transform, p) < 14).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0] : undefined;
+      if (kit) { if (fight(6)) return frame; go(kit.transform, .2, `war-kit-${kit.id}`); return frame; }
       if (fight(newbie ? 13 : 20)) return frame;
       // Back off from a crowd that is closing in (fight a few, flee from many): toward the middle of the ring, away from the nearest.
       const crowd = this.threats(p, 5), many = this.threats(p, 10).filter(e => this.chasing(e)).length;

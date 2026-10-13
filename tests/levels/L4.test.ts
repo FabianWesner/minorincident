@@ -215,6 +215,9 @@ describe('L4 The Safe City Falls', () => {
     const bursts = new Set<number>(); w.events.on('hmg.burst', e => { if (e.type === 'hmg.burst') bursts.add(e.sourceId); });
     const tank: { tick: number; to: { x: number; z: number }; player: { x: number; z: number }; closestAlly: number }[] = [];
     w.events.on('l4.tankFire', e => { if (e.type === 'l4.tankFire' && (s.phase === 'war' || (s.phase === 'collapse' && e.tick > s.lineBreakAt))) { const p = w.entities.get(1)!.transform; tank.push({ tick: e.tick, to: e.to, player: { x: p.x, z: p.z }, closestAlly: Math.min(...[...s.soldierIds, ...s.armed.map(a => a.id)].map(id => w.entities.get(id)).filter(a => a && a.civilian && a.health.current > 0).map(a => dist(a!.transform, e.to))) }); } });
+    // The courier stands idle for the whole war (l4-collapse-2: the war comes inside the ring and kills an idle courier; a retry would
+    // restart the timeline this test measures), so she is protected; the spectacle itself is unchanged.
+    w.combat!.damage.god = true;
     let heliAlt = 0, heliGrounded = false; let heliPasses = 0; w.events.on('l4.heliPass', () => { heliPasses++; });
     while (s.phase === 'convoy') w.update();
     step(w, 3 * 60); l.mission.completeObjective('quartermaster');
