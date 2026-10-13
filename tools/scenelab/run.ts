@@ -1,6 +1,7 @@
 import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, encodeWebm, evaluate, writeJson } from './session';
+import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
  * load, step in batches, capture shots / video / contact sheet, write metrics.json, evaluate the gates. */
@@ -31,21 +32,27 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const stops = new Set([...shots, ...sheetAt]);
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
   let frame = 0;
+  const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
     if (stop > frame) frame = await session.step(stop - frame);
+    pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
     if (shots.includes(stop)) { const path = `${out}/shot-${String(stop).padStart(4, '0')}.png`; await session.screenshot(path); written.push(path); }
     if (sheetAt.has(stop)) cells.push({ frame: stop, jpeg: await session.snapshot() });
     if (video && stop <= video * 60 && stop % 3 === 0) jpegs.push(await session.page.screenshot({ type: 'jpeg', quality: 80 }));
   }
   if (frame < frames) await session.step(frames - frame);
+  if (!pixels.some(p => p.frame === frames)) pixels.push({ frame: frames, pixels: await canvasFrame(session.page) });
   if (jpegs.length) { const path = `${out}/video.webm`; encodeWebm(jpegs, path); written.push(path); }
   let sheetInfo: { path: string; cells: number; kb: number } | undefined;
   if (cells.length) { sheetInfo = await session.makeSheet(cells, `${out}/sheet.jpg`); written.push(sheetInfo.path); }
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
   const result = evaluate(spec, metrics, clipping, errors);
+  result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));
+  result.checks.push({ name: 'requestedBackend', pass: metrics.backend === session.options.backend, value: Number(metrics.backend === session.options.backend), limit: 1 });
+  result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, pixels, consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }
