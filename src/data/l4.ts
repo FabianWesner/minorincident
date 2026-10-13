@@ -161,6 +161,8 @@ export const l4 = {
   /** Section 5.4: allied fighters v3. */
   soldiers: {
     hp: 120,
+    /** PO 2026-10-13 ("they kill all Zombies before i see them myself"): near the player the view rule (Allies.ts, option 3) caps
+     * what an ally may shoot; away from the player these ranges apply as before. */
     rifle: { damage: 18, shotS: .4, rangeM: 26, nearM: 20, hitNear: .65, hitFar: .35 },
     hmg: { damage: 30, shotS: .16, rangeM: 40, nearM: 30, hitNear: .7, hitFar: .4 },
     /** Engagement radius around the post: the line holds ground. */

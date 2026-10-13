@@ -1,5 +1,5 @@
 import { balancedCrowdModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
-import { storyProtected } from '../npc/storyProtection';
+import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import { l1v2 } from '../../data/l1v2';
@@ -63,6 +63,8 @@ export class Outbreak {
   blockers: LosBlockerRegistry | null = null;
   readonly refuges: Refuge[];
   private readonly heard: { x: number; z: number; tick: number }[] = [];
+  /** ally-combat-feel: allied gunshots of the last second (shooter and target); calm unarmed people within `gunfireM` stop what they do. */
+  private readonly gunfire: { x: number; z: number; tx: number; tz: number; tick: number }[] = [];
   private readonly rescue = new Set<number>();
   /** People convulsing on the ground this tick: witnesses notice them like an infected. */
   private readonly turning: EntitySnapshot[] = [];
@@ -78,6 +80,12 @@ export class Outbreak {
       const p = event.position ?? (event.anchor ? options.anchors?.[event.anchor] : undefined); if (p) this.hear(p);
     };
     this.offs.push(world.events.on('l1.blast', hear), world.events.on('l1.screams', hear));
+    this.offs.push(world.events.on('ally.attack', event => {
+      if (event.type !== 'ally.attack' || !event.from || !event.to || event.role === 'firefighter') return;
+      const last = this.gunfire[this.gunfire.length - 1];
+      if (last && last.tick === event.tick && Math.hypot(last.x - event.from.x, last.z - event.from.z) < 3) return;
+      this.gunfire.push({ x: event.from.x, z: event.from.z, tx: event.to.x, tz: event.to.z, tick: event.tick });
+    }));
     this.offs.push(world.events.on('sim.tick', () => this.dressInfected(), SimPhase.cleanup));
     this.offs.push(world.events.on('outbreak.bite', event => { if (event.type === 'outbreak.bite' && !this.emitting) this.externalBite(event); }));
     // Lane C's L1 brain grabs on contact and owns the 1.0 s hold and the rescue; the victim only mirrors it here.
@@ -167,6 +175,7 @@ export class Outbreak {
     if (this.started < 0 && ai.active.some(a => a.health.current > 0)) this.started = tick;
     this.dressInfected();
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
+    while (this.gunfire.length && this.gunfire[0].tick < tick - 60) this.gunfire.shift();
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
       const c = e.civilian; if (!c || c.pet && !c.zooAnimal || !c.l1) continue;
@@ -184,6 +193,7 @@ export class Outbreak {
       if (c.survivor && updateSurvivor(world, e)) continue;
       if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
+      if (c.state === 'calm' && this.gunfire.length && (tick + e.id) % 6 === 3) this.hearGunfire(e);
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
         this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
         continue;
@@ -266,6 +276,26 @@ export class Outbreak {
       this.state(e, 'alarmed', c.l1!.startleTicks);
     }
   }
+  /**
+   * PO 2026-10-13 ("queued civilians standing frozen in a line during the fight"): a gunfight within `gunfireM` startles a calm,
+   * unarmed person like a seen infected (they drop what they carry and flee from what is being shot at). Scripted people (story
+   * beats, the L2 haven waiters, survivors) keep their beats.
+   */
+  private hearGunfire(e: EntitySnapshot): void {
+    const c = e.civilian!; if (c.ally || c.story || c.survivor || c.l1?.haven || storyProtected(this.world, e)) return;
+    let best: number = civ.gunfireM, shot: (typeof this.gunfire)[number] | null = null;
+    for (const g of this.gunfire) { const d = Math.hypot(g.x - e.transform.x, g.z - e.transform.z); if (d < best) { best = d; shot = g; } }
+    if (!shot) return;
+    c.threat.x = shot.tx; c.threat.z = shot.tz; c.l1!.noticed = this.world.tick; this.dropProp(e);
+    // Hide nearby rather than run for the map edge: a few metres away from what is being shot at, then crouch there. They stay in
+    // the fight's world (still biteable), which keeps the war's victims around the player (L4 balance).
+    const dx = e.transform.x - shot.tx, dz = e.transform.z - shot.tz, d = Math.hypot(dx, dz) || 1, nav = this.world.infected!.nav;
+    for (const r of [civ.hideM, civ.hideM * .6, civ.hideM * .3]) {
+      const x = e.transform.x + dx / d * r, z = e.transform.z + dz / d * r;
+      if (nav.clear(x, z, .35) && nav.visible(e.transform, { x, z }, .3)) { c.l1!.haven = { route: [], leg: 0, x, z, cower: { x: shot.tx, z: shot.tz } }; break; }
+    }
+    this.state(e, 'alarmed', c.l1!.startleTicks);
+  }
   private sees(a: Vec2, b: Vec2, ignoreId: number): boolean {
     // Gates, fences and the car-wash curtain (lane C/F registry) block pedestrian sight too.
     const los = this.blockers ?? this.world.infected?.l1?.los;
@@ -290,7 +320,9 @@ export class Outbreak {
     if (h.sx === undefined || Math.hypot(e.transform.x - h.sx, e.transform.z - (h.sz ?? 0)) > .4) { h.sx = e.transform.x; h.sz = e.transform.z; h.since = tick; }
     if (left <= 1.2 || left <= 6 && tick - (h.since ?? tick) > 60) {
       this.state(e, 'calm'); c.path.length = 0; c.goal = -1;
-      c.schedule = [{ activity: 'look', anchor: 'l2/haven', target: { x: h.x, z: h.z }, facing: { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+      c.schedule = [{ activity: 'look', anchor: h.cower ? 'fight/hide' : 'l2/haven', target: { x: h.x, z: h.z }, facing: h.cower ?? { x: h.x - 12, z: h.z }, ticks: ticks(600) }]; c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+      // A person hiding from a gunfight crouches there, facing the fight.
+      if (h.cower) c.story = { clip: 'npc-cower', start: tick };
       return;
     }
     const before = { x: e.transform.x, z: e.transform.z };
@@ -420,7 +452,7 @@ export class Outbreak {
   /** Lane C may report a completed bite itself; the victim is handled exactly once. */
   private externalBite(event: BiteEvent): void {
     const e = this.world.entities.get(event.targetId), c = e?.civilian;
-    if (!e || storyProtected(this.world, e) || !c?.l1 || e.infection || !(mobile.has(c.state) || c.state === 'grabbed')) return;
+    if (!e || isCorgi(e) || storyProtected(this.world, e) || !c?.l1 || e.infection || !(mobile.has(c.state) || c.state === 'grabbed')) return;
     this.stats.bites++;
     if (c.state === 'grabbed') this.world.npcs!.civilians.release(c.attacker);
     if (event.turns && this.canTurn()) this.infect(e, event.sourceId); else this.kill(e);
@@ -432,7 +464,7 @@ export class Outbreak {
 
   /** Start the 3.0 +/- 0.5 s transformation of the same entity (stagger, collapse, eyes, rise). */
   infect(e: EntitySnapshot, sourceId: number): void {
-    if (storyProtected(this.world, e) || e.infection || e.infected || e.civilian?.state === 'finished') return;
+    if (isCorgi(e) || storyProtected(this.world, e) || e.infection || e.infected || e.civilian?.state === 'finished') return;
     this.humans.invalidate();
     const tick = this.world.tick, total = ticks(civ.transformS + (this.rng.next() * 2 - 1) * civ.transformJitterS);
     this.dropProp(e);
@@ -498,7 +530,7 @@ export class Outbreak {
    * of sight, e.g. the lab technician inside the facility or the off-screen horde. Not counted as a bite.
    */
   turnNow(e: EntitySnapshot, tier?: SpeedTier): void {
-    if (storyProtected(this.world, e)) return;
+    if (isCorgi(e) || storyProtected(this.world, e)) return;
     if (tier && e.appearance) e.appearance.tier = tier;
     e.infection = { entityId: e.id, progress: 1, phase: 'infected', tier: e.appearance?.tier ?? 'average', startedTick: this.world.tick, endsTick: this.world.tick, biteSourceId: 0 };
     e.hidden = false; this.rise(e, false);

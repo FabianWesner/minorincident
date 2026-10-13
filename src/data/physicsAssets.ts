@@ -73,7 +73,7 @@ export default {
       {
         "min": [
           -0.125,
-          9.536743172944284e-9,
+          9.536743172944284e-09,
           -0.375
         ],
         "max": [
@@ -142,7 +142,7 @@ export default {
       {
         "min": [
           -0.1599999998882413,
-          -2.384185793236071e-9,
+          -2.384185793236071e-09,
           -0.065
         ],
         "max": [
@@ -208,7 +208,7 @@ export default {
       {
         "min": [
           -0.625,
-          2.1457672083613488e-8,
+          2.1457672083613488e-08,
           -0.345
         ],
         "max": [
@@ -761,7 +761,7 @@ export default {
       {
         "min": [
           -0.5000000014901161,
-          1.1920928910669204e-8,
+          1.1920928910669204e-08,
           -1.615
         ],
         "max": [
@@ -816,7 +816,7 @@ export default {
       {
         "min": [
           -0.2479960181263109,
-          0.000004303301825436812,
+          4.303301825436812e-06,
           -0.4173319637775421
         ],
         "max": [
@@ -879,7 +879,7 @@ export default {
       {
         "min": [
           -0.7279999995678663,
-          -3.814697252524368e-9,
+          -3.814697252524368e-09,
           -0.0789999998807907
         ],
         "max": [
@@ -1244,7 +1244,7 @@ export default {
       {
         "min": [
           -0.515002876205462,
-          -0.000005679956837312261,
+          -5.679956837312261e-06,
           -1.2599999904632568
         ],
         "max": [
@@ -1275,7 +1275,7 @@ export default {
       {
         "min": [
           -0.22,
-          -2.3841857821338408e-8,
+          -2.3841857821338408e-08,
           -2.4
         ],
         "max": [
@@ -1306,7 +1306,7 @@ export default {
       {
         "min": [
           -0.9000000014901162,
-          4.7683715642676816e-8,
+          4.7683715642676816e-08,
           -3
         ],
         "max": [
@@ -1470,7 +1470,7 @@ export default {
       {
         "min": [
           -2.8749999046325683,
-          2.384185793236071e-8,
+          2.384185793236071e-08,
           -1.3750000238418578
         ],
         "max": [
@@ -1561,7 +1561,7 @@ export default {
       {
         "min": [
           0.8399999618530274,
-          -1.0728836041806744e-8,
+          -1.0728836041806744e-08,
           -1.34
         ],
         "max": [
@@ -1573,7 +1573,7 @@ export default {
       {
         "min": [
           -1.2800000429153442,
-          -1.0728836041806744e-8,
+          -1.0728836041806744e-08,
           -1.34
         ],
         "max": [
@@ -1619,7 +1619,7 @@ export default {
       {
         "min": [
           -1.3458214178681374,
-          -5.318850955227106e-7,
+          -5.318850955227106e-07,
           -0.48407473647678495
         ],
         "max": [
@@ -1694,7 +1694,7 @@ export default {
       {
         "min": [
           -0.515002876205462,
-          -0.000005679956837312261,
+          -5.679956837312261e-06,
           -1.2599999904632568
         ],
         "max": [
@@ -1733,7 +1733,7 @@ export default {
       {
         "min": [
           -0.475,
-          2.8014183056646047e-9,
+          2.8014183056646047e-09,
           -0.6
         ],
         "max": [
@@ -1800,7 +1800,7 @@ export default {
       {
         "min": [
           -0.2,
-          1.1920928910669204e-8,
+          1.1920928910669204e-08,
           -0.33
         ],
         "max": [
@@ -1863,7 +1863,7 @@ export default {
       {
         "min": [
           -0.08454651591427509,
-          -1.4651287294498161e-8,
+          -1.4651287294498161e-08,
           -0.11050029347030474
         ],
         "max": [
@@ -2045,7 +2045,7 @@ export default {
       {
         "min": [
           -0.35,
-          4.2915344167226976e-8,
+          4.2915344167226976e-08,
           -0.5
         ],
         "max": [
@@ -2135,7 +2135,7 @@ export default {
       {
         "min": [
           -0.33,
-          4.1723251242853365e-9,
+          4.1723251242853365e-09,
           -0.77
         ],
         "max": [
@@ -2214,7 +2214,7 @@ export default {
       {
         "min": [
           -0.37000700601667896,
-          0.000008160277973789931,
+          8.160277973789931e-06,
           -0.8134999871253967
         ],
         "max": [
@@ -2403,7 +2403,7 @@ export default {
       {
         "min": [
           -0.5000000014901161,
-          1.1920928910669204e-8,
+          1.1920928910669204e-08,
           -1.615
         ],
         "max": [
@@ -2485,7 +2485,7 @@ export default {
       {
         "min": [
           -1.35,
-          -2.622604367008563e-8,
+          -2.622604367008563e-08,
           -0.35
         ],
         "max": [
@@ -3000,7 +3000,7 @@ export default {
       {
         "min": [
           -0.6923491954803467,
-          0.000009297601091029506,
+          9.297601091029506e-06,
           -0.3100749059625259
         ],
         "max": [
@@ -3252,7 +3252,7 @@ export default {
       {
         "min": [
           -1.4756423830986023,
-          -1.341104505225843e-9,
+          -1.341104505225843e-09,
           -1.5061078667640686
         ],
         "max": [
@@ -3288,7 +3288,7 @@ export default {
       {
         "min": [
           -1.4756423830986023,
-          -1.341104505225843e-9,
+          -1.341104505225843e-09,
           -1.5061078667640686
         ],
         "max": [
@@ -3703,7 +3703,7 @@ export default {
       {
         "min": [
           -6,
-          -1.7881393449270533e-9,
+          -1.7881393449270533e-09,
           -5
         ],
         "max": [
@@ -3715,7 +3715,7 @@ export default {
       {
         "min": [
           -6.000000095367431,
-          9.536743172944284e-8,
+          9.536743172944284e-08,
           -5
         ],
         "max": [
@@ -3777,7 +3777,7 @@ export default {
       {
         "min": [
           -2.4,
-          -1.1920928910669204e-8,
+          -1.1920928910669204e-08,
           -0.4
         ],
         "max": [
@@ -3820,7 +3820,7 @@ export default {
       {
         "min": [
           -1.5,
-          -5.960464455334602e-9,
+          -5.960464455334602e-09,
           -0.36
         ],
         "max": [
@@ -3851,7 +3851,7 @@ export default {
       {
         "min": [
           -1.15,
-          2.38418573772492e-9,
+          2.38418573772492e-09,
           -0.325
         ],
         "max": [
@@ -3882,7 +3882,7 @@ export default {
       {
         "min": [
           -1,
-          9.536743172944284e-9,
+          9.536743172944284e-09,
           -0.4
         ],
         "max": [
@@ -3974,7 +3974,7 @@ export default {
         "max": [
           3.169999904632568,
           2.369999952316284,
-          4.7683715642676816e-8
+          4.7683715642676816e-08
         ]
       },
       {
@@ -3998,7 +3998,7 @@ export default {
         "max": [
           5.57,
           2.369999952316284,
-          4.7683715642676816e-8
+          4.7683715642676816e-08
         ]
       },
       {
@@ -4229,7 +4229,7 @@ export default {
       {
         "min": [
           -1.6,
-          -2.384185793236071e-8,
+          -2.384185793236071e-08,
           -0.7750000014901162
         ],
         "max": [
@@ -4573,7 +4573,7 @@ export default {
       {
         "min": [
           2.200000047683716,
-          2.384185793236071e-8,
+          2.384185793236071e-08,
           -1.2
         ],
         "max": [
@@ -4585,7 +4585,7 @@ export default {
       {
         "min": [
           3.200000047683716,
-          5.960464455334602e-9,
+          5.960464455334602e-09,
           -2
         ],
         "max": [
@@ -4597,7 +4597,7 @@ export default {
       {
         "min": [
           3.700000047683716,
-          2.980232227667301e-9,
+          2.980232227667301e-09,
           -2
         ],
         "max": [
@@ -4609,7 +4609,7 @@ export default {
       {
         "min": [
           -3.2,
-          2.384185793236071e-8,
+          2.384185793236071e-08,
           1.199999952316284
         ],
         "max": [
@@ -4621,7 +4621,7 @@ export default {
       {
         "min": [
           -3.200000047683716,
-          2.384185793236071e-8,
+          2.384185793236071e-08,
           -1.2
         ],
         "max": [
@@ -4633,7 +4633,7 @@ export default {
       {
         "min": [
           -3.2,
-          2.384185793236071e-8,
+          2.384185793236071e-08,
           -2.3999999523162843
         ],
         "max": [
@@ -4664,7 +4664,7 @@ export default {
       {
         "min": [
           -4.000000095367431,
-          4.768371586472142e-8,
+          4.768371586472142e-08,
           -3
         ],
         "max": [
@@ -4676,7 +4676,7 @@ export default {
       {
         "min": [
           -3.7,
-          5.960464483090178e-9,
+          5.960464483090178e-09,
           -3
         ],
         "max": [
@@ -5105,7 +5105,7 @@ export default {
       {
         "min": [
           -4.799999866485596,
-          -9.536743172944284e-8,
+          -9.536743172944284e-08,
           -7.7
         ],
         "max": [
@@ -5313,7 +5313,7 @@ export default {
       {
         "min": [
           0.77,
-          5.960464455334602e-9,
+          5.960464455334602e-09,
           -0.9
         ],
         "max": [
@@ -6049,7 +6049,7 @@ export default {
       {
         "min": [
           -6,
-          1.4901161138336505e-9,
+          1.4901161138336505e-09,
           -3.8
         ],
         "max": [
@@ -6464,7 +6464,7 @@ export default {
       {
         "min": [
           -6,
-          1.4901161138336505e-9,
+          1.4901161138336505e-09,
           -3.8
         ],
         "max": [
@@ -6591,7 +6591,7 @@ export default {
       {
         "min": [
           -5,
-          1.4901161138336505e-9,
+          1.4901161138336505e-09,
           -2.3
         ],
         "max": [
@@ -6730,7 +6730,7 @@ export default {
       {
         "min": [
           -2.8,
-          -1.341104505225843e-9,
+          -1.341104505225843e-09,
           -2.8
         ],
         "max": [
@@ -6878,7 +6878,7 @@ export default {
       {
         "min": [
           -15,
-          1.1920928966180355e-8,
+          1.1920928966180355e-08,
           -10
         ],
         "max": [
@@ -7046,7 +7046,7 @@ export default {
       {
         "min": [
           -30,
-          1.1920928966180355e-8,
+          1.1920928966180355e-08,
           10
         ],
         "max": [
@@ -7274,7 +7274,7 @@ export default {
       {
         "min": [
           -30,
-          3.5762786898541066e-9,
+          3.5762786898541066e-09,
           20
         ],
         "max": [
@@ -7321,7 +7321,7 @@ export default {
       },
       {
         "min": [
-          3.8146972647368216e-7,
+          3.8146972647368216e-07,
           1.2299999523162841,
           -1.3
         ],
@@ -7333,7 +7333,7 @@ export default {
       },
       {
         "min": [
-          3.8146972647368216e-7,
+          3.8146972647368216e-07,
           1.2299999523162841,
           -1.3
         ],
@@ -7365,7 +7365,7 @@ export default {
       {
         "min": [
           -3.3000000000000003,
-          -2.3841857821338408e-8,
+          -2.3841857821338408e-08,
           -2.8000000000000003
         ],
         "max": [
@@ -7377,5 +7377,633 @@ export default {
     ],
     "source": "public/assets/models/kit.zoo-tunnel-mouth.glb",
     "hash": "41c7cc058032d0ba21fea2dec43351ae209e3f00b4c7617b039886a0c7cb8e06"
+  },
+  "wpn.minigun-mounted": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.7999999523162842,
+          5.960464455334602e-09,
+          -1
+        ],
+        "max": [
+          1.2999999523162842,
+          0.8000000059604645,
+          1
+        ]
+      },
+      {
+        "min": [
+          -1.1,
+          5.960464455334602e-09,
+          -1.3300000429153442
+        ],
+        "max": [
+          1.1,
+          0.8000000059604645,
+          -0.8300000429153442
+        ]
+      },
+      {
+        "min": [
+          -1.1,
+          5.960464455334602e-09,
+          0.8300000429153442
+        ],
+        "max": [
+          1.1,
+          0.8000000059604645,
+          1.3300000429153442
+        ]
+      }
+    ],
+    "source": "public/assets/models/wpn.minigun-mounted.glb",
+    "hash": "07069fa2eff122f49a3222c9f1dd29a2408f93fd70f81329f0a8ade2f1f46e2b"
+  },
+  "prop.cure-canister": {
+    "class": "light",
+    "mass": 6,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.3,
+      0
+    ],
+    "pushable": true,
+    "kickable": true,
+    "flammable": false,
+    "sounds": "prop.metal-medium",
+    "boxes": [
+      {
+        "min": [
+          -0.21,
+          1.4305114759416426e-08,
+          -0.18
+        ],
+        "max": [
+          0.21,
+          0.7200000143051147,
+          0.18
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-canister.glb",
+    "hash": "cf06fecef26fbfe53bbb99562ef5f957381e0467ea21a3c99f494cb0e58df48c"
+  },
+  "prop.cure-canister-pedestal": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.65,
+          -0.15000000000000002,
+          -0.5
+        ],
+        "max": [
+          0.65,
+          1.15,
+          0.5
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-canister-pedestal.glb",
+    "hash": "0087190c1acfbda046e1c3d3724e3346aa6490df18ba517edd670c204ac7c758"
+  },
+  "kit.dispersal-pipe-straight": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4,
+          1.2000000953674317,
+          -1.2
+        ],
+        "max": [
+          4,
+          3.600000095367432,
+          1.2
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-pipe-straight.glb",
+    "hash": "41bee1599732bc429a8bf0083db6dad8598005f79998530bfedd15ac910f9601"
+  },
+  "kit.dispersal-pipe-elbow": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -3.1,
+          1.2000000953674317,
+          -3.1
+        ],
+        "max": [
+          0.10000000000000009,
+          3.600000095367432,
+          0.10000000000000009
+        ]
+      },
+      {
+        "min": [
+          -4.200000047683716,
+          1.2000000953674317,
+          -1.2
+        ],
+        "max": [
+          -2.200000047683716,
+          3.600000095367432,
+          1.2
+        ]
+      },
+      {
+        "min": [
+          -1.2,
+          1.4000000953674316,
+          -4.400000047683716
+        ],
+        "max": [
+          1.2,
+          3.4000000953674316,
+          -2.0000000476837156
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-pipe-elbow.glb",
+    "hash": "d1f1af47ebb02e5c0501236c0329cca99dfb5b26a3eb1a17ea7f6402641fed25"
+  },
+  "kit.dispersal-pipe-tee": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1,
+          1.2000000953674317,
+          -4
+        ],
+        "max": [
+          1,
+          3.600000095367432,
+          0
+        ]
+      },
+      {
+        "min": [
+          -4,
+          1.2000000953674317,
+          -1.2
+        ],
+        "max": [
+          4,
+          3.600000095367432,
+          1.2
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-pipe-tee.glb",
+    "hash": "768de5d56135ca00261bef4bf8a66f0520c7d1442961c5717e3c03a3736ebcc7"
+  },
+  "kit.dispersal-fan-housing": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      2,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.5,
+          0.7999998092651364,
+          -4.5
+        ],
+        "max": [
+          1.5,
+          9.599999809265137,
+          4.5
+        ]
+      },
+      {
+        "min": [
+          -3.6,
+          1.1920928910669204e-08,
+          -5.1
+        ],
+        "max": [
+          3.6,
+          1.100000011920929,
+          5.1
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-fan-housing.glb",
+    "hash": "09dabb7084b454df878db1cfd4b3bf8c355d9baeea1af917a5dd065bf8a2c4c2"
+  },
+  "kit.dispersal-turbine-hall": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      3,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -8.1,
+          4.7683715642676816e-08,
+          -5.1
+        ],
+        "max": [
+          8.1,
+          6.400000047683716,
+          2.1
+        ]
+      },
+      {
+        "min": [
+          -8,
+          0.49999990463256827,
+          1.5000000953674317
+        ],
+        "max": [
+          8,
+          4.699999904632568,
+          6.300000095367432
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-turbine-hall.glb",
+    "hash": "898f0df8457edfa337ddd666e15df179eaeff583a95f92e1771cf0f0ff83a1db"
+  },
+  "kit.dispersal-tank-sphere": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      4,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4.2,
+          4.7683715642676816e-08,
+          -4.2
+        ],
+        "max": [
+          4.2,
+          4.400000047683716,
+          4.2
+        ]
+      },
+      {
+        "min": [
+          -3.6,
+          3.9999999046325683,
+          -3.6
+        ],
+        "max": [
+          3.6,
+          11.199999904632568,
+          3.6
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-tank-sphere.glb",
+    "hash": "fada817945d8ebca60983ab3972f757c5fbc790d632c4c4520618484c55d010c"
+  },
+  "kit.dispersal-tank-bullet": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      3,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -5.2,
+          0.6000000953674318,
+          0.10000000000000009
+        ],
+        "max": [
+          5.2,
+          5.2000000953674315,
+          5.9
+        ]
+      },
+      {
+        "min": [
+          -5.2,
+          0.6000000953674318,
+          -5.9
+        ],
+        "max": [
+          5.2,
+          5.2000000953674315,
+          -0.10000000000000009
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-tank-bullet.glb",
+    "hash": "208269464176f5627cee4fa2b91dd67f5b632b6dd9d18f21cf263171890b1b15"
+  },
+  "kit.dispersal-filtration-tower": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      8,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          3,
+          1.2000000953674317,
+          -2.2
+        ],
+        "max": [
+          8,
+          3.600000095367432,
+          2.2
+        ]
+      },
+      {
+        "min": [
+          -3.2,
+          5.3,
+          -8.5
+        ],
+        "max": [
+          3.2,
+          11.7,
+          8.5
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-filtration-tower.glb",
+    "hash": "317170e9108e672251bc6f070db02f27d18e51dbca8e2f83561cd108c16082bf"
+  },
+  "kit.dispersal-platform": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4,
+          2.85,
+          -2
+        ],
+        "max": [
+          4,
+          3.15,
+          2
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-platform.glb",
+    "hash": "01dd6576cb581293b13eaadfb25fd1216289b86d9bf47edd0c7338df5ccabca7"
+  },
+  "kit.dispersal-console": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.8,
+          -2.384185793236071e-08,
+          -1.65
+        ],
+        "max": [
+          0.8,
+          1.299999976158142,
+          1.65
+        ]
+      },
+      {
+        "min": [
+          -0.8,
+          1.0499999523162842,
+          -1.5
+        ],
+        "max": [
+          -0.2,
+          2.049999952316284,
+          1.5
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-console.glb",
+    "hash": "4e3a5c3013244db4403d63474784c2d52eb8b30698b839ef9007a1dddc90a31f"
+  },
+  "prop.cure-garden-wall": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.9649999737739563,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.6,
+          1.1920928910669204e-08,
+          -0.25
+        ],
+        "max": [
+          1.6,
+          1.600000011920929,
+          0.25
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-garden-wall.glb",
+    "hash": "2edd775de5a8f4fc4ef89b26b62654eb32076ff08661e24975dea4bbab23127c"
+  },
+  "prop.cure-container-stack": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.014999985694885254,
+      2.5399999246001244,
+      -0.014999985694885254
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -3.05,
+          -0.45000009536743146,
+          -2.6
+        ],
+        "max": [
+          3.05,
+          5.649999904632568,
+          2.6
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-container-stack.glb",
+    "hash": "dc9dadb03f48822c744980d2d6e10afea007a7f952408ed621b9f739f209e0c9"
+  },
+  "prop.cure-drum-stack": {
+    "class": "heavy",
+    "mass": 300,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.059999942779541,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.65,
+          2.3841857821338408e-08,
+          -0.55
+        ],
+        "max": [
+          0.65,
+          2.200000023841858,
+          0.55
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-drum-stack.glb",
+    "hash": "07f9a2a1ae9f5772b46a6da4db04c1442f4f6054c1d2576c936099fdc901a993"
   }
 };

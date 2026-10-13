@@ -1,5 +1,5 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { apcDurability, vehicleBoardingTicks, vehicleDef } from '../../data/vehicles';
+import { apcDurability, apcFloor, vehicleBoardingTicks, vehicleDef } from '../../data/vehicles';
 import { vehicleExplosion } from '../../data/explosions';
 import { survivor } from '../../data/survivor';
 import type { InputFrame, Scheme } from '../../input/InputFrame';
@@ -24,8 +24,16 @@ export interface APCContact {
   contactId: number | null; separatedAt: number | null;
   windupAt: number | null; attackId: number | null; cooldownUntil: number;
 }
+/** Obstacle/wreck contact onset ledger entry (one per logical obstacle, whatever its collider count). */
+export interface APCObstacleContact { contactId: number | null; separatedAt: number | null }
+/** Authored wreck: several colliders, one logical obstacle id (an entity id or any caller-owned unique number). */
+export interface WreckBox { x: number; z: number; halfX: number; halfZ: number }
 export interface VehicleState {
-  apcContacts?: { sequence: number; infected: Record<number, APCContact> };
+  apcContacts?: { sequence: number; infected: Record<number, APCContact>; obstacles?: Record<number, APCObstacleContact> };
+  /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
+  floor?: boolean;
+  /** Cumulative damage stage (0 none, 1 <=75%, 2 <=50%, 3 <=25%, 4 = 0%); persisted so a reload restores it without replaying cues. */
+  stage?: number;
   passengers?: VehiclePassenger[];
   speed: number; forwardSpeed: number; steer: number; braking: boolean; boosting: boolean;
   /** Authored body variant, persisted with the vehicle snapshot. */
@@ -46,6 +54,8 @@ export class Vehicles {
   progressionArmor = 0;
   progressionBoost = 1;
   readonly obstacles: Obstacles;
+  /** Authored multi-collider wrecks by logical id; level setup re-registers them, they are not part of the save. */
+  readonly wrecks = new Map<number, readonly WreckBox[]>();
   /** L1 v2 courier bicycle (lane F); inert until `bicycle.spawn`. */
   readonly bicycle: Bicycle;
   private readonly infectedNeighbors: number[] = [];
@@ -60,13 +70,33 @@ export class Vehicles {
     const entity = this.world.entities.create({ kind: 'vehicle', archetype: id, transform: physics.transform, faction: 'survivor', health: { current: def.hp, max: def.hp }, vehicle: { ...(decay ? { decay } : {}), speed: 0, forwardSpeed: 0, steer: 0, braking: true, boosting: false, driver: null, attached: [], damage: 'normal', explodeAt: null, stuck: false, recoveringUntil: 0 } });
     this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: 0, hits: new Map(), crashAt: -60 }); this.world.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
+  /** A car can be driven while it has durability, or at the L9 floor. */
+  private operable(car: Car): boolean { return car.entity.health.current > 0 || !!car.entity.vehicle!.floor; }
+  /** L9 mission vehicle: 0 HP is a capped-speed floor, not a breakdown. Re-applying after a checkpoint restore replays no cue. */
+  setFloorPolicy(id: number, on = true): void {
+    const car = this.cars.get(id); if (!car) throw new Error(`Unknown vehicle ${id}`);
+    const state = car.entity.vehicle!; state.floor = on || undefined;
+    if (on) { state.stage = this.stageOf(car); this.floorAppearance(car); }
+    car.physics.speedCap = on && car.entity.health.current <= 0 ? apcFloor.speedShare : 1; car.physics.overspeedDamp = apcFloor.overspeedDamp;
+  }
+  /** Stage boundaries are inclusive, in percent of max durability. */
+  private stageOf(car: Car): number {
+    const ratio = car.entity.health.current / car.entity.health.max;
+    let stage = 0; for (const limit of apcFloor.stages) if (ratio <= limit + 1e-9) stage++;
+    return stage;
+  }
+  private floorAppearance(car: Car): void {
+    const state = car.entity.vehicle!;
+    // Existing smoke puffs stand in for the heavy-smoke stage; fire and explosions never run in the floor policy.
+    state.damage = (state.stage ?? 0) >= 3 ? 'smoking' : 'normal'; state.explodeAt = null;
+  }
   canInteract(): boolean {
-    if (this.active != null) return true;
+    if (this.active != null) return !this.cars.get(this.active)?.entity.vehicle?.floor;
     if (this.bicycle.canInteract()) return true;
     const player = this.world.entities.get(1);
     if (!player || player.health.current <= 0) return false;
     for (const car of this.cars.values()) {
-      if (car.entity.health.current <= 0 || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
+      if (!this.operable(car) || car.physics.speed >= 1 || this.world.tick < car.noEnterUntil) continue;
       this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
       if (Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7) return true;
     }
@@ -83,8 +113,9 @@ export class Vehicles {
       car.physics.gripScale = this.world.weather?.modifiers.vehicleGrip ?? 1;
       drive.throttle = drive.steer = 0; drive.brake = true; drive.boost = drive.handbrake = false;
       if (this.active !== car.entity.id) this.autopilot.get(car.entity.id)?.(drive, car.entity);
-      if (this.active === car.entity.id && frame.interact) this.exit(car);
-      if (car.entity.health.current > 0 && this.active === car.entity.id) {
+      // The floor vehicle has no voluntary exit: the interact input is ignored until the scripted crash.
+      if (this.active === car.entity.id && frame.interact && !state.floor) this.exit(car);
+      if (this.operable(car) && this.active === car.entity.id) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
           drive.throttle = frame.drive?.throttle ?? frame.move.x;
           drive.steer = frame.drive?.steer ?? -frame.move.z;
@@ -102,7 +133,7 @@ export class Vehicles {
         drive.handbrake = frame.handbrake ?? frame.right.held;
         if ((scheme !== 'mouse-only' && frame.left.down) || (car.physics.def.emergency && this.world.tick % 60 === 0)) this.noise(car);
         if (state.recoveringUntil > this.world.tick && !drive.brake) { drive.throttle = -.8; drive.steer = .6; drive.brake = false; }
-      } else if (this.active === null && player.health.current > 0 && car.entity.health.current > 0 && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
+      } else if (this.active === null && player.health.current > 0 && this.operable(car) && this.world.tick >= car.noEnterUntil && car.physics.speed < 1) {
         this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
         const near = Math.hypot(player.transform.x - this.position.x, player.transform.z - this.position.z) <= .7;
         const still = Math.hypot(frame.move.x, frame.move.z) < .05;
@@ -110,6 +141,8 @@ export class Vehicles {
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
       } else car.doorTicks = 0;
       state.boosting = drive.boost;
+      car.physics.speedCap = state.floor && car.entity.health.current <= 0 ? apcFloor.speedShare : 1;
+      if (state.floor) this.floorContacts(car);
       this.impacts(car);
       car.physics.prePhysics();
       state.steer = car.physics.steeringAngle; state.braking = car.physics.braking;
@@ -197,6 +230,8 @@ export class Vehicles {
   /** Hard contacts dent the body even while HP remains above the smoke threshold. */
   private crash(car: Car, speed: number): void {
     if (speed < 2 || this.world.tick - car.crashAt < 60) return;
+    // Floor policy: contacts are billed once per logical obstacle (floorContacts), never by speed, and never swap the hull for the wreck shell.
+    if (car.entity.vehicle!.floor) { car.crashAt = this.world.tick; return; }
     if (speed >= 3) car.entity.vehicle!.decay ??= 'wrecked';
     this.damage(car.entity.id, speed * 3 / car.physics.def.ramStrength);
     car.crashAt = this.world.tick;
@@ -209,6 +244,14 @@ export class Vehicles {
   }
   private damageState(car: Car): void {
     const state = car.entity.vehicle!, ratio = car.entity.health.current / car.entity.health.max;
+    if (state.floor) {
+      // Mission floor: cumulative stages only, each announced once; no smoking/burning/explosion path.
+      const stage = this.stageOf(car);
+      for (let next = (state.stage ?? 0) + 1; next <= stage; next++) this.world.events.emit({ type: 'vehicle.damage-stage', tick: this.world.tick, sourceId: car.entity.id, stage: next });
+      state.stage = Math.max(state.stage ?? 0, stage); this.floorAppearance(car);
+      car.physics.speedCap = car.entity.health.current <= 0 ? apcFloor.speedShare : 1;
+      return;
+    }
     if (state.damage === 'exploded') return;
     if (ratio < .15) state.decay = 'burned';
     else if (ratio < .4) state.decay ??= 'wrecked';
@@ -256,7 +299,7 @@ export class Vehicles {
   }
   /** E31: every active infected contact costs durability, with independent aware hull attacks. */
   private apcInfected(car: Car): void {
-    if (car.entity.health.current <= 0) return;
+    if (!this.operable(car)) return;
     const tuning = apcDurability, tick = this.world.tick, p = car.entity.transform, speed = car.physics.speed;
     const ledger = car.entity.vehicle!.apcContacts ??= { sequence: 0, infected: {} };
     const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
@@ -265,7 +308,7 @@ export class Vehicles {
     this.hullAttackers.length = 0;
     let quadrants = 0;
     for (const id of this.infectedNeighbors) {
-      if (car.entity.health.current <= 0) break;
+      if (!this.operable(car)) break;
       const target = this.world.entities.get(id)!;
       if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
@@ -285,7 +328,7 @@ export class Vehicles {
           this.world.spatial.set(id, target.transform.x, target.transform.z);
         }
         // E09 mass damage is independent of contact billing, so accelerating through an overlap still rams.
-        if (speed >= 4 && car.entity.health.current > 0 && tick >= (car.hits.get(id) ?? 0)) {
+        if (speed >= 4 && this.operable(car) && tick >= (car.hits.get(id) ?? 0)) {
           car.hits.set(id, tick + 60);
           this.world.combat?.damage.apply({ attackId: contact.contactId!, actionId: car.entity.archetype, sourceId: car.entity.id, targetId: id, origin: p, direction: { x: c, z: -s }, base: speed * 30 * car.physics.def.ramStrength, multiplier: 1, type: 'vehicle', knockback: target.archetype === 'infected.brute' ? 3 : 1, stagger: .5 });
         }
@@ -316,7 +359,7 @@ export class Vehicles {
     }
     if (!attackable) return;
     for (const target of this.hullAttackers) {
-      if (car.entity.health.current <= 0) break;
+      if (!this.operable(car)) break;
       if (car.physics.hullDistance(target.transform.x, target.transform.z) > tuning.reach) continue;
       const contact = ledger.infected[target.id] ??= { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
       if (contact.windupAt === null && tick >= contact.cooldownUntil) {
@@ -329,9 +372,57 @@ export class Vehicles {
       }
     }
   }
-  private apcHit(car: Car, target: EntitySnapshot, source: 'contact' | 'attack', contactId: number | null, attackId: number | null): void {
+  /** L9: obstacle and wreck contact onsets cost 10 durability each, with the infected separation rule; aliases of one wreck bill once. */
+  private floorContacts(car: Car): void {
+    const p = car.entity.transform, def = car.physics.def, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+    const ledger = car.entity.vehicle!.apcContacts ??= { sequence: 0, infected: {} };
+    const book = ledger.obstacles ??= {};
+    const seen = new Set<number>();
+    const note = (id: number, gap: number): void => {
+      seen.add(id);
+      let entry = book[id];
+      if (gap <= apcFloor.obstacleContactGap) {
+        entry ??= book[id] = { contactId: null, separatedAt: null };
+        entry.separatedAt = null;
+        if (entry.contactId === null) { entry.contactId = ++ledger.sequence; this.apcHit(car, { id }, 'obstacle', entry.contactId, null); }
+      } else if (entry && gap >= apcDurability.separation) {
+        entry.separatedAt ??= this.world.tick;
+        if (this.world.tick - entry.separatedAt >= apcDurability.separationTicks) delete book[id];
+      } else if (entry) entry.separatedAt = null;
+    };
+    // Axis-aligned prop/wreck box against the oriented hull, as in impacts(); the gap is the larger per-axis clearance.
+    const boxGap = (x: number, z: number, halfX: number, halfZ: number): number => {
+      const dx = x - p.x, dz = z - p.z, lx = dx * c - dz * s, lz = dx * s + dz * c;
+      const hx = Math.abs(c) * halfX + Math.abs(s) * halfZ, hz = Math.abs(s) * halfX + Math.abs(c) * halfZ;
+      return Math.max(Math.abs(lx) - (def.length / 2 + hx), Math.abs(lz) - (def.width / 2 + hz));
+    };
+    for (const item of this.obstacles.items) {
+      if (item.broken && !book[item.entity.id]) continue;
+      note(item.entity.id, item.broken ? Infinity : boxGap(item.entity.transform.x, item.entity.transform.z, item.halfX, item.halfZ));
+    }
+    for (const wall of this.world.interactables?.walls ?? []) {
+      const entity = wall.entityId === undefined ? undefined : this.world.entities.get(wall.entityId);
+      if (entity?.destructible && entity.health.current > 0 && ['fence', 'cone', 'barricade', 'trash-can', 'mailbox'].includes(entity.destructible.kind)) note(entity.id, boxGap(entity.transform.x, entity.transform.z, wall.halfX, wall.halfZ));
+    }
+    for (const [id, boxes] of this.wrecks) {
+      let gap = Infinity; for (const b of boxes) gap = Math.min(gap, boxGap(b.x, b.z, b.halfX, b.halfZ));
+      note(id, gap);
+    }
+    // Parked or abandoned cars are wrecks too: sample the hull outline against their chassis.
+    for (const other of this.cars.values()) {
+      if (other === car) continue;
+      let gap = Infinity;
+      for (const [lx, lz] of [[0, 0], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+        const wx = p.x + c * lx * def.length / 2 + s * lz * def.width / 2, wz = p.z - s * lx * def.length / 2 + c * lz * def.width / 2;
+        gap = Math.min(gap, other.physics.hullDistance(wx, wz));
+      }
+      note(other.entity.id, gap);
+    }
+    for (const key of Object.keys(book)) if (!seen.has(Number(key))) delete book[Number(key)];
+  }
+  private apcHit(car: Car, target: Pick<EntitySnapshot, 'id'>, source: 'contact' | 'attack' | 'obstacle', contactId: number | null, attackId: number | null): void {
     const before = car.entity.health.current;
-    this.damage(car.entity.id, source === 'contact' ? apcDurability.contactDamage : apcDurability.attackDamage);
+    this.damage(car.entity.id, source === 'attack' ? apcDurability.attackDamage : apcDurability.contactDamage);
     this.world.events.emit({ type: 'vehicle.durability-hit', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id, source, contactId, attackId, before, after: car.entity.health.current });
   }
   postPhysics(): void {
@@ -361,7 +452,7 @@ export class Vehicles {
         this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform); this.world.spatial.set(1, player.transform.x, player.transform.z);
       }
       this.updatePassengers(car); this.infected(car); this.damageState(car);
-      if (this.active === car.entity.id && car.entity.health.current > 0 && car.physics.recoverFlip()) {
+      if (this.active === car.entity.id && this.operable(car) && car.physics.recoverFlip()) {
         state.recoveringUntil = 0;
         this.world.events.emit({ type: 'vehicle.recovering', tick: this.world.tick, sourceId: car.entity.id });
       } else if (state.stuck && state.recoveringUntil <= this.world.tick && this.active === car.entity.id) {
@@ -374,7 +465,7 @@ export class Vehicles {
   /** Boarding uses the same doorway as the driver, with no visual seat-count limit. */
   boardPassenger(carId: number, actorId: number): boolean {
     const car = this.cars.get(carId), actor = this.world.entities.get(actorId);
-    if (!car?.physics.def.transport || (!actor?.civilian && !actor?.companion && !actor?.escort) || actor.health.current <= 0 || actor.civilian?.pet || actor.infected || actorId === 1 || car.entity.health.current <= 0 || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
+    if (!car?.physics.def.transport || (!actor?.civilian && !actor?.companion && !actor?.escort) || actor.health.current <= 0 || actor.civilian?.pet || actor.infected || actorId === 1 || !this.operable(car) || car.physics.speed >= 1 || actor.passengerOf !== undefined) return false;
     this.localPoint(car, car.physics.def.doorX, car.physics.def.width / 2 + .55);
     if (Math.hypot(actor.transform.x - this.position.x, actor.transform.z - this.position.z) > .7) return false;
     const c = actor.civilian;
@@ -386,7 +477,7 @@ export class Vehicles {
   /** Escape lanes provide their complete group, including losses; no kill-count condition. */
   groupBoarded(carId: number, roster: readonly number[]): boolean {
     const car = this.cars.get(carId);
-    if (!car?.physics.def.transport || car.entity.health.current <= 0 || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1) return false;
+    if (!car?.physics.def.transport || !this.operable(car) || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1) return false;
     if (this.transition?.carId === carId && this.transition.kind === 'enter' && this.world.tick - this.transition.tick < vehicleBoardingTicks) return false;
     return roster.every(id => {
       const actor = this.world.entities.get(id);
@@ -450,7 +541,7 @@ export class Vehicles {
   /** Call only after the complete living group is seated; copy before replacing the level. */
   transfer(carId: number): VehicleTransfer {
     const car = this.cars.get(carId);
-    if (!car?.physics.def.transport || car.entity.health.current <= 0 || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1 || car.entity.vehicle!.passengers?.some(p => p.phase !== 'seated')) throw new Error('Transport is not ready to depart');
+    if (!car?.physics.def.transport || !this.operable(car) || this.world.entities.get(1)!.health.current <= 0 || car.entity.vehicle!.driver !== 1 || car.entity.vehicle!.passengers?.some(p => p.phase !== 'seated')) throw new Error('Transport is not ready to depart');
     if (this.transition?.carId === carId && this.transition.kind === 'enter' && this.world.tick - this.transition.tick < vehicleBoardingTicks) throw new Error('Driver is still boarding');
     const ids = [1, ...(car.entity.vehicle!.passengers ?? []).map(p => p.id)];
     const payload = structuredClone({ tick: this.world.tick, infiniteCharges: this.world.combat?.runner.infiniteCharges ?? false, vehicle: car.entity, occupants: ids.map(id => this.world.entities.get(id)!).filter(e => e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished') });
@@ -485,7 +576,7 @@ export class Vehicles {
     if (vehicle.vehicle.recoveringUntil) vehicle.vehicle.recoveringUntil += delta;
     vehicle.vehicle.attached = [];
     // A campaign handover leaves the old district's infected behind, retaining the ID sequence.
-    if (vehicle.vehicle.apcContacts) vehicle.vehicle.apcContacts.infected = {};
+    if (vehicle.vehicle.apcContacts) { vehicle.vehicle.apcContacts.infected = {}; delete vehicle.vehicle.apcContacts.obstacles; }
     vehicle.transform.x = position.x; vehicle.transform.z = position.z; vehicle.transform.yaw = yaw;
     for (const actor of payload.occupants) {
       if (actor.id === 1) Object.assign(this.world.entities.get(1)!, actor);
@@ -528,8 +619,10 @@ export class Vehicles {
         if (contact.windupAt !== null) contact.windupAt += delta;
         if (contact.cooldownUntil) contact.cooldownUntil += delta;
       }
+      for (const contact of Object.values(state.apcContacts?.obstacles ?? {})) if (contact.separatedAt !== null) contact.separatedAt += delta;
       for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
       const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
+      physics.speedCap = state.floor && entity.health.current <= 0 ? apcFloor.speedShare : 1; physics.overspeedDamp = apcFloor.overspeedDamp;
       Object.assign(physics.transform, entity.transform); Object.assign(physics.previous, entity.transform); entity.transform = physics.transform;
       physics.body.setTranslation(entity.transform, true);
       physics.speed = state.speed; physics.forwardSpeed = state.forwardSpeed;

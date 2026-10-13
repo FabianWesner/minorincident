@@ -61,6 +61,26 @@ export class SpawnDirector {
     const c = this.camera, dx = position.x - c.x, dz = position.z - c.z;
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
   }
+  /**
+   * Ally fire rule (PO 2026-10-13: "visibility range of soldiers is so high, that they kill all Zombies before i see them myself"):
+   * the chest of `position` lies inside the player's sim-camera frame, inset by `inset` (an infected walks into view before anyone
+   * shoots it), and within `maxM` of the player. Without a camera volume (headless unit worlds) only the distance applies.
+   */
+  inPlayerView(position: { x: number; z: number; y?: number }, maxM = 22, inset = .92): boolean {
+    const player = this.ai.world.entities.get(1)?.transform;
+    if (player && Math.hypot(position.x - player.x, position.z - player.z) > maxM) return false;
+    if (!this.hasFrustum) return true;
+    const m = this.frustum, x = position.x, y = (position.y ?? .7) + .35, z = position.z;
+    const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13], w = m[3] * x + m[7] * y + m[11] * z + m[15];
+    return w > 0 && Math.abs(cx) <= w * inset && Math.abs(cy) <= w * inset;
+  }
+  /** True only with a camera volume and `position` inside its frame (no distance cap); headless worlds without a frustum: false. */
+  inFrame(position: { x: number; z: number; y?: number }, inset = 1): boolean {
+    if (!this.hasFrustum) return false;
+    const m = this.frustum, x = position.x, y = (position.y ?? .7) + .35, z = position.z;
+    const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13], w = m[3] * x + m[7] * y + m[11] * z + m[15];
+    return w > 0 && Math.abs(cx) <= w * inset && Math.abs(cy) <= w * inset;
+  }
   /** Test the whole human silhouette against the expanded viewport. */
   offscreen(position: { x: number; z: number }, floorY = 0): boolean {
     return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => !this.visible({ x: position.x + dx, z: position.z + dz, y: y + floorY }))));

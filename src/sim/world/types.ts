@@ -98,7 +98,9 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'interact.completed'; id: number; kind: import('../interact/Interactables').DeviceKind; cycle: number }
   | { tick: number; type: 'interact.interrupted'; id: number; progress: number }
   /** E31 IDs are monotonically allocated per vehicle, shared across contacts and attacks. */
-  | { tick: number; type: 'vehicle.durability-hit'; sourceId: number; targetId: number; source: 'contact' | 'attack'; contactId: number | null; attackId: number | null; before: number; after: number }
+  | { tick: number; type: 'vehicle.durability-hit'; sourceId: number; targetId: number; source: 'contact' | 'attack' | 'obstacle'; contactId: number | null; attackId: number | null; before: number; after: number }
+  /** L9 floor policy: one event per cumulative damage stage (1 = 75%, 2 = 50%, 3 = 25%, 4 = 0%), never replayed on load. */
+  | { tick: number; type: 'vehicle.damage-stage'; sourceId: number; stage: number }
   | { tick: number; type: 'vehicle.attack-windup'; sourceId: number; targetId: number; attackId: number; hitAt: number }
   | { tick: number; type: 'vehicle.obstacle-broken'; targetId: number }
   | { tick: number; type: 'vehicle.entered' | 'vehicle.exited' | 'vehicle.grabbed' | 'vehicle.shaken'; sourceId: number; targetId: number; /** E20: absent = driver (E09); the L2 fire truck seats the player as a passenger. */ role?: 'driver' | 'passenger' }
@@ -106,7 +108,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'noise'; sourceId: number; actionId: string; position: { x: number; y: number; z: number }; radius: number; loudness: number; kind: string; duration?: number }
   | { tick: number; type: 'entity.spawned'; id: number }
   /** E09 → E15 feedback only: no vehicle control/physics in the view. Blood is level-local 0..1. */
-  | { tick: number; type: 'vehicle.feedback'; id: number; position: { x: number; z: number }; yaw: number; healthFraction: number; blood: number }
+  | { tick: number; type: 'vehicle.feedback'; id: number; position: { x: number; z: number }; yaw: number; healthFraction: number; blood: number; floor?: boolean }
   | { tick: number; type: 'telegraph'; sourceId?: never; attackId: number; kind: TelegraphKind; position: { x: number; z: number }; radius: number; angle: number }
   | { tick: number; type: 'attack.resolved'; attackId: number }
   | { tick: number; type: 'vfx.effect'; kind: EffectKind; position: { x: number; z: number; y?: number }; radius: number }
