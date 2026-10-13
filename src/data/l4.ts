@@ -161,17 +161,17 @@ export const l4 = {
   /** Section 5.4: allied fighters v3. */
   soldiers: {
     hp: 120,
-    /** PO 2026-10-13 ("they kill all Zombies before i see them myself"): ranges cut to the player's view (was rifle 26 m, HMG 40 m,
-     * posts 24/36 m); nearM equals the range, so every hit chance inside it is the old one (accuracy and damage untouched). */
-    rifle: { damage: 18, shotS: .4, rangeM: 20, nearM: 20, hitNear: .65, hitFar: .35 },
-    hmg: { damage: 30, shotS: .16, rangeM: 22, nearM: 22, hitNear: .7, hitFar: .4 },
+    /** PO 2026-10-13 ("they kill all Zombies before i see them myself"): near the player the view rule (Allies.ts, option 3) caps
+     * what an ally may shoot; away from the player these ranges apply as before. */
+    rifle: { damage: 18, shotS: .4, rangeM: 26, nearM: 20, hitNear: .65, hitFar: .35 },
+    hmg: { damage: 30, shotS: .16, rangeM: 40, nearM: 30, hitNear: .7, hitFar: .4 },
     /** Engagement radius around the post: the line holds ground. */
-    postRangeM: 20, hmgRangeM: 22, moveMs: 3.8,
+    postRangeM: 24, hmgRangeM: 36, moveMs: 3.8,
   },
   civilians: {
     hp: 80, armedShare: .4, panicInfected: 3, panicRadiusM: 4, panicS: 6,
     pistol: { damage: 20, shotS: .7, rangeM: 18, nearM: 12, hitNear: .5, hitFar: .25 },
-    rifle: { damage: 60, shotS: .6 / 1, rangeM: 20, nearM: 20, hitNear: .6, hitFar: .4 },
+    rifle: { damage: 60, shotS: .6 / 1, rangeM: 32, nearM: 24, hitNear: .6, hitFar: .4 },
     /** Improvised melee (bat, pipe, crowbar): the firefighter swing with these numbers. */
     melee: { damage: 24, reachM: 1.9, swingS: .8 },
   },

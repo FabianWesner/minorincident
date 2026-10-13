@@ -59,10 +59,12 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const policeRule = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
-  // Off-screen self-defence (orchestrator 2026-10-13): an ally the player cannot see may shoot what is this close to it. Police keep the
-  // strict rule (PO 10-12: "Ideally the Zombies will win against police"; with it the L3 squad stopped losing officers) and only shove.
-  const inView = (target: EntitySnapshot) => playerSees(world, target.transform)
-    || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM && !playerSees(world, e.transform, 1.05);
+  // Police keep the strict rule everywhere (PO 10-12: "Ideally the Zombies will win against police") and only shove off screen.
+  // Orchestrator 2026-10-13 (option 3): the rule binds allies the player can see (in the frame or within 22 m of the courier); they
+  // shoot only what is in view, plus self-defence within 6 m. Allies away from the player fight their own war as before.
+  const onScreen = a.role === 'officer' || allyOnScreen(world, e.transform);
+  const inView = (target: EntitySnapshot) => !onScreen || playerSees(world, target.transform)
+    || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM;
   const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   const audibleThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
@@ -254,6 +256,12 @@ function cadence(world: SimWorld, e: EntitySnapshot, a: AllyState, shotS: number
 function playerSees(world: SimWorld, p: { x: number; z: number; y?: number }, inset?: number): boolean {
   const director = world.infected?.director as SpawnDirector | undefined;
   return director ? director.inPlayerView(p, allyViewM, inset) : true;
+}
+/** An ally the view rule binds: inside the player's sim-camera frame, or within `allyViewM` of the courier. */
+export function allyOnScreen(world: SimWorld, p: { x: number; z: number; y?: number }): boolean {
+  const player = world.entities.get(1)?.transform;
+  if (player && Math.hypot(p.x - player.x, p.z - player.z) <= allyViewM) return true;
+  return (world.infected?.director as SpawnDirector | undefined)?.inFrame(p) ?? false;
 }
 const lastCallout = new WeakMap<SimWorld, number>();
 /** A short shout (speech bubble + bark) from a fighter the player can see; one at a time, each fighter rarely. */

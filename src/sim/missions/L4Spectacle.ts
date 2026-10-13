@@ -1,3 +1,4 @@
+import { allyOnScreen } from '../outbreak/Allies';
 import { Rng } from '../../core/Rng';
 import { l4, l4Edges, l4Glass } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
@@ -128,14 +129,15 @@ export class L4Spectacle {
     if (tick < s.heliBurstAt) return;
     if (s.heliBurst === 0) {
       // A burst starts: pick the densest cluster that is not on top of an ally or the courier (door-gun fire is area fire).
-      const target = this.cluster(3, p => this.clearOfAllies(p, 6) && this.world.infected!.director.inPlayerView(p));
+      const bound = allyOnScreen(this.world, heli.transform), target = this.cluster(3, p => this.clearOfAllies(p, 6) && (!bound || this.world.infected!.director.inPlayerView(p)));
       if (!target) { s.heliBurstAt = tick + ticks(1); return; }
       s.heliBurst = h.burst.shots; s.heliTarget = { ...target.at };
       this.world.events.emit({ type: 'l4.heliPass', tick, from: { x: heli.transform.x, z: heli.transform.z }, to: { ...target.at } });
     }
     const at = s.heliTarget ?? { x: l4.map.centre.x, z: l4.map.centre.z };
-    // PO 2026-10-13: no ally gun (door gun included) fires at an infected the player cannot see.
-    const victims = this.ai.active.filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && dist(e.transform, at) <= 4.5 && this.world.infected!.director.inPlayerView(e.transform));
+    // PO 2026-10-13 / option 3: a door gun the player can see fires only at infected in view; away from the player it fights as before.
+    const seen = allyOnScreen(this.world, heli.transform);
+    const victims = this.ai.active.filter(e => e.health.current > 0 && !e.hidden && !e.infectionRise && dist(e.transform, at) <= 4.5 && (!seen || this.world.infected!.director.inPlayerView(e.transform)));
     const victim = victims.length ? victims[(s.heliShots + victims.length) % victims.length] : undefined;
     const from = { x: heli.transform.x, z: heli.transform.z }, to = victim ? { x: victim.transform.x, z: victim.transform.z } : at;
     const hit = !!victim && new Rng(this.world.seed, `heli-shot:${s.heliShots}`).next() < h.burst.hit;

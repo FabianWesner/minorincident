@@ -49,7 +49,7 @@ export const l3 = {
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
   /** The riflemen use `gun` (spec rifles); the mounted gun is one HMG gunner (l4.soldiers.hmg, anchor l3-hmg) in the sandbag nest at the line. */
-  soldiers: { deckY: 4.26, count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 20, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
+  soldiers: { deckY: 4.26, count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 26, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
   /** Section 5.3: each gunshot is a loud event for non-chasing infected within 20 m. */
   /** `handgunStaggerS`: a courier handgun hit staggers the infected like an L3 police pistol hit (brief l3-polish, E21-AC05). */
   gunfire: { radiusM: 20, holdS: 6, minGapS: .5, handgunStaggerS: .25 },
