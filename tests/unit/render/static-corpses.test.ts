@@ -35,8 +35,15 @@ test('static corpse pages grow beyond the old population cap and survive camera 
       expect(mesh.boundingSphere!.center.distanceTo(center) + local.radius).toBeLessThanOrEqual(mesh.boundingSphere!.radius + 1e-5);
     }
   }
-  // Restore removes only bodies absent from the checkpoint; the next sync repopulates its saved bodies.
-  records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(0);
+  // A body absent from the records (deleted, or hidden by a corpse budget) leaves alone; its page keeps the rest in place.
+  records.delete(1); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(259);
+  records.get(2)!.hidden = true; pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(258);
+  expect(pool.snapshot().figures.some(f => f.id === 1 || f.id === 2)).toBe(false);
+  // The moved last instance keeps its matrix (the page swap-removes).
+  const first = pool.children[0] as InstancedMesh, moved = new Matrix4(); first.getMatrixAt(0, moved);
+  expect(new Vector3().setFromMatrixPosition(moved).x).toBeCloseTo(1.28, 5);
+  // Restore (a record replaced by another object) rebuilds; the next sync repopulates its saved bodies.
+  records.set(3, { id: 3, corpse: true } as EntitySnapshot); pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(0);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 
@@ -75,6 +82,17 @@ test('L6 prewarmed corpse pages stay empty until a real body joins @E24', () => 
   expect(pool.snapshot()).toMatchObject({ instances: 1, draws: 1 });
   pool.begin(id => id === 7 ? e : undefined);
   expect(pool.snapshot().instances).toBe(1);
+  pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
+test('l4-collapse-2: gore masks and death frames share one frozen material (no new shader per dismemberment combination) @E22', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  const masks = [[], ['head'], ['armL', 'foreArmL', 'handL'], ['legR', 'shinR', 'footR', 'head']];
+  for (const [i, hidden] of masks.entries()) pool.place({ id: i + 1, corpse: true } as EntitySnapshot, `runner:${i}`, baked.geometry, material, baked.clip, frame - (i % 2), new Matrix4(), new Color('white'), [0, 0, 0], String(i + 1), hidden);
+  const pages = pool.children as InstancedMesh[];
+  expect(pages).toHaveLength(4); expect(new Set(pages.map(p => p.material)).size).toBe(1); expect(new Set(pages.map(p => p.geometry.getAttribute('position'))).size).toBe(4);
   pool.dispose(); baked.geometry.dispose(); material.dispose();
 });
 

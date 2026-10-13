@@ -852,6 +852,9 @@ export class AudioService implements Lifecycle {
             this.play(id, { position }, source);
         if (event.type === 'pickup.collected')
             this.stinger('weapon', this.level);
+        // l4-collapse: each lost line escalates the score (the elite stinger over the combat bed).
+        if (event.type === 'l4.beat')
+            this.stinger('elite', this.level);
     }
     update(): void {
         if (!this.available())

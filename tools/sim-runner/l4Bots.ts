@@ -60,7 +60,8 @@ export function runL4(world: SimWorld, mission: Mission, profile: L4Profile, opt
   }
   offs.forEach(off => off()); world.clearInput(); world.combat!.damage.god = false;
   const s = mission.state.l4!, hazards = [...world.entities.iterate()].filter(e => e.hazard?.kind === 'fire').length;
-  const arrivedS = s.arrivedAt ? (s.arrivedAt - start) / 60 : 0;
+  // From the arrival event: a checkpoint restore shifts `arrivedAt` by the retry delta, so the stored tick overstates the ride after a death.
+  const arrivedS = timeline.find(e => e.type === 'l4.convoyArrived')?.t ?? (s.arrivedAt ? (s.arrivedAt - start) / 60 : 0);
   return {
     profile, route: opts.route ?? 'auto', seed: opts.seed ?? world.seed, outcome: mission.state.phase === 'result' || mission.state.phase === 'progression' ? 'complete' : 'timeout',
     simSeconds: mission.state.stats.time, deaths: mission.state.stats.deaths, kills: mission.state.stats.kills, knockdowns: mission.state.stats.knockdowns, damage: mission.state.stats.damage,

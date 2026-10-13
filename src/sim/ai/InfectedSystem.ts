@@ -192,6 +192,10 @@ export class InfectedSystem {
         this.world.spatial.set(e.id,e.transform.x,e.transform.z); continue;
       }
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
+      if (b.scripted && !b.specialAttack) {
+        if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted);
+        e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+      }
       if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack) {
         const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
         if (seen) {
@@ -759,6 +763,19 @@ export class InfectedSystem {
       if (distance <= lunge && this.world.tick >= b.cooldown && strikable) { b.combo = 0; this.windup(e); return; }
       // QA2-04: hold at arm's reach between swings instead of walking into the courier's body.
       if (distance < Math.max(1.3, infectedContactDistance(e.combat!.radius)) && strikable) { brain.stuckTick = this.world.tick; brain.stuckX = e.transform.x; brain.stuckZ = e.transform.z; e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
+      // L4 (l4-collapse-2: "corpse heaps around a camping courier"): around a courier standing still the chasers take a slot on a ring
+      // (per id, at most ~90 degrees around from where they come) instead of queueing behind the first one; past the first eight closer
+      // chasers a body waits on an outer ring (1.1 m further out per eight) rather than pressing into a mound. The strike rule is unchanged.
+      if (distance > 1.7 && distance < 7 && this.world.missions?.state.l4 && this.courierStill()) {
+        let ahead = 0; const d2 = distance * distance;
+        for (const o of this.active) if (o !== e && o.health.current > 0 && o.infected?.l1?.targetId === 1 && (o.transform.x - target.position.x) ** 2 + (o.transform.z - target.position.z) ** 2 < d2) ahead++;
+        const ring = Math.min(4.7, 1.4 + 1.1 * Math.floor(ahead / 8));
+        const slot = (e.id * 2.399963) % (Math.PI * 2), bearing = Math.atan2(e.transform.z - target.position.z, e.transform.x - target.position.x);
+        const a = bearing + Math.max(-1.6, Math.min(1.6, Math.atan2(Math.sin(slot - bearing), Math.cos(slot - bearing))));
+        this.ringPoint.x = target.position.x + Math.cos(a) * ring; this.ringPoint.z = target.position.z + Math.sin(a) * ring;
+        if (ring > 1.4 && Math.abs(distance - ring) < .5) { e.transform.yaw = -Math.atan2(target.position.z - e.transform.z, target.position.x - e.transform.x); return; }
+        if (this.nav.clear(this.ringPoint.x, this.ringPoint.z, e.combat!.radius)) { this.steerL1(e, brain, this.ringPoint, brain.runSpeed, true, true); return; }
+      }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
       return;
     }
@@ -1173,6 +1190,9 @@ export class InfectedSystem {
    * goal moved), else a budgeted A* route (at most 4 new routes per tick; moving goals re-route every 0.25 s), or the
    * shared flow field when chasing the survivor in a crowd. `pursue` keeps full speed onto a moving human.
    */
+  private readonly ringPoint = { x: 0, z: 0 };
+  /** The courier moved less than 1 m/s this tick. */
+  private courierStill(): boolean { const p = this.world.entities.get(1)?.transform, q = this.world.previousPlayer; return !!p && !!q && Math.hypot(p.x - q.x, p.z - q.z) * 60 < 1; }
   private steerL1(e: EntitySnapshot, brain: L1Brain, goal: { x: number; z: number }, speed: number, survivor = false, pursue = false): void {
     speed = this.l3Speed(e, speed);
     const b = e.infected!, tick = this.world.tick, radius = e.combat!.radius, grid = this.navigation.district(e.transform);
@@ -1274,7 +1294,7 @@ export class InfectedSystem {
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
     const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
-    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack; // Roar paths must never follow the live-player flow field.
+    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted; // Roar and scripted paths must never follow the live-player flow field.
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       let next = from;
       if (useFlow) next = nav.flowNext(from);

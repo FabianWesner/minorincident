@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import type { Page } from '@playwright/test';
 import { test, expect, boot, testUrl } from '../fixtures';
-import { l4Anchors } from '../../../src/data/l4';
+import { l4, l4Anchors } from '../../../src/data/l4';
 
 /** E22 L4 browser runs. Browser runs only through tools/e2e-lock.sh, headless. */
 const output = 'test-results/epics/E22';
@@ -141,7 +141,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     await snap('l4-first-turn'); turnShot = true; void turnShot;
     // The war: hold the plaza with the army, shooting what comes within range; photos of the line and the tank.
     let line = false, tank = false;
-    for (let i = 0; i < 400 && !(await mission()).l4!.lineBreakAt; i++) {
+    for (let i = 0; i < 1200 && !(await mission()).l4!.lineBreakAt; i++) { // l4-collapse: the war lasts ~3 min (three lines, then "Fall back!")
       if (!await fightNearby(16)) await step(15);
       const m = await mission();
       const inFrame = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x + 22, e.transform.z - 3) < 24).length);
@@ -152,9 +152,10 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     if (!line) await snap('l4-war-line'); if (!tank) await snap('l4-tank');
     await step(150); await snap('l4-collapse');
     await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
-    // The collapse: to Kessler's Hardware along Harbor Street (north; the south mouth of the plaza holds the stalled crowd that killed the courier 24 times), through whatever comes, to the cellar door.
+    // The collapse: the escape street (l4-collapse-2: at "Fall back!" the horde leaves a gap on it; pursuers still chase): out of the ring's
+    // east side, down to Lakeshore Avenue and east to Kessler's cellar door, through whatever comes.
     const inCellar = async () => (await mission()).l4!.phase === 'cellar';
-    const route: P[] = [{ x: -19, z: -38 }, { x: 24, z: -38 }, { x: 46.6, z: -30 }, { x: 46.6, z: 30 }, at('l4-cellar-door')];
+    const route: P[] = [...l4.director.escape.route.slice(1).map(([x, z]) => ({ x, z })), at('l4-cellar-door')];
     for (const wp of route) { await go(wp, 2.2, inCellar, 9); if (await inCellar()) break; }
     for (let i = 0; i < 40 && !await inCellar(); i++) { await go(at('l4-cellar-door'), .5, inCellar, 9); await interact(); await step(20); }
     expect(await inCellar()).toBe(true);
