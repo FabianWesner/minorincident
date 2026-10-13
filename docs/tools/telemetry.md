@@ -25,7 +25,7 @@ Cloudflare Pages Functions in `functions/api/` (shared code in `functions/_lib/t
 
 | Resource | Id |
 | --- | --- |
-| D1 database `mi-telemetry` (binding `DB`) | `5592c62b-468c-498a-b724-fcc6d692ae90` (tables `sessions`, `events`, `replays`, schema in `migrations/0001_init.sql`) |
+| D1 database `mi-telemetry` (binding `DB`) | `5592c62b-468c-498a-b724-fcc6d692ae90` (tables `sessions`, `events`, `replays`, schema in `migrations/0001_init.sql`; `migrations/0002_debug.sql` adds the `debug` flag, apply it remotely before deploying) |
 | R2 bucket `mi-replays` (binding `REPLAYS`) | objects `<day>/<attempt>/<seq>.gz` |
 | Pages secret `TELEMETRY_READ_TOKEN` | production env of project `minor-incident`; the same value is in the repo `.env` |
 
@@ -35,7 +35,7 @@ QA (`BRANCH=qa`) deploys have no bindings: `/api/t` and `/api/replay` answer 503
 | --- | --- |
 | `POST /api/t` | event batch (strict schema: unknown types/fields/values reject the whole request) |
 | `POST /api/replay?a=&p=&s=&n=&l=&b=[&f=1&o=outcome&t=ticks&m=samples]` | one gzip chunk of a replay (<= 256 KB), idempotent per `a`/`n` |
-| `GET /api/stats?token=…&days=14` | JSON: players per day, sessions, session length distribution, level funnel (start/complete/restart/quit, median clear time), deaths and quits per level with 5 m grid positions and causes, perf per device class, devices, builds |
+| `GET /api/stats?token=…&days=14[&include=debug]` | sessions started with `?debug` (context `dbg`, column `debug` on sessions and events) are excluded unless `include=debug`; `debug_sessions` always counts them. JSON: players per day, sessions, session length distribution, level funnel (start/complete/restart/quit, median clear time), deaths and quits per level with 5 m grid positions and causes, perf per device class, devices, builds |
 | `GET /api/replays?token=…[&level=L1&outcome=quit&limit=50]` | recent replays; `&id=<attempt>` lists its chunks, `&id=…&chunk=<n>` streams one raw gzip chunk |
 
 Abuse limits (per session unless noted): 6000 events, 1.5 MB event bytes, 2500 requests, 24 MB of replay data, 100-event and 48 KB batches,
@@ -51,6 +51,7 @@ Setup (done once): `wrangler d1 create mi-telemetry`, `wrangler r2 bucket create
 ```
 npm run telemetry:stats -- --days 14            # readable report (token from TELEMETRY_READ_TOKEN env or the repo .env)
 npm run telemetry:stats -- --days 7 --json
+npm run telemetry:stats -- --debug             # include ?debug sessions (own testing); default is public players only
 npm run telemetry:stats -- --replays --level L1 --outcome quit --limit 20
 curl "https://minor-incident.com/api/stats?token=$TELEMETRY_READ_TOKEN&days=7"
 ```
