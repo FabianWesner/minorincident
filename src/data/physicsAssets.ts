@@ -3924,7 +3924,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.evac-bus.glb",
-    "hash": "880bc7cca2e01dc8a28f64976b3232da51b909b21fadd85eed61376b6125c884"
+    "hash": "086c981ee0c5b050e9023174ff14a1aa31007973a98e8bc7bca4797c0853743f"
   },
   "kit.army-checkpoint": {
     "class": "fixed",
