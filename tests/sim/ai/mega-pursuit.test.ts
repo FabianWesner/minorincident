@@ -114,7 +114,7 @@ const strip: PursuitRoute = {
   nodes: [-200, -170, -140, -110, -80, -50, -20, 0].map((x, i) => ({ id: `n${i}`, x, z: 0, region: x < -100 ? 'r1' : 'r2' })).concat([{ id: 'd1', x: -140, z: 40 }, { id: 'd2', x: -80, z: 40 }] as never),
   links: [['n0', 'n1'], ['n1', 'n2'], ['n2', 'n3'], ['n3', 'n4'], ['n4', 'n5'], ['n5', 'n6'], ['n6', 'n7'], ['n2', 'd1'], ['d1', 'd2'], ['d2', 'n4']],
 };
-test('T-E32-10f @E32-AC10 off-region: coarse 2 Hz advance at cruise × sim-time along authored nodes, counts against the cap, keeps HP, detailed on entry', async () => {
+test('T-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise × sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry', async () => {
   const w = await course(), resident = (x: number) => x > -100;
   const pursuit = installMegaPursuit(w, { introduceTick: null, route: strip, resident });
   const id = pursuit.introduce({ x: -200, z: 0 }), e = w.entities.get(id)!;
