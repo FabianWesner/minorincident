@@ -46,14 +46,14 @@ export class CampaignUI {
     const mission=this.game.world.missions,save=this.game.campaign;
     if(!save||!mission||mission.state.phase!=='progression'||this.offeredMission===mission)return;
     this.offeredMission=mission;
-    const match=/^L([1-9])$/.exec(mission.def.id);if(!match)return;
+    const match=/^L([1-9]|10)$/.exec(mission.def.id);if(!match)return;
     const level=Number(match[1]) as Level;
     // Game persists completion and aftermath on level.completed, before this navigation can unload the world.
     if(level===lastLevel){this.credits(save);return;}
     // Finishing level N continues with N+1, not with the furthest unlocked level (replays and L2-completed saves).
     void this.game.continueCampaign(save,nextLevelAfter(level)??undefined);
   }
-  /** The end of the campaign: shown after the last level (L9) and whenever the next level is not built yet. */
+  /** The end of the campaign: shown after the last level (L10) and whenever the next level is not built yet. */
   credits(save:CampaignSave):void {
     this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();
   }

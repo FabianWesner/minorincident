@@ -65,7 +65,7 @@ export interface SceneSpec {
    * `route` (nodes/links) and a `resident` box: outside it the pursuit runs coarse (off-region, the L9-S4 seam). `metrics.megaAlpha`. */
   megaAlpha?: { id?: string; at: Point; route?: import('../../sim/ai/MegaPursuit').PursuitRoute; resident?: [Point, Point] };
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
-  crossingCrash?: { health: number };
+  crossingCrash?: { health: number; handover?: boolean };
   armyBoom?: { x: number; z?: number; closed?: boolean };
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }

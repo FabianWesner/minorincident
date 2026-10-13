@@ -1,3 +1,6 @@
+import { preset } from '../../sim/progression/Campaign';
+import { applyCampaign } from '../../sim/progression/apply';
+import { completeCampaignLevel } from '../../sim/progression/carryover';
 import { levelNineMission } from '../../levels/L9/mission';
 import { crowdVariety } from '../../render/characters/CrowdAppearance';
 import { propFootprint } from '../../sim/interact/PropSystem';
@@ -218,6 +221,11 @@ export class SceneLab {
         return { x: a.position[0], y: a.position[1], z: a.position[2], radius: 2 };
       });
       def.anchors['crossing-start'] = { ...def.anchors['crash-approach'] };
+      if (spec.crossingCrash.handover) {
+        const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9;
+        applyCampaign(world, save);
+        world.events.on('level.completed', e => { if (e.type === 'level.completed') completeCampaignLevel(save, 9, e.result, world); });
+      }
       const mission = world.loadMission(def); mission.begin();
       const id = mission.l9!.state.carId;
       world.vehicles!.damage(id, 1000 - spec.crossingCrash.health); this.vehicles.set('apc', id);
