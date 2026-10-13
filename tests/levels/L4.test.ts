@@ -139,7 +139,7 @@ describe('L4 The Safe City Falls', () => {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
       step(w, 5 * 60); l.mission.completeObjective('quartermaster');
-      const turns: { tick: number; ids: number[]; near: number }[] = [], at = new Map<number, { x: number; z: number }>(), origins = new Set<string | undefined>(); /* positions at the turn: the turned run off afterwards */ w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); for (const id of e.ids) { at.set(id, { x: w.entities.get(id)!.transform.x, z: w.entities.get(id)!.transform.z }); origins.add(w.entities.get(id)!.appearance!.origin); } });
+      const turns: { tick: number; ids: number[]; near: number }[] = [], at = new Map<number, { x: number; z: number }>(), origins = new Set<string | undefined>(); /* positions at the turn: the turned run off afterwards */ w.events.on('l4.firstTurn', e => { if (e.type !== 'l4.firstTurn') return; turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); for (const id of e.ids) { at.set(id, { x: w.entities.get(id)!.transform.x, z: w.entities.get(id)!.transform.z }); origins.add(w.entities.get(id)!.appearance!.origin); } });
       step(w, 60 * 60);
       expect(turns, `seed ${seed}`).toHaveLength(1);
       const after = (turns[0].tick - s.gunAt) / 60; expect(after).toBeGreaterThanOrEqual(40); expect(after).toBeLessThanOrEqual(50);
