@@ -228,7 +228,10 @@ export class LevelFourWar {
    * in a vehicle's path (hull plus 0.6 m at the sides and 1.5 m ahead) steps out sideways to the nearer edge.
    */
   private clearLane(): void {
-    const { world } = this.mission, s = this.s, ids = [...s.residentIds, ...s.evacueeIds, ...s.soldierIds];
+    const { world } = this.mission, s = this.s;
+    // Every actor, not only the authored crowd: pets, the corgi, dog walkers, strays (PO 10-13 "Bus is going over a dog").
+    const ids: number[] = [];
+    for (const e of world.entities.iterate()) if (e.id !== 1 && !e.hidden && e.health.current > 0 && !e.corpse && (e.civilian || e.companion || e.infected) && !String(e.archetype).startsWith('veh.')) ids.push(e.id);
     for (const [i, vid] of s.convoyIds.entries()) {
       const v = world.entities.get(vid), spec = l4.convoy.vehicles[i]; if (!v) continue;
       const c = Math.cos(v.transform.yaw), si = Math.sin(v.transform.yaw);
@@ -333,10 +336,17 @@ export class LevelFourWar {
   private turn(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, o = this.outbreak();
     // The evacuees from the L3 buses collapse in the queue and turn (the visible 3 s transformation, same entity, same look).
-    let ids = s.turnerIds.filter(id => this.human(world.entities.get(id)));
+    // Collapse design: the evacuees who turn stand inside the perimeter (a seeded one may still be walking in from the bus), topped up from the queue.
+    const ring = l4.map.ring, inside = (id: number) => { const t = world.entities.get(id)!.transform; return t.x > ring.x0 && t.x < ring.x1 && t.z > ring.z0 && t.z < ring.z1; };
+    const want = this.turners(), centre = { x: -25, z: -9 };
+    let ids = s.turnerIds.filter(id => this.human(world.entities.get(id)) && inside(id));
+    if (ids.length < want) {
+      const rest = s.evacueeIds.filter(id => !ids.includes(id) && this.human(world.entities.get(id)) && inside(id));
+      ids = [...ids, ...rest.sort((a, b) => dist(world.entities.get(a)!.transform, centre) - dist(world.entities.get(b)!.transform, centre))].slice(0, want);
+    }
     if (!ids.length) {
       const queue = [...s.evacueeIds, ...s.residentIds].filter(id => this.human(world.entities.get(id)));
-      ids = queue.sort((a, b) => dist(world.entities.get(a)!.transform, { x: -25, z: -9 }) - dist(world.entities.get(b)!.transform, { x: -25, z: -9 })).slice(0, this.turners());
+      ids = queue.sort((a, b) => dist(world.entities.get(a)!.transform, centre) - dist(world.entities.get(b)!.transform, centre)).slice(0, want);
     }
     const first = world.entities.get(ids[0])?.transform ?? { x: -25, z: -9 };
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
