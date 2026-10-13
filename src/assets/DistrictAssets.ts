@@ -43,6 +43,7 @@ export const ROOFED = new Set(['bld.garage-detached', 'bld.courier-depot', 'bld.
 export class DistrictAssets {
   private readonly loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
   private readonly cache = new Map<string, Promise<Group>>();
+  private readonly glbLeases = new Map<string, number>();
   private readonly geometries = new Set<BufferGeometry>();
   private readonly batchMaterials = new Set<Material>();
   private readonly signTextures: import("three/webgpu").Texture[] = [];
@@ -68,8 +69,8 @@ export class DistrictAssets {
     });
     return root;
   }
-  async glb(url: string, lit = true): Promise<Group> {
-    const key = `${url}:${lit}`;
+  async glb(url: string, lit = true, terrain = false): Promise<Group> {
+    const key = `${url}:${lit}${terrain ? ':terrain' : ''}`;
     if (!this.cache.has(key))
       this.cache.set(
         key,
@@ -96,6 +97,14 @@ export class DistrictAssets {
               o.castShadow = true;
               o.receiveShadow = true;
             });
+            if (terrain) {
+              // Raw InstancedMesh nodes capture a new matrix buffer in their node
+              // graph for every cell. Reuse the district's vertex-attribute batch
+              // path and shared material so revisits never compile cold shaders.
+              const batch = staticBatch(scene, true, this.materials); this.share(batch);
+              scene.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });
+              return this.remember(batch);
+            }
             return this.remember(scene);
           })
           .catch((e) => {
@@ -104,6 +113,25 @@ export class DistrictAssets {
           }),
       );
     return this.cache.get(key)!;
+  }
+  /** Streamed terrain borrows the existing cache while resident. Last release
+   * evicts CPU arrays and GPU buffers, including a load finishing after unload. */
+  leaseGlb(url: string): { ready: Promise<Group>; release: () => void } {
+    const key = `${url}:true:terrain`;
+    this.glbLeases.set(key, (this.glbLeases.get(key) ?? 0) + 1);
+    const ready = this.glb(url, true, true), cached = this.cache.get(key);
+    let released = false;
+    return { ready, release: () => {
+      if (released) return; released = true;
+      const count = (this.glbLeases.get(key) ?? 1) - 1;
+      if (count) { this.glbLeases.set(key, count); return; }
+      this.glbLeases.delete(key);
+      if (this.cache.get(key) === cached) this.cache.delete(key);
+      void ready.then(root => root.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        this.geometries.delete(node.geometry); node.geometry.dispose();
+      })).catch(() => {});
+    } };
   }
   /** Every static batch of a role (body, lit windows, unlit windows) has the same node graph: one
    * shared material means one node build and cache key for all of them, so later LOD0 swaps reuse
@@ -256,6 +284,7 @@ export class DistrictAssets {
     for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear();
     for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
+    this.glbLeases.clear();
     void this.assets.dispose();
     this.ktx?.dispose();
   }
