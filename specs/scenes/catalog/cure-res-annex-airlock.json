@@ -1,0 +1,22 @@
+{
+ "name": "cure-res-annex-airlock",
+ "note": "L10 R5 quarantine annex (bld.cure-lab-annex) airlock side and the isolation tent (prop.cure-iso-tent) at the real game camera. Run with --matrix. Look for: airlock vestibule with yellow roof, chevron band over the double door, biohazard sign, scrubber tank and stacks behind, tent airlock door, eave band and guy ropes, sunk or floating parts, flicker, missing parts at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 70,
+ "dof": false,
+ "props": [
+  { "id": "annex", "asset": "bld.cure-lab-annex", "at": [0, 0], "yaw": 0 },
+  { "id": "tent", "asset": "prop.cure-iso-tent", "at": [16, 12], "yaw": 3.1416 },
+  { "id": "qf1", "asset": "prop.cure-quarantine-fence", "at": [12, -8], "yaw": 1.5708 },
+  { "id": "qf2", "asset": "prop.cure-quarantine-fence", "at": [12, -4.8], "yaw": 1.5708 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [11, 0], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [8, 0], "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
