@@ -1,18 +1,66 @@
 {
   "name": "l9-crash-approach",
-  "note": "L9 crash site (L9-A2): the courier walks the shared approach (x 455 to 503) past the wrecked truck, school bus, police sedan, pickup and sedan and the barricades, to the broken road lip. Game camera follows. Look for: wrecks partly blocking the 12 m road but leaving a lane, wrecks lying on the road surface (not floating or sunk), the road ending at a ragged lip, the gully reading as a collapsed bridge section, no flicker between road, banks and kit.",
+  "note": "L9 crash site (L9-A2): the courier runs the shared approach (x 472 to 504.5) past the wrecked truck, school bus, police sedan, pickup and sedan and the barricades, to the broken road lip. Game camera follows. Look for: wrecks partly blocking the 12 m road but leaving a lane, wrecks lying on the road surface (not floating or sunk), the road ending at a ragged lip, the gully reading as a collapsed bridge section, no flicker between road, banks and kit.",
   "seed": 31,
   "ground": "district",
   "time": "L9-crossing",
   "dof": false,
-  "layout": { "district": "D-CROSSING", "bbox": [[440, -70], [570, 70]] },
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        440,
+        -70
+      ],
+      [
+        570,
+        70
+      ]
+    ]
+  },
   "actors": [
-    { "id": "courier", "kind": "courier", "at": [456, 0], "state": { "walk": [[456, 0], [503, 0]] } }
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        472,
+        0
+      ],
+      "state": {
+        "run": [
+          [
+            472,
+            0
+          ],
+          [
+            504.5,
+            0
+          ]
+        ]
+      }
+    }
   ],
-  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
-  "frames": 420,
-  "shots": [0, 150, 300, 420],
-  "sheet": 60,
-  "clipping": { "ignoreFoliage": true },
-  "expect": { "consoleErrors": 0, "clippingMax": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 360,
+  "shots": [
+    0,
+    120,
+    240,
+    360
+  ],
+  "sheet": 45,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
 }

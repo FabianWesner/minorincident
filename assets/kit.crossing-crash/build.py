@@ -122,13 +122,14 @@ slab('deck C', (6.6, 3.9, FLOOR + 2.0), 4.0, 4.0, .45, (math.radians(10), math.r
 
 # ---- Broken pier stubs --------------------------------------------------------------------------
 rng.seed(400)
-for x, y, h in ((-1.4, -4.2, 3.4), (-.9, 4.4, 2.1), (3.5, 4.6, 1.2)):
-    column('pier stub', (x, y, FLOOR), .75, h, 'sidewalk')
-    box('pier cap rubble', (x, y, FLOOR + h + .1), (1.5, 1.5, .24), 'sidewalk', .05, (rng.uniform(-.2, .2), rng.uniform(-.2, .2), rng.random()))
-    for k in range(5):
-        t = k / 5 * 6.28
-        s = Vector((x + math.cos(t) * .6, y + math.sin(t) * .6, FLOOR + h)); e = s + Vector((math.cos(t) * .15, math.sin(t) * .15, rng.uniform(.5, 1.5)))
-        rod('rebar', s, e, .07, 'leatherShadow')
+for x, y, h in ((-1.4, -4.2, 2.6), (-.9, 4.4, 1.7), (3.5, 4.6, 1.0)):
+    # Rectangular stubs and bent, uneven rebar (parallel round columns with five upright rods read as raised hands at night).
+    box('pier stub', (x, y, FLOOR + h / 2), (1.5, 1.3, h), 'sidewalk', .03, (0, 0, rng.uniform(-.3, .3)))
+    box('pier cap rubble', (x, y, FLOOR + h + .1), (1.7, 1.5, .24), 'sidewalk', .05, (rng.uniform(-.2, .2), rng.uniform(-.2, .2), rng.random()))
+    for k in range(4):
+        s = Vector((x + rng.uniform(-.6, .6), y + rng.uniform(-.5, .5), FLOOR + h + .2))
+        e = s + Vector((rng.uniform(-.8, .8), rng.uniform(-.8, .8), rng.uniform(.3, .8)))
+        rod('rebar', s, e, .08, 'silver')
 
 # ---- Torn guard rails ---------------------------------------------------------------------------
 rng.seed(500)
@@ -168,7 +169,7 @@ def scatter(count, xr, yr, z, sizes, tokens):
         x, y = rng.uniform(*xr), rng.uniform(*yr); s = rng.uniform(*sizes)
         if z == FLOOR and -.2 < x < 3.9 and abs(y) < 3.4: continue   # keep the crash-wreck spot clear
         chunk((x, y, z + s * .3), (s * rng.uniform(.8, 1.5), s * rng.uniform(.7, 1.3), s * rng.uniform(.5, 1)), rng.choice(tokens))
-scatter(24, (-HALF + .8, HALF - .8), (-6, 6), FLOOR, (.5, 1.1), ['sidewalk', 'asphalt', 'sidewalk', 'brick'])
+scatter(24, (-HALF + .8, HALF - .8), (-6, 6), FLOOR, (.5, 1.1), ['sidewalk', 'asphalt', 'sidewalk'])
 before = set(bpy.data.objects)
 bpy.ops.import_scene.gltf(filepath=str(ROOT / 'assets/decay.rubble-pile' / ('model.glb' if L == 0 else f'model.lod{L}.glb')))
 imported = [o for o in set(bpy.data.objects) - before if o.type == 'MESH']
