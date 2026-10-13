@@ -1,0 +1,157 @@
+{
+ "name": "asset-l10-dispersal-arena",
+ "note": "L10 R7 finale assembly from src/data/l10Finale.ts (console at the origin, platform with the mounted gun, two bullet tanks and a sphere tank as cover, towers/fan/hall/pipe run on the rim), orbiting camera over the 25 m hold zone, one full turn. Look for: floating or sunk pieces, props overlapping, a readable open dodge lane network, gun on the deck, LOD swaps while orbiting.",
+ "ground": "sidewalk",
+ "size": 150,
+ "props": [
+  {
+   "id": "console",
+   "asset": "kit.dispersal-console",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "platform",
+   "asset": "kit.dispersal-platform",
+   "at": [
+    -8,
+    -6
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tank-a",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    14,
+    -12
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tank-b",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    -14,
+    14
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "sphere",
+   "asset": "kit.dispersal-tank-sphere",
+   "at": [
+    22,
+    16
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tower-e",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    31,
+    -4
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tower-nw",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    -30,
+    26
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "fan-w",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    -38,
+    -16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "hall-s",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    -32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-straight",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-tee",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-elbow",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "gun",
+   "asset": "wpn.minigun-mounted",
+   "at": [
+    -10,
+    3,
+    -6
+   ],
+   "yaw": 0
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   0,
+   4,
+   0
+  ],
+  "radius": 85,
+  "azimuth": 45,
+  "polar": 55,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30
+}
