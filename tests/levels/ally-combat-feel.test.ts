@@ -6,13 +6,14 @@ import type { EntitySnapshot } from '../../src/sim/world/types';
 import { followFrustum, loadL3, runL3 } from '../../tools/sim-runner/l3Bots';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 import { l4, l4Crowd } from '../../src/data/l4';
+import { allyOffscreenDefenceM } from '../../src/data/allyCombat';
 
 const slots = [...l4Crowd.queue.line1, ...l4Crowd.queue.line2, ...l4.calm.waiting];
 
 /**
  * ally-combat-feel (PO 2026-10-13, verbatim): "Everyone is just standing around and shooting, this doesn'T look like a fight scene."
  * "Peds with weapons need to use them against Zombies". "Also seems like visibility range of soldiers is so high, that they kill all
- * Zombies before i see them myself". Fighting allies keep moving, nobody fires at an infected outside the player's view, and the
+ * Zombies before i see them myself". Fighting allies keep moving, nobody fires at an infected outside the player's view farther than 6 m from itself, and the
  * unarmed queue breaks up the moment the war starts. One seed per level (PO 10-09: no batteries).
  */
 let world: SimWorld | undefined;
@@ -24,7 +25,9 @@ interface FightMetrics {
   moved5: number;
   /** Mean share of fighting allies standing still (< 0.25 m) for more than 2 s. */
   still2: number;
-  /** Ally shots (soldiers, officers, armed civilians, HMG crews, the helicopter) at a target outside the player's view, and all shots. */
+  /** Ally shots (soldiers, officers, armed civilians, HMG crews, the helicopter) at a target outside the player's view and farther than
+   * `allyOffscreenDefenceM` from the shooter, and all shots. PO 2026-10-13: "Also seems like visibility range of soldiers is so high, that
+   * they kill all Zombies before i see them myself"; orchestrator decision: an off-screen ally may still shoot an infected within 6 m of itself. */
   offscreenShots: number; shots: number;
   /** Most unarmed civilians still standing in the registration queue (calm) 3 s or more into the fight. */
   queued: number;
@@ -45,7 +48,7 @@ function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => n
   const off = w.events.on('ally.attack', e => {
     if (e.type !== 'ally.attack' || !e.targetId || e.role === 'firefighter' || e.role === 'tank' || !e.from) return;
     const t = w.entities.get(e.targetId); if (!t) return;
-    shots++; if (!w.infected!.director.inPlayerView(t.transform)) offscreen++;
+    shots++; if (!w.infected!.director.inPlayerView(t.transform) && Math.hypot(t.transform.x - e.from.x, t.transform.z - e.from.z) > allyOffscreenDefenceM + 1e-6) offscreen++;
   });
   return {
     tick(combatS: number) {
