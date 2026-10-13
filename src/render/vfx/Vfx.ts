@@ -4,7 +4,7 @@ import { infectedDef } from '../../data/infected';
 import { catalog as actions } from '../../data/actions/catalog';
 import type { EffectKind, TelegraphKind, GameEvent } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
-import { FxPool } from './FxPool';
+import { FxPool, tracerLaunchS } from './FxPool';
 import { GibPool } from './GibPool';
 import type { VehicleFeedbackEvent } from './VehicleFeedback';
 import { HitStop } from './HitStop';
@@ -83,6 +83,7 @@ export class Vfx extends Group {
   dismemberedKills = 0;
   kills = 0;
   lastExplosionRadius = 0;
+  private readonly tracerRounds = new WeakMap<object, number>();
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
   private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
     const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
@@ -95,15 +96,24 @@ export class Vfx extends Group {
     const slope = target ? (target.transform.y + .45 - muzzle.y) / range : 0;
     const ray = { ...direction, y: slope };
     if (!this.enabled) return; // The firing pose is independent of the user's particle preference.
-    const distance = this.world.combat?.query.clearDistance(muzzle, ray, range) ?? range;
+    let distance = this.world.combat?.query.clearDistance(muzzle, ray, range) ?? range;
+    // Player shots carry a ray rather than a victim id. Stop the visual at the
+    // first body on that ray as well as cover, without changing projectile damage.
+    const hit = target ?? (sourceId === 1 ? this.world.combat?.query.ray(sourceId, muzzle, ray, distance) : null);
+    if (hit) distance = Math.min(distance, Math.max(0, (hit.transform.x - muzzle.x) * direction.x + (hit.transform.z - muzzle.z) * direction.z));
     const start = [muzzle.x, muzzle.y, muzzle.z];
     this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y + slope * distance, muzzle.z + direction.z * distance] });
     if (this.shots.length > 64) this.shots.shift();
     this.burst(muzzle.x, muzzle.y, muzzle.z, 0xfff1b8, 8, .3, .12, 0);
     this.particles.spawn(this.time, .1, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .75, 0, 0xffffff);
-    const spacing = this.quality === 'high' ? .3 : .6;
-    // The first tracer particle is at the muzzle, then follows the visual hit ray.
-    for (let i = 0; i <= Math.min(80, Math.floor(distance / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, muzzle.x + direction.x * i * spacing, muzzle.y + slope * i * spacing, muzzle.z + direction.z * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
+    // Presentation-only cadence per shooter; entity keys disappear on level unload.
+    const round = source ? this.tracerRounds.get(source) ?? 0 : 0;
+    if (source) this.tracerRounds.set(source, round + 1);
+    if ((sourceId === 1 || round % 3 === 0) && distance > .01) {
+      const rayLength = Math.hypot(1, slope), speed = 320 / rayLength;
+      this.particles.spawn(this.time, distance / speed + tracerLaunchS, muzzle.x, muzzle.y, muzzle.z,
+        direction.x * speed, slope * speed, direction.z * speed, 1, 11, 0xffce78, distance * rayLength, .065);
+    }
     if (!dust) return;
     // ally-combat-feel: an ejected brass glint beside the shooter, and a dust puff where a miss (or cover) stops the round.
     this.particles.spawn(this.time, .35, muzzle.x - direction.z * .25, muzzle.y - .1, muzzle.z + direction.x * .25, -direction.z * 1.2, 1.4, direction.x * 1.2, .07, 0, 0xd8b45a, 9.81);

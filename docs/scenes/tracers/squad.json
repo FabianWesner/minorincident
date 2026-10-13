@@ -1,0 +1,120 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "trace": true,
+  "frames": 90,
+  "sheet": 3,
+  "shots": [
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "name": "tracers-squad",
+  "actors": [
+    {
+      "id": "soldier-0",
+      "kind": "pedestrian",
+      "at": [
+        -10.182,
+        3.818
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "soldier-1",
+      "kind": "pedestrian",
+      "at": [
+        -8.0607,
+        5.9393
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "soldier-2",
+      "kind": "pedestrian",
+      "at": [
+        -5.9393,
+        8.0607
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "soldier-3",
+      "kind": "pedestrian",
+      "at": [
+        -3.818,
+        10.182
+      ],
+      "look": {
+        "role": "soldier",
+        "model": "npc.national-guard",
+        "tint": "#4b5a3a"
+      },
+      "state": {
+        "ally": {
+          "role": "soldier",
+          "weapon": "rifle"
+        }
+      }
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        7,
+        -7
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    }
+  ],
+  "script": []
+}
