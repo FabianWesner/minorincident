@@ -99,7 +99,7 @@ export const l4 = {
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     fallback1: [[-27.5, -11.8], [-23.5, -11.8], [-19.5, -11.8], [-28.4, -2], [-28.4, 6.8], [-27.5, 15.2], [-24, 15.2], [-17.5, 9.2], [-20.5, -1]] as readonly P[],
     fallback2: [[-14.2, -10], [-14.2, -6.7], [-14.2, -3.4], [-14.2, 0], [-14.2, 3.3], [-14.2, 6.6], [-14.2, 10], [-13, -15.5], [-13, 13.5]] as readonly P[],
-    retreat: [[-6, -30], [4, -4], [-4, 30]] as readonly P[],
+    retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
     /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
     flanks: [
       [[-37, -18], [-37, 21], [-11, -19], [-11, 22], [-40, 2]],
