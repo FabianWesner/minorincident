@@ -43,14 +43,14 @@ export const l4Dressing: readonly L4Dressing[] = [
  * gun-nest beat), `armor` waits for the armour beat. `high`: high tier only (the low tier has six). No actor is spawned by the layout.
  */
 export const l4AlphaEmergence: readonly { anchor: string; edgeId?: string; at?: readonly [number, number]; job: 'line' | 'west' | 'north' | 'south' | 'armor'; afterTurnS: number; high?: boolean }[] = [
-  // Line 1: one Alpha through the west slot; the next goes for the line that holds after the first break.
-  { anchor: 'l4-alpha-west-slot', at: [-46, 21], job: 'west', afterTurnS: 36 },
-  { anchor: 'l4-alpha-nw', edgeId: 'nw-alley', job: 'line', afterTurnS: 70 },
-  // The two gun-nest Alphas (south-east, north), staggered, then two more at the nests line (high tier).
+  // Line 1: one Alpha through the west slot; the next (high tier) goes for the line that holds after the first break.
+  { anchor: 'l4-alpha-west-slot', at: [-46, 21], job: 'west', afterTurnS: 32 },
+  { anchor: 'l4-alpha-nw', edgeId: 'nw-alley', job: 'line', afterTurnS: 56, high: true },
+  // The two gun-nest Alphas (south-east, north), staggered, then two more at the nests line (the first of them high tier only).
   { anchor: 'l4-alpha-south', edgeId: 'south-east', job: 'south', afterTurnS: 84 },
   { anchor: 'l4-alpha-north', edgeId: 'north', job: 'north', afterTurnS: 92 },
   { anchor: 'l4-alpha-east', edgeId: 'east', job: 'line', afterTurnS: 100, high: true },
-  { anchor: 'l4-alpha-sw', edgeId: 'south-west', job: 'line', afterTurnS: 120, high: true },
+  { anchor: 'l4-alpha-sw', edgeId: 'south-west', job: 'line', afterTurnS: 120 },
   // The armour beat: from the west and out of the shop door north-east of the plaza.
   { anchor: 'l4-alpha-west', edgeId: 'west', job: 'armor', afterTurnS: 138 },
   { anchor: 'l4-alpha-ne', at: [.9, -23.3], job: 'armor', afterTurnS: 148 },
