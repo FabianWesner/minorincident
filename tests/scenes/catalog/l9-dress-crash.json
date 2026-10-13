@@ -1,0 +1,57 @@
+{
+  "name": "l9-dress-crash",
+  "note": "L9 crash site (L9-A2) before the crash: the game camera looks at the broken road lip (x 508) with the courier standing 8 m short of it. The road ends in a ragged lip, the 16 m gully with fallen deck slabs and pier stubs lies beyond, the far lip and the city outskirts continue on the other side, two wrecks and barricades flank the approach. Look for: the gap reading as a collapsed bridge from the game camera at zoom 1 and 0.5 on both tiers, the road surface ending at the teeth (no flat ground showing through the gap), no flicker on the banks, the courier clear of every wreck.",
+  "seed": 31,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        470,
+        -50
+      ],
+      [
+        570,
+        50
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        500,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      510,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 120,
+  "shots": [
+    0,
+    120
+  ],
+  "sheet": 60,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "weather": "wind"
+}
