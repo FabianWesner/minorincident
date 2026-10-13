@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
-import { Vector3 } from 'three';
-import { View } from '../../../src/render/View';
+import { Plane, Ray, Vector3 } from 'three';
+import { View, zoomLimits } from '../../../src/render/View';
 
 test('T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately', () => {
   const view = new View(); view.reset({ x: 0, z: 0 });
@@ -75,5 +75,24 @@ test('T-E21-spawn-camera @E21 spawn framing retains ramp height and zoom while i
     a.pull(201,0,.8);a.shake(1);a.roll(1);
     for(let i=0;i<60;i++){const p={x:195+i*.1,z:0,y:6.42-i*.05};a.update(p,1/60);b.update(p,1/60);expect(a.simCamera.matrixWorld.elements).toEqual(b.simCamera.matrixWorld.elements);expect(a.simCamera.projectionMatrix.elements).toEqual(b.simCamera.projectionMatrix.elements);}
     expect(a.camera.position.distanceTo(b.camera.position)).toBeGreaterThan(.1);
+  }
+});
+
+
+test('T-E02-max-zoom @E02-AC03 @E18-AC01 max zoom keeps desktop and portrait ground inside the low-tier cull and light-field bounds', () => {
+  expect(zoomLimits[1]).toBe(1.5);
+  for (const [width, height] of [[1600, 900], [390, 844]]) {
+    const view = new View(); view.resize(width, height); view.reset({ x: 0, z: 0 });
+    const base = view.radius; view.zoom(100);
+    for (let tick = 0; tick < 120; tick++) view.update({ x: 0, z: 0 }, 1 / 60);
+    expect(view.radius).toBeCloseTo(base * 1.5, 6);
+    expect(view.simCamera.position.toArray()).toEqual(view.camera.position.toArray());
+    const ground = new Plane(new Vector3(0, 1, 0), 0);
+    for (const x of [-1, 1]) for (const y of [-1, 1]) {
+      const direction = new Vector3(x, y, .5).unproject(view.simCamera).sub(view.simCamera.position).normalize();
+      const point = new Ray(view.simCamera.position, direction).intersectPlane(ground, new Vector3())!;
+      expect(point.length()).toBeLessThan(45);
+      expect(Math.max(Math.abs(point.x), Math.abs(point.z))).toBeLessThan(30);
+    }
   }
 });

@@ -119,3 +119,21 @@ test('@transition prepared civilian geometry survives scene disposal without sha
     expect(restored.every(mesh => mesh.geometry.getIndex() !== null)).toBe(true);
   } finally { first.dispose(); second.dispose(); load.mockRestore(); }
 });
+
+test.each(['high', 'low'] as const)('@E18-AC01 L4 %s settled bodies are drawn exactly once with the tier corpse geometry', async tier => {
+  const { CivilianCrowd } = await import('../../../src/render/npc/CivilianCrowd');
+  const corpse = { id: 3, corpse: true, infected: {}, appearance: { entityId: 3, asset: 'npc.civilian-man-a' }, health: { current: 0 } } as unknown as import('../../../src/sim/world/types').EntitySnapshot;
+  const world = { scenario: 'L4', tick: 1, entities: { get: () => corpse, iterate: () => [corpse].values() }, infected: { director: { tier } } } as unknown as import('../../../src/sim/world/SimWorld').SimWorld;
+  const crowd = new CivilianCrowd(world);
+  type Batch = { model: string; lod: string; mesh: { count: number; visible: boolean; castShadow: boolean } | undefined; place(e: typeof corpse): boolean; update(alpha: number, low: boolean, shotId?: number, figures?: readonly typeof corpse[]): void };
+  const batches = (crowd as unknown as { batches: Batch[] }).batches;
+  const drawn: { id: number; lod: string }[] = [];
+  for (const batch of batches) {
+    batch.mesh = { count: 0, visible: false, castShadow: false };
+    batch.place = e => { drawn.push({ id: e.id, lod: batch.lod }); return false; };
+    batch.update(1, tier === 'low', undefined, [corpse]);
+    batch.mesh = undefined;
+  }
+  expect(drawn).toEqual([{ id: 3, lod: tier === 'low' ? 'lod2' : 'lod1' }]);
+  crowd.dispose();
+});
