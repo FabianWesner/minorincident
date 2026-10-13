@@ -27,11 +27,11 @@ function helpers(page: Page) {
     await page.screenshot({ path: `${output}/${name}.png` }); shots.add(name);
     await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
   };
-  /** Shift + click the nearest infected within `range` (the machine gun shoots it, the axe swings at arm's length). */
+  /** Shift + click the nearest visible infected within `range` (the machine gun shoots it, the axe swings at arm's length). */
   const fightNearby = async (range = 2.6): Promise<boolean> => {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && a.input.visible(e.transform) && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
       return near ? a.input.project(near.transform) : null;
     }, range);
     if (!target) return false;
@@ -148,7 +148,8 @@ test.describe('L4 The Safe City Falls in the browser', () => {
       if (!line && inFrame >= 8) { await snap('l4-war-line'); line = true; }
       if (!tank && m.l4!.tankShots >= 1) { await snap('l4-tank'); tank = true; }
     }
-    expect((await mission()).l4!.lineBreakAt).toBeGreaterThan(0);
+    const warEnd = await mission();
+    expect(warEnd.l4!.lineBreakAt, JSON.stringify({ phase: warEnd.phase, time: warEnd.stats.time, deaths: warEnd.stats.deaths, cinematic: warEnd.cinematic, turnAt: warEnd.l4!.turnAt, beats: warEnd.l4!.director.lines })).toBeGreaterThan(0);
     if (!line) await snap('l4-war-line'); if (!tank) await snap('l4-tank');
     await step(150); await snap('l4-collapse');
     await expect(page.getByTestId('weapon-active')).not.toHaveAttribute('aria-label', /\d+\s*\/\s*\d+/);

@@ -372,6 +372,12 @@ export class Outbreak {
     }
   }
   private escape(e: EntitySnapshot): void {
+    // Fairhaven civilians hide inside their refuge and retain their human identity.
+    // Their removal would make the alarm look like the entire camp had turned.
+    if (this.world.missions?.state.l4) {
+      this.state(e, 'hide'); e.hidden = true; this.world.spatial.delete(e.id);
+      return;
+    }
     const refuge = e.civilian!.l1!.refuge ?? 'edge';
     this.stats.escaped++;
     this.world.events.emit({ type: 'outbreak.civilian-escaped', tick: this.world.tick, id: e.id, refuge });
