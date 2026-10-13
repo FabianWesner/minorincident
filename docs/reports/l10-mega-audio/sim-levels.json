@@ -1,0 +1,123 @@
+{
+  "passed": 1141,
+  "failed": 29,
+  "skipped": 2,
+  "failures": [
+    {
+      "test": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "failure": "AssertionError: expected 5.335680000018328 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+      "failure": "AssertionError: L1 high: expected 4.701838999986649 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+      "failure": "AssertionError: expected 6.183980999980122 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "failure": "AssertionError: expected 6.567747000139207 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "failure": "AssertionError: expected 6.785104000009596 to be less than or equal to 4"
+    },
+    {
+      "test": "L1 v2 mission T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart",
+      "failure": "TypeError: Cannot read properties of null (reading 'ids')"
+    },
+    {
+      "test": "L1 v2 mission T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)",
+      "failure": "AssertionError: expected [ { id: 1000000000, \u2026(5) }, \u2026(689) ] to deeply equal [ { id: 1000000000, \u2026(5) }, \u2026(689) ]"
+    },
+    {
+      "test": "L2 The Failed Rescue T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+      "failure": "AssertionError: expected 10 to be greater than or equal to 12"
+    },
+    {
+      "test": "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+      "failure": "AssertionError: {\"officer\":{\"x\":50.81353813597728,\"z\":-20.56969695151603,\"y\":1.015,\"yaw\":-4.72523586181338},\"player\":{\"x\":206.96238708496094,\"y\":0.9200000166893005,\"z\":-0.06956455111503601,\"yaw\":-0.288313794346646}}: expected 157.48878835182674 to be less than or equal to 8"
+    },
+    {
+      "test": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+      "failure": "AssertionError: expected 411.95 to be less than or equal to 405"
+    },
+    {
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "failure": "AssertionError: expected 481.26666666666665 to be less than or equal to 270"
+    },
+    {
+      "test": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+      "failure": "AssertionError: expected 0.5722070844686649 to be greater than or equal to 0.6"
+    },
+    {
+      "test": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+      "failure": "AssertionError: expected 190 to be greater than or equal to 200"
+    },
+    {
+      "test": "L5 Aftermath T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+      "failure": "AssertionError: expected 0.798162583518931 to be greater than or equal to 0.8"
+    },
+    {
+      "test": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+      "failure": "AssertionError: expected 275.31666666666666 to be less than or equal to 270"
+    },
+    {
+      "test": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+      "failure": "AssertionError: expected 1.753133986961202 to be less than 0.25"
+    },
+    {
+      "test": "T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier",
+      "failure": "Error: Test timed out in 240000ms."
+    },
+    {
+      "test": "T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks",
+      "failure": "Error: Test timed out in 120000ms."
+    },
+    {
+      "test": "@E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint",
+      "failure": "AssertionError: tick 7883, phase done: expected 0 to be greater than 0"
+    },
+    {
+      "test": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "failure": "AssertionError: expected 10.561495000030845 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms",
+      "failure": "AssertionError: expected 6.947064000181854 to be less than or equal to 6"
+    },
+    {
+      "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "failure": "AssertionError: expected 10.129549999954179 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "failure": "AssertionError: expected 10.681827999884263 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms",
+      "failure": "AssertionError: expected 7.042090999893844 to be less than or equal to 6"
+    },
+    {
+      "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "failure": "AssertionError: expected 11.233327000169083 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms",
+      "failure": "AssertionError: expected 6.805230000056326 to be less than or equal to 6"
+    },
+    {
+      "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "failure": "AssertionError: expected 9.598057999741286 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "failure": "AssertionError: expected 11.246151000261307 to be less than or equal to 4"
+    },
+    {
+      "test": "T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+      "failure": "AssertionError: expected 6.502925999928266 to be less than or equal to 6"
+    }
+  ]
+}

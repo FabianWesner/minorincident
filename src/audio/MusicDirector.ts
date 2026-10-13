@@ -34,7 +34,7 @@ export class MusicDirector {
     peak = false;
     private engaged = false;
     private quietSince: number | null = null;
-    constructor(readonly level: string, readonly epoch = 0) { this.bar = 240 / (musicLevels[level as keyof typeof musicLevels] ?? 120); }
+    constructor(readonly level: string, readonly epoch = 0) { this.bar = 240 / (musicLevels[(level === 'L10' ? 'L6' : level) as keyof typeof musicLevels] ?? 120); }
     update(time: number, input: MusicIntensity): void {
         if (input.danger !== undefined || input.minimum !== undefined) {
             if (input.danger) this.lastThreat = time;

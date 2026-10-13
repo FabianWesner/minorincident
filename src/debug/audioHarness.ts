@@ -1,6 +1,6 @@
 import { AudioGraph } from '../audio/AudioGraph';
 import { AudioRegistry } from '../audio/AudioRegistry';
-import { type AudioBus, audioCues, ambienceTiers, explosionBeats, musicLayers } from '../data/audioCues';
+import { type AudioBus, audioCues, resolvedAudioCue, ambienceTiers, explosionBeats, musicLayers } from '../data/audioCues';
 import { dbGain, reverbPresets, type ReverbPreset } from '../audio/acoustics';
 import { wave } from '../audio/synthesis';
 import { MusicDirector } from '../audio/MusicDirector';
@@ -140,7 +140,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         }
         for (const event of [...request.cues ?? []].sort((a, b) => a.time - b.time)) {
             if (event.time < 0 || event.time >= duration) continue;
-            const variant = audioCues[event.variant];
+            const variant = resolvedAudioCue(event.variant);
             if (!variant) throw new Error(`Missing recorded cue variant: ${event.variant}`);
             graph.retire(event.time);
             const voice = graph.play({ ...variant, id: event.cue }, registry.buffers.get(variant.category)!, {
