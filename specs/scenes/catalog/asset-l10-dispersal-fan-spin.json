@@ -1,0 +1,47 @@
+{
+ "name": "asset-l10-dispersal-fan-spin",
+ "note": "Fan rotor close-up while the dispersal runs (rotor about 8 m across). Look for: eight blades at different angles across the sheet frames, hub centred, blades inside the ring, no flicker.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    6,
+    6
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0
+  ],
+  "zoom": 1
+ },
+ "frames": 40,
+ "sheet": 8,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "dispersal": {
+  "active": true
+ }
+}

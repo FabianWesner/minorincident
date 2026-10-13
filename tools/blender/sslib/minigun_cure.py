@@ -460,13 +460,13 @@ def kit_dispersal_turbine_hall(s):
         s.box('cradle block', (x0, -3.9, .9), (1.6, 3.0, 1.0), CONCRETE, 'body', bevel=.03)
     # casing is open mid-train: two bladed stages on the shaft turn in the gap (`turbineRotor`)
     s.owner('turbineRotor', (-1.0, -3.9, 2.6))
-    s.cyl('turbine casing in', (-3.9, -3.9, 2.6), 1.7, 4.2, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
-    s.cyl('turbine casing out', (1.9, -3.9, 2.6), 1.7, 4.2, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
-    for x in (-5.0, -3.0, -1.9, -0.1, 1.5, 3.2):
+    s.cyl('turbine casing in', (-4.1, -3.9, 2.6), 1.7, 3.8, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
+    s.cyl('turbine casing out', (2.1, -3.9, 2.6), 1.7, 3.8, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
+    for x in (-5.0, -3.2, -2.2, 0.2, 1.6, 3.2):
         s.cyl('casing flange', (x, -3.9, 2.6), 1.88, .22, DARK, 'body', axis='X', seg=pick(s, 20, 12, 8))
-    s.box('steam chest', (-1.0, -3.9, 4.15), (1.7, 3.0, .3), STRUCT, 'body', bevel=.03)
-    s.cyl('rotor shaft', (-1.0, -3.9, 2.6), .38, 1.9, DARK, 'turbineRotor', axis='X', seg=pick(s, 12, 8, 6))
-    for k, x in enumerate((-1.45, -0.55)[:pick(s, 2, 2, 1)]):
+    s.box('steam chest', (-1.0, -3.9, 4.15), (2.4, 3.0, .3), STRUCT, 'body', bevel=.03)
+    s.cyl('rotor shaft', (-1.0, -3.9, 2.6), .38, 2.6, DARK, 'turbineRotor', axis='X', seg=pick(s, 12, 8, 6))
+    for k, x in enumerate(((-1.7, -1.0, -0.3), (-1.4, -0.6), (-1.0,))[s.lod]):
         s.cyl('rotor disc', (x, -3.9, 2.6), .9, .14, DARK, 'turbineRotor', axis='X', seg=pick(s, 20, 12, 8))
         nb = pick(s, 16, 12, 8)
         for b in range(nb):
