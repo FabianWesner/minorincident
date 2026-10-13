@@ -7377,5 +7377,98 @@ export default {
     ],
     "source": "public/assets/models/kit.zoo-tunnel-mouth.glb",
     "hash": "41c7cc058032d0ba21fea2dec43351ae209e3f00b4c7617b039886a0c7cb8e06"
+  },
+  "prop.cure-garden-wall": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.9649999737739563,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.6,
+          1.1920928910669204e-8,
+          -0.25
+        ],
+        "max": [
+          1.6,
+          1.600000011920929,
+          0.25
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-garden-wall.glb",
+    "hash": "2edd775de5a8f4fc4ef89b26b62654eb32076ff08661e24975dea4bbab23127c"
+  },
+  "prop.cure-container-stack": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.014999985694885254,
+      2.5399999246001244,
+      -0.014999985694885254
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -3.05,
+          -0.45000009536743146,
+          -2.6
+        ],
+        "max": [
+          3.05,
+          5.649999904632568,
+          2.6
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-container-stack.glb",
+    "hash": "dc9dadb03f48822c744980d2d6e10afea007a7f952408ed621b9f739f209e0c9"
+  },
+  "prop.cure-drum-stack": {
+    "class": "heavy",
+    "mass": 300,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.059999942779541,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.65,
+          2.3841857821338408e-8,
+          -0.55
+        ],
+        "max": [
+          0.65,
+          2.200000023841858,
+          0.55
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-drum-stack.glb",
+    "hash": "07f9a2a1ae9f5772b46a6da4db04c1442f4f6054c1d2576c936099fdc901a993"
   }
 };

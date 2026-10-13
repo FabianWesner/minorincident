@@ -1,0 +1,20 @@
+{
+ "name": "cure-res-security-lane",
+ "note": "L10 R2 security post (bld.cure-security-post) with a garden wall segment beside it at the real game camera: the courier stands in the vehicle lane under the canopy. Run with --matrix (high/low tier, zoom 1 and 0.5). Look for: booth glazing and roof beacons, canopy on four posts with the blue fascia, the lane clear for a vehicle, bollards, wall pillars and rail, sunk or floating parts, flicker, missing parts at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 40,
+ "dof": false,
+ "props": [
+  { "id": "security", "asset": "bld.cure-security-post", "at": [0, 0], "yaw": 0 },
+  { "id": "wall", "asset": "prop.cure-garden-wall", "at": [9, 3], "yaw": 1.5708 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [3, -1], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
