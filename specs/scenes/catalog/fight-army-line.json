@@ -1,0 +1,170 @@
+{
+ "name": "fight-army-line",
+ "note": "PO 2026-10-13: 'Everyone is just standing around and shooting, this doesn'T look like a fight scene.' Four rifle soldiers and an HMG crew on posts against sixteen chasing infected from the front and six from the flank at the game camera (zoom 1.0). Look for: soldiers shifting between firing positions and backstepping as infected close in (nobody frozen for more than ~2 s), 3-round bursts with muzzle flash, tracer, brass and dust puffs, a reload pause with the gun lowered, a rifle-butt shove at arm's length, no shots at infected outside the frame, no foot sliding, bodies facing the target.",
+ "ground": "asphalt",
+ "size": 44,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -3,
+    3
+   ],
+   "yaw": 0,
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "sol-1",
+   "kind": "pedestrian",
+   "at": [
+    0,
+    -3
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "sol-2",
+   "kind": "pedestrian",
+   "at": [
+    0.4,
+    -1
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "sol-3",
+   "kind": "pedestrian",
+   "at": [
+    0.2,
+    1.2
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "sol-4",
+   "kind": "pedestrian",
+   "at": [
+    -0.4,
+    5.4
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "rifle"
+    }
+   }
+  },
+  {
+   "id": "hmg",
+   "kind": "pedestrian",
+   "at": [
+    -1.5,
+    -5
+   ],
+   "yaw": 0,
+   "look": {
+    "model": "npc.national-guard",
+    "tint": "#4b5a3a",
+    "role": "soldier",
+    "handProp": "rifle"
+   },
+   "state": {
+    "ally": {
+     "role": "soldier",
+     "weapon": "hmg"
+    }
+   }
+  },
+  {
+   "id": "wave",
+   "kind": "infected",
+   "at": [
+    15,
+    0
+   ],
+   "count": 16,
+   "spread": 4.5,
+   "yaw": 180,
+   "state": "chase"
+  },
+  {
+   "id": "flank",
+   "kind": "infected",
+   "at": [
+    4,
+    -13
+   ],
+   "count": 6,
+   "spread": 2.5,
+   "yaw": 90,
+   "state": "chase"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   3,
+   0
+  ],
+  "zoom": 1
+ },
+ "frames": 720,
+ "sheet": 25,
+ "shots": [
+  150,
+  240,
+  330,
+  420
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ }
+}
