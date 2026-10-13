@@ -139,13 +139,13 @@ describe('L4 The Safe City Falls', () => {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
       step(w, 5 * 60); l.mission.completeObjective('quartermaster');
-      const turns: { tick: number; ids: number[]; near: number }[] = []; w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); });
+      const turns: { tick: number; ids: number[]; near: number }[] = [], at = new Map<number, { x: number; z: number }>(), origins = new Set<string | undefined>(); /* positions at the turn: the turned run off afterwards */ w.events.on('l4.firstTurn', e => { if (e.type === 'l4.firstTurn') turns.push({ tick: e.tick, ids: e.ids, near: e.humansNear }); for (const id of e.ids) { at.set(id, { x: w.entities.get(id)!.transform.x, z: w.entities.get(id)!.transform.z }); origins.add(w.entities.get(id)!.appearance!.origin); } });
       step(w, 60 * 60);
       expect(turns, `seed ${seed}`).toHaveLength(1);
       const after = (turns[0].tick - s.gunAt) / 60; expect(after).toBeGreaterThanOrEqual(40); expect(after).toBeLessThanOrEqual(50);
       expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
-      for (const id of turns[0].ids) { const e = w.entities.get(id)!.transform, r = l4.map.ring; expect(e.x > r.x0 - 1 && e.x < r.x1 + 1 && e.z > r.z0 - 1 && e.z < r.z1 + 1, `turner ${id} inside the perimeter`).toBe(true); }
-      for (const id of turns[0].ids) expect(w.entities.get(id)!.appearance!.origin).toBe('L3-bus');
+      for (const id of turns[0].ids) { const e = at.get(id)!, r = l4.map.ring; expect(e.x > r.x0 - 1 && e.x < r.x1 + 1 && e.z > r.z0 - 1 && e.z < r.z1 + 1, `turner ${id} inside the perimeter`).toBe(true); }
+      expect([...origins]).toEqual(['L3-bus']);
       w.dispose();
     }
     // Without the gun the turn still comes at arrival + 100 s.
@@ -313,7 +313,7 @@ describe('L4 The Safe City Falls', () => {
     for (const id of l4.checkpoints) {
       runL4(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === id });
       expect(m.state.checkpoint).toBe(id);
-      const snap = { alphaIds: [...s.alphaIds], line: [...w.entities.iterate()].filter(e => e.barricade?.slot.groupId === 'l4-line').map(e => ({ id: e.id, hp: e.health.current, intact: e.barricade!.intact })), phase: s.phase, soldiers: s.soldierIds.filter(i => w.entities.get(i)!.civilian?.state !== 'finished' && w.entities.get(i)!.health.current > 0).length, armed: s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length, tankPhase: s.tankPhase, heliPhase: s.heliPhase, gun: w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id) };
+      const snap = { alphaIds: [...s.alphaIds], line: [...w.entities.iterate()].filter(e => e.barricade?.slot.groupId === 'l4-line').map(e => ({ id: e.id, hp: e.health.current, intact: e.barricade!.intact })), phase: s.phase, soldiers: s.soldierIds.filter(i => { const e = w.entities.get(i); return !!e && e.civilian?.state !== 'finished' && e.health.current > 0; }).length, armed: s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length, tankPhase: s.tankPhase, heliPhase: s.heliPhase, gun: w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id) };
       snaps[id] = snap;
       for (let i = 0; i < 120; i++) w.update();
       const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick);
