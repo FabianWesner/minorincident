@@ -391,7 +391,7 @@ def build(ctx):
         plate(f'rear_door_{sname}', rrect(x0, 0.6, x1, 2.64, 0.04), side, 0.018, 'red', 'rear_compartment')
         frame(f'rear_door_frame_{sname}', x0, 0.6, x1, 2.64, side, 'chrome', 'rear_compartment', bar=0.035)
         for i, (za, zb) in enumerate([(2.27, 2.45), (0.74, 0.9)]):
-            plate(f'rear_door_band_{i}_{sname}', [(x0 + 0.03, za), (x1 - 0.03, za), (x1 - 0.03, zb), (x0 + 0.03, zb)], side, 0.006, 'white', 'rear_compartment', lift=0.018)
+            plate(f'rear_door_band_{i}_{sname}', [(x0 + 0.03, za), (x1 - 0.03, za), (x1 - 0.03, zb), (x0 + 0.03, zb)], side, 0.006, 'white', 'rear_compartment', lift=0.026)
         for i, xx in enumerate([x0 + 0.1, x1 - 0.1]):
             box(f'rear_door_handle_{i}_{sname}', (xx, fy + side * 0.05, 1.6), (0.045, 0.04, 0.2), 'chrome', 'rear_compartment', bevel=0.015)
         box(f'rear_top_lamp_{sname}', (px(150), fy + side * 0.02, 2.78), (0.18, 0.04, 0.09), 'lamp', 'rear_compartment', bevel=0.01)
@@ -432,8 +432,8 @@ def build(ctx):
         frame(f'lower_door_frame_{sname}', px(612), 0.5, px(728), 1.34, side, 'chrome', 'equipment_body', bar=0.028)
         box(f'lower_door_handle_{sname}', (px(700), fy + side * 0.045, 1.18), (0.045, 0.035, 0.12), 'chrome', 'equipment_body', bevel=0.012)
         sx0, sx1 = px(428), px(708)
-        plate(f'livery_stripe_{sname}', [(sx0, 1.5), (sx1, 1.5), (sx1, 1.57), (sx1 - 0.3, 1.66), (sx0, 1.62)], side, 0.005, 'white', 'equipment_body', lift=0.016)
-        plate(f'livery_lower_{sname}', [(px(616), 0.62), (px(724), 0.62), (px(724), 0.74), (px(616), 0.74)], side, 0.005, 'white', 'equipment_body', lift=0.016)
+        plate(f'livery_stripe_{sname}', [(sx0, 1.5), (sx1, 1.5), (sx1, 1.57), (sx1 - 0.3, 1.66), (sx0, 1.62)], side, 0.005, 'white', 'equipment_body', lift=0.026)
+        plate(f'livery_lower_{sname}', [(px(616), 0.62), (px(724), 0.62), (px(724), 0.74), (px(616), 0.74)], side, 0.005, 'white', 'equipment_body', lift=0.026)
         text(f'fire_text_{sname}', 'FIRE', 0.4, ((px(432) + px(600)) / 2, fy + side * 0.022, 1.86), '-y' if side < 0 else '+y', 'white', 'equipment_body', spacing=1.05, stretch=1.45)
         box(f'body_roof_trim_{sname}', ((mb_x0 + mb_x1) / 2, fy + side * 0.01, 2.68), (mb_x1 - mb_x0, 0.04, 0.06), 'chrome', 'equipment_body', bevel=0.012)
         box(f'body_sill_{sname}', ((px(612) + mb_x1) / 2, fy + side * 0.02, 0.38), (mb_x1 - px(612), 0.06, 0.09), 'chrome', 'equipment_body', bevel=0.02)

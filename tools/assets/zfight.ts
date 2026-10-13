@@ -142,7 +142,7 @@ export function coplanarOverlaps(document: Document, tolerance = TOLERANCE, minA
         const id = `${mats.join('|')}|${nodes.sort().join('|')}|${key.split(',').slice(0, 3).join(',')}`;
         const known = found.get(id);
         if (known) known.area += overlap;
-        else found.set(id, { materials: mats, nodes, area: overlap, at: a.p[0].map(c => Math.round(c * 1000) / 1000), normal: a.n.map(c => Math.round(c * 100) / 100) });
+        else found.set(id, { materials: mats, nodes, area: overlap, at: centre.map(c => Math.round(c * 1000) / 1000), normal: a.n.map(c => Math.round(c * 100) / 100) });
       }
     }
   }
