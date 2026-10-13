@@ -46,9 +46,9 @@ export class Combat {
     player.weapons = this.runner.loadout.state;
     player.combat ??= { radius: 0.3, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] };
   }
-  setLoadout(left: string[], right: string[]): void {
+  setLoadout(left: string[], right: string[], sequence = this.runner.lastAttackId): void {
     const loadout = new Loadout(left, right, actionResolver(this.actionDefinitions), this.rackCapacity), infinite = this.runner.infiniteCharges;
-    this.runner = new ActionRunner(1, loadout, this.runner.lastAttackId); this.runner.infiniteCharges = infinite; this.attach();
+    this.runner = new ActionRunner(1, loadout, Math.max(this.runner.lastAttackId, sequence)); this.runner.infiniteCharges = infinite; this.attach();
   }
   /**
    * A level's own pickup is never owned at the level start (a replayed level or a saved rack may still carry it): remove the

@@ -70,6 +70,11 @@ capture. Checkpoints include the arsenal alongside entity loadout timers and exi
 `chunks` / `megaPursuit` seams. `saveResume()` provides current live state plus the
 last reached retry snapshot in `CampaignSave.cureResume`; `loadResume()` restores
 live state after services are installed, while death restores the retry snapshot.
+Continue resumes that record; explicit Level select clears it for a whole-level replay.
+A saved death restores the retry checkpoint. The combat sequence continues across
+reloads so new rockets cannot reuse identities in the Mega's persisted hit ledger.
+Live resume preserves the Mega's saved position; the respawn fairness gap applies
+to checkpoint retries and death, through the same pursuit snapshot seam.
 Game saves at checkpoint boundaries and menu/save actions using the existing
 SaveStore/version 2 optional-record validation. Later finale lanes use mission items,
 states and counters for cure/charge/heat/epilogue data; the snapshot preserves them.
