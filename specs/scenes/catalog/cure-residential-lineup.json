@@ -1,0 +1,24 @@
+{
+ "name": "cure-residential-lineup",
+ "note": "L10 R2 residential fringe kit (kit.cure-residential) turntable: duplex, security post and garden walls beside the existing house-a and hedge, one full turn in 6 s. Look for: low two-storey massing (no tower), brick walls with a real roof overhang and brick gable infill, readable windows, porch canopies, the security canopy with booth and beacons, the walls' pillars and rails, feet on the ground, no flat panels, no flicker on roof edges, LOD swaps that change the silhouette.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 90,
+ "dof": false,
+ "props": [
+  { "id": "duplex", "asset": "bld.cure-duplex", "at": [-12, 0], "yaw": 0 },
+  { "id": "house", "asset": "bld.house-a", "at": [-12, -20], "yaw": 0 },
+  { "id": "security", "asset": "bld.cure-security-post", "at": [10, -6], "yaw": 0 },
+  { "id": "wall-a", "asset": "prop.cure-garden-wall", "at": [10, 8], "yaw": 0 },
+  { "id": "wall-b", "asset": "prop.cure-garden-wall", "at": [10, 11.4], "yaw": 0 },
+  { "id": "hedge", "asset": "prop.hedge", "at": [10, 14.8], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [3, 4], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "orbit", "target": [-2, 3, -4], "radius": 52, "azimuth": 45, "polar": 54, "spin": 60 },
+ "frames": 360,
+ "sheet": 30,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
