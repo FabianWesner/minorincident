@@ -4,7 +4,7 @@ import { l2 } from '../../data/l2';
 import { l4 } from '../../data/l4';
 import { policeTactics as pt } from '../../data/l3';
 import { policeTargetInView, policeShotRangeM } from '../../data/cameraFraming';
-import { allyCadence, allyCallout, allyTactics, allyViewM, type AllyTactic } from '../../data/allyCombat';
+import { allyCadence, allyCallout, allyOffscreenDefenceM, allyTactics, allyViewM, type AllyTactic } from '../../data/allyCombat';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { AllyGun, AllyState, Point } from '../npc/types';
@@ -58,7 +58,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const policeRule = (target: EntitySnapshot) => a.role !== 'officer' || defence(target) || (!!player && policeTargetInView(target.transform.x - player.transform.x, target.transform.z - player.transform.z) && dist(target.transform, e.transform) <= policeShotRangeM);
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
-  const inView = (target: EntitySnapshot) => world.infected!.director.inPlayerView(target.transform, allyViewM);
+  const director = world.infected!.director;
+  // Optional off-screen self-defence (0 = strict PO rule): an ally the player cannot see may shoot what is this close to it.
+  const inView = (target: EntitySnapshot) => director.inPlayerView(target.transform, allyViewM)
+    || allyOffscreenDefenceM > 0 && dist(target.transform, e.transform) <= allyOffscreenDefenceM && !director.inPlayerView(e.transform, allyViewM, 1.05);
   const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
   const audibleThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.

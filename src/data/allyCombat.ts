@@ -8,7 +8,7 @@ import { policeTactics } from './l3';
  */
 export const allyTactics = {
   officer: { ...policeTactics, stillS: 1.7 },
-  soldier: { ...policeTactics, backstepM: 4, stepM: 1.5, stepMs: 2.6, stepS: .8, stepEveryS: 1.3, leashM: 4, stillS: 1.6 },
+  soldier: { ...policeTactics, backstepM: 4, stepM: 1.4, stepMs: 2.6, stepS: .8, stepEveryS: 1.3, leashM: 2.8, stillS: 1.6 },
   civilian: { ...policeTactics, backstepM: 4.5, stepM: 1.7, stepMs: 3.2, stepS: .7, stepEveryS: .9, leashM: 6, stillS: 1.1, repositionShots: 2 },
 } as const;
 export type AllyTactic = typeof allyTactics[keyof typeof allyTactics];
@@ -26,5 +26,8 @@ export const allyCadence = {
 
 /** Player-view rule for every ally gun (PO 2026-10-13): never beyond this from the courier, and only inside the inset camera frame. */
 export const allyViewM = 22;
+/** Off-screen self-defence radius: an ally outside the player's view may fire at an infected this close to itself (also off-screen).
+ * 0 keeps the strict rule "no ally fires at an infected outside the player's view" (orchestrator decision 2026-10-13). */
+export const allyOffscreenDefenceM: number = 0;
 /** Call-outs: per speaker cooldown, and the quiet time between any two call-outs. */
 export const allyCallout = { perAllyS: 9, globalS: 2.2 } as const;
