@@ -2,7 +2,7 @@ import { readFileSync, statSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import type { Document } from '@gltf-transform/core';
 import manifest from '../../../src/assets/manifest.json';
-import { variantPath, type AssetDef } from '../../../src/assets/types';
+import type { AssetDef } from '../../../src/assets/types';
 import { assetIO } from '../../../tools/assets/io';
 import { coplanarOverlaps } from '../../../tools/assets/zfight';
 import { validateDocument } from '../../../tools/assets/validate';

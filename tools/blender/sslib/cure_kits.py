@@ -132,7 +132,7 @@ def security_post(s):
     s.window((0, -1), 4.3, -1.2, 1.95, 1.4, 1.0, 'uiDark', 'picketWhite')
     s.door((-1, 0), 2.8, 2.9, .3, .95, 2.0, 'uiDark', 'picketWhite')
     # canopy over the lane
-    s.plain('canopy', (0, -.25, 4.75), (9.2, 7.6, .25), 'uiDark')
+    s.plain('canopy', (0, -.25, 4.75), (9.2, 7.6, .25), 'picketWhite')
     s.plain('canopyBeam', (4.47, -.25, 4.45), (.3, 7.4, .5), 'policeBlue')
     for x in (-3.8, 3.8):
         for y in (-3.4, 2.9):
@@ -366,7 +366,7 @@ def refine(obj, step):
 # Longest triangle edge per tier before the AO bake (metres) and the AO floor that keeps the palette readable.
 REFINE = {'bld.cure-duplex': (2.0, 3.0, 0), 'bld.cure-security-post': (2.0, 3.0, 0), 'bld.cure-warehouse': (2.5, 5.0, 0),
           'bld.cure-service-building': (2.0, 3.0, 0)}  # small props keep their authored faces (AO floor only)
-AO_FLOOR = .55
+AO_FLOOR = .7
 
 
 def finish(s, path):
