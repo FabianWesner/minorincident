@@ -1,5 +1,5 @@
 /** Anonymous event batching (docs/tools/telemetry.md). No DOM here: the transport and clock are injected so it is unit-tested in Node. */
-export interface TelemetryContext { d: 'desktop' | 'phone' | 'tablet'; q: 'high' | 'low'; b: 'webgl' | 'webgpu'; v: string; vp: string }
+export interface TelemetryContext { d: 'desktop' | 'phone' | 'tablet'; q: 'high' | 'low'; b: 'webgl' | 'webgpu'; v: string; vp: string; dbg?: true }
 export type EventFields = { l?: string; k?: number; x?: number; z?: number; d?: Record<string, string | number | boolean> };
 export interface WireEvent extends EventFields { t: string; ts: number }
 /** ok = stored; retry = keep and try later; drop = the server refused this batch for good; stop = endpoint missing, switch telemetry off. */

@@ -6,6 +6,7 @@ import type { D1Database, D1Result, D1Statement, Env, R2Bucket } from '../../../
 export function localEnv(token = 'test-token-0123456789abcdef'): Env & { sqlite: DatabaseSync; objects: Map<string, Uint8Array> } {
   const sqlite = new DatabaseSync(':memory:');
   sqlite.exec(readFileSync('migrations/0001_init.sql', 'utf8'));
+  sqlite.exec(readFileSync('migrations/0002_debug.sql', 'utf8'));
   const statement = (sql: string, values: unknown[] = []): D1Statement => ({
     bind: (...next: unknown[]) => statement(sql, next),
     run: async (): Promise<D1Result> => { const r = sqlite.prepare(sql).run(...(values as SQLInputValue[])); return { success: true, meta: { changes: Number(r.changes), last_row_id: Number(r.lastInsertRowid) } }; },
