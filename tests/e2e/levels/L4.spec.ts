@@ -173,9 +173,12 @@ test.describe('L4 The Safe City Falls in the browser', () => {
   test('T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen', async ({ page }) => {
     test.setTimeout(600_000); page.setDefaultTimeout(120_000);
     await begin(page);
-    for (let i = 0; i < 12; i++) {
+    // PO 2026-10-13: "After I reached the final checkpoint, if there is still action, then let it go for another 5s, so it doesn't feel cutted."
+    // The war goes on above the cellar, so after the last objective the level runs out for 5 s (the final 'wait' completed) before L5 loads.
+    for (let i = 0; i < 24; i++) {
       const m = await page.evaluate(() => window.__SS__!.missions.state());
       if (!m || m.phase !== 'playing' || (await page.evaluate(() => window.__SS__!.getState().scenario)) !== 'L4') break;
+      if (m.steps.wait?.status === 'completed') { await page.evaluate(() => window.__SS__!.step(60)); continue; }
       await page.evaluate(() => window.__SS__!.cheats.completeObjective());
       if (await page.evaluate(() => window.__SS__!.missions.state()?.phase === 'playing' && window.__SS__!.getState().scenario === 'L4')) await page.evaluate(() => window.__SS__!.step(2));
     }
