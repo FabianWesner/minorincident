@@ -1,0 +1,25 @@
+{
+ "name": "qa-l10-mega-pursuit",
+ "note": "E32-AC10 (L10-S3): the Mega Alpha's persistent pursuit, followed by the game camera. The courier runs a loop through an R3-style yard (container stacks, garden walls); the Mega has no sight of her and steers round the obstacles at 0.7x her run speed, never through them. Look for: feet on the ground, facing along its travel, no sliding sideways, no cutting through containers or walls, no popping/teleport, the gap to the courier growing while she runs. metrics.megaAlpha: detailedMedianMs vs cruiseMs, stepMaxM, modes, distance samples.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 140,
+ "dof": false,
+ "props": [
+  { "id": "stack-a", "asset": "prop.cure-container-stack", "at": [2, 0], "yaw": 90 },
+  { "id": "stack-b", "asset": "prop.cure-container-stack", "at": [26, 14], "yaw": 0 },
+  { "id": "wall-a", "asset": "prop.cure-garden-wall", "at": [14, -5], "yaw": 90 },
+  { "id": "wall-b", "asset": "prop.cure-garden-wall", "at": [14, 5], "yaw": 90 },
+  { "id": "drums", "asset": "prop.cure-drum-stack", "at": [-6, 12], "yaw": 0.4 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [10, 0], "yaw": 0, "state": { "run": [[40, 0], [40, 28], [8, 30], [-24, 24], [-30, -4], [-8, -20], [30, -20]] } }
+ ],
+ "megaAlpha": { "id": "mega", "at": [-10, 0] },
+ "camera": { "mode": "follow", "actor": "mega", "zoom": 1 },
+ "frames": 900,
+ "shots": [120, 360, 600, 900],
+ "sheet": 60,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "megaCruiseErrorMax": 0.02, "megaStepMaxM": 0.25 }
+}
