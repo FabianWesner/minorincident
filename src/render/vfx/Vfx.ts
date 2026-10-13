@@ -1,7 +1,8 @@
 import { Group, type BufferGeometry, type Node } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
 import { infectedDef } from '../../data/infected';
-import { catalog as actions } from '../../data/actions/catalog';
+import type { ActionDef } from '../../data/actions/schema';
+import { catalog, mountedActions } from '../../data/actions/catalog';
 import type { EffectKind, TelegraphKind, GameEvent } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { FxPool, tracerLaunchS } from './FxPool';
@@ -9,6 +10,8 @@ import { GibPool } from './GibPool';
 import type { VehicleFeedbackEvent } from './VehicleFeedback';
 import { HitStop } from './HitStop';
 import { Blasts } from './Blasts';
+/** Mounted guns (the L10 rotary minigun) draw the same tracer and muzzle as a carried gun. */
+const actions: Readonly<Record<string, ActionDef>> = { ...catalog, ...mountedActions };
 
 export type Gore = 'Full' | 'Reduced' | 'Off';
 export type { EffectKind, TelegraphKind } from '../../sim/world/types';

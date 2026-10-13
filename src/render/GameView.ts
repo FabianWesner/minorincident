@@ -50,6 +50,7 @@ import { Grass, windPhase } from './Grass';
 import { DistrictView } from './DistrictView';
 import { PaletteMaterial } from './PaletteMaterial';
 import { InteractionView } from './InteractionView';
+import { MountedGunView } from './MountedGunView';
 import { EntityAssets } from './EntityAssets';
 import { loadMeasure } from '../assets/loadTiming';
 import { loadGate } from '../assets/loadGate';
@@ -134,6 +135,7 @@ export class GameView implements Lifecycle {
   private fixtureProps: PropFixtureView | null = null;
   private interactions: InteractionView | null = null;
   private entityAssets: EntityAssets | null = null;
+  private mountedGunView: MountedGunView | null = null;
   weather: WeatherView | null = null;
   vfx: Vfx | null = null;
   private labAccident: LabAccidentFx | null = null;
@@ -314,6 +316,7 @@ export class GameView implements Lifecycle {
       this.vfx = new Vfx(this.world, {
         muzzle: (id, direction) => {
           const e = this.world.entities.get(id);
+          if (id === 1 && this.world.mountedGun?.mounted) return this.mountedGunView?.muzzle(direction) ?? this.world.mountedGun.muzzle();
           if (id === 1 && e?.survivor && this.character && this.actions) {
             // Events precede the survivor action state; evaluate gait at this tick, then aim.
             this.character.position.set(e.transform.x, e.transform.y - .7, e.transform.z);
@@ -418,6 +421,13 @@ export class GameView implements Lifecycle {
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
   private accessories: CrowdAccessories | null = null;
+  /** The manned minigun is drawn by its own animated view (created when a level installs the gun); returns its load. */
+  private syncMountedGun(): Promise<void> | undefined {
+    if (!this.world.mountedGun) { if (this.mountedGunView) { this.mountedGunView.dispose(); this.mountedGunView = null; } return undefined; }
+    if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer); this.scene.add(this.mountedGunView); }
+    this.mountedGunView?.update();
+    return this.mountedGunView?.ready();
+  }
   private startActors(character: Promise<unknown>): Promise<unknown> {
     this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
     if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories); this.npcs.setQuality(this.quality); }
@@ -752,6 +762,7 @@ export class GameView implements Lifecycle {
     this.marker?.update(); if (!this.missionHidden) this.missionUI?.update(this.camera,innerWidth,innerHeight);
     pickBodies.begin(); this.accessories?.begin(); this.crowd?.update(this.view, alpha); this.contactShadows?.update(alpha); this.actions?.update();
     this.entityAssets?.update(alpha);
+    this.syncMountedGun();
     this.interactions?.update(this.camera); this.npcs?.update(this.camera, alpha, this.view.lodCamera); this.accessories?.finish();
     const flashOpacity = String(Math.max(this.weather?.flash ?? 0, this.vfx?.flash ?? 0, this.labAccident?.flash ?? 0));
     if (this.flashOverlay.style.opacity !== flashOpacity) this.flashOverlay.style.opacity = flashOpacity;
@@ -889,7 +900,7 @@ export class GameView implements Lifecycle {
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.accessories?.begin(); this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera); this.accessories?.finish();
-    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize()]); }
+    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]); }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
@@ -905,6 +916,7 @@ export class GameView implements Lifecycle {
     this.missionUI?.reset(); this.cinematicId = null; if(this.marker){this.scene.remove(this.marker);this.marker.dispose();this.marker=null;}
     if (this.fixtureProps) { this.scene.remove(this.fixtureProps); this.fixtureProps.dispose(); this.fixtureProps = null; }
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
+    if (this.mountedGunView) { this.scene.remove(this.mountedGunView); this.mountedGunView.dispose(); this.mountedGunView = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
