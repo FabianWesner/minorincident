@@ -650,36 +650,9 @@ export class LevelThreeCollapse {
     const m = l3.mercy;
     return Math.max(0, Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths - later + 1)));
   }
-  /**
-   * Brief l3-polish (T-E21-18: 11 infected on the fallback checkpoint): every respawn is safe without rewriting the restored
-   * outbreak layer. The respawn radius is cleared (infected inside it step back out to its edge, the cut hides the move), the
-   * pursuers around it lose the courier for a few seconds, and the courier gets a short grace.
-   */
-  private safeRespawn(): void {
-    const { world } = this.mission, ai = world.infected, r = l3.respawn, tick = world.tick, player = world.entities.get(1)!, p = player.transform;
-    if (!ai) return;
-    if (player.survivor) player.survivor.invulnerableUntil = tick + ticks(r.graceS);
-    for (const e of ai.active) {
-      const brain = e.infected?.l1, d = dist(e.transform, p);
-      if (e.health.current <= 0 || !brain || d > r.pursueM) continue;
-      if (d < r.clearM) {
-        const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - p.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - p.z) * k : Math.sin(e.id);
-        for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
-          const at = { x: p.x + dx * m, z: p.z + dz * m };
-          if (!ai.nav.clear(at.x, at.z, .45)) continue;
-          Object.assign(e.transform, at); world.spatial.set(e.id, at.x, at.z);
-          if (e.locomotion) { e.locomotion.vx = e.locomotion.vz = 0; }
-          break;
-        }
-      }
-      if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; e.infected!.state = 'wander'; if (e.combat) e.combat.attacking = false; }
-      brain.ignoreId = 1; brain.ignoreUntil = tick + ticks(r.delayS);
-    }
-  }
   private mercy(): void {
     this.mercyDue = false;
     const { world } = this.mission, s = this.s, ai = world.infected;
-    if (ai && (s.phase === 'corridor' || s.phase === 'fallback' || s.phase === 'attack')) this.safeRespawn();
     // Relief scales with deaths at one checkpoint: the first respawn thins what is still to come, the living crowd from the next.
     const frac = this.mercyFraction(), live = this.mercyFraction(1); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
     // The window starts behindM behind the respawn (a crowd standing on the checkpoint, real-input run 10-12) and reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback

@@ -252,6 +252,8 @@ export interface MissionState {
   volumes: boolean[]; killedBosses: string[];
   completedObjectives: string[]; steps: Record<string, StepState>; actors: Record<string, number>;
   items: string[]; states: Record<string, boolean>; counters: Record<string, number>; gates: Record<string, boolean>;
+  /** Tick until which the world keeps running after the final objective because action is ongoing (PO 2026-10-13); the HUD may show the completion banner. */
+  runOutUntil?: number;
   marker: string | null; checkpoint: string | null; tier: Tier | null; timeOfDay: TimeOfDay | null;
   subtitle: { id: string; text: string; until: number } | null;
   cinematic: { id: string; elapsed: number; resume: 'playing' | 'retry' } | null; failure: FailReason | null;
