@@ -60,7 +60,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // PO 2026-10-13: a gun only fires at what the player can see (the sim camera frame, at most 22 m from the courier); an infected
   // at arm's length still takes the shove or rifle butt, wherever it is.
   // Police keep the strict rule everywhere (PO 10-12: "Ideally the Zombies will win against police") and only shove off screen.
-  // Orchestrator 2026-10-13 (option 3): the rule binds allies the player can see (in the frame or within 22 m of the courier); they
+  // Orchestrator 2026-10-13 (option 3): the rule binds allies the player can see (in the frame, at most 22 m from the courier); they
   // shoot only what is in view, plus self-defence within 6 m. Allies away from the player fight their own war as before.
   const onScreen = a.role === 'officer' || allyOnScreen(world, e.transform);
   const inView = (target: EntitySnapshot) => !onScreen || playerSees(world, target.transform)
@@ -257,10 +257,12 @@ function playerSees(world: SimWorld, p: { x: number; z: number; y?: number }, in
   const director = world.infected?.director as SpawnDirector | undefined;
   return director ? director.inPlayerView(p, allyViewM, inset) : true;
 }
-/** An ally the view rule binds: inside the player's sim-camera frame, or within `allyViewM` of the courier. */
+/** An ally the view rule binds: inside the player's sim-camera frame and within `allyViewM` of the courier. (A plain 22 m circle bound
+ * nearly the whole L4 camp around the quartermaster: 3 of 20 soldiers left 50 s after the turn; the frame keeps 17 at 84 s.) Without a
+ * camera volume (bare sim worlds) nobody is bound. */
 export function allyOnScreen(world: SimWorld, p: { x: number; z: number; y?: number }): boolean {
   const player = world.entities.get(1)?.transform;
-  if (player && Math.hypot(p.x - player.x, p.z - player.z) <= allyViewM) return true;
+  if (player && Math.hypot(p.x - player.x, p.z - player.z) > allyViewM) return false;
   return (world.infected?.director as SpawnDirector | undefined)?.inFrame(p) ?? false;
 }
 const lastCallout = new WeakMap<SimWorld, number>();
