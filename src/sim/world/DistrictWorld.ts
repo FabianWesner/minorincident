@@ -18,6 +18,8 @@ import { placementColliders } from "../../levels/districts/staticCollision";
 import { bakeNav } from "./NavGrid";
 import { pushableProps } from "../../data/pushableProps";
 /** Sim-side level assembly. Render consumes the same immutable loaded layouts/placements. */
+/** Horizontal reach of a walkable support past its collider edge (m): closes authoring seams between tiled slabs. */
+export const supportSeam = .03;
 export class DistrictWorld {
   readonly districts;
   readonly nav;
@@ -71,7 +73,10 @@ export class DistrictWorld {
       };
     });
     for (const d of this.districts) for (const c of d.decay.colliders) if (c.walkable) {
-      const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
+      // PO 2026-10-13 "Corgi sunken": tiled walkable tops (the fire station apron: 0.75 x 1.5 m slabs) leave 3-4 cm seams; a
+      // point sample in a seam dropped the corgi (and any pedestrian) 10 cm into the drawn slab while the courier's capsule spanned it.
+      // Each support reaches `supportSeam` past its edge, so seams narrower than twice that are closed for every caller.
+      const a: Aabb = { min: [c.aabb.min[0] + d.origin[0] - supportSeam, c.aabb.min[1], c.aabb.min[2] + d.origin[1] - supportSeam], max: [c.aabb.max[0] + d.origin[0] + supportSeam, c.aabb.max[1], c.aabb.max[2] + d.origin[1] + supportSeam] };
       for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
         const key = DistrictWorld.groundKey(x, z), bucket = this.supports.get(key) ?? []; bucket.push(a); this.supports.set(key, bucket);
       }

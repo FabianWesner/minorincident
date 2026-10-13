@@ -1,4 +1,5 @@
 import { l1Pedestrians } from '../../data/npcs';
+import { soilDecorations } from '../../levels/districts/decorationSurface';
 import { flowerClusterBoxes, standNear } from '../npc/gardening';
 import { seatAnchor } from '../npc/seats';
 import type { CivilianActivity, CivilianProp, Point } from '../npc/types';
@@ -42,7 +43,7 @@ export function populateGrove(outbreak: Outbreak, count = 60): number[] {
     }
   }
   const bedBoxes = layout.placements.filter(q => q.assetId.startsWith('prop.flower-bed')).map(q => ({ x0: q.visualAabb.min[0] + ox, z0: q.visualAabb.min[2] + oz, x1: q.visualAabb.max[0] + ox, z1: q.visualAabb.max[2] + oz }));
-  bedBoxes.push(...flowerClusterBoxes(layout.decorations, [ox, oz]));
+  bedBoxes.push(...flowerClusterBoxes(soilDecorations(layout), [ox, oz]));
   const usedBeds = new Set<(typeof bedBoxes)[number]>();
   const doors = Object.keys(layout.anchors).filter(n => n.startsWith('refuge-door-')).map(anchor).filter((p): p is Point => !!p);
   const nearestDoor = (p: Point) => doors.reduce<Point | null>((best, d) => !best || Math.hypot(d.x - p.x, d.z - p.z) < Math.hypot(best.x - p.x, best.z - p.z) ? d : best, null);

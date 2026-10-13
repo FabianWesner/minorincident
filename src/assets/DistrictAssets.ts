@@ -23,6 +23,9 @@ import { decodeStaticBake } from './staticBakeData';
 import { decompressCivilianBake } from './civilianBakeData';
 import { openFireStationBays } from './fireStationBays';
 import { vehicleDecayFallback } from './vehicleDecay';
+import { occluderMinHeight } from '../render/SeeThrough';
+/** Props lower than an occluder keep every fragment while the courier see-through hole is open. */
+export const isUncutProp = (id: string): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && worldAssets[id].dimensions.y < occluderMinHeight;
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'], decay?: string): string[] {
   const def = definition(productionIds[id] ?? id);
@@ -178,15 +181,26 @@ export class DistrictAssets {
     })());
     return this.cache.get(baseKey)!;
   }
+  /** One uncut twin per shared batch material, so every low prop of a role still shares one node build. */
+  private readonly uncutMaterials = new Map<Material, PaletteMaterial>();
+  private uncut(material: PaletteMaterial): PaletteMaterial {
+    let twin = this.uncutMaterials.get(material);
+    if (!twin) { twin = material.frozenCopy().seeThrough(false); twin.name = `${material.name}:uncut`; this.uncutMaterials.set(material, twin); this.batchMaterials.add(twin); }
+    return twin;
+  }
   private finishBatch(id: string, root: Group): Group {
     this.share(root);
     if (id === 'bld.joes-diner') {
       const sign = dinerSign(); root.add(sign.root); this.geometries.add(sign.geometry); this.signTextures.push(sign.texture);
     }
+    // Furniture lower than an occluder (benches, hydrants, beds, low fences) is never cut by the courier hole: it cannot hide her,
+    // and the group-sized hole at close zoom otherwise dissolved everything above 0.3 m (PO 10-13 bench without planks).
+    const solid = isUncutProp(id);
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
       if (node.material instanceof PaletteMaterial) {
         if (id === 'bld.metro-entrance' && node.userData.door === 'shutter') node.material = node.material.frozenCopy().seeThrough(false);
+        else if (solid) node.material = this.uncut(node.material);
         else node.material.seeThrough();
       }
       this.batchMaterials.add(node.material as Material);
@@ -239,7 +253,7 @@ export class DistrictAssets {
   dispose(): void {
     for (const geometry of this.geometries) geometry.dispose();
     this.geometries.clear();
-    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear();
+    for (const material of this.batchMaterials) material.dispose(); this.batchMaterials.clear(); this.sharedMaterials.clear(); this.uncutMaterials.clear();
     for (const texture of this.signTextures) texture.dispose(); this.signTextures.length = 0;
     this.cache.clear();
     void this.assets.dispose();

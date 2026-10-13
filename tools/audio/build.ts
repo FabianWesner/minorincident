@@ -91,6 +91,17 @@ function capPeak(samples: Float32Array, max: number): Float32Array {
     if (peak > max) for (let i = 0; i < samples.length; i++) samples[i] *= max / peak;
     return samples;
 }
+/** Pickup fanfares: a synthesised body (peak 0.5) plus recorded foley layers (each peak-normalised to 0.5, scaled by `gain`) placed at `at` seconds. */
+interface Layer extends Recipe { at: number; duration: number; gain: number; }
+const fanfareLayers = imports.fanfare as Record<string, Layer[]>;
+function layered(id: string, body: Float32Array): Float32Array {
+    const out = Float32Array.from(body);
+    for (const layer of fanfareLayers[id]) {
+        const part = recording(layer, layer.duration), start = Math.round(layer.at * rate);
+        for (let i = 0; i < part.length && start + i < out.length; i++) out[start + i] += part[i] * layer.gain;
+    }
+    return capPeak(out, 0.7);
+}
 function encode(name: string, samples: Float32Array, bitrate = '64k'): void {
     const wav = join(temp, `${name}.wav`);
     writeFileSync(wav, wave([samples], rate));
@@ -110,7 +121,7 @@ try {
             for (const cue of Object.values(audioCues)) {
                 if (cue.category !== category) continue;
                 const recipe = (imports.cues as Record<string, Recipe>)[cue.id];
-                samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
+                samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : fanfareLayers[cue.id] ? layered(cue.id, synthesize(cue, rate)) : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
             }
             if (!category.startsWith('music')) capPeak(samples, 0.6); // sprite ceiling: about -4.4 dBFS before Opus/AAC overshoot, so every file stays under -1 dBTP
             // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
@@ -120,7 +131,7 @@ try {
         for (const ext of ['webm', 'm4a']) {
             const file = `${category}.${ext}`;
             const ids = Object.values(audioCues).filter(c => c.category === category).flatMap(c => {
-                const recipe = (imports.cues as Record<string, Recipe>)[c.id]; return recipe ? [recipe.source] : [];
+                const recipe = (imports.cues as Record<string, Recipe>)[c.id]; return recipe ? [recipe.source] : (fanfareLayers[c.id] ?? []).map(layer => layer.source);
             });
             licenses.push(`| ${file} | ${ids.length ? 'CC0 / CC-BY / self-made (MIT); see segment map' : 'self-made (MIT)'} | ${notice(ids)} | ${hash(`${output}/${file}`)} |`);
         }
@@ -156,6 +167,11 @@ try {
         const cue = audioCues[id];
         if (!cue) throw new Error(`Recipe has no cue: ${id}`);
         licenses.push(`| ${id} | ${notice([recipe.source])} | ${recipe.start} | ${cue.offset.toFixed(3)} / ${cue.duration.toFixed(3)} |`);
+    }
+    for (const [id, layers] of Object.entries(fanfareLayers)) {
+        const cue = audioCues[id];
+        if (!cue) throw new Error(`Fanfare has no cue: ${id}`);
+        for (const layer of layers) licenses.push(`| ${id} (layer) | ${notice([layer.source])} | ${layer.start} | ${cue.offset.toFixed(3)} + ${layer.at}s / ${layer.duration}s; synthesised body: self-made (MIT), src/audio/fanfare.ts |`);
     }
     writeFileSync(`${output}/LICENSES.md`, licenses.join('\n') + '\n');
     mkdirSync('assets/audio', { recursive: true });

@@ -183,6 +183,10 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `clippingMax` (static placement, actor bone, and native hand versus held-prop mesh intersections)
 - `heldPropIntersectionsMax` (native hand triangles versus the held prop, after the actual LOD reduction; use `0`)
 - `heldPropSamplesMin` (minimum sampled hand/prop pairs, preventing an absent prop from passing)
+- `heldPropHoldMin` (mug/phone: lowest drawn prop centre between hip 0 and shoulders 1, over every frame and LOD band; `metrics.heldProps.holds.<actor>` gives `heightMin`, `straightMax` and frames per `lods`). The seated drinker before the 10-13 fix: 0.34; now 0.53. Use 0.5.
+- `heldPropArmStraightMax` (mug/phone: shoulder-wrist distance over arm length; 1 is a hanging straight arm). Use 0.95.
+- `seeThroughLowPropsMax` (placements lower than an occluder, 1.1 m, drawn with the courier-hole cut material; `metrics.seeThrough.cutLowProps`). Use 0.
+- `seeThroughOpenFramesMin` (frames the solid-occluder hole was open; a cutaway fixture must actually open it). `metrics.seeThrough` also reports `solidRadiusMax`.
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
 - `footJitterRunMax` (courier only: longest run of consecutive frames with a vertical sole zig-zag of at least 0.8 cm, a one-frame bob; a gait touchdown gives 1-2)
@@ -283,6 +287,39 @@ npm run scene:catalog -- --list --filter 'bld-grove-*'
 It writes `test-results/scene-catalog/index.md` (scene, pass/fail, every gate with value/limit, link to the sheet) and `<scene>/sheet.jpg` + `metrics.json`. No full-size PNGs are kept; re-run one scene with `npm run scene -- specs/scenes/catalog/<x>.json --shots ...` for hi-res frames. Options: `--jobs 1|2`, `--backend webgpu`, `--size 960x540`, `--out dir`. Exit code 1 when a gate fails: a red catalog scene is a real defect at the time of writing, not noise.
 
 **How a lane uses it.** After a gameplay or visual change: (1) run `npm run scene:catalog -- --filter '<your area>*'` (e.g. `fight-*`, `bld-corridor-*`, `ped-*`); (2) open each `sheet.jpg` and describe what you saw in your report; (3) if your change needs a new case, add a spec to `specs/scenes/catalog/` with gates (`consoleErrors`, `undrawnFramesMax`, `clippingMax`, `footSinkMaxCm`, `propSinkMaxCm` as fits) and a `note` saying what to look for. Do not loosen a gate to make a scene pass.
+
+## Quality x zoom matrix (deploy gate)
+
+PO 2026-10-13: "Low zoom. Bank isn't fully rendered. Coffee cup still wrong. [...] This isn't a bug that I should ever face."
+Every catalog run used to be one tier (high) at the authored zoom, so low-tier LODs, close-zoom LOD bands and the large
+close-zoom courier hole were never seen. `--matrix` runs each selected scene at the high **and** low quality tier, and
+scenes with a `game`/`follow` camera at zoom 1 **and** the closest player zoom (`zoomLimits[0]` = 0.5), as rows named
+`<scene>@<tier>-z<zoom>` (other cameras: one row per tier).
+
+```sh
+npm run scene:matrix                                    # seat-*, ped-*, corgi-*, area-grove-* on WebGPU, all four variants
+npm run scene:catalog -- --matrix --filter 'fight-*'   # any area
+```
+
+Open the sheets of **both tiers** for your area. Catalog scenes added for the 10-13 reports: `seat-bench-l1-start` (L1 start
+bench + seated coffee drinker with the hole open; gates `seeThroughLowPropsMax`, `seeThroughOpenFramesMin`, `heldPropHoldMin`,
+`heldPropArmStraightMax`), `corgi-firestation-apron` (corgi over the 0.40 m apron slabs at zoom 0.5) and
+`area-grove-garden-path` (daisies vs the stone path).
+
+**Static guards in the unit suite (no browser, run with `npm run test:unit`, also on the Hetzner runner):**
+
+| Guard | File | Catches |
+| --- | --- | --- |
+| LOD fidelity, all 206 static props/buildings/vehicles | `tests/unit/assets/lod-fidelity.test.ts` | an LOD whose extent shrinks > 12 %, whose top/front/side/game-view silhouette IoU against LOD0 drops below 0.8, or that loses a material carrying > 5 % of the surface. 40 assets failing on 2026-10-13 are listed in `lod-fidelity.baseline.json` (asset backlog); any new defect fails. Report: `test-results/lod-fidelity.json`. |
+| Decoration surface, every district and tier GLB | `tests/unit/levels/decoration-surface.test.ts` | a drawn daisy on paving, a path, a road or gravel, or one not listed in the layout's `decorations` (shared rule `src/levels/districts/decorationSurface.ts`, render filter `src/render/decorationFilter.ts`). |
+| Walkable support seams, every district | `tests/sim/world/support-seams.test.ts` | a narrow trench between raised walkable tops into which `groundHeight` drops (corgi, pedestrians, pickups, shadows sink there while the courier's capsule spans it). |
+| Bus ride smoothness | `tests/e2e/levels/l4-bus-ride-smooth.spec.ts` | set-piece screen jitter on WebGL and WebGPU, high and low, at 60/120 Hz, uneven 120 Hz, 30 Hz and an uneven phone cadence (more than one sim tick per frame). |
+
+Why each 10-13 report slipped through, and the rule now: (1) all visual QA ran at high and the default zoom: run the matrix;
+(2) LOD sheets covered only assets a lane touched: the LOD fidelity test covers all; (3) a fix was verified on one path (the
+mug hold only in the standing unit test, the bus only at <= 1 tick per frame): metrics are per actor over every LOD band and
+the ride spec runs both tiers, both backends and phone cadences; (4) metrics compared against the same query that was wrong
+(corgi paw sink was measured against the sim floor that had the seam): the seam guard checks the support query itself.
 
 ## MCP server
 

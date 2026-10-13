@@ -5534,5 +5534,146 @@
       "duration": 94.426,
       "crossfade": 3
     }
+  },
+  "fanfare": {
+    "pickup.fanfare.bat": [
+      {
+        "source": "sfx2-k-impactWood_heavy_000",
+        "start": 0,
+        "at": 0,
+        "duration": 0.35,
+        "gain": 0.9
+      }
+    ],
+    "pickup.fanfare.fire-axe": [
+      {
+        "source": "sfx2-k-impactMetal_heavy_000",
+        "start": 0,
+        "at": 0,
+        "duration": 1.2,
+        "gain": 1.0
+      }
+    ],
+    "pickup.fanfare.handgun": [
+      {
+        "source": "sfx2-r100-sfx100v2_switch_01",
+        "start": 0,
+        "at": 0,
+        "duration": 0.2,
+        "gain": 1.0
+      },
+      {
+        "source": "sfx2-rwm-metal_close_01",
+        "start": 0,
+        "at": 0.1,
+        "duration": 0.3,
+        "gain": 0.7
+      }
+    ],
+    "pickup.fanfare.army-mg": [
+      {
+        "source": "sfx2-rwm-metal_open_01",
+        "start": 0,
+        "at": 0,
+        "duration": 0.3,
+        "gain": 0.8
+      },
+      {
+        "source": "sfx2-rwm-metal_close_01",
+        "start": 0,
+        "at": 1.14,
+        "duration": 0.3,
+        "gain": 1.0
+      }
+    ],
+    "pickup.fanfare.shotgun": [
+      {
+        "source": "sfx2-rwm-wood_slam_02",
+        "start": 0,
+        "at": 0,
+        "duration": 0.25,
+        "gain": 0.55
+      },
+      {
+        "source": "sfx2-rwm-metal_close_01",
+        "start": 0,
+        "at": 0.2,
+        "duration": 0.3,
+        "gain": 0.9,
+        "filter": "lowpass=f=3500"
+      }
+    ],
+    "pickup.fanfare.rocket": [
+      {
+        "source": "sfx2-k-impactSoft_heavy_000",
+        "start": 0,
+        "at": 0,
+        "duration": 0.4,
+        "gain": 0.9
+      },
+      {
+        "source": "sfx2-k-impactMetal_medium_000",
+        "start": 0,
+        "at": 0.2,
+        "duration": 0.5,
+        "gain": 0.7,
+        "filter": "lowpass=f=1500"
+      }
+    ],
+    "pickup.fanfare.molotov": [
+      {
+        "source": "sfx2-k-impactGlass_light_000",
+        "start": 0,
+        "at": 0,
+        "duration": 0.5,
+        "gain": 0.8
+      }
+    ],
+    "pickup.fanfare.corgi-lure": [
+      {
+        "source": "dog",
+        "start": 0.52,
+        "at": 0.38,
+        "duration": 0.4,
+        "gain": 0.5
+      }
+    ],
+    "pickup.fanfare.throwable": [
+      {
+        "source": "sfx2-k-impactMetal_light_000",
+        "start": 0,
+        "at": 0,
+        "duration": 0.3,
+        "gain": 0.8
+      }
+    ],
+    "pickup.fanfare.ability": [
+      {
+        "source": "sfx2-k-impactBell_heavy_000",
+        "start": 0,
+        "at": 0,
+        "duration": 0.9,
+        "gain": 0.4,
+        "filter": "highpass=f=800"
+      }
+    ],
+    "pickup.fanfare.melee": [
+      {
+        "source": "sfx2-k-impactMetal_medium_001",
+        "start": 0,
+        "at": 0,
+        "duration": 0.5,
+        "gain": 0.9
+      }
+    ],
+    "pickup.fanfare.gun": [
+      {
+        "source": "sfx2-r100-sfx100v2_switch_01",
+        "start": 0,
+        "at": 0,
+        "duration": 0.2,
+        "gain": 0.9
+      }
+    ]
   }
 }
