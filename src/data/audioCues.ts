@@ -1,11 +1,11 @@
 import type { NoiseKind } from './noise';
 import { infectedDefinitions } from './infected';
-import { catalog, balanceActions } from './actions/catalog';
+import { catalog, balanceActions, action } from './actions/catalog';
 import type { GameEvent } from '../sim/world/types';
 import type { Surface, PropMaterial } from './audioEvents';
 export const audioBuses = ['music', 'weapons', 'impacts', 'vehicles', 'props', 'gore', 'telegraph', 'ambience', 'dialogue', 'barks', 'ui'] as const;
 export type AudioBus = typeof audioBuses[number];
-export type SoundShape = 'shot' | 'noise' | 'tone' | 'vocal' | 'music' | 'step' | 'bed' | 'buzz' | 'chatter';
+export type SoundShape = 'shot' | 'noise' | 'tone' | 'vocal' | 'music' | 'step' | 'bed' | 'buzz' | 'chatter' | 'fanfare';
 /** Sprite offsets are seconds; recorded and original cues share identical Opus/AAC grids. */
 export interface AudioCue {
     id: string;
@@ -25,7 +25,7 @@ export interface AudioCue {
 }
 export const audioCues: Record<string, AudioCue> = {};
 /** Banks nothing needs at the first frame: loaded in the background shortly after the level starts (AudioService.load). */
-export const lazyCategories = new Set(['props', 'vehicles', 'dialogue', 'music', 'telegraph', 'weapons', 'gore', 'infected']);
+export const lazyCategories = new Set(['props', 'vehicles', 'dialogue', 'music', 'telegraph', 'weapons', 'gore', 'infected', 'pickups']);
 const offsets = new Map<string, number>();
 function cue(id: string, bus: AudioBus, shape: SoundShape, duration = 0.3, frequency = 250, options: Partial<AudioCue> = {}): void {
     const category = options.category ?? bus;
@@ -100,6 +100,27 @@ for (const [id, text] of [['radio', 'Emergency broadcast: proceed to the safe zo
     cue(`dialogue.${id}`, 'dialogue', 'vocal', 3, 185, { gain: 0.7, antiSpam: 0, rateSpread: 0, caption: text });
 for (const id of ['click', 'switch', 'pickup', 'respawn', 'death', 'tick'])
     cue(`ui.${id}`, 'ui', 'tone', 0.1, 700, { gain: id === 'tick' ? 0 : 0.1 });
+/**
+ * Weapon pickup stingers (PO 10-13: the L1 score excerpt that used to play on every pickup did not fit a machine gun). One short fanfare per weapon family, <= 2 s,
+ * synthesised in src/audio/fanfare.ts plus recorded foley layers (imports.json `fanfare`). Weapons bus, so the music duck that accompanies them never mutes them.
+ */
+export const pickupFanfareDurations = { bat: 1.6, 'fire-axe': 1.8, handgun: 1.3, 'army-mg': 1.95, shotgun: 1.8, rocket: 2, molotov: 1.1, 'corgi-lure': 1.1, throwable: 0.9, ability: 1.2, melee: 0.95, gun: 1.1 } as const;
+export type PickupFanfare = keyof typeof pickupFanfareDurations;
+for (const [name, duration] of Object.entries(pickupFanfareDurations))
+    cue(`pickup.fanfare.${name}`, 'weapons', 'fanfare', duration, 220, { category: 'pickups', gain: 0.55, antiSpam: 0.3, rateSpread: 0 });
+/** Action id -> fanfare. Weapons with their own mood are listed; every other weapon falls back to its category's light sting (pickupFanfare). */
+export const pickupFanfareByAction: Readonly<Record<string, PickupFanfare>> = {
+    'weapon.bat': 'bat', 'weapon.fire-axe': 'fire-axe', 'weapon.handgun': 'handgun', 'weapon.pistol': 'handgun',
+    'weapon.army-mg': 'army-mg', 'weapon.machine-gun': 'army-mg', 'weapon.shotgun': 'shotgun', 'weapon.rocket-launcher': 'rocket',
+    'weapon.molotov': 'molotov', 'ability.corgi-lure': 'corgi-lure',
+};
+export function pickupFanfare(actionId: string): PickupFanfare {
+    const own = pickupFanfareByAction[actionId];
+    if (own) return own;
+    let category: string | undefined;
+    try { category = action(actionId).category; } catch { /* unknown id: melee sting */ }
+    return category === 'ranged' ? 'gun' : category === 'throwable' ? 'throwable' : category === 'ability' ? 'ability' : 'melee';
+}
 cue('civilian.hey', 'barks', 'vocal', .75, 200, { gain: .5, antiSpam: .3, caption: 'Hey!' });
 cue('infected.vocal', 'barks', 'vocal', 1.5, 130, { gain: 0.12, antiSpam: 0.9, rateSpread: 0.12 });
 /** Recorded infected voices (lazy bank): alert snarl, hit pain, death, bite on a landed attack. Humanoid archetypes only. */
@@ -256,8 +277,8 @@ export const eventCues = {
     // E20 set piece: station bell, departure siren, doors forced open, checkpoint gate; allied strikes.
     'l2.alarm': 'l1.bell', 'l2.truckDeparted': 'vehicle.siren', 'l2.truckArrived': 'ui.tick', 'l2.crewExit': 'ui.tick', 'l2.firefightersAtDoors': 'ui.tick',
     'l2.doorsOpen': 'door.gate', 'l2.radio': 'ui.tick', 'l2.gateClosed': 'door.gate', 'l2.cue': 'ui.tick', 'ally.attack': 'action.weapon.fists',
-    'l3.handgun': 'ui.pickup', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'door.gate', 'l3.surge': 'ui.tick',
-    'l4.convoyStarted': 'ui.tick', 'l4.convoyArrived': 'door.gate', 'l4.gun': 'ui.pickup', 'l4.war': 'vehicle.siren', 'l4.heliWithdrawn': 'ui.tick', 'l4.descended': 'door.gate', 'l4.doorBarred': 'door.gate', 'l4.battle': 'ui.tick',
+    'l3.handgun': 'ui.tick', 'l3.attack': 'vehicle.siren', 'l3.wave': 'ui.tick', 'l3.fallback': 'ui.tick', 'l3.squad-lost': 'ui.tick', 'l3.segment': 'ui.tick', 'l3.gunfire': 'ui.tick', 'l3.crossed': 'door.gate', 'l3.surge': 'ui.tick',
+    'l4.convoyStarted': 'ui.tick', 'l4.convoyArrived': 'door.gate', 'l4.gun': 'ui.tick', 'l4.war': 'vehicle.siren', 'l4.heliWithdrawn': 'ui.tick', 'l4.descended': 'door.gate', 'l4.doorBarred': 'door.gate', 'l4.battle': 'ui.tick',
     'l4.firstTurn': 'ui.tick', 'l4.lineBreaks': 'ui.tick', 'l4.beat': 'civilian.scream', 'l4.wave': 'ui.tick', 'l4.tankFire': 'ui.tick', 'l4.heliPass': 'ui.tick', 'hmg.burst': 'ui.tick',
     // E23: the silent city. The sign-of-life cue is positional (AudioService picks the cue by survivor); beats are silent but the shutter.
     'l5.emerged': 'ui.tick', 'l5.searching': 'ui.tick', 'l5.accounted': 'ui.tick', 'l5.shutter': 'door.gate', 'l5.sheltered': 'ui.tick', 'l5.cue': 'ui.tick', 'l5.found': 'ui.pickup', 'l5.lost': 'ui.tick', 'l5.wait': 'ui.tick',
