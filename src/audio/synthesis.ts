@@ -1,8 +1,10 @@
 import { Rng, fnv1a } from '../core/Rng';
 import type { AudioCue } from '../data/audioCues';
+import { fanfare } from './fanfare';
 /** Original procedural placeholders; no third-party recordings or voices. Shared by the asset builder
  * and impulse-response generation. Audio assets can be replaced without changing cue contracts. */
 export function synthesize(cue: AudioCue, sampleRate: number): Float32Array {
+    if (cue.shape === 'fanfare') return fanfare(cue.id, cue.duration, sampleRate);
     const samples = new Float32Array(Math.ceil(cue.duration * sampleRate)), rng = new Rng(fnv1a(cue.id), 'synthesis');
     const tau = 2 * Math.PI, f = cue.frequency;
     let low = 0;
