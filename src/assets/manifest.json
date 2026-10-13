@@ -22154,5 +22154,660 @@
       "lod1": 2000,
       "lod2": 1000
     }
+  },
+  {
+    "id": "wpn.minigun-mounted",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/wpn.minigun-mounted/build.py",
+    "sourceGlb": "assets/wpn.minigun-mounted/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/wpn.minigun-mounted.glb",
+    "lods": {
+      "lod1": "public/assets/models/wpn.minigun-mounted.lod1.glb",
+      "lod2": "public/assets/models/wpn.minigun-mounted.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1500,
+      "lod2": 800
+    },
+    "dimensions": {
+      "x": 2.7,
+      "y": 1.76,
+      "z": 2.7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "pivot",
+      "elevation",
+      "barrels",
+      "heatGlow",
+      "muzzle"
+    ],
+    "animatedNodes": [
+      "pivot",
+      "elevation",
+      "barrels",
+      "heatGlow"
+    ],
+    "sockets": [
+      "muzzle",
+      "seatAnchor",
+      "gunnerSocket",
+      "heatGlowSlot"
+    ],
+    "budget": {
+      "triangles": 3500,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "canvasTan",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-canister",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-canister/build.py",
+    "sourceGlb": "assets/prop.cure-canister/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/prop.cure-canister.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-canister.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-canister.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 500,
+      "lod2": 300
+    },
+    "dimensions": {
+      "x": 0.445,
+      "y": 0.725,
+      "z": 0.34,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "backSocket"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "backSocket"
+    ],
+    "budget": {
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-canister-pedestal",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-canister-pedestal/build.py",
+    "sourceGlb": "assets/prop.cure-canister-pedestal/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/prop.cure-canister-pedestal.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-canister-pedestal.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-canister-pedestal.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 700,
+      "lod2": 400
+    },
+    "dimensions": {
+      "x": 1.4,
+      "y": 1.705,
+      "z": 1.4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "pickupSocket"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "pickupSocket"
+    ],
+    "budget": {
+      "triangles": 1000,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-pipe-straight",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-pipe-straight/build.py",
+    "sourceGlb": "assets/kit.dispersal-pipe-straight/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-pipe-straight.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-pipe-straight.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-pipe-straight.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 500,
+      "lod2": 250
+    },
+    "dimensions": {
+      "x": 8.08,
+      "y": 3.62,
+      "z": 2.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "portA",
+      "portB"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "portA",
+      "portB"
+    ],
+    "budget": {
+      "triangles": 1200,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-pipe-elbow",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-pipe-elbow/build.py",
+    "sourceGlb": "assets/kit.dispersal-pipe-elbow/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-pipe-elbow.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-pipe-elbow.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-pipe-elbow.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 600,
+      "lod2": 300
+    },
+    "dimensions": {
+      "x": 5.8,
+      "y": 3.62,
+      "z": 5.8,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "portA",
+      "portB"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "portA",
+      "portB"
+    ],
+    "budget": {
+      "triangles": 1600,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-pipe-tee",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-pipe-tee/build.py",
+    "sourceGlb": "assets/kit.dispersal-pipe-tee/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-pipe-tee.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-pipe-tee.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-pipe-tee.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 700,
+      "lod2": 300
+    },
+    "dimensions": {
+      "x": 8.08,
+      "y": 4.41,
+      "z": 5.34,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "portA",
+      "portB",
+      "portC"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "portA",
+      "portB",
+      "portC"
+    ],
+    "budget": {
+      "triangles": 1700,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-fan-housing",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-fan-housing/build.py",
+    "sourceGlb": "assets/kit.dispersal-fan-housing/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-fan-housing.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-fan-housing.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-fan-housing.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 2000,
+      "lod2": 900
+    },
+    "dimensions": {
+      "x": 7.2,
+      "y": 9.75,
+      "z": 10.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "fanRotor",
+      "portIntake"
+    ],
+    "animatedNodes": [
+      "fanRotor"
+    ],
+    "sockets": [
+      "portIntake",
+      "portExhaust",
+      "rotorAxis"
+    ],
+    "budget": {
+      "triangles": 5000,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-turbine-hall",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-turbine-hall/build.py",
+    "sourceGlb": "assets/kit.dispersal-turbine-hall/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-turbine-hall.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-turbine-hall.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-turbine-hall.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1800,
+      "lod2": 1200
+    },
+    "dimensions": {
+      "x": 16.8,
+      "y": 11.5,
+      "z": 12.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "door"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "door",
+      "steamPort"
+    ],
+    "budget": {
+      "triangles": 4000,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-tank-sphere",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-tank-sphere/build.py",
+    "sourceGlb": "assets/kit.dispersal-tank-sphere/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-tank-sphere.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-tank-sphere.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-tank-sphere.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1200,
+      "lod2": 700
+    },
+    "dimensions": {
+      "x": 10.475,
+      "y": 12.8,
+      "z": 8.79,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "portOutlet"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "portOutlet"
+    ],
+    "budget": {
+      "triangles": 2800,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-tank-bullet",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-tank-bullet/build.py",
+    "sourceGlb": "assets/kit.dispersal-tank-bullet/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-tank-bullet.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-tank-bullet.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-tank-bullet.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1500,
+      "lod2": 700
+    },
+    "dimensions": {
+      "x": 11.83,
+      "y": 7.335,
+      "z": 10.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "portOutlet"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "portOutlet"
+    ],
+    "budget": {
+      "triangles": 3000,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-filtration-tower",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-filtration-tower/build.py",
+    "sourceGlb": "assets/kit.dispersal-filtration-tower/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-filtration-tower.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-filtration-tower.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-filtration-tower.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1600,
+      "lod2": 800
+    },
+    "dimensions": {
+      "x": 11.9,
+      "y": 17.8,
+      "z": 8.6,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "portDuct"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "portDuct"
+    ],
+    "budget": {
+      "triangles": 4000,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-platform",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-platform/build.py",
+    "sourceGlb": "assets/kit.dispersal-platform/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-platform.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-platform.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-platform.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 900,
+      "lod2": 600
+    },
+    "dimensions": {
+      "x": 12.303,
+      "y": 4.165,
+      "z": 4.4,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "stairTop"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "stairTop",
+      "stairBottom"
+    ],
+    "budget": {
+      "triangles": 1800,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.dispersal-console",
+    "category": "building",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/kit.dispersal-console/build.py",
+    "sourceGlb": "assets/kit.dispersal-console/model.glb",
+    "sourceForward": "+X",
+    "glb": "public/assets/models/kit.dispersal-console.glb",
+    "lods": {
+      "lod1": "public/assets/models/kit.dispersal-console.lod1.glb",
+      "lod2": "public/assets/models/kit.dispersal-console.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 200
+    },
+    "dimensions": {
+      "x": 1.6,
+      "y": 2.025,
+      "z": 3.3,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "screen",
+      "progressScreen"
+    ],
+    "animatedNodes": [
+      "screen"
+    ],
+    "sockets": [
+      "progressScreen",
+      "operator"
+    ],
+    "budget": {
+      "triangles": 600,
+      "materials": 8,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
   }
 ]

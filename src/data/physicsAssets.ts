@@ -7377,5 +7377,540 @@ export default {
     ],
     "source": "public/assets/models/kit.zoo-tunnel-mouth.glb",
     "hash": "41c7cc058032d0ba21fea2dec43351ae209e3f00b4c7617b039886a0c7cb8e06"
+  },
+  "wpn.minigun-mounted": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          0.7999999523162842,
+          5.960464455334602e-9,
+          -1
+        ],
+        "max": [
+          1.2999999523162842,
+          0.8000000059604645,
+          1
+        ]
+      },
+      {
+        "min": [
+          -1.1,
+          5.960464455334602e-9,
+          -1.3300000429153442
+        ],
+        "max": [
+          1.1,
+          0.8000000059604645,
+          -0.8300000429153442
+        ]
+      },
+      {
+        "min": [
+          -1.1,
+          5.960464455334602e-9,
+          0.8300000429153442
+        ],
+        "max": [
+          1.1,
+          0.8000000059604645,
+          1.3300000429153442
+        ]
+      }
+    ],
+    "source": "public/assets/models/wpn.minigun-mounted.glb",
+    "hash": "07069fa2eff122f49a3222c9f1dd29a2408f93fd70f81329f0a8ade2f1f46e2b"
+  },
+  "prop.cure-canister": {
+    "class": "light",
+    "mass": 6,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.3,
+      0
+    ],
+    "pushable": true,
+    "kickable": true,
+    "flammable": false,
+    "sounds": "prop.metal-medium",
+    "boxes": [
+      {
+        "min": [
+          -0.21,
+          1.4305114759416426e-8,
+          -0.18
+        ],
+        "max": [
+          0.21,
+          0.7200000143051147,
+          0.18
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-canister.glb",
+    "hash": "cf06fecef26fbfe53bbb99562ef5f957381e0467ea21a3c99f494cb0e58df48c"
+  },
+  "prop.cure-canister-pedestal": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.5,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.65,
+          -0.15000000000000002,
+          -0.5
+        ],
+        "max": [
+          0.65,
+          1.15,
+          0.5
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-canister-pedestal.glb",
+    "hash": "0087190c1acfbda046e1c3d3724e3346aa6490df18ba517edd670c204ac7c758"
+  },
+  "kit.dispersal-pipe-straight": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4,
+          1.2000000953674317,
+          -1.2
+        ],
+        "max": [
+          4,
+          3.600000095367432,
+          1.2
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-pipe-straight.glb",
+    "hash": "41bee1599732bc429a8bf0083db6dad8598005f79998530bfedd15ac910f9601"
+  },
+  "kit.dispersal-pipe-elbow": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -3.1,
+          1.2000000953674317,
+          -3.1
+        ],
+        "max": [
+          0.10000000000000009,
+          3.600000095367432,
+          0.10000000000000009
+        ]
+      },
+      {
+        "min": [
+          -4.200000047683716,
+          1.2000000953674317,
+          -1.2
+        ],
+        "max": [
+          -2.200000047683716,
+          3.600000095367432,
+          1.2
+        ]
+      },
+      {
+        "min": [
+          -1.2,
+          1.4000000953674316,
+          -4.400000047683716
+        ],
+        "max": [
+          1.2,
+          3.4000000953674316,
+          -2.0000000476837156
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-pipe-elbow.glb",
+    "hash": "d1f1af47ebb02e5c0501236c0329cca99dfb5b26a3eb1a17ea7f6402641fed25"
+  },
+  "kit.dispersal-pipe-tee": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1,
+          1.2000000953674317,
+          -4
+        ],
+        "max": [
+          1,
+          3.600000095367432,
+          0
+        ]
+      },
+      {
+        "min": [
+          -4,
+          1.2000000953674317,
+          -1.2
+        ],
+        "max": [
+          4,
+          3.600000095367432,
+          1.2
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-pipe-tee.glb",
+    "hash": "768de5d56135ca00261bef4bf8a66f0520c7d1442961c5717e3c03a3736ebcc7"
+  },
+  "kit.dispersal-fan-housing": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      2,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.5,
+          0.7999998092651364,
+          -4.5
+        ],
+        "max": [
+          1.5,
+          9.599999809265137,
+          4.5
+        ]
+      },
+      {
+        "min": [
+          -3.6,
+          1.1920928910669204e-8,
+          -5.1
+        ],
+        "max": [
+          3.6,
+          1.100000011920929,
+          5.1
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-fan-housing.glb",
+    "hash": "09dabb7084b454df878db1cfd4b3bf8c355d9baeea1af917a5dd065bf8a2c4c2"
+  },
+  "kit.dispersal-turbine-hall": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      3,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -8.1,
+          4.7683715642676816e-8,
+          -5.1
+        ],
+        "max": [
+          8.1,
+          6.400000047683716,
+          2.1
+        ]
+      },
+      {
+        "min": [
+          -8,
+          0.49999990463256827,
+          1.5000000953674317
+        ],
+        "max": [
+          8,
+          4.699999904632568,
+          6.300000095367432
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-turbine-hall.glb",
+    "hash": "898f0df8457edfa337ddd666e15df179eaeff583a95f92e1771cf0f0ff83a1db"
+  },
+  "kit.dispersal-tank-sphere": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      4,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4.2,
+          4.7683715642676816e-8,
+          -4.2
+        ],
+        "max": [
+          4.2,
+          4.400000047683716,
+          4.2
+        ]
+      },
+      {
+        "min": [
+          -3.6,
+          3.9999999046325683,
+          -3.6
+        ],
+        "max": [
+          3.6,
+          11.199999904632568,
+          3.6
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-tank-sphere.glb",
+    "hash": "fada817945d8ebca60983ab3972f757c5fbc790d632c4c4520618484c55d010c"
+  },
+  "kit.dispersal-tank-bullet": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      3,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -5.2,
+          0.6000000953674318,
+          0.10000000000000009
+        ],
+        "max": [
+          5.2,
+          5.2000000953674315,
+          5.9
+        ]
+      },
+      {
+        "min": [
+          -5.2,
+          0.6000000953674318,
+          -5.9
+        ],
+        "max": [
+          5.2,
+          5.2000000953674315,
+          -0.10000000000000009
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-tank-bullet.glb",
+    "hash": "208269464176f5627cee4fa2b91dd67f5b632b6dd9d18f21cf263171890b1b15"
+  },
+  "kit.dispersal-filtration-tower": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      8,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          3,
+          1.2000000953674317,
+          -2.2
+        ],
+        "max": [
+          8,
+          3.600000095367432,
+          2.2
+        ]
+      },
+      {
+        "min": [
+          -3.2,
+          5.3,
+          -8.5
+        ],
+        "max": [
+          3.2,
+          11.7,
+          8.5
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-filtration-tower.glb",
+    "hash": "317170e9108e672251bc6f070db02f27d18e51dbca8e2f83561cd108c16082bf"
+  },
+  "kit.dispersal-platform": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -4,
+          2.85,
+          -2
+        ],
+        "max": [
+          4,
+          3.15,
+          2
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-platform.glb",
+    "hash": "01dd6576cb581293b13eaadfb25fd1216289b86d9bf47edd0c7338df5ccabca7"
+  },
+  "kit.dispersal-console": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -0.8,
+          -2.384185793236071e-8,
+          -1.65
+        ],
+        "max": [
+          0.8,
+          1.299999976158142,
+          1.65
+        ]
+      },
+      {
+        "min": [
+          -0.8,
+          1.0499999523162842,
+          -1.5
+        ],
+        "max": [
+          -0.2,
+          2.049999952316284,
+          1.5
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.dispersal-console.glb",
+    "hash": "4e3a5c3013244db4403d63474784c2d52eb8b30698b839ef9007a1dddc90a31f"
   }
 };
